@@ -8,16 +8,16 @@ public class Sonata extends Car {
 
     @Override
     double getDistancePerLiter() {
-        return 0;
+        return 10;
     }
 
     @Override
     double getTripDistance() {
-        return 0;
+        return this.distance;
     }
 
     @Override
     String getName() {
-        return null;
+        return "Sonata";
     }
 }

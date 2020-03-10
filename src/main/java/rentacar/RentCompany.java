@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RentCompany {
+    private static final String NEWLINE = System.getProperty("line.separator");
 
     private List<Car> cars;
 
@@ -12,15 +13,22 @@ public class RentCompany {
     }
 
     public static RentCompany create() {
-        List<Car> cars = new ArrayList<>();
-        return new RentCompany(cars);
+        return new RentCompany(new ArrayList<>());
     }
 
     public void addCar(Car car){
-        return;
+        cars.add(car);
     }
 
     public String generateReport() {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Car car : cars) {
+            stringBuilder.append(car.getName())
+                    .append(" : ")
+                    .append((int)car.getChargeQuantity())
+                    .append("리터")
+                    .append(NEWLINE);
+        }
+        return stringBuilder.toString();
     }
 }
