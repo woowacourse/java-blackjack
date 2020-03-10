@@ -29,11 +29,11 @@ public class Cards {
         return (cards.size() == 2) && (getScore() == 21);
     }
 
-    public boolean isLessThan(int criteria){
+    public boolean isLessThan(int criteria) {
         return getScore() <= criteria;
     }
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
         cards.add(card);
     }
 }

@@ -1,20 +1,21 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    List<Card> cardDeck;
+    private List<Card> cardDeck = new ArrayList<>();
 
-    public CardDeck(List<Card> cardDeck){
-        this.cardDeck = cardDeck;
+    public CardDeck(List<Card> cardDeck) {
+        this.cardDeck.addAll(cardDeck);
     }
 
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(cardDeck);
     }
 
-    public Card drawOne(){
+    public Card drawOne() {
         return cardDeck.remove(0);
     }
 }
