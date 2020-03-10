@@ -7,12 +7,14 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class NameTest {
     @Test
-    void create(){
+    void create() {
         assertThat(new Name("name")).isInstanceOf(Name.class);
     }
 
     @Test
-    void create_이름이_공백인_경우(){
+    void create_이름이_공백인_경우() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Name(""));
     }
 }
+
+

@@ -1,12 +1,12 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class CardTest {
-	@Test
-	void create() {
-		assertThat(Card.of("스페이드", 1)).isInstanceOf(Card.class);
-	}
+    @Test
+    void create() {
+        assertThat(Card.of("스페이드", "A")).isInstanceOf(Card.class);
+    }
 }

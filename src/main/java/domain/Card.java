@@ -1,15 +1,15 @@
 package domain;
 
 public class Card {
-	private Type type;
-	private int symbol;
+    private Type type;
+    private Symbol symbol;
 
-	private Card(Type type, int symbol) {
-		this.type = type;
-		this.symbol = symbol;
-	}
+    private Card(Type type, Symbol symbol) {
+        this.type = type;
+        this.symbol = symbol;
+    }
 
-	public static Card of(String type, int symbol) {
-		return new Card(Type.of(type), symbol);
-	}
+    public static Card of(String type, String symbol) {
+        return new Card(Type.of(type), Symbol.of(symbol));
+    }
 }
