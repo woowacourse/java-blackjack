@@ -12,8 +12,7 @@ public class CardFactory {
 	}
 
 	private static Stream<Card> createCardBySuit(CardSuit suit) {
-		return Stream.of(CardNumber
-				.values())
+		return Stream.of(CardNumber.values())
 			.map(number -> new Card(suit, number));
 	}
 }
