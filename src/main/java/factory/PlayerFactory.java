@@ -2,16 +2,16 @@ package factory;
 
 import domain.Player;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerFactory {
-    public static List<Player> create(String userInput) {
-        List<Player> players = new ArrayList<>();
-        String[] userInputs = userInput.split(",");
-        for(int i=0;i<userInputs.length;i++){
-            players.add(new Player(userInputs[i]));
-        }
-        return players;
-    }
+	private static final String NAME_DELIMITER = ",";
+
+	public static List<Player> create(String userInput) {
+		return Arrays.stream(userInput.split(NAME_DELIMITER))
+				.map(Player::new)
+				.collect(Collectors.toList());
+	}
 }
