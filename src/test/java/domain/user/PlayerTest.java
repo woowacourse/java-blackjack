@@ -15,7 +15,7 @@ public class PlayerTest {
 		Player player = new Player("동글");
 		player.addCards(new ArrayList<Card>());
 
-		assertThat(player.isBlackjack()).isTrue();
+		assertThat(player.isBlackjack()).isFalse();
 	}
 
 }
