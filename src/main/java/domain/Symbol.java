@@ -17,8 +17,8 @@ public enum Symbol {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private int point;
-    private String alias;
+    private final int point;
+    private final String alias;
 
     Symbol(int point) {
         this(point, String.valueOf(point));
