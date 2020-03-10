@@ -32,4 +32,8 @@ public class Cards {
     public boolean isLessThan(int criteria){
         return getScore() <= criteria;
     }
+
+    public void addCard(Card card){
+        cards.add(card);
+    }
 }
