@@ -10,6 +10,7 @@ public class CardFactory {
         for (Symbol symbol : Symbol.values()) {
             makeCardByShape(cards, symbol);
         }
+        Collections.shuffle(cards);
         return Collections.unmodifiableList(cards);
     }
 

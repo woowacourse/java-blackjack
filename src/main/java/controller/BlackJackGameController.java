@@ -7,12 +7,15 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.User;
 import view.InputView;
+import view.OutputView;
 
 public class BlackJackGameController {
 
     public static void run() {
         String name = InputView.inputUserNames();
         List<User> users = userNamesSetting(name);
+        OutputView.initialSetting(users);
+
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         dealer.initialDistribution(cardDeck);
