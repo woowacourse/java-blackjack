@@ -1,7 +1,5 @@
-import card.Card;
-import card.CardFactory;
-import card.Symbol;
-import card.Type;
+package card;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

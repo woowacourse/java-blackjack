@@ -1,9 +1,10 @@
 import card.Card;
+import card.CardFactory;
 import card.Symbol;
 import card.Type;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CardDeckFactory {
@@ -11,20 +12,19 @@ public class CardDeckFactory {
         throw new AssertionError();
     }
 
-    public static List<Card> create() {
-        List<Card> cards = new ArrayList<>();
+    public static CardDeck create() {
+        List<Card> cards = new LinkedList<>();
         Symbol[] symbols = Symbol.values();
         for (Symbol symbol : symbols) {
             createByType(cards, symbol);
         }
-        Collections.shuffle(cards);
-        return Collections.unmodifiableList(cards);
+        return new CardDeck(cards);
     }
 
     private static void createByType(List<Card> cards, Symbol symbol) {
         Type[] types = Type.values();
         for (Type type : types) {
-            cards.add(new Card(type, symbol));
+            cards.add(CardFactory.of(type, symbol));
         }
     }
 }
