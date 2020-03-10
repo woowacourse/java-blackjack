@@ -9,6 +9,10 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
+    public int getCardNumber() {
+        return cardNumber.getScore();
+    }
+
     @Override
     public String toString() {
         return cardNumber.getScore() + cardSuit.getSuit();
