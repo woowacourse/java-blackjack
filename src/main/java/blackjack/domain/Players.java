@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.controller.Controller;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,4 +27,7 @@ public class Players {
         }
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

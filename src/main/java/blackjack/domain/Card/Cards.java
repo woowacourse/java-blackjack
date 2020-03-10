@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Cards {
-    private static final int MAX_SUM = 21;
+    public static final int MAX_SUM = 21;
     private Set<Card> cards = new HashSet<>();
 
     public void add(Card card) {

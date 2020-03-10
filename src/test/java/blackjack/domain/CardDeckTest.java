@@ -11,6 +11,6 @@ class CardDeckTest {
     @Test
     void name() {
         int expected = 52;
-        assertThat(CardDeck.getSize()).isEqualTo(expected);
+        assertThat(new CardDeck().getSize()).isEqualTo(expected);
     }
 }
