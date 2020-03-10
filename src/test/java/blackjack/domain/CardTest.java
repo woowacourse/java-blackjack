@@ -6,16 +6,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DeckTest {
+public class CardTest {
 
-    @DisplayName("Deck 생성자 테스트")
+    @DisplayName("createCards() 메서드가 필요한 카드들을 생성하는지 테스트")
     @Test
-    void deckConstructorTest() {
-
+    void createCardsTest() {
         List<Card> cards = Card.createCards();
-        // given
         Assertions.assertThat(cards.size()).isEqualTo(52);
-        // when
-        // then
     }
 }
