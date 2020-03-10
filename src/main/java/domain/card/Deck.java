@@ -9,4 +9,13 @@ public class Deck {
     public Deck(List<Card> deck) {
         this.deck = deck;
     }
+
+    public void shuffle(){
+        Collections.shuffle(this.deck);
+    }
+
+    public Card deal(){
+        return this.deck.remove(0);
+    }
+
 }
