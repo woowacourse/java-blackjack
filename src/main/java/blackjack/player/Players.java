@@ -11,9 +11,9 @@ public class Players {
 		this.players = players;
 	}
 
-	public void receiveCards(CardFactory cardFactory) {
-		for (Player player : players) {
-			player.addCard(cardFactory.drawCard());
+	public void initCards(CardFactory cardFactory) {
+		for (int i = 0; i < 2; i++) {
+			players.forEach(player -> player.addCard(cardFactory.drawCard()));
 		}
 	}
 }

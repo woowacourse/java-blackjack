@@ -1,4 +1,10 @@
 package blackjack.player;
 
-public class Dealer {
+import blackjack.player.card.CardBundle;
+
+public class Dealer extends Player {
+	public Dealer(CardBundle cardBundle) {
+		super(cardBundle);
+	}
+
 }
