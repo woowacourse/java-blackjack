@@ -1,6 +1,6 @@
 package fuel.domain;
 
-public class K5 extends Car {
+public class K5 implements Car2 {
     private final int distancePerLiter = 13;
     private final int tripDistance;
     private final String name = "K5";
@@ -10,17 +10,22 @@ public class K5 extends Car {
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return distancePerLiter;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return tripDistance;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return name;
+    }
+
+    @Override
+    public double getChargeQuantity() {
+        return getTripDistance() / getDistancePerLiter();
     }
 }
