@@ -1,19 +1,19 @@
 package rentacar;
 
-public abstract class Car {
+public abstract class Car implements Rentable {
     protected int distance;
 
     public Car(int distance) {
         this.distance = distance;
     }
 
-    abstract double getDistancePerLiter();
+    public abstract double getDistancePerLiter();
 
-    abstract double getTripDistance();
+    public abstract double getTripDistance();
 
-    abstract String getName();
+    public abstract String getName();
 
-    double getChargeQuantity() {
+    public double getChargeQuantity() {
         return getTripDistance() / getDistancePerLiter();
     }
 }

@@ -1,25 +1,27 @@
 package rentacar;
 
-public class K5 extends Car {
+public class K5 implements Rentable {
 
     private static final int K5_DISTANCE_PER_LITER = 13;
 
+    private int distance;
+
     public K5(int distance) {
-        super(distance);
+        this.distance = distance;
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return K5_DISTANCE_PER_LITER;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return this.distance;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return this.getClass().getSimpleName();
     }
 }

@@ -8,9 +8,9 @@ public class RentCompany {
     private static final String COLON = " : ";
     private static final String FUEL_UNIT = "리터";
 
-    private List<Car> cars;
+    private List<Rentable> cars;
 
-    public RentCompany(List<Car> cars) {
+    public RentCompany(List<Rentable> cars) {
         this.cars = cars;
     }
 
@@ -18,13 +18,13 @@ public class RentCompany {
         return new RentCompany(new ArrayList<>());
     }
 
-    public void addCar(Car car) {
+    public void addCar(Rentable car) {
         cars.add(car);
     }
 
     public String generateReport() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Car car : cars) {
+        for (Rentable car : cars) {
             stringBuilder.append(car.getName())
                     .append(COLON)
                     .append((int) car.getChargeQuantity())
