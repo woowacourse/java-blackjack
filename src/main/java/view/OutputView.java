@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.player.Dealer;
+import domain.player.Participant;
 import domain.player.User;
 
 public class OutputView {
@@ -28,5 +29,9 @@ public class OutputView {
 
     public static void printDealerAdditionalCard() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+    }
+
+    public static void printFinalScore(Participant participant) {
+        System.out.println(participant.toString() + " -  결과 : " + participant.calculateScore());
     }
 }

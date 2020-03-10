@@ -35,9 +35,12 @@ public class BlackJackGameController {
                 OutputView.printCardStatus(user);
             }
         }
-
         dealerHit(dealer, cardDeck);
 
+        OutputView.printFinalScore(dealer);
+        for (User user : users) {
+            OutputView.printFinalScore(user);
+        }
     }
 
     public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
