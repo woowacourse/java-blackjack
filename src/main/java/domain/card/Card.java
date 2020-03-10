@@ -13,4 +13,8 @@ public class Card {
     public String toString() {
         return symbol + shape.toString();
     }
+
+    public int getScore() {
+        return symbol.getScore();
+    }
 }

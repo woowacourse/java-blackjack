@@ -15,12 +15,16 @@ public enum Symbol {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private final int number;
+    private final int score;
     private final String name;
 
-    Symbol(int number, String name) {
-        this.number = number;
+    Symbol(int score, String name) {
+        this.score = score;
         this.name = name;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override
