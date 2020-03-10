@@ -13,6 +13,10 @@ public class User {
 		cards.addCard(card);
 	}
 
+	public String getName() {
+		return name.getValue();
+	}
+
 	public int getScore() {
 		return cards.getScore();
 	}
