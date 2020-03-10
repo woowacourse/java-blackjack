@@ -1,8 +1,8 @@
-package RentCompany;
+package rentCompany;
 
-import RentCompany.car.Avante;
-import RentCompany.car.K5;
-import RentCompany.car.Sonata;
+import rentCompany.car.Avante;
+import rentCompany.car.K5;
+import rentCompany.car.Sonata;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,15 +10,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RentCompanyTest {
     private static final String NEWLINE = System.getProperty("line.separator");
-
-    @DisplayName("자동차를 생성하는 기능")
-    @Test
-    void Car() {
-        assertThat(new Sonata(350)).isNotNull();
-        assertThat(new Avante(350)).isNotNull();
-        assertThat(new K5(350)).isNotNull();
-    }
-
 
     //    @Test
 //    public void report() throws Exception {˚

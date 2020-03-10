@@ -1,4 +1,4 @@
-package RentCompany;
+package rentCompany;
 
 public class RentCompany {
     private RentCompany() {
