@@ -16,7 +16,7 @@ class PlayerTest {
 
     @Test
     void append() {
-        Player player = Player.of("포비");
+        User player = Player.of("포비");
         player.append(new Card(Symbol.ACE, Type.CLUB));
         player.append(new Card(Symbol.EIGHT, Type.HEART));
 
