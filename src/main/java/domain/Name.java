@@ -1,7 +1,8 @@
 package domain;
 
 public class Name {
-    String name;
+    private String name;
+
     public Name(String name) {
         validate(name);
         this.name = name;
