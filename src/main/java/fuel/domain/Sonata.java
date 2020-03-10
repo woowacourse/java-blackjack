@@ -1,6 +1,6 @@
 package fuel.domain;
 
-public class Sonata implements Car2 {
+public class Sonata implements Car {
     private final int distancePerLiter = 10;
     private final int tripDistance;
     private final String name = "Sonata";

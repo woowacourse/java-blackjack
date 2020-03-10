@@ -1,6 +1,6 @@
 package fuel.domain;
 
-public class Avante implements Car2 {
+public class Avante implements Car {
     private final int distancePerLiter = 15;
     private final int tripDistance;
     private final String name = "Avante";

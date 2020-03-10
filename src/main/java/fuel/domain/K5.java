@@ -1,6 +1,6 @@
 package fuel.domain;
 
-public class K5 implements Car2 {
+public class K5 implements Car {
     private final int distancePerLiter = 13;
     private final int tripDistance;
     private final String name = "K5";
