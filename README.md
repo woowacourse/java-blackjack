@@ -34,11 +34,11 @@
 
 ## 구현 순서 (TDD)
 
-- Symbol
-- Type
-- Card
-- Cards
-- User
-- Dealer
-- Player
-- Results
+- [x] Symbol
+- [x] Type
+- [x] Card
+- [x] Cards
+- [ ] User
+- [ ] Dealer
+- [ ] Player
+- [ ] Results
