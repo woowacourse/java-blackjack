@@ -1,9 +1,7 @@
 package domain;
 
-public class Player {
-    private Name name;
-
+public class Player extends User {
     public Player(String name) {
-        this.name = new Name(name);
+        super(name);
     }
 }
