@@ -21,4 +21,8 @@ public enum Type {
 	Type(int score) {
 		this.score = score;
 	}
+
+	public int getScore() {
+		return this.score;
+	}
 }

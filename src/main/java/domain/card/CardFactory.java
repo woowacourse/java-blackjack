@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
@@ -12,6 +13,6 @@ public class CardFactory {
 				cards.add(new Card(symbol, type));
 			}
 		}
-		return cards;
+		return Collections.unmodifiableList(cards);
 	}
 }

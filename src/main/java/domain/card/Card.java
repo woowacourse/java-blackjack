@@ -27,4 +27,9 @@ public class Card {
 	public int hashCode() {
 		return Objects.hash(symbol, type);
 	}
+
+	public int getScore() {
+		return this.type.getScore();
+	}
+
 }
