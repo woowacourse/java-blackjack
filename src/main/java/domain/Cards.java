@@ -18,5 +18,7 @@ public class Cards {
         return score;
     }
 
-
+    public boolean isBlackJack() {
+        return (cards.size() == 2) && (getScore() == 21);
+    }
 }
