@@ -21,8 +21,7 @@ public enum Symbol {
     private String alias;
 
     Symbol(int point) {
-        this.point = point;
-        this.alias = String.valueOf(point);
+        this(point, String.valueOf(point));
     }
 
     Symbol(int point, String alias) {
