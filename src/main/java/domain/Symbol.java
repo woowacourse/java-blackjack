@@ -27,4 +27,8 @@ public enum Symbol {
     public String getWord() {
         return word;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

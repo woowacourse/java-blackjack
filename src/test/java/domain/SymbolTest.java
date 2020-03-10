@@ -17,4 +17,10 @@ public class SymbolTest {
     void getWord() {
         assertThat(Symbol.ACE.getWord()).isEqualTo("A");
     }
+
+    @Test
+    @DisplayName("Symbol value를 확인하는 테스트 코드")
+    void getValue() {
+        assertThat(Symbol.KING.getValue()).isEqualTo(10);
+    }
 }
