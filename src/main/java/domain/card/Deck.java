@@ -1,7 +1,7 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import exception.EmptyDeckException;
@@ -13,7 +13,7 @@ public class Deck {
 	private final List<Card> deck;
 
 	public Deck() {
-		this.deck = new ArrayList<>(CardFactory.create());
+		this.deck = new LinkedList<>(CardFactory.create());
 		Collections.shuffle(deck);
 	}
 
