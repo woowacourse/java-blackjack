@@ -3,9 +3,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.CardDeck;
-import domain.Dealer;
-import domain.User;
+import domain.card.CardDeck;
+import domain.player.Dealer;
+import domain.player.User;
 import view.InputView;
 import view.OutputView;
 
@@ -23,6 +23,7 @@ public class BlackJackGameController {
             user.initialDistribution(cardDeck);
         }
 
+        OutputView.printOneCard(dealer);
     }
 
     public static List<User> userNamesSetting(String names) {

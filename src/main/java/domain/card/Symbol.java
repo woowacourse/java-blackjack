@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum Symbol {
     ACE(1),
@@ -21,4 +21,8 @@ public enum Symbol {
         this.number = number;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(number);
+    }
 }

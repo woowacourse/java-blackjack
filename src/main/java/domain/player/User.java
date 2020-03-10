@@ -1,17 +1,19 @@
-package domain;
+package domain.player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
+import domain.ParticipantCards;
+import domain.card.CardDeck;
 
 public class User {
     private static final int INITIAL_CARD_NUMBER = 2;
     private final String name;
-    private List<Card> cards = new ArrayList<>();
+    private ParticipantCards cards;
 
     public User(String name) {
         validateName(name);
         this.name = name;
+        this.cards = new ParticipantCards();
     }
 
     private void validateName(String name) {
