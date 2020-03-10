@@ -21,4 +21,8 @@ public class Cards {
     public boolean isBlackJack() {
         return (cards.size() == 2) && (getScore() == 21);
     }
+
+    public boolean isLessThan(int criteria){
+        return getScore() <= criteria;
+    }
 }
