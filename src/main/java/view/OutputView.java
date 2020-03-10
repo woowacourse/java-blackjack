@@ -1,8 +1,10 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.Result;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.User;
@@ -33,5 +35,19 @@ public class OutputView {
 
     public static void printFinalScore(Participant participant) {
         System.out.println(participant.toString() + " -  결과 : " + participant.calculateScore());
+    }
+
+    public static void printFinalResult() {
+        System.out.println("\n## 최종 승패");
+
+    }
+
+    public static void printDealerResult(int dealerWin, int dealerDraw, int dealerLose) {
+        System.out.println("딜러: " + dealerWin + "승 " + dealerDraw + "무 " + dealerLose + "패");
+    }
+
+    public static void printUserResult(Map.Entry<String, Result> userResultEntry) {
+        System.out.println(userResultEntry.getKey() + ": " + userResultEntry.getValue());
+
     }
 }

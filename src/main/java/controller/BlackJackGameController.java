@@ -1,8 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import domain.Result;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.User;
@@ -38,9 +41,38 @@ public class BlackJackGameController {
         dealerHit(dealer, cardDeck);
 
         OutputView.printFinalScore(dealer);
+
+        int dealerScore = dealer.calculateScore();
         for (User user : users) {
             OutputView.printFinalScore(user);
         }
+
+        Map<String, Result> userResultMap = new HashMap<>();
+        for (User user : users) {
+            userResultMap.put(user.getName(), user.beatDealer(dealer));
+        }
+
+        OutputView.printFinalResult();
+        int dealerWin = 0;
+        int dealerDraw = 0;
+        int dealerLose = 0;
+        for (Result value : userResultMap.values()) {
+            if (value == Result.승) {
+                dealerLose++;
+            }
+            if (value == Result.무) {
+                dealerDraw++;
+            }
+            if (value == Result.패) {
+                dealerWin++;
+            }
+        }
+        OutputView.printDealerResult(dealerWin, dealerDraw, dealerLose);
+
+        for (Map.Entry<String, Result> userResultEntry : userResultMap.entrySet()) {
+            OutputView.printUserResult(userResultEntry);
+        }
+
     }
 
     public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
