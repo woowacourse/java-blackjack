@@ -19,17 +19,9 @@ public class Player {
 	}
 
 	public boolean isBlackjack() {
-		if (cards.size() == 2 && calculateScore() == 21) {
-			return true;
-		}
+		// if (cards.size() == 2 && calculateScore() == 21) {
+		// 	return true;
+		// }
 		return false;
-	}
-
-	private int calculateScore() {
-		return cards.stream()
-			.map(Card::getScore)
-			.reduce(Integer::sum)
-			.orElseThrow(() -> new IllegalArgumentException());
-
 	}
 }
