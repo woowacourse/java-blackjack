@@ -13,7 +13,7 @@ public class Dealer extends Gamer {
 
 	@Override
 	public boolean isDrawable() {
-		int sum = super.cards
+		int sum = super.getCards()
 			.stream()
 			.mapToInt(Card::getCardNumber)
 			.sum();

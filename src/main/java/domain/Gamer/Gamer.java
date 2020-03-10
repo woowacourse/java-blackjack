@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public abstract class Gamer {
 	private String name;
-	protected final List<Card> cards = new ArrayList<>();
+	private final List<Card> cards = new ArrayList<>();
+	private Result gameResult;
 
 	public Gamer(String name, List<Card> cards) {
 		this.name = name;
@@ -24,6 +25,10 @@ public abstract class Gamer {
 	}
 
 	public abstract boolean isDrawable();
+
+	public List<Card> getCards() {
+		return cards;
+	}
 
 	@Override
 	public String toString() {
