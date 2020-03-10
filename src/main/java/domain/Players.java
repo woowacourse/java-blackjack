@@ -1,21 +1,17 @@
 package domain;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-public class Players {
+public class Players implements Iterable<Player> {
     private List<Player> players;
 
     public Players(List<Player> players){
         this.players = players;
     }
 
-    public Map<User,Boolean> getSummary(Dealer dealer) {
-        Map<User,Boolean> summary = new HashMap<>();
-        for(Player player : players){
-            summary.put(player,player.isWin(dealer));
-        }
-        return summary;
+    @Override
+    public Iterator<Player> iterator() {
+        return players.iterator();
     }
 }

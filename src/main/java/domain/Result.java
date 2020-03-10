@@ -1,19 +1,19 @@
 package domain;
 
-import java.util.List;
-
 public class Result {
-    private User user;
-    private List<Boolean> winningData;
+	private User user;
+	private int winCount;
+	private int loseCount;
 
-    public Result(User user, List<Boolean> winningData) {
-        this.user = user;
-        this.winningData = winningData;
-    }
+	public Result(User user, int winCount, int loseCount) {
+		this.user = user;
+		this.winCount = winCount;
+		this.loseCount = loseCount;
+	}
 
-    @Override
-    public String toString() {
-        return "user=" + user.getName() +
-                ", winningData=" + winningData ;
-    }
+	@Override
+	public String toString() {
+		return "user=" + user.getName() +
+				", win" + winCount + ", lose" + loseCount;
+	}
 }

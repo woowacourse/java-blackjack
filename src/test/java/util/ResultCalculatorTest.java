@@ -13,6 +13,7 @@ public class ResultCalculatorTest {
         Player player2 = new Player("플레이어2");
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck(CardFactory.create());
+        cardDeck.shuffle();
         dealer.giveOneCard(cardDeck, player);
         dealer.giveOneCard(cardDeck, player);
         dealer.giveOneCard(cardDeck, player2);
@@ -21,7 +22,5 @@ public class ResultCalculatorTest {
         dealer.addCard(cardDeck.drawOne());
         Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player,player2)));
         results.printAll();
-
-
     }
 }
