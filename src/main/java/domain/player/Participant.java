@@ -23,7 +23,10 @@ public class Participant implements ParticipantInterface {
 
     public void receive(CardDeck cardDeck) {
         cards.add(cardDeck.draw());
+    }
 
+    public int calculateScore() {
+        return cards.calculateScore();
     }
 
     @Override

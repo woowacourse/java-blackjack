@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.card.CardDeck;
+import domain.player.Dealer;
 import domain.player.User;
 
 class BlackJackGameControllerTest {
@@ -21,5 +23,15 @@ class BlackJackGameControllerTest {
         result.add(new User("c"));
 
         assertThat(BlackJackGameController.userNamesSetting(names)).isEqualTo(result);
+    }
+
+    @Test
+    void dealerHit() {
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer();
+
+        BlackJackGameController.dealerHit(dealer, cardDeck);
+
+        assertThat(dealer.calculateScore() > 16).isTrue();
     }
 }

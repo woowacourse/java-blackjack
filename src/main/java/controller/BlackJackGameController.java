@@ -36,7 +36,15 @@ public class BlackJackGameController {
             }
         }
 
+        dealerHit(dealer, cardDeck);
 
+    }
+
+    public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.calculateScore() <= 16) {
+            OutputView.printDealerAdditionalCard();
+            dealer.receive(cardDeck);
+        }
     }
 
     public static List<User> userNamesSetting(String names) {
