@@ -3,12 +3,12 @@ package study;
 import java.util.ArrayList;
 import java.util.List;
 
-import study.car.Car;
+import study.car.ChargeQuantity;
 
 public class RentCompany {
 	private static final String NEWLINE = System.getProperty("line.separator");
 
-	private final List<Car> cars;
+	private final List<ChargeQuantity> cars;
 
 	private RentCompany() {
 		this.cars = new ArrayList<>();
@@ -18,18 +18,21 @@ public class RentCompany {
 		return new RentCompany();
 	}
 
-	public void addCar(Car car) {
+	public void addCar(ChargeQuantity car) {
 		cars.add(car);
 	}
 
-	public List<Car> getCars() {
+	public List<ChargeQuantity> getCars() {
 		return cars;
 	}
 
 	public String generateReport() {
 		StringBuilder carsReport = new StringBuilder();
-		for (Car car : cars) {
-			carsReport.append(car);
+		for (ChargeQuantity car : cars) {
+			carsReport.append(car.getName())
+				.append(" : ")
+				.append((int)car.getChargeQuantity())
+				.append("리터");
 			carsReport.append(NEWLINE);
 		}
 		return carsReport.toString();
