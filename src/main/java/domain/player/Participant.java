@@ -21,6 +21,11 @@ public class Participant {
         return this.name;
     }
 
+    public void receive(CardDeck cardDeck) {
+        cards.add(cardDeck.draw());
+
+    }
+
     @Override
     public String toString() {
         return name + "카드: " + cards.toString();
@@ -35,9 +40,9 @@ public class Participant {
         User user = (User)o;
         return Objects.equals(name, user.name);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(name);
     }
+
 }

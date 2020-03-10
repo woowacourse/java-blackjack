@@ -6,6 +6,7 @@ import java.util.List;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.User;
+import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
 
@@ -26,6 +27,13 @@ public class BlackJackGameController {
         OutputView.printOneCard(dealer);
         for (User user : users) {
             OutputView.printCardStatus(user);
+        }
+
+        for (User user : users) {
+            while (InputUtils.isHit(InputView.inputIsHit(user))) {
+                user.receive(cardDeck);
+                OutputView.printCardStatus(user);
+            }
         }
 
 
