@@ -1,13 +1,11 @@
 package rentacar;
 
-public class Sonata implements Rentable {
+public class Sonata extends Car implements Rentable {
 
     private static final int SONATA_DISTANCE_PER_LITER = 10;
 
-    private int distance;
-
     public Sonata(int distance) {
-        this.distance = distance;
+        super(distance);
     }
 
     @Override
@@ -19,9 +17,14 @@ public class Sonata implements Rentable {
     public double getTripDistance() {
         return this.distance;
     }
-
+    
     @Override
     public String getName() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public double getChargeQuantity() {
+        return getTripDistance() / getDistancePerLiter();
     }
 }

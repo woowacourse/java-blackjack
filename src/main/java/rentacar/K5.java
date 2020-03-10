@@ -1,13 +1,11 @@
 package rentacar;
 
-public class K5 implements Rentable {
+public class K5 extends Car implements Rentable {
 
     private static final int K5_DISTANCE_PER_LITER = 13;
 
-    private int distance;
-
     public K5(int distance) {
-        this.distance = distance;
+        super(distance);
     }
 
     @Override
@@ -16,12 +14,17 @@ public class K5 implements Rentable {
     }
 
     @Override
-    public double getTripDistance() {
-        return this.distance;
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     @Override
-    public String getName() {
-        return this.getClass().getSimpleName();
+    public double getChargeQuantity() {
+        return getTripDistance() / getDistancePerLiter();
+    }
+
+    @Override
+    public double getTripDistance() {
+        return this.distance;
     }
 }
