@@ -1,23 +1,22 @@
-import card.Card;
-import card.Symbol;
-import card.Type;
+package card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardDeckFactory {
-    private CardDeckFactory() {
-        throw new AssertionError();
+public class CardFactory {
+    private static final List<Card> cards;
+
+    static{
+        cards = createCards();
     }
 
-    public static List<Card> create() {
+    private static List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
         Symbol[] symbols = Symbol.values();
         for (Symbol symbol : symbols) {
             createByType(cards, symbol);
         }
-        Collections.shuffle(cards);
         return Collections.unmodifiableList(cards);
     }
 
@@ -26,5 +25,14 @@ public class CardDeckFactory {
         for (Type type : types) {
             cards.add(new Card(type, symbol));
         }
+    }
+
+    public static Card of(Type type, Symbol symbol) {
+        for(Card card : cards) {
+            if(card.equals(new Card(type, symbol))){
+                return card;
+            }
+        }
+        throw new IllegalArgumentException("값을 찾을 수 없습니다.");
     }
 }

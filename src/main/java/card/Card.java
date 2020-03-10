@@ -1,3 +1,5 @@
+package card;
+
 import java.util.Objects;
 
 public class Card {
@@ -6,7 +8,8 @@ public class Card {
     private final Type type;
     private final Symbol symbol;
 
-    public Card(Type type, Symbol symbol) {
+    /* Package private */
+    Card(Type type, Symbol symbol) {
         validateNull(type, symbol);
         this.type = type;
         this.symbol = symbol;
