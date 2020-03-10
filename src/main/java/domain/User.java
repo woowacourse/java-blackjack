@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class User {
+    private static final int INITIAL_CARD_NUMBER = 2;
     private final String name;
     private List<Card> cards = new ArrayList<>();
 
@@ -21,6 +22,12 @@ public class User {
 
     public String getName() {
         return this.name;
+    }
+
+    public void initialDistribution(CardDeck cardDeck) {
+        for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
+            cards.add(cardDeck.draw());
+        }
     }
 
     @Override

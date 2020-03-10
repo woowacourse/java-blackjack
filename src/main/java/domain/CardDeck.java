@@ -13,4 +13,8 @@ public class CardDeck {
         Collections.shuffle(cards);
         this.cards = new LinkedList<>(cards);
     }
+
+    public Card draw() {
+        return cards.poll();
+    }
 }

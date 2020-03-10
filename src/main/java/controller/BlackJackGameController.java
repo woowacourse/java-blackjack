@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.CardDeck;
+import domain.Dealer;
 import domain.User;
 import view.InputView;
 
@@ -12,7 +13,13 @@ public class BlackJackGameController {
     public static void run() {
         String name = InputView.inputUserNames();
         List<User> users = userNamesSetting(name);
+        Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
+        dealer.initialDistribution(cardDeck);
+        for (User user : users) {
+            user.initialDistribution(cardDeck);
+        }
+
     }
 
     public static List<User> userNamesSetting(String names) {
