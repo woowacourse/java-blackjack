@@ -1,6 +1,7 @@
 package domain.participant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,5 +33,13 @@ public class Player {
 		if (name.trim().isEmpty()) {
 			throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
 		}
+	}
+
+	public void receiveCard(Card card) {
+		cards.add(card);
+	}
+
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cards);
 	}
 }
