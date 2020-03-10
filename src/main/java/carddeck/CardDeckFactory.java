@@ -1,9 +1,10 @@
+package carddeck;
+
 import card.Card;
 import card.CardFactory;
 import card.Symbol;
 import card.Type;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
