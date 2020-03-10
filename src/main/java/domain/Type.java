@@ -16,7 +16,7 @@ public enum Type {
 
     public static Type of(String name) {
         return Arrays.stream(values())
-                .filter(type -> type.name == name)
+                .filter(type -> type.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다."));
     }

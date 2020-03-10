@@ -38,7 +38,7 @@ public enum Symbol {
 
     public static Symbol of(String alias) {
         return Arrays.stream(values())
-                .filter(type -> type.alias == alias)
+                .filter(type -> type.alias.equals(alias))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 심볼입니다."));
     }
