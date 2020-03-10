@@ -28,10 +28,18 @@ public class Card {
         static final List<Card> cards = new ArrayList<>();
 
         static {
+            makeCards();
+        }
+
+        private static void makeCards() {
             for (Suit suit : Suit.values()) {
-                for (Rank rank : Rank.values()) {
-                    cards.add(new Card(suit, rank));
-                }
+                loop(suit);
+            }
+        }
+
+        private static void loop(final Suit suit) {
+            for (Rank rank : Rank.values()) {
+                cards.add(new Card(suit, rank));
             }
         }
 
