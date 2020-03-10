@@ -13,10 +13,14 @@ public class CardBundle {
 		cards.add(card);
 	}
 
+	public int compare(CardBundle cardBundle) {
+		return Integer.compare(this.calculateScore(), cardBundle.calculateScore());
+	}
+
 	public int calculateScore() {
 		int result = cards.stream()
-				.mapToInt(Card::getScore)
-				.sum();
+			.mapToInt(Card::getScore)
+			.sum();
 
 		if (hasAce() && isBurst(result + ACE_WEIGHT)) {
 			return result;
