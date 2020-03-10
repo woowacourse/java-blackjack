@@ -32,4 +32,12 @@ public class CardsTest {
         cards.add(card);
         assertThat(cards.getCards()).isEqualTo(Collections.singletonList(card));
     }
+
+    @Test
+    @DisplayName("Cards의 Score를 계산")
+    void calculateScore() {
+        cards.add(new Card(Symbol.TEN, Type.DIAMOND));
+        cards.add(new Card(Symbol.FIVE, Type.DIAMOND));
+        assertThat(cards.calculateScore()).isEqualTo(15);
+    }
 }

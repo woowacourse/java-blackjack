@@ -16,4 +16,10 @@ public class Cards {
     List<Card> getCards() {
         return cards;
     }
+
+    public int calculateScore() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
 }
