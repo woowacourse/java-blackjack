@@ -11,11 +11,18 @@ public class Cards {
     }
 
     public int getScore() {
-        int score = 0;
+        Score score = Score.ZERO;
         for (Card card : cards) {
-            score += card.getPoint();
+            score = score.add(card.getPoint());
         }
-        return score;
+        if (hasAce()) {
+            score = score.addAceBonusIfNotBust();
+        }
+        return score.getValue();
+    }
+
+    public boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public boolean isBlackJack() {
