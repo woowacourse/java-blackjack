@@ -33,7 +33,11 @@ public class User {
         return cards.isBust();
     }
 
+    public boolean isNotBust() {
+        return !isBust();
+    }
+
     public boolean isWin(User that) {
-        return  !(isBust()) && (this.getScore() >= that.getScore());
+        return isNotBust() && (that.isBust() || getScore() >= that.getScore());
     }
 }
