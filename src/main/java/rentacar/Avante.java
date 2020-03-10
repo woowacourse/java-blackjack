@@ -2,13 +2,15 @@ package rentacar;
 
 public class Avante extends Car {
 
+    private static final int AVANTE_DISTANCE_PER_LITER = 15;
+
     public Avante(int distance) {
         super(distance);
     }
 
     @Override
     double getDistancePerLiter() {
-        return 15;
+        return AVANTE_DISTANCE_PER_LITER;
     }
 
     @Override
@@ -18,6 +20,6 @@ public class Avante extends Car {
 
     @Override
     String getName() {
-        return "Avante";
+        return this.getClass().getSimpleName();
     }
 }

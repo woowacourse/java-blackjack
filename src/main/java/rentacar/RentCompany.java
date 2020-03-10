@@ -5,6 +5,8 @@ import java.util.List;
 
 public class RentCompany {
     private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String COLON = " : ";
+    private static final String FUEL_UNIT = "리터";
 
     private List<Car> cars;
 
@@ -16,7 +18,7 @@ public class RentCompany {
         return new RentCompany(new ArrayList<>());
     }
 
-    public void addCar(Car car){
+    public void addCar(Car car) {
         cars.add(car);
     }
 
@@ -24,9 +26,9 @@ public class RentCompany {
         StringBuilder stringBuilder = new StringBuilder();
         for (Car car : cars) {
             stringBuilder.append(car.getName())
-                    .append(" : ")
-                    .append((int)car.getChargeQuantity())
-                    .append("리터")
+                    .append(COLON)
+                    .append((int) car.getChargeQuantity())
+                    .append(FUEL_UNIT)
                     .append(NEWLINE);
         }
         return stringBuilder.toString();
