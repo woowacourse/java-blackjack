@@ -1,5 +1,6 @@
 package blackjack.domain.Card;
 
+import java.io.FileReader;
 import java.util.Objects;
 
 public class Card {
@@ -33,10 +34,15 @@ public class Card {
         return this.number == number && this.figure == figure;
     }
 
+    public Figure getFigure() { return figure; }
+
     public int getNumber() {
         return number.getNumber();
     }
 
+    public String getInfo() {
+        return getNumber() + getFigure().getFigure();
+    }
     public boolean has(CardNumber number) {
         return this.number == number;
     }

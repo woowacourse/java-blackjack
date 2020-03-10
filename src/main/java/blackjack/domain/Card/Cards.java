@@ -2,6 +2,8 @@ package blackjack.domain.Card;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.List;
 
 public class Cards {
     public static final int MAX_SUM = 21;
@@ -30,5 +32,11 @@ public class Cards {
             }
         }
         return sum;
+    }
+
+    public List<String> getInfo() {
+        return cards.stream()
+                .map(Card::getInfo)
+                .collect(Collectors.toList());
     }
 }
