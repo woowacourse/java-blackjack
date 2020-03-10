@@ -11,4 +11,10 @@ public class SymbolTest {
     void valueOf() {
         assertThat(Symbol.valueOf("ACE")).isEqualTo(Symbol.ACE);
     }
+
+    @Test
+    @DisplayName("Symbol word 생성 확인")
+    void getWord() {
+        assertThat(Symbol.ACE.getWord()).isEqualTo("A");
+    }
 }
