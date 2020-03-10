@@ -11,7 +11,6 @@ public class CardFactoryTest {
 
 	@Test
 	void createTest() {
-
 		List<Card> cards = new ArrayList<>();
 		for (Type type : Type.values()) {
 			for (Symbol symbol : Symbol.values()) {

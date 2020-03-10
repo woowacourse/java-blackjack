@@ -1,11 +1,17 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardFactory {
 
 	public static List<Card> create() {
-
-		return null;
+		List<Card> cards = new ArrayList<>();
+		for (Type type : Type.values()) {
+			for (Symbol symbol : Symbol.values()) {
+				cards.add(new Card(symbol, type));
+			}
+		}
+		return cards;
 	}
 }
