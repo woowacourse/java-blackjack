@@ -20,4 +20,8 @@ public enum Type {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 타입입니다."));
     }
+
+    public String getName() {
+        return name;
+    }
 }

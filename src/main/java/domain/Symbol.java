@@ -50,4 +50,8 @@ public enum Symbol {
     public int getPoint() {
         return point;
     }
+
+    public String getAlias() {
+        return alias;
+    }
 }
