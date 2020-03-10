@@ -37,4 +37,26 @@ class PlayerTest {
 
 		assertThat(player.getCards()).contains(new Card(Symbol.ACE, Type.CLUB));
 	}
+
+	@Test
+	@DisplayName("20이하의 경우 추가 카드를 받을 수 있는지")
+	void canReceiveMore() {
+		Player player = new Player("pobi");
+		player.receiveCard(new Card(Symbol.SEVEN, Type.DIAMOND));
+		player.receiveCard(new Card(Symbol.SEVEN, Type.CLUB));
+		player.receiveCard(new Card(Symbol.SIX, Type.DIAMOND));
+
+		assertThat(player.canReceiveMore()).isTrue();
+	}
+
+	@Test
+	@DisplayName("20초과의 경우 추가 카드를 받을 수 없는지")
+	void canNotReceiveMore() {
+		Player player = new Player("pobi");
+		player.receiveCard(new Card(Symbol.EIGHT, Type.DIAMOND));
+		player.receiveCard(new Card(Symbol.SEVEN, Type.CLUB));
+		player.receiveCard(new Card(Symbol.SIX, Type.DIAMOND));
+
+		assertThat(player.canReceiveMore()).isFalse();
+	}
 }

@@ -25,26 +25,4 @@ class ScoreTest {
 		);
 		assertThat(Score.calculate(cards)).isEqualTo(21);
 	}
-
-	@Test
-	@DisplayName("20이하의 경우 추가 카드를 받을 수 있는지")
-	void canReceiveMore() {
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.DIAMOND),
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.SIX, Type.CLUB)
-		);
-		assertThat(Score.isUnderTwentyOne(cards)).isTrue();
-	}
-
-	@Test
-	@DisplayName("20초과의 경우 추가 카드를 받을 수 없는지")
-	void canNotReceiveMore() {
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.EIGHT, Type.CLUB),
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.SIX, Type.CLUB)
-		);
-		assertThat(Score.isUnderTwentyOne(cards)).isFalse();
-	}
 }
