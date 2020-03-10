@@ -1,31 +1,45 @@
 package blackjack.view;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class InputViewTest {
-    @DisplayName("이름 입력 테스트")
-    @Test
-    void inputPlayNames() {
-        //given
-        String input = "allen,bebop";
-        InputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        Scanner scanner = new Scanner(inputStream);
+	@DisplayName("이름 입력 테스트")
+	@Test
+	void inputPlayNames() {
+		//given
+		String input = "allen,bebop";
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		Scanner scanner = new Scanner(inputStream);
 
-        InputView inputView = new InputView(scanner);
+		InputView inputView = new InputView(scanner);
 
-        //when
-        List<String> names = inputView.inputPlayNames();
+		//when
+		List<String> names = inputView.inputPlayNames();
 
-        //then
-        assertThat(names).containsExactly("allen", "bebop");
-    }
+		//then
+		assertThat(names).containsExactly("allen", "bebop");
+	}
 
+	@DisplayName("이름입력시 빈칸 예외처리")
+	@ParameterizedTest
+	@ValueSource(strings = {"\n", " \n"})
+	void inputPlayNamesException(String input) {
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		Scanner scanner = new Scanner(inputStream);
+
+		InputView inputView = new InputView(scanner);
+
+		assertThatThrownBy(inputView::inputPlayNames)
+			.isInstanceOf(IllegalArgumentException.class);
+	}
 }
