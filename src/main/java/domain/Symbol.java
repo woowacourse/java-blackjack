@@ -43,4 +43,8 @@ public enum Symbol {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 심볼입니다."));
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }

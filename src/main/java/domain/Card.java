@@ -12,4 +12,8 @@ public class Card {
     public static Card of(String type, String symbol) {
         return new Card(Type.of(type), Symbol.of(symbol));
     }
+
+    public boolean isAce() {
+        return symbol.isAce();
+    }
 }

@@ -9,4 +9,9 @@ public class CardTest {
     void create() {
         assertThat(Card.of("스페이드", "A")).isInstanceOf(Card.class);
     }
+
+    @Test
+    void isAce() {
+        assertThat(Card.of("스페이드", "A").isAce()).isTrue();
+    }
 }
