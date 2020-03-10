@@ -9,9 +9,4 @@ public class PlayerTest {
 	void create() {
 		assertThat(new Player("이름")).isInstanceOf(Player.class);
 	}
-
-	@Test
-	void create_이름이_공백인_경우() {
-		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Player(""));
-	}
 }
