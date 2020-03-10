@@ -16,4 +16,14 @@ public class ScoreTest {
         assertThat(new Score(2).add(3)).isEqualTo(new Score(5));
         assertThat(new Score(2).add(3).add(5)).isEqualTo(new Score(10));
     }
+
+    @Test
+    void addAceBonusIfNotBust() {
+        assertThat(new Score(11).addAceBonusIfNotBust()).isEqualTo(new Score(21));
+    }
+
+    @Test
+    void isNotBust() {
+        assertThat(new Score(21).isNotBust()).isTrue();
+    }
 }
