@@ -15,7 +15,7 @@ public abstract class Gamer {
 		initCard(cards);
 	}
 
-	protected void initCard(List<Card> cards) {
+	private void initCard(List<Card> cards) {
 		this.cards.addAll(cards);
 	}
 
