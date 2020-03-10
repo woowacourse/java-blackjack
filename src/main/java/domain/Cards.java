@@ -9,4 +9,14 @@ public class Cards {
     public Cards() {
         this.cards = new ArrayList<>();
     }
+
+    public int getScore() {
+        int score = 0;
+        for (Card card : cards) {
+            score += card.getPoint();
+        }
+        return score;
+    }
+
+
 }
