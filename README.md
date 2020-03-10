@@ -40,6 +40,7 @@
 - [x] Card
 - [x] Cards
 - [x] Player
+- [x] Deck
 - [ ] Dealer
 - [ ] Participant
 - [ ] Results

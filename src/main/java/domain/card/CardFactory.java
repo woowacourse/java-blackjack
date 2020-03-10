@@ -3,12 +3,11 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Cards {
+public class CardFactory {
 	private static final List<Card> cards = new ArrayList<>();
 
-	private Cards() {
+	private CardFactory() {
 	}
 
 	static {
