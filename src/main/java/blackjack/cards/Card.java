@@ -28,4 +28,16 @@ public class Card {
     public int hashCode() {
         return Objects.hash(number, figure);
     }
+
+    public boolean has(CardNumber number, Figure figure) {
+        return this.number == number && this.figure == figure;
+    }
+
+    public int getNumber() {
+        return number.getNumber();
+    }
+
+    public boolean has(CardNumber number) {
+        return this.number == number;
+    }
 }
