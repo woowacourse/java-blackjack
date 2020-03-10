@@ -14,6 +14,10 @@ public class ParticipantCards {
         cards.add(card);
     }
 
+    public String toStringOneCard() {
+        return cards.get(0).toString();
+    }
+
     @Override
     public String toString() {
         List<String> cardNames = cards.stream()

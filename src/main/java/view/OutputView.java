@@ -19,6 +19,10 @@ public class OutputView {
     }
 
     public static void printOneCard(Dealer dealer) {
-        System.out.println(String.format("%s카드 : %s", dealer.getName(), dealer.toStringCard()));
+        System.out.println(dealer.toStringOneCard());
+    }
+
+    public static void printCardStatus(User user) {
+        System.out.println(user.toString());
     }
 }

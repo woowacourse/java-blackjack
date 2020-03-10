@@ -18,12 +18,17 @@ public class BlackJackGameController {
 
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
-        dealer.initialDistribution(cardDeck);
+        dealer.firstDraw(cardDeck);
         for (User user : users) {
-            user.initialDistribution(cardDeck);
+            user.firstDraw(cardDeck);
         }
 
         OutputView.printOneCard(dealer);
+        for (User user : users) {
+            OutputView.printCardStatus(user);
+        }
+
+
     }
 
     public static List<User> userNamesSetting(String names) {
