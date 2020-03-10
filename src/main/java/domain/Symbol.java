@@ -47,4 +47,8 @@ public enum Symbol {
     public boolean isAce() {
         return this == ACE;
     }
+
+    public int getPoint() {
+        return point;
+    }
 }

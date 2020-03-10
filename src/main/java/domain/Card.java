@@ -16,4 +16,8 @@ public class Card {
     public boolean isAce() {
         return symbol.isAce();
     }
+
+    public int getPoint() {
+        return symbol.getPoint();
+    }
 }

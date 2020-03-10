@@ -14,4 +14,10 @@ public class CardTest {
     void isAce() {
         assertThat(Card.of("스페이드", "A").isAce()).isTrue();
     }
+
+    @Test
+    void getPoint() {
+        assertThat(Card.of("스페이드", "A").getPoint()).isEqualTo(1);
+        assertThat(Card.of("스페이드", "K").getPoint()).isEqualTo(10);
+    }
 }
