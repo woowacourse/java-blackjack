@@ -32,4 +32,7 @@ public class Card {
 		return this.type.getScore();
 	}
 
+	public boolean isAce() {
+		return this.type == Type.ACE;
+	}
 }
