@@ -24,7 +24,7 @@
 - [ ] Card
      - [ ] symbol (heart, spade, clover, diamond) (enum)
      - [ ] type (2~10, J, k, Q, A) (enum)
-        - [ ] J, K, Q는 10점으로 계산
+        - [x] J, K, Q는 10점으로 계산
         - [ ] Ace 의 경우 플레이어에 유리한 쪽으로 1점, 11점 둘 다 사용가능
 - [ ] 유저 생성
     - [ ] 유저 이름 입력 받기 
