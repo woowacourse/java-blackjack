@@ -7,7 +7,7 @@ import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        CardDeck cardDeck = new CardDeck(CardFactory.create());
+        CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         Players players = new Players(PlayerFactory.create(InputView.inputNames()));
 

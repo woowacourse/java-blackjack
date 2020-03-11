@@ -15,7 +15,7 @@ public class DealerTest {
     void giveOneCard() {
         Player player = new Player("플레이어");
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = new CardDeck(CardFactory.create());
+        CardDeck cardDeck = new CardDeck();
         dealer.giveOneCard(cardDeck, player);
         assertThat(player.getCardSize()).isEqualTo(1);
     }

@@ -1,14 +1,15 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
+
+import factory.CardFactory;
 
 public class CardDeck {
-    private List<Card> cardDeck = new ArrayList<>();
+    private Stack<Card> cardDeck = new Stack<>();
 
-    public CardDeck(List<Card> cardDeck) {
-        this.cardDeck.addAll(cardDeck);
+    public CardDeck() {
+        cardDeck.addAll(CardFactory.create());
     }
 
     public void shuffle() {
@@ -16,6 +17,6 @@ public class CardDeck {
     }
 
     public Card drawOne() {
-        return cardDeck.remove(0);
+        return cardDeck.pop();
     }
 }
