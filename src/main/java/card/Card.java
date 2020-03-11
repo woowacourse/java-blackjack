@@ -4,12 +4,19 @@ import java.util.Objects;
 
 public class Card {
     private final Symbol symbol;
-
     private final Type type;
 
     public Card(Symbol symbol, Type type) {
         this.symbol = symbol;
         this.type = type;
+    }
+
+    public boolean isAce() {
+        return symbol.equals(Symbol.ACE);
+    }
+
+    public int score() {
+        return symbol.getScore();
     }
 
     @Override
