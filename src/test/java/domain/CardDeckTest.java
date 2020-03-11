@@ -13,6 +13,6 @@ public class CardDeckTest {
 	@Test
 	void drawOne() {
 		CardDeck cardDeck = new CardDeck();
-		assertThat(cardDeck.drawOne()).isInstanceOf(Card.class);
+		assertThat(cardDeck.pop()).isInstanceOf(Card.class);
 	}
 }

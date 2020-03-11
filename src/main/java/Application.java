@@ -45,7 +45,7 @@ public class Application {
 
 	private static void addCardIfNeed(CardDeck cardDeck, Dealer dealer) {
 		if (dealer.shouldAddCard()) {
-			dealer.addCard(cardDeck.drawOne());
+			dealer.addCard(cardDeck.pop());
 			OutputView.printDealerAddCard();
 		}
 	}

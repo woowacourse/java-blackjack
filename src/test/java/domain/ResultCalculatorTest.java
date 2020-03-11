@@ -16,8 +16,8 @@ public class ResultCalculatorTest {
 		dealer.giveCard(cardDeck, player);
 		dealer.giveCard(cardDeck, player2);
 		dealer.giveCard(cardDeck, player2);
-		dealer.addCard(cardDeck.drawOne());
-		dealer.addCard(cardDeck.drawOne());
+		dealer.addCard(cardDeck.pop());
+		dealer.addCard(cardDeck.pop());
 		Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player, player2)));
 	}
 }

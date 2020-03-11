@@ -13,7 +13,7 @@ public class Dealer extends User {
 	}
 
 	public void giveCard(CardDeck cardDeck, User user) {
-		user.addCard(cardDeck.drawOne());
+		user.addCard(cardDeck.pop());
 	}
 
 	public void giveCard(CardDeck cardDeck, Players players) {
