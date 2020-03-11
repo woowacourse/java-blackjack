@@ -17,4 +17,8 @@ public class StringUtils {
             throw new IllegalStringInputException("Null 값은 입력하실 수 없습니다.");
         }
     }
+
+    public static String trimString(String input){
+        return input.replaceAll(" ", "");
+    }
 }
