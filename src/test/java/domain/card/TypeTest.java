@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TypeTest {
+class TypeTest {
     @Test
     @DisplayName("타입이 생성된다.")
     void valueOf() {

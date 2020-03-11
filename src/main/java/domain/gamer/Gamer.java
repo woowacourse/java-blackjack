@@ -5,9 +5,11 @@ import domain.card.PlayingCards;
 
 public class Gamer {
     final PlayingCards playingCards;
+    final String name;
 
-    Gamer(PlayingCards playingCards) {
+    Gamer(PlayingCards playingCards, String name) {
         this.playingCards = playingCards;
+        this.name = name;
     }
 
     public void addCard(Card card) {
