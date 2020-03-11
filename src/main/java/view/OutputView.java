@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
@@ -29,14 +30,22 @@ public class OutputView {
     }
 
     public static void printGamersCard(Gamers gamers) {
-        printGamerCard(gamers.getDealer());
-        gamers.stream().forEach(OutputView::printGamerCard);
+		System.out.println(printDealerCard(gamers.getDealer()));
+		gamers.stream().forEach(OutputView::printGamerCard);
         System.out.println();
     }
 
     public static void printGamerCard(Gamer gamer) {
         System.out.println(printCards(gamer));
     }
+
+    private static String printDealerCard(Dealer dealer) {
+		StringBuilder cardsToString = new StringBuilder();
+		cardsToString.append(dealer.getName());
+		cardsToString.append(" : " );
+		cardsToString.append(printCard(dealer.getCards().get(0)));
+		return cardsToString.toString();
+	}
 
     private static String printCards(Gamer gamer) {
         StringBuilder cardsToString = new StringBuilder();
