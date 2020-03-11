@@ -11,6 +11,13 @@ public class Result {
 		this.loseCount = loseCount;
 	}
 
+	public void addWinCount(){
+		winCount++;
+	}
+
+	public void addLoseCount(){
+		loseCount++;
+	}
 	@Override
 	public String toString() {
 		return "user=" + user.getName() +

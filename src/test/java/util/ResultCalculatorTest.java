@@ -21,6 +21,11 @@ public class ResultCalculatorTest {
         dealer.addCard(cardDeck.drawOne());
         dealer.addCard(cardDeck.drawOne());
         Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player,player2)));
+
+        System.out.println(dealer.getScore());
+        System.out.println(player.getScore());
+        System.out.println(player2.getScore());
+
         results.printAll();
     }
 }
