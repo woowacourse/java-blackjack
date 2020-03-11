@@ -20,4 +20,9 @@ public class CardTest {
         assertThat(Card.of("스페이드", "A").getPoint()).isEqualTo(1);
         assertThat(Card.of("스페이드", "K").getPoint()).isEqualTo(10);
     }
+
+    @Test
+    void getCardInfo() {
+        assertThat(Card.of("스페이드", "A").getCardInfo()).isEqualTo("A스페이드");
+    }
 }
