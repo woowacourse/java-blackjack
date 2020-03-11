@@ -44,5 +44,8 @@ public class DealerTest {
 
         user.addCard(Card.of("스페이드", "10"));
         assertThat(dealer.isWin(user)).isFalse();
+
+        dealer.addCard(Card.of("스페이드", "9"));
+        assertThat(dealer.isWin(user)).isFalse();
     }
 }
