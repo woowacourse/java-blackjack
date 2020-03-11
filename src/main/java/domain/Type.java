@@ -26,4 +26,12 @@ public enum Type {
     public boolean isAce() {
         return this == ACE;
     }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
