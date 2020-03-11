@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private final Cards cards;
+    private final PlayingCards playingCards;
 
-    private Deck(Cards cards) {
-        this.cards = cards;
+    private Deck(PlayingCards playingCards) {
+        this.playingCards = playingCards;
     }
 
     public static Deck create() {
@@ -15,7 +15,7 @@ public class Deck {
         for(Type type : Type.values()) {
             cards.addAll(createBySymbol(type));
         }
-        return new Deck(new Cards(cards));
+        return new Deck(new PlayingCards(cards));
     }
 
     private static List<Card> createBySymbol(Type type) {
@@ -24,5 +24,10 @@ public class Deck {
             cards.add(new Card(symbol,type));
         }
         return cards;
+    }
+
+    public Card handOutCard() {
+
+        return null;
     }
 }

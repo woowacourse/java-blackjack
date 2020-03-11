@@ -2,12 +2,12 @@ package domain;
 
 import java.util.List;
 
-public class Cards {
+public class PlayingCards {
     private static final int ACE_BONUS = 10;
     private static final int BLACK_JACK = 21;
     private List<Card> cards;
 
-    Cards(List<Card> cards) {
+    PlayingCards(List<Card> cards) {
         this.cards = cards;
     }
 
