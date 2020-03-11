@@ -1,10 +1,11 @@
 package domain.gamer;
 
-import domain.card.Deck;
-
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import domain.card.Deck;
 
 public class Gamers {
 	private List<Player> players;
@@ -20,11 +21,10 @@ public class Gamers {
 		dealer.addCard(deck.popCard(2));
 	}
 
-	public List<Boolean> gameResult() {
+	public Map<String, WinOrLose> gameResult() {
 		return players.stream()
-			.map(Gamer::calculateWithAce)
-			.map(player -> player < dealer.calculateWithAce())
-			.collect(Collectors.toList());
+			.collect(Collectors.toMap(Gamer::getName,
+				player -> player.isWinOrLose(dealer.calculateWithAce())));
 	}
 
 	public Dealer getDealer() {
