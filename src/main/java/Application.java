@@ -15,43 +15,45 @@ public class Application {
         dealer.addCard(cardDeck.drawOne());
         dealer.addCard(cardDeck.drawOne());
 
-        for(Player player : players){
-            dealer.giveOneCard(cardDeck,player);
-            dealer.giveOneCard(cardDeck,player);
+        for (Player player : players) {
+            dealer.giveOneCard(cardDeck, player);
+            dealer.giveOneCard(cardDeck, player);
         }
 
         OutputView.printDistributeMessage(players);
         OutputView.printInitStatus(dealer, players);
 
-        askMoreCard(cardDeck,dealer,players);
-//        checkDealerCardAndGiveMoreCard(dealer);
-
-        if(dealer.shouldAddCard()){
-            dealer.addCard(cardDeck.drawOne());
-        }
+        askMoreCard(cardDeck, dealer, players);
+        checkDealerCardAndGiveMoreCard(cardDeck, dealer);
 
         OutputView.printUsersResult(dealer, players);
 
-        Results results = ResultCalculator.getResults(dealer,players);
+        Results results = ResultCalculator.getResults(dealer, players);
         results.printAll();
     }
 
     private static void askMoreCard(CardDeck cardDeck, Dealer dealer, Players players) {
-        for(Player player : players){
-            giveIfWant(cardDeck,dealer,player);
+        for (Player player : players) {
+            giveIfWant(cardDeck, dealer, player);
         }
     }
 
     private static void giveIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
         String moreCard = "";
-        while (!moreCard.equals("n")){
+        while (!moreCard.equals("n")) {
             moreCard = InputView.inputMoreCard(player);
-            if(moreCard.equals("y")){
-                dealer.giveOneCard(cardDeck,player);
+            if (moreCard.equals("y")) {
+                dealer.giveOneCard(cardDeck, player);
             }
-            if(player.isBust()){
+            if (player.isBust()) {
                 break;
             }
+        }
+    }
+
+    private static void checkDealerCardAndGiveMoreCard(CardDeck cardDeck, Dealer dealer) {
+        if (dealer.shouldAddCard()) {
+            dealer.addCard(cardDeck.drawOne());
         }
     }
 }
