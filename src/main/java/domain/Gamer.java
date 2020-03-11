@@ -11,4 +11,6 @@ public interface Gamer {
 	void add(Card card);
 
 	int scoreHands();
+
+	boolean isBlackjack();
 }
