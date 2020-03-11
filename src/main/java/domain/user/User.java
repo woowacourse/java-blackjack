@@ -1,7 +1,9 @@
-package domain;
+package domain.user;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.deck.Card;
 
 public abstract class User {
 

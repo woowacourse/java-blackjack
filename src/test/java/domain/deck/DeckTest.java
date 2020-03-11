@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,6 +7,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import domain.deck.Card;
+import domain.deck.Deck;
+import domain.deck.DeckFactory;
+import domain.deck.Symbol;
+import domain.deck.Type;
 
 class DeckTest {
 

@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 public enum Type {
     ACE(11, "A"),
