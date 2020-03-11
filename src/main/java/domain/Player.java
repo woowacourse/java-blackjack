@@ -1,6 +1,6 @@
 package domain;
 
-public class Player {
+public class Player implements Gamer {
 	private static final int BUST_NUMBER = 21;
 
 	private String name;
@@ -11,11 +11,18 @@ public class Player {
 		this.hands = new Hands();
 	}
 
+	@Override
 	public void add(Card card) {
 		hands.add(card);
 	}
 
+	@Override
 	public boolean isBust() {
 		return hands.calculateTotalScore() > BUST_NUMBER;
+	}
+
+	@Override
+	public int scoreHands() {
+		return 0;
 	}
 }
