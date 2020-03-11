@@ -49,4 +49,8 @@ public class Participant {
     public boolean checkBlackJack() {
         return hands.isBlackJack();
     }
+
+    public boolean checkBurst() {
+        return hands.isBurst();
+    }
 }

@@ -50,7 +50,7 @@ public class ParticipantTest {
     @DisplayName("첫 카드로 ace와 10의 점수를 갖는 카드가 주어졌을 때, 블랙잭인지 확인")
     @ParameterizedTest
     @MethodSource("blackJackData")
-    void isBlackJack_AceWithTen_ReturnTrue(List<Card> cards) {
+    void checkBlackJack_AceWithTen_ReturnTrue(List<Card> cards) {
         Hands hands = new Hands(cards);
         assertThat(new Participant(name, hands).checkBlackJack()).isTrue();
     }
@@ -67,6 +67,27 @@ public class ParticipantTest {
                 Arguments.of(new ArrayList<>(Arrays.asList(ace, jack))),
                 Arguments.of(new ArrayList<>(Arrays.asList(ace, queen))),
                 Arguments.of(new ArrayList<>(Arrays.asList(ace, king)))
+        );
+    }
+
+    @DisplayName("카드를 추가로 받았을 때, 버스트인지 확인")
+    @ParameterizedTest
+    @MethodSource("burstData")
+    void checkBurst_ScoreOver21_ReturnTrue(List<Card> cards) {
+        Hands hands = new Hands(cards);
+        assertThat(new Participant(name, hands).checkBurst()).isTrue();
+    }
+
+    static Stream<Arguments> burstData() {
+        Card six = new Card(Symbol.SIX, Type.CLUB);
+        Card seven = new Card(Symbol.SEVEN, Type.HEART);
+        Card nine = new Card(Symbol.NINE, Type.HEART);
+        Card ten = new Card(Symbol.TEN, Type.SPADE);
+
+        return Stream.of(
+                Arguments.of(new ArrayList<>(Arrays.asList(six, seven, nine))),
+                Arguments.of(new ArrayList<>(Arrays.asList(seven, nine, ten))),
+                Arguments.of(new ArrayList<>(Arrays.asList(six, nine, ten)))
         );
     }
 }
