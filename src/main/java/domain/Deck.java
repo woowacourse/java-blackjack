@@ -1,33 +1,41 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Stack;
 
 public class Deck {
-    private final PlayingCards playingCards;
+    private final Stack<Card> cards;
 
-    private Deck(PlayingCards playingCards) {
-        this.playingCards = playingCards;
+    private Deck(Stack<Card> cards) {
+        this.cards = cards;
     }
 
     public static Deck create() {
-        List<Card> cards = new ArrayList<>();
-        for(Type type : Type.values()) {
+        Stack<Card> cards = new Stack<>();
+        for (Type type : Type.values()) {
             cards.addAll(createBySymbol(type));
         }
-        return new Deck(new PlayingCards(cards));
+        return new Deck(cards);
     }
 
-    private static List<Card> createBySymbol(Type type) {
-        List<Card> cards = new ArrayList<>();
-        for(Symbol symbol : Symbol.values()) {
-            cards.add(new Card(symbol,type));
+    private static Stack<Card> createBySymbol(Type type) {
+        Stack<Card> cards = new Stack<>();
+        for (Symbol symbol : Symbol.values()) {
+            cards.add(new Card(symbol, type));
         }
         return cards;
     }
 
-    public Card handOutCard() {
+    private void shuffle() {
+        Collections.shuffle(cards);
+    }
 
-        return null;
+    public Card handOutCard() {
+        shuffle();
+        return cards.pop();
+    }
+
+    boolean isEmpty() {
+        return cards.isEmpty();
     }
 }
