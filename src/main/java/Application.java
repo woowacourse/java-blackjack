@@ -23,8 +23,10 @@ public class Application {
         OutputView.printDistributeMessage(players);
         OutputView.printInitStatus(dealer, players);
 
-        askMoreCard(cardDeck, dealer, players);
-        checkDealerCardAndGiveMoreCard(cardDeck, dealer);
+        if (dealer.isNotBlackJack()) {
+            askMoreCard(cardDeck, dealer, players);
+            checkDealerCardAndGiveMoreCard(cardDeck, dealer);
+        }
 
         OutputView.printUsersResult(dealer, players);
         OutputView.printLastResult(ResultCalculator.getResults(dealer, players));

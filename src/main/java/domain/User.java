@@ -35,6 +35,10 @@ public abstract class User {
         return cards.isBlackJack();
     }
 
+    public boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
+
     public boolean isBust() {
         return cards.isBust();
     }
