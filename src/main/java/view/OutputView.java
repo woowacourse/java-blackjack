@@ -28,7 +28,7 @@ public class OutputView {
 			System.out.println(
 					player.toString() +
 							"카드: " +
-							player.openAllCards().stream()
+							player.openAllCards().toList().stream()
 									.map(Card::toString)
 									.collect(joining(DELIMITER))
 			);

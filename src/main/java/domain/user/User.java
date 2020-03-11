@@ -36,8 +36,8 @@ public class User {
 		this.cards.add(card);
 	}
 
-	public List<Card> openAllCards() {
-		return cards.toList();
+	public Cards openAllCards() {
+		return this.cards;
 	}
 
 	@Override

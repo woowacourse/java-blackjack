@@ -27,6 +27,22 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
+	public int size() {
+		return this.cards.size();
+	}
+
+	public int getAceCount() {
+		return (int) cards.stream()
+				.filter(Card::isAce)
+				.count();
+	}
+
+	public int getPoint() {
+		return cards.stream()
+				.mapToInt(Card::getPoint)
+				.sum();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

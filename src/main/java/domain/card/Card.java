@@ -1,11 +1,6 @@
 package domain.card;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 클래스 이름 : .java
@@ -22,6 +17,14 @@ public class Card {
 	public Card(Symbol symbol, Type type) {
 		this.symbol = symbol;
 		this.type = type;
+	}
+
+	public boolean isAce() {
+		return symbol.equals(Symbol.ACE);
+	}
+
+	public int getPoint() {
+		return this.symbol.getScore();
 	}
 
 	@Override

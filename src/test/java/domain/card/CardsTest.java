@@ -1,5 +1,6 @@
 package domain.card;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,6 +20,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class CardsTest {
 
+	private Cards cards;
+	private Card card;
+
+	@BeforeEach
+	void setUp() {
+		cards = new Cards(new ArrayList<>());
+		card = new Card(Symbol.ACE, Type.CLOVER);
+		cards.add(card);
+	}
+
 	@Test
 	void create_Cards() {
 		assertThat(new Cards(new ArrayList<>())).isInstanceOf(Cards.class);
@@ -26,10 +37,6 @@ public class CardsTest {
 
 	@Test
 	void add_Card() {
-		Cards cards = new Cards(new ArrayList<>());
-		Card card = new Card(Symbol.ACE, Type.CLOVER);
-
-		cards.add(card);
 		Cards expected = new Cards(Collections.singletonList(card));
 
 		assertThat(cards).isEqualTo(expected);
@@ -37,12 +44,18 @@ public class CardsTest {
 
 	@Test
 	void toList_Getter_For_View() {
-		Cards cards = new Cards(new ArrayList<>());
-		Card card = new Card(Symbol.ACE, Type.CLOVER);
-		cards.add(card);
-
 		List<Card> expected = Collections.singletonList(card);
 
 		assertEquals(expected, cards.toList());
+	}
+
+	@Test
+	void getAceCount_When_One_Ace_Card_Return_One() {
+		assertThat(cards.getAceCount()).isEqualTo(1);
+	}
+
+	@Test
+	void getPoint_When_One_Ace_Card_Return_11() {
+		assertThat(cards.getPoint()).isEqualTo(11);
 	}
 }

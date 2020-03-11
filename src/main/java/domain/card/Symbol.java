@@ -31,6 +31,10 @@ public enum Symbol {
 		this.name = name;
 	}
 
+	public int getScore() {
+		return this.score;
+	}
+
 	public String getName() {
 		return this.name;
 	}
