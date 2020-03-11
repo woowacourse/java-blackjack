@@ -1,4 +1,4 @@
-package domain.Gamer;
+package domain.gamer;
 
 import java.util.Collections;
 import java.util.List;

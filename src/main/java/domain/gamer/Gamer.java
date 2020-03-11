@@ -1,4 +1,4 @@
-package domain.Gamer;
+package domain.gamer;
 
 import domain.card.Card;
 
@@ -11,9 +11,9 @@ public abstract class Gamer {
 	private final List<Card> cards = new ArrayList<>();
 	private Result gameResult;
 
-	public Gamer(String name, List<Card> cards) {
+	public Gamer(String name) {
 		this.name = name;
-		initCard(cards);
+		// initCard(cards);
 	}
 
 	private void initCard(List<Card> cards) {

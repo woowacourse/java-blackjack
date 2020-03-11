@@ -1,17 +1,15 @@
-package domain.Gamer;
+package domain.gamer;
 
-import domain.card.Card;
-
-import java.util.List;
+import exception.NameFormatException;
 
 public class Player extends Gamer {
     private static final String PATTERN = "[a-zA-Z가-힣]*";
 
-    public Player(String name, List<Card> cards) {
-        super(name, cards);
+    public Player(String name) {
+        super(name);
 
-        if(isInvalidName(name)) {
-            throw new IllegalArgumentException("잘못된 이름입니다.");
+        if (isInvalidName(name)) {
+            throw new NameFormatException("잘못된 이름입니다.");
         }
     }
 
@@ -20,7 +18,9 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean isDrawable() { return false; }
+    public boolean isDrawable() {
+        return false;
+    }
 
     public static boolean isDrawable(YesOrNo yesorNo) {
         return yesorNo.isDrawable();

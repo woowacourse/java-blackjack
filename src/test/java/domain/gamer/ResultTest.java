@@ -1,4 +1,4 @@
-package domain.Gamer;
+package domain.gamer;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -13,11 +13,13 @@ import domain.card.CardSuit;
 public class ResultTest {
 	@Test
 	public void calculateTest() {
-		Player player = new Player("pobi", Arrays.asList(
-			new Card(CardSuit.CLOVER, CardNumber.SEVEN),
-			new Card(CardSuit.CLOVER, CardNumber.TEN))
-		);
+		Player player = new Player("pobi");
 
 		assertThat(Result.calculate(player)).isEqualTo(17);
 	}
 }
+
+//Arrays.asList(
+//			new Card(CardSuit.CLOVER, CardNumber.SEVEN),
+//			new Card(CardSuit.CLOVER, CardNumber.TEN))
+//

@@ -1,4 +1,4 @@
-package domain.Gamer;
+package domain.gamer;
 
 public enum YesOrNo {
     YES("y", true),

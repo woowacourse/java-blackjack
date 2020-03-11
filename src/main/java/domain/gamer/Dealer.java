@@ -1,14 +1,12 @@
-package domain.Gamer;
-
-import java.util.List;
+package domain.gamer;
 
 import domain.card.Card;
 
 public class Dealer extends Gamer {
 	private static final int DRAW_CARD_PIVOT = 16;
 
-	public Dealer(List<Card> cards) {
-		super("딜러", cards);
+	public Dealer() {
+		super("딜러");
 	}
 
 	@Override
