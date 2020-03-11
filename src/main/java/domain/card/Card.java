@@ -15,6 +15,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardNumber.getScore() + cardSuit.getSuit();
+        return cardNumber.getCardInitial() + cardSuit.getSuit();
     }
 }
