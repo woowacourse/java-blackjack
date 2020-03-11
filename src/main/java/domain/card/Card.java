@@ -36,6 +36,10 @@ public class Card {
 		return this.type == Type.ACE;
 	}
 
+	public String getSymbol() {
+		return symbol.getName();
+	}
+
 	@Override
 	public String toString() {
 		return "Card{" +

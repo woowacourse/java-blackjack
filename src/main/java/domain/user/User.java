@@ -25,5 +25,13 @@ public abstract class User {
 		return this.cards.isBust();
 	}
 
+	public int calculateScore() {
+		return cards.calculateScore();
+	}
+
+	public List<Card> getCards() {
+		return cards.getCards();
+	}
+
 	public abstract String getName();
 }

@@ -44,4 +44,8 @@ public class Cards {
 		return cards.stream()
 			.anyMatch(Card::isAce);
 	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
 }
