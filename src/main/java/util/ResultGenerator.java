@@ -16,6 +16,7 @@ public class ResultGenerator {
 
     public static Results create(final Dealer dealer, final Players players) {
         List<Result> results = new ArrayList<>();
+
         addDealerResults(dealer, players, results);
         addPlayerResults(dealer, players, results);
         return new Results(results);
