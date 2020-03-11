@@ -1,30 +1,55 @@
 package blackjack.domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
-    Card card1;
-    Card card2;
-    UserCards userCards;
-    User dealer;
-
-    @BeforeEach
-    void setUp() {
-        card1 = new Card(Suit.CLUB, Symbol.SIX);
-        card2 = new Card(Suit.HEART, Symbol.KING);
-        userCards = new UserCards(Arrays.asList(card1, card2));
-        dealer = new Dealer(userCards);
+    private static Stream<Arguments> generateStandardDealer() {
+        return Stream.of(
+                Arguments.of(new UserCards(Arrays.asList(
+                        new Card(Suit.DIAMOND, Symbol.SIX),
+                        new Card(Suit.HEART, Symbol.KING)
+                )), true),
+                Arguments.of(new UserCards(Arrays.asList(
+                        new Card(Suit.CLUB, Symbol.JACK),
+                        new Card(Suit.SPADE, Symbol.SEVEN)
+                )), false)
+        );
     }
 
     @Test
     @DisplayName("딜러의 이름이 \"딜러\"인지 확인")
     void checkDealerName() {
-        assertThat(dealer.getName()).isEqualTo("딜러");
+        UserCards userCards = new UserCards(Arrays.asList(
+                new Card(Suit.CLUB, Symbol.SIX),
+                new Card(Suit.HEART, Symbol.KING)
+        ));
+        assertThat(new Dealer(userCards).getName()).isEqualTo("딜러");
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 하나만 표시하는지 확인")
+    void displayDealerCardInfo() {
+        UserCards userCards = new UserCards(Arrays.asList(
+                new Card(Suit.SPADE, Symbol.JACK),
+                new Card(Suit.DIAMOND, Symbol.THREE)
+        ));
+        assertThat(new Dealer(userCards).showDealerCardInfo()).isEqualTo("스페이드 잭");
+    }
+
+    @ParameterizedTest
+    @DisplayName("딜러의 카드 합이 16 이하인지 확인")
+    @MethodSource("generateStandardDealer")
+    void scoreUnderSixteenTest(UserCards userCards, boolean expected) {
+        assertThat(new Dealer(userCards).isUnderThreshold()).isEqualTo(expected);
+    }
+
 }

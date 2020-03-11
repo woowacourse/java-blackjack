@@ -12,7 +12,7 @@ public class PlayerTest {
     Card card1;
     Card card2;
     UserCards userCards;
-    User player;
+    Player player;
 
     @BeforeEach
     void setUp() {
