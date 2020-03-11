@@ -5,9 +5,9 @@
 * [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 
-- [ ]  플레이어의 이름을 입력 받는다.
+- [x]  플레이어의 이름을 입력 받는다.
     - [x]  문자열 처리
-    - [ ]  참여인원 제한
+    - [x]  참여인원 제한
     - [x]  플레이어 생성
 - [ ]  게임 시작시 카드 2장을 딜러와 플레이어에게 나누어 주어야 한다.
     - [ ]  Deck에서 2장을 pop해서 준다. (2장 pop하는 메서드도 가능)
