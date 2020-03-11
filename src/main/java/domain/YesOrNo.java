@@ -1,0 +1,28 @@
+package domain;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class YesOrNo {
+
+    private static final List<String> ANSWER = Collections.unmodifiableList(Arrays.asList("y", "Y", "n", "N"));
+    private static final String INPUT_ERROR_MESSAGE = "입력은 y(Y), n(N)만 가능합니다.";
+
+    private final String answer;
+
+    private YesOrNo(String input) {
+        validate(input);
+        answer = input.toLowerCase();
+    }
+
+    public static YesOrNo of(String input) {
+        return new YesOrNo(input);
+    }
+
+    private void validate(String input) {
+        if (!ANSWER.contains(input)) {
+            throw new IllegalArgumentException(INPUT_ERROR_MESSAGE);
+        }
+    }
+}
