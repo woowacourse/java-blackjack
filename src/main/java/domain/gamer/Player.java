@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import domain.card.Card;
 import domain.card.Hands;
 
 /**
@@ -8,32 +7,11 @@ import domain.card.Hands;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-public class Player implements Gamer {
+public class Player extends Gamer {
 	private String name;
 	private Hands hands;
 
 	public Player(String name) {
-		this.name = name;
-		this.hands = new Hands();
-	}
-
-	@Override
-	public void add(Card card) {
-		hands.add(card);
-	}
-
-	@Override
-	public boolean isBust() {
-		return hands.calculateTotalScore() > Hands.BLACKJACK;
-	}
-
-	@Override
-	public int scoreHands() {
-		return hands.calculateTotalScore();
-	}
-
-	@Override
-	public boolean isBlackjack() {
-		return (hands.calculateTotalScore() == Hands.BLACKJACK) && hands.hasTwoCards();
+		super(name);
 	}
 }
