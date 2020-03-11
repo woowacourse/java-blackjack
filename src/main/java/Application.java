@@ -17,7 +17,7 @@ public class Application {
 		giveTwoCard(cardDeck, dealer, players);
 		if (dealer.isNotBlackJack()) {
 			askMoreCard(cardDeck, dealer, players);
-			checkDealerCardAndGiveMoreCard(cardDeck, dealer);
+			addCardIfNeed(cardDeck, dealer);
 		}
 		OutputView.printUsersResult(dealer, players);
 		OutputView.printLastResult(ResultCalculator.getResults(dealer, players));
@@ -35,17 +35,17 @@ public class Application {
 	}
 
 	private static void askMoreCard(CardDeck cardDeck, Dealer dealer, Players players) {
-		players.forEach(player -> giveIfWant(cardDeck, dealer, player));
+		players.forEach(player -> addCardIfWant(cardDeck, dealer, player));
 	}
 
-	private static void giveIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
+	private static void addCardIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
 		while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
 			dealer.giveOneCard(cardDeck, player);
 			OutputView.printStatus(player.getName(), player.getCards());
 		}
 	}
 
-	private static void checkDealerCardAndGiveMoreCard(CardDeck cardDeck, Dealer dealer) {
+	private static void addCardIfNeed(CardDeck cardDeck, Dealer dealer) {
 		if (dealer.shouldAddCard()) {
 			dealer.addCard(cardDeck.drawOne());
 			OutputView.printDealerAddCard();
