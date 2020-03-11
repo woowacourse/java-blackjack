@@ -12,7 +12,7 @@ public class Player extends User {
 
     @Override
     public String getFirstDrawResult() {
-        return name + ": "
+        return name + "카드: "
                 + cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));

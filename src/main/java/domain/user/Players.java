@@ -31,4 +31,16 @@ public class Players {
                 player -> player.draw(deck.dealOut())
         );
     }
+
+    public String getAllFirstDrawResult() {
+        return players.stream()
+                .map(Player::getFirstDrawResult)
+                .collect(Collectors.joining("\n"));
+    }
+
+    public String getAllNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
+    }
 }

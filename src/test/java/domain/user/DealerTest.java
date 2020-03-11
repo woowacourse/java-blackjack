@@ -21,6 +21,6 @@ class DealerTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         dealer.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(dealer.getFirstDrawResult()).isEqualTo("딜러: 8클로버");
+        assertThat(dealer.getFirstDrawResult()).isEqualTo("딜러카드: 8클로버");
     }
 }

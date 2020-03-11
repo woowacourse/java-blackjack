@@ -10,7 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import domain.deck.Card;
 import domain.deck.DeckFactory;
+import domain.deck.Symbol;
+import domain.deck.Type;
 
 class PlayersTest {
     private Players players;
@@ -19,17 +22,6 @@ class PlayersTest {
     void setUp() {
         String names = "pobi, jason";
         players = Players.of(names);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"pobi", "jason"})
-    void create(String name) {
-        List<String> playerNames = players.getPlayers()
-                .stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-
-        assertThat(playerNames).contains(name);
     }
 
     @Test
@@ -47,5 +39,22 @@ class PlayersTest {
                 .collect(Collectors.toList());
 
         assertThat(expected).isEqualTo(result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"pobi", "jason"})
+    void getAllNames(String name) {
+        String playerNames = players.getAllNames();
+
+        assertThat(playerNames).contains(name);
+    }
+
+    @Test
+    void getAllFirstDrawResult() {
+        players.getPlayers()
+                .forEach(player -> player.draw(new Card(Symbol.SPADE, Type.ACE)));
+        String expected = "pobi카드: A스페이드\njason카드: A스페이드";
+
+        assertThat(players.getAllFirstDrawResult()).isEqualTo(expected);
     }
 }
