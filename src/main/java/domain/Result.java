@@ -2,6 +2,7 @@ package domain;
 
 public class Result {
 	private static final int ONE = 1;
+
 	private String name;
 	private int winCount;
 	private int loseCount;
