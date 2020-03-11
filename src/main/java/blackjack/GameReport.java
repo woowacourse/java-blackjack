@@ -33,11 +33,4 @@ public class GameReport {
         return Objects.hash(name, gameResult);
     }
 
-    @Override
-    public String toString() {
-        return "GameReport{" +
-                "name='" + name + '\'' +
-                ", gameResult=" + gameResult +
-                '}';
-    }
 }

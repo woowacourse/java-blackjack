@@ -1,8 +1,5 @@
 package blackjack;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import blackjack.player.Dealer;
 import blackjack.player.Gambler;
 import blackjack.player.Player;
@@ -12,48 +9,66 @@ import blackjack.player.card.CardFactory;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BlackjackGame {
-	private final CardFactory cardFactory;
-	private final InputView inputView;
-	private final OutputView outputView;
+    private static final String ACCEPT = "y";
+    private final CardFactory cardFactory;
+    private final InputView inputView;
+    private final OutputView outputView;
 
-	public BlackjackGame(CardFactory cardFactory, InputView inputView, OutputView outputView) {
-		this.cardFactory = cardFactory;
-		this.inputView = inputView;
-		this.outputView = outputView;
-	}
+    public BlackjackGame(CardFactory cardFactory, InputView inputView, OutputView outputView) {
+        this.cardFactory = cardFactory;
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
 
-	public void run() {
-		List<Player> players = inputView.inputPlayNames().stream()
-			.map(name -> new Gambler(new CardBundle(), name))
-			.collect(Collectors.toList());
-		players.add(new Dealer(new CardBundle()));
-		Players players2 = new Players(players);
+    public void run() {
+        Player dealer = new Dealer(new CardBundle());
+        Players players = new Players(makePlayers(dealer));
 
-		for (int i = 0; i < 2; i++) {
-			players2.drawCard(cardFactory);
-		}
-		outputView.showCards(players2);
+        drawStartingCards(players);
+        if (dealer.isDrawable()) {
+            drawGambler(players);
+            drawDealer(dealer);
+        }
 
-		if (players2.isDealerBlackjack()) {
-			List<GameReport> gameReports = players2.getReports();
-			outputView.showReports(gameReports);
-			return;
-		}
+        outputView.showReports(players.getReports());
+    }
 
-		for (Player player : players2.findGamblers()) {
-			while (!player.isBurst() && "y".equals(inputView.inputDrawRequest())) {
-				player.playerDrawCard();
-				outputView.showCards(player);
-			}
-		}
+    private List<Player> makePlayers(Player dealer) {
+        List<Player> players = inputView.inputPlayNames().stream()
+                .map(name -> new Gambler(new CardBundle(), name))
+                .collect(Collectors.toList());
+        players.add(dealer);
+        return players;
+    }
 
-		while (players2.canDraw()) {
-			players2.dealerDrawCard();
-			outputView.showDealerCard(players2);
-		}
+    private void drawStartingCards(Players players2) {
+        for (int i = 0; i < 2; i++) {
+            players2.drawCard(cardFactory);
+        }
+        outputView.showCards(players2);
+    }
 
-		List<GameReport> gameReports = players2.getReports();
-		outputView.showReports(gameReports);
-	}
+    private void drawGambler(Players players) {
+        for (Player player : players.findGamblers()) {
+            drawEachGambler(player);
+        }
+    }
+
+    private void drawEachGambler(Player gambler) {
+        while (gambler.isDrawable() && ACCEPT.equals(inputView.inputDrawRequest())) {
+            gambler.addCard(cardFactory.drawCard());
+            outputView.showCards(gambler);
+        }
+    }
+
+    private void drawDealer(Player dealer) {
+        while (dealer.isDrawable()) {
+            dealer.addCard(cardFactory.drawCard());
+            outputView.showDealerCard(dealer);
+        }
+    }
 }
