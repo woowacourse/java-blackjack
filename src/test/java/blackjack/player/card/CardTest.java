@@ -14,7 +14,7 @@ class CardTest {
     @ParameterizedTest
     @CsvSource(value = {"ACE,true", "TWO,false"})
     void isAce(CardNumber cardNumber, boolean result) {
-        Card card = Card.valueOf(Symbol.HEART, cardNumber);
+        Card card = new Card(Symbol.HEART, cardNumber);
         assertThat(card.isAce()).isEqualTo(result);
     }
 
@@ -22,7 +22,7 @@ class CardTest {
     @ParameterizedTest
     @CsvSource(value = {"ACE,1", "TEN,10", "KING,10"})
     void name(CardNumber cardNumber, int result) {
-        Card card = Card.valueOf(Symbol.CLUB, cardNumber);
+        Card card = new Card(Symbol.CLUB, cardNumber);
         assertThat(card.getScore()).isEqualTo(result);
     }
 }

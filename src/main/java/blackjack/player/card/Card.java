@@ -19,12 +19,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    //TODO : 지워야함
-    @Deprecated
-    public static Card valueOf(Symbol symbol, CardNumber cardNumber) {
-        return Card.CardCache.getCard(symbol, cardNumber);
-    }
-
     public static List<Card> getCardCache() {
         return CardCache.getCardCache();
     }

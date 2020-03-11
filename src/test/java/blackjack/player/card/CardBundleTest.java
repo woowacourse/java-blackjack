@@ -16,9 +16,9 @@ class CardBundleTest {
 	void calculateScore(CardNumber number, int result) {
 		//given
 		CardBundle cardBundle = new CardBundle();
-		cardBundle.addCard(Card.valueOf(HEART, CardNumber.ACE));
-		cardBundle.addCard(Card.valueOf(HEART, CardNumber.EIGHT));
-		cardBundle.addCard(Card.valueOf(HEART, number));
+		cardBundle.addCard(new Card(HEART, CardNumber.ACE));
+		cardBundle.addCard(new Card(HEART, CardNumber.EIGHT));
+		cardBundle.addCard(new Card(HEART, number));
 
 		//when
 		int expect = cardBundle.calculateScore();
@@ -33,10 +33,10 @@ class CardBundleTest {
 	void compare(CardNumber number, int result) {
 		//given
 		CardBundle cardBundle = new CardBundle();
-		cardBundle.addCard(Card.valueOf(HEART, CardNumber.NINE));
+		cardBundle.addCard(new Card(HEART, CardNumber.NINE));
 
 		CardBundle other = new CardBundle();
-		other.addCard(Card.valueOf(HEART, number));
+		other.addCard(new Card(HEART, number));
 
 		//when
 		int expect = cardBundle.compare(other);
