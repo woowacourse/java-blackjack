@@ -25,51 +25,51 @@ public class Application {
         printResults(dealer, players);
     }
 
-    private static void distributeInitCard(CardDeck cardDeck, Dealer dealer, Players players) {
+    private static void distributeInitCard(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         distributeToUser(cardDeck, dealer);
         for (Player player : players) {
             distributeToUser(cardDeck, player);
         }
     }
 
-    private static void distributeToUser(CardDeck cardDeck, User user) {
+    private static void distributeToUser(final CardDeck cardDeck, final User user) {
         int distributeCount = DEFAULT_CARD_SIZE;
         while (distributeCount-- > 0) {
             CardDistributor.giveOneCard(cardDeck, user);
         }
     }
 
-    private static void initBrief(Dealer dealer, Players players) {
+    private static void initBrief(final Dealer dealer, final Players players) {
         OutputView.printDistributeMessage(players);
         OutputView.printInitStatus(dealer, players);
     }
 
-    private static void addMoreCards(CardDeck cardDeck, Dealer dealer, Players players) {
+    private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         userMoreCard(cardDeck, players);
         dealerMoreCard(cardDeck, dealer);
     }
 
-    private static void userMoreCard(CardDeck cardDeck, Players players) {
+    private static void userMoreCard(final CardDeck cardDeck, final Players players) {
         for (Player player : players) {
             giveCardsIfPlayerWant(cardDeck, player);
         }
     }
 
-    private static void giveCardsIfPlayerWant(CardDeck cardDeck, Player player) {
+    private static void giveCardsIfPlayerWant(final CardDeck cardDeck, final Player player) {
         while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
             CardDistributor.giveOneCard(cardDeck, player);
             OutputView.printStatus(player);
         }
     }
 
-    private static void dealerMoreCard(CardDeck cardDeck, Dealer dealer) {
+    private static void dealerMoreCard(final CardDeck cardDeck, final Dealer dealer) {
         if (dealer.shouldAddCard()) {
             CardDistributor.giveOneCard(cardDeck, dealer);
             OutputView.printDealerAddCard();
         }
     }
 
-    private static void printResults(Dealer dealer, Players players) {
+    private static void printResults(final Dealer dealer, final Players players) {
         OutputView.printUsersResult(dealer, players);
         OutputView.printLastResult(ResultGenerator.create(dealer, players));
     }

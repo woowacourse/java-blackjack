@@ -13,7 +13,7 @@ public class PlayerFactory {
     private PlayerFactory() {
     }
 
-    public static List<Player> create(String userInput) {
+    public static List<Player> create(final String userInput) {
         List<Player> players = Arrays.stream(userInput.split(NAME_DELIMITER))
                 .map(Player::new)
                 .collect(Collectors.toList());

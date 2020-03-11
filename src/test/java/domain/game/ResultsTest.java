@@ -16,6 +16,6 @@ public class ResultsTest {
         Dealer dealer = new Dealer();
         Players players = new Players(PlayerFactory.create("playerA,PlayerB"));
 
-        assertThat(ResultGenerator.create(dealer,players)).isInstanceOf(Results.class);
+        assertThat(ResultGenerator.create(dealer, players)).isInstanceOf(Results.class);
     }
 }

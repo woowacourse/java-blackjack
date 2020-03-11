@@ -25,5 +25,3 @@ public class NameTest {
         assertThat(new Name("name").getValue()).isEqualTo("name");
     }
 }
-
-

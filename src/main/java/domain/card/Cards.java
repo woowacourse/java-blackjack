@@ -8,7 +8,7 @@ public class Cards {
     private static final int BLACKJACK_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards() {
         this.cards = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Cards {
         return cards.size();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
@@ -37,7 +37,7 @@ public class Cards {
         return (cards.size() == BLACKJACK_SIZE) && (getScore() == BLACKJACK_SCORE);
     }
 
-    public boolean isLessThan(int criteria) {
+    public boolean isLessThan(final int criteria) {
         return getScore() <= criteria;
     }
 

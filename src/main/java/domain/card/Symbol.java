@@ -20,23 +20,23 @@ public enum Symbol {
     private final int point;
     private final String alias;
 
-    Symbol(int point) {
+    Symbol(final int point) {
         this(point, String.valueOf(point));
     }
 
-    Symbol(int point, String alias) {
+    Symbol(final int point, final String alias) {
         this.point = point;
         this.alias = alias;
     }
 
-    public static Symbol of(int point) {
+    public static Symbol of(final int point) {
         return Arrays.stream(values())
                 .filter(type -> type.point == point)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 심볼입니다."));
     }
 
-    public static Symbol of(String alias) {
+    public static Symbol of(final String alias) {
         return Arrays.stream(values())
                 .filter(type -> type.alias.equals(alias))
                 .findFirst()

@@ -1,11 +1,11 @@
 package domain.user;
 
 public class Player extends User {
-    public Player(String name) {
+    public Player(final String name) {
         super(name);
     }
 
-    public boolean isWin(User that) {
-        return isNotBust() && (that.isBust() || getScore() >= that.getScore());
+    public boolean isWin(final User opponentUser) {
+        return isNotBust() && (opponentUser.isBust() || getScore() >= opponentUser.getScore());
     }
 }

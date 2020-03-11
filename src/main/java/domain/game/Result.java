@@ -2,11 +2,11 @@ package domain.game;
 
 public class Result {
     private static final int ONE = 1;
-    private String name;
+    private final String name;
     private int winCount;
     private int loseCount;
 
-    public Result(String name) {
+    public Result(final String name) {
         this.name = name;
         this.winCount = 0;
         this.loseCount = 0;

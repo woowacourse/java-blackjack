@@ -20,9 +20,9 @@ public class CardDistributorTest {
         assertThat(dealer.getCardSize()).isEqualTo(0);
         assertThat(player.getCardSize()).isEqualTo(0);
 
-        CardDistributor.giveOneCard(cardDeck,dealer);
-        CardDistributor.giveOneCard(cardDeck,player);
-        CardDistributor.giveOneCard(cardDeck,player);
+        CardDistributor.giveOneCard(cardDeck, dealer);
+        CardDistributor.giveOneCard(cardDeck, player);
+        CardDistributor.giveOneCard(cardDeck, player);
         assertThat(dealer.getCardSize()).isEqualTo(1);
         assertThat(player.getCardSize()).isEqualTo(2);
     }

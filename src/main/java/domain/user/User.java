@@ -6,15 +6,15 @@ import domain.card.Cards;
 import java.util.List;
 
 public abstract class User {
-    private Name name;
-    private Cards cards;
+    private final Name name;
+    private final Cards cards;
 
-    public User(String name) {
+    public User(final String name) {
         this.name = new Name(name);
         this.cards = new Cards();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.addCard(card);
     }
 
@@ -42,5 +42,5 @@ public abstract class User {
         return !isBust();
     }
 
-    public abstract boolean isWin(User user);
+    public abstract boolean isWin(final User user);
 }

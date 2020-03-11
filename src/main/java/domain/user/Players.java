@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Players implements Iterable<Player> {
-    private List<Player> players;
+    private final List<Player> players;
 
-    public Players(List<Player> players) {
+    public Players(final List<Player> players) {
         this.players = players;
     }
 

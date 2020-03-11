@@ -6,15 +6,15 @@ public enum WhetherAddCard {
     YES("y"),
     NO("n");
 
-    private final String type;
+    private final String wantToAdd;
 
-    WhetherAddCard(String type) {
-        this.type = type;
+    WhetherAddCard(final String wantToAdd) {
+        this.wantToAdd = wantToAdd;
     }
 
-    public static WhetherAddCard of(String type) {
+    public static WhetherAddCard of(final String wantToAdd) {
         return Arrays.stream(values())
-                .filter(whetherAddCard -> whetherAddCard.type.equals(type))
+                .filter(whetherAddCard -> whetherAddCard.wantToAdd.equals(wantToAdd))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y 또는 n이 아닙니다."));
     }

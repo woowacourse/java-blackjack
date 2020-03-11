@@ -10,11 +10,11 @@ public enum Type {
 
     private final String name;
 
-    Type(String name) {
+    Type(final String name) {
         this.name = name;
     }
 
-    public static Type of(String name) {
+    public static Type of(final String name) {
         return Arrays.stream(values())
                 .filter(type -> type.name.equals(name))
                 .findFirst()

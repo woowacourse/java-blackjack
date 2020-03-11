@@ -9,7 +9,7 @@ public class Score {
 
     private final int score;
 
-    public Score(int score) {
+    public Score(final int score) {
         this.score = score;
     }
 
@@ -17,7 +17,7 @@ public class Score {
         return score;
     }
 
-    public Score add(int point) {
+    public Score add(final int point) {
         return new Score(score + point);
     }
 

@@ -20,7 +20,7 @@ public class CardFactory {
         return Collections.unmodifiableList(cards);
     }
 
-    private static void createByType(Symbol symbol, List<Card> cards) {
+    private static void createByType(Symbol symbol, final List<Card> cards) {
         for (Type type : Type.values()) {
             cards.add(Card.of(type.getName(), symbol.getAlias()));
         }
