@@ -36,16 +36,16 @@ public class DealerTest {
     @DisplayName("딜러 승리 여부 확인 - 플레이어와 동점일 경우 패배")
     void isWin() {
         Dealer dealer = new Dealer();
-        Player user = new Player("player");
+        Player player = new Player("player");
 
         dealer.addCard(Card.of("스페이드", "K"));
-        user.addCard(Card.of("스페이드", "9"));
-        assertThat(dealer.isWin(user)).isTrue();
+        player.addCard(Card.of("스페이드", "9"));
+        assertThat(dealer.isWin(player)).isTrue();
 
-        user.addCard(Card.of("스페이드", "10"));
-        assertThat(dealer.isWin(user)).isFalse();
+        player.addCard(Card.of("스페이드", "10"));
+        assertThat(dealer.isWin(player)).isFalse();
 
         dealer.addCard(Card.of("스페이드", "9"));
-        assertThat(dealer.isWin(user)).isFalse();
+        assertThat(dealer.isWin(player)).isFalse();
     }
 }
