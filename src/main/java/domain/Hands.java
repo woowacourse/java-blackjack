@@ -3,6 +3,11 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *    손패를 나타내는 클래스입니다.
+ *
+ *    @author AnHyungJu, ParkDooWon
+ */
 public class Hands {
 	private List<Card> hands;
 

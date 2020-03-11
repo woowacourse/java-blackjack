@@ -1,7 +1,7 @@
 package domain;
 
 /**
- *    class description
+ *    카드 심볼
  *
  *    @author AnHyungJu, ParkDooWon
  */

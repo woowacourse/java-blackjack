@@ -1,5 +1,10 @@
 package domain;
 
+/**
+ *    카드를 나타내는 클래스입니다.
+ *
+ *    @author AnHyungJu, ParkDooWon
+ */
 public class Card {
 	private Type type;
 	private Symbol symbol;

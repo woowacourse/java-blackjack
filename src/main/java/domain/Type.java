@@ -1,5 +1,10 @@
 package domain;
 
+/**
+ *    카드 타입
+ *
+ *    @author AnHyungJu, ParkDooWon
+ */
 public enum Type {
 	HEART("♥"),
 	SPADE("♠"),

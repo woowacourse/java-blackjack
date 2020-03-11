@@ -1,5 +1,10 @@
 package domain;
 
+/**
+ *    게임 플레이어를 나타내는 클래스입니다.
+ *
+ *    @author AnHyungJu, ParkDooWon
+ */
 public class Player implements Gamer {
 	private static final int BUST_NUMBER = 21;
 
