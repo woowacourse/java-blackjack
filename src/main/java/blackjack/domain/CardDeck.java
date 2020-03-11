@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.exception.CardDeckEmptyException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,13 @@ public class CardDeck {
     }
 
     public Card getOneCard() {
+        if (isEmpty()) {
+            throw new CardDeckEmptyException("카드 덱이 비었습니다.");
+        }
         return cardDeck.remove(HEAD_INDEX);
+    }
+
+    private boolean isEmpty() {
+        return this.cardDeck.size() == 0;
     }
 }
