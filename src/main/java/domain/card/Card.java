@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Card {
     private static final String CARD_NO_EXSIST_MESSAGE = "적절한 number 또는 symbol의 카드가 존재하지 않습니다.";
-    private final int number;
-    private final Symbol symbol;
+    private final Rank rank;
+    private final Suit suit;
 
-    private Card(int number, Symbol symbol) {
-        this.number = number;
-        this.symbol = symbol;
+    private Card(Rank rank, Suit suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
-    public static Card of(int number, Symbol symbol) {
+    public static Card of(Rank rank, Suit suit) {
         return CardCache.cards
                 .stream()
-                .filter(card -> card.number == number)
-                .filter(card -> card.symbol == symbol)
+                .filter(card -> card.rank == rank)
+                .filter(card -> card.suit == suit)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXSIST_MESSAGE));
     }
@@ -26,25 +26,27 @@ public class Card {
         return CardCache.cards;
     }
 
-    public int getNumber() {
-        return number;
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
+    public int extractScore() {
+        return rank.getScore();
     }
 
     private static class CardCache {
         private static final List<Card> cards = new ArrayList<>();
-        private static final int MIN = 1;
-        private static final int MAX = 12;
 
         static {
-            for (int number = MIN; number <= MAX; number++) {
-                cards.addAll(generateAllSymbolCard(number));
+            for (Rank rank : Rank.values()) {
+                cards.addAll(generateAllSymbolCard(rank));
             }
         }
 
-        private static List<Card> generateAllSymbolCard(int number) {
+        private static List<Card> generateAllSymbolCard(Rank rank) {
             List<Card> allSymbolCards = new ArrayList<>();
-            for (Symbol symbol : Symbol.values()) {
-                allSymbolCards.add(new Card(number, symbol));
+            for (Suit suit : Suit.values()) {
+                allSymbolCards.add(new Card(rank, suit));
             }
             return allSymbolCards;
         }

@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum Symbol {
+public enum Suit {
     HEART("하트"),
     DIAMOND("다이아몬드"),
     SPADE("스페이드"),
@@ -8,7 +8,7 @@ public enum Symbol {
 
     private final String name;
 
-    Symbol(String name) {
+    Suit(String name) {
         this.name = name;
     }
 

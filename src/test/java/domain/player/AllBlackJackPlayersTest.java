@@ -1,10 +1,6 @@
-package domain.players;
+package domain.player;
 
 import domain.CardDeck;
-import domain.player.AllBlackJackPlayers;
-import domain.player.BlackJackPlayer;
-import domain.player.Dealer;
-import domain.player.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

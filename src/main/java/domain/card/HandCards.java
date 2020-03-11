@@ -17,6 +17,12 @@ public class HandCards implements CardPossessor {
         this.cards = cards;
     }
 
+    public int calculateDefaultSum() {
+        return cards.stream()
+                .mapToInt(Card::extractScore)
+                .sum();
+    }
+
     @Override
     public void drawCard(CardProvider cardProvider) {
         cards.add(cardProvider.giveCard());
@@ -34,5 +40,10 @@ public class HandCards implements CardPossessor {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 }
