@@ -11,18 +11,22 @@ public class YesOrNo {
 
     private final String answer;
 
-    private YesOrNo(String input) {
-        validate(input);
-        answer = input.toLowerCase();
+    private YesOrNo(String answer) {
+        validate(answer);
+        this.answer = answer.toLowerCase();
     }
 
-    public static YesOrNo of(String input) {
-        return new YesOrNo(input);
+    public static YesOrNo of(String answer) {
+        return new YesOrNo(answer);
     }
 
-    private void validate(String input) {
-        if (!ANSWER.contains(input)) {
+    private void validate(String answer) {
+        if (!ANSWER.contains(answer)) {
             throw new IllegalArgumentException(INPUT_ERROR_MESSAGE);
         }
+    }
+
+    public boolean isYes() {
+        return "y".equals(answer);
     }
 }

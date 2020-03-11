@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class YesOrNoTest {
@@ -23,5 +24,12 @@ class YesOrNoTest {
         assertThatThrownBy(() -> YesOrNo.of("YES"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력은 y(Y), n(N)만 가능합니다.");
+    }
+
+    @ParameterizedTest
+    @DisplayName("입력값이 y(Y)인지 확")
+    @CsvSource({"y,True", "Y,True", "n,False", "N,False"})
+    void isYes(String input, boolean result) {
+        assertThat(YesOrNo.of(input).isYes()).isEqualTo(result);
     }
 }
