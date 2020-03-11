@@ -20,4 +20,9 @@ public class Card {
     public int getPoint() {
         return symbol.getPoint();
     }
+
+    @Override
+    public String toString() {
+        return symbol.getAlias() + type.getName();
+    }
 }

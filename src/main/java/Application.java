@@ -3,6 +3,7 @@ import factory.CardFactory;
 import factory.PlayerFactory;
 import util.ResultCalculator;
 import view.InputView;
+import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
@@ -18,6 +19,8 @@ public class Application {
             dealer.giveOneCard(cardDeck,player);
             dealer.giveOneCard(cardDeck,player);
         }
+
+        OutputView.printInitStatus(dealer, players);
 
         if(dealer.shouldAddCard()){
             dealer.addCard(cardDeck.drawOne());

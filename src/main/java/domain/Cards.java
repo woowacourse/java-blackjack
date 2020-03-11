@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -26,6 +27,10 @@ public class Cards {
             score = score.addAceBonusIfNotBust();
         }
         return score.getValue();
+    }
+
+    public List<Card> getValue() {
+        return Collections.unmodifiableList(cards);
     }
 
     public boolean hasAce() {

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract  class User {
     private Name name;
     private Cards cards;
@@ -23,6 +25,10 @@ public abstract  class User {
 
     public int getCardSize() {
         return cards.getSize();
+    }
+
+    public List<Card> getCards() {
+        return cards.getValue();
     }
 
     public boolean isBlackJack() {
