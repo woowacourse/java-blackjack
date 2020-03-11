@@ -6,12 +6,14 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import factory.CardFactory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 public class ResultCalculatorTest {
     @Test
+    @DisplayName("결과 계산 확인")
     void getResults() {
         Player player = new Player("플레이어");
         Player player2 = new Player("플레이어2");

@@ -1,5 +1,6 @@
 package domain.card;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class TypeTest {
     @Test
+    @DisplayName("타입 of")
     void of() {
         assertThat(Type.of("스페이드") == Type.SPADE).isTrue();
         assertThat(Type.of("하트") == Type.HEART).isTrue();
@@ -15,7 +17,8 @@ public class TypeTest {
     }
 
     @Test
-    void of_존재하지_않는_경우() {
+    @DisplayName("존재하지 않는 타입")
+    void of_not_exist_type() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Type.of("세모"));
     }
 }
