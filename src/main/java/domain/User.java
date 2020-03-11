@@ -1,6 +1,6 @@
 package domain;
 
-public class User {
+public abstract  class User {
     private Name name;
     private Cards cards;
 
@@ -37,7 +37,5 @@ public class User {
         return !isBust();
     }
 
-    public boolean isWin(User that) {
-        return isNotBust() && (that.isBust() || getScore() >= that.getScore());
-    }
+    abstract boolean isWin(User user);
 }
