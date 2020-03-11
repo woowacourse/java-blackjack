@@ -1,8 +1,10 @@
+import card.Card;
+
 public abstract class User {
 
     abstract String getName();
 
-    abstract void draw();
+    abstract void draw(Card card);
 
     abstract String getStatus();
 
