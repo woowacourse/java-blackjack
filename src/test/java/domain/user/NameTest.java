@@ -18,6 +18,12 @@ public class NameTest {
     void create_name_is_blank() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Name(""));
     }
+
+    @Test
+    @DisplayName("이름 확인")
+    void getValue() {
+        assertThat(new Name("name").getValue()).isEqualTo("name");
+    }
 }
 
 
