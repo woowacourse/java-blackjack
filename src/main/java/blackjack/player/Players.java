@@ -4,6 +4,7 @@ import blackjack.GameReport;
 import blackjack.player.card.CardFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -19,7 +20,24 @@ public class Players {
     }
 
     public List<GameReport> getReports() {
+        Player dealer = findDealer();
+        List<Player> gamblers = findGamblers();
 
-        return null;
+        return gamblers.stream()
+                .map(dealer::getReport)
+                .collect(Collectors.toList());
+    }
+
+    private List<Player> findGamblers() {
+        return players.stream()
+                .filter(Player::isGambler)
+                .collect(Collectors.toList());
+    }
+
+    private Player findDealer() {
+        return players.stream()
+                .filter(Player::isDealer)
+                .findFirst()
+                .orElseThrow(AssertionError::new);
     }
 }
