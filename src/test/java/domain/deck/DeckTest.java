@@ -8,18 +8,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.deck.Card;
-import domain.deck.Deck;
-import domain.deck.DeckFactory;
-import domain.deck.Symbol;
-import domain.deck.Type;
-
 class DeckTest {
 
     @Test
     @DisplayName("생성 확인")
     void create() {
-        assertThatCode(DeckFactory::createDeck)
+        assertThatCode(DeckFactory::getDeck)
                 .doesNotThrowAnyException();
     }
 
@@ -51,7 +45,7 @@ class DeckTest {
     @Test
     @DisplayName("카드 한장을 분배")
     void dealOut() {
-        Deck deck = DeckFactory.createDeck();
+        Deck deck = DeckFactory.getDeck();
         assertThat(deck.dealOut()).isExactlyInstanceOf(Card.class);
     }
 }

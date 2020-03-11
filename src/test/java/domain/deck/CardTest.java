@@ -5,10 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.deck.Card;
-import domain.deck.Symbol;
-import domain.deck.Type;
-
 class CardTest {
 
     @Test

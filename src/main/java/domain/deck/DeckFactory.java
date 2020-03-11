@@ -5,7 +5,9 @@ import java.util.List;
 
 public class DeckFactory {
 
-    public static Deck createDeck() {
+    private static final Deck deck = createDeck();
+
+    private static Deck createDeck() {
         List<Card> cards = new ArrayList<>();
 
         for (Symbol symbol : Symbol.values()) {
@@ -23,5 +25,9 @@ public class DeckFactory {
         }
 
         return cards;
+    }
+
+    public static Deck getDeck() {
+        return deck;
     }
 }
