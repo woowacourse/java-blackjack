@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.Deck;
+import blackjack.domain.deck.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

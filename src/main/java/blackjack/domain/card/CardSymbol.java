@@ -16,11 +16,11 @@ public enum CardSymbol {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private final int carNumber;
+    private final int cardNumber;
     private final String cardSymbol;
 
-    CardSymbol(int cardnNumber, String cardSymbol) {
-        this.carNumber = cardnNumber;
+    CardSymbol(int cardNumber, String cardSymbol) {
+        this.cardNumber = cardNumber;
         this.cardSymbol = cardSymbol;
     }
 
@@ -28,4 +28,11 @@ public enum CardSymbol {
         return cardSymbol;
     }
 
+    public int getCardNumber() {
+        return cardNumber;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }
