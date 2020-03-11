@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import domain.card.Card;
 import domain.result.Score;
+import domain.result.Result;
 
 public abstract class Participant {
 	private final String name;
@@ -42,6 +43,10 @@ public abstract class Participant {
 
 	public boolean canHit() {
 		return Score.calculate(cards) <= getHitPoint();
+	}
+
+	public Result compareScore(Participant participant) {
+		return Result.of(Score.calculate(cards), Score.calculate(participant.cards));
 	}
 
 	public abstract int getHitPoint();

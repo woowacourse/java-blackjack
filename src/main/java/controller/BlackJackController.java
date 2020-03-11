@@ -1,3 +1,5 @@
+package controller;
+
 import java.util.List;
 
 import domain.card.Deck;
@@ -5,6 +7,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.PlayersFactory;
 import domain.participant.YesOrNo;
+import domain.result.GameResult;
 import view.InputView;
 import view.OutputView;
 
@@ -32,5 +35,9 @@ public class BlackJackController {
 			dealer.hit(deck.drawCard());
 			OutputView.printDealerCards(dealer);
 		}
+
+		GameResult gameResult = GameResult.from(players, dealer);
+		OutputView.printDealerResult(gameResult.dealerResult());
+		OutputView.printPlayersResult(gameResult);
 	}
 }

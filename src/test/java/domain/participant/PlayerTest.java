@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.result.Result;
 
 class PlayerTest {
 	@Test
@@ -69,5 +70,38 @@ class PlayerTest {
 		player.hit(new Card(Symbol.SIX, Type.DIAMOND));
 
 		assertThat(player.getCards()).hasSize(3);
+	}
+
+	@Test
+	@DisplayName("서로 다른 두장의 카드가 정상적으로 비교되는지 테스트")
+	void compareScoreTest() {
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+
+		Player another = new Player("jason");
+		another.hit(new Card(Symbol.TEN, Type.DIAMOND));
+
+		Player other = new Player("brown");
+		other.hit(new Card(Symbol.TEN, Type.DIAMOND));
+
+		assertThat(player.compareScore(another)).isEqualTo(Result.LOSE);
+		assertThat(another.compareScore(player)).isEqualTo(Result.WIN);
+		assertThat(another.compareScore(other)).isEqualTo(Result.DRAW);
+	}
+
+	@Test
+	@DisplayName("한쪽이 버스트인 경우 정상적으로 비교가 되는지 테스트")
+	void compareBustScore() {
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+		player.hit(new Card(Symbol.NINE, Type.DIAMOND));
+		player.hit(new Card(Symbol.FIVE, Type.DIAMOND));
+
+		Player another = new Player("jason");
+		another.hit(new Card(Symbol.TEN, Type.DIAMOND));
+		another.hit(new Card(Symbol.TEN, Type.DIAMOND));
+
+		assertThat(player.compareScore(another)).isEqualTo(Result.LOSE);
+		assertThat(player.compareScore(player)).isEqualTo(Result.DRAW);
 	}
 }

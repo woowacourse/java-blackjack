@@ -2,8 +2,6 @@ package domain.result;
 
 import java.util.List;
 
-import javax.print.attribute.standard.PresentationDirection;
-
 import domain.card.Card;
 import domain.card.Symbol;
 
@@ -17,6 +15,8 @@ public class Score {
 		if (containAce(cards) && rawScore + TEN <= BLACKJACK_SCORE) {
 			return rawScore + TEN;
 		}
+		if (rawScore > BLACKJACK_SCORE)
+			return ZERO;
 		return rawScore;
 	}
 
