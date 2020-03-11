@@ -19,11 +19,12 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("첫 카드 분배 결과")
     void getFirstDrawResult() {
         Player player = new Player("이름");
         player.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         player.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(player.getFirstDrawResult()).isEqualTo("이름: 8클로버, A다이아몬드");
+        assertThat(player.getFirstDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
     }
 }

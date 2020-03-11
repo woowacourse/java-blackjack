@@ -22,10 +22,6 @@ public class Players {
         return new Players(names);
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public void draw(Deck deck) {
         players.forEach(
                 player -> player.draw(deck.dealOut())
@@ -42,5 +38,9 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

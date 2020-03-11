@@ -26,6 +26,7 @@ class UserTest {
     }
 
     @Test
+    @DisplayName("카드 한장 분배")
     void draw() {
         User user = new Player("이름");
         int initSize = user.cards.size();

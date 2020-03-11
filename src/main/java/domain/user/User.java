@@ -24,13 +24,13 @@ public abstract class User {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void draw(Card card) {
         cards.add(card);
     }
 
     public abstract String getFirstDrawResult();
+
+    public String getName() {
+        return name;
+    }
 }
