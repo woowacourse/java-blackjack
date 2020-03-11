@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import blackjack.domain.result.Result;
 
@@ -8,9 +8,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Players {
-    private static final String MAX_PLAYER_ERR_MSG = "플레이어는 최대 5명입니다.";
     private static final String NULL_ERR_MSG = "플레이어의 이름이 없습니다.";
-    public static final int MAX_PLAYER = 5;
+    private static final String MAX_PLAYER_ERR_MSG = "플레이어는 최대 %d명입니다.";
+    private static final int MAX_PLAYER = 5;
 
     private final List<Player> players;
 
@@ -18,11 +18,10 @@ public class Players {
         Objects.requireNonNull(names, NULL_ERR_MSG);
 
         if (names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException(MAX_PLAYER_ERR_MSG);
+            throw new IllegalArgumentException(String.format(MAX_PLAYER_ERR_MSG, MAX_PLAYER));
         }
 
         players = new ArrayList<>();
-
         for (String name : names) {
             players.add(new Player(name));
         }

@@ -1,8 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.Card.Card;
-import blackjack.domain.Card.CardNumber;
-import blackjack.domain.Card.Figure;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +12,8 @@ class CardTest {
     @DisplayName("생성한 카드의 Equals 확인")
     @Test
     void equalsTest() {
-        Card card = new Card(CardNumber.TWO, Figure.HEART);
-        Card expected = new Card(CardNumber.TWO, Figure.HEART);
+        Card card = new Card(Type.TWO, Figure.HEART);
+        Card expected = new Card(Type.TWO, Figure.HEART);
         assertThat(card).isEqualTo(expected);
     }
 
@@ -29,7 +26,7 @@ class CardTest {
                 .hasMessageContaining("생성자에 Null이 들어올 수 없습니다.");
 
         assertThatThrownBy(() -> {
-            new Card(CardNumber.TWO, null);
+            new Card(Type.TWO, null);
         }).isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("생성자에 Null이 들어올 수 없습니다.");
     }

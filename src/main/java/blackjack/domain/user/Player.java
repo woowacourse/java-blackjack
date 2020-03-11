@@ -1,15 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
-import blackjack.domain.Card.Card;
-import blackjack.domain.Card.Cards;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.result.Result;
 
 import java.util.Objects;
 
 public class Player {
     private static final String NULL_ERR_MSG = "플레이어의 이름이 없습니다.";
-    private static final String MAX_PLAYER_NAME_ERR_MSG = "플레이어 이름은 최대 5자입니다.";
-    public static final int MAX_NAME_LENGTH = 5;
+    private static final String PLAYER_NAME_ERR_MSG = "플레이어 이름은 0자 이상, %d자 이하입니다.";
+    private static final int MAX_NAME_LENGTH = 5;
 
     private String name;
     private Cards cards;
@@ -18,8 +18,8 @@ public class Player {
     public Player(String name) {
         Objects.requireNonNull(name, NULL_ERR_MSG);
 
-        if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(MAX_PLAYER_NAME_ERR_MSG);
+        if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException(String.format(PLAYER_NAME_ERR_MSG, MAX_NAME_LENGTH));
         }
 
         this.name = name;
@@ -30,34 +30,34 @@ public class Player {
         cards.add(card);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public boolean exceedMaxSum() {
-        if (cards.getSum() > Cards.MAX_SUM) {
+        if (cards.computeScore() > Cards.MAX_SUM) {
             return true;
         }
         return false;
     }
 
     public int getSum() {
-        return cards.getSum();
+        return cards.computeScore();
     }
 
     public void createResult(Dealer dealer) {
         this.result = Result.getResult(getSum(), dealer.getSum());
     }
 
-    public Result getResult() {
-        return result;
+    public String showCards() {
+        return String.join(" ,", cards.showCardsInfo());
     }
 
-    public String showCards() {
-        return String.join(" ,", cards.getInfo());
+    public String getName() {
+        return name;
     }
 
     public Cards getCards() {
         return cards;
+    }
+
+    public Result getResult() {
+        return result;
     }
 }

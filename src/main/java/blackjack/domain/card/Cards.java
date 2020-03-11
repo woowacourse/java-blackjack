@@ -1,4 +1,4 @@
-package blackjack.domain.Card;
+package blackjack.domain.card;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,15 +7,17 @@ import java.util.stream.Collectors;
 
 public class Cards {
     public static final int MAX_SUM = 21;
+    private static final int ACE_VALUE_DIFFERENCE = 10;
+
     private Set<Card> cards = new HashSet<>();
 
     public void add(Card card) {
         this.cards.add(card);
     }
 
-    public int getSum() {
-        int sum =  cards.stream()
-                .mapToInt(Card::getNumber)
+    public int computeScore() {
+        int sum = cards.stream()
+                .mapToInt(Card::getCardValue)
                 .sum();
 
         return handleAce(sum);
@@ -27,16 +29,16 @@ public class Cards {
                 break;
             }
 
-            if (card.has(CardNumber.ACE)) {
-                sum -= 10;
+            if (card.isAce()) {
+                sum -= ACE_VALUE_DIFFERENCE;
             }
         }
         return sum;
     }
 
-    public List<String> getInfo() {
+    public List<String> showCardsInfo() {
         return cards.stream()
-                .map(Card::getInfo)
+                .map(Card::showCardInfo)
                 .collect(Collectors.toList());
     }
 

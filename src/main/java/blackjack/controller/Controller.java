@@ -1,9 +1,9 @@
 package blackjack.controller;
 
-import blackjack.domain.Card.CardDeck;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -12,10 +12,10 @@ import java.util.List;
 public class Controller {
 
     public void run() {
-        List<String> names = InputView.getNames();
+        List<String> names = InputView.enterNames();
+
         Players players = new Players(names);
         Dealer dealer = new Dealer();
-
         CardDeck deck = new CardDeck();
 
         // 초기화
@@ -51,7 +51,7 @@ public class Controller {
     }
 
     private boolean proceed(String name) {
-        String result = InputView.getYorN(name);
+        String result = InputView.selectYesOrNo(name);
         if (result.equals("y")) {
             return true;
         }

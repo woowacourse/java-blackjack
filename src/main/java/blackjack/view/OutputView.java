@@ -1,11 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.Card.Card;
-import blackjack.domain.Card.Cards;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.result.Result;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 
 public class OutputView {
 
@@ -15,7 +15,6 @@ public class OutputView {
 
     public static void printInitialStatus(Players players, Dealer dealer) {
         System.out.println();
-
         System.out.println(String.format(STATUS_INFO_MSG, String.join(" ,", players.getPlayerNames())));
         // 딜러 출력
         printStatus(dealer.getName(), dealer.getFirstCard());
@@ -28,16 +27,16 @@ public class OutputView {
     }
 
     public static void printStatus(String name, Card card) {
-        System.out.println(String.format("%s: %s", name, card.getInfo()));
+        System.out.println(String.format("%s: %s", name, card.showCardInfo()));
     }
 
     public static void printStatus(String name, Cards cards) {
-        String cardInfo = String.join(DELIMITER, cards.getInfo());
+        String cardInfo = String.join(DELIMITER, cards.showCardsInfo());
         System.out.println(String.format("%s: %s", name, cardInfo));
     }
 
     private static void printStatus(String name, Cards cards, int score) {
-        String cardInfo = String.join(DELIMITER, cards.getInfo());
+        String cardInfo = String.join(DELIMITER, cards.showCardsInfo());
         System.out.println(String.format("%s: %s - 결과: %d", name, cardInfo, score));
     }
 
