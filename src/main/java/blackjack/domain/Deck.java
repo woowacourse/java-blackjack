@@ -16,7 +16,7 @@ public class Deck {
     }
 
     public Card drawCard() {
-        if (deck.size() == 0) {
+        if (deck.isEmpty()) {
             throw new NullPointerException("덱이 비었습니다");
         }
         return deck.poll();

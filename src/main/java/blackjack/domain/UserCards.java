@@ -8,7 +8,7 @@ public class UserCards {
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
-        if (cards == null || cards.size() == 0) {
+        if (cards == null || cards.isEmpty()) {
             throw new RuntimeException("카드가 없습니다");
         }
         this.cards = new LinkedList<>(cards);
