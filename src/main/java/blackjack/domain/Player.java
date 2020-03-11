@@ -53,6 +53,4 @@ public abstract class Player {
     }
 
     public abstract List<Card> getInitialCards();
-
-
 }
