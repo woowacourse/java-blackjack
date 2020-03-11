@@ -29,9 +29,9 @@ public class ResultCalculator {
 
 	private static void calculateWinLose(User mainUser, User opponentUser, Result result) {
 		if (mainUser.isWin(opponentUser)) {
-			result.addWinCount();
+			result.increaseWinCount();
 			return;
 		}
-		result.addLoseCount();
+		result.increaseLoseCount();
 	}
 }

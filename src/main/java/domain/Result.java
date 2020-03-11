@@ -3,7 +3,7 @@ package domain;
 public class Result {
 	private static final int ONE = 1;
 
-	private String name;
+	private final String name;
 	private int winCount;
 	private int loseCount;
 
@@ -13,11 +13,11 @@ public class Result {
 		this.loseCount = loseCount;
 	}
 
-	public void addWinCount() {
+	public void increaseWinCount() {
 		winCount++;
 	}
 
-	public void addLoseCount() {
+	public void increaseLoseCount() {
 		loseCount++;
 	}
 
