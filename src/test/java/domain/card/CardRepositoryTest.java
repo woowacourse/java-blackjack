@@ -12,10 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>
  * 날짜 : 2020/03/11
  */
-public class CardTest {
-
+public class CardRepositoryTest {
 	@Test
-	void create_Card() {
-		assertThat(new Card(Symbol.ACE, Type.DIAMOND)).isInstanceOf(Card.class);
+	void measure_Cards_Size() {
+		assertThat(CardRepository.toList().size()).isEqualTo(52);
 	}
 }

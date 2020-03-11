@@ -42,23 +42,4 @@ public class Card {
 	public String toString() {
 		return symbol.getName() + type.getName();
 	}
-
-	public static class CardCache {
-		private static final List<Card> cardCache;
-
-		static {
-			cardCache = Arrays.stream(Symbol.values())
-					.flatMap(CardCache::mapToCardByType)
-					.collect(Collectors.toList());
-		}
-
-		private static Stream<Card> mapToCardByType(Symbol symbol) {
-			return Arrays.stream(Type.values())
-					.map(type -> new Card(symbol, type));
-		}
-
-		public static List<Card> toList() {
-			return Collections.unmodifiableList(cardCache);
-		}
-	}
 }
