@@ -6,17 +6,17 @@ import java.util.Stack;
 import factory.CardFactory;
 
 public class CardDeck {
-    private Stack<Card> cardDeck = new Stack<>();
+	private Stack<Card> cardDeck = new Stack<>();
 
-    public CardDeck() {
-        cardDeck.addAll(CardFactory.create());
-    }
+	public CardDeck() {
+		cardDeck.addAll(CardFactory.create());
+	}
 
-    public void shuffle() {
-        Collections.shuffle(cardDeck);
-    }
+	public void shuffle() {
+		Collections.shuffle(cardDeck);
+	}
 
-    public Card drawOne() {
-        return cardDeck.pop();
-    }
+	public Card drawOne() {
+		return cardDeck.pop();
+	}
 }
