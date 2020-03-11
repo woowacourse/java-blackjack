@@ -1,6 +1,9 @@
 package domain.user;
 
+import java.util.List;
 import java.util.Objects;
+
+import domain.card.Card;
 
 public class Player extends User {
 	private final String name;
@@ -22,6 +25,11 @@ public class Player extends User {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
+	}
+
+	@Override
+	public List<Card> getInitialCard() {
+		return cards.getCards().subList(0, 2);
 	}
 
 	@Override

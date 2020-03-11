@@ -9,6 +9,7 @@ import domain.user.Dealer;
 import domain.user.PlayerFactory;
 import domain.user.User;
 import view.InputView;
+import view.OutputView;
 
 public class BlackjackGame {
 	private final CardDivider cardDivider;
@@ -29,6 +30,7 @@ public class BlackjackGame {
 			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
 		}
 		dealer.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
+		OutputView.
 	}
 
 	private void drawCard(List<User> users, Dealer dealer) {

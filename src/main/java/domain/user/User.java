@@ -33,5 +33,7 @@ public abstract class User {
 		return cards.getCards();
 	}
 
+	public abstract List<Card> getInitialCard();
+
 	public abstract String getName();
 }
