@@ -21,7 +21,7 @@ public class Player extends User {
     }
 
     public void additionalDraw(Deck deck, YesOrNo answer) {
-        if(answer.isYes()) {
+        if (answer.isYes()) {
             optionalDraw(deck);
         }
     }

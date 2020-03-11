@@ -18,6 +18,7 @@ import domain.deck.Symbol;
 import domain.deck.Type;
 
 class PlayerTest {
+
     private Player player;
 
     @BeforeEach
@@ -40,7 +41,6 @@ class PlayerTest {
 
         assertThat(player.getFirstDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
     }
-
 
     @ParameterizedTest
     @DisplayName("딜러 기준 포인트에 따른 드로우")

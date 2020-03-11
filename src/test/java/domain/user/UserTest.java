@@ -17,6 +17,7 @@ import domain.deck.Symbol;
 import domain.deck.Type;
 
 class UserTest {
+
     private User user;
 
     @BeforeEach
@@ -75,14 +76,6 @@ class UserTest {
         assertThat(user.isBlackJack()).isTrue();
     }
 
-    private static Stream<Arguments> createOption() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.DIAMOND, Type.TWO), 1),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.THREE), 0),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), 0)
-        );
-    }
-
     @ParameterizedTest
     @DisplayName("Bust, BlackJack 여부에 따른 드로우")
     @MethodSource("createOption")
@@ -95,5 +88,13 @@ class UserTest {
         user.optionalDraw(DeckFactory.getDeck());
 
         assertThat(user.cards.size()).isEqualTo(initSize + expected);
+    }
+
+    private static Stream<Arguments> createOption() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.DIAMOND, Type.TWO), 1),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.THREE), 0),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), 0)
+        );
     }
 }

@@ -17,6 +17,7 @@ import domain.deck.Symbol;
 import domain.deck.Type;
 
 class PlayersTest {
+
     private Players players;
 
     @BeforeEach

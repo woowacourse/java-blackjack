@@ -17,14 +17,8 @@ import domain.deck.Symbol;
 import domain.deck.Type;
 
 class DealerTest {
-    Dealer dealer;
 
-    private static Stream<Arguments> createOption() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), 1),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), 0)
-        );
-    }
+    private Dealer dealer;
 
     @Test
     @DisplayName("생성 확인")
@@ -57,5 +51,12 @@ class DealerTest {
         dealer.additionalDraw(DeckFactory.getDeck());
 
         assertThat(dealer.cards.size()).isEqualTo(initSize + expected);
+    }
+
+    private static Stream<Arguments> createOption() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), 1),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), 0)
+        );
     }
 }
