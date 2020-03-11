@@ -20,18 +20,12 @@ public enum Symbol {
 	QUEEN("Q", 10),
 	KING("K", 10);
 
-	private static final int BUST_SCORE = 21;
-
 	private String symbol;
 	private int score;
 
 	Symbol(String symbol, int score) {
 		this.symbol = symbol;
 		this.score = score;
-	}
-
-	public static boolean isBust(int score) {
-		return score > BUST_SCORE;
 	}
 
 	public String getSymbol() {
