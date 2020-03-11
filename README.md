@@ -133,8 +133,7 @@ MethodName_StateUnderTest_ExpectedBehavior
 공백을 지울 것인지
 
 1. 빈 문자열, null이 입력되었을 때 예외처리
-2. 중복된 이름이 있을 경우 예외처리
-3. 이름이 '딜러'일 경우 예외처리
+2. 이름이 '딜러'일 경우 예외처리
 
 ### ParticipantTest
 
@@ -156,7 +155,8 @@ MethodName_StateUnderTest_ExpectedBehavior
 
 ### ParticipantsTest
 
-1. GameResult 메서드를 불러오는 과정에서
+1. 중복된 이름이 있을 경우 예외처리
+2. GameResult 메서드를 불러오는 과정에서
     1. 버스트된 참가자는 제외하는지 → 무조건 패배
 
 ### CardFactoryTest - 카드 전체 생성
