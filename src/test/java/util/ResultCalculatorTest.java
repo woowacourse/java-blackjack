@@ -1,6 +1,10 @@
 package util;
 
-import domain.*;
+import domain.card.CardDeck;
+import domain.game.Results;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Players;
 import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +18,10 @@ public class ResultCalculatorTest {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck(CardFactory.create());
         cardDeck.shuffle();
-        dealer.giveOneCard(cardDeck, player);
-        dealer.giveOneCard(cardDeck, player);
-        dealer.giveOneCard(cardDeck, player2);
-        dealer.giveOneCard(cardDeck, player2);
+        CardDistributor.giveOneCard(cardDeck, player);
+        CardDistributor.giveOneCard(cardDeck, player);
+        CardDistributor.giveOneCard(cardDeck, player2);
+        CardDistributor.giveOneCard(cardDeck, player2);
         dealer.addCard(cardDeck.drawOne());
         dealer.addCard(cardDeck.drawOne());
         Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player, player2)));
@@ -26,6 +30,5 @@ public class ResultCalculatorTest {
         System.out.println(player.getScore());
         System.out.println(player2.getScore());
 
-        results.printAll();
     }
 }

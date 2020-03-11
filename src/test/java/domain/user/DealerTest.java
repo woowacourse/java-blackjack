@@ -1,7 +1,11 @@
-package domain;
+package domain.user;
 
+import domain.card.CardDeck;
+import domain.user.Dealer;
+import domain.user.Player;
 import factory.CardFactory;
 import org.junit.jupiter.api.Test;
+import util.CardDistributor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,9 +18,8 @@ public class DealerTest {
     @Test
     void giveOneCard() {
         Player player = new Player("플레이어");
-        Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck(CardFactory.create());
-        dealer.giveOneCard(cardDeck, player);
+        CardDistributor.giveOneCard(cardDeck, player);
         assertThat(player.getCardSize()).isEqualTo(1);
     }
 

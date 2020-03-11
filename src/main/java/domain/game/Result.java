@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public class Result {
     private static final int ONE = 1;
@@ -6,10 +6,10 @@ public class Result {
     private int winCount;
     private int loseCount;
 
-    public Result(String name, int winCount, int loseCount) {
+    public Result(String name) {
         this.name = name;
-        this.winCount = winCount;
-        this.loseCount = loseCount;
+        this.winCount = 0;
+        this.loseCount = 0;
     }
 
     public void addWinCount() {

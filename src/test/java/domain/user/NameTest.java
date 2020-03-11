@@ -1,5 +1,6 @@
-package domain;
+package domain.user;
 
+import domain.user.Name;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

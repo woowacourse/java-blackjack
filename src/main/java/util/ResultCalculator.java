@@ -1,20 +1,28 @@
 package util;
 
-import domain.*;
+import domain.game.Result;
+import domain.game.Results;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Players;
+import domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResultCalculator {
+    private ResultCalculator() {
+    }
+
     public static Results getResults(Dealer dealer, Players players) {
         List<Result> results = new ArrayList<>();
-        addDealerInfo(dealer, players, results);
-        addPlayerInfo(dealer, players, results);
+        addDealerResults(dealer, players, results);
+        addPlayerResults(dealer, players, results);
         return new Results(results);
     }
 
-    private static void addDealerInfo(Dealer dealer, Players players, List<Result> results) {
-        Result result = new Result(dealer.getName(), 0, 0);
+    private static void addDealerResults(Dealer dealer, Players players, List<Result> results) {
+        Result result = new Result(dealer.getName());
 
         for (Player player : players) {
             calculateWinLose(dealer, player, result);
@@ -22,9 +30,9 @@ public class ResultCalculator {
         results.add(result);
     }
 
-    private static void addPlayerInfo(Dealer dealer, Players players, List<Result> results) {
+    private static void addPlayerResults(Dealer dealer, Players players, List<Result> results) {
         for (Player player : players) {
-            Result result = new Result(player.getName(), 0, 0);
+            Result result = new Result(player.getName());
 
             calculateWinLose(player, dealer, result);
             results.add(result);

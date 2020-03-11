@@ -1,5 +1,6 @@
-package domain;
+package domain.card;
 
+import domain.card.Symbol;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

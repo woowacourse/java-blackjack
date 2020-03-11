@@ -1,14 +1,16 @@
 package factory;
 
-import domain.Card;
-import domain.Symbol;
-import domain.Type;
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
+    private CardFactory(){}
+
     public static List<Card> create() {
         List<Card> cards = new ArrayList<>();
         for (Symbol symbol : Symbol.values()) {

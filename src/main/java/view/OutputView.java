@@ -1,6 +1,11 @@
 package view;
 
-import domain.*;
+import domain.card.Card;
+import domain.game.Result;
+import domain.game.Results;
+import domain.user.Dealer;
+import domain.user.Players;
+import domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,18 +22,18 @@ public class OutputView {
     }
 
     public static void printInitStatus(Dealer dealer, Players players) {
-        printStatus(dealer.getName(), dealer.getFirstCard());
-        players.forEach(player -> printStatus(player.getName(), player.getCards()));
+        printStatus(dealer);
+        players.forEach(player -> printStatus(player));
         System.out.println();
     }
 
-    public static void printStatus(String name, List<Card> cards) {
-        System.out.printf("%s카드: %s\n", name, makeCardNames(cards));
+    public static void printStatus(User user) {
+        System.out.printf("%s카드: %s\n", user.getName(), makeCardNames(user.getCards()));
     }
 
     private static String makeCardNames(List<Card> cards) {
         return cards.stream()
-                .map(Card::getName)
+                .map(Card::getCardInfo)
                 .collect(Collectors.joining(DELIMITER));
     }
 

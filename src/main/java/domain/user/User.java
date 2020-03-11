@@ -1,4 +1,7 @@
-package domain;
+package domain.user;
+
+import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.List;
 
@@ -29,10 +32,6 @@ public abstract class User {
 
     public List<Card> getCards() {
         return cards.getValue();
-    }
-
-    public boolean isBlackJack() {
-        return cards.isBlackJack();
     }
 
     public boolean isBust() {

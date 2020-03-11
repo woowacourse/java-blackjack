@@ -1,11 +1,11 @@
-package domain;
+package domain.card;
 
 import java.util.Objects;
 
 public class Score {
     public static final Score ZERO = new Score(0);
     private static final int ACE_BONUS = 10;
-    private static final int CRITICAL_POINT = 21;
+    private static final int BUST_CRITICAL_POINT = 22;
 
     private final int score;
 
@@ -30,7 +30,7 @@ public class Score {
     }
 
     public boolean isNotBust() {
-        return score <= CRITICAL_POINT;
+        return score < BUST_CRITICAL_POINT;
     }
 
     @Override

@@ -1,5 +1,7 @@
-package domain;
+package domain.card;
 
+import domain.card.Card;
+import domain.card.CardDeck;
 import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 

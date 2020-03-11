@@ -1,52 +1,76 @@
-import domain.*;
+import domain.card.CardDeck;
+import domain.game.WhetherAddCard;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Players;
+import domain.user.User;
 import factory.CardFactory;
 import factory.PlayerFactory;
+import util.CardDistributor;
 import util.ResultCalculator;
 import view.InputView;
 import view.OutputView;
 
 public class Application {
+    private static final int DEFAULT_CARD_SIZE = 2;
+
     public static void main(String[] args) {
-        CardDeck cardDeck = new CardDeck(CardFactory.create());
-        Dealer dealer = new Dealer();
-        Players players = new Players(PlayerFactory.create(InputView.inputNames()));
+        final CardDeck cardDeck = new CardDeck(CardFactory.create());
+        final Dealer dealer = new Dealer();
+        final Players players = new Players(PlayerFactory.create(InputView.inputNames()));
 
-        cardDeck.shuffle();
-        dealer.addCard(cardDeck.drawOne());
-        dealer.addCard(cardDeck.drawOne());
+        distributeInitCard(cardDeck, dealer, players);
+        initBrief(dealer, players);
+        addMoreCards(cardDeck, dealer, players);
+        printResults(dealer, players);
+    }
 
+    private static void distributeInitCard(CardDeck cardDeck, Dealer dealer, Players players) {
+        distributeToUser(cardDeck, dealer);
         for (Player player : players) {
-            dealer.giveOneCard(cardDeck, player);
-            dealer.giveOneCard(cardDeck, player);
+            distributeToUser(cardDeck, player);
         }
+    }
 
+    private static void distributeToUser(CardDeck cardDeck, User user) {
+        int distributeCount = DEFAULT_CARD_SIZE;
+        while (distributeCount-- > 0) {
+            CardDistributor.giveOneCard(cardDeck, user);
+        }
+    }
+
+    private static void initBrief(Dealer dealer, Players players) {
         OutputView.printDistributeMessage(players);
         OutputView.printInitStatus(dealer, players);
-
-        askMoreCard(cardDeck, dealer, players);
-        checkDealerCardAndGiveMoreCard(cardDeck, dealer);
-
-        OutputView.printUsersResult(dealer, players);
-        OutputView.printLastResult(ResultCalculator.getResults(dealer, players));
     }
 
-    private static void askMoreCard(CardDeck cardDeck, Dealer dealer, Players players) {
+    private static void addMoreCards(CardDeck cardDeck, Dealer dealer, Players players) {
+        userMoreCard(cardDeck, players);
+        dealerMoreCard(cardDeck, dealer);
+    }
+
+    private static void userMoreCard(CardDeck cardDeck, Players players) {
         for (Player player : players) {
-            giveIfWant(cardDeck, dealer, player);
+            giveCardsIfPlayerWant(cardDeck, player);
         }
     }
 
-    private static void giveIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
+    private static void giveCardsIfPlayerWant(CardDeck cardDeck, Player player) {
         while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
-            dealer.giveOneCard(cardDeck, player);
-            OutputView.printStatus(player.getName(), player.getCards());
+            CardDistributor.giveOneCard(cardDeck, player);
+            OutputView.printStatus(player);
         }
     }
 
-    private static void checkDealerCardAndGiveMoreCard(CardDeck cardDeck, Dealer dealer) {
+    private static void dealerMoreCard(CardDeck cardDeck, Dealer dealer) {
         if (dealer.shouldAddCard()) {
-            dealer.addCard(cardDeck.drawOne());
+            CardDistributor.giveOneCard(cardDeck, dealer);
             OutputView.printDealerAddCard();
         }
+    }
+
+    private static void printResults(Dealer dealer, Players players) {
+        OutputView.printUsersResult(dealer, players);
+        OutputView.printLastResult(ResultCalculator.getResults(dealer, players));
     }
 }

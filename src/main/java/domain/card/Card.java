@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public class Card {
     private Type type;
@@ -21,7 +21,7 @@ public class Card {
         return symbol.getPoint();
     }
 
-    public String getName() {
+    public String getCardInfo() {
         return symbol.getAlias() + type.getName();
     }
 }
