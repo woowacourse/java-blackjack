@@ -14,7 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class CardTest {
 	@Test
-	void create_card() {
+	void create_Card() {
 		assertThat(new Card(Symbol.ACE, Type.DIAMOND)).isInstanceOf(Card.class);
+	}
+
+	@Test
+	void measure_Cache_Size() {
+		assertThat(Card.CardCache.toList().size()).isEqualTo(52);
 	}
 }
