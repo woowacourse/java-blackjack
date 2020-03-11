@@ -1,9 +1,13 @@
-package blackjack;
+package blackjack.user;
 
+import blackjack.card.Card;
+import blackjack.card.Symbol;
+import blackjack.card.Type;
+import blackjack.user.Player;
+import blackjack.user.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
