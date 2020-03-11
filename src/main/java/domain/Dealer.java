@@ -14,4 +14,8 @@ public class Dealer extends User {
 	public boolean shouldAddCard() {
 		return getScore() <= SHOULD_ADD_CARD_POINT;
 	}
+
+	public boolean isWin(User that) {
+		return isNotBust() && (that.isBust() || getScore() > that.getScore());
+	}
 }
