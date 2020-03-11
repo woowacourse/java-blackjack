@@ -27,8 +27,12 @@ public class OutputView {
 
 	public static void printBlackJackUser(List<User> users) {
 		for (User user : users) {
-			System.out.printf("%s 블랙잭!", user.getName());
+			System.out.printf("%s 블랙잭!%s", user.getName(), NEW_LINE);
 		}
+	}
+
+	public static void printUserBust(User user) {
+		System.out.printf("%s 버스트!%s", user.getName(), NEW_LINE);
 	}
 
 	public static void printUserCard(User user) {
@@ -55,17 +59,13 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printUserBust(User user) {
-		System.out.printf("%s 버스트!", user.getName());
-	}
-
 	private static String parseCardsString(List<Card> cards) {
 		return cards.stream()
 			.map(OutputView::parseCardString)
 			.collect(Collectors.joining(JOINING_DELIMITER));
 	}
 
-	private static String parseCardString(Card val) {
-		return val.getSymbol() + val.getScore();
+	private static String parseCardString(Card card) {
+		return card.getTypeName() + card.getSymbol();
 	}
 }

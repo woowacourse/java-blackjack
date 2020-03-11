@@ -30,7 +30,7 @@ public class Cards {
 
 	public int calculateScore() {
 		int result = cards.stream()
-			.map(Card::getScore)
+			.map(Card::getTypeScore)
 			.reduce(Integer::sum)
 			.orElseThrow(() -> new NoSuchElementException("카드가 없습니다."));
 

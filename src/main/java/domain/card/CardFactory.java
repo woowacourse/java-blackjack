@@ -13,6 +13,7 @@ public class CardFactory {
 				cards.add(new Card(symbol, type));
 			}
 		}
+
 	}
 
 	public static List<Card> create() {

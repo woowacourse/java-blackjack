@@ -28,8 +28,12 @@ public class Card {
 		return Objects.hash(symbol, type);
 	}
 
-	public int getScore() {
+	public int getTypeScore() {
 		return this.type.getScore();
+	}
+
+	public String getTypeName() {
+		return this.type.getName();
 	}
 
 	public boolean isAce() {
@@ -40,11 +44,4 @@ public class Card {
 		return symbol.getName();
 	}
 
-	@Override
-	public String toString() {
-		return "Card{" +
-			"symbol=" + symbol +
-			", type=" + type +
-			'}';
-	}
 }
