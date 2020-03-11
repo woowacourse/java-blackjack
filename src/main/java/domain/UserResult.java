@@ -1,8 +1,8 @@
 package domain;
 
-import java.util.Map;
-
 import domain.player.User;
+
+import java.util.Map;
 
 public class UserResult {
     private final Map<User, Result> results;

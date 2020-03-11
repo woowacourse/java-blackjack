@@ -14,17 +14,18 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGameController {
+	private static final int FIRST_DRAW_COUNT = 2;
 
 	public static void run() {
 		String name = InputView.inputUserNames();
 		List<User> users = makeUsers(name);
-		OutputView.initialSetting(users);
-
 		Dealer dealer = new Dealer();
 		CardDeck cardDeck = new CardDeck();
-		dealer.firstDraw(cardDeck);
+
+		OutputView.firstDrawMessage(name, FIRST_DRAW_COUNT);
+		dealer.cardDraw(cardDeck, FIRST_DRAW_COUNT);
 		for (User user : users) {
-			user.firstDraw(cardDeck);
+			user.cardDraw(cardDeck, FIRST_DRAW_COUNT);
 		}
 
 		OutputView.printOneCard(dealer);
@@ -34,7 +35,7 @@ public class BlackJackGameController {
 
 		for (User user : users) {
 			while (InputUtils.isHit(InputView.inputIsHit(user))) {
-				user.receive(cardDeck);
+				user.cardDraw(cardDeck);
 				OutputView.printCardStatus(user);
 			}
 		}
@@ -78,7 +79,7 @@ public class BlackJackGameController {
 	public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
 		while (dealer.calculateScore() <= 16) {
 			OutputView.printDealerAdditionalCard();
-			dealer.receive(cardDeck);
+			dealer.cardDraw(cardDeck);
 		}
 	}
 

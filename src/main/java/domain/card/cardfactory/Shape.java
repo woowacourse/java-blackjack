@@ -1,4 +1,4 @@
-package domain.card;
+package domain.card.cardfactory;
 
 public enum Shape {
     다이아몬드,

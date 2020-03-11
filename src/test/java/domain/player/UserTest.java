@@ -1,6 +1,5 @@
-package domain;
+package domain.player;
 
-import domain.player.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,5 +22,4 @@ public class UserTest {
 				new User(null)
 		).isInstanceOf(IllegalArgumentException.class);
 	}
-
 }

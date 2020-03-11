@@ -1,0 +1,49 @@
+package domain.player;
+
+import domain.card.CardDeck;
+import domain.card.PlayerCards;
+
+import java.util.Objects;
+
+public class Player implements PlayerInterface {
+
+	protected String name;
+	protected PlayerCards playerCards;
+
+	public void cardDraw(CardDeck cardDeck, int count) {
+		playerCards.addAll(cardDeck.draw(count));
+	}
+
+	public void cardDraw(CardDeck cardDeck) {
+		playerCards.addAll(cardDeck.draw());
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public int calculateScore() {
+		return playerCards.calculateScore();
+	}
+
+	@Override
+	public String toString() {
+		return name + "카드: " + playerCards.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		User user = (User) o;
+		return Objects.equals(name, user.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+}
