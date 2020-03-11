@@ -14,7 +14,7 @@ public abstract class Player {
 
     protected int sumCardNumber() {
         return (int) this.cards.stream()
-                .mapToLong(card -> card.getCardNumber())
+                .mapToLong(Card::getCardNumber)
                 .sum();
     }
 
