@@ -41,12 +41,14 @@ public class Application {
 	private static void giveIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
 		while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
 			dealer.giveOneCard(cardDeck, player);
+			OutputView.printStatus(player.getName(), player.getCards());
 		}
 	}
 
 	private static void checkDealerCardAndGiveMoreCard(CardDeck cardDeck, Dealer dealer) {
 		if (dealer.shouldAddCard()) {
 			dealer.addCard(cardDeck.drawOne());
+			OutputView.printDealerAddCard();
 		}
 	}
 }

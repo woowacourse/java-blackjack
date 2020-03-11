@@ -24,9 +24,13 @@ public class OutputView {
         players.forEach(player -> printStatus(player.getName(), player.getCards()));
     }
 
-    private static void printStatus(String name, List<Card> cards) {
+    public static void printStatus(String name, List<Card> cards) {
         System.out.printf("%s: %s\n", name, cards);
     }
+
+    public static void printDealerAddCard() {
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+	}
 
     public static void printUsersResult(Dealer dealer, Players players) {
         printUserResult(dealer);
