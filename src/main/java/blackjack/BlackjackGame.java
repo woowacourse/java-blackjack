@@ -29,7 +29,7 @@ public class BlackjackGame {
 		Players players = new Players(makePlayers(dealer));
 
 		drawStartingCards(players);
-		if (dealer.isDrawable()) {
+		if (dealer.isNotBurst()) {
 			drawGambler(players);
 			drawDealer(dealer);
 		}
@@ -59,7 +59,7 @@ public class BlackjackGame {
 	}
 
 	private void drawEachGambler(Player gambler) {
-		while (gambler.isDrawable() && ACCEPT.equals(inputView.inputDrawRequest())) {
+		while (gambler.isDrawable() && ACCEPT.equals(inputView.inputDrawRequest(gambler))) {
 			gambler.addCard(cardFactory.drawCard());
 			outputView.showCards(gambler);
 		}

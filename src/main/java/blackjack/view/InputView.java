@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import blackjack.player.Player;
+
 public class InputView {
 	private static final String DELIMITER = ",";
 	private final Scanner scanner;
@@ -28,7 +30,8 @@ public class InputView {
 		}
 	}
 
-	public String inputDrawRequest() {
-		return null;
+	public String inputDrawRequest(Player player) {
+		System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
+		return scanner.nextLine();
 	}
 }

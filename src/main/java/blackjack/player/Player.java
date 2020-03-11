@@ -1,39 +1,49 @@
 package blackjack.player;
 
+import java.util.List;
+
 import blackjack.GameReport;
 import blackjack.player.card.Card;
 import blackjack.player.card.CardBundle;
 
 public abstract class Player {
-    protected final String name;
-    protected final CardBundle cardBundle;
+	protected final String name;
+	protected final CardBundle cardBundle;
 
-    public Player(CardBundle cardBundle, String name) {
-        this.cardBundle = cardBundle;
-        this.name = name;
-    }
+	public Player(CardBundle cardBundle, String name) {
+		this.cardBundle = cardBundle;
+		this.name = name;
+	}
 
-    public void addCard(Card card) {
-        cardBundle.addCard(card);
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public boolean isBurst() {
-        return cardBundle.isBurst();
-    }
+	public void addCard(Card card) {
+		cardBundle.addCard(card);
+	}
 
-    protected boolean isNotBurst() {
-        return !isBurst();
-    }
+	public boolean isBurst() {
+		return cardBundle.isBurst();
+	}
 
-    public boolean isBlackjack() {
-        return cardBundle.isBlackjack();
-    }
+	public boolean isNotBurst() {
+		return !isBurst();
+	}
 
-    public abstract boolean isDealer();
+	public boolean isBlackjack() {
+		return cardBundle.isBlackjack();
+	}
 
-    public abstract boolean isGambler();
+	public abstract boolean isDealer();
 
-    public abstract boolean isDrawable();
+	public abstract boolean isGambler();
 
-    public abstract GameReport getReport(Player player);
+	public abstract boolean isDrawable();
+
+	public abstract GameReport getReport(Player player);
+
+	public List<Card> getCardBundle() {
+		return this.cardBundle.getCards();
+	}
 }

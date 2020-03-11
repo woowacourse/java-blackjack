@@ -1,9 +1,9 @@
 package blackjack.player;
 
+import java.util.Objects;
+
 import blackjack.GameReport;
 import blackjack.player.card.CardBundle;
-
-import java.util.Objects;
 
 public class Gambler extends Player {
 	public Gambler(CardBundle cardBundle, String name) {
@@ -22,7 +22,11 @@ public class Gambler extends Player {
 
 	@Override
 	public boolean isDrawable() {
-		return isNotBurst();
+		return isNotBurst() && isNotBlackjack();
+	}
+
+	private boolean isNotBlackjack() {
+		return !isBlackjack();
 	}
 
 	@Override

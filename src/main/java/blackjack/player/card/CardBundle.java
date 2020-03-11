@@ -1,6 +1,7 @@
 package blackjack.player.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,4 +71,7 @@ public class CardBundle {
 		return Objects.hash(cards);
 	}
 
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cards);
+	}
 }
