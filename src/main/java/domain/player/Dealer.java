@@ -9,8 +9,4 @@ public class Dealer extends Player {
 		this.name = DEALER_NAME;
 		this.playerCards = new PlayerCards();
 	}
-
-	public String toStringOneCard() {
-		return name + " : " + playerCards.toStringOneCard();
-	}
 }

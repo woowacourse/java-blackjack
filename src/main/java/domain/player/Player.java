@@ -26,7 +26,11 @@ public class Player implements PlayerInterface {
 	}
 
 	public String toStringAllCard() {
-		return name + "카드: " + playerCards.toString();
+		return name + "카드: " + playerCards.toStringAllCard();
+	}
+
+	public String toStringOneCard() {
+		return name + "카드: " + playerCards.toStringOneCard();
 	}
 
 	@Override

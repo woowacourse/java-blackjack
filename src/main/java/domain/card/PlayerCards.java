@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerCards {
-	public static final int ACE_SCORE = 1;
 	public static final int MAX_SCORE = 21;
 	public static final int ACE_BONUS = 10;
 	public static final int FIRST_CARD_INDEX = 0;
+	private static final int BASE_SCORE = 0;
 	public static final String DELIMITER = ", ";
 
 	private final List<Card> playerCards = new ArrayList<>();
@@ -24,15 +24,20 @@ public class PlayerCards {
 	}
 
 	public int calculateScore() {
-		int score = 0;
+		int score = BASE_SCORE;
 		boolean containAce = false;
 		for (Card card : playerCards) {
-			if (card.getScore() == ACE_SCORE) {
-				containAce = true;
-			}
+			containAce = isContainAce(containAce, card);
 			score += card.getScore();
 		}
 		return calculateFinalScore(score, containAce);
+	}
+
+	private boolean isContainAce(boolean containAce, Card card) {
+		if (card.isAce()) {
+			containAce = true;
+		}
+		return containAce;
 	}
 
 	private int calculateFinalScore(int score, boolean containAce) {
@@ -46,8 +51,7 @@ public class PlayerCards {
 		return playerCards.get(FIRST_CARD_INDEX).toString();
 	}
 
-	@Override
-	public String toString() {
+	public String toStringAllCard() {
 		List<String> cardNames = playerCards.stream()
 				.map(Card::toString)
 				.collect(Collectors.toList());

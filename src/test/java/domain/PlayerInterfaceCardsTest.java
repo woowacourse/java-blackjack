@@ -15,6 +15,6 @@ class PlayerInterfaceCardsTest {
 		cards.add(new Card(Symbol.ACE, Shape.DIAMOND));
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));
 
-		assertThat(cards.toString()).isEqualTo("A다이아몬드, 8스페이드");
+		assertThat(cards.toStringAllCard()).isEqualTo("A다이아몬드, 8스페이드");
 	}
 }
