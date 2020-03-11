@@ -4,7 +4,7 @@ import domain.card.HandCards;
 
 public class ScoreCalculator {
     private static final int ACE_ADDITIONAL_SCORE = 10;
-    private static final int BLACK_JACK_SCORE = 21;
+    public static final int BLACK_JACK_SCORE = 21;
 
     private ScoreCalculator() {
     }

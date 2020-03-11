@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.CardPossessor;
 import domain.CardProvider;
+import domain.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class HandCards implements CardPossessor {
 
     @Override
     public int calculateScore() {
-        return 0;
+        return ScoreCalculator.calculate(this);
     }
 
     @Override
