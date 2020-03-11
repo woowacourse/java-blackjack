@@ -3,12 +3,14 @@ package controller;
 import static java.util.stream.Collectors.*;
 
 import java.util.List;
+import java.util.Map;
 
 import domain.card.CardFactory;
 import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.gamer.WinOrLose;
 import domain.gamer.YesOrNo;
 import utils.InputUtils;
 import view.InputView;
@@ -26,6 +28,7 @@ public class GameController {
 		addCardAtPlayers(gamers, deck);
 		addCardAtDealer(gamers, deck);
 		OutputView.printCardsResultAndScore(gamers);
+		OutputView.printPlayersWinOrLose(gamers.gameResult());
 	}
 
 	private List<Player> generatePlayers() {
