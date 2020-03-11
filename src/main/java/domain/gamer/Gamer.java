@@ -1,10 +1,10 @@
 package domain.gamer;
 
-import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import domain.card.Card;
 
 public abstract class Gamer {
 	private String name;
@@ -16,15 +16,15 @@ public abstract class Gamer {
 		// initCard(cards);
 	}
 
-	private void initCard(List<Card> cards) {
+	public void addCard(List<Card> cards) {
 		this.cards.addAll(cards);
 	}
 
-	protected void addCard(Card card) {
-		cards.add(card);
-	}
-
 	public abstract boolean isDrawable();
+
+	public String getName() {
+		return name;
+	}
 
 	public List<Card> getCards() {
 		return cards;
@@ -34,6 +34,6 @@ public abstract class Gamer {
 	public String toString() {
 		return name + " : " + cards.stream()
 			.map(Card::toString)
-			.collect(Collectors.joining(","));
+			.collect(Collectors.joining(", "));
 	}
 }
