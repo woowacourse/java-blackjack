@@ -13,7 +13,7 @@ public abstract class User {
 		this.cards = new Cards(new ArrayList<>());
 	}
 
-	protected void addCards(List<Card> cards) {
+	public void addCards(List<Card> cards) {
 		this.cards.addAll(cards);
 	}
 
