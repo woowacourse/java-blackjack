@@ -20,4 +20,8 @@ public enum Rank {
     Rank(final int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

@@ -12,6 +12,14 @@ public class Card {
         this.rank = rank;
     }
 
+    public int getRankValue() {
+        return rank.getValue();
+    }
+
+    public boolean isAce() {
+        return getRankValue() == Rank.ACE.getValue();
+    }
+
     public static List<Card> createCards() {
         return new ArrayList<>(CardCache.cards);
     }
