@@ -24,6 +24,17 @@ class UserTest {
 	}
 
 	@Test
+	void draw_DrawCard_AddDrawCardToHand() {
+		User user = new User("user");
+		Deck deck = new Deck();
+		user.draw(deck);
+
+		assertThat(user).extracting("hand.cards").asList()
+			.hasOnlyElementsOfType(Card.class)
+			.hasSize(1);
+	}
+
+	@Test
 	void draw_DrawNumberOfCards_AddDrawCardsToHand() {
 		User user = new User("user");
 		Deck deck = new Deck();

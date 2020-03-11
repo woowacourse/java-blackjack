@@ -28,6 +28,10 @@ public class User {
 		}
 	}
 
+	public void draw(Deck deck) {
+		hand.add(deck.draw());
+	}
+
 	public void draw(Deck deck, int drawNumber) {
 		validateDrawNumber(drawNumber);
 		List<Card> cards = IntStream.range(0, drawNumber)
