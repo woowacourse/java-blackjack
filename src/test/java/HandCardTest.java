@@ -14,7 +14,7 @@ public class HandCardTest {
         HandCard handCard = new HandCard();
         Type type = Type.valueOf("SPADE");
         Symbol symbol = Symbol.valueOf("ACE");
-        handCard.add(CardFactory.of(type,symbol));
+        handCard.add(CardFactory.of(type, symbol));
 
         Assertions.assertThat(handCard.getNames()).isEqualTo("A스페이드");
     }
@@ -24,19 +24,19 @@ public class HandCardTest {
         HandCard handCard = new HandCard();
         Type type = Type.valueOf("SPADE");
         Symbol symbol = Symbol.valueOf("ACE");
-        handCard.add(CardFactory.of(type,symbol));
+        handCard.add(CardFactory.of(type, symbol));
         type = Type.valueOf("HEART");
         symbol = Symbol.valueOf("SEVEN");
-        handCard.add(CardFactory.of(type,symbol));
+        handCard.add(CardFactory.of(type, symbol));
         type = Type.valueOf("CLUB");
         symbol = Symbol.valueOf("KING");
-        handCard.add(CardFactory.of(type,symbol));
+        handCard.add(CardFactory.of(type, symbol));
 
         Assertions.assertThat(handCard.getNames()).isEqualTo("A스페이드,7하트,K클로버");
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SPADE,FIVE,5","DIAMOND,TEN,10","HEART,ACE,11","CLUB,KING,10"})
+    @CsvSource(value = {"SPADE,FIVE,5", "DIAMOND,TEN,10", "HEART,ACE,11", "CLUB,KING,10"})
     void 점수_계산_테스트(String type, String symbol, int expected) {
         Card card = CardFactory.of(Type.valueOf(type), Symbol.valueOf(symbol));
         HandCard handCard = new HandCard();
