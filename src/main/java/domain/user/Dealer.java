@@ -11,4 +11,9 @@ public class Dealer extends User {
     public static Dealer appoint() {
         return new Dealer();
     }
+
+    @Override
+    public String getFirstDrawResult() {
+        return DEALER + ": " + cards.get(0).getName();
+    }
 }

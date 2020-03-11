@@ -31,4 +31,6 @@ public abstract class User {
     public void draw(Card card) {
         cards.add(card);
     }
+
+    public abstract String getFirstDrawResult();
 }
