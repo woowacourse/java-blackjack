@@ -41,11 +41,11 @@ public class Card {
             '}';
     }
 
-    public int getSymbol() {
-        return this.symbol.getScore();
+    public String getSymbol() {
+        return this.symbol.getSymbolName();
     }
 
-    public String getType() {
-        return this.type.toString();
+    public String getTypeKorean() {
+        return this.type.getKoreanName();
     }
 }

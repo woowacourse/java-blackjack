@@ -1,8 +1,11 @@
 package domain.user;
 
+import domain.card.Card;
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import utils.CustomCollector;
 
 public class Players {
 
@@ -21,5 +24,18 @@ public class Players {
         for (Player player : players) {
             player.receiveFirstCards(deck);
         }
+    }
+
+    public List<String> getNames() {
+        return players.stream().
+            map(Player::getName)
+            .collect(Collectors.toList());
+    }
+
+    public List<Card> getCardsByName(String name) {
+        return players.stream()
+            .filter(player -> player.isSameName(name))
+            .collect(CustomCollector.toSingleton())
+            .getCards();
     }
 }

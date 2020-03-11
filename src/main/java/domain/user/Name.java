@@ -9,4 +9,12 @@ public class Name {
         }
         this.name = name;
     }
+
+    public boolean isSame(String name) {
+        return this.name.equals(name);
+    }
+
+    public String getName() {
+        return name;
+    }
 }
