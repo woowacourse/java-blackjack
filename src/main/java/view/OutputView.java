@@ -2,9 +2,7 @@ package view;
 
 import domain.Result;
 import domain.Rull;
-import domain.player.Dealer;
 import domain.player.Player;
-import domain.player.User;
 
 import java.util.Map;
 
@@ -21,12 +19,12 @@ public class OutputView {
 		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, name, firstDrawCount));
 	}
 
-	public static void printOneCard(Dealer dealer) {
-		System.out.println(dealer.toStringOneCard());
+	public static void printOneCard(Player player) {
+		System.out.println(player.toStringOneCard());
 	}
 
-	public static void printAllCard(User user) {
-		System.out.println(user.toStringAllCard());
+	public static void printAllCard(Player player) {
+		System.out.println(player.toStringAllCard());
 	}
 
 	public static void printDealerHitMessage() {
