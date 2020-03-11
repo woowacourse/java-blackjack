@@ -1,6 +1,7 @@
 package blackjack.utils;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -29,5 +30,13 @@ public class NameParserTest {
     }, delimiter = ':')
     void parseTest(String input, int expected) {
         assertThat(NameParser.parse(input).size()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("중복된 이름이 있는 경우 테스트")
+    void duplicatedNameTest() {
+        assertThatThrownBy(() -> NameParser.parse("pobi,jason,pororo,pobi"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("중복");
     }
 }
