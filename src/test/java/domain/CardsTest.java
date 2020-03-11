@@ -14,10 +14,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CardsTest {
 	private static Stream<Arguments> generateInput() {
 		return Stream.of(
-			Arguments.of(Arrays.asList(new Card(Symbol.TWO, Type.HEART), new Card(Symbol.TWO, Type.DIAMOND)), 4),
-			Arguments.of(Arrays.asList(new Card(Symbol.ACE, Type.HEART), new Card(Symbol.KING, Type.DIAMOND)), 21),
-			Arguments.of(Arrays.asList(new Card(Symbol.ACE, Type.HEART), new Card(Symbol.NINE, Type.DIAMOND),
-				new Card(Symbol.TWO, Type.DIAMOND)), 22));
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), 4),
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), 21),
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
+				new Card(Type.DIAMOND, Symbol.TWO)), 22));
 	}
 
 	@ParameterizedTest
@@ -28,10 +28,10 @@ public class CardsTest {
 
 	@Test
 	void ACE_유무() {
-		Cards cards1 = new Cards(Arrays.asList(new Card(Symbol.ACE, Type.HEART), new Card(Symbol.KING, Type.DIAMOND)));
+		Cards cards1 = new Cards(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)));
 		assertThat(cards1.hasAce()).isTrue();
 
-		Cards cards2 = new Cards(Arrays.asList(new Card(Symbol.TWO, Type.HEART), new Card(Symbol.KING, Type.DIAMOND)));
+		Cards cards2 = new Cards(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.KING)));
 		assertThat(cards2.hasAce()).isFalse();
 	}
 }

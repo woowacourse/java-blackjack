@@ -1,12 +1,12 @@
 package domain;
 
 public class Card {
-	private Symbol symbol;
 	private Type type;
+	private Symbol symbol;
 
-	public Card(Symbol symbol, Type type) {
-		this.symbol = symbol;
+	public Card(Type type, Symbol symbol) {
 		this.type = type;
+		this.symbol = symbol;
 	}
 
 	public int score() {

@@ -8,16 +8,16 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 	@Test
 	void 점수_계산() {
-		assertThat(new Card(Symbol.ACE, Type.HEART).score()).isEqualTo(11);
-		assertThat(new Card(Symbol.KING, Type.HEART).score()).isEqualTo(10);
+		assertThat(new Card(Type.HEART, Symbol.ACE).score()).isEqualTo(11);
+		assertThat(new Card(Type.HEART, Symbol.KING).score()).isEqualTo(10);
 	}
 
 	@Test
 	void Ace_유무() {
-		Card card1 = new Card(Symbol.ACE, Type.HEART);
+		Card card1 = new Card(Type.HEART, Symbol.ACE);
 		assertThat(card1.isAce()).isTrue();
 
-		Card card2 = new Card(Symbol.TWO, Type.HEART);
+		Card card2 = new Card(Type.HEART, Symbol.TWO);
 		assertThat(card2.isAce()).isFalse();
 	}
 }
