@@ -128,7 +128,7 @@ MethodName_StateUnderTest_ExpectedBehavior
 
 ## TEST 목록
 
-### NameTest
+### ParticipantNameTest
 
 공백을 지울 것인지
 
