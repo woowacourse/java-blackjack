@@ -13,4 +13,8 @@ public class Hand {
 	public void add(Card card) {
 		cards.add(card);
 	}
+
+	public void add(List<Card> cards) {
+		this.cards.addAll(cards);
+	}
 }

@@ -2,6 +2,9 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class HandTest {
@@ -17,5 +20,14 @@ class HandTest {
 		hand.add(card);
 
 		assertThat(hand).extracting("cards").asList().contains(card);
+	}
+
+	@Test
+	void add_CardList_AddCardsToHand() {
+		Hand hand = new Hand();
+		List<Card> cards = Arrays.asList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.EIGHT, Type.DIAMOND));
+		hand.add(cards);
+
+		assertThat(hand).extracting("cards").asList().containsAll(cards);
 	}
 }
