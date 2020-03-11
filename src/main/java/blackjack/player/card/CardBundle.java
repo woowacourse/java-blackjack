@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class CardBundle {
 	private static final int ACE_WEIGHT = 10;
-	private static final int BLACKJACK_MAXIMUM_VALUE = 21;
+	private static final int BLACKJACK_VALUE = 21;
 	private final List<Card> cards = new ArrayList<>();
 
 	public void addCard(Card card) {
@@ -31,13 +31,21 @@ public class CardBundle {
 		return resultScore;
 	}
 
+	public boolean isBlackjack() {
+		return cards.size() == 2 && calculateScore() == BLACKJACK_VALUE;
+	}
+
 	private boolean hasAce() {
 		return cards.stream()
 			.anyMatch(Card::isAce);
 	}
 
+	public boolean isBurst() {
+		return calculateScore() > BLACKJACK_VALUE;
+	}
+
 	private boolean isBurst(int result) {
-		return result > BLACKJACK_MAXIMUM_VALUE;
+		return result > BLACKJACK_VALUE;
 	}
 
 	@Override
@@ -54,4 +62,5 @@ public class CardBundle {
 	public int hashCode() {
 		return Objects.hash(cards);
 	}
+
 }
