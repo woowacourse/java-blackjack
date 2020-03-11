@@ -2,14 +2,13 @@ package domain.player;
 
 import domain.CardPossessor;
 import domain.CardProvider;
-import domain.card.Card;
-
-import java.util.List;
 
 public abstract class BlackJackPlayer {
+    protected final String name;
     protected final CardPossessor cardsOnHand;
 
-    public BlackJackPlayer(CardPossessor cards) {
+    public BlackJackPlayer(String name, CardPossessor cards) {
+        this.name = name;
         this.cardsOnHand = cards;
     }
 
@@ -30,4 +29,8 @@ public abstract class BlackJackPlayer {
     }
 
     public abstract boolean canDrawMore();
+
+    public CardPossessor getCardsOnHand() {
+        return cardsOnHand;
+    }
 }

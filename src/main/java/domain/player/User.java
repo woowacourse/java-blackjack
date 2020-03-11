@@ -1,12 +1,10 @@
 package domain.player;
 
-import domain.CardPossessor;
 import domain.card.HandCards;
 
 public class User extends BlackJackPlayer {
-
-    public User(CardPossessor cards) {
-        super(cards);
+    public User(String name) {
+        super(name, new HandCards());
     }
 
     @Override
