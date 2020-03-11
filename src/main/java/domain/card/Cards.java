@@ -24,6 +24,7 @@ public class Cards {
 
     public int getScore() {
         Score score = Score.ZERO;
+
         for (Card card : cards) {
             score = score.add(card.getPoint());
         }

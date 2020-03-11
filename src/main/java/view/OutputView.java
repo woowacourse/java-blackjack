@@ -17,6 +17,7 @@ public class OutputView {
 
     public static void printDistributeMessage(final Players players) {
         List<String> playersName = new ArrayList<>();
+
         players.forEach(player -> playersName.add(player.getName()));
         System.out.println("\n딜러와 " + String.join(DELIMITER, playersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
     }

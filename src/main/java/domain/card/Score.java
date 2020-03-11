@@ -23,6 +23,7 @@ public class Score {
 
     public Score addAceBonusIfNotBust() {
         Score newScore = add(ACE_BONUS);
+
         if (newScore.isNotBust()) {
             return newScore;
         }

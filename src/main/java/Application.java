@@ -34,6 +34,7 @@ public class Application {
 
     private static void distributeToUser(final CardDeck cardDeck, final User user) {
         int distributeCount = DEFAULT_CARD_SIZE;
+
         while (distributeCount-- > 0) {
             CardDistributor.giveOneCard(cardDeck, user);
         }

@@ -14,6 +14,7 @@ public class CardFactory {
 
     public static List<Card> create() {
         List<Card> cards = new ArrayList<>();
+
         for (Symbol symbol : Symbol.values()) {
             createByType(symbol, cards);
         }
