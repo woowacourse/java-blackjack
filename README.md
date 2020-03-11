@@ -15,12 +15,12 @@
 딜러와 플레이어에서 발생하는 중복 코드를 제거해야 한다.
 
 ## 기능 구현 목록
-- [ ] CardsFactory 
+- [x] CardsFactory 
     - [x] 카드 54 개 정적 생성
-    - [ ] 게임 당 복사 & 셔플
-- [ ] CardShoe
+    - [x] 게임 당 복사 & 셔플
+- [ ] CardDeck
     - [ ] 랜덤 2장 (initial)
-    - [ ] 랜덤 1장 (하나로 통합 고려)
+    - [x] 랜덤 1장 (하나로 통합 고려)
 - [x] Card
      - [x] symbol (heart, spade, clover, diamond) (enum)
      - [x] type (2~10, J, k, Q, A) (enum)

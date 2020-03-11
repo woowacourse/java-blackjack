@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CardFactory {
-    private static List<Card> cardDeck;
+    private static List<Card> cards;
 
     static {
-        cardDeck = setUp();
+        cards = setUp();
     }
 
     private static List<Card> setUp() {
@@ -20,7 +20,9 @@ public class CardFactory {
                 .collect(Collectors.toList());
     }
 
-    public static List<Card> getCardDeck() {
+    public static List<Card> createCardDeck() {
+        List<Card> cardDeck = new ArrayList<>(cards);
+        Collections.shuffle(cardDeck);
         return cardDeck;
     }
 }
