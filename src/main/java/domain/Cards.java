@@ -34,4 +34,12 @@ public class Cards {
         }
         return sum;
     }
+
+    public boolean isOverBlackJack() {
+        return getSum() > 21;
+    }
+
+    public boolean isBlackJack() {
+        return getSum() == 21;
+    }
 }
