@@ -13,9 +13,9 @@ public enum CardNumber {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    JAY(11),
-    QUEEN(12),
-    KING(13);
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
     private int cardNumber;
 

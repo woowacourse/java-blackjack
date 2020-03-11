@@ -42,6 +42,10 @@ public class Card {
         return new ArrayList<>(cards);
     }
 
+    public boolean isAce() {
+        return this.cardNumber.equals(CardNumber.ACE);
+    }
+
     public int getCardNumber() {
         return this.cardNumber.getCardNumber();
     }

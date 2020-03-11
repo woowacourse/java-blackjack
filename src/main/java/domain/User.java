@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class User extends Player {
     public User(Card... cards) {
         super(cards);

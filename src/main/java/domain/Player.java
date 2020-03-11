@@ -19,4 +19,8 @@ public abstract class Player {
     }
 
     abstract void insertCard(Cards cards);
+
+    public List<Card> getCard() {
+        return Collections.unmodifiableList(this.cards);
+    }
 }
