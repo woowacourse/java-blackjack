@@ -9,4 +9,12 @@ public class Player extends User {
         }
         this.name = new Name(name);
     }
+
+    public boolean isSameName(String name) {
+        return this.name.isSame(name);
+    }
+
+    public String getName() {
+        return name.getName();
+    }
 }

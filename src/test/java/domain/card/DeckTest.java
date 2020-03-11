@@ -1,4 +1,4 @@
 package domain.card;
 
-public class Cards {
+public class DeckTest {
 }

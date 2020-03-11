@@ -40,4 +40,12 @@ public class Card {
             ", type=" + type +
             '}';
     }
+
+    public int getSymbol() {
+        return this.symbol.getScore();
+    }
+
+    public String getType() {
+        return this.type.toString();
+    }
 }

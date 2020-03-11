@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,12 @@ public class Players {
         }
         for (String playerName : playerNames) {
             players.add(new Player(playerName));
+        }
+    }
+
+    public void receiveFirstCards(Deck deck) {
+        for (Player player : players) {
+            player.receiveFirstCards(deck);
         }
     }
 }
