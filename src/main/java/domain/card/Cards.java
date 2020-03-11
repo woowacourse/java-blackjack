@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class UserCards {
+public class Cards {
     private static final int MIN_SUM_FOR_ACE_IS_ONE = 12;
+    private static final int BLACKJACK_SCORE = 21;
+
     private List<Card> cards = new ArrayList<>();
 
-    public UserCards() {
+    public Cards() {
     }
 
     public List<Card> getCards() {
@@ -47,5 +49,9 @@ public class UserCards {
             return scoreAceAsOne + Symbol.ALTERNATE_ACE_SCORE;
         }
         return scoreAceAsOne;
+    }
+
+    public boolean isBlackJack() {
+        return sumScores() == BLACKJACK_SCORE;
     }
 }

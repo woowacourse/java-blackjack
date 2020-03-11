@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class UserCardTest {
+public class CardsTest {
     private static Stream<Arguments> getCardsOneAceExist() {
         List<Card> cardsWhenAceIs11 = new ArrayList<>();
         cardsWhenAceIs11.add(new Card(Symbol.ACE, Type.CLUB));
@@ -50,16 +50,16 @@ public class UserCardTest {
         card.add(new Card(Symbol.TWO, Type.CLUB));
         card.add(new Card(Symbol.QUEEN, Type.CLUB));
 
-        UserCards userCards = new UserCards();
-        userCards.put(card);
-        assertThat(userCards.sumScores()).isEqualTo(12);
+        Cards cards = new Cards();
+        cards.put(card);
+        assertThat(cards.sumScores()).isEqualTo(12);
     }
 
     @ParameterizedTest
     @DisplayName("한 장의 에이스가 존재할 때 합 구하기")
     @MethodSource("getCardsOneAceExist")
     void sumScoresWhenOneAceExist(List<Card> cards) {
-        UserCards userCards = new UserCards();
+        Cards userCards = new Cards();
         userCards.put(cards);
         assertThat(userCards.sumScores()).isEqualTo(21);
     }
@@ -68,9 +68,30 @@ public class UserCardTest {
     @DisplayName("두 장의 에이스가 존재할 때 합 구하기")
     @MethodSource("getCardsTwoAceExist")
     void sumScoresWhenAceIsMoreThanTwo(List<Card> cards, int sumResult) {
-        UserCards userCards = new UserCards();
+        Cards userCards = new Cards();
         userCards.put(cards);
         assertThat(userCards.sumScores()).isEqualTo(sumResult);
     }
 
+    @Test
+    void isBlackJackWhenFalse() {
+        List<Card> card = new ArrayList<>();
+        card.add(new Card(Symbol.TWO, Type.CLUB));
+        card.add(new Card(Symbol.QUEEN, Type.CLUB));
+
+        Cards cards = new Cards();
+        cards.put(card);
+        assertThat(cards.isBlackJack()).isFalse();
+    }
+
+    @Test
+    void isBlackJackWhenTrue() {
+        List<Card> card = new ArrayList<>();
+        card.add(new Card(Symbol.ACE, Type.CLUB));
+        card.add(new Card(Symbol.QUEEN, Type.CLUB));
+
+        Cards cards = new Cards();
+        cards.put(card);
+        assertThat(cards.isBlackJack()).isTrue();
+    }
 }

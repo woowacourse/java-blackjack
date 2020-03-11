@@ -1,13 +1,13 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Deck;
-import domain.card.UserCards;
 import java.util.List;
 
 public abstract class User {
 
-    protected UserCards cards;
+    protected Cards cards;
 
     public User() {
     }
