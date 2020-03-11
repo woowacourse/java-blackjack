@@ -1,0 +1,39 @@
+package blackjack.domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player {
+    protected static final int ACE_CRITICAL_POINT = 11;
+    protected static final int ACE_UPPER_POINT = 11;
+    protected static final int ACE_LOWER_POINT = 1;
+
+    protected List<Card> cards = new ArrayList<>();
+
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
+    public int getCardsSize() {
+        return this.cards.size();
+    }
+
+    public int calculateScore() {
+        int score = calculateRawScore();
+        if (hasAce() && score <= ACE_CRITICAL_POINT) {
+            score += ACE_UPPER_POINT - ACE_LOWER_POINT;
+        }
+        return score;
+    }
+
+    private int calculateRawScore() {
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+}

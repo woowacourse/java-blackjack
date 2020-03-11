@@ -1,10 +1,12 @@
 package blackjack;
 
 import blackjack.domain.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,26 @@ public class DealerTest {
         dealer = Dealer.getDealer();
     }
 
+    @DisplayName("카드 덱에서 뽑았을 때 유저가 가지고 있는 카드 수와 덱의 카드 수가 동시에 변하는지 확인")
+    @Test
+    void addCardTest() {
+        for (int i = 0; i < 2; i++) {
+            dealer.addCard(cardDeck.getOneCard());
+        }
+        assertThat(dealer.getCardsSize()).isEqualTo(2);
+        assertThat(cardDeck.size()).isEqualTo(4);
+    }
+
+    @DisplayName("현재 보유 중인 카드의 총 점수 계산")
+    @Test
+    void calculateScoreTest() {
+        for (int i = 0; i < 2; i++) {
+            dealer.addCard(cardDeck.getOneCard());
+        }
+        int score = dealer.calculateScore();
+        assertThat(score).isEqualTo(19);
+    }
+
     @DisplayName("딜러의 점수가 16이하인지 확인")
     @Test
     void isUnderCriticalScore() {
@@ -39,5 +61,12 @@ public class DealerTest {
             dealer.addCard(cardDeck.getOneCard());
         }
         assertThat(dealer.isUnderCriticalScore()).isFalse();
+    }
+
+    @AfterEach
+    void tearDown() throws NoSuchFieldException, IllegalAccessException {
+        Field dealer_instance = Dealer.class.getDeclaredField("dealer_instance");
+        dealer_instance.setAccessible(true);
+        dealer_instance.set(null, null);
     }
 }
