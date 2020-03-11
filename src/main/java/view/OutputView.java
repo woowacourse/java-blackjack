@@ -29,4 +29,9 @@ public class OutputView {
     public static void printAddCardAtDealer() {
         System.out.println("딜러는 16이하라 카드 한장 더 받았습니다.");
     }
+
+    public static void printCardsResultAndScore(Gamers gamers) {
+        System.out.println(gamers.getDealer() + "-결과 : " + gamers.getDealer().getScore());
+        gamers.stream().forEach(x -> System.out.println(x + "- 결과 : " + x.getScore()));
+    }
 }

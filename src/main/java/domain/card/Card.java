@@ -9,8 +9,8 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public int getCardNumber() {
-        return cardNumber.getScore();
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 
     @Override

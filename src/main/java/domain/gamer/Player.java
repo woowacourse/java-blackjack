@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import domain.card.Card;
 import exception.NameFormatException;
 
 public class Player extends Gamer {
@@ -21,10 +20,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean isDrawable() {
-        int sum = super.getCards()
-                .stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
-        return sum < DRAW_CARD_PIVOT;
+        return super.result.calculateWithAce(this) < DRAW_CARD_PIVOT;
     }
 }

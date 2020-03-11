@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
+import domain.card.CardNumber;
 
 public abstract class Gamer {
 	private String name;
 	private final List<Card> cards = new ArrayList<>();
-	private Result gameResult;
+	protected Result result = new Result();
 
 	public Gamer(String name) {
 		this.name = name;
-		// initCard(cards);
 	}
 
 	public void addCard(List<Card> cards) {
@@ -28,6 +28,18 @@ public abstract class Gamer {
 
 	public List<Card> getCards() {
 		return cards;
+	}
+
+	public boolean isContainAce(){
+		return cards.stream().anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
+	}
+
+	public int getScore(){
+		return result.calculateWithAce(this);
+	}
+
+	public Result getGameResult() {
+		return result;
 	}
 
 	@Override

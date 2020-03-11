@@ -25,7 +25,7 @@ public class GameController {
         OutputView.printPlayer(gamers);
         addCardAtPlayers(gamers, deck);
         addCardAtDealer(gamers, deck);
-        OutputView.printPlayer(gamers);
+        OutputView.printCardsResultAndScore(gamers);
     }
 
     private List<Player> generatePlayers() {
