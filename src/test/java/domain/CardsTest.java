@@ -23,7 +23,7 @@ public class CardsTest {
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.ACE));
         cards.add(new Card(Type.CLUB, Symbol.JACK));
-        Assertions.assertThat(cards.getSum())
+        Assertions.assertThat(cards.getScore())
                 .isEqualTo(16);
     }
 

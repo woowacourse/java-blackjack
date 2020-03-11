@@ -1,10 +1,13 @@
 package domain;
 
+import util.BlackJackRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
+    private static final int BLACK_JACK_SCORE = 21;
     private List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -14,31 +17,31 @@ public class Cards {
         cards.add(card);
     }
 
-    public int getSum() {
-        int sum = 0;
+    public int getScore() {
+        int score = 0;
         for (Card card : cards) {
-            sum += card.getValue();
+            score += card.getValue();
         }
-        return addAceWeight(sum);
+        return addAceWeight(score);
     }
 
-    private int addAceWeight(int sum) {
+    private int addAceWeight(int score) {
         for (Card card : cards) {
-            if (sum > 11) {
+            if (BlackJackRule.isBust(score + Symbol.getAceWeight())) {
                 break;
             }
             if (card.isAce()) {
-                sum += Symbol.getAceWeight();
+                score += Symbol.getAceWeight();
             }
         }
-        return sum;
+        return score;
     }
 
     public boolean isBust() {
-        return getSum() > 21;
+        return BlackJackRule.isBust(getScore());
     }
 
     public boolean isBlackJack() {
-        return getSum() == 21;
+        return BlackJackRule.isBlackJack(getScore());
     }
 }
