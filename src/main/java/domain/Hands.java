@@ -9,16 +9,24 @@ import java.util.List;
  *    @author AnHyungJu, ParkDooWon
  */
 public class Hands {
+	public static final int BLACKJACK = 21;
+	private static final int ACE_TO_ELEVEN = 10;
+
 	private List<Card> hands;
 
 	public Hands() {
-		hands = new ArrayList<>();
+		this.hands = new ArrayList<>();
 	}
 
 	public int calculateTotalScore() {
-		return hands.stream()
+		int totalScore = hands.stream()
 			.mapToInt(Card::score)
 			.sum();
+
+		if (hasAce() && (totalScore + ACE_TO_ELEVEN <= BLACKJACK)) {
+			return totalScore + ACE_TO_ELEVEN;
+		}
+		return totalScore;
 	}
 
 	public boolean hasAce() {
@@ -30,7 +38,7 @@ public class Hands {
 		hands.add(card);
 	}
 
-	public int getSize() {
-		return hands.size();
+	public boolean hasTwoCards() {
+		return hands.size() == 2;
 	}
 }

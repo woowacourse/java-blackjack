@@ -2,11 +2,14 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class HandsTest {
@@ -18,28 +21,31 @@ public class HandsTest {
 		assertThat(hands.calculateTotalScore()).isEqualTo(21);
 	}
 
-	@Test
-	void ACE_유무() {
-		Hands hands1 = new Hands();
-		hands1.add(new Card(Type.HEART, Symbol.ACE));
-		hands1.add(new Card(Type.DIAMOND, Symbol.KING));
-		assertThat(hands1.hasAce()).isTrue();
-
-		Hands hands2 = new Hands();
-		hands2.add(new Card(Type.HEART, Symbol.TWO));
-		hands2.add(new Card(Type.DIAMOND, Symbol.KING));
-		assertThat(hands2.hasAce()).isFalse();
+	private static Stream<Arguments> generateInput() {
+		return Stream.of(
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), true),
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), true),
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
+				new Card(Type.DIAMOND, Symbol.TWO)), false));
 	}
 
 	@Test
-	void 카드_추가() {
-		List<Card> cards = new ArrayList<>(
-			Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)));
+	void ACE_갯수() {
+		Hands hands1 = new Hands();
+		hands1.add(new Card(Type.HEART, Symbol.ACE));
+		hands1.add(new Card(Type.DIAMOND, Symbol.KING));
+		assertThat(hands1.hasAce()).isEqualTo(1);
+	}
+
+	@ParameterizedTest
+	@MethodSource("generateInput")
+	void 두_장인지(List<Card> cards, boolean expected) {
 		Hands hands = new Hands();
+
 		for (Card card : cards) {
 			hands.add(card);
 		}
-		hands.add(new Card(Type.CLUBS, Symbol.ACE));
-		assertThat(hands.getSize()).isEqualTo(3);
+
+		assertThat(hands.hasTwoCards()).isEqualTo(expected);
 	}
 }

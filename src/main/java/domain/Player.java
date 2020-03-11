@@ -6,8 +6,6 @@ package domain;
  *    @author AnHyungJu, ParkDooWon
  */
 public class Player implements Gamer {
-	private static final int BLACKJACK = 21;
-
 	private String name;
 	private Hands hands;
 
@@ -23,19 +21,16 @@ public class Player implements Gamer {
 
 	@Override
 	public boolean isBust() {
-		return hands.calculateTotalScore() > BLACKJACK;
+		return hands.calculateTotalScore() > Hands.BLACKJACK;
 	}
 
 	@Override
 	public int scoreHands() {
-		if (isBust() && hands.hasAce()) {
-
-		}
-		return 0;
+		return hands.calculateTotalScore();
 	}
 
 	@Override
 	public boolean isBlackjack() {
-		return hands.calculateTotalScore() == BLACKJACK;
+		return (hands.calculateTotalScore() == Hands.BLACKJACK) && hands.hasTwoCards();
 	}
 }
