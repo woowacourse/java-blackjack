@@ -4,7 +4,7 @@ import card.Deck;
 
 import java.util.Objects;
 
-public class Participant {
+public class Participant implements User {
     private static final String YES = "y";
     private static final String NO = "n";
 
@@ -21,36 +21,44 @@ public class Participant {
         this.hands = hands;
     }
 
-    // TODO : 메서드 분리
     public void needMoreCard(String answer, Deck deck) {
-        if (Objects.isNull(answer) || answer.isEmpty()) {
-            throw new InvalidParticipantException(InvalidParticipantException.NULL_OR_EMPTY);
-        }
+        checkNullOrEmpty(answer);
+        checkYesOrNo(answer);
 
         if (answer.equals(YES)) {
             hit(deck);
         }
+    }
 
-        if (answer.equals(NO)) {
+    private void checkNullOrEmpty(String answer) {
+        if (Objects.isNull(answer) || answer.isEmpty()) {
+            throw new InvalidParticipantException(InvalidParticipantException.NULL_OR_EMPTY);
+        }
+    }
+
+    private void checkYesOrNo(String answer) {
+        if (answer.equals(YES) || answer.equals(NO)) {
             return;
         }
-
         throw new InvalidParticipantException(InvalidParticipantException.INVALID_INPUT);
-    }
-
-    private void hit(Deck deck) {
-        hands.draw(deck);
-    }
-
-    public int handSize() {
-        return hands.size();
     }
 
     public boolean checkBlackJack() {
         return hands.isBlackJack();
     }
 
+    @Override
+    public void hit(Deck deck) {
+        hands.draw(deck);
+    }
+
+    @Override
     public boolean checkBurst() {
         return hands.isBurst();
+    }
+
+    @Override
+    public int handSize() {
+        return hands.size();
     }
 }

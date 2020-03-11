@@ -40,7 +40,7 @@ public class DealerTest {
         Hands hand = new Hands(hands);
         Dealer dealer = new Dealer(hand);
 
-        dealer.needMoreCard(deck);
+        dealer.hit(deck);
 
         assertThat(dealer.handSize()).isEqualTo(2);
     }
@@ -66,7 +66,7 @@ public class DealerTest {
         Hands hand = new Hands(hands);
         Dealer dealer = new Dealer(hand);
 
-        dealer.needMoreCard(deck);
+        dealer.hit(deck);
 
         assertThat(dealer.handSize()).isEqualTo(3);
     }

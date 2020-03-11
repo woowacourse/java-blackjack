@@ -2,7 +2,9 @@ package user;
 
 import card.Deck;
 
-public class Dealer {
+public class Dealer implements User {
+    public static final int DEALER_HIT_POINT = 16;
+
     private Hands hands;
 
     public Dealer(Deck deck) {
@@ -13,13 +15,20 @@ public class Dealer {
         this.hands = hands;
     }
 
-    public int handSize() {
-        return hands.size();
-    }
-
-    public void needMoreCard(Deck deck) {
-        if (this.hands.score() <= 16) {
+    @Override
+    public void hit(Deck deck) {
+        if (this.hands.score() <= DEALER_HIT_POINT) {
             this.hands.draw(deck);
         }
+    }
+
+    @Override
+    public boolean checkBurst() {
+        return hands.isBurst();
+    }
+
+    @Override
+    public int handSize() {
+        return hands.size();
     }
 }
