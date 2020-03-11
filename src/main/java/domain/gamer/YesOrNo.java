@@ -1,22 +1,29 @@
 package domain.gamer;
 
+import exception.YesOrNoFormatException;
+
+import java.util.Arrays;
+
 public enum YesOrNo {
     YES("y", true),
     NO("n", false);
 
     private String answerValue;
-    private boolean isDrawable;
+    private boolean drawable;
 
-    YesOrNo(String answerValue, boolean isDrawable) {
+    YesOrNo(String answerValue, boolean drawable) {
         this.answerValue = answerValue;
-        this.isDrawable = isDrawable;
+        this.drawable = drawable;
     }
 
-    public String getAnswerValue() {
-        return answerValue;
+    public boolean getDrawable() {
+        return drawable;
     }
 
-    public boolean isDrawable() {
-        return isDrawable;
+    public static YesOrNo findYesOrNo(String answer) {
+        return Arrays.stream(values())
+                .filter(x -> x.answerValue.equals(answer))
+                .findFirst()
+                .orElseThrow(() -> new YesOrNoFormatException("y 또는 n을 입력해주세요." ));
     }
 }

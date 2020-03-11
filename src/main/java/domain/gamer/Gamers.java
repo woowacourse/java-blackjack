@@ -1,9 +1,9 @@
 package domain.gamer;
 
+import domain.card.Deck;
+
 import java.util.List;
 import java.util.stream.Stream;
-
-import domain.card.Deck;
 
 public class Gamers {
 	private List<Player> players;
@@ -16,7 +16,6 @@ public class Gamers {
 
 	public void initCard(Deck deck) {
 		players.forEach(player -> player.addCard(deck.popCard(2)));
-
 		dealer.addCard(deck.popCard(2));
 	}
 

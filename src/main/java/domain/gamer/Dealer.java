@@ -9,7 +9,6 @@ public class Dealer extends Gamer {
 		super("딜러");
 	}
 
-	@Override
 	public boolean isDrawable() {
 		int sum = super.getCards()
 			.stream()

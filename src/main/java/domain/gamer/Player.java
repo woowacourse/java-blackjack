@@ -1,9 +1,11 @@
 package domain.gamer;
 
+import domain.card.Card;
 import exception.NameFormatException;
 
 public class Player extends Gamer {
     private static final String PATTERN = "[a-zA-Z가-힣]*";
+    private static final int DRAW_CARD_PIVOT = 21;
 
     public Player(String name) {
         super(name);
@@ -19,10 +21,10 @@ public class Player extends Gamer {
 
     @Override
     public boolean isDrawable() {
-        return false;
-    }
-
-    public static boolean isDrawable(YesOrNo yesorNo) {
-        return yesorNo.isDrawable();
+        int sum = super.getCards()
+                .stream()
+                .mapToInt(Card::getCardNumber)
+                .sum();
+        return sum < DRAW_CARD_PIVOT;
     }
 }
