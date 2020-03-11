@@ -36,6 +36,10 @@ public class User {
 		this.cards.add(card);
 	}
 
+	public List<Card> openAllCards() {
+		return cards.toList();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +21,10 @@ public class Cards {
 
 	public void add(Card card) {
 		cards.add(card);
+	}
+
+	public List<Card> toList() {
+		return Collections.unmodifiableList(cards);
 	}
 
 	@Override

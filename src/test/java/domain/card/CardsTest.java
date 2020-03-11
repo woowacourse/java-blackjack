@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 클래스 이름 : .java
@@ -31,5 +33,16 @@ public class CardsTest {
 		Cards expected = new Cards(Collections.singletonList(card));
 
 		assertThat(cards).isEqualTo(expected);
+	}
+
+	@Test
+	void toList_Getter_For_View() {
+		Cards cards = new Cards(new ArrayList<>());
+		Card card = new Card(Symbol.ACE, Type.CLOVER);
+		cards.add(card);
+
+		List<Card> expected = Collections.singletonList(card);
+
+		assertEquals(expected, cards.toList());
 	}
 }

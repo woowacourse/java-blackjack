@@ -5,7 +5,7 @@ import domain.user.Dealer;
 import domain.user.Players;
 import service.BlackjackService;
 
-import static view.OutputView.printInitialDistribution;
+import static view.OutputView.*;
 
 /**
  * 클래스 이름 : .java
@@ -19,5 +19,6 @@ public class BlackjackController {
 	public static void run(Deck deck, Dealer dealer, Players players) {
 		BlackjackService.giveInitialCards(deck, dealer, players);
 		printInitialDistribution(players);
+		printInitialStatus(dealer, players);
 	}
 }

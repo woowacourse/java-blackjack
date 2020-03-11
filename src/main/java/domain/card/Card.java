@@ -38,6 +38,11 @@ public class Card {
 		return Objects.hash(symbol, type);
 	}
 
+	@Override
+	public String toString() {
+		return symbol.getName() + type.getName();
+	}
+
 	public static class CardCache {
 		private static final List<Card> cardCache;
 
