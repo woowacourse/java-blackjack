@@ -30,6 +30,4 @@ public class TypeTest {
         assertThat(Type.of("클로버").getName()).isEqualTo("클로버");
         assertThat(Type.of("다이아몬드").getName()).isEqualTo("다이아몬드");
     }
-
-
 }

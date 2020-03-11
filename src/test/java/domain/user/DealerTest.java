@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import factory.CardFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -29,5 +30,19 @@ public class DealerTest {
     void shouldAddCard() {
         Dealer dealer = new Dealer();
         assertThat(dealer.shouldAddCard()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러 승리 여부 확인 - 플레이어와 동점일 경우 패배")
+    void isWin() {
+        Dealer dealer = new Dealer();
+        Player user = new Player("player");
+
+        dealer.addCard(Card.of("스페이드", "K"));
+        user.addCard(Card.of("스페이드", "9"));
+        assertThat(dealer.isWin(user)).isTrue();
+
+        user.addCard(Card.of("스페이드", "10"));
+        assertThat(dealer.isWin(user)).isFalse();
     }
 }
