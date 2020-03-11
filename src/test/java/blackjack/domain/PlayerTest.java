@@ -35,4 +35,10 @@ public class PlayerTest {
         player.receiveCard(new Card(Suit.HEART, Symbol.SIX));
         assertThat(player.isBusted()).isTrue();
     }
+
+    @Test
+    @DisplayName("사용자가 갖고 있는 카드 정보를 모두 출력하는 기능 확인")
+    void displayPlayerCardInfo() {
+        assertThat(player.showCardInfo()).isEqualTo("클럽 6, 하트 킹");
+    }
 }

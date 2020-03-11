@@ -12,4 +12,11 @@ public class Card {
     public int getScore() {
         return symbol.getScore();
     }
+
+    @Override
+    public String toString() {
+        return suit.getName() +
+                " " +
+                symbol.getName();
+    }
 }

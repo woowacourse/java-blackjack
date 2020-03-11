@@ -26,4 +26,12 @@ public abstract class User {
     public boolean isBlackJack() {
         return cards.getTotalScore() == BLACKJACK;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String showCardInfo() {
+        return String.join(", ", cards.getCardInfo());
+    }
 }
