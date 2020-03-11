@@ -28,5 +28,9 @@ public class BlackJackController {
                 OutputView.printPlayerCards(player);
             }
         }
+        while (!dealer.isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD)) {
+            dealer.receiveCard(deck);
+            OutputView.printDealerHasReceivedMoreCard();
+        }
     }
 }

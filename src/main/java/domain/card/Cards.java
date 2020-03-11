@@ -7,6 +7,7 @@ import java.util.List;
 public class Cards {
     private static final int MIN_SUM_FOR_ACE_IS_ONE = 12;
     public static final int BLACKJACK_SCORE = 21;
+    public static final int MAX_SUM_FOR_DEALER_MORE_CARD = 16;
 
     private List<Card> cards = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -50,5 +51,9 @@ public class OutputView {
 
     public static void printAskWantMoreCard(String name) {
         System.out.println(name + "님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    }
+
+    public static void printDealerHasReceivedMoreCard() {
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
     }
 }
