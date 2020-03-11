@@ -23,6 +23,9 @@ public class Application {
         OutputView.printDistributeMessage(players);
         OutputView.printInitStatus(dealer, players);
 
+        askMoreCard(cardDeck,dealer,players);
+//        checkDealerCardAndGiveMoreCard(dealer);
+
         if(dealer.shouldAddCard()){
             dealer.addCard(cardDeck.drawOne());
         }
@@ -31,5 +34,24 @@ public class Application {
 
         Results results = ResultCalculator.getResults(dealer,players);
         results.printAll();
+    }
+
+    private static void askMoreCard(CardDeck cardDeck, Dealer dealer, Players players) {
+        for(Player player : players){
+            giveIfWant(cardDeck,dealer,player);
+        }
+    }
+
+    private static void giveIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
+        String moreCard = "";
+        while (!moreCard.equals("n")){
+            moreCard = InputView.inputMoreCard(player);
+            if(moreCard.equals("y")){
+                dealer.giveOneCard(cardDeck,player);
+            }
+            if(player.isBust()){
+                break;
+            }
+        }
     }
 }
