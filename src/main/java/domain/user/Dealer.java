@@ -4,7 +4,11 @@ public class Dealer extends User {
 
     private static final String DEALER = "딜러";
 
-    public Dealer() {
+    private Dealer() {
         super(DEALER);
+    }
+
+    public static Dealer appoint() {
+        return new Dealer();
     }
 }
