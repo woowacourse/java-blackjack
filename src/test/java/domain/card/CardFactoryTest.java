@@ -20,4 +20,13 @@ public class CardFactoryTest {
 
 		assertThat(CardFactory.create()).isEqualTo(cards);
 	}
+
+	@Test
+	void sizeTest() {
+		int size = CardFactory.create().size();
+
+		assertThat(size).isEqualTo(52);
+	}
+
+
 }
