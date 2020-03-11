@@ -1,27 +1,27 @@
 package domain;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeckFactory {
 
     public static Deck createDeck() {
-        Queue<Card> queue = new LinkedList<>();
+        List<Card> cards = new ArrayList<>();
 
         for (Symbol symbol : Symbol.values()) {
-            queue.addAll(createCard(symbol));
+            cards.addAll(createCard(symbol));
         }
 
-        return new Deck(queue);
+        return new Deck(cards);
     }
 
-    private static Queue<Card> createCard(Symbol symbol) {
-        Queue<Card> queue = new LinkedList<>();
+    private static List<Card> createCard(Symbol symbol) {
+        List<Card> cards = new ArrayList<>();
 
         for (Type type : Type.values()) {
-            queue.add(new Card(symbol, type));
+            cards.add(new Card(symbol, type));
         }
 
-        return queue;
+        return cards;
     }
 }
