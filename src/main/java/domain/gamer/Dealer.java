@@ -8,6 +8,6 @@ public class Dealer extends Gamer {
     }
 
     public boolean isDrawable() {
-        return super.result.calculateWithAce(this) <= DRAW_CARD_PIVOT;
+        return super.calculateWithAce() <= DRAW_CARD_PIVOT;
     }
 }

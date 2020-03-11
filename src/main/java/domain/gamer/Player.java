@@ -20,6 +20,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean isDrawable() {
-        return super.result.calculateWithAce(this) < DRAW_CARD_PIVOT;
+        return super.calculateWithAce() < DRAW_CARD_PIVOT;
     }
 }

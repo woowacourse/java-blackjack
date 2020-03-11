@@ -45,7 +45,7 @@ public class OutputView {
 
     public static void printCardsResultAndScore(Gamers gamers) {
         System.out.println();
-        System.out.printf("%s - 결과 : %s" + NEWLINE, gamers.getDealer(), gamers.getDealer().getScore());
-        gamers.stream().forEach(player -> System.out.printf("%s - 결과 : %s" + NEWLINE, player, player.getScore()));
+        System.out.printf("%s - 결과 : %s" + NEWLINE, gamers.getDealer(), gamers.getDealer().calculateWithAce());
+        gamers.stream().forEach(player -> System.out.printf("%s - 결과 : %s" + NEWLINE, player, player.calculateWithAce()));
     }
 }
