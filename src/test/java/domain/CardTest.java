@@ -2,11 +2,13 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
 
     @Test
+    @DisplayName("생성 확인")
     void create() {
         assertThat(new Card(Symbol.SPADE, Type.EIGHT)).isNotNull();
     }

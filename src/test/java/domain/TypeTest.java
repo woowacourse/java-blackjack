@@ -2,11 +2,13 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TypeTest {
 
     @Test
+    @DisplayName("ACE인지 검사")
     void isAce() {
         Type type = Type.ACE;
         assertThat(type.isAce()).isTrue();
