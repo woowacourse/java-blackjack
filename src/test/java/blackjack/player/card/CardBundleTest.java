@@ -30,8 +30,8 @@ class CardBundleTest {
 
 	@DisplayName("두 카드패를 비교해서 승자, 패자, 무승부를 결정")
 	@ParameterizedTest
-	@CsvSource(value = {"TEN,-1", "NINE,0", "TWO,1"})
-	void compare(CardNumber number, int result) {
+	@CsvSource(value = {"TEN,LOSE", "NINE,DRAW", "TWO,WIN"})
+	void compare(CardNumber number, GameResult result) {
 		//given
 		CardBundle cardBundle = new CardBundle();
 		cardBundle.addCard(new Card(HEART, CardNumber.NINE));
@@ -40,15 +40,15 @@ class CardBundleTest {
 		other.addCard(new Card(HEART, number));
 
 		//when
-		int expect = cardBundle.compare(other);
+		GameResult expect = cardBundle.compare(other);
 
 		assertThat(expect).isEqualTo(result);
 	}
 
 	@DisplayName("버스트인사람은 무조건 패배")
 	@ParameterizedTest
-	@CsvSource(value = {"ACE,TWO,-1", "TWO,ACE,1"})
-	void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, int result) {
+	@CsvSource(value = {"ACE,TWO,LOSE", "TWO,ACE,WIN"})
+	void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, GameResult result) {
 		//given
 		CardBundle dealerCardBundle = new CardBundle();
 		dealerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
@@ -61,7 +61,7 @@ class CardBundleTest {
 		gamblerCardBundle.addCard(new Card(HEART, gamblerNumber));
 
 		//when
-		int expect = dealerCardBundle.compare(gamblerCardBundle);
+		GameResult expect = dealerCardBundle.compare(gamblerCardBundle);
 
 		assertThat(expect).isEqualTo(result);
 	}
