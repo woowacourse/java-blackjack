@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Card {
@@ -36,5 +37,9 @@ public class Card {
 
     private boolean isSameCard(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
         return this.cardNumber.equals(cardNumber) && this.cardSuitSymbol.equals(cardSuitSymbol);
+    }
+
+    public static List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }
