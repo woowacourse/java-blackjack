@@ -11,4 +11,10 @@ public class UserCards {
         }
         this.cards = cards;
     }
+
+    public int getTotalScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
 }

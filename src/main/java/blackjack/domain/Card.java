@@ -8,4 +8,8 @@ public class Card {
         this.suit = suit;
         this.symbol = symbol;
     }
+
+    public int getScore() {
+        return symbol.getScore();
+    }
 }
