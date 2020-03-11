@@ -1,5 +1,7 @@
 package model;
 
+import utils.StringUtils;
+
 import java.util.*;
 
 public class PlayerName {
@@ -12,26 +14,14 @@ public class PlayerName {
     }
 
     private void validate(String input) {
-        validateNull(input);
+        StringUtils.validateNull(input);
         validateSplit(input);
     }
 
     private void validateSplit(String input) {
         String[] names = input.split(COMMA);
         for (String name : names) {
-            validateEmpty(name);
-        }
-    }
-
-    private void validateEmpty(String input) {
-        if (input.trim().isEmpty()) {
-            throw new IllegalArgumentException("이름은 한 글자 이상이어야 합니다.");
-        }
-    }
-
-    private void validateNull(String input) {
-        if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("Null 값 입니다.");
+            StringUtils.validateEmpty(name);
         }
     }
 

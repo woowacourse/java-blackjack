@@ -1,5 +1,6 @@
 package model;
 
+import exception.IllegalStringInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,15 +15,17 @@ public class PlayerNameTest {
     void input_Empty() {
         assertThatThrownBy(() -> {
             new PlayerName(" ");
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalStringInputException.class)
+        .hasMessageMatching("입력은 한 글자 이상이어야 합니다.");
     }
 
     @Test
-    @DisplayName("입력으로 빈값이 들어올 때")
+    @DisplayName("입력으로 null값이 들어올 때")
     void input_Null() {
         assertThatThrownBy(() -> {
             new PlayerName(null);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalStringInputException.class)
+        .hasMessageMatching("Null 값은 입력하실 수 없습니다.");
     }
 
     @Test
@@ -30,7 +33,8 @@ public class PlayerNameTest {
     void split_test(){
         assertThatThrownBy(()->{
             new PlayerName(", ,");
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalStringInputException.class)
+        .hasMessageMatching("입력은 한 글자 이상이어야 합니다.");
     }
 
     @ParameterizedTest
