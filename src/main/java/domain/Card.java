@@ -21,8 +21,7 @@ public class Card {
         return symbol.getPoint();
     }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return symbol.getAlias() + type.getName();
     }
 }
