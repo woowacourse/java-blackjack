@@ -13,8 +13,7 @@ public class Card {
         return cardNumber;
     }
 
-    @Override
-    public String toString() {
-        return cardNumber.getCardInitial() + cardSuit.getSuit();
+    public CardSuit getCardSuit() {
+        return cardSuit;
     }
 }

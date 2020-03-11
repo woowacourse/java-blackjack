@@ -10,4 +10,8 @@ public class Dealer extends Gamer {
     public boolean isDrawable() {
         return super.calculateWithAce() <= DRAW_CARD_PIVOT;
     }
+
+    public String initCardToString() {
+        return super.cards.get(0).toString();
+    }
 }
