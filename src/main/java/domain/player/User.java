@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.ScoreCalculator;
+import domain.BlackJackScoreManager;
 import domain.card.HandCards;
 
 public class User extends BlackJackPlayer {
@@ -10,6 +10,6 @@ public class User extends BlackJackPlayer {
 
     @Override
     public boolean canDrawMore() {
-        return calculateScore() <= ScoreCalculator.BLACK_JACK_SCORE;
+        return calculateScore() <= BlackJackScoreManager.BLACK_JACK_SCORE;
     }
 }

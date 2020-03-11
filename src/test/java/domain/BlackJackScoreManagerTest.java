@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ScoreCalculatorTest {
+class BlackJackScoreManagerTest {
 
     private static Stream<Arguments> generateCards() {
         return Stream.of(
@@ -37,6 +37,6 @@ class ScoreCalculatorTest {
     void calculate(int[] numbers, int expectedScore) {
         HandCards handCards = new HandCards(parseNumbersToCards(numbers));
 
-        assertThat(ScoreCalculator.calculate(handCards)).isEqualTo(expectedScore);
+        assertThat(BlackJackScoreManager.calculate(handCards)).isEqualTo(expectedScore);
     }
 }

@@ -1,8 +1,8 @@
 package domain.card;
 
+import domain.BlackJackScoreManager;
 import domain.CardPossessor;
 import domain.CardProvider;
-import domain.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class HandCards implements CardPossessor {
 
     @Override
     public int calculateScore() {
-        return ScoreCalculator.calculate(this);
+        return BlackJackScoreManager.calculate(this);
     }
 
     @Override

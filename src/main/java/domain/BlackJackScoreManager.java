@@ -2,11 +2,12 @@ package domain;
 
 import domain.card.HandCards;
 
-public class ScoreCalculator {
+public class BlackJackScoreManager {
+    public static final int DEALER_DRAW_THRESHOLD = 16;
     private static final int ACE_ADDITIONAL_SCORE = 10;
     public static final int BLACK_JACK_SCORE = 21;
 
-    private ScoreCalculator() {
+    private BlackJackScoreManager() {
     }
 
     public static int calculate(HandCards handCards) {
