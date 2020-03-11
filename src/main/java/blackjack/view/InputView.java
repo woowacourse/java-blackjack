@@ -27,4 +27,8 @@ public class InputView {
 			throw new IllegalArgumentException(String.format("%s 비어있는 값을 입력했습니다.", inputNames));
 		}
 	}
+
+	public String inputDrawRequest() {
+		return null;
+	}
 }

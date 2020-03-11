@@ -14,6 +14,9 @@ public class CardBundle {
 	}
 
 	public int compare(CardBundle cardBundle) {
+		if (cardBundle.isBurst()) {
+			return -1;
+		}
 		return Integer.compare(this.calculateScore(), cardBundle.calculateScore());
 	}
 

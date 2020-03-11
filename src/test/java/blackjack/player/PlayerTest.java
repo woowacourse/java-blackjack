@@ -75,5 +75,4 @@ class PlayerTest {
 		//than
 		assertThat(isBurst).isEqualTo(result);
 	}
-
 }

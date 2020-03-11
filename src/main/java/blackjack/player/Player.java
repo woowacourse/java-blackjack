@@ -30,4 +30,6 @@ public abstract class Player {
 	public boolean isBurst() {
 		return cardBundle.isBurst();
 	}
+
+	public abstract void playerDrawCard();
 }

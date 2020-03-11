@@ -1,12 +1,13 @@
 package blackjack.player.card;
 
-import blackjack.player.card.component.CardNumber;
+import static blackjack.player.card.component.Symbol.*;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static blackjack.player.card.component.Symbol.HEART;
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.player.card.component.CardNumber;
 
 class CardBundleTest {
 
@@ -40,6 +41,27 @@ class CardBundleTest {
 
 		//when
 		int expect = cardBundle.compare(other);
+
+		assertThat(expect).isEqualTo(result);
+	}
+
+	@DisplayName("버스트인사람은 무조건 패배")
+	@ParameterizedTest
+	@CsvSource(value = {"ACE,TWO,-1", "TWO,ACE,1"})
+	void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, int result) {
+		//given
+		CardBundle dealerCardBundle = new CardBundle();
+		dealerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
+		dealerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
+		dealerCardBundle.addCard(new Card(HEART, dealerNumber));
+
+		CardBundle gamblerCardBundle = new CardBundle();
+		gamblerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
+		gamblerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
+		gamblerCardBundle.addCard(new Card(HEART, gamblerNumber));
+
+		//when
+		int expect = dealerCardBundle.compare(gamblerCardBundle);
 
 		assertThat(expect).isEqualTo(result);
 	}
