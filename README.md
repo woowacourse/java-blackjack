@@ -16,12 +16,12 @@
 
 ## 기능 구현 목록
 - [ ] CardsFactory 
-    - [ ] 카드 54 개 정적 생성
+    - [x] 카드 54 개 정적 생성
     - [ ] 게임 당 복사 & 셔플
 - [ ] CardShoe
     - [ ] 랜덤 2장 (initial)
     - [ ] 랜덤 1장 (하나로 통합 고려)
-- [ ] Card
+- [x] Card
      - [x] symbol (heart, spade, clover, diamond) (enum)
      - [x] type (2~10, J, k, Q, A) (enum)
         - [x] J, K, Q는 10점으로 계산
