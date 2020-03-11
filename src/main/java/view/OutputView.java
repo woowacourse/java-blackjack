@@ -19,8 +19,9 @@ public class OutputView {
                 + Deck.NUMBER_OF_FIRST_DEAL_CARDS + "장의 카드를 나누었습니다."
         );
 
-        System.out.println("딜러: " + dealer.getCards().get(0).getSymbol() + dealer.getCards().get(0)
-            .getTypeKorean());
+        Card anyDealerCard = dealer.getAnyCard();
+
+        System.out.println("딜러: " + anyDealerCard.getSymbolName() + anyDealerCard.getTypeKorean());
         for (String playerName : playerNames) {
             System.out.println(
                 playerName + "카드 : " + formatCardStatus(players.getCardsByName(playerName)));
@@ -30,7 +31,7 @@ public class OutputView {
     private static String formatCardStatus(List<Card> cards) {
         List<String> cardState = new ArrayList<>();
         for (Card card : cards) {
-            cardState.add(card.getSymbol() + card.getTypeKorean());
+            cardState.add(card.getSymbolName() + card.getTypeKorean());
         }
         return String.join(", ", cardState);
     }
