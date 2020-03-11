@@ -1,5 +1,6 @@
 package view;
 
+import domain.card.Card;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
@@ -34,7 +35,25 @@ public class OutputView {
     }
 
     public static void printGamerCard(Gamer gamer) {
-        System.out.println(gamer);
+        System.out.println(printCards(gamer));
+    }
+
+    private static String printCards(Gamer gamer) {
+        StringBuilder cardsToString = new StringBuilder();
+        cardsToString.append(gamer.getName());
+        cardsToString.append(" : " );
+        cardsToString.append(gamer.getCards()
+                .stream()
+                .map(OutputView::printCard)
+                .collect(Collectors.joining(", " )));
+        return cardsToString.toString();
+    }
+
+    public static String printCard(Card card) {
+        StringBuilder cardToString = new StringBuilder();
+        cardToString.append(card.getCardNumber().getCardInitial());
+        cardToString.append(card.getCardSuit().getSuit());
+        return cardToString.toString();
     }
 
     public static void printAddCardAtDealer() {
@@ -47,8 +66,8 @@ public class OutputView {
 
     public static void printCardsResultAndScore(Gamers gamers) {
         System.out.println();
-        System.out.printf("%s - 결과 : %s" + NEWLINE, gamers.getDealer(), gamers.getDealer().calculateWithAce());
-        gamers.stream().forEach(player -> System.out.printf("%s - 결과 : %s" + NEWLINE, player, player.calculateWithAce()));
+        System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(gamers.getDealer()), gamers.getDealer().calculateWithAce());
+        gamers.stream().forEach(player -> System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(player), player.calculateWithAce()));
     }
 
     public static void printPlayersWinOrLose(Map<String, WinOrLose> playersWinOrLose) {
