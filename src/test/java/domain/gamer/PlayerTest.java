@@ -1,9 +1,9 @@
-package domain.Gamer;
+package domain.gamer;
 
-import domain.Card.Card;
-import domain.Card.PlayingCards;
-import domain.Card.Symbol;
-import domain.Card.Type;
+import domain.card.Card;
+import domain.card.PlayingCards;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

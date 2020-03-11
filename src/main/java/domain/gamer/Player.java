@@ -1,6 +1,6 @@
-package domain.Gamer;
+package domain.gamer;
 
-import domain.Card.PlayingCards;
+import domain.card.PlayingCards;
 
 public class Player extends Gamer {
     private String name;

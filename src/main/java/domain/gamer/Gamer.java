@@ -1,7 +1,7 @@
-package domain.Gamer;
+package domain.gamer;
 
-import domain.Card.Card;
-import domain.Card.PlayingCards;
+import domain.card.Card;
+import domain.card.PlayingCards;
 
 public class Gamer {
     final PlayingCards playingCards;

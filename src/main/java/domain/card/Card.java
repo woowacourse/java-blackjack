@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 public class Card {
     private final Symbol symbol;
