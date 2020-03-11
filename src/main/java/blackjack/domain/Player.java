@@ -11,6 +11,7 @@ public abstract class Player {
 
     protected List<Card> cards = new ArrayList<>();
     protected String name;
+    protected Status status;
 
     public void addCard(Card card) {
         this.cards.add(card);
@@ -42,6 +43,11 @@ public abstract class Player {
     public String getName() {
         return name;
     }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    };
+
 
     public abstract List<Card> getInitialCards();
 
