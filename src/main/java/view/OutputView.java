@@ -1,8 +1,12 @@
 package view;
 
 import domain.card.Card;
+import domain.result.Result;
+import domain.result.ResultType;
 import domain.user.Dealer;
 import domain.user.Players;
+
+import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
 
@@ -33,5 +37,18 @@ public class OutputView {
 									.collect(joining(DELIMITER))
 			);
 		});
+	}
+
+	public static void printResult(Result result, Players players) {
+		Map<ResultType, Long> dealerResult = result.createDealerResult();
+		System.out.println("## 최종 승패");
+		System.out.println("딜러: " +
+				dealerResult.getOrDefault(ResultType.WIN, 0L) + "승 " +
+				dealerResult.getOrDefault(ResultType.DRAW, 0L) + "무 " +
+				dealerResult.getOrDefault(ResultType.LOSE, 0L) + "패"
+		);
+		players.forEach(player ->
+				System.out.println(player.toString() + ": " + result.get(player).getName())
+		);
 	}
 }

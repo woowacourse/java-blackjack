@@ -1,5 +1,6 @@
 package controller;
 
+import domain.ScoreType;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Players;
@@ -20,5 +21,12 @@ public class BlackjackController {
 		BlackjackService.giveInitialCards(deck, dealer, players);
 		printInitialDistribution(players);
 		printInitialStatus(dealer, players);
+		if (isBlackjack(dealer)) {
+			printResult(BlackjackService.createResultWhenDealerBlackjack(players), players);
+		}
+	}
+
+	private static boolean isBlackjack(Dealer dealer) {
+		return ScoreType.BLACKJACK.equals(ScoreType.of(dealer.openAllCards()));
 	}
 }
