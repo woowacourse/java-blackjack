@@ -1,8 +1,9 @@
 package user;
 
-import java.util.List;
 import card.Card;
 import card.Deck;
+
+import java.util.List;
 
 public class Hands {
     private List<Card> hands;
@@ -13,5 +14,9 @@ public class Hands {
 
     public int size() {
         return hands.size();
+    }
+
+    public void draw(Deck deck) {
+        hands.add(deck.draw());
     }
 }
