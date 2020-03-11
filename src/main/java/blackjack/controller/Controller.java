@@ -5,6 +5,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.List;
 
@@ -25,11 +26,28 @@ public class Controller {
         dealer.addCard(deck.giveCard());
         dealer.addCard(deck.giveCard());
 
+        OutputView.printInitialStatus(players, dealer);
+
+        // 게임
         for (Player player : players.getPlayers()) {
-           while(proceed(player.getName()) && !player.exceedMaxSum()){
+            while (!player.exceedMaxSum() && proceed(player.getName())) {
                player.addCard(deck.giveCard());
+                OutputView.printStatus(player.getName(), player.getCards());
             }
         }
+
+        if (dealer.needMoreCard()) {
+            deck.giveCard(dealer);
+            OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
+        }
+
+        OutputView.printFinalStatus(players, dealer);
+
+        // 결과 계산
+        players.computeResult(dealer);
+        dealer.computeResult(players.getResult());
+
+        OutputView.printFinalResult(dealer, players);
     }
 
     private boolean proceed(String name) {
