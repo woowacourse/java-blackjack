@@ -38,7 +38,6 @@ public class SymbolTest {
         assertThat(Symbol.of("A").isAce()).isTrue();
     }
 
-
     @Test
     @DisplayName("심볼의 점수 확인")
     void getPoint() {
@@ -57,7 +56,6 @@ public class SymbolTest {
         assertThat(Symbol.of("K").getPoint()).isEqualTo(10);
     }
 
-
     @Test
     @DisplayName("심볼의 Alias 확인")
     void getAlias() {
@@ -75,5 +73,4 @@ public class SymbolTest {
         assertThat(Symbol.of("Q").getAlias()).isEqualTo("Q");
         assertThat(Symbol.of("K").getAlias()).isEqualTo("K");
     }
-
 }
