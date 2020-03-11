@@ -52,7 +52,7 @@ public class ParticipantTest {
     @MethodSource("blackJackData")
     void isBlackJack_AceWithTen_ReturnTrue(List<Card> cards) {
         Hands hands = new Hands(cards);
-        assertThat(new Participant(name, hands).isBlackJack()).isTrue();
+        assertThat(new Participant(name, hands).checkBlackJack()).isTrue();
     }
 
     static Stream<Arguments> blackJackData() {

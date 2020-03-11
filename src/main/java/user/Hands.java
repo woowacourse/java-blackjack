@@ -8,6 +8,7 @@ import java.util.List;
 public class Hands {
     public static final int ACE_SCORE_CHANGE_POINT = 11;
     public static final int ACE_EXTRA_SCORE = 10;
+    public static final int BLACKJACK_SCORE = 21;
 
     private List<Card> hands;
     private int score;
@@ -53,5 +54,9 @@ public class Hands {
         if (card.isAce()) {
             hasAce = true;
         }
+    }
+
+    public boolean isBlackJack() {
+        return score() == BLACKJACK_SCORE;
     }
 }
