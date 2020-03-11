@@ -37,5 +37,5 @@ public abstract  class User {
         return !isBust();
     }
 
-    abstract boolean isWin(User user);
+    public abstract boolean isWin(User user);
 }
