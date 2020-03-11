@@ -1,5 +1,7 @@
 package domain;
 
+import domain.player.BlackJackPlayer;
+
 import java.util.List;
 
 public interface ResultMaker {

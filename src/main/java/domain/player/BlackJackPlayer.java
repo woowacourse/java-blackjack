@@ -1,4 +1,10 @@
-package domain;
+package domain.player;
+
+import domain.CardPossessor;
+import domain.CardProvider;
+import domain.card.Card;
+
+import java.util.List;
 
 public abstract class BlackJackPlayer {
     protected final CardPossessor cardsOnHand;
