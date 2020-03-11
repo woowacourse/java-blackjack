@@ -14,7 +14,9 @@ public class Card {
         this.type = type;
     }
 
-    // TODO Card 관련 추가 기능 구현
+    public boolean isAce() {
+        return this.symbol.equals(Symbol.ACE);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -51,9 +53,5 @@ public class Card {
 
     public String getTypeKorean() {
         return this.type.getKoreanName();
-    }
-
-    public boolean isAce() {
-        return this.symbol.equals(Symbol.ACE);
     }
 }

@@ -15,7 +15,7 @@ public enum Symbol {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    public static final int ALTERNATE_ACE_SCORE = 11;
+    static final int ALTERNATE_ACE_SCORE = 11;
 
     private int score;
     private String symbolName;

@@ -35,7 +35,7 @@ public class Players {
     public List<Card> getCardsByName(String name) {
         return players.stream()
             .filter(player -> player.isSameName(name))
-            .collect(CustomCollector.toSingleton())
+            .collect(CustomCollector.toSingleElement())
             .getCards();
     }
 }

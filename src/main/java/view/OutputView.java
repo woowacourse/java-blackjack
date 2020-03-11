@@ -14,18 +14,24 @@ public class OutputView {
 
     public static void printFirstCardDealt(Dealer dealer, Players players) {
         List<String> playerNames = players.getNames();
-        System.out.println(
-            "딜러와 " + String.join(", ", playerNames) + "에게 "
-                + Deck.NUMBER_OF_FIRST_DEAL_CARDS + "장의 카드를 나누었습니다."
+        System.out.printf("딜러와 %s 에게 %d장의 카드를 나누어주었습니다.\n",
+            String.join(", ", playerNames),
+            Deck.NUMBER_OF_FIRST_DEAL_CARDS
         );
+        printAnyDealerCard(dealer);
+        printPlayersCards(players, playerNames);
+    }
 
-        Card anyDealerCard = dealer.getAnyCard();
-
-        System.out.println("딜러: " + anyDealerCard.getSymbolName() + anyDealerCard.getTypeKorean());
+    private static void printPlayersCards(Players players, List<String> playerNames) {
         for (String playerName : playerNames) {
             System.out.println(
                 playerName + "카드 : " + formatCardStatus(players.getCardsByName(playerName)));
         }
+    }
+
+    private static void printAnyDealerCard(Dealer dealer) {
+        Card anyDealerCard = dealer.getAnyCard();
+        System.out.println("딜러: " + anyDealerCard.getSymbolName() + anyDealerCard.getTypeKorean());
     }
 
     private static String formatCardStatus(List<Card> cards) {

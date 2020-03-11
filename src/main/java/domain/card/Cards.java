@@ -10,13 +10,6 @@ public class Cards {
 
     private List<Card> cards = new ArrayList<>();
 
-    public Cards() {
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(this.cards);
-    }
-
     public void put(Card card) {
         this.cards.add(card);
     }
@@ -53,5 +46,9 @@ public class Cards {
 
     public boolean isBlackJack() {
         return sumScores() == BLACKJACK_SCORE;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(this.cards);
     }
 }
