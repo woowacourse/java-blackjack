@@ -10,7 +10,6 @@ import domain.card.CardNumber;
 public abstract class Gamer {
 	private String name;
 	private final List<Card> cards = new ArrayList<>();
-	protected Result result = new Result();
 
 	public Gamer(String name) {
 		this.name = name;
@@ -47,10 +46,6 @@ public abstract class Gamer {
 
 	public boolean isContainAce(){
 		return cards.stream().anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
-	}
-
-	public Result getGameResult() {
-		return result;
 	}
 
 	@Override
