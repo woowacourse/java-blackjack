@@ -35,4 +35,12 @@ public class Card {
 	public boolean isAce() {
 		return this.type == Type.ACE;
 	}
+
+	@Override
+	public String toString() {
+		return "Card{" +
+			"symbol=" + symbol +
+			", type=" + type +
+			'}';
+	}
 }
