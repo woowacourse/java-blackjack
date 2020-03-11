@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,14 +9,30 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
+    Card card1;
+    Card card2;
+    UserCards userCards;
+    User player;
+
+    @BeforeEach
+    void setUp() {
+        card1 = new Card(Suit.CLUB, Symbol.SIX);
+        card2 = new Card(Suit.HEART, Symbol.KING);
+        userCards = new UserCards(Arrays.asList(card1, card2));
+        player = new Player("pobi", userCards);
+    }
+
     @Test
     @DisplayName("사용자가 카드를 한 장 새로 받는 것 테스트")
     void receiveCard() {
-        Card card1 = new Card(Suit.CLUB, Symbol.SIX);
-        Card card2 = new Card(Suit.HEART, Symbol.KING);
-        UserCards userCards = new UserCards(Arrays.asList(card1, card2));
-        User player = new Player("pobi", userCards);
         player.receiveCard(new Card(Suit.DIAMOND, Symbol.TWO));
         assertThat(player.getTotalScore()).isEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("사용자의 UserCards의 합이 21을 초과하는 경우 busted인지 확인")
+    void isBusted() {
+        player.receiveCard(new Card(Suit.HEART, Symbol.SIX));
+        assertThat(player.isBusted()).isTrue();
     }
 }
