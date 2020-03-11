@@ -13,12 +13,13 @@ public class OutputView {
     public static void printDistributeMessage(Players players) {
         List<String> playersName = new ArrayList<>();
         players.forEach(player -> playersName.add(player.getName()));
-        System.out.println("딜러와 " + String.join(DELIMITER, playersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
+        System.out.println("\n딜러와 " + String.join(DELIMITER, playersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
     }
 
     public static void printInitStatus(Dealer dealer, Players players) {
         printStatus(dealer.getName(), dealer.getFirstCard());
         players.forEach(player -> printStatus(player.getName(), player.getCards()));
+		System.out.println();
     }
 
     public static void printStatus(String name, List<Card> cards) {
@@ -32,10 +33,11 @@ public class OutputView {
     }
 
     public static void printDealerAddCard() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printUsersResult(Dealer dealer, Players players) {
+		System.out.println();
         printUserResult(dealer);
         players.forEach(OutputView::printUserResult);
     }
@@ -45,18 +47,18 @@ public class OutputView {
     }
 
     public static void printLastResult(Results results) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         for (Result result : results) {
             printIndividualResult(result);
         }
     }
 
     private static void printIndividualResult(Result result) {
-        if (result.getLoseCount() + result.getWinCount() > 1) {
+        if (result.isPlayCountMoreThanOne()) {
             System.out.printf("%s: %d승 %s패\n", result.getName(), result.getWinCount(), result.getLoseCount());
             return;
         }
-        if (result.getWinCount() == 1) {
+        if (result.hasWin()) {
             System.out.println(result.getName() + ": 승");
             return;
         }
