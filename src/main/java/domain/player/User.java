@@ -16,7 +16,7 @@ public class User extends Player {
 		}
 	}
 
-	public Result beatDealer(Dealer dealer) {
+	public Result compareScore(Dealer dealer) {
 		int dealerScore = dealer.calculateScore();
 		int userScore = this.calculateScore();
 		if (dealerScore > 21) {

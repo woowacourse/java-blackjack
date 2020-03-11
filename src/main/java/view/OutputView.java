@@ -8,16 +8,18 @@ import domain.player.User;
 import java.util.Map;
 
 public class OutputView {
+	private static final String STRING_FORMAT_FIRST_DRAW_MESSAGE = "딜러와 %s에게 %d장씩 나누었습니다.";
+
 	public static void firstDrawMessage(String name, int firstDrawCount) {
-		System.out.println(String.format("딜러와 %s에게 %d장씩 나누었습니다.", name, firstDrawCount));
+		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, name, firstDrawCount));
 	}
 
 	public static void printOneCard(Dealer dealer) {
 		System.out.println(dealer.toStringOneCard());
 	}
 
-	public static void printCardStatus(User user) {
-		System.out.println(user.toString());
+	public static void printAllCard(User user) {
+		System.out.println(user.toStringAllCard());
 	}
 
 	public static void printDealerAdditionalCard() {
@@ -25,7 +27,7 @@ public class OutputView {
 	}
 
 	public static void printFinalScore(Player player) {
-		System.out.println(player.toString() + " -  결과 : " + player.calculateScore());
+		System.out.println(player.toStringAllCard() + " -  결과 : " + player.calculateScore());
 	}
 
 	public static void printFinalResult() {

@@ -22,34 +22,27 @@ public class BlackJackGameController {
 		Dealer dealer = new Dealer();
 		CardDeck cardDeck = new CardDeck();
 
-		OutputView.firstDrawMessage(name, FIRST_DRAW_COUNT);
-		dealer.cardDraw(cardDeck, FIRST_DRAW_COUNT);
-		for (User user : users) {
-			user.cardDraw(cardDeck, FIRST_DRAW_COUNT);
-		}
+		firstDraw(users, dealer, cardDeck);
 
+		OutputView.firstDrawMessage(name, FIRST_DRAW_COUNT);
 		OutputView.printOneCard(dealer);
 		for (User user : users) {
-			OutputView.printCardStatus(user);
+			OutputView.printAllCard(user);
 		}
 
 		for (User user : users) {
-			while (InputUtils.isHit(InputView.inputIsHit(user))) {
-				user.cardDraw(cardDeck);
-				OutputView.printCardStatus(user);
-			}
+			userHit(cardDeck, user);
 		}
 		dealerHit(dealer, cardDeck);
 
 		OutputView.printFinalScore(dealer);
-
 		for (User user : users) {
 			OutputView.printFinalScore(user);
 		}
 
 		Map<String, Result> userResultMap = new HashMap<>();
 		for (User user : users) {
-			userResultMap.put(user.getName(), user.beatDealer(dealer));
+			userResultMap.put(user.getName(), user.compareScore(dealer));
 		}
 
 		OutputView.printFinalResult();
@@ -73,6 +66,20 @@ public class BlackJackGameController {
 			OutputView.printUserResult(userResultEntry);
 		}
 
+	}
+
+	private static void userHit(CardDeck cardDeck, User user) {
+		while (InputUtils.isHitToBoolean(InputView.inputIsHit(user))) {
+			user.cardDraw(cardDeck);
+			OutputView.printAllCard(user);
+		}
+	}
+
+	private static void firstDraw(List<User> users, Dealer dealer, CardDeck cardDeck) {
+		dealer.cardDraw(cardDeck, FIRST_DRAW_COUNT);
+		for (User user : users) {
+			user.cardDraw(cardDeck, FIRST_DRAW_COUNT);
+		}
 	}
 
 	public static void dealerHit(Dealer dealer, CardDeck cardDeck) {

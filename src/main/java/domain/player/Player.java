@@ -6,7 +6,6 @@ import domain.card.PlayerCards;
 import java.util.Objects;
 
 public class Player implements PlayerInterface {
-
 	protected String name;
 	protected PlayerCards playerCards;
 
@@ -26,8 +25,7 @@ public class Player implements PlayerInterface {
 		return playerCards.calculateScore();
 	}
 
-	@Override
-	public String toString() {
+	public String toStringAllCard() {
 		return name + "카드: " + playerCards.toString();
 	}
 
