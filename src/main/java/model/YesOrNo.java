@@ -17,10 +17,10 @@ public class YesOrNo {
     }
 
     private YesOrNo(String input) {
-        this.yesOrNo = input;
+        this.yesOrNo = StringUtils.trimString(input);
     }
 
-    public static YesOrNo of(String input){
+    public static YesOrNo of(String input) {
         validate(input);
         return cache.get(input.toLowerCase());
     }
@@ -45,7 +45,7 @@ public class YesOrNo {
         return input.equalsIgnoreCase("Y");
     }
 
-    public boolean getYesOrNo(){
+    public boolean getYesOrNo() {
         return isYes(yesOrNo);
     }
 }

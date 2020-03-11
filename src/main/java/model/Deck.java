@@ -29,6 +29,7 @@ public class Deck implements Strategy {
         return drawCard;
     }
 
+    @Override
     public CardHand initialDraw() {
         validateSize();
         CardHand cardHand = new CardHand();
