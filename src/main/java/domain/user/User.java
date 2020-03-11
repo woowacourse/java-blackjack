@@ -30,6 +30,12 @@ public abstract class User {
 
     public abstract String getFirstDrawResult();
 
+    public int calculatePoint() {
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
+    }
+
     public String getName() {
         return name;
     }
