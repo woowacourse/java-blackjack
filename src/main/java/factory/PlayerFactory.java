@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
 public class PlayerFactory {
     private static final String NAME_DELIMITER = ",";
 
-    private PlayerFactory(){}
+    private PlayerFactory() {
+    }
 
     public static List<Player> create(String userInput) {
         List<Player> players = Arrays.stream(userInput.split(NAME_DELIMITER))

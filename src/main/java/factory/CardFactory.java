@@ -9,7 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
-    private CardFactory(){}
+    private CardFactory() {
+    }
 
     public static List<Card> create() {
         List<Card> cards = new ArrayList<>();
