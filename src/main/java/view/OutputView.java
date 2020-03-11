@@ -30,7 +30,7 @@ public class OutputView {
 		System.out.println(player.toStringAllCard() + " -  결과 : " + player.calculateScore());
 	}
 
-	public static void printFinalResult() {
+	public static void printFinalResultMessage() {
 		System.out.println("\n## 최종 승패");
 
 	}

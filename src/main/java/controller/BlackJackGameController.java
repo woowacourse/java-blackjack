@@ -13,65 +13,81 @@ import java.util.List;
 
 public class BlackJackGameController {
 	private static final int FIRST_DRAW_COUNT = 2;
+	private static final int DEALER_HIT_SCORE = 16;
+	private static final String NAME_DELIMITER = ",";
 
 	public static void run() {
-		String name = InputView.inputUserNames();
-		List<User> users = makeUsers(name);
+		String userName = InputView.inputUserNames();
+		List<User> users = makeUsers(userName);
 		Dealer dealer = new Dealer();
 		CardDeck cardDeck = new CardDeck();
 
 		firstDraw(users, dealer, cardDeck);
+		printCardStatus(userName, users, dealer);
 
+		hit(users, dealer, cardDeck);
+
+		printScore(users, dealer);
+
+		GameResult gameResult = new GameResult(users, dealer);
+		printResult(gameResult);
+	}
+
+	public static List<User> makeUsers(String names) {
+		List<User> users = new ArrayList<>();
+		String[] userNames = names.split(NAME_DELIMITER);
+		for (String name : userNames) {
+			users.add(new User(name));
+		}
+		return users;
+	}
+
+	private static void firstDraw(List<User> users, Dealer dealer, CardDeck cardDeck) {
+		dealer.cardDraw(cardDeck.draw(FIRST_DRAW_COUNT));
+		for (User user : users) {
+			user.cardDraw(cardDeck.draw(FIRST_DRAW_COUNT));
+		}
+	}
+
+	private static void printCardStatus(String name, List<User> users, Dealer dealer) {
 		OutputView.firstDrawMessage(name, FIRST_DRAW_COUNT);
 		OutputView.printOneCard(dealer);
 		for (User user : users) {
 			OutputView.printAllCard(user);
 		}
-
-		for (User user : users) {
-			userHit(cardDeck, user);
-		}
-		dealerHit(dealer, cardDeck);
-
-		OutputView.printFinalScore(dealer);
-		for (User user : users) {
-			OutputView.printFinalScore(user);
-		}
-
-		GameResult gameResult = new GameResult(users, dealer);
-
-		OutputView.printFinalResult();
-		OutputView.printDealerResult(gameResult.getDealerResult());
-		OutputView.printUserResult(gameResult.getUserResult());
 	}
 
-	private static void userHit(CardDeck cardDeck, User user) {
+	private static void hit(List<User> users, Dealer dealer, CardDeck cardDeck) {
+		for (User user : users) {
+			userHit(user, cardDeck);
+		}
+		dealerHit(dealer, cardDeck);
+	}
+
+	private static void userHit(User user, CardDeck cardDeck) {
 		while (InputUtils.isHitToBoolean(InputView.inputIsHit(user))) {
-			user.cardDraw(cardDeck);
+			user.cardDraw(cardDeck.draw());
 			OutputView.printAllCard(user);
 		}
 	}
 
-	private static void firstDraw(List<User> users, Dealer dealer, CardDeck cardDeck) {
-		dealer.cardDraw(cardDeck, FIRST_DRAW_COUNT);
-		for (User user : users) {
-			user.cardDraw(cardDeck, FIRST_DRAW_COUNT);
-		}
-	}
-
 	public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
-		while (dealer.calculateScore() <= 16) {
+		while (dealer.calculateScore() <= DEALER_HIT_SCORE) {
 			OutputView.printDealerAdditionalCard();
-			dealer.cardDraw(cardDeck);
+			dealer.cardDraw(cardDeck.draw());
 		}
 	}
 
-	public static List<User> makeUsers(String names) {
-		List<User> users = new ArrayList<>();
-		String[] userNames = names.split(",");
-		for (String name : userNames) {
-			users.add(new User(name));
+	private static void printScore(List<User> users, Dealer dealer) {
+		OutputView.printFinalScore(dealer);
+		for (User user : users) {
+			OutputView.printFinalScore(user);
 		}
-		return users;
+	}
+
+	private static void printResult(GameResult gameResult) {
+		OutputView.printFinalResultMessage();
+		OutputView.printDealerResult(gameResult.getDealerResult());
+		OutputView.printUserResult(gameResult.getUserResult());
 	}
 }

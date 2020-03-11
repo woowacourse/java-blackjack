@@ -1,11 +1,12 @@
 package domain.player;
 
-import domain.card.CardDeck;
+
+import domain.card.cardfactory.Card;
+
+import java.util.List;
 
 public interface PlayerInterface {
-	void cardDraw(CardDeck cardDeck, int count);
-
-	void cardDraw(CardDeck cardDeck);
+	void cardDraw(List<Card> cards);
 
 	int calculateScore();
 

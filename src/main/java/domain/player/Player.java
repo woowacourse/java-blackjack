@@ -1,20 +1,18 @@
 package domain.player;
 
-import domain.card.CardDeck;
 import domain.card.PlayerCards;
+import domain.card.cardfactory.Card;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player implements PlayerInterface {
+	private static final String STRING_FORMAT_PRINT_CARD = "%s카드 : %s";
 	protected String name;
 	protected PlayerCards playerCards;
 
-	public void cardDraw(CardDeck cardDeck, int count) {
-		playerCards.addAll(cardDeck.draw(count));
-	}
-
-	public void cardDraw(CardDeck cardDeck) {
-		playerCards.addAll(cardDeck.draw());
+	public void cardDraw(List<Card> cards) {
+		playerCards.addAll(cards);
 	}
 
 	public String getName() {
@@ -26,11 +24,11 @@ public class Player implements PlayerInterface {
 	}
 
 	public String toStringAllCard() {
-		return name + "카드: " + playerCards.toStringAllCard();
+		return String.format(STRING_FORMAT_PRINT_CARD, this.name, playerCards.toStringAllCard());
 	}
 
 	public String toStringOneCard() {
-		return name + "카드: " + playerCards.toStringOneCard();
+		return String.format(STRING_FORMAT_PRINT_CARD, this.name, playerCards.toStringOneCard());
 	}
 
 	@Override

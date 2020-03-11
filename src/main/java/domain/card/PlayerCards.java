@@ -11,7 +11,7 @@ public class PlayerCards {
 	public static final int ACE_BONUS = 10;
 	public static final int FIRST_CARD_INDEX = 0;
 	private static final int BASE_SCORE = 0;
-	public static final String DELIMITER = ", ";
+	public static final String CARD_DELIMITER = ", ";
 
 	private final List<Card> playerCards = new ArrayList<>();
 
@@ -55,6 +55,6 @@ public class PlayerCards {
 		List<String> cardNames = playerCards.stream()
 				.map(Card::toString)
 				.collect(Collectors.toList());
-		return String.join(DELIMITER, cardNames);
+		return String.join(CARD_DELIMITER, cardNames);
 	}
 }
