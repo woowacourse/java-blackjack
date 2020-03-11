@@ -11,9 +11,14 @@ import java.util.Objects;
  * 날짜 : 2020/03/11
  */
 public class Player {
+	public static final String INPUT_EMPTY_NAME = "이름이 빈 문자열입니다.";
+
 	private final String name;
 
 	public Player(String name) {
+		if (name.isEmpty()) {
+			throw new IllegalArgumentException(INPUT_EMPTY_NAME);
+		}
 		this.name = name;
 	}
 
