@@ -35,12 +35,19 @@ public class OutputView {
 
 	}
 
-	public static void printDealerResult(int dealerWin, int dealerDraw, int dealerLose) {
-		System.out.println("딜러: " + dealerWin + "승 " + dealerDraw + "무 " + dealerLose + "패");
+	public static void printDealerResult(Map<Result, Integer> dealerResult) {
+		StringBuilder resultBuilder = new StringBuilder();
+		for (Result result : dealerResult.keySet()) {
+			if (dealerResult.get(result) > 0) {
+				resultBuilder.append(String.valueOf(dealerResult.get(result)) + result);
+			}
+		}
+		System.out.println(String.format("딜러 : %s", resultBuilder));
 	}
 
-	public static void printUserResult(Map.Entry<String, Result> userResultEntry) {
-		System.out.println(userResultEntry.getKey() + ": " + userResultEntry.getValue());
-
+	public static void printUserResult(Map<String, Result> userResult) {
+		for (Map.Entry<String, Result> userResultEntry : userResult.entrySet()) {
+			System.out.println(userResultEntry.getKey() + ": " + userResultEntry.getValue());
+		}
 	}
 }
