@@ -19,7 +19,7 @@ public class OutputView {
     public static void printInitStatus(Dealer dealer, Players players) {
         printStatus(dealer.getName(), dealer.getFirstCard());
         players.forEach(player -> printStatus(player.getName(), player.getCards()));
-		System.out.println();
+        System.out.println();
     }
 
     public static void printStatus(String name, List<Card> cards) {
@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     public static void printUsersResult(Dealer dealer, Players players) {
-		System.out.println();
+        System.out.println();
         printUserResult(dealer);
         players.forEach(OutputView::printUserResult);
     }
