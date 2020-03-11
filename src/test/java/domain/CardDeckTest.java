@@ -9,10 +9,11 @@ public class CardDeckTest {
     @DisplayName("개수 이상 드로우시 예외발생 테스트")
     @Test
     void cardDraw() {
+        CardDeck cardDeck = new CardDeck();
         for (int i = 0; i < 52; i++) {
-            CardDeck.draw();
+            cardDeck.draw();
         }
-        assertThatThrownBy(() -> CardDeck.draw())
+        assertThatThrownBy(() -> cardDeck.draw())
                 .isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

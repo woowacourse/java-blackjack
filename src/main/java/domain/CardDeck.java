@@ -7,9 +7,9 @@ import java.util.List;
 public class CardDeck {
 
     private static final String CARD_DECK_IS_EMPTY_EXCEPTION_MESSAGE = "카드덱에 카드가 남아있지 않습니다.";
-    private static List<Card> cardDeck;
+    private List<Card> cardDeck;
 
-    static {
+    public CardDeck() {
         cardDeck = new LinkedList<>();
         for (Type type : Type.values()) {
             for (Symbol symbol : Symbol.values()) {
@@ -19,7 +19,7 @@ public class CardDeck {
         Collections.shuffle(cardDeck);
     }
 
-    public static Card draw() {
+    public Card draw() {
         if (cardDeck.size() == 0) {
             throw new IndexOutOfBoundsException(CARD_DECK_IS_EMPTY_EXCEPTION_MESSAGE);
         }
