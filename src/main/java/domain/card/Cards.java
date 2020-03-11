@@ -18,6 +18,10 @@ public class Cards {
         return cards.size();
     }
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
     public int getScore() {
         Score score = Score.ZERO;
         for (Card card : cards) {
@@ -29,6 +33,14 @@ public class Cards {
         return score.getValue();
     }
 
+    public boolean isBlackJack() {
+        return (cards.size() == BLACKJACK_SIZE) && (getScore() == BLACKJACK_SCORE);
+    }
+
+    public boolean isLessThan(int criteria) {
+        return getScore() <= criteria;
+    }
+
     public List<Card> getValue() {
         return Collections.unmodifiableList(cards);
     }
@@ -37,19 +49,7 @@ public class Cards {
         return cards.stream().anyMatch(Card::isAce);
     }
 
-    public boolean isBlackJack() {
-        return (cards.size() == BLACKJACK_SIZE) && (getScore() == BLACKJACK_SCORE);
-    }
-
     public boolean isBust() {
         return getScore() > BLACKJACK_SCORE;
-    }
-
-    public boolean isLessThan(int criteria) {
-        return getScore() <= criteria;
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
     }
 }

@@ -11,6 +11,15 @@ public class CardsTest {
     }
 
     @Test
+    void addCard() {
+        Cards cards = new Cards();
+        assertThat(cards.getSize()).isEqualTo(0);
+
+        cards.addCard(Card.of("스페이드", "K"));
+        assertThat(cards.getSize()).isEqualTo(1);
+    }
+
+    @Test
     void getScore() {
         Cards cards = new Cards();
         cards.addCard(Card.of("스페이드", "K"));
@@ -36,5 +45,25 @@ public class CardsTest {
         cards.addCard(Card.of("스페이드", "A"));
 
         assertThat(cards.isLessThan(20)).isFalse();
+    }
+    @Test
+    void hasAce() {
+        Cards cards = new Cards();
+        cards.addCard(Card.of("스페이드", "K"));
+        assertThat(cards.hasAce()).isFalse();
+
+        cards.addCard(Card.of("스페이드", "A"));
+        assertThat(cards.hasAce()).isTrue();
+    }
+    @Test
+    void isBust() {
+        Cards cards = new Cards();
+        cards.addCard(Card.of("스페이드", "K"));
+        cards.addCard(Card.of("스페이드", "Q"));
+        assertThat(cards.isBust()).isFalse();
+
+        cards.addCard(Card.of("스페이드", "2"));
+        assertThat(cards.isBust()).isTrue();
+
     }
 }
