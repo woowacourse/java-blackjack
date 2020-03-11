@@ -5,7 +5,7 @@ import domain.card.Cards;
 import domain.card.Deck;
 import java.util.List;
 
-public abstract class User {
+public abstract class User implements Participant {
 
     protected Cards cards = new Cards();
 
@@ -21,12 +21,16 @@ public abstract class User {
         return this.cards.isSmallerThan(blackjackScore);
     }
 
+    public void receiveCard(Deck deck) {
+        cards.put(deck.deal());
+    }
+
     public List<Card> getCards() {
         return cards.getCards();
     }
 
-    public void receiveCard(Deck deck) {
-        cards.put(deck.deal());
+    public int getTotalScore() {
+        return cards.sumScores();
     }
 
 }

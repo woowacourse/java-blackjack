@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.user.Dealer;
+import domain.user.Participant;
 import domain.user.Player;
 import domain.user.Players;
 import java.util.ArrayList;
@@ -27,12 +28,17 @@ public class OutputView {
     private static void printPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
+            System.out.println();
         }
     }
 
     public static void printPlayerCards(Player player) {
-        System.out.println(player.getName() + "카드 : "
-            + formatCardStatus(player.getCards())
+        printUserCards(player.getName(), player);
+    }
+
+    private static void printUserCards(String name, Participant participant) {
+        System.out.print(name + "카드 : "
+            + formatCardStatus(participant.getCards())
         );
     }
 
@@ -50,10 +56,27 @@ public class OutputView {
     }
 
     public static void printAskWantMoreCard(String name) {
+        System.out.println();
         System.out.println(name + "님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public static void printDealerHasReceivedMoreCard() {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
+        System.out.println();
+    }
+
+    public static void printFinalCardStatus(Dealer dealer, Players players) {
+        printDealerCard(dealer);
+        System.out.println(" - " + "결과 : " + dealer.getTotalScore());
+
+        for (Player player : players.getPlayers()) {
+            printPlayerCards(player);
+            System.out.println(" - " + "결과 : " + player.getTotalScore());
+        }
+
+    }
+
+    private static void printDealerCard(Dealer dealer) {
+        printUserCards("딜러", dealer);
     }
 }
