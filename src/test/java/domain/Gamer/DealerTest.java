@@ -31,4 +31,24 @@ class DealerTest {
 
         assertThat(dealer.countCards()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 더 받을 수 있다.")
+    void canGetExtraCard() {
+        PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.TWO, Type.DIAMOND),
+                new Card(Symbol.TEN, Type.HEART)));
+        Dealer dealer = new Dealer(playingCards);
+
+        assertThat(dealer.canGetExtraCard()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 더 카드를 받을 수 없다.")
+    void canNotGetExtraCard() {
+        PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
+                new Card(Symbol.TEN, Type.HEART)));
+        Dealer dealer = new Dealer(playingCards);
+
+        assertThat(dealer.canGetExtraCard()).isFalse();
+    }
 }
