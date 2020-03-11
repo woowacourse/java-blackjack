@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
@@ -33,25 +33,23 @@ class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("createCards")
-    @DisplayName("플레이어는 가지고 있는 카드의 합을 구할 수 있다")
-    void calculateSum(List<Card> cards, int result) {
+    @DisplayName("bust되었는지 확인")
+    void isBusted(List<Card> cards, boolean isBusted) {
         for (Card card : cards) {
-           player.add(card);
+            player.add(card);
         }
-        assertThat(player.calculateSum()).isEqualTo(result);
+
+        assertThat(player.isBusted()).isEqualTo(isBusted);
     }
 
     private static Stream<Arguments> createCards() {
         Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
-        Card fiveClover = new Card(CardSymbol.FIVE, CardType.CLOVER);
         Card queenClover = new Card(CardSymbol.QUEEN, CardType.CLOVER);
         Card kingClover = new Card(CardSymbol.KING, CardType.CLOVER);
-        List<Card> cardSumSixteen = Arrays.asList(aceSpade, fiveClover);
-        List<Card> cardSumTwentyOne = Arrays.asList(aceSpade, queenClover, kingClover);
-        List<Card> cardSumThirteen = Arrays.asList(aceSpade, aceSpade, aceSpade);
+        List<Card> notBustedCards = Arrays.asList(aceSpade, queenClover, kingClover);
+        List<Card> bustedCards = Arrays.asList(kingClover, kingClover, kingClover);
         return Stream.of(
-                Arguments.of(cardSumSixteen, 16),
-                Arguments.of(cardSumTwentyOne, 21),
-                Arguments.of(cardSumThirteen, 13));
+                Arguments.of(notBustedCards, false),
+                Arguments.of(bustedCards, true));
     }
 }
