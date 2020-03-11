@@ -24,6 +24,7 @@ public class GameController {
         OutputView.printInitCardGuide(gamers);
         OutputView.printPlayer(gamers);
         addCardAtPlayers(gamers, deck);
+        addCardAtDealer(gamers, deck);
         OutputView.printPlayer(gamers);
     }
 
@@ -45,5 +46,12 @@ public class GameController {
             yesOrNo = YesOrNo.findYesOrNo(InputView.inputAsDrawable(player));
             player.addCard(deck.popCard(1));
         } while (yesOrNo.getDrawable() && player.isDrawable());
+    }
+
+    private void addCardAtDealer(Gamers gamers, Deck deck) {
+        if(gamers.getDealer().isDrawable()) {
+            OutputView.printAddCardAtDealer();
+            gamers.getDealer().addCard(deck.popCard(1));
+        }
     }
 }
