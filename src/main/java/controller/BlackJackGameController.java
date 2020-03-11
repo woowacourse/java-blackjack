@@ -43,7 +43,6 @@ public class BlackJackGameController {
 
 		OutputView.printFinalScore(dealer);
 
-		int dealerScore = dealer.calculateScore();
 		for (User user : users) {
 			OutputView.printFinalScore(user);
 		}
@@ -58,13 +57,13 @@ public class BlackJackGameController {
 		int dealerDraw = 0;
 		int dealerLose = 0;
 		for (Result value : userResultMap.values()) {
-			if (value == Result.승) {
+			if (value == Result.WIN) {
 				dealerLose++;
 			}
-			if (value == Result.무) {
+			if (value == Result.DRAW) {
 				dealerDraw++;
 			}
-			if (value == Result.패) {
+			if (value == Result.LOSE) {
 				dealerWin++;
 			}
 		}

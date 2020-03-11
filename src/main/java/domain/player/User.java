@@ -22,19 +22,19 @@ public class User extends Player {
 		int userScore = this.calculateScore();
 		if (dealerScore > 21) {
 			if (userScore > 21) {
-				return Result.패;
+				return Result.LOSE;
 			}
-			return Result.승;
+			return Result.WIN;
 		}
 		if (userScore > 21) {
-			return Result.패;
+			return Result.LOSE;
 		}
 		if (dealerScore == userScore) {
-			return Result.무;
+			return Result.DRAW;
 		}
 		if (dealerScore > userScore) {
-			return Result.패;
+			return Result.LOSE;
 		}
-		return Result.승;
+		return Result.WIN;
 	}
 }
