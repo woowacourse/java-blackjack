@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.result.Score;
 
 public abstract class Participant {
 	private final String name;
@@ -35,13 +36,37 @@ public abstract class Participant {
 		}
 	}
 
-	public void receiveCard(Card card) {
+	public void hit(Card card) {
 		cards.add(card);
 	}
+
+	public boolean canHit() {
+		return Score.calculate(cards) <= getHitPoint();
+	}
+
+	public abstract int getHitPoint();
 
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public abstract boolean canReceiveMore();
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Participant that = (Participant)o;
+		return Objects.equals(name, that.name) &&
+			Objects.equals(cards, that.cards);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, cards);
+	}
 }
