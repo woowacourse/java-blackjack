@@ -22,7 +22,7 @@
     - [ ] 랜덤 2장 (initial)
     - [ ] 랜덤 1장 (하나로 통합 고려)
 - [ ] Card
-     - [ ] symbol (heart, spade, clover, diamond) (enum)
+     - [x] symbol (heart, spade, clover, diamond) (enum)
      - [ ] type (2~10, J, k, Q, A) (enum)
         - [x] J, K, Q는 10점으로 계산
         - [ ] Ace 의 경우 플레이어에 유리한 쪽으로 1점, 11점 둘 다 사용가능
