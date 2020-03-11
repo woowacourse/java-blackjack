@@ -45,4 +45,15 @@ public class PlayerTest {
             Arguments.of(new Player("오렌지"), "히히", false)
         );
     }
+
+    @Test
+    @DisplayName("한 장의 카드를 더 받기")
+    void receiveCard() {
+        Deck deck = CardFactory.create();
+        Player player = new Player("pobi");
+        player.receiveFirstCards(deck);
+        int sizeBeforeReceiveCard = player.getCards().size();
+        player.receiveCard(deck);
+        assertThat(player.getCards().size()).isEqualTo(sizeBeforeReceiveCard + 1);
+    }
 }

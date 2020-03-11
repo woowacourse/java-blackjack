@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards {
     private static final int MIN_SUM_FOR_ACE_IS_ONE = 12;
-    private static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_SCORE = 21;
 
     private List<Card> cards = new ArrayList<>();
 
@@ -50,5 +50,13 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
+    }
+
+    public boolean isLargerThan(int score) {
+        return this.sumScores() > score;
+    }
+
+    public boolean isSmallerThan(int score) {
+        return this.sumScores() < score;
     }
 }

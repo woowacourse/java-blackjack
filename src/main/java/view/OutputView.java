@@ -41,4 +41,8 @@ public class OutputView {
         }
         return String.join(", ", cardState);
     }
+
+    public static void printAskWantMoreCard(String name) {
+        System.out.println(name + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    }
 }

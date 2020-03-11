@@ -11,4 +11,17 @@ public class InputView {
         OutputView.printEnterPlayerNames();
         return StringUtils.splitIntoList(SCANNER.nextLine());
     }
+
+    public static boolean askWantMoreCard(String name) {
+        OutputView.printAskWantMoreCard(name);
+        String input = SCANNER.nextLine();
+
+        if ("y".equals(input)) {
+            return true;
+        }
+        if ("n".equals(input)) {
+            return false;
+        }
+        throw new IllegalUserInputException("y 또는 n 을 입력해야 합니다.");
+    }
 }

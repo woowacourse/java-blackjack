@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Deck;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import utils.CustomCollector;
@@ -37,5 +38,9 @@ public class Players {
             .filter(player -> player.isSameName(name))
             .collect(CustomCollector.toSingleElement())
             .getCards();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(this.players);
     }
 }

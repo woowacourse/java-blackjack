@@ -13,8 +13,20 @@ public abstract class User {
         cards.put(deck.dealFirstCards());
     }
 
+    public boolean isLargerThan(int score) {
+        return this.cards.isLargerThan(score);
+    }
+
+    public boolean isSmallerThan(int blackjackScore) {
+        return this.cards.isSmallerThan(blackjackScore);
+    }
+
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public void receiveCard(Deck deck) {
+        cards.put(deck.deal());
     }
 
 }

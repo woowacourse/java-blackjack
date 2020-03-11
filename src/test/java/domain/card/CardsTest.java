@@ -94,4 +94,28 @@ public class CardsTest {
         cards.put(card);
         assertThat(cards.isBlackJack()).isTrue();
     }
+
+    @Test
+    void isLargerThan() {
+        Cards cards = new Cards();
+        List<Card> cardList = new ArrayList<>();
+
+        cardList.add(new Card(Symbol.ACE, Type.CLUB));
+        cardList.add(new Card(Symbol.QUEEN, Type.CLUB));
+
+        cards.put(cardList);
+        assertThat(cards.isLargerThan(Cards.BLACKJACK_SCORE)).isFalse();
+    }
+
+    @Test
+    void isSmallerThan() {
+        Cards cards = new Cards();
+        List<Card> cardList = new ArrayList<>();
+
+        cardList.add(new Card(Symbol.ACE, Type.CLUB));
+        cardList.add(new Card(Symbol.NINE, Type.CLUB));
+
+        cards.put(cardList);
+        assertThat(cards.isSmallerThan(Cards.BLACKJACK_SCORE)).isTrue();
+    }
 }
