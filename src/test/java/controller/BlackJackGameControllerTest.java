@@ -12,6 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 class BlackJackGameControllerTest {
+
 	@Test
 	@DisplayName("입력된 이름들로 유저가 올바르게 생성되는지 테스트")
 	void makeUsers() {

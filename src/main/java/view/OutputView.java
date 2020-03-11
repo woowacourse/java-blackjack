@@ -1,6 +1,7 @@
 package view;
 
 import domain.Result;
+import domain.Rull;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.User;
@@ -9,6 +10,10 @@ import java.util.Map;
 
 public class OutputView {
 	private static final String STRING_FORMAT_FIRST_DRAW_MESSAGE = "딜러와 %s에게 %d장씩 나누었습니다.";
+	private static final String STRING_FORMAT_FINAL_SCORE = "%s - 결과 : %s";
+	private static final String STRING_FORMAT_DEALER_HIT_MESSAGE = "\n딜러는 %s이하라 한장의 카드를 더 받았습니다.\n";
+	private static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
+	private static final String COLON = " : ";
 
 	public static void firstDrawMessage(String name, int firstDrawCount) {
 		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, name, firstDrawCount));
@@ -22,17 +27,18 @@ public class OutputView {
 		System.out.println(user.toStringAllCard());
 	}
 
-	public static void printDealerAdditionalCard() {
-		System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+	public static void printDealerHitMessage() {
+		System.out.println(String.format(STRING_FORMAT_DEALER_HIT_MESSAGE, Rull.DEALER_HIT_SCORE));
 	}
 
 	public static void printFinalScore(Player player) {
-		System.out.println(player.toStringAllCard() + " -  결과 : " + player.calculateScore());
+		System.out.println(String.format(STRING_FORMAT_FINAL_SCORE,
+				player.toStringAllCard(),
+				player.calculateScore()));
 	}
 
 	public static void printFinalResultMessage() {
-		System.out.println("\n## 최종 승패");
-
+		System.out.println(FINAL_RESULT_MESSAGE);
 	}
 
 	public static void printDealerResult(Map<Result, Integer> dealerResult) {
@@ -47,7 +53,7 @@ public class OutputView {
 
 	public static void printUserResult(Map<String, Result> userResult) {
 		for (Map.Entry<String, Result> userResultEntry : userResult.entrySet()) {
-			System.out.println(userResultEntry.getKey() + ": " + userResultEntry.getValue());
+			System.out.println(userResultEntry.getKey() + COLON + userResultEntry.getValue());
 		}
 	}
 }

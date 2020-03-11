@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameResult {
+	private static final int INITIAL_RESULT_COUNT = 0;
 	private final Map<String, Result> userResult;
 	private final Map<Result, Integer> dealerResult;
 
@@ -15,7 +16,7 @@ public class GameResult {
 		this.userResult = new HashMap<>();
 		this.dealerResult = new HashMap<>();
 		for (Result value : Result.values()) {
-			dealerResult.put(value, 0);
+			dealerResult.put(value, INITIAL_RESULT_COUNT);
 		}
 
 		for (User user : users) {
@@ -27,20 +28,25 @@ public class GameResult {
 		int dealerScore = dealer.calculateScore();
 		int userScore = user.calculateScore();
 
-		if (dealerScore > 21) {
-			if (userScore > 21) {
-				return userLoseCase();
-			}
-			return userWinCase();
+		if (dealerScore > Rull.MAX_SCORE) {
+			return dealerBurst(userScore);
 		}
-		if (userScore > 21) {
+		return dealerNotBurst(dealerScore, userScore);
+	}
+
+	private Result dealerBurst(int userScore) {
+		if (userScore > Rull.MAX_SCORE) {
+			return userLoseCase();
+		}
+		return userWinCase();
+	}
+
+	private Result dealerNotBurst(int dealerScore, int userScore) {
+		if (userScore > Rull.MAX_SCORE || dealerScore > userScore) {
 			return userLoseCase();
 		}
 		if (dealerScore == userScore) {
 			return userDrawCase();
-		}
-		if (dealerScore > userScore) {
-			return userLoseCase();
 		}
 		return userWinCase();
 	}
@@ -65,6 +71,13 @@ public class GameResult {
 	}
 
 	public Map<Result, Integer> getDealerResult() {
+		Map<Result, Integer> dealerResult = new HashMap<>();
+		for (Result result : Result.values()) {
+			int count = (int) userResult.values().stream()
+					.filter(x -> x == result)
+					.count();
+			dealerResult.put(result, count);
+		}
 		return dealerResult;
 	}
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameResult;
+import domain.Rull;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.User;
@@ -12,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGameController {
-	private static final int FIRST_DRAW_COUNT = 2;
-	private static final int DEALER_HIT_SCORE = 16;
 	private static final String NAME_DELIMITER = ",";
 
 	public static void run() {
@@ -43,14 +42,14 @@ public class BlackJackGameController {
 	}
 
 	private static void firstDraw(List<User> users, Dealer dealer, CardDeck cardDeck) {
-		dealer.cardDraw(cardDeck.draw(FIRST_DRAW_COUNT));
+		dealer.cardDraw(cardDeck.draw(Rull.FIRST_DRAW_COUNT));
 		for (User user : users) {
-			user.cardDraw(cardDeck.draw(FIRST_DRAW_COUNT));
+			user.cardDraw(cardDeck.draw(Rull.FIRST_DRAW_COUNT));
 		}
 	}
 
 	private static void printCardStatus(String name, List<User> users, Dealer dealer) {
-		OutputView.firstDrawMessage(name, FIRST_DRAW_COUNT);
+		OutputView.firstDrawMessage(name, Rull.FIRST_DRAW_COUNT);
 		OutputView.printOneCard(dealer);
 		for (User user : users) {
 			OutputView.printAllCard(user);
@@ -72,8 +71,8 @@ public class BlackJackGameController {
 	}
 
 	public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
-		while (dealer.calculateScore() <= DEALER_HIT_SCORE) {
-			OutputView.printDealerAdditionalCard();
+		while (dealer.calculateScore() <= Rull.DEALER_HIT_SCORE) {
+			OutputView.printDealerHitMessage();
 			dealer.cardDraw(cardDeck.draw());
 		}
 	}

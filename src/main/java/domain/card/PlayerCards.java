@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.Rull;
 import domain.card.cardfactory.Card;
 
 import java.util.ArrayList;
@@ -7,10 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerCards {
-	public static final int MAX_SCORE = 21;
-	public static final int ACE_BONUS = 10;
 	public static final int FIRST_CARD_INDEX = 0;
-	private static final int BASE_SCORE = 0;
 	public static final String CARD_DELIMITER = ", ";
 
 	private final List<Card> playerCards = new ArrayList<>();
@@ -24,7 +22,7 @@ public class PlayerCards {
 	}
 
 	public int calculateScore() {
-		int score = BASE_SCORE;
+		int score = Rull.BASE_SCORE;
 		boolean containAce = false;
 		for (Card card : playerCards) {
 			containAce = isContainAce(containAce, card);
@@ -41,8 +39,8 @@ public class PlayerCards {
 	}
 
 	private int calculateFinalScore(int score, boolean containAce) {
-		if (containAce && score + ACE_BONUS <= MAX_SCORE) {
-			return score + ACE_BONUS;
+		if (containAce && score + Rull.ACE_BONUS <= Rull.MAX_SCORE) {
+			return score + Rull.ACE_BONUS;
 		}
 		return score;
 	}
