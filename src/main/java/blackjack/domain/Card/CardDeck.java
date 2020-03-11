@@ -1,5 +1,6 @@
 package blackjack.domain.Card;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 
 import java.util.HashSet;
@@ -34,5 +35,13 @@ public class CardDeck {
                 .orElseThrow(() -> new IllegalArgumentException(NULL_ERROR_MSG));
         cards.remove(card);
         return card;
+    }
+
+    public void giveCard(Player player) {
+        player.addCard(giveCard());
+    }
+
+    public void giveCard(Dealer dealer) {
+        dealer.addCard(giveCard());
     }
 }

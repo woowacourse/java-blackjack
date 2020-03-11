@@ -5,6 +5,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class Controller {
            while(proceed(player.getName()) && !player.exceedMaxSum()){
                player.addCard(deck.giveCard());
             }
+        }
+
+        if (dealer.needMoreCard()) {
+            deck.giveCard(dealer);
+            OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
         }
     }
 
