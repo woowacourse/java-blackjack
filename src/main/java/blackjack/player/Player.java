@@ -13,4 +13,8 @@ public abstract class Player {
 	public void addCard(Card card) {
 		cardBundle.addCard(card);
 	}
+
+	public abstract boolean isDealer();
+
+	public abstract boolean isGambler();
 }

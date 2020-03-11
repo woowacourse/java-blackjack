@@ -7,4 +7,13 @@ public class Dealer extends Player {
 		super(cardBundle);
 	}
 
+	@Override
+	public boolean isDealer() {
+		return true;
+	}
+
+	@Override
+	public boolean isGambler() {
+		return false;
+	}
 }

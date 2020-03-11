@@ -4,12 +4,22 @@ import java.util.Objects;
 
 import blackjack.player.card.CardBundle;
 
-public class User extends Player {
+public class Gambler extends Player {
 	private final String name;
 
-	public User(CardBundle cardBundle, String name) {
+	public Gambler(CardBundle cardBundle, String name) {
 		super(cardBundle);
 		this.name = name;
+	}
+
+	@Override
+	public boolean isDealer() {
+		return false;
+	}
+
+	@Override
+	public boolean isGambler() {
+		return true;
 	}
 
 	@Override
@@ -18,8 +28,8 @@ public class User extends Player {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		User user = (User)o;
-		return Objects.equals(name, user.name);
+		Gambler gambler = (Gambler)o;
+		return Objects.equals(name, gambler.name);
 	}
 
 	@Override
