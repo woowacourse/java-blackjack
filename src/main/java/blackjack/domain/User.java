@@ -24,7 +24,8 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        return cards.getTotalScore() == BLACKJACK;
+        return cards.getCardInfo().size() == 2
+                && cards.getTotalScore() == BLACKJACK;
     }
 
     public String getName() {
