@@ -34,4 +34,8 @@ public class PlayingCards {
     private boolean canAddAceBonus(int result, Card card) {
         return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
     }
+
+    public int size() {
+        return cards.size();
+    }
 }

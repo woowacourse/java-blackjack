@@ -1,9 +1,5 @@
 package domain.Card;
 
-import domain.Card.Card;
-import domain.Card.PlayingCards;
-import domain.Card.Symbol;
-import domain.Card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,5 +64,13 @@ class PlayingCardsTest {
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
         assertThat(playingCards.calculateScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("카드의 갯수를 구한다")
+    void size() {
+        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
+        playingCards.add(new Card(Symbol.ACE, Type.SPADE));
+        assertThat(playingCards.size()).isEqualTo(2);
     }
 }
