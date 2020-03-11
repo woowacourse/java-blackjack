@@ -19,9 +19,9 @@ public class HandsTest {
     @DisplayName("카드 점수를 정상적으로 계산하는지 확인")
     @ParameterizedTest
     @MethodSource("generateData")
-    void score_GivenHands_SumScore(int score, List<Card> hands) {
-        Hands hand = new Hands(hands);
-        assertThat(hand.score()).isEqualTo(score);
+    void score_GivenHands_SumScore(int score, List<Card> cards) {
+        Hands hands = new Hands(cards);
+        assertThat(hands.score()).isEqualTo(score);
     }
 
     static Stream<Arguments> generateData() {

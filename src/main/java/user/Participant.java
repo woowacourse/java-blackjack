@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Participant {
     private static final String YES = "y";
     private static final String NO = "n";
+    public static final int BLACKJACK_SCORE = 21;
 
     private ParticipantName name;
     private Hands hands;
@@ -14,6 +15,11 @@ public class Participant {
     public Participant(ParticipantName name, Deck deck) {
         this.name = name;
         this.hands = new Hands(deck);
+    }
+
+    public Participant(ParticipantName name, Hands hands) {
+        this.name = name;
+        this.hands = hands;
     }
 
     // TODO : 메서드 분리
@@ -39,5 +45,9 @@ public class Participant {
 
     public int handSize() {
         return hands.size();
+    }
+
+    public boolean isBlackJack() {
+        return hands.score() == BLACKJACK_SCORE;
     }
 }
