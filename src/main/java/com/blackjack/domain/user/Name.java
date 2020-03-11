@@ -1,4 +1,4 @@
-package com.blackjack.domain;
+package com.blackjack.domain.user;
 
 import java.util.Objects;
 
