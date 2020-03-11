@@ -22,4 +22,9 @@ class PlayerTest {
                 .hasMessage("빈 이름이 있습니다.");
     }
 
+    @Test
+    void getName() {
+        Player player = new Player("이름");
+        assertThat(player.getName()).isEqualTo("이름");
+    }
 }

@@ -20,4 +20,8 @@ public abstract class User {
             throw new IllegalArgumentException("빈 이름이 있습니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
