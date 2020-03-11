@@ -6,7 +6,6 @@ import java.util.List;
 public class Cards {
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
     private List<Card> cards = new ArrayList<>();
-    private boolean ace0;
 
     public void add(Card card) {
         if (cards.contains(card)) {
@@ -35,7 +34,7 @@ public class Cards {
         return sum;
     }
 
-    public boolean isOverBlackJack() {
+    public boolean isBust() {
         return getSum() > 21;
     }
 

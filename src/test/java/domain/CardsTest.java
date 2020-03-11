@@ -34,11 +34,11 @@ public class CardsTest {
         cards.add(new Card(Type.DIAMOND, Symbol.TWO));
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        Assertions.assertThat(cards.isOverBlackJack())
+        Assertions.assertThat(cards.isBust())
                 .isFalse();
 
         cards.add(new Card(Type.CLUB, Symbol.JACK));
-        Assertions.assertThat(cards.isOverBlackJack())
+        Assertions.assertThat(cards.isBust())
                 .isTrue();
     }
 
