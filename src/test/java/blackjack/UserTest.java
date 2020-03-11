@@ -62,4 +62,12 @@ public class UserTest {
         int score = user.calculateScore();
         assertThat(score).isEqualTo(19);
     }
+
+    @DisplayName("유저의 이름을 반환하는지 확인")
+    @Test
+    void getNameTest() {
+        Player user = new User("pobi");
+        assertThat(user.getName()).isEqualTo("pobi");
+    }
+
 }

@@ -63,6 +63,14 @@ public class DealerTest {
         assertThat(dealer.isUnderCriticalScore()).isFalse();
     }
 
+    @DisplayName("딜러의 이름을 반환하는지 확인")
+    @Test
+    void getNameTest() {
+        Player dealer = Dealer.getDealer();
+        assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+
     @AfterEach
     void tearDown() throws NoSuchFieldException, IllegalAccessException {
         Field dealer_instance = Dealer.class.getDeclaredField("dealer_instance");

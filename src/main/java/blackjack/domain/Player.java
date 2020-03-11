@@ -9,6 +9,7 @@ public class Player {
     protected static final int ACE_LOWER_POINT = 1;
 
     protected List<Card> cards = new ArrayList<>();
+    protected String name;
 
     public void addCard(Card card) {
         this.cards.add(card);
@@ -35,5 +36,9 @@ public class Player {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public String getName() {
+        return name;
     }
 }
