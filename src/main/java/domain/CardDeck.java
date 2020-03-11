@@ -3,8 +3,6 @@ package domain;
 import java.util.Collections;
 import java.util.Stack;
 
-import factory.CardFactory;
-
 public class CardDeck {
 	private Stack<Card> cardDeck = new Stack<>();
 

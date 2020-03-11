@@ -1,4 +1,4 @@
-package util;
+package domain;
 
 import java.util.Arrays;
 
@@ -8,6 +8,7 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
+import domain.ResultCalculator;
 import domain.Results;
 
 public class ResultCalculatorTest {

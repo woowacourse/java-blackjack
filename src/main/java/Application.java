@@ -3,8 +3,8 @@ import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import domain.WhetherAddCard;
-import factory.PlayerFactory;
-import util.ResultCalculator;
+import domain.PlayerFactory;
+import domain.ResultCalculator;
 import view.InputView;
 import view.OutputView;
 
