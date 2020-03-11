@@ -9,8 +9,8 @@ public class Results {
         this.results = results;
     }
 
-    public void printAll(){
-        for(Result result : results){
+    public void printAll() {
+        for (Result result : results) {
             System.out.println(result.toString());
         }
     }

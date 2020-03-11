@@ -20,7 +20,7 @@ public class ResultCalculatorTest {
         dealer.giveOneCard(cardDeck, player2);
         dealer.addCard(cardDeck.drawOne());
         dealer.addCard(cardDeck.drawOne());
-        Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player,player2)));
+        Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player, player2)));
 
         System.out.println(dealer.getScore());
         System.out.println(player.getScore());
