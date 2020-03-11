@@ -20,6 +20,13 @@ public class CardHand {
         return Collections.unmodifiableList(cards);
     }
 
+    public int calculateScore() {
+        if (isAce()) {
+            return calculateScoreWithAce();
+        }
+        return calculateScoreWithNoAce();
+    }
+
     public int calculateScoreWithAce() {
         int score = calculateScoreWithNoAce();
         if (score + 10 > 21) {
