@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static domain.user.Players.OVER_MAX_PLAYERS_COUNT;
 import static domain.user.Players.UNDER_MIN_PLAYERS_COUNT;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,5 +42,12 @@ public class PlayersTest {
 		assertThatIllegalArgumentException().isThrownBy(() ->
 				Players.of(new ArrayList<>()))
 				.withMessage(UNDER_MIN_PLAYERS_COUNT);
+	}
+
+	@Test
+	void getNames_From_Players() {
+		String expected = "kouz, toney";
+		String actual = Players.of("kouz,toney").getNames();
+		assertEquals(expected, actual);
 	}
 }
