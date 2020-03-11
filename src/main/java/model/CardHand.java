@@ -7,6 +7,7 @@ import java.util.List;
 public class CardHand {
     private List<Card> cards = new ArrayList<>();
 
+
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -19,9 +20,13 @@ public class CardHand {
         return Collections.unmodifiableList(cards);
     }
 
-//    public int calculateScoreWithAce() {
-//        cards.stream().filter(Card::isAce)
-//    }
+    public int calculateScoreWithAce() {
+        int score = calculateScoreWithNoAce();
+        if (score + 10 > 21) {
+            return score;
+        }
+        return score + 10;
+    }
 
     public int calculateScoreWithNoAce() {
         return cards.stream()
@@ -33,5 +38,9 @@ public class CardHand {
 
     public boolean isAce() {
          return cards.stream().filter(Card::isAce).count() > 0;
+    }
+
+    public boolean contains(Card card) {
+        return cards.contains(card);
     }
 }

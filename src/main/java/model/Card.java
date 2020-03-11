@@ -3,8 +3,8 @@ package model;
 import java.util.Objects;
 
 public class Card {
-    private Symbol symbol;
-    private Type type;
+    private final Symbol symbol;
+    private final Type type;
 
     public Card(Symbol symbol, Type type) {
         this.symbol = symbol;

@@ -30,11 +30,30 @@ public class CardHandTest {
 
     @Test
     @DisplayName("카드 점수 계산")
-    void calculateScore_Test() {
+    void calculateScoreWithNoAce_Test() {
         CardHand cardHand = new CardHand();
         cardHand.addCard(new Card(Symbol.THREE, Type.DIAMOND));
         cardHand.addCard(new Card(Symbol.TWO, Type.DIAMOND));
         cardHand.addCard(new Card(Symbol.SIX, Type.DIAMOND));
         assertThat(cardHand.calculateScoreWithNoAce()).isEqualTo(11);
+    }
+
+    @Test
+    @DisplayName("Ace를 가지고 있을때 - Ace 11점일때")
+    void calculateScoreWithElevenAce_Test() {
+        CardHand cardHand = new CardHand();
+        cardHand.addCard(new Card(Symbol.THREE, Type.DIAMOND));
+        cardHand.addCard(new Card(Symbol.ACE, Type.DIAMOND));
+        cardHand.addCard(new Card(Symbol.SIX, Type.DIAMOND));
+        assertThat(cardHand.calculateScoreWithAce()).isEqualTo(20);
+    }
+    @Test
+    @DisplayName("Ace를 가지고 있을때 - Ace 1점일때")
+    void calculateScoreWithOneAce_Test() {
+        CardHand cardHand = new CardHand();
+        cardHand.addCard(new Card(Symbol.FIVE, Type.DIAMOND));
+        cardHand.addCard(new Card(Symbol.ACE, Type.DIAMOND));
+        cardHand.addCard(new Card(Symbol.SIX, Type.DIAMOND));
+        assertThat(cardHand.calculateScoreWithAce()).isEqualTo(12);
     }
 }
