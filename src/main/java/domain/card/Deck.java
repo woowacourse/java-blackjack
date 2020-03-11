@@ -1,9 +1,12 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 public class Deck {
+    private static final int INIT_CARDS_SIZE = 2;
     private final Stack<Card> cards;
 
     private Deck(Stack<Card> cards) {
@@ -38,4 +41,14 @@ public class Deck {
     boolean isEmpty() {
         return cards.isEmpty();
     }
+
+    public PlayingCards getInitCards() {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < INIT_CARDS_SIZE; i++) {
+            cards.add(handOutCard());
+        }
+        return new PlayingCards(cards);
+    }
+
+
 }

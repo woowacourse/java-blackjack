@@ -9,9 +9,6 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckTest {
-
-    private Deck deck;
-
     @Test
     @DisplayName("Deck 생성")
     void create() {
@@ -23,6 +20,13 @@ class DeckTest {
     void handoutSingle() {
         Deck deck = Deck.create();
         assertThat(deck.handOutCard()).isInstanceOf(Card.class);
+    }
+
+    @Test
+    @DisplayName("두 장의 PlayingCards 반환")
+    void name() {
+        Deck deck = Deck.create();
+        assertThat(deck.getInitCards().size()).isEqualTo(2);
     }
 
     @Test
