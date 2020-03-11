@@ -10,7 +10,7 @@ public class PlayerName {
 
     public PlayerName(String input) {
         validate(input);
-        names = Arrays.asList(input.split(COMMA));
+        names = Arrays.asList(StringUtils.trimString(input).split(COMMA));
     }
 
     private void validate(String input) {
