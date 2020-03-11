@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -10,6 +11,14 @@ public class Hand {
 
     public Hand(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public Hand() {
+        this.cards = new ArrayList<>();
+    }
+
+    public void add(Card card) {
+        this.cards.add(card);
     }
 
     public boolean isBusted() {
