@@ -8,6 +8,7 @@ import domain.deck.Card;
 public abstract class User {
 
     private static final String EMPTY = "";
+
     protected List<Card> cards;
     protected final String name;
 
@@ -25,5 +26,9 @@ public abstract class User {
 
     public String getName() {
         return name;
+    }
+
+    public void draw(Card card) {
+        cards.add(card);
     }
 }
