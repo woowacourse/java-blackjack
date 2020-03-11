@@ -12,10 +12,10 @@ public class ResultCalculatorTest {
 		Dealer dealer = new Dealer();
 		CardDeck cardDeck = new CardDeck();
 		cardDeck.shuffle();
-		dealer.giveOneCard(cardDeck, player);
-		dealer.giveOneCard(cardDeck, player);
-		dealer.giveOneCard(cardDeck, player2);
-		dealer.giveOneCard(cardDeck, player2);
+		dealer.giveCard(cardDeck, player);
+		dealer.giveCard(cardDeck, player);
+		dealer.giveCard(cardDeck, player2);
+		dealer.giveCard(cardDeck, player2);
 		dealer.addCard(cardDeck.drawOne());
 		dealer.addCard(cardDeck.drawOne());
 		Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player, player2)));

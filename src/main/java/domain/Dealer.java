@@ -12,8 +12,12 @@ public class Dealer extends User {
 		super(NAME);
 	}
 
-	public void giveOneCard(CardDeck cardDeck, User user) {
+	public void giveCard(CardDeck cardDeck, User user) {
 		user.addCard(cardDeck.drawOne());
+	}
+
+	public void giveCard(CardDeck cardDeck, Players players) {
+		players.forEach(player -> giveCard(cardDeck, player));
 	}
 
 	public boolean shouldAddCard() {

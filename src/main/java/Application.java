@@ -24,12 +24,10 @@ public class Application {
 	}
 
 	private static void giveTwoCard(CardDeck cardDeck, Dealer dealer, Players players) {
-		dealer.addCard(cardDeck.drawOne());
-		dealer.addCard(cardDeck.drawOne());
-		players.forEach(player -> {
-			dealer.giveOneCard(cardDeck, player);
-			dealer.giveOneCard(cardDeck, player);
-		});
+		for (int i = 0; i < 2; i++) {
+			dealer.giveCard(cardDeck, dealer);
+			dealer.giveCard(cardDeck, players);
+		}
 		OutputView.printDistributeMessage(players);
 		OutputView.printInitStatus(dealer, players);
 	}
@@ -40,7 +38,7 @@ public class Application {
 
 	private static void addCardIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
 		while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
-			dealer.giveOneCard(cardDeck, player);
+			dealer.giveCard(cardDeck, player);
 			OutputView.printStatus(player.getName(), player.getCards());
 		}
 	}
