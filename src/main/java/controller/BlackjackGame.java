@@ -19,17 +19,19 @@ public class BlackjackGame {
 
 	public void run() {
 		List<User> users = PlayerFactory.create(InputView.inputNames());
-		users.add(new Dealer());
-		initCards(users);
+		Dealer dealer = new Dealer();
+		initCards(users, dealer);
+		drawCard(users, dealer);
 	}
 
-	private void initCards(List<User> users) {
+	private void initCards(List<User> users, Dealer dealer) {
 		for (User user : users) {
 			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
 		}
+		dealer.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
 	}
 
-	private void drawCard(List<User> users) {
+	private void drawCard(List<User> users, Dealer dealer) {
 		for (User user : users) {
 			if (user.isBlackjack()) {
 				continue;
@@ -42,8 +44,11 @@ public class BlackjackGame {
 				user.addCards(Arrays.asList(cardDivider.divide()));
 			}
 			//출력
-			//[Feat] 카드 추가 분배 기능 추가
 		}
 
+		while (dealer.isDrawable()) {
+			dealer.addCards(Arrays.asList(cardDivider.divide()));
+			//출력
+		}
 	}
 }
