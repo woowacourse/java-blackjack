@@ -21,4 +21,15 @@ public class TypeTest {
     void of_not_exist_type() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Type.of("세모"));
     }
+
+    @Test
+    @DisplayName("심볼 이름 확인")
+    void getName() {
+        assertThat(Type.of("스페이드").getName()).isEqualTo("스페이드");
+        assertThat(Type.of("하트").getName()).isEqualTo("하트");
+        assertThat(Type.of("클로버").getName()).isEqualTo("클로버");
+        assertThat(Type.of("다이아몬드").getName()).isEqualTo("다이아몬드");
+    }
+
+
 }
