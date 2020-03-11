@@ -38,4 +38,8 @@ public class PlayingCards {
     public int size() {
         return cards.size();
     }
+
+    public boolean isBust() {
+        return BLACK_JACK < calculateScore();
+    }
 }

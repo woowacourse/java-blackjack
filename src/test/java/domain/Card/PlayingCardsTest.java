@@ -73,4 +73,23 @@ class PlayingCardsTest {
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
         assertThat(playingCards.size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("버스트라는 걸 확인한다")
+    void isBust() {
+        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
+        playingCards.add(new Card(Symbol.TEN, Type.SPADE));
+        playingCards.add(new Card(Symbol.EIGHT, Type.SPADE));
+
+        assertThat(playingCards.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("버스트가 아닌 걸 확인한다")
+    void isNotBust() {
+        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
+        playingCards.add(new Card(Symbol.TEN, Type.SPADE));
+
+        assertThat(playingCards.isBust()).isFalse();
+    }
 }
