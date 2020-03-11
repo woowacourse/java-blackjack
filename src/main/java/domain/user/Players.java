@@ -1,12 +1,10 @@
 package domain.user;
 
-import domain.card.Card;
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import utils.CustomCollector;
 
 public class Players {
 
@@ -31,13 +29,6 @@ public class Players {
         return players.stream().
             map(Player::getName)
             .collect(Collectors.toList());
-    }
-
-    public List<Card> getCardsByName(String name) {
-        return players.stream()
-            .filter(player -> player.isSameName(name))
-            .collect(CustomCollector.toSingleElement())
-            .getCards();
     }
 
     public List<Player> getPlayers() {

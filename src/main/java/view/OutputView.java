@@ -3,6 +3,7 @@ package view;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.Players;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,19 @@ public class OutputView {
             Deck.NUMBER_OF_FIRST_DEAL_CARDS
         );
         printAnyDealerCard(dealer);
-        printPlayersCards(players, playerNames);
+        printPlayersCards(players);
     }
 
-    private static void printPlayersCards(Players players, List<String> playerNames) {
-        for (String playerName : playerNames) {
-            System.out.println(
-                playerName + "카드 : " + formatCardStatus(players.getCardsByName(playerName)));
+    private static void printPlayersCards(Players players) {
+        for (Player player : players.getPlayers()) {
+            printPlayerCards(player);
         }
+    }
+
+    public static void printPlayerCards(Player player) {
+        System.out.println(player.getName() + "카드 : "
+            + formatCardStatus(player.getCards())
+        );
     }
 
     private static void printAnyDealerCard(Dealer dealer) {
@@ -43,6 +49,6 @@ public class OutputView {
     }
 
     public static void printAskWantMoreCard(String name) {
-        System.out.println(name + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(name + "님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 }

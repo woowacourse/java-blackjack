@@ -22,9 +22,10 @@ public class BlackJackController {
         OutputView.printFirstCardDealt(dealer, players);
 
         for (Player player : players.getPlayers()) {
-            while (player.isSmallerThan(Cards.BLACKJACK_SCORE) && InputView
-                .askWantMoreCard(player.getName())) {
+            while (player.isSmallerThan(Cards.BLACKJACK_SCORE)
+                && InputView.askWantMoreCard(player.getName())) {
                 player.receiveCard(deck);
+                OutputView.printPlayerCards(player);
             }
         }
     }
