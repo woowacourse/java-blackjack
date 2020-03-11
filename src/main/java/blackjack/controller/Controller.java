@@ -26,9 +26,13 @@ public class Controller {
         dealer.addCard(deck.giveCard());
         dealer.addCard(deck.giveCard());
 
+        OutputView.printInitialStatus(players, dealer);
+
+        // 게임
         for (Player player : players.getPlayers()) {
-           while(proceed(player.getName()) && !player.exceedMaxSum()){
+            while (!player.exceedMaxSum() && proceed(player.getName())) {
                player.addCard(deck.giveCard());
+                OutputView.printStatus(player.getName(), player.getCards());
             }
         }
 
@@ -37,11 +41,13 @@ public class Controller {
             OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
         }
 
+        OutputView.printFinalStatus(players, dealer);
+
         // 결과 계산
         players.computeResult(dealer);
         dealer.computeResult(players.getResult());
 
-        OutputView.printBlackjackResult(dealer, players);
+        OutputView.printFinalResult(dealer, players);
     }
 
     private boolean proceed(String name) {

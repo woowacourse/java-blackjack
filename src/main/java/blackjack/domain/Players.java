@@ -47,4 +47,16 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<String> showCardsInfo() {
+        return players.stream()
+                .map(Player::showCards)
+                .collect(Collectors.toList());
+    }
 }

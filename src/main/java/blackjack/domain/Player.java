@@ -52,4 +52,12 @@ public class Player {
     public Result getResult() {
         return result;
     }
+
+    public String showCards() {
+        return String.join(" ,", cards.getInfo());
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
 }

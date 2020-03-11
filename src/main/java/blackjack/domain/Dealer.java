@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Dealer {
+    private static final String CANT_FIND_CARD_MSG = "카드가 존재하지 않습니다.";
     public static final int LOWER_BOUND = 16;
     private Cards cards;
     private final Map<Result, Integer> results;
@@ -38,5 +39,20 @@ public class Dealer {
 
     public int getResultSum(Result result) {
         return results.get(result);
+    }
+
+    public String getName() {
+        return "딜러";
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
+
+    public Card getFirstCard() {
+        return cards.getCards()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(CANT_FIND_CARD_MSG));
     }
 }
