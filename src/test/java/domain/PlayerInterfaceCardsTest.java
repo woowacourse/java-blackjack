@@ -12,8 +12,8 @@ class PlayerInterfaceCardsTest {
 	@Test
 	void toStringTest() {
 		PlayerCards cards = new PlayerCards();
-		cards.add(new Card(Symbol.ACE, Shape.다이아몬드));
-		cards.add(new Card(Symbol.EIGHT, Shape.스페이드));
+		cards.add(new Card(Symbol.ACE, Shape.DIAMOND));
+		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));
 
 		assertThat(cards.toString()).isEqualTo("A다이아몬드, 8스페이드");
 	}

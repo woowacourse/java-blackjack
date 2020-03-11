@@ -4,7 +4,6 @@ import domain.Result;
 import domain.card.PlayerCards;
 
 public class User extends Player {
-
 	public User(String name) {
 		validateName(name);
 		this.name = name;
