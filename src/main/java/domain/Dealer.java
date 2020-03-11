@@ -7,6 +7,12 @@ public class Dealer extends Player {
         super(cards);
     }
 
+    public void insertAdditionalCard(Cards cards) {
+        if (CardCalculator.isUnderSixteen(this)) {
+            insertCard(cards);
+        }
+    }
+
     @Override
     public void insertCard(Cards cards) {
         if (sumCardNumber() <= STANDARD) {

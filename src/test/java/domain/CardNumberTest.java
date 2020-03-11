@@ -15,7 +15,7 @@ public class CardNumberTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 13})
+    @ValueSource(ints = {1, 10})
     @DisplayName("카드의 숫자를 반환하는 테스트")
     void cardTest(int input) {
         Assertions.assertThatCode(() -> CardNumber.findCardNumber(input)).doesNotThrowAnyException();
