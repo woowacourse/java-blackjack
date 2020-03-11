@@ -27,9 +27,7 @@ public class Application {
 		checkDealerCardAndGiveMoreCard(cardDeck, dealer);
 
 		OutputView.printUsersResult(dealer, players);
-
-		Results results = ResultCalculator.getResults(dealer, players);
-		results.printAll();
+		OutputView.printLastResult(ResultCalculator.getResults(dealer, players));
 	}
 
 	private static void askMoreCard(CardDeck cardDeck, Dealer dealer, Players players) {

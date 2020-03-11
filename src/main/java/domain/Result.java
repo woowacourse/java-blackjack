@@ -1,12 +1,12 @@
 package domain;
 
 public class Result {
-    private User user;
+    private String name;
     private int winCount;
     private int loseCount;
 
-    public Result(User user, int winCount, int loseCount) {
-        this.user = user;
+    public Result(String name, int winCount, int loseCount) {
+        this.name = name;
         this.winCount = winCount;
         this.loseCount = loseCount;
     }
@@ -19,9 +19,15 @@ public class Result {
         loseCount++;
     }
 
-    @Override
-    public String toString() {
-        return "user=" + user.getName() +
-                ", win" + winCount + ", lose" + loseCount;
+    public String getName() {
+        return name;
+    }
+
+    public int getWinCount() {
+        return winCount;
+    }
+
+    public int getLoseCount() {
+        return loseCount;
     }
 }

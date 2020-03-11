@@ -1,17 +1,17 @@
 package domain;
 
+import java.util.Iterator;
 import java.util.List;
 
-public class Results {
+public class Results implements Iterable<Result> {
     private List<Result> results;
 
     public Results(List<Result> results) {
         this.results = results;
     }
 
-    public void printAll() {
-        for (Result result : results) {
-            System.out.println(result.toString());
-        }
+    @Override
+    public Iterator<Result> iterator() {
+        return results.iterator();
     }
 }
