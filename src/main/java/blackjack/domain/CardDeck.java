@@ -24,4 +24,8 @@ public class CardDeck {
     private boolean isEmpty() {
         return this.cardDeck.size() == 0;
     }
+
+    public int size() {
+        return this.cardDeck.size();
+    }
 }
