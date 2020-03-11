@@ -10,32 +10,29 @@ public class Application {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         Players players = new Players(PlayerFactory.create(InputView.inputNames()));
-
         cardDeck.shuffle();
-        dealer.addCard(cardDeck.drawOne());
-        dealer.addCard(cardDeck.drawOne());
-
-        for (Player player : players) {
-            dealer.giveOneCard(cardDeck, player);
-            dealer.giveOneCard(cardDeck, player);
-        }
-
-        OutputView.printDistributeMessage(players);
-        OutputView.printInitStatus(dealer, players);
-
+        giveTwoCard(cardDeck, dealer, players);
         if (dealer.isNotBlackJack()) {
             askMoreCard(cardDeck, dealer, players);
             checkDealerCardAndGiveMoreCard(cardDeck, dealer);
         }
-
         OutputView.printUsersResult(dealer, players);
         OutputView.printLastResult(ResultCalculator.getResults(dealer, players));
     }
 
+    private static void giveTwoCard(CardDeck cardDeck, Dealer dealer, Players players) {
+        dealer.addCard(cardDeck.drawOne());
+        dealer.addCard(cardDeck.drawOne());
+        players.forEach(player -> {
+            dealer.giveOneCard(cardDeck, player);
+            dealer.giveOneCard(cardDeck, player);
+        });
+        OutputView.printDistributeMessage(players);
+        OutputView.printInitStatus(dealer, players);
+    }
+
     private static void askMoreCard(CardDeck cardDeck, Dealer dealer, Players players) {
-        for (Player player : players) {
-            giveIfWant(cardDeck, dealer, player);
-        }
+        players.forEach(player -> giveIfWant(cardDeck, dealer, player));
     }
 
     private static void giveIfWant(CardDeck cardDeck, Dealer dealer, Player player) {
