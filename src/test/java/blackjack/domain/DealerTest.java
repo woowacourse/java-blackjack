@@ -34,4 +34,6 @@ public class DealerTest {
         boolean expected = false;
         assertThat(dealer.needMoreCard()).isEqualTo(expected);
     }
+
+
 }

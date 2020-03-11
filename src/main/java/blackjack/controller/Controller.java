@@ -36,6 +36,12 @@ public class Controller {
             deck.giveCard(dealer);
             OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
         }
+
+        // 결과 계산
+        players.computeResult(dealer);
+        dealer.computeResult(players.getResult());
+
+        OutputView.printBlackjackResult(dealer, players);
     }
 
     private boolean proceed(String name) {

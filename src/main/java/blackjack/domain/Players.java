@@ -1,10 +1,11 @@
 package blackjack.domain;
 
-import blackjack.controller.Controller;
+import blackjack.domain.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Players {
     private static final String MAX_PLAYER_ERR_MSG = "플레이어는 최대 5명입니다.";
@@ -30,4 +31,20 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
+
+
+    public void computeResult(Dealer dealer) {
+//        players.stream()
+//                .map(player -> player.createResult(dealer));
+        for (Player player : players) {
+            player.createResult(dealer);
+        }
+    }
+
+    public List<Result> getResult() {
+        return players.stream()
+                .map(Player::getResult)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -1,11 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.Card.Card;
-import blackjack.domain.Card.CardDeck;
 import blackjack.domain.Card.Cards;
+import blackjack.domain.result.Result;
 
 import java.util.Objects;
-import java.util.Set;
 
 public class Player {
     private static final String NULL_ERR_MSG = "플레이어의 이름이 없습니다.";
@@ -14,6 +13,7 @@ public class Player {
 
     private String name;
     private Cards cards;
+    private Result result;
 
     public Player(String name) {
         Objects.requireNonNull(name, NULL_ERR_MSG);
@@ -39,5 +39,17 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    public int getSum() {
+        return cards.getSum();
+    }
+
+    public void createResult(Dealer dealer) {
+        this.result = Result.getResult(getSum(), dealer.getSum());
+    }
+
+    public Result getResult() {
+        return result;
     }
 }
