@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.deck.Deck;
+
 public class Players {
     private List<Player> players;
 
@@ -22,5 +24,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void draw(Deck deck) {
+        players.forEach(
+                player -> player.draw(deck.dealOut())
+        );
     }
 }
