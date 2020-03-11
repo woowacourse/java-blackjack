@@ -11,10 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-public class ResultCalculatorTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class ResultGeneratorTest {
     @Test
-    @DisplayName("결과 계산 확인")
-    void getResults() {
+    @DisplayName("결과 생성 확인")
+    void create() {
         Player player = new Player("플레이어");
         Player player2 = new Player("플레이어2");
         Dealer dealer = new Dealer();
@@ -26,11 +28,7 @@ public class ResultCalculatorTest {
         CardDistributor.giveOneCard(cardDeck, player2);
         dealer.addCard(cardDeck.drawOne());
         dealer.addCard(cardDeck.drawOne());
-        Results results = ResultCalculator.getResults(dealer, new Players(Arrays.asList(player, player2)));
 
-        System.out.println(dealer.getScore());
-        System.out.println(player.getScore());
-        System.out.println(player2.getScore());
-
+        assertThat(ResultGenerator.create(dealer, new Players(Arrays.asList(player, player2)))).isInstanceOf(Results.class);
     }
 }

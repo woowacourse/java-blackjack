@@ -7,7 +7,7 @@ import domain.user.User;
 import factory.CardFactory;
 import factory.PlayerFactory;
 import util.CardDistributor;
-import util.ResultCalculator;
+import util.ResultGenerator;
 import view.InputView;
 import view.OutputView;
 
@@ -71,6 +71,6 @@ public class Application {
 
     private static void printResults(Dealer dealer, Players players) {
         OutputView.printUsersResult(dealer, players);
-        OutputView.printLastResult(ResultCalculator.getResults(dealer, players));
+        OutputView.printLastResult(ResultGenerator.create(dealer, players));
     }
 }

@@ -10,11 +10,11 @@ import domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultCalculator {
-    private ResultCalculator() {
+public class ResultGenerator {
+    private ResultGenerator() {
     }
 
-    public static Results getResults(Dealer dealer, Players players) {
+    public static Results create(Dealer dealer, Players players) {
         List<Result> results = new ArrayList<>();
         addDealerResults(dealer, players, results);
         addPlayerResults(dealer, players, results);

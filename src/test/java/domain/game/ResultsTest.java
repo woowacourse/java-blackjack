@@ -5,7 +5,7 @@ import domain.user.Players;
 import factory.PlayerFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.ResultCalculator;
+import util.ResultGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,6 +16,6 @@ public class ResultsTest {
         Dealer dealer = new Dealer();
         Players players = new Players(PlayerFactory.create("playerA,PlayerB"));
 
-        assertThat(ResultCalculator.getResults(dealer,players)).isInstanceOf(Results.class);
+        assertThat(ResultGenerator.create(dealer,players)).isInstanceOf(Results.class);
     }
 }
