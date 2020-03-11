@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SymbolTest {
+class SymbolTest {
     @ParameterizedTest
     @DisplayName("스코어를 잘 불러오는지 확인")
     @CsvSource(value = {"ACE,1", "TEN,10", "KING,10"})
