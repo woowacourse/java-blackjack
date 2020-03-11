@@ -20,4 +20,10 @@ public abstract class User {
 	public boolean isBlackjack() {
 		return cards.isBlackjack();
 	}
+
+	public boolean isBust() {
+		return this.cards.isBust();
+	}
+
+	public abstract String getName();
 }

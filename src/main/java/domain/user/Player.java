@@ -23,4 +23,9 @@ public class Player extends User {
 	public int hashCode() {
 		return Objects.hash(name);
 	}
+
+	@Override
+	public String getName() {
+		return this.name;
+	}
 }
