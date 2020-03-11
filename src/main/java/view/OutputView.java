@@ -1,13 +1,20 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Players;
-import domain.User;
+import domain.*;
 
 public class OutputView {
+	private static final String DELIMITER = ", ";
+	private static final String INIT_DISTRIBUTE_COUNT = "2";
+	public static void printDistributeMessage(Players players){
+		List<String> playersName = new ArrayList<>();
+		players.forEach(player -> playersName.add(player.getName()));
+
+		System.out.println("딜러와 " +String.join(DELIMITER,playersName) +"에게 "+ INIT_DISTRIBUTE_COUNT +"장 나누었습니다.");
+	}
+
 	public static void printInitStatus(Dealer dealer, Players players) {
 		printStatus(dealer.getName(), dealer.getFirstCard());
 		players.forEach(player -> printStatus(player.getName(), player.getCards()));

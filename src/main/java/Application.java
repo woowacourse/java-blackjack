@@ -20,6 +20,7 @@ public class Application {
             dealer.giveOneCard(cardDeck,player);
         }
 
+        OutputView.printDistributeMessage(players);
         OutputView.printInitStatus(dealer, players);
 
         if(dealer.shouldAddCard()){
