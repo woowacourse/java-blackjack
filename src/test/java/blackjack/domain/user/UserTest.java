@@ -24,7 +24,7 @@ class UserTest {
 	}
 
 	@Test
-	void draw_NumberOfCards_ReturnCardList() {
+	void draw_DrawNumberOfCards_AddDrawCardsToHand() {
 		User user = new User("user");
 		Deck deck = new Deck();
 		user.draw(deck, 2);
