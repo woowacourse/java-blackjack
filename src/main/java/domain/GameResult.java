@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class GameResult {
 	private static final int INITIAL_RESULT_COUNT = 0;
+
 	private final Map<String, Result> userResult;
 	private final Map<Result, Integer> dealerResult;
 
@@ -27,7 +28,6 @@ public class GameResult {
 	public Result compareScore(User user, Dealer dealer) {
 		int dealerScore = dealer.calculateScore();
 		int userScore = user.calculateScore();
-
 		if (dealerScore > Rull.MAX_SCORE) {
 			return dealerBurst(userScore);
 		}
@@ -71,13 +71,6 @@ public class GameResult {
 	}
 
 	public Map<Result, Integer> getDealerResult() {
-		Map<Result, Integer> dealerResult = new HashMap<>();
-		for (Result result : Result.values()) {
-			int count = (int) userResult.values().stream()
-					.filter(x -> x == result)
-					.count();
-			dealerResult.put(result, count);
-		}
 		return dealerResult;
 	}
 }

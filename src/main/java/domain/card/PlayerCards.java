@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerCards {
-	public static final int FIRST_CARD_INDEX = 0;
-	public static final String CARD_DELIMITER = ", ";
+	private static final int FIRST_CARD_INDEX = 0;
+	private static final String CARD_DELIMITER = ", ";
 
 	private final List<Card> playerCards = new ArrayList<>();
 

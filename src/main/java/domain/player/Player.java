@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Player implements PlayerInterface {
 	private static final String STRING_FORMAT_PRINT_CARD = "%s카드 : %s";
+
 	protected String name;
 	protected PlayerCards playerCards;
 
