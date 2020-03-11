@@ -1,5 +1,7 @@
 package card;
+
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -29,5 +31,13 @@ public class CardTest {
         Card card = new Card(Type.valueOf(type), Symbol.valueOf(symbol));
         int result = card.getValue();
         Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"SPADE,FIVE,5스페이드","DIAMOND,TEN,10다이아몬드","HEART,ACE,A하트","CLUB,KING,K클로버"})
+    void 카드_이름_반환_테스트(String type, String symbol, String expected) {
+        Card card = new Card(Type.valueOf(type), Symbol.valueOf(symbol));
+
+        Assertions.assertThat(card.getName()).isEqualTo(expected);
     }
 }

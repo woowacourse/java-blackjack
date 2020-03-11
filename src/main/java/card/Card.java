@@ -35,7 +35,15 @@ public class Card {
         return Objects.hash(type, symbol);
     }
 
+    public boolean isAce() {
+        return symbol == Symbol.ACE;
+    }
+
     public int getValue() {
         return symbol.getScore();
+    }
+
+    public String getName() {
+        return symbol.getName() + type.getType();
     }
 }

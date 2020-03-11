@@ -1,8 +1,6 @@
 package carddeck;
 
 import card.Card;
-import carddeck.CardDeck;
-import carddeck.CardDeckFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
