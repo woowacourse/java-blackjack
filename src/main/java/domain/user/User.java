@@ -8,6 +8,7 @@ import domain.deck.Card;
 public abstract class User {
 
     private static final String EMPTY = "";
+    private static final int BLACK_JACK = 21;
 
     protected List<Card> cards;
     protected final String name;
@@ -34,6 +35,14 @@ public abstract class User {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
+    }
+
+    public boolean isBust() {
+        return calculatePoint() > BLACK_JACK;
+    }
+
+    public boolean isBlackJack() {
+        return calculatePoint() == BLACK_JACK;
     }
 
     public String getName() {

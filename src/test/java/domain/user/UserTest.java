@@ -42,10 +42,30 @@ class UserTest {
     }
 
     @Test
+    @DisplayName("카드 point 계산")
     void calculatePoint() {
         user.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         user.draw(new Card(Symbol.DIAMOND, Type.FIVE));
 
         assertThat(user.calculatePoint()).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("카드 포인트가 21을 넘는지 확인")
+    void isBust() {
+        user.draw(new Card(Symbol.CLOVER, Type.EIGHT));
+        user.draw(new Card(Symbol.DIAMOND, Type.EIGHT));
+        user.draw(new Card(Symbol.HEART, Type.EIGHT));
+
+        assertThat(user.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 포인트가 21인지 확인")
+    void isBlackJack() {
+        user.draw(new Card(Symbol.CLOVER, Type.ACE));
+        user.draw(new Card(Symbol.DIAMOND, Type.KING));
+
+        assertThat(user.isBlackJack()).isTrue();
     }
 }
