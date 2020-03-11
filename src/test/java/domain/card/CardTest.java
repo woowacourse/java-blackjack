@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 날짜 : 2020/03/11
  */
 public class CardTest {
+
 	@Test
 	void create_Card() {
 		assertThat(new Card(Symbol.ACE, Type.DIAMOND)).isInstanceOf(Card.class);
