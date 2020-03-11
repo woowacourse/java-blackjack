@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Card {
@@ -41,5 +40,9 @@ public class Card {
 
     public static List<Card> getCards() {
         return new ArrayList<>(cards);
+    }
+
+    public int getCardNumber() {
+        return this.cardNumber.getCardNumber();
     }
 }
