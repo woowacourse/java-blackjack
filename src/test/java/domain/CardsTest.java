@@ -16,7 +16,6 @@ public class CardsTest {
 		cards.addCard(Card.of("스페이드", "K"));
 		cards.addCard(Card.of("스페이드", "3"));
 		cards.addCard(Card.of("스페이드", "A"));
-
 		assertThat(cards.getScore()).isEqualTo(14);
 	}
 
@@ -25,7 +24,6 @@ public class CardsTest {
 		Cards cards = new Cards();
 		cards.addCard(Card.of("스페이드", "K"));
 		cards.addCard(Card.of("스페이드", "A"));
-
 		assertThat(cards.isBlackJack()).isTrue();
 	}
 
@@ -34,7 +32,6 @@ public class CardsTest {
 		Cards cards = new Cards();
 		cards.addCard(Card.of("스페이드", "K"));
 		cards.addCard(Card.of("스페이드", "A"));
-
 		assertThat(cards.isLessThan(20)).isFalse();
 	}
 }

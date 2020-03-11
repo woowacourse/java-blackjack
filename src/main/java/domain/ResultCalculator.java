@@ -13,7 +13,6 @@ public class ResultCalculator {
 
 	private static void addDealerInfo(Dealer dealer, Players players, List<Result> results) {
 		Result result = new Result(dealer.getName(), 0, 0);
-
 		for (Player player : players) {
 			calculateWinLose(dealer, player, result);
 		}
@@ -23,7 +22,6 @@ public class ResultCalculator {
 	private static void addPlayerInfo(Dealer dealer, Players players, List<Result> results) {
 		for (Player player : players) {
 			Result result = new Result(player.getName(), 0, 0);
-
 			calculateWinLose(player, dealer, result);
 			results.add(result);
 		}
