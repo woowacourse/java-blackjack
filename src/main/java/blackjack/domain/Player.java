@@ -3,10 +3,11 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public abstract class Player {
     protected static final int ACE_CRITICAL_POINT = 11;
     protected static final int ACE_UPPER_POINT = 11;
     protected static final int ACE_LOWER_POINT = 1;
+    protected static final int START_INDEX = 0;
 
     protected List<Card> cards = new ArrayList<>();
     protected String name;
@@ -41,4 +42,8 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public abstract List<Card> getInitialCards();
+
+
 }

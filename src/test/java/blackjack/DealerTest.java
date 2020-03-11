@@ -70,6 +70,14 @@ public class DealerTest {
         assertThat(dealer.getName()).isEqualTo("딜러");
     }
 
+    @DisplayName("딜러의 초기 카드 오픈상태 확인")
+    @Test
+    void getInitialCardsTest() {
+        for (int i = 0; i < 2; i++) {
+            dealer.addCard(cardDeck.getOneCard());
+        }
+        assertThat(dealer.getInitialCards()).containsExactly(new Card(Symbol.CLOVER, Type.EIGHT));
+    }
 
     @AfterEach
     void tearDown() throws NoSuchFieldException, IllegalAccessException {

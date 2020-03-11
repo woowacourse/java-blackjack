@@ -70,4 +70,14 @@ public class UserTest {
         assertThat(user.getName()).isEqualTo("pobi");
     }
 
+    @DisplayName("유저의 초기 카드 오픈상태 확인")
+    @Test
+    void getInitialCardsTest() {
+        for (int i = 0; i < 2; i++) {
+            user.addCard(cardDeck.getOneCard());
+        }
+        assertThat(user.getInitialCards()).containsExactly(
+                new Card(Symbol.CLOVER, Type.EIGHT), new Card(Symbol.CLOVER, Type.ACE));
+    }
+
 }
