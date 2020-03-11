@@ -41,11 +41,19 @@ public class Card {
             '}';
     }
 
-    public String getSymbol() {
+    public String getSymbolName() {
         return this.symbol.getSymbolName();
+    }
+
+    public int getSymbolScore() {
+        return this.symbol.getScore();
     }
 
     public String getTypeKorean() {
         return this.type.getKoreanName();
+    }
+
+    public boolean isAce() {
+        return this.symbol.equals(Symbol.ACE);
     }
 }

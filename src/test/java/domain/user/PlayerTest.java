@@ -23,13 +23,6 @@ public class PlayerTest {
             isInstanceOf(NullPointerException.class);
     }
 
-    private static Stream<Arguments> getIsSameNameTestCases() {
-        return Stream.of(
-            Arguments.of(new Player("오렌지"), "오렌지", true),
-            Arguments.of(new Player("오렌지"), "히히", false)
-        );
-    }
-
     @Test
     @DisplayName("초기 2장의 카드 받기 테스트")
     void receiveFirstCards() {
@@ -44,5 +37,12 @@ public class PlayerTest {
     @DisplayName("")
     void isSameName(Player player, String name, boolean result) {
         assertThat(player.isSameName(name)).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> getIsSameNameTestCases() {
+        return Stream.of(
+            Arguments.of(new Player("오렌지"), "오렌지", true),
+            Arguments.of(new Player("오렌지"), "히히", false)
+        );
     }
 }
