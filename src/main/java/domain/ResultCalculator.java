@@ -3,13 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.Result;
-import domain.Results;
-import domain.User;
-
 public class ResultCalculator {
 	public static Results getResults(Dealer dealer, Players players) {
 		List<Result> results = new ArrayList<>();

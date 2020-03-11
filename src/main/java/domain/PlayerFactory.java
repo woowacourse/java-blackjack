@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Player;
-
 public class PlayerFactory {
 	private static final String NAME_DELIMITER = ",";
 

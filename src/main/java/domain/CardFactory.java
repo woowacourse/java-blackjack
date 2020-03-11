@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import domain.Card;
-import domain.Symbol;
-import domain.Type;
-
 public class CardFactory {
 	public static List<Card> create() {
 		List<Card> cards = new ArrayList<>();
