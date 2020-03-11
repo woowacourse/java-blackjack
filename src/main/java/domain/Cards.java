@@ -3,6 +3,8 @@ package domain;
 import java.util.List;
 
 public class Cards {
+    private static final int ACE_BONUS = 10;
+    private static final int BLACK_JACK = 21;
     private List<Card> cards;
 
     Cards(List<Card> cards) {
@@ -18,8 +20,18 @@ public class Cards {
     }
 
     public int calculateScore() {
-        return cards.stream()
+        int result = cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
+        for (Card card : cards) {
+            if (canAddAceBonus(result, card)) {
+                result += ACE_BONUS;
+            }
+        }
+        return result;
+    }
+
+    private boolean canAddAceBonus(int result, Card card) {
+        return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
     }
 }

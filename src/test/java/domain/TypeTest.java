@@ -9,7 +9,7 @@ public class TypeTest {
     @Test
     @DisplayName("타입이 생성된다.")
     void valueOf() {
-     assertThat(Type.valueOf("HEART")).isEqualTo(Type.HEART);
+        assertThat(Type.valueOf("HEART")).isEqualTo(Type.HEART);
     }
 
     @Test

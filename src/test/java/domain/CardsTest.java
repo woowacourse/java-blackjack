@@ -9,8 +9,7 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardsTest {
-
+class CardsTest {
     private Cards cards;
 
     @BeforeEach
@@ -39,5 +38,31 @@ public class CardsTest {
         cards.add(new Card(Symbol.TEN, Type.DIAMOND));
         cards.add(new Card(Symbol.FIVE, Type.DIAMOND));
         assertThat(cards.calculateScore()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("버스트에 따라서 ACE값이 결정되서 계산한다")
+    void calculateWithAceNotBurst() {
+        cards.add(new Card(Symbol.TEN, Type.DIAMOND));
+        cards.add(new Card(Symbol.ACE, Type.DIAMOND));
+        assertThat(cards.calculateScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("버스트에 따라서 ACE값이 결정되서 계산한다")
+    void calculateWithAceOnBurst() {
+        cards.add(new Card(Symbol.TEN, Type.DIAMOND));
+        cards.add(new Card(Symbol.NINE, Type.CLOVER));
+        cards.add(new Card(Symbol.ACE, Type.SPADE));
+        assertThat(cards.calculateScore()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("버스트에 따라서 ACE값이 결정되서 계산한다")
+    void calculateWithAceOnBurst1() {
+        cards.add(new Card(Symbol.NINE, Type.CLOVER));
+        cards.add(new Card(Symbol.ACE, Type.SPADE));
+        cards.add(new Card(Symbol.ACE, Type.SPADE));
+        assertThat(cards.calculateScore()).isEqualTo(21);
     }
 }

@@ -1,7 +1,6 @@
 package domain;
 
 public enum Type {
-
     SPADE("♤"),
     DIAMOND("♢"),
     HEART("♡"),
