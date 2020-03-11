@@ -1,4 +1,7 @@
-import card.Card;
+package domain.user;
+
+import domain.HandCard;
+import domain.card.Card;
 
 import java.util.Objects;
 
@@ -23,7 +26,7 @@ public class Player extends User {
     }
 
     public void draw(Card card) {
-         handCard.add(card);
+        handCard.add(card);
     }
 
     public String getStatus() {

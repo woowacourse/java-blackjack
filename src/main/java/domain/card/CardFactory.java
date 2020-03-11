@@ -1,4 +1,4 @@
-package card;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.List;
 public class CardFactory {
     private static final List<Card> cards;
 
-    static{
+    static {
         cards = createCards();
     }
 
@@ -28,8 +28,8 @@ public class CardFactory {
     }
 
     public static Card of(Type type, Symbol symbol) {
-        for(Card card : cards) {
-            if(card.equals(new Card(type, symbol))){
+        for (Card card : cards) {
+            if (card.equals(new Card(type, symbol))) {
                 return card;
             }
         }

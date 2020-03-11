@@ -1,6 +1,6 @@
-package carddeck;
+package domain.carddeck;
 
-import card.Card;
+import domain.card.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

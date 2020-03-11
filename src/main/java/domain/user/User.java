@@ -1,4 +1,6 @@
-import card.Card;
+package domain.user;
+
+import domain.card.Card;
 
 public abstract class User {
 

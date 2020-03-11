@@ -1,4 +1,4 @@
-package card;
+package domain.card;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

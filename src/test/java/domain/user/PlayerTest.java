@@ -1,6 +1,8 @@
-import card.CardFactory;
-import card.Symbol;
-import card.Type;
+package domain.user;
+
+import domain.card.CardFactory;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +28,7 @@ public class PlayerTest {
     void 플레이어_생성_테스트() {
         Player player = new Player("KIM");
 
-        Assertions.assertThat(player).hasFieldOrPropertyWithValue("name","KIM");
+        Assertions.assertThat(player).hasFieldOrPropertyWithValue("name", "KIM");
     }
 
     @ParameterizedTest

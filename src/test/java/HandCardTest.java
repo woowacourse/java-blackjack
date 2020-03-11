@@ -1,7 +1,8 @@
-import card.Card;
-import card.CardFactory;
-import card.Symbol;
-import card.Type;
+import domain.HandCard;
+import domain.card.Card;
+import domain.card.CardFactory;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,6 +1,6 @@
-package carddeck;
+package domain.carddeck;
 
-import card.Card;
+import domain.card.Card;
 
 import java.util.Collections;
 import java.util.List;

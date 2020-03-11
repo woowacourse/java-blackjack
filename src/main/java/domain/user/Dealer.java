@@ -1,4 +1,7 @@
-import card.Card;
+package domain.user;
+
+import domain.HandCard;
+import domain.card.Card;
 
 public class Dealer {
     public static final String DEALER_NAME = "딜러";

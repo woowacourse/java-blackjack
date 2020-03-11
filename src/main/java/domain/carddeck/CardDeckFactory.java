@@ -1,9 +1,9 @@
-package carddeck;
+package domain.carddeck;
 
-import card.Card;
-import card.CardFactory;
-import card.Symbol;
-import card.Type;
+import domain.card.Card;
+import domain.card.CardFactory;
+import domain.card.Symbol;
+import domain.card.Type;
 
 import java.util.LinkedList;
 import java.util.List;
