@@ -22,6 +22,10 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXSIST_MESSAGE));
     }
 
+    public static List<Card> getAllCards() {
+        return CardCache.cards;
+    }
+
     public int getNumber() {
         return number;
     }
