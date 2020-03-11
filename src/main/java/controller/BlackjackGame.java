@@ -1,7 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.YesOrNo;
 import domain.card.CardDivider;
@@ -22,7 +24,18 @@ public class BlackjackGame {
 		List<User> users = PlayerFactory.create(InputView.inputNames());
 		Dealer dealer = new Dealer();
 		initCards(users, dealer);
+		checkBlackJack(users, dealer);
 		drawCard(users, dealer);
+	}
+
+	private void checkBlackJack(List<User> users, Dealer dealer) {
+		List<User> allUsers = new ArrayList<>(users);
+		allUsers.add(dealer);
+
+		List<User> blackjackUsers = allUsers.stream()
+			.filter(User::isBlackjack)
+			.collect(Collectors.toList());
+		OutputView.printBlackJackUser(blackjackUsers);
 	}
 
 	private void initCards(List<User> users, Dealer dealer) {
@@ -30,7 +43,10 @@ public class BlackjackGame {
 			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
 		}
 		dealer.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
-		OutputView.
+
+		List<User> allUsers = new ArrayList<>(users);
+		allUsers.add(dealer);
+		OutputView.printInitialResult(allUsers);
 	}
 
 	private void drawCard(List<User> users, Dealer dealer) {
@@ -38,19 +54,26 @@ public class BlackjackGame {
 			if (user.isBlackjack()) {
 				continue;
 			}
-			while (!user.isBust()) {
-				YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
-				if (yesOrNo.isEnd()) {
+
+			YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
+			while (yesOrNo.isContinue()) {
+				user.addCards(Arrays.asList(cardDivider.divide()));
+				OutputView.printUserCard(user);
+				if (user.isBust()) {
+					OutputView.printUserBust(user);
 					break;
 				}
-				user.addCards(Arrays.asList(cardDivider.divide()));
+				yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
 			}
-			//출력
 		}
 
 		while (dealer.isDrawable()) {
 			dealer.addCards(Arrays.asList(cardDivider.divide()));
-			//출력
+			OutputView.printDealerDraw();
 		}
+
+		List<User> allUsers = new ArrayList<>(users);
+		allUsers.add(dealer);
+		OutputView.printUserResult(allUsers);
 	}
 }

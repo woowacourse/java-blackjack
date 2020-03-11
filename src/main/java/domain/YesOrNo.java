@@ -7,7 +7,7 @@ public class YesOrNo {
 		this.yesOrNo = yesOrNo;
 	}
 
-	public boolean isEnd() {
-		return this.yesOrNo.equals("n");
+	public boolean isContinue() {
+		return this.yesOrNo.equals("y");
 	}
 }
