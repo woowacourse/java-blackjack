@@ -57,4 +57,22 @@ public class AbstractUserTest {
 
         assertThat(user.calculateScore()).isEqualTo(new Score(12));
     }
+
+    @Test
+    void isBust_ShouldReturnTrue() {
+        user.append(new Card(Symbol.TEN, Type.CLUB));
+        user.append(new Card(Symbol.EIGHT, Type.HEART));
+        user.append(new Card(Symbol.FOUR, Type.SPADE));
+
+        assertThat(user.isBust()).isTrue();
+    }
+
+    @Test
+    void isBust_ShouldReturnFalse() {
+        user.append(new Card(Symbol.TEN, Type.CLUB));
+        user.append(new Card(Symbol.EIGHT, Type.HEART));
+        user.append(new Card(Symbol.THREE, Type.SPADE));
+
+        assertThat(user.isBust()).isFalse();
+    }
 }

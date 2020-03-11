@@ -26,7 +26,7 @@ public class AbstractUser implements User {
 
     @Override
     public boolean isBust() {
-        return true;
+        return calculateScore().isOver(21);
     }
 
     @Override

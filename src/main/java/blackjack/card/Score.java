@@ -26,6 +26,10 @@ public class Score {
         return score < number;
     }
 
+    public boolean isOver(int number) {
+        return score > number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
