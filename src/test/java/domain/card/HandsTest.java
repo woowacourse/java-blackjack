@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -30,11 +30,11 @@ public class HandsTest {
 	}
 
 	@Test
-	void ACE_갯수() {
+	void ACE_유무() {
 		Hands hands1 = new Hands();
 		hands1.add(new Card(Type.HEART, Symbol.ACE));
 		hands1.add(new Card(Type.DIAMOND, Symbol.KING));
-		assertThat(hands1.hasAce()).isEqualTo(1);
+		assertThat(hands1.hasAce()).isEqualTo(true);
 	}
 
 	@ParameterizedTest

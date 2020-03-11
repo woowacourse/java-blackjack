@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
  *    @author AnHyungJu, ParkDooWon
  */
 @SuppressWarnings("NonAsciiCharacters")
-public class CardFactoryTest {
+public class DeckTest {
 	@Test
-	void 생성_사이즈() {
-		assertThat(CardFactory.create().size()).isEqualTo(52);
+	void 카드_나누기() {
+		assertThat(new Deck().deal()).isInstanceOf(Card.class);
 	}
 }

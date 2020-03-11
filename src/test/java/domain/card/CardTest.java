@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 	@Test
 	void 점수_계산() {
-		assertThat(new Card(Type.HEART, Symbol.ACE).score()).isEqualTo(11);
+		assertThat(new Card(Type.HEART, Symbol.ACE).score()).isEqualTo(1);
 		assertThat(new Card(Type.HEART, Symbol.KING).score()).isEqualTo(10);
 	}
 

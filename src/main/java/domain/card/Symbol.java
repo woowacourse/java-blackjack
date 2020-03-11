@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 /**
  *    카드 심볼

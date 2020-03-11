@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,14 +10,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
+
 @SuppressWarnings("NonAsciiCharacters")
 public class PlayerTest {
 	private static Stream<Arguments> generateBustInput() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), false),
 			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), false),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
-				new Card(Type.DIAMOND, Symbol.TWO)), true));
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.THREE), new Card(Type.DIAMOND, Symbol.NINE),
+				new Card(Type.DIAMOND, Symbol.KING)), true));
 	}
 
 	private static Stream<Arguments> generateInput() {

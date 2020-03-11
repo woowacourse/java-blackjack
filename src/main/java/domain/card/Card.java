@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 /**
  *    카드를 나타내는 클래스입니다.

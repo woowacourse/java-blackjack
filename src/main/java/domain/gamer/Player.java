@@ -1,4 +1,7 @@
-package domain;
+package domain.gamer;
+
+import domain.card.Card;
+import domain.card.Hands;
 
 /**
  *    게임 플레이어 나타내는 클래스입니다.

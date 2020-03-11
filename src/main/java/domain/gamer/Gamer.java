@@ -1,4 +1,6 @@
-package domain;
+package domain.gamer;
+
+import domain.card.Card;
 
 /**
  *    게임 진행자 인터페이스입니다.
