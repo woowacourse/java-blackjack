@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class UserCards {
@@ -9,12 +10,16 @@ public class UserCards {
         if (cards == null || cards.size() == 0) {
             throw new RuntimeException("카드가 없습니다");
         }
-        this.cards = cards;
+        this.cards = new LinkedList<>(cards);
     }
 
     public int getTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 }
