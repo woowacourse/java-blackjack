@@ -22,6 +22,7 @@ class PlayerTest {
         player.addCard(card);
         assertThat(player.countCards()).isEqualTo(1);
     }
+
     @Test
     @DisplayName("플레이어가 생성된다")
     void constructor() {
@@ -29,5 +30,36 @@ class PlayerTest {
         String name = "player";
         Player player = new Player(name, playingCards);
         assertThat(player).isNotNull();
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트인지 확인")
+    void isBust() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(name, playingCards);
+        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
+        Card card2 = new Card(Symbol.KING, Type.CLOVER);
+        Card card3 = new Card(Symbol.JACK, Type.CLOVER);
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+
+        assertThat(player.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트인지 확인")
+    void isNotBust() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(name, playingCards);
+        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
+        Card card2 = new Card(Symbol.KING, Type.CLOVER);
+
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.isBust()).isFalse();
     }
 }

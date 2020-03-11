@@ -17,4 +17,8 @@ public class Gamer {
     public int countCards() {
         return playingCards.size();
     }
+
+    public boolean isBust() {
+        return playingCards.isBust();
+    }
 }
