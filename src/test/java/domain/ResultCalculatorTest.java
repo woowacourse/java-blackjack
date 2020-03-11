@@ -4,13 +4,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import domain.CardDeck;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.ResultCalculator;
-import domain.Results;
-
 public class ResultCalculatorTest {
 	@Test
 	void getResults() {
