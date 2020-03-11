@@ -1,5 +1,5 @@
 package blackjack.domain;
 
-public enum PlayerResult {
+public enum UserResult {
     WIN, LOSE, DRAW;
 }

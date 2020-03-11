@@ -11,6 +11,7 @@ public class Dealer extends Player {
 
     private Dealer() {
         this.name = KOREAN_NAME;
+        this.status = Status.NONE;
     }
 
     public static Dealer getDealer() {

@@ -48,6 +48,9 @@ public abstract class Player {
         this.status = status;
     };
 
+    public Status getStatus() {
+        return status;
+    }
 
     public abstract List<Card> getInitialCards();
 

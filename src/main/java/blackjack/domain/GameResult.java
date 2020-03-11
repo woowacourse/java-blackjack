@@ -1,15 +1,15 @@
 package blackjack.domain;
 
+import blackjack.domain.strategy.DealerStatusStrategy;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<User, PlayerResult> gameResult = new HashMap<>();
+    private Map<User, UserResult> gameResult = new HashMap<>();
 
-    public PlayerResult calculatePlayerResult(Dealer dealer, User user) {
-        if (dealer.status == Status.BLACKJACK && user.status == Status.BLACKJACK) {
-            return PlayerResult.DRAW;
-        }
-        return null;
+    public UserResult calculatePlayerResult(Dealer dealer, User user) {
+        DealerStatusStrategy dealerStatusStrategy = dealer.status.getDealerStatusStrategy();
+        return dealerStatusStrategy.compute(dealer, user);
     }
 }
