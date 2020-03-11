@@ -11,6 +11,14 @@ public class Card {
         this.type = type;
     }
 
+    public int getPoint() {
+        return type.getPoint();
+    }
+
+    public boolean isAce() {
+        return type == Type.ACE;
+    }
+
     @Override
     public String toString() {
         return type.getSimpleName() + symbol.getKoreanName();

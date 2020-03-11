@@ -16,20 +16,22 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class UserTest {
     private List<Card> cards;
     private CardDeck cardDeck;
+    private User user;
 
     @BeforeEach
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
                         new Card(Symbol.CLOVER, Type.EIGHT),
+                        new Card(Symbol.CLOVER, Type.ACE),
                         new Card(Symbol.DIAMOND, Type.JACK),
                         new Card(Symbol.HEART, Type.SEVEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.CLOVER, Type.ACE),
                         new Card(Symbol.HEART, Type.TEN)
                 )
         );
         cardDeck = new CardDeck(cards);
+        user = new User("pobi");
     }
 
     @DisplayName("user 생성 시 빈 문자열일 경우 예외 발생 확인")
@@ -44,11 +46,20 @@ public class UserTest {
     @DisplayName("카드 덱에서 뽑았을 때 유저가 가지고 있는 카드 수와 덱의 카드 수가 동시에 변하는지 확인")
     @Test
     void addCardTest() {
-        User user = new User("pobi");
         for (int i = 0; i < 2; i++) {
             user.addCard(cardDeck.getOneCard());
         }
         assertThat(user.getCardsSize()).isEqualTo(2);
         assertThat(cardDeck.size()).isEqualTo(4);
+    }
+
+    @DisplayName("현재 보유 중인 카드의 총 점수 계산")
+    @Test
+    void calculateScoreTest() {
+        for (int i = 0; i < 2; i++) {
+            user.addCard(cardDeck.getOneCard());
+        }
+        int score = user.calculateScore();
+        assertThat(score).isEqualTo(19);
     }
 }
