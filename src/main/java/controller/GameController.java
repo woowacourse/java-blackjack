@@ -15,43 +15,43 @@ import view.InputView;
 import view.OutputView;
 
 public class GameController {
-    public void run() {
-        Gamers gamers = new Gamers(generatePlayers(), new Dealer());
-        Deck deck = new Deck(CardFactory.create());
+	public void run() {
+		Gamers gamers = new Gamers(generatePlayers(), new Dealer());
+		Deck deck = new Deck(CardFactory.create());
 
-        gamers.initCard(deck);
+		gamers.initCard(deck);
 
-        OutputView.printInitCardGuide(gamers);
-        OutputView.printPlayer(gamers);
-        addCardAtPlayers(gamers, deck);
-        addCardAtDealer(gamers, deck);
-        OutputView.printCardsResultAndScore(gamers);
-    }
+		OutputView.printInitCardGuide(gamers);
+		OutputView.printGamersCard(gamers);
+		addCardAtPlayers(gamers, deck);
+		addCardAtDealer(gamers, deck);
+		OutputView.printCardsResultAndScore(gamers);
+	}
 
-    private List<Player> generatePlayers() {
-        return InputUtils.splitAsDelimiter(InputView.inputAsPlayerName())
-                .stream()
-                .map(Player::new)
-                .collect(toList());
-    }
+	private List<Player> generatePlayers() {
+		return InputUtils.splitAsDelimiter(InputView.inputAsPlayerName())
+			.stream()
+			.map(Player::new)
+			.collect(toList());
+	}
 
-    private void addCardAtPlayers(Gamers gamers, Deck deck) {
-    	gamers.stream()
-				.forEach(player -> drawCardOfPlayer(deck, player));
-    }
+	private void addCardAtPlayers(Gamers gamers, Deck deck) {
+		gamers.stream()
+			.forEach(player -> drawCardOfPlayer(deck, player));
+	}
 
-    private void drawCardOfPlayer(Deck deck, Player player) {
-        YesOrNo yesOrNo;
-        do {
-            yesOrNo = YesOrNo.findYesOrNo(InputView.inputAsDrawable(player));
-            player.addCard(deck.popCard(1));
-        } while (yesOrNo.getDrawable() && player.isDrawable());
-    }
+	private void drawCardOfPlayer(Deck deck, Player player) {
+		while (player.isDrawable()
+			&& YesOrNo.findYesOrNo(InputView.inputAsDrawable(player)).getDrawable()) {
+			player.addCard(deck.popCard(1));
+			OutputView.printGamerCard(player);
+		}
+	}
 
-    private void addCardAtDealer(Gamers gamers, Deck deck) {
-        if(gamers.getDealer().isDrawable()) {
-            OutputView.printAddCardAtDealer();
-            gamers.getDealer().addCard(deck.popCard(1));
-        }
-    }
+	private void addCardAtDealer(Gamers gamers, Deck deck) {
+		while (gamers.getDealer().isDrawable()) {
+			OutputView.printAddCardAtDealer();
+			gamers.getDealer().addCard(deck.popCard(1));
+		}
+	}
 }

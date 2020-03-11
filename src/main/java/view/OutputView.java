@@ -21,9 +21,13 @@ public class OutputView {
         System.out.println(stringBuffer.toString());
     }
 
-    public static void printPlayer(Gamers gamers) {
-        System.out.println(gamers.getDealer());
-        gamers.stream().forEach(System.out::println);
+    public static void printGamersCard(Gamers gamers) {
+        printGamerCard(gamers.getDealer());
+        gamers.stream().forEach(OutputView::printGamerCard);
+    }
+
+    public static void printGamerCard(Gamer gamer) {
+        System.out.println(gamer);
     }
 
     public static void printAddCardAtDealer() {
