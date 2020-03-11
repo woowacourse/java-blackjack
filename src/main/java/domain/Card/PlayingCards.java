@@ -1,4 +1,4 @@
-package domain;
+package domain.Card;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ public class PlayingCards {
     private static final int BLACK_JACK = 21;
     private List<Card> cards;
 
-    PlayingCards(List<Card> cards) {
+    public PlayingCards(List<Card> cards) {
         this.cards = cards;
     }
 

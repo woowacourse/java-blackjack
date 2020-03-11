@@ -1,4 +1,4 @@
-package domain;
+package domain.Card;
 
 public enum Symbol {
     ACE(1, "A"),

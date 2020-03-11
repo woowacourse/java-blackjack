@@ -1,4 +1,4 @@
-package domain;
+package domain.Card;
 
 import java.util.Collections;
 import java.util.Stack;

@@ -1,5 +1,9 @@
-package domain;
+package domain.Card;
 
+import domain.Card.Card;
+import domain.Card.PlayingCards;
+import domain.Card.Symbol;
+import domain.Card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
