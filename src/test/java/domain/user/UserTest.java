@@ -2,17 +2,11 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.deck.Card;
-import domain.deck.DeckFactory;
 import domain.deck.Symbol;
 import domain.deck.Type;
 
@@ -74,27 +68,5 @@ class UserTest {
         user.draw(new Card(Symbol.DIAMOND, Type.KING));
 
         assertThat(user.isBlackJack()).isTrue();
-    }
-
-    @ParameterizedTest
-    @DisplayName("Bust, BlackJack 여부에 따른 드로우")
-    @MethodSource("createOption")
-    void optionalDraw(Card card, int expected) {
-        user.draw(new Card(Symbol.CLOVER, Type.KING));
-        user.draw(new Card(Symbol.DIAMOND, Type.EIGHT));
-        user.draw(card);
-        int initSize = user.cards.size();
-
-        user.optionalDraw(DeckFactory.getDeck());
-
-        assertThat(user.cards.size()).isEqualTo(initSize + expected);
-    }
-
-    private static Stream<Arguments> createOption() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.DIAMOND, Type.TWO), 1),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.THREE), 0),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), 0)
-        );
     }
 }

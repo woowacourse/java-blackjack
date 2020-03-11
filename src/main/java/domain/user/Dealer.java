@@ -1,7 +1,5 @@
 package domain.user;
 
-import domain.deck.Deck;
-
 public class Dealer extends User {
 
     private static final String DEALER = "딜러";
@@ -16,13 +14,12 @@ public class Dealer extends User {
     }
 
     @Override
-    public String getFirstDrawResult() {
+    public String getDrawResult() {
         return DEALER + "카드: " + cards.get(0).getName();
     }
 
-    public void additionalDraw(Deck deck) {
-        if (calculatePoint() < PIVOT) {
-            optionalDraw(deck);
-        }
+    @Override
+    public boolean isAvailableToDraw() {
+        return !isBust() && !isBlackJack() && calculatePoint() < PIVOT;
     }
 }

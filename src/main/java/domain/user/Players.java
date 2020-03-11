@@ -30,7 +30,7 @@ public class Players {
 
     public String getAllFirstDrawResult() {
         return players.stream()
-                .map(Player::getFirstDrawResult)
+                .map(Player::getDrawResult)
                 .collect(Collectors.joining("\n"));
     }
 

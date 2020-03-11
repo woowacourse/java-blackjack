@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.deck.Card;
-import domain.deck.Deck;
 
 public abstract class User {
 
@@ -30,7 +29,7 @@ public abstract class User {
         cards.add(card);
     }
 
-    public abstract String getFirstDrawResult();
+    public abstract String getDrawResult();
 
     public int calculatePoint() {
         return cards.stream()
@@ -46,11 +45,7 @@ public abstract class User {
         return calculatePoint() == BLACK_JACK;
     }
 
-    protected void optionalDraw(Deck deck) {
-        if (!isBust() && !isBlackJack()) {
-            draw(deck.dealOut());
-        }
-    }
+    public abstract boolean isAvailableToDraw();
 
     public String getName() {
         return name;

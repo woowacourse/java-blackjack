@@ -12,13 +12,17 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.deck.Card;
-import domain.deck.DeckFactory;
 import domain.deck.Symbol;
 import domain.deck.Type;
 
 class DealerTest {
 
     private Dealer dealer;
+
+    @BeforeEach
+    void setUp() {
+        dealer = Dealer.appoint();
+    }
 
     @Test
     @DisplayName("생성 확인")
@@ -32,31 +36,23 @@ class DealerTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         dealer.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(dealer.getFirstDrawResult()).isEqualTo("딜러카드: 8클로버");
-    }
-
-    @BeforeEach
-    void setUp() {
-        dealer = Dealer.appoint();
+        assertThat(dealer.getDrawResult()).isEqualTo("딜러카드: 8클로버");
     }
 
     @ParameterizedTest
-    @DisplayName("딜러 기준 포인트에 따른 드로우")
+    @DisplayName("딜러 기준 드로우 가능한지 확인")
     @MethodSource("createOption")
-    void additionalDraw(Card card, int expected) {
+    void isAvailableToDraw(Card card, boolean expected) {
         dealer.draw(new Card(Symbol.CLOVER, Type.TEN));
         dealer.draw(card);
-        int initSize = dealer.cards.size();
 
-        dealer.additionalDraw(DeckFactory.getDeck());
-
-        assertThat(dealer.cards.size()).isEqualTo(initSize + expected);
+        assertThat(dealer.isAvailableToDraw()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createOption() {
         return Stream.of(
-                Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), 1),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), 0)
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false)
         );
-    }
+   }
 }

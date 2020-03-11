@@ -11,9 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.YesOrNo;
 import domain.deck.Card;
-import domain.deck.DeckFactory;
 import domain.deck.Symbol;
 import domain.deck.Type;
 
@@ -39,25 +37,26 @@ class PlayerTest {
         player.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         player.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(player.getFirstDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
+        assertThat(player.getDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
     }
 
     @ParameterizedTest
-    @DisplayName("딜러 기준 포인트에 따른 드로우")
+    @DisplayName("플레이어가 드로우 가능한지 확인")
     @MethodSource("createOption")
-    void additionalDraw(YesOrNo input, int expected) {
+    void isAvailableToDraw(Card card, boolean expected) {
         player.draw(new Card(Symbol.CLOVER, Type.TEN));
-        int initSize = player.cards.size();
+        player.draw(new Card(Symbol.CLOVER, Type.EIGHT));
+        player.draw(card);
 
-        player.additionalDraw(DeckFactory.getDeck(), input);
-
-        assertThat(player.cards.size()).isEqualTo(initSize + expected);
+        assertThat(player.isAvailableToDraw()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createOption() {
         return Stream.of(
-                Arguments.of(YesOrNo.of("y"), 1),
-                Arguments.of(YesOrNo.of("n"), 0)
+                Arguments.of(new Card(Symbol.DIAMOND, Type.TWO), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.THREE), false),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), false)
+
         );
     }
 }
