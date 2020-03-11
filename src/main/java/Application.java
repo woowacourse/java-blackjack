@@ -26,6 +26,8 @@ public class Application {
             dealer.addCard(cardDeck.drawOne());
         }
 
+        OutputView.printUsersResult(dealer, players);
+
         Results results = ResultCalculator.getResults(dealer,players);
         results.printAll();
     }
