@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HandCard {
+    private static final int ACE_BONUS_SCORE = 10;
+    private static final int BLACKJACK_FULL_SCORE = 21;
+
     private final List<Card> cards;
 
     public HandCard() {
@@ -29,18 +32,16 @@ public class HandCard {
     }
 
     private int getAceScore(int sum) {
-        if (haveAce() && sum <= 11) {
-            return sum + 10;
+        if (sum <= (BLACKJACK_FULL_SCORE - ACE_BONUS_SCORE) && hasAce()) {
+            return sum + ACE_BONUS_SCORE;
         }
         return sum;
     }
 
-    private boolean haveAce() {
-        for (Card card : cards) {
-            if (card.isAce()) {
-                return true;
-            }
-        }
-        return false;
+    private boolean hasAce() {
+        return cards.stream()
+                .map(Card::isAce)
+                .findAny()
+                .orElse(false);
     }
 }

@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class CardFactoryTest {
     @ParameterizedTest
     @CsvSource(value = {"SPADE,FIVE","DIAMOND,TEN","HEART,ACE","CLUB,KING"})

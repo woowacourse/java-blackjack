@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class CardDeckTest {
     @Test
     void 카드덱_생성_테스트() {
