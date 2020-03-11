@@ -1,7 +1,6 @@
 package domain.user;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import domain.card.Card;
 import domain.card.Cards;

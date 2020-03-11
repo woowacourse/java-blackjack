@@ -82,6 +82,12 @@ public class CardsTest {
 	}
 	*/
 
+	@Test
+	void isBustTest() {
+		Cards cards = createCards(Arrays.asList(2, 10, 10));
+		assertThat(cards.isBust()).isTrue();
+	}
+
 	Cards createCards(List<Integer> numbers) {
 		return numbers.stream()
 			.map(num -> new Card(Symbol.CLOVER, Type.of(num)))

@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
+	private static final int BUST_SCORE = 22;
 	private static final int ACE_ADDITIONAL_SCORE = 10;
 	private static final int BLACKJACK_CARD_SIZE = 2;
 
@@ -21,6 +22,10 @@ public class Cards {
 
 	public boolean isBlackjack() {
 		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
+	}
+
+	public boolean isBust() {
+		return calculateScore() >= BUST_SCORE;
 	}
 
 	public int calculateScore() {
