@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import domain.YesOrNo;
 import domain.card.CardDivider;
 import domain.result.DealerResult;
+import domain.result.MatchCalculator;
 import domain.result.MatchResult;
-import domain.result.Result;
 import domain.result.UserResult;
 import domain.user.Dealer;
 import domain.user.PlayerFactory;
@@ -79,14 +79,18 @@ public class BlackjackGame {
 		if (user.isBlackjack()) {
 			return;
 		}
-		while (isContinuousFromInput(user)) {
+		while (isUserNotBust(user) || isContinuousFromInput(user)) {
 			user.addCards(Arrays.asList(cardDivider.divide()));
 			OutputView.printUserCard(user);
-			if (user.isBust()) {
-				OutputView.printUserBust(user);
-				break;
-			}
 		}
+	}
+
+	private boolean isUserNotBust(User user) {
+		if (!user.isBust()) {
+			return true;
+		}
+		OutputView.printUserBust(user);
+		return false;
 	}
 
 	private boolean isContinuousFromInput(User user) {
@@ -108,13 +112,11 @@ public class BlackjackGame {
 	}
 
 	private void printGameResult(List<User> users, Dealer dealer) {
-		Result result = new Result(users, dealer);
-
 		List<UserResult> userResults = users.stream()
 			.map(user -> new UserResult(user, MatchResult.findMatchResult(user, dealer)))
 			.collect(Collectors.toList());
+		DealerResult dealerResult = new DealerResult(new MatchCalculator(users, dealer).getMatchResults());
 
-		DealerResult dealerResult = new DealerResult(result.getResult());
 		OutputView.printGameResult(userResults, dealerResult);
 	}
 }

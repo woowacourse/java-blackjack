@@ -9,11 +9,14 @@ public class CardFactory {
 
 	static {
 		for (Type type : Type.values()) {
-			for (Symbol symbol : Symbol.values()) {
-				cards.add(new Card(symbol, type));
-			}
+			createCardsByType(type);
 		}
+	}
 
+	private static void createCardsByType(Type type) {
+		for (Symbol symbol : Symbol.values()) {
+			cards.add(new Card(symbol, type));
+		}
 	}
 
 	public static List<Card> create() {

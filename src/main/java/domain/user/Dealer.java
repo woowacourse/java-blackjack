@@ -6,8 +6,10 @@ import domain.card.Card;
 
 public class Dealer extends User {
 	private static final int MAXIMUM_DRAWABLE_SCORE = 16;
+	private static final int INITIAL_FROM_INDEX = 0;
+	private static final int INITIAL_TO_INDEX = 1;
 
-	private String name;
+	private final String name;
 
 	public Dealer() {
 		this.name = "딜러";
@@ -19,7 +21,7 @@ public class Dealer extends User {
 
 	@Override
 	public List<Card> getInitialCard() {
-		return cards.getCards().subList(0, 1);
+		return cards.getCards().subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
 	}
 
 	@Override

@@ -12,6 +12,22 @@ public class Card {
 		this.type = type;
 	}
 
+	public boolean isAce() {
+		return this.type == Type.ACE;
+	}
+
+	public int getTypeScore() {
+		return this.type.getScore();
+	}
+
+	public String getTypeName() {
+		return this.type.getName();
+	}
+
+	public String getSymbol() {
+		return symbol.getName();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -26,22 +42,6 @@ public class Card {
 	@Override
 	public int hashCode() {
 		return Objects.hash(symbol, type);
-	}
-
-	public int getTypeScore() {
-		return this.type.getScore();
-	}
-
-	public String getTypeName() {
-		return this.type.getName();
-	}
-
-	public boolean isAce() {
-		return this.type == Type.ACE;
-	}
-
-	public String getSymbol() {
-		return symbol.getName();
 	}
 
 }

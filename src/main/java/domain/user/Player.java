@@ -6,6 +6,9 @@ import java.util.Objects;
 import domain.card.Card;
 
 public class Player extends User {
+	private static final int INITIAL_START_INDEX = 0;
+	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
+	private static final int INITIAL_TO_INDEX = 2;
 	private final String name;
 
 	public Player(String name) {
@@ -37,7 +40,7 @@ public class Player extends User {
 
 	@Override
 	public List<Card> getInitialCard() {
-		return cards.getCards().subList(0, 2);
+		return cards.getCards().subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
 	}
 
 	@Override

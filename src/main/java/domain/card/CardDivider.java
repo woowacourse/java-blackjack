@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,11 +10,12 @@ public class CardDivider {
 	private final List<Card> cards;
 	private final Stack<Integer> orders;
 
+
 	public CardDivider() {
 		this.cards = CardFactory.create();
 		this.orders = new Stack<>();
-		for (int i = 0; i < 52; i++) {
-			orders.push(i);
+		for (int index = 0; index < cards.size(); index++) {
+			orders.push(index);
 		}
 		Collections.shuffle(orders);
 	}

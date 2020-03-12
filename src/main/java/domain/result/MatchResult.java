@@ -30,7 +30,7 @@ public enum MatchResult {
 		return matchResult;
 	}
 
-	public MatchResult switching() {
+	public MatchResult reverseWinAndLose() {
 		if (this == MatchResult.WIN) {
 			return MatchResult.LOSE;
 		}
