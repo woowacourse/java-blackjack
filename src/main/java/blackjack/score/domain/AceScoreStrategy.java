@@ -1,4 +1,4 @@
-package blackjack.card.domain.score;
+package blackjack.score.domain;
 
 import blackjack.card.domain.Card;
 
@@ -26,19 +26,12 @@ public class AceScoreStrategy implements ScoreStrategy {
                 .mapToInt(Card::getNumber)
                 .sum();
         int aceCount = getAceCount(cards);
+        sum += aceCount * ACE_WEIGHT;
 
-        while (canAddAceWeight(sum, aceCount)) {
-            sum += ACE_WEIGHT;
+        while (sum > BLACKJACK_VALUE) {
+            sum -= ACE_WEIGHT;
             aceCount--;
         }
         return sum;
-    }
-
-    private boolean canAddAceWeight(int sum, int aceCount) {
-        return isNotBurst(sum) && aceCount > 0;
-    }
-
-    private boolean isNotBurst(int sum) {
-        return sum + ACE_WEIGHT <= BLACKJACK_VALUE;
     }
 }

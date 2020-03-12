@@ -1,6 +1,6 @@
 package blackjack.card.domain;
 
-import blackjack.card.domain.score.ScoreCalculator;
+import blackjack.score.domain.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
