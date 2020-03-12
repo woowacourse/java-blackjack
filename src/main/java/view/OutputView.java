@@ -47,21 +47,21 @@ public class OutputView {
         System.out.printf("%s - 결과: %s\n", getUserCards(user), user.getScore());
     }
 
-    public static void printFinalResult(GameResult gameResult) {
+    public static void printFinalResult(Dealer dealer, GameResult gameResult) {
         System.out.println("\n## 최종 승패");
-        printDealerFinalResult(gameResult.getDealerResults());
+        printDealerFinalResult(dealer, gameResult.getDealerResults());
         printPlayerFinalResult(gameResult.getPlayersResult());
     }
 
     private static void printPlayerFinalResult(Map<Player, Outcome> playersResult) {
         for (Player player : playersResult.keySet()) {
             Outcome outcome = playersResult.get(player);
-            System.out.printf("%s: %s", player.getName(), outcome.getName());
+            System.out.printf("%s: %s\n", player.getName(), outcome.getName());
         }
     }
 
-    private static void printDealerFinalResult(Map<Outcome, Integer> gameResult) {
-        System.out.print("딜러: ");
+    private static void printDealerFinalResult(Dealer dealer, Map<Outcome, Integer> gameResult) {
+        System.out.printf("%s: ", dealer.getName());
         for (Outcome outcome : gameResult.keySet()) {
             printDealerFinalOutcome(gameResult, outcome);
         }
