@@ -1,13 +1,13 @@
 package blackjack.view.dto;
 
+import blackjack.card.domain.CardBundle;
+import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import blackjack.card.CardBundle;
-import blackjack.player.Gambler;
-import blackjack.player.Player;
 
 public class NamesDTO {
 	private static final String DELIMITER = ",";

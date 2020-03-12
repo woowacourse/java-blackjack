@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import java.util.Scanner;
-
-import blackjack.player.Player;
+import blackjack.player.domain.Player;
 import blackjack.view.dto.DrawRequestDTO;
 import blackjack.view.dto.NamesDTO;
+
+import java.util.Scanner;
 
 public class InputView {
 	private final Scanner scanner;

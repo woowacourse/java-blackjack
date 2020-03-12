@@ -1,4 +1,4 @@
-package blackjack.card.component;
+package blackjack.card.domain.component;
 
 public enum Symbol {
 	HEART("하트"),

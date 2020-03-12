@@ -1,9 +1,9 @@
-package blackjack.player;
+package blackjack.player.domain;
+
+import blackjack.card.domain.CardBundle;
+import blackjack.player.domain.report.GameReport;
 
 import java.util.Objects;
-
-import blackjack.card.CardBundle;
-import blackjack.card.GameReport;
 
 public class Gambler extends Player {
 	public Gambler(CardBundle cardBundle, String name) {

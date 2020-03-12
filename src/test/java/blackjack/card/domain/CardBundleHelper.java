@@ -1,7 +1,7 @@
-package blackjack.card;
+package blackjack.card.domain;
 
-import blackjack.card.component.CardNumber;
-import blackjack.card.component.Symbol;
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 
 public class CardBundleHelper {
 	public static CardBundle aCardBundle(CardNumber... cardNumbers) {

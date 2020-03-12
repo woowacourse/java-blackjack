@@ -1,16 +1,16 @@
 package blackjack.view;
 
+import blackjack.player.domain.Player;
+import blackjack.player.domain.Players;
+import blackjack.view.dto.GameStatisticsDTO;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.player.Player;
-import blackjack.player.Players;
-import blackjack.view.dto.GameStatisticsDTO;
-
 public class OutputView {
 	public static void showCards(Players players) {
-		List<Player> gamblers = findGamblers(players);
-		Player dealer = findDealer(players);
+		List<Player> gamblers = players.findGamblers();
+		Player dealer = players.findDealer();
 
 		System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", collectGamblersNames(gamblers)));
 
@@ -18,23 +18,10 @@ public class OutputView {
 		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));
 	}
 
-	private static List<Player> findGamblers(Players players) {
-		return players.getPlayers().stream()
-			.filter(Player::isGambler)
-			.collect(Collectors.toList());
-	}
-
-	private static Player findDealer(Players players) {
-		return players.getPlayers().stream()
-			.filter(Player::isDealer)
-			.findFirst()
-			.orElseThrow(AssertionError::new);
-	}
-
 	private static String collectGamblersNames(List<Player> gamblers) {
 		return gamblers.stream()
-			.map(Player::getName)
-			.collect(Collectors.joining(", "));
+				.map(Player::getName)
+				.collect(Collectors.joining(", "));
 	}
 
 	public static void showCardInfo(Player player) {
@@ -47,15 +34,15 @@ public class OutputView {
 
 	private static String makeCardInfo(Player player) {
 		return player.getCardBundle().stream()
-			.map(card -> String.format("%s%s", card.getMessage(), card.getSymbol()))
-			.collect(Collectors.joining(", "));
+				.map(card -> String.format("%s%s", card.getMessage(), card.getSymbol()))
+				.collect(Collectors.joining(", "));
 	}
 
 	private static String getCardList(Players players) {
 		List<Player> gamePlayers = players.getPlayers();
 		return gamePlayers.stream()
-			.map(player -> String.format("%s 결과 - %d", getCardInfo(player), player.getScore()))
-			.collect(Collectors.joining(System.lineSeparator()));
+				.map(player -> String.format("%s 결과 - %d", getCardInfo(player), player.getScore()))
+				.collect(Collectors.joining(System.lineSeparator()));
 	}
 
 	public static void showDealerDrawMessage() {

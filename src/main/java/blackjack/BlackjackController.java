@@ -1,21 +1,21 @@
 package blackjack;
 
-import java.util.List;
-
-import blackjack.card.CardBundle;
-import blackjack.card.CardFactory;
-import blackjack.player.Dealer;
-import blackjack.player.Player;
-import blackjack.player.Players;
+import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.CardDeck;
+import blackjack.player.domain.Dealer;
+import blackjack.player.domain.Player;
+import blackjack.player.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackjackController {
-	private final CardFactory cardFactory;
+	private final CardDeck cardDeck;
 	private final InputView inputView;
 
-	public BlackjackController(CardFactory cardFactory, InputView inputView) {
-		this.cardFactory = cardFactory;
+	public BlackjackController(CardDeck cardDeck, InputView inputView) {
+		this.cardDeck = cardDeck;
 		this.inputView = inputView;
 	}
 
@@ -41,7 +41,7 @@ public class BlackjackController {
 
 	private void drawStartingCards(Players players) {
 		for (int i = 0; i < 2; i++) {
-			players.drawCard(cardFactory);
+			players.drawCard(cardDeck);
 		}
 		OutputView.showCards(players);
 	}
@@ -54,14 +54,14 @@ public class BlackjackController {
 
 	private void drawEachGambler(Player gambler) {
 		while (gambler.isDrawable() && inputView.inputDrawRequest(gambler).isDraw()) {
-			gambler.addCard(cardFactory.drawCard());
+			gambler.addCard(cardDeck.drawCard());
 			OutputView.showCardInfo(gambler);
 		}
 	}
 
 	private void drawDealer(Player dealer) {
 		while (dealer.isDrawable()) {
-			dealer.addCard(cardFactory.drawCard());
+			dealer.addCard(cardDeck.drawCard());
 			OutputView.showDealerDrawMessage();
 		}
 	}

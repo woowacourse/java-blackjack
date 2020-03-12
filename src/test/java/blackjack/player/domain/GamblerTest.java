@@ -1,18 +1,18 @@
-package blackjack.player;
+package blackjack.player.domain;
 
-import static blackjack.card.CardBundleHelper.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.component.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.card.CardBundle;
-import blackjack.card.component.CardNumber;
+import java.util.stream.Stream;
+
+import static blackjack.card.domain.CardBundleHelper.aCardBundle;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GamblerTest {
 
@@ -37,9 +37,10 @@ class GamblerTest {
 		Player gambler2 = new Gambler(new CardBundle(), "allen");
 
 		assertThatThrownBy(() -> gambler1.getReport(gambler2))
-			.isInstanceOf(UnsupportedOperationException.class);
+				.isInstanceOf(UnsupportedOperationException.class);
 	}
 
+	@DisplayName("겜블러는 버스트이거나 블랙잭이면 카드를 뽑을수 없다.")
 	@ParameterizedTest
 	@MethodSource("bundleProvider")
 	void isDrawable(boolean result, CardBundle cardBundle) {

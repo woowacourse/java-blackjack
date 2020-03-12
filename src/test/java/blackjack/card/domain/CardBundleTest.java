@@ -1,13 +1,12 @@
-package blackjack.card;
+package blackjack.card.domain;
 
-import static blackjack.card.component.Symbol.*;
-import static org.assertj.core.api.Assertions.*;
-
+import blackjack.card.domain.component.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.card.component.CardNumber;
+import static blackjack.card.domain.component.Symbol.HEART;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CardBundleTest {
 

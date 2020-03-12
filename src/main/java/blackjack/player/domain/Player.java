@@ -1,11 +1,11 @@
-package blackjack.player;
+package blackjack.player.domain;
+
+import blackjack.card.domain.Card;
+import blackjack.card.domain.CardBundle;
+import blackjack.player.domain.report.GameReport;
 
 import java.util.Collections;
 import java.util.List;
-
-import blackjack.card.Card;
-import blackjack.card.CardBundle;
-import blackjack.card.GameReport;
 
 public abstract class Player {
 	protected final String name;

@@ -1,17 +1,16 @@
-package blackjack.player;
+package blackjack.player.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
+import blackjack.card.domain.Card;
+import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.GameResult;
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
+import blackjack.player.domain.report.GameReport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.card.Card;
-import blackjack.card.CardBundle;
-import blackjack.card.GameReport;
-import blackjack.card.GameResult;
-import blackjack.card.component.CardNumber;
-import blackjack.card.component.Symbol;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
@@ -33,6 +32,7 @@ class DealerTest {
 		assertThat(report).isEqualTo(new GameReport("bebop", result));
 	}
 
+	@DisplayName("딜러의 카드패가 16을 초과하면 뽑을수 없다.")
 	@ParameterizedTest
 	@CsvSource(value = {"TEN,false", "NINE,true"})
 	void isDrawable(CardNumber cardNumber, boolean result) {
@@ -40,8 +40,10 @@ class DealerTest {
 		Player dealer = new Dealer(new CardBundle());
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.SEVEN));
 		dealer.addCard(Card.of(Symbol.DIAMOND, cardNumber));
+
 		//when
 		boolean drawable = dealer.isDrawable();
+
 		//then
 		assertThat(drawable).isEqualTo(result);
 	}

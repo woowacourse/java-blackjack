@@ -1,19 +1,19 @@
 package blackjack.view;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.List;
-
+import blackjack.card.domain.CardBundle;
+import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Player;
+import blackjack.view.dto.NamesDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import blackjack.card.CardBundle;
-import blackjack.player.Gambler;
-import blackjack.player.Player;
-import blackjack.view.dto.NamesDTO;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NamesDTOTest {
 

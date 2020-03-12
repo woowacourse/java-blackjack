@@ -1,20 +1,19 @@
-package blackjack.player;
+package blackjack.player.domain;
 
-import static blackjack.card.CardBundleHelper.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import blackjack.card.domain.Card;
+import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.card.Card;
-import blackjack.card.CardBundle;
-import blackjack.card.component.CardNumber;
-import blackjack.card.component.Symbol;
+import java.util.stream.Stream;
+
+import static blackjack.card.domain.CardBundleHelper.aCardBundle;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 

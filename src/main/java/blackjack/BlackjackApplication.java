@@ -1,12 +1,13 @@
 package blackjack;
 
-import java.util.Scanner;
-
-import blackjack.card.CardFactory;
+import blackjack.card.domain.CardDeck;
+import blackjack.card.domain.CardFactory;
 import blackjack.view.InputView;
+
+import java.util.Scanner;
 
 public class BlackjackApplication {
 	public static void main(String[] args) {
-		new BlackjackController(CardFactory.getInstance(), new InputView(new Scanner(System.in))).run();
+		new BlackjackController(CardDeck.getInstance(new CardFactory()), new InputView(new Scanner(System.in))).run();
 	}
 }

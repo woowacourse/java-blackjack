@@ -1,12 +1,12 @@
-package blackjack.card;
+package blackjack.card.domain;
+
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import blackjack.card.component.CardNumber;
-import blackjack.card.component.Symbol;
 
 public class Card {
 
