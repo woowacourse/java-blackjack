@@ -16,4 +16,6 @@ public interface Participant {
     String getName();
 
     String gameResult();
+
+    void set(Result result);
 }

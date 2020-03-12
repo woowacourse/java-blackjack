@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.exceptions.InvalidParticipantsException;
+
 public class Participants implements Iterable<Participant> {
     public static final int FIRST_CARDS_COUNT = 2;
 
@@ -37,6 +39,21 @@ public class Participants implements Iterable<Participant> {
         return participants.stream()
             .map(Participant::getName)
             .collect(Collectors.joining(", "));
+    }
+
+    public Participant getDealer() {
+        return participants.stream()
+            .filter(Participant::isDealer)
+            .findFirst()
+            .orElseThrow(() ->
+                new InvalidParticipantsException("딜러가 없는 게임은 무효입니다.")
+            );
+    }
+
+    public List<Participant> getPlayers() {
+        return participants.stream()
+            .filter(participant -> !participant.isDealer())
+            .collect(Collectors.toList());
     }
 
     @Override

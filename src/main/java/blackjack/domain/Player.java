@@ -61,6 +61,11 @@ public class Player implements Participant {
     }
 
     @Override
+    public void set(final Result result) {
+        this.result = result;
+    }
+
+    @Override
     public void draw(final Deck deck) {
         hand.add(deck.pop());
     }

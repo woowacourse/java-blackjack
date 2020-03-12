@@ -27,6 +27,12 @@ public class Dealer implements Participant {
             .collect(Collectors.joining(SPACE));
     }
 
+    @Override
+    public void set(final Result result) {
+        this.result.putIfAbsent(result, 0);
+        this.result.put(result, this.result.get(result) + 1);
+    }
+
     public boolean needsMoreCard() {
         return hand.calculate() < DEALER_DRAW_CRITERIA;
     }
