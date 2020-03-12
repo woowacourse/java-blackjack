@@ -4,8 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.rule.CardCalculator;
 
-import java.util.List;
-
 public abstract class Gamer {
 
     protected Hand hand = new Hand();

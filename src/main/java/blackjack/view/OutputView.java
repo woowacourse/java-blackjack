@@ -5,7 +5,7 @@ import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.BlackJackResult;
-import blackjack.domain.result.GamersResult;
+import blackjack.dto.GamersResultDto;
 
 import java.util.Map;
 
@@ -46,11 +46,11 @@ public class OutputView {
         System.out.println(String.format(CARD_RESULT_FORMAT, gamer.getName(), gamer.getCardStatus(), gamer.calculateSum()));
     }
 
-    public static void printGamersResult(GamersResult gamersResult) {
+    public static void printGamersResult(GamersResultDto gamersResultDto) {
         System.out.print(System.lineSeparator());
         System.out.println(RESULT_MESSAGE);
-        printDealerResult(gamersResult.getDealerResult());
-        printPlayersResult(gamersResult.getPlayersResult());
+        printDealerResult(gamersResultDto.getDealerResult());
+        printPlayersResult(gamersResultDto.getPlayersResult());
     }
 
     private static void printInitialHand(Dealer dealer, Players players) {
