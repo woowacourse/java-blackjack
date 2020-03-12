@@ -12,16 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackjackService {
-	public static void giveInitialCards(Deck deck, Dealer dealer, Players players) {
+	public static void shuffle(Deck deck) {
 		deck.shuffle();
-
-		dealer.addCard(deck.pop());
-		dealer.addCard(deck.pop());
-
-		players.forEach(player -> {
-			player.addCard(deck.pop());
-			player.addCard(deck.pop());
-		});
 	}
 
 	public static void addCard(User user, Deck deck) {
