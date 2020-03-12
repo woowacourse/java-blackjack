@@ -3,6 +3,9 @@ package blackjack.domain.user;
 import blackjack.domain.Result;
 
 public class Player extends User {
+
+    public static final String CANNOT_DETERMINE_RESULT = "승패를 계산할 수 없습니다";
+
     public Player(String name) {
         super(name);
     }
@@ -22,7 +25,7 @@ public class Player extends User {
         if (isWin(dealer)) {
             return Result.WIN;
         }
-        throw new RuntimeException("승패를 계산할 수 없습니다.");
+        throw new RuntimeException(CANNOT_DETERMINE_RESULT);
     }
 
     private boolean isDraw(Dealer dealer) {
