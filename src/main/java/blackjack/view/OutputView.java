@@ -94,11 +94,16 @@ public class OutputView {
 
     public static void printResult(Result result) {
         System.out.println("## 최종 승패");
-        System.out.println("딜러" + " : " + result.getDealerResult());
+        System.out.println("딜러" + " : " + CreateDealerResult(result));
         for (Player player : result.getPlayerResults().keySet()) {
             String playerResult = createPlayerResult(player, result);
             System.out.println(playerResult);
         }
+    }
+
+    private static String CreateDealerResult(Result result) {
+        return String.format("%d승 %d패",
+                result.getDealerWin(), result.getDealerLose());
     }
 
     private static String createPlayerResult(Player player, Result result) {

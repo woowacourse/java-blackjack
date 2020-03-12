@@ -3,26 +3,20 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
+    private Result result;
 
-    @Test
-    void of() {
-        Player dealer = DefaultDealer.create();
-        Players players = Players.of("그니,무늬");
-
-        assertThat(Result.of(dealer, players)).isNotNull();
-    }
-
-    @Test
-    void getDealerResult() {
-        Player dealer = DefaultDealer.create();
+    @BeforeEach
+    void setUp() {
+        Dealer dealer = DefaultDealer.create();
         dealer.giveCards(Card.of(Symbol.ACE, Type.SPADE));
 
         Players players = Players.of("그니, 무늬, 포비");
@@ -31,8 +25,21 @@ class ResultTest {
                 Card.of(Symbol.SEVEN, Type.HEART));
         players.giveCards(2, Card.of(Symbol.TWO, Type.DIAMOND));
 
-        Result result = Result.of(dealer, players);
+        result = Result.of(dealer, players);
+    }
 
-        assertThat(result.getDealerResult()).isEqualTo("2승 1패");
+    @Test
+    void of() {
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    void getDealerWin() {
+        assertThat(result.getDealerWin()).isEqualTo(2);
+    }
+
+    @Test
+    void getDealerLose() {
+        assertThat(result.getDealerLose()).isEqualTo(1);
     }
 }

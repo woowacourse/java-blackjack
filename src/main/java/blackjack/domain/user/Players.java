@@ -48,7 +48,7 @@ public class Players {
         }
     }
 
-    public Map<Player, Boolean> generateResult(Player dealer) {
+    public Map<Player, Boolean> createResult(Player dealer) {
         Map<Player, Boolean> playerResults = new HashMap<>();
         Score dealerScore = dealer.calculateScore();
         for (Player player : players) {
