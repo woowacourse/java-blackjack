@@ -4,6 +4,7 @@ import card.Deck;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -12,10 +13,17 @@ public class Players {
     List<Player> players;
 
     public Players(String playerNames, Deck deck) {
+        checkNull(playerNames);
         List<String> names = splitNames(playerNames);
         checkDuplication(names);
         for (String name : names) {
             players.add(new Player(name, deck));
+        }
+    }
+
+    private void checkNull(String playerNames) {
+        if (Objects.isNull(playerNames)) {
+            throw new InvalidPlayersException(InvalidPlayersException.NULL);
         }
     }
 

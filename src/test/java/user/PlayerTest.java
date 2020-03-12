@@ -23,13 +23,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class PlayerTest {
     private static Player player;
     private static Deck deck;
-    private static PlayerName name;
 
     @BeforeAll
     static void setUp() {
-        name = new PlayerName("또링");
         deck = new Deck();
-        player = new Player(name, deck);
+        player = new Player("또링", deck);
     }
 
     @DisplayName("생성했을 때, 두 장의 카드를 보유하고 있는지 확인")
@@ -52,7 +50,7 @@ public class PlayerTest {
     @MethodSource("blackJackData")
     void checkBlackJack_AceWithTen_ReturnTrue(List<Card> cards) {
         Hands hands = new Hands(cards);
-        assertThat(new Player(name, hands).checkBlackJack()).isTrue();
+        assertThat(new Player("또링", hands).checkBlackJack()).isTrue();
     }
 
     static Stream<Arguments> blackJackData() {
