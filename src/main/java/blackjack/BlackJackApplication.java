@@ -5,6 +5,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.rule.HandInitializer;
 import blackjack.domain.rule.PlayerAnswer;
 import blackjack.dto.GamersResultDto;
 import blackjack.view.InputView;
@@ -12,14 +13,12 @@ import blackjack.view.OutputView;
 
 public class BlackJackApplication {
 
-    private static final int INITIAL_HAND_COUNT = 2;
-
     public static void main(String[] args) {
         Deck deck = new Deck(CardFactory.generate());
         Dealer dealer = new Dealer();
         Players players = Players.ofComma(InputView.askPlayerNames());
 
-        initializeHand(dealer, players, deck);
+        HandInitializer.initialize(dealer, players, deck);
         OutputView.printInitialCards(dealer, players);
 
         drawMoreCard(dealer, players, deck);
@@ -27,19 +26,6 @@ public class BlackJackApplication {
 
         GamersResultDto gamersResultDto = GamersResultDto.of(dealer, players);
         OutputView.printGamersResult(gamersResultDto);
-    }
-
-    private static void initializeHand(Dealer dealer, Players players, Deck deck) {
-        for (int i = 0; i < INITIAL_HAND_COUNT; i++) {
-            drawCard(dealer, players, deck);
-        }
-    }
-
-    private static void drawCard(Dealer dealer, Players players, Deck deck) {
-        dealer.draw(deck.pick());
-        for (Player player : players) {
-            player.draw(deck.pick());
-        }
     }
 
     private static void drawMoreCard(Dealer dealer, Players players, Deck deck) {
