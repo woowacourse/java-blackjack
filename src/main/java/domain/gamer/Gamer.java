@@ -7,7 +7,7 @@ public class Gamer {
     final PlayingCards playingCards;
     final String name;
 
-    Gamer(PlayingCards playingCards, String name) {
+    public Gamer(PlayingCards playingCards, String name) {
         this.playingCards = playingCards;
         this.name = name;
     }
@@ -22,5 +22,13 @@ public class Gamer {
 
     public boolean isBust() {
         return playingCards.isBust();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public PlayingCards getPlayingCards() {
+        return playingCards;
     }
 }

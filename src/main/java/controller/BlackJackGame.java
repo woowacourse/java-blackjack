@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.Deck;
+import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.view.InputView;
 
@@ -14,5 +15,6 @@ public class BlackJackGame {
         List<Player> players = playerNames.stream()
                 .map(name -> new Player(deck.getInitCards(), name))
                 .collect(Collectors.toList());
+        Dealer dealer = new Dealer(deck.getInitCards());
     }
 }
