@@ -1,8 +1,5 @@
 package domain.card;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

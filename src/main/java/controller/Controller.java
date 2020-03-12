@@ -2,6 +2,7 @@ package controller;
 
 import domain.Answer;
 import domain.GameResult;
+import domain.Names;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
 import domain.rule.DealerRule;
@@ -45,7 +46,7 @@ public class Controller {
 
     private boolean askPlayerDraw(Player player) {
         OutputView.printCardFormat(player.getName());
-        Answer answer = InputView.askMoreCard();
+        Answer answer = InputView.requestDraw();
         return answer.isAgree();
     }
 
@@ -71,41 +72,11 @@ public class Controller {
 
     private List<Player> createPlayers() {
         List<Player> players = new ArrayList<>();
-        List<String> names = Arrays.asList(InputView.requestName());
+        Names names = new Names(Arrays.asList(InputView.requestName()));
 
-        validate(names);
-        for (String name : names) {
+        for (String name : names.get()) {
             players.add(new Player(name));
         }
         return players;
-    }
-
-    private void validate(List<String> names) {
-        validateNull(names);
-        validateEmptyName(names);
-        validateDuplication(names);
-    }
-
-    private void validateNull(List<String> names) {
-        if (Objects.isNull(names) || names.isEmpty()) {
-            throw new IllegalArgumentException("입력이 잘못되었습니다.");
-        }
-    }
-
-    private void validateEmptyName(List<String> names) {
-        boolean hasEmptyName = names.stream()
-                .map(String::isEmpty)
-                .findAny()
-                .orElse(false);
-        if (hasEmptyName) {
-            throw new IllegalArgumentException("입력이 잘못되었습니다.");
-        }
-    }
-
-    private void validateDuplication(List<String> names) {
-        Set<String> playerNames = new HashSet<>(names);
-        if (playerNames.size() != names.size()) {
-            throw new IllegalArgumentException("입력이 잘못되었습니다.");
-        }
     }
 }
