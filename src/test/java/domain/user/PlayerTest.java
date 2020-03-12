@@ -83,4 +83,14 @@ public class PlayerTest {
         Player.addCard(Card.of("하트", "A"));
         assertThat(Player.isNotBust()).isFalse();
     }
+
+    @Test
+    @DisplayName("첫 카드 확인")
+    void getFirstCardInfo(){
+        Player player = new Dealer();
+        player.addCard(Card.of("스페이드", "10"));
+        player.addCard(Card.of("스페이드", "A"));
+
+        assertThat(player.getFirstCardInfo()).isEqualTo("10스페이드");
+    }
 }
