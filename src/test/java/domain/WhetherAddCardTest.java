@@ -14,6 +14,7 @@ public class WhetherAddCardTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void of_y_또는_n이_아닌_경우() {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> WhetherAddCard.of("a"));
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> WhetherAddCard.of("b"));

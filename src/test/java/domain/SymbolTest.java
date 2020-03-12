@@ -23,6 +23,7 @@ public class SymbolTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void of_존재하지_않는_심볼() {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Symbol.of("N"));
 	}

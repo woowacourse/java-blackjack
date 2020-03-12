@@ -11,6 +11,7 @@ public class DealerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void giveCard_플레이어_한명() {
 		Player player = new Player("플레이어");
 		Dealer dealer = new Dealer();
@@ -20,6 +21,7 @@ public class DealerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void giveCard_플레이어_다수() {
 		Players players = PlayersFactory.create("a,b,c,d");
 		Dealer dealer = new Dealer();
@@ -43,6 +45,7 @@ public class DealerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_딜러와_플레이어가_동점() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");
@@ -50,6 +53,7 @@ public class DealerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_딜러와_플레이어_둘_다_버스트() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");
@@ -63,6 +67,7 @@ public class DealerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_딜러가_플레이어보다_21에_가까운_경우() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");
@@ -74,6 +79,7 @@ public class DealerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_플레이어가_딜러보다_21에_가까운_경우() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");

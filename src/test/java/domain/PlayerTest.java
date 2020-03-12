@@ -11,6 +11,7 @@ public class PlayerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_딜러와_플레이어가_동점() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");
@@ -18,6 +19,7 @@ public class PlayerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_딜러와_플레이어_둘_다_버스트() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");
@@ -31,6 +33,7 @@ public class PlayerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_플레이어가_딜러보다_21에_가까운_경우() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");
@@ -42,6 +45,7 @@ public class PlayerTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void isWin_딜러가_플레이어보다_21에_가까운_경우() {
 		Dealer dealer = new Dealer();
 		Player player = new Player("플레이어");

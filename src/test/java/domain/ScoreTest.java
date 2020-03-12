@@ -11,6 +11,7 @@ public class ScoreTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void create_0미만() {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Score(-1));
 	}

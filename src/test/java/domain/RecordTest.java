@@ -11,6 +11,7 @@ public class RecordTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void create_카운트가_0_미만인_경우() {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Record(-1, 0));
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Record(0, -1));

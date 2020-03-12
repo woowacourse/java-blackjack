@@ -14,6 +14,7 @@ public class TypeTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
 	void of_존재하지_않는_경우() {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Type.of("세모"));
 	}
