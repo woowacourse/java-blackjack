@@ -1,19 +1,20 @@
 package blackjack.player.domain;
 
-import blackjack.card.domain.Card;
-import blackjack.card.domain.CardBundle;
-import blackjack.card.domain.component.CardNumber;
-import blackjack.card.domain.component.Symbol;
+import static blackjack.card.domain.CardBundleHelper.*;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
-
-import static blackjack.card.domain.CardBundleHelper.aCardBundle;
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.card.domain.Card;
+import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 
 class PlayerTest {
 
@@ -73,5 +74,20 @@ class PlayerTest {
 		boolean isBurst = player.isBurst();
 		//than
 		assertThat(isBurst).isEqualTo(result);
+	}
+
+	@DisplayName("플레이어의 패가 21이하인지 확인")
+	@ParameterizedTest
+	@CsvSource(value = {"ACE,true", "TWO,false"})
+	void isNotBurst(CardNumber cardNumber, boolean result) {
+		//given
+		Player player = new Dealer(new CardBundle());
+		player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
+		player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
+		player.addCard(Card.of(Symbol.HEART, cardNumber));
+		//when
+		boolean notBurst = player.isNotBurst();
+		//then
+		assertThat(notBurst).isEqualTo(result);
 	}
 }
