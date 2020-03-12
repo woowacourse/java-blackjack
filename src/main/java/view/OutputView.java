@@ -56,8 +56,26 @@ public class OutputView {
 
     }
 
-    public static void printDealerResult(int dealerWin, int dealerDraw, int dealerLose) {
-        System.out.println("딜러: " + dealerWin + "승 " + dealerDraw + "무 " + dealerLose + "패");
+    public static void printDealerResult(Map<String, Result> userResultMap) {
+        StringBuilder sb = new StringBuilder("딜러: ");
+        int dealerWin = 0;
+        int dealerDraw = 0;
+        int dealerLose = 0;
+        for (Result value : userResultMap.values()) {
+            if (value == Result.승) {
+                dealerLose++;
+            }
+            if (value == Result.무) {
+                dealerDraw++;
+            }
+            if (value == Result.패) {
+                dealerWin++;
+            }
+        }
+        sb.append(dealerWin).append("승 ");
+        sb.append(dealerDraw).append("무 ");
+        sb.append(dealerLose).append("패");
+        System.out.println(sb);
     }
 
     public static void printUserResult(Map.Entry<String, Result> userResultEntry) {

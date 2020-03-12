@@ -36,28 +36,11 @@ public class BlackJackGameController {
         OutputView.printFinalScoreForAllParticipants(dealer, participants);
 
         Map<String, Result> userResultMap = participants.putResultIntoMap(dealer);
-
         OutputView.printFinalResult();
-        int dealerWin = 0;
-        int dealerDraw = 0;
-        int dealerLose = 0;
-        for (Result value : userResultMap.values()) {
-            if (value == Result.승) {
-                dealerLose++;
-            }
-            if (value == Result.무) {
-                dealerDraw++;
-            }
-            if (value == Result.패) {
-                dealerWin++;
-            }
-        }
-        OutputView.printDealerResult(dealerWin, dealerDraw, dealerLose);
-
+        OutputView.printDealerResult(userResultMap);
         for (Map.Entry<String, Result> userResultEntry : userResultMap.entrySet()) {
             OutputView.printUserResult(userResultEntry);
         }
-
     }
 
     static void dealerHit(Dealer dealer, CardDeck cardDeck) {
