@@ -4,6 +4,7 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.rule.PlayerAnswer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,13 +20,40 @@ public class BlackJackApplication {
         List<Player> players = initializePlayers(InputView.askPlayerNames());
 
         drawInitialCards(dealer, players, deck);
-
         OutputView.printInitialCards(dealer, players);
+        drawMoreCard(dealer, players, deck);
 
-        while (dealer.shouldDrawCard()) {
+    }
+
+    private static void drawMoreCard(Dealer dealer, List<Player> players, Deck deck) {
+        hitOrStandForPlayers(players, deck);
+        drawCardForDealer(dealer, deck);
+    }
+
+    private static void drawCardForDealer(Dealer dealer, Deck deck) {
+        while(!dealer.shouldDrawCard()) {
             dealer.add(deck.pick());
+            OutputView.printDealerDrewACard();
         }
+    }
 
+    private static void hitOrStandForPlayers(List<Player> players, Deck deck) {
+        for (Player player : players) {
+            hitOrStand(player, deck);
+        }
+    }
+
+    private static void hitOrStand(Player player, Deck deck) {
+        while(!player.isBusted()) {
+            PlayerAnswer answer = PlayerAnswer.of(InputView.askHitOrStand(player.getName()));
+            if (answer.isYes()) {
+                player.add(deck.pick());
+            }
+            OutputView.printPlayerCard(player);
+            if (!answer.isYes()) {
+                break;
+            }
+        }
     }
 
     private static void drawInitialCards(Dealer dealer, List<Player> players, Deck deck) {
