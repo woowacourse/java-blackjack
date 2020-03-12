@@ -35,7 +35,7 @@ class UserTest {
 		Deck deck = new Deck();
 		user.draw(deck);
 
-		assertThat(user).extracting("hand.cards").asList()
+		assertThat(user).extracting("hand").asList()
 			.hasOnlyElementsOfType(Card.class)
 			.hasSize(1);
 	}
@@ -46,7 +46,7 @@ class UserTest {
 		Deck deck = new Deck();
 		user.draw(deck, 2);
 
-		assertThat(user).extracting("hand.cards").asList()
+		assertThat(user).extracting("hand").asList()
 			.hasOnlyElementsOfType(Card.class)
 			.hasSize(2);
 	}
