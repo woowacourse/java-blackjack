@@ -20,21 +20,7 @@ class CardTest {
         Card expected = new Card(CardNumber.TWO, CardFigure.HEART);
         assertThat(card).isEqualTo(expected);
     }
-
-    @DisplayName("예외 테스트: 생성자에 Null이 들어온 경우")
-    @Test
-    void validateNotNullTest() {
-        assertThatThrownBy(() -> {
-            new Card(null, CardFigure.HEART);
-        }).isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("생성자에 Null이 들어올 수 없습니다.");
-
-        assertThatThrownBy(() -> {
-            new Card(CardNumber.TWO, null);
-        }).isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("생성자에 Null이 들어올 수 없습니다.");
-    }
-
+    
     @DisplayName("카드가 해당 번호를 가지고 있는지 확인")
     @ParameterizedTest
     @CsvSource(value = {"FIVE,true", "FOUR,false"})

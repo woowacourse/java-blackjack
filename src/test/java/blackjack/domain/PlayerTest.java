@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
-    @DisplayName("플레이어의 카드 합이 21미만일 때 확인")
+    @DisplayName("플레이어의 카드 합이 21이하일 때 확인")
     @Test
     void canReceiveMoreCard_SUM_UNDER_21() {
         Player player = new Player("pobi");
