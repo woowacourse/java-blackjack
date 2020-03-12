@@ -9,4 +9,8 @@ public class Dealer extends User {
             .getCards()
             .get(0);
     }
+
+    public boolean isScoreSame(int score) {
+        return this.cards.sumScores() == score;
+    }
 }

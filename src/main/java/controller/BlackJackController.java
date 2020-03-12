@@ -1,5 +1,6 @@
 package controller;
 
+import domain.ResultCalculator;
 import domain.card.CardFactory;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -21,6 +22,11 @@ public class BlackJackController {
         dealToDealer(dealer, deck);
 
         OutputView.printFinalCardStatus(dealer, players);
+
+//        OutputView.printDealerResult(ResultCalculator.calculateDealerResult(dealer,players));
+        for (Player player : players.getPlayers()) {
+            ResultCalculator.calculatePlayerResult(dealer, player);
+        }
     }
 
     private static void dealToDealer(Dealer dealer, Deck deck) {
