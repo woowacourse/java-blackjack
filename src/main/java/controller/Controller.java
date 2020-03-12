@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Answer;
+import domain.GameResult;
 import domain.rule.DealerRule;
 import domain.rule.PlayerRule;
 import domain.card.CardDeck;
@@ -54,17 +55,7 @@ public class Controller {
             OutputView.printStatusWithScore(player.getStatus(), player.getScore());
         }
 
-        //------
-        Map<String, Boolean> playerResult = new HashMap<>();
-        Map<String, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(dealer.getName(),0);
-        for (Player player : players) {
-            playerResult.put(player.getName(),!dealer.isWinner(player));
-            if(dealer.isWinner(player)) {
-                dealerResult.put(dealer.getName(), dealerResult.get(dealer.getName())+1);
-            }
-        }
-        OutputView.printGameResult(playerResult, dealerResult);
+        OutputView.printGameResult(new GameResult(players,dealer), dealer);
     }
 
     private void validate(List<String> names) {

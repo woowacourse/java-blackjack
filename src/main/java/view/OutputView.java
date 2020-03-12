@@ -1,5 +1,6 @@
 package view;
 
+import domain.GameResult;
 import domain.user.Dealer;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class OutputView {
                 .append(playerNames)
                 .append("에게 2장의 카드를 나누었습니다.");
 
-        System.out.println(stringBuilder.toString());
+        System.out.println(stringBuilder);
     }
 
     public static void printStatus(String status) {
@@ -40,18 +41,21 @@ public class OutputView {
         System.out.println(status + " - 결과 : " + score);
     }
 
-    public static void printGameResult(Map<String, Boolean> gameResult, Map<String, Integer> dealerResult) {
+    public static void printGameResult(GameResult gameResult, Dealer dealer) {
         System.out.println("## 최종 승패\n");
-        for (String name : dealerResult.keySet()) {
-            System.out.println(name + ": " + dealerResult.get(name) + "승 " + (gameResult.size() - dealerResult.get(name)) + "패");
-        }
-        for (String name : gameResult.keySet()) {
+        System.out.println(dealer.getName() + ": " + gameResult.calculateDealerWins() + "승 " + gameResult.calculateDealerLoses() + "패");
+
+        Map<String, Boolean> playerResult = gameResult.getPlayerResult();
+        for (String name : playerResult.keySet()) {
             System.out.print(name + ": ");
-            if (gameResult.get(name)) {
-                System.out.println("승");
-            } else {
-                System.out.println("패");
-            }
+            System.out.println(makeResultWord(playerResult.get(name)));
         }
+    }
+
+    private static String makeResultWord(Boolean result) {
+        if(result){
+            return "승";
+        }
+        return "패";
     }
 }
