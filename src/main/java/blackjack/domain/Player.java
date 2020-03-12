@@ -1,8 +1,10 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 import blackjack.exceptions.InvalidPlayerException;
 
-public class Player {
+public class Player implements Participant {
     private final Hand hand;
     private final String name;
     private Result result;
@@ -20,7 +22,46 @@ public class Player {
     }
 
     private boolean isNullOrEmpty(final String name) {
-        return name == null || name.trim().isEmpty();
+        return Objects.isNull(name) || name.trim().isEmpty();
     }
 
+    @Override
+    public int score() {
+        return hand.calculate();
+    }
+
+    @Override
+    public void drawMoreCard(final Deck deck) {
+        draw(deck);
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public boolean isBusted() {
+        return score() > 21;
+    }
+
+    @Override
+    public String handStatus() {
+        return hand.toString();
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getResult() {
+        return result.getValue();
+    }
+
+    @Override
+    public void draw(final Deck deck) {
+        hand.add(deck.pop());
+    }
 }
