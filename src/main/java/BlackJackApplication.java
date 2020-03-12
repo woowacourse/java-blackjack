@@ -19,6 +19,8 @@ public class BlackJackApplication {
         doFirstDrawPhase(allGamers, cardDeck);
 
         doDrawMorePhase(allGamers, cardDeck);
+
+        OutputView.printScore(allGamers);
     }
 
     private static List<Player> inputPlayerNames() {

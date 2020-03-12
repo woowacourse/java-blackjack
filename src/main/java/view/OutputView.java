@@ -69,4 +69,11 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
+    public static void printScore(AllGamers allGamers) {
+        String scores = allGamers.getGamers().stream()
+                .map(gamer -> parseGamerState(gamer) + " - 결과: " + gamer.calculateScore().getValue())
+                .collect(Collectors.joining("\n"));
+        System.out.println(scores);
+    }
+
 }
