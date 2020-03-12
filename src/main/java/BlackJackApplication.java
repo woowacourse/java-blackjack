@@ -1,7 +1,7 @@
-import domain.CardDeck;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
+import domain.card.CardDeck;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Players;
 import view.InputView;
 import view.OutputView;
 

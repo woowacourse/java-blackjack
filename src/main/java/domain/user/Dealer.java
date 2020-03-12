@@ -1,4 +1,6 @@
-package domain;
+package domain.user;
+
+import domain.card.DealerCards;
 
 public class Dealer extends User {
 

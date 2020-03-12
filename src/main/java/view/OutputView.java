@@ -1,9 +1,9 @@
 package view;
 
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.User;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Players;
+import domain.user.User;
 import domain.WinningResult;
 import java.util.HashMap;
 import java.util.Map;

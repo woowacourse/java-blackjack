@@ -1,5 +1,7 @@
-package domain;
+package domain.user;
 
+import domain.WinningResult;
+import domain.card.Cards;
 import util.BlackJackRule;
 
 public class Player extends User {
