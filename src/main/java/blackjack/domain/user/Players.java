@@ -56,7 +56,7 @@ public class Players {
 	}
 
 	public Map<Player, Boolean> createResult(Player dealer) {
-		Map<Player, Boolean> playerResults = new HashMap<>();
+		Map<Player, Boolean> playerResults = new LinkedHashMap<>();
 		Score dealerScore = dealer.calculateScore();
 		for (Player player : players) {
 			playerResults.put(player, player.isWinner(dealerScore));
