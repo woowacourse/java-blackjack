@@ -46,4 +46,8 @@ public class HandCard {
                 .findAny()
                 .orElse(false);
     }
+
+    public boolean isOver() {
+        return BLACKJACK_FULL_SCORE < getScore();
+    }
 }
