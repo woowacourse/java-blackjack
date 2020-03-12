@@ -22,7 +22,7 @@ public enum YesOrNo {
 
     public static YesOrNo findYesOrNo(String answer) {
         return Arrays.stream(values())
-                .filter(x -> x.answerValue.equals(answer))
+                .filter(x -> x.answerValue.equals(answer.toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new YesOrNoFormatException("y 또는 n을 입력해주세요." ));
     }
