@@ -40,11 +40,15 @@ public class OutputView {
         }
     }
 
-    private static void printUserCard(User user) {
+    public static void printUserCard(User user) {
         String userCards = user.getCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
 
         System.out.printf("%s : %s" + NEW_LINE, user.getName(), userCards);
+
+        if (user.isBust()) {
+            System.out.println("버스트되었습니다!!!");
+        }
     }
 }

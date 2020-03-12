@@ -21,5 +21,12 @@ public class Blackjack {
         }
 
         OutputView.printInitialInfo(dealer, players);
+
+        for (User player : players.getPlayers()) {
+            while (player.isNotBust() && InputView.inputToHitOrStay(player).equals("y")) {
+                player.giveCards(deck.draw());
+                OutputView.printUserCard(player);
+            }
+        }
     }
 }

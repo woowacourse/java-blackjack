@@ -21,4 +21,6 @@ public interface User {
     String getName();
 
     Boolean isWinner(Score dealerScore);
+
+    boolean isNotBust();
 }

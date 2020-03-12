@@ -31,6 +31,11 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
+    public boolean isNotBust() {
+        return !isBust();
+    }
+
+    @Override
     public boolean is(String name) {
         return this.name.equals(name);
     }
