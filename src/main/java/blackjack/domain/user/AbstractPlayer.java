@@ -8,14 +8,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractUser implements User {
+public abstract class AbstractPlayer implements Player {
     private static final int MAX_SCORE_TO_MAXIMIZE = 12;
     private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
     private final String name;
     private final List<Card> cards;
 
-    protected AbstractUser(String name) {
+    protected AbstractPlayer(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
     }
@@ -36,7 +36,7 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
-    public boolean is(String name) {
+    public boolean isName(String name) {
         return this.name.equals(name);
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractUser implements User {
     }
 
     private Score sumScore() {
-        Score score = new Score(0);
+        Score score = Score.of(0);
 
         for (Card card : cards) {
             score = score.add(card.getScore());
@@ -62,7 +62,7 @@ public abstract class AbstractUser implements User {
 
     private Score maximize(Score score) {
         if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
-            return score.add(new Score(ADDING_SCORE_TO_MAXIMIZE));
+            return score.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
         }
         return score;
     }

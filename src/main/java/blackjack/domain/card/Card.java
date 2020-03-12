@@ -6,9 +6,13 @@ public class Card {
     private final Symbol symbol;
     private final Type type;
 
-    public Card(Symbol symbol, Type type) {
+    private Card(Symbol symbol, Type type) {
         this.symbol = symbol;
         this.type = type;
+    }
+
+    public static Card of(Symbol symbol, Type type) {
+        return new Card(symbol, type);
     }
 
     public boolean isAce() {

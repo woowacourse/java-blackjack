@@ -10,27 +10,27 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class Players {
-    private final List<User> players;
+    private final List<Player> players;
 
-    private Players(List<User> players) {
-        validateDuplicatedName(players);
-        validateNames(players);
+    private Players(List<Player> players) {
+        validateDistinctNames(players);
+        validateNotContainsDealer(players);
         this.players = players;
     }
 
     public static Players of(String playerNames) {
-        List<User> players = Arrays.stream(playerNames.split(","))
+        List<Player> players = Arrays.stream(playerNames.split(","))
                 .map(String::trim)
-                .map(Player::of)
+                .map(DefaultPlayer::of)
                 .collect(collectingAndThen(toList(),
                         Collections::unmodifiableList));
 
         return new Players(players);
     }
 
-    private void validateDuplicatedName(List<User> Players) {
+    private void validateDistinctNames(List<Player> Players) {
         int distinctCount = (int) Players.stream()
-                .map(User::getName)
+                .map(Player::getName)
                 .distinct()
                 .count();
 
@@ -39,19 +39,19 @@ public class Players {
         }
     }
 
-    private void validateNames(List<User> Players) {
+    private void validateNotContainsDealer(List<Player> Players) {
         boolean hasDealerName = Players.stream()
-                .anyMatch(player -> player.is("딜러"));
+                .anyMatch(player -> player.isName("딜러"));
 
         if (hasDealerName) {
             throw new PlayersException("플레이어의 이름은 딜러일 수 없습니다.");
         }
     }
 
-    public Map<User, Boolean> generateResult(User dealer) {
-        Map<User, Boolean> playerResults = new HashMap<>();
+    public Map<Player, Boolean> generateResult(Player dealer) {
+        Map<Player, Boolean> playerResults = new HashMap<>();
         Score dealerScore = dealer.calculateScore();
-        for (User player : players) {
+        for (Player player : players) {
             playerResults.put(player, player.isWinner(dealerScore));
         }
 
@@ -69,7 +69,7 @@ public class Players {
         return players.size();
     }
 
-    public List<User> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

@@ -1,26 +1,26 @@
 package blackjack.domain;
 
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
 
 import java.util.Map;
 
 public class Result {
-    private final Map<User, Boolean> playerResults;
+    private final Map<Player, Boolean> playerResults;
 
-    private Result(User dealer, Players players) {
+    private Result(Player dealer, Players players) {
         playerResults = players.generateResult(dealer);
     }
 
-    public static Result of(User dealer, Players players) {
+    public static Result of(Player dealer, Players players) {
         return new Result(dealer, players);
     }
 
-    public boolean isWinner(User player) {
+    public boolean isWinner(Player player) {
         return playerResults.get(player);
     }
 
-    public Map<User, Boolean> getPlayerResults() {
+    public Map<Player, Boolean> getPlayerResults() {
         return playerResults;
     }
 

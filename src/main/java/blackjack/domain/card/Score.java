@@ -7,9 +7,13 @@ import java.util.Objects;
 public class Score {
     private final int score;
 
-    public Score(int score) {
+    private Score(int score) {
         validateRange(score);
         this.score = score;
+    }
+
+    public static Score of(int score) {
+        return new Score(score);
     }
 
     private void validateRange(int score) {

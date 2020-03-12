@@ -19,7 +19,7 @@ public class Deck {
 
         for (Symbol symbol : Symbol.values()) {
             for (Type type : Type.values()) {
-                deck.add(new Card(symbol, type));
+                deck.add(Card.of(symbol, type));
             }
         }
 

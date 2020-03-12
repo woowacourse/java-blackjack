@@ -3,8 +3,9 @@ package blackjack;
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.DefaultDealer;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
+import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -12,7 +13,7 @@ public class Blackjack {
     public static void main(String[] args) {
         String playerNames = InputView.inputPlayerNames();
         Players players = Players.of(playerNames);
-        Dealer dealer = Dealer.create();
+        Dealer dealer = DefaultDealer.create();
         Deck deck = Deck.create();
         deck.shuffle();
 
@@ -23,7 +24,7 @@ public class Blackjack {
 
         OutputView.printInitialInfo(dealer, players);
 
-        for (User player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             while (player.isNotBust() && InputView.inputToHitOrStay(player).equals("y")) {
                 player.giveCards(deck.draw());
                 OutputView.printUserCard(player);
