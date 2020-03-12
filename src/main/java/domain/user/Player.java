@@ -9,7 +9,15 @@ public class Player extends User {
 	private final String name;
 
 	public Player(String name) {
+		validEmptyAndNull(name);
 		this.name = name;
+	}
+
+	private void validEmptyAndNull(String name) {
+		if (Objects.isNull(name) || name.isEmpty()) {
+			throw new IllegalArgumentException("이름에 빈값이 들어갈 수 없습니다.");
+		}
+
 	}
 
 	@Override
