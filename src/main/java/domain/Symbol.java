@@ -15,13 +15,13 @@ public enum Symbol {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String name;
+    private final String symbol;
     private final int value;
 
     private static final int ACE_WEIGHT = 11 - ACE.value;
 
-    Symbol(String name, int value) {
-        this.name = name;
+    Symbol(String symbol, int value) {
+        this.symbol = symbol;
         this.value = value;
     }
 
@@ -33,7 +33,7 @@ public enum Symbol {
         return value;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
     }
 }

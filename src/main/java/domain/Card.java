@@ -21,7 +21,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return symbol.getName() + type.getName();
+        return symbol.getSymbol() + type.getType();
     }
 
     @Override

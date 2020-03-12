@@ -6,13 +6,13 @@ public enum Type {
     SPADE("스페이드"),
     CLUB("클로바");
 
-    private final String name;
+    private final String type;
 
-    Type(String name) {
-        this.name = name;
+    Type(String type) {
+        this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 }
