@@ -14,7 +14,7 @@ public class ResultsTest {
     @DisplayName("Results 생성")
     void create() {
         Dealer dealer = new Dealer();
-        Users users = new Users(UserFactory.create("playerA,PlayerB"));
+        Users users = new Users(UserFactory.create("userA,userB"));
 
         assertThat(ResultGenerator.create(dealer, users)).isInstanceOf(Results.class);
     }
