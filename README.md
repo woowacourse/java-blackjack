@@ -14,23 +14,25 @@
 
 ## 기능 구현
 
-PlayerName 클래스
+PlayerNames 클래스
 
 - 입력 검증 구현
   - split / Empty / Null
 
-Person interface
 
+User 클래스
 - draw
 - 보유한 카드
 - 카드 점수 계산
 
-- Player 클래스
-  - draw(Overriding)
-  - 이름
-- Dealer 클래스
-  - draw(Overriding)
-  - 이름
+    - Player 클래스
+      - draw(Overriding)
+      - 이름
+      - result
+    - Dealer 클래스
+      - draw(Overriding)
+      - 이름
+      - result
 
 Card
 
@@ -38,14 +40,19 @@ Card
   - 숫자
   - 모양
 
-CardList
+CardFactory
+
+- 카드 덱 생성
+
+CardHand
 
 - 일급 컬렉션
 
 YesOrNo
 
-- 카드를 받을 건지 검증
+- 카드를 받을 건지 입력 받고 검
 
 Result
 
-- 최종승패 결과 계산
+- enum
+- 최종승패 결과
