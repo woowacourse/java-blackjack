@@ -42,12 +42,12 @@ public class CardsTest {
 	}
 
 	@Test
-	void getAceCount_When_One_Ace_Card_Return_One() {
+	void hasAce_When_One_Ace_Card_Return_True() {
 		assertThat(cards.hasAce()).isTrue();
 	}
 
 	@Test
-	void getPoint_When_One_Ace_Card_Return_1() {
+	void getScore_When_One_Ace_Card_Return_1() {
 		assertThat(cards.getScore()).isEqualTo(1);
 	}
 
