@@ -12,7 +12,7 @@ public class PlayerFactory {
 	private static final int MIN_PARTICIPANT = 1;
 	private static final int MAX_PARTICIPANT = 7;
 
-	public static List<Player> createPlayers(String input) {
+	public static List<User> createPlayers(String input) {
 		List<Name> names = NameParser.parseName(input);
 		validateDuplication(names);
 		validateBounds(names);

@@ -1,6 +1,7 @@
 package com.blackjack.domain.user;
 
 import java.util.Collections;
+import java.util.List;
 
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.card.CardDeck;
@@ -8,10 +9,12 @@ import com.blackjack.domain.card.CardDeck;
 public abstract class User {
 	private static final int FIRST_DRAW_COUNT = 2;
 
+	private final Name name;
 	final Hands hands;
 
-	User() {
+	User(Name name) {
 		this.hands = new Hands(Collections.emptyList());
+		this.name = name;
 	}
 
 	public void draw(CardDeck cardDeck) {
@@ -26,4 +29,12 @@ public abstract class User {
 	}
 
 	public abstract boolean canDraw();
+
+	public String getName() {
+		return name.toString();
+	}
+
+	public List<Card> getHands() {
+		return hands.getCards();
+	}
 }
