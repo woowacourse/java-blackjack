@@ -1,6 +1,6 @@
 package domain;
 
-public enum WinningResult {
+public enum Outcome {
     WIN("승"),
     DRAW("무"),
     LOSE("패"),
@@ -8,11 +8,11 @@ public enum WinningResult {
 
     private final String name;
 
-    WinningResult(String name) {
+    Outcome(String name) {
         this.name = name;
     }
 
-    public static WinningResult calculate(int dealerScore, int playerScore) {
+    public static Outcome calculate(int dealerScore, int playerScore) {
         if (dealerScore < playerScore) {
             return WIN;
         }

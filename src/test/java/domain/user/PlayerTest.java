@@ -2,7 +2,7 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.WinningResult;
+import domain.Outcome;
 import domain.card.CardDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +45,7 @@ public class PlayerTest {
         }
         player.calculateWinningResult(17);
 
-        assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
+        assertThat(player.getOutcome()).isEqualTo(Outcome.LOSE);
     }
 
     @DisplayName("승무패 결과 산정 테스트 - 패배")
@@ -54,7 +54,7 @@ public class PlayerTest {
         player.drawCard(cardDeck);
         player.calculateWinningResult(17);
 
-        assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
+        assertThat(player.getOutcome()).isEqualTo(Outcome.LOSE);
     }
 
     @DisplayName("승무패 결과 산정 테스트 - 승리")
@@ -63,6 +63,6 @@ public class PlayerTest {
         player.drawCard(cardDeck);
         player.calculateWinningResult(22);
 
-        assertThat(player.getWinningResult()).isEqualTo(WinningResult.WIN);
+        assertThat(player.getOutcome()).isEqualTo(Outcome.WIN);
     }
 }

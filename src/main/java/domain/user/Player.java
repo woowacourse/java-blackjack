@@ -1,12 +1,12 @@
 package domain.user;
 
-import domain.WinningResult;
+import domain.Outcome;
 import util.BlackJackRule;
 
 public class Player extends User {
 
     private final String name;
-    private WinningResult winningResult = WinningResult.UNDEFINED;
+    private Outcome outcome = Outcome.UNDEFINED;
 
     public Player(String name) {
         this.name = name;
@@ -19,21 +19,21 @@ public class Player extends User {
 
     public void calculateWinningResult(int dealerScore) {
         if (cards.isBust()) {
-            winningResult = WinningResult.LOSE;
+            outcome = Outcome.LOSE;
             return;
         }
-        if (BlackJackRule.isBust(dealerScore) && winningResult == WinningResult.UNDEFINED) {
-            winningResult = WinningResult.WIN;
+        if (BlackJackRule.isBust(dealerScore) && outcome == Outcome.UNDEFINED) {
+            outcome = Outcome.WIN;
             return;
         }
-        winningResult = WinningResult.calculate(dealerScore, cards.getScore());
+        outcome = Outcome.calculate(dealerScore, cards.getScore());
     }
 
     public String getName() {
         return name;
     }
 
-    public WinningResult getWinningResult() {
-        return winningResult;
+    public Outcome getOutcome() {
+        return outcome;
     }
 }
