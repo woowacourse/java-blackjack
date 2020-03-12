@@ -1,5 +1,8 @@
 package dto;
 
+import java.util.stream.Collectors;
+
+import domain.card.Card;
 import domain.card.Hands;
 import domain.gamer.Dealer;
 
@@ -28,6 +31,14 @@ public class DealerDto {
 			+ hands.getCards()
 			.get(1)
 			.shape();
+	}
+
+	public String showCards() {
+		return this.name
+			+ ": "
+			+ hands.getCards().stream()
+			.map(Card::shape)
+			.collect(Collectors.joining(", "));
 	}
 
 	public String getName() {

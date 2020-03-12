@@ -37,7 +37,7 @@ public class InputView {
 	}
 
 	private static void validateYesOrNo(String input) {
-		boolean isException = (!"Y".equalsIgnoreCase(input)) || (!"N".equalsIgnoreCase(input));
+		boolean isException = (!"Y".equalsIgnoreCase(input)) && (!"N".equalsIgnoreCase(input));
 
 		if (isException) {
 			throw new IllegalArgumentException("y나 n을 입력해주세요.");

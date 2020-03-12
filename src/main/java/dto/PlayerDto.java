@@ -32,6 +32,15 @@ public class PlayerDto {
 			.collect(Collectors.joining(", "));
 	}
 
+	public boolean isDefeat(int dealerScore) {
+		return ((hands.calculateTotalScore() > Hands.BLACKJACK) ||
+			((dealerScore > hands.calculateTotalScore()) && (dealerScore <= Hands.BLACKJACK)));
+	}
+
+	public boolean isDraw(int dealerScore) {
+		return (dealerScore == hands.calculateTotalScore()) && (dealerScore <= Hands.BLACKJACK);
+	}
+
 	public String getName() {
 		return name;
 	}

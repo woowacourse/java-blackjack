@@ -15,8 +15,8 @@ import view.OutputView;
 public class Controller {
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
-		checkBlackjack(blackjackGame);
 		progress(blackjackGame);
+		end(blackjackGame);
 	}
 
 	private static BlackjackGame initialize() {
@@ -32,16 +32,25 @@ public class Controller {
 		}
 	}
 
-	private static void checkBlackjack(BlackjackGame blackjackGame) {
-	}
-
 	private static void progress(BlackjackGame blackjackGame) {
 		if (blackjackGame.isDealerBlackjack()) {
 			OutputView.printDealerBlackjack();
 			return;
 		}
+		progressPlayers(blackjackGame);
+		progressDealer(blackjackGame);
+	}
+
+	private static void progressPlayers(BlackjackGame blackjackGame) {
 		for (Player player : blackjackGame.getPlayers()) {
 			askMoreCard(player, blackjackGame);
+		}
+	}
+
+	private static void progressDealer(BlackjackGame blackjackGame) {
+		while (blackjackGame.getDealer().canDraw()) {
+			OutputView.printDealerDraw();
+			blackjackGame.drawDealer();
 		}
 	}
 
@@ -56,6 +65,11 @@ public class Controller {
 	}
 
 	private static boolean isContinue(Player player) {
-		return "Y".equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player))) && !player.isBust();
+		return !player.isBust() && "Y".equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+	}
+
+	private static void end(BlackjackGame blackjackGame) {
+		OutputView.printResult(BlackjackGameDto.from(blackjackGame));
+		OutputView.printMatchResult(BlackjackGameDto.from(blackjackGame));
 	}
 }
