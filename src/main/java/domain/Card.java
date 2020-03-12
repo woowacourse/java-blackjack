@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Card {
     private Type type;
     private Symbol symbol;
@@ -20,5 +22,19 @@ public class Card {
     @Override
     public String toString() {
         return symbol.getName() + type.getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return type == card.type &&
+                symbol == card.symbol;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, symbol);
     }
 }
