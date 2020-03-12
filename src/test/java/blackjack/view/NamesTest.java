@@ -34,7 +34,7 @@ class NamesTest {
         assertThat(players).isEqualTo(result);
     }
 
-    @DisplayName("Names 에서 Player 리스트 만들기")
+    @DisplayName("Names 에 Null 혹은 비어있는 값 입력시 exception 발생")
     @ParameterizedTest
     @NullAndEmptySource
     void toPlayersException(String inputNames) {
