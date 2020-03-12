@@ -13,12 +13,6 @@ public class CardDeck {
     private final List<Card> cards;
 
     public CardDeck() {
-//        cards = Arrays.stream(CardNumber.values())
-//                .map(cardNumber ->
-//                        Arrays.stream(CardFigure.values()).map(cardFigure -> {
-//                    return new Card (cardNumber, cardFigure);
-//                })).collect(Collectors.toSet());
-
         cards = new ArrayList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             for (CardFigure cardFigure : CardFigure.values()) {
@@ -55,6 +49,6 @@ public class CardDeck {
         return cards.stream()
                 .filter(card -> card.has(number, cardFigure))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format(NO_CARD_ERROR_MSG)));
+                .orElseThrow(() -> new IllegalArgumentException(NO_CARD_ERROR_MSG));
     }
 }

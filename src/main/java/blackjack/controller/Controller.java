@@ -33,7 +33,7 @@ public class Controller {
 
     public void play() {
         for (Player player : players.getPlayers()) {
-            playerBlackjack(player, deck);
+            playGameForPlayer(player, deck);
         }
 
         if (dealer.canReceiveMoreCard()) {
@@ -62,7 +62,7 @@ public class Controller {
         throw new IllegalArgumentException(WRONG_INPUT_ERROR_MSG);
     }
 
-    private void playerBlackjack(Player player, CardDeck deck) {
+    private void playGameForPlayer(Player player, CardDeck deck) {
         while (!player.canReceiveMoreCard() && proceed(player.getName())) {
             player.addCard(deck.getCard());
             OutputView.printStatus(player.getName(), player.getCards());

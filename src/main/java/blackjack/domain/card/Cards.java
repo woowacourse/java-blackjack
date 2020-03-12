@@ -6,13 +6,11 @@ import java.util.stream.Collectors;
 
 public class Cards {
     private static final String INDEX_ERROR_MSG = "카드에 잘못된 접근입니다.";
-    public static final int UPPER_LIMIT = 21;
     private List<Card> cards;
-    private int sum;
+    public static final int UPPER_LIMIT = 21;
 
     public Cards() {
         cards = new ArrayList<>();
-        sum = 0;
     }
 
     public void add(Card card) {
@@ -36,7 +34,6 @@ public class Cards {
                 sum -= CardNumber.ACE_DIFF;
             }
         }
-        this.sum = sum;
         return sum;
     }
 

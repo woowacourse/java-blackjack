@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.result.ResultType;
 
 public class Player extends User {
@@ -15,10 +16,7 @@ public class Player extends User {
 
     @Override
     public boolean canReceiveMoreCard() {
-        if (super.computeSum() < super.getCards().UPPER_LIMIT) {
-            return true;
-        }
-        return false;
+        return super.computeSum() <= Cards.UPPER_LIMIT;
     }
 
     public ResultType createResult(Dealer dealer) {
