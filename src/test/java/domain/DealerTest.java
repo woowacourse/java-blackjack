@@ -11,12 +11,21 @@ public class DealerTest {
 	}
 
 	@Test
-	void giveOneCard() {
+	void giveCard_플레이어_한명() {
 		Player player = new Player("플레이어");
 		Dealer dealer = new Dealer();
 		CardDeck cardDeck = new CardDeck();
 		dealer.giveCard(cardDeck, player);
 		assertThat(player.getCardSize()).isEqualTo(1);
+	}
+
+	@Test
+	void giveCard_플레이어_다수() {
+		Players players = new Players(PlayerFactory.create("a,b,c,d"));
+		Dealer dealer = new Dealer();
+		CardDeck cardDeck = new CardDeck();
+		dealer.giveCard(cardDeck, players);
+		players.forEach(player -> assertThat(player.getCardSize()).isEqualTo(1));
 	}
 
 	@Test
