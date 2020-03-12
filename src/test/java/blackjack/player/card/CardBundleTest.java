@@ -1,13 +1,12 @@
 package blackjack.player.card;
 
-import static blackjack.player.card.component.Symbol.*;
-import static org.assertj.core.api.Assertions.*;
-
+import blackjack.player.card.component.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.player.card.component.CardNumber;
+import static blackjack.player.card.component.Symbol.HEART;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CardBundleTest {
 
@@ -17,9 +16,9 @@ class CardBundleTest {
 	void calculateScore(CardNumber number, int result) {
 		//given
 		CardBundle cardBundle = new CardBundle();
-		cardBundle.addCard(new Card(HEART, CardNumber.ACE));
-		cardBundle.addCard(new Card(HEART, CardNumber.EIGHT));
-		cardBundle.addCard(new Card(HEART, number));
+		cardBundle.addCard(Card.of(HEART, CardNumber.ACE));
+		cardBundle.addCard(Card.of(HEART, CardNumber.EIGHT));
+		cardBundle.addCard(Card.of(HEART, number));
 
 		//when
 		int expect = cardBundle.calculateScore();
@@ -51,14 +50,14 @@ class CardBundleTest {
 	void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, GameResult result) {
 		//given
 		CardBundle dealerCardBundle = new CardBundle();
-		dealerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
-		dealerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
-		dealerCardBundle.addCard(new Card(HEART, dealerNumber));
+		dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
+		dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
+		dealerCardBundle.addCard(Card.of(HEART, dealerNumber));
 
 		CardBundle gamblerCardBundle = new CardBundle();
-		gamblerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
-		gamblerCardBundle.addCard(new Card(HEART, CardNumber.TEN));
-		gamblerCardBundle.addCard(new Card(HEART, gamblerNumber));
+		gamblerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
+		gamblerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
+		gamblerCardBundle.addCard(Card.of(HEART, gamblerNumber));
 
 		//when
 		GameResult expect = dealerCardBundle.compare(gamblerCardBundle);

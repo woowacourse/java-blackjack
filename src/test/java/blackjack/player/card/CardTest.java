@@ -3,6 +3,7 @@ package blackjack.player.card;
 import blackjack.player.card.component.CardNumber;
 import blackjack.player.card.component.Symbol;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -14,7 +15,7 @@ class CardTest {
     @ParameterizedTest
     @CsvSource(value = {"ACE,true", "TWO,false"})
     void isAce(CardNumber cardNumber, boolean result) {
-        Card card = new Card(Symbol.HEART, cardNumber);
+        Card card = Card.of(Symbol.HEART, cardNumber);
         assertThat(card.isAce()).isEqualTo(result);
     }
 
@@ -22,7 +23,22 @@ class CardTest {
     @ParameterizedTest
     @CsvSource(value = {"ACE,1", "TEN,10", "KING,10"})
     void name(CardNumber cardNumber, int result) {
-        Card card = new Card(Symbol.CLUB, cardNumber);
+        Card card = Card.of(Symbol.CLUB, cardNumber);
         assertThat(card.getScore()).isEqualTo(result);
+    }
+
+    @DisplayName("싱글톤으로 만들어둔 CardCache에서 카드 가져오기")
+    @Test
+    void of() {
+        //given
+        Symbol symbol = Symbol.DIAMOND;
+        CardNumber cardNumber = CardNumber.FIVE;
+
+        //when
+        Card card = Card.of(symbol, cardNumber);
+
+        //then
+        assertThat(card.getSymbol()).isEqualTo(Symbol.DIAMOND.getName());
+        assertThat(card.getNumber()).isEqualTo(CardNumber.FIVE.getNumber());
     }
 }
