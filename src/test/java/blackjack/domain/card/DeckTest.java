@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.exception.DeckException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -10,54 +11,62 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
+    private Deck deck;
+
+    @BeforeEach
+    void setUp() {
+        deck = Deck.create();
+    }
+
     @Test
     void create() {
-        assertThat(Deck.create()).isNotNull();
+        assertThat(deck).isNotNull();
     }
 
     @Test
     void draw() {
-        Deck deck = Deck.create();
-
-        Set<Card> set = new HashSet<>();
-
+        // given
+        Set<Card> notDuplicated = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            set.add(deck.draw());
+            notDuplicated.add(deck.draw());
         }
 
-        assertThat(set.size())
+        // then
+        assertThat(notDuplicated.size())
                 .isEqualTo(52);
     }
 
     @Test
     void draw_ThereAreNoCard_ShouldThrowException() {
-        Deck deck = Deck.create();
-
+        // given
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
 
-        assertThatThrownBy(() -> {
-            deck.draw();
-        }).isInstanceOf(DeckException.class);
+        // then
+        assertThatThrownBy(deck::draw).
+                isInstanceOf(DeckException.class);
     }
 
     @Test
     void shuffle() {
-        Deck deck1 = Deck.create();
-        Deck deck2 = Deck.create();
+        // given
+        Deck notExpected = Deck.create();
 
-        deck1.shuffle();
+        // when
+        deck.shuffle();
 
-        assertThat(deck1).isNotEqualTo(deck2);
+        // then
+        assertThat(deck).isNotEqualTo(notExpected);
     }
 
     @Test
     void equals() {
-        Deck deck1 = Deck.create();
-        Deck deck2 = Deck.create();
+        // given
+        Deck expected = Deck.create();
 
-        assertThat(deck1).isEqualTo(deck2);
+        // then
+        assertThat(deck).isEqualTo(expected);
     }
 
 }

@@ -28,9 +28,11 @@ public class DefaultPlayerTest {
 
 	@Test
 	void giveCards() {
+		// given
 		player.giveCards(Card.of(Symbol.ACE, Type.CLUB),
 				Card.of(Symbol.EIGHT, Type.HEART));
 
+		// then
 		assertThat(player.getCards())
 				.isEqualTo(Arrays.asList(Card.of(Symbol.ACE, Type.CLUB),
 						Card.of(Symbol.EIGHT, Type.HEART)));
@@ -38,44 +40,54 @@ public class DefaultPlayerTest {
 
 	@Test
 	void calculateScore() {
+		// given
 		player.giveCards(Card.of(Symbol.TWO, Type.CLUB),
 				Card.of(Symbol.EIGHT, Type.HEART));
 
+		// then
 		assertThat(player.calculateScore()).isEqualTo(Score.of(10));
 	}
 
 	@Test
 	void calculateScore_WhenAceShouldBeEleven() {
+		// given
 		player.giveCards(Card.of(Symbol.ACE, Type.CLUB),
 				Card.of(Symbol.EIGHT, Type.HEART));
 
+		// then
 		assertThat(player.calculateScore()).isEqualTo(Score.of(19));
 	}
 
 	@Test
 	void calculateScore_WhenAceShouldBeOne() {
+		// given
 		player.giveCards(Card.of(Symbol.ACE, Type.CLUB),
 				Card.of(Symbol.EIGHT, Type.HEART),
 				Card.of(Symbol.THREE, Type.SPADE));
 
+		// then
 		assertThat(player.calculateScore()).isEqualTo(Score.of(12));
 	}
 
 	@Test
 	void isBust() {
+		// given
 		player.giveCards(Card.of(Symbol.TEN, Type.CLUB),
 				Card.of(Symbol.EIGHT, Type.HEART),
 				Card.of(Symbol.FOUR, Type.SPADE));
 
+		// then
 		assertThat(player.isBust()).isTrue();
 	}
 
 	@Test
 	void isNotBust() {
+		// given
 		player.giveCards(Card.of(Symbol.TEN, Type.CLUB),
 				Card.of(Symbol.EIGHT, Type.HEART),
 				Card.of(Symbol.THREE, Type.SPADE));
 
+		// then
 		assertThat(player.isNotBust()).isTrue();
 	}
 
