@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.card.Deck;
+import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 /**
@@ -16,12 +18,16 @@ public class BlackjackGame {
 	private static final int EMPTY = 0;
 
 	private List<Player> players;
+	private Dealer dealer;
+	private Deck deck;
 
 	public BlackjackGame(String[] playersName) {
 		validate(playersName);
 		this.players = Arrays.stream(playersName)
 			.map(Player::new)
 			.collect(Collectors.toList());
+		this.dealer = new Dealer();
+		this.deck = new Deck();
 	}
 
 	private void validate(String[] playersName) {
