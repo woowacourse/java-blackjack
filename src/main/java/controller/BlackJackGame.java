@@ -7,6 +7,7 @@ import view.OutputView;
 public class BlackJackGame {
 
     public static final int SCORE_BOUNDARY = 16;
+    public static final int ADDITIONAL_DRAW_COUNT = 1;
 
     public static void play(Players players, Dealer dealer, Deck deck) {
         OutputView.printInitialCards(players, dealer);
@@ -29,14 +30,14 @@ public class BlackJackGame {
 
     private static void drawWhenYes(Deck deck, Player player, YesOrNo yesOrNo) {
         if (yesOrNo.getYesOrNo()) {
-            player.drawCard(deck.draw());
+            player.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
         }
     }
 
     private static void hitOrStayForDealer(Dealer dealer, Deck deck) {
         if (dealer.getScore() <= SCORE_BOUNDARY) {
             OutputView.printDealerDraw(dealer);
-            dealer.drawCard(deck.draw());
+            dealer.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
         }
     }
 }

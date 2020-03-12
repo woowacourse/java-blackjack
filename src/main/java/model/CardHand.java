@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardHand {
-    private List<Card> cards = new ArrayList<>();
+public class CardHand  {
+    public static final int ADDITIONAL_ACE_SCORE = 10;
+    public static final int BLACK_JACK_SCORE = 21;
 
+    private List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public void addCard(Strategy strategy) {
-        cards.add(strategy.draw());
     }
 
     public List<Card> getCards() {
@@ -29,10 +27,10 @@ public class CardHand {
 
     public int calculateScoreWithAce() {
         int score = calculateScoreWithNoAce();
-        if (score + 10 > 21) {
+        if (score + ADDITIONAL_ACE_SCORE > BLACK_JACK_SCORE) {
             return score;
         }
-        return score + 10;
+        return score + ADDITIONAL_ACE_SCORE;
     }
 
     public int calculateScoreWithNoAce() {
@@ -44,7 +42,7 @@ public class CardHand {
     }
 
     public boolean isAce() {
-         return cards.stream().filter(Card::isAce).count() > 0;
+         return cards.stream().anyMatch(Card::isAce);
     }
 
     public boolean contains(Card card) {

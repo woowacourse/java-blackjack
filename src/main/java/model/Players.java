@@ -7,7 +7,7 @@ public class Players {
 
     public Players(List<String> names, Deck deck) {
         for (String name: names) {
-            players.add(new Player(name, deck.initialDraw()));
+            players.add(new Player(name, deck.draw(2)));
         }
     }
 

@@ -8,10 +8,6 @@ public class Dealer extends User {
         super(cardHand);
     }
 
-    public Dealer(Strategy strategy) {
-        super(strategy);
-    }
-
     public String toStringCardHandFirst() {
         return cardHand.getCards().get(0).toString();
     }

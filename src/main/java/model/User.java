@@ -13,15 +13,12 @@ public abstract class User {
         this.cardHand = cardHand;
     }
 
-    public User(Strategy strategy){
-        this.name ="TEMP";
-        this.cardHand = strategy.initialDraw();
-    }
-
     public abstract String toStringCardHand();
 
-    public void drawCard(Card card) {
-        cardHand.addCard(card);
+    public void drawCard(CardHand cardHand) {
+        for(Card drawCard: cardHand.getCards()){
+            this.cardHand.addCard(drawCard);
+        }
     }
 
     public CardHand getCardHand() {

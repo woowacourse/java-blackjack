@@ -13,10 +13,6 @@ public class Player extends User {
         super(name, cardHand);
     }
 
-    public Player(Strategy strategy) {
-        super(strategy);
-    }
-
     @Override
     public String toStringCardHand() {
         List<String> cardNames = new ArrayList<>();

@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck implements Strategy {
-    public static final int initialDrawCount = 2;
-    public static final int INITIAL_DRAW_COUNT = initialDrawCount;
+public class Deck {
+    public static final int INITIAL_DRAW_COUNT = 2;
     private List<Card> cards = new ArrayList<>();
 
     public Deck(List<Card> cards) {
@@ -20,28 +19,34 @@ public class Deck implements Strategy {
         Collections.shuffle(cards);
     }
 
-    @Override
-    public Card draw() {
-        validateSize();
-        int lastIndex = cards.size() - 1;
-        Card drawCard = cards.get(lastIndex);
-        cards.remove(lastIndex);
-        return drawCard;
-    }
+//    public CardHand initialDraw() {
+//        validateSize();
+//        CardHand cardHand = new CardHand();
+//        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
+//            cardHand.addCard(draw());
+//        }
+//        return cardHand;
+//    }
 
-    @Override
-    public CardHand initialDraw() {
-        validateSize();
+    public CardHand draw(int count) {
+        validateSize(count);
         CardHand cardHand = new CardHand();
-        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
-            cardHand.addCard(draw());
+        for (int i = 0; i < count; i++) {
+            int lastIndex = getCurrentDeckSize() - 1;
+            Card card = cards.get(lastIndex);
+            cardHand.addCard(card);
+            cards.remove(lastIndex);
         }
         return cardHand;
     }
 
-    private void validateSize() {
-        if (cards.size() <= 0) {
-            throw new EmptyDeckException("더 이상 draw 할 카드가 존재하지 않습니다.");
+    public int getCurrentDeckSize() {
+        return cards.size();
+    }
+
+    private void validateSize(int count) {
+        if (getCurrentDeckSize() - count < 0) {
+            throw new EmptyDeckException(count + "장 이상 draw 할 카드가 존재하지 않습니다.");
         }
     }
 

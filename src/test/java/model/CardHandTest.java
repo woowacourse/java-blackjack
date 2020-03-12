@@ -1,29 +1,11 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardHandTest {
-    Strategy strategy = new TempDeck(Arrays.asList(
-            new Card(Symbol.EIGHT, Type.DIAMOND),
-            new Card(Symbol.TWO, Type.DIAMOND),
-            new Card(Symbol.FIVE, Type.DIAMOND)
-    ));
-
-    @Test
-    @DisplayName("카드를 추가하는 지 테스트")
-    void addCard_Test() {
-        CardHand cardHand = new CardHand();
-
-        cardHand.addCard(strategy);
-        assertThat(cardHand.getCards().contains(new Card(Symbol.EIGHT, Type.DIAMOND))).isTrue();
-    }
 
     @Test
     @DisplayName("ACE를 가지고 있는 지 테스트")
