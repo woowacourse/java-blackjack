@@ -50,5 +50,4 @@ public class DealerTest {
                 Arguments.of(cardSumUnderSixteen, true),
                 Arguments.of(cardSumOverSixteen, false));
     }
-
 }

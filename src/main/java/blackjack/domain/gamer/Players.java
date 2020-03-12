@@ -25,7 +25,7 @@ public class Players implements Iterable<Player> {
 
     public String getNames() {
         List<String> names = players.stream().map(Player::getName).collect(Collectors.toList());
-        return String.join(",", names);
+        return String.join(", ", names);
     }
 
     @Override

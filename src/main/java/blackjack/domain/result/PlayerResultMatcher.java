@@ -24,7 +24,7 @@ public class PlayerResultMatcher {
         return new GamersResult(dealerResult, playersResult);
     }
 
-    public static BlackJackResult match(Dealer dealer, Player player) {
+    private static BlackJackResult match(Dealer dealer, Player player) {
         if (!player.isBusted()) {
             if (!dealer.isBusted()) {
                 return findWinner(dealer, player);
@@ -41,5 +41,4 @@ public class PlayerResultMatcher {
             return BlackJackResult.LOSE;
         return BlackJackResult.DRAW;
     }
-
 }
