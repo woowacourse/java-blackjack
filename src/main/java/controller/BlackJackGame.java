@@ -20,5 +20,11 @@ public class BlackJackGame {
         Dealer dealer = new Dealer(deck.getInitCards());
 
         OutputView.printInitGamersState(GamerDto.of(dealer), players.stream().map(GamerDto::of).collect(Collectors.toList()));
+        for (Player player : players) {
+            while(!player.isBust() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
+                player.addCard(deck.handOutCard());
+                OutputView.printGamerCardsState(GamerDto.of(player));
+            }
+        }
     }
 }

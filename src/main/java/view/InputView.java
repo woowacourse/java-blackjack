@@ -25,10 +25,10 @@ public class InputView {
     }
 
     public static String inputGetMoreCard(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",name);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n",name);
         String input = scanner.nextLine();
 
-        if(isYesOrNo(input)) {
+        if(!isYesOrNo(input)) {
             throw new IllegalArgumentException();
         }
 

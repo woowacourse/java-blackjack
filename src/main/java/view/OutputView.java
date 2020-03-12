@@ -2,6 +2,7 @@ package view;
 
 import common.GamerDto;
 import domain.card.Card;
+import domain.gamer.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class OutputView {
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.\n", dealerName, playerNames);
         printInitDealerCard(dealerDto);
         for (GamerDto playerDto : playerDtos) {
-            printInitGamerCards(playerDto);
+            printGamerCardsState(playerDto);
         }
     }
 
@@ -26,7 +27,7 @@ public class OutputView {
         System.out.printf("%s: %s%s\n", dealerDto.getName(), card.getSymbol().getWord(), card.getType().getPattern());
     }
 
-    private static void printInitGamerCards(GamerDto gamerDto) {
+    public static void printGamerCardsState(GamerDto gamerDto) {
         String gamerCards = gamerDto.getCards().stream()
                 .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
                 .collect(Collectors.joining(DELIMITER));
