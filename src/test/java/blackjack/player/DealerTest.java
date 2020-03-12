@@ -32,4 +32,17 @@ class DealerTest {
 		//then
 		assertThat(report).isEqualTo(new GameReport("bebop", result));
 	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"TEN,false", "NINE,true"})
+	void isDrawable(CardNumber cardNumber, boolean result) {
+		//given
+		Player dealer = new Dealer(new CardBundle());
+		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.SEVEN));
+		dealer.addCard(Card.of(Symbol.DIAMOND, cardNumber));
+		//when
+		boolean drawable = dealer.isDrawable();
+		//then
+		assertThat(drawable).isEqualTo(result);
+	}
 }

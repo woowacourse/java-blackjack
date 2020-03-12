@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.card.GameReport;
+import blackjack.card.GameResult;
 
 public class GameStatisticsDTO {
 	private final String dealerResult;
@@ -21,14 +22,15 @@ public class GameStatisticsDTO {
 	}
 
 	private String collectRecord(List<GameReport> gameReports) {
+
 		int gamblerWinCount = (int)gameReports.stream()
-			.filter(GameReport::isWin)
+			.filter(gameReport -> gameReport.getGameResult() == GameResult.WIN)
 			.count();
 		int gamblerLoseCount = (int)gameReports.stream()
-			.filter(GameReport::isLose)
+			.filter(gameReport -> gameReport.getGameResult() == GameResult.LOSE)
 			.count();
 		int draw = (int)gameReports.stream()
-			.filter(GameReport::isDraw)
+			.filter(gameReport -> gameReport.getGameResult() == GameResult.DRAW)
 			.count();
 
 		return String.format("딜러: %d승 %d패 %d무", gamblerLoseCount, gamblerWinCount, draw);

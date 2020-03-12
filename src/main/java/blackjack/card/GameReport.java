@@ -11,18 +11,6 @@ public class GameReport {
 		this.gameResult = gameResult;
 	}
 
-	public static boolean isWin(GameReport gameReport) {
-		return gameReport.gameResult == GameResult.WIN;
-	}
-
-	public static boolean isLose(GameReport gameReport) {
-		return gameReport.gameResult == GameResult.LOSE;
-	}
-
-	public static boolean isDraw(GameReport gameReport) {
-		return gameReport.gameResult == GameResult.DRAW;
-	}
-
 	public String getName() {
 		return name;
 	}
