@@ -15,4 +15,14 @@ public enum WinningResult {
     public String getResult() {
         return result;
     }
+
+    public WinningResult reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
 }
