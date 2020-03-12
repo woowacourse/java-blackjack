@@ -1,8 +1,10 @@
 package domain.result;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static domain.gamer.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
@@ -10,7 +12,7 @@ public class DealerResult extends BlackJackResult<Map<WinLose, Integer>> {
     private final Map<WinLose, Integer> winLose;
 
     public DealerResult(List<PlayerResult> playerResults) {
-        super("딜러");
+        super(DEALER_NAME);
         this.winLose = mappingResults(playerResults);
     }
 
@@ -21,7 +23,7 @@ public class DealerResult extends BlackJackResult<Map<WinLose, Integer>> {
 
     @Override
     public Map<WinLose, Integer> getWinLose() {
-        return winLose;
+        return Collections.unmodifiableMap(winLose);
     }
 
     @Override

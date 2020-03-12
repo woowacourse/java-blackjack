@@ -3,27 +3,28 @@ package domain.gamer;
 import domain.card.possessable.CardPossessable;
 import domain.card.providable.CardProvidable;
 import domain.result.WinLose;
-import domain.score.BlackJackScoreManager;
 import domain.score.Calculatable;
 
 import java.util.Objects;
 
-public abstract class Gamer implements BlackJackGameable {
-    protected final String name;
-    protected final CardPossessable cardPossessable;
+import static domain.score.ScoreManagable.BLACK_JACK_SCORE;
 
-    public Gamer(String name, CardPossessable cards) {
+public abstract class Gamer implements BlackJackGameable {
+    private final String name;
+    private final CardPossessable cardPossessable;
+
+    Gamer(String name, CardPossessable cards) {
         this.name = name;
         this.cardPossessable = cards;
     }
 
     @Override
     public WinLose determineWinLose(BlackJackGameable counterParts) {
-        if (this.calculateScore().isLargerThan(BlackJackScoreManager.BLACK_JACK_SCORE)) {
+        if (this.calculateScore().isLargerThan(BLACK_JACK_SCORE)) {
             return WinLose.LOSE;
         }
 
-        if (counterParts.calculateScore().isLargerThan(BlackJackScoreManager.BLACK_JACK_SCORE)) {
+        if (counterParts.calculateScore().isLargerThan(BLACK_JACK_SCORE)) {
             return WinLose.WIN;
         }
 

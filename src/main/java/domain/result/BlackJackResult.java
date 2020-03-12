@@ -5,15 +5,15 @@ import java.util.Objects;
 public abstract class BlackJackResult<T> {
     private final String gamerName;
 
-    public BlackJackResult(String gamerName) {
+    BlackJackResult(String gamerName) {
         this.gamerName = gamerName;
     }
 
-    public String getGamerName() {
+    abstract public T getWinLose();
+
+    String getGamerName() {
         return gamerName;
     }
-
-    abstract public T getWinLose();
 
     @Override
     public boolean equals(Object o) {

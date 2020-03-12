@@ -7,11 +7,11 @@ public enum YesNo {
     NO("n", false);
 
     private final String value;
-    private final boolean yesno;
+    private final boolean yesNo;
 
-    YesNo(String value, boolean yesno) {
+    YesNo(String value, boolean yesNo) {
         this.value = value;
-        this.yesno = yesno;
+        this.yesNo = yesNo;
     }
 
     public static YesNo of(String yesno) {
@@ -21,7 +21,7 @@ public enum YesNo {
                 .orElseThrow(() -> new IllegalArgumentException("y와 n만 입력해주세요."));
     }
 
-    public boolean getYesno() {
-        return yesno;
+    public boolean getYesNo() {
+        return yesNo;
     }
 }

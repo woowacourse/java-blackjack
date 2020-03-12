@@ -26,14 +26,13 @@ public enum Rank {
     }
 
     public static Rank of(int value) {
-        return Arrays.asList(Rank.values())
-                .stream()
+        return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NO_EXIST_MESSAGE));
     }
 
-    public int getScore() {
+    public int extractScoreValue() {
         if (this == Rank.K || this == Rank.Q || this == Rank.J) {
             return ALPHABET_SCORE;
         }

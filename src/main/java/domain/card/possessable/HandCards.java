@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HandCards implements CardPossessable {
+    private static final String DELIMITER = ", ";
+    private static final int FIRST_INDEX = 0;
+
     private final List<Card> cards;
 
     public HandCards() {
@@ -19,13 +22,6 @@ public class HandCards implements CardPossessable {
 
     public HandCards(List<Card> cards) {
         this.cards = cards;
-    }
-
-    @Override
-    public Calculatable calculateDefaultSum() {
-        return new Score(cards.stream()
-                .mapToInt(Card::extractScore)
-                .sum());
     }
 
     @Override
@@ -39,8 +35,10 @@ public class HandCards implements CardPossessable {
     }
 
     @Override
-    public int getCardAmount() {
-        return cards.size();
+    public Calculatable calculateDefaultSum() {
+        return new Score(cards.stream()
+                .mapToInt(Card::extractScore)
+                .sum());
     }
 
     @Override
@@ -51,7 +49,7 @@ public class HandCards implements CardPossessable {
 
     @Override
     public Card getOneCard() {
-        return cards.get(0);
+        return cards.get(FIRST_INDEX);
     }
 
     @Override
@@ -63,6 +61,6 @@ public class HandCards implements CardPossessable {
     public String toString() {
         return cards.stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
     }
 }

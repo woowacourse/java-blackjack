@@ -40,11 +40,12 @@ public class BlackJackApplication {
     private static void doDrawMorePhase(AllGamers allGamers, CardDeck cardDeck) {
         askPlayersDrawMore(allGamers.getPlayers(), cardDeck);
         OutputView.printEmptyLine();
-        detetermineDealerMoreDraw(allGamers.getDealer(), cardDeck);
+
+        determineDealerMoreDraw(allGamers.getDealer(), cardDeck);
         OutputView.printEmptyLine();
     }
 
-    private static void detetermineDealerMoreDraw(Dealer dealer, CardDeck cardDeck) {
+    private static void determineDealerMoreDraw(Dealer dealer, CardDeck cardDeck) {
         if (dealer.canDrawMore()) {
             OutputView.printDealerCanDrawMore();
             dealer.drawCard(cardDeck);
@@ -63,6 +64,7 @@ public class BlackJackApplication {
                 OutputView.printGamerState(player);
                 break;
             }
+
             player.drawCard(cardDeck);
             OutputView.printGamerState(player);
         }
@@ -72,12 +74,14 @@ public class BlackJackApplication {
         if (player.canDrawMore() == false) {
             OutputView.printCanNotDrawMessage(player);
         }
+
         return player.canDrawMore();
     }
 
     private static void doResultsPhase(AllGamers allGamers) {
         OutputView.printScore(allGamers);
         OutputView.printEmptyLine();
+
         OutputView.printReults(allGamers.determineResults());
     }
 }

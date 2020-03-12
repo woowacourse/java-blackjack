@@ -1,10 +1,11 @@
 package domain.gamer;
 
 import domain.card.possessable.HandCards;
-import domain.score.BlackJackScoreManager;
+
+import static domain.score.ScoreManagable.DEALER_DRAW_THRESHOLD;
 
 public class Dealer extends Gamer {
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         super(DEALER_NAME, new HandCards());
@@ -12,8 +13,6 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDrawMore() {
-        return BlackJackScoreManager.DEALER_DRAW_THRESHOLD.isLargerOrEqualThan(calculateScore());
+        return DEALER_DRAW_THRESHOLD.isLargerOrEqualThan(calculateScore());
     }
-
-
 }

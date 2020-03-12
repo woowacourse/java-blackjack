@@ -28,7 +28,7 @@ public class AllGamersTest {
         allGamers.drawFirstPhase(new CardDeck());
 
         for (Gamer gamer : allGamers.getGamers()) {
-            int cardAmount = gamer.getCardsOnHand().getCardAmount();
+            int cardAmount = gamer.getCardsOnHand().getCards().size();
             assertThat(cardAmount).isEqualTo(2);
         }
     }

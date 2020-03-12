@@ -31,25 +31,22 @@ public class AllGamers {
         }
     }
 
+    private List<Gamer> joinGamers() {
+        List<Gamer> gamers = new ArrayList<>();
+        gamers.add(dealer);
+        gamers.addAll(players);
+
+        return gamers;
+    }
+
     private void drawInitialCardToEach(Gamer gamer, CardProvidable cardProvidable) {
         for (int i = 0; i < INITIAL_CARD_AMOUNT; i++) {
             gamer.drawCard(cardProvidable);
         }
     }
 
-    private List<Gamer> joinGamers() {
-        List<Gamer> gamers = new ArrayList<>();
-        gamers.add(dealer);
-        gamers.addAll(players);
-
-
-        return gamers;
-    }
-
     public AllBlackJackResults determineResults() {
-        List<BlackJackResult> gameResult = new ArrayList<>();
-
-        gameResult.addAll(determineUsersResults());
+        List<BlackJackResult> gameResult = new ArrayList<>(determineUsersResults());
         gameResult.add(new DealerResult(determineUsersResults()));
 
         return new AllBlackJackResults(gameResult);

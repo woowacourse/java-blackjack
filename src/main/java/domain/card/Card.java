@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Card {
@@ -22,16 +23,16 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXSIST_MESSAGE));
     }
 
-    public static List<Card> getAllCards() {
-        return CardCache.cards;
-    }
-
     public boolean isAce() {
         return rank.isAce();
     }
 
+    public static List<Card> getAllCards() {
+        return Collections.unmodifiableList(CardCache.cards);
+    }
+
     public int extractScore() {
-        return rank.getScore();
+        return rank.extractScoreValue();
     }
 
     @Override

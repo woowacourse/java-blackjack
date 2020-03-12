@@ -4,8 +4,6 @@ import domain.card.possessable.CardPossessable;
 import domain.card.possessable.HandCards;
 
 public class BlackJackScoreManager implements ScoreManagable {
-
-
     private BlackJackScoreManager() {
     }
 

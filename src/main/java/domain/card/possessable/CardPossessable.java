@@ -15,8 +15,6 @@ public interface CardPossessable {
 
     boolean hasAce();
 
-    int getCardAmount();
-
     Card getOneCard();
 
     List<Card> getCards();
