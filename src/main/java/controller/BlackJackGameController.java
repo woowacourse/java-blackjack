@@ -1,10 +1,8 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import domain.Participant;
 import domain.Result;
 import domain.card.CardDeck;
 import domain.player.Dealer;
@@ -16,36 +14,28 @@ import view.OutputView;
 public class BlackJackGameController {
 
     public static void run() {
-        String name = InputView.inputUserNames();
-        List<User> users = userNamesSetting(name);
-        OutputView.initialSetting(users);
+        String names = InputView.inputUserNames();
+        Participant participants = new Participant(names);
+        OutputView.initialSetting(participants);
 
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         dealer.firstDraw(cardDeck);
-        for (User user : users) {
-            user.firstDraw(cardDeck);
-        }
+        participants.firstDraw(cardDeck);
 
         OutputView.printOneCard(dealer);
-        for (User user : users) {
-            OutputView.printCardStatus(user);
-        }
+        OutputView.printCardStatusForAllParticipants(participants);
 
-        for (User user : users) {
+        for (User user : participants.getParticipants()) {
             while (InputUtils.isHit(InputView.inputIsHit(user))) {
                 user.receive(cardDeck);
                 OutputView.printCardStatus(user);
             }
         }
         dealerHit(dealer, cardDeck);
+        OutputView.printFinalScoreForAllParticipants(dealer, participants);
 
-        OutputView.printFinalScoreForAllParticipants(dealer, users);
-
-        Map<String, Result> userResultMap = new HashMap<>();
-        for (User user : users) {
-            userResultMap.put(user.getName(), user.beatDealer(dealer));
-        }
+        Map<String, Result> userResultMap = participants.putResultIntoMap(dealer);
 
         OutputView.printFinalResult();
         int dealerWin = 0;
@@ -75,15 +65,6 @@ public class BlackJackGameController {
             OutputView.printDealerAdditionalCard();
             dealer.receive(cardDeck);
         }
-    }
-
-    public static List<User> userNamesSetting(String names) {
-        List<User> users = new ArrayList<>();
-        String[] userNames = names.split(",");
-        for (String name : userNames) {
-            users.add(new User(name));
-        }
-        return users;
     }
 
 }
