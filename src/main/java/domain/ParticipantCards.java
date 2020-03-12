@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 
 public class ParticipantCards {
-    public static final String DELIMITER = ", ";
-    public static final int ACE_SCORE = 1;
-    public static final int MAX_SCORE = 21;
-    public static final int ACE_BONUS = 10;
-    public static final int FIRST_CARD_INDEX = 0;
+    private static final String DELIMITER = ", ";
+    private static final int ACE_SCORE = 1;
+    private static final int MAX_SCORE = 21;
+    private static final int ACE_BONUS = 10;
+    private static final int FIRST_CARD_INDEX = 0;
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {

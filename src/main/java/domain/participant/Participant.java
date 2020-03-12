@@ -6,10 +6,10 @@ import domain.ParticipantCards;
 import domain.card.CardDeck;
 
 public class Participant implements ParticipantInterface {
-    public static final int INITIAL_CARD_NUMBER = 2;
+    private static final int INITIAL_CARD_NUMBER = 2;
 
-    protected String name;
-    protected ParticipantCards cards;
+    String name;
+    ParticipantCards cards;
 
     public void firstDraw(CardDeck cardDeck) {
         for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {

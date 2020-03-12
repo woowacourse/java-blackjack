@@ -60,7 +60,7 @@ public class BlackJackGameController {
 
     }
 
-    public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
+    static void dealerHit(Dealer dealer, CardDeck cardDeck) {
         while (dealer.calculateScore() <= 16) {
             OutputView.printDealerAdditionalCard();
             dealer.receive(cardDeck);

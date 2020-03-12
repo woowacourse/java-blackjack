@@ -11,7 +11,7 @@ import domain.participant.User;
 
 public class OutputView {
 
-    public static final String DELIMITER = ", ";
+    private static final String DELIMITER = ", ";
 
     public static void initialSetting(Players users) {
         StringBuilder settingInstruction = new StringBuilder();
@@ -40,7 +40,7 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printFinalScore(Participant participant) {
+    private static void printFinalScore(Participant participant) {
         System.out.println(participant.toString() + " -  결과 : " + participant.calculateScore());
     }
 

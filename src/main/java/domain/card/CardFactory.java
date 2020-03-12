@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardFactory {
-    public static List<Card> create() {
+class CardFactory {
+    static List<Card> create() {
         List<Card> cards = new ArrayList<>();
         for (Symbol symbol : Symbol.values()) {
             makeCardByShape(cards, symbol);
