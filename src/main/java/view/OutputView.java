@@ -1,5 +1,7 @@
 package view;
 
+import java.util.stream.Collectors;
+
 import dto.BlackjackGameDto;
 import dto.PlayerDto;
 
@@ -19,12 +21,11 @@ public class OutputView {
 	}
 
 	public static void printInitialDraw(BlackjackGameDto blackjackGameDto) {
-		StringBuilder stringBuilder = new StringBuilder();
-
-		stringBuilder.append("딜러와 ");
-		blackjackGameDto.getPlayers().forEach(player -> stringBuilder.append(player.getName())
-			.append(" "));
-		stringBuilder.append("에게 2장을 나누었습니다.");
+		String stringBuilder = "딜러와 "
+			+ blackjackGameDto.getPlayers().stream()
+			.map(PlayerDto::getName)
+			.collect(Collectors.joining(", "))
+			+ "에게 2장을 나누었습니다.";
 		System.out.println(stringBuilder);
 	}
 
@@ -41,5 +42,9 @@ public class OutputView {
 
 	public static void printCards(PlayerDto playerDto) {
 		System.out.println(playerDto.showCards());
+	}
+
+	public static void printDealerDraw() {
+		System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
 	}
 }

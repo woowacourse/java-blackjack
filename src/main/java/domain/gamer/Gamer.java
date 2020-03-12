@@ -24,7 +24,7 @@ public class Gamer {
 		}
 	}
 
-	public void add(Card card) {
+	public void draw(Card card) {
 		hands.add(card);
 	}
 
