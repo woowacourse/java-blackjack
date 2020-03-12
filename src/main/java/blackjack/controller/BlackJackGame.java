@@ -14,13 +14,11 @@ public class BlackJackGame {
 
     private final Dealer dealer;
     private final CardDeck cardDeck;
-    private final GameResult gameResult;
     private List<User> users;
 
     public BlackJackGame() {
         dealer = Dealer.getDealer();
         cardDeck = new CardDeck(CardFactory.createCardDeck());
-        gameResult = new GameResult();
     }
 
     public void run() {
@@ -50,30 +48,32 @@ public class BlackJackGame {
 
     private void play() {
         for (User user : users) {
-            // 블랙잭인지 확인하고 상태 변경
+            user.changeStatusIfBlackJack();
             eachUserPlay(user);
         }
         dealerPlay();
     }
 
     private void eachUserPlay(User user) {
-        while (InputView.askOneMoreCard(user) == Response.YES) {
+        while (user.isNoneStatus() && InputView.askOneMoreCard(user) == Response.YES) {
             user.addCard(cardDeck.getOneCard());
-            // 버스트인지 확인하고 상태 변경
+            user.changeStatusIfBust();
             OutputView.printUserCards(user);
         }
     }
 
     private void dealerPlay() {
+        dealer.changeStatusIfBlackJack();
         if (dealer.isUnderCriticalScore()) {
             dealer.addCard(cardDeck.getOneCard());
+            dealer.changeStatusIfBust();
             OutputView.printDealerPlayConfirmMessage();
         }
     }
 
     private void calculateResult() {
         OutputView.printPlayerFinalScore(dealer, users);
-        gameResult.calculateGameResult(dealer, users);
+        GameResult gameResult = GameResult.calculateGameResult(dealer, users);
         OutputView.printGameResult(gameResult);
     }
 }

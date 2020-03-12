@@ -2,26 +2,30 @@ package blackjack.domain;
 
 import blackjack.domain.strategy.DealerStatusStrategy;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
-    private Map<User, UserResult> gameResult = new HashMap<>();
+    private Map<User, UserResult> gameResult;
 
-    public void calculateGameResult(Dealer dealer, List<User> users) {
-        for (User user : users) {
-            gameResult.put(user, calculatePlayerResult(dealer, user));
-        }
+    private GameResult(Map<User, UserResult> result) {
+        this.gameResult = result;
     }
 
-    public UserResult calculatePlayerResult(Dealer dealer, User user) {
+    public static GameResult calculateGameResult(Dealer dealer, List<User> users) {
+        Map<User, UserResult> result = new LinkedHashMap<>();
+        for (User user : users) {
+            result.put(user, calculatePlayerResult(dealer, user));
+        }
+        return new GameResult(result);
+    }
+
+    public static UserResult calculatePlayerResult(Dealer dealer, User user) {
         DealerStatusStrategy dealerStatusStrategy = dealer.status.getDealerStatusStrategy();
         return dealerStatusStrategy.compute(dealer, user);
     }
 
     public Map<User, UserResult> getGameResult() {
-        return gameResult;
+        return Collections.unmodifiableMap(gameResult);
     }
 
     public String getKoreanName(User user) {

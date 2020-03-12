@@ -15,6 +15,10 @@ public class User extends Player {
         this.status = Status.NONE;
     }
 
+    public boolean isNoneStatus() {
+        return this.status == Status.NONE;
+    }
+
     @Override
     public List<Card> getInitialCards() {
         return this.cards.subList(START_INDEX, USER_INITIAL_CARDS_SIZE);

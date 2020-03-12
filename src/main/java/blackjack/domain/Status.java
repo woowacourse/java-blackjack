@@ -12,7 +12,7 @@ public enum Status {
 
     private DealerStatusStrategy dealerStatusStrategy;
 
-    Status(DealerStatusStrategy dealerStatusStrategy){
+    Status(DealerStatusStrategy dealerStatusStrategy) {
         this.dealerStatusStrategy = dealerStatusStrategy;
     }
 

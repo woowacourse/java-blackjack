@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CardDeck {
     private static final int HEAD_INDEX = 0;
+    private static final int EMPTY_SIZE = 0;
 
     private List<Card> cardDeck;
 
@@ -22,7 +23,7 @@ public class CardDeck {
     }
 
     private boolean isEmpty() {
-        return this.cardDeck.size() == 0;
+        return this.cardDeck.size() == EMPTY_SIZE;
     }
 
     public int size() {

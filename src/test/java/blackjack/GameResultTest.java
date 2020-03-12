@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameResultTest {
     private Dealer dealer;
     private User user;
-    private GameResult gameResult;
     private List<Card> cards;
     private CardDeck cardDeck;
 
@@ -36,7 +35,6 @@ public class GameResultTest {
         cardDeck = new CardDeck(cards);
         dealer = Dealer.getDealer();
         user = new User("bossdog");
-        gameResult = new GameResult();
     }
 
     private static Stream<Arguments> StatusProvider() {
@@ -58,7 +56,7 @@ public class GameResultTest {
     void calculateGameResult(Status dealerStatus, Status userStatus, UserResult userResult) {
         dealer.setStatus(dealerStatus);
         user.setStatus(userStatus);
-        assertThat(gameResult.calculatePlayerResult(dealer, user)).isEqualTo(userResult);
+        assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(userResult);
     }
 
     @DisplayName("딜러와 유저의 최종 상태가 NONE일 경우 SCORE 기반 결과 계산")
@@ -68,6 +66,6 @@ public class GameResultTest {
             dealer.addCard(cardDeck.getOneCard());
             user.addCard(cardDeck.getOneCard());
         }
-        assertThat(gameResult.calculatePlayerResult(dealer, user)).isEqualTo(UserResult.DRAW);
+        assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(UserResult.DRAW);
     }
 }
