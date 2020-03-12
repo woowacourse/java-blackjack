@@ -18,7 +18,7 @@ public class ResultGenerator {
         List<Result> results = new ArrayList<>();
 
         addDealerResults(dealer, users, results);
-        addPlayerResults(dealer, users, results);
+        addUserResults(dealer, users, results);
         return new Results(results);
     }
 
@@ -31,7 +31,7 @@ public class ResultGenerator {
         results.add(result);
     }
 
-    private static void addPlayerResults(final Dealer dealer, final Users users, final List<Result> results) {
+    private static void addUserResults(final Dealer dealer, final Users users, final List<Result> results) {
         for (User User : users) {
             Result result = new Result(User.getName());
 
