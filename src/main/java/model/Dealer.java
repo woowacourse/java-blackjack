@@ -1,55 +1,53 @@
 package model;
 
+import java.util.*;
+
+import static model.Player.DELIMITER;
+
 public class Dealer extends User {
-    private int win = 0;
-    private int lose = 0;
+    private final Map<Result, Integer> result = new HashMap<>();
 
     public Dealer(CardHand cardHand) {
         super(cardHand);
+        result.put(Result.WIN, 0);
+        result.put(Result.DRAW, 0);
+        result.put(Result.LOSE, 0);
     }
 
     public String toStringCardHandFirst() {
         return cardHand.getCards().get(0).toString();
     }
 
-    public Result compareWithOther(Player player){
-        if (getScore() > player.getScore()) {
+    public Result compareScore(Player player) {
+        if(this.isBust() && player.isBust()){
+            return Result.DRAW;
+        }
+        if(this.isBust()){
             return Result.WIN;
         }
-        if(getScore()==player.getScore()){
-            return Result.DEFAULT;
+        if(player.isBust()){
+            return Result.LOSE;
         }
-        return Result.LOSE;
+        return Result.calculateResult(Integer.compare(getScore(), player.getScore()));
     }
 
-    public void compare(Players players) {
-        for (Player player : players.getPlayers()) {
-            compareWithPlayer(player);
-        }
-    }
-
-    public void compareWithPlayer(Player player) {
-        Result result = compareWithOther(player);
-        if (Result.WIN == result) {
-            win++;
-            player.setResult(Result.LOSE);
-        }
-        if (Result.LOSE == result) {
-            lose++;
-            player.setResult(Result.WIN);
-        }
+    public Map<Result, Integer> getResult() {
+        return Collections.unmodifiableMap(result);
     }
 
     @Override
     public String toStringCardHand() {
-        StringBuilder stringBuilder = new StringBuilder();
+        List<String> cardNames = new ArrayList<>();
+
         for (Card card : cardHand.getCards()) {
-            stringBuilder.append(card.toString());
+            cardNames.add(card.toString());
         }
-        return stringBuilder.toString();
+        return String.join(DELIMITER, cardNames);
     }
 
-    public int getWin() {
-        return win;
+    public void setResult(final Result result) {
+        Result oppositeResult = Result.oppositeResult(result);
+        int count = this.result.get(oppositeResult);
+        this.result.put(oppositeResult, count+1);
     }
 }

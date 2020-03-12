@@ -4,6 +4,7 @@ public abstract class User {
     protected final String name;
     protected final CardHand cardHand;
 
+
     public User(CardHand cardHand) {
         this("딜러", cardHand);
     }
@@ -21,6 +22,10 @@ public abstract class User {
         }
     }
 
+    public boolean isBust(){
+        return getScore()>21;
+    }
+
     public CardHand getCardHand() {
         return cardHand;
     }
@@ -28,7 +33,6 @@ public abstract class User {
     public int getScore() {
         return cardHand.calculateScore();
     }
-
 
     @Override
     public String toString() {

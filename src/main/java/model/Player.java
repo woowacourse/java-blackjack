@@ -30,4 +30,6 @@ public class Player extends User {
     public Result getResult() {
         return result;
     }
+
+
 }
