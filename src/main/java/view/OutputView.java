@@ -39,4 +39,22 @@ public class OutputView {
     public static void printUserCard(ResponsePlayerDTO result) {
         System.out.println(result.getName() + "카드: " + result.getCardInfo());
     }
+
+    public static void printDealerAdditionalCard() {
+        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.");
+    }
+
+    public static void printFinalResult(List<ResponsePlayerDTO> result) {
+        for (ResponsePlayerDTO responsePlayerDTO : result) {
+            System.out.println(responsePlayerDTO.getName() + "카드: "
+            + responsePlayerDTO.getCardInfo() + " - 결과: " + responsePlayerDTO.getScore());
+        }
+    }
+
+    public static void printWinningResult(List<String> winningResult) {
+        System.out.println("## 최종 승패");
+        for (String result : winningResult) {
+            System.out.println(result);
+        }
+    }
 }
