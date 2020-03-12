@@ -30,10 +30,11 @@ public class OutputView {
     }
 
     public static void printDealerOneMoreCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printUsersCardsAndScore(Dealer dealer, Players players) {
+        System.out.println();
         printUserCardsAndScore("딜러", dealer);
         for (Player player : players.getPlayers()) {
             printUserCardsAndScore(player.getName(), player);
