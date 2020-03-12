@@ -18,12 +18,12 @@ public class Hand {
         this.cards = cards;
     }
 
-    public boolean isBusted() {
-        return calculate() > BLACK_JACK;
+    public void add(Card card) {
+        this.cards.add(card);
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public boolean isBusted() {
+        return calculate() > BLACK_JACK;
     }
 
     public int calculate() {
