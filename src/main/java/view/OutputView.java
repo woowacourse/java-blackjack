@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static void printEmptyLine() {
+        System.out.println();
+    }
+
     public static void printInitialCards(AllGamers allGamers) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -59,6 +63,10 @@ public class OutputView {
 
     public static void printCanNotDrawMessage() {
         System.out.println("더이상 뽑을 수 없습니다.");
+    }
+
+    public static void printDealerCanDrawMore() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
 }

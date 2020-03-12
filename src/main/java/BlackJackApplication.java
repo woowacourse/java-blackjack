@@ -14,10 +14,11 @@ public class BlackJackApplication {
         Dealer dealer = new Dealer();
         AllGamers allGamers = new AllGamers(dealer, players);
         CardDeck cardDeck = new CardDeck();
+        OutputView.printEmptyLine();
 
-        runFirstDrawPhase(allGamers, cardDeck);
+        doFirstDrawPhase(allGamers, cardDeck);
 
-        askDrawMore(allGamers, cardDeck);
+        doDrawMorePhase(allGamers, cardDeck);
     }
 
     private static List<Player> inputPlayerNames() {
@@ -27,13 +28,27 @@ public class BlackJackApplication {
                 .collect(Collectors.toList());
     }
 
-    private static void runFirstDrawPhase(AllGamers allGamers, CardDeck cardDeck) {
+    private static void doFirstDrawPhase(AllGamers allGamers, CardDeck cardDeck) {
         allGamers.drawFirstPhase(cardDeck);
         OutputView.printInitialCards(allGamers);
+        OutputView.printEmptyLine();
     }
 
-    private static void askDrawMore(AllGamers allGamers, CardDeck cardDeck) {
-        List<Player> players = allGamers.getPlayers();
+    private static void doDrawMorePhase(AllGamers allGamers, CardDeck cardDeck) {
+        askPlayersDrawMore(allGamers.getPlayers(), cardDeck);
+        OutputView.printEmptyLine();
+        detetermineDealerMoreDraw(allGamers.getDealer(), cardDeck);
+        OutputView.printEmptyLine();
+    }
+
+    private static void detetermineDealerMoreDraw(Dealer dealer, CardDeck cardDeck) {
+        if (dealer.canDrawMore()) {
+            OutputView.printDealerCanDrawMore();
+            dealer.drawCard(cardDeck);
+        }
+    }
+
+    private static void askPlayersDrawMore(List<Player> players, CardDeck cardDeck) {
         for (Player player : players) {
             drawIfWant(cardDeck, player);
         }
