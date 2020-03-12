@@ -1,6 +1,8 @@
 package view;
 
+import domain.Score;
 import domain.card.Card;
+import domain.card.Cards;
 import domain.result.Result;
 import domain.result.ResultType;
 import domain.user.Dealer;
@@ -27,8 +29,8 @@ public class OutputView {
 		System.out.println("딜러와 " + players.getNames() + "에게 2장의 카드를 나누었습니다.");
 	}
 
-	public static void printInitialStatus(Dealer dealer, Players players) {
-		System.out.println("딜러: " + dealer.openCard().toString());
+	public static void printInitialStatus(Card dealerCard, Players players) {
+		System.out.println("딜러: " + dealerCard.toString());
 		players.forEach(OutputView::printCardsStatusOf);
 	}
 
@@ -39,6 +41,33 @@ public class OutputView {
 						player.openAllCards().toList().stream()
 								.map(Card::toString)
 								.collect(joining(DELIMITER))
+		);
+	}
+
+	public static void printDealerDraw() {
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+	}
+
+	public static void printResultStatus(Cards dealerCards, Players players) {
+		System.out.println("딜러: " +
+				dealerCards.toList().stream()
+						.map(Card::toString)
+						.collect(joining(DELIMITER)) +
+				" - 결과: " +
+				Score.of(dealerCards));
+
+		players.forEach(OutputView::printCardsResultOf);
+	}
+
+	private static void printCardsResultOf(Player player) {
+		System.out.println(
+				player +
+						"카드: " +
+						player.openAllCards().toList().stream()
+								.map(Card::toString)
+								.collect(joining(DELIMITER)) +
+						" - 결과: " +
+						Score.of(player.openAllCards())
 		);
 	}
 

@@ -30,7 +30,6 @@ public class Players implements Iterable<Player> {
 		if (players.size() >= MAX_PLAYERS_COUNT) {
 			throw new IllegalArgumentException(OVER_MAX_PLAYERS_COUNT);
 		}
-
 		if (players.size() == MIN_PLAYERS_COUNT) {
 			throw new IllegalArgumentException(UNDER_MIN_PLAYERS_COUNT);
 		}

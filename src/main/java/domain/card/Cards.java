@@ -34,7 +34,7 @@ public class Cards {
 	}
 
 	public boolean hasAce() {
-		return  cards.stream()
+		return cards.stream()
 				.anyMatch(Card::isAce);
 	}
 

@@ -24,8 +24,9 @@ public class BlackjackController {
 	public static void run(Deck deck, Dealer dealer, Players players) {
 		BlackjackService.giveInitialCards(deck, dealer, players);
 		printInitialDistribution(players);
-		printInitialStatus(dealer, players);
-		if (isBlackjack(dealer)) { // TODO: 2020/03/12 (메서드로 빼서 혹은 return 줘서??) 이 경우에는 바로 게임 종료되도록
+		printInitialStatus(dealer.openCard(), players);
+		if (isBlackjack(dealer)) {
+			printResultStatus(dealer.openAllCards(), players);
 			printResult(BlackjackService.createResultWhenDealerBlackjack(players), players);
 			return;
 		}
@@ -39,12 +40,16 @@ public class BlackjackController {
 
 		while (hasToDraw(dealer)) {
 			BlackjackService.addCard(dealer, deck);
+			printDealerDraw();
 		}
+
+		printResultStatus(dealer.openAllCards(), players);
+		printResult(BlackjackService.createResult(dealer, players), players);
 	}
 
 	private static boolean hasToDraw(Dealer dealer) {
 		Cards dealerCards = dealer.openAllCards();
-		return Score.of(dealerCards).isDealerDraw();
+		return Score.of(dealerCards).canDealerDraw();
 	}
 
 	private static boolean wantDraw(Player player) {

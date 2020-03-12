@@ -54,4 +54,28 @@ public class BlackjackService {
 	public static void addCard(User user, Deck deck) {
 		user.addCard(deck.pop());
 	}
+
+	public static Result createResult(Dealer dealer, Players players) {
+		Map<Player, ResultType> results = new HashMap<>();
+
+		players.forEach(player -> {
+			if (isPlayerWin(dealer, player)) {
+				results.put(player, ResultType.WIN);
+				return;
+			}
+			if (isDraw(dealer, player)) {
+				results.put(player, ResultType.DRAW);
+			}
+			results.put(player, ResultType.LOSE);
+		});
+		return new Result(results);
+	}
+
+	private static boolean isPlayerWin(Dealer dealer, Player player) {
+		return Score.of(player.openAllCards()).isBiggerThan(Score.of(dealer.openAllCards()));
+	}
+
+	private static boolean isDraw(Dealer dealer, Player player) {
+		return Score.of(dealer.openAllCards()).isNotBurst() && Score.of(player.openAllCards()).isNotBurst() && Score.of(dealer.openAllCards()).equals(Score.of(player.openAllCards()));
+	}
 }
