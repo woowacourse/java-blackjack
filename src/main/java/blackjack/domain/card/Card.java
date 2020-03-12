@@ -19,4 +19,8 @@ public class Card {
                 " " +
                 symbol.getName();
     }
+
+    public boolean isAce() {
+        return this.symbol.name().equals("ACE");
+    }
 }
