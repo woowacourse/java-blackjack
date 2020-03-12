@@ -1,26 +1,21 @@
 package blackjack.domain.card;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
-import java.util.Set;
+import java.util.List;
 
 public class CardDeck {
-    private static final String NULL_ERROR_MSG = "카드를 찾을 수 없습니다.";
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
     public CardDeck() {
         cards = CardFactory.getInstance();
     }
 
-    public void dealFirstCards(Dealer dealer) {
-        dealer.addCard(giveCard());
-        dealer.addCard(giveCard());
-    }
-
-    public void dealFirstCards(Player player) {
-        player.addCard(giveCard());
-        player.addCard(giveCard());
+    public void dealFirstCards(Participant participant) {
+        participant.addCard(giveCard());
+        participant.addCard(giveCard());
     }
 
     public boolean dealAdditionalCard(Dealer dealer) {
@@ -40,11 +35,7 @@ public class CardDeck {
     }
 
     private Card giveCard() {
-        Card card = cards.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(NULL_ERROR_MSG));
-        cards.remove(card);
-        return card;
+        return cards.remove(0);
     }
 
     public int getSize() {

@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class CardFactory {
     private static final String NULL_ERROR_MSG = "카드 Type과 Figure에 Null이 들어올 수 없습니다.";
@@ -19,8 +17,10 @@ public class CardFactory {
     private CardFactory() {
     }
 
-    public static Set<Card> getInstance() {
-        return new HashSet<>(cards);
+    public static List<Card> getInstance() {
+        LinkedList<Card> cardDeck = new LinkedList<>(CardFactory.cards);
+        Collections.shuffle(cardDeck);
+        return cardDeck;
     }
 
     public static Card of(Type type, Figure figure) {

@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Figure;
@@ -16,7 +16,7 @@ public class DealerTest {
         dealer.addCard(CardFactory.of(Type.FIVE, Figure.CLOVER));
         dealer.addCard(CardFactory.of(Type.FIVE, Figure.HEART));
 
-        assertThat(dealer.needMoreCard()).isTrue();
+        assertThat(dealer.canGetMoreCard()).isTrue();
     }
 
     @DisplayName("딜러의 카드 합이 16 초과할 때 확인")
@@ -26,7 +26,7 @@ public class DealerTest {
         dealer.addCard(CardFactory.of(Type.QUEEN, Figure.CLOVER));
         dealer.addCard(CardFactory.of(Type.KING, Figure.CLOVER));
 
-        assertThat(dealer.needMoreCard()).isFalse();
+        assertThat(dealer.canGetMoreCard()).isFalse();
     }
 
 

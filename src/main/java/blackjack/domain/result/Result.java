@@ -1,39 +1,31 @@
 package blackjack.domain.result;
 
-import java.util.List;
-
 public enum Result {
     WIN("승"),
     LOSE("패"),
     DRAW("무");
 
     private static final int BUST = 21;
-    private final String message;
+    private final String word;
 
-    Result(String message) {
-        this.message = message;
+    Result(String word) {
+        this.word = word;
     }
 
-    public static Result getResult(int playerPoint, int dealerPoint) {
-        if (playerPoint > BUST) {
+    public static Result findResultByScore(int playerScore, int dealerScore) {
+        if (playerScore > BUST) {
             return LOSE;
         }
-        if (dealerPoint > BUST) {
+        if (dealerScore > BUST) {
             return WIN;
         }
-        if (playerPoint > dealerPoint) {
+        if (playerScore > dealerScore) {
             return WIN;
         }
-        if (playerPoint == dealerPoint) {
+        if (playerScore == dealerScore) {
             return DRAW;
         }
         return LOSE;
-    }
-
-    public static int getSum(Result result, List<Result> results) {
-        return (int) results.stream()
-                .filter(element -> element == result)
-                .count();
     }
 
     public static Result reverse(Result result) {
@@ -46,7 +38,7 @@ public enum Result {
         return result;
     }
 
-    public String getMessage() {
-        return message;
+    public String getWord() {
+        return word;
     }
 }

@@ -1,8 +1,7 @@
-package blackjack.domain.user;
+package blackjack.domain.participant;
 
-import blackjack.domain.result.Result;
+import blackjack.domain.result.MatchResult;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,34 +20,20 @@ public class Players {
             throw new IllegalArgumentException(String.format(MAX_PLAYER_ERR_MSG, MAX_PLAYER));
         }
 
-        players = new ArrayList<>();
-        for (String name : names) {
-            players.add(new Player(name));
-        }
+        players = names.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
-
-    public void computeResult(Dealer dealer) {
-        for (Player player : players) {
-            player.createResult(dealer);
-        }
+    public List<MatchResult> createMatchResult(Dealer dealer) {
+        return players.stream()
+                .map(player -> player.createMatchResult(dealer))
+                .collect(Collectors.toList());
     }
-
-//    public List<Result> computeResult2(Dealer dealer) {
-//        for (Player player : players) {
-//            player.createResult2(dealer);
-//        }
-//    }
 
     public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public List<Result> getResult() {
-        return players.stream()
-                .map(Player::getResult)
                 .collect(Collectors.toList());
     }
 
