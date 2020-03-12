@@ -25,17 +25,17 @@ public class ResultGenerator {
     private static void addDealerResults(final Dealer dealer, final Users users, final List<Result> results) {
         Result result = new Result(dealer.getName());
 
-        for (User User : users) {
-            calculateWinLose(dealer, User, result);
+        for (User user : users) {
+            calculateWinLose(dealer, user, result);
         }
         results.add(result);
     }
 
     private static void addUserResults(final Dealer dealer, final Users users, final List<Result> results) {
-        for (User User : users) {
-            Result result = new Result(User.getName());
+        for (User user : users) {
+            Result result = new Result(user.getName());
 
-            calculateWinLose(User, dealer, result);
+            calculateWinLose(user, dealer, result);
             results.add(result);
         }
     }

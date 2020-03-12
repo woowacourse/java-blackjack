@@ -12,8 +12,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String inputMoreCard(final User User) {
-        System.out.println(User.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static String inputMoreCard(final User user) {
+        System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return SCANNER.nextLine();
     }
 }
