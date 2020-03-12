@@ -15,8 +15,8 @@ public enum CardNumber {
 	QUEEN(10, "Q"),
 	KING(10, "K");
 
-	private int score;
-	private String cardInitial;
+	private final int score;
+	private final String cardInitial;
 
 	CardNumber(int score, String cardInitial) {
 		this.score = score;

@@ -25,15 +25,16 @@ public abstract class Gamer {
 
     public int calculateWithAce() {
         int score = calculateScore();
+
         if (isContainAce() && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
             return score + ACE_HIDDEN_SCORE;
         }
+
         return score;
     }
 
     private int calculateScore() {
-        return cards
-                .stream()
+        return cards.stream()
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getScore)
                 .sum();

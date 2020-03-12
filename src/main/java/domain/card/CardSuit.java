@@ -6,7 +6,7 @@ public enum CardSuit {
 	DIAMOND("다이아몬드"),
 	HEART("하트");
 
-	private String suit;
+	private final String suit;
 
 	CardSuit(String suit) {
 		this.suit = suit;

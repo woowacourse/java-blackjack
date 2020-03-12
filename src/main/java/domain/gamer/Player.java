@@ -8,7 +8,6 @@ public class Player extends Gamer {
 
 	public Player(String name) {
 		super(name);
-
 		if (isInvalidName(name)) {
 			throw new NameFormatException("잘못된 이름입니다.");
 		}

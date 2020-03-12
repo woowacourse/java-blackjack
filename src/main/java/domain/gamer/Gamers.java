@@ -1,16 +1,18 @@
 package domain.gamer;
 
-import static java.util.stream.Collectors.*;
+import domain.card.Deck;
+import utils.InputUtils;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.card.Deck;
-import utils.InputUtils;
+import static java.util.stream.Collectors.toList;
 
 public class Gamers {
+	private static final int INIT_CARD_SIZE = 2;
+
 	private List<Player> players;
 	private Dealer dealer;
 
@@ -23,8 +25,8 @@ public class Gamers {
 	}
 
 	public void initCard(Deck deck) {
-		players.forEach(player -> player.addCard(deck.popCard(2)));
-		dealer.addCard(deck.popCard(2));
+		players.forEach(player -> player.addCard(deck.popCard(INIT_CARD_SIZE)));
+		dealer.addCard(deck.popCard(INIT_CARD_SIZE));
 	}
 
 	public Map<String, WinOrLose> generateGameResults() {

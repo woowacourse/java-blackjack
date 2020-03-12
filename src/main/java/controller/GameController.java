@@ -10,16 +10,17 @@ import view.InputView;
 import view.OutputView;
 
 public class GameController {
-	public void run() {
-		Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
-		Deck deck = new Deck(CardFactory.getInstance());
-		gamers.initCard(deck);
-		OutputView.printInitCardGuide(gamers);
-		OutputView.printGamersCard(gamers);
+    private static final int ADD_CARD_SIZE = 1;
 
+    public void run() {
+        Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
+        Deck deck = new Deck(CardFactory.getInstance());
+        gamers.initCard(deck);
+        OutputView.printInitCardGuide(gamers);
+        OutputView.printGamersCard(gamers);
         addCardAtGamers(gamers, deck);
         OutputView.printGameResults(gamers);
-	}
+    }
 
     private void addCardAtGamers(Gamers gamers, Deck deck) {
         addCardAtPlayers(gamers, deck);
@@ -28,15 +29,15 @@ public class GameController {
     }
 
     private void addCardAtPlayers(Gamers gamers, Deck deck) {
-		gamers.getPlayers()
-			.forEach(player -> drawCardOfPlayer(deck, player));
-	}
+        gamers.getPlayers()
+                .forEach(player -> drawCardOfPlayer(deck, player));
+    }
 
-	private void drawCardOfPlayer(Deck deck, Player player) {
-		while (player.isDrawable()
-			&& YesOrNo.findYesOrNo(InputView.inputAsDrawable(player)).getDrawable()) {
-			player.addCard(deck.popCard(1));
-			OutputView.printGamerCard(player);
-		}
-	}
+    private void drawCardOfPlayer(Deck deck, Player player) {
+        while (player.isDrawable()
+                && YesOrNo.findYesOrNo(InputView.inputAsDrawable(player)).getDrawable()) {
+            player.addCard(deck.popCard(ADD_CARD_SIZE));
+            OutputView.printGamerCard(player);
+        }
+    }
 }
