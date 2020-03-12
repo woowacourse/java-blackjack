@@ -47,4 +47,14 @@ public class Score {
 	public String toString() {
 		return String.valueOf(score);
 	}
+
+	public ResultType compareTo(Score dealerScore) {
+		if (score > dealerScore.score) {
+			return ResultType.WIN;
+		}
+		if (score < dealerScore.score) {
+			return ResultType.LOSE;
+		}
+		return ResultType.DRAW;
+	}
 }

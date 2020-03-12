@@ -2,6 +2,8 @@ package com.blackjack.domain.user;
 
 import java.util.Collections;
 
+import com.blackjack.domain.ResultType;
+import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.card.CardDeck;
 
@@ -25,6 +27,12 @@ public abstract class User {
 	public void draw(CardDeck cardDeck) {
 		Card card = cardDeck.pop();
 		hands.add(card);
+	}
+
+	public ResultType compareScoreWithUser(User user) {
+		Score score = hands.calculateScore();
+		Score dealerScore = user.hands.calculateScore();
+		return score.compareTo(dealerScore);
 	}
 
 	public abstract boolean canDraw();
