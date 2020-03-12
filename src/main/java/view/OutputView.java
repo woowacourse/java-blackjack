@@ -1,5 +1,6 @@
 package view;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class OutputView {
 				.stream()
 				.collect(Collectors.joining(", "));
 		System.out.printf("%s와 %s에게 두 장의 카드를 나누었습니다.\n", dealer.getName(), playersName);
-		printCards(dealer.getName(), dealer.getFirstCard());
+		printCards(dealer.getName(), Arrays.asList(dealer.getFirstCard()));
 		players.forEach(player -> printCards(player.getName(), player.getCards()));
 	}
 

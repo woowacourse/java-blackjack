@@ -33,4 +33,12 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		assertThat(dealer.shouldAddCard()).isTrue();
 	}
+
+	@Test
+	void getFirstCard() {
+		Dealer dealer = new Dealer();
+		dealer.addCard(Card.of("스페이드", "A"));
+		dealer.addCard(Card.of("하트", "A"));
+		assertThat(dealer.getFirstCard()).isEqualTo(Card.of("스페이드", "A"));
+	}
 }

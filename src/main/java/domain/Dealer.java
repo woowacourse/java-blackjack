@@ -28,7 +28,7 @@ public class Dealer extends User {
 		return isNotBust() && (that.isBust() || getScore() > that.getScore());
 	}
 
-	public List<Card> getFirstCard() {
-		return Arrays.asList(getCards().get(FIRST_CARD_INDEX));
+	public Card getFirstCard() {
+		return getCards().get(FIRST_CARD_INDEX);
 	}
 }
