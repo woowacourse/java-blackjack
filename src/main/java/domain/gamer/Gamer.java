@@ -42,7 +42,7 @@ public abstract class Gamer {
 
     public boolean isContainAce() {
         return cards.stream()
-            .anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
+                .anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
     }
 
     public String getName() {

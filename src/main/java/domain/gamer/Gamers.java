@@ -11,35 +11,35 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public class Gamers {
-	private static final int INIT_CARD_SIZE = 2;
+    private static final int INIT_CARD_SIZE = 2;
 
-	private List<Player> players;
-	private Dealer dealer;
+    private List<Player> players;
+    private Dealer dealer;
 
-	public Gamers(String players, Dealer dealer) {
-		this.players = InputUtils.splitAsDelimiter(players)
-			.stream()
-			.map(Player::new)
-			.collect(toList());
-		this.dealer = dealer;
-	}
+    public Gamers(String players, Dealer dealer) {
+        this.players = InputUtils.splitAsDelimiter(players)
+                .stream()
+                .map(Player::new)
+                .collect(toList());
+        this.dealer = dealer;
+    }
 
-	public void initCard(Deck deck) {
-		players.forEach(player -> player.addCard(deck.popCard(INIT_CARD_SIZE)));
-		dealer.addCard(deck.popCard(INIT_CARD_SIZE));
-	}
+    public void initCard(Deck deck) {
+        players.forEach(player -> player.addCard(deck.popCard(INIT_CARD_SIZE)));
+        dealer.addCard(deck.popCard(INIT_CARD_SIZE));
+    }
 
-	public Map<String, WinOrLose> generateGameResults() {
-		return players.stream()
-			.collect(Collectors.toMap(Gamer::getName,
-				player -> player.isWinOrLose(dealer.calculateWithAce())));
-	}
+    public Map<String, WinOrLose> generateGameResults() {
+        return players.stream()
+                .collect(Collectors.toMap(Gamer::getName,
+                        player -> player.isWinOrLose(dealer.calculateWithAce())));
+    }
 
-	public Dealer getDealer() {
-		return dealer;
-	}
+    public Dealer getDealer() {
+        return dealer;
+    }
 
-	public List<Player> getPlayers() {
-		return Collections.unmodifiableList(players);
-	}
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }

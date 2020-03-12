@@ -1,30 +1,30 @@
 package domain.gamer;
 
 public enum WinOrLose {
-	WIN("승"),
-	DRAW("무"),
-	LOSE("패");
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패");
 
-	private static final int WIN_OR_LOSE_PIVOT = 0;
-	private final String initial;
+    private static final int WIN_OR_LOSE_PIVOT = 0;
+    private final String initial;
 
-	WinOrLose(String initial) {
-		this.initial = initial;
-	}
+    WinOrLose(String initial) {
+        this.initial = initial;
+    }
 
-	public static WinOrLose of(int value) {
-		if (value > WIN_OR_LOSE_PIVOT) {
-			return WIN;
-		}
+    public static WinOrLose of(int intervalScore) {
+        if (intervalScore > WIN_OR_LOSE_PIVOT) {
+            return WIN;
+        }
 
-		if (value < WIN_OR_LOSE_PIVOT) {
-			return LOSE;
-		}
+        if (intervalScore < WIN_OR_LOSE_PIVOT) {
+            return LOSE;
+        }
 
-		return DRAW;
-	}
+        return DRAW;
+    }
 
-	public String getInitial() {
-		return initial;
-	}
+    public String getInitial() {
+        return initial;
+    }
 }

@@ -1,18 +1,17 @@
 package domain.gamer;
 
-import static org.assertj.core.api.Assertions.*;
-
 import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.ArgumentUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
     @Test
@@ -37,24 +36,24 @@ public class DealerTest {
         assertThat(dealer.isDrawable()).isFalse();
     }
 
-    @ParameterizedTest
-	@MethodSource("generateCards")
-    @DisplayName("카드 점수가 16이하면 추가 카드 지급")
-    void addCardAtDealerTest(List<Card> cards, int expectedSize) {
-        Dealer dealer = new Dealer();
-        dealer.addCard(cards);
-        Deck deck = new Deck(CardFactory.getInstance());
-        dealer.addCardAtDealer(deck);
-        assertThat(dealer.getCards()).hasSize(expectedSize);
-    }
-
     static Stream<Arguments> generateCards() {
         return Stream.of(
                 Arguments.of(Arrays.asList(
                         new Card(CardSuit.CLOVER, CardNumber.SIX),
                         new Card(CardSuit.CLOVER, CardNumber.TEN)), 3),
-                 Arguments.of(Arrays.asList(
-				new Card(CardSuit.CLOVER, CardNumber.KING),
-				new Card(CardSuit.CLOVER, CardNumber.TEN)), 2));
+                Arguments.of(Arrays.asList(
+                        new Card(CardSuit.CLOVER, CardNumber.KING),
+                        new Card(CardSuit.CLOVER, CardNumber.TEN)), 2));
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateCards")
+    @DisplayName("카드 점수가 16이하면 추가 카드 지급")
+    void addCardAtDealerTest(List<Card> cards, int expectedSize) {
+        Dealer dealer = new Dealer();
+        dealer.addCard(cards);
+        Deck deck = new Deck(CardFactory.getInstance());
+        dealer.addCardAtDealer(deck.popCard(1));
+        assertThat(dealer.getCards()).hasSize(expectedSize);
     }
 }
