@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 
 import domain.YesOrNo;
 import domain.card.CardDivider;
+import domain.result.DealerResult;
+import domain.result.MatchResult;
 import domain.result.Result;
+import domain.result.UserResult;
 import domain.user.Dealer;
 import domain.user.PlayerFactory;
 import domain.user.User;
@@ -91,6 +94,12 @@ public class BlackjackGame {
 
 	private void printGameResult(List<User> users, Dealer dealer) {
 		Result result = new Result(users, dealer);
-		OutputView.printGameResult(result);
+
+		List<UserResult> userResults = users.stream()
+			.map(user -> new UserResult(user, MatchResult.findMatchResult(user, dealer)))
+			.collect(Collectors.toList());
+
+		DealerResult dealerResult = new DealerResult(result.getResult());
+		OutputView.printGameResult(userResults, dealerResult);
 	}
 }

@@ -12,4 +12,12 @@ public class UserResult {
 		this.user = Objects.requireNonNull(user);
 		this.matchResult = Objects.requireNonNull(matchResult);
 	}
+
+	public String getName() {
+		return user.getName();
+	}
+
+	public String getMatchResult() {
+		return matchResult.getMatchResult();
+	}
 }

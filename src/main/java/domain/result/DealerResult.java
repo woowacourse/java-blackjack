@@ -1,5 +1,6 @@
 package domain.result;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -14,18 +15,13 @@ public class DealerResult {
 	}
 
 	public Map<MatchResult, Long> calculateDealerResult() {
-		return playerMatchResults.stream()
+		Map<MatchResult, Long> result = playerMatchResults.stream()
 			.map(MatchResult::switching)
 			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-	}
 
+		Arrays.stream(MatchResult.values())
+			.forEach(key -> result.putIfAbsent(key, 0L));
 
-	public String getResult(){
-		StringBuilder builder = new StringBuilder("딜러: ");
-		Map<MatchResult, Long> map = calculateDealerResult();
-		for (MatchResult matchResult : MatchResult.values()) {
-			builder.append(map.get(matchResult) + matchResult.getMatchResult());
-		}
-		return builder.toString();
+		return result;
 	}
 }
