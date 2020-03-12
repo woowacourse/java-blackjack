@@ -6,9 +6,12 @@ public abstract class User {
     protected UserCards cards;
 
 
-    public User(String name, UserCards cards) {
+    public User(String name) {
         this.name = name;
-        this.cards = cards;
+    }
+
+    public void receiveInitialCards(UserCards initialCards) {
+        this.cards = initialCards;
     }
 
     public void receiveCard(Card card) {

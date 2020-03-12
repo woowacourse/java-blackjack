@@ -28,11 +28,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러의 이름이 \"딜러\"인지 확인")
     void checkDealerName() {
-        UserCards userCards = new UserCards(Arrays.asList(
-                new Card(Suit.CLUB, Symbol.SIX),
-                new Card(Suit.HEART, Symbol.KING)
-        ));
-        assertThat(new Dealer(userCards).getName()).isEqualTo("딜러");
+        assertThat(new Dealer().getName()).isEqualTo("딜러");
     }
 
     @Test
@@ -42,14 +38,18 @@ public class DealerTest {
                 new Card(Suit.SPADE, Symbol.JACK),
                 new Card(Suit.DIAMOND, Symbol.THREE)
         ));
-        assertThat(new Dealer(userCards).showDealerCardInfo()).isEqualTo("스페이드 잭");
+        Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(userCards);
+        assertThat(dealer.showDealerCardInfo()).isEqualTo("스페이드 잭");
     }
 
     @ParameterizedTest
     @DisplayName("딜러의 카드 합이 16 이하인지 확인")
     @MethodSource("generateStandardDealer")
     void scoreUnderSixteenTest(UserCards userCards, boolean expected) {
-        assertThat(new Dealer(userCards).isUnderThreshold()).isEqualTo(expected);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(userCards);
+        assertThat(dealer.isUnderThreshold()).isEqualTo(expected);
     }
 
 }
