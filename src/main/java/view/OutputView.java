@@ -59,4 +59,34 @@ public class OutputView {
 			System.out.println(player.showCards() + " - " + player.getHands().calculateTotalScore());
 		}
 	}
+
+	public static void printMatchResult(BlackjackGameDto blackjackGameDto) {
+		System.out.println("## 최종 승패");
+		List<PlayerDto> players = blackjackGameDto.getPlayers();
+		int dealerScore = blackjackGameDto.getDealer().getHands().calculateTotalScore();
+
+		for (PlayerDto playerDto : players) {
+			printLoser(dealerScore, playerDto);
+			printDrawer(dealerScore, playerDto);
+			printWinner(dealerScore, playerDto);
+		}
+	}
+
+	private static void printWinner(int dealerScore, PlayerDto playerDto) {
+		if (!playerDto.isDefeat(dealerScore) && !playerDto.isDraw(dealerScore)) {
+			System.out.println(playerDto.getName() + " : 승");
+		}
+	}
+
+	private static void printDrawer(int dealerScore, PlayerDto playerDto) {
+		if (playerDto.isDraw(dealerScore)) {
+			System.out.println(playerDto.getName() + " : 무");
+		}
+	}
+
+	private static void printLoser(int dealerScore, PlayerDto playerDto) {
+		if (playerDto.isDefeat(dealerScore)) {
+			System.out.println(playerDto.getName() + " : 패");
+		}
+	}
 }
