@@ -14,4 +14,12 @@ public class InputView {
         return input;
     }
 
+    public static boolean askForHit(String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String input = sc.nextLine();
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("다시 입력해 주세요.");
+        }
+        return Answer.of(input);
+    }
 }
