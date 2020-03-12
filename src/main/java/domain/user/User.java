@@ -5,10 +5,11 @@ import domain.card.Cards;
 
 public abstract class User {
 
-    protected Cards cards;
+    private static final int DEFAULT_DRAW_COUNT = 1;
+    protected Cards cards = new Cards();
 
     public void drawCard(CardDeck cardDeck) {
-        drawCard(cardDeck, 1);
+        drawCard(cardDeck, DEFAULT_DRAW_COUNT);
     }
 
     public void drawCard(CardDeck cardDeck, int cardCount) {
@@ -17,7 +18,7 @@ public abstract class User {
         }
     }
 
-    public abstract boolean isAbleDrawCards();
+    public abstract boolean canDrawCard();
 
     public Cards getCards() {
         return cards;

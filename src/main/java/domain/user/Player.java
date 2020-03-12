@@ -1,46 +1,39 @@
 package domain.user;
 
 import domain.WinningResult;
-import domain.card.Cards;
 import util.BlackJackRule;
 
 public class Player extends User {
 
     private final String name;
-    private WinningResult winningResult;
+    private WinningResult winningResult = WinningResult.UNDEFINED;
 
     public Player(String name) {
         this.name = name;
-        this.winningResult = WinningResult.UNDEFINED;
-        cards = new Cards();
     }
 
     @Override
-    public boolean isAbleDrawCards() {
-        if (cards.isBust()) {
-            winningResult = WinningResult.LOSE;
-            return false;
-        }
-        if (cards.isBlackJack()) {
-            return false;
-        }
-        return true;
-    }
-
-    public WinningResult getWinningResult() {
-        return winningResult;
+    public boolean canDrawCard() {
+        return !cards.isBust() && !cards.isBlackJack();
     }
 
     public void calculateWinningResult(int dealerScore) {
+        if (cards.isBust()) {
+            winningResult = WinningResult.LOSE;
+            return;
+        }
         if (BlackJackRule.isBust(dealerScore) && winningResult == WinningResult.UNDEFINED) {
             winningResult = WinningResult.WIN;
+            return;
         }
-        if (winningResult == WinningResult.UNDEFINED) {
-            winningResult = WinningResult.calculate(dealerScore, cards.getScore());
-        }
+        winningResult = WinningResult.calculate(dealerScore, cards.getScore());
     }
 
     public String getName() {
         return name;
+    }
+
+    public WinningResult getWinningResult() {
+        return winningResult;
     }
 }

@@ -13,12 +13,10 @@ public class DealerTest {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         dealer.drawCard(cardDeck);
-        Assertions.assertThat(dealer.isAbleDrawCards())
-            .isTrue();
+        Assertions.assertThat(dealer.canDrawCard()).isTrue();
         for (int i = 0; i < 10; i++) {
             dealer.drawCard(cardDeck);
         }
-        Assertions.assertThat(dealer.isAbleDrawCards())
-            .isFalse();
+        Assertions.assertThat(dealer.canDrawCard()).isFalse();
     }
 }

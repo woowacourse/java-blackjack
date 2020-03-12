@@ -1,15 +1,11 @@
 package domain.user;
 
-import domain.card.DealerCards;
+import util.BlackJackRule;
 
 public class Dealer extends User {
 
-    public Dealer() {
-        cards = new DealerCards();
-    }
-
     @Override
-    public boolean isAbleDrawCards() {
-        return !((DealerCards) cards).isOverSixteen();
+    public boolean canDrawCard() {
+        return BlackJackRule.isDealerDraw(cards.getScore());
     }
 }
