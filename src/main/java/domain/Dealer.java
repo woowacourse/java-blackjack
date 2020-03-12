@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Dealer extends User {
 	private static final int SHOULD_ADD_CARD_POINT = 16;
 	private static final int FIRST_CARD_INDEX = 0;
