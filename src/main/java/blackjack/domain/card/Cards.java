@@ -1,8 +1,10 @@
 package blackjack.domain.card;
 
+import blackjack.util.BlackJackRule;
 import java.util.ArrayList;
 import java.util.List;
-import blackjack.util.BlackJackRule;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -18,21 +20,16 @@ public class Cards {
     }
 
     public int getScore() {
-        int score = 0;
-        for (Card card : cards) {
-            score += card.getValue();
-        }
+        int score = cards.stream()
+            .mapToInt(Card::getValue)
+            .sum();
         return addAceWeight(score);
     }
 
     private int addAceWeight(int score) {
-        for (Card card : cards) {
-            if (BlackJackRule.isBust(score + Symbol.getAceWeight())) {
-                break;
-            }
-            if (card.isAce()) {
-                score += Symbol.getAceWeight();
-            }
+        Optional<Card> aceCard = cards.stream().filter(Card::isAce).findFirst();
+        if (aceCard.isPresent() && !BlackJackRule.isBust(score + Symbol.getAceWeight())) {
+            score += Symbol.getAceWeight();
         }
         return score;
     }
@@ -46,10 +43,8 @@ public class Cards {
     }
 
     public List<String> getInfos() {
-        List<String> cardInfos = new ArrayList<>();
-        for(Card card : cards) {
-            cardInfos.add(card.getInfo());
-        }
-        return cardInfos;
+        return cards.stream()
+            .map(Card::getInfo)
+            .collect(Collectors.toList());
     }
 }

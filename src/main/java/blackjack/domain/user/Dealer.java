@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
-import java.util.List;
 import blackjack.util.BlackJackRule;
+import java.util.List;
 
 public class Dealer extends User {
 

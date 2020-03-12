@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class GameResultTest {
+
     private Dealer dealer;
     private Players players;
 
@@ -33,6 +34,7 @@ public class GameResultTest {
             assertThat(playerResult.get(player)).isEqualTo(Outcome.LOSE);
         }
     }
+
     @DisplayName("플레이어의 승패 - 무")
     @Test
     void checkPlayerResultDraw() {
@@ -43,6 +45,7 @@ public class GameResultTest {
             assertThat(playerResult.get(player)).isEqualTo(Outcome.DRAW);
         }
     }
+
     @DisplayName("플레이어의 승패 - 승")
     @Test
     void checkPlayerResultWin() {

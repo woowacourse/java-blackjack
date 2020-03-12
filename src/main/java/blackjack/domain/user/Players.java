@@ -3,17 +3,16 @@ package blackjack.domain.user;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
 
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName));
-        }
-        this.players = Collections.unmodifiableList(players);
+        this.players = Collections.unmodifiableList(playerNames.stream()
+            .map(Player::new)
+            .collect(Collectors.toList()));
     }
 
     public List<Player> getPlayers() {
@@ -21,10 +20,8 @@ public class Players {
     }
 
     public List<String> getPlayerNames() {
-        List<String> playerNames = new ArrayList<>();
-        for (Player player : players) {
-            playerNames.add(player.getName());
-        }
-        return Collections.unmodifiableList(playerNames);
+        return Collections.unmodifiableList(players.stream()
+            .map(User::getName)
+            .collect(Collectors.toList()));
     }
 }
