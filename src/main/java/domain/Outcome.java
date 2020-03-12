@@ -3,8 +3,7 @@ package domain;
 public enum Outcome {
     WIN("승"),
     DRAW("무"),
-    LOSE("패"),
-    UNDEFINED("미정");
+    LOSE("패");
 
     private final String name;
 
@@ -23,10 +22,10 @@ public enum Outcome {
     }
 
     public static Outcome converseOutcome(Outcome outcome) {
-        if (outcome == Outcome.WIN) {
-            return Outcome.LOSE;
+        if (outcome == Outcome.DRAW) {
+            return Outcome.DRAW;
         }
-        return outcome == Outcome.DRAW ? Outcome.DRAW : Outcome.WIN;
+        return outcome == Outcome.WIN ? Outcome.LOSE : Outcome.WIN;
     }
 
     public String getName() {

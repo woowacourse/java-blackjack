@@ -13,8 +13,7 @@ public class GameResult {
     private final Map<Outcome, Integer> dealerResults;
 
     public GameResult(Dealer dealer, Players players) {
-        Map<Player, Outcome> playerResults = calculatePlayerResults(dealer, players);
-        this.playerResults = Collections.unmodifiableMap(playerResults);
+        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, players));
         this.dealerResults = Collections.unmodifiableMap(calculateDealerResults());
     }
 
@@ -28,9 +27,9 @@ public class GameResult {
 
     private Map<Outcome, Integer> calculateDealerResults() {
         Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
-        dealerResults.put(Outcome.WIN, 0);
-        dealerResults.put(Outcome.DRAW, 0);
-        dealerResults.put(Outcome.LOSE, 0);
+        for(Outcome outcome : Outcome.values()) {
+            dealerResults.put(outcome, 0);
+        }
         for (Outcome outcome : this.playerResults.values()) {
             Outcome dealerOutcome = Outcome.converseOutcome(outcome);
             dealerResults.put(dealerOutcome, dealerResults.get(dealerOutcome) + 1);
