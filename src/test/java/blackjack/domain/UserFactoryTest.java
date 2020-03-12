@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.utils.NameParser;
+import blackjack.utils.InputHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ public class UserFactoryTest {
     @Test
     @DisplayName("선수 이름이 8명을 초과하여 입력됐을 때 exception ")
     void moreThanMaxPlayerNumber() {
-        assertThatThrownBy(() -> UserFactory.generateUsers(NameParser.parse("s, ab,cd,11,14,sdf,cu,lkl,hih")))
+        assertThatThrownBy(() -> UserFactory.generateUsers(InputHandler.parseName("s, ab,cd,11,14,sdf,cu,lkl,hih")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("초과");
     }

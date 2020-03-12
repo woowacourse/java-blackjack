@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class NameParserTest {
+public class InputHandlerTest {
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("이름이 입력이 아예 안됐을 떄")
     void nullInputTest(String input) {
-        assertThatThrownBy(() -> NameParser.parse(input))
+        assertThatThrownBy(() -> InputHandler.parseName(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("1개 이상");
     }
@@ -29,13 +29,13 @@ public class NameParserTest {
             "@!,#$%,!^&,%&*,알트:5"
     }, delimiter = ':')
     void parseTest(String input, int expected) {
-        assertThat(NameParser.parse(input).size()).isEqualTo(expected);
+        assertThat(InputHandler.parseName(input).size()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("중복된 이름이 있는 경우 테스트")
     void duplicatedNameTest() {
-        assertThatThrownBy(() -> NameParser.parse("pobi,jason,pororo,pobi"))
+        assertThatThrownBy(() -> InputHandler.parseName("pobi,jason,pororo,pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복");
     }

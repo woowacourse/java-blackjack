@@ -40,7 +40,7 @@ public class DealerTest {
         ));
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(userCards);
-        assertThat(dealer.showDealerCardInfo()).isEqualTo("스페이드 잭");
+        assertThat(dealer.showInitialCardInfo()).isEqualTo("딜러 카드: 스페이드 잭");
     }
 
     @ParameterizedTest
