@@ -24,18 +24,9 @@ public class BlackjackGame {
 		List<User> users = PlayerFactory.create(InputView.inputNames());
 		Dealer dealer = new Dealer();
 		initCards(users, dealer);
-		checkBlackJack(users, dealer);
-		drawCard(users, dealer);
-	}
-
-	private void checkBlackJack(List<User> users, Dealer dealer) {
-		List<User> allUsers = new ArrayList<>(users);
-		allUsers.add(dealer);
-
-		List<User> blackjackUsers = allUsers.stream()
-			.filter(User::isBlackjack)
-			.collect(Collectors.toList());
-		OutputView.printBlackJackUser(blackjackUsers);
+		printBlackjackUsers(users, dealer);
+		checkCanDraw(users, dealer);
+		printUserResult(users, dealer);
 	}
 
 	private void initCards(List<User> users, Dealer dealer) {
@@ -47,6 +38,23 @@ public class BlackjackGame {
 		List<User> allUsers = new ArrayList<>(users);
 		allUsers.add(dealer);
 		OutputView.printInitialResult(allUsers);
+	}
+
+	private void printBlackjackUsers(List<User> users, Dealer dealer) {
+		List<User> allUsers = new ArrayList<>(users);
+		allUsers.add(dealer);
+
+		List<User> blackjackUsers = allUsers.stream()
+			.filter(User::isBlackjack)
+			.collect(Collectors.toList());
+		OutputView.printBlackJackUser(blackjackUsers);
+	}
+
+	private void checkCanDraw(List<User> users, Dealer dealer) {
+		if (dealer.isBlackjack()) {
+			return;
+		}
+		drawCard(users, dealer);
 	}
 
 	private void drawCard(List<User> users, Dealer dealer) {
@@ -71,7 +79,9 @@ public class BlackjackGame {
 			dealer.addCards(Arrays.asList(cardDivider.divide()));
 			OutputView.printDealerDraw();
 		}
+	}
 
+	private void printUserResult(List<User> users, Dealer dealer) {
 		List<User> allUsers = new ArrayList<>(users);
 		allUsers.add(dealer);
 		OutputView.printUserResult(allUsers);
