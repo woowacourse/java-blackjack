@@ -36,6 +36,6 @@ public enum ResultType {
 		return Arrays.stream(ResultType.values())
 				.filter(type -> type.resultJudge.test(user1.compareTo(user2)))
 				.findFirst()
-				.orElseThrow(NullPointerException::new);
+				.orElseThrow(() -> new NullPointerException("원하는 결과를 찾을 수 없습니다."));
 	}
 }

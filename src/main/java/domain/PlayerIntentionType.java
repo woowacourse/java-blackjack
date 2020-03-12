@@ -16,7 +16,7 @@ public enum PlayerIntentionType {
 		return Arrays.stream(PlayerIntentionType.values())
 				.filter(value -> value.getValue().equals(input))
 				.findFirst()
-				.orElseThrow(NullPointerException::new);
+				.orElseThrow(() -> new NullPointerException("옳지 않은 입력입니다."));
 	}
 
 	public String getValue() {
