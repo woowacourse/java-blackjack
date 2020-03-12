@@ -1,13 +1,18 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
+    public static final String BUST_MESSAGE = "버스트 되었습니다!!!";
 
     public static void printInitialInfo(User dealer, Players players) {
         printInitialInfoHead(dealer, players);
@@ -41,14 +46,53 @@ public class OutputView {
     }
 
     public static void printUserCard(User user) {
-        String userCards = user.getCards().stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(", "));
-
+        String userCards = createUserCardInfo(user);
         System.out.printf("%s : %s" + NEW_LINE, user.getName(), userCards);
 
+        printIfBust(user);
+    }
+
+    private static String createUserCardInfo(User user) {
+        return user.getCards().stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+	public static void printDealerTurn(Dealer dealer) {
+        System.out.printf("딜러는 %s미만이라 한장의 카드를 더 받았습니다." + NEW_LINE,
+                Dealer.MINIMUM_NUMBER_TO_STAY);
+
+        printIfBust(dealer);
+    }
+
+    private static void printIfBust(User user) {
         if (user.isBust()) {
-            System.out.println("버스트되었습니다!!!");
+            System.out.println(BUST_MESSAGE);
         }
+    }
+
+    public static void printFinalInfo(User dealer, Players players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players.getPlayers());
+
+        for (User user : users) {
+            String userCards = createUserCardInfo(user);
+            String score = createResultScore(user);
+
+            System.out.printf("%s : %s - 결과: %s" + NEW_LINE,
+                    user.getName(), userCards, score);
+        }
+    }
+
+    private static String createResultScore(User user) {
+        if (user.isBust()) {
+            return "bust";
+        }
+        return String.valueOf(user.calculateScore().getScore());
+    }
+
+    private static void printUserCardWithScore(User user) {
+
     }
 }
