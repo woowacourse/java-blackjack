@@ -33,6 +33,6 @@ public class UserTest {
         assertThat(user.isWin(dealer)).isFalse();
 
         dealer.addCard(Card.of("스페이드", "Q"));
-        assertThat(user.isWin(dealer)).isTrue();
+        assertThat(user.isWin(dealer)).isFalse();
     }
 }

@@ -29,13 +29,6 @@ public enum Symbol {
         this.alias = alias;
     }
 
-    public static Symbol of(final int point) {
-        return Arrays.stream(values())
-                .filter(type -> type.point == point)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 심볼입니다."));
-    }
-
     public static Symbol of(final String alias) {
         return Arrays.stream(values())
                 .filter(type -> type.alias.equals(alias))
