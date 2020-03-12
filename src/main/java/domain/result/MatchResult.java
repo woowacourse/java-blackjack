@@ -24,4 +24,8 @@ public enum MatchResult {
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
 	}
+
+	public String getMatchResult() {
+		return matchResult;
+	}
 }

@@ -16,35 +16,12 @@ public class Result {
 		this.dealer = dealer;
 	}
 
-	public List<String> getResult() {
-		List<String> results = new ArrayList<>();
-		int dealerScore = dealer.calculateScore();
+	public List<MatchResult> getResult() {
+		List<MatchResult> matchResults = new ArrayList<>();
 		for (User user : users) {
-			if (dealer.isBust() && !user.isBust()) {
-				results.add(user.getName() + ": 승");
-			} else if (user.calculateScore() > dealerScore) {
-				results.add(user.getName() + ": 승");
-			} else if (user.isBlackjack() && dealer.isBlackjack()) {
-				results.add(user.getName() + ": 무");
-			} else {
-				results.add(user.getName() + ": 패");
-			}
+			MatchResult matchResult = MatchResult.findMatchResult(user, dealer);
+			matchResults.add(matchResult);
 		}
-		int win = 0;
-		int draw = 0;
-		int lose = 0;
-
-		for (String result : results) {
-			if (result.indexOf("승") > 0) {
-				lose++;
-			} else if (result.indexOf("패") > 0) {
-				win++;
-			} else {
-				draw++;
-			}
-		}
-
-		results.add(0, String.format("%s : %d승 %d무 %d패", dealer.getName(), win, draw, lose));
-		return results;
+		return matchResults;
 	}
 }
