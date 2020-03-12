@@ -37,4 +37,9 @@ public class Player extends User {
         }
         return winningResult = WinningResult.LOSE;
     }
+
+    @Override
+    public String getWinningResult() {
+        return name + ": " + winningResult.getResult();
+    }
 }

@@ -61,7 +61,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 승패 확인 결과")
     void getWinningResult() {
-        String expected = "0승 0패 1무승부";
+        String expected = "딜러: 0승 0패 1무승부";
 
         dealer.applyWinningResult(WinningResult.DRAW);
 

@@ -13,6 +13,7 @@ public class Dealer extends User {
     private static final int PIVOT = 17;
 
     private static Map<WinningResult, Integer> winningResults;
+
     static {
         winningResults = new LinkedHashMap<>();
 
@@ -42,8 +43,10 @@ public class Dealer extends User {
         winningResults.computeIfPresent(winningResult, (key, value) -> value + 1);
     }
 
+    @Override
     public String getWinningResult() {
-        return winningResults.entrySet()
+        return DEALER + ": "
+                + winningResults.entrySet()
                 .stream()
                 .map(winningResult -> winningResult.getValue() + winningResult.getKey().getResult())
                 .collect(Collectors.joining(" "));

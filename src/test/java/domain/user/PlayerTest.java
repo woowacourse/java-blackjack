@@ -70,29 +70,52 @@ class PlayerTest {
     private static Stream<Arguments> createCardSet() {
         return Stream.of(
                 //플레이어가 21점인 경우
-                createCardsAndResult(Type.FIVE, Type.FIVE, WinningResult.DRAW),
-                createCardsAndResult(Type.FIVE, Type.FOUR, WinningResult.WIN),
-                createCardsAndResult(Type.FIVE, Type.SIX, WinningResult.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.FIVE, WinningResult.DRAW),
+                createCardsAndWinningResult(Type.FIVE, Type.FOUR, WinningResult.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.SIX, WinningResult.WIN),
 
                 //플레이어가 버스트인 경우
-                createCardsAndResult(Type.SIX, Type.SIX, WinningResult.LOSE),
-                createCardsAndResult(Type.SIX, Type.FIVE, WinningResult.LOSE),
-                createCardsAndResult(Type.SIX, Type.FOUR, WinningResult.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.SIX, WinningResult.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FIVE, WinningResult.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FOUR, WinningResult.LOSE),
 
                 //플레이어가 21미만인 경우
-                createCardsAndResult(Type.THREE, Type.TWO, WinningResult.WIN),
-                createCardsAndResult(Type.THREE, Type.THREE, WinningResult.DRAW),
-                createCardsAndResult(Type.THREE, Type.FOUR, WinningResult.LOSE),
-                createCardsAndResult(Type.THREE, Type.FIVE, WinningResult.LOSE),
-                createCardsAndResult(Type.THREE, Type.SIX, WinningResult.WIN)
+                createCardsAndWinningResult(Type.THREE, Type.TWO, WinningResult.WIN),
+                createCardsAndWinningResult(Type.THREE, Type.THREE, WinningResult.DRAW),
+                createCardsAndWinningResult(Type.THREE, Type.FOUR, WinningResult.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.FIVE, WinningResult.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.SIX, WinningResult.WIN)
                 );
     }
 
-    private static Arguments createCardsAndResult(Type player, Type dealer, WinningResult winningResult) {
+    private static Arguments createCardsAndWinningResult(Type player, Type dealer, WinningResult winningResult) {
         return Arguments.of(
                 new Card(Symbol.HEART, player),
                 new Card(Symbol.SPADE, dealer),
                 winningResult
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("승패 결과")
+    @MethodSource("createCardsAndResult")
+    void getWinningResult(Card card, String expected) {
+        player.draw(new Card(Symbol.DIAMOND, Type.SIX));
+        player.draw(card);
+
+        Dealer dealer = Dealer.appoint();
+        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
+
+        player.win(dealer);
+
+        assertThat(player.getWinningResult()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createCardsAndResult() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.HEART, Type.FIVE), "이름: 승"),
+                Arguments.of(new Card(Symbol.HEART, Type.TWO), "이름: 패"),
+                Arguments.of(new Card(Symbol.HEART, Type.FOUR), "이름: 무승부")
         );
     }
 }
