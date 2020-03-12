@@ -16,7 +16,7 @@ public abstract class Player {
         Collections.addAll(this.cards, cards);
     }
 
-    protected int sumCardNumber() {
+    public int sumCardNumber() {
         return CardCalculator.calculateCards(this.cards);
     }
 
