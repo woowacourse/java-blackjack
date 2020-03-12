@@ -41,4 +41,46 @@ public class DealerTest {
 		dealer.addCard(Card.of("하트", "A"));
 		assertThat(dealer.getFirstCard()).isEqualTo(Card.of("스페이드", "A"));
 	}
+
+	@Test
+	void isWin_딜러와_플레이어가_동점() {
+		Dealer dealer = new Dealer();
+		Player player = new Player("플레이어");
+		assertThat(dealer.isWin(player)).isTrue();
+	}
+
+	@Test
+	void isWin_딜러와_플레이어_둘_다_버스트() {
+		Dealer dealer = new Dealer();
+		Player player = new Player("플레이어");
+		dealer.addCard(Card.of("하트", "J"));
+		dealer.addCard(Card.of("하트", "Q"));
+		dealer.addCard(Card.of("하트", "K"));
+		player.addCard(Card.of("클로버", "J"));
+		player.addCard(Card.of("클로버", "Q"));
+		player.addCard(Card.of("클로버", "K"));
+		assertThat(dealer.isWin(player)).isTrue();
+	}
+
+	@Test
+	void isWin_딜러가_플레이어보다_21에_가까운_경우() {
+		Dealer dealer = new Dealer();
+		Player player = new Player("플레이어");
+		dealer.addCard(Card.of("하트", "J"));
+		dealer.addCard(Card.of("하트", "Q"));
+		player.addCard(Card.of("클로버", "J"));
+		player.addCard(Card.of("클로버", "9"));
+		assertThat(dealer.isWin(player)).isTrue();
+	}
+
+	@Test
+	void isWin_플레이어가_딜러보다_21에_가까운_경우() {
+		Dealer dealer = new Dealer();
+		Player player = new Player("플레이어");
+		dealer.addCard(Card.of("하트", "J"));
+		dealer.addCard(Card.of("하트", "9"));
+		player.addCard(Card.of("클로버", "J"));
+		player.addCard(Card.of("클로버", "Q"));
+		assertThat(dealer.isWin(player)).isFalse();
+	}
 }
