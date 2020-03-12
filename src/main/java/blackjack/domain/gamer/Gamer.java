@@ -5,10 +5,11 @@ import blackjack.domain.rule.CardCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Gamer {
 
-    private List<Card> cards = new ArrayList<>();
+    protected List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         cards.add(card);
@@ -22,7 +23,11 @@ public abstract class Gamer {
         return CardCalculator.calculate(cards);
     }
 
-
     public abstract String getName();
 
+    public String getCardStatus() {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(","));
+    }
 }
