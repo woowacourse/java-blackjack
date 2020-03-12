@@ -19,15 +19,15 @@ public class Player extends Gamer {
 	}
 
 	public WinOrLose isWinOrLose(int dealerScore) {
-		if (calculateWithAce() > 21) {
+		if (calculateWithAce() > DRAW_CARD_PIVOT) {
 			return WinOrLose.LOSE;
 		}
 
-		if (dealerScore > 21) {
+		if (dealerScore > DRAW_CARD_PIVOT) {
 			return WinOrLose.WIN;
 		}
 
-		return WinOrLose.of(calculateWithAce() > dealerScore);
+		return WinOrLose.of(calculateWithAce() - dealerScore);
 	}
 
 	@Override

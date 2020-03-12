@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gamer {
-    public static final int BUST_NUMBER = 22;
-    public static final int ACE_HIDDEN_SCORE = 10;
+    private static final int BUST_NUMBER = 22;
+    private static final int ACE_HIDDEN_SCORE = 10;
 
     protected String name;
     protected final List<Card> cards = new ArrayList<>();
@@ -40,7 +40,8 @@ public abstract class Gamer {
     }
 
     public boolean isContainAce() {
-        return cards.stream().anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
+        return cards.stream()
+            .anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
     }
 
     public String getName() {

@@ -1,24 +1,27 @@
 package domain.gamer;
 
-import java.util.Arrays;
-
 public enum WinOrLose {
-	WIN(true, "승"),
-	LOSE(false, "패");
+	WIN("승"),
+	DRAW("무"),
+	LOSE("패");
 
-	private boolean value;
-	private String initial;
+	private static final int WIN_OR_LOSE_PIVOT = 0;
+	private final String initial;
 
-	WinOrLose(boolean value, String initial) {
-		this.value = value;
+	WinOrLose(String initial) {
 		this.initial = initial;
 	}
 
-	public static WinOrLose of(boolean value) {
-		return Arrays.stream(WinOrLose.values())
-			.filter(x -> x.value == value)
-			.findFirst()
-			.orElseThrow(IllegalArgumentException::new);
+	public static WinOrLose of(int value) {
+		if (value > WIN_OR_LOSE_PIVOT) {
+			return WIN;
+		}
+
+		if (value < WIN_OR_LOSE_PIVOT) {
+			return LOSE;
+		}
+
+		return DRAW;
 	}
 
 	public String getInitial() {

@@ -74,7 +74,12 @@ public class OutputView {
 		System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
 	}
 
-	public static void printCardsResultAndScore(Gamers gamers) {
+	public static void printGameResults(Gamers gamers) {
+		printCardsResultAndScore(gamers);
+		printPlayersWinOrLose(gamers.generateGameResults());
+	}
+
+	private static void printCardsResultAndScore(Gamers gamers) {
 		System.out.println();
 		System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(gamers.getDealer()),
 			gamers.getDealer().calculateWithAce());
@@ -83,11 +88,11 @@ public class OutputView {
 				player -> System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(player), player.calculateWithAce()));
 	}
 
-	public static void printPlayersWinOrLose(Map<String, WinOrLose> playersWinOrLose) {
+	private static void printPlayersWinOrLose(Map<String, WinOrLose> playersWinOrLose) {
 		System.out.println();
 		System.out.println("## 최종 승패");
 		System.out.println("딜러 : " + playersWinOrLose.values().stream().filter(x -> x == WinOrLose.LOSE).count()
-			+ WinOrLose.WIN.getInitial()
+			+ WinOrLose.WIN.getInitial()+ playersWinOrLose.values().stream().filter(x -> x == WinOrLose.DRAW).count() + WinOrLose.DRAW.getInitial()
 			+ playersWinOrLose.values().stream().filter(x -> x == WinOrLose.WIN).count() + WinOrLose.LOSE.getInitial()
 		);
 		playersWinOrLose.forEach((a, b) -> System.out.println(a + " : " + b.getInitial()));
