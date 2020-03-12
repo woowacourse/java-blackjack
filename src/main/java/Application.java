@@ -27,8 +27,8 @@ public class Application {
 
     private static void distributeInitCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
         distributeToPlayer(cardDeck, dealer);
-        for (User User : users) {
-            distributeToPlayer(cardDeck, User);
+        for (User user : users) {
+            distributeToPlayer(cardDeck, user);
         }
     }
 
@@ -51,15 +51,15 @@ public class Application {
     }
 
     private static void userMoreCard(final CardDeck cardDeck, final Users users) {
-        for (User User : users) {
-            giveCardsIfUserWant(cardDeck, User);
+        for (User user : users) {
+            giveCardsIfUserWant(cardDeck, user);
         }
     }
 
-    private static void giveCardsIfUserWant(final CardDeck cardDeck, final User User) {
-        while (User.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(User)).isYes()) {
-            CardDistributor.giveOneCard(cardDeck, User);
-            OutputView.printStatus(User);
+    private static void giveCardsIfUserWant(final CardDeck cardDeck, final User user) {
+        while (user.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(user)).isYes()) {
+            CardDistributor.giveOneCard(cardDeck, user);
+            OutputView.printStatus(user);
         }
     }
 
