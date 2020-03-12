@@ -51,14 +51,12 @@ public abstract class User {
 		return hand.calculateScore().isMoreThan(BLACKJACK_SCORE);
 	}
 
-	abstract boolean canDraw();
+	public abstract boolean canDraw();
+
+	public abstract List<Card> getInitialHand();
 
 	public String getName() {
 		return name;
-	}
-
-	public List<Card> getInitialHand() {
-		return getHand();
 	}
 
 	public List<Card> getHand() {

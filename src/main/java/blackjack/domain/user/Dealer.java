@@ -12,7 +12,7 @@ public class Dealer extends User {
 	}
 
 	@Override
-	boolean canDraw() {
+	public boolean canDraw() {
 		return hand.calculateScore().isLowerThan(DEALER_DRAWABLE_MAX_SCORE);
 	}
 
