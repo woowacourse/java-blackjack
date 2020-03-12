@@ -13,6 +13,6 @@ public class Player extends AbstractUser {
 
     @Override
     public Boolean isWinner(Score dealerScore) {
-        return calculateScore().isOver(dealerScore);
+        return calculateScore().isOver(dealerScore) && isNotBust();
     }
 }
