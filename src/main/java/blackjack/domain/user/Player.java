@@ -1,0 +1,26 @@
+package blackjack.domain.user;
+
+import blackjack.domain.Outcome;
+import blackjack.util.BlackJackRule;
+
+public class Player extends User {
+
+    public Player(String name) {
+        super(name);
+    }
+
+    @Override
+    public boolean canDrawCard() {
+        return !(cards.isBust() || cards.isBlackJack());
+    }
+
+    public Outcome calculateOutcome(int dealerScore) {
+        if (cards.isBust()) {
+            return Outcome.LOSE;
+        }
+        if (BlackJackRule.isBust(dealerScore)) {
+            return Outcome.WIN;
+        }
+        return Outcome.calculate(dealerScore, cards.getScore());
+    }
+}
