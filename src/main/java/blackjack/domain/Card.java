@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Card {
     private Suit suit;
@@ -20,8 +21,10 @@ public class Card {
         return getRankValue() == Rank.ACE.getValue();
     }
 
-    public static List<Card> createCards() {
-        return new ArrayList<>(CardCache.cards);
+    public static Stack<Card> createCards() {
+        Stack<Card> cards = new Stack<>();
+        CardCache.cards.forEach(cards::push);
+        return cards;
     }
 
     @Override

@@ -1,11 +1,11 @@
 package blackjack.domain;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class Deck {
 
-    private List<Card> cards;
+    private Stack<Card> cards;
 
     private Deck() {
         this.cards = Card.createCards();
@@ -25,7 +25,7 @@ public class Deck {
         if (cards.isEmpty()) {
             this.cards = Card.createCards();
         }
-        return cards.remove(0);
+        return cards.pop();
     }
 
     public int size() {
