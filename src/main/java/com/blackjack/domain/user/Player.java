@@ -3,7 +3,7 @@ package com.blackjack.domain.user;
 import com.blackjack.domain.Score;
 
 public class Player extends User {
-	private static final Score DRAW_CONDITION = new Score(21);
+	private static final int DRAW_CONDITION = 21;
 
 	Player(Name name) {
 		super(name);

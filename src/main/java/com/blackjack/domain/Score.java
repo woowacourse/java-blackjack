@@ -8,16 +8,10 @@ public class Score {
 	private static final int BLACKJACK_SCORE = 21;
 
 	private final int score;
-	private final boolean isInitialDraw;
 
 	public Score(int score) {
-		this(score, false);
-	}
-
-	public Score(int score, boolean isInitialDraw) {
 		validateBounds(score);
 		this.score = score;
-		this.isInitialDraw = isInitialDraw;
 	}
 
 	private void validateBounds(int score) {
@@ -26,12 +20,8 @@ public class Score {
 		}
 	}
 
-	public boolean isLowerThan(Score drawCondition) {
-		return score < drawCondition.score;
-	}
-
-	public boolean isBlackjack() {
-		return score == BLACKJACK_SCORE && isInitialDraw;
+	public boolean isLowerThan(int drawCondition) {
+		return score < drawCondition;
 	}
 
 	public boolean isBust() {
@@ -51,5 +41,10 @@ public class Score {
 	@Override
 	public int hashCode() {
 		return Objects.hash(score);
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(score);
 	}
 }

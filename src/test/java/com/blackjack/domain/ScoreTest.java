@@ -27,6 +27,6 @@ public class ScoreTest {
 	@CsvSource(value = {"10,true", "11,false"})
 	void isLowerThan(int num, boolean expected) {
 		Score score = new Score(num);
-		assertThat(score.isLowerThan(new Score(11))).isEqualTo(expected);
+		assertThat(score.isLowerThan(11)).isEqualTo(expected);
 	}
 }
