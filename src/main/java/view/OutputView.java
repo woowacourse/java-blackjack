@@ -17,12 +17,14 @@ public class OutputView {
 	private static final String DELIMITER = ", ";
 
 	public static void printInitialDistribution(Players players) {
+		emptyLine();
 		System.out.println("딜러와 " + players.getNames() + "에게 2장의 카드를 나누었습니다.");
 	}
 
 	public static void printInitialStatus(Card dealerCard, Players players) {
 		System.out.println("딜러: " + dealerCard.toString());
 		players.forEach(OutputView::printCardsStatusOf);
+		emptyLine();
 	}
 
 	public static void printCardsStatusOf(Player player) {
@@ -36,7 +38,9 @@ public class OutputView {
 	}
 
 	public static void printDealerDraw() {
+		emptyLine();
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+		emptyLine();
 	}
 
 	public static void printResultStatus(Cards dealerCards, Players players) {
@@ -64,6 +68,8 @@ public class OutputView {
 
 	public static void printResult(Result result, Players players) {
 		Map<ResultType, Long> dealerResult = result.createDealerResult();
+
+		emptyLine();
 		System.out.println("## 최종 승패");
 		System.out.println("딜러: " +
 				dealerResult.getOrDefault(ResultType.WIN, 0L) + "승 " +
@@ -73,5 +79,9 @@ public class OutputView {
 		players.forEach(player ->
 				System.out.println(player.toString() + ": " + result.get(player).getName())
 		);
+	}
+
+	private static void emptyLine() {
+		System.out.println();
 	}
 }
