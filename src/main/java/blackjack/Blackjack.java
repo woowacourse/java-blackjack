@@ -60,7 +60,7 @@ public class Blackjack {
     }
 
     private static boolean shouldProgress(Player player) {
-        return player.isNotBust() && InputView.inputToHitOrStay(player).equals("y");
+        return player.isNotBust() && InputView.inputToHitOrStay(player).isYes();
     }
 
     private static void progress(Dealer dealer, Deck deck) {

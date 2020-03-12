@@ -1,9 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.exception.SymbolException;
-
-import java.util.Arrays;
-
 public enum Symbol {
     ACE(1, "A"),
     TWO(2),

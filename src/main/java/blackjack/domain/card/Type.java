@@ -1,9 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.exception.TypeException;
-
-import java.util.Arrays;
-
 public enum Type {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),

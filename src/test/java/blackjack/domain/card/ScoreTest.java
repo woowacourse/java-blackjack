@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.exception.ScoreException;
+import blackjack.domain.card.exceptions.ScoreException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -13,8 +13,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String inputToHitOrStay(Player player) {
+    public static YesOrNo inputToHitOrStay(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getName());
-        return scanner.nextLine();
+        return YesOrNo.of(scanner.nextLine());
     }
 }

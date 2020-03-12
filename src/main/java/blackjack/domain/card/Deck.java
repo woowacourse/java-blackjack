@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.exception.DeckException;
+import blackjack.domain.card.exceptions.DeckException;
 
 import java.util.ArrayList;
 import java.util.Collections;
