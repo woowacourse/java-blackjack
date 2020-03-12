@@ -14,6 +14,8 @@ public interface User {
 
     List<Card> getCards();
 
+    boolean is(String name);
+
     String getName();
 
     Boolean isWinner(Score dealerScore);

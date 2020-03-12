@@ -5,6 +5,7 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +19,7 @@ class ResultTest {
     @Test
     void of() {
         User dealer = Dealer.create();
-        Player player1 = Player.of("그니");
-        Player player2 = Player.of("무늬");
-
-        List<User> players = Arrays.asList(player1, player2);
+        Players players = Players.of("그니,무늬");
 
         assertThat(Result.of(dealer, players)).isNotNull();
     }
