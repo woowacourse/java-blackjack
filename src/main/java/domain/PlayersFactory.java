@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class PlayersFactory {
+	private PlayersFactory() {
+	}
+
 	private static final String NAME_DELIMITER = ",";
 
 	public static Players create(String userInput) {

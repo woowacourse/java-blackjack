@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultCalculator {
+	private ResultCalculator() {
+	}
+
 	public static Results calculate(Dealer dealer, Players players) {
 		List<Result> results = new ArrayList<>();
 		results.add(calculateByDealer(dealer, players));

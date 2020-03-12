@@ -12,6 +12,9 @@ import domain.Results;
 import domain.User;
 
 public class OutputView {
+	private OutputView() {
+	}
+
 	public static void printFirstDistribute(Dealer dealer, Players players) {
 		String playersName = players.getNames()
 				.stream()
