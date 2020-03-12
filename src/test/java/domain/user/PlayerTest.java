@@ -88,11 +88,25 @@ class PlayerTest {
                 );
     }
 
-    private static Arguments createCardsAndWinningResult(Type player, Type dealer, WinningResult winningResult) {
-        return Arguments.of(
-                new Card(Symbol.HEART, player),
-                new Card(Symbol.SPADE, dealer),
-                winningResult
+    @ParameterizedTest
+    @DisplayName("블랙잭일 경우 승자 확인")
+    @MethodSource("createOtherCardSet")
+    void winIfBlackJack(Card playerCard, Card dealerCard, WinningResult expected) {
+        player.draw(new Card(Symbol.DIAMOND, Type.KING));
+        player.draw(playerCard);
+
+        Dealer dealer = Dealer.appoint();
+        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
+        dealer.draw(dealerCard);
+
+        assertThat(player.win(dealer)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createOtherCardSet() {
+        return Stream.of(
+                createCardsAndWinningResult(Type.ACE, Type.ACE, WinningResult.DRAW),
+                createCardsAndWinningResult(Type.ACE, Type.FIVE, WinningResult.WIN),
+                createCardsAndWinningResult(Type.THREE, Type.ACE, WinningResult.LOSE)
         );
     }
 
@@ -116,6 +130,14 @@ class PlayerTest {
                 Arguments.of(new Card(Symbol.HEART, Type.FIVE), "이름: 승"),
                 Arguments.of(new Card(Symbol.HEART, Type.TWO), "이름: 패"),
                 Arguments.of(new Card(Symbol.HEART, Type.FOUR), "이름: 무승부")
+        );
+    }
+
+    private static Arguments createCardsAndWinningResult(Type player, Type dealer, WinningResult winningResult) {
+        return Arguments.of(
+                new Card(Symbol.HEART, player),
+                new Card(Symbol.SPADE, dealer),
+                winningResult
         );
     }
 }
