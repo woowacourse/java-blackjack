@@ -13,7 +13,7 @@ public class BlackJackRule {
         return score > BLACK_JACK_SCORE;
     }
 
-    public static boolean isOverSixteen(int score) {
-        return score > DEALER_DRAW_BASIS_SCORE;
+    public static boolean isDealerDraw(int score) {
+        return score <= DEALER_DRAW_BASIS_SCORE;
     }
 }
