@@ -1,18 +1,24 @@
 package domain.gamer;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import domain.card.Deck;
+import utils.InputUtils;
 
 public class Gamers {
 	private List<Player> players;
 	private Dealer dealer;
 
-	public Gamers(List<Player> players, Dealer dealer) {
-		this.players = players;
+	public Gamers(String players, Dealer dealer) {
+		this.players = InputUtils.splitAsDelimiter(players)
+			.stream()
+			.map(Player::new)
+			.collect(toList());
 		this.dealer = dealer;
 	}
 

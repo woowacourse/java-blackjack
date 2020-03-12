@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 
 public class GameController {
     public void run() {
-        Gamers gamers = new Gamers(generatePlayers(), new Dealer());
+        Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
         Deck deck = new Deck(CardFactory.getInstance());
 
         gamers.initCard(deck);
@@ -27,13 +27,6 @@ public class GameController {
         addCardAtDealer(gamers, deck);
         OutputView.printCardsResultAndScore(gamers);
         OutputView.printPlayersWinOrLose(gamers.gameResult());
-    }
-
-    private List<Player> generatePlayers() {
-        return InputUtils.splitAsDelimiter(InputView.inputAsPlayerName())
-                .stream()
-                .map(Player::new)
-                .collect(toList());
     }
 
     private void addCardAtPlayers(Gamers gamers, Deck deck) {
