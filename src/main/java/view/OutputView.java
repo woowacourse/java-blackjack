@@ -1,5 +1,7 @@
 package view;
 
+import domain.DealerResult;
+import domain.Result;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -9,6 +11,7 @@ import domain.user.Player;
 import domain.user.Players;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class OutputView {
     public static void printEnterPlayerNames() {
@@ -73,11 +76,27 @@ public class OutputView {
             printPlayerCards(player);
             System.out.println(" - " + "결과 : " + player.getTotalScore());
         }
-
+        System.out.println();
     }
 
     private static void printDealerCard(Dealer dealer) {
         System.out.println();
         printUserCards("딜러", dealer);
+    }
+
+    public static void printResultMessage() {
+        System.out.println("## 최종 승패");
+    }
+
+    public static void printDealerResult(DealerResult result) {
+        System.out.print("딜러 : ");
+        for (Entry<Result, Integer> entry : result.getDealerResult().entrySet()) {
+            System.out.printf("%d%s ", entry.getValue(), entry.getKey());
+        }
+        System.out.println();
+    }
+
+    public static void printPlayerResult(String name, Result result) {
+        System.out.println(name + ": " + result);
     }
 }

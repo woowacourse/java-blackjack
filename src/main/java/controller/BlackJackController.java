@@ -23,9 +23,13 @@ public class BlackJackController {
 
         OutputView.printFinalCardStatus(dealer, players);
 
-//        OutputView.printDealerResult(ResultCalculator.calculateDealerResult(dealer,players));
+        OutputView.printResultMessage();
+        OutputView.printDealerResult(ResultCalculator.calculateDealerResult(dealer, players));
         for (Player player : players.getPlayers()) {
-            ResultCalculator.calculatePlayerResult(dealer, player);
+            OutputView.printPlayerResult(
+                player.getName(),
+                ResultCalculator.calculatePlayerResult(dealer, player)
+            );
         }
     }
 

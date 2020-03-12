@@ -22,6 +22,10 @@ public class DealerResult {
         }
     }
 
+    public Map<Result, Integer> getDealerResult() {
+        return Collections.unmodifiableMap(dealerResult);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
