@@ -51,11 +51,24 @@ public class CardsTest {
 
 	@Test
 	void getAceCount_When_One_Ace_Card_Return_One() {
-		assertThat(cards.getAceCount()).isEqualTo(1);
+		assertThat(cards.hasAce()).isTrue();
 	}
 
 	@Test
-	void getPoint_When_One_Ace_Card_Return_11() {
-		assertThat(cards.getPoint()).isEqualTo(11);
+	void getPoint_When_One_Ace_Card_Return_1() {
+		assertThat(cards.getScore()).isEqualTo(1);
+	}
+
+	@Test
+	void hasInitialSize_When_Two_Cards_Return_True() {
+		cards.add(card);
+		assertThat(cards.hasInitialSize()).isTrue();
+	}
+
+	@Test
+	void hasInitialSize_When_Three_Cards_Return_False() {
+		cards.add(card);
+		cards.add(card);
+		assertThat(cards.hasInitialSize()).isFalse();
 	}
 }

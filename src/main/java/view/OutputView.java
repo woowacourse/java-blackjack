@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.result.Result;
 import domain.result.ResultType;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.Players;
 
 import java.util.Map;
@@ -28,15 +29,17 @@ public class OutputView {
 
 	public static void printInitialStatus(Dealer dealer, Players players) {
 		System.out.println("딜러: " + dealer.openCard().toString());
-		players.forEach(player -> {
-			System.out.println(
-					player.toString() +
-							"카드: " +
-							player.openAllCards().toList().stream()
-									.map(Card::toString)
-									.collect(joining(DELIMITER))
-			);
-		});
+		players.forEach(OutputView::printCardsStatusOf);
+	}
+
+	public static void printCardsStatusOf(Player player) {
+		System.out.println(
+				player.toString() +
+						"카드: " +
+						player.openAllCards().toList().stream()
+								.map(Card::toString)
+								.collect(joining(DELIMITER))
+		);
 	}
 
 	public static void printResult(Result result, Players players) {

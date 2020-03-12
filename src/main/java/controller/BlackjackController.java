@@ -1,11 +1,15 @@
 package controller;
 
-import domain.ScoreType;
+import domain.PlayerIntentionType;
+import domain.Score;
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.Players;
 import service.BlackjackService;
 
+import static view.InputView.*;
 import static view.OutputView.*;
 
 /**
@@ -21,12 +25,39 @@ public class BlackjackController {
 		BlackjackService.giveInitialCards(deck, dealer, players);
 		printInitialDistribution(players);
 		printInitialStatus(dealer, players);
-		if (isBlackjack(dealer)) {
+		if (isBlackjack(dealer)) { // TODO: 2020/03/12 (메서드로 빼서 혹은 return 줘서??) 이 경우에는 바로 게임 종료되도록
 			printResult(BlackjackService.createResultWhenDealerBlackjack(players), players);
+			return;
+		}
+
+		players.forEach(player -> {
+			while (canDrawMore(player) && wantDraw(player)) {
+				BlackjackService.addCard(player, deck);
+				printCardsStatusOf(player);
+			}
+		});
+
+		while (hasToDraw(dealer)) {
+			BlackjackService.addCard(dealer, deck);
 		}
 	}
 
+	private static boolean hasToDraw(Dealer dealer) {
+		Cards dealerCards = dealer.openAllCards();
+		return Score.of(dealerCards).isDealerDraw();
+	}
+
+	private static boolean wantDraw(Player player) {
+		return PlayerIntentionType.of(inputPlayerIntention(player)).equals(PlayerIntentionType.YES);
+	}
+
+	private static boolean canDrawMore(Player player) {
+		Cards playerCards = player.openAllCards();
+		return Score.of(playerCards).isNotBurst();
+	}
+
 	private static boolean isBlackjack(Dealer dealer) {
-		return ScoreType.BLACKJACK.equals(ScoreType.of(dealer.openAllCards()));
+		Cards dealerCards = dealer.openAllCards();
+		return dealerCards.hasInitialSize() && Score.of(dealerCards).isBlackjackScore();
 	}
 }

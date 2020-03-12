@@ -1,7 +1,5 @@
 package domain.user;
 
-import org.junit.jupiter.api.Test;
-
 /**
  * 클래스 이름 : .java
  *

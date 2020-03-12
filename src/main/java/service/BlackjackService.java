@@ -1,12 +1,14 @@
 package service;
 
-import domain.ScoreType;
+import domain.Score;
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.Result;
 import domain.result.ResultType;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import domain.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,11 @@ public class BlackjackService {
 	}
 
 	private static boolean isBlackjack(Player player) {
-		return ScoreType.BLACKJACK.equals(ScoreType.of(player.openAllCards()));
+		Cards playerCards = player.openAllCards();
+		return Score.of(playerCards).isBlackjackScore() && playerCards.hasInitialSize();
+	}
+
+	public static void addCard(User user, Deck deck) {
+		user.addCard(deck.pop());
 	}
 }

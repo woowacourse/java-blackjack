@@ -29,6 +29,6 @@ public class CardTest {
 	@Test
 	void getPoint() {
 		Card card = new Card(Symbol.ACE, Type.DIAMOND);
-		assertThat(card.getPoint()).isEqualTo(11);
+		assertThat(card.getScore()).isEqualTo(1);
 	}
 }
