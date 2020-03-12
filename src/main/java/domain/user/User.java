@@ -52,6 +52,11 @@ public abstract class User {
 
     public abstract boolean isAvailableToDraw();
 
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
     public String getName() {
         return name;
     }

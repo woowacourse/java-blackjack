@@ -2,9 +2,14 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.deck.Card;
 import domain.deck.Symbol;
@@ -78,5 +83,21 @@ class UserTest {
         user.draw(new Card(Symbol.DIAMOND, Type.SIX));
 
         assertThat(user.isBlackJackPoint()).isTrue();
+    }
+
+    @ParameterizedTest
+    @DisplayName("ACE를 가지고 있는지 확인")
+    @MethodSource("createCard")
+    void hasAce(Card card, boolean expected) {
+        user.draw(card);
+
+        assertThat(user.hasAce()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createCard() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), true),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), false)
+        );
     }
 }
