@@ -16,7 +16,10 @@ public class Dealer extends Player {
     }
 
     public boolean isWin(Player opponentPlayer) {
-        return isNotBust() && (opponentPlayer.isBust() || getScore() > opponentPlayer.getScore());
+        boolean userBust = opponentPlayer.isBust();
+        boolean dealerWin = isNotBust() && (opponentPlayer.isBust() || getScore() > opponentPlayer.getScore());
+
+        return userBust || dealerWin;
     }
 
     public String getFirstCardInfo() {
