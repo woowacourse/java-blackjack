@@ -5,7 +5,7 @@ import java.util.Objects;
 import domain.ParticipantCards;
 import domain.card.CardDeck;
 
-public class Participant implements ParticipantInterface {
+public class Player implements PlayerInterface {
     public static final int INITIAL_CARD_NUMBER = 2;
 
     protected String name;

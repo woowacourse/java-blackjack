@@ -40,12 +40,7 @@ public class BlackJackGameController {
         }
         dealerHit(dealer, cardDeck);
 
-        OutputView.printFinalScore(dealer);
-
-        int dealerScore = dealer.calculateScore();
-        for (User user : users) {
-            OutputView.printFinalScore(user);
-        }
+        OutputView.printFinalScoreForAllParticipants(dealer, users);
 
         Map<String, Result> userResultMap = new HashMap<>();
         for (User user : users) {
