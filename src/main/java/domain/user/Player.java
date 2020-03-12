@@ -20,6 +20,6 @@ public class Player extends User {
 
     @Override
     public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack();
+        return !isBust() && !isBlackJack() && !isBlackJackPoint();
     }
 }

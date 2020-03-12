@@ -9,6 +9,7 @@ public abstract class User {
 
     private static final String EMPTY = "";
     private static final int BLACK_JACK = 21;
+    private static final int BLACK_JACK_SIZE = 2;
 
     protected List<Card> cards;
     protected final String name;
@@ -42,6 +43,10 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_SIZE && isBlackJackPoint();
+    }
+
+    public boolean isBlackJackPoint() {
         return calculatePoint() == BLACK_JACK;
     }
 

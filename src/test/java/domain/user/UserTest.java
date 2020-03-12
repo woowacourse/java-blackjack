@@ -62,11 +62,21 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("카드 포인트가 21인지 확인")
+    @DisplayName("카드가 2장일 때 포인트가 21인지 확인")
     void isBlackJack() {
         user.draw(new Card(Symbol.CLOVER, Type.ACE));
         user.draw(new Card(Symbol.DIAMOND, Type.KING));
 
         assertThat(user.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 포인트가 21인지 확인")
+    void isBlackJackPoint() {
+        user.draw(new Card(Symbol.DIAMOND, Type.KING));
+        user.draw(new Card(Symbol.DIAMOND, Type.FIVE));
+        user.draw(new Card(Symbol.DIAMOND, Type.SIX));
+
+        assertThat(user.isBlackJackPoint()).isTrue();
     }
 }

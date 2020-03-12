@@ -52,7 +52,8 @@ class DealerTest {
     private static Stream<Arguments> createOption() {
         return Stream.of(
                 Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), true),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false)
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), false)
         );
    }
 }

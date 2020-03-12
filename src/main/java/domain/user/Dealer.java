@@ -20,6 +20,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack() && calculatePoint() < PIVOT;
+        return !isBust() && !isBlackJack() && !isBlackJackPoint() && calculatePoint() < PIVOT;
     }
 }
