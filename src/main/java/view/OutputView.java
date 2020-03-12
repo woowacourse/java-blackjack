@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
@@ -16,19 +16,28 @@ public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
 
 	public static void printReceivedCards(List<Player> players, Dealer dealer) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(dealer.getName())
-			.append("와 ");
-		for (Player player : players) {
-			sb.append(player.getName());
-		}
-		sb.append("에게 2장의 카드를 나누었습니다.");
-		System.out.println(sb);
+		System.out.println();
+
+		printGiving(players, dealer);
 		printCards(dealer);
 		for (Player player : players) {
 			printCards(player);
 		}
+
 		System.out.println();
+	}
+
+	private static void printGiving(List<Player> players, Dealer dealer) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(dealer.getName())
+			.append("와 ");
+		sb.append(players.stream()
+			.map(Player::getName)
+			.collect(Collectors.joining(", ")));
+		sb.append("에게 2장의 카드를 나누었습니다.");
+		sb.append(NEW_LINE);
+		System.out.println(sb);
 	}
 
 	public static void printCards(Participant user) {
@@ -43,26 +52,16 @@ public class OutputView {
 		System.out.println(sb);
 	}
 
-	public static void printDealerCards(Dealer dealer) {
+	public static void printDealerCards() {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-		printCards(dealer);
 	}
 
-	public static void printDealerResult(Map<Result, Long> dealerResult) {
+	public static void printDealerResult(TreeMap<Result, Integer> dealerResult) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
 		sb.append("딜러: ");
-		if (Objects.nonNull(dealerResult.get(Result.WIN))) {
-			sb.append(dealerResult.get(Result.WIN))
-				.append("승 ");
-		}
-		if (Objects.nonNull(dealerResult.get(Result.DRAW))) {
-			sb.append(dealerResult.get(Result.DRAW))
-				.append("무 ");
-		}
-		if (Objects.nonNull(dealerResult.get(Result.LOSE))) {
-			sb.append(dealerResult.get(Result.LOSE))
-				.append("패");
+		for (Result result : dealerResult.keySet()) {
+			sb.append(dealerResult.get(result)).append(result.getResult());
 		}
 		System.out.println(sb);
 	}
