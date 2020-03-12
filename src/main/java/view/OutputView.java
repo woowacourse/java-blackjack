@@ -56,7 +56,7 @@ public class OutputView {
     private static void printPlayerFinalResult(Map<Player, Outcome> playersResult) {
         for (Player player : playersResult.keySet()) {
             Outcome outcome = playersResult.get(player);
-            System.out.printf("%: %", player.getName(), outcome.getName());
+            System.out.printf("%s: %s", player.getName(), outcome.getName());
         }
     }
 
