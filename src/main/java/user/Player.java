@@ -4,12 +4,11 @@ import card.Deck;
 
 import java.util.Objects;
 
-public class Player implements User {
+public class Player extends User {
     private static final String YES = "y";
     private static final String NO = "n";
 
     private PlayerName name;
-    private Hands hands;
 
     public Player(String name, Deck deck) {
         this.name = new PlayerName(name);
@@ -50,15 +49,5 @@ public class Player implements User {
     @Override
     public void hit(Deck deck) {
         hands.draw(deck);
-    }
-
-    @Override
-    public boolean checkBurst() {
-        return hands.isBurst();
-    }
-
-    @Override
-    public int handSize() {
-        return hands.size();
     }
 }
