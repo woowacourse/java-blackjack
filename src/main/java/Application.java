@@ -1,9 +1,9 @@
 import domain.card.CardDeck;
 import domain.game.WhetherAddCard;
 import domain.user.Dealer;
-import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
+import domain.user.Player;
 import factory.CardFactory;
 import factory.UserFactory;
 import util.CardDistributor;
@@ -71,7 +71,7 @@ public class Application {
     }
 
     private static void printResults(final Dealer dealer, final Users users) {
-        OutputView.printUsersResult(dealer, users);
+        OutputView.printPlayersResult(dealer, users);
         OutputView.printLastResult(ResultGenerator.create(dealer, users));
     }
 }

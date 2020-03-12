@@ -46,7 +46,7 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printUsersResult(final Dealer dealer, final Users users) {
+    public static void printPlayersResult(final Dealer dealer, final Users users) {
         System.out.println();
         printPlayerResult(dealer);
         users.forEach(OutputView::printPlayerResult);
