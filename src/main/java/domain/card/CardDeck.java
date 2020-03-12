@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class CardDeck {
+	private static final int ONE_COUNT = 1;
 	private final Queue<Card> cards;
 
 	public CardDeck() {
@@ -25,6 +26,6 @@ public class CardDeck {
 	}
 
 	public List<Card> draw() {
-		return draw(1);
+		return draw(ONE_COUNT);
 	}
 }
