@@ -1,18 +1,15 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.rule.CardCalculator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Gamer {
 
-    protected List<Card> cards = new ArrayList<>();
+    protected Hand hand = new Hand();
 
-    public void add(Card card) {
-        cards.add(card);
+    public void draw(Card card) {
+        hand.add(card);
     }
 
     public boolean isBusted() {
@@ -20,14 +17,12 @@ public abstract class Gamer {
     }
 
     public int calculateSum() {
-        return CardCalculator.calculate(cards);
+        return hand.calculateSum();
     }
 
     public abstract String getName();
 
     public String getCardStatus() {
-        return cards.stream()
-                .map(Card::toString)
-                .collect(Collectors.joining(", "));
+        return hand.getCardStatus();
     }
 }

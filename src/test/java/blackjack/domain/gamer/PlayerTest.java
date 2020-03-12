@@ -36,7 +36,7 @@ class PlayerTest {
     @DisplayName("bust되었는지 확인")
     void isBusted(List<Card> cards, boolean isBusted) {
         for (Card card : cards) {
-            player.add(card);
+            player.draw(card);
         }
 
         assertThat(player.isBusted()).isEqualTo(isBusted);

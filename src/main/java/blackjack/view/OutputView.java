@@ -3,12 +3,11 @@ package blackjack.view;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.result.GamersResult;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -19,32 +18,23 @@ public class OutputView {
     private static final String RESULT_MESSAGE = "## 최종 승패";
     private static final String GAMERS_RESULT_FORMAT = "%s : %s";
 
-    public static void printInitialCards(Dealer dealer, List<Player> players) {
-        String names = parseName(players);
+    public static void printInitialCards(Dealer dealer, Players players) {
         System.out.print(System.lineSeparator());
-        System.out.println(String.format(INITIAL_CARD_FORMAT, dealer.getName(), names));
-        System.out.println(String.format(CARD_STATUS_FORMAT, dealer.getName(), dealer.getInitialCardStatus()));
-        for (Player player : players) {
-            printPlayerCard(player);
-        }
+        System.out.println(String.format(INITIAL_CARD_FORMAT, dealer.getName(), players.getNames()));
+        printInitialHand(dealer, players);
         System.out.print(System.lineSeparator());
     }
 
-    public static void printPlayerCard(Player player) {
+    public static void printPlayerHand(Player player) {
         System.out.println(String.format(CARD_STATUS_FORMAT, player.getName(), player.getCardStatus()));
     }
 
-    private static String parseName(List<Player> players) {
-        List<String> names = players.stream().map(Player::getName).collect(Collectors.toList());
-        return String.join(",", names);
-    }
-
-    public static void printDealerDrewACard() {
+    public static void printDealerDrewCard() {
         System.out.print(System.lineSeparator());
         System.out.println(DEALER_DREW_A_CARD_MESSAGE);
     }
 
-    public static void printGamerScore(Dealer dealer, List<Player> players) {
+    public static void printGamerScore(Dealer dealer, Players players) {
         System.out.println(System.lineSeparator());
         printCardResult(dealer);
         for (Player player : players) {
@@ -56,15 +46,35 @@ public class OutputView {
         System.out.println(String.format(CARD_RESULT_FORMAT, gamer.getName(), gamer.getCardStatus(), gamer.calculateSum()));
     }
 
-    public static void printResult(GamersResult gamersResult) {
+    public static void printGamersResult(GamersResult gamersResult) {
         System.out.print(System.lineSeparator());
         System.out.println(RESULT_MESSAGE);
         printDealerResult(gamersResult.getDealerResult());
         printPlayersResult(gamersResult.getPlayersResult());
+    }
 
+    private static void printInitialHand(Dealer dealer, Players players) {
+        printDealerInitialHand(dealer);
+        for (Player player : players) {
+            printPlayerHand(player);
+        }
+    }
+
+    private static void printDealerInitialHand(Dealer dealer) {
+        System.out.println(String.format(CARD_STATUS_FORMAT, dealer.getName(), dealer.getInitialCardStatus()));
     }
 
     private static void printDealerResult(Map<BlackJackResult, Integer> dealerResult) {
+        System.out.println(String.format(GAMERS_RESULT_FORMAT, "딜러", makeDealerResult(dealerResult)));
+    }
+
+    private static void printPlayersResult(Map<Player, BlackJackResult> playersResult) {
+        for (Map.Entry<Player, BlackJackResult> entry : playersResult.entrySet()) {
+            System.out.println(String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue().getKoreanName()));
+        }
+    }
+
+    private static String makeDealerResult(Map<BlackJackResult, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<BlackJackResult, Integer> entry : dealerResult.entrySet()) {
             if (entry.getValue() == 0) {
@@ -72,13 +82,7 @@ public class OutputView {
             }
             stringBuilder.append(entry.getValue() + entry.getKey().getKoreanName());
         }
-        System.out.println(String.format(GAMERS_RESULT_FORMAT, "딜러", stringBuilder.toString()));
-    }
-
-    private static void printPlayersResult(Map<Player, BlackJackResult> playersResult) {
-        for (Map.Entry<Player, BlackJackResult> entry : playersResult.entrySet()) {
-            System.out.println(String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue().getKoreanName()));
-        }
+        return stringBuilder.toString();
     }
 }
 

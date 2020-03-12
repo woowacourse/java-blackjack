@@ -4,79 +4,72 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.domain.result.GamersResult;
 import blackjack.domain.result.PlayerResultMatcher;
 import blackjack.domain.rule.PlayerAnswer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class BlackJackApplication {
+
+    private static final int INITIAL_HAND_COUNT = 2;
 
     public static void main(String[] args) {
         Deck deck = new Deck(CardFactory.generate());
         Dealer dealer = new Dealer();
-        List<Player> players = initializePlayers(InputView.askPlayerNames());
+        Players players = Players.ofComma(InputView.askPlayerNames());
 
-        drawInitialCards(dealer, players, deck);
+        initializeHand(dealer, players, deck);
         OutputView.printInitialCards(dealer, players);
+
         drawMoreCard(dealer, players, deck);
+        OutputView.printGamerScore(dealer, players);
 
         GamersResult gamersResult = PlayerResultMatcher.report(dealer, players);
-        OutputView.printGamerScore(dealer, players);
-        OutputView.printResult(gamersResult);
+        OutputView.printGamersResult(gamersResult);
     }
 
-    private static void drawMoreCard(Dealer dealer, List<Player> players, Deck deck) {
+    private static void initializeHand(Dealer dealer, Players players, Deck deck) {
+        for (int i = 0; i < INITIAL_HAND_COUNT; i++) {
+            drawCard(dealer, players, deck);
+        }
+    }
+
+    private static void drawCard(Dealer dealer, Players players, Deck deck) {
+        dealer.draw(deck.pick());
+        for (Player player : players) {
+            player.draw(deck.pick());
+        }
+    }
+
+    private static void drawMoreCard(Dealer dealer, Players players, Deck deck) {
         hitOrStandForPlayers(players, deck);
         drawCardForDealer(dealer, deck);
     }
 
-    private static void drawCardForDealer(Dealer dealer, Deck deck) {
-        while(dealer.shouldDrawCard()) {
-            dealer.add(deck.pick());
-            OutputView.printDealerDrewACard();
-        }
-    }
-
-    private static void hitOrStandForPlayers(List<Player> players, Deck deck) {
+    private static void hitOrStandForPlayers(Players players, Deck deck) {
         for (Player player : players) {
             hitOrStand(player, deck);
         }
     }
 
+    private static void drawCardForDealer(Dealer dealer, Deck deck) {
+        while (dealer.shouldDrawCard()) {
+            dealer.draw(deck.pick());
+            OutputView.printDealerDrewCard();
+        }
+    }
+
     private static void hitOrStand(Player player, Deck deck) {
-        while(!player.isBusted()) {
-            PlayerAnswer answer = PlayerAnswer.of(InputView.askHitOrStand(player.getName()));
-            if (answer.isYes()) {
-                player.add(deck.pick());
-            }
-            OutputView.printPlayerCard(player);
-            if (!answer.isYes()) {
-                break;
-            }
+        while (!player.isBusted() && wantMoreCard(player)) {
+            player.draw(deck.pick());
+            OutputView.printPlayerHand(player);
         }
     }
 
-    private static void drawInitialCards(Dealer dealer, List<Player> players, Deck deck) {
-        for (int i = 0; i < 2; i++) {
-            drawCards(dealer, players, deck);
-        }
-    }
-
-    private static void drawCards(Dealer dealer, List<Player> players, Deck deck) {
-        dealer.add(deck.pick());
-        for (Player player : players) {
-            player.add(deck.pick());
-        }
-    }
-
-    private static List<Player> initializePlayers(String names) {
-        return Arrays.stream(names.split(","))
-                .map(Player::new)
-                .collect(Collectors.toList());
+    private static boolean wantMoreCard(Player player) {
+        PlayerAnswer answer = PlayerAnswer.of(InputView.askHitOrStand(player.getName()));
+        return answer.isYes();
     }
 }

@@ -16,6 +16,6 @@ public class Dealer extends Gamer {
     }
 
     public String getInitialCardStatus() {
-        return cards.get(FIRST_CARD_INDEX).toString();
+        return hand.getHand().get(FIRST_CARD_INDEX).toString();
     }
 }

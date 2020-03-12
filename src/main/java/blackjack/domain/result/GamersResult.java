@@ -3,7 +3,6 @@ package blackjack.domain.result;
 import blackjack.domain.gamer.Player;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class GamersResult {

@@ -2,22 +2,23 @@ package blackjack.domain.result;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerResultMatcher {
 
-    public static GamersResult report(Dealer dealer, List<Player> players) {
+    public static GamersResult report(Dealer dealer, Players players) {
         EnumMap<BlackJackResult, Integer> dealerResult = new EnumMap<>(BlackJackResult.class);
-        Arrays.stream(BlackJackResult.values())
-                .forEach(blackJackResult -> dealerResult.put(blackJackResult, 0));
-
         Map<Player, BlackJackResult> playersResult = new HashMap<>();
 
         for (Player player : players) {
             BlackJackResult result = match(dealer, player);
             playersResult.put(player, result);
             dealerResult.computeIfPresent(result.reversed(), (key, value) -> ++value);
+            dealerResult.putIfAbsent(result.reversed(), 1);
         }
 
         return new GamersResult(dealerResult, playersResult);

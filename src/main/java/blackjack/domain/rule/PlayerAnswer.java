@@ -1,7 +1,5 @@
 package blackjack.domain.rule;
 
-import java.util.Arrays;
-
 public enum PlayerAnswer {
 
     Y,
