@@ -1,7 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.result.WinOrLose;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
@@ -97,10 +98,11 @@ public class OutputView {
     public static void printResult(Result result) {
         System.out.println(result.getDealerResult());
 
-        Map<User, Boolean> playerResults = result.getPlayerResults();
+        Map<User, WinOrLose> playerResults = result.getPlayerResults();
         Set<User> players = playerResults.keySet();
         for (User player : players) {
-            System.out.printf("%s : %s" + NEW_LINE, player.getName(), playerResults.get(player));
+            WinOrLose winOrLose = playerResults.get(player);
+            System.out.printf("%s : %s" + NEW_LINE, player.getName(), winOrLose.getName());
         }
     }
 }

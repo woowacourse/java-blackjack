@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
+import blackjack.domain.result.WinOrLose;
 import blackjack.domain.user.exception.PlayersException;
 
 import java.util.*;
@@ -48,11 +49,12 @@ public class Players {
         }
     }
 
-    public Map<User, Boolean> generateResult(User dealer) {
-        Map<User, Boolean> playerResults = new HashMap<>();
+    public Map<User, WinOrLose> generateResult(User dealer) {
+        Map<User, WinOrLose> playerResults = new HashMap<>();
         Score dealerScore = dealer.calculateScore();
         for (User player : players) {
-            playerResults.put(player, player.isWinner(dealerScore));
+            boolean isWinner = player.isWinner(dealerScore);
+            playerResults.put(player, WinOrLose.of(isWinner));
         }
 
         return playerResults;

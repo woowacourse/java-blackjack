@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
@@ -6,7 +6,7 @@ import blackjack.domain.user.User;
 import java.util.Map;
 
 public class Result {
-    private final Map<User, Boolean> playerResults;
+    private final Map<User, WinOrLose> playerResults;
 
     private Result(User dealer, Players players) {
         playerResults = players.generateResult(dealer);
@@ -16,7 +16,7 @@ public class Result {
         return new Result(dealer, players);
     }
 
-    public Map<User, Boolean> getPlayerResults() {
+    public Map<User, WinOrLose> getPlayerResults() {
         return playerResults;
     }
 
@@ -26,7 +26,7 @@ public class Result {
         int all = playerResults.size();
 
         int dealerLoseCount = (int) playerResults.values().stream()
-                .filter(isWinner -> isWinner)
+                .filter(winOrLose -> winOrLose == WinOrLose.WIN)
                 .count();
         int dealerWinCount = all - dealerLoseCount;
 
