@@ -3,9 +3,9 @@ package domain.participant;
 import domain.ParticipantCards;
 import domain.result.Result;
 
-public class User extends Participant {
+public class Player extends Participant {
 
-    public User(String name) {
+    public Player(String name) {
         validateName(name);
         this.name = name;
         this.cards = new ParticipantCards();
@@ -23,7 +23,7 @@ public class User extends Participant {
         if (dealerScore > 21 && userScore > 21) {
             return Result.패;
         }
-        if (dealerScore > 21 && userScore <= 21) {
+        if (dealerScore > 21) {
             return Result.승;
         }
         if (userScore > 21) {

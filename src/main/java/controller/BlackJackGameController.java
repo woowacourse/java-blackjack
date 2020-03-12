@@ -5,7 +5,7 @@ import java.util.Map;
 import domain.Players;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import domain.participant.User;
+import domain.participant.Player;
 import domain.result.Result;
 import utils.InputUtils;
 import view.InputView;
@@ -13,38 +13,53 @@ import view.OutputView;
 
 public class BlackJackGameController {
 
-    public static void run() {
-        String names = InputView.inputUserNames();
-        Players participants = new Players(names);
-        OutputView.initialSetting(participants);
+    private static final int DEALER_STANDARD_SCORE = 16;
 
+    public static void run() {
+        Players players = setPlayers();
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
+
         dealer.firstDraw(cardDeck);
-        participants.firstDraw(cardDeck);
+        players.firstDraw(cardDeck);
+        OutputView.printInitialDrawInstruction(players);
+        OutputView.printDealerInitialDraw(dealer);
+        OutputView.printCardStatusForAllPlayers(players);
 
-        OutputView.printDealerFirstDraw(dealer);
-        OutputView.printCardStatusForAllParticipants(participants);
-
-        for (User user : participants.getPlayers()) {
-            while (InputUtils.isHit(InputView.inputIsHit(user))) {
-                user.receive(cardDeck);
-                OutputView.printCardStatus(user);
-            }
+        for (Player player : players.getPlayers()) {
+            performPlayersHit(cardDeck, player);
         }
-        dealerHit(dealer, cardDeck);
-        OutputView.printFinalScoreForAllParticipants(dealer, participants);
+        performDealerHit(dealer, cardDeck);
 
-        Map<String, Result> userResultMap = participants.putResultIntoMap(dealer);
-        OutputView.printFinalResult();
-        OutputView.printDealerResult(userResultMap);
-        for (Map.Entry<String, Result> userResultEntry : userResultMap.entrySet()) {
-            OutputView.printUserResult(userResultEntry);
+        OutputView.printFinalScoreBoard(dealer, players);
+        Map<String, Result> userResultMap = players.putResultIntoMap(dealer);
+        OutputView.printFinalResult(userResultMap);
+    }
+
+    private static void performPlayersHit(CardDeck cardDeck, Player player) {
+        try {
+            while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
+                player.receive(cardDeck);
+                OutputView.printCardStatus(player);
+            }
+        } catch (Exception e) {
+            OutputView.printErrorMessage(e.getMessage());
+            performPlayersHit(cardDeck, player);
         }
     }
 
-    static void dealerHit(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.calculateScore() <= 16) {
+    private static Players setPlayers() {
+        try {
+            String names = InputView.inputUserNames();
+            return new Players(names);
+        } catch (Exception e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return setPlayers();
+        }
+    }
+
+    static void performDealerHit(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.calculateScore() <= DEALER_STANDARD_SCORE) {
             OutputView.printDealerAdditionalCard();
             dealer.receive(cardDeck);
         }

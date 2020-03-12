@@ -13,9 +13,7 @@ class BlackJackGameControllerTest {
     void dealerHit() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
-
-        BlackJackGameController.dealerHit(dealer, cardDeck);
-
+        BlackJackGameController.performDealerHit(dealer, cardDeck);
         assertThat(dealer.calculateScore() > 16).isTrue();
     }
 }

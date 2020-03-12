@@ -8,7 +8,7 @@ public class Dealer extends Participant {
         this.cards = new ParticipantCards();
     }
 
-    public String toStringOneCard() {
+    public String toStringFirstDraw() {
         return name + " : " + cards.toStringOneCard();
     }
 }

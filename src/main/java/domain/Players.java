@@ -9,19 +9,19 @@ import java.util.stream.Collectors;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.User;
+import domain.participant.Player;
 import domain.result.Result;
 
 public class Players {
-    private List<User> players;
+    private List<Player> players;
 
     public Players(String names) {
-        List<User> users = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
         String[] userNames = names.split(",");
         for (String name : userNames) {
-            users.add(new User(name));
+            players.add(new Player(name));
         }
-        this.players = users;
+        this.players = players;
     }
 
     public List<String> getUserNames() {
@@ -29,21 +29,20 @@ public class Players {
     }
 
     public void firstDraw(CardDeck cardDeck) {
-        for (User user : players) {
-            user.firstDraw(cardDeck);
+        for (Player player : players) {
+            player.firstDraw(cardDeck);
         }
     }
 
     public Map<String, Result> putResultIntoMap(Dealer dealer) {
         Map<String, Result> userResultMap = new HashMap<>();
-
-        for (User user : players) {
-            userResultMap.put(user.getName(), user.beatDealer(dealer));
+        for (Player player : players) {
+            userResultMap.put(player.getName(), player.beatDealer(dealer));
         }
         return userResultMap;
     }
 
-    public List<User> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 

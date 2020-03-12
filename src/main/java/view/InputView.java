@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-import domain.participant.User;
+import domain.participant.Player;
 
 public class InputView {
     private static Scanner scanner = new Scanner(System.in);
@@ -12,8 +12,8 @@ public class InputView {
         return scanner.next();
     }
 
-    public static String inputIsHit(User user) {
-        System.out.println(String.format("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", user.getName()));
+    public static String inputHitOrNot(Player player) {
+        System.out.println(String.format("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
         return scanner.next();
     }
 }

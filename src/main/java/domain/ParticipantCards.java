@@ -18,18 +18,6 @@ public class ParticipantCards {
         cards.add(card);
     }
 
-    public String toStringOneCard() {
-        return cards.get(FIRST_CARD_INDEX).toString();
-    }
-
-    @Override
-    public String toString() {
-        List<String> cardNames = cards.stream()
-            .map(Card::toString)
-            .collect(Collectors.toList());
-        return String.join(DELIMITER, cardNames);
-    }
-
     public int calculateScore() {
         int score = 0;
         boolean containAce = false;
@@ -47,5 +35,17 @@ public class ParticipantCards {
             return score + ACE_BONUS;
         }
         return score;
+    }
+
+    public String toStringOneCard() {
+        return cards.get(FIRST_CARD_INDEX).toString();
+    }
+
+    @Override
+    public String toString() {
+        List<String> cardNames = cards.stream()
+            .map(Card::toString)
+            .collect(Collectors.toList());
+        return String.join(DELIMITER, cardNames);
     }
 }

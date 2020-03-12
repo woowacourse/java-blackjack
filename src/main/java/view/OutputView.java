@@ -1,37 +1,35 @@
 package view;
 
-import java.util.List;
 import java.util.Map;
 
 import domain.Players;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.User;
+import domain.participant.Player;
 import domain.result.Result;
 
 public class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public static void initialSetting(Players users) {
-        StringBuilder settingInstruction = new StringBuilder();
-        List<String> names = users.getUserNames();
-        String userNames = String.join(DELIMITER, names);
-        settingInstruction.append("딜러와 ").append(userNames).append("에게 2장의 카드를 나누었습니다.");
-        System.out.println(settingInstruction);
+    public static void printInitialDrawInstruction(Players users) {
+        StringBuilder drawInstruction = new StringBuilder();
+        String userNames = String.join(DELIMITER, users.getUserNames());
+        drawInstruction.append("\n딜러와 ").append(userNames).append("에게 2장의 카드를 나누었습니다.");
+        System.out.println(drawInstruction);
     }
 
-    public static void printDealerFirstDraw(Dealer dealer) {
-        System.out.println(dealer.toStringOneCard());
+    public static void printDealerInitialDraw(Dealer dealer) {
+        System.out.println(dealer.toStringFirstDraw());
     }
 
-    public static void printCardStatus(User user) {
-        System.out.println(user.toString());
+    public static void printCardStatus(Player player) {
+        System.out.println(player.toString());
     }
 
-    public static void printCardStatusForAllParticipants(Players participants) {
-        for (User user : participants.getPlayers()) {
-            printCardStatus(user);
+    public static void printCardStatusForAllPlayers(Players players) {
+        for (Player player : players.getPlayers()) {
+            printCardStatus(player);
         }
         System.out.println();
     }
@@ -41,19 +39,20 @@ public class OutputView {
     }
 
     private static void printFinalScore(Participant participant) {
-        System.out.println(participant.toString() + " -  결과 : " + participant.calculateScore());
+        System.out.println(participant.toString() + " - 결과 : " + participant.calculateScore());
     }
 
-    public static void printFinalScoreForAllParticipants(Dealer dealer, Players users) {
+    public static void printFinalScoreBoard(Dealer dealer, Players players) {
         printFinalScore(dealer);
-        for (User user : users.getPlayers()) {
-            printFinalScore(user);
+        for (Player player : players.getPlayers()) {
+            printFinalScore(player);
         }
     }
 
-    public static void printFinalResult() {
+    public static void printFinalResult(Map<String, Result> userResultMap) {
         System.out.println("\n## 최종 승패");
-
+        printDealerResult(userResultMap);
+        printPlayersResult(userResultMap);
     }
 
     public static void printDealerResult(Map<String, Result> userResultMap) {
@@ -72,14 +71,17 @@ public class OutputView {
                 dealerWin++;
             }
         }
-        sb.append(dealerWin).append("승 ");
-        sb.append(dealerDraw).append("무 ");
-        sb.append(dealerLose).append("패");
+        sb.append(dealerWin).append("승 ").append(dealerDraw).append("무 ").append(dealerLose).append("패");
         System.out.println(sb);
     }
 
-    public static void printUserResult(Map.Entry<String, Result> userResultEntry) {
-        System.out.println(userResultEntry.getKey() + ": " + userResultEntry.getValue());
+    public static void printPlayersResult(Map<String, Result> userResultMap) {
+        for (String playerName : userResultMap.keySet()) {
+            System.out.println(playerName + ": " + userResultMap.get(playerName));
+        }
+    }
 
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
     }
 }

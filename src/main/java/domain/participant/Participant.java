@@ -17,16 +17,16 @@ public class Participant implements ParticipantInterface {
         }
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public void receive(CardDeck cardDeck) {
         cards.add(cardDeck.draw());
     }
 
     public int calculateScore() {
         return cards.calculateScore();
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     @Override
@@ -40,8 +40,8 @@ public class Participant implements ParticipantInterface {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        User user = (User)o;
-        return Objects.equals(name, user.name);
+        Player player = (Player)o;
+        return Objects.equals(name, player.name);
     }
     @Override
     public int hashCode() {
