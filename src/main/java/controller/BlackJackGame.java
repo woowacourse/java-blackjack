@@ -1,13 +1,17 @@
 package controller;
 
 import common.GamerDto;
+import domain.PlayerResult;
 import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -32,8 +36,14 @@ public class BlackJackGame {
         }
 
         OutputView.printGamerCardsStateWithScore(GamerDto.of(dealer), dealer.calculateScore());
-        for (Player player : players) {
+        for(Player player : players) {
             OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore());
         }
-    }
+        Map<PlayerResult, List<Player>> gameResults = players.stream()
+                .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player), Collectors.toList()));
+        for(PlayerResult playerResult : PlayerResult.values()) {
+            gameResults.putIfAbsent(playerResult, new ArrayList<>());
+        }
+        OutputView.printGameResult(gameResults);
+}
 }

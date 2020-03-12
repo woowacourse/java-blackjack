@@ -31,6 +31,10 @@ public enum PlayerResult {
         this.resultState = resultState;
     }
 
+    public String getResultState() {
+        return resultState;
+    }
+
     abstract boolean isMatch(Dealer dealer, Player player);
 
     public static PlayerResult match(Dealer dealer, Player player) {
