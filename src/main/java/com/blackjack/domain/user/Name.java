@@ -32,4 +32,24 @@ public class Name {
 			throw new IllegalArgumentException("이름은 null이거나 빈 문자열이 될 수 없습니다.");
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Name name1 = (Name)o;
+		return Objects.equals(name, name1.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }
