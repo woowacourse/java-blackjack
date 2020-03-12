@@ -28,8 +28,4 @@ public class Hand {
 		}
 		return score;
 	}
-
-	public boolean canDrawBy(int drawableMaxScore) {
-		return calculateScore().isLowerThan(drawableMaxScore);
-	}
 }

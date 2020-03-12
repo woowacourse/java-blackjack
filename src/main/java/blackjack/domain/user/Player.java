@@ -9,6 +9,6 @@ public class Player extends User {
 
 	@Override
 	boolean canDraw() {
-		return hand.canDrawBy(PLAYER_DRAWABLE_MAX_SCORE);
+		return hand.calculateScore().isLowerThan(PLAYER_DRAWABLE_MAX_SCORE);
 	}
 }

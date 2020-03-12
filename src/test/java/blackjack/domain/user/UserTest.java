@@ -2,8 +2,12 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import blackjack.domain.card.Card;
@@ -55,5 +59,23 @@ class UserTest {
 		assertThatThrownBy(() -> user.draw(deck, 0))
 			.isInstanceOf(InvalidUserException.class)
 			.hasMessage(InvalidUserException.INVALID_DRAW_NUMBER);
+	}
+
+	@ParameterizedTest
+	@MethodSource("provideBustUser")
+	void isBust_BustScoreUser_ReturnTrue(User user) {
+		assertThat(user.isBust()).isTrue();
+	}
+
+	private static Stream<Arguments> provideBustUser() {
+		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
+
+		User user = new Player("user");
+		Deck deck = new Deck();
+
+		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
+			user.draw(deck);
+		}
+		return Stream.of(Arguments.of(user));
 	}
 }

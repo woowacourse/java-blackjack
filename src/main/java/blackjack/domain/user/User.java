@@ -12,6 +12,7 @@ import blackjack.domain.user.hand.Hand;
 
 public abstract class User {
 	private static final int DRAW_LOWER_BOUND = 1;
+	private static final int BLACKJACK_SCORE = 21;
 
 	protected final String name;
 	protected final Hand hand;
@@ -44,6 +45,10 @@ public abstract class User {
 		if (drawNumber < DRAW_LOWER_BOUND) {
 			throw new InvalidUserException(InvalidUserException.INVALID_DRAW_NUMBER);
 		}
+	}
+
+	public boolean isBust() {
+		return hand.calculateScore().isMoreThan(BLACKJACK_SCORE);
 	}
 
 	abstract boolean canDraw();

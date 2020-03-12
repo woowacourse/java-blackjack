@@ -9,6 +9,6 @@ public class Dealer extends User {
 
 	@Override
 	boolean canDraw() {
-		return hand.canDrawBy(DEALER_DRAWABLE_MAX_SCORE);
+		return hand.calculateScore().isLowerThan(DEALER_DRAWABLE_MAX_SCORE);
 	}
 }
