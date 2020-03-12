@@ -20,7 +20,7 @@ public class Score {
 		return new Score(number);
 	}
 
-	public static Score of(Cards cards) {  // TODO: 2020/03/12  추후리팩
+	public static Score of(Cards cards) {
 		int score = cards.getScore();
 		if (score > BLACKJACK_SCORE) {
 			return Score.of(BURST_SCORE);
