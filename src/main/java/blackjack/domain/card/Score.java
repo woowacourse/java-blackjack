@@ -1,6 +1,6 @@
-package blackjack.card;
+package blackjack.domain.card;
 
-import blackjack.card.exception.ScoreException;
+import blackjack.domain.card.exception.ScoreException;
 
 import java.util.Objects;
 

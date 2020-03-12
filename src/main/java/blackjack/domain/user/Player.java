@@ -1,6 +1,6 @@
-package blackjack.user;
+package blackjack.domain.user;
 
-import blackjack.card.Score;
+import blackjack.domain.card.Score;
 
 public class Player extends AbstractUser {
     private Player(String name) {
