@@ -7,6 +7,7 @@ import domains.user.Dealer;
 import domains.user.Hands;
 import domains.user.Player;
 import domains.user.Players;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,11 +21,17 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
+    private GameResult gameResult;
+
+    @BeforeEach
+    void setUp() {
+        gameResult = new GameResult();
+    }
+
     @DisplayName("참가자들과 딜러의 게임 결과를 계산하여 승패를 반환")
     @ParameterizedTest
     @MethodSource("gameData")
     void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
-        GameResult gameResult = new GameResult();
         gameResult.create(players, dealer);
 
         Iterator<Player> iterator = players.iterator();
@@ -33,6 +40,15 @@ public class GameResultTest {
 
         assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(WinOrLose.WIN);
         assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(WinOrLose.DRAW);
+    }
+
+    @DisplayName("딜러의 게임 결과를 확인")
+    @ParameterizedTest
+    @MethodSource("gameData")
+    void calculateDealerResult__ReturnWin(Players players, Dealer dealer) {
+        gameResult.create(players, dealer);
+
+        assertThat(gameResult.calculateDealerResult()).isEqualTo("0승 1무 1패");
     }
 
     static Stream<Arguments> gameData() {

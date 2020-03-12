@@ -54,7 +54,7 @@ public class GameResult {
                 continue;
             }
         }
-        return winCount + "승 " + drawCount + "무 " + loseCount + " 패";
+        return winCount + "승 " + drawCount + "무 " + loseCount + "패";
     }
 
     public Map<Player, WinOrLose> getGameResult() {
