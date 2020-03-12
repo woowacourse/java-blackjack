@@ -22,5 +22,6 @@ public class BlackjackGameController {
             dealer.receiveCard(deck.drawCard());
             OutputView.printDealerHitMoreCard();
         }
+        OutputView.printFinalResult(DisplayHandler.parseFinalResult(users));
     }
 }

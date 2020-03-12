@@ -40,4 +40,8 @@ public abstract class User {
     }
 
     public abstract String showInitialCardInfo();
+
+    public String showFinalCardInfo() {
+        return showCardInfo() + " - 결과 : " + getTotalScore();
+    }
 }

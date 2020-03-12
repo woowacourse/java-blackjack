@@ -17,4 +17,10 @@ public class DisplayHandler {
                         .map(User::showInitialCardInfo)
                         .collect(Collectors.joining("\n"));
     }
+
+    public static String parseFinalResult(Users users) {
+        return users.getUsers().stream()
+                .map(User::showFinalCardInfo)
+                .collect(Collectors.joining("\n"));
+    }
 }
