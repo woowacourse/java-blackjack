@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.PlayingCards;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.gamer.Gamer;
+import domain.gamer.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +19,12 @@ class GamerDtoTest {
     @BeforeEach
     void setUp() {
         PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
-        gamerDto = GamerDto.of(new Gamer(playingCards, "testName"));
+        gamerDto = GamerDto.of(new Player(playingCards, "testName"));
     }
 
     @Test
     void of() {
-        assertThat(GamerDto.of(new Gamer(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
+        assertThat(GamerDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
     }
 
     @Test

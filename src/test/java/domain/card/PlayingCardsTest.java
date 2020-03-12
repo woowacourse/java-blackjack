@@ -71,7 +71,7 @@ class PlayingCardsTest {
     void size() {
         playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
-        assertThat(playingCards.size()).isEqualTo(2);
+        assertThat(playingCards.countCards()).isEqualTo(2);
     }
 
     @Test
@@ -90,6 +90,6 @@ class PlayingCardsTest {
         playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
         playingCards.add(new Card(Symbol.TEN, Type.SPADE));
 
-        assertThat(playingCards.isBust()).isFalse();
+        assertThat(playingCards.isNotBust()).isTrue();
     }
 }

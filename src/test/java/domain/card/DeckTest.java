@@ -19,14 +19,14 @@ class DeckTest {
     @DisplayName("한 장의 카드를 반환")
     void handoutSingle() {
         Deck deck = Deck.create();
-        assertThat(deck.handOutCard()).isInstanceOf(Card.class);
+        assertThat(deck.dealCard()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("두 장의 PlayingCards 반환")
     void name() {
         Deck deck = Deck.create();
-        assertThat(deck.getInitCards().size()).isEqualTo(2);
+        assertThat(deck.dealInitCards().countCards()).isEqualTo(2);
     }
 
     @Test
@@ -35,7 +35,7 @@ class DeckTest {
         Deck deck = Deck.create();
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(deck.handOutCard());
+            cards.add(deck.dealCard());
         }
         assertThat(cards).hasSize(52);
         assertThat(deck.isEmpty()).isTrue();

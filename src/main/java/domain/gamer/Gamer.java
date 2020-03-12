@@ -3,7 +3,7 @@ package domain.gamer;
 import domain.card.Card;
 import domain.card.PlayingCards;
 
-public class Gamer {
+public abstract class Gamer {
     final PlayingCards playingCards;
     final String name;
 
@@ -21,10 +21,14 @@ public class Gamer {
     }
 
     public int countCards() {
-        return playingCards.size();
+        return playingCards.countCards();
     }
 
     public boolean isBust() {
+        return playingCards.isBust();
+    }
+
+    public boolean isNotBust() {
         return playingCards.isBust();
     }
 

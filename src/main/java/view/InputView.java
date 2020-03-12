@@ -13,22 +13,15 @@ public class InputView {
     public static List<String> inputPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String playerNamesValue = scanner.nextLine();
-        List<String> playerNames = Arrays.asList(playerNamesValue.split(DELIMITER));
 
-        for(String playerName : playerNames) {
-            if(isNotNumber(playerName)) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-        return playerNames;
+        return Arrays.asList(playerNamesValue.split(DELIMITER));
     }
 
     public static String inputGetMoreCard(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n",name);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
         String input = scanner.nextLine();
 
-        if(!isYesOrNo(input)) {
+        if (!isYesOrNo(input)) {
             throw new IllegalArgumentException();
         }
 
@@ -37,10 +30,5 @@ public class InputView {
 
     private static boolean isYesOrNo(String input) {
         return YES.equals(input) || NO.equals(input);
-    }
-
-    private static boolean isNotNumber(final String playerNamesValue) {
-        return playerNamesValue.chars()
-                .anyMatch(c -> !Character.isAlphabetic(c));
     }
 }

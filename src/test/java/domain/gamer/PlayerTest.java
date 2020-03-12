@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
     @Test
@@ -30,6 +31,16 @@ class PlayerTest {
         String name = "player";
         Player player = new Player(playingCards, name);
         assertThat(player).isNotNull();
+    }
+
+    @Test
+    @DisplayName("플레이어가 생성 시 예외를 반환한다.")
+    void constructorWithException() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "123";
+        assertThatThrownBy(() -> new Player(playingCards, name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("알파벳 이외의 문자는 허용하지 않습니다.");
     }
 
     @Test

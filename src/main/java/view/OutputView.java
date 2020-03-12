@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     private static void printInitDealerCard(GamerDto dealerDto) {
-        Card card =  dealerDto.getCards().get(FIRST_CARD_INDEX);
+        Card card = dealerDto.getCards().get(FIRST_CARD_INDEX);
         System.out.printf("%s: %s%s\n", dealerDto.getName(), card.getSymbol().getWord(), card.getType().getPattern());
     }
 
@@ -49,16 +49,16 @@ public class OutputView {
 
     public static void printGameResult(Map<PlayerResult, List<Player>> gameResults) {
         System.out.println("최종 승패");
-        System.out.printf("딜러 : %d승, %d무, %d패 \n", gameResults.get(PlayerResult.LOSE).size()
-                ,gameResults.get(PlayerResult.DRAW).size(),gameResults.get(PlayerResult.WIN).size());
-        for(PlayerResult playerResult : PlayerResult.values()) {
+        System.out.printf("딜러 : %d승, %d무, %d패 \n", gameResults.get(PlayerResult.LOSE).size(),
+                gameResults.get(PlayerResult.DRAW).size(), gameResults.get(PlayerResult.WIN).size());
+        for (PlayerResult playerResult : PlayerResult.values()) {
             printEachResult(gameResults.get(playerResult), playerResult);
         }
     }
 
     private static void printEachResult(List<Player> players, PlayerResult playerResult) {
         for (Player player : players) {
-            System.out.println(player.getName() + " : " + playerResult.getResultState());
+            System.out.println(player.getName() + " : " + playerResult.getName());
         }
     }
 }

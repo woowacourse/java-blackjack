@@ -9,13 +9,13 @@ public enum PlayerResult {
     WIN("승") {
         @Override
         boolean isMatch(Dealer dealer, Player player) {
-            return !player.isBust() && (dealer.isBust() || player.calculateScore() > dealer.calculateScore());
+            return !player.isNotBust() && (dealer.isBust() || player.calculateScore() > dealer.calculateScore());
         }
     },
     DRAW("무") {
         @Override
         boolean isMatch(Dealer dealer, Player player) {
-            return !dealer.isBust() && !player.isBust() && player.calculateScore() == dealer.calculateScore();
+            return dealer.isNotBust() && !player.isBust() && player.calculateScore() == dealer.calculateScore();
         }
     },
     LOSE("패") {
@@ -25,14 +25,14 @@ public enum PlayerResult {
         }
     };
 
-    private String resultState;
+    private String name;
 
-    PlayerResult(String resultState) {
-        this.resultState = resultState;
+    PlayerResult(String name) {
+        this.name = name;
     }
 
-    public String getResultState() {
-        return resultState;
+    public String getName() {
+        return name;
     }
 
     abstract boolean isMatch(Dealer dealer, Player player);
@@ -41,6 +41,6 @@ public enum PlayerResult {
         return Arrays.stream(values())
                 .filter(result -> result.isMatch(dealer, player))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("조건이 아무래도 이상합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("승무패 조건에 맞지 않습니다."));
     }
 }
