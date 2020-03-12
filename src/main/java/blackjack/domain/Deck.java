@@ -9,9 +9,10 @@ public class Deck {
 
     public Deck(LinkedList<Card> cards) {
         this.deck = Objects.requireNonNull(cards);
+        shuffle();
     }
 
-    public void shuffle() {
+    private void shuffle() {
         Collections.shuffle(deck);
     }
 

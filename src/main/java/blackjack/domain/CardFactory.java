@@ -21,7 +21,7 @@ public class CardFactory {
         return CardFactorySingletonHolder.instance;
     }
 
-    public List<Card> issueNewCards() {
+    public LinkedList<Card> issueNewCards() {
         return new LinkedList<>(cards);
     }
 
