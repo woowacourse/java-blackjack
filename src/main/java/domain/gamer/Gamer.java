@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.card.possessable.CardPossessable;
 import domain.card.providable.CardProvidable;
 import domain.result.WinLose;
+import domain.score.Calculatable;
 
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public abstract class Gamer implements BlackJackGameable {
 
     @Override
     public WinLose determineWinLose(BlackJackGameable counterParts) {
-        if (this.calculateScore() > counterParts.calculateScore()) {
+        if (this.calculateScore().isLargerThan(counterParts.calculateScore())) {
             return WinLose.WIN;
         }
 
@@ -30,7 +31,7 @@ public abstract class Gamer implements BlackJackGameable {
     }
 
     @Override
-    public int calculateScore() {
+    public Calculatable calculateScore() {
         return cardPossessable.calculateScore();
     }
 

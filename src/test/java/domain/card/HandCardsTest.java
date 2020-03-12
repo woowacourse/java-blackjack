@@ -1,6 +1,7 @@
 package domain.card;
 
 import domain.card.possessable.HandCards;
+import domain.score.Score;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -43,7 +44,7 @@ class HandCardsTest {
     void 순수한합구하기테스트(int[] ranks, int expectedScore) {
         HandCards handCards = new HandCards(parseNumbersToCards(ranks));
 
-        assertThat(handCards.calculateDefaultSum()).isEqualTo(expectedScore);
+        assertThat(handCards.calculateDefaultSum()).isEqualTo(new Score(expectedScore));
     }
 
     @Test

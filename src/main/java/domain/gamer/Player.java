@@ -1,7 +1,7 @@
 package domain.gamer;
 
-import domain.BlackJackScoreManager;
 import domain.card.possessable.HandCards;
+import domain.score.BlackJackScoreManager;
 
 public class Player extends Gamer {
     public Player(String name) {
@@ -10,6 +10,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean canDrawMore() {
-        return calculateScore() <= BlackJackScoreManager.BLACK_JACK_SCORE;
+        return BlackJackScoreManager.BLACK_JACK_SCORE.isLargerOrEqualThan(calculateScore());
     }
 }

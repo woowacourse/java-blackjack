@@ -1,8 +1,10 @@
 package domain.card.possessable;
 
-import domain.BlackJackScoreManager;
 import domain.card.Card;
 import domain.card.providable.CardProvidable;
+import domain.score.BlackJackScoreManager;
+import domain.score.Calculatable;
+import domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,11 @@ public class HandCards implements CardPossessable {
         this.cards = cards;
     }
 
-    public int calculateDefaultSum() {
-        return cards.stream()
+    @Override
+    public Calculatable calculateDefaultSum() {
+        return new Score(cards.stream()
                 .mapToInt(Card::extractScore)
-                .sum();
+                .sum());
     }
 
     @Override
@@ -30,7 +33,7 @@ public class HandCards implements CardPossessable {
     }
 
     @Override
-    public int calculateScore() {
+    public Calculatable calculateScore() {
         return BlackJackScoreManager.calculate(this);
     }
 
@@ -39,12 +42,13 @@ public class HandCards implements CardPossessable {
         return cards.size();
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
+    @Override
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
