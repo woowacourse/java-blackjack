@@ -7,7 +7,6 @@ import java.util.List;
 public class Cards {
     private static final int BLACKJACK_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
-    private static final int INIT_CARD_INDEX = 0;
 
     private final List<Card> cards;
 
@@ -45,12 +44,6 @@ public class Cards {
 
     public List<Card> getValue() {
         return Collections.unmodifiableList(cards);
-    }
-
-    public String getFirstCardInfo() {
-        Card firstCard = cards.get(INIT_CARD_INDEX);
-
-        return firstCard.getCardInfo();
     }
 
     public boolean hasAce() {

@@ -87,10 +87,10 @@ public class PlayerTest {
     @Test
     @DisplayName("첫 카드 확인")
     void getFirstCardInfo() {
-        Player player = new Dealer();
-        player.addCard(Card.of("스페이드", "10"));
-        player.addCard(Card.of("스페이드", "A"));
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.of("스페이드", "10"));
+        dealer.addCard(Card.of("스페이드", "A"));
 
-        assertThat(player.getFirstCardInfo()).isEqualTo("10스페이드");
+        assertThat(dealer.getFirstCardInfo()).isEqualTo("10스페이드");
     }
 }

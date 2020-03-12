@@ -30,7 +30,7 @@ public class OutputView {
 
     public static void printStatus(final Player player) {
         if (player instanceof Dealer) {
-            System.out.printf("%s카드: %s\n", player.getName(), player.getFirstCardInfo());
+            System.out.printf("%s카드: %s\n", player.getName(), ((Dealer) player).getFirstCardInfo());
             return;
         }
         System.out.printf("%s카드: %s\n", player.getName(), makeCardNames(player.getCards()));
