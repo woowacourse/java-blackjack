@@ -1,9 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.CardFactory;
-import blackjack.domain.Deck;
-import blackjack.domain.UserFactory;
-import blackjack.domain.Users;
+import blackjack.domain.*;
 import blackjack.utils.DisplayHandler;
 import blackjack.utils.InputHandler;
 import blackjack.view.InputView;
@@ -20,5 +17,10 @@ public class BlackjackGameController {
                 .forEach(t -> t.receiveInitialCards(deck.drawInitialCards()));
         OutputView.printInitialCardDistribution(DisplayHandler.parseInitialDistribution(users));
         InputHandler.hitMoreCard(users, deck);
+        Dealer dealer = users.getDealer();
+        if (dealer.isUnderThreshold()) {
+            dealer.receiveCard(deck.drawCard());
+            OutputView.printDealerHitMoreCard();
+        }
     }
 }

@@ -12,4 +12,8 @@ public class OutputView {
     public static void printBusted(String name) {
         System.out.println(name + "이(가) 버스트 되었습니다");
     }
+
+    public static void printDealerHitMoreCard() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다");
+    }
 }
