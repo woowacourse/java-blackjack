@@ -13,6 +13,7 @@ public class Blackjack {
         Players players = Players.of(playerNames);
         User dealer = Dealer.create();
         Deck deck = Deck.create();
+        deck.shuffle();
 
         dealer.giveCards(deck.draw(), deck.draw());
         for (int i = 0; i < players.memberSize(); i++) {

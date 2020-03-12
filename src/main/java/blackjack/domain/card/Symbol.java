@@ -30,4 +30,8 @@ public enum Symbol {
     public Score getScore() {
         return score;
     }
+
+    public String getName() {
+        return name;
+    }
 }

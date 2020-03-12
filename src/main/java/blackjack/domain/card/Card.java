@@ -40,4 +40,8 @@ public class Card {
                 ", type=" + type +
                 '}';
     }
+
+    public String getName() {
+        return symbol.getName() + " " + type.getName();
+    }
 }
