@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Results implements Iterable<Result> {
-	private List<Result> results;
+	private final List<Result> results;
 
 	public Results(List<Result> results) {
 		this.results = Collections.unmodifiableList(new ArrayList<>(results));
