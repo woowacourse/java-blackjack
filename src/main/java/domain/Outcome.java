@@ -22,6 +22,13 @@ public enum Outcome {
         return LOSE;
     }
 
+    public static Outcome converseOutcome(Outcome outcome) {
+        if (outcome == Outcome.WIN) {
+            return Outcome.LOSE;
+        }
+        return outcome == Outcome.DRAW ? Outcome.DRAW : Outcome.WIN;
+    }
+
     public String getName() {
         return name;
     }

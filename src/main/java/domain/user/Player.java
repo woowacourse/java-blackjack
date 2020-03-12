@@ -6,7 +6,6 @@ import util.BlackJackRule;
 public class Player extends User {
 
     private final String name;
-    private Outcome outcome = Outcome.UNDEFINED;
 
     public Player(String name) {
         this.name = name;
@@ -17,23 +16,17 @@ public class Player extends User {
         return !cards.isBust() && !cards.isBlackJack();
     }
 
-    public void calculateWinningResult(int dealerScore) {
+    public Outcome calculateOutcome(int dealerScore) {
         if (cards.isBust()) {
-            outcome = Outcome.LOSE;
-            return;
+            return Outcome.LOSE;
         }
-        if (BlackJackRule.isBust(dealerScore) && outcome == Outcome.UNDEFINED) {
-            outcome = Outcome.WIN;
-            return;
+        if (BlackJackRule.isBust(dealerScore)) {
+            return Outcome.WIN;
         }
-        outcome = Outcome.calculate(dealerScore, cards.getScore());
+        return Outcome.calculate(dealerScore, cards.getScore());
     }
 
     public String getName() {
         return name;
-    }
-
-    public Outcome getOutcome() {
-        return outcome;
     }
 }

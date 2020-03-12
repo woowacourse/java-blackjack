@@ -43,26 +43,23 @@ public class PlayerTest {
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-        player.calculateWinningResult(17);
 
-        assertThat(player.getOutcome()).isEqualTo(Outcome.LOSE);
+        assertThat(player.calculateOutcome(17)).isEqualTo(Outcome.LOSE);
     }
 
     @DisplayName("승무패 결과 산정 테스트 - 패배")
     @Test
     void calculateWinningResult_lose() {
         player.drawCard(cardDeck);
-        player.calculateWinningResult(17);
 
-        assertThat(player.getOutcome()).isEqualTo(Outcome.LOSE);
+        assertThat(player.calculateOutcome(17)).isEqualTo(Outcome.LOSE);
     }
 
     @DisplayName("승무패 결과 산정 테스트 - 승리")
     @Test
     void calculateWinningResult_win() {
         player.drawCard(cardDeck);
-        player.calculateWinningResult(22);
 
-        assertThat(player.getOutcome()).isEqualTo(Outcome.WIN);
+        assertThat(player.calculateOutcome(22)).isEqualTo(Outcome.WIN);
     }
 }

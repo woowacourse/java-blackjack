@@ -1,3 +1,4 @@
+import domain.GameResult;
 import domain.card.CardDeck;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -18,11 +19,9 @@ public class BlackJackApplication {
     }
 
     private static void printCalculatedResult(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
-            player.calculateWinningResult(dealer.getCards().getScore());
-        }
+        GameResult gameResult = new GameResult(dealer, players);
         OutputView.printUsersCardsAndScore(dealer, players);
-        OutputView.printFinalResult(players);
+        OutputView.printFinalResult(gameResult);
     }
 
     private static void drawMoreCards(Dealer dealer, Players players, CardDeck cardDeck) {

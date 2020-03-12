@@ -1,11 +1,11 @@
 package view;
 
+import domain.GameResult;
+import domain.Outcome;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import domain.user.User;
-import domain.Outcome;
-import java.util.HashMap;
 import java.util.Map;
 
 public class OutputView {
@@ -43,45 +43,23 @@ public class OutputView {
     public static void printUserCardsAndScore(String name, User user) {
         String userCards = user.getCards().getCards().toString();
         System.out.println(name + ": " + userCards.substring(1, userCards.length() - 1)
-            + "- 결과: " + user.getCards().getScore());
+            + " - 결과: " + user.getCards().getScore());
     }
 
-    public static void printFinalResult(Players players) {
+    public static void printFinalResult(GameResult gameResult) {
         System.out.println("\n## 최종 승패");
-        printDealerFinalResult(players);
-        for (Player player : players.getPlayers()) {
-            printPlayerFinalResult(player);
+        printDealerFinalResult(gameResult.getDealerResults());
+        for (Player player : gameResult.getPlayersResult().keySet()) {
+            System.out.println(
+                player.getName() + ": " + gameResult.getPlayersResult().get(player).getName());
         }
     }
 
-    private static void printPlayerFinalResult(Player player) {
-        System.out.println(player.getName() + ": " + player.getOutcome().getName());
-    }
-
-    /* todo 수정 필요
-       1. 뷰에 둔다.
-          - View에 이런거 놔둬도 되나?
-       2. 책임을 Dealer로 옮긴다.
-          - 1) Player의 WinningResult를 받아온다.
-          - 2) Player에게 Dealer를 넘겨서, 셋팅을 해주도록 한다.
-          - 3) Player에게 Delaer의 WinningResult를 물어보고 받아온다.
-       3. 책임을 바깥(다른 도메인)으로 옮긴다.
-          - 이럴 경우에는, Player의 WinningResult는 그대로 놔둬도 되는가?
-    */
-    private static void printDealerFinalResult(Players players) {
-        Map<Outcome, Integer> dealerWinningResult = new HashMap<>();
-        dealerWinningResult.put(Outcome.WIN, 0);
-        dealerWinningResult.put(Outcome.DRAW, 0);
-        dealerWinningResult.put(Outcome.LOSE, 0);
-        for (Player player : players.getPlayers()) {
-            dealerWinningResult.put(player.getOutcome(),
-                dealerWinningResult.get(player.getOutcome()) + 1);
-        }
+    private static void printDealerFinalResult(Map<Outcome, Integer> gameResult) {
         System.out.print("딜러: ");
-        for (Outcome outcome : dealerWinningResult.keySet()) {
-            if (dealerWinningResult.get(outcome) != 0) {
-                System.out
-                    .print(dealerWinningResult.get(outcome) + outcome.getName() + " ");
+        for (Outcome outcome : gameResult.keySet()) {
+            if (gameResult.get(outcome) != 0) {
+                System.out.print(gameResult.get(outcome) + outcome.getName() + " ");
             }
         }
         System.out.println();
