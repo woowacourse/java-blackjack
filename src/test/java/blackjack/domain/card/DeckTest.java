@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
-
     public static final int SIZE_AFTER_FIRST_POP = Deck.create().size() - 1;
 
     @DisplayName("pop()을 통해 카드 한 장을 뺴오는지")

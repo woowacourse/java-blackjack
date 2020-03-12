@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,6 +10,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 
 public class HandTest {
     public static final List<Card> CARDS_8 = Arrays.asList(
@@ -76,5 +80,4 @@ public class HandTest {
             )
         );
     }
-
 }

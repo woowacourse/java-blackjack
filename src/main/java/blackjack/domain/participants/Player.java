@@ -1,7 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import java.util.Objects;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.exceptions.InvalidPlayerException;
 
 public class Player implements Participant {
@@ -42,7 +44,7 @@ public class Player implements Participant {
 
     @Override
     public boolean isBusted() {
-        return score() > 21;
+        return hand.isBusted();
     }
 
     @Override
@@ -71,7 +73,7 @@ public class Player implements Participant {
     }
 
     // 테스트용
-    void draw(final Card card) {
+    public void draw(final Card card) {
         hand.add(card);
     }
 }

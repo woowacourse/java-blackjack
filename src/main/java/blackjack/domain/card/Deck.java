@@ -1,10 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
-
     private Stack<Card> cards;
 
     private Deck() {

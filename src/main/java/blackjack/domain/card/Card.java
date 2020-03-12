@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,18 @@ public class Card {
         this.rank = rank;
     }
 
-    public int getRankValue() {
-        return rank.getValue();
+    public static Stack<Card> createCards() {
+        Stack<Card> cards = new Stack<>();
+        CardCache.cards.forEach(cards::push);
+        return cards;
     }
 
     public boolean isAce() {
         return getRankValue() == Rank.ACE.getValue();
     }
 
-    public static Stack<Card> createCards() {
-        Stack<Card> cards = new Stack<>();
-        CardCache.cards.forEach(cards::push);
-        return cards;
+    public int getRankValue() {
+        return rank.getValue();
     }
 
     @Override

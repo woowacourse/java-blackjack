@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import blackjack.exceptions.InvalidPlayerException;
 
 public class PlayerTest {
+
     @DisplayName("Player 생성자 예외 처리 테스트")
     @ParameterizedTest
     @NullAndEmptySource

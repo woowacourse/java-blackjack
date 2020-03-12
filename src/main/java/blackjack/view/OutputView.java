@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Player;
 
 public class OutputView {
     public static void nameInstruction() {
@@ -45,14 +45,18 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void resultStatus(Participants participants) {
+    public static void result(Participants participants) {
         for (Participant participant : participants) {
             System.out.println(statusToString(participant) + " - 결과: " + participant.score());
         }
         System.out.println();
     }
 
-    public static void result(Participants participants) {
+    public static String statusToString(Participant participant) {
+        return participant.getName() + ": " + participant.handStatus();
+    }
+
+    public static void statistics(Participants participants) {
         System.out.println("## 최종 승패");
         for (Participant participant : participants) {
             System.out.println(participant.getName() + " : " + participant.gameResult());
@@ -61,10 +65,6 @@ public class OutputView {
 
     public static void printError(String message) {
         System.out.println(message);
-    }
-
-    public static String statusToString(Participant participant) {
-        return participant.getName() + ": " + participant.handStatus();
     }
 
 }

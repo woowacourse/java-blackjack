@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,10 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Deck;
 import blackjack.exceptions.InvalidParticipantsException;
 
 public class Participants implements Iterable<Participant> {
     public static final int FIRST_CARDS_COUNT = 2;
+    public static final String SPLIT_DELIMITER = ",";
+    public static final String JOIN_DELIMITER = ", ";
 
     private final List<Participant> participants;
 
@@ -17,13 +20,13 @@ public class Participants implements Iterable<Participant> {
         this.participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(Arrays.stream(names
-            .split(","))
+            .split(SPLIT_DELIMITER))
             .map(Player::new)
             .collect(Collectors.toList()));
     }
 
     // 테스트용
-    Participants(final Dealer dealer, final Player... players) {
+    public Participants(final Dealer dealer, final Player... players) {
         this.participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(Arrays.asList(players));
@@ -33,12 +36,6 @@ public class Participants implements Iterable<Participant> {
         for (int i = 0; i < FIRST_CARDS_COUNT; i++) {
             participants.forEach(participant -> participant.draw(deck));
         }
-    }
-
-    public String getNames() {
-        return participants.stream()
-            .map(Participant::getName)
-            .collect(Collectors.joining(", "));
     }
 
     public Participant getDealer() {
@@ -54,6 +51,12 @@ public class Participants implements Iterable<Participant> {
         return participants.stream()
             .filter(participant -> !participant.isDealer())
             .collect(Collectors.toList());
+    }
+
+    public String getNames() {
+        return participants.stream()
+            .map(Participant::getName)
+            .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
     @Override

@@ -1,12 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
+
 public class Hand {
     public static final int BLACK_JACK = 21;
     public static final int GAP_BETWEEN_ACE_VALUE = 10;
+    public static final String DELIMITER = ", ";
 
     private List<Card> cards;
 
@@ -14,7 +17,8 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
-    public Hand(final List<Card> cards) {
+    // 테스트용
+    Hand(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -58,6 +62,6 @@ public class Hand {
     public String toString() {
         return cards.stream()
             .map(Card::toString)
-            .collect(Collectors.joining(", "));
+            .collect(Collectors.joining(DELIMITER));
     }
 }

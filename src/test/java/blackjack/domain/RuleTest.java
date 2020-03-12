@@ -1,11 +1,15 @@
 package blackjack.domain;
 
-import static blackjack.domain.HandTest.*;
-import static blackjack.domain.Result.*;
+import static blackjack.domain.participants.HandTest.*;
+import static blackjack.domain.participants.Result.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Player;
 
 public class RuleTest {
 

@@ -1,9 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
@@ -17,12 +20,13 @@ public class Dealer implements Participant {
         this.result = new HashMap<>();
     }
 
-    public String getName() {
-        return "딜러";
-    }
-
     public int addedCardCount() {
         return hand.addedCardCount();
+    }
+
+    @Override
+    public String getName() {
+        return "딜러";
     }
 
     @Override
@@ -33,24 +37,19 @@ public class Dealer implements Participant {
             .collect(Collectors.joining(SPACE));
     }
 
+    public int countResult(final Result result) {
+        return this.result.getOrDefault(result, 0);
+    }
+
     @Override
     public void set(final Result result) {
         this.result.putIfAbsent(result, 0);
         this.result.put(result, this.result.get(result) + 1);
     }
 
-    public boolean needsMoreCard() {
-        return hand.calculate() < DEALER_DRAW_CRITERIA;
-    }
-
     @Override
     public void draw(Deck deck) {
         hand.add(deck.pop());
-    }
-
-    // 테스트용
-    void draw(Card card) {
-        hand.add(card);
     }
 
     @Override
@@ -65,6 +64,10 @@ public class Dealer implements Participant {
         }
     }
 
+    private boolean needsMoreCard() {
+        return hand.calculate() < DEALER_DRAW_CRITERIA;
+    }
+
     @Override
     public boolean isDealer() {
         return true;
@@ -72,7 +75,7 @@ public class Dealer implements Participant {
 
     @Override
     public boolean isBusted() {
-        return score() > 21;
+        return hand.isBusted();
     }
 
     @Override
@@ -80,7 +83,8 @@ public class Dealer implements Participant {
         return hand.toString();
     }
 
-    public int countResult(final Result result) {
-        return this.result.getOrDefault(result, 0);
+    // 테스트용
+    public void draw(Card card) {
+        hand.add(card);
     }
 }
