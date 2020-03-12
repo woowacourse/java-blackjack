@@ -15,10 +15,10 @@ public class CardBundle {
 	}
 
 	public GameResult compare(CardBundle gamblerCardBundle) {
-		if (gamblerCardBundle.isNotBurst()) {
+		if (gamblerCardBundle.isBurst()) {
 			return GameResult.LOSE;
 		}
-		if (isNotBurst()) {
+		if (isBurst()) {
 			return GameResult.WIN;
 		}
 		int compare = Integer.compare(gamblerCardBundle.calculateScore(), this.calculateScore());
@@ -43,10 +43,10 @@ public class CardBundle {
 
 	private boolean hasAce() {
 		return cards.stream()
-			.anyMatch(Card::isAce);
+				.anyMatch(Card::isAce);
 	}
 
-	public boolean isNotBurst() {
+	public boolean isBurst() {
 		return calculateScore() > BLACKJACK_VALUE;
 	}
 

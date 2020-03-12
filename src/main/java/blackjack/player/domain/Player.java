@@ -1,11 +1,11 @@
 package blackjack.player.domain;
 
-import java.util.Collections;
-import java.util.List;
-
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.report.GameReport;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Player {
 	protected final String name;
@@ -25,7 +25,7 @@ public abstract class Player {
 	}
 
 	public boolean isBurst() {
-		return cardBundle.isNotBurst();
+		return cardBundle.isBurst();
 	}
 
 	public boolean isNotBurst() {
