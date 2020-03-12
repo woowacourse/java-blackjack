@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.WinningResult;
+import domain.result.WinningResult;
 
 public class Player extends User {
 

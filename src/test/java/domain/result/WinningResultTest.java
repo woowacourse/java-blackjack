@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 

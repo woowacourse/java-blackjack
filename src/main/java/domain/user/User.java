@@ -11,6 +11,7 @@ public abstract class User {
     private static final String EMPTY = "";
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
+    private static final String NAME_ERROR_MESSAGE = "빈 이름이 있습니다.";
 
     protected List<Card> cards;
     protected final String name;
@@ -23,7 +24,7 @@ public abstract class User {
 
     private void validate(String name) {
         if (EMPTY.equals(name)) {
-            throw new IllegalArgumentException("빈 이름이 있습니다.");
+            throw new IllegalArgumentException(NAME_ERROR_MESSAGE);
         }
     }
 

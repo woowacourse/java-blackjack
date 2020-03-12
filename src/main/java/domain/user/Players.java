@@ -1,13 +1,15 @@
 package domain.user;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.WinningResult;
+import domain.result.WinningResult;
 import domain.deck.Deck;
 
 public class Players {
+
     private List<Player> players;
 
     private Players(String input) {
@@ -52,9 +54,11 @@ public class Players {
     }
 
     public List<WinningResult> getWinningResults() {
-        return players.stream()
-                .map(Player::getWinningResult)
-                .collect(Collectors.toList());
+        return Collections.unmodifiableList(
+                players.stream()
+                        .map(Player::getWinningResult)
+                        .collect(Collectors.toList())
+        );
     }
 
     public String getAllTotalWinningResult() {
@@ -64,6 +68,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 }

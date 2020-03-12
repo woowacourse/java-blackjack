@@ -2,7 +2,7 @@ package controller;
 
 import java.util.List;
 
-import domain.WinningResult;
+import domain.result.WinningResult;
 import domain.deck.Deck;
 import domain.deck.DeckFactory;
 import domain.user.Dealer;

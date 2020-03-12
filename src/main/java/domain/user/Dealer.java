@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.WinningResult;
+import domain.result.WinningResult;
 
 public class Dealer extends User {
 

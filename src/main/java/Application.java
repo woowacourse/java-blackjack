@@ -22,5 +22,4 @@ public class Application {
         blackJackGame.decideWinner(dealer, players);
         OutputView.printWinningResult(dealer, players);
     }
-
 }
