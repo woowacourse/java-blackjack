@@ -21,7 +21,7 @@ public class BlackJackGame {
 
         OutputView.printInitGamersState(GamerDto.of(dealer), players.stream().map(GamerDto::of).collect(Collectors.toList()));
         for (Player player : players) {
-            while(!player.isBust() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
+            while (!player.isBust() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
                 player.addCard(deck.handOutCard());
                 OutputView.printGamerCardsState(GamerDto.of(player));
             }
@@ -35,6 +35,5 @@ public class BlackJackGame {
         for (Player player : players) {
             OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore());
         }
-
     }
 }
