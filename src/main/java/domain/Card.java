@@ -16,4 +16,9 @@ public class Card {
     public int getValue() {
         return symbol.getValue();
     }
+
+    @Override
+    public String toString() {
+        return symbol.getName() + type.getName();
+    }
 }
