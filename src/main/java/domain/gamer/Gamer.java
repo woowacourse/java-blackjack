@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gamer {
+    public static final int BUST_NUMBER = 22;
+    public static final int ACE_HIDDEN_SCORE = 10;
+
     protected String name;
     protected final List<Card> cards = new ArrayList<>();
 
@@ -19,9 +22,6 @@ public abstract class Gamer {
     }
 
     public abstract boolean isDrawable();
-
-    public static final int BUST_NUMBER = 22;
-    public static final int ACE_HIDDEN_SCORE = 10;
 
     public int calculateWithAce() {
         int score = calculateScore();

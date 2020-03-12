@@ -66,7 +66,7 @@ public class OutputView {
     }
 
     public static void printAddCardAtDealer() {
-        System.out.println("딜러는 16이하라 카드 한장 더 받았습니다." );
+        System.out.println("딜러는 17이상이 될 때까지 카드를 더 받았습니다." );
     }
 
     public static void printAddCardGuide(Player player) {

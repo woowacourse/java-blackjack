@@ -6,25 +6,19 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 import domain.gamer.YesOrNo;
-import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class GameController {
     public void run() {
         Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
         Deck deck = new Deck(CardFactory.getInstance());
-
         gamers.initCard(deck);
-
         OutputView.printInitCardGuide(gamers);
         OutputView.printGamersCard(gamers);
         addCardAtPlayers(gamers, deck);
-        addCardAtDealer(gamers, deck);
+        gamers.getDealer().addCardAtDealer(deck);
+        OutputView.printAddCardAtDealer();
         OutputView.printCardsResultAndScore(gamers);
         OutputView.printPlayersWinOrLose(gamers.gameResult());
     }
@@ -39,13 +33,6 @@ public class GameController {
                 && YesOrNo.findYesOrNo(InputView.inputAsDrawable(player)).getDrawable()) {
             player.addCard(deck.popCard(1));
             OutputView.printGamerCard(player);
-        }
-    }
-
-    private void addCardAtDealer(Gamers gamers, Deck deck) {
-        while (gamers.getDealer().isDrawable()) {
-            OutputView.printAddCardAtDealer();
-            gamers.getDealer().addCard(deck.popCard(1));
         }
     }
 }
