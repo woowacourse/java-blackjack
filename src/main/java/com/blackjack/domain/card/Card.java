@@ -25,4 +25,9 @@ public class Card {
 	public boolean isAce() {
 		return symbol.isAce();
 	}
+
+	@Override
+	public String toString() {
+		return symbol.toString() + type.toString();
+	}
 }
