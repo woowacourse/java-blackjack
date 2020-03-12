@@ -1,8 +1,8 @@
-package domain.player;
+package domain.participant;
 
 import domain.ParticipantCards;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     public Dealer() {
         this.name = "딜러";
         this.cards = new ParticipantCards();

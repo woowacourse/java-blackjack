@@ -1,11 +1,11 @@
-package domain.player;
+package domain.participant;
 
 import java.util.Objects;
 
 import domain.ParticipantCards;
 import domain.card.CardDeck;
 
-public class Player implements PlayerInterface {
+public class Participant implements ParticipantInterface {
     public static final int INITIAL_CARD_NUMBER = 2;
 
     protected String name;

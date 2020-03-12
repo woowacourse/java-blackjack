@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Map;
 
-import domain.player.User;
+import domain.participant.User;
 
 public class UserResult {
     private final Map<User, Result> results;

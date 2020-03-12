@@ -2,11 +2,11 @@ package controller;
 
 import java.util.Map;
 
-import domain.Participant;
+import domain.Players;
 import domain.Result;
 import domain.card.CardDeck;
-import domain.player.Dealer;
-import domain.player.User;
+import domain.participant.Dealer;
+import domain.participant.User;
 import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
@@ -15,7 +15,7 @@ public class BlackJackGameController {
 
     public static void run() {
         String names = InputView.inputUserNames();
-        Participant participants = new Participant(names);
+        Players participants = new Players(names);
         OutputView.initialSetting(participants);
 
         Dealer dealer = new Dealer();
@@ -26,7 +26,7 @@ public class BlackJackGameController {
         OutputView.printDealerFirstDraw(dealer);
         OutputView.printCardStatusForAllParticipants(participants);
 
-        for (User user : participants.getParticipants()) {
+        for (User user : participants.getPlayers()) {
             while (InputUtils.isHit(InputView.inputIsHit(user))) {
                 user.receive(cardDeck);
                 OutputView.printCardStatus(user);

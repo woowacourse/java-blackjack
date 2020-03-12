@@ -10,7 +10,7 @@ import domain.card.Card;
 import domain.card.Shape;
 import domain.card.Symbol;
 
-class PlayerCardsTest {
+class ParticipantCardsTest {
     private ParticipantCards cards;
 
     @BeforeEach

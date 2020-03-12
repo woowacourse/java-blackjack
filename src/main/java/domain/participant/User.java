@@ -1,9 +1,9 @@
-package domain.player;
+package domain.participant;
 
 import domain.ParticipantCards;
 import domain.Result;
 
-public class User extends Player {
+public class User extends Participant {
 
     public User(String name) {
         validateName(name);

@@ -8,7 +8,7 @@ import domain.card.Card;
 import domain.card.Shape;
 import domain.card.Symbol;
 
-class PlayerInterfaceCardsTest {
+class ParticipantInterfaceCardsTest {
     @Test
     void toStringTest() {
         ParticipantCards cards = new ParticipantCards();

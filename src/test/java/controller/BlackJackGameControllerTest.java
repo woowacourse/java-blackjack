@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import domain.card.CardDeck;
-import domain.player.Dealer;
+import domain.participant.Dealer;
 
 class BlackJackGameControllerTest {
 

@@ -3,17 +3,17 @@ package view;
 import java.util.List;
 import java.util.Map;
 
-import domain.Participant;
+import domain.Players;
 import domain.Result;
-import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.User;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.User;
 
 public class OutputView {
 
     public static final String DELIMITER = ", ";
 
-    public static void initialSetting(Participant users) {
+    public static void initialSetting(Players users) {
         StringBuilder settingInstruction = new StringBuilder();
         List<String> names = users.getUserNames();
         String userNames = String.join(DELIMITER, names);
@@ -29,8 +29,8 @@ public class OutputView {
         System.out.println(user.toString());
     }
 
-    public static void printCardStatusForAllParticipants(Participant participants) {
-        for (User user : participants.getParticipants()) {
+    public static void printCardStatusForAllParticipants(Players participants) {
+        for (User user : participants.getPlayers()) {
             printCardStatus(user);
         }
         System.out.println();
@@ -40,13 +40,13 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printFinalScore(Player player) {
-        System.out.println(player.toString() + " -  결과 : " + player.calculateScore());
+    public static void printFinalScore(Participant participant) {
+        System.out.println(participant.toString() + " -  결과 : " + participant.calculateScore());
     }
 
-    public static void printFinalScoreForAllParticipants(Dealer dealer, Participant users) {
+    public static void printFinalScoreForAllParticipants(Dealer dealer, Players users) {
         printFinalScore(dealer);
-        for (User user : users.getParticipants()) {
+        for (User user : users.getPlayers()) {
             printFinalScore(user);
         }
     }

@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-import domain.player.User;
+import domain.participant.User;
 
 public class InputView {
     private static Scanner scanner = new Scanner(System.in);

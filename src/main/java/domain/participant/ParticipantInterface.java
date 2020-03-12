@@ -1,8 +1,8 @@
-package domain.player;
+package domain.participant;
 
 import domain.card.CardDeck;
 
-public interface PlayerInterface {
+public interface ParticipantInterface {
     void firstDraw(CardDeck cardDeck);
 
     void receive(CardDeck cardDeck);
