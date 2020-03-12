@@ -90,20 +90,20 @@ public class OutputView {
                 .append("## 최종승패")
                 .append(NEWLINE)
                 .append("딜러 : ")
-                .append(getCount(playersWinOrLose, WinOrLose.WIN))
-                .append(getCount(playersWinOrLose, WinOrLose.DRAW))
-                .append(getCount(playersWinOrLose, WinOrLose.LOSE));
+                .append(printResultCount(playersWinOrLose, WinOrLose.LOSE, WinOrLose.WIN.getInitial()))
+                .append(printResultCount(playersWinOrLose, WinOrLose.DRAW, WinOrLose.DRAW.getInitial()))
+                .append(printResultCount(playersWinOrLose, WinOrLose.WIN, WinOrLose.LOSE.getInitial()));
         System.out.println(dealerResult.toString());
         playersWinOrLose.forEach((a, b) -> System.out.println(a + " : " + b.getInitial()));
     }
 
-    private static String getCount(Map<String, WinOrLose> playersWinOrLose, WinOrLose winOrLose) {
+    private static String printResultCount(Map<String, WinOrLose> playersWinOrLose, WinOrLose winOrLose, String dealerInitial) {
         StringBuilder winOrLoseAndCount = new StringBuilder();
         winOrLoseAndCount.append(playersWinOrLose.values()
                 .stream()
                 .filter(x -> x == winOrLose)
-                .count());
-        winOrLoseAndCount.append(winOrLose.getInitial());
+                .count())
+                .append(dealerInitial);
         return winOrLoseAndCount.toString();
     }
 }
