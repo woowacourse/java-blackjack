@@ -17,10 +17,6 @@ public class Player implements PlayerInterface {
 		playerCards.addAll(cards);
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
 	public int calculateScore() {
 		return playerCards.calculateScore();
 	}
@@ -39,6 +35,10 @@ public class Player implements PlayerInterface {
 
 	public String toStringOneCard() {
 		return String.format(STRING_FORMAT_PRINT_CARD, this.name, playerCards.toStringOneCard());
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	@Override

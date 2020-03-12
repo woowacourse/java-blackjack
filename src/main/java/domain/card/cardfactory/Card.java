@@ -9,16 +9,16 @@ public class Card {
 		this.shape = shape;
 	}
 
-	@Override
-	public String toString() {
-		return symbol + shape.toString();
+	public boolean isAce() {
+		return this.symbol == Symbol.ACE;
 	}
 
 	public int getScore() {
 		return symbol.getScore();
 	}
 
-	public boolean isAce() {
-		return this.symbol == Symbol.ACE;
+	@Override
+	public String toString() {
+		return symbol.toString() + shape.toString();
 	}
 }

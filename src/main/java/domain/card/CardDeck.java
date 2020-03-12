@@ -25,8 +25,6 @@ public class CardDeck {
 	}
 
 	public List<Card> draw() {
-		List<Card> cards = new ArrayList<>();
-		cards.add(this.cards.poll());
-		return cards;
+		return draw(1);
 	}
 }

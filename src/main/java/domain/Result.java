@@ -11,11 +11,6 @@ public enum Result {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return name;
-	}
-
 	public static boolean isLose(Result result) {
 		return result == LOSE;
 	}
@@ -26,5 +21,10 @@ public enum Result {
 
 	public static boolean isWin(Result result) {
 		return result == WIN;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }

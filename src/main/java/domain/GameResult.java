@@ -30,10 +30,6 @@ public class GameResult {
 		return Result.LOSE;
 	}
 
-	public Map<String, Result> getUserResult() {
-		return userResult;
-	}
-
 	public int calculateDealerWinCount() {
 		return (int) userResult.values().stream()
 				.filter(Result::isLose)
@@ -50,5 +46,9 @@ public class GameResult {
 		return (int) userResult.values().stream()
 				.filter(Result::isWin)
 				.count();
+	}
+
+	public Map<String, Result> getUserResult() {
+		return userResult;
 	}
 }

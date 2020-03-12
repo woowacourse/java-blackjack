@@ -19,5 +19,4 @@ public class CardFactory {
 			cards.add(new Card(symbol, shape));
 		}
 	}
-
 }
