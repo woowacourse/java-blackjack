@@ -19,9 +19,9 @@ public class GameTable {
 
 	public PlayerRecords calculateResult() {
 		return players.stream()
-			.collect(Collectors.collectingAndThen(toMap(
-				player -> player,
-				player -> player.compareScoreWithUser(dealer)
-			), PlayerRecords::new));
+				.collect(Collectors.collectingAndThen(toMap(
+						player -> player,
+						player -> player.compareScoreWithUser(dealer)
+				), PlayerRecords::new));
 	}
 }

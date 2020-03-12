@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import com.blackjack.domain.user.Name;
-
 public class NameTest {
 	@DisplayName("올바른 값을 넣었을때 인스턴스 생성")
 	@Test

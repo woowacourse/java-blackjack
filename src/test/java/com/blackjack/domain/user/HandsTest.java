@@ -31,8 +31,8 @@ class HandsTest {
 	@Test
 	void calculateScore_IncludeAceAndNotUpward_CreateTotalScore() {
 		Hands hands = new Hands(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.TEN, Type.DIAMOND),
-			new Card(Symbol.JACK, Type.DIAMOND)));
+				new Card(Symbol.TEN, Type.DIAMOND),
+				new Card(Symbol.JACK, Type.DIAMOND)));
 		assertThat(hands.calculateScore()).isEqualTo(new Score(21));
 	}
 

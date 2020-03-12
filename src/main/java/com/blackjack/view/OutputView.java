@@ -69,9 +69,9 @@ public class OutputView {
 
 	private static String makeDealerFirstCardInfo(User dealer) {
 		return dealer.getHands()
-			.getCards()
-			.get(0)
-			.toString();
+				.getCards()
+				.get(0)
+				.toString();
 	}
 
 	private static String makeUserCardInfo(User user) {
@@ -80,16 +80,16 @@ public class OutputView {
 
 	private static String makeCardInfo(User user) {
 		return user.getHands()
-			.getCards()
-			.stream()
-			.map(Card::toString)
-			.collect(Collectors.joining(DELIMITER));
+				.getCards()
+				.stream()
+				.map(Card::toString)
+				.collect(Collectors.joining(DELIMITER));
 	}
 
 	private static void printDrawTitle(List<User> players) {
 		String playerNames = players.stream()
-			.map(User::getName)
-			.collect(Collectors.joining(DELIMITER));
+				.map(User::getName)
+				.collect(Collectors.joining(DELIMITER));
 		System.out.println("딜러와 " + playerNames + "에게 2장의 카드를 나누었습니다.");
 	}
 

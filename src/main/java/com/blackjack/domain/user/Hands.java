@@ -22,8 +22,8 @@ public class Hands {
 
 	public Score calculateScore() {
 		int totalScore = cards.stream()
-			.mapToInt(Card::getScore)
-			.sum();
+				.mapToInt(Card::getScore)
+				.sum();
 
 		totalScore = computeAceBy(totalScore);
 		return new Score(totalScore);

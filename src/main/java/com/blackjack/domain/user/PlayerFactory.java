@@ -17,8 +17,8 @@ public class PlayerFactory {
 		validateDuplication(names);
 		validateBounds(names);
 		return names.stream()
-			.map(Player::new)
-			.collect(toList());
+				.map(Player::new)
+				.collect(toList());
 	}
 
 	private static void validateDuplication(List<Name> names) {

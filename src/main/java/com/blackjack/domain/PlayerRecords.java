@@ -18,9 +18,9 @@ public class PlayerRecords {
 
 	public Map<ResultType, Long> calculateDealerResult() {
 		return records.values()
-			.stream()
-			.map(ResultType::convertResultType)
-			.collect(Collectors.groupingBy(Function.identity(), counting()));
+				.stream()
+				.map(ResultType::convertResultType)
+				.collect(Collectors.groupingBy(Function.identity(), counting()));
 	}
 
 	public Map<User, ResultType> getRecords() {
