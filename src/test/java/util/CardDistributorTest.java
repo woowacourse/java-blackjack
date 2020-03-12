@@ -2,7 +2,7 @@ package util;
 
 import domain.card.CardDeck;
 import domain.user.Dealer;
-import domain.user.Player;
+import domain.user.User;
 import factory.CardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,15 +15,15 @@ public class CardDistributorTest {
     void giveOneCard() {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
         final Dealer dealer = new Dealer();
-        final Player player = new Player("player");
+        final User user = new User("user");
 
         assertThat(dealer.getCardSize()).isEqualTo(0);
-        assertThat(player.getCardSize()).isEqualTo(0);
+        assertThat(user.getCardSize()).isEqualTo(0);
 
         CardDistributor.giveOneCard(cardDeck, dealer);
-        CardDistributor.giveOneCard(cardDeck, player);
-        CardDistributor.giveOneCard(cardDeck, player);
+        CardDistributor.giveOneCard(cardDeck, user);
+        CardDistributor.giveOneCard(cardDeck, user);
         assertThat(dealer.getCardSize()).isEqualTo(1);
-        assertThat(player.getCardSize()).isEqualTo(2);
+        assertThat(user.getCardSize()).isEqualTo(2);
     }
 }

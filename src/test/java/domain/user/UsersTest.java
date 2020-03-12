@@ -1,15 +1,15 @@
 package domain.user;
 
-import factory.PlayerFactory;
+import factory.UserFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayersTest {
+public class UsersTest {
     @Test
-    @DisplayName("Players 생성")
+    @DisplayName("Users 생성")
     void create() {
-        assertThat(new Players(PlayerFactory.create("playerA,playerB"))).isInstanceOf(Players.class);
+        assertThat(new Users(UserFactory.create("playerA,playerB"))).isInstanceOf(Users.class);
     }
 }

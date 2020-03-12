@@ -4,29 +4,83 @@ import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
     @Test
-    @DisplayName("Player 생성")
-    void create() {
-        assertThat(new Player("이름")).isInstanceOf(Player.class);
+    @DisplayName("카드 추가 확인")
+    void addCard() {
+        Player Player = new User("user");
+        assertThat(Player.getCards().size()).isEqualTo(0);
+
+        Player.addCard(Card.of("스페이드", "A"));
+        assertThat(Player.getCards().size()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("플레이어 승리 여부 확인 - 딜러와 동점일 경우 승리")
-    void isWin() {
-        Dealer dealer = new Dealer();
-        Player player = new Player("player");
+    @DisplayName("이름 확인")
+    void getName() {
+        Player Player = new User("user");
+        assertThat(Player.getName()).isEqualTo("user");
+    }
 
-        dealer.addCard(Card.of("스페이드", "K"));
-        player.addCard(Card.of("스페이드", "9"));
-        assertThat(player.isWin(dealer)).isFalse();
+    @Test
+    @DisplayName("점수 확인")
+    void getScore() {
+        Player Player = new User("user");
+        Player.addCard(Card.of("스페이드", "A"));
+        Player.addCard(Card.of("하트", "10"));
 
-        player.addCard(Card.of("스페이드", "10"));
-        assertThat(player.isWin(dealer)).isTrue();
+        assertThat(Player.getScore()).isEqualTo(21);
+    }
 
-        dealer.addCard(Card.of("스페이드", "9"));
-        assertThat(player.isWin(dealer)).isTrue();
+    @Test
+    @DisplayName("카드 사이즈 확인")
+    void getCardSize() {
+        Player Player = new User("user");
+        assertThat(Player.getCardSize()).isEqualTo(0);
+
+        Player.addCard(Card.of("스페이드", "A"));
+        assertThat(Player.getCardSize()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("카드 리스트 확인")
+    void getCards() {
+        Player Player = new User("user");
+        Player.addCard(Card.of("스페이드", "A"));
+        assertThat(Player.getCards()).isInstanceOf(List.class);
+    }
+
+    @Test
+    @DisplayName("버스트 확인")
+    void isBust() {
+        Player Player = new User("user");
+        Player.addCard(Card.of("스페이드", "10"));
+        Player.addCard(Card.of("스페이드", "A"));
+        assertThat(Player.isBust()).isFalse();
+
+        Player.addCard(Card.of("하트", "10"));
+        assertThat(Player.isBust()).isFalse();
+
+        Player.addCard(Card.of("하트", "A"));
+        assertThat(Player.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("버스트 아님 확인")
+    void isNotBust() {
+        Player Player = new User("user");
+        Player.addCard(Card.of("스페이드", "10"));
+        Player.addCard(Card.of("스페이드", "A"));
+        assertThat(Player.isNotBust()).isTrue();
+
+        Player.addCard(Card.of("하트", "10"));
+        assertThat(Player.isNotBust()).isTrue();
+
+        Player.addCard(Card.of("하트", "A"));
+        assertThat(Player.isNotBust()).isFalse();
     }
 }

@@ -1,8 +1,8 @@
 package domain.game;
 
 import domain.user.Dealer;
-import domain.user.Players;
-import factory.PlayerFactory;
+import domain.user.Users;
+import factory.UserFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.ResultGenerator;
@@ -14,8 +14,8 @@ public class ResultsTest {
     @DisplayName("Results 생성")
     void create() {
         Dealer dealer = new Dealer();
-        Players players = new Players(PlayerFactory.create("playerA,PlayerB"));
+        Users users = new Users(UserFactory.create("playerA,PlayerB"));
 
-        assertThat(ResultGenerator.create(dealer, players)).isInstanceOf(Results.class);
+        assertThat(ResultGenerator.create(dealer, users)).isInstanceOf(Results.class);
     }
 }

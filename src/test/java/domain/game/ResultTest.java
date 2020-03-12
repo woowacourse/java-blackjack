@@ -9,13 +9,13 @@ public class ResultTest {
     @Test
     @DisplayName("Result 생성")
     void create() {
-        assertThat(new Result("player")).isInstanceOf(Result.class);
+        assertThat(new Result("user")).isInstanceOf(Result.class);
     }
 
     @Test
     @DisplayName("winCount 증가 확인")
     void addWinCount() {
-        Result result = new Result("player");
+        Result result = new Result("user");
 
         assertThat(result.getWinCount()).isEqualTo(0);
 
@@ -26,7 +26,7 @@ public class ResultTest {
     @Test
     @DisplayName("loseCount 증가 확인")
     void addLoseCount() {
-        Result result = new Result("player");
+        Result result = new Result("user");
 
         assertThat(result.getLoseCount()).isEqualTo(0);
 
@@ -37,7 +37,7 @@ public class ResultTest {
     @Test
     @DisplayName("플레이 횟수 1초과 확인")
     void isPlayCountMoreThanOne() {
-        Result result = new Result("player");
+        Result result = new Result("user");
 
         assertThat(result.isPlayCountMoreThanOne()).isFalse();
 
@@ -51,7 +51,7 @@ public class ResultTest {
     @Test
     @DisplayName("1회 이상 승리 확인")
     void hasWin() {
-        Result result = new Result("player");
+        Result result = new Result("user");
 
         assertThat(result.hasWin()).isFalse();
 
