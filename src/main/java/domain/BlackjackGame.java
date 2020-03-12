@@ -59,8 +59,8 @@ public class BlackjackGame {
 
 	public void initialDraw() {
 		for (int i = 0; i < 2; i++) {
-			dealer.add(deck.deal());
-			players.forEach(player -> player.add(deck.deal()));
+			dealer.draw(deck.deal());
+			players.forEach(player -> player.draw(deck.deal()));
 		}
 	}
 
@@ -69,7 +69,11 @@ public class BlackjackGame {
 	}
 
 	public void draw(Player player) {
-		player.add(deck.deal());
+		player.draw(deck.deal());
+	}
+
+	public void drawDealer() {
+		dealer.draw(deck.deal());
 	}
 
 	public List<Player> getPlayers() {

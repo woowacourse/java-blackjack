@@ -42,7 +42,7 @@ public class GamerTest {
 	void 버스트(List<Card> cards, boolean expected) {
 		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			gamer.add(card);
+			gamer.draw(card);
 		}
 		assertThat(gamer.isBust()).isEqualTo(expected);
 	}
@@ -52,7 +52,7 @@ public class GamerTest {
 	void 블랙잭(List<Card> cards, boolean expected) {
 		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			gamer.add(card);
+			gamer.draw(card);
 		}
 		assertThat(gamer.isBlackjack()).isEqualTo(expected);
 	}
