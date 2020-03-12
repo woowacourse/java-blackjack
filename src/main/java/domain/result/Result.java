@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Result {
 		List<String> results = new ArrayList<>();
 		int dealerScore = dealer.calculateScore();
 		for (User user : users) {
-			if (dealer.isBust() && user.isBust() == false) {
+			if (dealer.isBust() && !user.isBust()) {
 				results.add(user.getName() + ": 승");
 			} else if (user.calculateScore() > dealerScore) {
 				results.add(user.getName() + ": 승");
@@ -44,7 +44,7 @@ public class Result {
 			}
 		}
 
-		results.add(0, dealer.getName() + ": ㅅ123123123");
+		results.add(0, String.format("%s : %d승 %d무 %d패", dealer.getName(), win, draw, lose));
 		return results;
 	}
 }

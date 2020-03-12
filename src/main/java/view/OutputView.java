@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.result.Result;
 import domain.card.Card;
 import domain.user.User;
 
@@ -67,5 +68,12 @@ public class OutputView {
 
 	private static String parseCardString(Card card) {
 		return card.getTypeName() + card.getSymbol();
+	}
+
+	public static void printGameResult(Result result) {
+		List<String> result1 = result.getResult();
+		for (String s : result1) {
+			System.out.println(s);
+		}
 	}
 }

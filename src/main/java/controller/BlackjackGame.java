@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Result;
+import domain.result.Result;
 import domain.YesOrNo;
 import domain.card.CardDivider;
 import domain.user.Dealer;
@@ -28,6 +28,7 @@ public class BlackjackGame {
 		printBlackjackUsers(users, dealer);
 		checkCanDraw(users, dealer);
 		printUserResult(users, dealer);
+		printGameResult(users, dealer);
 	}
 
 	private void initCards(List<User> users, Dealer dealer) {
