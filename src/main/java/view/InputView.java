@@ -17,13 +17,10 @@ public class InputView {
     }
 
     public static boolean inputMoreCard(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
         String input = scanner.nextLine();
-        if (input.equals("y")) {
-            return true;
-        }
-        if (input.equals("n")) {
-            return false;
+        if (input.equals("y") || input.equals("n")) {
+            return input.equals("y");
         }
         throw new IllegalArgumentException("Not valid input (only y/n)");
     }

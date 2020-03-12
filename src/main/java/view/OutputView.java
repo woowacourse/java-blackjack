@@ -4,7 +4,7 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import domain.user.User;
-import domain.WinningResult;
+import domain.Outcome;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +12,7 @@ public class OutputView {
 
     public static void printCardDistribution(Players players) {
         System.out
-            .println("\n딜러와 " + String.join(", ", players.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
+            .printf("\n딜러와 %s에게 2장의 카드를 나누었습니다.\n", String.join(", ", players.getPlayerNames()));
     }
 
     public static void printUsersCards(Dealer dealer, Players players) {
@@ -55,7 +55,7 @@ public class OutputView {
     }
 
     private static void printPlayerFinalResult(Player player) {
-        System.out.println(player.getName() + ": " + player.getWinningResult().getName());
+        System.out.println(player.getName() + ": " + player.getOutcome().getName());
     }
 
     /* todo 수정 필요
@@ -69,19 +69,19 @@ public class OutputView {
           - 이럴 경우에는, Player의 WinningResult는 그대로 놔둬도 되는가?
     */
     private static void printDealerFinalResult(Players players) {
-        Map<WinningResult, Integer> dealerWinningResult = new HashMap<>();
-        dealerWinningResult.put(WinningResult.WIN, 0);
-        dealerWinningResult.put(WinningResult.DRAW, 0);
-        dealerWinningResult.put(WinningResult.LOSE, 0);
+        Map<Outcome, Integer> dealerWinningResult = new HashMap<>();
+        dealerWinningResult.put(Outcome.WIN, 0);
+        dealerWinningResult.put(Outcome.DRAW, 0);
+        dealerWinningResult.put(Outcome.LOSE, 0);
         for (Player player : players.getPlayers()) {
-            dealerWinningResult.put(player.getWinningResult(),
-                dealerWinningResult.get(player.getWinningResult()) + 1);
+            dealerWinningResult.put(player.getOutcome(),
+                dealerWinningResult.get(player.getOutcome()) + 1);
         }
         System.out.print("딜러: ");
-        for (WinningResult winningResult : dealerWinningResult.keySet()) {
-            if (dealerWinningResult.get(winningResult) != 0) {
+        for (Outcome outcome : dealerWinningResult.keySet()) {
+            if (dealerWinningResult.get(outcome) != 0) {
                 System.out
-                    .print(dealerWinningResult.get(winningResult) + winningResult.getName() + " ");
+                    .print(dealerWinningResult.get(outcome) + outcome.getName() + " ");
             }
         }
         System.out.println();
