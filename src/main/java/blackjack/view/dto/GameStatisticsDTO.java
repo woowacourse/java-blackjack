@@ -1,15 +1,15 @@
-package blackjack.view;
+package blackjack.view.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.GameReport;
+import blackjack.card.GameReport;
 
-public class GameStatistics {
+public class GameStatisticsDTO {
 	private final String dealerResult;
 	private final String gamblerResult;
 
-	public GameStatistics(List<GameReport> gameReports) {
+	public GameStatisticsDTO(List<GameReport> gameReports) {
 		this.dealerResult = collectRecord(gameReports);
 		this.gamblerResult = collectGamblerResult(gameReports);
 	}

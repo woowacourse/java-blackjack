@@ -1,4 +1,4 @@
-package blackjack.player.card.component;
+package blackjack.card.component;
 
 public enum CardNumber {
 	ACE(1, "A"),

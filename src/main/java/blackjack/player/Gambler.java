@@ -2,8 +2,8 @@ package blackjack.player;
 
 import java.util.Objects;
 
-import blackjack.GameReport;
-import blackjack.player.card.CardBundle;
+import blackjack.card.CardBundle;
+import blackjack.card.GameReport;
 
 public class Gambler extends Player {
 	public Gambler(CardBundle cardBundle, String name) {

@@ -1,8 +1,8 @@
 package blackjack.player;
 
-import blackjack.GameReport;
-import blackjack.player.card.CardBundle;
-import blackjack.player.card.GameResult;
+import blackjack.card.CardBundle;
+import blackjack.card.GameReport;
+import blackjack.card.GameResult;
 
 public class Dealer extends Player {
 

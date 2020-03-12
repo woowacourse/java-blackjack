@@ -3,9 +3,9 @@ package blackjack.player;
 import java.util.Collections;
 import java.util.List;
 
-import blackjack.GameReport;
-import blackjack.player.card.Card;
-import blackjack.player.card.CardBundle;
+import blackjack.card.Card;
+import blackjack.card.CardBundle;
+import blackjack.card.GameReport;
 
 public abstract class Player {
 	protected final String name;

@@ -1,71 +1,76 @@
 package blackjack.view;
 
-import blackjack.player.Player;
-import blackjack.player.Players;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.player.Player;
+import blackjack.player.Players;
+import blackjack.view.dto.GameStatisticsDTO;
+
 public class OutputView {
-    public static void showCards(Players players) {
-        List<Player> gamblers = findGamblers(players);
-        Player dealer = findDealer(players);
+	public static void showCards(Players players) {
+		List<Player> gamblers = findGamblers(players);
+		Player dealer = findDealer(players);
 
-        System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", collectGamblersNames(gamblers)));
+		System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", collectGamblersNames(gamblers)));
 
-        System.out.println(String.format("%s", getCardInfo(dealer).split(",")[0]));
-        gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));
-    }
+		System.out.println(String.format("%s", getCardInfo(dealer).split(",")[0]));
+		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));
+	}
 
-    private static List<Player> findGamblers(Players players) {
-        return players.getPlayers().stream()
-                .filter(Player::isGambler)
-                .collect(Collectors.toList());
-    }
+	private static List<Player> findGamblers(Players players) {
+		return players.getPlayers().stream()
+			.filter(Player::isGambler)
+			.collect(Collectors.toList());
+	}
 
-    private static Player findDealer(Players players) {
-        return players.getPlayers().stream()
-                .filter(Player::isDealer)
-                .findFirst()
-                .orElseThrow(AssertionError::new);
-    }
+	private static Player findDealer(Players players) {
+		return players.getPlayers().stream()
+			.filter(Player::isDealer)
+			.findFirst()
+			.orElseThrow(AssertionError::new);
+	}
 
-    private static String collectGamblersNames(List<Player> gamblers) {
-        return gamblers.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
-    }
+	private static String collectGamblersNames(List<Player> gamblers) {
+		return gamblers.stream()
+			.map(Player::getName)
+			.collect(Collectors.joining(", "));
+	}
 
-    public static String getCardInfo(Player player) {
-        return String.format("%s: %s", player.getName(), makeCardInfo(player));
-    }
+	public static void showCardInfo(Player player) {
+		System.out.println(getCardInfo(player));
+	}
 
-    private static String makeCardInfo(Player player) {
-        return player.getCardBundle().stream()
-                .map(card -> String.format("%s%s", card.getMessage(), card.getSymbol()))
-                .collect(Collectors.joining(", "));
-    }
+	private static String getCardInfo(Player player) {
+		return String.format("%s: %s", player.getName(), makeCardInfo(player));
+	}
 
-    private static String getCardList(Players players) {
-        List<Player> gamePlayers = players.getPlayers();
-        return gamePlayers.stream()
-                .map(player -> String.format("%s 결과 - %d", getCardInfo(player), player.getScore()))
-                .collect(Collectors.joining(System.lineSeparator()));
-    }
+	private static String makeCardInfo(Player player) {
+		return player.getCardBundle().stream()
+			.map(card -> String.format("%s%s", card.getMessage(), card.getSymbol()))
+			.collect(Collectors.joining(", "));
+	}
 
-    public static void showDealerDrawMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-    }
+	private static String getCardList(Players players) {
+		List<Player> gamePlayers = players.getPlayers();
+		return gamePlayers.stream()
+			.map(player -> String.format("%s 결과 - %d", getCardInfo(player), player.getScore()))
+			.collect(Collectors.joining(System.lineSeparator()));
+	}
 
-    public static void showReports(Players players) {
-        showFinalPlayersCards(players);
-        GameStatistics gameStatistics = new GameStatistics(players.getReports());
-        System.out.println("\n## 최종 승패");
-        System.out.println(gameStatistics.getDealerResult());
-        System.out.println(gameStatistics.getGamblerResult());
-    }
+	public static void showDealerDrawMessage() {
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+	}
 
-    private static void showFinalPlayersCards(Players players) {
-        System.out.println(getCardList(players));
-    }
+	public static void showReports(Players players) {
+		showFinalPlayersCards(players);
+		GameStatisticsDTO gameStatisticsDTO = new GameStatisticsDTO(players.getReports());
+		System.out.println("\n## 최종 승패");
+		System.out.println(gameStatisticsDTO.getDealerResult());
+		System.out.println(gameStatisticsDTO.getGamblerResult());
+	}
+
+	private static void showFinalPlayersCards(Players players) {
+		System.out.println(getCardList(players));
+	}
 }

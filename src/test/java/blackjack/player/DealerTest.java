@@ -1,16 +1,17 @@
 package blackjack.player;
 
-import blackjack.GameReport;
-import blackjack.player.card.Card;
-import blackjack.player.card.CardBundle;
-import blackjack.player.card.GameResult;
-import blackjack.player.card.component.CardNumber;
-import blackjack.player.card.component.Symbol;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.card.Card;
+import blackjack.card.CardBundle;
+import blackjack.card.GameReport;
+import blackjack.card.GameResult;
+import blackjack.card.component.CardNumber;
+import blackjack.card.component.Symbol;
 
 class DealerTest {
 

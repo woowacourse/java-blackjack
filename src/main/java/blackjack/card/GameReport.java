@@ -1,8 +1,6 @@
-package blackjack;
+package blackjack.card;
 
 import java.util.Objects;
-
-import blackjack.player.card.GameResult;
 
 public class GameReport {
 	private final String name;

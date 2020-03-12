@@ -1,4 +1,4 @@
-package blackjack.player.card;
+package blackjack.card;
 
 import java.util.ArrayList;
 import java.util.Collections;

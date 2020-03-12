@@ -1,6 +1,6 @@
 package blackjack.player;
 
-import static blackjack.player.card.CardBundleHelper.*;
+import static blackjack.card.CardBundleHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.GameReport;
-import blackjack.player.card.GameResult;
-import blackjack.player.card.component.CardNumber;
+import blackjack.card.GameReport;
+import blackjack.card.GameResult;
+import blackjack.card.component.CardNumber;
 
 class PlayersTest {
 

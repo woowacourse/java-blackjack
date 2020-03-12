@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.GameReport;
-import blackjack.player.card.CardFactory;
+import blackjack.card.CardFactory;
+import blackjack.card.GameReport;
 
 public class Players {
 	private final List<Player> players;
