@@ -1,9 +1,10 @@
 package model;
 
+import static controller.BlackJackGame.BLACK_JACK_COUNT;
+
 public abstract class User {
     protected final String name;
     protected final CardHand cardHand;
-
 
     public User(CardHand cardHand) {
         this("딜러", cardHand);
@@ -17,13 +18,13 @@ public abstract class User {
     public abstract String toStringCardHand();
 
     public void drawCard(CardHand cardHand) {
-        for(Card drawCard: cardHand.getCards()){
+        for (Card drawCard : cardHand) {
             this.cardHand.addCard(drawCard);
         }
     }
 
-    public boolean isBust(){
-        return getScore()>21;
+    public boolean isBust() {
+        return getScore() > BLACK_JACK_COUNT;
     }
 
     public CardHand getCardHand() {
@@ -34,8 +35,7 @@ public abstract class User {
         return cardHand.calculateScore();
     }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 }

@@ -4,9 +4,9 @@ import java.util.*;
 
 public class CardFactory {
 
-    public static List<Card> createCardList(){
+    public static List<Card> createCardList() {
         List<Card> cards = new ArrayList<>();
-        for(Symbol symbol : Symbol.values()){
+        for (Symbol symbol : Symbol.values()) {
             createByType(cards, symbol);
         }
         return Collections.unmodifiableList(cards);

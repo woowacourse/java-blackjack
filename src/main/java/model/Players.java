@@ -2,22 +2,28 @@ package model;
 
 import java.util.*;
 
-public class Players {
+import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
+
+public class Players implements Iterable<Player> {
     private final List<Player> players = new ArrayList<>();
 
-    public Players(List<String> names, Deck deck) {
-        for (String name: names) {
-            players.add(new Player(name, deck.draw(2)));
+    public Players(PlayerNames names, Deck deck) {
+        for (String name : names) {
+            players.add(new Player(name, deck.draw(INITIAL_DRAW_COUNT)));
         }
     }
 
-    public String getNames(){
+    public String getNames() {
         List<String> names = new ArrayList<>();
-        players.stream().forEach(p->names.add(p.toString()));
+
+        for (Player player : players) {
+            names.add(player.getName());
+        }
         return String.join(",", names);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    @Override
+    public Iterator<Player> iterator() {
+        return players.iterator();
     }
 }

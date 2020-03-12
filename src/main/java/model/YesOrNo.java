@@ -32,21 +32,21 @@ public class YesOrNo {
     }
 
     private static void validateYesOrNo(String input) {
-        if (!(isYes(input) || isNo(input))) {
+        if (!(isInputYes(input) || isInputNo(input))) {
             throw new IllegalYesOrNoInputException("Y 또는 N를 입력해 주세요.");
         }
     }
 
-    private static boolean isNo(String input) {
+    private static boolean isInputNo(String input) {
         return input.equalsIgnoreCase("N");
     }
 
-    private static boolean isYes(String input) {
+    private static boolean isInputYes(String input) {
         return input.equalsIgnoreCase("Y");
     }
 
-    public boolean getYesOrNo() {
-        return isYes(yesOrNo);
+    public boolean isInputYes() {
+        return isInputYes(yesOrNo);
     }
 }
 

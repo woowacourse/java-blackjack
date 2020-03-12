@@ -26,14 +26,14 @@ public class UserTest {
     @DisplayName("딜러 이름 테스트")
     void dealer_Name() {
         User dealer = new Dealer(notBustHand1);
-        assertThat(dealer.toString()).isEqualTo("딜러");
+        assertThat(dealer.getName()).isEqualTo("딜러");
     }
 
     @Test
     @DisplayName("이름을 불러오는 지 테스트")
     void name_Test() {
         Player player = new Player(PLAYER_NAME, notBustHand1);
-        assertThat(player.toString()).isEqualTo(PLAYER_NAME);
+        assertThat(player.getName()).isEqualTo(PLAYER_NAME);
     }
 
     @Test

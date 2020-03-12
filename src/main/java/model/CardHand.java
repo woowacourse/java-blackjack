@@ -2,9 +2,10 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class CardHand  {
+public class CardHand implements Iterable<Card> {
     public static final int ADDITIONAL_ACE_SCORE = 10;
     public static final int BLACK_JACK_SCORE = 21;
 
@@ -12,10 +13,6 @@ public class CardHand  {
 
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 
     public int calculateScore() {
@@ -37,15 +34,20 @@ public class CardHand  {
         return cards.stream()
                 .map(Card::getSymbol)
                 .map(Symbol::getScore)
-                .reduce((integer, integer2) -> integer+integer2)
+                .reduce((integer, integer2) -> integer + integer2)
                 .get();
     }
 
     public boolean isAce() {
-         return cards.stream().anyMatch(Card::isAce);
+        return cards.stream().anyMatch(Card::isAce);
     }
 
-    public boolean contains(Card card) {
-        return cards.contains(card);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    @Override
+    public Iterator<Card> iterator() {
+        return cards.iterator();
     }
 }

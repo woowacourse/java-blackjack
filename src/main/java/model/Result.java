@@ -24,7 +24,7 @@ public enum Result {
         return Arrays.stream(Result.values())
                 .filter(result -> result.isSameResult(compareValue))
                 .findFirst()
-                .orElse(DRAW);
+                .get();
     }
 
     private boolean isSameResult(int compareValue) {

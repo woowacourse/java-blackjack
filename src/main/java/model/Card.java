@@ -11,7 +11,7 @@ public class Card {
         this.type = type;
     }
 
-    public boolean isSameCard(Symbol symbol, Type type){
+    public boolean isSameCard(Symbol symbol, Type type) {
         return this.symbol == symbol && this.type == type;
     }
 
@@ -39,6 +39,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return symbol.toString()+type.toString();
+        return symbol.toString() + type.toString();
     }
 }

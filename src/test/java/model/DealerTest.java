@@ -36,6 +36,4 @@ public class DealerTest {
 
         assertThat(dealer.getResult().get(Result.WIN)).isEqualTo(1);
     }
-
-
 }

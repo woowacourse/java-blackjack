@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,13 +21,13 @@ public class YesOrNoTest {
     @DisplayName("입력값이 N, n 일 때 테스트")
     @ValueSource(strings = {"N", "n"})
     void input_No_Test(String input) {
-        assertThat(YesOrNo.of(input).getYesOrNo()).isFalse();
+        assertThat(YesOrNo.of(input).isInputYes()).isFalse();
     }
 
     @ParameterizedTest
     @DisplayName("입력값이 Y, y 일 때 테스트")
     @ValueSource(strings = {"Y", "y"})
     void input_Yes_Test(String input) {
-        assertThat(YesOrNo.of(input).getYesOrNo()).isTrue();
+        assertThat(YesOrNo.of(input).isInputYes()).isTrue();
     }
 }

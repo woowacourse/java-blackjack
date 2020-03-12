@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends User {
-
     public static final String DELIMITER = ", ";
 
     private Result result;
@@ -17,7 +16,7 @@ public class Player extends User {
     public String toStringCardHand() {
         List<String> cardNames = new ArrayList<>();
 
-        for (Card card : cardHand.getCards()) {
+        for (Card card : cardHand) {
             cardNames.add(card.toString());
         }
         return String.join(DELIMITER, cardNames);

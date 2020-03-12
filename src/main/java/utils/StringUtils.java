@@ -18,7 +18,7 @@ public class StringUtils {
         }
     }
 
-    public static String trimString(String input){
+    public static String trimString(String input) {
         return input.replaceAll(" ", "");
     }
 }

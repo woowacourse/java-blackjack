@@ -34,6 +34,7 @@ public class CardHandTest {
         cardHand.addCard(new Card(Symbol.SIX, Type.DIAMOND));
         assertThat(cardHand.calculateScoreWithAce()).isEqualTo(20);
     }
+
     @Test
     @DisplayName("Ace를 가지고 있을때 - Ace 1점일때")
     void calculateScoreWithOneAce_Test() {

@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    public static final int INITIAL_DRAW_COUNT = 2;
     private List<Card> cards = new ArrayList<>();
 
     public Deck(List<Card> cards) {
@@ -18,15 +17,6 @@ public class Deck {
     private void shuffle() {
         Collections.shuffle(cards);
     }
-
-//    public CardHand initialDraw() {
-//        validateSize();
-//        CardHand cardHand = new CardHand();
-//        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
-//            cardHand.addCard(draw());
-//        }
-//        return cardHand;
-//    }
 
     public CardHand draw(int count) {
         validateSize(count);

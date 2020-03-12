@@ -21,7 +21,7 @@ public class DeckTest {
     @Test
     void drawTest() {
         assertThatThrownBy(() -> {
-            deck.draw(DECK_SIZE+1);
+            deck.draw(DECK_SIZE + 1);
         }).isInstanceOf(EmptyDeckException.class).hasMessageMatching("53장 이상 draw 할 카드가 존재하지 않습니다.");
     }
 

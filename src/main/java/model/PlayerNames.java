@@ -4,11 +4,12 @@ import utils.StringUtils;
 
 import java.util.*;
 
-public class PlayerName {
+public class PlayerNames implements Iterable<String> {
     private static final String COMMA = ",";
-    List<String> names;
 
-    public PlayerName(String input) {
+    private final List<String> names;
+
+    public PlayerNames(String input) {
         validate(input);
         names = Arrays.asList(StringUtils.trimString(input).split(COMMA));
     }
@@ -25,7 +26,12 @@ public class PlayerName {
         }
     }
 
-    public List<String> getNames() {
-        return Collections.unmodifiableList(names);
+    public boolean contains(String name) {
+        return names.contains(name);
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return names.iterator();
     }
 }
