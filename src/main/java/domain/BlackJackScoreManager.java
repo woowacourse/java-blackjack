@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.HandCards;
+import domain.card.possessable.HandCards;
 
 public class BlackJackScoreManager {
     public static final int DEALER_DRAW_THRESHOLD = 16;

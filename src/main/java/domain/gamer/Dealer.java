@@ -1,9 +1,9 @@
-package domain.player;
+package domain.gamer;
 
 import domain.BlackJackScoreManager;
-import domain.card.HandCards;
+import domain.card.possessable.HandCards;
 
-public class Dealer extends BlackJackPlayer {
+public class Dealer extends Gamer {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {

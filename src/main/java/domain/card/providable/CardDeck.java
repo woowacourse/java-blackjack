@@ -1,4 +1,4 @@
-package domain;
+package domain.card.providable;
 
 import domain.card.Card;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardDeck implements CardProvider{
+public class CardDeck implements CardProvidable {
     private static final int FIRST = 0;
     private final List<Card> cards = new ArrayList<>();
 

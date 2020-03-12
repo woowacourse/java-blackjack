@@ -1,10 +1,10 @@
-package domain.player;
+package domain.gamer;
 
 import domain.BlackJackScoreManager;
-import domain.card.HandCards;
+import domain.card.possessable.HandCards;
 
-public class User extends BlackJackPlayer {
-    public User(String name) {
+public class Player extends Gamer {
+    public Player(String name) {
         super(name, new HandCards());
     }
 

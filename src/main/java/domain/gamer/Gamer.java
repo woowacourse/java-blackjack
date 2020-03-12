@@ -1,21 +1,22 @@
-package domain.player;
+package domain.gamer;
 
-import domain.CardPossessor;
-import domain.CardProvider;
+import domain.card.possessable.CardPossessable;
+import domain.card.providable.CardProvidable;
 import domain.result.WinLose;
 
 import java.util.Objects;
 
-public abstract class BlackJackPlayer {
+public abstract class Gamer implements BlackJackGameable {
     protected final String name;
-    protected final CardPossessor cardPossessor;
+    protected final CardPossessable cardPossessable;
 
-    public BlackJackPlayer(String name, CardPossessor cards) {
+    public Gamer(String name, CardPossessable cards) {
         this.name = name;
-        this.cardPossessor = cards;
+        this.cardPossessable = cards;
     }
 
-    public WinLose determineWinLose(BlackJackPlayer counterParts) {
+    @Override
+    public WinLose determineWinLose(BlackJackGameable counterParts) {
         if (this.calculateScore() > counterParts.calculateScore()) {
             return WinLose.WIN;
         }
@@ -23,18 +24,21 @@ public abstract class BlackJackPlayer {
         return WinLose.LOSE;
     }
 
-    public void drawCard(CardProvider cardProvider) {
-        cardPossessor.drawCard(cardProvider);
+    @Override
+    public void drawCard(CardProvidable cardProvidable) {
+        cardPossessable.drawCard(cardProvidable);
     }
 
+    @Override
     public int calculateScore() {
-        return cardPossessor.calculateScore();
+        return cardPossessable.calculateScore();
     }
 
+    @Override
     public abstract boolean canDrawMore();
 
-    public CardPossessor getCardsOnHand() {
-        return cardPossessor;
+    public CardPossessable getCardsOnHand() {
+        return cardPossessable;
     }
 
     public String getName() {
@@ -45,7 +49,7 @@ public abstract class BlackJackPlayer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BlackJackPlayer that = (BlackJackPlayer) o;
+        Gamer that = (Gamer) o;
         return Objects.equals(name, that.name);
     }
 

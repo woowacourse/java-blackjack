@@ -1,13 +1,13 @@
-package domain.card;
+package domain.card.possessable;
 
 import domain.BlackJackScoreManager;
-import domain.CardPossessor;
-import domain.CardProvider;
+import domain.card.Card;
+import domain.card.providable.CardProvidable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandCards implements CardPossessor {
+public class HandCards implements CardPossessable {
     private final List<Card> cards;
 
     public HandCards() {
@@ -25,8 +25,8 @@ public class HandCards implements CardPossessor {
     }
 
     @Override
-    public void drawCard(CardProvider cardProvider) {
-        cards.add(cardProvider.giveCard());
+    public void drawCard(CardProvidable cardProvidable) {
+        cards.add(cardProvidable.giveCard());
     }
 
     @Override

@@ -1,8 +1,8 @@
-package domain;
+package domain.card.providable;
 
 import domain.card.Card;
 
 @FunctionalInterface
-public interface CardProvider {
+public interface CardProvidable {
     Card giveCard();
 }

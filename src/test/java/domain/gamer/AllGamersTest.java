@@ -1,9 +1,9 @@
-package domain.player;
+package domain.gamer;
 
-import domain.CardDeck;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.card.providable.CardDeck;
 import domain.result.DealerResult;
 import domain.result.UserResult;
 import domain.result.WinLose;
@@ -16,20 +16,20 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AllBlackJackPlayersTest {
+public class AllGamersTest {
     @Test
     void 첫_페이즈_드로우_테스트() {
         Dealer dealer = new Dealer();
-        User user1 = new User("phobi");
-        User user2 = new User("jason");
+        Player player1 = new Player("phobi");
+        Player player2 = new Player("jason");
 
-        List<User> users = Arrays.asList(user1, user2);
+        List<Player> players = Arrays.asList(player1, player2);
 
-        AllBlackJackPlayers allBlackJackPlayers = new AllBlackJackPlayers(dealer, users);
-        allBlackJackPlayers.drawFirstPhase(new CardDeck());
+        AllGamers allGamers = new AllGamers(dealer, players);
+        allGamers.drawFirstPhase(new CardDeck());
 
-        for (BlackJackPlayer blackJackPlayer : allBlackJackPlayers.getGamers()) {
-            int cardAmount = blackJackPlayer.getCardsOnHand().getCardAmount();
+        for (Gamer gamer : allGamers.getGamers()) {
+            int cardAmount = gamer.getCardsOnHand().getCardAmount();
             assertThat(cardAmount).isEqualTo(2);
         }
     }
@@ -37,18 +37,18 @@ public class AllBlackJackPlayersTest {
     @Test
     void 결과_찾기_테스트() {
         Dealer dealer = new Dealer();
-        User user1 = new User("phobi");
-        User user2 = new User("jason");
+        Player player1 = new Player("phobi");
+        Player player2 = new Player("jason");
 
         makePlayersDrawFixedCards(dealer, 10, 5);
-        makePlayersDrawFixedCards(user1, 2, 3);
-        makePlayersDrawFixedCards(user2, 10, 6);
+        makePlayersDrawFixedCards(player1, 2, 3);
+        makePlayersDrawFixedCards(player2, 10, 6);
 
-        List<User> users = Arrays.asList(user1, user2);
+        List<Player> players = Arrays.asList(player1, player2);
 
-        AllBlackJackPlayers allBlackJackPlayers = new AllBlackJackPlayers(dealer, users);
+        AllGamers allGamers = new AllGamers(dealer, players);
 
-        assertThat(allBlackJackPlayers.determineResults()).contains(
+        assertThat(allGamers.determineResults()).contains(
                 new UserResult("phobi", WinLose.LOSE),
                 new UserResult("jason", WinLose.WIN));
 
@@ -57,16 +57,16 @@ public class AllBlackJackPlayersTest {
         expectedDealerWinLose.put(WinLose.WIN, 1);
         expectedDealerWinLose.put(WinLose.LOSE, 1);
 
-        assertThat(allBlackJackPlayers.determineResults().stream()
+        assertThat(allGamers.determineResults().stream()
                 .filter(a -> a instanceof DealerResult)
                 .findAny()
                 .get()
                 .getWinLose()).isEqualTo(expectedDealerWinLose);
     }
 
-    private void makePlayersDrawFixedCards(BlackJackPlayer blackJackPlayer, int... ranks) {
+    private void makePlayersDrawFixedCards(Gamer gamer, int... ranks) {
         for (int rank : ranks) {
-            blackJackPlayer.drawCard(() -> Card.of(Rank.of(rank), Suit.CLOVER));
+            gamer.drawCard(() -> Card.of(Rank.of(rank), Suit.CLOVER));
         }
     }
 }
