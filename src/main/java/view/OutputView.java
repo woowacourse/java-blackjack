@@ -1,10 +1,10 @@
 package view;
 
-import domain.DealerResult;
-import domain.Result;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
+import domain.result.DealerResult;
+import domain.result.Result;
 import domain.user.Dealer;
 import domain.user.Participant;
 import domain.user.Player;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class OutputView {
-    public static void printEnterPlayerNames() {
+    static void printEnterPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
@@ -58,7 +58,7 @@ public class OutputView {
         return String.join(", ", cardState);
     }
 
-    public static void printAskWantMoreCard(String name) {
+    static void printAskWantMoreCard(String name) {
         System.out.println();
         System.out.println(name + "님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
@@ -98,5 +98,9 @@ public class OutputView {
 
     public static void printPlayerResult(String name, Result result) {
         System.out.println(name + ": " + result);
+    }
+
+    public static void printExceptionMessage(Exception e) {
+        System.out.println(e.getMessage());
     }
 }

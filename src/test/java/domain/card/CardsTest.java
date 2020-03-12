@@ -12,15 +12,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
-    private static Stream<Arguments> getCardsOneAceExist() {
-        List<Card> cardsWhenAceIs11 = new ArrayList<>();
-        cardsWhenAceIs11.add(new Card(Symbol.ACE, Type.CLUB));
-        cardsWhenAceIs11.add(new Card(Symbol.QUEEN, Type.CLUB));
+    private static List<Card> cardList;
 
-        List<Card> cardsWhenAceIs1 = new ArrayList<>();
-        cardsWhenAceIs1.add(new Card(Symbol.ACE, Type.CLUB));
-        cardsWhenAceIs1.add(new Card(Symbol.QUEEN, Type.CLUB));
-        cardsWhenAceIs1.add(new Card(Symbol.QUEEN, Type.HEART));
+    private static Stream<Arguments> getCardsOneAceExist() {
+        List<Card> cardsWhenAceIs11
+            = makeCardList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.QUEEN, Type.CLUB));
+        List<Card> cardsWhenAceIs1 = makeCardList(new Card(Symbol.ACE, Type.CLUB),
+            new Card(Symbol.QUEEN, Type.CLUB), new Card(Symbol.QUEEN, Type.HEART));
 
         return Stream.of(
             Arguments.of(cardsWhenAceIs11),
@@ -29,14 +27,10 @@ public class CardsTest {
     }
 
     private static Stream<Arguments> getCardsTwoAceExist() {
-        List<Card> cardsWhenAceIs11 = new ArrayList<>();
-        cardsWhenAceIs11.add(new Card(Symbol.ACE, Type.CLUB));
-        cardsWhenAceIs11.add(new Card(Symbol.ACE, Type.CLUB));
-
-        List<Card> cardsWhenAceIs1 = new ArrayList<>();
-        cardsWhenAceIs1.add(new Card(Symbol.ACE, Type.CLUB));
-        cardsWhenAceIs1.add(new Card(Symbol.ACE, Type.CLUB));
-        cardsWhenAceIs1.add(new Card(Symbol.QUEEN, Type.HEART));
+        List<Card> cardsWhenAceIs11
+            = makeCardList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.ACE, Type.CLUB));
+        List<Card> cardsWhenAceIs1 = makeCardList(new Card(Symbol.ACE, Type.CLUB),
+            new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.QUEEN, Type.HEART));
 
         return Stream.of(
             Arguments.of(cardsWhenAceIs11, 12),
@@ -44,15 +38,11 @@ public class CardsTest {
         );
     }
 
-    @Test
-    void sumScores() {
-        List<Card> card = new ArrayList<>();
-        card.add(new Card(Symbol.TWO, Type.CLUB));
-        card.add(new Card(Symbol.QUEEN, Type.CLUB));
-
-        Cards cards = new Cards();
-        cards.put(card);
-        assertThat(cards.sumScores()).isEqualTo(12);
+    private static List<Card> makeCardList(Card card1, Card card2) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        return cards;
     }
 
     @ParameterizedTest
@@ -73,36 +63,42 @@ public class CardsTest {
         assertThat(userCards.sumScores()).isEqualTo(sumResult);
     }
 
+    private static List<Card> makeCardList(Card card1, Card card2, Card card3) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        return cards;
+    }
+
+    @Test
+    void sumScores() {
+        cardList = makeCardList(new Card(Symbol.TWO, Type.CLUB), new Card(Symbol.QUEEN, Type.CLUB));
+        Cards cards = new Cards();
+        cards.put(cardList);
+        assertThat(cards.sumScores()).isEqualTo(12);
+    }
+
     @Test
     void isBlackJackWhenFalse() {
-        List<Card> card = new ArrayList<>();
-        card.add(new Card(Symbol.TWO, Type.CLUB));
-        card.add(new Card(Symbol.QUEEN, Type.CLUB));
-
+        cardList = makeCardList(new Card(Symbol.TWO, Type.CLUB), new Card(Symbol.QUEEN, Type.CLUB));
         Cards cards = new Cards();
-        cards.put(card);
+        cards.put(cardList);
         assertThat(cards.isBlackJack()).isFalse();
     }
 
     @Test
     void isBlackJackWhenTrue() {
-        List<Card> card = new ArrayList<>();
-        card.add(new Card(Symbol.ACE, Type.CLUB));
-        card.add(new Card(Symbol.QUEEN, Type.CLUB));
-
+        cardList = makeCardList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.QUEEN, Type.CLUB));
         Cards cards = new Cards();
-        cards.put(card);
+        cards.put(cardList);
         assertThat(cards.isBlackJack()).isTrue();
     }
 
     @Test
     void isLargerThan() {
         Cards cards = new Cards();
-        List<Card> cardList = new ArrayList<>();
-
-        cardList.add(new Card(Symbol.ACE, Type.CLUB));
-        cardList.add(new Card(Symbol.QUEEN, Type.CLUB));
-
+        cardList = makeCardList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.QUEEN, Type.CLUB));
         cards.put(cardList);
         assertThat(cards.isLargerThan(Cards.BLACKJACK_SCORE)).isFalse();
     }
@@ -110,11 +106,7 @@ public class CardsTest {
     @Test
     void isSmallerThan() {
         Cards cards = new Cards();
-        List<Card> cardList = new ArrayList<>();
-
-        cardList.add(new Card(Symbol.ACE, Type.CLUB));
-        cardList.add(new Card(Symbol.NINE, Type.CLUB));
-
+        cardList = makeCardList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.NINE, Type.CLUB));
         cards.put(cardList);
         assertThat(cards.isSmallerThan(Cards.BLACKJACK_SCORE)).isTrue();
     }

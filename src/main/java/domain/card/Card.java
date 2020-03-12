@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Objects;
-
 /**
  * 카드 한장을 의미하는 객체
  */
@@ -28,19 +26,6 @@ public class Card {
         }
         Card card = (Card) o;
         return symbol == card.symbol && type == card.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(symbol, type);
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-            "symbol=" + symbol +
-            ", type=" + type +
-            '}';
     }
 
     public String getSymbolName() {

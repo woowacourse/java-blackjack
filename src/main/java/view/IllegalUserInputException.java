@@ -1,6 +1,7 @@
 package view;
 
 public class IllegalUserInputException extends RuntimeException {
+
     public IllegalUserInputException() {
         super();
     }

@@ -35,7 +35,4 @@ public class Players {
         return Collections.unmodifiableList(this.players);
     }
 
-    public int count() {
-        return players.size();
-    }
 }

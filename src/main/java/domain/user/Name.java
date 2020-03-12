@@ -14,7 +14,7 @@ public class Name {
         return this.name.equals(name);
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 }
