@@ -25,7 +25,6 @@ public class WinningResultTest {
         card4 = Card.of(CardNumber.KING, CardSuitSymbol.HEART);
         card5 = Card.of(CardNumber.TWO, CardSuitSymbol.CLUB);
         card6 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-
     }
 
     @Test
@@ -38,8 +37,8 @@ public class WinningResultTest {
         WinningResult winningResult = new WinningResult(dealer, players);
         Map<String, Boolean> winningPlayerResult = winningResult.getWinningResult();
 
-        Assertions.assertThat(winningPlayerResult.keySet()).containsSequence("Labin","Subway");
-        Assertions.assertThat(winningPlayerResult.values()).containsSequence(true,false);
+        Assertions.assertThat(winningPlayerResult.keySet()).containsSequence("Labin", "Subway");
+        Assertions.assertThat(winningPlayerResult.values()).containsSequence(true, false);
 
     }
 }
