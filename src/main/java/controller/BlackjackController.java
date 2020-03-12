@@ -13,32 +13,36 @@ import static view.OutputView.*;
 public class BlackjackController {
 	public static void run(Deck deck, Dealer dealer, Players players) {
 		BlackjackService.giveInitialCards(deck, dealer, players);
-		printInitialDistribution(players);
 		printInitialStatus(dealer.openCard(), players);
 
 		if (dealer.isBlackJack()) {
-			printResultStatus(dealer.openAllCards(), players);
-			printResult(BlackjackService.createResult(dealer, players), players);
+			printResult(dealer, players);
 			return;
 		}
 
-		players.forEach(player -> {
-			while (player.canDrawMore() && wantDraw(player)) {
-				BlackjackService.addCard(player, deck);
-				printCardsStatusOf(player);
-			}
-		});
+		players.forEach(player -> proceedExtraDraw(player, deck));
 
 		while (dealer.canDrawMore()) {
 			BlackjackService.addCard(dealer, deck);
-			printDealerDraw();
+			printDealerDrawing();
 		}
 
+		printResult(dealer, players);
+	}
+
+	private static void printResult(Dealer dealer, Players players) {
 		printResultStatus(dealer.openAllCards(), players);
-		printResult(BlackjackService.createResult(dealer, players), players);
+		printTotalResult(BlackjackService.createResult(dealer, players), players);
+	}
+
+	private static void proceedExtraDraw(Player player, Deck deck) {
+		while (player.canDrawMore() && wantDraw(player)) {
+			BlackjackService.addCard(player, deck);
+			printCardsStatusOf(player);
+		}
 	}
 
 	private static boolean wantDraw(Player player) {
-		return PlayerIntentionType.of(inputPlayerIntention(player)).equals(PlayerIntentionType.YES);
+		return PlayerIntentionType.YES.equals(PlayerIntentionType.of(inputPlayerIntention(player)));
 	}
 }
