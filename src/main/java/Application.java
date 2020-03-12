@@ -9,6 +9,8 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
+	private static final int DISTRIBUTE_CARD_SIZE = 2;
+
 	public static void main(String[] args) {
 		run(new CardDeck(), new Dealer(), PlayersFactory.create((InputView.inputNames())));
 	}
@@ -25,7 +27,7 @@ public class Application {
 	}
 
 	private static void distributeTwoCard(CardDeck cardDeck, Dealer dealer, Players players) {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < DISTRIBUTE_CARD_SIZE; i++) {
 			dealer.giveCard(cardDeck, dealer);
 			dealer.giveCard(cardDeck, players);
 		}
