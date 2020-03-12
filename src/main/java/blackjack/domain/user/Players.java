@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +34,14 @@ public class Players {
 
 
     public void computeResult(Dealer dealer) {
-//        players.stream()
-//                .map(player -> player.createResult(dealer));
         for (Player player : players) {
             player.createResult(dealer);
         }
     }
 
-    public List<Result> getResult() {
+    public List<ResultType> getResult() {
         return players.stream()
-                .map(Player::getResult)
+                .map(Player::getResultType)
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +50,6 @@ public class Players {
                 .map(Player::getName)
                 .collect(Collectors.toList());
     }
-
 
     public List<String> showCardsInfo() {
         return players.stream()

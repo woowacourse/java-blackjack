@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.YorN;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -12,13 +11,16 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class Controller {
+    private static String WRONG_INPUT_ERROR_MSG = "잘못된 입력입니다.";
+    private Dealer dealer;
+    private Players players;
+    private CardDeck deck;
 
-    public void run() {
-        // 초기화
-        Dealer dealer = new Dealer();
+    public Controller() {
+        dealer = new Dealer();
         List<String> names = InputView.getNames();
-        Players players = new Players(names);
-        CardDeck deck = new CardDeck();
+        players = new Players(names);
+        deck = new CardDeck();
 
         for (Player player : players.getPlayers()) {
             setInitialCards(player, deck);
@@ -26,23 +28,22 @@ public class Controller {
         setInitialCards(dealer, deck);
 
         OutputView.printInitialStatus(players, dealer);
+    }
 
-        // 게임 진행 ~ 다른 클래스로 추출해서 사용하는 방법?
+    public void play() {
         for (Player player : players.getPlayers()) {
-            while (!player.canReceiveMoreCard() && proceed(player.getName())) {
-               player.addCard(deck.getCard());
-               OutputView.printStatus(player.getName(), player.getCards());
-            }
+            playerBlackjack(player, deck);
         }
 
         if (dealer.canReceiveMoreCard()) {
             dealer.addCard(deck.getCard());
             OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
         }
+    }
 
+    public void computeResult() {
         OutputView.printFinalStatus(players, dealer);
 
-        // 결과 계산
         players.computeResult(dealer);
         dealer.computeResult(players.getResult());
 
@@ -51,7 +52,20 @@ public class Controller {
 
     private boolean proceed(String name) {
         String input = InputView.getYorN(name);
-        return YorN.valueOf(input).getResult();
+        if (input.equals("y")) {
+            return true;
+        }
+        if (input.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException(WRONG_INPUT_ERROR_MSG);
+    }
+
+    private void playerBlackjack(Player player, CardDeck deck) {
+        while (!player.canReceiveMoreCard() && proceed(player.getName())) {
+            player.addCard(deck.getCard());
+            OutputView.printStatus(player.getName(), player.getCards());
+        }
     }
 
     private void setInitialCards(User user, CardDeck deck) {

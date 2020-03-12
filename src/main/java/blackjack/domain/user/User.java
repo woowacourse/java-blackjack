@@ -20,6 +20,7 @@ public abstract class User {
     public User(String name) {
         validateNotNull(name);
         validateNameLength(name);
+        this.name = name;
         cards = new Cards();
     }
 
@@ -38,7 +39,7 @@ public abstract class User {
     }
 
     public void addCard(Card card) {
-        Objects.requireNonNull(name, String.format(NULL_ERR_MSG, "카드"));
+        Objects.requireNonNull(card, String.format(NULL_ERR_MSG, "카드"));
         cards.add(card);
     }
 

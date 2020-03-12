@@ -1,33 +1,36 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Result;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.result.ResultType;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Dealer extends User {
+    private static final String name = "딜러";
     private static final String CANT_FIND_CARD_MSG = "카드가 존재하지 않습니다.";
     public static final int LOWER_BOUND = 16;
-    private final Map<Result, Integer> results;
+    private final Map<ResultType, Integer> results;
 
     public Dealer() {
-        super("딜러");
+        super(name);
         this.results = new HashMap<>();
     }
 
-    public void computeResult(List<Result> playerResult) {
-        for (Result k : Result.values()) {
-            results.put(Result.reverse(k), Result.getSum(k, playerResult));
+    public void computeResult(List<ResultType> playerResultType) {
+        for (ResultType k : ResultType.values()) {
+            results.put(ResultType.reverse(k), ResultType.computeSum(k, playerResultType));
         }
     }
 
+    public int getResultSum(ResultType resultType) {
+        return results.getOrDefault(resultType, 0);
+    }
+
     public Card getFirstCard() {
-        return super.getCards().getCards()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(CANT_FIND_CARD_MSG));
+        return super.getCards().getCard(CardDeck.FIRST_INDEX);
     }
 
     @Override

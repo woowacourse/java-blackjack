@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultType;
 
 public class OutputView {
 
@@ -58,15 +58,15 @@ public class OutputView {
     public static void printFinalResult(Dealer dealer, Players players) {
         System.out.println();
         StringBuilder dealerMessage = new StringBuilder();
-        for (Result result : Result.values()) {
-//            dealerMessage.append(dealer.computeSum(result));
-            dealerMessage.append(result.getMessage());
+        for (ResultType resultType : ResultType.values()) {
+            dealerMessage.append(dealer.getResultSum(resultType));
+            dealerMessage.append(resultType.getMessage());
         }
 
         System.out.println("## 최종 승패");
         System.out.println(String.format(String.format("딜러: %s", dealerMessage)));
         for (Player player : players.getPlayers()) {
-            System.out.println(String.format("%s: %s", player.getName(), player.getResult().getMessage()));
+            System.out.println(String.format("%s: %s", player.getName(), player.getResultType().getMessage()));
         }
     }
 }
