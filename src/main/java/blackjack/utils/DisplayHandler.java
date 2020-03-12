@@ -1,7 +1,7 @@
 package blackjack.utils;
 
-import blackjack.domain.User;
-import blackjack.domain.Users;
+import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ public class DisplayHandler {
                         .collect(Collectors.joining("\n"));
     }
 
-    public static String parseFinalResult(Users users) {
+    public static String parseFinalScoreAnnouncement(Users users) {
         return users.getUsers().stream()
                 .map(User::showFinalCardInfo)
                 .collect(Collectors.joining("\n"));

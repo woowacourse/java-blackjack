@@ -1,8 +1,13 @@
 package blackjack.controller;
 
-import blackjack.domain.*;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.UserFactory;
+import blackjack.domain.user.Users;
 import blackjack.utils.DisplayHandler;
 import blackjack.utils.InputHandler;
+import blackjack.utils.ResultHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -22,6 +27,7 @@ public class BlackjackGameController {
             dealer.receiveCard(deck.drawCard());
             OutputView.printDealerHitMoreCard();
         }
-        OutputView.printFinalResult(DisplayHandler.parseFinalResult(users));
+        OutputView.printFinalCardScore(DisplayHandler.parseFinalScoreAnnouncement(users));
+        OutputView.printFinalResult(ResultHandler.findAllWinners(users));
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import blackjack.utils.InputHandler;
 import org.junit.jupiter.api.DisplayName;

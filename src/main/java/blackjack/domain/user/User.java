@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
 
 public abstract class User {
     public static final int BLACKJACK = 21;

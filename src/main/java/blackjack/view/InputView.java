@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.utils.Answer;
+import blackjack.domain.user.Decision;
 
 import java.util.Scanner;
 
@@ -28,7 +28,7 @@ public class InputView {
             if (input == null || input.isEmpty()) {
                 throw new IllegalArgumentException("다시 입력해 주세요.");
             }
-            return Answer.of(input);
+            return Decision.of(input);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return askForHit(name);

@@ -1,8 +1,8 @@
-package blackjack.utils;
+package blackjack.domain.user;
 
 import java.util.Arrays;
 
-public enum Answer {
+public enum Decision {
     Y("Y", "y", true),
     N("N", "n", false);
 
@@ -11,7 +11,7 @@ public enum Answer {
     private String lowercase;
     private boolean intended;
 
-    Answer(String uppercase, String lowercase, boolean intended) {
+    Decision(String uppercase, String lowercase, boolean intended) {
         this.uppercase = uppercase;
         this.lowercase = lowercase;
         this.intended = intended;

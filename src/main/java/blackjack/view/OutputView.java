@@ -14,10 +14,15 @@ public class OutputView {
     }
 
     public static void printDealerHitMoreCard() {
-        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다");
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다\n");
     }
 
-    public static void printFinalResult(String finalResult) {
-        System.out.println("## 결과 : \n" + finalResult);
+    public static void printFinalCardScore(String finalResult) {
+        System.out.println("\n## 결과 : \n" + finalResult + "\n");
+    }
+
+    public static void printFinalResult(String allWinners) {
+        System.out.println("## 최종 승패");
+        System.out.println(allWinners);
     }
 }
