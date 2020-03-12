@@ -5,6 +5,6 @@ import domain.Score;
 public class PlayerDrawStrategy implements DrawStrategy {
 	@Override
 	public boolean canDraw(Score score) {
-		return score.isNotBurst();
+		return score.isNotBurst() && !score.isBlackjackScore();
 	}
 }
