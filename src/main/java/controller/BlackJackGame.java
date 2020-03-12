@@ -39,7 +39,7 @@ public class BlackJackGame {
     }
 
     private void playersAdditionalDraw(Player player) {
-        while(player.isAvailableToDraw() && isYes(player)) {
+        while (player.isAvailableToDraw() && isYes(player)) {
             player.draw(deck.dealOut());
             OutputView.printDealOutResult(player);
         }

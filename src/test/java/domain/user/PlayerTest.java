@@ -85,7 +85,7 @@ class PlayerTest {
                 createCardsAndWinningResult(Type.THREE, Type.FOUR, WinningResult.LOSE),
                 createCardsAndWinningResult(Type.THREE, Type.FIVE, WinningResult.LOSE),
                 createCardsAndWinningResult(Type.THREE, Type.SIX, WinningResult.WIN)
-                );
+        );
     }
 
     @ParameterizedTest

@@ -56,7 +56,7 @@ class DealerTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), false)
         );
-   }
+    }
 
     @Test
     @DisplayName("딜러 승패 확인 결과")

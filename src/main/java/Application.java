@@ -23,7 +23,4 @@ public class Application {
         OutputView.printWinningResult(dealer, players);
     }
 
-
-
-
 }
