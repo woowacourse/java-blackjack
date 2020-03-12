@@ -24,7 +24,9 @@ class DealerResultTest {
 		Map<MatchResult, Long> actual = dealerResult.calculateDealerResult();
 
 		Map<MatchResult, Long> expected = new HashMap<>();
-		expected.put(MatchResult.WIN, 2L);
+		expected.put(MatchResult.LOSE, 2L);
+		expected.put(MatchResult.WIN, 0L);
+		expected.put(MatchResult.DRAW, 0L);
 		assertThat(actual).containsExactlyInAnyOrderEntriesOf(expected);
 	}
 }
