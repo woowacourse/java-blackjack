@@ -9,6 +9,8 @@ public class WhetherAddCardTest {
 	void of() {
 		assertThat(WhetherAddCard.of("y")).isEqualTo(WhetherAddCard.YES);
 		assertThat(WhetherAddCard.of("n")).isEqualTo(WhetherAddCard.NO);
+		assertThat(WhetherAddCard.of("Y")).isEqualTo(WhetherAddCard.YES);
+		assertThat(WhetherAddCard.of("N")).isEqualTo(WhetherAddCard.NO);
 	}
 
 	@Test
@@ -21,5 +23,7 @@ public class WhetherAddCardTest {
 	void isYes() {
 		assertThat(WhetherAddCard.of("y").isYes()).isTrue();
 		assertThat(WhetherAddCard.of("n").isYes()).isFalse();
+		assertThat(WhetherAddCard.of("Y").isYes()).isTrue();
+		assertThat(WhetherAddCard.of("N").isYes()).isFalse();
 	}
 }

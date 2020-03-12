@@ -13,8 +13,9 @@ public enum WhetherAddCard {
 	}
 
 	public static WhetherAddCard of(String type) {
+		String lowerCaseType = type.toLowerCase();
 		return Arrays.stream(values())
-				.filter(whetherAddCard -> whetherAddCard.type.equals(type))
+				.filter(whetherAddCard -> whetherAddCard.type.equals(lowerCaseType))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("y 또는 n이 아닙니다."));
 	}
