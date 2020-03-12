@@ -3,10 +3,10 @@ package controller;
 import java.util.List;
 
 import domain.card.Deck;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.PlayersFactory;
-import domain.participant.YesOrNo;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.gamer.PlayersFactory;
+import domain.gamer.YesOrNo;
 import domain.result.GameResult;
 import view.InputView;
 import view.OutputView;

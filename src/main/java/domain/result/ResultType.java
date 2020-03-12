@@ -3,7 +3,7 @@ package domain.result;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-public enum Result {
+public enum ResultType {
 	WIN("승", (myScore, otherScore) -> {
 		return (!myScore.isBust() && otherScore.isBust()) || myScore.isBiggerThan(otherScore);
 	}),
@@ -17,24 +17,24 @@ public enum Result {
 	private final String result;
 	private final BiFunction<Score, Score, Boolean> expression;
 
-	Result(String result,
+	ResultType(String result,
 		BiFunction<Score, Score, Boolean> expression) {
 		this.result = result;
 		this.expression = expression;
 	}
 
-	public static Result of(Score myScore, Score otherScore) {
-		return Arrays.stream(Result.values())
+	public static ResultType of(Score myScore, Score otherScore) {
+		return Arrays.stream(ResultType.values())
 			.filter(result -> result.expression.apply(myScore, otherScore))
 			.findFirst()
 			.get();
 	}
 
-	public static Result reverse(Result result) {
-		if (result == WIN) {
+	public static ResultType reverse(ResultType resultType) {
+		if (resultType == WIN) {
 			return LOSE;
 		}
-		if (result == LOSE) {
+		if (resultType == LOSE) {
 			return WIN;
 		}
 		return DRAW;

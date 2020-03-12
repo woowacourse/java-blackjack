@@ -6,11 +6,11 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Player;
 import domain.result.GameResult;
-import domain.result.Result;
+import domain.result.ResultType;
 
 public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
@@ -44,12 +44,12 @@ public class OutputView {
 		System.out.println();
 	}
 
-	public static void printCards(Participant user) {
+	public static void printCards(Gamer user) {
 		StringBuilder sb = createCardsFormat(user);
 		System.out.println(sb);
 	}
 
-	private static StringBuilder createCardsFormat(Participant user) {
+	private static StringBuilder createCardsFormat(Gamer user) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(user.getName())
 			.append(": ")
@@ -73,28 +73,28 @@ public class OutputView {
 		System.out.println(sb);
 	}
 
-	private static void createScoreFormat(Participant participant, StringBuilder sb) {
-		sb.append(createCardsFormat(participant))
+	private static void createScoreFormat(Gamer gamer, StringBuilder sb) {
+		sb.append(createCardsFormat(gamer))
 			.append(" - 결과: ")
-			.append(participant.getScore().getScore())
+			.append(gamer.calculateScore().getScore())
 			.append(NEW_LINE);
 	}
 
-	public static void printDealerResult(TreeMap<Result, Integer> dealerResult) {
+	public static void printDealerResult(TreeMap<ResultType, Integer> dealerResult) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
 		sb.append("딜러: ");
-		for (Result result : dealerResult.keySet()) {
-			sb.append(dealerResult.get(result)).append(result.getResult());
+		for (ResultType resultType : dealerResult.keySet()) {
+			sb.append(dealerResult.get(resultType)).append(resultType.getResult());
 		}
 		System.out.println(sb);
 	}
 
 	public static void printPlayersResult(GameResult gameResult) {
 		StringBuilder sb = new StringBuilder();
-		Map<Player, Result> playersResult = gameResult.getPlayersResult();
+		Map<Player, ResultType> playersResult = gameResult.getPlayersResult();
 
-		for (Map.Entry<Player, Result> playerResultEntry : playersResult.entrySet()) {
+		for (Map.Entry<Player, ResultType> playerResultEntry : playersResult.entrySet()) {
 			sb.append(playerResultEntry.getKey().getName())
 				.append(": ")
 				.append(playerResultEntry.getValue().getResult())

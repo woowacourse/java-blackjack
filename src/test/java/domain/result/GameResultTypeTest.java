@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
 
-class GameResultTest {
+class GameResultTypeTest {
 	private List<Player> players;
 	private Dealer dealer;
 
@@ -39,9 +39,9 @@ class GameResultTest {
 	void fromTest() {
 		GameResult gameResult = GameResult.from(players, dealer);
 
-		Map<Player, Result> expected = new HashMap<>();
-		expected.put(players.get(0), Result.LOSE);
-		expected.put(players.get(1), Result.WIN);
+		Map<Player, ResultType> expected = new HashMap<>();
+		expected.put(players.get(0), ResultType.LOSE);
+		expected.put(players.get(1), ResultType.WIN);
 
 		assertThat(gameResult.getPlayersResult()).isEqualTo(expected);
 	}
@@ -51,9 +51,9 @@ class GameResultTest {
 	void dealerResultTest() {
 		GameResult gameResult = GameResult.from(players, dealer);
 
-		Map<Result, Integer> expected = new HashMap<>();
-		expected.put(Result.LOSE, 1);
-		expected.put(Result.WIN, 1);
+		Map<ResultType, Integer> expected = new HashMap<>();
+		expected.put(ResultType.LOSE, 1);
+		expected.put(ResultType.WIN, 1);
 
 		assertThat(gameResult.dealerResult()).isEqualTo(expected);
 

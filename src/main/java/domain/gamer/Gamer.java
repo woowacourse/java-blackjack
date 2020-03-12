@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.gamer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,11 +8,11 @@ import java.util.Objects;
 import domain.card.Card;
 import domain.result.Score;
 
-public abstract class Participant {
+public abstract class Gamer {
 	private final String name;
 	private final List<Card> cards;
 
-	public Participant(String name) {
+	public Gamer(String name) {
 		validate(name);
 		this.name = name;
 		this.cards = new ArrayList<>();
@@ -45,7 +45,7 @@ public abstract class Participant {
 		return Score.calculate(cards).isLowerThan(getHitPoint());
 	}
 
-	public Score getScore() {
+	public Score calculateScore() {
 		return Score.calculate(cards);
 	}
 
@@ -63,7 +63,7 @@ public abstract class Participant {
 			return true;
 		if (object == null || getClass() != object.getClass())
 			return false;
-		Participant that = (Participant)object;
+		Gamer that = (Gamer)object;
 		return Objects.equals(name, that.name) &&
 			Objects.equals(cards, that.cards);
 	}
