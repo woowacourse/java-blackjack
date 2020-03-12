@@ -22,7 +22,7 @@ public class Application {
 	private static List<User> generateUsers() {
 		List<User> users = new ArrayList<>();
 
-		users.add(new Dealer("dealer"));
+		users.add(new Dealer(Dealer.NAME));
 		users.addAll(PlayerFactory.create(InputView.inputPlayerNames()));
 		return users;
 	}
