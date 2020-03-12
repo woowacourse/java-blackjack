@@ -11,10 +11,12 @@ public class Dealer extends Player {
         super(cards);
     }
 
-    public void insertAdditionalCard(Cards cards) {
+    public boolean isAdditionalCard(Cards cards) {
         if (CardCalculator.isUnderSixteen(this.cards)) {
             insertCard(cards);
+            return true;
         }
+        return false;
     }
 
     @Override

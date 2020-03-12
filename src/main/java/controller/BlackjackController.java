@@ -2,12 +2,14 @@ package controller;
 
 import domain.AnswerType;
 import domain.PlayerFactory;
+import domain.WinningResult;
 import domain.card.Cards;
 import domain.player.Players;
 import domain.player.User;
 import dto.RequestAnswerDTO;
 import dto.RequestPlayerNameDTO;
 import dto.ResponsePlayerDTO;
+import dto.ResponseWinningResultDTO;
 import view.InputView;
 import view.OutputView;
 
@@ -38,6 +40,16 @@ public class BlackjackController {
                 answerType = validateBlackJack(user, answerType);
             } while (answerType.equals(AnswerType.YES) && isBlackJack(user));
         }
+
+        if (players.getDealer().isAdditionalCard(cards)) {
+            OutputView.printDealerAdditionalCard();
+        }
+
+        OutputView.printFinalResult(ResponsePlayerDTO.getResult(players));
+        WinningResult winningResult = new WinningResult(players);
+        ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
+                winningResult.getWinningResult());
+        OutputView.printWinningResult(responseWinningResultDTO.getWinningResult());
     }
 
     private static AnswerType validateBlackJack(User user, AnswerType answerType) {

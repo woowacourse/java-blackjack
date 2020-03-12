@@ -25,7 +25,7 @@ public class CardCalculatorTest {
     void isUnderSixteenWithAceTest() {
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
-        dealer.insertAdditionalCard(cards);
+        dealer.isAdditionalCard(cards);
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
     }
@@ -35,7 +35,7 @@ public class CardCalculatorTest {
     void isUnderSixteenWithAceWithoutTenTest() {
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB));
-        dealer.insertAdditionalCard(cards);
+        dealer.isAdditionalCard(cards);
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
     }
@@ -45,7 +45,7 @@ public class CardCalculatorTest {
     void isUnderSixteenWithoutAceGetCardTest() {
         Dealer dealer = new Dealer(Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
-        dealer.insertAdditionalCard(cards);
+        dealer.isAdditionalCard(cards);
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
     }
@@ -55,7 +55,7 @@ public class CardCalculatorTest {
     void isUnderSixteenWithoutAceTest() {
         Dealer dealer = new Dealer(Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SIX, CardSuitSymbol.CLUB));
-        dealer.insertAdditionalCard(cards);
+        dealer.isAdditionalCard(cards);
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
     }

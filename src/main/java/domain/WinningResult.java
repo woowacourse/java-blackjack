@@ -1,21 +1,21 @@
 package domain;
 
 import domain.player.Player;
+import domain.player.Players;
 import domain.player.User;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class WinningResult {
     private Map<String, Boolean> winningPlayer;
 
-    public WinningResult(Player dealer, List<Player> users) {
+    public WinningResult(Players players) {
         winningPlayer = new HashMap<>();
 
-        for (Player user : users) {
-            User targetUser = (User) user;
-            winningPlayer.put(targetUser.getName(), DecisionWinner.compareWinner(targetUser, dealer));
+        Player dealer = players.getDealer();
+        for (User user : players.getUsers()) {
+            winningPlayer.put(user.getName(), DecisionWinner.compareWinner(user, dealer));
         }
     }
 
