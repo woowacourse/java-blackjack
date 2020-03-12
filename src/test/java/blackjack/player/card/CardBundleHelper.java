@@ -7,7 +7,7 @@ public class CardBundleHelper {
 	public static CardBundle aCardBundle(CardNumber... cardNumbers) {
 		CardBundle cardBundle = new CardBundle();
 		for (CardNumber cardNumber : cardNumbers) {
-			cardBundle.addCard(new Card(Symbol.HEART, cardNumber));
+			cardBundle.addCard(Card.of(Symbol.HEART, cardNumber));
 		}
 		return cardBundle;
 	}

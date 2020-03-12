@@ -1,20 +1,19 @@
 package blackjack.player;
 
-import static blackjack.player.card.CardBundleHelper.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import blackjack.player.card.Card;
+import blackjack.player.card.CardBundle;
+import blackjack.player.card.component.CardNumber;
+import blackjack.player.card.component.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.player.card.Card;
-import blackjack.player.card.CardBundle;
-import blackjack.player.card.component.CardNumber;
-import blackjack.player.card.component.Symbol;
+import java.util.stream.Stream;
+
+import static blackjack.player.card.CardBundleHelper.aCardBundle;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 
@@ -55,8 +54,8 @@ class PlayerTest {
 		//given
 		Player player = new Dealer(new CardBundle());
 		Symbol club = Symbol.CLUB;
-		player.addCard(new Card(club, CardNumber.ACE));
-		player.addCard(new Card(club, cardNumber));
+		player.addCard(Card.of(club, CardNumber.ACE));
+		player.addCard(Card.of(club, cardNumber));
 
 		//when
 		boolean isBlackjack = player.isBlackjack();
