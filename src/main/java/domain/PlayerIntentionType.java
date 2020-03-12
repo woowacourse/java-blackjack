@@ -14,12 +14,8 @@ public enum PlayerIntentionType {
 
 	public static PlayerIntentionType of(String input) {
 		return Arrays.stream(PlayerIntentionType.values())
-				.filter(value -> value.getValue().equals(input))
-				.findFirst()
-				.orElseThrow(NullPointerException::new);
-	}
-
-	public String getValue() {
-		return value;
+			.filter(type -> type.value.equals(input))
+			.findFirst()
+			.orElseThrow(NullPointerException::new);
 	}
 }
