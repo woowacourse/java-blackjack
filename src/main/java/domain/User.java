@@ -1,13 +1,11 @@
 package domain;
 
 public class User extends Player {
-    private String naem;
-    private boolean isWin;
+    private String name;
 
-    public User(String naem, Card... cards) {
+    public User(String name, Card... cards) {
         super(cards);
-        this.naem = naem;
-        this.isWin = false;
+        this.name = name;
     }
 
     @Override
@@ -19,5 +17,9 @@ public class User extends Player {
         if (AnswerType.YES.equals(answerType)) {
             insertCard(cards);
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }
