@@ -30,7 +30,8 @@ public class ResultCalculator {
 		int loseCount = 0;
 		if (player.isWin(dealer)) {
 			winCount++;
-		} else {
+		}
+		if (dealer.isWin(player)) {
 			loseCount++;
 		}
 		return new Result(player.getName(), winCount, loseCount);
