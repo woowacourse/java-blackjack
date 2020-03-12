@@ -16,7 +16,7 @@ public class PlayerTest {
 	@Test
 	void isBlackjackTest() {
 		Player player = new Player("동글");
-		player.addCards(Arrays.asList(new Card(Symbol.CLOVER, Type.ACE), 
+		player.addCards(Arrays.asList(new Card(Symbol.CLOVER, Type.ACE),
 			new Card(Symbol.CLOVER, Type.JACK)));
 
 		assertThat(player.isBlackjack()).isTrue();
