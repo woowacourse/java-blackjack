@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 public class CardFactory implements CardCreateStrategy {
 
+    @Override
     public List<Card> getCards() {
         return Arrays.stream(Symbol.values())
                 .flatMap(this::makeCard)

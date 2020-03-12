@@ -11,18 +11,34 @@ public class AceScoreStrategy implements ScoreStrategy {
 
     @Override
     public boolean support(List<Card> cards) {
-        return hasAce(cards) && calculate(cards) <= BLACKJACK_VALUE;
+        return getAceCount(cards) > 0;
     }
 
-    private boolean hasAce(List<Card> cards) {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+    private int getAceCount(List<Card> cards) {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     @Override
     public int calculate(List<Card> cards) {
-        return cards.stream()
+        int sum = cards.stream()
                 .mapToInt(Card::getNumber)
-                .sum() + ACE_WEIGHT;
+                .sum();
+        int aceCount = getAceCount(cards);
+
+        while (canAddAceWeight(sum, aceCount)) {
+            sum += ACE_WEIGHT;
+            aceCount--;
+        }
+        return sum;
+    }
+
+    private boolean canAddAceWeight(int sum, int aceCount) {
+        return isNotBurst(sum) && aceCount > 0;
+    }
+
+    private boolean isNotBurst(int sum) {
+        return sum + ACE_WEIGHT <= BLACKJACK_VALUE;
     }
 }

@@ -16,7 +16,7 @@ public enum ScoreCalculator {
         this.scoreStrategy = scoreStrategy;
     }
 
-    public static ScoreCalculator findByCardBundle(List<Card> cards) {
+    public static ScoreCalculator findByCards(List<Card> cards) {
         return Arrays.stream(values())
                 .filter(scoreCalculator -> scoreCalculator.scoreStrategy.support(cards))
                 .findFirst()

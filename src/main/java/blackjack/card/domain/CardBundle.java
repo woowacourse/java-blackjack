@@ -27,7 +27,7 @@ public class CardBundle {
     }
 
     public int calculateScore() {
-        return ScoreCalculator.findByCardBundle(cards)
+        return ScoreCalculator.findByCards(cards)
                 .calculate(cards);
     }
 
