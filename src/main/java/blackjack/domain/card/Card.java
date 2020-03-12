@@ -16,12 +16,4 @@ public class Card {
 	public int getSymbolValue() {
 		return symbol.getSymbol();
 	}
-
-	public Symbol getSymbol() {
-		return symbol;
-	}
-
-	public Type getType() {
-		return type;
-	}
 }

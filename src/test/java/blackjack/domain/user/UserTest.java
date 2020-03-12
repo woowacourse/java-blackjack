@@ -12,20 +12,22 @@ import blackjack.domain.card.Deck;
 class UserTest {
 	@Test
 	void User_InputUserName_GenerateInstance() {
-		assertThat(new User("user")).isInstanceOf(User.class);
+		User user = new Dealer("user");
+
+		assertThat(user).isInstanceOf(User.class);
 	}
 
 	@ParameterizedTest
 	@NullAndEmptySource
 	void validate_InvalidUserName_InvalidUserExceptionThrown(String name) {
-		assertThatThrownBy(() -> new User(name))
+		assertThatThrownBy(() -> new Dealer(name))
 			.isInstanceOf(InvalidUserException.class)
 			.hasMessage(InvalidUserException.NULL_OR_EMPTY);
 	}
 
 	@Test
 	void draw_DrawCard_AddDrawCardToHand() {
-		User user = new User("user");
+		User user = new Dealer("user");
 		Deck deck = new Deck();
 		user.draw(deck);
 
@@ -36,7 +38,7 @@ class UserTest {
 
 	@Test
 	void draw_DrawNumberOfCards_AddDrawCardsToHand() {
-		User user = new User("user");
+		User user = new Dealer("user");
 		Deck deck = new Deck();
 		user.draw(deck, 2);
 
@@ -47,7 +49,7 @@ class UserTest {
 
 	@Test
 	void validateDrawNumber_InvalidNumberOfCards_InvalidUserExceptionThrown() {
-		User user = new User("user");
+		User user = new Dealer("user");
 		Deck deck = new Deck();
 
 		assertThatThrownBy(() -> user.draw(deck, 0))

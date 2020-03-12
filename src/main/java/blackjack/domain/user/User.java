@@ -8,13 +8,13 @@ import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
+import blackjack.domain.user.hand.Hand;
 
-public class User {
+public abstract class User {
 	private static final int DRAW_LOWER_BOUND = 1;
 
-	private final String name;
-	private final Hand hand;
+	protected final String name;
+	protected final Hand hand;
 
 	public User(String name) {
 		validate(name);
@@ -23,7 +23,7 @@ public class User {
 	}
 
 	private void validate(String name) {
-		if (Objects.isNull(name) || name.isEmpty()) {
+		if (Objects.isNull(name) || name.trim().isEmpty()) {
 			throw new InvalidUserException(InvalidUserException.NULL_OR_EMPTY);
 		}
 	}
@@ -34,15 +34,17 @@ public class User {
 
 	public void draw(Deck deck, int drawNumber) {
 		validateDrawNumber(drawNumber);
-		List<Card> cards = IntStream.range(0, drawNumber)
+		List<Card> drawCards = IntStream.range(0, drawNumber)
 			.mapToObj(e -> deck.draw())
 			.collect(toList());
-		hand.add(cards);
+		hand.add(drawCards);
 	}
 
-	private void validateDrawNumber(int drawNumber) {
+	protected void validateDrawNumber(int drawNumber) {
 		if (drawNumber < DRAW_LOWER_BOUND) {
 			throw new InvalidUserException(InvalidUserException.INVALID_DRAW_NUMBER);
 		}
 	}
+
+	abstract boolean canDraw();
 }
