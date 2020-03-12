@@ -28,8 +28,4 @@ public class Deck {
     public boolean isSize(int size) {
         return deck.size() == size;
     }
-
-    public void removeCard(Card card) {
-        this.deck.remove(card);
-    }
 }

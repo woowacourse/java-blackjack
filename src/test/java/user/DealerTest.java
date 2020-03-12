@@ -84,5 +84,4 @@ public class DealerTest {
                 Arguments.of(new ArrayList<>(Arrays.asList(four, seven)))
         );
     }
-
 }
