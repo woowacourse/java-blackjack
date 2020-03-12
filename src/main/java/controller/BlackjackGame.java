@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.Result;
 import domain.YesOrNo;
 import domain.card.CardDivider;
 import domain.user.Dealer;
@@ -85,5 +86,10 @@ public class BlackjackGame {
 		List<User> allUsers = new ArrayList<>(users);
 		allUsers.add(dealer);
 		OutputView.printUserResult(allUsers);
+	}
+
+	private void printGameResult(List<User> users, Dealer dealer) {
+		Result result = new Result(users, dealer);
+		OutputView.printGameResult(result);
 	}
 }
