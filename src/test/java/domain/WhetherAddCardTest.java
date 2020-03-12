@@ -16,4 +16,10 @@ public class WhetherAddCardTest {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> WhetherAddCard.of("a"));
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> WhetherAddCard.of("b"));
 	}
+
+	@Test
+	void isYes() {
+		assertThat(WhetherAddCard.of("y").isYes()).isTrue();
+		assertThat(WhetherAddCard.of("n").isYes()).isFalse();
+	}
 }
