@@ -1,13 +1,15 @@
 package domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.WinningResult;
 import domain.card.CardDeck;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+
     private CardDeck cardDeck;
     private Player player;
 
@@ -17,16 +19,22 @@ public class PlayerTest {
         player = new Player("Jamie&Ravie");
     }
 
-    @DisplayName("드로우 가능여부 테스트")
+    @DisplayName("드로우 가능여부 - 가능")
     @Test
     void canDrawCard() {
         player.drawCard(cardDeck);
-        Assertions.assertThat(player.canDrawCard()).isTrue();
 
+        assertThat(player.canDrawCard()).isTrue();
+    }
+
+    @DisplayName("드로우 가능여부 - 불가")
+    @Test
+    void cantDrawCard() {
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-        Assertions.assertThat(player.canDrawCard()).isFalse();
+
+        assertThat(player.canDrawCard()).isFalse();
     }
 
     @DisplayName("Bust일 때(21 초과일 때), 무조건 패배하는 테스트")
@@ -36,7 +44,8 @@ public class PlayerTest {
             player.drawCard(cardDeck);
         }
         player.calculateWinningResult(17);
-        Assertions.assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
+
+        assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
     }
 
     @DisplayName("승무패 결과 산정 테스트 - 패배")
@@ -44,8 +53,8 @@ public class PlayerTest {
     void calculateWinningResult_lose() {
         player.drawCard(cardDeck);
         player.calculateWinningResult(17);
-        Assertions.assertThat(player.getWinningResult())
-            .isEqualTo(WinningResult.LOSE);
+
+        assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
     }
 
     @DisplayName("승무패 결과 산정 테스트 - 승리")
@@ -53,7 +62,7 @@ public class PlayerTest {
     void calculateWinningResult_win() {
         player.drawCard(cardDeck);
         player.calculateWinningResult(22);
-        Assertions.assertThat(player.getWinningResult())
-            .isEqualTo(WinningResult.WIN);
+
+        assertThat(player.getWinningResult()).isEqualTo(WinningResult.WIN);
     }
 }

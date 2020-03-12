@@ -1,7 +1,6 @@
 package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +14,8 @@ public class PlayersTest {
     void getPlayerNames() {
         Players players = new Players(Arrays.asList("jamie", "ravie"));
         List<String> playerNames = players.getPlayerNames();
+
         assertThat(playerNames.get(0)).isEqualTo("jamie");
         assertThat(playerNames.get(1)).isEqualTo("ravie");
-        assertThatThrownBy(() -> playerNames.get(2)).isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

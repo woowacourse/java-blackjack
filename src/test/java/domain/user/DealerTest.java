@@ -1,23 +1,36 @@
 package domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.CardDeck;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    @DisplayName("드로우 가능여부 테스트")
+    private CardDeck cardDeck;
+    private Dealer dealer;
+
+    @BeforeEach
+    void resetVariable() {
+        cardDeck = new CardDeck();
+        dealer = new Dealer();
+    }
+
+    @DisplayName("드로우 가능여부 - 가능")
     @Test
     void canDrawCard() {
-        CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer();
         dealer.drawCard(cardDeck);
-        Assertions.assertThat(dealer.canDrawCard()).isTrue();
+        assertThat(dealer.canDrawCard()).isTrue();
+    }
 
+    @DisplayName("드로우 가능여부 - 불가")
+    @Test
+    void cantDrawCard() {
         for (int i = 0; i < 10; i++) {
             dealer.drawCard(cardDeck);
         }
-        Assertions.assertThat(dealer.canDrawCard()).isFalse();
+        assertThat(dealer.canDrawCard()).isFalse();
     }
 }

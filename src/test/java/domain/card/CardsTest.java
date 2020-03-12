@@ -1,60 +1,61 @@
 package domain.card;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
+    private Cards cards;
 
-    @Test
-    @DisplayName("같은 카드 추가 테스트")
-    void add() {
-        Cards cards = new Cards();
-        Card card = new Card(Type.DIAMOND, Symbol.ACE);
-        cards.add(card);
-        Assertions.assertThatThrownBy(() -> cards.add(card))
-            .isInstanceOf(IllegalArgumentException.class);
+    @BeforeEach
+    void resetVariable() {
+        cards = new Cards();
     }
 
+    @DisplayName("같은 카드 추가시 예외 발생")
     @Test
-    @DisplayName("카드 합계 출력")
+    void add() {
+        Card card = new Card(Type.DIAMOND, Symbol.ACE);
+        cards.add(card);
+        assertThatThrownBy(() -> cards.add(card)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("카드 숫자 합계")
+    @Test
     void getSum() {
-        Cards cards = new Cards();
         cards.add(new Card(Type.DIAMOND, Symbol.TWO));
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.ACE));
         cards.add(new Card(Type.CLUB, Symbol.JACK));
-        Assertions.assertThat(cards.getScore())
-            .isEqualTo(16);
+
+        assertThat(cards.getScore()).isEqualTo(16);
     }
 
-    @Test
     @DisplayName("카드가 21을 넘는지 확인")
+    @Test
     void isOverBlackJack() {
-        Cards cards = new Cards();
         cards.add(new Card(Type.DIAMOND, Symbol.TWO));
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        Assertions.assertThat(cards.isBust())
-            .isFalse();
+        assertThat(cards.isBust()).isFalse();
 
         cards.add(new Card(Type.CLUB, Symbol.JACK));
-        Assertions.assertThat(cards.isBust())
-            .isTrue();
+        assertThat(cards.isBust()).isTrue();
     }
 
-    @Test
     @DisplayName("카드가 21인지 확인")
+    @Test
     void isBlackJack() {
         Cards cards = new Cards();
         cards.add(new Card(Type.DIAMOND, Symbol.TWO));
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        Assertions.assertThat(cards.isBlackJack())
-            .isFalse();
+        assertThat(cards.isBlackJack()).isFalse();
 
         cards.add(new Card(Type.CLUB, Symbol.SIX));
-        Assertions.assertThat(cards.isBlackJack())
-            .isTrue();
+        assertThat(cards.isBlackJack()).isTrue();
     }
 }
