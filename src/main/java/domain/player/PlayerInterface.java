@@ -2,7 +2,7 @@ package domain.player;
 
 import domain.card.CardDeck;
 
-public interface ParticipantInterface {
+public interface PlayerInterface {
     void firstDraw(CardDeck cardDeck);
 
     void receive(CardDeck cardDeck);
