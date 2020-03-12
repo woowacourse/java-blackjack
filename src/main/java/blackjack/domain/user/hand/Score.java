@@ -50,7 +50,7 @@ public class Score {
 	}
 
 	public boolean isLowerThan(int score) {
-		return this.score < score;
+		return this.score <= score;
 	}
 
 	public boolean isMoreThan(int score) {

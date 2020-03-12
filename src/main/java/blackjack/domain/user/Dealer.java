@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 
 public class Dealer extends User {
 	public static final String NAME = "Dealer";
-	private static final int DEALER_DRAWABLE_MAX_SCORE = 17;
+	public static final int DEALER_DRAWABLE_MAX_SCORE = 16;
 
 	public Dealer(String name) {
 		super(name);

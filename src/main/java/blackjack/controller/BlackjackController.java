@@ -1,9 +1,11 @@
 package blackjack.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.DrawOpinion;
 import blackjack.domain.card.Deck;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.view.InputView;
@@ -13,28 +15,35 @@ public class BlackjackController {
 	private static final int INITIAL_DRAW_NUMBER = 2;
 
 	private final Deck deck;
-	private final List<User> users;
+	private final Dealer dealer;
+	private final List<Player> players;
 
-	public BlackjackController(Deck deck, List<User> users) {
+	public BlackjackController(Deck deck, Dealer dealer, List<Player> players) {
 		this.deck = deck;
-		this.users = users;
+		this.dealer = dealer;
+		this.players = players;
 	}
 
 	public void playGame() {
-		users.forEach(user -> user.draw(deck, INITIAL_DRAW_NUMBER));
+		drawInitialCardsEachUser();
+		drawCardsEachUsers();
+	}
+
+	private void drawInitialCardsEachUser() {
+		List<User> users = new ArrayList<>();
+		users.add(dealer);
+		users.addAll(players);
+
+		players.forEach(user -> user.draw(deck, INITIAL_DRAW_NUMBER));
 		OutputView.printUsersInitialDraw(INITIAL_DRAW_NUMBER, users);
-
-		drawCardsEachPlayerByOpinion();
-
 	}
 
-	private void drawCardsEachPlayerByOpinion() {
-		users.stream()
-			.filter(user -> user.getClass().equals(Player.class))
-			.forEach(this::drawCardsByOpinion);
+	private void drawCardsEachUsers() {
+		players.forEach(this::drawCardsByOpinion);
+		drawCardsDealer();
 	}
 
-	private void drawCardsByOpinion(User player) {
+	private void drawCardsByOpinion(Player player) {
 		while (player.canDraw()) {
 			DrawOpinion drawOpinion = DrawOpinion.of(InputView.inputDrawOpinion(player));
 
@@ -43,6 +52,13 @@ public class BlackjackController {
 			}
 			player.draw(deck);
 			OutputView.printUserHand(player, player.getHand());
+		}
+	}
+
+	private void drawCardsDealer() {
+		while (dealer.canDraw()) {
+			dealer.draw(deck);
+			OutputView.printDealerDrawCard();
 		}
 	}
 }

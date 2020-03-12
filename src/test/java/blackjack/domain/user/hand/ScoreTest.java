@@ -49,7 +49,7 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"9,false", "10,true"})
+	@CsvSource(value = {"8,false", "9,true"})
 	void isLowerThan_InputIntegerScore_ReturnCompareResult(int value, boolean expected) {
 		Score score = Score.valueOf(9);
 

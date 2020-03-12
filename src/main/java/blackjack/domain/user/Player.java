@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 
 public class Player extends User {
-	private static final int PLAYER_DRAWABLE_MAX_SCORE = 22;
+	private static final int PLAYER_DRAWABLE_MAX_SCORE = 21;
 
 	public Player(String name) {
 		super(name);
