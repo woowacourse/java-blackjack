@@ -4,6 +4,9 @@ import blackjack.domain.card.Card;
 
 public abstract class User {
     public static final int BLACKJACK = 21;
+    public static final String CARD = " 카드: ";
+    public static final String DELIMITER = ", ";
+    public static final String RESULT = " - 결과 : ";
     protected final String name;
     protected UserCards cards;
 
@@ -38,12 +41,12 @@ public abstract class User {
     }
 
     public String showCardInfo() {
-        return name + " 카드: " + String.join(", ", cards.getCardInfo());
+        return name + CARD + String.join(DELIMITER, cards.getCardInfo());
     }
 
     public abstract String showInitialCardInfo();
 
     public String showFinalCardInfo() {
-        return showCardInfo() + " - 결과 : " + getTotalScore();
+        return showCardInfo() + RESULT + getTotalScore();
     }
 }

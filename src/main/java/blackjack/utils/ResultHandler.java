@@ -10,6 +10,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ResultHandler {
+
+    public static final String COLON = ": ";
+    public static final String NEW_LINE = "\n";
+    public static final String WINS = "승 ";
+    public static final String DRAWS = "무 ";
+    public static final String LOSES = "패";
+
     public static String findAllWinners(Users users) {
         Dealer dealer = users.getDealer();
         Map<Player, Result> totalResult = new LinkedHashMap<>();
@@ -36,23 +43,23 @@ public class ResultHandler {
 
         sb.append(parseDealerTotalResult(dealerResult));
         totalResult.forEach((player, result) ->
-                sb.append(player.getName()).append(": ").append(result.getName()).append("\n"));
+                sb.append(player.getName()).append(COLON).append(result.getName()).append(NEW_LINE));
         return sb.toString();
     }
 
     private static String parseDealerTotalResult(Map<Result, Integer> dealerResult) {
         StringBuilder sb = new StringBuilder();
-        sb.append(Dealer.DEALER + ": ");
+        sb.append(Dealer.DEALER + COLON);
         if (dealerResult.get(Result.WIN) > 0) {
-            sb.append(dealerResult.get(Result.WIN)).append("승 ");
+            sb.append(dealerResult.get(Result.WIN)).append(WINS);
         }
         if (dealerResult.get(Result.DRAW) > 0) {
-            sb.append(dealerResult.get(Result.DRAW)).append("무 ");
+            sb.append(dealerResult.get(Result.DRAW)).append(DRAWS);
         }
         if (dealerResult.get(Result.LOSE) > 0) {
-            sb.append(dealerResult.get(Result.LOSE)).append("패");
+            sb.append(dealerResult.get(Result.LOSE)).append(LOSES);
         }
-        sb.append("\n");
+        sb.append(NEW_LINE);
         return sb.toString();
     }
 }

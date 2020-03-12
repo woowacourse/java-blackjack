@@ -6,6 +6,7 @@ public enum Decision {
     Y("Y", "y", true),
     N("N", "n", false);
 
+    public static final String INPUT_AGAIN = "다시 입력해 주세요";
     private String uppercase;
     private String lowercase;
     private boolean intended;
@@ -22,6 +23,6 @@ public enum Decision {
                         x.lowercase.equals(answer))
                 .findFirst()
                 .map(a -> a.intended)
-                .orElseThrow(() -> new IllegalArgumentException("다시 입력해 주세요"));
+                .orElseThrow(() -> new IllegalArgumentException(INPUT_AGAIN));
     }
 }

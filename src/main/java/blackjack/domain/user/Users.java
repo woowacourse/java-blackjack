@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Users {
+    public static final String NO_DEALER = "딜러가 없습니다";
     private final List<User> users;
 
     public Users(List<User> users) {
@@ -20,7 +21,7 @@ public class Users {
                 .filter(user -> user instanceof Dealer)
                 .findFirst()
                 .map(user -> (Dealer) user)
-                .orElseThrow(() -> new NullPointerException("딜러가 없습니다"));
+                .orElseThrow(() -> new NullPointerException(NO_DEALER));
     }
 
     public List<Player> getPlayer() {

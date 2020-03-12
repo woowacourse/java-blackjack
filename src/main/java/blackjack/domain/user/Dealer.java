@@ -10,7 +10,7 @@ public class Dealer extends User {
     }
 
     public String showInitialCardInfo() {
-        return name + " 카드: " + cards.getCardInfo().get(0);
+        return name + CARD + cards.getCardInfo().get(0);
     }
 
     public boolean isUnderThreshold() {

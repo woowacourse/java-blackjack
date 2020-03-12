@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class UserFactory {
 
     public static final int MAX_PLAYER = 8;
+    public static final String CANNOT_EXCEED_MAX_PLAYERS = "플레이어의 수는" + MAX_PLAYER + "명을 초과할 수 없습니다";
 
     public static Users generateUsers(List<String> userNames) {
         validatePlayerNumber(userNames);
@@ -20,7 +21,7 @@ public class UserFactory {
 
     private static void validatePlayerNumber(List<String> userNames) {
         if (userNames.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("플레이어의 수는" + MAX_PLAYER + "명을 초과할 수 없습니다");
+            throw new IllegalArgumentException(CANNOT_EXCEED_MAX_PLAYERS);
         }
     }
 }

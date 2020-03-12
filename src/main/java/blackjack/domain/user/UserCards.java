@@ -7,13 +7,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCards {
+    public static final String NO_CARD = "카드가 없습니다";
+    public static final int INCREMENT_ACE_THRESHOLD = 11;
+    public static final int ACE_INCREMENT = 10;
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
-        if (cards == null || cards.isEmpty()) {
-            throw new RuntimeException("카드가 없습니다");
-        }
+        validateNullOrEmptyCard(cards);
         this.cards = new LinkedList<>(cards);
+    }
+
+    private void validateNullOrEmptyCard(List<Card> cards) {
+        if (cards == null || cards.isEmpty()) {
+            throw new RuntimeException(NO_CARD);
+        }
     }
 
     public int getTotalScore() {
@@ -25,8 +32,8 @@ public class UserCards {
     }
 
     private int incrementAceScore(int score) {
-        if (cards.stream().anyMatch(Card::isAce) && score <= 11) {
-            score += 10;
+        if (cards.stream().anyMatch(Card::isAce) && score <= INCREMENT_ACE_THRESHOLD) {
+            score += ACE_INCREMENT;
         }
         return score;
     }

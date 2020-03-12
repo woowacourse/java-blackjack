@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
+    public static final String DECK_IS_EMPTY = "덱이 비었습니다";
     private final LinkedList<Card> deck;
 
     public Deck(LinkedList<Card> cards) {
@@ -22,7 +23,7 @@ public class Deck {
 
     public Card drawCard() {
         if (deck.isEmpty()) {
-            throw new NullPointerException("덱이 비었습니다");
+            throw new NullPointerException(DECK_IS_EMPTY);
         }
         return deck.poll();
     }
