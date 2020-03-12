@@ -1,9 +1,9 @@
-import domain.YesOrNo;
 import domain.deck.Deck;
 import domain.deck.DeckFactory;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import util.YesOrNo;
 import view.InputView;
 import view.OutputView;
 
