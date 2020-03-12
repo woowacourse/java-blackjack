@@ -20,4 +20,8 @@ public enum Symbol {
 	Symbol(int symbol) {
 		this.symbol = symbol;
 	}
+
+	public int getSymbol() {
+		return symbol;
+	}
 }
