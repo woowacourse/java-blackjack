@@ -40,15 +40,4 @@ public class ScoreTest {
 	void isNotBurst_When_Score_Is_22_Return_False() {
 		assertThat(Score.of(22).isNotBurst()).isFalse();
 	}
-
-
-	@Test
-	void isDealerDraw_When_Score_Has_Under_17_Score_Then_Return_True() {
-		assertThat(Score.of(16).canDealerDraw()).isTrue();
-	}
-
-	@Test
-	void isDealerDraw_When_Score_Has_Over_16_Score_Then_Return_False() {
-		assertThat(Score.of(17).canDealerDraw()).isFalse();
-	}
 }

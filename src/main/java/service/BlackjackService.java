@@ -1,7 +1,5 @@
 package service;
 
-import domain.Score;
-import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.Result;
 import domain.result.ResultType;
@@ -26,48 +24,13 @@ public class BlackjackService {
 		});
 	}
 
-	public static Result createResultWhenDealerBlackjack(Players players) {
-		Map<Player, ResultType> results = new HashMap<>();
-		players.forEach(player -> {
-			if (isBlackjack(player)) {
-				results.put(player, ResultType.DRAW);
-				return;
-			}
-			results.put(player, ResultType.LOSE);
-		});
-		return new Result(results);
-	}
-
-	private static boolean isBlackjack(Player player) {
-		Cards playerCards = player.openAllCards();
-		return Score.of(playerCards).isBlackjackScore() && playerCards.hasInitialSize();
-	}
-
 	public static void addCard(User user, Deck deck) {
 		user.addCard(deck.pop());
 	}
 
 	public static Result createResult(Dealer dealer, Players players) {
 		Map<Player, ResultType> results = new HashMap<>();
-
-		players.forEach(player -> {
-			if (isPlayerWin(dealer, player)) {
-				results.put(player, ResultType.WIN);
-				return;
-			}
-			if (isDraw(dealer, player)) {
-				results.put(player, ResultType.DRAW);
-			}
-			results.put(player, ResultType.LOSE);
-		});
+		players.forEach(player -> results.put(player, ResultType.of(player, dealer)));
 		return new Result(results);
-	}
-
-	private static boolean isPlayerWin(Dealer dealer, Player player) {
-		return Score.of(player.openAllCards()).isBiggerThan(Score.of(dealer.openAllCards()));
-	}
-
-	private static boolean isDraw(Dealer dealer, Player player) {
-		return Score.of(dealer.openAllCards()).isNotBurst() && Score.of(player.openAllCards()).isNotBurst() && Score.of(dealer.openAllCards()).equals(Score.of(player.openAllCards()));
 	}
 }

@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.user.strategy.draw.PlayerDrawStrategy;
+
 import java.util.Objects;
 
 public class Player extends User {
@@ -12,6 +14,7 @@ public class Player extends User {
 			throw new IllegalArgumentException(INPUT_EMPTY_NAME);
 		}
 		this.name = name;
+		super.drawStrategy = new PlayerDrawStrategy();
 	}
 
 	@Override

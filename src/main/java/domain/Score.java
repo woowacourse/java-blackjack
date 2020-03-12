@@ -8,7 +8,6 @@ public class Score {
 	private static final int BLACKJACK_SCORE = 21;
 	private static final int BURST_SCORE = 0;
 	private static final int ACE_GAP = 10;
-	private static final int DEALER_DRAW_BOUND = 16;
 
 	private final int score;
 
@@ -39,12 +38,12 @@ public class Score {
 		return score <= BLACKJACK_SCORE && score != BURST_SCORE;
 	}
 
-	public boolean canDealerDraw() {
-		return score <= DEALER_DRAW_BOUND && score != BURST_SCORE;
+	public boolean isBiggerThan(Score other) {
+		return this.minus(other) > 0;
 	}
 
-	public boolean isBiggerThan(Score that) {
-		return this.score - that.score > 0;
+	public int minus(Score other) {
+		return this.score - other.score;
 	}
 
 	@Override
