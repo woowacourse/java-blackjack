@@ -1,4 +1,8 @@
-package domain;
+package domain.player;
+
+import domain.AnswerType;
+import domain.card.Card;
+import domain.card.Cards;
 
 public class User extends Player {
     private String name;

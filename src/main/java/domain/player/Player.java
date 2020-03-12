@@ -1,4 +1,8 @@
-package domain;
+package domain.player;
+
+import domain.CardCalculator;
+import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.ArrayList;
 import java.util.Collections;

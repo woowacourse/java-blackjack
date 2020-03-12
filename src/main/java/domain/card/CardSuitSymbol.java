@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum CardSuitSymbol {
     SPACE("스페이스"),

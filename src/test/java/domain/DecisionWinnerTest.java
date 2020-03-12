@@ -1,5 +1,10 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardSuitSymbol;
+import domain.player.Dealer;
+import domain.player.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +13,7 @@ public class DecisionWinnerTest {
     @DisplayName("딜러가 블랙잭이고 유저도 블랙잭인 경우 유저가 승")
     @Test
     void userAndDealerBothBlackjackTest() {
-        User user = new User("subway",Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+        User user = new User("subway", Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));

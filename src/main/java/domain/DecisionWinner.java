@@ -1,5 +1,7 @@
 package domain;
 
+import domain.player.Player;
+
 public class DecisionWinner {
     private DecisionWinner() {
     }

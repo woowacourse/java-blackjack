@@ -1,5 +1,8 @@
 package domain;
 
+import domain.player.Player;
+import domain.player.User;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
