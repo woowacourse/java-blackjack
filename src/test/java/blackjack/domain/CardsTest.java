@@ -15,33 +15,33 @@ public class CardsTest {
     void sumTest() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = new Cards();
-        cards.add(cardDeck.of(CardNumber.THREE, CardFigure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
+        cards.add(cardDeck.getCard(CardNumber.THREE, CardFigure.CLOVER));
+        cards.add(cardDeck.getCard(CardNumber.KING, CardFigure.CLOVER));
 
         int expected = 13;
         assertThat(cards.computeSum()).isEqualTo(expected);
     }
 
-    @DisplayName("Ace가 있을 때의 카드 합 계산 확인(21이 초과하는 경우)")
+    @DisplayName("카드 합 계산 확인 - ACE가 1이여야 할 때")
     @Test
-    void aceSumTest() {
+    void sumTest_AceIs1() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = new Cards();
-        cards.add(cardDeck.of(CardNumber.ACE, CardFigure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.QUEEN, CardFigure.HEART));
+        cards.add(cardDeck.getCard(CardNumber.ACE, CardFigure.CLOVER));
+        cards.add(cardDeck.getCard(CardNumber.KING, CardFigure.CLOVER));
+        cards.add(cardDeck.getCard(CardNumber.QUEEN, CardFigure.HEART));
 
         int expected = 21;
         assertThat(cards.computeSum()).isEqualTo(expected);
     }
 
-    @DisplayName("Ace가 있을 때의 카드 합 계산 확인(21이 초과하지 않는 경우)")
+    @DisplayName("카드 합 계산 확인 - ACE가 11이여야 할 때")
     @Test
-    void aceSumTest2() {
+    void sumTest_AceIs11() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = new Cards();
-        cards.add(cardDeck.of(CardNumber.ACE, CardFigure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
+        cards.add(cardDeck.getCard(CardNumber.ACE, CardFigure.CLOVER));
+        cards.add(cardDeck.getCard(CardNumber.KING, CardFigure.CLOVER));
 
         int expected = 21;
         assertThat(cards.computeSum()).isEqualTo(expected);
