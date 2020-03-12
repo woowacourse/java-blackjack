@@ -1,9 +1,8 @@
-package blackjack.view;
+package blackjack.view.dto;
 
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.Gambler;
 import blackjack.player.domain.Player;
-import blackjack.view.dto.NamesDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
