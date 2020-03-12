@@ -15,7 +15,7 @@ public class Application {
 
 	private static void run(CardDeck cardDeck, Dealer dealer, Players players) {
 		cardDeck.shuffle();
-		giveTwoCard(cardDeck, dealer, players);
+		distributeTwoCard(cardDeck, dealer, players);
 		if (dealer.isNotBlackJack()) {
 			askMoreCard(cardDeck, dealer, players);
 			addCardIfNeed(cardDeck, dealer);
@@ -24,7 +24,7 @@ public class Application {
 		OutputView.printGameResult(ResultCalculator.getResults(dealer, players));
 	}
 
-	private static void giveTwoCard(CardDeck cardDeck, Dealer dealer, Players players) {
+	private static void distributeTwoCard(CardDeck cardDeck, Dealer dealer, Players players) {
 		for (int i = 0; i < 2; i++) {
 			dealer.giveCard(cardDeck, dealer);
 			dealer.giveCard(cardDeck, players);
