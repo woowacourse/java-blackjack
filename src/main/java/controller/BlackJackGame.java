@@ -16,6 +16,17 @@ public class BlackJackGame {
             drawCardEachPlayer(deck, player);
         }
         hitOrStayForDealer(dealer, deck);
+        OutputView.printFinalCardHandResult(players, dealer);
+        compareScores(players, dealer);
+        OutputView.printResult(players, dealer);
+    }
+
+    private static void compareScores(final Players players, final Dealer dealer) {
+        for(Player player : players.getPlayers()){
+            Result result = dealer.compareScore(player);
+            player.setResult(result);
+            dealer.setResult(result);
+        }
     }
 
 
