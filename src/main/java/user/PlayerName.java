@@ -2,11 +2,11 @@ package user;
 
 import java.util.Objects;
 
-public class ParticipantName {
+public class PlayerName {
     private static final String DEALER = "딜러";
     private String participantName;
 
-    public ParticipantName(String participantName) {
+    public PlayerName(String participantName) {
         checkNullOrEmpty(participantName);
         checkSameAsDealer(participantName);
         this.participantName = participantName;
@@ -14,13 +14,13 @@ public class ParticipantName {
 
     private void checkNullOrEmpty(String userName) {
         if (Objects.isNull(userName) || userName.isEmpty()) {
-            throw new InvalidParticipantNameException(InvalidParticipantNameException.NULL_OR_EMPTY);
+            throw new InvalidPlayerNameException(InvalidPlayerNameException.NULL_OR_EMPTY);
         }
     }
 
     private void checkSameAsDealer(String userName) {
         if (userName.equals(DEALER)) {
-            throw new InvalidParticipantNameException(InvalidParticipantNameException.SAME_AS_DEALER);
+            throw new InvalidPlayerNameException(InvalidPlayerNameException.SAME_AS_DEALER);
         }
     }
 }

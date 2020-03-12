@@ -20,31 +20,31 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ParticipantTest {
-    private static Participant participant;
+public class PlayerTest {
+    private static Player player;
     private static Deck deck;
-    private static ParticipantName name;
+    private static PlayerName name;
 
     @BeforeAll
     static void setUp() {
-        name = new ParticipantName("또링");
+        name = new PlayerName("또링");
         deck = new Deck();
-        participant = new Participant(name, deck);
+        player = new Player(name, deck);
     }
 
     @DisplayName("생성했을 때, 두 장의 카드를 보유하고 있는지 확인")
     @Test
     void constructor_InitializeParticipant_HandsSizeIsTwo() {
-        assertThat(participant.handSize()).isEqualTo(2);
+        assertThat(player.handSize()).isEqualTo(2);
     }
 
     @DisplayName("카드를 더 받을지 입력받을 때 y혹은 n이 입력되지 않았을 경우 예외처리")
     @ParameterizedTest
     @ValueSource(strings = {"Y", "1", "q"})
     void needMoreCard_InvalidAnswer_ExceptionThrown(String answer) {
-        assertThatThrownBy(() -> participant.needMoreCard(answer, deck))
-                .isInstanceOf(InvalidParticipantException.class)
-                .hasMessage(InvalidParticipantException.INVALID_INPUT);
+        assertThatThrownBy(() -> player.needMoreCard(answer, deck))
+                .isInstanceOf(InvalidPlayerException.class)
+                .hasMessage(InvalidPlayerException.INVALID_INPUT);
     }
 
     @DisplayName("첫 카드로 ace와 10의 점수를 갖는 카드가 주어졌을 때, 블랙잭인지 확인")
@@ -52,7 +52,7 @@ public class ParticipantTest {
     @MethodSource("blackJackData")
     void checkBlackJack_AceWithTen_ReturnTrue(List<Card> cards) {
         Hands hands = new Hands(cards);
-        assertThat(new Participant(name, hands).checkBlackJack()).isTrue();
+        assertThat(new Player(name, hands).checkBlackJack()).isTrue();
     }
 
     static Stream<Arguments> blackJackData() {

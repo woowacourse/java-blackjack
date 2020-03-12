@@ -4,19 +4,19 @@ import card.Deck;
 
 import java.util.Objects;
 
-public class Participant implements User {
+public class Player implements User {
     private static final String YES = "y";
     private static final String NO = "n";
 
-    private ParticipantName name;
+    private PlayerName name;
     private Hands hands;
 
-    public Participant(ParticipantName name, Deck deck) {
+    public Player(PlayerName name, Deck deck) {
         this.name = name;
         this.hands = new Hands(deck);
     }
 
-    public Participant(ParticipantName name, Hands hands) {
+    public Player(PlayerName name, Hands hands) {
         this.name = name;
         this.hands = hands;
     }
@@ -32,7 +32,7 @@ public class Participant implements User {
 
     private void checkNullOrEmpty(String answer) {
         if (Objects.isNull(answer) || answer.isEmpty()) {
-            throw new InvalidParticipantException(InvalidParticipantException.NULL_OR_EMPTY);
+            throw new InvalidPlayerException(InvalidPlayerException.NULL_OR_EMPTY);
         }
     }
 
@@ -40,7 +40,7 @@ public class Participant implements User {
         if (answer.equals(YES) || answer.equals(NO)) {
             return;
         }
-        throw new InvalidParticipantException(InvalidParticipantException.INVALID_INPUT);
+        throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);
     }
 
     public boolean checkBlackJack() {
