@@ -14,19 +14,20 @@ public class BlackJackGame {
 
     private final Dealer dealer;
     private final CardDeck cardDeck;
+    private final GameResult gameResult;
     private List<User> users;
 
     public BlackJackGame() {
         dealer = Dealer.getDealer();
         cardDeck = new CardDeck(CardFactory.createCardDeck());
+        gameResult = new GameResult();
     }
 
     public void run() {
         enrollUsers();
         distributeCards();
-        OutputView.printInitialPlayerCards(dealer, users);
         play();
-
+        calculateResult();
     }
 
     public void enrollUsers() {
@@ -44,10 +45,12 @@ public class BlackJackGame {
             IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
                     .forEach(i -> user.addCard(cardDeck.getOneCard()));
         }
+        OutputView.printInitialPlayerCards(dealer, users);
     }
 
     private void play() {
         for (User user : users) {
+            // 블랙잭인지 확인하고 상태 변경
             eachUserPlay(user);
         }
         dealerPlay();
@@ -56,6 +59,7 @@ public class BlackJackGame {
     private void eachUserPlay(User user) {
         while (InputView.askOneMoreCard(user) == Response.YES) {
             user.addCard(cardDeck.getOneCard());
+            // 버스트인지 확인하고 상태 변경
             OutputView.printUserCards(user);
         }
     }
@@ -65,5 +69,11 @@ public class BlackJackGame {
             dealer.addCard(cardDeck.getOneCard());
             OutputView.printDealerPlayConfirmMessage();
         }
+    }
+
+    private void calculateResult() {
+        OutputView.printPlayerFinalScore(dealer, users);
+        gameResult.calculateGameResult(dealer, users);
+        OutputView.printGameResult(gameResult);
     }
 }

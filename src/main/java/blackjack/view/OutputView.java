@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.User;
+import blackjack.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +15,7 @@ public class OutputView {
     private static final String COMMA_WITH_SPACE = ", ";
     private static final String ASK_ONE_MORE_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_PLAY_CONFIRM_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PLAYER_FINAL_INFORMATION_FORMAT = "%s 카드: %s - 결과 : %d";
 
     public static void printInputUserNamesGuideMessage() {
         System.out.println(INPUT_USER_NAMES_GUIDE_MESSAGE);
@@ -62,5 +60,38 @@ public class OutputView {
 
     public static void printDealerPlayConfirmMessage() {
         System.out.println(DEALER_PLAY_CONFIRM_MESSAGE);
+    }
+
+    public static void printPlayerFinalScore(Dealer dealer, List<User> users) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(users);
+
+        for (Player player : players) {
+            System.out.println(String.format(
+                    PLAYER_FINAL_INFORMATION_FORMAT,
+                    player.getName(), combineCards(player.getCards()), player.calculateScore()));
+        }
+    }
+
+    public static void printGameResult(GameResult gameResult) {
+        System.out.println(NEW_LINE + String.format("딜러 : %d승 %d무 %d패",
+                countDealerResult(gameResult, UserResult.LOSE),
+                countDealerResult(gameResult, UserResult.DRAW),
+                countDealerResult(gameResult, UserResult.WIN)
+                ));
+
+        gameResult.getGameResult()
+                .keySet()
+                .forEach(user -> System.out.println(String.format("%s : %s",
+                        user.getName(), gameResult.getKoreanName(user))));
+    }
+
+    private static int countDealerResult(GameResult gameResult, UserResult userResult) {
+        return (int) gameResult.getGameResult()
+                .values()
+                .stream()
+                .filter(result -> result.equals(userResult))
+                .count();
     }
 }
