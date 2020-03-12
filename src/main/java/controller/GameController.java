@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
 public class GameController {
     public void run() {
         Gamers gamers = new Gamers(generatePlayers(), new Dealer());
-        Deck deck = new Deck(CardFactory.create());
+        Deck deck = new Deck(CardFactory.getInstance());
 
         gamers.initCard(deck);
 
