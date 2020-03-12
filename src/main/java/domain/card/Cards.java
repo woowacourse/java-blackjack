@@ -13,6 +13,8 @@ import java.util.Objects;
  * 날짜 : 2020/03/11
  */
 public class Cards {
+	private static final int INITIAL_CARDS_SIZE = 2;
+
 	private List<Card> cards;
 
 	public Cards(List<Card> cards) {
@@ -27,19 +29,18 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public int size() {
-		return this.cards.size();
+	public boolean hasInitialSize() {
+		return this.cards.size() == INITIAL_CARDS_SIZE;
 	}
 
-	public int getAceCount() {
-		return (int) cards.stream()
-				.filter(Card::isAce)
-				.count();
+	public boolean hasAce() {
+		return  cards.stream()
+				.anyMatch(Card::isAce);
 	}
 
-	public int getPoint() {
+	public int getScore() {
 		return cards.stream()
-				.mapToInt(Card::getPoint)
+				.mapToInt(Card::getScore)
 				.sum();
 	}
 

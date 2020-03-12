@@ -23,7 +23,7 @@ public class Card {
 		return symbol.equals(Symbol.ACE);
 	}
 
-	public int getPoint() {
+	public int getScore() {
 		return this.symbol.getScore();
 	}
 

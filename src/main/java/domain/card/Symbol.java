@@ -9,7 +9,7 @@ package domain.card;
  * 날짜 : 2020/03/11
  */
 public enum Symbol {
-	ACE(11, "A"),
+	ACE(1, "A"),
 	TWO(2, "2"),
 	THREE(3, "3"),
 	FOUR(4, "4"),
