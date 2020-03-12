@@ -40,4 +40,15 @@ public class PlayerTest {
                 Arguments.of(17, WinOrLose.WIN),
                 Arguments.of(22, WinOrLose.WIN));
     }
+
+    @Test
+    @DisplayName("플레이어가 버스트가 되었을 경우 패패 테스트")
+    void isPlayerBustTest() {
+        Player player = new Player("pobi");
+        player.addCard(Arrays.asList(
+                new Card(CardSuit.CLOVER, CardNumber.EIGHT),
+                new Card(CardSuit.CLOVER, CardNumber.TEN),
+                new Card(CardSuit.HEART, CardNumber.KING)));
+        assertThat(player.isWinOrLose(17)).isEqualTo(WinOrLose.LOSE);
+    }
 }
