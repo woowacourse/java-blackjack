@@ -34,6 +34,10 @@ User 클래스
       - 이름
       - result
 
+Players 
+- Player 일급 컬렉션
+
+
 Card
 
 - enum
@@ -43,6 +47,10 @@ Card
 CardFactory
 
 - 카드 덱 생성
+
+Deck
+
+- 팩토리로 생성된 실제 게임 사용 덱
 
 CardHand
 
