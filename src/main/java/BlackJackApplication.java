@@ -29,7 +29,7 @@ public class BlackJackApplication {
         for (Player player : players.getPlayers()) {
             drawMorePlayerCard(cardDeck, player);
         }
-        while (dealer.isAbleDrawCards()) {
+        while (dealer.canDrawCard()) {
             OutputView.printDealerOneMoreCard();
             dealer.drawCard(cardDeck);
         }
@@ -45,7 +45,7 @@ public class BlackJackApplication {
     }
 
     private static void drawMorePlayerCard(CardDeck cardDeck, Player player) {
-        while (player.isAbleDrawCards() && InputView.inputMoreCard(player)) {
+        while (player.canDrawCard() && InputView.inputMoreCard(player)) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }
