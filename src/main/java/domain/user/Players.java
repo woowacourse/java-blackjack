@@ -8,14 +8,6 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
-/**
- * 클래스 이름 : .java
- *
- * @author
- * @version 1.0
- * <p>
- * 날짜 : 2020/03/11
- */
 public class Players implements Iterable<Player> {
 	public static final String OVER_MAX_PLAYERS_COUNT = "블랙잭의 최대 인원은 8명입니다.";
 	public static final String UNDER_MIN_PLAYERS_COUNT = "블랙잭의 최소 인원은 1명입니다.";

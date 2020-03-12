@@ -13,14 +13,6 @@ import domain.user.User;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 클래스 이름 : .java
- *
- * @author
- * @version 1.0
- * <p>
- * 날짜 : 2020/03/11
- */
 public class BlackjackService {
 	public static void giveInitialCards(Deck deck, Dealer dealer, Players players) {
 		deck.shuffle();

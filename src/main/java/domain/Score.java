@@ -4,14 +4,6 @@ import domain.card.Cards;
 
 import java.util.Objects;
 
-/**
- * 클래스 이름 : .java
- *
- * @author
- * @version 1.0
- * <p>
- * 날짜 : 2020/03/12
- */
 public class Score {
 	private static final int BLACKJACK_SCORE = 21;
 	private static final int BURST_SCORE = 0;

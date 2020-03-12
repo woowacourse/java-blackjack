@@ -5,7 +5,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.result.Result;
 import domain.result.ResultType;
-import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 
@@ -13,14 +12,6 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
 
-/**
- * 클래스 이름 : .java
- *
- * @author
- * @version 1.0
- * <p>
- * 날짜 : 2020/03/11
- */
 public class OutputView {
 
 	private static final String DELIMITER = ", ";

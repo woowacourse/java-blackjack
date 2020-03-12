@@ -10,14 +10,6 @@ import static domain.user.Players.UNDER_MIN_PLAYERS_COUNT;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * 클래스 이름 : .java
- *
- * @author
- * @version 1.0
- * <p>
- * 날짜 : 2020/03/11
- */
 public class PlayersTest {
 
 	@Test
