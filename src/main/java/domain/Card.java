@@ -1,8 +1,8 @@
 package domain;
 
 public class Card {
-	private Type type;
-	private Symbol symbol;
+	private final Type type;
+	private final Symbol symbol;
 
 	private Card(Type type, Symbol symbol) {
 		this.type = type;

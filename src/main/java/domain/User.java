@@ -3,7 +3,7 @@ package domain;
 import java.util.List;
 
 public abstract class User {
-	private Name name;
+	private final Name name;
 	private Cards cards;
 
 	public User(String name) {
