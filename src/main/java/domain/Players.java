@@ -10,9 +10,10 @@ import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.User;
+import domain.result.Result;
 
 public class Players {
-    List<User> players;
+    private List<User> players;
 
     public Players(String names) {
         List<User> users = new ArrayList<>();

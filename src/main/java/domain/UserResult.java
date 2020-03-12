@@ -3,6 +3,7 @@ package domain;
 import java.util.Map;
 
 import domain.participant.User;
+import domain.result.Result;
 
 public class UserResult {
     private final Map<User, Result> results;

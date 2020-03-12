@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.ParticipantCards;
-import domain.Result;
+import domain.result.Result;
 
 public class User extends Participant {
 

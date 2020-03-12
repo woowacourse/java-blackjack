@@ -3,10 +3,10 @@ package controller;
 import java.util.Map;
 
 import domain.Players;
-import domain.Result;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.User;
+import domain.result.Result;
 import utils.InputUtils;
 import view.InputView;
 import view.OutputView;

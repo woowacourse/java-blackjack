@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Players;
-import domain.Result;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.User;
+import domain.result.Result;
 
 public class OutputView {
 
