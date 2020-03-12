@@ -32,7 +32,14 @@ public abstract class User {
 
     public abstract String getDrawResult();
 
-    public int calculatePoint() {
+    public int calculatePointAccordingToHasAce() {
+        if (isBust() && hasAce()) {
+            return calculatePoint() - 10;
+        }
+        return calculatePoint();
+    }
+
+    private int calculatePoint() {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();

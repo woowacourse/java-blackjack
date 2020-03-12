@@ -47,13 +47,23 @@ class UserTest {
         assertThat(user.cards.size()).isEqualTo(initSize + 1);
     }
 
-    @Test
-    @DisplayName("카드 point 계산")
-    void calculatePoint() {
-        user.draw(new Card(Symbol.CLOVER, Type.EIGHT));
-        user.draw(new Card(Symbol.DIAMOND, Type.FIVE));
+    @ParameterizedTest
+    @DisplayName("Ace의 보유 여부를 고려한 카드 point 계산")
+    @MethodSource("createCardAndPoint")
+    void calculatePointAccordingToHasAce(Card card, int expected) {
+        user.draw(new Card(Symbol.CLOVER, Type.FIVE));
+        user.draw(new Card(Symbol.DIAMOND, Type.ACE));
+        user.draw(card);
 
-        assertThat(user.calculatePoint()).isEqualTo(13);
+        assertThat(user.calculatePointAccordingToHasAce()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createCardAndPoint() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.DIAMOND, Type.FOUR), 20),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), 21),
+                Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), 12)
+        );
     }
 
     @Test
