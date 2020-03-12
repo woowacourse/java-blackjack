@@ -44,4 +44,8 @@ public class Cards {
     public boolean isBlackJack() {
         return BlackJackRule.isBlackJack(getScore());
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }

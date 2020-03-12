@@ -7,7 +7,12 @@ public enum Type {
     CLUB("클로바");
 
     private final String name;
+
     Type(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

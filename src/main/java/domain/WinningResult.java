@@ -6,10 +6,10 @@ public enum WinningResult {
     LOSE("패"),
     UNDEFINED("미정");
 
-    private final String resultName;
+    private final String name;
 
-    WinningResult(String resultName) {
-        this.resultName = resultName;
+    WinningResult(String name) {
+        this.name = name;
     }
 
     public static WinningResult calculate(int dealerScore, int playerScore) {
@@ -20,5 +20,9 @@ public enum WinningResult {
             return DRAW;
         }
         return LOSE;
+    }
+
+    public String getName() {
+        return name;
     }
 }

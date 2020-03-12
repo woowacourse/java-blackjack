@@ -37,4 +37,8 @@ public class Player extends User {
             winningResult = WinningResult.calculate(dealerScore, cards.getScore());
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
