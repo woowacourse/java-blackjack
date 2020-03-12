@@ -26,10 +26,14 @@ public class BlackJackGame {
                 OutputView.printGamerCardsState(GamerDto.of(player));
             }
         }
-
         if (dealer.canGetExtraCard()) {
             dealer.addCard(deck.handOutCard());
             OutputView.printDealerHit();
+        }
+
+        OutputView.printGamerCardsStateWithScore(GamerDto.of(dealer), dealer.calculateScore());
+        for (Player player : players) {
+            OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore());
         }
 
     }

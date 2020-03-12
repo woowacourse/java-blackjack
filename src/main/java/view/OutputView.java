@@ -34,6 +34,13 @@ public class OutputView {
     }
 
     public static void printDealerHit() {
-        System.out.println("딜러 16이하라 한 장의 카드를 더 받습니다.");
+        System.out.println("딜러 16이하라 한 장의 카드를 더 받습니다.\n");
+    }
+
+    public static void printGamerCardsStateWithScore(GamerDto gamerDto, int gamerScore) {
+        String gamerCards = gamerDto.getCards().stream()
+                .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
+                .collect(Collectors.joining(DELIMITER));
+        System.out.printf("%s: %s - 결과: %d\n", gamerDto.getName(), gamerCards, gamerScore);
     }
 }
