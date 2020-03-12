@@ -15,5 +15,5 @@ public interface Participant {
 
     String getName();
 
-    String getResult();
+    String gameResult();
 }

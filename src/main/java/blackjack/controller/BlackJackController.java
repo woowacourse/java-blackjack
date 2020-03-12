@@ -11,13 +11,11 @@ import blackjack.view.OutputView;
 public class BlackJackController {
     public static void run() {
         OutputView.nameInstruction();
-        Dealer dealer = new Dealer();
         Deck deck = Deck.create();
-        Participants participants = new Participants(dealer, InputView.getInput());
+        Participants participants = new Participants(new Dealer(), InputView.getInput());
         OutputView.shareFirstPair(participants);
         participants.initialDraw(deck);
         OutputView.participantsStatus(participants);
-        // 첫 번째 인덱스만 항상 Dealer니까 1 인덱스부터 시작하는 건?? 기본 for문에 해줘야 하니 많이 별로다.
         for (Participant participant : participants) {
             dealerDrawsMore(deck, participant);
             playersDrawMore(deck, participant);

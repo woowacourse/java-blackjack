@@ -20,6 +20,13 @@ public class Participants implements Iterable<Participant> {
             .collect(Collectors.toList()));
     }
 
+    // 테스트용
+    Participants(final Dealer dealer, final Player... players) {
+        this.participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(Arrays.asList(players));
+    }
+
     public void initialDraw(Deck deck) {
         for (int i = 0; i < FIRST_CARDS_COUNT; i++) {
             participants.forEach(participant -> participant.draw(deck));

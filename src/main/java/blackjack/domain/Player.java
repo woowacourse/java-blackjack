@@ -56,12 +56,17 @@ public class Player implements Participant {
     }
 
     @Override
-    public String getResult() {
+    public String gameResult() {
         return result.getValue();
     }
 
     @Override
     public void draw(final Deck deck) {
         hand.add(deck.pop());
+    }
+
+    // 테스트용
+    void draw(final Card card) {
+        hand.add(card);
     }
 }

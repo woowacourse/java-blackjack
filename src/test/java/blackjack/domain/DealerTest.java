@@ -34,8 +34,8 @@ public class DealerTest {
 
     static Stream<Arguments> needsMoreCardParameters() {
         return Stream.of(
-            Arguments.of(CARDS_EIGHT, true),
-            Arguments.of(CARDS_ACE_AS_ONE, false)
+            Arguments.of(CARDS_8, true),
+            Arguments.of(CARDS_21_ACE_AS_ONE, false)
         );
     }
 

@@ -45,7 +45,7 @@ public class OutputView {
     public static void result(List<Participant> participants) {
         System.out.println("## 최종 승패");
         for (Participant participant : participants) {
-            System.out.println(participant.getName() + " : " + participant.getResult());
+            System.out.println(participant.getName() + " : " + participant.gameResult());
         }
     }
 

@@ -21,11 +21,7 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public String getResult() {
-        return parsedResult();
-    }
-
-    private String parsedResult() {
+    public String gameResult() {
         return result.keySet().stream()
             .map(result -> this.result.get(result) + result.getValue())
             .collect(Collectors.joining(SPACE));
@@ -70,5 +66,9 @@ public class Dealer implements Participant {
     @Override
     public String handStatus() {
         return hand.toString();
+    }
+
+    public int countResult(final Result result) {
+        return this.result.getOrDefault(result, 0);
     }
 }

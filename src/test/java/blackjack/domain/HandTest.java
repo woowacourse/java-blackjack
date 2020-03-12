@@ -12,22 +12,22 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class HandTest {
-    public static final List<Card> CARDS_EIGHT = Arrays.asList(
+    public static final List<Card> CARDS_8 = Arrays.asList(
         new Card(Suit.SPADE, Rank.TWO),
         new Card(Suit.CLUB, Rank.TWO),
         new Card(Suit.SPADE, Rank.TWO),
         new Card(Suit.SPADE, Rank.TWO)
     );
-    public static final List<Card> CARDS_ACE_AS_ONE = Arrays.asList(
+    public static final List<Card> CARDS_21_ACE_AS_ONE = Arrays.asList(
         new Card(Suit.SPADE, Rank.JACK),
         new Card(Suit.CLUB, Rank.JACK),
         new Card(Suit.SPADE, Rank.ACE)
     );
-    public static final List<Card> CARDS_ACE_AS_ELEVEN = Arrays.asList(
+    public static final List<Card> CARDS_21_ACE_AS_ELEVEN = Arrays.asList(
         new Card(Suit.SPADE, Rank.ACE),
         new Card(Suit.SPADE, Rank.KING)
     );
-    public static final List<Card> CARDS_BUSTED = Arrays.asList(
+    public static final List<Card> CARDS_22_BUSTED = Arrays.asList(
         new Card(Suit.SPADE, Rank.TWO),
         new Card(Suit.SPADE, Rank.KING),
         new Card(Suit.SPADE, Rank.KING)
@@ -44,10 +44,10 @@ public class HandTest {
     static Stream<Arguments> isBustedParameters() {
         return Stream.of(
             Arguments.of("Bust 되지 않음",
-                CARDS_ACE_AS_ELEVEN, false
+                CARDS_21_ACE_AS_ELEVEN, false
             ),
             Arguments.of("Bust 됨",
-                CARDS_BUSTED, true
+                CARDS_22_BUSTED, true
             )
         );
     }
@@ -63,16 +63,16 @@ public class HandTest {
     static Stream<Arguments> cards() {
         return Stream.of(
             Arguments.of("정상적인 합 계산",
-                CARDS_EIGHT, 8
+                CARDS_8, 8
             ),
             Arguments.of("ACE가 1로 계산되는 경우",
-                CARDS_ACE_AS_ONE, 21
+                CARDS_21_ACE_AS_ONE, 21
             ),
             Arguments.of("ACE가 11로 계산되는 경우",
-                CARDS_ACE_AS_ELEVEN, 21
+                CARDS_21_ACE_AS_ELEVEN, 21
             ),
             Arguments.of("Busted의 경우",
-                CARDS_BUSTED, 22
+                CARDS_22_BUSTED, 22
             )
         );
     }
