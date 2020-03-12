@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Card.Card;
-import blackjack.domain.Card.Cards;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import blackjack.domain.result.Result;
 
 public class OutputView {
@@ -43,10 +43,10 @@ public class OutputView {
 
     public static void printFinalStatus(Players players, Dealer dealer) {
         System.out.println();
-        printStatus(dealer.getName(), dealer.getCards(), dealer.getSum());
+        printStatus(dealer.getName(), dealer.getCards(), dealer.computeSum());
 
         for (Player player : players.getPlayers()) {
-            printStatus(player.getName(), player.getCards(), player.getSum());
+            printStatus(player.getName(), player.getCards(), player.computeSum());
         }
     }
 
@@ -59,7 +59,7 @@ public class OutputView {
         System.out.println();
         StringBuilder dealerMessage = new StringBuilder();
         for (Result result : Result.values()) {
-            dealerMessage.append(dealer.getResultSum(result));
+//            dealerMessage.append(dealer.computeSum(result));
             dealerMessage.append(result.getMessage());
         }
 

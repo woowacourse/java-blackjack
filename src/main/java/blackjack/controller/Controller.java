@@ -1,9 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.Card.CardDeck;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.YorN;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -12,32 +14,29 @@ import java.util.List;
 public class Controller {
 
     public void run() {
+        // 초기화
+        Dealer dealer = new Dealer();
         List<String> names = InputView.getNames();
         Players players = new Players(names);
-        Dealer dealer = new Dealer();
-
         CardDeck deck = new CardDeck();
 
-        // 초기화
         for (Player player : players.getPlayers()) {
-            player.addCard(deck.giveCard());
-            player.addCard(deck.giveCard());
+            setInitialCards(player, deck);
         }
-        dealer.addCard(deck.giveCard());
-        dealer.addCard(deck.giveCard());
+        setInitialCards(dealer, deck);
 
         OutputView.printInitialStatus(players, dealer);
 
-        // 게임
+        // 게임 진행 ~ 다른 클래스로 추출해서 사용하는 방법?
         for (Player player : players.getPlayers()) {
-            while (!player.exceedMaxSum() && proceed(player.getName())) {
-               player.addCard(deck.giveCard());
-                OutputView.printStatus(player.getName(), player.getCards());
+            while (!player.canReceiveMoreCard() && proceed(player.getName())) {
+               player.addCard(deck.getCard());
+               OutputView.printStatus(player.getName(), player.getCards());
             }
         }
 
-        if (dealer.needMoreCard()) {
-            deck.giveCard(dealer);
+        if (dealer.canReceiveMoreCard()) {
+            dealer.addCard(deck.getCard());
             OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
         }
 
@@ -51,14 +50,12 @@ public class Controller {
     }
 
     private boolean proceed(String name) {
-        String result = InputView.getYorN(name);
-        if (result.equals("y")) {
-            return true;
-        }
+        String input = InputView.getYorN(name);
+        return YorN.valueOf(input).getResult();
+    }
 
-        if (result.equals("n")) {
-            return false;
-        }
-        throw new IllegalArgumentException("잘못된 입력입니다.");
+    private void setInitialCards(User user, CardDeck deck) {
+        user.addCard(deck.getCard());
+        user.addCard(deck.getCard());
     }
 }

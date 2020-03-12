@@ -1,18 +1,18 @@
-package blackjack.domain.Card;
+package blackjack.domain.card;
 
 import java.util.Objects;
 
 public class Card {
     private static final String NULL_ERROR_MSG = "생성자에 Null이 들어올 수 없습니다.";
     private CardNumber number;
-    private Figure figure;
+    private CardFigure cardFigure;
 
-    public Card(CardNumber number, Figure figure) {
+    public Card(CardNumber number, CardFigure cardFigure) {
         Objects.requireNonNull(number, NULL_ERROR_MSG);
-        Objects.requireNonNull(figure, NULL_ERROR_MSG);
+        Objects.requireNonNull(cardFigure, NULL_ERROR_MSG);
 
         this.number = number;
-        this.figure = figure;
+        this.cardFigure = cardFigure;
     }
 
     @Override
@@ -21,27 +21,28 @@ public class Card {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return number == card.number &&
-                figure == card.figure;
+                cardFigure == card.cardFigure;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, figure);
+        return Objects.hash(number, cardFigure);
     }
 
-    public boolean has(CardNumber number, Figure figure) {
-        return this.number == number && this.figure == figure;
+    public boolean has(CardNumber number, CardFigure cardFigure) {
+        return this.number == number && this.cardFigure == cardFigure;
     }
 
-    public Figure getFigure() { return figure; }
+    public CardFigure getCardFigure() { return cardFigure; }
 
     public int getNumber() {
         return number.getNumber();
     }
 
     public String getInfo() {
-        return number.getMessage() + getFigure().getFigure();
+        return number.getMessage() + getCardFigure().getFigure();
     }
+
     public boolean has(CardNumber number) {
         return this.number == number;
     }

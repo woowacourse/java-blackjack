@@ -1,9 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.Card.CardDeck;
-import blackjack.domain.Card.CardNumber;
-import blackjack.domain.Card.Cards;
-import blackjack.domain.Card.Figure;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.CardFigure;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +15,11 @@ public class CardsTest {
     void sumTest() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = new Cards();
-        cards.add(cardDeck.of(CardNumber.THREE, Figure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.KING, Figure.CLOVER));
+        cards.add(cardDeck.of(CardNumber.THREE, CardFigure.CLOVER));
+        cards.add(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
 
         int expected = 13;
-        assertThat(cards.getSum()).isEqualTo(expected);
+        assertThat(cards.computeSum()).isEqualTo(expected);
     }
 
     @DisplayName("Ace가 있을 때의 카드 합 계산 확인(21이 초과하는 경우)")
@@ -27,12 +27,12 @@ public class CardsTest {
     void aceSumTest() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = new Cards();
-        cards.add(cardDeck.of(CardNumber.ACE, Figure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.KING, Figure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.QUEEN, Figure.HEART));
+        cards.add(cardDeck.of(CardNumber.ACE, CardFigure.CLOVER));
+        cards.add(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
+        cards.add(cardDeck.of(CardNumber.QUEEN, CardFigure.HEART));
 
         int expected = 21;
-        assertThat(cards.getSum()).isEqualTo(expected);
+        assertThat(cards.computeSum()).isEqualTo(expected);
     }
 
     @DisplayName("Ace가 있을 때의 카드 합 계산 확인(21이 초과하지 않는 경우)")
@@ -40,10 +40,10 @@ public class CardsTest {
     void aceSumTest2() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = new Cards();
-        cards.add(cardDeck.of(CardNumber.ACE, Figure.CLOVER));
-        cards.add(cardDeck.of(CardNumber.KING, Figure.CLOVER));
+        cards.add(cardDeck.of(CardNumber.ACE, CardFigure.CLOVER));
+        cards.add(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
 
         int expected = 21;
-        assertThat(cards.getSum()).isEqualTo(expected);
+        assertThat(cards.computeSum()).isEqualTo(expected);
     }
 }

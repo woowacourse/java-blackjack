@@ -1,6 +1,6 @@
-package blackjack.domain.Card;
+package blackjack.domain.card;
 
-public enum Figure {
+public enum CardFigure {
     DIAMOND("다이아몬드"),
     CLOVER("클로버"),
     HEART("하트"),
@@ -8,7 +8,7 @@ public enum Figure {
 
     private final String figure;
 
-    Figure(String figure) {
+    CardFigure(String figure) {
         this.figure = figure;
     }
 

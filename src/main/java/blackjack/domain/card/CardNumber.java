@@ -1,4 +1,4 @@
-package blackjack.domain.Card;
+package blackjack.domain.card;
 
 public enum CardNumber {
     TWO(2, "2"),
@@ -17,6 +17,7 @@ public enum CardNumber {
 
     private final int number;
     private final String message;
+    public static final int ACE_DIFF = 10;
 
     CardNumber(int number, String message) {
         this.number = number;
@@ -29,5 +30,9 @@ public enum CardNumber {
 
     public String getMessage() {
         return message;
+    }
+
+    public boolean isAce() {
+        return this == CardNumber.ACE;
     }
 }

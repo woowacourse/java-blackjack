@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.Card.CardDeck;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +20,10 @@ class CardDeckTest {
     void name2() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
-        int originSum = dealer.getSum();
+        int originSum = dealer.computeSum();
 
-        cardDeck.giveCard(dealer);
+        cardDeck.getCard(dealer);
 
-        assertThat(dealer.getSum() > originSum).isTrue();
+        assertThat(dealer.computeSum() > originSum).isTrue();
     }
 }

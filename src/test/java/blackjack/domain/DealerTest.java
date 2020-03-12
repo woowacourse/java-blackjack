@@ -1,8 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.Card.CardDeck;
-import blackjack.domain.Card.CardNumber;
-import blackjack.domain.Card.Figure;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardFigure;
+import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,8 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
 
-        dealer.addCard(cardDeck.of(CardNumber.FIVE, Figure.CLOVER));
-        dealer.addCard(cardDeck.of(CardNumber.FIVE, Figure.HEART));
+        dealer.addCard(cardDeck.of(CardNumber.FIVE, CardFigure.CLOVER));
+        dealer.addCard(cardDeck.of(CardNumber.FIVE, CardFigure.HEART));
 
         boolean expected = true;
         assertThat(dealer.needMoreCard()).isEqualTo(expected);
@@ -28,8 +29,8 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
 
-        dealer.addCard(cardDeck.of(CardNumber.QUEEN, Figure.CLOVER));
-        dealer.addCard(cardDeck.of(CardNumber.KING, Figure.CLOVER));
+        dealer.addCard(cardDeck.of(CardNumber.QUEEN, CardFigure.CLOVER));
+        dealer.addCard(cardDeck.of(CardNumber.KING, CardFigure.CLOVER));
 
         boolean expected = false;
         assertThat(dealer.needMoreCard()).isEqualTo(expected);
