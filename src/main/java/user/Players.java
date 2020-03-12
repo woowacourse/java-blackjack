@@ -1,16 +1,22 @@
 package user;
 
+import card.Deck;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
     public static final String DELIMITER = ",";
+
     List<Player> players;
 
-    public Players(String playerNames) {
+    public Players(String playerNames, Deck deck) {
         List<String> names = splitNames(playerNames);
         checkDuplication(names);
+        for (String name : names) {
+            players.add(new Player(name, deck));
+        }
     }
 
     private List<String> splitNames(String playerNames) {

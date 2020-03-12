@@ -11,8 +11,8 @@ public class Player implements User {
     private PlayerName name;
     private Hands hands;
 
-    public Player(PlayerName name, Deck deck) {
-        this.name = name;
+    public Player(String name, Deck deck) {
+        this.name = new PlayerName(name);
         this.hands = new Hands(deck);
     }
 
