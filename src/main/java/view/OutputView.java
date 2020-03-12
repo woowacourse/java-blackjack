@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.game.Result;
 import domain.game.Results;
 import domain.user.Dealer;
-import domain.user.Players;
-import domain.user.User;
+import domain.user.Player;
+import domain.user.Users;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,25 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String INIT_DISTRIBUTE_COUNT = "2";
 
-    public static void printDistributeMessage(final Players players) {
-        List<String> playersName = new ArrayList<>();
+    public static void printDistributeMessage(final Users users) {
+        List<String> usersName = new ArrayList<>();
 
-        players.forEach(player -> playersName.add(player.getName()));
-        System.out.println("\n딜러와 " + String.join(DELIMITER, playersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
+        users.forEach(User -> usersName.add(User.getName()));
+        System.out.println("\n딜러와 " + String.join(DELIMITER, usersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
     }
 
-    public static void printInitStatus(final Dealer dealer, final Players players) {
+    public static void printInitStatus(final Dealer dealer, final Users users) {
         printStatus(dealer);
-        players.forEach(player -> printStatus(player));
+        users.forEach(User -> printStatus(User));
         System.out.println();
     }
 
-    public static void printStatus(final User user) {
-        System.out.printf("%s카드: %s\n", user.getName(), makeCardNames(user.getCards()));
+    public static void printStatus(final Player player) {
+        if (player instanceof Dealer) {
+            System.out.printf("%s카드: %s\n", player.getName(), player.getFirstCardInfo());
+            return;
+        }
+        System.out.printf("%s카드: %s\n", player.getName(), makeCardNames(player.getCards()));
     }
 
     private static String makeCardNames(final List<Card> cards) {
@@ -42,14 +46,14 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printUsersResult(final Dealer dealer, final Players players) {
+    public static void printUsersResult(final Dealer dealer, final Users users) {
         System.out.println();
-        printUserResult(dealer);
-        players.forEach(OutputView::printUserResult);
+        printPlayerResult(dealer);
+        users.forEach(OutputView::printPlayerResult);
     }
 
-    private static void printUserResult(final User user) {
-        System.out.printf("%s카드: %s - 결과: %d\n", user.getName(), makeCardNames(user.getCards()), user.getScore());
+    private static void printPlayerResult(final Player player) {
+        System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), makeCardNames(player.getCards()), player.getScore());
     }
 
     public static void printLastResult(Results results) {

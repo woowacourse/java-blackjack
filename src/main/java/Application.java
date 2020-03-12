@@ -2,10 +2,10 @@ import domain.card.CardDeck;
 import domain.game.WhetherAddCard;
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.Players;
 import domain.user.User;
+import domain.user.Users;
 import factory.CardFactory;
-import factory.PlayerFactory;
+import factory.UserFactory;
 import util.CardDistributor;
 import util.ResultGenerator;
 import view.InputView;
@@ -17,49 +17,49 @@ public class Application {
     public static void main(String[] args) {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
         final Dealer dealer = new Dealer();
-        final Players players = new Players(PlayerFactory.create(InputView.inputNames()));
+        final Users users = new Users(UserFactory.create(InputView.inputNames()));
 
-        distributeInitCard(cardDeck, dealer, players);
-        initBrief(dealer, players);
-        addMoreCards(cardDeck, dealer, players);
-        printResults(dealer, players);
+        distributeInitCard(cardDeck, dealer, users);
+        initBrief(dealer, users);
+        addMoreCards(cardDeck, dealer, users);
+        printResults(dealer, users);
     }
 
-    private static void distributeInitCard(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        distributeToUser(cardDeck, dealer);
-        for (Player player : players) {
-            distributeToUser(cardDeck, player);
+    private static void distributeInitCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
+        distributeToPlayer(cardDeck, dealer);
+        for (User User : users) {
+            distributeToPlayer(cardDeck, User);
         }
     }
 
-    private static void distributeToUser(final CardDeck cardDeck, final User user) {
+    private static void distributeToPlayer(final CardDeck cardDeck, final Player player) {
         int distributeCount = DEFAULT_CARD_SIZE;
 
         while (distributeCount-- > 0) {
-            CardDistributor.giveOneCard(cardDeck, user);
+            CardDistributor.giveOneCard(cardDeck, player);
         }
     }
 
-    private static void initBrief(final Dealer dealer, final Players players) {
-        OutputView.printDistributeMessage(players);
-        OutputView.printInitStatus(dealer, players);
+    private static void initBrief(final Dealer dealer, final Users users) {
+        OutputView.printDistributeMessage(users);
+        OutputView.printInitStatus(dealer, users);
     }
 
-    private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        userMoreCard(cardDeck, players);
+    private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Users users) {
+        userMoreCard(cardDeck, users);
         dealerMoreCard(cardDeck, dealer);
     }
 
-    private static void userMoreCard(final CardDeck cardDeck, final Players players) {
-        for (Player player : players) {
-            giveCardsIfPlayerWant(cardDeck, player);
+    private static void userMoreCard(final CardDeck cardDeck, final Users users) {
+        for (User User : users) {
+            giveCardsIfUserWant(cardDeck, User);
         }
     }
 
-    private static void giveCardsIfPlayerWant(final CardDeck cardDeck, final Player player) {
-        while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
-            CardDistributor.giveOneCard(cardDeck, player);
-            OutputView.printStatus(player);
+    private static void giveCardsIfUserWant(final CardDeck cardDeck, final User User) {
+        while (User.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(User)).isYes()) {
+            CardDistributor.giveOneCard(cardDeck, User);
+            OutputView.printStatus(User);
         }
     }
 
@@ -70,8 +70,8 @@ public class Application {
         }
     }
 
-    private static void printResults(final Dealer dealer, final Players players) {
-        OutputView.printUsersResult(dealer, players);
-        OutputView.printLastResult(ResultGenerator.create(dealer, players));
+    private static void printResults(final Dealer dealer, final Users users) {
+        OutputView.printUsersResult(dealer, users);
+        OutputView.printLastResult(ResultGenerator.create(dealer, users));
     }
 }

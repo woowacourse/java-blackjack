@@ -19,10 +19,10 @@ public class DealerTest {
     @Test
     @DisplayName("카드 한 장 분배")
     void giveOneCard() {
-        Player player = new Player("플레이어");
+        User user = new User("유저");
         CardDeck cardDeck = new CardDeck(CardFactory.create());
-        CardDistributor.giveOneCard(cardDeck, player);
-        assertThat(player.getCardSize()).isEqualTo(1);
+        CardDistributor.giveOneCard(cardDeck, user);
+        assertThat(user.getCardSize()).isEqualTo(1);
     }
 
     @Test
@@ -33,19 +33,19 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러 승리 여부 확인 - 플레이어와 동점일 경우 패배")
+    @DisplayName("딜러 승리 여부 확인 - 유저와 동점일 경우 패배")
     void isWin() {
         Dealer dealer = new Dealer();
-        Player player = new Player("player");
+        User user = new User("user");
 
         dealer.addCard(Card.of("스페이드", "K"));
-        player.addCard(Card.of("스페이드", "9"));
-        assertThat(dealer.isWin(player)).isTrue();
+        user.addCard(Card.of("스페이드", "9"));
+        assertThat(dealer.isWin(user)).isTrue();
 
-        player.addCard(Card.of("스페이드", "10"));
-        assertThat(dealer.isWin(player)).isFalse();
+        user.addCard(Card.of("스페이드", "10"));
+        assertThat(dealer.isWin(user)).isFalse();
 
         dealer.addCard(Card.of("스페이드", "9"));
-        assertThat(dealer.isWin(player)).isFalse();
+        assertThat(dealer.isWin(user)).isFalse();
     }
 }
