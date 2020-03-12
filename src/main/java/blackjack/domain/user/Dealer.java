@@ -4,8 +4,6 @@ public class Dealer extends User {
 
     public static final String DEALER = "딜러";
     public static final int THRESHOLD = 16;
-    int wins = 0;
-    int loses = 0;
 
     public Dealer() {
         super(DEALER);

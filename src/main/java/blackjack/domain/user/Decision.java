@@ -6,7 +6,6 @@ public enum Decision {
     Y("Y", "y", true),
     N("N", "n", false);
 
-
     private String uppercase;
     private String lowercase;
     private boolean intended;

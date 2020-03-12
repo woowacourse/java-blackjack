@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.Result;
 
 public class Player extends User {
-    boolean isWinner;
     public Player(String name) {
         super(name);
     }
