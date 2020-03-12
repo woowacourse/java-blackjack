@@ -27,7 +27,6 @@ public class Record {
 		return loseCount;
 	}
 
-
 	public boolean hasMany() {
 		return winCount + loseCount >= MANY_TIMES;
 	}
