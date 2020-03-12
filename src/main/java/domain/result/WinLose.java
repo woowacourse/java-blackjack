@@ -2,6 +2,12 @@ package domain.result;
 
 public enum WinLose {
     WIN,
-    DRAW,
     LOSE;
+
+    public static WinLose reverse(WinLose winLose) {
+        if (winLose == WIN) {
+            return LOSE;
+        }
+        return WIN;
+    }
 }

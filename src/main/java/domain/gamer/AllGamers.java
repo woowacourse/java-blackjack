@@ -1,9 +1,10 @@
 package domain.gamer;
 
 import domain.card.providable.CardProvidable;
+import domain.result.AllBlackJackResults;
 import domain.result.BlackJackResult;
 import domain.result.DealerResult;
-import domain.result.UserResult;
+import domain.result.PlayerResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,18 +46,18 @@ public class AllGamers {
         return gamers;
     }
 
-    public List<BlackJackResult> determineResults() {
+    public AllBlackJackResults determineResults() {
         List<BlackJackResult> gameResult = new ArrayList<>();
 
         gameResult.addAll(determineUsersResults());
         gameResult.add(new DealerResult(determineUsersResults()));
 
-        return gameResult;
+        return new AllBlackJackResults(gameResult);
     }
 
-    private List<UserResult> determineUsersResults() {
+    private List<PlayerResult> determineUsersResults() {
         return players.stream()
-                .map(player -> new UserResult(player.getName(), player.determineWinLose(dealer)))
+                .map(player -> new PlayerResult(player.getName(), player.determineWinLose(dealer)))
                 .collect(toList());
     }
 

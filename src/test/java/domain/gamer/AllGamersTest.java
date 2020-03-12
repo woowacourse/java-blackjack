@@ -4,8 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.card.providable.CardDeck;
-import domain.result.DealerResult;
-import domain.result.UserResult;
+import domain.result.PlayerResult;
 import domain.result.WinLose;
 import org.junit.jupiter.api.Test;
 
@@ -48,20 +47,16 @@ public class AllGamersTest {
 
         AllGamers allGamers = new AllGamers(dealer, players);
 
-        assertThat(allGamers.determineResults()).contains(
-                new UserResult("phobi", WinLose.LOSE),
-                new UserResult("jason", WinLose.WIN));
+        assertThat(allGamers.determineResults().extractPlayerResults()).contains(
+                new PlayerResult("phobi", WinLose.LOSE),
+                new PlayerResult("jason", WinLose.WIN));
 
         // 딜러 확인
         Map<WinLose, Integer> expectedDealerWinLose = new HashMap<>();
         expectedDealerWinLose.put(WinLose.WIN, 1);
         expectedDealerWinLose.put(WinLose.LOSE, 1);
 
-        assertThat(allGamers.determineResults().stream()
-                .filter(a -> a instanceof DealerResult)
-                .findAny()
-                .get()
-                .getWinLose()).isEqualTo(expectedDealerWinLose);
+        assertThat(allGamers.determineResults().extractDealerResult().getWinLose()).isEqualTo(expectedDealerWinLose);
     }
 
     private void makePlayersDrawFixedCards(Gamer gamer, int... ranks) {

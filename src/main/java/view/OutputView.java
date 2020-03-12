@@ -4,6 +4,8 @@ import domain.gamer.AllGamers;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
+import domain.result.AllBlackJackResults;
+import domain.result.PlayerResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,8 +63,8 @@ public class OutputView {
         return gamer.getName() + ": " + gamer.getCardsOnHand().toString();
     }
 
-    public static void printCanNotDrawMessage() {
-        System.out.println("더이상 뽑을 수 없습니다.");
+    public static void printCanNotDrawMessage(Player player) {
+        System.out.println(player.getName() + "는 더이상 뽑을 수 없습니다.");
     }
 
     public static void printDealerCanDrawMore() {
@@ -74,6 +76,19 @@ public class OutputView {
                 .map(gamer -> parseGamerState(gamer) + " - 결과: " + gamer.calculateScore().getValue())
                 .collect(Collectors.joining("\n"));
         System.out.println(scores);
+    }
+
+    public static void printReults(AllBlackJackResults allBlackJackResults) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("##최종승패\n");
+        stringBuilder.append(allBlackJackResults.extractDealerResult().toString());
+        stringBuilder.append("\n");
+        stringBuilder.append(allBlackJackResults.extractPlayerResults().stream()
+                .map(PlayerResult::toString)
+                .collect(Collectors.joining("\n")));
+
+        System.out.println(stringBuilder.toString());
     }
 
 }

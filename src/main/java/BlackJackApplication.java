@@ -20,8 +20,9 @@ public class BlackJackApplication {
 
         doDrawMorePhase(allGamers, cardDeck);
 
-        OutputView.printScore(allGamers);
+        doResultsPhase(allGamers);
     }
+
 
     private static List<Player> inputPlayerNames() {
         return InputView.inputPlayerNames()
@@ -69,8 +70,14 @@ public class BlackJackApplication {
 
     private static boolean canDrawMore(Player player) {
         if (player.canDrawMore() == false) {
-            OutputView.printCanNotDrawMessage();
+            OutputView.printCanNotDrawMessage(player);
         }
         return player.canDrawMore();
+    }
+
+    private static void doResultsPhase(AllGamers allGamers) {
+        OutputView.printScore(allGamers);
+        OutputView.printEmptyLine();
+        OutputView.printReults(allGamers.determineResults());
     }
 }

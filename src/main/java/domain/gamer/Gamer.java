@@ -23,6 +23,10 @@ public abstract class Gamer implements BlackJackGameable {
             return WinLose.LOSE;
         }
 
+        if (counterParts.calculateScore().isLargerThan(BlackJackScoreManager.BLACK_JACK_SCORE)) {
+            return WinLose.WIN;
+        }
+
         if (this.calculateScore().isLargerThan(counterParts.calculateScore())) {
             return WinLose.WIN;
         }
