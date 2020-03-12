@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,9 +22,7 @@ public abstract class AbstractUser implements User {
 
     @Override
     public void giveCards(Card... cards) {
-        for (Card card : cards) {
-            this.cards.add(card);
-        }
+        this.cards.addAll(Arrays.asList(cards));
     }
 
     @Override
@@ -34,6 +33,11 @@ public abstract class AbstractUser implements User {
     @Override
     public boolean is(String name) {
         return this.name.equals(name);
+    }
+
+    @Override
+    public int countCards() {
+        return cards.size();
     }
 
     @Override

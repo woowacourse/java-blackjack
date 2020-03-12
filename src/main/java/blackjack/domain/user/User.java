@@ -16,6 +16,8 @@ public interface User {
 
     boolean is(String name);
 
+    int countCards();
+
     String getName();
 
     Boolean isWinner(Score dealerScore);

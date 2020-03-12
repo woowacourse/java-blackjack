@@ -5,6 +5,7 @@ import blackjack.domain.card.Score;
 import blackjack.domain.user.exception.PlayersException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -67,5 +68,9 @@ public class Players {
 
     public int memberSize() {
         return players.size();
+    }
+
+    public List<User> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

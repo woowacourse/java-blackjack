@@ -5,7 +5,6 @@ import blackjack.domain.card.Score;
 public class Dealer extends AbstractUser {
     private static final String NAME = "딜러";
 
-
     private Dealer() {
         super(NAME);
     }
