@@ -33,5 +33,7 @@ public class Blackjack {
             dealer.giveCards(deck.draw());
             OutputView.printDealerTurn(dealer);
         }
+
+        OutputView.printFinalInfo(dealer, players);
     }
 }

@@ -2,9 +2,12 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -43,13 +46,16 @@ public class OutputView {
     }
 
     public static void printUserCard(User user) {
-        String userCards = user.getCards().stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(", "));
-
+        String userCards = createUserCardInfo(user);
         System.out.printf("%s : %s" + NEW_LINE, user.getName(), userCards);
 
         printIfBust(user);
+    }
+
+    private static String createUserCardInfo(User user) {
+        return user.getCards().stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
     }
 
 	public static void printDealerTurn(Dealer dealer) {
@@ -63,5 +69,30 @@ public class OutputView {
         if (user.isBust()) {
             System.out.println(BUST_MESSAGE);
         }
+    }
+
+    public static void printFinalInfo(User dealer, Players players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players.getPlayers());
+
+        for (User user : users) {
+            String userCards = createUserCardInfo(user);
+            String score = createResultScore(user);
+
+            System.out.printf("%s : %s - 결과: %s" + NEW_LINE,
+                    user.getName(), userCards, score);
+        }
+    }
+
+    private static String createResultScore(User user) {
+        if (user.isBust()) {
+            return "bust";
+        }
+        return String.valueOf(user.calculateScore().getScore());
+    }
+
+    private static void printUserCardWithScore(User user) {
+
     }
 }
