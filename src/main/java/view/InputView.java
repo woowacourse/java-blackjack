@@ -1,6 +1,8 @@
 package view;
 
+import dto.RequestAnswerDTO;
 import dto.RequestPlayerNameDTO;
+import dto.ResponsePlayerDTO;
 
 import java.util.Scanner;
 
@@ -27,5 +29,24 @@ public class InputView {
             throw new IllegalArgumentException();
         }
     }
+
+    public static RequestAnswerDTO inputAnswer(ResponsePlayerDTO responsePlayerDTO) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y,아니오는 n)",responsePlayerDTO.getName());
+        try {
+            String answer = SCANNER.nextLine();
+            validateAnswer(answer);
+            return new RequestAnswerDTO(answer);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return  inputAnswer(responsePlayerDTO);
+        }
+    }
+
+    private static void validateAnswer(String answer) {
+        if( !answer.equals("y") && !answer.equals("n")){
+            throw new IllegalArgumentException("예는 y,아니오는 n 로 입력해주세요");
+        }
+    }
+
 }
 

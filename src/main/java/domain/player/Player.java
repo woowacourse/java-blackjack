@@ -17,10 +17,10 @@ public abstract class Player {
     }
 
     public int sumCardNumber() {
-        return CardCalculator.calculateCards(this.cards);
+        return CardCalculator.calculateContainAce(this.cards);
     }
 
-    abstract void insertCard(Cards cards);
+    public abstract void insertCard(Cards cards);
 
     public List<Card> getCard() {
         return Collections.unmodifiableList(this.cards);

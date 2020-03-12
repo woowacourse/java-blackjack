@@ -44,6 +44,10 @@ public class ResponsePlayerDTO {
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 
+    public static ResponsePlayerDTO getResponsePlayerDTO(Player player){
+        return new ResponsePlayerDTO(player);
+    }
+
     public String getName() {
         return this.name;
     }

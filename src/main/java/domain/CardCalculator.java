@@ -37,7 +37,7 @@ public class CardCalculator {
         return sum == BLACK_JACK;
     }
 
-    public static int calculateCards(List<Card> cards) {
+    private static int calculateCards(List<Card> cards) {
         return (int) cards.stream()
                 .mapToLong(Card::getCardNumber)
                 .sum();
