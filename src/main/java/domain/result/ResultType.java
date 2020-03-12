@@ -32,9 +32,9 @@ public enum ResultType {
 		return name;
 	}
 
-	public static ResultType from(User user1, User user2) {
+	public static ResultType from(User result, User compared) {
 		return Arrays.stream(ResultType.values())
-				.filter(type -> type.resultJudge.test(user1.compareTo(user2)))
+				.filter(type -> type.resultJudge.test(result.compareTo(compared)))
 				.findFirst()
 				.orElseThrow(NullPointerException::new);
 	}
