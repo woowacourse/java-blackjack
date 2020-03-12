@@ -14,14 +14,13 @@ public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
     public static final String BUST_MESSAGE = "버스트 되었습니다!!!";
 
-    public static void printInitialInfo(Player dealer, Players players) {
-        printInitialInfoHead(dealer, players);
-
-        printInitialDealerCard(dealer);
+    public static void printStartInfo(Dealer dealer, Players players) {
+        printStartInfoHead(dealer, players);
+        printOneOfDealerCard(dealer);
         printAllPlayerCards(players);
     }
 
-    private static void printInitialInfoHead(Player dealer, Players players) {
+    private static void printStartInfoHead(Dealer dealer, Players players) {
         String playerNames = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
@@ -30,29 +29,24 @@ public class OutputView {
                 dealer.getName(), playerNames, dealer.countCards());
     }
 
-    private static void printInitialDealerCard(Player dealer) {
-        String dealerCards = dealer.getCards().stream()
-                .limit(1)
-                .map(Card::getName)
-                .collect(Collectors.joining(", "));
-
-        System.out.printf("%s : %s" + NEW_LINE, dealer.getName(), dealerCards);
+    private static void printOneOfDealerCard(Dealer dealer) {
+        System.out.printf("%s : %s" + NEW_LINE, dealer.getName(), dealer.showFirstCard());
     }
 
     private static void printAllPlayerCards(Players players) {
         for (Player player : players.getPlayers()) {
-            printUserCard(player);
+            printPlayerCard(player);
         }
     }
 
-    public static void printUserCard(Player player) {
-        String userCards = createUserCardInfo(player);
+    public static void printPlayerCard(Player player) {
+        String userCards = createPlayerCardInfo(player);
         System.out.printf("%s : %s" + NEW_LINE, player.getName(), userCards);
 
         printIfBust(player);
     }
 
-    private static String createUserCardInfo(Player player) {
+    private static String createPlayerCardInfo(Player player) {
         return player.getCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
@@ -77,7 +71,7 @@ public class OutputView {
         users.addAll(players.getPlayers());
 
         for (Player player : users) {
-            String userCards = createUserCardInfo(player);
+            String userCards = createPlayerCardInfo(player);
             String score = createResultScore(player);
 
             System.out.printf("%s : %s - 결과: %s" + NEW_LINE,
