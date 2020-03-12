@@ -14,17 +14,24 @@ import java.util.List;
 public class InputHandler {
 
     public static List<String> parseName(String input) {
-        if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException("이름은 최소 1개 이상이어야 합니다");
-        }
+        validateNullOrEmptyName(input);
         List<String> names = Arrays.asList(input.trim()
                 .replace(" ", "")
                 .split(","));
+        validateDuplicatedName(names);
+        return names;
+    }
 
+    private static void validateNullOrEmptyName(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("이름은 최소 1개 이상이어야 합니다");
+        }
+    }
+
+    private static void validateDuplicatedName(List<String> names) {
         if (names.size() != new HashSet<>(names).size()) {
             throw new IllegalArgumentException("중복된 이름이 있습니다");
         }
-        return names;
     }
 
     public static void hitMoreCard(Users users, Deck deck) {
