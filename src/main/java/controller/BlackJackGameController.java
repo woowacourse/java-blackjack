@@ -22,7 +22,7 @@ public class BlackJackGameController {
 		CardDeck cardDeck = new CardDeck();
 
 		firstDraw(users, dealer, cardDeck);
-		printCardStatus(userName, users, dealer);
+		printFirstDrawCards(userName, users, dealer);
 
 		hit(users, dealer, cardDeck);
 
@@ -48,7 +48,7 @@ public class BlackJackGameController {
 		}
 	}
 
-	private static void printCardStatus(String name, List<User> users, Dealer dealer) {
+	private static void printFirstDrawCards(String name, List<User> users, Dealer dealer) {
 		OutputView.firstDrawMessage(name, Rull.FIRST_DRAW_COUNT);
 		OutputView.printOneCard(dealer);
 		for (User user : users) {
@@ -86,7 +86,7 @@ public class BlackJackGameController {
 
 	private static void printResult(GameResult gameResult) {
 		OutputView.printFinalResultMessage();
-		OutputView.printDealerResult(gameResult.getDealerResult());
-		OutputView.printUserResult(gameResult.getUserResult());
+		OutputView.printDealerResult(gameResult);
+		OutputView.printUserResult(gameResult);
 	}
 }

@@ -15,4 +15,16 @@ public enum Result {
 	public String toString() {
 		return name;
 	}
+
+	public static boolean isLose(Result result) {
+		return result == LOSE;
+	}
+
+	public static boolean isDraw(Result result) {
+		return result == DRAW;
+	}
+
+	public static boolean isWin(Result result) {
+		return result == WIN;
+	}
 }

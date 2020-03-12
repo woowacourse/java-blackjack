@@ -10,6 +10,8 @@ public interface PlayerInterface {
 
 	int calculateScore();
 
+	int calculateBurstIsZeroScore();
+
 	String getName();
 
 	String toStringAllCard();

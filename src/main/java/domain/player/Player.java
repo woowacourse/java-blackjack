@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.Rull;
 import domain.card.PlayerCards;
 import domain.card.cardfactory.Card;
 
@@ -24,6 +25,14 @@ public class Player implements PlayerInterface {
 		return playerCards.calculateScore();
 	}
 
+	public int calculateBurstIsZeroScore() {
+		int score = playerCards.calculateScore();
+		if (score > Rull.MAX_SCORE) {
+			return 0;
+		}
+		return score;
+	}
+
 	public String toStringAllCard() {
 		return String.format(STRING_FORMAT_PRINT_CARD, this.name, playerCards.toStringAllCard());
 	}
@@ -46,5 +55,4 @@ public class Player implements PlayerInterface {
 	public int hashCode() {
 		return Objects.hash(name);
 	}
-
 }
