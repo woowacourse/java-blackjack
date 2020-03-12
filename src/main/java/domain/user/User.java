@@ -6,6 +6,9 @@ public class User extends Player {
     }
 
     public boolean isWin(final Player opponentPlayer) {
-        return isNotBust() && (opponentPlayer.isBust() || getScore() >= opponentPlayer.getScore());
+        boolean dealerBust = opponentPlayer.isBust();
+        boolean userWin = isNotBust() && (opponentPlayer.isBust() || getScore() >= opponentPlayer.getScore());
+
+        return dealerBust || userWin;
     }
 }

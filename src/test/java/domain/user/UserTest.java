@@ -20,13 +20,19 @@ public class UserTest {
         User user = new User("user");
 
         dealer.addCard(Card.of("스페이드", "K"));
-        user.addCard(Card.of("스페이드", "9"));
+        user.addCard(Card.of("하트", "9"));
         assertThat(user.isWin(dealer)).isFalse();
 
-        user.addCard(Card.of("스페이드", "10"));
+        user.addCard(Card.of("하트", "10"));
         assertThat(user.isWin(dealer)).isTrue();
 
         dealer.addCard(Card.of("스페이드", "9"));
+        assertThat(user.isWin(dealer)).isTrue();
+
+        user.addCard(Card.of("하트", "Q"));
+        assertThat(user.isWin(dealer)).isFalse();
+
+        dealer.addCard(Card.of("스페이드", "Q"));
         assertThat(user.isWin(dealer)).isTrue();
     }
 }
