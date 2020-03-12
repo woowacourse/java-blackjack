@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+
     @Test
     @DisplayName("드로우 테스트")
     void isAbleDrawCard() {
@@ -12,12 +13,12 @@ public class PlayerTest {
         Player player = new Player("jamie");
         player.drawCard(cardDeck);
         Assertions.assertThat(player.isAbleDrawCards())
-                .isTrue();
+            .isTrue();
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
         Assertions.assertThat(player.isAbleDrawCards())
-                .isFalse();
+            .isFalse();
     }
 
     @Test
@@ -43,7 +44,7 @@ public class PlayerTest {
         player.drawCard(cardDeck);
         player.calculateWinningResult(17);
         Assertions.assertThat(player.getWinningResult())
-                .isEqualTo(WinningResult.LOSE);
+            .isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -54,6 +55,6 @@ public class PlayerTest {
         player.drawCard(cardDeck);
         player.calculateWinningResult(22);
         Assertions.assertThat(player.getWinningResult())
-                .isEqualTo(WinningResult.WIN);
+            .isEqualTo(WinningResult.WIN);
     }
 }

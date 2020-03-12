@@ -1,13 +1,12 @@
 package domain;
 
-import util.BlackJackRule;
-
 import java.util.ArrayList;
 import java.util.List;
+import util.BlackJackRule;
 
 public class Cards {
+
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
-    private static final int BLACK_JACK_SCORE = 21;
     private List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {

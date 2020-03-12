@@ -1,13 +1,18 @@
 package view;
 
-import domain.*;
-
+import domain.Dealer;
+import domain.Player;
+import domain.Players;
+import domain.User;
+import domain.WinningResult;
 import java.util.HashMap;
 import java.util.Map;
 
 public class OutputView {
+
     public static void printCardDistribution(Players players) {
-        System.out.println("\n딜러와 " + String.join(", ", players.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
+        System.out
+            .println("\n딜러와 " + String.join(", ", players.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
     }
 
     public static void printUsersCards(Dealer dealer, Players players) {
@@ -20,7 +25,8 @@ public class OutputView {
 
     public static void printPlayerCards(Player player) {
         String playerCards = player.getCards().getCards().toString();
-        System.out.println(player.getName() + ": " + playerCards.substring(1, playerCards.length() - 1));
+        System.out
+            .println(player.getName() + ": " + playerCards.substring(1, playerCards.length() - 1));
     }
 
     public static void printDealerOneMoreCard() {
@@ -37,7 +43,7 @@ public class OutputView {
     public static void printUserCardsAndScore(String name, User user) {
         String userCards = user.getCards().getCards().toString();
         System.out.println(name + ": " + userCards.substring(1, userCards.length() - 1)
-                + "- 결과: " + user.getCards().getScore());
+            + "- 결과: " + user.getCards().getScore());
     }
 
     public static void printFinalResult(Players players) {
@@ -68,12 +74,14 @@ public class OutputView {
         dealerWinningResult.put(WinningResult.DRAW, 0);
         dealerWinningResult.put(WinningResult.LOSE, 0);
         for (Player player : players.getPlayers()) {
-            dealerWinningResult.put(player.getWinningResult(), dealerWinningResult.get(player.getWinningResult()) + 1);
+            dealerWinningResult.put(player.getWinningResult(),
+                dealerWinningResult.get(player.getWinningResult()) + 1);
         }
         System.out.print("딜러: ");
         for (WinningResult winningResult : dealerWinningResult.keySet()) {
             if (dealerWinningResult.get(winningResult) != 0) {
-                System.out.print(dealerWinningResult.get(winningResult) + winningResult.getName() + " ");
+                System.out
+                    .print(dealerWinningResult.get(winningResult) + winningResult.getName() + " ");
             }
         }
         System.out.println();

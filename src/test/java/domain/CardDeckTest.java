@@ -1,11 +1,12 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 public class CardDeckTest {
+
     @DisplayName("개수 이상 드로우시 예외발생 테스트")
     @Test
     void cardDraw() {
@@ -14,6 +15,6 @@ public class CardDeckTest {
             cardDeck.draw();
         }
         assertThatThrownBy(() -> cardDeck.draw())
-                .isInstanceOf(IndexOutOfBoundsException.class);
+            .isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

@@ -1,6 +1,7 @@
 package domain;
 
 public class Dealer extends User {
+
     public Dealer() {
         cards = new DealerCards();
     }

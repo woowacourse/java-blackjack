@@ -6,6 +6,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackApplication {
+
     public static void main(String[] args) {
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.inputNames());

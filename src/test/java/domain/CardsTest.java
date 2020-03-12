@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
+
     @Test
     @DisplayName("같은 카드 추가 테스트")
     void add() {
@@ -12,7 +13,7 @@ public class CardsTest {
         Card card = new Card(Type.DIAMOND, Symbol.ACE);
         cards.add(card);
         Assertions.assertThatThrownBy(() -> cards.add(card))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -24,7 +25,7 @@ public class CardsTest {
         cards.add(new Card(Type.DIAMOND, Symbol.ACE));
         cards.add(new Card(Type.CLUB, Symbol.JACK));
         Assertions.assertThat(cards.getScore())
-                .isEqualTo(16);
+            .isEqualTo(16);
     }
 
     @Test
@@ -35,11 +36,11 @@ public class CardsTest {
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.JACK));
         Assertions.assertThat(cards.isBust())
-                .isFalse();
+            .isFalse();
 
         cards.add(new Card(Type.CLUB, Symbol.JACK));
         Assertions.assertThat(cards.isBust())
-                .isTrue();
+            .isTrue();
     }
 
     @Test
@@ -50,10 +51,10 @@ public class CardsTest {
         cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.JACK));
         Assertions.assertThat(cards.isBlackJack())
-                .isFalse();
+            .isFalse();
 
         cards.add(new Card(Type.CLUB, Symbol.SIX));
         Assertions.assertThat(cards.isBlackJack())
-                .isTrue();
+            .isTrue();
     }
 }

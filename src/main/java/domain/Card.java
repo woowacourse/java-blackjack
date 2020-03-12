@@ -1,6 +1,7 @@
 package domain;
 
 public class Card {
+
     private Type type;
     private Symbol symbol;
 
