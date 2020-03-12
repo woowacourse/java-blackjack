@@ -4,17 +4,14 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 
 class ScoreTest {
-	@Test
-	void Score_GenerateInstance() {
-		assertThat(new Score()).isInstanceOf(Score.class)
-			.extracting("score").isEqualTo(0);
-	}
-
 	@Test
 	void valueOf_InputInteger_ReturnInstance() {
 		assertThat(Score.valueOf(10)).isInstanceOf(Score.class)
@@ -23,16 +20,39 @@ class ScoreTest {
 
 	@ParameterizedTest
 	@EnumSource(value = Symbol.class)
-	void valueOf_InputSymbol_ReturnInstance(Symbol symbol) {
-		assertThat(Score.valueOf(symbol)).isInstanceOf(Score.class)
-			.extracting("score").isEqualTo(symbol.getSymbol());
+	void valueOf_InputCard_ReturnInstance(Symbol symbol) {
+		Card card = new Card(symbol, Type.CLUB);
+
+		assertThat(Score.valueOf(card)).isInstanceOf(Score.class)
+			.extracting("score").isEqualTo(card.getSymbolValue());
 	}
 
 	@Test
-	void add_InputScore_addScore() {
-		Score score1 = Score.valueOf(Symbol.TWO);
-		Score score2 = Score.valueOf(Symbol.EIGHT);
+	void add_InputCard_addScore() {
+		Card card = new Card(Symbol.TWO, Type.CLUB);
+		assertThat(Score.ZERO.add(card)).extracting("score").isEqualTo(2);
+	}
 
-		assertThat(score1.add(score2)).extracting("score").isEqualTo(10);
+	@Test
+	void add_ACECardAddBy11_addScore() {
+		Card card = new Card(Symbol.ACE, Type.CLUB);
+
+		assertThat(Score.ZERO.add(card)).extracting("score").isEqualTo(11);
+	}
+
+	@Test
+	void add_ACECardAddBy1_addScore() {
+		Card card = new Card(Symbol.ACE, Type.CLUB);
+		Score score = Score.valueOf(11);
+
+		assertThat(score.add(card)).extracting("score").isEqualTo(12);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"9,false", "10,true"})
+	void isLowerThan_InputIntegerScore_ReturnCompareResult(int value, boolean expected) {
+		Score score = Score.valueOf(9);
+
+		assertThat(score.isLowerThan(value)).isEqualTo(expected);
 	}
 }

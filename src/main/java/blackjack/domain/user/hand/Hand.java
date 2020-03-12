@@ -19,4 +19,17 @@ public class Hand {
 	public void add(List<Card> cards) {
 		this.cards.addAll(cards);
 	}
+
+	public Score calculateScore() {
+		Score score = Score.ZERO;
+
+		for (Card card : cards) {
+			score = score.add(card);
+		}
+		return score;
+	}
+
+	public boolean canDrawBy(int drawableMaxScore) {
+		return calculateScore().isLowerThan(drawableMaxScore);
+	}
 }

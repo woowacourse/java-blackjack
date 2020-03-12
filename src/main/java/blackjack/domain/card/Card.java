@@ -8,4 +8,20 @@ public class Card {
 		this.symbol = symbol;
 		this.type = type;
 	}
+
+	public boolean isAce() {
+		return this.symbol.equals(Symbol.ACE);
+	}
+
+	public int getSymbolValue() {
+		return symbol.getSymbol();
+	}
+
+	public Symbol getSymbol() {
+		return symbol;
+	}
+
+	public Type getType() {
+		return type;
+	}
 }
