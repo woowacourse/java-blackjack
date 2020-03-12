@@ -34,10 +34,6 @@ public abstract class Player {
         return cards.getValue();
     }
 
-    public String getFirstCardInfo() {
-        return cards.getFirstCardInfo();
-    }
-
     public boolean isBust() {
         return cards.isBust();
     }
