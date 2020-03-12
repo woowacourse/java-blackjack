@@ -11,6 +11,11 @@ public class ScoreTest {
 	}
 
 	@Test
+	void create_0미만() {
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Score(-1));
+	}
+
+	@Test
 	void add() {
 		assertThat(Score.ZERO.add(10)).isEqualTo(new Score(10));
 		assertThat(new Score(2).add(3)).isEqualTo(new Score(5));
