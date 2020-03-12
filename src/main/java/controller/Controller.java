@@ -16,6 +16,7 @@ public class Controller {
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
 		progress(blackjackGame);
+		end(blackjackGame);
 	}
 
 	private static BlackjackGame initialize() {
@@ -65,5 +66,9 @@ public class Controller {
 
 	private static boolean isContinue(Player player) {
 		return !player.isBust() && "Y".equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+	}
+
+	private static void end(BlackjackGame blackjackGame) {
+		OutputView.printResult(BlackjackGameDto.from(blackjackGame));
 	}
 }

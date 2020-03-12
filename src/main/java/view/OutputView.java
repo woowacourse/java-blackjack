@@ -1,8 +1,10 @@
 package view;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import dto.BlackjackGameDto;
+import dto.DealerDto;
 import dto.PlayerDto;
 
 /**
@@ -46,5 +48,15 @@ public class OutputView {
 
 	public static void printDealerDraw() {
 		System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+	}
+
+	public static void printResult(BlackjackGameDto blackjackGameDto) {
+		DealerDto dealerDto = blackjackGameDto.getDealer();
+		List<PlayerDto> playersDto = blackjackGameDto.getPlayers();
+
+		System.out.println(dealerDto.showCards() + " - " + dealerDto.getHands().calculateTotalScore());
+		for (PlayerDto player : playersDto) {
+			System.out.println(player.showCards() + " - " + player.getHands().calculateTotalScore());
+		}
 	}
 }
