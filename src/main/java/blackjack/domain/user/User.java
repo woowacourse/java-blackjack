@@ -19,7 +19,7 @@ public abstract class User {
 
 	public User(String name) {
 		validate(name);
-		this.name = name;
+		this.name = name.trim();
 		this.hand = new Hand();
 	}
 
@@ -52,4 +52,21 @@ public abstract class User {
 	}
 
 	abstract boolean canDraw();
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		User that = (User)o;
+		return name.equals(that.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
 }
