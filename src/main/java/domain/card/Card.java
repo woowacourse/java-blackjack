@@ -31,10 +31,6 @@ public class Card {
 		return symbol;
 	}
 
-	public Type getType() {
-		return type;
-	}
-
 	public String getCardInfo() {
 		return symbol.toString() + type.toString();
 	}

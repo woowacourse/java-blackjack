@@ -20,9 +20,8 @@ public class GameResult {
 
 	public static GameResult from(List<Player> players, Dealer dealer) {
 		Map<Player, Result> playerToResult = new HashMap<>();
-
 		for (Player player : players) {
-			playerToResult.put(player, player.compareScore(dealer));
+			playerToResult.put(player, Result.of(player.getScore(), dealer.getScore()));
 		}
 		return new GameResult(playerToResult);
 	}

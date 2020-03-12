@@ -7,11 +7,8 @@ import java.util.Objects;
 
 import domain.card.Card;
 import domain.result.Score;
-import domain.result.Result;
 
 public abstract class Participant {
-	public static final int BUST_POINT = 21;
-
 	private final String name;
 	private final List<Card> cards;
 
@@ -39,26 +36,19 @@ public abstract class Participant {
 		}
 	}
 
+	public abstract Score getHitPoint();
+
 	public void hit(Card card) {
 		cards.add(card);
 	}
 
-	public boolean isBust() {
-		return Score.calculate(cards) > BUST_POINT;
-	}
-
-	;
-
-	// TODO: 2020/03/11 버그 수정 아마 Bust 메서드 추가(Score랑 같이)
 	public boolean canHit() {
-		return Score.calculate(cards) <= getHitPoint();
+		return Score.calculate(cards).isLowerThan(getHitPoint());
 	}
 
-	public Result compareScore(Participant participant) {
-		return Result.of(Score.calculate(cards), Score.calculate(participant.cards));
+	public Score getScore() {
+		return Score.calculate(cards);
 	}
-
-	public abstract int getHitPoint();
 
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);

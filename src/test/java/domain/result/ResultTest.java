@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameResultTest {
+class ResultTest {
 	@Test
 	@DisplayName("플레이어의 승패와 대칭되는 딜러의 승패가 반환되는지")
 	void reverseTest() {
@@ -15,10 +15,10 @@ class GameResultTest {
 	}
 
 	@Test
-	@DisplayName("플레이어의 승패와 대칭되는 딜러의 승패가 반환되는지")
+	@DisplayName("점수비교를 통해 올바른 결과(Enum)을 생성하는지 테스트")
 	void ofTest() {
-		assertThat(Result.of(10,17)).isEqualTo(Result.LOSE);
-		assertThat(Result.of(21,10)).isEqualTo(Result.WIN);
-		assertThat(Result.of(5,5)).isEqualTo(Result.DRAW);
+		assertThat(Result.of(Score.of(10),Score.of(17))).isEqualTo(Result.LOSE);
+		assertThat(Result.of(Score.of(21),Score.of(10))).isEqualTo(Result.WIN);
+		assertThat(Result.of(Score.of(5),Score.of(5))).isEqualTo(Result.DRAW);
 	}
 }
