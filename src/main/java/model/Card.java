@@ -11,10 +11,6 @@ public class Card {
         this.type = type;
     }
 
-    public boolean isSameCard(Symbol symbol, Type type) {
-        return this.symbol == symbol && this.type == type;
-    }
-
     public Symbol getSymbol() {
         return symbol;
     }

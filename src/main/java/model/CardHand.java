@@ -34,7 +34,7 @@ public class CardHand implements Iterable<Card> {
         return cards.stream()
                 .map(Card::getSymbol)
                 .map(Symbol::getScore)
-                .reduce((integer, integer2) -> integer + integer2)
+                .reduce(Integer::sum)
                 .get();
     }
 

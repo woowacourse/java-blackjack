@@ -27,10 +27,6 @@ public abstract class User {
         return getScore() > BLACK_JACK_COUNT;
     }
 
-    public CardHand getCardHand() {
-        return cardHand;
-    }
-
     public int getScore() {
         return cardHand.calculateScore();
     }
