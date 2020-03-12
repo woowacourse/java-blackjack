@@ -36,6 +36,14 @@ public abstract class Player {
 		return cardBundle.isBlackjack();
 	}
 
+	public List<Card> getCardBundle() {
+		return Collections.unmodifiableList(this.cardBundle.getCards());
+	}
+
+	public int getScore() {
+		return cardBundle.calculateScore();
+	}
+
 	public abstract boolean isDealer();
 
 	public abstract boolean isGambler();
@@ -44,11 +52,4 @@ public abstract class Player {
 
 	public abstract GameReport getReport(Player player);
 
-	public List<Card> getCardBundle() {
-		return Collections.unmodifiableList(this.cardBundle.getCards());
-	}
-
-	public int getScore() {
-		return cardBundle.calculateScore();
-	}
 }
