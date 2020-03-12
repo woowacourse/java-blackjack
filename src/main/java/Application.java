@@ -64,7 +64,7 @@ public class Application {
     }
 
     private static void dealerMoreCard(final CardDeck cardDeck, final Dealer dealer) {
-        if (dealer.shouldAddCard()) {
+        while (dealer.shouldAddCard()) {
             CardDistributor.giveOneCard(cardDeck, dealer);
             OutputView.printDealerAddCard();
         }
