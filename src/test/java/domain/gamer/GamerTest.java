@@ -15,12 +15,11 @@ import domain.card.Symbol;
 import domain.card.Type;
 
 /**
- *   class description
  *
- *   @author ParkDooWon, AnHyungJu
+ *    @author AnHyungJu, ParkDooWon
  */
 @SuppressWarnings("NonAsciiCharacters")
-public class DealerTest {
+public class GamerTest {
 	private static Stream<Arguments> generateBustInput() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), false),
@@ -40,20 +39,20 @@ public class DealerTest {
 	@ParameterizedTest
 	@MethodSource("generateBustInput")
 	void 버스트(List<Card> cards, boolean expected) {
-		Dealer dealer = new Dealer();
+		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			dealer.add(card);
+			gamer.add(card);
 		}
-		assertThat(dealer.isBust()).isEqualTo(expected);
+		assertThat(gamer.isBust()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateBlackjackInput")
 	void 블랙잭(List<Card> cards, boolean expected) {
-		Dealer dealer = new Dealer();
+		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			dealer.add(card);
+			gamer.add(card);
 		}
-		assertThat(dealer.isBlackjack()).isEqualTo(expected);
+		assertThat(gamer.isBlackjack()).isEqualTo(expected);
 	}
 }
