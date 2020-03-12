@@ -12,25 +12,24 @@ public class CardCalculator {
     private CardCalculator() {
     }
 
-    public static boolean isUnderSixteen(Player dealer) {
-        List<Card> cards = dealer.getCard();
-        return isPresentAceAndUnderSumWithAce(dealer, cards) || isNotPresentAceAndUnderSixteen(dealer, cards);
+    public static boolean isUnderSixteen(List<Card> cards) {
+        return isPresentAceAndUnderSumWithAce(cards) || isNotPresentAceAndUnderSixteen(cards);
     }
 
-    private static boolean isNotPresentAceAndUnderSixteen(Player dealer, List<Card> cards) {
+    private static boolean isNotPresentAceAndUnderSixteen(List<Card> cards) {
         return cards.stream()
-                .noneMatch(Card::isAce) && dealer.sumCardNumber() <= DEALER_STANDARD_ADDITIONAL_CARD;
+                .noneMatch(Card::isAce) && calculateCards(cards) <= DEALER_STANDARD_ADDITIONAL_CARD;
     }
 
-    private static boolean isPresentAceAndUnderSumWithAce(Player dealer, List<Card> cards) {
+    private static boolean isPresentAceAndUnderSumWithAce(List<Card> cards) {
         return cards.stream()
-                .anyMatch(Card::isAce) && dealer.sumCardNumber() <= SUM_WITH_ACE;
+                .anyMatch(Card::isAce) && calculateCards(cards) <= SUM_WITH_ACE;
     }
 
-    public static boolean isBlackJack(Player player) {
-        int sum = player.sumCardNumber();
+    public static boolean isBlackJack(List<Card> cards) {
+        int sum = calculateCards(cards);
 
-        if (player.getCard().stream().anyMatch(Card::isAce) && sum == STANDARD_ACE_ELEVEN) {
+        if (cards.stream().anyMatch(Card::isAce) && sum == STANDARD_ACE_ELEVEN) {
             return true;
         }
         return sum == BLACK_JACK;
@@ -42,13 +41,15 @@ public class CardCalculator {
                 .sum();
     }
 
-    public static int calculateContainAce(Player player) {
-        int playerCardSum = player.sumCardNumber();
-        if (player.getCard().stream()
+    public static int calculateContainAce(List<Card> cards) {
+        int playerCardSum = calculateCards(cards);
+
+        if (cards.stream()
                 .anyMatch(Card::isAce)
-                && player.sumCardNumber() + SUM_CONTAIN_ACE <= BLACK_JACK) {
+                && playerCardSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
             playerCardSum += SUM_CONTAIN_ACE;
         }
+
         return playerCardSum;
     }
 }

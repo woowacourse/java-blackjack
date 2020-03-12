@@ -49,4 +49,9 @@ public class Card {
     public int getCardNumber() {
         return this.cardNumber.getCardNumber();
     }
+
+    @Override
+    public String toString() {
+        return getCardNumber() + this.cardSuitSymbol.getSuitSymbol();
+    }
 }

@@ -16,7 +16,7 @@ public class UserTest {
         card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
         card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
         cards = new Cards();
-        user = new User(card1, card2);
+        user = new User("pobi",card1, card2);
     }
 
     @DisplayName("y를 입력 받을때 카드를 받는지 결정하는 메서드")

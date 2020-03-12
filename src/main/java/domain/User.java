@@ -1,10 +1,12 @@
 package domain;
 
 public class User extends Player {
+    private String naem;
     private boolean isWin;
 
-    public User(Card... cards) {
+    public User(String naem, Card... cards) {
         super(cards);
+        this.naem = naem;
         this.isWin = false;
     }
 

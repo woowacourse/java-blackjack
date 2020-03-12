@@ -8,7 +8,7 @@ public class Dealer extends Player {
     }
 
     public void insertAdditionalCard(Cards cards) {
-        if (CardCalculator.isUnderSixteen(this)) {
+        if (CardCalculator.isUnderSixteen(this.cards)) {
             insertCard(cards);
         }
     }
