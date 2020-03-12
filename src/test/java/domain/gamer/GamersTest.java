@@ -2,10 +2,15 @@ package domain.gamer;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.card.Card;
 import domain.card.CardFactory;
+import domain.card.CardNumber;
+import domain.card.CardSuit;
 import domain.card.Deck;
 
 public class GamersTest {
@@ -29,5 +34,25 @@ public class GamersTest {
 		Player player = gamers.getPlayers().get(0);
 		assertThat(player.getCards()).hasSize(2);
 		assertThat(gamers.getDealer().getCards()).hasSize(2);
+	}
+
+	@Test
+	public void generateGameResultsTest() {
+		String names = "pobi, json";
+		Gamers gamers = new Gamers(names, new Dealer());
+
+		gamers.getPlayers().forEach(x -> {
+			x.addCard(Arrays.asList(
+				new Card(CardSuit.CLOVER, CardNumber.SIX),
+				new Card(CardSuit.CLOVER, CardNumber.TEN))
+			);
+		});
+
+		gamers.getDealer().addCard(Arrays.asList(
+			new Card(CardSuit.CLOVER, CardNumber.SEVEN),
+			new Card(CardSuit.CLOVER, CardNumber.TEN))
+		);
+
+		assertThat(gamers.generateGameResults().get("pobi")).isEqualTo(WinOrLose.LOSE);
 	}
 }

@@ -27,7 +27,7 @@ public class Gamers {
 		dealer.addCard(deck.popCard(2));
 	}
 
-	public Map<String, WinOrLose> gameResult() {
+	public Map<String, WinOrLose> generateGameResults() {
 		return players.stream()
 			.collect(Collectors.toMap(Gamer::getName,
 				player -> player.isWinOrLose(dealer.calculateWithAce())));

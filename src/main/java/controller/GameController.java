@@ -20,7 +20,7 @@ public class GameController {
         gamers.getDealer().addCardAtDealer(deck);
         OutputView.printAddCardAtDealer();
         OutputView.printCardsResultAndScore(gamers);
-        OutputView.printPlayersWinOrLose(gamers.gameResult());
+        OutputView.printPlayersWinOrLose(gamers.generateGameResults());
     }
 
     private void addCardAtPlayers(Gamers gamers, Deck deck) {
