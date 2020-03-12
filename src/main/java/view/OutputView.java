@@ -2,9 +2,11 @@ package view;
 
 import domain.GameResult;
 import domain.user.Dealer;
+import domain.user.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static domain.rule.DealerRule.DRAW_MAX_SCORE;
 
@@ -17,11 +19,12 @@ public class OutputView {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDrawTurn(String name, List<String> names) {
-        String playerNames = String.join(", ", names);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name)
+    public static void printDrawTurn(Dealer dealer, List<Player> players) {
+        String playerNames = players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(","));
+        StringBuilder stringBuilder = new StringBuilder()
+                .append(dealer.getName())
                 .append("와 ")
                 .append(playerNames)
                 .append("에게 2장의 카드를 나누었습니다.");
@@ -53,7 +56,7 @@ public class OutputView {
     }
 
     private static String makeResultWord(Boolean result) {
-        if(result){
+        if (result) {
             return "승";
         }
         return "패";
