@@ -24,7 +24,7 @@ public class DefaultPlayer extends AbstractPlayer {
         if (isBust()) {
             return false;
         }
-        if (dealerScore.isOver(21)) {
+        if (dealerScore.isOver(Player.MAX_SCORE)) {
             return true;
         }
         return calculateScore().isOver(dealerScore);

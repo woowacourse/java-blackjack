@@ -24,7 +24,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBust() {
-        return calculateScore().isOver(21);
+        return calculateScore().isOver(Player.MAX_SCORE);
     }
 
     @Override
