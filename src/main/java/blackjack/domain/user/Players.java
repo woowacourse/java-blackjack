@@ -15,6 +15,7 @@ public class Players {
     private Players(List<Player> players) {
         validateDistinctNames(players);
         validateNotContainsDealer(players);
+        validateIsSizeNotZero(players);
         this.players = players;
     }
 
@@ -45,6 +46,12 @@ public class Players {
 
         if (hasDealerName) {
             throw new PlayersException("플레이어의 이름은 딜러일 수 없습니다.");
+        }
+    }
+
+    private void validateIsSizeNotZero(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new PlayersException("플레이어는 한 명 이상이어야 합니다.");
         }
     }
 

@@ -6,13 +6,14 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.exception.PlayersException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Blackjack {
 	public static void main(String[] args) {
 		String playerNames = InputView.inputPlayerNames();
-		Players players = Players.of(playerNames);
+		Players players = preparePlayers(playerNames);
 		Dealer dealer = DefaultDealer.create();
 		Deck deck = prepareDeck();
 
@@ -22,6 +23,22 @@ public class Blackjack {
         progress(dealer, deck);
 
         finish(players, dealer);
+    }
+
+    private static Players preparePlayers(String playerNames) {
+	    Players players;
+	    do {
+	        players = preparePlayersIfValid(playerNames);
+        } while (players == null);
+        return players;
+    }
+
+    private static Players preparePlayersIfValid(String playerNames) {
+	    try {
+	        return Players.of(playerNames);
+        } catch (PlayersException e) {
+	        return null;
+        }
     }
 
     private static Deck prepareDeck() {
