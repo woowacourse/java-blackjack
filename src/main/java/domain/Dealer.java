@@ -22,7 +22,7 @@ public class Dealer extends User {
 	}
 
 	public boolean isWin(User that) {
-		return that.isBust() || (isNotBust() && (getScore() >= that.getScore()));
+		return that.isBust() || (isNotBust() && isScoreGreaterThan(that.getScore()));
 	}
 
 	public Card getFirstCard() {

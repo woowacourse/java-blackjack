@@ -6,6 +6,6 @@ public class Player extends User {
 	}
 
 	public boolean isWin(User that) {
-		return isNotBust() && (that.isBust() || getScore() >= that.getScore());
+		return isNotBust() && (that.isBust() || isScoreGreaterThan(that.getScore()));
 	}
 }

@@ -47,5 +47,9 @@ public abstract class User {
 		return !isBust();
 	}
 
+	public boolean isScoreGreaterThan(int score) {
+		return cards.isScoreGreaterThan(score);
+	}
+
 	public abstract boolean isWin(User user);
 }

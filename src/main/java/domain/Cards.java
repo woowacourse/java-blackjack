@@ -35,6 +35,10 @@ public class Cards {
 		return score().isBust();
 	}
 
+	public boolean isScoreGreaterThan(int score) {
+		return score().isGreaterThan(score);
+	}
+
 	private Score score() {
 		Score score = Score.ZERO;
 		for (Card card : cards) {
