@@ -1,8 +1,10 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Outcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,5 +67,19 @@ public class CardsTest {
 
         cards.add(new Card(Type.CLUB, Symbol.SIX));
         assertThat(cards.isBlackJack()).isTrue();
+    }
+
+
+    @DisplayName("Bust일 때(21 초과일 때), 무조건 패배하는 테스트")
+    @Test
+    void isBustEqualLose() {
+        Cards cardsBust = new Cards();
+        Cards cardsNotBust = new Cards();
+        cardsBust.add(new Card(Type.CLUB, Symbol.KING));
+        cardsBust.add(new Card(Type.CLUB, Symbol.QUEEN));
+        cardsBust.add(new Card(Type.CLUB, Symbol.JACK));
+
+        assertThat(cardsBust.calculateOutcome(cardsNotBust)).isEqualTo(Outcome.LOSE);
+        assertThat(cardsNotBust.calculateOutcome(cardsBust)).isEqualTo(Outcome.WIN);
     }
 }

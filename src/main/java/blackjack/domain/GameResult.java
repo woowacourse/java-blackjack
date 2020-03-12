@@ -30,7 +30,7 @@ public class GameResult {
     private Map<Player, Outcome> calculatePlayerResults(Dealer dealer, Players players) {
         Map<Player, Outcome> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerResults.put(player, player.calculateOutcome(dealer.getScore()));
+            playerResults.put(player, player.calculateOutcome(dealer));
         }
         return playerResults;
     }

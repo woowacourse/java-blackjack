@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Outcome;
 import blackjack.util.BlackJackRule;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +47,15 @@ public class Cards {
         return cards.stream()
             .map(Card::getInfo)
             .collect(Collectors.toList());
+    }
+
+    public Outcome calculateOutcome(Cards comparisonCards) {
+        if (isBust()) {
+            return Outcome.LOSE;
+        }
+        if (comparisonCards.isBust()) {
+            return Outcome.WIN;
+        }
+        return Outcome.calculate(getScore(), comparisonCards.getScore());
     }
 }

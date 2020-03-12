@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.util.BlackJackRule;
+
 public enum Outcome {
     WIN("승"),
     DRAW("무"),
@@ -11,7 +13,7 @@ public enum Outcome {
         this.name = name;
     }
 
-    public static Outcome calculate(int dealerScore, int playerScore) {
+    public static Outcome calculate(int playerScore, int dealerScore) {
         if (dealerScore == playerScore) {
             return DRAW;
         }
