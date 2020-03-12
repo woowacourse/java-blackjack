@@ -104,4 +104,15 @@ class PlayerTest {
 		assertThat(player.compareScore(another)).isEqualTo(Result.LOSE);
 		assertThat(player.compareScore(player)).isEqualTo(Result.DRAW);
 	}
+
+	@Test
+	@DisplayName("Bust인지를 정상적으로 확인하는지")
+	void bustTest() {
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+		player.hit(new Card(Symbol.NINE, Type.DIAMOND));
+		player.hit(new Card(Symbol.FIVE, Type.DIAMOND));
+
+		assertThat(player.isBust()).isTrue();
+	}
 }

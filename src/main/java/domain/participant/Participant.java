@@ -10,6 +10,8 @@ import domain.result.Score;
 import domain.result.Result;
 
 public abstract class Participant {
+	public static final int BUST_POINT = 21;
+
 	private final String name;
 	private final List<Card> cards;
 
@@ -41,6 +43,13 @@ public abstract class Participant {
 		cards.add(card);
 	}
 
+	public boolean isBust() {
+		return Score.calculate(cards) > BUST_POINT;
+	}
+
+	;
+
+	// TODO: 2020/03/11 버그 수정 아마 Bust 메서드 추가(Score랑 같이)
 	public boolean canHit() {
 		return Score.calculate(cards) <= getHitPoint();
 	}
@@ -60,12 +69,12 @@ public abstract class Participant {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
+	public boolean equals(Object object) {
+		if (this == object)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (object == null || getClass() != object.getClass())
 			return false;
-		Participant that = (Participant)o;
+		Participant that = (Participant)object;
 		return Objects.equals(name, that.name) &&
 			Objects.equals(cards, that.cards);
 	}
@@ -74,4 +83,5 @@ public abstract class Participant {
 	public int hashCode() {
 		return Objects.hash(name, cards);
 	}
+
 }

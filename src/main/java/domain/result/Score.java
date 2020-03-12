@@ -15,8 +15,6 @@ public class Score {
 		if (containAce(cards) && rawScore + TEN <= BLACKJACK_SCORE) {
 			return rawScore + TEN;
 		}
-		if (rawScore > BLACKJACK_SCORE)
-			return ZERO;
 		return rawScore;
 	}
 
