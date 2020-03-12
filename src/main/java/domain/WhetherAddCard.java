@@ -3,8 +3,8 @@ package domain;
 import java.util.Arrays;
 
 public enum WhetherAddCard {
-	Y("y"),
-	N("n");
+	YES("y"),
+	NO("n");
 
 	private final String type;
 
@@ -20,6 +20,6 @@ public enum WhetherAddCard {
 	}
 
 	public boolean isYes() {
-		return this == Y;
+		return this == YES;
 	}
 }
