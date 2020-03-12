@@ -77,6 +77,7 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
+        System.out.println();
         printUserCards("딜러", dealer);
     }
 }
