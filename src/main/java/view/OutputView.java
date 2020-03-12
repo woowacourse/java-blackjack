@@ -2,6 +2,7 @@ package view;
 
 import domain.gamer.AllGamers;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Player;
 
 import java.util.List;
@@ -41,10 +42,23 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
+    public static void printGamerState(Gamer gamer) {
+        System.out.println(parseGamerState(gamer));
+    }
+
     private static String parseGamersState(List<Player> players) {
         return players
                 .stream()
-                .map(gamer -> gamer.getName() + ": " + gamer.getCardsOnHand().toString())
+                .map(OutputView::parseGamerState)
                 .collect(Collectors.joining("\n"));
     }
+
+    private static String parseGamerState(Gamer gamer) {
+        return gamer.getName() + ": " + gamer.getCardsOnHand().toString();
+    }
+
+    public static void printCanNotDrawMessage() {
+        System.out.println("더이상 뽑을 수 없습니다.");
+    }
+
 }

@@ -10,6 +10,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean canDrawMore() {
-        return BlackJackScoreManager.BLACK_JACK_SCORE.isLargerOrEqualThan(calculateScore());
+        return BlackJackScoreManager.BLACK_JACK_SCORE.isLargerThan(calculateScore());
     }
 }

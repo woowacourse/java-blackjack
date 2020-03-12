@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.card.possessable.CardPossessable;
 import domain.card.providable.CardProvidable;
 import domain.result.WinLose;
+import domain.score.BlackJackScoreManager;
 import domain.score.Calculatable;
 
 import java.util.Objects;
@@ -18,6 +19,10 @@ public abstract class Gamer implements BlackJackGameable {
 
     @Override
     public WinLose determineWinLose(BlackJackGameable counterParts) {
+        if (this.calculateScore().isLargerThan(BlackJackScoreManager.BLACK_JACK_SCORE)) {
+            return WinLose.LOSE;
+        }
+
         if (this.calculateScore().isLargerThan(counterParts.calculateScore())) {
             return WinLose.WIN;
         }

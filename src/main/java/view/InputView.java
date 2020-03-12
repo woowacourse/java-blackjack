@@ -1,5 +1,7 @@
 package view;
 
+import domain.gamer.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,5 +19,10 @@ public class InputView {
         return Arrays.stream(SCANNER.nextLine().split(NAME_DELIMITER))
                 .map(name -> name.replace(SPACE, NO_SPACE))
                 .collect(Collectors.toList());
+    }
+
+    public static boolean askDrawMore(Player player) {
+        System.out.println(player.getName() + " 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        return YesNo.of(SCANNER.nextLine()).getYesno();
     }
 }
