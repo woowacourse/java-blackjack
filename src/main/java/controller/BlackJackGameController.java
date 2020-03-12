@@ -23,7 +23,7 @@ public class BlackJackGameController {
         dealer.firstDraw(cardDeck);
         participants.firstDraw(cardDeck);
 
-        OutputView.printOneCard(dealer);
+        OutputView.printDealerFirstDraw(dealer);
         OutputView.printCardStatusForAllParticipants(participants);
 
         for (User user : participants.getParticipants()) {

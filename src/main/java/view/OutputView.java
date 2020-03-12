@@ -21,7 +21,7 @@ public class OutputView {
         System.out.println(settingInstruction);
     }
 
-    public static void printOneCard(Dealer dealer) {
+    public static void printDealerFirstDraw(Dealer dealer) {
         System.out.println(dealer.toStringOneCard());
     }
 
