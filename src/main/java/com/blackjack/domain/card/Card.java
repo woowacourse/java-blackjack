@@ -6,7 +6,7 @@ public class Card {
 	private final Symbol symbol;
 	private final Type type;
 
-	Card(Symbol symbol, Type type) {
+	public Card(Symbol symbol, Type type) {
 		validateNull(symbol, type);
 		this.symbol = symbol;
 		this.type = type;
@@ -16,5 +16,13 @@ public class Card {
 		if (Objects.isNull(symbol) || Objects.isNull(type)) {
 			throw new IllegalArgumentException("symbol 또는 type은 null값을 가질 수 없습니다.");
 		}
+	}
+
+	public int getScore() {
+		return symbol.getScore();
+	}
+
+	public boolean isAce() {
+		return symbol.isAce();
 	}
 }

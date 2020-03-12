@@ -24,4 +24,8 @@ public enum Symbol {
 	public int getScore() {
 		return score;
 	}
+
+	public boolean isAce() {
+		return ACE == this;
+	}
 }
