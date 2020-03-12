@@ -17,9 +17,18 @@ public class UserCards {
     }
 
     public int getTotalScore() {
-        return cards.stream()
+        int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+        score = incrementAceScore(score);
+        return score;
+    }
+
+    private int incrementAceScore(int score) {
+        if (cards.stream().anyMatch(Card::isAce) && score <= 11) {
+            score += 10;
+        }
+        return score;
     }
 
     public void addCard(Card card) {
