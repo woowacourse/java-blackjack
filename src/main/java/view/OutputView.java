@@ -101,4 +101,8 @@ public class OutputView {
 		}
 		System.out.println(builder);
 	}
+
+	public static void printExceptionMessage(String message) {
+		System.out.println(message);
+	}
 }

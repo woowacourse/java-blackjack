@@ -79,7 +79,7 @@ public class BlackjackGame {
 		if (user.isBlackjack()) {
 			return;
 		}
-		while (isUserNotBust(user) || isContinuousFromInput(user)) {
+		while (isUserNotBust(user) && isContinuousFromInput(user)) {
 			user.addCards(Arrays.asList(cardDivider.divide()));
 			OutputView.printUserCard(user);
 		}
