@@ -14,6 +14,7 @@ public class Players {
 
     private Players(List<User> players) {
         validateDuplicatedName(players);
+        validateNames(players);
         this.players = players;
     }
 
@@ -35,6 +36,15 @@ public class Players {
 
         if (Players.size() != distinctCount) {
             throw new PlayersException("중복된 이름이 있으면 안 됩니다.");
+        }
+    }
+
+    private void validateNames(List<User> Players) {
+        boolean hasDealerName = Players.stream()
+                .anyMatch(player -> player.is("딜러"));
+
+        if (hasDealerName) {
+            throw new PlayersException("플레이어의 이름은 딜러일 수 없습니다.");
         }
     }
 
