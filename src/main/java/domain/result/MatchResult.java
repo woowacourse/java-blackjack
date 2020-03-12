@@ -29,4 +29,14 @@ public enum MatchResult {
 	public String getMatchResult() {
 		return matchResult;
 	}
+
+	public MatchResult switching() {
+		if (this == MatchResult.WIN) {
+			return MatchResult.LOSE;
+		}
+		if (this == MatchResult.LOSE) {
+			return MatchResult.WIN;
+		}
+		return this;
+	}
 }

@@ -15,6 +15,17 @@ public class DealerResult {
 
 	public Map<MatchResult, Long> calculateDealerResult() {
 		return playerMatchResults.stream()
+			.map(MatchResult::switching)
 			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+	}
+
+
+	public String getResult(){
+		StringBuilder builder = new StringBuilder("딜러: ");
+		Map<MatchResult, Long> map = calculateDealerResult();
+		for (MatchResult matchResult : MatchResult.values()) {
+			builder.append(map.get(matchResult) + matchResult.getMatchResult());
+		}
+		return builder.toString();
 	}
 }

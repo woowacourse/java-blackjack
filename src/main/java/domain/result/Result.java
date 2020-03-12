@@ -17,6 +17,7 @@ public class Result {
 
 	public List<MatchResult> getResult() {
 		List<MatchResult> matchResults = new ArrayList<>();
+		List<UserResult> userResults = new ArrayList<>();
 		for (User user : users) {
 			MatchResult matchResult = MatchResult.findMatchResult(user, dealer);
 			matchResults.add(matchResult);
