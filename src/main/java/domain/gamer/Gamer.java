@@ -17,11 +17,11 @@ public abstract class Gamer {
         this.name = name;
     }
 
+    public abstract boolean isDrawable();
+
     public void addCard(List<Card> cards) {
         this.cards.addAll(cards);
     }
-
-    public abstract boolean isDrawable();
 
     public int calculateWithAce() {
         int score = calculateScore();
@@ -39,12 +39,12 @@ public abstract class Gamer {
                 .sum();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public boolean isContainAce() {
         return cards.stream().anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Card> getCards() {

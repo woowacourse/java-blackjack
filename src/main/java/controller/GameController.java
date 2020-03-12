@@ -24,7 +24,7 @@ public class GameController {
     }
 
     private void addCardAtPlayers(Gamers gamers, Deck deck) {
-        gamers.stream()
+        gamers.getPlayers()
                 .forEach(player -> drawCardOfPlayer(deck, player));
     }
 

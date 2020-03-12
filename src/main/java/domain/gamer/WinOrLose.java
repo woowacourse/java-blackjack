@@ -21,10 +21,6 @@ public enum WinOrLose {
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public boolean isValue() {
-		return value;
-	}
-
 	public String getInitial() {
 		return initial;
 	}
