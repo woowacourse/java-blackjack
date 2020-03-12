@@ -6,7 +6,7 @@ import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface User {
-    void append(Card card);
+    void giveCards(Card... cards);
 
     Score calculateScore();
 

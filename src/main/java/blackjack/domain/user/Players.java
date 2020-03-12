@@ -58,12 +58,14 @@ public class Players {
         return playerResults;
     }
 
-    public void giveCard(String name, Card card) {
-        User selectedPlayer = players.stream()
-                .filter(player -> player.is(name))
-                .findFirst()
-                .orElseThrow(() -> new PlayersException("해당하는 이름을 가진 player가 없습니다."));
+    public void giveCards(int index, Card... cards) {
+        for (Card card : cards) {
+            players.get(index)
+                    .giveCards(card);
+        }
+    }
 
-        selectedPlayer.append(card);
+    public int memberSize() {
+        return players.size();
     }
 }

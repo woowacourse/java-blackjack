@@ -20,8 +20,10 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
-    public void append(Card card) {
-        cards.add(card);
+    public void giveCards(Card... cards) {
+        for (Card card : cards) {
+            this.cards.add(card);
+        }
     }
 
     @Override
