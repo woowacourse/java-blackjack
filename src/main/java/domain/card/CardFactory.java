@@ -2,6 +2,7 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CardFactory {
@@ -34,5 +35,9 @@ public class CardFactory {
             }
         }
         throw new IllegalArgumentException("값을 찾을 수 없습니다.");
+    }
+
+    public static CardDeck createCardDeck(){
+        return new CardDeck(new LinkedList<>(cards));
     }
 }

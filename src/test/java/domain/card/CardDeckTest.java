@@ -1,6 +1,8 @@
-package domain.carddeck;
+package domain.card;
 
 import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +13,14 @@ import java.util.Set;
 public class CardDeckTest {
     @Test
     void 카드덱_생성_테스트() {
-        CardDeck cardDeck = CardDeckFactory.create();
+        CardDeck cardDeck = CardFactory.createCardDeck();
 
         Assertions.assertThat(cardDeck).hasFieldOrProperty("cards");
     }
 
     @Test
     void 카드를_뽑는_메서드_테스트() {
-        CardDeck cardDeck = CardDeckFactory.create();
+        CardDeck cardDeck = CardFactory.createCardDeck();
 
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
@@ -30,7 +32,7 @@ public class CardDeckTest {
 
     @Test
     void 예외상황_카드를_다뽑았을때_테스트() {
-        CardDeck cardDeck = CardDeckFactory.create();
+        CardDeck cardDeck = CardFactory.createCardDeck();
 
         for (int i = 0; i < 52; i++) {
             cardDeck.draw();
