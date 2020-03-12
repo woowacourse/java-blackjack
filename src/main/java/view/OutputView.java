@@ -2,7 +2,6 @@ package view;
 
 import common.GamerDto;
 import domain.card.Card;
-import domain.gamer.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,5 +31,9 @@ public class OutputView {
                 .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
                 .collect(Collectors.joining(DELIMITER));
         System.out.printf("%s: %s\n", gamerDto.getName(), gamerCards);
+    }
+
+    public static void printDealerHit() {
+        System.out.println("딜러 16이하라 한 장의 카드를 더 받습니다.");
     }
 }

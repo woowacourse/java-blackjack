@@ -26,5 +26,11 @@ public class BlackJackGame {
                 OutputView.printGamerCardsState(GamerDto.of(player));
             }
         }
+
+        if (dealer.canGetExtraCard()) {
+            dealer.addCard(deck.handOutCard());
+            OutputView.printDealerHit();
+        }
+
     }
 }
