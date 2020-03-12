@@ -1,6 +1,8 @@
 package domain;
 
 public class Name {
+	private static final String BLANK = " ";
+
 	private final String name;
 
 	public Name(String name) {
@@ -10,7 +12,10 @@ public class Name {
 
 	private void validate(String name) {
 		if (name == null || name.isEmpty()) {
-			throw new IllegalArgumentException("이름이 공백입니다.");
+			throw new IllegalArgumentException("이름이 비어있다.");
+		}
+		if (name.contains(BLANK)) {
+			throw new IllegalArgumentException("이름에 공백이 존재한다.");
 		}
 	}
 
