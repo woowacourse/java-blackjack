@@ -22,6 +22,10 @@ public class Hand {
         this.cards.add(card);
     }
 
+    public int addedCardCount() {
+        return cards.size() - Participants.FIRST_CARDS_COUNT;
+    }
+
     public boolean isBusted() {
         return calculate() > BLACK_JACK;
     }

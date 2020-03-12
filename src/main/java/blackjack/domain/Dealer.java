@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,10 +21,15 @@ public class Dealer implements Participant {
         return "딜러";
     }
 
+    public int addedCardCount() {
+        return hand.addedCardCount();
+    }
+
     @Override
     public String gameResult() {
-        return result.keySet().stream()
-            .map(result -> this.result.get(result) + result.getValue())
+        return Arrays.stream(Result.values())
+            .filter(result -> countResult(result) != 0)
+            .map(result -> countResult(result) + result.getValue())
             .collect(Collectors.joining(SPACE));
     }
 
