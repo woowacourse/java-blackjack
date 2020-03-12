@@ -3,8 +3,8 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.result.Result;
 import domain.card.Card;
+import domain.result.Result;
 import domain.user.User;
 
 public class OutputView {
@@ -71,9 +71,9 @@ public class OutputView {
 	}
 
 	public static void printGameResult(Result result) {
-		List<String> result1 = result.getResult();
-		for (String s : result1) {
-			System.out.println(s);
-		}
+		// List<String> result1 = result.getResult();
+		// for (String s : result1) {
+		// 	System.out.println(s);
+		// }
 	}
 }

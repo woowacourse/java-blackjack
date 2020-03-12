@@ -2,7 +2,6 @@ package domain.result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import domain.user.Dealer;
 import domain.user.User;
@@ -23,5 +22,6 @@ public class Result {
 			matchResults.add(matchResult);
 		}
 		return matchResults;
+		// TODO: 2020/03/12 딜러의 승패는 어떻게 표현해야 할까?
 	}
 }

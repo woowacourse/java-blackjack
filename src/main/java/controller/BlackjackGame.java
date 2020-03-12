@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.result.Result;
 import domain.YesOrNo;
 import domain.card.CardDivider;
+import domain.result.Result;
 import domain.user.Dealer;
 import domain.user.PlayerFactory;
 import domain.user.User;

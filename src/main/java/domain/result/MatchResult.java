@@ -6,7 +6,8 @@ import java.util.function.BiPredicate;
 import domain.user.User;
 
 public enum MatchResult {
-	WIN("승", (player, dealer) -> (dealer.isBust() && !player.isBust()) || (player.calculateScore() > dealer.calculateScore())),
+	WIN("승", (player, dealer) -> (dealer.isBust() && !player.isBust()) || (player.calculateScore()
+		> dealer.calculateScore())),
 	DRAW("무", (player, dealer) -> dealer.isBlackjack() && player.isBlackjack()),
 	LOSE("패", (player, dealer) -> (player.isBust()) || (player.calculateScore() <= dealer.calculateScore()));
 
