@@ -2,8 +2,8 @@ package domain.card;
 
 public class Card {
 
-    private Type type;
-    private Symbol symbol;
+    private final Type type;
+    private final Symbol symbol;
 
     public Card(Type type, Symbol symbol) {
         this.type = type;
@@ -18,6 +18,9 @@ public class Card {
         return symbol.getValue();
     }
 
+    public String getInfo() {
+        return symbol.getName() + type.getName();
+    }
     @Override
     public String toString() {
         return symbol.getName() + type.getName();

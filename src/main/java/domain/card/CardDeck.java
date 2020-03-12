@@ -6,8 +6,10 @@ import java.util.List;
 
 public class CardDeck {
 
-    private static final String CARD_DECK_IS_EMPTY_EXCEPTION_MESSAGE = "카드덱에 카드가 남아있지 않습니다.";
-    private List<Card> cardDeck;
+    private static final String CARD_DECK_IS_EMPTY_EXCEPTION_MESSAGE
+        = "카드덱에 카드가 남아있지 않습니다.";
+
+    private final List<Card> cardDeck;
 
     public CardDeck() {
         cardDeck = new LinkedList<>();

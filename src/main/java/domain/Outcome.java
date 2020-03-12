@@ -12,20 +12,17 @@ public enum Outcome {
     }
 
     public static Outcome calculate(int dealerScore, int playerScore) {
-        if (dealerScore < playerScore) {
-            return WIN;
-        }
         if (dealerScore == playerScore) {
             return DRAW;
         }
-        return LOSE;
+        return dealerScore < playerScore ? WIN : LOSE;
     }
 
     public static Outcome converseOutcome(Outcome outcome) {
-        if (outcome == Outcome.DRAW) {
-            return Outcome.DRAW;
+        if (outcome == DRAW) {
+            return DRAW;
         }
-        return outcome == Outcome.WIN ? Outcome.LOSE : Outcome.WIN;
+        return outcome == WIN ? LOSE : WIN;
     }
 
     public String getName() {

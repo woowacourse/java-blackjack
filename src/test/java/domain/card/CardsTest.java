@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
+
     private Cards cards;
 
     @BeforeEach
@@ -20,7 +21,8 @@ public class CardsTest {
     void add() {
         Card card = new Card(Type.DIAMOND, Symbol.ACE);
         cards.add(card);
-        assertThatThrownBy(() -> cards.add(card)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> cards.add(card)).isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("중복");
     }
 
     @DisplayName("카드 숫자 합계")

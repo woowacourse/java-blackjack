@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.CardDeck;
 import domain.card.Cards;
+import java.util.List;
 
 public abstract class User {
 
@@ -20,7 +21,11 @@ public abstract class User {
 
     public abstract boolean canDrawCard();
 
-    public Cards getCards() {
-        return cards;
+    public List<String> getCardsInfos() {
+        return cards.getInfos();
+    }
+
+    public int getScore() {
+        return cards.getScore();
     }
 }

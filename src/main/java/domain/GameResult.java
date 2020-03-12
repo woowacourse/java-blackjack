@@ -20,19 +20,24 @@ public class GameResult {
     private Map<Player, Outcome> calculatePlayerResults(Dealer dealer, Players players) {
         Map<Player, Outcome> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerResults.put(player, player.calculateOutcome(dealer.getCards().getScore()));
+            playerResults.put(player, player.calculateOutcome(dealer.getScore()));
         }
         return playerResults;
     }
 
     private Map<Outcome, Integer> calculateDealerResults() {
-        Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
-        for(Outcome outcome : Outcome.values()) {
-            dealerResults.put(outcome, 0);
-        }
+        Map<Outcome, Integer> dealerResults = initializationDealerResults();
         for (Outcome outcome : this.playerResults.values()) {
             Outcome dealerOutcome = Outcome.converseOutcome(outcome);
             dealerResults.put(dealerOutcome, dealerResults.get(dealerOutcome) + 1);
+        }
+        return dealerResults;
+    }
+
+    private Map<Outcome, Integer> initializationDealerResults() {
+        Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
+        for(Outcome outcome : Outcome.values()) {
+            dealerResults.put(outcome, 0);
         }
         return dealerResults;
     }

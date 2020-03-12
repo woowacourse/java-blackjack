@@ -16,7 +16,7 @@ public class OutputView {
     }
 
     public static void printUsersCards(Dealer dealer, Players players) {
-        System.out.println("딜러: " + dealer.getCards().getCards().get(0));
+        System.out.println("딜러: " + dealer.getCardsInfos().get(0));
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
@@ -24,9 +24,7 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        String playerCards = player.getCards().getCards().toString();
-        System.out
-            .println(player.getName() + ": " + playerCards.substring(1, playerCards.length() - 1));
+        System.out.println(player.getName() + ": " + String.join(", ", player.getCardsInfos()));
     }
 
     public static void printDealerOneMoreCard() {
@@ -42,9 +40,8 @@ public class OutputView {
     }
 
     public static void printUserCardsAndScore(String name, User user) {
-        String userCards = user.getCards().getCards().toString();
-        System.out.println(name + ": " + userCards.substring(1, userCards.length() - 1)
-            + " - 결과: " + user.getCards().getScore());
+        System.out.println(name + ": " + String.join(", ", user.getCardsInfos())
+            + " - 결과: " + user.getScore());
     }
 
     public static void printFinalResult(GameResult gameResult) {

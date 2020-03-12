@@ -6,7 +6,8 @@ import util.BlackJackRule;
 
 public class Cards {
 
-    private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
+    private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
+
     private List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -44,7 +45,11 @@ public class Cards {
         return BlackJackRule.isBlackJack(getScore());
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<String> getInfos() {
+        List<String> cardInfos = new ArrayList<>();
+        for(Card card : cards) {
+            cardInfos.add(card.getInfo());
+        }
+        return cardInfos;
     }
 }
