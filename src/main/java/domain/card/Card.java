@@ -34,6 +34,11 @@ public class Card {
         return rank.getScore();
     }
 
+    @Override
+    public String toString() {
+        return rank.toString() + suit.toString();
+    }
+
     private static class CardCache {
         private static final List<Card> cards = new ArrayList<>();
 

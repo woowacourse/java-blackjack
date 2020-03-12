@@ -35,8 +35,8 @@ class HandCardsTest {
     void 카드뽑기테스트() {
         List<Card> cards = new ArrayList<>();
         HandCards handCards = new HandCards(cards);
-        handCards.drawCard(() -> Card.of(Rank.JACK, Suit.HEART));
-        assertThat(handCards.getCards()).contains(Card.of(Rank.JACK, Suit.HEART));
+        handCards.drawCard(() -> Card.of(Rank.J, Suit.HEART));
+        assertThat(handCards.getCards()).contains(Card.of(Rank.J, Suit.HEART));
     }
 
     @ParameterizedTest

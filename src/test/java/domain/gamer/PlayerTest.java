@@ -12,8 +12,8 @@ public class PlayerTest {
     void 플레이어가_카드를_더뽑을수있는지_확인() {
         Player player = new Player("pobi");
 
-        player.drawCard(() -> Card.of(Rank.KING, Suit.CLOVER));
-        player.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
+        player.drawCard(() -> Card.of(Rank.K, Suit.CLOVER));
+        player.drawCard(() -> Card.of(Rank.Q, Suit.CLOVER));
         assertThat(player.canDrawMore()).isTrue();
 
         player.drawCard(() -> Card.of(Rank.FOUR, Suit.CLOVER));

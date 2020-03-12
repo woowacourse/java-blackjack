@@ -13,7 +13,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         dealer.drawCard(() -> Card.of(Rank.SIX, Suit.CLOVER));
-        dealer.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
+        dealer.drawCard(() -> Card.of(Rank.Q, Suit.CLOVER));
         assertThat(dealer.canDrawMore()).isTrue();
 
         dealer.drawCard(() -> Card.of(Rank.FOUR, Suit.CLOVER));

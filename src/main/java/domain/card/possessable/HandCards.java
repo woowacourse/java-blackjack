@@ -8,6 +8,7 @@ import domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HandCards implements CardPossessable {
     private final List<Card> cards;
@@ -48,7 +49,20 @@ public class HandCards implements CardPossessable {
                 .anyMatch(Card::isAce);
     }
 
+    @Override
+    public Card getOneCard() {
+        return cards.get(0);
+    }
+
+    @Override
     public List<Card> getCards() {
         return cards;
+    }
+
+    @Override
+    public String toString() {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
     }
 }

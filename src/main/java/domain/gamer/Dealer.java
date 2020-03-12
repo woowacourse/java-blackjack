@@ -14,4 +14,6 @@ public class Dealer extends Gamer {
     public boolean canDrawMore() {
         return BlackJackScoreManager.DEALER_DRAW_THRESHOLD.isLargerOrEqualThan(calculateScore());
     }
+
+
 }

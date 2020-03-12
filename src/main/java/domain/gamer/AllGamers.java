@@ -38,8 +38,9 @@ public class AllGamers {
 
     private List<Gamer> joinGamers() {
         List<Gamer> gamers = new ArrayList<>();
-        gamers.addAll(players);
         gamers.add(dealer);
+        gamers.addAll(players);
+
 
         return gamers;
     }
@@ -61,5 +62,13 @@ public class AllGamers {
 
     public List<Gamer> getGamers() {
         return Collections.unmodifiableList(joinGamers());
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

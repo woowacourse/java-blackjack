@@ -1,7 +1,10 @@
 package domain.card.possessable;
 
+import domain.card.Card;
 import domain.card.providable.CardProvidable;
 import domain.score.Calculatable;
+
+import java.util.List;
 
 public interface CardPossessable {
     void drawCard(CardProvidable cardProvidable);
@@ -13,4 +16,8 @@ public interface CardPossessable {
     boolean hasAce();
 
     int getCardAmount();
+
+    Card getOneCard();
+
+    List<Card> getCards();
 }

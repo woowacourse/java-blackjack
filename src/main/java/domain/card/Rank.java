@@ -12,9 +12,9 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
-    JACK(10),
-    QUEEN(11),
-    KING(12);
+    J(10),
+    Q(11),
+    K(12);
 
     private static final String NO_EXIST_MESSAGE = "적절한 숫자의 랭크가 존재하지 않습니다.";
     private static final int ALPHABET_SCORE = 10;
@@ -34,7 +34,7 @@ public enum Rank {
     }
 
     public int getScore() {
-        if (this == Rank.KING || this == Rank.QUEEN || this == Rank.JACK) {
+        if (this == Rank.K || this == Rank.Q || this == Rank.J) {
             return ALPHABET_SCORE;
         }
 
@@ -43,5 +43,14 @@ public enum Rank {
 
     public boolean isAce() {
         return this == Rank.ACE;
+    }
+
+    @Override
+    public String toString() {
+        if (this == Rank.ACE || this == Rank.J || this == Rank.Q || this == Rank.K) {
+            return this.name();
+        }
+
+        return Integer.toString(this.value);
     }
 }
