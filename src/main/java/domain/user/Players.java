@@ -47,10 +47,20 @@ public class Players {
                 .collect(Collectors.joining("\n"));
     }
 
-    public List<WinningResult> getWinningResults(Dealer dealer) {
+    public void decideWinner(Dealer dealer) {
+        players.forEach(player -> player.win(dealer));
+    }
+
+    public List<WinningResult> getWinningResults() {
         return players.stream()
-                .map(player -> player.win(dealer))
+                .map(Player::getWinningResult)
                 .collect(Collectors.toList());
+    }
+
+    public String getAllTotalWinningResult() {
+        return players.stream()
+                .map(Player::getTotalWinningResult)
+                .collect(Collectors.joining("\n"));
     }
 
     public List<Player> getPlayers() {

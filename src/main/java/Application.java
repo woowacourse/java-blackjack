@@ -1,3 +1,6 @@
+import java.util.List;
+
+import domain.WinningResult;
 import domain.deck.Deck;
 import domain.deck.DeckFactory;
 import domain.user.Dealer;
@@ -34,6 +37,12 @@ public class Application {
         }
 
         OutputView.printTotalResult(dealer, players);
+
+        players.decideWinner(dealer);
+        List<WinningResult> playerWinningResults = players.getWinningResults();
+        playerWinningResults.forEach(winningResult -> dealer.applyWinningResult(winningResult.reverse()));
+
+        OutputView.printWinningResult(dealer, players);
     }
 
     private static void playersAdditionalDraw(Deck deck, Player player) {

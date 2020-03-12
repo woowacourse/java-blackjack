@@ -108,7 +108,7 @@ class PlayerTest {
 
         player.win(dealer);
 
-        assertThat(player.getWinningResult()).isEqualTo(expected);
+        assertThat(player.getTotalWinningResult()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardsAndResult() {

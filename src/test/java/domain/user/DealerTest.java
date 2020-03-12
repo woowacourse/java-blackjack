@@ -65,6 +65,6 @@ class DealerTest {
 
         dealer.applyWinningResult(WinningResult.DRAW);
 
-        assertThat(dealer.getWinningResult()).isEqualTo(expected);
+        assertThat(dealer.getTotalWinningResult()).isEqualTo(expected);
     }
 }

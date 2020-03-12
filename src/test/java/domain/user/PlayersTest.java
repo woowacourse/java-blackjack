@@ -103,7 +103,33 @@ class PlayersTest {
                 .get(2)
                 .draw(new Card(Symbol.CLOVER, Type.SIX));
 
-        WinningResult winningResult = players.getWinningResults(dealer).get(index);
+        players.decideWinner(dealer);
+
+        WinningResult winningResult = players.getWinningResults().get(index);
         assertThat(winningResult.getResult()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("모든 플레이어 승패 결과")
+    void getAllTotalWinningResult() {
+        String expected = "pobi: 승\n"
+                + "jason: 패\n"
+                + "woo: 무승부";
+        Dealer dealer = Dealer.appoint();
+        dealer.draw(new Card(Symbol.SPADE, Type.SIX));
+
+        players.getPlayers()
+                .get(0)
+                .draw(new Card(Symbol.SPADE, Type.SEVEN));
+        players.getPlayers()
+                .get(1)
+                .draw(new Card(Symbol.HEART, Type.FIVE));
+        players.getPlayers()
+                .get(2)
+                .draw(new Card(Symbol.CLOVER, Type.SIX));
+
+        players.decideWinner(dealer);
+
+        assertThat(players.getAllTotalWinningResult()).isEqualTo(expected);
     }
 }

@@ -39,7 +39,11 @@ public class Player extends User {
     }
 
     @Override
-    public String getWinningResult() {
+    public String getTotalWinningResult() {
         return name + ": " + winningResult.getResult();
+    }
+
+    public WinningResult getWinningResult() {
+        return winningResult;
     }
 }

@@ -44,7 +44,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public String getWinningResult() {
+    public String getTotalWinningResult() {
         return DEALER + ": "
                 + winningResults.entrySet()
                 .stream()

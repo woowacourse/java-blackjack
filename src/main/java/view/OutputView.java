@@ -25,4 +25,10 @@ public class OutputView {
         System.out.println(dealer.getTotalDrawResult());
         System.out.println(players.getAllTotalDrawResult());
     }
+
+    public static void printWinningResult(Dealer dealer, Players players) {
+        System.out.println("\n## 최종 승패");
+        System.out.println(dealer.getTotalWinningResult());
+        System.out.println(players.getAllTotalWinningResult());
+    }
 }

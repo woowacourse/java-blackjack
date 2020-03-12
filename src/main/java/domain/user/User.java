@@ -74,7 +74,7 @@ public abstract class User {
         return getDrawResult() + " - 결과: " + calculatePointAccordingToHasAce();
     }
 
-    public abstract String getWinningResult();
+    public abstract String getTotalWinningResult();
 
     public String getName() {
         return name;
