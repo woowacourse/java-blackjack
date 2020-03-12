@@ -18,7 +18,7 @@ public class Score {
 
 	static {
 		Arrays.stream(Symbol.values())
-			.map(Symbol::getSymbol)
+			.map(Symbol::getScore)
 			.forEach(symbolValue ->
 				CACHE.putIfAbsent(symbolValue, new Score(symbolValue)));
 	}

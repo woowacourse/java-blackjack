@@ -53,6 +53,18 @@ public abstract class User {
 
 	abstract boolean canDraw();
 
+	public String getName() {
+		return name;
+	}
+
+	public List<Card> getInitialHand() {
+		return getHand();
+	}
+
+	public List<Card> getHand() {
+		return hand.getCards();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

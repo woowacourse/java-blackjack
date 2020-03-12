@@ -28,4 +28,8 @@ public class Hand {
 		}
 		return score;
 	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
 }

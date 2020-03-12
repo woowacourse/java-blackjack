@@ -14,6 +14,11 @@ public class Card {
 	}
 
 	public int getSymbolValue() {
-		return symbol.getSymbol();
+		return symbol.getScore();
+	}
+
+	@Override
+	public String toString() {
+		return symbol.getSymbol() + type.getType();
 	}
 }
