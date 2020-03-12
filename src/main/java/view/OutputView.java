@@ -46,9 +46,7 @@ public class OutputView {
 
 	public static void printGameResult(Results results) {
 		System.out.println("## 최종 승패");
-		for (Result result : results) {
-			printIndividualResult(result);
-		}
+		results.forEach(OutputView::printIndividualResult);
 	}
 
 	private static void printIndividualResult(Result result) {
