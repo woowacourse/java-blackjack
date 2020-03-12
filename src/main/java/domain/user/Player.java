@@ -4,6 +4,8 @@ import domain.WinningResult;
 
 public class Player extends User {
 
+    WinningResult winningResult;
+
     public Player(String name) {
         super(name);
     }
@@ -16,23 +18,23 @@ public class Player extends User {
     //todo: 내부 구현 내용 개선
     public WinningResult win(Dealer dealer) {
         if (isBust()) {
-            return WinningResult.LOSE;
+            return winningResult = WinningResult.LOSE;
         }
         if (isBlackJack()) {
             if (dealer.isBlackJack()) {
-                return WinningResult.DRAW;
+                return winningResult = WinningResult.DRAW;
             }
-            return WinningResult.WIN;
+            return winningResult = WinningResult.WIN;
         }
         if (dealer.isBust()) {
-            return WinningResult.WIN;
+            return winningResult = WinningResult.WIN;
         }
         if (calculatePointAccordingToHasAce() > dealer.calculatePointAccordingToHasAce()) {
-            return WinningResult.WIN;
+            return winningResult = WinningResult.WIN;
         }
         if (calculatePointAccordingToHasAce() == dealer.calculatePointAccordingToHasAce()) {
-            return WinningResult.DRAW;
+            return winningResult = WinningResult.DRAW;
         }
-        return WinningResult.LOSE;
+        return winningResult = WinningResult.LOSE;
     }
 }

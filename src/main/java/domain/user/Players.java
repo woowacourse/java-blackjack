@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.WinningResult;
 import domain.deck.Deck;
 
 public class Players {
@@ -44,6 +45,12 @@ public class Players {
         return players.stream()
                 .map(Player::getTotalDrawResult)
                 .collect(Collectors.joining("\n"));
+    }
+
+    public List<WinningResult> getWinningResults(Dealer dealer) {
+        return players.stream()
+                .map(player -> player.win(dealer))
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
