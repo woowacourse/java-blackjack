@@ -19,13 +19,17 @@ public class Players implements Iterable<Player> {
 	private final List<Player> players;
 
 	private Players(List<Player> players) {
+		validate(players);
+		this.players = players;
+	}
+
+	private void validate(List<Player> players) {
 		if (players.size() >= MAX_PLAYERS_COUNT) {
 			throw new IllegalArgumentException(OVER_MAX_PLAYERS_COUNT);
 		}
 		if (players.size() == MIN_PLAYERS_COUNT) {
 			throw new IllegalArgumentException(UNDER_MIN_PLAYERS_COUNT);
 		}
-		this.players = players;
 	}
 
 	public static Players of(List<Player> values) {
