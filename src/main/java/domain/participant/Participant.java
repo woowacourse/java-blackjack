@@ -14,7 +14,6 @@ public abstract class Participant {
 
 	public Participant(String name) {
 		validate(name);
-
 		this.name = name;
 		this.cards = new ArrayList<>();
 	}
@@ -73,5 +72,4 @@ public abstract class Participant {
 	public int hashCode() {
 		return Objects.hash(name, cards);
 	}
-
 }

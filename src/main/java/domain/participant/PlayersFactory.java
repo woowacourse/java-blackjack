@@ -13,7 +13,6 @@ public class PlayersFactory {
 		List<Player> players = userNames.stream()
 			.map(Player::new)
 			.collect(Collectors.toList());
-
 		return Collections.unmodifiableList(players);
 	}
 }

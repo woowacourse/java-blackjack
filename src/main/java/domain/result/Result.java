@@ -14,8 +14,8 @@ public enum Result {
 		return myScore.isBust() || myScore.isLowerThan(otherScore);
 	});
 
-	private String result;
-	private BiFunction<Score, Score, Boolean> expression;
+	private final String result;
+	private final BiFunction<Score, Score, Boolean> expression;
 
 	Result(String result,
 		BiFunction<Score, Score, Boolean> expression) {

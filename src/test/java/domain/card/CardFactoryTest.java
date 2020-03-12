@@ -21,7 +21,6 @@ class CardFactoryTest {
 		assertThat(new HashSet<>(CardFactory.create())).hasSize(52);
 	}
 
-
 	@Test
 	@DisplayName("동일 타입,심볼을 가진 카드는 같다.")
 	void equalsTest() {

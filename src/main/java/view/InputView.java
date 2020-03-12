@@ -5,7 +5,6 @@ import java.util.Scanner;
 import domain.participant.Player;
 
 public class InputView {
-	private static final String NEW_LINE = System.lineSeparator();
 	private static final Scanner scanner = new Scanner(System.in);
 
 	public static String inputUserNames() {

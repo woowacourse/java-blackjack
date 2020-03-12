@@ -36,7 +36,7 @@ public class GameResult {
 				result.remove(resultToCount.getKey());
 			}
 		}
-		return result;
+		return Collections.unmodifiableMap(result);
 	}
 
 	public Map<Player, Result> getPlayersResult() {

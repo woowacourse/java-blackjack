@@ -12,11 +12,27 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-	public static void run() {
-		List<Player> players = PlayersFactory.of(InputView.inputUserNames());
-		Dealer dealer = new Dealer();
-		Deck deck = new Deck();
+	private final List<Player> players;
+	private final Dealer dealer;
+	private final Deck deck;
 
+	public BlackJackController() {
+		this.players = PlayersFactory.of(InputView.inputUserNames());
+		this.dealer = new Dealer();
+		this.deck = new Deck();
+	}
+
+	public void run() {
+		giveTwoCards();
+		giveCardToPlayers();
+		giveCardToDealer();
+		GameResult gameResult = GameResult.from(players, dealer);
+
+		OutputView.printDealerResult(gameResult.dealerResult());
+		OutputView.printPlayersResult(gameResult);
+	}
+
+	private void giveTwoCards() {
 		for (Player player : players) {
 			player.hit(deck.drawCard());
 			player.hit(deck.drawCard());
@@ -24,20 +40,25 @@ public class BlackJackController {
 		dealer.hit(deck.drawCard());
 		dealer.hit(deck.drawCard());
 		OutputView.printReceivedCards(players, dealer);
+	}
 
+	private void giveCardToPlayers() {
 		for (Player player : players) {
-			while (player.canHit() && YesOrNo.of(InputView.inputReceiveMore(player)).isYes()) {
-				player.hit(deck.drawCard());
-				OutputView.printCards(player);
-			}
+			giveCardToPlayer(player);
 		}
+	}
+
+	private void giveCardToPlayer(Player player) {
+		while (player.canHit() && YesOrNo.of(InputView.inputReceiveMore(player)).isYes()) {
+			player.hit(deck.drawCard());
+			OutputView.printCards(player);
+		}
+	}
+
+	private void giveCardToDealer() {
 		while (dealer.canHit()) {
 			dealer.hit(deck.drawCard());
 			OutputView.printDealerCards(dealer);
 		}
-
-		GameResult gameResult = GameResult.from(players, dealer);
-		OutputView.printDealerResult(gameResult.dealerResult());
-		OutputView.printPlayersResult(gameResult);
 	}
 }

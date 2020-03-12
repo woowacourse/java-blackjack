@@ -5,6 +5,7 @@ import java.util.Arrays;
 public enum YesOrNo {
 	YES("Y"),
 	NO("N");
+
 	private final String state;
 
 	YesOrNo(String state) {

@@ -27,6 +27,7 @@ class ScoreTest {
 			new Card(Symbol.SEVEN, Type.CLUB),
 			new Card(Symbol.SIX, Type.CLUB)
 		);
+
 		assertThat(Score.calculate(cards)).isEqualTo(Score.of(21));
 	}
 
@@ -37,19 +38,19 @@ class ScoreTest {
 		assertThat(Score.calculate(cards)).isEqualTo(Score.of(expected));
 	}
 
-	static Stream<Arguments> generateWithAce () {
+	static Stream<Arguments> generateWithAce() {
 		Card ace = new Card(Symbol.ACE, Type.DIAMOND);
 		return Stream.of(
 			Arguments.of(12, Arrays.asList(ace, ace)),
 			Arguments.of(21, Arrays.asList(ace, new Card(Symbol.TEN, Type.DIAMOND))),
 			Arguments.of(14, Arrays.asList(ace, new Card(Symbol.THREE, Type.DIAMOND))),
 			Arguments.of(20, Arrays.asList(ace, new Card(Symbol.NINE, Type.DIAMOND), new Card(Symbol.TEN, Type.CLUB)))
-			);
+		);
 	}
 
 	@Test
 	@DisplayName("점수를 올바르게 비교하는지 테스트")
-	void compareTest(){
+	void compareTest() {
 		Score twentyOne = Score.of(21);
 		Score ten = Score.of(10);
 
