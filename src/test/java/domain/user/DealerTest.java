@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import domain.WinningResult;
 import domain.deck.Card;
 import domain.deck.Symbol;
 import domain.deck.Type;
@@ -56,4 +57,14 @@ class DealerTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), false)
         );
    }
+
+    @Test
+    @DisplayName("딜러 승패 확인 결과")
+    void getWinningResult() {
+        String expected = "0승 0패 1무승부";
+
+        dealer.applyWinningResult(WinningResult.DRAW);
+
+        assertThat(dealer.getWinningResult()).isEqualTo(expected);
+    }
 }
