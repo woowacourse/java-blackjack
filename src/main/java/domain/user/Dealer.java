@@ -12,7 +12,7 @@ public class Dealer extends User {
 		super.drawStrategy = new DealerDrawStrategy();
 	}
 
-	public Card openCard() {
+	public Card openOneCard() {
 		List<Card> dealerCards = cards.toList();
 		return dealerCards.get(FIRST_CARD_INDEX);
 	}

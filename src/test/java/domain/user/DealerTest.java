@@ -15,7 +15,7 @@ class DealerTest {
 	void openCard_When_Dealer_Has_One_Card_Return_The_Card() {
 		Dealer dealer = new Dealer();
 		dealer.addCard(new Card(Symbol.ACE, Type.CLOVER));
-		assertEquals(new Card(Symbol.ACE, Type.CLOVER), dealer.openCard());
+		assertEquals(new Card(Symbol.ACE, Type.CLOVER), dealer.openOneCard());
 	}
 
 	@Test

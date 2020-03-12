@@ -16,11 +16,11 @@ public class BlackjackController {
 	public static void run(Deck deck, Dealer dealer) {
 		Players players = Players.of(InputView.inputPlayerNames());
 		BlackjackService.giveInitialCards(deck, dealer, players);
-		printInitialStatus(dealer.openCard(), players);
+		printInitialStatus(dealer.openOneCard(), players);
 
 		if (dealer.isBlackJack()) {
 			Result result = BlackjackService.createResult(dealer, players);
-			printResult(result, dealer, players);
+			printResult(result, dealer.openAllCards(), players);
 			return;
 		}
 
@@ -32,7 +32,7 @@ public class BlackjackController {
 		}
 
 		Result result = BlackjackService.createResult(dealer, players);
-		printResult(result, dealer, players);
+		printResult(result, dealer.openAllCards(), players);
 	}
 
 	private static void proceedPhaseOf(Player player, Deck deck) {

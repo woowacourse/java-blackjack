@@ -38,6 +38,7 @@ public class OutputView {
 	}
 
 	private static void printCardsResultOf(Player player) {
+		emptyLine();
 		Cards cards = player.openAllCards();
 		System.out.println(player + "카드: " +
 			cards.toList().stream()
@@ -46,10 +47,10 @@ public class OutputView {
 			" - 결과: " + Score.of(player.openAllCards()));
 	}
 
-	public static void printResult(Result result, Dealer dealer, Players players) {
+	public static void printResult(Result result, Cards dealerCards, Players players) {
 		Map<ResultType, Long> dealerResult = result.createDealerResult();
 
-		printResultStatus(dealer.openAllCards(), players);
+		printResultStatus(dealerCards, players);
 		System.out.println("## 최종 승패");
 		System.out.println("딜러: " +
 			dealerResult.getOrDefault(ResultType.WIN, 0L) + "승 " +
