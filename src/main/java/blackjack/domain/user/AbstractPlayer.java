@@ -3,10 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractPlayer implements Player {
     private static final int MAX_SCORE_TO_MAXIMIZE = 12;
@@ -79,5 +76,27 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractPlayer that = (AbstractPlayer) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(cards, that.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cards);
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractPlayer{" +
+                "name='" + name + '\'' +
+                ", cards=" + cards +
+                '}';
     }
 }
