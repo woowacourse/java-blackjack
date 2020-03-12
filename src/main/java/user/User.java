@@ -7,12 +7,15 @@ public abstract class User {
 
     abstract void hit(Deck deck);
 
-
-
     public boolean checkBurst() {
         return hands.isBurst();
     }
+
     public int handSize(){
         return hands.size();
+    }
+
+    public int score() {
+        return hands.score();
     }
 }

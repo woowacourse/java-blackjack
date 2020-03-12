@@ -4,7 +4,6 @@ import card.Card;
 import card.Symbol;
 import card.Type;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,6 +28,7 @@ public class WinOrLoseTest {
 
         assertThat(WinOrLose.checkWinOrLose(player, dealer)).isEqualTo(WinOrLose.WIN);
     }
+
     static Stream<Arguments> winnerData() {
         Card ace = new Card(Symbol.ACE, Type.CLUB);
         Card ten = new Card(Symbol.TEN, Type.SPADE);

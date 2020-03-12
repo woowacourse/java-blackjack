@@ -21,6 +21,10 @@ public class Players {
         }
     }
 
+    public Players(List<Player> players) {
+        this.players = players;
+    }
+
     private void checkNull(String playerNames) {
         if (Objects.isNull(playerNames)) {
             throw new InvalidPlayersException(InvalidPlayersException.NULL);
