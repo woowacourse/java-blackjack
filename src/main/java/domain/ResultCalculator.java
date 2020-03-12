@@ -29,14 +29,9 @@ public class ResultCalculator {
 	}
 
 	private static Result calculateByPlayer(Player player, Dealer dealer) {
-		int winCount = 0;
-		int loseCount = 0;
 		if (player.isWin(dealer)) {
-			winCount++;
+			return new Result(player.getName(), 1, 0);
 		}
-		if (dealer.isWin(player)) {
-			loseCount++;
-		}
-		return new Result(player.getName(), winCount, loseCount);
+		return new Result(player.getName(), 0, 1);
 	}
 }
