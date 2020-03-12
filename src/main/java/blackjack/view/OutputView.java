@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
+    public static final String BUST_MESSAGE = "버스트 되었습니다!!!";
 
     public static void printInitialInfo(User dealer, Players players) {
         printInitialInfoHead(dealer, players);
@@ -47,8 +49,19 @@ public class OutputView {
 
         System.out.printf("%s : %s" + NEW_LINE, user.getName(), userCards);
 
+        printIfBust(user);
+    }
+
+	public static void printDealerTurn(Dealer dealer) {
+        System.out.printf("딜러는 %s미만이라 한장의 카드를 더 받았습니다." + NEW_LINE,
+                Dealer.MINIMUM_NUMBER_TO_STAY);
+
+        printIfBust(dealer);
+    }
+
+    private static void printIfBust(User user) {
         if (user.isBust()) {
-            System.out.println("버스트되었습니다!!!");
+            System.out.println(BUST_MESSAGE);
         }
     }
 }

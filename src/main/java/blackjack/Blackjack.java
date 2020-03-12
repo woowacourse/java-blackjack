@@ -11,7 +11,7 @@ public class Blackjack {
     public static void main(String[] args) {
         String playerNames = InputView.inputPlayerNames();
         Players players = Players.of(playerNames);
-        User dealer = Dealer.create();
+        Dealer dealer = Dealer.create();
         Deck deck = Deck.create();
         deck.shuffle();
 
@@ -27,6 +27,11 @@ public class Blackjack {
                 player.giveCards(deck.draw());
                 OutputView.printUserCard(player);
             }
+        }
+
+        while (dealer.shouldReceiveCard()) {
+            dealer.giveCards(deck.draw());
+            OutputView.printDealerTurn(dealer);
         }
     }
 }
