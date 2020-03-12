@@ -7,6 +7,6 @@ import org.junit.jupiter.api.Test;
 public class CardFactoryTest {
 	@Test
 	void create() {
-		assertThat(CardFactory.create().size()).isEqualTo(52);
+		assertThat(CardFactory.create()).hasSize(52);
 	}
 }
