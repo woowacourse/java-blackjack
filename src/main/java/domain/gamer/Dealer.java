@@ -3,7 +3,7 @@ package domain.gamer;
 import domain.card.Hands;
 
 /**
- *   class description
+ *   딜러 클래스입니다.
  *
  *   @author ParkDooWon, AnHyungJu  
  */

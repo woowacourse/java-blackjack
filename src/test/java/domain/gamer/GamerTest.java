@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import domain.card.Card;
 import domain.card.Symbol;
@@ -54,5 +55,13 @@ public class GamerTest {
 			gamer.add(card);
 		}
 		assertThat(gamer.isBlackjack()).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@NullAndEmptySource
+	void 이름_null이나_빈_값(String name) {
+		assertThatThrownBy(() -> new Player(name))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("null이나 빈 값");
 	}
 }

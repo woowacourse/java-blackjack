@@ -13,8 +13,15 @@ public class Gamer {
 	private Hands hands;
 
 	public Gamer(String name) {
+		validateNullAndEmpty(name);
 		this.name = name;
 		this.hands = new Hands();
+	}
+
+	private void validateNullAndEmpty(String name) {
+		if ((name == null) || name.isEmpty()) {
+			throw new IllegalArgumentException("null이나 빈 값이 들어올 수 없습니다.");
+		}
 	}
 
 	public void add(Card card) {
