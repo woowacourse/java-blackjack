@@ -28,26 +28,6 @@ class PlayersTest {
 	}
 
 	@Test
-	void createResult() {
-		// given
-		players.giveCards(0, Card.of(Symbol.ACE, Type.CLUB));
-		players.giveCards(1, Card.of(Symbol.TEN, Type.CLUB));
-		players.giveCards(2, Card.of(Symbol.TWO, Type.CLUB));
-
-		Dealer dealer = DefaultDealer.create();
-		dealer.giveCards(Card.of(Symbol.THREE, Type.HEART));
-
-		// then
-		Map<Player, Boolean> map = new HashMap<>();
-		map.put(players.getPlayers().get(0), true);
-		map.put(players.getPlayers().get(1), true);
-		map.put(players.getPlayers().get(2), false);
-
-		assertThat(players.createResult(dealer))
-				.isEqualTo(map);
-	}
-
-	@Test
 	void giveCards() {
 		// given
 		Card card = Card.of(Symbol.ACE, Type.CLUB);

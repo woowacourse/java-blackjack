@@ -89,7 +89,7 @@ public class OutputView {
     public static void printResult(Result result) {
         System.out.println("## 최종 승패");
         System.out.println("딜러" + " : " + CreateDealerResult(result));
-        for (Player player : result.getPlayerResults().keySet()) {
+        for (String player : result.getPlayerResults().keySet()) {
             String playerResult = createPlayerResult(player, result);
             System.out.println(playerResult);
         }
@@ -100,9 +100,9 @@ public class OutputView {
                 result.getDealerWin(), result.getDealerLose());
     }
 
-    private static String createPlayerResult(Player player, Result result) {
-        String resultWord = boolToResultWord(result.isWinner(player));
-        return String.format("%s : %s", player.getName(), resultWord);
+    private static String createPlayerResult(String name, Result result) {
+        String resultWord = boolToResultWord(result.isWinner(name));
+        return String.format("%s : %s", name, resultWord);
     }
 
     private static String boolToResultWord(boolean bool) {
