@@ -1,5 +1,6 @@
 package domain.card;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -28,12 +29,18 @@ public class CardsTest {
     @DisplayName("카드 숫자 합계")
     @Test
     void getSum() {
-        cards.add(new Card(Type.DIAMOND, Symbol.TWO));
-        cards.add(new Card(Type.DIAMOND, Symbol.THREE));
         cards.add(new Card(Type.DIAMOND, Symbol.ACE));
+        cards.add(new Card(Type.SPADE, Symbol.ACE));
+        cards.add(new Card(Type.HEART, Symbol.ACE));
+        cards.add(new Card(Type.CLUB, Symbol.ACE));
         cards.add(new Card(Type.CLUB, Symbol.JACK));
+        assertThat(cards.getScore()).isEqualTo(14);
 
-        assertThat(cards.getScore()).isEqualTo(16);
+        cards = new Cards();
+        cards.add(new Card(Type.DIAMOND, Symbol.ACE));
+        cards.add(new Card(Type.CLUB, Symbol.ACE));
+        cards.add(new Card(Type.CLUB, Symbol.TWO));
+        assertThat(cards.getScore()).isEqualTo(14);
     }
 
     @DisplayName("카드가 21을 넘는지 확인")

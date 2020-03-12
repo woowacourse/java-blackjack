@@ -8,8 +8,12 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 
     @Test
-    @DisplayName("카드 생성자 테스트")
+    @DisplayName("에이스 카드 여부 확인")
     void card() {
-        assertThat(new Card(Type.CLUB, Symbol.ACE)).isInstanceOf(Card.class);
+        Card cardAce = new Card(Type.CLUB, Symbol.ACE);
+        Card cardNotAce = new Card(Type.CLUB, Symbol.TEN);
+
+        assertThat(cardAce.isAce()).isTrue();
+        assertThat(cardNotAce.isAce()).isFalse();
     }
 }

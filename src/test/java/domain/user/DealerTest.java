@@ -18,16 +18,12 @@ public class DealerTest {
         dealer = new Dealer();
     }
 
-    @DisplayName("드로우 가능여부 - 가능")
+    @DisplayName("드로우 가능여부")
     @Test
     void canDrawCard() {
         dealer.drawCard(cardDeck);
         assertThat(dealer.canDrawCard()).isTrue();
-    }
 
-    @DisplayName("드로우 가능여부 - 불가")
-    @Test
-    void cantDrawCard() {
         for (int i = 0; i < 10; i++) {
             dealer.drawCard(cardDeck);
         }

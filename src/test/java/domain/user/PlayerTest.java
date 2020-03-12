@@ -23,17 +23,11 @@ public class PlayerTest {
     @Test
     void canDrawCard() {
         player.drawCard(cardDeck);
-
         assertThat(player.canDrawCard()).isTrue();
-    }
 
-    @DisplayName("드로우 가능여부 - 불가")
-    @Test
-    void cantDrawCard() {
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-
         assertThat(player.canDrawCard()).isFalse();
     }
 
@@ -43,23 +37,15 @@ public class PlayerTest {
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-
         assertThat(player.calculateOutcome(17)).isEqualTo(Outcome.LOSE);
     }
 
-    @DisplayName("승무패 결과 산정 테스트 - 패배")
+    @DisplayName("승무패 결과 산정 테스트")
     @Test
     void calculateWinningResult_lose() {
         player.drawCard(cardDeck);
-
         assertThat(player.calculateOutcome(17)).isEqualTo(Outcome.LOSE);
-    }
-
-    @DisplayName("승무패 결과 산정 테스트 - 승리")
-    @Test
-    void calculateWinningResult_win() {
-        player.drawCard(cardDeck);
-
+        assertThat(player.calculateOutcome(player.getScore())).isEqualTo(Outcome.DRAW);
         assertThat(player.calculateOutcome(22)).isEqualTo(Outcome.WIN);
     }
 }

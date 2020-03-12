@@ -28,6 +28,7 @@ public class GameResultTest {
         dealer.drawCard(new CardDeck());
         GameResult gameResult = new GameResult(dealer, players);
         Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
+
         for (Player player : playerResult.keySet()) {
             assertThat(playerResult.get(player)).isEqualTo(Outcome.LOSE);
         }
@@ -37,6 +38,7 @@ public class GameResultTest {
     void checkPlayerResultDraw() {
         GameResult gameResult = new GameResult(dealer, players);
         Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
+
         for (Player player : playerResult.keySet()) {
             assertThat(playerResult.get(player)).isEqualTo(Outcome.DRAW);
         }
@@ -47,6 +49,7 @@ public class GameResultTest {
         players.getPlayers().get(0).drawCard(new CardDeck());
         GameResult gameResult = new GameResult(dealer, players);
         Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
+
         for (Player player : playerResult.keySet()) {
             assertThat(playerResult.get(player)).isEqualTo(Outcome.WIN);
         }
