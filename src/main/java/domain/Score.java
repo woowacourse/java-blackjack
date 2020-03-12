@@ -3,17 +3,35 @@ package domain;
 import java.util.Objects;
 
 public class Score {
-	public static final Score ZERO = new Score(0);
+	private static final int MIN = 0;
 	private static final int ACE_BONUS = 10;
-	private static final int CRITICAL_POINT = 21;
+	private static final int BLACKJACK_SIZE = 2;
+	private static final int BLACKJACK_SCORE = 21;
+
+	public static final Score ZERO = new Score(MIN);
 
 	private final int score;
 
 	public Score(int score) {
+		validate(score);
 		this.score = score;
 	}
 
+	private void validate(int score) {
+		if (score < MIN) {
+			throw new IllegalArgumentException("점수는 0 이상이어야 합니다.");
+		}
+	}
+
 	public int getValue() {
+		return score;
+	}
+
+	public Score addAceBonusIfNotBust() {
+		Score score = add(ACE_BONUS);
+		if (score.isBust()) {
+			return this;
+		}
 		return score;
 	}
 
@@ -21,16 +39,12 @@ public class Score {
 		return new Score(score + point);
 	}
 
-	public Score addAceBonusIfNotBust() {
-		Score newScore = add(ACE_BONUS);
-		if (newScore.isNotBust()) {
-			return newScore;
-		}
-		return this;
+	public boolean isBlackjack(int cardSize) {
+		return cardSize == BLACKJACK_SIZE && score == BLACKJACK_SCORE;
 	}
 
-	public boolean isNotBust() {
-		return score <= CRITICAL_POINT;
+	public boolean isBust() {
+		return score > BLACKJACK_SCORE;
 	}
 
 	@Override

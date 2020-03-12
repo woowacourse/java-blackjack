@@ -12,7 +12,7 @@ public abstract class User {
 	}
 
 	public void addCard(Card card) {
-		cards.addCard(card);
+		cards.add(card);
 	}
 
 	public String getName() {

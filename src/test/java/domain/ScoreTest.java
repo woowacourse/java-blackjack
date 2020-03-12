@@ -23,7 +23,24 @@ public class ScoreTest {
 	}
 
 	@Test
+	void isBlackJack() {
+		assertThat(new Score(21).isBlackjack(2)).isTrue();
+	}
+
+	@Test
+	void isNotBlackJack() {
+		assertThat(new Score(21).isBlackjack(3)).isFalse();
+		assertThat(new Score(20).isBlackjack(2)).isFalse();
+		assertThat(new Score(22).isBlackjack(2)).isFalse();
+	}
+
+	@Test
+	void isBust() {
+		assertThat(new Score(22).isBust()).isTrue();
+	}
+
+	@Test
 	void isNotBust() {
-		assertThat(new Score(21).isNotBust()).isTrue();
+		assertThat(new Score(21).isBust()).isFalse();
 	}
 }

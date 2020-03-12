@@ -11,27 +11,41 @@ public class CardsTest {
 	}
 
 	@Test
+	void getSize() {
+		Cards cards = new Cards();
+		assertThat(cards.getSize()).isEqualTo(0);
+	}
+
+	@Test
+	void add() {
+		Cards cards = new Cards();
+		cards.add(Card.of("스페이드", "J"));
+		assertThat(cards.getSize()).isEqualTo(1);
+	}
+
+	@Test
 	void getScore() {
 		Cards cards = new Cards();
-		cards.addCard(Card.of("스페이드", "K"));
-		cards.addCard(Card.of("스페이드", "3"));
-		cards.addCard(Card.of("스페이드", "A"));
+		cards.add(Card.of("스페이드", "K"));
+		cards.add(Card.of("스페이드", "3"));
+		cards.add(Card.of("스페이드", "A"));
 		assertThat(cards.getScore()).isEqualTo(14);
 	}
 
 	@Test
 	void isBlackJack() {
 		Cards cards = new Cards();
-		cards.addCard(Card.of("스페이드", "K"));
-		cards.addCard(Card.of("스페이드", "A"));
+		cards.add(Card.of("스페이드", "K"));
+		cards.add(Card.of("스페이드", "A"));
 		assertThat(cards.isBlackJack()).isTrue();
 	}
 
 	@Test
-	void isLessThan() {
+	void isBust() {
 		Cards cards = new Cards();
-		cards.addCard(Card.of("스페이드", "K"));
-		cards.addCard(Card.of("스페이드", "A"));
-		assertThat(cards.isLessThan(20)).isFalse();
+		cards.add(Card.of("스페이드", "J"));
+		cards.add(Card.of("스페이드", "Q"));
+		cards.add(Card.of("스페이드", "K"));
+		assertThat(cards.isBust()).isTrue();
 	}
 }
