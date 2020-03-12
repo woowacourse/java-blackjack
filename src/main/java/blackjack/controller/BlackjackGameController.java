@@ -14,7 +14,7 @@ public class BlackjackGameController {
         );
 
         Deck deck = new Deck(CardFactory.getInstance().issueNewCards());
-
-
+        users.getUsers()
+                .forEach(t -> t.receiveInitialCards(deck.drawInitialCards()));
     }
 }

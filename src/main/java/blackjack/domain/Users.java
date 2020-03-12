@@ -9,4 +9,8 @@ public class Users {
     public Users(List<User> users) {
         this.users = Collections.unmodifiableList(users);
     }
+
+    public List<User> getUsers() {
+        return this.users;
+    }
 }

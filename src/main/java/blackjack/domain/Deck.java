@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Deck {
     private final LinkedList<Card> deck;
@@ -21,5 +23,10 @@ public class Deck {
             throw new NullPointerException("덱이 비었습니다");
         }
         return deck.poll();
+    }
+
+    public UserCards drawInitialCards() {
+        return new UserCards(IntStream.of(0, 2).mapToObj(t -> this.drawCard())
+                .collect(Collectors.toList()));
     }
 }
