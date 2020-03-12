@@ -30,6 +30,10 @@ public class Score {
         return score > number;
     }
 
+    public boolean isOver(Score other) {
+        return isOver(other.score);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

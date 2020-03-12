@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AbstractUser implements User {
+public abstract class AbstractUser implements User {
     private static final int MAX_SCORE_TO_MAXIMIZE = 12;
     private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
