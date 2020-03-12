@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,13 +9,15 @@ public class CardFactory {
     private final List<Card> cards;
 
     private CardFactory() {
-        List<Card> cards = new LinkedList<>();
-        for (Suit suit : Suit.values()) {
-            for (Symbol symbol : Symbol.values()) {
-                cards.add(new Card(suit, symbol));
-            }
-        }
-        this.cards = Collections.unmodifiableList(cards);
+        this.cards = Collections.unmodifiableList(generateAllCards());
+    }
+
+    private LinkedList<Card> generateAllCards() {
+        LinkedList<Card> cards = new LinkedList<>();
+        Arrays.stream(Suit.values()).forEach(suit -> Arrays.stream(Symbol.values())
+                .map(symbol -> new Card(suit, symbol))
+                .forEach(cards::add));
+        return cards;
     }
 
     public static CardFactory getInstance() {
