@@ -11,6 +11,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class Controller {
+    private static int INITIAL_SET_CARD_SIZE = 2;
     private static String WRONG_INPUT_ERROR_MSG = "잘못된 입력입니다.";
     private Dealer dealer;
     private Players players;
@@ -37,7 +38,7 @@ public class Controller {
 
         if (dealer.canReceiveMoreCard()) {
             dealer.addCard(deck.getCard());
-            OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
+            OutputView.printDealerReceiveMoreCard(Dealer.LOWER_BOUND);
         }
     }
 
@@ -69,7 +70,8 @@ public class Controller {
     }
 
     private void setInitialCards(User user, CardDeck deck) {
-        user.addCard(deck.getCard());
-        user.addCard(deck.getCard());
+        for (int i = 0; i < INITIAL_SET_CARD_SIZE; i++) {
+            user.addCard(deck.getCard());
+        }
     }
 }

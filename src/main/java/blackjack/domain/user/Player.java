@@ -25,4 +25,8 @@ public class Player extends User {
         this.resultType = ResultType.computeResult(super.computeSum(), dealer.computeSum());
         return resultType;
     }
+
+    public String getResultTypeMessage() {
+        return resultType.getMessage();
+    }
 }

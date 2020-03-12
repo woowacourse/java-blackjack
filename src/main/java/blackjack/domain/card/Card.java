@@ -47,7 +47,7 @@ public class Card {
         return number.getNumber();
     }
 
-    public String getInfo() {
+    public String getMessage() {
         return number.getMessage() + getCardFigure().getFigure();
     }
 }

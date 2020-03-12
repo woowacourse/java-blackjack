@@ -44,7 +44,7 @@ public abstract class User {
     }
 
     public String showCards() {
-        return String.join(" ,", cards.getInfo());
+        return String.join(" ,", cards.getMessage());
     }
 
     public Cards getCards() {

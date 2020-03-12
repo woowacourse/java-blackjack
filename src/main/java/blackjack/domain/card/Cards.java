@@ -40,9 +40,9 @@ public class Cards {
         return sum;
     }
 
-    public List<String> getInfo() {
+    public List<String> getMessage() {
         return cards.stream()
-                .map(Card::getInfo)
+                .map(Card::getMessage)
                 .collect(Collectors.toList());
     }
 
