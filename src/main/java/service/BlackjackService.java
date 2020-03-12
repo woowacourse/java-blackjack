@@ -30,7 +30,7 @@ public class BlackjackService {
 
 	public static Result createResult(Dealer dealer, Players players) {
 		Map<Player, ResultType> results = new HashMap<>();
-		players.forEach(player -> results.put(player, ResultType.of(player, dealer)));
+		players.forEach(player -> results.put(player, ResultType.from(player, dealer)));
 		return new Result(results);
 	}
 }
