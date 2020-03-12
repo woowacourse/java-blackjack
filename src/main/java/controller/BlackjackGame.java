@@ -12,7 +12,6 @@ import domain.result.MatchResult;
 import domain.result.Result;
 import domain.result.UserResult;
 import domain.user.Dealer;
-import domain.user.Player;
 import domain.user.PlayerFactory;
 import domain.user.User;
 import view.InputView;
@@ -66,26 +65,33 @@ public class BlackjackGame {
 	}
 
 	private void drawCard(List<User> users, Dealer dealer) {
-		drawUserCard(users);
+		drawPlayersCard(users);
 		drawDealerCard(dealer);
 	}
 
-	private void drawUserCard(List<User> users) {
+	private void drawPlayersCard(List<User> users) {
 		for (User user : users) {
-			if (user.isBlackjack()) {
-				continue;
-			}
-			YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
-			while (yesOrNo.isContinue()) {
-				user.addCards(Arrays.asList(cardDivider.divide()));
-				OutputView.printUserCard(user);
-				if (user.isBust()) {
-					OutputView.printUserBust(user);
-					break;
-				}
-				yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
+			drawPlayerCard(user);
+		}
+	}
+
+	private void drawPlayerCard(User user) {
+		if (user.isBlackjack()) {
+			return;
+		}
+		while (isContinuousFromInput(user)) {
+			user.addCards(Arrays.asList(cardDivider.divide()));
+			OutputView.printUserCard(user);
+			if (user.isBust()) {
+				OutputView.printUserBust(user);
+				break;
 			}
 		}
+	}
+
+	private boolean isContinuousFromInput(User user) {
+		YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
+		return yesOrNo.isContinue();
 	}
 
 	private void drawDealerCard(Dealer dealer) {
