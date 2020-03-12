@@ -18,13 +18,13 @@ public class OutputView {
     public static void printDistributeMessage(final Users users) {
         List<String> usersName = new ArrayList<>();
 
-        users.forEach(User -> usersName.add(User.getName()));
+        users.forEach(user -> usersName.add(user.getName()));
         System.out.println("\n딜러와 " + String.join(DELIMITER, usersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
     }
 
     public static void printInitStatus(final Dealer dealer, final Users users) {
         printStatus(dealer);
-        users.forEach(User -> printStatus(User));
+        users.forEach(user -> printStatus(user));
         System.out.println();
     }
 
