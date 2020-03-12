@@ -23,14 +23,17 @@ Person interface
 
 - draw
 - 보유한 카드
-- 카드 점수 계산
-
+- Bust 확인
+- 카드 점수
 - Player 클래스
   - draw(Overriding)
   - 이름
+  - Dealer와의 게임결과 가짐
 - Dealer 클래스
   - draw(Overriding)
   - 이름
+  - Player와 게임 결과를 출력하는 함수
+  - Players의 모든 결과값을 가짐(Map)
 
 Card
 
@@ -38,9 +41,18 @@ Card
   - 숫자
   - 모양
 
-CardList
+CardFactory
+
+- 52장의 카드를 만든다
+
+CardHand
 
 - 일급 컬렉션
+- User가 가지는 카드 관리
+
+Deck
+
+- Dealer와 Players에게 카드나누어 줄 카드를 가지는 클래스
 
 YesOrNo
 
