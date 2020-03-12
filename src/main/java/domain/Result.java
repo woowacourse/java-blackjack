@@ -1,43 +1,31 @@
 package domain;
 
 public class Result {
-	private static final int ONE = 1;
-
-	private final String name;
-	private int winCount;
-	private int loseCount;
+	private final Name name;
+	private final Record record;
 
 	public Result(String name, int winCount, int loseCount) {
-		this.name = name;
-		this.winCount = winCount;
-		this.loseCount = loseCount;
-	}
-
-	public void increaseWinCount() {
-		winCount++;
-	}
-
-	public void increaseLoseCount() {
-		loseCount++;
+		this.name = new Name(name);
+		this.record = new Record(winCount, loseCount);
 	}
 
 	public String getName() {
-		return name;
+		return name.getValue();
 	}
 
 	public int getWinCount() {
-		return winCount;
+		return record.getWinCount();
 	}
 
 	public int getLoseCount() {
-		return loseCount;
+		return record.getLoseCount();
 	}
 
-	public boolean isPlayCountMoreThanOne() {
-		return winCount + loseCount > ONE;
+	public boolean hasMany() {
+		return record.hasMany();
 	}
 
 	public boolean hasWin() {
-		return winCount >= ONE;
+		return record.hasWin();
 	}
 }

@@ -23,7 +23,7 @@ public class Application {
 			addCardIfNeed(cardDeck, dealer);
 		}
 		OutputView.printCardsResults(dealer, players);
-		OutputView.printGameResult(ResultCalculator.getResults(dealer, players));
+		OutputView.printGameResult(ResultCalculator.calculate(dealer, players));
 	}
 
 	private static void distributeTwoCard(CardDeck cardDeck, Dealer dealer, Players players) {

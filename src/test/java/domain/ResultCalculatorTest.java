@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 public class ResultCalculatorTest {
 	@Test
-	void getResults() {
+	void calculate() {
 		Players players = PlayersFactory.create("a,b,c,d");
 		Dealer dealer = new Dealer();
-		assertThat(ResultCalculator.getResults(dealer, players)).isInstanceOf(Results.class);
+		assertThat(ResultCalculator.calculate(dealer, players)).isInstanceOf(Results.class);
 	}
 }

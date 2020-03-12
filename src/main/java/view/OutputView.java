@@ -52,7 +52,7 @@ public class OutputView {
 	}
 
 	private static void printIndividualResult(Result result) {
-		if (result.isPlayCountMoreThanOne()) {
+		if (result.hasMany()) {
 			System.out.printf("%s: %d승 %s패\n", result.getName(), result.getWinCount(), result.getLoseCount());
 			return;
 		}

@@ -4,34 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultCalculator {
-	public static Results getResults(Dealer dealer, Players players) {
+	public static Results calculate(Dealer dealer, Players players) {
 		List<Result> results = new ArrayList<>();
-		addDealerInfo(dealer, players, results);
-		addPlayerInfo(dealer, players, results);
+		results.add(calculateByDealer(dealer, players));
+		results.addAll(calculateByPlayers(players, dealer));
 		return new Results(results);
 	}
 
-	private static void addDealerInfo(Dealer dealer, Players players, List<Result> results) {
-		Result result = new Result(dealer.getName(), 0, 0);
-		for (Player player : players) {
-			calculateWinLose(dealer, player, result);
-		}
-		results.add(result);
+	private static Result calculateByDealer(Dealer dealer, Players players) {
+		List<Boolean> result = new ArrayList<>();
+		players.forEach(player -> result.add(dealer.isWin(player)));
+		int winCount = (int)result.stream().filter(Boolean::booleanValue).count();
+		int loseCount = result.size() - winCount;
+		return new Result(dealer.getName(), winCount, loseCount);
 	}
 
-	private static void addPlayerInfo(Dealer dealer, Players players, List<Result> results) {
-		for (Player player : players) {
-			Result result = new Result(player.getName(), 0, 0);
-			calculateWinLose(player, dealer, result);
-			results.add(result);
-		}
+	private static List<Result> calculateByPlayers(Players players, Dealer dealer) {
+		List<Result> results = new ArrayList<>();
+		players.forEach(player -> results.add(calculateByPlayer(player, dealer)));
+		return results;
 	}
 
-	private static void calculateWinLose(User mainUser, User opponentUser, Result result) {
-		if (mainUser.isWin(opponentUser)) {
-			result.increaseWinCount();
-			return;
+	private static Result calculateByPlayer(Player player, Dealer dealer) {
+		int winCount = 0;
+		int loseCount = 0;
+		if (player.isWin(dealer)) {
+			winCount++;
+		} else {
+			loseCount++;
 		}
-		result.increaseLoseCount();
+		return new Result(player.getName(), winCount, loseCount);
 	}
 }
