@@ -1,8 +1,11 @@
 package com.blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.blackjack.domain.PlayerRecords;
+import com.blackjack.domain.ResultType;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.user.User;
 
@@ -31,6 +34,23 @@ public class OutputView {
 		for (User player : players) {
 			System.out.printf("%s - 결과: %s\n", makeUserCardInfo(player), makePlayerScore(player));
 		}
+	}
+
+	public static void printResultMessage() {
+		System.out.println("\n## 최종 승패");
+	}
+
+	public static void printUserRecords(PlayerRecords playerRecords, List<User> players) {
+		for (User player : players) {
+			System.out.printf("%s: %s\n", player.getName(), playerRecords.getRecords().get(player));
+		}
+	}
+
+	public static void printDealerRecord(Map<ResultType, Long> dealerResult) {
+		Long winCount = dealerResult.getOrDefault(ResultType.WIN, 0L);
+		Long drawCount = dealerResult.getOrDefault(ResultType.DRAW, 0L);
+		Long loseCount = dealerResult.getOrDefault(ResultType.LOSE, 0L);
+		System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, loseCount);
 	}
 
 	private static String makePlayerScore(User player) {

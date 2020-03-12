@@ -6,6 +6,8 @@ import static com.blackjack.view.OutputView.*;
 import java.util.List;
 
 import com.blackjack.domain.DrawDecideType;
+import com.blackjack.domain.GameTable;
+import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.card.CardDeck;
 import com.blackjack.domain.user.Dealer;
 import com.blackjack.domain.user.PlayerFactory;
@@ -24,6 +26,16 @@ public class BlackjackController {
 		drawDealerEndTurn(cardDeck, dealer);
 
 		printCards(dealer, players);
+
+		printResult(dealer, players);
+	}
+
+	private void printResult(Dealer dealer, List<User> players) {
+		GameTable gameTable = new GameTable(dealer, players);
+		PlayerRecords playerRecords = gameTable.calculateResult();
+		printResultMessage();
+		printDealerRecord(playerRecords.calculateDealerResult());
+		printUserRecords(playerRecords, players);
 	}
 
 	private void drawDealerEndTurn(CardDeck cardDeck, Dealer dealer) {
