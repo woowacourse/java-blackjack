@@ -58,6 +58,10 @@ public class Score {
 		return this.score > BLACKJACK_SCORE;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

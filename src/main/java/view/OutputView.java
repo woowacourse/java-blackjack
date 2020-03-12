@@ -15,19 +15,7 @@ import domain.result.Result;
 public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
 
-	public static void printReceivedCards(List<Player> players, Dealer dealer) {
-		System.out.println();
-
-		printGiving(players, dealer);
-		printCards(dealer);
-		for (Player player : players) {
-			printCards(player);
-		}
-
-		System.out.println();
-	}
-
-	private static void printGiving(List<Player> players, Dealer dealer) {
+	public static void printGiving(List<Player> players, Dealer dealer) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(dealer.getName())
@@ -40,7 +28,28 @@ public class OutputView {
 		System.out.println(sb);
 	}
 
+	public static void printDealerCard(Dealer dealer) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(dealer.getName())
+			.append(": ")
+			.append(dealer.getCards().get(0).getCardInfo());
+		System.out.println(sb);
+	}
+
+	public static void printPlayersCard(List<Player> players) {
+		System.out.println();
+		for (Player player : players) {
+			printCards(player);
+		}
+		System.out.println();
+	}
+
 	public static void printCards(Participant user) {
+		StringBuilder sb = createCardsFormat(user);
+		System.out.println(sb);
+	}
+
+	private static StringBuilder createCardsFormat(Participant user) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(user.getName())
 			.append(": ")
@@ -48,12 +57,27 @@ public class OutputView {
 				.stream()
 				.map(Card::getCardInfo)
 				.collect(Collectors.joining(", ")));
-
-		System.out.println(sb);
+		return sb;
 	}
 
 	public static void printDealerCards() {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+	}
+
+	public static void printCardsScore(List<Player> players, Dealer dealer) {
+		StringBuilder sb = new StringBuilder();
+		createScoreFormat(dealer, sb);
+		for (Player player : players) {
+			createScoreFormat(player, sb);
+		}
+		System.out.println(sb);
+	}
+
+	private static void createScoreFormat(Participant participant, StringBuilder sb) {
+		sb.append(createCardsFormat(participant))
+			.append(" - 결과: ")
+			.append(participant.getScore().getScore())
+			.append(NEW_LINE);
 	}
 
 	public static void printDealerResult(TreeMap<Result, Integer> dealerResult) {

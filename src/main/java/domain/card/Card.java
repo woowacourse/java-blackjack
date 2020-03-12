@@ -32,6 +32,6 @@ public class Card {
 	}
 
 	public String getCardInfo() {
-		return symbol.toString() + type.toString();
+		return symbol.toString() +" "+ type.toString();
 	}
 }
