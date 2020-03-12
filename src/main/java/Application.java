@@ -18,10 +18,8 @@ public class Application {
 	private static void run(CardDeck cardDeck, Dealer dealer, Players players) {
 		cardDeck.shuffle();
 		distributeTwoCard(cardDeck, dealer, players);
-		if (dealer.isNotBlackJack()) {
-			askMoreCard(cardDeck, dealer, players);
-			addCardIfNeed(cardDeck, dealer);
-		}
+		askMoreCard(cardDeck, dealer, players);
+		addCardIfNeed(cardDeck, dealer);
 		OutputView.printCardsResults(dealer, players);
 		OutputView.printGameResult(ResultCalculator.calculate(dealer, players));
 	}
