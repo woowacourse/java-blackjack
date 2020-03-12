@@ -10,6 +10,9 @@ import com.blackjack.domain.user.Name;
 public class NameParser {
 	private static final String DELIMITER = ",";
 
+	private NameParser() {
+	}
+
 	public static List<Name> parseName(String input) {
 		return Stream.of(input.split(DELIMITER))
 			.map(String::trim)
