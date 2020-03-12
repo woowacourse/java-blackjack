@@ -5,6 +5,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class Blackjack {
     public static void main(String[] args) {
@@ -17,5 +18,7 @@ public class Blackjack {
         for (int i = 0; i < players.memberSize(); i++) {
             players.giveCards(i, deck.draw(), deck.draw());
         }
+
+        OutputView.printInitialInfo(dealer, players);
     }
 }
