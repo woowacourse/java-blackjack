@@ -1,6 +1,6 @@
 package domain.user;
 
-import static domain.Drawable.BLACKJACK_FULL_SCORE;
+import static domain.rule.Drawable.BLACKJACK_FULL_SCORE;
 
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";

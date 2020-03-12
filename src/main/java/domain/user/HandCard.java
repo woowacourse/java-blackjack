@@ -1,4 +1,4 @@
-package domain;
+package domain.user;
 
 import domain.card.Card;
 
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.Drawable.ACE_BONUS_SCORE;
-import static domain.Drawable.BLACKJACK_FULL_SCORE;
+import static domain.rule.Drawable.ACE_BONUS_SCORE;
+import static domain.rule.Drawable.BLACKJACK_FULL_SCORE;
 
 public class HandCard {
     private final List<Card> cards;

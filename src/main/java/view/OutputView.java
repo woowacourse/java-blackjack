@@ -2,9 +2,10 @@ package view;
 
 import domain.user.Dealer;
 
+import java.util.List;
 import java.util.Map;
 
-import static domain.DealerRule.DRAW_MAX_SCORE;
+import static domain.rule.DealerRule.DRAW_MAX_SCORE;
 
 public class OutputView {
     public static void printNameFormat() {
@@ -15,7 +16,7 @@ public class OutputView {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDrawTurn(String name, String[] names) {
+    public static void printDrawTurn(String name, List<String> names) {
         String playerNames = String.join(", ", names);
 
         StringBuilder stringBuilder = new StringBuilder();

@@ -1,7 +1,6 @@
 package domain.user;
 
-import domain.Drawable;
-import domain.HandCard;
+import domain.rule.Drawable;
 import domain.card.Card;
 
 import java.util.Objects;

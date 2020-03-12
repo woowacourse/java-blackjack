@@ -1,4 +1,4 @@
-package domain;
+package domain.rule;
 
 public interface Drawable {
     public static final int ACE_BONUS_SCORE = 10;

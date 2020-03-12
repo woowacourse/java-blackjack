@@ -1,8 +1,8 @@
 package controller;
 
 import domain.Answer;
-import domain.DealerRule;
-import domain.PlayerRule;
+import domain.rule.DealerRule;
+import domain.rule.PlayerRule;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
 import domain.user.Dealer;
@@ -10,18 +10,15 @@ import domain.user.Player;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Controller {
     public void run() {
         List<Player> players = new ArrayList<>();
         Dealer dealer = new Dealer();
-        String[] names = InputView.requestName();
+        List<String> names = Arrays.asList(InputView.requestName());
+        validate(names);
         for (String name : names) {
-            name = name.trim();
             players.add(new Player(name));
         }
         OutputView.printDrawTurn(dealer.getName(), names);
@@ -58,15 +55,44 @@ public class Controller {
         }
 
         //------
-        Map<String, Boolean> gameResult = new HashMap<>();
+        Map<String, Boolean> playerResult = new HashMap<>();
         Map<String, Integer> dealerResult = new HashMap<>();
         dealerResult.put(dealer.getName(),0);
         for (Player player : players) {
-            gameResult.put(player.getName(),!dealer.isWinner(player));
+            playerResult.put(player.getName(),!dealer.isWinner(player));
             if(dealer.isWinner(player)) {
                 dealerResult.put(dealer.getName(), dealerResult.get(dealer.getName())+1);
             }
         }
-        OutputView.printGameResult(gameResult, dealerResult);
+        OutputView.printGameResult(playerResult, dealerResult);
+    }
+
+    private void validate(List<String> names) {
+        validateNull(names);
+        validateEmptyName(names);
+        validateDuplication(names);
+    }
+
+    private void validateNull(List<String> names) {
+        if (Objects.isNull(names) || names.isEmpty()) {
+            throw new IllegalArgumentException("입력이 잘못되었습니다.");
+        }
+    }
+
+    private void validateEmptyName(List<String> names) {
+        boolean hasEmptyName = names.stream()
+                .map(String::isEmpty)
+                .findAny()
+                .orElse(false);
+        if (hasEmptyName) {
+            throw new IllegalArgumentException("입력이 잘못되었습니다.");
+        }
+    }
+
+    private void validateDuplication(List<String> names) {
+        Set<String> playerNames = new HashSet<>(names);
+        if (playerNames.size() != names.size()) {
+            throw new IllegalArgumentException("입력이 잘못되었습니다.");
+        }
     }
 }

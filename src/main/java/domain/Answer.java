@@ -14,13 +14,13 @@ public class Answer {
 
     private void validateValue(String userAnswer) {
         validateNull(userAnswer);
-        if(!INPUT_TRUE.equals(userAnswer) && !INPUT_FALSE.equals(userAnswer)){
+        if (!INPUT_TRUE.equals(userAnswer) && !INPUT_FALSE.equals(userAnswer)) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
 
     private void validateNull(String userAnswer) {
-        if(Objects.isNull(userAnswer)){
+        if (Objects.isNull(userAnswer)) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
