@@ -12,7 +12,14 @@ public class Card {
 	}
 
 	public static Card of(String type, String symbol) {
-		return new Card(Type.of(type), Symbol.of(symbol));
+		return of(Type.of(type), Symbol.of(symbol));
+	}
+
+	public static Card of(Type type, Symbol symbol) {
+		if (type == null || symbol == null) {
+			throw new IllegalArgumentException("카드의 타입 및 심볼은 NULL이 될 수 없습니다.");
+		}
+		return new Card(type, symbol);
 	}
 
 	public boolean isAce() {

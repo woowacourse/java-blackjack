@@ -11,6 +11,14 @@ public class CardTest {
 	}
 
 	@Test
+	@SuppressWarnings("NonAsciiCharacters")
+	void create_null을_입력한_경우() {
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of(Type.CLOVER, null));
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of(null, Symbol.ACE));
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of((Type)null, (Symbol)null));
+	}
+
+	@Test
 	void isAce() {
 		assertThat(Card.of("스페이드", "A").isAce()).isTrue();
 	}

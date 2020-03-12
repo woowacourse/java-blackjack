@@ -18,7 +18,7 @@ public class CardFactory {
 
 	private static void createByType(Symbol symbol, List<Card> cards) {
 		for (Type type : Type.values()) {
-			cards.add(Card.of(type.getName(), symbol.getAlias()));
+			cards.add(Card.of(type, symbol));
 		}
 	}
 }
