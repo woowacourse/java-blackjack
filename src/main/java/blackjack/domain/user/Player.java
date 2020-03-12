@@ -23,4 +23,6 @@ public interface Player {
     Boolean isWinner(Score dealerScore);
 
     boolean isNotBust();
+
+    boolean isDealer();
 }

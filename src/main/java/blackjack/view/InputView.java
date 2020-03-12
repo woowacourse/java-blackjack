@@ -27,6 +27,7 @@ public class InputView {
         try {
             return YesOrNo.of(scanner.nextLine());
         } catch (YesOrNoException e) {
+            ErrorView.print(e);
             return null;
         }
     }

@@ -26,4 +26,9 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 	public Boolean isWinner(Score dealerScore) {
 		return isNotBust();
 	}
+
+	@Override
+	public boolean isDealer() {
+		return true;
+	}
 }
