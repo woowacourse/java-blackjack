@@ -8,12 +8,47 @@ import domain.card.Symbol;
 import domain.card.Type;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ResultCalculatorTest {
+
+    @Test
+    @DisplayName("딜러의 승패 결과 확인 테스트")
+    void calculateDealerResult() {
+        Map<Result, Integer> expected = new HashMap<>();
+        expected.put(Result.WIN, 0);
+        expected.put(Result.DRAW, 1);
+        expected.put(Result.LOSE, 1);
+
+        Dealer dealer = new Dealer();
+        Players players = new Players(Arrays.asList("오렌지", "히히"));
+        Player winPlayer = players.getPlayers().get(0);
+        Player drawPlayer = players.getPlayers().get(1);
+        List<Card> deckForTest = new ArrayList<>();
+
+        deckForTest.add(new Card(Symbol.ACE, Type.HEART));
+        deckForTest.add(new Card(Symbol.QUEEN, Type.HEART));
+        winPlayer.receiveFirstCards(new Deck(deckForTest));
+
+        deckForTest.add(new Card(Symbol.EIGHT, Type.SPADE));
+        deckForTest.add(new Card(Symbol.QUEEN, Type.SPADE));
+        drawPlayer.receiveFirstCards(new Deck(deckForTest));
+
+        deckForTest.add(new Card(Symbol.EIGHT, Type.SPADE));
+        deckForTest.add(new Card(Symbol.QUEEN, Type.SPADE));
+        dealer.receiveFirstCards(new Deck(deckForTest));
+
+        assertThat(
+            ResultCalculator.calculateDealerResult(dealer, players)
+        ).isEqualTo(new DealerResult(expected));
+    }
 
     @Test
     @DisplayName("두명의 점수가 같은 경우 무승부")

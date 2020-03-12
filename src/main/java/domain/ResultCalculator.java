@@ -3,8 +3,34 @@ package domain;
 import domain.card.Cards;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResultCalculator {
+
+    public static DealerResult calculateDealerResult(Dealer dealer, Players players) {
+        Map<Result, Integer> dealerResult = new HashMap<>();
+        Arrays.stream(Result.values())
+            .forEach(result -> dealerResult.put(result, 0));
+
+        for (Player player : players.getPlayers()) {
+            Result playerResult = calculateDealerResult(dealer, player);
+            dealerResult.replace(playerResult, dealerResult.get(playerResult) + 1);
+        }
+        return new DealerResult(dealerResult);
+    }
+
+    private static Result calculateDealerResult(Dealer dealer, Player player) {
+        if (calculatePlayerResult(dealer, player).equals(Result.WIN)) {
+            return Result.LOSE;
+        }
+        if (calculatePlayerResult(dealer, player).equals(Result.LOSE)) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
+    }
 
     public static Result calculatePlayerResult(Dealer dealer, Player player) {
         if (isDraw(dealer, player)) {
