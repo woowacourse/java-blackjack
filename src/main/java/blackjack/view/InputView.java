@@ -3,6 +3,7 @@ package blackjack.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -14,11 +15,13 @@ public class InputView {
     public static List<String> enterNames() {
         System.out.println(ENTER_NAMES_MSG);
         String input = scanner.nextLine();
-        return Arrays.asList(input.split(DELIMITER));
+        return Arrays.stream(input.split(DELIMITER))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     public static String selectYesOrNo(String name) {
         System.out.println(String.format(SELECT_YES_OR_NO_MSG, name));
-        return scanner.nextLine();
+        return (scanner.nextLine()).trim();
     }
 }

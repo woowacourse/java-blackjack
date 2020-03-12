@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.ResultType;
 
 public class Player extends Participant {
     public Player(String name) {
@@ -14,8 +14,8 @@ public class Player extends Participant {
         return cards.computeScore() < Cards.MAX_SUM;
     }
 
-    public MatchResult createMatchResult(Dealer dealer) {
-        Result result = Result.findResultByScore(computeScore(), dealer.computeScore());
-        return new MatchResult(name, result);
+    public PlayerResult createPlayerResult(Dealer dealer) {
+        ResultType resultType = ResultType.findResultByScore(computeScore(), dealer.computeScore());
+        return new PlayerResult(name, resultType);
     }
 }

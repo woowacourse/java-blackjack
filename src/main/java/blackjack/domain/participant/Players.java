@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.MatchResult;
+import blackjack.domain.result.PlayerResult;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,9 +25,9 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<MatchResult> createMatchResult(Dealer dealer) {
+    public List<PlayerResult> createPlayerResults(Dealer dealer) {
         return players.stream()
-                .map(player -> player.createMatchResult(dealer))
+                .map(player -> player.createPlayerResult(dealer))
                 .collect(Collectors.toList());
     }
 

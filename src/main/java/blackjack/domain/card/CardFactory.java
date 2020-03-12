@@ -26,7 +26,6 @@ public class CardFactory {
     public static Card of(Type type, Figure figure) {
         Objects.requireNonNull(type, NULL_ERROR_MSG);
         Objects.requireNonNull(figure, NULL_ERROR_MSG);
-
         return new Card(type, figure);
     }
 }

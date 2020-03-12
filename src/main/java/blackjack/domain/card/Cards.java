@@ -1,15 +1,14 @@
 package blackjack.domain.card;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cards {
     public static final int MAX_SUM = 21;
     private static final int ACE_VALUE_DIFFERENCE = 10;
 
-    private Set<Card> cards = new HashSet<>();
+    private List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         this.cards.add(card);
@@ -42,7 +41,7 @@ public class Cards {
                 .collect(Collectors.toList());
     }
 
-    public Set<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 }

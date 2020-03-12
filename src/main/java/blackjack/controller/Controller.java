@@ -4,13 +4,12 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class Controller {
 
@@ -27,8 +26,8 @@ public class Controller {
 
         OutputView.printFinalStatus(players, dealer);
 
-        List<MatchResult> playerResults = players.createMatchResult(dealer);
-        Map<Result, Integer> dealerResult = dealer.computeResult(playerResults);
+        List<PlayerResult> playerResults = players.createPlayerResults(dealer);
+        DealerResult dealerResult = dealer.createDealerResult(playerResults);
         OutputView.printFinalResult(dealerResult, playerResults);
     }
 
@@ -44,7 +43,7 @@ public class Controller {
             while (player.canGetMoreCard()) {
                 String reply = InputView.selectYesOrNo(player.getName());
                 if (deck.dealAdditionalCard(player, reply)) {
-                    OutputView.printStatus(player.getName(), player.getCards());
+                    OutputView.printCardsStatus(player.getName(), player.showCards());
                     continue;
                 }
                 break;
