@@ -16,7 +16,7 @@ public class OutputView {
     }
 
     public static void printUsersCards(Dealer dealer, Players players) {
-        System.out.println("딜러: " + dealer.getCardsInfos().get(0));
+        System.out.println("딜러: " + dealer.getFirstCardInfo());
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
@@ -24,7 +24,11 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        System.out.println(player.getName() + ": " + String.join(", ", player.getCardsInfos()));
+        System.out.println(getUserCards(player));
+    }
+
+    private static String getUserCards(User user) {
+        return String.format("%s: %s", user.getName(), String.join(", ", user.getCardsInfos()));
     }
 
     public static void printDealerOneMoreCard() {
@@ -33,33 +37,40 @@ public class OutputView {
 
     public static void printUsersCardsAndScore(Dealer dealer, Players players) {
         System.out.println();
-        printUserCardsAndScore("딜러", dealer);
+        printUserCardsAndScore(dealer);
         for (Player player : players.getPlayers()) {
-            printUserCardsAndScore(player.getName(), player);
+            printUserCardsAndScore(player);
         }
     }
 
-    public static void printUserCardsAndScore(String name, User user) {
-        System.out.println(name + ": " + String.join(", ", user.getCardsInfos())
-            + " - 결과: " + user.getScore());
+    public static void printUserCardsAndScore(User user) {
+        System.out.printf("%s - 결과: %s\n", getUserCards(user), user.getScore());
     }
 
     public static void printFinalResult(GameResult gameResult) {
         System.out.println("\n## 최종 승패");
         printDealerFinalResult(gameResult.getDealerResults());
-        for (Player player : gameResult.getPlayersResult().keySet()) {
-            System.out.println(
-                player.getName() + ": " + gameResult.getPlayersResult().get(player).getName());
+        printPlayerFinalResult(gameResult.getPlayersResult());
+    }
+
+    private static void printPlayerFinalResult(Map<Player, Outcome> playersResult) {
+        for (Player player : playersResult.keySet()) {
+            Outcome outcome = playersResult.get(player);
+            System.out.printf("%: %", player.getName(), outcome.getName());
         }
     }
 
     private static void printDealerFinalResult(Map<Outcome, Integer> gameResult) {
         System.out.print("딜러: ");
         for (Outcome outcome : gameResult.keySet()) {
-            if (gameResult.get(outcome) != 0) {
-                System.out.print(gameResult.get(outcome) + outcome.getName() + " ");
-            }
+            printDealerFinalOutcome(gameResult, outcome);
         }
         System.out.println();
+    }
+
+    private static void printDealerFinalOutcome(Map<Outcome, Integer> gameResult, Outcome outcome) {
+        if (gameResult.get(outcome) != 0) {
+            System.out.print(gameResult.get(outcome) + outcome.getName() + " ");
+        }
     }
 }

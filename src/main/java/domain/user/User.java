@@ -7,7 +7,13 @@ import java.util.List;
 public abstract class User {
 
     private static final int DEFAULT_DRAW_COUNT = 1;
+
+    private final String name;
     protected Cards cards = new Cards();
+
+    public User(String name) {
+        this.name = name;
+    }
 
     public void drawCard(CardDeck cardDeck) {
         drawCard(cardDeck, DEFAULT_DRAW_COUNT);
@@ -27,5 +33,9 @@ public abstract class User {
 
     public int getScore() {
         return cards.getScore();
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -5,10 +5,8 @@ import util.BlackJackRule;
 
 public class Player extends User {
 
-    private final String name;
-
     public Player(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override
@@ -24,9 +22,5 @@ public class Player extends User {
             return Outcome.WIN;
         }
         return Outcome.calculate(dealerScore, cards.getScore());
-    }
-
-    public String getName() {
-        return name;
     }
 }
