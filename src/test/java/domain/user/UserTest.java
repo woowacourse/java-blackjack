@@ -47,6 +47,15 @@ class UserTest {
         assertThat(user.cards.size()).isEqualTo(initSize + 1);
     }
 
+    @Test
+    @DisplayName("첫 카드 분배 결과")
+    void getDrawResult() {
+        user.draw(new Card(Symbol.CLOVER, Type.EIGHT));
+        user.draw(new Card(Symbol.DIAMOND, Type.ACE));
+
+        assertThat(user.getDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
+    }
+
     @ParameterizedTest
     @DisplayName("Ace의 보유 여부를 고려한 카드 point 계산")
     @MethodSource("createCardAndPoint")
@@ -109,5 +118,13 @@ class UserTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), true),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), false)
         );
+    }
+
+    @Test
+    void getTotalDrawResult() {
+        user.draw(new Card(Symbol.DIAMOND, Type.KING));
+        user.draw(new Card(Symbol.DIAMOND, Type.SIX));
+
+        assertThat(user.getTotalDrawResult()).isEqualTo("이름카드: K다이아몬드, 6다이아몬드 - 결과: 16");
     }
 }

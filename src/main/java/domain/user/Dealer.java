@@ -13,8 +13,7 @@ public class Dealer extends User {
         return new Dealer();
     }
 
-    @Override
-    public String getDrawResult() {
+    public String getFirstDrawResult() {
         return DEALER + "카드: " + cards.get(0).getName();
     }
 

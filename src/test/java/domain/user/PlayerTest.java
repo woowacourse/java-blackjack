@@ -31,14 +31,7 @@ class PlayerTest {
                 .doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("첫 카드 분배 결과")
-    void getFirstDrawResult() {
-        player.draw(new Card(Symbol.CLOVER, Type.EIGHT));
-        player.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(player.getDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
-    }
 
     @ParameterizedTest
     @DisplayName("플레이어가 드로우 가능한지 확인")
@@ -56,7 +49,6 @@ class PlayerTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.TWO), true),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.THREE), false),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), false)
-
         );
     }
 }

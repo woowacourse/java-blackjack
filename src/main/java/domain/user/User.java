@@ -2,6 +2,7 @@ package domain.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.deck.Card;
 
@@ -30,7 +31,12 @@ public abstract class User {
         cards.add(card);
     }
 
-    public abstract String getDrawResult();
+    public String getDrawResult() {
+        return name + "카드: "
+                + cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
+    }
 
     public int calculatePointAccordingToHasAce() {
         if (isBust() && hasAce()) {
@@ -62,6 +68,10 @@ public abstract class User {
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public String getTotalDrawResult() {
+        return getDrawResult() + " - 결과: " + calculatePointAccordingToHasAce();
     }
 
     public String getName() {
