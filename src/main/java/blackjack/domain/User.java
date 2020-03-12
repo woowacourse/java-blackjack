@@ -36,6 +36,8 @@ public abstract class User {
     }
 
     public String showCardInfo() {
-        return String.join(", ", cards.getCardInfo());
+        return name + " 카드: " + String.join(", ", cards.getCardInfo());
     }
+
+    public abstract String showInitialCardInfo();
 }

@@ -9,8 +9,8 @@ public class Dealer extends User {
         super(DEALER);
     }
 
-    public String showDealerCardInfo() {
-        return cards.getCardInfo().get(0);
+    public String showInitialCardInfo() {
+        return name + " 카드: " + cards.getCardInfo().get(0);
     }
 
     public boolean isUnderThreshold() {
