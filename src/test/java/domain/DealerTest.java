@@ -21,7 +21,7 @@ public class DealerTest {
 
 	@Test
 	void giveCard_플레이어_다수() {
-		Players players = new Players(PlayerFactory.create("a,b,c,d"));
+		Players players = PlayersFactory.create("a,b,c,d");
 		Dealer dealer = new Dealer();
 		CardDeck cardDeck = new CardDeck();
 		dealer.giveCard(cardDeck, players);

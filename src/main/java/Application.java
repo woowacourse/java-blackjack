@@ -1,7 +1,7 @@
 import domain.CardDeck;
 import domain.Dealer;
 import domain.Player;
-import domain.PlayerFactory;
+import domain.PlayersFactory;
 import domain.Players;
 import domain.ResultCalculator;
 import domain.WhetherAddCard;
@@ -12,7 +12,7 @@ public class Application {
 	public static void main(String[] args) {
 		CardDeck cardDeck = new CardDeck();
 		Dealer dealer = new Dealer();
-		Players players = new Players(PlayerFactory.create(InputView.inputNames()));
+		Players players = PlayersFactory.create(InputView.inputNames());
 		cardDeck.shuffle();
 		giveTwoCard(cardDeck, dealer, players);
 		if (dealer.isNotBlackJack()) {
