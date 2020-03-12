@@ -10,10 +10,13 @@ public class BlackJackApplication {
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.inputNames());
         CardDeck cardDeck = new CardDeck();
-
-        distributeFirstCards(dealer, players, cardDeck);
-        drawMoreCards(dealer, players, cardDeck);
-        printCalculatedResult(dealer, players);
+        try {
+            distributeFirstCards(dealer, players, cardDeck);
+            drawMoreCards(dealer, players, cardDeck);
+            printCalculatedResult(dealer, players);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void printCalculatedResult(Dealer dealer, Players players) {
