@@ -12,6 +12,7 @@ import domain.result.MatchResult;
 import domain.result.Result;
 import domain.result.UserResult;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.PlayerFactory;
 import domain.user.User;
 import view.InputView;
@@ -19,36 +20,38 @@ import view.OutputView;
 
 public class BlackjackGame {
 	private final CardDivider cardDivider;
+	private final List<User> users;
+	private final Dealer dealer;
 
 	public BlackjackGame(CardDivider cardDivider) {
+		users = PlayerFactory.create(InputView.inputNames());
+		dealer = new Dealer();
 		this.cardDivider = cardDivider;
 	}
 
 	public void run() {
-		List<User> users = PlayerFactory.create(InputView.inputNames());
-		Dealer dealer = new Dealer();
-		initCards(users, dealer);
-		printBlackjackUsers(users, dealer);
+		List<User> allUsers = initAllUsers();
+		initCards(allUsers);
+		printBlackjackUsers(allUsers);
 		checkCanDraw(users, dealer);
 		printUserResult(users, dealer);
 		printGameResult(users, dealer);
 	}
 
-	private void initCards(List<User> users, Dealer dealer) {
-		for (User user : users) {
-			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
-		}
-		dealer.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
-
+	private List<User> initAllUsers() {
 		List<User> allUsers = new ArrayList<>(users);
 		allUsers.add(dealer);
+		return allUsers;
+	}
+
+	private void initCards(List<User> allUsers) {
+		for (User user : allUsers) {
+			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
+		}
 		OutputView.printInitialResult(allUsers);
 	}
 
-	private void printBlackjackUsers(List<User> users, Dealer dealer) {
-		List<User> allUsers = new ArrayList<>(users);
-		allUsers.add(dealer);
-
+	private void printBlackjackUsers(List<User> allUsers) {
 		List<User> blackjackUsers = allUsers.stream()
 			.filter(User::isBlackjack)
 			.collect(Collectors.toList());
@@ -63,11 +66,15 @@ public class BlackjackGame {
 	}
 
 	private void drawCard(List<User> users, Dealer dealer) {
+		drawUserCard(users);
+		drawDealerCard(dealer);
+	}
+
+	private void drawUserCard(List<User> users) {
 		for (User user : users) {
 			if (user.isBlackjack()) {
 				continue;
 			}
-
 			YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
 			while (yesOrNo.isContinue()) {
 				user.addCards(Arrays.asList(cardDivider.divide()));
@@ -79,7 +86,9 @@ public class BlackjackGame {
 				yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
 			}
 		}
+	}
 
+	private void drawDealerCard(Dealer dealer) {
 		while (dealer.isDrawable()) {
 			dealer.addCards(Arrays.asList(cardDivider.divide()));
 			OutputView.printDealerDraw();
