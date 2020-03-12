@@ -2,6 +2,9 @@ package domain.player;
 
 import domain.CardPossessor;
 import domain.CardProvider;
+import domain.result.WinLose;
+
+import java.util.Objects;
 
 public abstract class BlackJackPlayer {
     protected final String name;
@@ -12,12 +15,12 @@ public abstract class BlackJackPlayer {
         this.cardPossessor = cards;
     }
 
-    public boolean isWinTo(BlackJackPlayer counterParts) {
-        return this.calculateScore() > counterParts.calculateScore();
-    }
+    public WinLose determineWinLose(BlackJackPlayer counterParts) {
+        if (this.calculateScore() > counterParts.calculateScore()) {
+            return WinLose.WIN;
+        }
 
-    public boolean isDrawTo(BlackJackPlayer counterParts) {
-        return this.calculateScore() == counterParts.calculateScore();
+        return WinLose.LOSE;
     }
 
     public void drawCard(CardProvider cardProvider) {
@@ -32,5 +35,22 @@ public abstract class BlackJackPlayer {
 
     public CardPossessor getCardsOnHand() {
         return cardPossessor;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BlackJackPlayer that = (BlackJackPlayer) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

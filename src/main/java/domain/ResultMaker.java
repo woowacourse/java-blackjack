@@ -1,9 +1,10 @@
 package domain;
 
 import domain.player.BlackJackPlayer;
+import domain.result.WinLose;
 
 import java.util.List;
 
 public interface ResultMaker {
-    public List<BlackResult> makeBlackjackResult(List<BlackJackPlayer> players);
+    public List<WinLose> makeBlackjackResult(List<BlackJackPlayer> players);
 }
