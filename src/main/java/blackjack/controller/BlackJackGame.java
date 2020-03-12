@@ -21,10 +21,12 @@ public class BlackJackGame {
         cardDeck = new CardDeck(CardFactory.createCardDeck());
     }
 
-    public void play() {
+    public void run() {
         enrollUsers();
         distributeCards();
         OutputView.printInitialPlayerCards(dealer, users);
+        play();
+
     }
 
     public void enrollUsers() {
@@ -44,4 +46,24 @@ public class BlackJackGame {
         }
     }
 
+    private void play() {
+        for (User user : users) {
+            eachUserPlay(user);
+        }
+        dealerPlay();
+    }
+
+    private void eachUserPlay(User user) {
+        while (InputView.askOneMoreCard(user) == Response.YES) {
+            user.addCard(cardDeck.getOneCard());
+            OutputView.printUserCards(user);
+        }
+    }
+
+    private void dealerPlay() {
+        if (dealer.isUnderCriticalScore()) {
+            dealer.addCard(cardDeck.getOneCard());
+            OutputView.printDealerPlayConfirmMessage();
+        }
+    }
 }

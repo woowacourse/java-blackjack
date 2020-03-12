@@ -1,0 +1,24 @@
+package blackjack.domain;
+
+import blackjack.exception.ResponseNotMatchException;
+
+import java.util.Arrays;
+
+public enum Response {
+    YES("y"),
+    NO("n");
+
+    private String lowerCase;
+
+    Response(String lowerCase) {
+        this.lowerCase = lowerCase;
+    }
+
+    public static Response of(String inputValue) {
+        String lowerCase = inputValue.toLowerCase();
+        return Arrays.stream(values())
+                .filter(response -> response.lowerCase.equals(lowerCase))
+                .findFirst()
+                .orElseThrow(() -> new ResponseNotMatchException("y 또는 n을 입력해주세요."));
+    }
+}
