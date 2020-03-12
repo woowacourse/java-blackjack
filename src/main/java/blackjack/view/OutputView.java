@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -94,5 +95,26 @@ public class OutputView {
 
     private static void printUserCardWithScore(User user) {
 
+    }
+
+    public static void printResult(Result result) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러" + " : " + result.getDealerResult());
+        for (User player : result.getPlayerResults().keySet()) {
+            String playerResult = createPlayerResult(player, result);
+            System.out.println(playerResult);
+        }
+    }
+
+    private static String createPlayerResult(User player, Result result) {
+        String resultWord = boolToResultWord(result.isWinner(player));
+        return String.format("%s : %s", player.getName(), resultWord);
+    }
+
+    private static String boolToResultWord(boolean bool) {
+        if (bool) {
+            return "승";
+        }
+        return "패";
     }
 }

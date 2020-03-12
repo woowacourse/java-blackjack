@@ -16,7 +16,7 @@ public class Dealer extends AbstractUser {
 
     @Override
     public Boolean isWinner(Score dealerScore) {
-        return true;
+        return isNotBust();
     }
 
     public boolean shouldReceiveCard() {

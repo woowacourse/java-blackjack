@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
@@ -35,5 +36,9 @@ public class Blackjack {
         }
 
         OutputView.printFinalInfo(dealer, players);
+
+        Result result = Result.of(dealer, players);
+
+        OutputView.printResult(result);
     }
 }

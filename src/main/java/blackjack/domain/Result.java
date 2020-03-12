@@ -16,6 +16,10 @@ public class Result {
         return new Result(dealer, players);
     }
 
+    public boolean isWinner(User player) {
+        return playerResults.get(player);
+    }
+
     public Map<User, Boolean> getPlayerResults() {
         return playerResults;
     }
