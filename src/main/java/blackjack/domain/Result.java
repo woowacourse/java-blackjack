@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
-import java.util.List;
 import java.util.Map;
 
 public class Result {
@@ -11,10 +10,6 @@ public class Result {
 
     private Result(User dealer, Players players) {
         playerResults = players.generateResult(dealer);
-    }
-
-    public static Result of(User dealer, List<User> players) {
-        return new Result(dealer, players);
     }
 
     public static Result of(User dealer, Players players) {

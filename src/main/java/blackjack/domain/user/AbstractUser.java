@@ -30,6 +30,11 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
+    public boolean is(String name) {
+        return this.name.equals(name);
+    }
+
+    @Override
     public Score calculateScore() {
         Score score = sumScore();
         return maximize(score);
