@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.BlackjackGame;
-import domain.card.Card;
-import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
@@ -15,46 +13,25 @@ import domain.gamer.Player;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class BlackjackGameDto {
-	private List<Player> players;
-	private Dealer dealer;
-	private Deck deck;
+	private List<PlayerDto> players;
+	private DealerDto dealer;
 
-	private BlackjackGameDto(List<Player> players, Dealer dealer, Deck deck) {
-		this.players = players;
-		this.dealer = dealer;
-		this.deck = deck;
+	private BlackjackGameDto(List<Player> players, Dealer dealer) {
+		this.players = players.stream()
+			.map(PlayerDto::from)
+			.collect(Collectors.toList());
+		this.dealer = DealerDto.from(dealer);
 	}
 
 	public static BlackjackGameDto from(BlackjackGame blackjackGame) {
-		return new BlackjackGameDto(blackjackGame.getPlayers(), blackjackGame.getDealer(), blackjackGame.getDeck());
+		return new BlackjackGameDto(blackjackGame.getPlayers(), blackjackGame.getDealer());
 	}
 
-	public List<Player> getPlayers() {
+	public List<PlayerDto> getPlayers() {
 		return players;
 	}
 
-	public Dealer getDealer() {
+	public DealerDto getDealer() {
 		return dealer;
-	}
-
-	public Deck getDeck() {
-		return deck;
-	}
-
-	public String showDealerInitialCard() {
-		return "딜러: "
-			+ "HIDDEN, "
-			+ dealer.getHands()
-			.getCards()
-			.get(1)
-			.shape();
-	}
-
-	public String showCards(Player player) {
-		return player.getName()
-			+ ": "
-			+ player.getHands().getCards().stream()
-			.map(Card::shape)
-			.collect(Collectors.joining(", "));
 	}
 }

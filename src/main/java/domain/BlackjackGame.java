@@ -64,6 +64,14 @@ public class BlackjackGame {
 		}
 	}
 
+	public boolean isDealerBlackjack() {
+		return dealer.isBlackjack();
+	}
+
+	public void draw(Player player) {
+		player.add(deck.deal());
+	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}

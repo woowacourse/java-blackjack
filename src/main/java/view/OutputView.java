@@ -1,7 +1,7 @@
 package view;
 
-import domain.gamer.Player;
 import dto.BlackjackGameDto;
+import dto.PlayerDto;
 
 /**
  *   class outputView입니다.
@@ -13,8 +13,14 @@ public class OutputView {
 		System.out.println(e.getMessage());
 	}
 
+	public static void printInitial(BlackjackGameDto blackjackGameDto) {
+		printInitialDraw(blackjackGameDto);
+		printInitialCards(blackjackGameDto);
+	}
+
 	public static void printInitialDraw(BlackjackGameDto blackjackGameDto) {
 		StringBuilder stringBuilder = new StringBuilder();
+
 		stringBuilder.append("딜러와 ");
 		blackjackGameDto.getPlayers().forEach(player -> stringBuilder.append(player.getName())
 			.append(" "));
@@ -23,9 +29,17 @@ public class OutputView {
 	}
 
 	public static void printInitialCards(BlackjackGameDto blackjackGameDto) {
-		System.out.println(blackjackGameDto.showDealerInitialCard());
-		for (Player player : blackjackGameDto.getPlayers()) {
-			System.out.println(blackjackGameDto.showCards(player));
+		System.out.println(blackjackGameDto.getDealer().showDealerInitialCard());
+		for (PlayerDto player : blackjackGameDto.getPlayers()) {
+			System.out.println(player.showCards());
 		}
+	}
+
+	public static void printDealerBlackjack() {
+		System.out.println("딜러가 블랙잭입니다.");
+	}
+
+	public static void printCards(PlayerDto playerDto) {
+		System.out.println(playerDto.showCards());
 	}
 }
