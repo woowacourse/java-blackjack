@@ -1,6 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
+import dto.BlackjackGameDto;
 import view.InputView;
 import view.OutputView;
 
@@ -12,6 +13,7 @@ import view.OutputView;
 public class Controller {
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
+		progress(blackjackGame);
 	}
 
 	private static BlackjackGame initialize() {
@@ -21,5 +23,11 @@ public class Controller {
 			OutputView.printErrorMessage(e);
 			return initialize();
 		}
+	}
+
+	private static void progress(BlackjackGame blackjackGame) {
+		blackjackGame.initialDraw();
+		OutputView.printInitialDraw(BlackjackGameDto.from(blackjackGame));
+		OutputView.printInitialCards(BlackjackGameDto.from(blackjackGame));
 	}
 }

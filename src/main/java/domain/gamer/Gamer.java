@@ -39,4 +39,12 @@ public class Gamer {
 	public boolean isBlackjack() {
 		return (hands.calculateTotalScore() == Hands.BLACKJACK) && hands.hasTwoCards();
 	}
+
+	public Hands getHands() {
+		return hands;
+	}
+
+	public String getName() {
+		return name;
+	}
 }

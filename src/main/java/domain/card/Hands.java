@@ -12,14 +12,14 @@ public class Hands {
 	public static final int BLACKJACK = 21;
 	private static final int ACE_TO_ELEVEN = 10;
 
-	private List<Card> hands;
+	private List<Card> cards;
 
 	public Hands() {
-		this.hands = new ArrayList<>();
+		this.cards = new ArrayList<>();
 	}
 
 	public int calculateTotalScore() {
-		int totalScore = hands.stream()
+		int totalScore = cards.stream()
 			.mapToInt(Card::score)
 			.sum();
 
@@ -30,15 +30,19 @@ public class Hands {
 	}
 
 	public boolean hasAce() {
-		return hands.stream()
+		return cards.stream()
 			.anyMatch(Card::isAce);
 	}
 
 	public void add(Card card) {
-		hands.add(card);
+		cards.add(card);
 	}
 
 	public boolean hasTwoCards() {
-		return hands.size() == 2;
+		return cards.size() == 2;
+	}
+
+	public List<Card> getCards() {
+		return cards;
 	}
 }

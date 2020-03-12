@@ -56,4 +56,23 @@ public class BlackjackGame {
 			throw new IllegalArgumentException("인원수 초과입니다.");
 		}
 	}
+
+	public void initialDraw() {
+		for (int i = 0; i < 2; i++) {
+			dealer.add(deck.deal());
+			players.forEach(player -> player.add(deck.deal()));
+		}
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public Dealer getDealer() {
+		return dealer;
+	}
+
+	public Deck getDeck() {
+		return deck;
+	}
 }
