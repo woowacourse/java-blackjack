@@ -22,25 +22,31 @@ public class GameController {
     }
 
     public void run() {
-        for (Player player : players) {
-            while (player.needMoreCard(getAnswerForNeedMoreCard(player), deck)) {
-                if (player.checkBurst()) {
-                    OutputView.printBurst(player);
-                    continue;
-                }
-                OutputView.printHands(player);
-            }
-        }
+        hitOrStay();
         dealer.hit(deck);
         if (dealer.handSize() == 3) {
             OutputView.printDealerHitCard();
         }
-
         OutputView.printAllHands(players, dealer);
 
         gameResult.create(players, dealer);
-
         OutputView.printGameResult(gameResult);
+    }
+
+    private void hitOrStay() {
+        for (Player player : players) {
+            needMoreCard(player);
+        }
+    }
+
+    private void needMoreCard(Player player) {
+        while (player.needMoreCard(getAnswerForNeedMoreCard(player), deck)) {
+            if (player.checkBurst()) {
+                OutputView.printBurst(player);
+                break;
+            }
+            OutputView.printHands(player);
+        }
     }
 
     private String getAnswerForNeedMoreCard(Player player) {

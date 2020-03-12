@@ -2,10 +2,7 @@ package domains.user;
 
 import domains.card.Deck;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players implements Iterable<Player>{
@@ -14,6 +11,7 @@ public class Players implements Iterable<Player>{
     List<Player> players;
 
     public Players(String playerNames, Deck deck) {
+        players = new ArrayList<>();
         checkNull(playerNames);
         List<String> names = splitNames(playerNames);
         checkDuplication(names);
