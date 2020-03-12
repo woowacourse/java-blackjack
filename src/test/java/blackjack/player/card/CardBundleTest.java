@@ -1,12 +1,13 @@
 package blackjack.player.card;
 
-import blackjack.player.card.component.CardNumber;
+import static blackjack.player.card.component.Symbol.*;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static blackjack.player.card.component.Symbol.HEART;
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.player.card.component.CardNumber;
 
 class CardBundleTest {
 
@@ -33,10 +34,10 @@ class CardBundleTest {
 	void compare(CardNumber number, GameResult result) {
 		//given
 		CardBundle dealerBundle = new CardBundle();
-		dealerBundle.addCard(new Card(HEART, CardNumber.NINE));
+		dealerBundle.addCard(Card.of(HEART, CardNumber.NINE));
 
 		CardBundle gamblerBundle = new CardBundle();
-		gamblerBundle.addCard(new Card(HEART, number));
+		gamblerBundle.addCard(Card.of(HEART, number));
 
 		//when
 		GameResult expect = dealerBundle.compare(gamblerBundle);

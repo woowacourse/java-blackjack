@@ -20,6 +20,7 @@ public class Bundles {
 			String cardList = cardBundle.stream()
 				.map(card -> String.format("%s%s", card.getMessage(), card.getSymbol()))
 				.collect(Collectors.joining(", "));
+
 			stringBuilder.append(player.getName())
 				.append(": ")
 				.append(cardList)
