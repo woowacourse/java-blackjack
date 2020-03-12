@@ -28,16 +28,22 @@ public class Players {
         );
     }
 
+    public String getAllNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
+    }
+
     public String getAllFirstDrawResult() {
         return players.stream()
                 .map(Player::getDrawResult)
                 .collect(Collectors.joining("\n"));
     }
 
-    public String getAllNames() {
+    public String getAllTotalDrawResult() {
         return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
+                .map(Player::getTotalDrawResult)
+                .collect(Collectors.joining("\n"));
     }
 
     public List<Player> getPlayers() {

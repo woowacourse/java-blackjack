@@ -62,4 +62,21 @@ class PlayersTest {
 
         assertThat(players.getAllFirstDrawResult()).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("모든 플레이어 최종 결과")
+    void getAllTotalDrawResult() {
+        players.getPlayers()
+                .get(0)
+                .draw(new Card(Symbol.SPADE, Type.ACE));
+        players.getPlayers()
+                .get(1)
+                .draw(new Card(Symbol.SPADE, Type.THREE));
+        players.getPlayers()
+                .get(1)
+                .draw(new Card(Symbol.HEART, Type.FIVE));
+        String expected = "pobi카드: A스페이드 - 결과: 11\njason카드: 3스페이드, 5하트 - 결과: 8";
+
+        assertThat(players.getAllTotalDrawResult()).isEqualTo(expected);
+    }
 }

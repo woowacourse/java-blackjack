@@ -32,6 +32,8 @@ public class Application {
             OutputView.printDealerDealOut();
             dealer.draw(deck.dealOut());
         }
+
+        OutputView.printTotalResult(dealer, players);
     }
 
     private static void playersAdditionalDraw(Deck deck, Player player) {

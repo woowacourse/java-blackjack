@@ -121,6 +121,7 @@ class UserTest {
     }
 
     @Test
+    @DisplayName("최종 보유 카드 및 포인트 계산 결과")
     void getTotalDrawResult() {
         user.draw(new Card(Symbol.DIAMOND, Type.KING));
         user.draw(new Card(Symbol.DIAMOND, Type.SIX));
