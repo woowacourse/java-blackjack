@@ -7,7 +7,7 @@ public class CardCalculator {
     private static final int STANDARD_ACE_ELEVEN = 11;
     private static final int BLACK_JACK = 21;
     private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
-    public static final int SUM_CONTAIN_ACE = 10;
+    private static final int SUM_CONTAIN_ACE = 10;
 
     private CardCalculator() {
     }

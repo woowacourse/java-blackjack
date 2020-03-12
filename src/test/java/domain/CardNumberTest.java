@@ -11,7 +11,8 @@ public class CardNumberTest {
     @ValueSource(ints = {0, 14})
     @DisplayName("카드의 숫자를 반환하는 에러 테스트")
     void throw_cardTest(int input) {
-        Assertions.assertThatThrownBy(() -> CardNumber.findCardNumber(input)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> CardNumber.findCardNumber(input))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest

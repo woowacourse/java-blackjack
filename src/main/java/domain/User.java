@@ -9,7 +9,7 @@ public class User extends Player {
     }
 
     @Override
-    void insertCard(Cards cards) {
+    public void insertCard(Cards cards) {
         this.cards.add(cards.pop());
     }
 

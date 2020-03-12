@@ -8,11 +8,11 @@ public enum AnswerType {
 
     private String answer;
 
-    private AnswerType(String answer) {
+    AnswerType(String answer) {
         this.answer = answer;
     }
 
-    public static AnswerType findAnswerType(String answer){
+    public static AnswerType findAnswerType(String answer) {
         return Arrays.stream(values())
                 .filter(answerType -> answerType.answer.equals(answer))
                 .findFirst()

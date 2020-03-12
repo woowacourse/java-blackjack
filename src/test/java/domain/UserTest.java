@@ -23,7 +23,6 @@ public class UserTest {
     @Test
     void yes_insertCard() {
         AnswerType answerType = AnswerType.YES;
-
         user.insertCard(cards, answerType);
 
         Assertions.assertThat(user).extracting("cards").asList().size().isEqualTo(3);
@@ -33,7 +32,6 @@ public class UserTest {
     @Test
     void no_insertCard() {
         AnswerType answerType = AnswerType.NO;
-
         user.insertCard(cards, answerType);
 
         Assertions.assertThat(user).extracting("cards").asList().size().isEqualTo(2);
