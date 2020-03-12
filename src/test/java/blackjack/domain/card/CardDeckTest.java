@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,15 +15,17 @@ class CardDeckTest {
         assertThat(new CardDeck().getSize()).isEqualTo(expected);
     }
 
-    @DisplayName("카드덱이 카드를 하나씩 생성해서 전달하는지 확인")
+    @DisplayName("카드덱이 첫 카드를 2장 전달하는지 확인")
     @Test
     void name2() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
-        int originSum = dealer.getSum();
+        Player player = new Player("포비");
 
-        cardDeck.giveCard(dealer);
+        cardDeck.dealFirstCards(dealer);
+        cardDeck.dealFirstCards(player);
 
-        assertThat(dealer.getSum() > originSum).isTrue();
+        assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
+        assertThat(player.getCards().getCards().size()).isEqualTo(2);
     }
 }

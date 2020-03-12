@@ -13,20 +13,38 @@ public class CardDeck {
         cards = CardFactory.getInstance();
     }
 
-    public Card giveCard() {
+    public void dealFirstCards(Dealer dealer) {
+        dealer.addCard(giveCard());
+        dealer.addCard(giveCard());
+    }
+
+    public void dealFirstCards(Player player) {
+        player.addCard(giveCard());
+        player.addCard(giveCard());
+    }
+
+    public boolean dealAdditionalCard(Dealer dealer) {
+        dealer.addCard(giveCard());
+        return true;
+    }
+
+    public boolean dealAdditionalCard(Player player, String reply) {
+        if ("y".equals(reply)) {
+            player.addCard(giveCard());
+            return true;
+        }
+        if ("n".equals(reply)) {
+            return false;
+        }
+        throw new IllegalArgumentException("응답은 y 혹은 n만 가능합니다.");
+    }
+
+    private Card giveCard() {
         Card card = cards.stream()
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NULL_ERROR_MSG));
         cards.remove(card);
         return card;
-    }
-
-    public void giveCard(Player player) {
-        player.addCard(giveCard());
-    }
-
-    public void giveCard(Dealer dealer) {
-        dealer.addCard(giveCard());
     }
 
     public int getSize() {

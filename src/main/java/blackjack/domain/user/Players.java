@@ -27,17 +27,23 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
 
     public void computeResult(Dealer dealer) {
-//        players.stream()
-//                .map(player -> player.createResult(dealer));
         for (Player player : players) {
             player.createResult(dealer);
         }
+    }
+
+//    public List<Result> computeResult2(Dealer dealer) {
+//        for (Player player : players) {
+//            player.createResult2(dealer);
+//        }
+//    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
     public List<Result> getResult() {
@@ -46,16 +52,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-
-    public List<String> showCardsInfo() {
-        return players.stream()
-                .map(Player::showCards)
-                .collect(Collectors.toList());
+    public List<Player> getPlayers() {
+        return players;
     }
 }

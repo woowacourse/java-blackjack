@@ -18,29 +18,29 @@ public class Controller {
         Dealer dealer = new Dealer();
         CardDeck deck = new CardDeck();
 
-        // 초기화
+        // 초기 카드 전달
+        deck.dealFirstCards(dealer);
         for (Player player : players.getPlayers()) {
-            player.addCard(deck.giveCard());
-            player.addCard(deck.giveCard());
+            deck.dealFirstCards(player);
         }
-        dealer.addCard(deck.giveCard());
-        dealer.addCard(deck.giveCard());
-
         OutputView.printInitialStatus(players, dealer);
 
-        // 게임
+        // 추가 카드 전달
         for (Player player : players.getPlayers()) {
-            while (!player.exceedMaxSum() && proceed(player.getName())) {
-               player.addCard(deck.giveCard());
-                OutputView.printStatus(player.getName(), player.getCards());
+            while (player.canGetMoreCard()) {
+                String reply = InputView.selectYesOrNo(player.getName());
+                if (deck.dealAdditionalCard(player, reply)) {
+                    OutputView.printStatus(player.getName(), player.getCards());
+                    continue;
+                }
+                break;
             }
         }
 
-        if (dealer.needMoreCard()) {
-            deck.giveCard(dealer);
+        while (dealer.canGetMoreCard()) {
+            deck.dealAdditionalCard(dealer);
             OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
         }
-
         OutputView.printFinalStatus(players, dealer);
 
         // 결과 계산
@@ -48,17 +48,5 @@ public class Controller {
         dealer.computeResult(players.getResult());
 
         OutputView.printFinalResult(dealer, players);
-    }
-
-    private boolean proceed(String name) {
-        String result = InputView.selectYesOrNo(name);
-        if (result.equals("y")) {
-            return true;
-        }
-
-        if (result.equals("n")) {
-            return false;
-        }
-        throw new IllegalArgumentException("잘못된 입력입니다.");
     }
 }
