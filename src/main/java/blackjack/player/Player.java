@@ -1,5 +1,6 @@
 package blackjack.player;
 
+import java.util.Collections;
 import java.util.List;
 
 import blackjack.GameReport;
@@ -44,6 +45,10 @@ public abstract class Player {
 	public abstract GameReport getReport(Player player);
 
 	public List<Card> getCardBundle() {
-		return this.cardBundle.getCards();
+		return Collections.unmodifiableList(this.cardBundle.getCards());
+	}
+
+	public int getScore() {
+		return cardBundle.calculateScore();
 	}
 }

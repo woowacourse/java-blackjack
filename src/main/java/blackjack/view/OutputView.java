@@ -9,16 +9,24 @@ import blackjack.player.Players;
 
 public class OutputView {
 	public void showReports(List<GameReport> gameReports) {
+		GameStatistics gameStatistics = new GameStatistics(gameReports);
+		System.out.println("## 최종 승패");
+		System.out.println(gameStatistics.getDealerResult());
+		System.out.println(gameStatistics.getGamblerResult());
+	}
 
+	public void showPlayersCards(Players players) {
+		System.out.println(Bundles.getCardList(players));
 	}
 
 	public void showCards(Players players) {
 		List<Player> playersList = players.getPlayers();
-		String names = playersList.stream()
+		String gamblerNames = playersList.stream()
+			.filter(Player::isGambler)
 			.map(Player::getName)
 			.collect(Collectors.joining(", "));
 
-		System.out.println(String.format("딜러와 %s에게 %d장을 나누었습니다.", names, playersList.size()));
+		System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", gamblerNames));
 		for (Player player : playersList) {
 			String cardList = player.getCardBundle().stream()
 				.map(card -> card.getNumber() + card.getSymbol())

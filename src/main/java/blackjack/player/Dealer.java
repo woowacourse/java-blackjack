@@ -29,7 +29,7 @@ public class Dealer extends Player {
 
 	@Override
 	public GameReport getReport(Player player) {
-		GameResult gameResult = player.cardBundle.compare(this.cardBundle);
+		GameResult gameResult = this.cardBundle.compare(player.cardBundle);
 		return new GameReport(player.name, gameResult);
 	}
 }

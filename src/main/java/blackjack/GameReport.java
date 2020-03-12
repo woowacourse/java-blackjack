@@ -13,12 +13,28 @@ public class GameReport {
 		this.gameResult = gameResult;
 	}
 
+	public static boolean isWin(GameReport gameReport) {
+		return gameReport.gameResult == GameResult.WIN;
+	}
+
+	public static boolean isLose(GameReport gameReport) {
+		return gameReport.gameResult == GameResult.LOSE;
+	}
+
+	public static boolean isDraw(GameReport gameReport) {
+		return gameReport.gameResult == GameResult.DRAW;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public GameResult getGameResult() {
 		return gameResult;
+	}
+
+	public String getMessage() {
+		return gameResult.getMessage();
 	}
 
 	@Override
@@ -36,5 +52,4 @@ public class GameReport {
 	public int hashCode() {
 		return Objects.hash(name, gameResult);
 	}
-
 }

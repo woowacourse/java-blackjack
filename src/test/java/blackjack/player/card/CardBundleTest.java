@@ -30,17 +30,17 @@ class CardBundleTest {
 
 	@DisplayName("두 카드패를 비교해서 승자, 패자, 무승부를 결정")
 	@ParameterizedTest
-	@CsvSource(value = {"TEN,LOSE", "NINE,DRAW", "TWO,WIN"})
+	@CsvSource(value = {"TEN,WIN", "NINE,DRAW", "TWO,LOSE"})
 	void compare(CardNumber number, GameResult result) {
 		//given
-		CardBundle cardBundle = new CardBundle();
-		cardBundle.addCard(new Card(HEART, CardNumber.NINE));
+		CardBundle dealerBundle = new CardBundle();
+		dealerBundle.addCard(new Card(HEART, CardNumber.NINE));
 
-		CardBundle other = new CardBundle();
-		other.addCard(new Card(HEART, number));
+		CardBundle gamblerBundle = new CardBundle();
+		gamblerBundle.addCard(new Card(HEART, number));
 
 		//when
-		GameResult expect = cardBundle.compare(other);
+		GameResult expect = dealerBundle.compare(gamblerBundle);
 
 		assertThat(expect).isEqualTo(result);
 	}

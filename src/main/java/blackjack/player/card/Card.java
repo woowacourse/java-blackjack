@@ -39,6 +39,10 @@ public class Card {
 		return symbol.getName();
 	}
 
+	public String getMessage() {
+		return cardNumber.getMessage();
+	}
+
 	private static class CardCache {
 		private static final List<Card> cards;
 
