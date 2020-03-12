@@ -15,15 +15,22 @@ import static view.OutputView.*;
 public class BlackjackController {
 	private static final int INITIAL_CARDS_SIZE = 2;
 
-	public static void run(Deck deck, Dealer dealer) {
+	private final BlackjackService service;
+
+	public BlackjackController(BlackjackService service) {
+		this.service = service;
+	}
+
+	public void run() {
+		Deck deck = service.getShuffledDeck();
+		Dealer dealer = service.createDealer();
 		Players players = Players.of(InputView.inputPlayerNames());
 
-		BlackjackService.shuffle(deck);
 		giveInitialCards(dealer, players, deck);
 		printInitialStatus(dealer.openOneCard(), players);
 
 		if (dealer.isBlackJack()) {
-			Result result = BlackjackService.createResult(dealer, players);
+			final Result result = service.createResult(dealer, players);
 			printResult(result, dealer.openAllCards(), players);
 			return;
 		}
@@ -31,29 +38,29 @@ public class BlackjackController {
 		players.forEach(player -> proceedPhaseOf(player, deck));
 
 		while (dealer.canDrawMore()) {
-			BlackjackService.addCard(dealer, deck);
+			service.addCard(dealer, deck);
 			printDealerDrawing();
 		}
 
-		Result result = BlackjackService.createResult(dealer, players);
+		final Result result = service.createResult(dealer, players);
 		printResult(result, dealer.openAllCards(), players);
 	}
 
-	private static void giveInitialCards(Dealer dealer, Players players, Deck deck) {
+	private void giveInitialCards(Dealer dealer, Players players, Deck deck) {
 		for (int i = 0; i < INITIAL_CARDS_SIZE; i++) {
-			BlackjackService.addCard(dealer, deck);
-			players.forEach(player -> BlackjackService.addCard(player, deck));
+			service.addCard(dealer, deck);
+			players.forEach(player -> service.addCard(player, deck));
 		}
 	}
 
-	private static void proceedPhaseOf(Player player, Deck deck) {
+	private void proceedPhaseOf(Player player, Deck deck) {
 		while (player.canDrawMore() && wantDraw(player)) {
-			BlackjackService.addCard(player, deck);
+			service.addCard(player, deck);
 			printCardsStatusOf(player);
 		}
 	}
 
-	private static boolean wantDraw(Player player) {
+	private boolean wantDraw(Player player) {
 		return PlayerIntentionType.YES.equals(PlayerIntentionType.of(inputPlayerIntention(player)));
 	}
 }

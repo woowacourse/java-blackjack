@@ -1,14 +1,9 @@
 import controller.BlackjackController;
-import domain.card.CardRepository;
-import domain.card.Deck;
-import domain.user.Dealer;
-import domain.user.Players;
-import view.InputView;
+import service.BlackjackService;
 
 public class Application {
 	public static void main(String[] args) {
-		Deck deck = new Deck(CardRepository.toList());
-		Dealer dealer = new Dealer();
-		BlackjackController.run(deck, dealer);
+		BlackjackController controller = new BlackjackController(new BlackjackService());
+		controller.run();
 	}
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Cards {
 	private static final int INITIAL_CARDS_SIZE = 2;
 
-	private List<Card> cards;
+	private final List<Card> cards;
 
 	public Cards(List<Card> cards) {
 		this.cards = cards;
