@@ -28,6 +28,6 @@ public abstract class Gamer {
     public String getCardStatus() {
         return cards.stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
     }
 }

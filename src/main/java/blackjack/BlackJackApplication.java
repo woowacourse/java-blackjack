@@ -4,6 +4,8 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.result.GamersResult;
+import blackjack.domain.result.PlayerResultMatcher;
 import blackjack.domain.rule.PlayerAnswer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,6 +25,9 @@ public class BlackJackApplication {
         OutputView.printInitialCards(dealer, players);
         drawMoreCard(dealer, players, deck);
 
+        GamersResult gamersResult = PlayerResultMatcher.report(dealer, players);
+        OutputView.printGamerScore(dealer, players);
+        OutputView.printResult(gamersResult);
     }
 
     private static void drawMoreCard(Dealer dealer, List<Player> players, Deck deck) {
@@ -31,7 +36,7 @@ public class BlackJackApplication {
     }
 
     private static void drawCardForDealer(Dealer dealer, Deck deck) {
-        while(!dealer.shouldDrawCard()) {
+        while(dealer.shouldDrawCard()) {
             dealer.add(deck.pick());
             OutputView.printDealerDrewACard();
         }

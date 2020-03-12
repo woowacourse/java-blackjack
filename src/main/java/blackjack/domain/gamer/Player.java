@@ -11,6 +11,4 @@ public class Player extends Gamer {
     public String getName() {
         return name;
     }
-
-
 }
