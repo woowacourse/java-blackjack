@@ -1,9 +1,11 @@
 package domain.user;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.card.Cards;
 
 public class Player extends User {
 	private static final int INITIAL_START_INDEX = 0;
@@ -14,8 +16,16 @@ public class Player extends User {
 		super(name);
 	}
 
+	private Player(Name name, Cards cards) {
+		super(name, cards);
+	}
+
 	public static Player valueOf(String name) {
 		return new Player(new Name(name));
+	}
+
+	public static Player fromNameAndCards(String name, Card... cards) {
+		return new Player(new Name(name), new Cards(Arrays.asList(cards)));
 	}
 
 	@Override

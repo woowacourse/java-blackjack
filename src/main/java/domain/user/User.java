@@ -9,16 +9,16 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public abstract class User {
-	protected final Cards cards;
 	protected final Name name;
+	protected final Cards cards;
 
 	public User(Name name) {
-		this(new Cards(new ArrayList<>()), name);
+		this(name, new Cards(new ArrayList<>()));
 	}
 
-	public User(Cards cards, Name name) {
-		this.cards = Objects.requireNonNull(cards);
+	public User(Name name, Cards cards) {
 		this.name = Objects.requireNonNull(name);
+		this.cards = Objects.requireNonNull(cards);
 	}
 
 	public void addCards(Card... cards) {
