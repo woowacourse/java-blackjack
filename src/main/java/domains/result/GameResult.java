@@ -8,6 +8,7 @@ import domains.user.Player;
 import domains.user.Players;
 
 public class GameResult {
+	private static final String BLANK = " ";
 	private Map<Player, WinOrLose> gameResult;
 
 	public GameResult() {
@@ -51,11 +52,10 @@ public class GameResult {
 			}
 			if (result.equals(WinOrLose.LOSE)) {
 				winCount++;
-				continue;
 			}
 		}
-		return winCount + WinOrLose.WIN.getWinOrLose()
-			+ drawCount + WinOrLose.DRAW.getWinOrLose()
+		return winCount + WinOrLose.WIN.getWinOrLose() + BLANK
+			+ drawCount + WinOrLose.DRAW.getWinOrLose()+ BLANK
 			+ loseCount + WinOrLose.LOSE.getWinOrLose();
 	}
 

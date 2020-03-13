@@ -21,7 +21,7 @@ import domains.user.Hands;
 import domains.user.Player;
 import domains.user.Players;
 
-public class GameResultTest {
+class GameResultTest {
 	private GameResult gameResult;
 
 	@BeforeEach
@@ -49,19 +49,21 @@ public class GameResultTest {
 	void calculateDealerResult__ReturnWin(Players players, Dealer dealer) {
 		gameResult.create(players, dealer);
 
-		assertThat(gameResult.calculateDealerResult()).isEqualTo("0승 1무 1패");
+		assertThat(gameResult.calculateDealerResult()).isEqualTo("1승 1무 1패");
 	}
 
 	static Stream<Arguments> gameData() {
 		Card ace = new Card(Symbol.ACE, Type.CLUB);
 		Card king = new Card(Symbol.KING, Type.HEART);
 		Card four = new Card(Symbol.FOUR, Type.DIAMOND);
+		Card two = new Card(Symbol.TWO, Type.DIAMOND);
 
 		Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));
 
 		Player ddoring = new Player("또링", new Hands(Arrays.asList(ace, king)));
 		Player smallBear = new Player("작은곰", new Hands(Arrays.asList(ace, four)));
-		Players players = new Players(new ArrayList<>(Arrays.asList(ddoring, smallBear)));
+		Player pobi = new Player("포비", new Hands(Arrays.asList(two, four)));
+		Players players = new Players(new ArrayList<>(Arrays.asList(ddoring, smallBear, pobi)));
 
 		return Stream.of(
 			Arguments.of(players, dealer)

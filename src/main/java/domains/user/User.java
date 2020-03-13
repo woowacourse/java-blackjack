@@ -2,17 +2,23 @@ package domains.user;
 
 import domains.card.Deck;
 
-public abstract class User {
+public class User {
 	Hands hands;
 	private boolean burst = false;
 
-	abstract void hit(Deck deck);
+	public void hit(Deck deck) {
+		hands.draw(deck);
+	}
 
 	public boolean checkBurst() {
 		if (hands.isBurst()) {
 			this.burst = true;
 		}
 		return this.burst;
+	}
+
+	public boolean isBurst() {
+		return burst;
 	}
 
 	public int handSize() {
@@ -25,9 +31,5 @@ public abstract class User {
 
 	public String getHandsWords() {
 		return hands.toString();
-	}
-
-	public boolean isBurst() {
-		return burst;
 	}
 }

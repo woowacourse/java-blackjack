@@ -47,9 +47,4 @@ public class Player extends User {
 	public String getName() {
 		return name.toString();
 	}
-
-	@Override
-	public void hit(Deck deck) {
-		hands.draw(deck);
-	}
 }

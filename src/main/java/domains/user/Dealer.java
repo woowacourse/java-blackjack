@@ -4,6 +4,7 @@ import domains.card.Deck;
 
 public class Dealer extends User {
 	private static final int DEALER_HIT_POINT = 16;
+	private boolean hitFlag = false;
 
 	public Dealer(Deck deck) {
 		this.hands = new Hands(deck);
@@ -13,10 +14,14 @@ public class Dealer extends User {
 		this.hands = hands;
 	}
 
-	@Override
-	public void hit(Deck deck) {
+	public void hitOrStay(Deck deck){
 		if (this.hands.score() <= DEALER_HIT_POINT) {
-			this.hands.draw(deck);
+			hit(deck);
+			hitFlag = true;
 		}
+	}
+
+	public boolean didHit(){
+		return hitFlag;
 	}
 }

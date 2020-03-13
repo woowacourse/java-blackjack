@@ -19,11 +19,12 @@ class GameController {
 
 	private void run(Deck deck, Dealer dealer, Players players) {
 		hitOrStay(players, deck);
-		dealer.hit(deck);
+		dealer.hitOrStay(deck);
 
-		if (dealer.handSize() == 3) {
+		if (dealer.didHit()) {
 			OutputView.printDealerHitCard();
 		}
+
 		OutputView.printAllHands(players, dealer);
 
 		GameResult gameResult = new GameResult();
