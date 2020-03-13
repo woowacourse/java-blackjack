@@ -10,10 +10,10 @@ public class Dealer extends User {
 	private static final int INITIAL_TO_INDEX = 1;
 	private static final String DEALER_DEFAULT_NAME = "딜러";
 
-	private final String name;
+	private final Name name;
 
 	public Dealer() {
-		this.name = DEALER_DEFAULT_NAME;
+		this.name = new Name(DEALER_DEFAULT_NAME);
 	}
 
 	public boolean isDrawable() {
@@ -27,7 +27,7 @@ public class Dealer extends User {
 
 	@Override
 	public String getName() {
-		return this.name;
+		return name.getName();
 	}
 
 }
