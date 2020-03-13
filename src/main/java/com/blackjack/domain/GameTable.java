@@ -21,7 +21,7 @@ public class GameTable {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> player.compareScoreWithUser(dealer)
+						player -> player.compareTo(dealer)
 				), PlayerRecords::new));
 	}
 }

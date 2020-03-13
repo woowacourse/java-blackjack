@@ -7,7 +7,7 @@ import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.card.CardDeck;
 
-public abstract class User {
+public abstract class User implements Drawable {
 	private static final int FIRST_DRAW_COUNT = 2;
 
 	private final Name name;
@@ -29,10 +29,10 @@ public abstract class User {
 		hands.add(card);
 	}
 
-	public ResultType compareScoreWithUser(User user) {
+	public ResultType compareTo(User user) {
 		Score score = hands.calculateScore();
-		Score dealerScore = user.hands.calculateScore();
-		return score.compareTo(dealerScore);
+		Score userScore = user.hands.calculateScore();
+		return score.compareTo(userScore);
 	}
 
 	public abstract boolean canDraw();

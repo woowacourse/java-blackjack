@@ -24,8 +24,14 @@ public class Score {
 		return score < drawCondition;
 	}
 
-	public boolean isBust() {
-		return score > BLACKJACK_SCORE;
+	public ResultType compareTo(Score userScore) {
+		if (score > userScore.score) {
+			return ResultType.WIN;
+		}
+		if (score < userScore.score) {
+			return ResultType.LOSE;
+		}
+		return ResultType.DRAW;
 	}
 
 	@Override
@@ -46,15 +52,5 @@ public class Score {
 	@Override
 	public String toString() {
 		return String.valueOf(score);
-	}
-
-	public ResultType compareTo(Score dealerScore) {
-		if (score > dealerScore.score) {
-			return ResultType.WIN;
-		}
-		if (score < dealerScore.score) {
-			return ResultType.LOSE;
-		}
-		return ResultType.DRAW;
 	}
 }
