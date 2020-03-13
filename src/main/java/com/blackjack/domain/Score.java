@@ -2,10 +2,9 @@ package com.blackjack.domain;
 
 import java.util.Objects;
 
-public class Score {
+public class Score implements Comparable<Score> {
 	private static final int MIN_SCORE = 1;
 	private static final int MAX_SCORE = 30;
-	private static final int BLACKJACK_SCORE = 21;
 
 	private final int score;
 
@@ -24,14 +23,9 @@ public class Score {
 		return score < drawCondition;
 	}
 
-	public ResultType compareTo(Score userScore) {
-		if (score > userScore.score) {
-			return ResultType.WIN;
-		}
-		if (score < userScore.score) {
-			return ResultType.LOSE;
-		}
-		return ResultType.DRAW;
+	@Override
+	public int compareTo(Score o) {
+		return Integer.compare(score, o.score);
 	}
 
 	@Override
