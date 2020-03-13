@@ -65,14 +65,31 @@ public class UserCardsTest {
 
     @DisplayName("카드가 21인지 확인")
     @Test
-    void isBlackJack() {
+    void isOneMoreAddThenBust() {
         userCards.add(new Card(Type.DIAMOND, Symbol.TWO));
         userCards.add(new Card(Type.DIAMOND, Symbol.THREE));
         userCards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        assertThat(userCards.isBlackJack()).isFalse();
+        assertThat(userCards.isOneMoreAddThenBust()).isFalse();
 
         userCards.add(new Card(Type.CLUB, Symbol.SIX));
+        assertThat(userCards.isOneMoreAddThenBust()).isTrue();
+    }
+
+    @DisplayName("카드가 블랙잭인지 확인")
+    @Test
+    void isBlackJack() {
+        userCards.add(new Card(Type.CLUB, Symbol.ACE));
+        userCards.add(new Card(Type.CLUB, Symbol.TEN));
         assertThat(userCards.isBlackJack()).isTrue();
+
+        userCards.add(new Card(Type.SPADE, Symbol.EIGHT));
+        assertThat(userCards.isBlackJack()).isFalse();
+
+        userCards = new UserCards();
+        userCards.add(new Card(Type.SPADE, Symbol.TEN));
+        userCards.add(new Card(Type.SPADE, Symbol.EIGHT));
+        userCards.add(new Card(Type.SPADE, Symbol.THREE));
+        assertThat(userCards.isBlackJack()).isFalse();
     }
 }
 

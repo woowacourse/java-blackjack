@@ -10,7 +10,7 @@ public class Player extends User {
 
     @Override
     public boolean canDrawCard() {
-        return !(userCards.isBust() || userCards.isBlackJack());
+        return !(userCards.isBust() || userCards.isOneMoreAddThenBust());
     }
 
     public Outcome calculateOutcome(User dealer) {

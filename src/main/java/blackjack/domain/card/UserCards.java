@@ -43,6 +43,10 @@ public class UserCards {
     }
 
     public boolean isBlackJack() {
+        return cards.size() == 2 && BlackJackRule.isBlackJack(getScore());
+    }
+
+    public boolean isOneMoreAddThenBust() {
         return BlackJackRule.isBlackJack(getScore());
     }
 
