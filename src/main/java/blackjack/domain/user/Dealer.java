@@ -12,6 +12,14 @@ public class Dealer extends User {
 		super(name);
 	}
 
+	Dealer(String name, List<Card> cards) {
+		super(name, cards);
+	}
+
+	public static Dealer valueOf(String name, List<Card> cards) {
+		return new Dealer(name, cards);
+	}
+
 	@Override
 	public boolean canDraw() {
 		return hand.calculateScore().isLowerThan(DEALER_DRAWABLE_MAX_SCORE);

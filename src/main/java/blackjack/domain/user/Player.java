@@ -11,6 +11,14 @@ public class Player extends User {
 		super(name);
 	}
 
+	Player(String name, List<Card> cards) {
+		super(name, cards);
+	}
+
+	public static Player valueOf(String name, List<Card> cards) {
+		return new Player(name, cards);
+	}
+
 	@Override
 	public boolean canDraw() {
 		return hand.calculateScore().isLowerThan(PLAYER_DRAWABLE_MAX_SCORE);

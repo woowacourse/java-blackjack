@@ -23,6 +23,11 @@ public abstract class User {
 		this.hand = new Hand();
 	}
 
+	User(String name, List<Card> cards) {
+		this(name);
+		this.hand.add(cards);
+	}
+
 	private void validate(String name) {
 		if (Objects.isNull(name) || name.trim().isEmpty()) {
 			throw new InvalidUserException(InvalidUserException.NULL_OR_EMPTY);
