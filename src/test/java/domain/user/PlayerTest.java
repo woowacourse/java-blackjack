@@ -13,7 +13,7 @@ public class PlayerTest {
 
 	@Test
 	void isBlackjackTest() {
-		Player player = new Player("동글");
+		Player player = Player.valueOf("동글");
 		player.addCards(new Card(CLOVER, ACE),
 			new Card(CLOVER, JACK));
 

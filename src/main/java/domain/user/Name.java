@@ -3,6 +3,8 @@ package domain.user;
 import java.util.Objects;
 
 public class Name {
+	private static final String NULL_OR_EMPTY_NAME_EXCEPTION_MESSAGE = "이름에 빈값이 들어갈 수 없습니다.";
+
 	private final String name;
 
 	public Name(String name) {
@@ -12,8 +14,12 @@ public class Name {
 
 	private void validEmptyAndNull(String name) {
 		if (Objects.isNull(name) || name.isEmpty()) {
-			throw new IllegalArgumentException("이름에 빈값이 들어갈 수 없습니다.");
+			throw new IllegalArgumentException(NULL_OR_EMPTY_NAME_EXCEPTION_MESSAGE);
 		}
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	@Override

@@ -18,9 +18,9 @@ import domain.user.User;
 class MatchCalculatorTest {
 	@Test
 	void getMatchResultsTest() {
-		User player = new Player("test");
-		User player2 = new Player("test");
-		User player3 = new Player("test");
+		User player = Player.valueOf("test");
+		User player2 = Player.valueOf("test");
+		User player3 = Player.valueOf("test");
 
 		player.addCards(new Card(CLOVER, ACE), new Card(CLOVER, EIGHT));
 		player2.addCards(new Card(CLOVER, ACE), new Card(CLOVER, NINE));

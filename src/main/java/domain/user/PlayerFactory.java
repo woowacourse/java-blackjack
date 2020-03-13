@@ -10,7 +10,7 @@ public class PlayerFactory {
 	public static List<User> create(String combinedName) {
 		return Arrays.stream(combinedName.split(DELIMITER))
 			.map(String::trim)
-			.map(Player::new)
+			.map(Player::valueOf)
 			.collect(Collectors.toList());
 	}
 }

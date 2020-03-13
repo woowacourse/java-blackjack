@@ -10,17 +10,14 @@ public class Player extends User {
 	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
 	private static final int INITIAL_TO_INDEX = 2;
 
-	private final String name;
+	private final Name name;
 
-	public Player(String name) {
-		validEmptyAndNull(name);
-		this.name = name;
+	private Player(Name name) {
+		this.name = Objects.requireNonNull(name);
 	}
 
-	private void validEmptyAndNull(String name) {
-		if (Objects.isNull(name) || name.isEmpty()) {
-			throw new IllegalArgumentException("이름에 빈값이 들어갈 수 없습니다.");
-		}
+	public static Player valueOf(String name) {
+		return new Player(new Name(name));
 	}
 
 	@Override
@@ -30,7 +27,7 @@ public class Player extends User {
 
 	@Override
 	public String getName() {
-		return this.name;
+		return name.getName();
 	}
 
 	@Override
