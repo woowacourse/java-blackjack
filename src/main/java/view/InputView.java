@@ -15,7 +15,7 @@ public class InputView {
 		return SCANNER.nextLine();
 	}
 
-	public static String inputMoreDrawResponse(String name) {
+	public static String inputYesOrNo(String name) {
 		System.out.printf(INPUT_PLAYER_MORE_DRAW_RESPONSE_MESSAGE, name);
 		return SCANNER.nextLine();
 	}

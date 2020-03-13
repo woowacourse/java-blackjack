@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.MoreDrawResponse;
+import domain.YesOrNo;
 import domain.card.CardDeck;
 import domain.result.DealerResult;
 import domain.result.MatchCalculator;
@@ -19,99 +19,72 @@ import view.OutputView;
 
 public class BlackjackGame {
 	private final CardDeck cardDeck;
-	private final List<Player> players;
-	private final Dealer dealer;
 
 	public BlackjackGame(CardDeck cardDeck) {
-		players = PlayerFactory.create(InputView.inputNames());
-		dealer = new Dealer();
 		this.cardDeck = cardDeck;
 	}
 
 	public void play() {
-		List<User> allUsers = initAllUsers();
-		drawInitialCards(allUsers);
-		printBlackjackUsers(allUsers);
-		drawOptionalCards();
-		printAllUserScore();
-		printGameResult();
+		final List<Player> players = PlayerFactory.create(InputView.inputNames());
+		final Dealer dealer = new Dealer();
+		drawInitialCards(players, dealer);
+		drawOptionalCards(players, dealer);
+		printAllUserScore(players, dealer);
+		printGameResult(players, dealer);
 	}
 
-	private List<User> initAllUsers() {
-		List<User> allUsers = new ArrayList<>(players);
-		allUsers.add(dealer);
-		return allUsers;
-	}
-
-	private void drawInitialCards(List<User> allUsers) {
-		for (User user : allUsers) {
-			user.addCards(cardDeck.draw(), cardDeck.draw());
+	private void drawInitialCards(List<Player> players, Dealer dealer) {
+		for (Player player : players) {
+			player.addCards(cardDeck.draw(), cardDeck.draw());
 		}
-		OutputView.printInitialResult(allUsers);
+		dealer.addCards(cardDeck.draw(), cardDeck.draw());
+		OutputView.printInitialResult(players, dealer);
 	}
 
-	private void printBlackjackUsers(List<User> allUsers) {
-		List<User> blackjackUsers = allUsers.stream()
-			.filter(User::isBlackjack)
-			.collect(Collectors.toList());
-		OutputView.printBlackJackUser(blackjackUsers);
-	}
-
-	private void drawOptionalCards() {
+	private void drawOptionalCards(List<Player> players, Dealer dealer) {
 		if (dealer.isBlackjack()) {
 			return;
 		}
-		drawCard();
+		drawCard(players, dealer);
 	}
 
-	private void drawCard() {
-		drawPlayersCard();
-		drawDealerCard();
+	private void drawCard(List<Player> players, Dealer dealer) {
+		drawPlayersCard(players);
+		drawDealerCard(dealer);
 	}
 
-	private void drawPlayersCard() {
+	private void drawPlayersCard(List<Player> players) {
 		for (Player player : players) {
 			drawPlayerCard(player);
 		}
 	}
 
 	private void drawPlayerCard(Player player) {
-		if (player.isBlackjack()) {
-			return;
-		}
-		while (isNotBust(player) && hasNeedMoreCard(player)) {
+		while (player.isDrawable() && isYes(player)) {
 			player.addCards(cardDeck.draw());
 			OutputView.printUserCard(player);
 		}
 	}
 
-	private boolean isNotBust(Player player) {
-		if (!player.isBust()) {
-			return true;
-		}
-		OutputView.printBust(player);
-		return false;
+	private boolean isYes(Player player) {
+		YesOrNo yesOrNo = YesOrNo.of(InputView.inputYesOrNo(player.getName()));
+		return yesOrNo.isYes();
 	}
 
-	private boolean hasNeedMoreCard(Player player) {
-		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputMoreDrawResponse(player.getName()));
-		return moreDrawResponse.isMoreDraw();
-	}
-
-	private void drawDealerCard() {
+	private void drawDealerCard(Dealer dealer) {
 		if (dealer.isDrawable()) {
 			dealer.addCards(cardDeck.draw());
 			OutputView.printDealerDraw();
 		}
 	}
 
-	private void printAllUserScore() {
+	private void printAllUserScore(List<Player> players, Dealer dealer) {
 		List<User> allUsers = new ArrayList<>(players);
 		allUsers.add(dealer);
 		OutputView.printUserResult(allUsers);
 	}
 
-	private void printGameResult() {
+	private void printGameResult(List<Player> players, Dealer dealer) {
 		List<PlayerResult> userResults = players.stream()
 			.map(user -> new PlayerResult(user, MatchResult.calculatePlayerMatchResult(user, dealer)))
 			.collect(Collectors.toList());

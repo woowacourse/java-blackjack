@@ -49,4 +49,9 @@ public class Player extends User {
 	public int hashCode() {
 		return Objects.hash(name);
 	}
+
+	@Override
+	public boolean isDrawable() {
+		return !isBlackjack() && !isBust();
+	}
 }

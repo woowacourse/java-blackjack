@@ -24,6 +24,7 @@ public class Dealer extends User {
 		return new Dealer(new Name(DEALER_DEFAULT_NAME), new Cards(Arrays.asList(cards)));
 	}
 
+	@Override
 	public boolean isDrawable() {
 		return cards.calculateScore() <= MAXIMUM_DRAWABLE_SCORE;
 	}

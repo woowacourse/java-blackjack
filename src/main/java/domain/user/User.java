@@ -46,4 +46,6 @@ public abstract class User {
 	}
 
 	public abstract List<Card> getInitialCard();
+
+	public abstract boolean isDrawable();
 }

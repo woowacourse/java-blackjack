@@ -8,6 +8,8 @@ import domain.card.Card;
 import domain.result.DealerResult;
 import domain.result.MatchResult;
 import domain.result.PlayerResult;
+import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.User;
 
 public class OutputView {
@@ -15,7 +17,6 @@ public class OutputView {
 	private static final String CARD_STRING_FORMAT = " 카드: %s  ";
 	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
 	private static final String DEALER_DRAW_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-	private static final String BLACK_JACK_MESSAGE = "%s 블랙잭!%s";
 	private static final String Colon = ":";
 	private static final String SPACE = " ";
 	private static final String PREFIX_DEALER_SCORE_RESULT_MESSAGE = "딜러: ";
@@ -25,24 +26,27 @@ public class OutputView {
 	private OutputView() {
 	}
 
-	public static void printInitialResult(List<User> users) {
+	public static void printInitialResult(List<Player> players, Dealer dealer) {
+		printPlayersInitialDrawResult(players);
+		printDealerInitialDrawResult(dealer);
+	}
+
+	private static void printPlayersInitialDrawResult(List<Player> players) {
 		StringBuilder builder = new StringBuilder();
-		for (User user : users) {
-			builder.append(user.getName());
-			builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getInitialCard())));
-			builder.append(NEW_LINE);
+		for (Player player : players) {
+			builder.append(getUserInitialDrawResult(player));
 		}
 		System.out.println(builder);
 	}
 
-	public static void printBlackJackUser(List<User> users) {
-		for (User user : users) {
-			System.out.printf(BLACK_JACK_MESSAGE, user.getName(), NEW_LINE);
-		}
+	private static void printDealerInitialDrawResult(Dealer dealer) {
+		System.out.println(getUserInitialDrawResult(dealer));
 	}
 
-	public static void printBust(User user) {
-		System.out.printf("%s 버스트!%s", user.getName(), NEW_LINE);
+	private static String getUserInitialDrawResult(User user) {
+		return String.format("%s %s %s", user.getName(),
+			String.format(CARD_STRING_FORMAT, parseCardsString(user.getInitialCard())),
+			NEW_LINE);
 	}
 
 	public static void printUserCard(User user) {
@@ -51,6 +55,10 @@ public class OutputView {
 		builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
 		builder.append(NEW_LINE);
 		System.out.println(builder);
+	}
+
+	public static void printDealerDraw() {
+		System.out.println(DEALER_DRAW_ONE_MORE_CARD_MESSAGE);
 	}
 
 	public static void printUserResult(List<User> users) {
@@ -62,10 +70,6 @@ public class OutputView {
 			builder.append(NEW_LINE);
 		}
 		System.out.println(builder);
-	}
-
-	public static void printDealerDraw() {
-		System.out.println(DEALER_DRAW_ONE_MORE_CARD_MESSAGE);
 	}
 
 	private static String parseCardsString(List<Card> cards) {
