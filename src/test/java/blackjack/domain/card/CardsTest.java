@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class CardsTest {
 	private Deck simpleDeck;
@@ -25,6 +24,7 @@ class CardsTest {
 
 	@Test
 	void create() {
+		// then
 		assertThat(simpleDeck).isNotNull();
 	}
 
@@ -53,17 +53,20 @@ class CardsTest {
 		}
 
 		// then
-		assertThatThrownBy(simpleDeck::draw)
-				.isInstanceOf(DeckException.class);
+		assertThatThrownBy(() -> {
+			// when
+			simpleDeck.draw();
+		}).isInstanceOf(DeckException.class);
 	}
 
 	@Test
 	void equals() {
 		// given
 		Deck expected = Cards.of(fourCards);
+		Deck notExpected = Cards.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
 
 		// then
-		assertThat(simpleDeck).isEqualTo(expected);
+		assertThat(simpleDeck.equals(expected)).isTrue();
+		assertThat(simpleDeck.equals(notExpected)).isFalse();
 	}
-
 }

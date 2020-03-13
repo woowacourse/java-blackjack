@@ -22,7 +22,7 @@ public class YesOrNo {
 		if (yesOrNo.equals(YES) || yesOrNo.equals(NO)) {
 			return;
 		}
-		throw new YesOrNoException("Y나 N을 입력해야합니다.");
+		throw new YesOrNoException("Y/y나 N/n을 입력해야합니다.");
 	}
 
 	public boolean isYes() {

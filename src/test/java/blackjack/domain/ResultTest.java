@@ -5,12 +5,10 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
