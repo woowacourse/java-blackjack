@@ -16,7 +16,7 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         try {
             String playerName = SCANNER.nextLine();
-            validatePlayerName(playerName);
+            validatePlayerNameEmpty(playerName);
             return new RequestPlayerNamesDTO(playerName);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -24,7 +24,7 @@ public class InputView {
         }
     }
 
-    private static void validatePlayerName(String playerName) {
+    private static void validatePlayerNameEmpty(String playerName) {
         if (playerName == null || playerName.isEmpty()) {
             throw new IllegalArgumentException("비어있는 이름을 입력할 수 없습니다.");
         }

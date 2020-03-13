@@ -39,7 +39,7 @@ public class BlackjackController {
         WinningResult winningResult = new WinningResult(players);
         ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
                 winningResult.getWinningResult());
-        OutputView.printWinningResult(responseWinningResultDTO.getWinningResult());
+        OutputView.printWinningResult(responseWinningResultDTO);
     }
 
     private static RequestPlayerNamesDTO inputRequestPlayerNamesDTO() {
