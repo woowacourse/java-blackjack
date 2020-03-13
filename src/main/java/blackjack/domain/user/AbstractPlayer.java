@@ -6,7 +6,7 @@ import blackjack.domain.card.Score;
 import java.util.*;
 
 public abstract class AbstractPlayer implements Player {
-    public static final int MAX_SCORE = 21;
+    private static final int MAX_SCORE = 21;
     private static final int MAX_SCORE_TO_MAXIMIZE = 12;
     private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
@@ -18,6 +18,10 @@ public abstract class AbstractPlayer implements Player {
         this.cards = new ArrayList<>();
     }
 
+    protected int getMaxScore() {
+        return MAX_SCORE;
+    }
+
     @Override
     public void giveCards(Card... cards) {
         this.cards.addAll(Arrays.asList(cards));
@@ -25,7 +29,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBust() {
-        return calculateScore().isOver(MAX_SCORE);
+        return calculateScore().isOver(getMaxScore());
     }
 
     @Override
