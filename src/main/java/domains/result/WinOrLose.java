@@ -4,7 +4,9 @@ import domains.user.Dealer;
 import domains.user.Player;
 
 public enum WinOrLose {
-	WIN("승"), LOSE("패"), DRAW("무");
+	WIN("승"),
+	DRAW("무"),
+	LOSE("패");
 
 	private String winOrLose;
 
@@ -18,6 +20,16 @@ public enum WinOrLose {
 		}
 		if (player.score() < dealer.score()) {
 			return LOSE;
+		}
+		return DRAW;
+	}
+
+	public static WinOrLose oppose(WinOrLose outcome) {
+		if (WIN.equals(outcome)) {
+			return LOSE;
+		}
+		if (LOSE.equals(outcome)) {
+			return WIN;
 		}
 		return DRAW;
 	}

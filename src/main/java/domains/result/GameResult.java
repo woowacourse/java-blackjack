@@ -1,7 +1,12 @@
 package domains.result;
 
+import static java.util.stream.Collectors.*;
+
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import domains.user.Dealer;
 import domains.user.Player;
@@ -9,6 +14,7 @@ import domains.user.Players;
 
 public class GameResult {
 	private static final String BLANK = " ";
+
 	private Map<Player, WinOrLose> gameResult;
 
 	public GameResult() {
@@ -37,26 +43,21 @@ public class GameResult {
 	}
 
 	public String calculateDealerResult() {
-		int winCount = 0;
-		int loseCount = 0;
-		int drawCount = 0;
+		Map<WinOrLose, Long> dealerGameResult = gameResult.values().stream()
+			.map(WinOrLose::oppose)
+			.collect(
+				Collectors.collectingAndThen(Collectors.groupingBy(Function.identity(), counting()), EnumMap::new));
 
-		for (WinOrLose result : gameResult.values()) {
-			if (result.equals(WinOrLose.WIN)) {
-				loseCount++;
-				continue;
-			}
-			if (result.equals(WinOrLose.DRAW)) {
-				drawCount++;
-				continue;
-			}
-			if (result.equals(WinOrLose.LOSE)) {
-				winCount++;
-			}
-		}
-		return winCount + WinOrLose.WIN.getWinOrLose() + BLANK
-			+ drawCount + WinOrLose.DRAW.getWinOrLose()+ BLANK
-			+ loseCount + WinOrLose.LOSE.getWinOrLose();
+		return convertToString(dealerGameResult);
+	}
+
+	private String convertToString(Map<WinOrLose, Long> dealerGameResult) {
+		return dealerGameResult.entrySet().stream().map(
+			result -> {
+				long count = result.getValue();
+				String resultName = result.getKey().getWinOrLose();
+				return count + resultName;
+			}).collect(Collectors.joining(BLANK));
 	}
 
 	public Map<Player, WinOrLose> getGameResult() {
