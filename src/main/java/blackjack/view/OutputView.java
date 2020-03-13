@@ -43,12 +43,15 @@ public class OutputView {
 
 	public static void printBlackjackReport(Report blackJackReport) {
 		System.out.println(NEWLINE + FINAL_RESULT_MESSAGE);
-		System.out.println(StringUtil.joinDealerResult(blackJackReport.getDealerResult()));
+		printUserResult(Dealer.NAME, StringUtil.joinDealerResult(blackJackReport.getDealerResult()));
 		printPlayersResult(blackJackReport.getPlayersResult());
 	}
 
 	private static void printPlayersResult(Map<Player, ResultType> playersResult) {
-		playersResult.forEach((player, resultType) ->
-			System.out.println(player.getName() + SEPARATOR + resultType.getAlias()));
+		playersResult.forEach((player, resultType) -> printUserResult(player.getName(), resultType.getAlias()));
+	}
+
+	private static void printUserResult(String name, String result) {
+		System.out.println(name + SEPARATOR + result);
 	}
 }

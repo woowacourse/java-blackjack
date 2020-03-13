@@ -28,6 +28,8 @@ public class BlackjackController {
 	public void playGame() {
 		List<User> users = generateUsers();
 		drawInitialCardsEachUser(users);
+		OutputView.printUsersInitialDraw(INITIAL_DRAW_NUMBER, users);
+
 		drawCardsEachUsers();
 		printUsersCardsAndScore(users);
 
@@ -44,7 +46,6 @@ public class BlackjackController {
 
 	private void drawInitialCardsEachUser(List<User> users) {
 		users.forEach(user -> user.draw(deck, INITIAL_DRAW_NUMBER));
-		OutputView.printUsersInitialDraw(INITIAL_DRAW_NUMBER, users);
 	}
 
 	private void drawCardsEachUsers() {
@@ -53,15 +54,14 @@ public class BlackjackController {
 	}
 
 	private void drawCardsByOpinion(Player player) {
-		while (player.canDraw()) {
-			DrawOpinion drawOpinion = DrawOpinion.of(InputView.inputDrawOpinion(player));
+		DrawOpinion drawOpinion;
 
-			if (DrawOpinion.NO.equals(drawOpinion)) {
-				break;
-			}
+		do {
+			drawOpinion = DrawOpinion.of(InputView.inputDrawOpinion(player));
 			player.draw(deck);
+
 			OutputView.printUserHand(player, player.getHand());
-		}
+		} while (player.canDraw() && DrawOpinion.YES.equals(drawOpinion));
 	}
 
 	private void drawCardsDealer() {

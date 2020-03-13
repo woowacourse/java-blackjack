@@ -1,6 +1,6 @@
 package blackjack.domain.user.hand;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -9,7 +9,7 @@ public class Hand {
 	private final List<Card> cards;
 
 	public Hand() {
-		this.cards = new ArrayList<>();
+		this.cards = new LinkedList<>();
 	}
 
 	public void add(Card card) {

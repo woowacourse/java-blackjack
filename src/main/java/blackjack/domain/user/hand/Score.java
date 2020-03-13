@@ -1,26 +1,24 @@
 package blackjack.domain.user.hand;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 
 public class Score {
-	public final static Score ZERO = new Score(0);
-	private final static Map<Integer, Score> CACHE = new HashMap<>();
+	public static final Score ZERO = new Score(0);
+	private static final Map<Integer, Score> CACHE = new HashMap<>();
 	private static final int ADDITIONAL_ACE_SCORE = 10;
 	private static final int BUST_SCORE = 22;
 
 	private final int score;
 
 	static {
-		Arrays.stream(Symbol.values())
-			.map(Symbol::getScore)
-			.forEach(symbolValue ->
-				CACHE.putIfAbsent(symbolValue, new Score(symbolValue)));
+		IntStream.range(Symbol.ACE.getScore(), BUST_SCORE)
+			.forEach(score -> CACHE.put(score, new Score(score)));
 	}
 
 	private Score(int score) {

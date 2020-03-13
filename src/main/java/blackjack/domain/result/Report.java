@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,7 +33,7 @@ public class Report {
 	private static Map<ResultType, Long> generateDealerResult(Dealer dealer, List<Player> players) {
 		return players.stream()
 			.map(player -> ResultType.from(dealer, player))
-			.collect(groupingBy(Function.identity(), counting()));
+			.collect(collectingAndThen(groupingBy(Function.identity(), counting()), EnumMap::new));
 	}
 
 	public Map<ResultType, Long> getDealerResult() {
