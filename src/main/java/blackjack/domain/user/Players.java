@@ -51,10 +51,10 @@ public class Players {
         }
     }
 
-    public void giveCards(int index, Card... cards) {
+    public void drawCards(int index, Card... cards) {
         for (Card card : cards) {
             players.get(index)
-                    .giveCards(card);
+                    .drawCards(card);
         }
     }
 

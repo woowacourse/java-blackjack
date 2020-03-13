@@ -17,22 +17,22 @@ public class Blackjack {
         Deck deck = Deck.create();
         deck.shuffle();
 
-        dealer.giveCards(deck.draw(), deck.draw());
+        dealer.drawCards(deck.draw(), deck.draw());
         for (int i = 0; i < players.memberSize(); i++) {
-            players.giveCards(i, deck.draw(), deck.draw());
+            players.drawCards(i, deck.draw(), deck.draw());
         }
 
         OutputView.printInitialInfo(dealer, players);
 
         for (User player : players.getPlayers()) {
             while (player.isNotBust() && InputView.inputToHitOrStay(player).equals("y")) {
-                player.giveCards(deck.draw());
+                player.drawCards(deck.draw());
                 OutputView.printUserCard(player);
             }
         }
 
         while (dealer.shouldReceiveCard()) {
-            dealer.giveCards(deck.draw());
+            dealer.drawCards(deck.draw());
             OutputView.printDealerTurn(dealer);
         }
 

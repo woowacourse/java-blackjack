@@ -23,13 +23,13 @@ class GameResultTest {
     @Test
     void getDealerResult() {
         Dealer dealer = Dealer.create();
-        dealer.giveCards(new Card(Symbol.ACE, Type.SPADE));
+        dealer.drawCards(new Card(Symbol.ACE, Type.SPADE));
 
         Players players = Players.of("그니, 무늬, 포비");
-        players.giveCards(0, new Card(Symbol.TEN, Type.DIAMOND));
-        players.giveCards(1, new Card(Symbol.FIVE, Type.CLUB),
+        players.drawCards(0, new Card(Symbol.TEN, Type.DIAMOND));
+        players.drawCards(1, new Card(Symbol.FIVE, Type.CLUB),
                 new Card(Symbol.SEVEN, Type.HEART));
-        players.giveCards(2, new Card(Symbol.TWO, Type.DIAMOND));
+        players.drawCards(2, new Card(Symbol.TWO, Type.DIAMOND));
 
         GameResult gameResult = GameResult.of(dealer, players);
 

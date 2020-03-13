@@ -22,7 +22,7 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
-    public void giveCards(Card... cards) {
+    public void drawCards(Card... cards) {
         this.cards.addAll(Arrays.asList(cards));
     }
 

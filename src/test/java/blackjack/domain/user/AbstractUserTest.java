@@ -26,7 +26,7 @@ public class AbstractUserTest {
 
     @Test
     void giveCards() {
-        user.giveCards(new Card(Symbol.ACE, Type.CLUB),
+        user.drawCards(new Card(Symbol.ACE, Type.CLUB),
                 new Card(Symbol.EIGHT, Type.HEART));
 
         assertThat(user.getCards())
@@ -36,7 +36,7 @@ public class AbstractUserTest {
 
     @Test
     void sumScore() {
-        user.giveCards(new Card(Symbol.TWO, Type.CLUB),
+        user.drawCards(new Card(Symbol.TWO, Type.CLUB),
                 new Card(Symbol.EIGHT, Type.HEART));
 
         assertThat(user.calculateScore()).isEqualTo(new Score(10));
@@ -44,7 +44,7 @@ public class AbstractUserTest {
 
     @Test
     void sumScore_WhenAceShouldBeEleven() {
-        user.giveCards(new Card(Symbol.ACE, Type.CLUB),
+        user.drawCards(new Card(Symbol.ACE, Type.CLUB),
                 new Card(Symbol.EIGHT, Type.HEART));
 
         assertThat(user.calculateScore()).isEqualTo(new Score(19));
@@ -52,7 +52,7 @@ public class AbstractUserTest {
 
     @Test
     void sumScore_WhenAceShouldBeOne() {
-        user.giveCards(new Card(Symbol.ACE, Type.CLUB),
+        user.drawCards(new Card(Symbol.ACE, Type.CLUB),
                 new Card(Symbol.EIGHT, Type.HEART),
                 new Card(Symbol.THREE, Type.SPADE));
 
@@ -61,7 +61,7 @@ public class AbstractUserTest {
 
     @Test
     void isBust_ShouldReturnTrue() {
-        user.giveCards(new Card(Symbol.TEN, Type.CLUB),
+        user.drawCards(new Card(Symbol.TEN, Type.CLUB),
                 new Card(Symbol.EIGHT, Type.HEART),
                 new Card(Symbol.FOUR, Type.SPADE));
 
@@ -70,7 +70,7 @@ public class AbstractUserTest {
 
     @Test
     void isBust_ShouldReturnFalse() {
-        user.giveCards(new Card(Symbol.TEN, Type.CLUB),
+        user.drawCards(new Card(Symbol.TEN, Type.CLUB),
                 new Card(Symbol.EIGHT, Type.HEART),
                 new Card(Symbol.THREE, Type.SPADE));
 

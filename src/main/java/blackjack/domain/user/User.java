@@ -7,7 +7,7 @@ import blackjack.domain.result.WinOrLose;
 import java.util.List;
 
 public interface User {
-    void giveCards(Card... cards);
+    void drawCards(Card... cards);
 
     Score calculateScore();
 
