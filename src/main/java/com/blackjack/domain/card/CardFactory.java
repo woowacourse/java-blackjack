@@ -1,23 +1,29 @@
 package com.blackjack.domain.card;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class CardFactory {
-	public static List<Card> create() {
-		List<Card> cards = new ArrayList<>();
-		Symbol[] symbols = Symbol.values();
-		for (Symbol symbol : symbols) {
-			createByType(cards, symbol);
-		}
-		return Collections.unmodifiableList(cards);
+class CardFactory {
+	private static List<Card> cards;
+
+	static {
+		cards = Arrays.stream(CardNumber.values())
+				.flatMap(CardFactory::createCards)
+				.collect(Collectors.toList());
 	}
 
-	private static void createByType(List<Card> cards, Symbol symbol) {
-		Type[] types = Type.values();
-		for (Type type : types) {
-			cards.add(new Card(symbol, type));
-		}
+	private CardFactory() {
+	}
+
+	private static Stream<Card> createCards(CardNumber cardNumber) {
+		return Arrays.stream(CardSymbol.values())
+				.map(cardSymbol -> new Card(cardNumber, cardSymbol));
+	}
+
+	static List<Card> create() {
+		return Collections.unmodifiableList(cards);
 	}
 }
