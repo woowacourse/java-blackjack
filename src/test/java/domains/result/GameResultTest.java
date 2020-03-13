@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,18 +21,11 @@ import domains.user.Player;
 import domains.user.Players;
 
 class GameResultTest {
-	private GameResult gameResult;
-
-	@BeforeEach
-	void setUp() {
-		gameResult = new GameResult();
-	}
-
 	@DisplayName("참가자들과 딜러의 게임 결과를 계산하여 승패를 반환")
 	@ParameterizedTest
 	@MethodSource("gameData")
 	void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
-		gameResult.create(players, dealer);
+		GameResult gameResult = new GameResult(players, dealer);
 
 		Iterator<Player> iterator = players.iterator();
 		Player ddoring = iterator.next();
@@ -47,7 +39,7 @@ class GameResultTest {
 	@ParameterizedTest
 	@MethodSource("gameData")
 	void calculateDealerResult__ReturnWin(Players players, Dealer dealer) {
-		gameResult.create(players, dealer);
+		GameResult gameResult = new GameResult(players, dealer);
 
 		assertThat(gameResult.calculateDealerResult()).isEqualTo("1승 1무 1패");
 	}

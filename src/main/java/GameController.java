@@ -27,8 +27,7 @@ class GameController {
 
 		OutputView.printAllHands(players, dealer);
 
-		GameResult gameResult = new GameResult();
-		gameResult.create(players, dealer);
+		GameResult gameResult = new GameResult(players, dealer);
 		OutputView.printGameResult(gameResult);
 	}
 

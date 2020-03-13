@@ -17,11 +17,12 @@ public class GameResult {
 
 	private Map<Player, WinOrLose> gameResult;
 
-	public GameResult() {
+	public GameResult(Players players, Dealer dealer) {
 		this.gameResult = new HashMap<>();
+		create(players, dealer);
 	}
 
-	public void create(Players players, Dealer dealer) {
+	private void create(Players players, Dealer dealer) {
 		for (Player player : players) {
 			if (checkBurstPlayer(player)) {
 				continue;
