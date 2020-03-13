@@ -7,6 +7,9 @@ import java.util.Objects;
 
 public class Players {
     public static final int MAX_PLAYER_NUMBER = 7;
+    public static final String EMPTY_OR_NULL_EXCEPTION_MESSAGE = "Empty or null player names exception.";
+    public static final String INVALID_INPUT_SIZE_EXCEPTION_MESSAGE = "Input player over 7 exception.";
+
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
@@ -32,10 +35,10 @@ public class Players {
 
     private void validatePlayers(List<String> playerNames) {
         if (Objects.isNull(playerNames) || playerNames.isEmpty()) {
-            throw new IllegalArgumentException("Empty or null player names exception.");
+            throw new IllegalArgumentException(EMPTY_OR_NULL_EXCEPTION_MESSAGE);
         }
         if (playerNames.size() > MAX_PLAYER_NUMBER) {
-            throw new IllegalArgumentException("Input player over 7 exception.");
+            throw new IllegalArgumentException(INVALID_INPUT_SIZE_EXCEPTION_MESSAGE);
         }
     }
 }
