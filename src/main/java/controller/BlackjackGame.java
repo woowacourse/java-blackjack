@@ -94,7 +94,7 @@ public class BlackjackGame {
 	}
 
 	private boolean isContinuousFromInput(User user) {
-		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputYesORNo(user.getName()));
+		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputPlayerMoreDrawResponse(user.getName()));
 		return moreDrawResponse.isMoreDraw();
 	}
 
