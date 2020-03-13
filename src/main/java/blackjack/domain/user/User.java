@@ -31,8 +31,8 @@ public abstract class User {
         return cards.getInfos();
     }
 
-    public int getScore() {
-        return cards.getScore();
+    public int getTotalScore() {
+        return cards.getTotalScore();
     }
 
     public String getName() {

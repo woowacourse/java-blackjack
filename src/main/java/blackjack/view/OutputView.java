@@ -44,7 +44,7 @@ public class OutputView {
     }
 
     public static void printUserCardsAndScore(User user) {
-        System.out.printf("%s - 결과: %s\n", getUserCards(user), user.getScore());
+        System.out.printf("%s - 결과: %s\n", getUserCards(user), user.getTotalScore());
     }
 
     public static void printFinalResult(Dealer dealer, GameResult gameResult) {

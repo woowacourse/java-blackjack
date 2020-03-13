@@ -35,17 +35,6 @@ public class GameResultTest {
         }
     }
 
-    @DisplayName("플레이어의 승패 - 무")
-    @Test
-    void checkPlayerResultDraw() {
-        GameResult gameResult = new GameResult(dealer, players);
-        Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
-
-        for (Player player : playerResult.keySet()) {
-            assertThat(playerResult.get(player)).isEqualTo(Outcome.DRAW);
-        }
-    }
-
     @DisplayName("플레이어의 승패 - 승")
     @Test
     void checkPlayerResultWin() {

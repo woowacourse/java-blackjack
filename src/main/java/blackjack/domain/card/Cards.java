@@ -46,6 +46,13 @@ public class Cards {
         return BlackJackRule.isBlackJack(getScore());
     }
 
+    public int getTotalScore() {
+        if(isBust()) {
+            return 0;
+        }
+        return getScore();
+    }
+
     public List<String> getInfos() {
         return cards.stream()
             .map(Card::getInfo)
@@ -53,6 +60,6 @@ public class Cards {
     }
 
     public Outcome calculateOutcome(Cards comparisonCards) {
-        return Outcome.calculate(getScore(), comparisonCards.getScore());
+        return Outcome.calculate(getTotalScore(), comparisonCards.getTotalScore());
     }
 }

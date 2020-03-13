@@ -25,7 +25,7 @@ public class OutcomeTest {
 
     @DisplayName("패 산정")
     @ParameterizedTest
-    @CsvSource(value = {"16, 17", "8, 15", "16, 20"})
+    @CsvSource(value = {"16, 17", "8, 15", "16, 20", "0, 0"})
     void calculateLose(int playerScore, int dealerScore) {
         assertThat(Outcome.calculate(playerScore, dealerScore)).isEqualTo(Outcome.LOSE);
     }
