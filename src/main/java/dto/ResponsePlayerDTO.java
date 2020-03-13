@@ -31,20 +31,23 @@ public class ResponsePlayerDTO {
             this.name = DEALER_NAME;
             return;
         }
-        User targetUser = (User) player;
-        this.name = targetUser.getName();
+
+        User User = (User) player;
+        this.name = User.getName();
     }
 
     public static List<ResponsePlayerDTO> of(Players players) {
         List<ResponsePlayerDTO> responsePlayerDTOS = new ArrayList<>();
+
         responsePlayerDTOS.add(new ResponsePlayerDTO(players.getDealer()));
         responsePlayerDTOS.addAll(players.getUsers().stream()
                 .map(ResponsePlayerDTO::new)
                 .collect(Collectors.toList()));
+
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 
-    public static ResponsePlayerDTO of(Player player){
+    public static ResponsePlayerDTO of(Player player) {
         return new ResponsePlayerDTO(player);
     }
 

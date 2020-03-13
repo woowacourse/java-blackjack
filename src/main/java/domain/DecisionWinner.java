@@ -3,6 +3,9 @@ package domain;
 import domain.player.Player;
 
 public class DecisionWinner {
+
+    private static final int BLACK_JACK = 21;
+
     private DecisionWinner() {
     }
 
@@ -14,10 +17,10 @@ public class DecisionWinner {
     }
 
     private static boolean determineWin(int TargetPlayerCardSum, int playerCardSum) {
-        if (TargetPlayerCardSum < 21 && playerCardSum > 21) {
+        if (TargetPlayerCardSum < BLACK_JACK && playerCardSum > BLACK_JACK) {
             return true;
         }
-        if (TargetPlayerCardSum > 21) {
+        if (TargetPlayerCardSum > BLACK_JACK) {
             return false;
         }
         return TargetPlayerCardSum >= playerCardSum;

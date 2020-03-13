@@ -29,12 +29,6 @@ public class CardCalculator {
         return sum < BLACK_JACK;
     }
 
-    private static int calculateCards(List<Card> cards) {
-        return (int) cards.stream()
-                .mapToLong(Card::getCardNumber)
-                .sum();
-    }
-
     public static int calculateDeterminedAce(List<Card> cards) {
         int playerCardSum = calculateCards(cards);
 
@@ -45,5 +39,11 @@ public class CardCalculator {
         }
 
         return playerCardSum;
+    }
+
+    private static int calculateCards(List<Card> cards) {
+        return (int) cards.stream()
+                .mapToLong(Card::getCardNumber)
+                .sum();
     }
 }

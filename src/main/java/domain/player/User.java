@@ -1,6 +1,5 @@
 package domain.player;
 
-import domain.AnswerType;
 import domain.card.Card;
 import domain.card.Cards;
 

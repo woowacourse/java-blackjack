@@ -20,9 +20,9 @@ public abstract class Player {
         return CardCalculator.calculateDeterminedAce(this.cards);
     }
 
-    public abstract void insertCard(Cards cards);
-
     public List<Card> getCard() {
         return Collections.unmodifiableList(this.cards);
     }
+
+    public abstract void insertCard(Cards cards);
 }

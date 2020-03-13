@@ -25,6 +25,7 @@ public class PlayerFactory {
         List<Player> players = playerNames.stream()
                 .map(name -> new User(name, cards.pop(), cards.pop()))
                 .collect(Collectors.toList());
+
         players.add(new Dealer(cards.pop(), cards.pop()));
         return new Players(players);
     }

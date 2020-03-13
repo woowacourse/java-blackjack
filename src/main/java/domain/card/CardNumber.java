@@ -23,8 +23,8 @@ public enum CardNumber {
         this.cardNumber = cardNumber;
     }
 
-    public static CardNumber findCardNumber(int cardNumber) {
-        return Arrays.stream(values())
+    public static void findCardNumber(int cardNumber) {
+        Arrays.stream(values())
                 .filter(card -> card.cardNumber == cardNumber)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

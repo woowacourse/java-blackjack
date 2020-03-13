@@ -15,6 +15,7 @@ public class ResponseWinningResultDTO {
         int allUserLoseCount = winningPlayer.values().size() - allUserWinCount;
         List<String> result = new ArrayList<>(Collections.singletonList("딜러: " + allUserLoseCount + "승 "
                 + allUserWinCount + "패"));
+
         result.addAll(winningPlayer.entrySet().stream()
                 .map(entry -> winString(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList()));

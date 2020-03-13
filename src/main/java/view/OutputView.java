@@ -60,6 +60,7 @@ public class OutputView {
     }
 
     public static void printUserCardsOverBlackJack(ResponsePlayerDTO responsePlayerDTO){
-        System.out.printf("%s는 21을 초과 하였습니다.\n",responsePlayerDTO.getName());
+        System.out.printf("%s는 카트합이 21 이상입니다. 턴 종료.\n",responsePlayerDTO.getName());
+        System.out.println();
     }
 }
