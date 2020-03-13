@@ -18,10 +18,13 @@ public class CardDeck {
     }
 
     public static CardDeck getInstance(CardCreateStrategy cardCreateStrategy) {
+        if (cardCreateStrategy == null) {
+            throw new IllegalArgumentException("카드를 생성 할 수 없습니다.");
+        }
         return new CardDeck(cardCreateStrategy);
     }
 
-    public Card drawCard() {
+    public Card draw() {
         checkEmpty();
         return blackjackCards.pop();
     }

@@ -7,7 +7,7 @@ import java.util.List;
 public class AceScoreStrategy implements ScoreStrategy {
 
     private static final int ACE_WEIGHT = 10;
-    private static final int BLACKJACK_VALUE = 21;
+    private static final int MAXIMUM_VALUE = 21;
 
     @Override
     public boolean support(List<Card> cards) {
@@ -28,7 +28,7 @@ public class AceScoreStrategy implements ScoreStrategy {
         int aceCount = getAceCount(cards);
         sum += aceCount * ACE_WEIGHT;
 
-        while (sum > BLACKJACK_VALUE) {
+        while (sum > MAXIMUM_VALUE) {
             sum -= ACE_WEIGHT;
             aceCount--;
         }

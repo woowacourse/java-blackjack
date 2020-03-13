@@ -52,14 +52,14 @@ public class BlackjackController {
 
     private void drawEachGambler(Player gambler) {
         while (gambler.isDrawable() && inputView.inputDrawRequest(gambler).isDraw()) {
-            gambler.addCard(cardDeck.drawCard());
+            gambler.addCard(cardDeck.draw());
             OutputView.showCardInfo(gambler);
         }
     }
 
     private void drawDealer(Player dealer) {
         while (dealer.isDrawable()) {
-            dealer.addCard(cardDeck.drawCard());
+            dealer.addCard(cardDeck.draw());
             OutputView.showDealerDrawMessage();
         }
     }

@@ -1,5 +1,6 @@
 package blackjack.player.domain.report;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,9 @@ public class GameReports {
     private final List<GameReport> gameReports;
 
     public GameReports(List<GameReport> gameReports) {
+        if (gameReports == null) {
+            gameReports = new ArrayList<>();
+        }
         this.gameReports = gameReports;
     }
 

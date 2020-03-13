@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CardBundle {
-    private static final int BLACKJACK_VALUE = 21;
+    private static final int MAXIMUM_VALUE = 21;
     private final List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
@@ -32,11 +32,11 @@ public class CardBundle {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == BLACKJACK_VALUE;
+        return cards.size() == 2 && calculateScore() == MAXIMUM_VALUE;
     }
 
     public boolean isBurst() {
-        return calculateScore() > BLACKJACK_VALUE;
+        return calculateScore() > MAXIMUM_VALUE;
     }
 
     public boolean isNotEmpty() {

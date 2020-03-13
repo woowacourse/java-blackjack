@@ -11,24 +11,14 @@ public class Gambler extends Player {
 	}
 
 	@Override
-	public boolean isDealer() {
-		return false;
-	}
-
-	@Override
-	public boolean isGambler() {
-		return true;
-	}
-
-	@Override
 	public boolean isDrawable() {
 		return isNotBurst() && isNotBlackjack();
 	}
 
 	@Override
-	public GameReport getReport(Player player) {
-		throw new UnsupportedOperationException();
-	}
+    public GameReport createReport(Player player) {
+        throw new UnsupportedOperationException();
+    }
 
 	@Override
 	public boolean equals(Object o) {

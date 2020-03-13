@@ -25,7 +25,7 @@ class CardDeckTest {
             }
         });
 
-        assertThatThrownBy(cardDeck::drawCard)
+        assertThatThrownBy(cardDeck::draw)
                 .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -41,9 +41,16 @@ class CardDeckTest {
         });
 
         //when
-        Card expect = cardDeck.drawCard();
+        Card expect = cardDeck.draw();
 
         //then
         assertThat(expect).isEqualTo(Card.of(Symbol.DIAMOND, CardNumber.ACE));
+    }
+
+    @DisplayName("카드 생성 전략이 없을 경우 인스턴스화 불가능 Exception")
+    @Test
+    void getInstance() {
+        assertThatThrownBy(() -> CardDeck.getInstance(null))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

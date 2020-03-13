@@ -12,22 +12,12 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean isDealer() {
-        return true;
-    }
-
-    @Override
-    public boolean isGambler() {
-        return false;
-    }
-
-    @Override
     public boolean isDrawable() {
         return cardBundle.calculateScore() <= HIT_VALUE;
     }
 
     @Override
-    public GameReport getReport(Player player) {
+    public GameReport createReport(Player player) {
         return new GameReport(player.name, this.cardBundle.compare(player.cardBundle));
     }
 }

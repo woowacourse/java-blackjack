@@ -9,8 +9,18 @@ public class GameReport {
     private final GameResult gameResult;
 
     public GameReport(String name, GameResult gameResult) {
+        validate(name, gameResult);
         this.name = name;
         this.gameResult = gameResult;
+    }
+
+    private void validate(String name, GameResult gameResult) {
+        if (name == null) {
+            throw new IllegalArgumentException("이름이 비어있습니다.");
+        }
+        if (gameResult == null) {
+            throw new IllegalArgumentException("게임 결과가 비어있습니다.");
+        }
     }
 
     public String getName() {

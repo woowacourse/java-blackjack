@@ -33,12 +33,12 @@ class GamblerTest {
 	@DisplayName("겜블러는 게임 결과를 만들어낼수 없습니다.")
 	@Test
 	void getReport() {
-		Player gambler1 = new Gambler(new CardBundle(), "bebop");
-		Player gambler2 = new Gambler(new CardBundle(), "allen");
+        Player gambler1 = new Gambler(new CardBundle(), "bebop");
+        Player gambler2 = new Gambler(new CardBundle(), "allen");
 
-		assertThatThrownBy(() -> gambler1.getReport(gambler2))
-				.isInstanceOf(UnsupportedOperationException.class);
-	}
+        assertThatThrownBy(() -> gambler1.createReport(gambler2))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
 
 	@DisplayName("겜블러는 버스트이거나 블랙잭이면 카드를 뽑을수 없다.")
 	@ParameterizedTest

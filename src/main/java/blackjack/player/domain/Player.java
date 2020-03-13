@@ -12,8 +12,18 @@ public abstract class Player {
     protected final CardBundle cardBundle;
 
     public Player(CardBundle cardBundle, String name) {
+        validate(cardBundle, name);
         this.cardBundle = cardBundle;
         this.name = name;
+    }
+
+    private void validate(CardBundle cardBundle, String name) {
+        if (cardBundle == null) {
+            throw new IllegalArgumentException("CardBundle이 비었습니다.");
+        }
+        if (name == null) {
+            throw new IllegalArgumentException("이름이 비었습니다.");
+        }
     }
 
     public String getName() {
@@ -48,13 +58,9 @@ public abstract class Player {
         return cardBundle.calculateScore();
     }
 
-    public abstract boolean isDealer();
-
-    public abstract boolean isGambler();
-
     public abstract boolean isDrawable();
 
-    public abstract GameReport getReport(Player player);
+    public abstract GameReport createReport(Player player);
 
     public boolean hasCard() {
         return cardBundle.isNotEmpty();
