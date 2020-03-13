@@ -57,7 +57,7 @@ public class Players {
     public Map<Player, WinningResult> decideWinner(Dealer dealer) {
         Map<Player, WinningResult> winningResultOfPlayers = new LinkedHashMap<>();
 
-        players.forEach(player -> winningResultOfPlayers.put(player, Rule.decideWinningResult(dealer, player)));
+        players.forEach(player -> winningResultOfPlayers.put(player, Rule.decideWinningResult(player, dealer)));
 
         return Collections.unmodifiableMap(winningResultOfPlayers);
     }

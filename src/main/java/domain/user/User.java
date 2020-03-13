@@ -32,6 +32,8 @@ public abstract class User {
         return name + CARD + cards.getCardsDrawResult();
     }
 
+    public abstract boolean isAvailableToDraw();
+
     public int calculatePoint() {
         return cards.calculatePointAccordingToHasAce();
     }
@@ -43,8 +45,6 @@ public abstract class User {
     public boolean isBlackJack() {
         return cards.isBlackJack();
     }
-
-    public abstract boolean isAvailableToDraw();
 
     public String getTotalDrawResult() {
         return getDrawResult() + RESULT + calculatePoint();

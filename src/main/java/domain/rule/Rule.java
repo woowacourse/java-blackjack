@@ -1,38 +1,33 @@
 package domain.rule;
 
+import java.util.function.BiFunction;
+
 import domain.result.WinningResult;
-import domain.user.Dealer;
-import domain.user.Player;
+import domain.user.User;
 
-public class Rule {
+public enum Rule {
 
-    public static WinningResult decideWinningResult(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return WinningResult.LOSE;
-        }
-        if (dealer.isBust()) {
-            return WinningResult.WIN;
-        }
-        return bothNotBustCase(dealer, player);
+    FIRST_USER_BUST((first, second) -> first.isBust(), WinningResult.LOSE),
+    SECOND_USER_BUST((first, second) -> second.isBust(), WinningResult.WIN),
+    FIRST_USER_GREATER((first, second) -> first.calculatePoint() > second.calculatePoint(), WinningResult.WIN),
+    FIRST_USER_ONLY_BLACK_JACK((first, second) -> first.isBlackJack() && !second.isBlackJack(), WinningResult.WIN),
+    SECOND_USER_ONLY_BLACK_JACK((first, second) -> !first.isBlackJack() && second.isBlackJack(), WinningResult.LOSE),
+    EQUALS((first, second) -> first.calculatePoint() == second.calculatePoint(), WinningResult.DRAW);
+
+    private final BiFunction<User, User, Boolean> condition;
+    private final WinningResult winningResult;
+
+    Rule(BiFunction<User, User, Boolean> condition, WinningResult winningResult) {
+        this.condition = condition;
+        this.winningResult = winningResult;
     }
 
-    private static WinningResult bothNotBustCase(Dealer dealer, Player player) {
-        if (player.calculatePoint() > dealer.calculatePoint()) {
-            return WinningResult.WIN;
-        }
-        if (player.calculatePoint() == dealer.calculatePoint()) {
-            return checkBlackJackCase(dealer, player);
+    public static WinningResult decideWinningResult(User first, User second) {
+        for (Rule rule : Rule.values()) {
+            if (rule.condition.apply(first, second)) {
+                return rule.winningResult;
+            }
         }
         return WinningResult.LOSE;
-    }
-
-    private static WinningResult checkBlackJackCase(Dealer dealer, Player player) {
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            return WinningResult.WIN;
-        }
-        if (!player.isBlackJack() && dealer.isBlackJack()) {
-            return WinningResult.LOSE;
-        }
-        return WinningResult.DRAW;
     }
 }

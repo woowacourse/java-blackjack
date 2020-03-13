@@ -41,7 +41,7 @@ class RuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.SIX));
         dealer.draw(dealerCard);
 
-        assertThat(Rule.decideWinningResult(dealer, player)).isEqualTo(expected);
+        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardSet() {
@@ -82,7 +82,7 @@ class RuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
-        assertThat(Rule.decideWinningResult(dealer, player)).isEqualTo(WinningResult.DRAW);
+        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(WinningResult.DRAW);
     }
 
     @Test
@@ -95,7 +95,7 @@ class RuleTest {
         dealer.draw(new Card(Symbol.SPADE, Type.SIX));
         dealer.draw(new Card(Symbol.HEART, Type.FIVE));
 
-        assertThat(Rule.decideWinningResult(dealer, player)).isEqualTo(WinningResult.WIN);
+        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -108,6 +108,6 @@ class RuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
-        assertThat(Rule.decideWinningResult(dealer, player)).isEqualTo(WinningResult.LOSE);
+        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(WinningResult.LOSE);
     }
 }
