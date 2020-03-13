@@ -29,7 +29,7 @@ public abstract class Gamer {
     }
 
     public boolean isNotBust() {
-        return playingCards.isBust();
+        return playingCards.isNotBust();
     }
 
     public String getName() {
