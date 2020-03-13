@@ -17,6 +17,7 @@ public class Dealer extends Gamer {
 		super("딜러");
 	}
 
+	@Override
 	public boolean canDraw() {
 		return scoreHands() <= DRAW_CONDITION;
 	}
