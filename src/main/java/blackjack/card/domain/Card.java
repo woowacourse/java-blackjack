@@ -4,8 +4,6 @@ import blackjack.card.domain.component.CardNumber;
 import blackjack.card.domain.component.Symbol;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Card {
@@ -20,6 +18,10 @@ public class Card {
 
 	public static Card of(Symbol symbol, CardNumber cardNumber) {
 		return CardCache.of(symbol, cardNumber);
+	}
+
+	public static Card[] values() {
+		return CardCache.cache;
 	}
 
 	public boolean isAce() {
@@ -43,12 +45,12 @@ public class Card {
 	}
 
 	private static class CardCache {
-		private static final List<Card> cache;
+		private static final Card[] cache;
 
 		static {
 			cache = Arrays.stream(CardNumber.values())
-				.flatMap(CardCache::makeCards)
-				.collect(Collectors.toList());
+					.flatMap(CardCache::makeCards)
+					.toArray(Card[]::new);
 		}
 
 		private CardCache() {
@@ -61,7 +63,7 @@ public class Card {
 
 		public static Card of(Symbol symbol, CardNumber cardNumber) {
 			validate(symbol, cardNumber);
-			return cache.stream()
+			return Arrays.stream(cache)
 					.filter(card -> card.symbol == symbol)
 					.filter(card -> card.cardNumber == cardNumber)
 					.findFirst()
