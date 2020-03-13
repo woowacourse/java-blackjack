@@ -18,12 +18,12 @@ public class CardFactoryTest {
 			}
 		}
 
-		assertThat(CardFactory.create()).isEqualTo(cards);
+		assertThat(CardFactory.getInstance()).isEqualTo(cards);
 	}
 
 	@Test
 	void sizeTest() {
-		int size = CardFactory.create().size();
+		int size = CardFactory.getInstance().size();
 		assertThat(size).isEqualTo(52);
 	}
 

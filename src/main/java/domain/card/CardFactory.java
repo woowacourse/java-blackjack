@@ -20,7 +20,7 @@ public class CardFactory {
 		}
 	}
 
-	public static List<Card> create() {
+	public static List<Card> getInstance() {
 		return Collections.unmodifiableList(cards);
 	}
 }

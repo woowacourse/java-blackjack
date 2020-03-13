@@ -51,7 +51,6 @@ public class OutputView {
 		builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
 		builder.append(NEW_LINE);
 		System.out.println(builder);
-
 	}
 
 	public static void printUserResult(List<User> users) {

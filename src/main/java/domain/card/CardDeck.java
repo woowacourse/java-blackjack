@@ -6,30 +6,28 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class CardDeck {
-	private final List<Card> cards;
-	private final Stack<Integer> decks;
+	private static final String EMPTY_CARD_DECK_EXCEPTION_MESSAGE = "카드 덱이 비어있습니다.";
+
+	private final Stack<Card> cards;
 
 	public CardDeck() {
-		this.cards = CardFactory.create();
-		this.decks = new Stack<>();
-		for (int index = 0, size = cards.size(); index < size; index++) {
-			decks.push(index);
-		}
-		Collections.shuffle(decks);
+		this.cards = initCards();
 	}
 
-	public CardDeck(List<Integer> decks) {
-		this.cards = CardFactory.create();
-		this.decks = new Stack<>();
-		for (Integer order : decks) {
-			this.decks.push(order);
+	private Stack<Card> initCards() {
+		Stack<Card> cards = new Stack<>();
+		List<Card> totalCards = CardFactory.getInstance();
+		for (Card each : totalCards) {
+			cards.push(each);
 		}
+		Collections.shuffle(cards);
+		return cards;
 	}
 
 	public Card draw() {
-		if (decks.isEmpty()) {
-			throw new NoSuchElementException("카드 덱이 비어있습니다.");
+		if (cards.isEmpty()) {
+			throw new NoSuchElementException(EMPTY_CARD_DECK_EXCEPTION_MESSAGE);
 		}
-		return cards.get(decks.pop());
+		return cards.pop();
 	}
 }
