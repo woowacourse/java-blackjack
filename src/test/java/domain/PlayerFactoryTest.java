@@ -15,7 +15,7 @@ public class PlayerFactoryTest {
     @Test
     void createPlayersTest() {
         Cards cards = new Cards();
-        List<String> playerName = new ArrayList<>(Arrays.asList("pobi","json"));
+        List<String> playerName = new ArrayList<>(Arrays.asList("pobi", "json"));
         PlayerFactory playerFactory = PlayerFactory.getInstance();
 
         Assertions.assertThat(playerFactory.createPlayers(cards, playerName)).isInstanceOf(Players.class);
