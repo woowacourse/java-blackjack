@@ -11,9 +11,8 @@ public abstract class User {
     public boolean checkBurst() {
         if (hands.isBurst()) {
             this.burst = true;
-            return true;
         }
-        return false;
+        return this.burst;
     }
 
     public int handSize() {
