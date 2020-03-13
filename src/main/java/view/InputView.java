@@ -4,8 +4,6 @@ import model.user.Player;
 
 import java.util.Scanner;
 
-import static view.OutputView.NEW_LINE;
-
 public class InputView {
     private static Scanner scanner = new Scanner(System.in);
 
@@ -15,8 +13,7 @@ public class InputView {
     }
 
     public static String inputYesOrNo(Player player) {
-        System.out.println(NEW_LINE + player.getName() +
-                "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
 }

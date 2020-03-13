@@ -12,30 +12,28 @@ import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static controller.BlackJackGame.HIT_BOUNDARY;
 
 public class OutputView {
-    public static final String DELIMITER = ": ";
+
     public static final String NEW_LINE = "\n";
-    public static final String RESULT_STRING = " - 결과: ";
+    private static final String DELIMITER = ": ";
+    private static final String CARD_DELIMITER = "카드: ";
+    private static final String INITIAL_SET_MESSAGE = "%s와 %s에게 %d장의 카드를 나누었습니다.";
+    private static final String DEALER_DRAW_MESSAGE = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String RESULT_CARD_SCORE_MESSAGE = "%s카드: %s - 결과: %d";
+    private static final String FINAL_WIN_OR_LOSE_MESSAGE = "## 최종 승패";
+    private static final String DEALER_RESULT_MESSAGE = "%s:  %d승 %d무 %d패";
 
     public static void printInitialCards(Players players, Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("\n")
-                .append(dealer.getName())
-                .append("와 ")
-                .append(players.getNames())
-                .append("에게 ")
-                .append(INITIAL_DRAW_COUNT)
-                .append("장의 카드를 나누었습니다.");
-        System.out.println(stringBuilder.toString());
+        System.out.printf(NEW_LINE + INITIAL_SET_MESSAGE + NEW_LINE,
+            dealer.getName(), players.getNames(), INITIAL_DRAW_COUNT);
     }
 
-    public static void printUsersCard(Players players, Dealer dealer) {
+    public static void printUserCard(Players players, Dealer dealer) {
         printDealerCard(dealer);
         printPlayersCard(players);
     }
 
     private static void printDealerCard(Dealer dealer) {
-        System.out.print(NEW_LINE + dealer.getName() + DELIMITER + dealer.toStringCardHandFirst());
+        System.out.println(dealer.getName() + DELIMITER + dealer.toStringCardHandFirst());
     }
 
     private static void printPlayersCard(Players players) {
@@ -46,54 +44,48 @@ public class OutputView {
     }
 
     public static void printPlayerCard(BlackJackPerson blackJackPerson) {
-        System.out.print(NEW_LINE + blackJackPerson.getName() + DELIMITER + blackJackPerson.toStringCardHand());
+        System.out.println(
+            blackJackPerson.getName() + CARD_DELIMITER + blackJackPerson.toStringCardHand());
     }
 
     public static void printDealerDraw(Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append(NEW_LINE)
-                .append(dealer.getName())
-                .append("는 ")
-                .append(HIT_BOUNDARY)
-                .append("이하라 한장의 카드를 더 받았습니다.");
-        System.out.println(stringBuilder.toString());
+        System.out.printf(NEW_LINE + DEALER_DRAW_MESSAGE + NEW_LINE,
+            dealer.getName(), HIT_BOUNDARY);
     }
 
-    public static void printFinalCardHandResult(Players players, Dealer dealer) {
+    public static void printFinalScoreResult(Players players, Dealer dealer) {
         System.out.println();
-        printPlayerCard(dealer);
-        System.out.print(RESULT_STRING + dealer.getScore());
+        printScoreResult(dealer);
         for (Player player : players) {
-            printPlayerCard(player);
-            System.out.print(RESULT_STRING + player.getScore());
+            printScoreResult(player);
         }
     }
 
+    private static void printScoreResult(BlackJackPerson blackJackPerson) {
+        System.out.printf(RESULT_CARD_SCORE_MESSAGE + NEW_LINE,
+            blackJackPerson.getName(),
+            blackJackPerson.toStringCardHand(),
+            blackJackPerson.getScore());
+    }
+
     public static void printResult(Players players, Dealer dealer) {
-        System.out.println(NEW_LINE + NEW_LINE + "## 최종 승패");
+        System.out.println(NEW_LINE + FINAL_WIN_OR_LOSE_MESSAGE);
         printDealerResult(dealer);
         printPlayersResult(players);
     }
 
     private static void printDealerResult(Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
         Map<Result, Integer> result = dealer.getResult();
-        stringBuilder.append(dealer.getName())
-            .append(": ")
-            .append(result.get(Result.WIN))
-            .append("승 ")
-            .append(result.get(Result.DRAW))
-            .append("무 ")
-            .append(result.get(Result.LOSE))
-            .append("패");
-        System.out.println(stringBuilder.toString());
+        System.out.printf(DEALER_RESULT_MESSAGE,
+            dealer.getName(),
+            result.get(Result.WIN),
+            result.get(Result.DRAW),
+            result.get(Result.LOSE));
     }
 
     private static void printPlayersResult(Players players) {
         for (Player player : players) {
-            System.out.print(player.getName() + DELIMITER);
-            System.out.println(player.getResult().toString());
+            System.out.println(player.getName() + DELIMITER + player.getResult().toString());
         }
     }
 }

@@ -16,10 +16,10 @@ public class BlackJackGame {
 
     public static void play(Players players, Dealer dealer, Deck deck) {
         OutputView.printInitialCards(players, dealer);
-        OutputView.printUsersCard(players, dealer);
+        OutputView.printUserCard(players, dealer);
         drawCardToPlayers(players, deck);
         hitOrStayForDealer(dealer, deck);
-        OutputView.printFinalCardHandResult(players, dealer);
+        OutputView.printFinalScoreResult(players, dealer);
         compareScores(players, dealer);
         OutputView.printResult(players, dealer);
     }
