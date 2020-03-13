@@ -34,8 +34,7 @@ public class CardHand implements Iterable<Card> {
         return cards.stream()
                 .map(Card::getSymbol)
                 .map(Symbol::getScore)
-                .reduce(Integer::sum)
-                .get();
+                .reduce(0, Integer::sum);
     }
 
     public boolean isAce() {

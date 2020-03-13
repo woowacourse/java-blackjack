@@ -1,25 +1,12 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
-public class Player extends User {
-    public static final String DELIMITER = ", ";
-
+public class Player extends BlackJackPerson {
     private Result result;
 
     public Player(String name, CardHand cardHand) {
         super(name, cardHand);
-    }
-
-    @Override
-    public String toStringCardHand() {
-        List<String> cardNames = new ArrayList<>();
-
-        for (Card card : cardHand) {
-            cardNames.add(card.toString());
-        }
-        return String.join(DELIMITER, cardNames);
     }
 
     public void setResult(Result result) {
@@ -30,5 +17,20 @@ public class Player extends User {
         return result;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return result == player.result;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(result);
+    }
 }

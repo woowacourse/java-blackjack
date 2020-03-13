@@ -2,20 +2,33 @@ package model;
 
 import static controller.BlackJackGame.BLACK_JACK_COUNT;
 
-public abstract class User {
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlackJackPerson {
+    private static final String DELIMITER = ", ";
+    private static final String DEALER_NAME = "딜러";
+
     protected final String name;
     protected final CardHand cardHand;
 
-    public User(CardHand cardHand) {
-        this("딜러", cardHand);
+    public BlackJackPerson(CardHand cardHand) {
+        this(DEALER_NAME, cardHand);
     }
 
-    public User(String name, CardHand cardHand) {
+    public BlackJackPerson(String name, CardHand cardHand) {
         this.name = name;
         this.cardHand = cardHand;
     }
 
-    public abstract String toStringCardHand();
+    public String toStringCardHand() {
+        List<String> cardNames = new ArrayList<>();
+
+        for (Card card : cardHand) {
+            cardNames.add(card.toString());
+        }
+        return String.join(DELIMITER, cardNames);
+    };
 
     public void drawCard(CardHand cardHand) {
         for (Card drawCard : cardHand) {

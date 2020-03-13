@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserTest {
+public class BlackJackPersonTest {
     public static final String PLAYER_NAME = "DD";
     static CardHand bustHand1 = new CardHand();
     static CardHand bustHand2 = new CardHand();
@@ -25,7 +25,7 @@ public class UserTest {
     @Test
     @DisplayName("딜러 이름 테스트")
     void dealer_Name() {
-        User dealer = new Dealer(notBustHand1);
+        BlackJackPerson dealer = new Dealer(notBustHand1);
         assertThat(dealer.getName()).isEqualTo("딜러");
     }
 

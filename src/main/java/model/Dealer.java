@@ -3,9 +3,8 @@ package model;
 import java.util.*;
 
 import static controller.BlackJackGame.HIT_BOUNDARY;
-import static model.Player.DELIMITER;
 
-public class Dealer extends User {
+public class Dealer extends BlackJackPerson {
     public static final int ZERO = 0;
     private final Map<Result, Integer> result = new HashMap<>();
 
@@ -35,16 +34,6 @@ public class Dealer extends User {
 
     public Map<Result, Integer> getResult() {
         return Collections.unmodifiableMap(result);
-    }
-
-    @Override
-    public String toStringCardHand() {
-        List<String> cardNames = new ArrayList<>();
-
-        for (Card card : cardHand) {
-            cardNames.add(card.toString());
-        }
-        return String.join(DELIMITER, cardNames);
     }
 
     public void setResult(final Result result) {

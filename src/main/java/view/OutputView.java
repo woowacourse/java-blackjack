@@ -41,8 +41,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerCard(User user) {
-        System.out.print(NEW_LINE + user.getName() + DELIMITER + user.toStringCardHand());
+    public static void printPlayerCard(BlackJackPerson blackJackPerson) {
+        System.out.print(NEW_LINE + blackJackPerson.getName() + DELIMITER + blackJackPerson.toStringCardHand());
     }
 
     public static void printDealerDraw(Dealer dealer) {
@@ -56,7 +56,7 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    public static void printFinalCardHandResult(final Players players, final Dealer dealer) {
+    public static void printFinalCardHandResult(Players players, Dealer dealer) {
         System.out.println();
         printPlayerCard(dealer);
         System.out.print(RESULT_STRING + dealer.getScore());
@@ -66,7 +66,7 @@ public class OutputView {
         }
     }
 
-    public static void printDealerResult(final Dealer dealer) {
+    public static void printDealerResult(Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         Map<Result, Integer> result = dealer.getResult();
         stringBuilder.append(dealer.getName())
@@ -78,13 +78,13 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    public static void printResult(final Players players, final Dealer dealer) {
+    public static void printResult(Players players, Dealer dealer) {
         System.out.println(NEW_LINE + NEW_LINE + "## 최종 승패");
         printDealerResult(dealer);
         printPlayersResult(players);
     }
 
-    private static void printPlayersResult(final Players players) {
+    private static void printPlayersResult(Players players) {
         for (Player player : players) {
             System.out.print(player.getName() + DELIMITER);
             System.out.println(player.getResult().toString());
