@@ -1,53 +1,57 @@
 package domains.user;
 
-import domains.card.Deck;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Players implements Iterable<Player>{
-    public static final String DELIMITER = ",";
+import domains.card.Deck;
 
-    List<Player> players;
+public class Players implements Iterable<Player> {
+	private static final String DELIMITER = ",";
 
-    public Players(String playerNames, Deck deck) {
-        players = new ArrayList<>();
-        checkNull(playerNames);
-        List<String> names = splitNames(playerNames);
-        checkDuplication(names);
-        for (String name : names) {
-            players.add(new Player(name, deck));
-        }
-    }
+	private List<Player> players;
 
-    public Players(List<Player> players) {
-        this.players = players;
-    }
+	public Players(String playerNames, Deck deck) {
+		players = new ArrayList<>();
+		checkNull(playerNames);
+		List<String> names = splitNames(playerNames);
+		checkDuplication(names);
+		for (String name : names) {
+			players.add(new Player(name, deck));
+		}
+	}
 
-    private void checkNull(String playerNames) {
-        if (Objects.isNull(playerNames)) {
-            throw new InvalidPlayersException(InvalidPlayersException.NULL);
-        }
-    }
+	public Players(List<Player> players) {
+		this.players = players;
+	}
 
-    private List<String> splitNames(String playerNames) {
-        List<String> names = Arrays.asList(playerNames.split(DELIMITER));
-        names = names.stream().map(String::trim).collect(Collectors.toList());
-        return names;
-    }
+	private void checkNull(String playerNames) {
+		if (Objects.isNull(playerNames)) {
+			throw new InvalidPlayersException(InvalidPlayersException.NULL);
+		}
+	}
 
-    private void checkDuplication(List<String> names) {
-        int distinctNameCount = (int) names.stream()
-                .distinct()
-                .count();
+	private List<String> splitNames(String playerNames) {
+		List<String> names = Arrays.asList(playerNames.split(DELIMITER));
+		names = names.stream().map(String::trim).collect(Collectors.toList());
+		return names;
+	}
 
-        if (names.size() != distinctNameCount) {
-            throw new InvalidPlayersException(InvalidPlayersException.DUPLICATION);
-        }
-    }
+	private void checkDuplication(List<String> names) {
+		int distinctNameCount = (int)names.stream()
+			.distinct()
+			.count();
 
-    @Override
-    public Iterator<Player> iterator() {
-        return players.iterator();
-    }
+		if (names.size() != distinctNameCount) {
+			throw new InvalidPlayersException(InvalidPlayersException.DUPLICATION);
+		}
+	}
+
+	@Override
+	public Iterator<Player> iterator() {
+		return players.iterator();
+	}
 }

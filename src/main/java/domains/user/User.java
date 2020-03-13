@@ -3,31 +3,31 @@ package domains.user;
 import domains.card.Deck;
 
 public abstract class User {
-    protected Hands hands;
-    protected boolean burst = false;
+	Hands hands;
+	private boolean burst = false;
 
-    abstract void hit(Deck deck);
+	abstract void hit(Deck deck);
 
-    public boolean checkBurst() {
-        if (hands.isBurst()) {
-            this.burst = true;
-        }
-        return this.burst;
-    }
+	public boolean checkBurst() {
+		if (hands.isBurst()) {
+			this.burst = true;
+		}
+		return this.burst;
+	}
 
-    public int handSize() {
-        return hands.size();
-    }
+	public int handSize() {
+		return hands.size();
+	}
 
-    public int score() {
-        return hands.score();
-    }
+	public int score() {
+		return hands.score();
+	}
 
-    public String getHandsWords() {
-        return hands.toString();
-    }
+	public String getHandsWords() {
+		return hands.toString();
+	}
 
-    public boolean isBurst() {
-        return burst;
-    }
+	public boolean isBurst() {
+		return burst;
+	}
 }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DeckFactory {
-    public static List<Card> create() {
+class DeckFactory {
+    static List<Card> create() {
         List<Card> cards = new ArrayList<>();
         Symbol[] symbols = Symbol.values();
         for (Symbol symbol : symbols) {
