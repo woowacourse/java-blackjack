@@ -26,10 +26,4 @@ public class Dealer extends User {
 	public List<Card> getInitialCard() {
 		return cards.getCards().subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
 	}
-
-	@Override
-	public String getName() {
-		return name.getName();
-	}
-
 }

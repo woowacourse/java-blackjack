@@ -24,7 +24,6 @@ public class CardFactoryTest {
 	@Test
 	void sizeTest() {
 		int size = CardFactory.create().size();
-
 		assertThat(size).isEqualTo(52);
 	}
 

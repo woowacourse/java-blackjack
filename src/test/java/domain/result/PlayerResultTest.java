@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerResultTest {
-	@DisplayName("Null값이 포함된 인자로 객체 생성시 예외 테스")
+	@DisplayName("Null값이 포함된 인자로 객체 생성시 예외가 발생한다.")
 	@Test
 	void createWithNullArgumentExceptionTest() {
 		assertThatThrownBy(() -> new PlayerResult(null, null))

@@ -60,28 +60,6 @@ public class CardsTest {
 		assertThat(cards.isBlackjack()).isEqualTo(false);
 	}
 
-/*
-	private static Stream<Arguments> blackjackTestSet() {
-		return Stream.of(
-			Arguments.of(createCards(Arrays.asList(1, 10)))), true),
-			Arguments.of(new Cards(
-				Arrays.asList(
-					new Card(Symbol.CLOVER, Type.ACE),
-					new Card(Symbol.CLOVER, Type.TEN),
-					new Card(Symbol.CLOVER, Type.TWO)
-				)
-			), false),
-			Arguments.of(new Cards(
-				Arrays.asList(
-					new Card(Symbol.CLOVER, Type.ACE),
-					new Card(Symbol.CLOVER, Type.TEN),
-					new Card(Symbol.CLOVER, Type.TWO)
-				)
-			), false)
-		);
-	}
-	*/
-
 	@Test
 	void isBustTest() {
 		Cards cards = createCards(Arrays.asList(2, 10, 10));

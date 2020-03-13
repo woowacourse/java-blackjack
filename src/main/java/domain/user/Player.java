@@ -24,11 +24,6 @@ public class Player extends User {
 	}
 
 	@Override
-	public String getName() {
-		return name.getName();
-	}
-
-	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;

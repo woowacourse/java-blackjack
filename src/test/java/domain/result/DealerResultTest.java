@@ -17,7 +17,7 @@ class DealerResultTest {
 			.isInstanceOf(NullPointerException.class);
 	}
 
-	@DisplayName("승패 집계가 제대로 이뤄지는지 테스트")
+	@DisplayName("딜러의 누적 승패 집계가 제대로 이뤄지는지 테스트")
 	@Test
 	void calculateDealerResultTest() {
 		DealerResult dealerResult = new DealerResult(Arrays.asList(MatchResult.WIN, MatchResult.WIN));

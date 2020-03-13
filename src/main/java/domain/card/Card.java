@@ -36,7 +36,7 @@ public class Card {
 			return false;
 		}
 		Card that = (Card)object;
-		return symbol == that.symbol &&
+		return this.symbol == that.symbol &&
 			this.type == that.type;
 	}
 

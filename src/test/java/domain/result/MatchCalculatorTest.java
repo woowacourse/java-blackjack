@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
@@ -16,6 +17,7 @@ import domain.user.Player;
 import domain.user.User;
 
 class MatchCalculatorTest {
+	@DisplayName("플레이어들 각각 딜러와 점수를 비교한 뒤, 모든 플레이어의 게임 승패여부를 목록으로 반환한다.")
 	@Test
 	void getMatchResultsTest() {
 		User player = Player.valueOf("test");

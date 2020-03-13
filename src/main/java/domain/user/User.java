@@ -41,7 +41,9 @@ public abstract class User {
 		return cards.getCards();
 	}
 
-	public abstract List<Card> getInitialCard();
+	public String getName() {
+		return name.getName();
+	}
 
-	public abstract String getName();
+	public abstract List<Card> getInitialCard();
 }
