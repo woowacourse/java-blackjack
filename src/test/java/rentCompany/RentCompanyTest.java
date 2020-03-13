@@ -1,10 +1,9 @@
 package rentCompany;
 
+import org.junit.jupiter.api.Test;
 import rentCompany.car.Avante;
 import rentCompany.car.K5;
 import rentCompany.car.Sonata;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -12,7 +11,7 @@ public class RentCompanyTest {
 	private static final String NEWLINE = System.getProperty("line.separator");
 
 	@Test
-	public void report() throws Exception {
+	public void report() {
 		RentCompany company = RentCompany.create();
 		company.addCar(new Sonata(150));
 		company.addCar(new K5(400));

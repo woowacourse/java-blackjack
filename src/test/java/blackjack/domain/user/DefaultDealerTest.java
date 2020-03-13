@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +20,7 @@ class DefaultDealerTest {
 
 	@BeforeEach
 	void setUp() {
-		dealer = DefaultDealer.create();
+		dealer = DefaultDealer.dealer();
 	}
 
 	@Test
@@ -96,9 +95,9 @@ class DefaultDealerTest {
 
 	@ParameterizedTest
 	@MethodSource("generateCalculateScoreParams")
-	void calculateScore(List<Card> cards, Score expected) {
+	void calculateScore(Card[] cards, Score expected) {
 		// given
-		dealer.giveCards(cards.toArray(Card[]::new));
+		dealer.giveCards(cards);
 
 		// then
 		assertThat(dealer.calculateScore()).isEqualTo(expected);
@@ -106,11 +105,11 @@ class DefaultDealerTest {
 
 	public static Stream<Arguments> generateCalculateScoreParams() {
 		return Stream.of(
-				Arguments.of(Arrays.asList(Card.of(Symbol.ACE, Type.HEART),
-						Card.of(Symbol.TEN, Type.HEART)), Score.of(21)),
-				Arguments.of(Arrays.asList(Card.of(Symbol.ACE, Type.HEART),
+				Arguments.of(new Card[]{Card.of(Symbol.ACE, Type.HEART),
+						Card.of(Symbol.TEN, Type.HEART)}, Score.of(21)),
+				Arguments.of(new Card[]{Card.of(Symbol.ACE, Type.HEART),
 						Card.of(Symbol.ACE, Type.HEART),
-						Card.of(Symbol.TEN, Type.HEART)), Score.of(12))
+						Card.of(Symbol.TEN, Type.HEART)}, Score.of(12))
 		);
 	}
 

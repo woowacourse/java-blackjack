@@ -8,7 +8,7 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 		super(NAME);
 	}
 
-	public static DefaultDealer create() {
+	public static DefaultDealer dealer() {
 		return new DefaultDealer();
 	}
 
