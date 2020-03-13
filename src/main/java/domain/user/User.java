@@ -34,6 +34,14 @@ public abstract class User {
         return cards.calculatePointAccordingToHasAce();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public abstract boolean isAvailableToDraw();
 
     public String getTotalDrawResult() {

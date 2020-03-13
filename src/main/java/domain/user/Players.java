@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import domain.result.WinningResult;
+import domain.rule.Rule;
 
 public class Players {
 
@@ -54,7 +55,7 @@ public class Players {
     public Map<Player, WinningResult> decideWinner(Dealer dealer) {
         Map<Player, WinningResult> winningResultOfPlayers = new LinkedHashMap<>();
 
-        players.forEach(player -> winningResultOfPlayers.put(player, player.modifyWinningResult(dealer)));
+        players.forEach(player -> winningResultOfPlayers.put(player, Rule.decideWinningResult(dealer, player)));
 
         return Collections.unmodifiableMap(winningResultOfPlayers);
     }
