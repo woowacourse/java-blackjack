@@ -6,38 +6,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OutputView {
-    public static void printCardDistribution(Players players) {
-        System.out.println("\n딜러와 " + String.join(", ", players.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
+    public static final String DELIMITER = ", ";
+
+    public static void printFirstCards(Dealer dealer, Players players) {
+        printFirstDrawMessage(players);
+        printFirstDealerCards(dealer);
+        printPlayersCards(players, false);
+        System.out.println();
     }
 
-    public static void printUsersCards(Dealer dealer, Players players) {
+    private static void printFirstDrawMessage(Players players) {
+        System.out.println("\n딜러와 " + String.join(DELIMITER, players.getPlayerNames())
+                + "에게 2장의 카드를 나누었습니다.");
+    }
+
+    private static void printFirstDealerCards(Dealer dealer) {
         System.out.println("딜러: " + dealer.getCards().getCards().get(0));
-        for (Player player : players.getPlayers()) {
-            printPlayerCards(player);
+    }
+
+    public static void printUsersCards(Dealer dealer, Players players, boolean withScore) {
+        printUserCards("딜러", dealer, withScore);
+        printPlayersCards(players, withScore);
+    }
+
+    public static void printUserCards(String name, User user, boolean withScore) {
+        System.out.print(name + ": " + user.getCards());
+        if (withScore) {
+            System.out.print("- 결과: " + user.getCards().getScore());
         }
         System.out.println();
     }
 
-    public static void printPlayerCards(Player player) {
-        String playerCards = player.getCards().getCards().toString();
-        System.out.println(player.getName() + ": " + playerCards.substring(1, playerCards.length() - 1));
-    }
-
-    public static void printDealerOneMoreCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-    }
-
-    public static void printUsersCardsAndScore(Dealer dealer, Players players) {
-        printUserCardsAndScore("딜러", dealer);
+    public static void printPlayersCards(Players players, boolean withScore) {
         for (Player player : players.getPlayers()) {
-            printUserCardsAndScore(player.getName(), player);
+            printUserCards(player.getName(), player, withScore);
         }
-    }
-
-    public static void printUserCardsAndScore(String name, User user) {
-        String userCards = user.getCards().getCards().toString();
-        System.out.println(name + ": " + userCards.substring(1, userCards.length() - 1)
-                + "- 결과: " + user.getCards().getScore());
     }
 
     public static void printFinalResult(Players players) {
@@ -49,8 +52,13 @@ public class OutputView {
     }
 
     private static void printPlayerFinalResult(Player player) {
-        System.out.println(player.getName() + ": " + player.getWinningResult().getName());
+        System.out.println(player.getName() + ": " + player.getWinningResult().getKorean());
     }
+
+    public static void printDealerHitMessage() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+    }
+
 
     /* todo 수정 필요
        1. 뷰에 둔다.
@@ -73,7 +81,7 @@ public class OutputView {
         System.out.print("딜러: ");
         for (WinningResult winningResult : dealerWinningResult.keySet()) {
             if (dealerWinningResult.get(winningResult) != 0) {
-                System.out.print(dealerWinningResult.get(winningResult) + winningResult.getName() + " ");
+                System.out.print(dealerWinningResult.get(winningResult) + winningResult.getKorean() + " ");
             }
         }
         System.out.println();

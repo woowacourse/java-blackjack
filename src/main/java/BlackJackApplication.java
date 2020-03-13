@@ -23,7 +23,7 @@ public class BlackJackApplication {
         for (Player player : players.getPlayers()) {
             player.calculateWinningResult(dealer.getCards().getScore());
         }
-        OutputView.printUsersCardsAndScore(dealer, players);
+        OutputView.printUsersCards(dealer, players, true);
         OutputView.printFinalResult(players);
     }
 
@@ -31,8 +31,8 @@ public class BlackJackApplication {
         for (Player player : players.getPlayers()) {
             drawMorePlayerCard(cardDeck, player);
         }
-        while (dealer.isAbleDrawCards()) {
-            OutputView.printDealerOneMoreCard();
+        while (dealer.canHit()) {
+            OutputView.printDealerHitMessage();
             dealer.drawCard(cardDeck);
         }
     }
@@ -42,14 +42,13 @@ public class BlackJackApplication {
         for (Player player : players.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
-        OutputView.printCardDistribution(players);
-        OutputView.printUsersCards(dealer, players);
+        OutputView.printFirstCards(dealer, players);
     }
 
     private static void drawMorePlayerCard(CardDeck cardDeck, Player player) {
-        while (player.isAbleDrawCards() && InputView.inputMoreCard(player)) {
+        while (player.canHit() && InputView.inputMoreCard(player)) {
             player.drawCard(cardDeck);
-            OutputView.printPlayerCards(player);
+            OutputView.printUserCards(player.getName(), player, false);
         }
     }
 }
