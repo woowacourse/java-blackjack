@@ -35,17 +35,9 @@ public class BlackJackGame {
     }
 
     private static void drawCardEachPlayer(Deck deck, Player player) {
-        YesOrNo yesOrNo = YesOrNo.of("y");
-        while (!player.isBust() && yesOrNo.isInputYes()) {
-            yesOrNo = YesOrNo.of(InputView.inputYesOrNo(player));
-            drawWhenYes(deck, player, yesOrNo);
-            OutputView.printPlayerCard(player);
-        }
-    }
-
-    private static void drawWhenYes(Deck deck, Player player, YesOrNo yesOrNo) {
-        if (yesOrNo.isInputYes()) {
+        while (!player.isBust() && YesOrNo.findAnswer(InputView.inputYesOrNo(player)).isYes()) {
             player.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
+            OutputView.printPlayerCard(player);
         }
     }
 
