@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.card.domain.Card;
+import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
 import blackjack.view.dto.GameStatisticsDTO;
@@ -14,7 +16,7 @@ public class OutputView {
 
 		System.out.println(String.format("딜러와 %s에게 %d장을 나누었습니다.", collectGamblersNames(gamblers), Players.STARTING_CARD_SIZE));
 
-		System.out.println(String.format("%s", getCardInfo(dealer).split(",")[0]));
+		System.out.println(String.format("%s : %s", dealer.getName(), makeCardInfoWithHiddenCard((Dealer) dealer)));
 		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));
 	}
 
@@ -36,6 +38,11 @@ public class OutputView {
 		return player.getCardBundle().stream()
 				.map(card -> String.format("%s%s", card.getMessage(), card.getSymbol()))
 				.collect(Collectors.joining(", "));
+	}
+
+	private static String makeCardInfoWithHiddenCard(Dealer dealer) {
+		List<Card> cards = dealer.getCardBundle();
+		return cards.get(0).getMessage() + cards.get(0).getSymbol();
 	}
 
 	private static String getCardList(Players players) {
