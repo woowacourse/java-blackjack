@@ -6,11 +6,11 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-public class CardDividerTest {
+public class CardDeckTest {
 
 	@Test
 	void divideTest() {
-		CardDivider cardDivider = new CardDivider(Collections.singletonList(0));
-		assertThat(cardDivider.divide()).isEqualTo(new Card(Symbol.DIAMOND, Type.ACE));
+		CardDeck cardDeck = new CardDeck(Collections.singletonList(0));
+		assertThat(cardDeck.draw()).isEqualTo(new Card(Symbol.DIAMOND, Type.ACE));
 	}
 }

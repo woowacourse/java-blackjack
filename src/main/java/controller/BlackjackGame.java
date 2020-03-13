@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.YesOrNo;
-import domain.card.CardDivider;
+import domain.MoreDrawResponse;
+import domain.card.CardDeck;
 import domain.result.DealerResult;
 import domain.result.MatchCalculator;
 import domain.result.MatchResult;
@@ -18,14 +18,14 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackGame {
-	private final CardDivider cardDivider;
+	private final CardDeck cardDeck;
 	private final List<User> users;
 	private final Dealer dealer;
 
-	public BlackjackGame(CardDivider cardDivider) {
+	public BlackjackGame(CardDeck cardDeck) {
 		users = PlayerFactory.create(InputView.inputNames());
 		dealer = new Dealer();
-		this.cardDivider = cardDivider;
+		this.cardDeck = cardDeck;
 	}
 
 	public void run() {
@@ -45,7 +45,7 @@ public class BlackjackGame {
 
 	private void initCards(List<User> allUsers) {
 		for (User user : allUsers) {
-			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
+			user.addCards(Arrays.asList(cardDeck.draw(), cardDeck.draw()));
 		}
 		OutputView.printInitialResult(allUsers);
 	}
@@ -80,7 +80,7 @@ public class BlackjackGame {
 			return;
 		}
 		while (isUserNotBust(user) && isContinuousFromInput(user)) {
-			user.addCards(Arrays.asList(cardDivider.divide()));
+			user.addCards(Arrays.asList(cardDeck.draw()));
 			OutputView.printUserCard(user);
 		}
 	}
@@ -94,13 +94,13 @@ public class BlackjackGame {
 	}
 
 	private boolean isContinuousFromInput(User user) {
-		YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
-		return yesOrNo.isContinue();
+		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputYesORNo(user.getName()));
+		return moreDrawResponse.isMoreDraw();
 	}
 
 	private void drawDealerCard(Dealer dealer) {
 		while (dealer.isDrawable()) {
-			dealer.addCards(Arrays.asList(cardDivider.divide()));
+			dealer.addCards(Arrays.asList(cardDeck.draw()));
 			OutputView.printDealerDraw();
 		}
 	}
