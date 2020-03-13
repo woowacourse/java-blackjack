@@ -13,7 +13,7 @@ class DeckTest {
     @Test
     @DisplayName("생성 확인")
     void create() {
-        assertThatCode(DeckFactory::getDeck)
+        assertThatCode(DeckFactory::createDeck)
                 .doesNotThrowAnyException();
     }
 
@@ -45,7 +45,7 @@ class DeckTest {
     @Test
     @DisplayName("카드 한장을 분배")
     void dealOut() {
-        Deck deck = DeckFactory.getDeck();
+        Deck deck = DeckFactory.createDeck();
         assertThat(deck.dealOut()).isExactlyInstanceOf(Card.class);
     }
 }

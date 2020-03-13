@@ -2,9 +2,8 @@ package controller;
 
 import java.util.List;
 
+import domain.card.Deck;
 import domain.result.WinningResult;
-import domain.deck.Deck;
-import domain.deck.DeckFactory;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -17,8 +16,12 @@ public class BlackJackGame {
     private static final int FIRST_CARD_COUNT = 2;
     private final Deck deck;
 
-    public BlackJackGame() {
-        deck = DeckFactory.getDeck();
+    public static BlackJackGame set(Deck deck) {
+        return new BlackJackGame(deck);
+    }
+
+    private BlackJackGame(Deck deck) {
+        this.deck = deck;
     }
 
     public void firstDealOut(Dealer dealer, Players players) {
@@ -50,8 +53,9 @@ public class BlackJackGame {
         return YesOrNo.of(input).isYes();
     }
 
-    public void decideWinner(Dealer dealer, Players players) {
+    public void reflectResult(Dealer dealer, Players players) {
         players.decideWinner(dealer);
+
         List<WinningResult> playerWinningResults = players.getWinningResults();
         playerWinningResults.forEach(winningResult -> dealer.applyWinningResult(winningResult.reverse()));
     }

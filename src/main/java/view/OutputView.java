@@ -9,7 +9,7 @@ public class OutputView {
     public static void printFirstDealOutResult(Dealer dealer, Players players) {
         System.out.println(String.format("\n딜러와 %s에게 2장을 나누었습니다.", players.getAllNames()));
         System.out.println(dealer.getFirstDrawResult());
-        System.out.println(players.getAllFirstDrawResult());
+        System.out.println(players.getAllFirstDrawResults());
         System.out.println();
     }
 
@@ -22,13 +22,14 @@ public class OutputView {
     }
 
     public static void printTotalResult(Dealer dealer, Players players) {
+        System.out.println();
         System.out.println(dealer.getTotalDrawResult());
-        System.out.println(players.getAllTotalDrawResult());
+        System.out.println(players.getAllTotalDrawResults());
     }
 
     public static void printWinningResult(Dealer dealer, Players players) {
         System.out.println("\n## 최종 승패");
         System.out.println(dealer.getTotalWinningResult());
-        System.out.println(players.getAllTotalWinningResult());
+        System.out.println(players.getAllTotalWinningResults());
     }
 }

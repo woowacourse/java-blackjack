@@ -37,13 +37,13 @@ public class Players {
                 .collect(Collectors.joining(", "));
     }
 
-    public String getAllFirstDrawResult() {
+    public String getAllFirstDrawResults() {
         return players.stream()
                 .map(Player::getDrawResult)
                 .collect(Collectors.joining("\n"));
     }
 
-    public String getAllTotalDrawResult() {
+    public String getAllTotalDrawResults() {
         return players.stream()
                 .map(Player::getTotalDrawResult)
                 .collect(Collectors.joining("\n"));
@@ -53,18 +53,18 @@ public class Players {
         players.forEach(player -> player.win(dealer));
     }
 
+    public String getAllTotalWinningResults() {
+        return players.stream()
+                .map(Player::getTotalWinningResult)
+                .collect(Collectors.joining("\n"));
+    }
+
     public List<WinningResult> getWinningResults() {
         return Collections.unmodifiableList(
                 players.stream()
                         .map(Player::getWinningResult)
                         .collect(Collectors.toList())
         );
-    }
-
-    public String getAllTotalWinningResult() {
-        return players.stream()
-                .map(Player::getTotalWinningResult)
-                .collect(Collectors.joining("\n"));
     }
 
     public List<Player> getPlayers() {

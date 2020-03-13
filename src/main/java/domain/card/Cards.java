@@ -9,6 +9,7 @@ public class Cards {
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
     private static final int FIRST_INDEX = 0;
+    private static final int TEN = 10;
 
     private List<Card> cards;
 
@@ -22,7 +23,7 @@ public class Cards {
 
     public int calculatePointAccordingToHasAce() {
         if (isBust() && hasAce()) {
-            return calculatePoint() - 10;
+            return calculatePoint() - TEN;
         }
         return calculatePoint();
     }

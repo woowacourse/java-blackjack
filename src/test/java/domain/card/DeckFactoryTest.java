@@ -10,6 +10,6 @@ class DeckFactoryTest {
     @Test
     @DisplayName("생성 확인")
     void createDeck() {
-        assertThat(DeckFactory.getDeck()).isNotNull();
+        assertThat(DeckFactory.createDeck()).isNotNull();
     }
 }

@@ -1,4 +1,5 @@
 import controller.BlackJackGame;
+import domain.card.DeckFactory;
 import domain.user.Dealer;
 import domain.user.Players;
 import view.InputView;
@@ -11,7 +12,7 @@ public class Application {
         Players players = Players.of(names);
         Dealer dealer = Dealer.appoint();
 
-        BlackJackGame blackJackGame = new BlackJackGame();
+        BlackJackGame blackJackGame = BlackJackGame.set(DeckFactory.createDeck());
 
         blackJackGame.firstDealOut(dealer, players);
         OutputView.printFirstDealOutResult(dealer, players);
@@ -19,7 +20,7 @@ public class Application {
         blackJackGame.additionalDealOut(dealer, players);
         OutputView.printTotalResult(dealer, players);
 
-        blackJackGame.decideWinner(dealer, players);
+        blackJackGame.reflectResult(dealer, players);
         OutputView.printWinningResult(dealer, players);
     }
 }

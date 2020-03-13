@@ -6,7 +6,6 @@ import domain.card.Cards;
 public abstract class User {
 
     private static final String EMPTY = "";
-    private static final String NAME_ERROR_MESSAGE = "빈 이름이 있습니다.";
 
     protected Cards cards;
     protected final String name;
@@ -19,7 +18,7 @@ public abstract class User {
 
     private void validate(String name) {
         if (EMPTY.equals(name)) {
-            throw new IllegalArgumentException(NAME_ERROR_MESSAGE);
+            throw new IllegalArgumentException("빈 이름이 있습니다.");
         }
     }
 

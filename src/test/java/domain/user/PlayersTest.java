@@ -36,7 +36,7 @@ class PlayersTest {
                 .map(player -> player.cards.getCards().size() + 1)
                 .collect(Collectors.toList());
 
-        players.draw(DeckFactory.getDeck());
+        players.draw(DeckFactory.createDeck());
 
         List<Integer> result = players.getPlayers()
                 .stream()
@@ -62,7 +62,7 @@ class PlayersTest {
                 .forEach(player -> player.draw(new Card(Symbol.SPADE, Type.ACE)));
         String expected = "pobi카드: A스페이드\njason카드: A스페이드\nwoo카드: A스페이드";
 
-        assertThat(players.getAllFirstDrawResult()).isEqualTo(expected);
+        assertThat(players.getAllFirstDrawResults()).isEqualTo(expected);
     }
 
     @Test
@@ -84,7 +84,7 @@ class PlayersTest {
                 + "jason카드: 3스페이드, 5하트 - 결과: 8\n"
                 + "woo카드: K클로버 - 결과: 10";
 
-        assertThat(players.getAllTotalDrawResult()).isEqualTo(expected);
+        assertThat(players.getAllTotalDrawResults()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -130,6 +130,6 @@ class PlayersTest {
 
         players.decideWinner(dealer);
 
-        assertThat(players.getAllTotalWinningResult()).isEqualTo(expected);
+        assertThat(players.getAllTotalWinningResults()).isEqualTo(expected);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class YesOrNo {
 
     private static final List<String> ANSWER = Collections.unmodifiableList(Arrays.asList("y", "Y", "n", "N"));
-    private static final String INPUT_ERROR_MESSAGE = "입력은 y(Y), n(N)만 가능합니다.";
+    private static final String YES = "y";
 
     private final String answer;
 
@@ -22,11 +22,11 @@ public class YesOrNo {
 
     private void validate(String answer) {
         if (!ANSWER.contains(answer)) {
-            throw new IllegalArgumentException(INPUT_ERROR_MESSAGE);
+            throw new IllegalArgumentException("입력은 y(Y), n(N)만 가능합니다.");
         }
     }
 
     public boolean isYes() {
-        return "y".equals(answer);
+        return YES.equals(answer);
     }
 }

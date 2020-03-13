@@ -12,10 +12,6 @@ public enum WinningResult {
         this.result = result;
     }
 
-    public String getResult() {
-        return result;
-    }
-
     public WinningResult reverse() {
         if (this == WIN) {
             return LOSE;
@@ -24,5 +20,9 @@ public enum WinningResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public String getResult() {
+        return result;
     }
 }

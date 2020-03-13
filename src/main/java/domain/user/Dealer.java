@@ -36,7 +36,8 @@ public class Dealer extends User {
 
     @Override
     public boolean isAvailableToDraw() {
-        return !cards.isBust() && !cards.isBlackJack() && !cards.isBlackJackPoint() && cards.calculatePointAccordingToHasAce() < PIVOT;
+        return !cards.isBust() && !cards.isBlackJack() && !cards.isBlackJackPoint()
+                && cards.calculatePointAccordingToHasAce() < PIVOT;
     }
 
     public void applyWinningResult(WinningResult winningResult) {
