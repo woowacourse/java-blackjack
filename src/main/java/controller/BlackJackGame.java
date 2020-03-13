@@ -9,10 +9,9 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackGame {
-    public static final int ADDITIONAL_DRAW_COUNT = 1;
+    private static final int ADDITIONAL_DRAW_COUNT = 1;
     public static final int INITIAL_DRAW_COUNT = 2;
     public static final int HIT_BOUNDARY = 16;
-    public static final int BLACK_JACK_COUNT = 21;
 
     public static void play(Players players, Dealer dealer, Deck deck) {
         OutputView.printInitialCards(players, dealer);
@@ -24,7 +23,7 @@ public class BlackJackGame {
         OutputView.printResult(players, dealer);
     }
 
-    private static void drawCardToPlayers(final Players players, final Deck deck) {
+    private static void drawCardToPlayers(Players players, Deck deck) {
         for (Player player : players) {
             drawCardEachPlayer(deck, player);
         }
@@ -44,7 +43,7 @@ public class BlackJackGame {
         }
     }
 
-    private static void compareScores(final Players players, final Dealer dealer) {
+    private static void compareScores(Players players, Dealer dealer) {
         for (Player player : players) {
             Result result = dealer.compareScore(player);
             player.setResult(result);

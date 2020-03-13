@@ -15,20 +15,11 @@ public enum Result {
         this.resultValue = resultValue;
     }
 
-    @Override
-    public String toString() {
-        return result;
-    }
-
     public static Result calculateResult(int compareValue) {
         return Arrays.stream(Result.values())
-                .filter(result -> result.isSameResult(compareValue))
-                .findFirst()
-                .get();
-    }
-
-    private boolean isSameResult(int compareValue) {
-        return this.resultValue == compareValue;
+            .filter(result -> result.resultValue == compareValue)
+            .findFirst()
+            .get();
     }
 
     public static Result oppositeResult(Result result) {
@@ -49,5 +40,8 @@ public enum Result {
         return result == WIN;
     }
 
-
+    @Override
+    public String toString() {
+        return result;
+    }
 }

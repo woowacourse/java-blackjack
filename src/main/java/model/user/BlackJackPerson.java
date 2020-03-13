@@ -1,7 +1,5 @@
 package model.user;
 
-import static controller.BlackJackGame.BLACK_JACK_COUNT;
-
 import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
@@ -10,6 +8,7 @@ import model.card.CardHand;
 public class BlackJackPerson {
     private static final String DELIMITER = ", ";
     private static final String DEALER_NAME = "딜러";
+    private static final int BLACK_JACK_COUNT = 21;
 
     protected final String name;
     protected final CardHand cardHand;
