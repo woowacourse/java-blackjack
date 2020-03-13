@@ -28,7 +28,7 @@ public class Dealer extends User {
             winningResult.put(WinningResult.WIN, winningResult.get(WinningResult.WIN) + 1);
             return;
         }
-        winningResult.put(WinningResult.DRAW,winningResult.get(WinningResult.DRAW) + 1);
+        winningResult.put(WinningResult.DRAW, winningResult.get(WinningResult.DRAW) + 1);
     }
 
     public Map<WinningResult, Integer> getWinningResult() {
