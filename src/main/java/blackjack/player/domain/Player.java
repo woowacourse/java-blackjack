@@ -26,12 +26,16 @@ public abstract class Player {
         }
     }
 
-    public String getName() {
-        return this.name;
+    public boolean hasCard() {
+        return cardBundle.isNotEmpty();
     }
 
     public void addCard(Card card) {
         cardBundle.addCard(card);
+    }
+
+    public int getScore() {
+        return cardBundle.calculateScore();
     }
 
     public boolean isBurst() {
@@ -54,15 +58,11 @@ public abstract class Player {
         return Collections.unmodifiableList(this.cardBundle.getCards());
     }
 
-    public int getScore() {
-        return cardBundle.calculateScore();
+    public String getName() {
+        return this.name;
     }
 
     public abstract boolean isDrawable();
 
     public abstract GameReport createReport(Player player);
-
-    public boolean hasCard() {
-        return cardBundle.isNotEmpty();
-    }
 }
