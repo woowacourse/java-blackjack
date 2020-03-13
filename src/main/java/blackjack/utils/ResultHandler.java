@@ -25,20 +25,20 @@ public class ResultHandler {
         return parseAllWinners(totalResult);
     }
 
-    private static Map<Result, Integer> calculateDealerResultCount(Map<Player, Result> totalResult) {
-        Map<Result, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(Result.WIN, 0);
-        dealerResult.put(Result.DRAW, 0);
-        dealerResult.put(Result.LOSE, 0);
+    private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
+        Map<Result, Integer> playerResult = new HashMap<>();
+        playerResult.put(Result.WIN, 0);
+        playerResult.put(Result.DRAW, 0);
+        playerResult.put(Result.LOSE, 0);
 
         for (Result r : totalResult.values()) {
-            dealerResult.put(r, dealerResult.get(r) + 1);
+            playerResult.put(r, playerResult.get(r) + 1);
         }
-        return dealerResult;
+        return playerResult;
     }
 
     private static String parseAllWinners(Map<Player, Result> totalResult) {
-        Map<Result, Integer> dealerResult = calculateDealerResultCount(totalResult);
+        Map<Result, Integer> dealerResult = calculatePlayerResultCount(totalResult);
         StringBuilder sb = new StringBuilder();
 
         sb.append(parseDealerTotalResult(dealerResult));
@@ -47,17 +47,17 @@ public class ResultHandler {
         return sb.toString();
     }
 
-    private static String parseDealerTotalResult(Map<Result, Integer> dealerResult) {
+    private static String parseDealerTotalResult(Map<Result, Integer> playerResult) {
         StringBuilder sb = new StringBuilder();
         sb.append(Dealer.DEALER + COLON);
-        if (dealerResult.get(Result.WIN) > 0) {
-            sb.append(dealerResult.get(Result.WIN)).append(WINS);
+        if (playerResult.get(Result.LOSE) > 0) {
+            sb.append(playerResult.get(Result.LOSE)).append(WINS);
         }
-        if (dealerResult.get(Result.DRAW) > 0) {
-            sb.append(dealerResult.get(Result.DRAW)).append(DRAWS);
+        if (playerResult.get(Result.DRAW) > 0) {
+            sb.append(playerResult.get(Result.DRAW)).append(DRAWS);
         }
-        if (dealerResult.get(Result.LOSE) > 0) {
-            sb.append(dealerResult.get(Result.LOSE)).append(LOSES);
+        if (playerResult.get(Result.WIN) > 0) {
+            sb.append(playerResult.get(Result.WIN)).append(LOSES);
         }
         sb.append(NEW_LINE);
         return sb.toString();
