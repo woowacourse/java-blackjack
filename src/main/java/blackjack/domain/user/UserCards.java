@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class UserCards {
     public static final String NO_CARD = "카드가 없습니다";
-    public static final int INCREMENT_ACE_THRESHOLD = 11;
     public static final int ACE_INCREMENT = 10;
+    public static final int BLACKJACK = 21;
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
@@ -32,7 +32,7 @@ public class UserCards {
     }
 
     private int incrementAceScore(int score) {
-        if (cards.stream().anyMatch(Card::isAce) && score <= INCREMENT_ACE_THRESHOLD) {
+        if (cards.stream().anyMatch(Card::isAce) && score <= BLACKJACK - ACE_INCREMENT) {
             score += ACE_INCREMENT;
         }
         return score;
@@ -46,5 +46,14 @@ public class UserCards {
         return cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isBusted() {
+        return getTotalScore() > BLACKJACK;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2
+                && getTotalScore() == BLACKJACK;
     }
 }

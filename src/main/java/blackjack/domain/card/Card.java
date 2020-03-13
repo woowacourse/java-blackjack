@@ -14,14 +14,14 @@ public class Card {
         return symbol.getScore();
     }
 
+    public boolean isAce() {
+        return this.symbol.name().equals("ACE");
+    }
+
     @Override
     public String toString() {
         return suit.getName() +
                 BLANK +
                 symbol.getName();
-    }
-
-    public boolean isAce() {
-        return this.symbol.name().equals("ACE");
     }
 }

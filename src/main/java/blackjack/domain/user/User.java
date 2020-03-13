@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 public abstract class User {
-    public static final int BLACKJACK = 21;
     public static final String CARD = " 카드: ";
     public static final String DELIMITER = ", ";
     public static final String RESULT = " - 결과 : ";
@@ -28,15 +27,6 @@ public abstract class User {
         return cards.getTotalScore();
     }
 
-    public boolean isBusted() {
-        return cards.getTotalScore() > BLACKJACK;
-    }
-
-    public boolean isBlackJack() {
-        return cards.getCardInfo().size() == 2
-                && cards.getTotalScore() == BLACKJACK;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -49,6 +39,14 @@ public abstract class User {
 
     public String showFinalCardInfo() {
         return showCardInfo() + RESULT + parseFinalScore();
+    }
+
+    public boolean isBusted() {
+        return cards.isBusted();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 
     private String parseFinalScore() {
