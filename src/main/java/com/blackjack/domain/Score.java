@@ -20,7 +20,7 @@ public class Score implements Comparable<Score> {
 	}
 
 	public boolean isLowerThan(int drawCondition) {
-		return score < drawCondition;
+		return score <= drawCondition;
 	}
 
 	@Override

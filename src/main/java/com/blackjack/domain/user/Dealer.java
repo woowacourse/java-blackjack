@@ -3,7 +3,7 @@ package com.blackjack.domain.user;
 import com.blackjack.domain.Score;
 
 public class Dealer extends User {
-	private static final int DRAW_CONDITION = 17;
+	public static final int DRAW_CONDITION = 16;
 	private static final Name DEALER_NAME = new Name("딜러");
 
 	public Dealer() {

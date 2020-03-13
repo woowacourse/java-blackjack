@@ -2,6 +2,7 @@ package com.blackjack.domain;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,9 @@ public class GameRule {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> player.compareTo(dealer)
+						player -> player.compareScoreTo(dealer),
+						(r1, r2) -> r1,
+						LinkedHashMap::new
 				), PlayerRecords::new));
 	}
 }

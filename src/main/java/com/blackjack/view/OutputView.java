@@ -1,5 +1,7 @@
 package com.blackjack.view;
 
+import static com.blackjack.domain.user.Dealer.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,7 +28,7 @@ public class OutputView {
 	}
 
 	public static void printDealerDrawMessage() {
-		System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+		System.out.printf("딜러는 %d이하라 한 장의 카드를 더 받았습니다.\n", DRAW_CONDITION);
 	}
 
 	public static void printCards(User dealer, List<User> players) {
@@ -40,17 +42,15 @@ public class OutputView {
 		System.out.println("\n## 최종 승패");
 	}
 
-	public static void printUserRecords(PlayerRecords playerRecords, List<User> players) {
-		for (User player : players) {
-			System.out.printf("%s: %s\n", player.getName(), playerRecords.getRecords().get(player));
-		}
+	public static void printUserRecords(PlayerRecords playerRecords) {
+		playerRecords.getRecords().forEach((key, value) -> System.out.printf("%s: %s\n", key.getName(), value));
 	}
 
 	public static void printDealerRecord(Map<ResultType, Long> dealerResult) {
-		Long winCount = dealerResult.getOrDefault(ResultType.WIN, 0L);
-		Long drawCount = dealerResult.getOrDefault(ResultType.DRAW, 0L);
-		Long loseCount = dealerResult.getOrDefault(ResultType.LOSE, 0L);
-		System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, loseCount);
+		String result = dealerResult.entrySet().stream()
+				.map(e -> e.getValue() + e.getKey().toString())
+				.collect(Collectors.joining(" "));
+		System.out.printf("딜러: %s\n", result);
 	}
 
 	private static String makePlayerScore(User player) {
@@ -90,7 +90,7 @@ public class OutputView {
 		String playerNames = players.stream()
 				.map(User::getName)
 				.collect(Collectors.joining(DELIMITER));
-		System.out.println("딜러와 " + playerNames + "에게 2장의 카드를 나누었습니다.");
+		System.out.printf("딜러와 %s에게 %d장의 카드를 나누었습니다.\n", playerNames, FIRST_DRAW_COUNT);
 	}
 
 }

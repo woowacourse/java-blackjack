@@ -31,7 +31,7 @@ public class BlackjackController {
 		PlayerRecords playerRecords = gameRule.calculateResult();
 		printResultMessage();
 		printDealerRecord(playerRecords.calculateDealerResult());
-		printUserRecords(playerRecords, players);
+		printUserRecords(playerRecords);
 	}
 
 	private List<User> createPlayers() {

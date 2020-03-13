@@ -8,7 +8,7 @@ import com.blackjack.domain.card.Card;
 import com.blackjack.domain.card.CardDeck;
 
 public abstract class User {
-	private static final int FIRST_DRAW_COUNT = 2;
+	public static final int FIRST_DRAW_COUNT = 2;
 
 	private final Name name;
 	final Hands hands;
@@ -29,7 +29,7 @@ public abstract class User {
 		hands.add(card);
 	}
 
-	public ResultType compareTo(User user) {
+	public ResultType compareScoreTo(User user) {
 		Score score = hands.calculateScore();
 		Score userScore = user.hands.calculateScore();
 		return ResultType.of(score.compareTo(userScore));
