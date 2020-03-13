@@ -23,8 +23,8 @@ public class Blackjack {
 
 		start(players, dealer, deck);
 
-		progress(players, deck);
-		progress(dealer, deck);
+		progressPlayers(players, deck);
+		progressDealer(dealer, deck);
 
 		finish(players, dealer);
 	}
@@ -66,24 +66,24 @@ public class Blackjack {
 		}
 	}
 
-	private static void progress(Players players, Deck cards) {
+	private static void progressPlayers(Players players, Deck cards) {
 		for (Player player : players.getPlayers()) {
-			progress(player, cards);
+			progressPlayer(player, cards);
 		}
 	}
 
-	private static void progress(Player player, Deck cards) {
-		while (shouldProgress(player)) {
+	private static void progressPlayer(Player player, Deck cards) {
+		while (willProgress(player)) {
 			player.giveCards(cards.draw());
 			OutputView.printPlayerCard(player);
 		}
 	}
 
-	private static boolean shouldProgress(Player player) {
+	private static boolean willProgress(Player player) {
 		return player.isNotBust() && InputView.inputYesOrNo(player).isYes();
 	}
 
-	private static void progress(Dealer dealer, Cards cards) {
+	private static void progressDealer(Dealer dealer, Deck cards) {
 		while (dealer.shouldReceiveCard()) {
 			dealer.giveCards(cards.draw());
 			OutputView.printDealerTurn(dealer);
