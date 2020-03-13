@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.Result;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
 import blackjack.domain.user.Players;
@@ -16,13 +16,13 @@ public class Blackjack {
 	public static void main(String[] args) {
 		String playerNames = InputView.inputPlayerNames();
 		Players players = preparePlayers(playerNames);
-		Dealer dealer = DefaultDealer.create();
-		Deck deck = prepareDeck();
+		Dealer dealer = DefaultDealer.dealer();
+		Cards cards = prepareDeck();
 
-		start(players, dealer, deck);
+		start(players, dealer, cards);
 
-		progress(players, deck);
-		progress(dealer, deck);
+		progress(players, cards);
+		progress(dealer, cards);
 
 		finish(players, dealer);
 	}
@@ -44,37 +44,37 @@ public class Blackjack {
 		}
 	}
 
-	private static Deck prepareDeck() {
-		Deck deck = Deck.create();
-		deck.shuffle();
-		return deck;
+	private static Cards prepareDeck() {
+		Cards cards = Cards.create();
+		cards.shuffle();
+		return cards;
 	}
 
-	private static void start(Players players, Dealer dealer, Deck deck) {
-		giveTwoCard(dealer, deck);
-		giveTwoCard(players, deck);
+	private static void start(Players players, Dealer dealer, Cards cards) {
+		giveTwoCard(dealer, cards);
+		giveTwoCard(players, cards);
 		OutputView.printStartInfo(dealer, players);
 	}
 
-	private static void giveTwoCard(Dealer dealer, Deck deck) {
-		dealer.giveCards(deck.draw(), deck.draw());
+	private static void giveTwoCard(Dealer dealer, Cards cards) {
+		dealer.giveCards(cards.draw(), cards.draw());
 	}
 
-	private static void giveTwoCard(Players players, Deck deck) {
+	private static void giveTwoCard(Players players, Cards cards) {
 		for (int i = 0; i < players.memberSize(); i++) {
-			players.giveCards(i, deck.draw(), deck.draw());
+			players.giveCards(i, cards.draw(), cards.draw());
 		}
 	}
 
-	private static void progress(Players players, Deck deck) {
+	private static void progress(Players players, Cards cards) {
 		for (Player player : players.getPlayers()) {
-			progress(player, deck);
+			progress(player, cards);
 		}
 	}
 
-	private static void progress(Player player, Deck deck) {
+	private static void progress(Player player, Cards cards) {
 		while (shouldProgress(player)) {
-			player.giveCards(deck.draw());
+			player.giveCards(cards.draw());
 			OutputView.printPlayerCard(player);
 		}
 	}
@@ -83,9 +83,9 @@ public class Blackjack {
 		return player.isNotBust() && InputView.inputYesOrNo(player).isYes();
 	}
 
-	private static void progress(Dealer dealer, Deck deck) {
+	private static void progress(Dealer dealer, Cards cards) {
 		while (dealer.shouldReceiveCard()) {
-			dealer.giveCards(deck.draw());
+			dealer.giveCards(cards.draw());
 			OutputView.printDealerTurn(dealer);
 		}
 	}

@@ -14,7 +14,7 @@ public class YesOrNo {
 	}
 
 	public static YesOrNo of(String yesOrNo) {
-		String upperCase = yesOrNo.strip().toUpperCase();
+		String upperCase = yesOrNo.trim().toUpperCase();
 		return new YesOrNo(upperCase);
 	}
 
