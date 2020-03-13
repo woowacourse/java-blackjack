@@ -3,6 +3,7 @@ package controller;
 import common.GamerDto;
 import domain.PlayerResult;
 import domain.card.Deck;
+import domain.card.DeckFactory;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import view.InputView;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
     public void play() {
-        Deck deck = Deck.create();
+        Deck deck = DeckFactory.create();
         List<String> playerNames = InputView.inputPlayerNames();
         List<Player> players = playerNames.stream()
                 .map(name -> new Player(deck.dealInitCards(), name))

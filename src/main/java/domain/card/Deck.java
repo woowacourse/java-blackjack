@@ -1,39 +1,35 @@
 package domain.card;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Deck {
     public static final int INIT_CARDS_SIZE = 2;
 
     private Stack<Card> cards;
 
-    private Deck(Stack<Card> cards) {
+    public Deck(Stack<Card> cards) {
+        validateDuplicate(cards);
         this.cards = cards;
     }
 
-    public static Deck create() {
-        return Arrays.stream(Type.values())
-                .flatMap(Deck::createBySymbol)
-                .collect(Collectors.collectingAndThen(Collectors.toCollection(Stack::new), Deck::new));
-    }
-
-    private static Stream<Card> createBySymbol(Type type) {
-        return Arrays.stream(Symbol.values())
-                .map(symbol -> new Card(symbol, type));
-    }
-
-    private void shuffle() {
-        Collections.shuffle(cards);
+    private void validateDuplicate(Stack<Card> cards) {
+        if (cards.size() != new HashSet<>(cards).size()) {
+            throw new IllegalArgumentException("중복되는 카드가 존재합니다.");
+        }
     }
 
     public Card dealCard() {
-        shuffle();
+        fulfillIfEmpty();
         return cards.pop();
+    }
+
+    private void fulfillIfEmpty() {
+        if (isEmpty()) {
+            this.cards = DeckFactory.create().cards;
+        }
     }
 
     public PlayingCards dealInitCards() {
