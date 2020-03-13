@@ -63,6 +63,10 @@ public abstract class User {
 		return hand.getCards();
 	}
 
+	public int getScore() {
+		return hand.calculateScore().getScore();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

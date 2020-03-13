@@ -25,16 +25,21 @@ public class BlackjackController {
 	}
 
 	public void playGame() {
-		drawInitialCardsEachUser();
+		List<User> users = generateUsers();
+		drawInitialCardsEachUser(users);
 		drawCardsEachUsers();
+		printUsersCardsAndScore(users);
 	}
 
-	private void drawInitialCardsEachUser() {
+	private List<User> generateUsers() {
 		List<User> users = new ArrayList<>();
 		users.add(dealer);
 		users.addAll(players);
+		return users;
+	}
 
-		players.forEach(user -> user.draw(deck, INITIAL_DRAW_NUMBER));
+	private void drawInitialCardsEachUser(List<User> users) {
+		users.forEach(user -> user.draw(deck, INITIAL_DRAW_NUMBER));
 		OutputView.printUsersInitialDraw(INITIAL_DRAW_NUMBER, users);
 	}
 
@@ -59,6 +64,12 @@ public class BlackjackController {
 		while (dealer.canDraw()) {
 			dealer.draw(deck);
 			OutputView.printDealerDrawCard();
+		}
+	}
+
+	private void printUsersCardsAndScore(List<User> users) {
+		for (User user : users) {
+			OutputView.printUserHandAndScore(user);
 		}
 	}
 }

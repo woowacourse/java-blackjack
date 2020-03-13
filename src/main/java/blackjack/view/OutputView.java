@@ -28,4 +28,8 @@ public class OutputView {
 	public static void printDealerDrawCard() {
 		System.out.println(String.format(DEALER_DRAW_FORMAT, Dealer.NAME, Dealer.DEALER_DRAWABLE_MAX_SCORE));
 	}
+
+	public static void printUserHandAndScore(User user) {
+		System.out.println(user.getName() + ": " + StringUtil.joinCards(user.getHand()) + " - 결과: " + user.getScore());
+	}
 }
