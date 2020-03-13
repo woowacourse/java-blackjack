@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.ResultType;
+import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.user.User;
 
@@ -24,18 +25,15 @@ public class OutputView {
 	}
 
 	public static void printUserCardInfo(User player) {
-		System.out.println(makeUserCardInfo(player));
+		System.out.print(makeUserCardInfo(player));
 	}
 
 	public static void printDealerDrawMessage() {
 		System.out.printf("딜러는 %d이하라 한 장의 카드를 더 받았습니다.\n", DRAW_CONDITION);
 	}
 
-	public static void printCards(User dealer, List<User> players) {
-		System.out.printf("%s - 결과: %s\n", makeUserCardInfo(dealer), makeDealerScore(dealer));
-		for (User player : players) {
-			System.out.printf("%s - 결과: %s\n", makeUserCardInfo(player), makePlayerScore(player));
-		}
+	public static void printUserScore(Score score) {
+		System.out.printf(" - 결과: %s\n", score);
 	}
 
 	public static void printResultMessage() {
@@ -51,14 +49,6 @@ public class OutputView {
 				.map(e -> e.getValue() + e.getKey().toString())
 				.collect(Collectors.joining(" "));
 		System.out.printf("딜러: %s\n", result);
-	}
-
-	private static String makePlayerScore(User player) {
-		return player.getHands().calculateScore().toString();
-	}
-
-	private static String makeDealerScore(User dealer) {
-		return dealer.getHands().calculateScore().toString();
 	}
 
 	private static void printPlayersCardInfo(List<User> players) {

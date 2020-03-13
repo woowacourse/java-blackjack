@@ -35,6 +35,7 @@ class DrawController {
 		while (canDraw(player)) {
 			player.draw(cardDeck);
 			printUserCardInfo(player);
+			System.out.println();
 		}
 	}
 

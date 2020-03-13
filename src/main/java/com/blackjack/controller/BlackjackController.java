@@ -21,9 +21,19 @@ public class BlackjackController {
 		DrawController drawController = new DrawController();
 		drawController.draw(cardDeck, dealer, players);
 
-		printCards(dealer, players);
+		printUserCards(dealer, players);
 
 		printResult(dealer, players);
+	}
+
+	private void printUserCards(Dealer dealer, List<User> players) {
+		System.out.println();
+		printUserCardInfo(dealer);
+		printUserScore(dealer.calculateScore());
+		for (User player : players) {
+			printUserCardInfo(player);
+			printUserScore(player.calculateScore());
+		}
 	}
 
 	private void printResult(Dealer dealer, List<User> players) {
