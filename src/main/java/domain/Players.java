@@ -3,8 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Players {
+    public static final int MAX_PLAYER_NUMBER = 7;
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
@@ -29,8 +31,11 @@ public class Players {
     }
 
     private void validatePlayers(List<String> playerNames) {
-        if (playerNames.size() > 7) {
-            throw new IllegalArgumentException("최대 참여 가능 플레이어 수는 7 입니다.");
+        if (Objects.isNull(playerNames) || playerNames.isEmpty()) {
+            throw new IllegalArgumentException("Empty or null player names exception.");
+        }
+        if (playerNames.size() > MAX_PLAYER_NUMBER) {
+            throw new IllegalArgumentException("Input player over 7 exception.");
         }
     }
 }
