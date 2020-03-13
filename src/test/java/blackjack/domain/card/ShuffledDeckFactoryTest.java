@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ShuffledDeckFactoryTest {
 	DeckFactory deckFactory;
@@ -25,7 +24,7 @@ class ShuffledDeckFactoryTest {
 	@Test
 	void create() {
 		// when
-		Deck deck = Cards.ofDeckFactory(deckFactory);
+		Drawable deck = Deck.ofDeckFactory(deckFactory);
 
 		// then
 		Set<Card> cards = new HashSet<>();

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -33,7 +32,7 @@ public class DefaultPlayerTest {
 				Card.of(Symbol.EIGHT, Type.HEART));
 
 		// then
-		assertThat(player.getCards())
+		assertThat(player.getHand())
 				.isEqualTo(Arrays.asList(Card.of(Symbol.ACE, Type.CLUB),
 						Card.of(Symbol.EIGHT, Type.HEART)));
 	}
@@ -45,7 +44,7 @@ public class DefaultPlayerTest {
 				Card.of(Symbol.EIGHT, Type.HEART));
 
 		// then
-		assertThat(player.calculateScore()).isEqualTo(Score.of(10));
+		assertThat(player.getScore()).isEqualTo(Score.of(10));
 	}
 
 	@Test
@@ -55,7 +54,7 @@ public class DefaultPlayerTest {
 				Card.of(Symbol.EIGHT, Type.HEART));
 
 		// then
-		assertThat(player.calculateScore()).isEqualTo(Score.of(19));
+		assertThat(player.getScore()).isEqualTo(Score.of(19));
 	}
 
 	@Test
@@ -66,7 +65,7 @@ public class DefaultPlayerTest {
 				Card.of(Symbol.THREE, Type.SPADE));
 
 		// then
-		assertThat(player.calculateScore()).isEqualTo(Score.of(12));
+		assertThat(player.getScore()).isEqualTo(Score.of(12));
 	}
 
 	@Test
@@ -101,7 +100,7 @@ public class DefaultPlayerTest {
 		player.giveCards(cards);
 
 		// then
-		assertThat(player.getCards()).isEqualTo(Arrays.asList(cards));
+		assertThat(player.getHand()).isEqualTo(Arrays.asList(cards));
 	}
 
 	@Test

@@ -6,187 +6,165 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultDealerTest {
 	private Dealer dealer;
+	private Card aceSpade;
+	private Card sixDiamond;
+	private Card tenClub;
+	private Card jackHeart;
 
 	@BeforeEach
 	void setUp() {
 		dealer = DefaultDealer.dealer();
+
+		aceSpade = Card.of(Symbol.ACE, Type.SPADE);
+		sixDiamond = Card.of(Symbol.SIX, Type.DIAMOND);
+		tenClub = Card.of(Symbol.TEN, Type.CLUB);
+		jackHeart = Card.of(Symbol.JACK, Type.HEART);
 	}
 
 	@Test
 	void create() {
+		// then
 		assertThat(dealer).isNotNull();
 	}
 
 	@Test
-	void shouldReceiveCard_ShouldReturnFalse() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.SEVEN, Type.CLUB));
+	void shouldReceiveCard() {
+		dealer.giveCards(tenClub, sixDiamond);
+		assertThat(dealer.shouldReceiveCard()).isTrue();
 
-		// then
+		dealer.giveCards(aceSpade);
 		assertThat(dealer.shouldReceiveCard()).isFalse();
 	}
 
 	@Test
-	void shouldReceiveCard_ShouldReturnTrue() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.SIX, Type.CLUB));
-
-		// then
-		assertThat(dealer.shouldReceiveCard()).isTrue();
-	}
-
-	@Test
 	void showFirstCard() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.SIX, Type.CLUB));
+		dealer.giveCards(tenClub, sixDiamond);
+		assertThat(dealer.getFirstCard()).isEqualTo(tenClub);
 
-		// then
-		assertThat(dealer.getFirstCard()).isEqualTo(Card.of(Symbol.TEN, Type.CLUB));
+		dealer.giveCards(jackHeart, aceSpade);
+		assertThat(dealer.getFirstCard()).isEqualTo(tenClub);
 	}
 
 	@Test
-	void isWinner_ShouldReturnFalse() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TWO, Type.CLUB));
+	void isWinner() {
+		dealer.giveCards(tenClub, aceSpade);
+		assertThat(dealer.isWinner(dealer.getScore())).isTrue();
 
-		// then
-		assertThat(dealer.isWinner(dealer.calculateScore())).isFalse();
-	}
+		dealer.giveCards(tenClub);
+		assertThat(dealer.isWinner(dealer.getScore())).isTrue();
 
-	@Test
-	void isWinner_ShouldReturnTrue() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB));
-
-		// then
-		assertThat(dealer.isWinner(dealer.calculateScore())).isTrue();
+		dealer.giveCards(aceSpade);
+		assertThat(dealer.isWinner(dealer.getScore())).isFalse();
 	}
 
 	@Test
 	void giveCards() {
-		// when
-		dealer.giveCards(Card.of(Symbol.ACE, Type.HEART),
-				Card.of(Symbol.ACE, Type.CLUB));
+		dealer.giveCards(aceSpade, sixDiamond);
+		assertThat(dealer.getHand())
+				.isEqualTo(Arrays.asList(aceSpade, sixDiamond));
 
-		// then
-		assertThat(dealer.countCards()).isEqualTo(2);
-		assertThat(dealer.getCards()).isEqualTo(
-				Arrays.asList(Card.of(Symbol.ACE, Type.HEART),
-						Card.of(Symbol.ACE, Type.CLUB))
-		);
-	}
-
-	@ParameterizedTest
-	@MethodSource("generateCalculateScoreParams")
-	void calculateScore(Card[] cards, Score expected) {
-		// given
-		dealer.giveCards(cards);
-
-		// then
-		assertThat(dealer.calculateScore()).isEqualTo(expected);
-	}
-
-	public static Stream<Arguments> generateCalculateScoreParams() {
-		return Stream.of(
-				Arguments.of(new Card[]{Card.of(Symbol.ACE, Type.HEART),
-						Card.of(Symbol.TEN, Type.HEART)}, Score.of(21)),
-				Arguments.of(new Card[]{Card.of(Symbol.ACE, Type.HEART),
-						Card.of(Symbol.ACE, Type.HEART),
-						Card.of(Symbol.TEN, Type.HEART)}, Score.of(12))
-		);
+		dealer.giveCards(tenClub, jackHeart);
+		assertThat(dealer.getHand())
+				.isEqualTo(Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart));
 	}
 
 	@Test
-	void isBust_ShouldReturnTrue() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND),
-				Card.of(Symbol.ACE, Type.DIAMOND));
+	void getScore() {
+		dealer.giveCards(aceSpade);
+		assertThat(dealer.getScore()).isEqualTo(Score.of(11));
 
-		// then
+		dealer.giveCards(jackHeart);
+		assertThat(dealer.getScore()).isEqualTo(Score.of(21));
+
+		dealer.giveCards(sixDiamond);
+		assertThat(dealer.getScore()).isEqualTo(Score.of(17));
+
+		dealer.giveCards(aceSpade);
+		assertThat(dealer.getScore()).isEqualTo(Score.of(18));
+
+		dealer.giveCards(sixDiamond);
+		assertThat(dealer.getScore()).isEqualTo(Score.of(24));
+	}
+
+	@Test
+	void isBust() {
+		dealer.giveCards(tenClub, aceSpade);
+		assertThat(dealer.isBust()).isFalse();
+
+		dealer.giveCards(tenClub);
+		assertThat(dealer.isBust()).isFalse();
+
+		dealer.giveCards(aceSpade);
 		assertThat(dealer.isBust()).isTrue();
 	}
 
 	@Test
-	void isBust_ShouldReturnFalse() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND));
-
-		// then
-		assertThat(dealer.isBust()).isFalse();
-	}
-
-	@Test
-	void isNotBust_ShouldReturnTrue() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND),
-				Card.of(Symbol.ACE, Type.DIAMOND));
-
-		// then
-		assertThat(dealer.isNotBust()).isFalse();
-	}
-
-	@Test
-	void isNotBust_ShouldReturnFalse() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND));
-
-		// then
+	void isNotBust() {
+		dealer.giveCards(tenClub, aceSpade);
 		assertThat(dealer.isNotBust()).isTrue();
+
+		dealer.giveCards(tenClub);
+		assertThat(dealer.isNotBust()).isTrue();
+
+		dealer.giveCards(aceSpade);
+		assertThat(dealer.isNotBust()).isFalse();
 	}
 
 	@Test
 	void getCards() {
 		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND));
+		List<Card> expected = new ArrayList<>();
 
-		// then
-		assertThat(dealer.getCards()).isEqualTo(Arrays.asList(
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND)));
+		// when-then
+		assertThat(dealer.getHand()).isEqualTo(expected);
+
+		dealer.giveCards(aceSpade);
+		expected.add(aceSpade);
+		assertThat(dealer.getHand()).isEqualTo(expected);
+
+		dealer.giveCards(sixDiamond);
+		expected.add(sixDiamond);
+		assertThat(dealer.getHand()).isEqualTo(expected);
+
+		dealer.giveCards(tenClub);
+		expected.add(tenClub);
+		assertThat(dealer.getHand()).isEqualTo(expected);
+
+		dealer.giveCards(jackHeart);
+		expected.add(jackHeart);
+		assertThat(dealer.getHand()).isEqualTo(expected);
 	}
 
 	@Test
 	void countCards() {
-		// given
-		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.TEN, Type.CLUB),
-				Card.of(Symbol.ACE, Type.DIAMOND));
+		dealer.giveCards();
+		assertThat(dealer.countCards()).isEqualTo(0);
 
-		// then
+		dealer.giveCards(aceSpade);
+		assertThat(dealer.countCards()).isEqualTo(1);
+
+		dealer.giveCards(tenClub);
+		assertThat(dealer.countCards()).isEqualTo(2);
+
+		dealer.giveCards(sixDiamond);
 		assertThat(dealer.countCards()).isEqualTo(3);
+
+		dealer.giveCards(jackHeart, jackHeart);
+		assertThat(dealer.countCards()).isEqualTo(5);
 	}
 
 	@Test
 	void getName() {
-		// given
+		// then
 		assertThat(dealer.getName()).isEqualTo("딜러");
 	}
 }

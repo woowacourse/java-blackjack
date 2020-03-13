@@ -8,11 +8,11 @@ import java.util.List;
 public interface Player {
     void giveCards(Card... cards);
 
-    Score calculateScore();
+    Score getScore();
 
     boolean isBust();
 
-    List<Card> getCards();
+    List<Card> getHand();
 
     int countCards();
 

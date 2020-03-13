@@ -27,7 +27,7 @@ public class DefaultPlayer extends AbstractPlayer {
         if (dealerScore.isOver(getMaxScore())) {
             return true;
         }
-        return calculateScore().isOver(dealerScore);
+        return getScore().isOver(dealerScore);
     }
 
     @Override

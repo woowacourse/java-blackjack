@@ -47,7 +47,7 @@ public class OutputView {
     }
 
     private static String createPlayerCardInfo(Player player) {
-        return player.getCards().stream()
+        return player.getHand().stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
@@ -83,7 +83,7 @@ public class OutputView {
         if (player.isBust()) {
             return "bust";
         }
-        return String.valueOf(player.calculateScore().getScore());
+        return String.valueOf(player.getScore().getScore());
     }
 
     public static void printResult(Result result) {

@@ -8,8 +8,8 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 
-class CardsTest {
-	private Deck simpleDeck;
+class DeckTest {
+	private Drawable simpleDeck;
 	private List<Card> fourCards;
 
 	@BeforeEach
@@ -19,7 +19,7 @@ class CardsTest {
 				Card.of(Symbol.FIVE, Type.CLUB),
 				Card.of(Symbol.SIX, Type.SPADE)));
 
-		simpleDeck = Cards.of(fourCards);
+		simpleDeck = Deck.of(fourCards);
 	}
 
 	@Test
@@ -62,8 +62,8 @@ class CardsTest {
 	@Test
 	void equals() {
 		// given
-		Deck expected = Cards.of(fourCards);
-		Deck notExpected = Cards.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
+		Drawable expected = Deck.of(fourCards);
+		Drawable notExpected = Deck.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
 
 		// then
 		assertThat(simpleDeck.equals(expected)).isTrue();

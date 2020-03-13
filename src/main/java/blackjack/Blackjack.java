@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.domain.Result;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
@@ -19,7 +19,7 @@ public class Blackjack {
 		String playerNames = InputView.inputPlayerNames();
 		Players players = preparePlayers(playerNames);
 		Dealer dealer = DefaultDealer.dealer();
-		Deck deck = prepareDeck();
+		Drawable deck = prepareDeck();
 
 		start(players, dealer, deck);
 
@@ -46,33 +46,33 @@ public class Blackjack {
 		}
 	}
 
-	private static Cards prepareDeck() {
-		return Cards.ofDeckFactory(new ShuffledDeckFactory());
+	private static Deck prepareDeck() {
+		return Deck.ofDeckFactory(new ShuffledDeckFactory());
 	}
 
-	private static void start(Players players, Dealer dealer, Deck cards) {
+	private static void start(Players players, Dealer dealer, Drawable cards) {
 		giveTwoCardDealer(dealer, cards);
 		giveTwoCardEachPlayer(players, cards);
 		OutputView.printStartInfo(dealer, players);
 	}
 
-	private static void giveTwoCardDealer(Dealer dealer, Deck cards) {
+	private static void giveTwoCardDealer(Dealer dealer, Drawable cards) {
 		dealer.giveCards(cards.draw(), cards.draw());
 	}
 
-	private static void giveTwoCardEachPlayer(Players players, Deck cards) {
+	private static void giveTwoCardEachPlayer(Players players, Drawable cards) {
 		for (int i = 0; i < players.memberSize(); i++) {
 			players.giveCards(i, cards.draw(), cards.draw());
 		}
 	}
 
-	private static void progressPlayers(Players players, Deck cards) {
+	private static void progressPlayers(Players players, Drawable cards) {
 		for (Player player : players.getPlayers()) {
 			progressPlayer(player, cards);
 		}
 	}
 
-	private static void progressPlayer(Player player, Deck cards) {
+	private static void progressPlayer(Player player, Drawable cards) {
 		while (willProgress(player)) {
 			player.giveCards(cards.draw());
 			OutputView.printPlayerCard(player);
@@ -83,7 +83,7 @@ public class Blackjack {
 		return player.isNotBust() && InputView.inputYesOrNo(player).isYes();
 	}
 
-	private static void progressDealer(Dealer dealer, Deck cards) {
+	private static void progressDealer(Dealer dealer, Drawable cards) {
 		while (dealer.shouldReceiveCard()) {
 			dealer.giveCards(cards.draw());
 			OutputView.printDealerTurn(dealer);

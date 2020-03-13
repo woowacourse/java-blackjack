@@ -16,12 +16,12 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 
 	@Override
     public boolean shouldReceiveCard() {
-		return calculateScore().isUnder(MINIMUM_NUMBER_TO_STAY);
+		return getScore().isUnder(MINIMUM_NUMBER_TO_STAY);
 	}
 
 	@Override
 	public Card getFirstCard() {
-		return getCards().get(0);
+		return getHand().get(0);
 	}
 
 	@Override

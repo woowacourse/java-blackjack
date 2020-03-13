@@ -6,12 +6,12 @@ import java.util.List;
 
 public class ShuffledDeckFactory implements DeckFactory {
 	@Override
-	public Cards create() {
+	public Deck create() {
 		List<Card> deck = new ArrayList<>();
 		putAllCards(deck);
 
 		Collections.shuffle(deck);
-		return Cards.of(deck);
+		return Deck.of(deck);
 	}
 
 	/**

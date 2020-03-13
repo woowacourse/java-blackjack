@@ -29,7 +29,7 @@ public class Result {
 
     private static Map<Player, Boolean> CreatePlayersResult(Dealer dealer, Players players) {
         Map<Player, Boolean> playerResults = new LinkedHashMap<>();
-        Score dealerScore = dealer.calculateScore();
+        Score dealerScore = dealer.getScore();
         for (Player player : players.getPlayers()) {
             playerResults.put(player, player.isWinner(dealerScore));
         }

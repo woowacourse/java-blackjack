@@ -11,11 +11,11 @@ public abstract class AbstractPlayer implements Player {
     private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
     private final String name;
-    private final List<Card> cards;
+    private final List<Card> hand;
 
     protected AbstractPlayer(String name) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.hand = new ArrayList<>();
     }
 
     protected int getMaxScore() {
@@ -24,12 +24,12 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public void giveCards(Card... cards) {
-        this.cards.addAll(Arrays.asList(cards));
+        this.hand.addAll(Arrays.asList(cards));
     }
 
     @Override
     public boolean isBust() {
-        return calculateScore().isOver(getMaxScore());
+        return getScore().isOver(getMaxScore());
     }
 
     @Override
@@ -39,11 +39,11 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public int countCards() {
-        return cards.size();
+        return hand.size();
     }
 
     @Override
-    public Score calculateScore() {
+    public Score getScore() {
         Score score = sumScore();
         return maximize(score);
     }
@@ -51,7 +51,7 @@ public abstract class AbstractPlayer implements Player {
     private Score sumScore() {
         Score score = Score.of(0);
 
-        for (Card card : cards) {
+        for (Card card : hand) {
             score = score.add(card.getScore());
         }
         return score;
@@ -65,12 +65,12 @@ public abstract class AbstractPlayer implements Player {
     }
 
     private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return hand.stream().anyMatch(Card::isAce);
     }
 
     @Override
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
     @Override
@@ -84,19 +84,19 @@ public abstract class AbstractPlayer implements Player {
         if (o == null || getClass() != o.getClass()) return false;
         AbstractPlayer that = (AbstractPlayer) o;
         return Objects.equals(name, that.name) &&
-                Objects.equals(cards, that.cards);
+                Objects.equals(hand, that.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, hand);
     }
 
     @Override
     public String toString() {
         return "AbstractPlayer{" +
                 "name='" + name + '\'' +
-                ", cards=" + cards +
+                ", cards=" + hand +
                 '}';
     }
 }
