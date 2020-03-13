@@ -2,6 +2,8 @@ package blackjack;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
 import blackjack.domain.user.Players;
@@ -17,12 +19,12 @@ public class Blackjack {
 		String playerNames = InputView.inputPlayerNames();
 		Players players = preparePlayers(playerNames);
 		Dealer dealer = DefaultDealer.dealer();
-		Cards cards = prepareDeck();
+		Deck deck = prepareDeck();
 
-		start(players, dealer, cards);
+		start(players, dealer, deck);
 
-		progress(players, cards);
-		progress(dealer, cards);
+		progress(players, deck);
+		progress(dealer, deck);
 
 		finish(players, dealer);
 	}
@@ -45,34 +47,32 @@ public class Blackjack {
 	}
 
 	private static Cards prepareDeck() {
-		Cards cards = Cards.create();
-		cards.shuffle();
-		return cards;
+		return Cards.of(new ShuffledDeckFactory());
 	}
 
-	private static void start(Players players, Dealer dealer, Cards cards) {
+	private static void start(Players players, Dealer dealer, Deck cards) {
 		giveTwoCard(dealer, cards);
 		giveTwoCard(players, cards);
 		OutputView.printStartInfo(dealer, players);
 	}
 
-	private static void giveTwoCard(Dealer dealer, Cards cards) {
+	private static void giveTwoCard(Dealer dealer, Deck cards) {
 		dealer.giveCards(cards.draw(), cards.draw());
 	}
 
-	private static void giveTwoCard(Players players, Cards cards) {
+	private static void giveTwoCard(Players players, Deck cards) {
 		for (int i = 0; i < players.memberSize(); i++) {
 			players.giveCards(i, cards.draw(), cards.draw());
 		}
 	}
 
-	private static void progress(Players players, Cards cards) {
+	private static void progress(Players players, Deck cards) {
 		for (Player player : players.getPlayers()) {
 			progress(player, cards);
 		}
 	}
 
-	private static void progress(Player player, Cards cards) {
+	private static void progress(Player player, Deck cards) {
 		while (shouldProgress(player)) {
 			player.giveCards(cards.draw());
 			OutputView.printPlayerCard(player);

@@ -22,30 +22,12 @@ public class Cards implements Deck {
         return deckFactory.create();
     }
 
-    // TODO remove
-    public static Cards create() {
-        List<Card> deck = new ArrayList<>();
-
-        for (Symbol symbol : Symbol.values()) {
-            for (Type type : Type.values()) {
-                deck.add(Card.of(symbol, type));
-            }
-        }
-
-        return new Cards(deck);
-    }
-
     @Override
     public Card draw() {
         if (cards.isEmpty()) {
             throw new DeckException("뽑을 카드가 없습니다.");
         }
         return cards.remove(cards.size() - 1);
-    }
-
-    // TODO remove
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 
     @Override
