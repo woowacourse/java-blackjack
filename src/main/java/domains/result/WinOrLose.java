@@ -13,6 +13,9 @@ public enum WinOrLose {
     }
 
     public static WinOrLose checkWinOrLose(Player player, Dealer dealer) {
+        if (dealer.checkBurst() && !player.isBurst()) {
+            return WIN;
+        }
         if (player.score() > dealer.score()) {
             return WIN;
         }

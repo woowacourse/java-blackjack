@@ -12,13 +12,8 @@ public class Hands {
     public static final int BURST_SCORE = 21;
 
     private List<Card> hands;
-    private int score;
-    private boolean hasAce;
-
-    {
-        this.score = 0;
-        this.hasAce = false;
-    }
+    private int score = 0;
+    private boolean hasAce = false;
 
     public Hands(List<Card> hands) {
         this.hands = hands;

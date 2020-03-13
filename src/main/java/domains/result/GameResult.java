@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, WinOrLose> gameResult;
+    private Map<Player, WinOrLose> playerResult;
+    private Map<WinOrLose, Integer> gameResult;
 
     public GameResult() {
+        this.playerResult = new HashMap<>();
         this.gameResult = new HashMap<>();
     }
 
@@ -19,45 +21,37 @@ public class GameResult {
             if (checkBurstPlayer(player)) {
                 continue;
             }
-            gameResult.put(player, WinOrLose.checkWinOrLose(player, dealer));
+            playerResult.put(player, WinOrLose.checkWinOrLose(player, dealer));
         }
     }
 
     private boolean checkBurstPlayer(Player player) {
         if (player.isBurst()) {
-            gameResult.put(player, WinOrLose.LOSE);
+            playerResult.put(player, WinOrLose.LOSE);
             return true;
         }
         return false;
     }
 
     public WinOrLose getWinOrLose(Player player) {
-        return gameResult.get(player);
+        return playerResult.get(player);
     }
 
     public String calculateDealerResult() {
-        int winCount = 0;
-        int loseCount = 0;
-        int drawCount = 0;
-
-        for (WinOrLose result : gameResult.values()) {
-            if (result.equals(WinOrLose.WIN)) {
-                loseCount++;
-                continue;
-            }
-            if (result.equals(WinOrLose.DRAW)) {
-                drawCount++;
-                continue;
-            }
-            if (result.equals(WinOrLose.LOSE)) {
-                winCount++;
-                continue;
-            }
+        for(WinOrLose winOrLose : WinOrLose.values()) {
+            gameResult.put(winOrLose, 0);
         }
-        return winCount + "승 " + drawCount + "무 " + loseCount + "패";
+
+        for (WinOrLose result : playerResult.values()) {
+            gameResult.put(result, gameResult.get(result) + 1);
+        }
+
+        return gameResult.get(WinOrLose.LOSE) + WinOrLose.WIN.getWinOrLose()
+                + gameResult.get(WinOrLose.DRAW) + WinOrLose.DRAW.getWinOrLose()
+                + gameResult.get(WinOrLose.WIN) + WinOrLose.LOSE.getWinOrLose();
     }
 
-    public Map<Player, WinOrLose> getGameResult() {
-        return gameResult;
+    public Map<Player, WinOrLose> getPlayerResult() {
+        return playerResult;
     }
 }

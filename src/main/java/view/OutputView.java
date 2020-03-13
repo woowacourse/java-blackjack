@@ -53,7 +53,7 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult) {
         System.out.println("딜러: " + gameResult.calculateDealerResult());
-        Map<Player, WinOrLose> result = gameResult.getGameResult();
+        Map<Player, WinOrLose> result = gameResult.getPlayerResult();
         for (Player player : result.keySet()) {
             System.out.println(player.getName() + ": " + result.get(player).getWinOrLose());
         }
