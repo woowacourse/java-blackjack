@@ -2,6 +2,7 @@ package com.blackjack.view;
 
 import java.util.Scanner;
 
+import com.blackjack.domain.user.Drawable;
 import com.blackjack.domain.user.User;
 
 public class InputView {
@@ -15,7 +16,7 @@ public class InputView {
 		return SCANNER.nextLine();
 	}
 
-	public static String inputDrawDecideType(User player) {
+	public static String inputDrawDecideType(Drawable player) {
 		System.out.printf("%s은(는) 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
 		return SCANNER.nextLine();
 	}
