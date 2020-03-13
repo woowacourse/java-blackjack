@@ -51,10 +51,9 @@ public class GameResult {
             }
             if (result.equals(WinOrLose.LOSE)) {
                 winCount++;
-                continue;
             }
         }
-        return winCount + "승 " + drawCount + "무 " + loseCount + "패";
+        return winCount + WinOrLose.WIN.getWinOrLose() + drawCount + WinOrLose.DRAW.getWinOrLose() + loseCount + WinOrLose.LOSE.getWinOrLose();
     }
 
     public Map<Player, WinOrLose> getGameResult() {
