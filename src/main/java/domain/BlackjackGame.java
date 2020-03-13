@@ -16,6 +16,7 @@ import domain.gamer.Player;
 public class BlackjackGame {
 	private static final int MAX_PLAYER = 5;
 	private static final int EMPTY = 0;
+	private static final int INITIAL_DRAW_NUMBER = 2;
 
 	private List<Player> players;
 	private Dealer dealer;
@@ -58,7 +59,7 @@ public class BlackjackGame {
 	}
 
 	public void initialDraw() {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < INITIAL_DRAW_NUMBER; i++) {
 			dealer.draw(deck.deal());
 			players.forEach(player -> player.draw(deck.deal()));
 		}

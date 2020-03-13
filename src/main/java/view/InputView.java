@@ -14,6 +14,8 @@ public class InputView {
 	private static final String DELIMITER = ",";
 	private static final int LIMIT = -1;
 	private static final Scanner scanner = new Scanner(System.in);
+	private static final String YES = "Y";
+	private static final String NO = "N";
 
 	public static String[] inputPlayersName() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -37,7 +39,7 @@ public class InputView {
 	}
 
 	private static void validateYesOrNo(String input) {
-		boolean isException = (!"Y".equalsIgnoreCase(input)) && (!"N".equalsIgnoreCase(input));
+		boolean isException = (!YES.equalsIgnoreCase(input)) && (!NO.equalsIgnoreCase(input));
 
 		if (isException) {
 			throw new IllegalArgumentException("y나 n을 입력해주세요.");
