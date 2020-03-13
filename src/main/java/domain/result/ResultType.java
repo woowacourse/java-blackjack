@@ -28,14 +28,14 @@ public enum ResultType {
 		return DRAW;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public static ResultType from(User user1, User user2) {
 		return Arrays.stream(ResultType.values())
 				.filter(type -> type.resultJudge.test(user1.compareTo(user2)))
 				.findFirst()
 				.orElseThrow(() -> new NullPointerException("원하는 결과를 찾을 수 없습니다."));
+	}
+
+	public String getName() {
+		return name;
 	}
 }

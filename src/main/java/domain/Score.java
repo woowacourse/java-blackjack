@@ -20,6 +20,8 @@ public class Score {
 	}
 
 	public static Score of(Cards cards) {
+
+		// 여기세 score라는걸 세개의 분기를 이용해서 규정한다. 내가 허용하는 스코어는 이거뿐인데 이런 분기 과정이 이넘의 한 벨류가 될 수 있다.
 		int score = cards.getScore();
 		if (score > BLACKJACK_SCORE) {
 			return Score.of(BURST_SCORE);
