@@ -25,7 +25,7 @@ class ShuffledDeckFactoryTest {
 	@Test
 	void create() {
 		// when
-		Deck deck = deckFactory.create();
+		Deck deck = Cards.ofDeckFactory(deckFactory);
 
 		// then
 		Set<Card> cards = new HashSet<>();

@@ -2,20 +2,19 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.exceptions.DeckException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Cards implements Deck {
-    private final List<Card> cards;
+    private final Stack<Card> cards;
 
-    private Cards(List<Card> cards) {
+    private Cards(Stack<Card> cards) {
         this.cards = cards;
     }
 
-    public static Cards of(List<Card> deck) {
-        return new Cards(deck);
+    public static Cards of(List<Card> cards) {
+        Stack<Card> stack = new Stack<>();
+        stack.addAll(cards);
+        return new Cards(stack);
     }
 
     public static Cards ofDeckFactory(DeckFactory deckFactory) {
@@ -27,7 +26,7 @@ public class Cards implements Deck {
         if (cards.isEmpty()) {
             throw new DeckException("뽑을 카드가 없습니다.");
         }
-        return cards.remove(cards.size() - 1);
+        return cards.pop();
     }
 
     @Override

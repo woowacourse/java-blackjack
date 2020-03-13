@@ -10,60 +10,60 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CardsTest {
-    private Deck simpleDeck;
-    private List<Card> fourCards;
+	private Deck simpleDeck;
+	private List<Card> fourCards;
 
-    @BeforeEach
-    void setUp() {
-        fourCards = new ArrayList<>(Arrays.asList(Card.of(Symbol.THREE, Type.HEART),
-                Card.of(Symbol.FOUR, Type.DIAMOND),
-                Card.of(Symbol.FIVE, Type.CLUB),
-                Card.of(Symbol.SIX, Type.SPADE)));
+	@BeforeEach
+	void setUp() {
+		fourCards = new ArrayList<>(Arrays.asList(Card.of(Symbol.THREE, Type.HEART),
+				Card.of(Symbol.FOUR, Type.DIAMOND),
+				Card.of(Symbol.FIVE, Type.CLUB),
+				Card.of(Symbol.SIX, Type.SPADE)));
 
-        simpleDeck = Cards.of(fourCards);
-    }
+		simpleDeck = Cards.of(fourCards);
+	}
 
-    @Test
-    void create() {
-        assertThat(simpleDeck).isNotNull();
-    }
+	@Test
+	void create() {
+		assertThat(simpleDeck).isNotNull();
+	}
 
-    @Test
-    void draw() {
-        // given
-        List<Card> expected = new ArrayList<>(fourCards);
-        Collections.reverse(expected);
+	@Test
+	void draw() {
+		// given
+		List<Card> expected = new ArrayList<>(fourCards);
+		Collections.reverse(expected);
 
-        // when
-        List<Card> drawn = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            drawn.add(simpleDeck.draw());
-        }
+		// when
+		List<Card> drawn = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+			drawn.add(simpleDeck.draw());
+		}
 
-        // then
-        assertThat(drawn)
-                .isEqualTo(expected);
-    }
+		// then
+		assertThat(drawn)
+				.isEqualTo(expected);
+	}
 
-    @Test
-    void draw_ThereAreNoCard_ShouldThrowException() {
-        // given
-        for (int i = 0; i < 4; i++) {
-            simpleDeck.draw();
-        }
+	@Test
+	void draw_ThereAreNoCard_ShouldThrowException() {
+		// given
+		for (int i = 0; i < 4; i++) {
+			simpleDeck.draw();
+		}
 
-        // then
-        assertThatThrownBy(simpleDeck::draw).
-                isInstanceOf(DeckException.class);
-    }
+		// then
+		assertThatThrownBy(simpleDeck::draw)
+				.isInstanceOf(DeckException.class);
+	}
 
-    @Test
-    void equals() {
-        // given
-        Deck expected = Cards.of(fourCards);
+	@Test
+	void equals() {
+		// given
+		Deck expected = Cards.of(fourCards);
 
-        // then
-        assertThat(simpleDeck).isEqualTo(expected);
-    }
+		// then
+		assertThat(simpleDeck).isEqualTo(expected);
+	}
 
 }
