@@ -34,6 +34,15 @@ public class BlackJackApplication {
         OutputView.printFinalResult(dealer, gameResult);
     }
 
+    private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
+        dealer.drawCard(cardDeck, 2);
+        for (Player player : players.getPlayers()) {
+            player.drawCard(cardDeck, 2);
+        }
+        OutputView.printCardDistribution(players);
+        OutputView.printUsersCards(dealer, players);
+    }
+
     private static void drawMoreCards(Dealer dealer, Players players, CardDeck cardDeck) {
         for (Player player : players.getPlayers()) {
             drawMorePlayerCard(cardDeck, player);
@@ -42,15 +51,6 @@ public class BlackJackApplication {
             OutputView.printDealerOneMoreCard();
             dealer.drawCard(cardDeck);
         }
-    }
-
-    private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
-        dealer.drawCard(cardDeck, 2);
-        for (Player player : players.getPlayers()) {
-            player.drawCard(cardDeck, 2);
-        }
-        OutputView.printCardDistribution(players);
-        OutputView.printUsersCards(dealer, players);
     }
 
     private static void drawMorePlayerCard(CardDeck cardDeck, Player player) {

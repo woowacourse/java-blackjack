@@ -3,8 +3,10 @@ package blackjack.domain;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameResult {
@@ -13,7 +15,9 @@ public class GameResult {
 
     static {
         Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
-        for (Outcome outcome : Outcome.values()) {
+        List<Outcome> dealerOutcomes = Arrays.asList(Outcome.values());
+        Collections.reverse(dealerOutcomes);
+        for (Outcome outcome : dealerOutcomes) {
             dealerResults.put(outcome, 0);
         }
         initialDealerResults = dealerResults;
@@ -38,7 +42,7 @@ public class GameResult {
     private Map<Outcome, Integer> calculateDealerResults() {
         Map<Outcome, Integer> dealerResults = initialDealerResults;
         for (Outcome outcome : this.playerResults.values()) {
-            dealerResults.put(outcome.converse(), dealerResults.get(outcome.converse()) + 1);
+            dealerResults.put(outcome, dealerResults.get(outcome) + 1);
         }
         return dealerResults;
     }

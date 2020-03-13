@@ -70,7 +70,7 @@ public class OutputView {
 
     private static void printDealerFinalOutcome(Map<Outcome, Integer> gameResult, Outcome outcome) {
         if (gameResult.get(outcome) != 0) {
-            System.out.print(gameResult.get(outcome) + outcome.getName() + " ");
+            System.out.print(gameResult.get(outcome) + outcome.getConverseName() + " ");
         }
     }
 

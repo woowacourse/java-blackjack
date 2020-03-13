@@ -6,7 +6,6 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import java.util.Arrays;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,7 @@ public class GameResultTest {
     @BeforeEach
     void resetVariable() {
         dealer = new Dealer();
-        players = new Players(Arrays.asList("Jamie"));
+        players = new Players("Jamie");
     }
 
     @DisplayName("플레이어의 승패 - 패")
@@ -31,19 +30,20 @@ public class GameResultTest {
         Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
 
         for (Player player : playerResult.keySet()) {
-            assertThat(playerResult.get(player)).isEqualTo(Outcome.LOSE);
+            assertThat(playerResult.get(player)).isEqualTo(Outcome.PLAYER_LOSE);
         }
     }
 
     @DisplayName("플레이어의 승패 - 승")
     @Test
+        // MethodSource
     void checkPlayerResultWin() {
         players.getPlayers().get(0).drawCard(new CardDeck());
         GameResult gameResult = new GameResult(dealer, players);
         Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
 
         for (Player player : playerResult.keySet()) {
-            assertThat(playerResult.get(player)).isEqualTo(Outcome.WIN);
+            assertThat(playerResult.get(player)).isEqualTo(Outcome.PLAYER_WIN);
         }
     }
 }

@@ -54,12 +54,12 @@ public class UserCards {
     }
 
     public Outcome calculateOutcome(UserCards comparisonUserCards) {
-        return Outcome.calculate(getTotalScore(), comparisonUserCards.getTotalScore());
+        return Outcome.from(getTotalScore(), comparisonUserCards.getTotalScore());
     }
 
     public List<String> getInfos() {
         return cards.stream()
-            .map(Card::getInfo)
+            .map(Card::toString)
             .collect(Collectors.toList());
     }
 }
