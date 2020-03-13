@@ -75,17 +75,5 @@ public class CardsTest {
         cards.add(new Card(Type.CLUB, Symbol.SIX));
         assertThat(cards.isBlackJack()).isTrue();
     }
-
-    @DisplayName("카드들 인포 출력 확인")
-    @Test
-    void checkCardsInfos() {
-        Card cardDiamondEight = new Card(Type.DIAMOND, Symbol.EIGHT);
-        Card cardDiamondTwo = new Card(Type.DIAMOND, Symbol.TWO);
-        cards.add(cardDiamondEight);
-        cards.add(cardDiamondTwo);
-        List<String> infos = cards.getInfos();
-
-        assertThat(infos.get(0)).isEqualTo("8다이아몬드");
-        assertThat(infos.get(1)).isEqualTo("2다이아몬드");
-    }
 }
+
