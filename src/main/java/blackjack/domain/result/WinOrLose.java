@@ -15,7 +15,7 @@ public enum WinOrLose {
     }
 
     public static WinOrLose of(boolean isWinner) {
-        return Arrays.stream(WinOrLose.values())
+        return Arrays.stream(values())
                 .filter(winOrLose -> isWinner == winOrLose.isWinner)
                 .findFirst()
                 .get();

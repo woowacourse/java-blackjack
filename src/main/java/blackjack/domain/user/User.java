@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface User {
     String getName();
 
     boolean isNotBust();
+
+    void drawCards(Deck deck, int drawingCount);
 }

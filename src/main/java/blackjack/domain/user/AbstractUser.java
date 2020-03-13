@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 import java.util.ArrayList;
@@ -19,6 +20,13 @@ public abstract class AbstractUser implements User {
     protected AbstractUser(String name) {
         this.name = name;
         this.cards = new ArrayList<>();
+    }
+
+    @Override
+    public void drawCards(Deck deck, int drawingCount) {
+        for (int i = 0; i < drawingCount; i++) {
+            cards.add(deck.draw());
+        }
     }
 
     @Override

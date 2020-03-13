@@ -2,9 +2,7 @@ package blackjack;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -17,15 +15,13 @@ public class Blackjack {
         Deck deck = Deck.create();
         deck.shuffle();
 
-        dealer.drawCards(deck.draw(), deck.draw());
-        for (int i = 0; i < players.memberSize(); i++) {
-            players.drawCards(i, deck.draw(), deck.draw());
-        }
+        dealer.drawCards(deck, 2);
+        players.drawCards(deck, 2);
 
         OutputView.printInitialInfo(dealer, players);
 
         for (Player player : players.getPlayers()) {
-            while (player.isNotBust() && InputView.inputToHitOrStay(player).equals("y")) {
+            while (player.isNotBust() && inputToHit(player)) {
                 player.drawCards(deck.draw());
                 OutputView.printUserCard(player);
             }
@@ -40,5 +36,14 @@ public class Blackjack {
 
         GameResult gameResult = GameResult.of(dealer, players);
         OutputView.printGameResult(gameResult);
+    }
+
+    private static boolean inputToHit(Player player) {
+        try {
+            HitOrStay hitOrStay = HitOrStay.of(InputView.inputToHitOrStay(player));
+            return hitOrStay.isToHit();
+        } catch (HitOrStayException e) {
+            return inputToHit(player);
+        }
     }
 }
