@@ -37,7 +37,7 @@ public class BlackjackGame {
 	}
 
 	private List<User> initAllUsers() {
-		List<User> allUsers = new ArrayList<>();
+		List<User> allUsers = new ArrayList<>(players);
 		allUsers.add(dealer);
 		return allUsers;
 	}
