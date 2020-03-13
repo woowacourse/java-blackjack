@@ -40,4 +40,39 @@ class ResultTypeTest {
 			Arguments.arguments(dealer, sony, ResultType.DRAW),
 			Arguments.arguments(dealer, stitch, ResultType.WIN));
 	}
+
+	@ParameterizedTest
+	@MethodSource("providePlayerBustScoreWithReturnType")
+	void from_DealerScoreAndPlayerBustScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
+		assertThat(ResultType.from(targetUser, compareUser)).isEqualTo(expected);
+	}
+
+	private static Stream<Arguments> providePlayerBustScoreWithReturnType() {
+		List<Card> dealerCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
+		List<Card> pobiBustCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND), new Card(Symbol.TEN, Type.DIAMOND));
+		Player pobi = Player.valueOf("pobi", pobiBustCards);
+
+		Dealer dealer = Dealer.valueOf("dealer", dealerCards);
+		return Stream.of(
+			Arguments.arguments(dealer, pobi, ResultType.WIN));
+	}
+
+	@ParameterizedTest
+	@MethodSource("provideDealerBustScoreWithReturnType")
+	void from_DealerBustScoreAndPlayerScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
+		assertThat(ResultType.from(targetUser, compareUser)).isEqualTo(expected);
+	}
+
+	private static Stream<Arguments> provideDealerBustScoreWithReturnType() {
+		List<Card> dealerBustCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND),new Card(Symbol.TEN, Type.DIAMOND));
+		List<Card> pobiCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
+		List<Card> sonyBustCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND),new Card(Symbol.EIGHT, Type.DIAMOND));
+		Player pobi = Player.valueOf("pobi", pobiCards);
+		Player sony = Player.valueOf("sony", sonyBustCards);
+
+		Dealer dealer = Dealer.valueOf("dealer", dealerBustCards);
+		return Stream.of(
+			Arguments.arguments(dealer, pobi, ResultType.LOSE),
+			Arguments.arguments(dealer, sony, ResultType.WIN));
+	}
 }
