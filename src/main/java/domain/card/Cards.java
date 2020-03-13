@@ -23,7 +23,7 @@ public class Cards {
     }
 
     public int calculatePointAccordingToHasAce() {
-        if (isBust() && hasAce()) {
+        if (areBust() && hasAce()) {
             return calculatePoint() - TEN;
         }
         return calculatePoint();
@@ -35,19 +35,19 @@ public class Cards {
                 .sum();
     }
 
-    public boolean isBust() {
+    public boolean areBust() {
         return calculatePoint() > BLACK_JACK;
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_SIZE && isBlackJackPoint();
+    public boolean areBlackJack() {
+        return cards.size() == BLACK_JACK_SIZE && areBlackJackPoint();
     }
 
-    public boolean isBlackJackPoint() {
+    public boolean areBlackJackPoint() {
         return calculatePoint() == BLACK_JACK;
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }

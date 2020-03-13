@@ -37,7 +37,7 @@ class CardsTest {
         cards.add(new Card(Symbol.DIAMOND, Type.EIGHT));
         cards.add(new Card(Symbol.HEART, Type.EIGHT));
 
-        assertThat(cards.isBust()).isTrue();
+        assertThat(cards.areBust()).isTrue();
     }
 
     @Test
@@ -46,7 +46,7 @@ class CardsTest {
         cards.add(new Card(Symbol.CLOVER, Type.ACE));
         cards.add(new Card(Symbol.DIAMOND, Type.KING));
 
-        assertThat(cards.isBlackJack()).isTrue();
+        assertThat(cards.areBlackJack()).isTrue();
     }
 
     @Test
@@ -56,23 +56,7 @@ class CardsTest {
         cards.add(new Card(Symbol.DIAMOND, Type.FIVE));
         cards.add(new Card(Symbol.DIAMOND, Type.SIX));
 
-        assertThat(cards.isBlackJackPoint()).isTrue();
-    }
-
-    @ParameterizedTest
-    @DisplayName("ACE를 가지고 있는지 확인")
-    @MethodSource("createCard")
-    void hasAce(Card card, boolean expected) {
-        cards.add(card);
-
-        assertThat(cards.hasAce()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> createCard() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), true),
-                Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), false)
-        );
+        assertThat(cards.areBlackJackPoint()).isTrue();
     }
 
     @ParameterizedTest

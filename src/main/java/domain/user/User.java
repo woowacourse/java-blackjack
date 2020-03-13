@@ -39,11 +39,11 @@ public abstract class User {
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return cards.areBust();
     }
 
     public boolean isBlackJack() {
-        return cards.isBlackJack();
+        return cards.areBlackJack();
     }
 
     public String getTotalDrawResult() {
