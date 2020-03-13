@@ -1,5 +1,7 @@
 package blackjack;
 
+import java.util.List;
+
 import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.CardDeck;
 import blackjack.player.domain.Dealer;
@@ -7,8 +9,6 @@ import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.List;
 
 public class BlackjackController {
 	private final CardDeck cardDeck;
@@ -24,7 +24,7 @@ public class BlackjackController {
 		Players players = new Players(makePlayers(dealer));
 
 		drawStartingCards(players);
-		if (dealer.isNotBurst()) {
+		if (dealer.isNotBlackjack()) {
 			drawGambler(players);
 			drawDealer(dealer);
 		}

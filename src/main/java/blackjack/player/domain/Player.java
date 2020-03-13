@@ -24,16 +24,16 @@ public abstract class Player {
 		cardBundle.addCard(card);
 	}
 
-	public boolean isBurst() {
-		return cardBundle.isNotBurst();
-	}
-
 	public boolean isNotBurst() {
-		return !isBurst();
+		return cardBundle.isNotBurst();
 	}
 
 	public boolean isBlackjack() {
 		return cardBundle.isBlackjack();
+	}
+
+	public boolean isNotBlackjack() {
+		return !isBlackjack();
 	}
 
 	public abstract boolean isDealer();

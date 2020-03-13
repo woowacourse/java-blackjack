@@ -32,10 +32,10 @@ class PlayerTest {
 	private static Stream<Arguments> cardBundleProvider() {
 		return Stream.of(
 			Arguments.of(
-				aCardBundle(CardNumber.KING, CardNumber.KING, CardNumber.TWO), true
+				aCardBundle(CardNumber.KING, CardNumber.KING, CardNumber.TWO), false
 			),
 			Arguments.of(
-				aCardBundle(CardNumber.KING, CardNumber.ACE), false
+				aCardBundle(CardNumber.KING, CardNumber.ACE), true
 			)
 		);
 	}
@@ -64,16 +64,16 @@ class PlayerTest {
 		assertThat(isBlackjack).isEqualTo(result);
 	}
 
-	@DisplayName("플레이어의 패가 21을 초과했는지 확인")
+	@DisplayName("플레이어의 패가 21이하인지 확인")
 	@ParameterizedTest
 	@MethodSource("cardBundleProvider")
 	void isBurst(CardBundle cardBundle, boolean result) {
 		//given
 		Player player = new Dealer(cardBundle);
 		//when
-		boolean isBurst = player.isBurst();
+		boolean notBurst = player.isNotBurst();
 		//than
-		assertThat(isBurst).isEqualTo(result);
+		assertThat(notBurst).isEqualTo(result);
 	}
 
 	@DisplayName("플레이어의 패가 21이하인지 확인")

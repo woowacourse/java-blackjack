@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class CardBundle {
 	private static final int ACE_WEIGHT = 10;
-	private static final int BLACKJACK_VALUE = 21;
+	private static final int BLACKJACK_MAXIMUM_VALUE = 21;
 	private final List<Card> cards = new ArrayList<>();
 
 	public void addCard(Card card) {
@@ -15,10 +15,10 @@ public class CardBundle {
 	}
 
 	public GameResult compare(CardBundle gamblerCardBundle) {
-		if (gamblerCardBundle.isNotBurst()) {
+		if (gamblerCardBundle.isBurst()) {
 			return GameResult.LOSE;
 		}
-		if (isNotBurst()) {
+		if (isBurst()) {
 			return GameResult.WIN;
 		}
 		int compare = Integer.compare(gamblerCardBundle.calculateScore(), this.calculateScore());
@@ -38,7 +38,7 @@ public class CardBundle {
 	}
 
 	public boolean isBlackjack() {
-		return cards.size() == 2 && calculateScore() == BLACKJACK_VALUE;
+		return cards.size() == 2 && calculateScore() == BLACKJACK_MAXIMUM_VALUE;
 	}
 
 	private boolean hasAce() {
@@ -46,12 +46,16 @@ public class CardBundle {
 			.anyMatch(Card::isAce);
 	}
 
-	public boolean isNotBurst() {
-		return calculateScore() > BLACKJACK_VALUE;
+	private boolean isBurst() {
+		return calculateScore() > BLACKJACK_MAXIMUM_VALUE;
 	}
 
-	private boolean isNotBurst(int result) {
-		return !(result > BLACKJACK_VALUE);
+	private boolean isNotBurst(int score) {
+		return score <= BLACKJACK_MAXIMUM_VALUE;
+	}
+
+	public boolean isNotBurst() {
+		return !isBurst();
 	}
 
 	@Override
