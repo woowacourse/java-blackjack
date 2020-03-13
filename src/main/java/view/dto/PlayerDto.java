@@ -1,4 +1,4 @@
-package dto;
+package view.dto;
 
 import java.util.stream.Collectors;
 
@@ -32,20 +32,19 @@ public class PlayerDto {
 			.collect(Collectors.joining(", "));
 	}
 
-	public boolean isDefeat(int dealerScore) {
-		return ((hands.calculateTotalScore() > Hands.BLACKJACK) ||
-			((dealerScore > hands.calculateTotalScore()) && (dealerScore <= Hands.BLACKJACK)));
+	public int score() {
+		return hands.calculateTotalScore();
 	}
 
-	public boolean isDraw(int dealerScore) {
-		return (dealerScore == hands.calculateTotalScore()) && (dealerScore <= Hands.BLACKJACK);
+	public boolean win(int score) {
+		return (hands.calculateTotalScore() <= Hands.BLACKJACK) && (score < hands.calculateTotalScore());
+	}
+
+	public boolean isPush(int score) {
+		return score <= Hands.BLACKJACK && (score == hands.calculateTotalScore());
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public Hands getHands() {
-		return hands;
 	}
 }

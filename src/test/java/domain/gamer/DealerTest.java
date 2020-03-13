@@ -39,8 +39,8 @@ public class DealerTest {
 	void 카드_받기(List<Card> cards, boolean expected) {
 		Dealer dealer = new Dealer();
 		for (Card card : cards) {
-			dealer.draw(card);
+			dealer.hit(card);
 		}
-		assertThat(dealer.canDraw()).isEqualTo(expected);
+		assertThat(dealer.canHit()).isEqualTo(expected);
 	}
 }

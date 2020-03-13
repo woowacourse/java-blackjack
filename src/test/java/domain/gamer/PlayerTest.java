@@ -13,6 +13,7 @@ public class PlayerTest {
 	@Test
 	void 생성() {
 		Player player = new Player("a");
+
 		assertThat(player).isNotNull();
 		assertThat(player.getName()).isEqualTo("a");
 		assertThat(player.getHands()).isNotNull();

@@ -2,10 +2,10 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.gamer.Player;
-import dto.BlackjackGameDto;
-import dto.PlayerDto;
 import view.InputView;
 import view.OutputView;
+import view.dto.BlackjackGameDto;
+import view.dto.PlayerDto;
 
 /**
  *   class controller 클래스입니다.
@@ -48,7 +48,7 @@ public class Controller {
 	}
 
 	private static void progressDealer(BlackjackGame blackjackGame) {
-		while (blackjackGame.getDealer().canDraw()) {
+		while (blackjackGame.getDealer().canHit()) {
 			OutputView.printDealerDraw();
 			blackjackGame.drawDealer();
 		}
@@ -69,7 +69,7 @@ public class Controller {
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
-		OutputView.printResult(BlackjackGameDto.from(blackjackGame));
+		OutputView.printGameResult(BlackjackGameDto.from(blackjackGame));
 		OutputView.printMatchResult(BlackjackGameDto.from(blackjackGame));
 	}
 }

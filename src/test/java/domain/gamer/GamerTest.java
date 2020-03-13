@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,6 +24,13 @@ import domain.card.Type;
  */
 @SuppressWarnings("NonAsciiCharacters")
 public class GamerTest {
+	private Gamer gamer;
+
+	@BeforeEach
+	void setUp() {
+		gamer = new Gamer("a");
+	}
+
 	private static Stream<Arguments> generateBustInput() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), false),
@@ -58,9 +66,8 @@ public class GamerTest {
 	@ParameterizedTest
 	@MethodSource("generateBustInput")
 	void 버스트(List<Card> cards, boolean expected) {
-		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			gamer.draw(card);
+			gamer.hit(card);
 		}
 		assertThat(gamer.isBust()).isEqualTo(expected);
 	}
@@ -68,9 +75,8 @@ public class GamerTest {
 	@ParameterizedTest
 	@MethodSource("generateBlackjackInput")
 	void 블랙잭(List<Card> cards, boolean expected) {
-		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			gamer.draw(card);
+			gamer.hit(card);
 		}
 		assertThat(gamer.isBlackjack()).isEqualTo(expected);
 	}
@@ -78,19 +84,17 @@ public class GamerTest {
 	@ParameterizedTest
 	@MethodSource("generateDrawInput")
 	void 카드_받기(List<Card> cards, boolean expected) {
-		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			gamer.draw(card);
+			gamer.hit(card);
 		}
-		assertThat(gamer.canDraw()).isEqualTo(expected);
+		assertThat(gamer.canHit()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateScoreInput")
 	void 손패_점수(List<Card> cards, int expected) {
-		Gamer gamer = new Gamer("a");
 		for (Card card : cards) {
-			gamer.draw(card);
+			gamer.hit(card);
 		}
 		assertThat(gamer.scoreHands()).isEqualTo(expected);
 	}
@@ -105,7 +109,6 @@ public class GamerTest {
 
 	@Test
 	void Getter() {
-		Gamer gamer = new Gamer("a");
 		assertThat(gamer.getName()).isInstanceOf(String.class).isNotBlank();
 		assertThat(gamer.getHands()).isInstanceOf(Hands.class).isNotNull();
 	}

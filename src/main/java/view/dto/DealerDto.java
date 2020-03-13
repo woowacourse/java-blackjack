@@ -1,4 +1,4 @@
-package dto;
+package view.dto;
 
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ public class DealerDto {
 	}
 
 	public String showDealerInitialCard() {
-		return name
+		return this.name
 			+ ": "
 			+ "HIDDEN, "
 			+ hands.getCards()
@@ -41,11 +41,7 @@ public class DealerDto {
 			.collect(Collectors.joining(", "));
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public Hands getHands() {
-		return hands;
+	public int score() {
+		return this.hands.calculateTotalScore();
 	}
 }

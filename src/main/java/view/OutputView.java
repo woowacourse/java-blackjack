@@ -1,11 +1,9 @@
 package view;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
-import dto.BlackjackGameDto;
-import dto.DealerDto;
-import dto.PlayerDto;
+import view.dto.BlackjackGameDto;
+import view.dto.PlayerDto;
 
 /**
  *   class outputView입니다.
@@ -23,12 +21,12 @@ public class OutputView {
 	}
 
 	public static void printInitialDraw(BlackjackGameDto blackjackGameDto) {
-		String stringBuilder = "딜러와 "
+		String string = "딜러와 "
 			+ blackjackGameDto.getPlayers().stream()
 			.map(PlayerDto::getName)
 			.collect(Collectors.joining(", "))
 			+ "에게 2장을 나누었습니다.";
-		System.out.println(stringBuilder);
+		System.out.println(string);
 	}
 
 	public static void printInitialCards(BlackjackGameDto blackjackGameDto) {
@@ -50,43 +48,11 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
 	}
 
-	public static void printResult(BlackjackGameDto blackjackGameDto) {
-		DealerDto dealerDto = blackjackGameDto.getDealer();
-		List<PlayerDto> playersDto = blackjackGameDto.getPlayers();
-
-		System.out.println(dealerDto.showCards() + " - " + dealerDto.getHands().calculateTotalScore());
-		for (PlayerDto player : playersDto) {
-			System.out.println(player.showCards() + " - " + player.getHands().calculateTotalScore());
-		}
+	public static void printGameResult(BlackjackGameDto blackjackGameDto) {
+		System.out.println(blackjackGameDto.gameResult());
 	}
 
 	public static void printMatchResult(BlackjackGameDto blackjackGameDto) {
-		System.out.println("## 최종 승패");
-		List<PlayerDto> players = blackjackGameDto.getPlayers();
-		int dealerScore = blackjackGameDto.getDealer().getHands().calculateTotalScore();
-
-		for (PlayerDto playerDto : players) {
-			printLoser(dealerScore, playerDto);
-			printDrawer(dealerScore, playerDto);
-			printWinner(dealerScore, playerDto);
-		}
-	}
-
-	private static void printWinner(int dealerScore, PlayerDto playerDto) {
-		if (!playerDto.isDefeat(dealerScore) && !playerDto.isDraw(dealerScore)) {
-			System.out.println(playerDto.getName() + " : 승");
-		}
-	}
-
-	private static void printDrawer(int dealerScore, PlayerDto playerDto) {
-		if (playerDto.isDraw(dealerScore)) {
-			System.out.println(playerDto.getName() + " : 무");
-		}
-	}
-
-	private static void printLoser(int dealerScore, PlayerDto playerDto) {
-		if (playerDto.isDefeat(dealerScore)) {
-			System.out.println(playerDto.getName() + " : 패");
-		}
+		System.out.println(blackjackGameDto.matchResult());
 	}
 }

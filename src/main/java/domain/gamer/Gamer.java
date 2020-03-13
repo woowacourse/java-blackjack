@@ -24,7 +24,7 @@ public class Gamer {
 		}
 	}
 
-	public void draw(Card card) {
+	public void hit(Card card) {
 		hands.add(card);
 	}
 
@@ -40,7 +40,7 @@ public class Gamer {
 		return (hands.calculateTotalScore() == Hands.BLACKJACK) && hands.hasTwoCards();
 	}
 
-	public boolean canDraw() {
+	public boolean canHit() {
 		return hands.calculateTotalScore() < Hands.BLACKJACK;
 	}
 
