@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.WinningResult;
 import domain.rule.Rule;
+import view.OutputView;
 
 public class Players {
 
@@ -37,19 +39,19 @@ public class Players {
     public String getAllNames() {
         return players.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(Cards.COMMA));
     }
 
     public String getAllFirstDrawResults() {
         return players.stream()
                 .map(Player::getDrawResult)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(OutputView.NEWLINE));
     }
 
     public String getAllTotalDrawResults() {
         return players.stream()
                 .map(Player::getTotalDrawResult)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(OutputView.NEWLINE));
     }
 
     public Map<Player, WinningResult> decideWinner(Dealer dealer) {

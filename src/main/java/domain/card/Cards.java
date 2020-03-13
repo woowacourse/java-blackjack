@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
+    public static final String COMMA = ", ";
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
     private static final int FIRST_INDEX = 0;
@@ -58,7 +59,7 @@ public class Cards {
     public String getCardsDrawResult() {
         return cards.stream()
                 .map(Card::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(COMMA));
     }
 
     public List<Card> getCards() {

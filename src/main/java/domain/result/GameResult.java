@@ -8,9 +8,12 @@ import java.util.stream.Collectors;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import view.OutputView;
 
 public class GameResult {
 
+    private static final String COLON = ": ";
+    private static final String SPACE = " ";
     private Map<WinningResult, Integer> winningResultOfDealer;
     private Map<Player, WinningResult> winningResultOfPlayers;
 
@@ -36,21 +39,21 @@ public class GameResult {
     }
 
     public String getTotalWinningResults() {
-        return getDealerWinningResult() + "\n" + getPlayersWinningResult();
+        return getDealerWinningResult() + OutputView.NEWLINE + getPlayersWinningResult();
     }
 
     private String getDealerWinningResult() {
-        return Dealer.DEALER + ": "
+        return Dealer.DEALER + COLON
                 + winningResultOfDealer.entrySet()
                 .stream()
                 .map(winningResult -> winningResult.getValue() + winningResult.getKey().getResult())
-                .collect(Collectors.joining(" "));
+                .collect(Collectors.joining(SPACE));
     }
 
     private String getPlayersWinningResult() {
         return winningResultOfPlayers.entrySet()
                 .stream()
-                .map(player -> player.getKey().getName() + ": " + player.getValue().getResult())
-                .collect(Collectors.joining("\n"));
+                .map(player -> player.getKey().getName() + COLON + player.getValue().getResult())
+                .collect(Collectors.joining(OutputView.NEWLINE));
     }
 }

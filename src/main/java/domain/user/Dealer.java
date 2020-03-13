@@ -14,7 +14,7 @@ public class Dealer extends User {
     }
 
     public String getFirstDrawResult() {
-        return DEALER + "카드: " + cards.getFirstCard().getName();
+        return DEALER + CARD + cards.getFirstCard().getName();
     }
 
     @Override

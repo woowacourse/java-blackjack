@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.result.WinningResult;
 
 class PlayerTest {
 

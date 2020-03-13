@@ -5,7 +5,9 @@ import domain.card.Cards;
 
 public abstract class User {
 
+    protected static final String CARD = "카드: ";
     private static final String EMPTY = "";
+    private static final String RESULT = " - 결과: ";
 
     protected Cards cards;
     protected final String name;
@@ -27,7 +29,7 @@ public abstract class User {
     }
 
     public String getDrawResult() {
-        return name + "카드: " + cards.getCardsDrawResult();
+        return name + CARD + cards.getCardsDrawResult();
     }
 
     public int calculatePoint() {
@@ -45,7 +47,7 @@ public abstract class User {
     public abstract boolean isAvailableToDraw();
 
     public String getTotalDrawResult() {
-        return getDrawResult() + " - 결과: " + calculatePoint();
+        return getDrawResult() + RESULT + calculatePoint();
     }
 
     public String getName() {

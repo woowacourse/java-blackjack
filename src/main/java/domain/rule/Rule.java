@@ -26,7 +26,7 @@ public class Rule {
         return WinningResult.LOSE;
     }
 
-    private static WinningResult checkBlackJackCase(Dealer dealer, Player player ) {
+    private static WinningResult checkBlackJackCase(Dealer dealer, Player player) {
         if (player.isBlackJack() && !dealer.isBlackJack()) {
             return WinningResult.WIN;
         }
