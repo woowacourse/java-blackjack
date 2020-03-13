@@ -15,16 +15,12 @@ public class BlackjackController {
 		BlackjackService.giveInitialCards(deck, dealer, players);
 		printInitialStatus(dealer.openCard(), players);
 
-		if (dealer.isBlackjack()) {
-			printResult(dealer, players);
-			return;
-		}
-
-		players.forEach(player -> proceedExtraDraw(player, deck));
-
-		while (dealer.canDrawMore()) {
-			BlackjackService.addCard(dealer, deck);
-			printDealerDrawing();
+		if (dealer.isNotBlackjack()) {
+			players.forEach(player -> proceedExtraDraw(player, deck));
+			while (dealer.canDrawMore()) {
+				BlackjackService.addCard(dealer, deck);
+				printDealerDrawing();
+			}
 		}
 
 		printResult(dealer, players);

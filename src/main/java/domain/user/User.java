@@ -42,8 +42,8 @@ public class User implements Comparable<User> {
 		return drawStrategy.canDraw(this.score);
 	}
 
-	public boolean isBlackjack() {
-		return cards.hasInitialSize() && score.isBlackjackScore();
+	public boolean isNotBlackjack() {
+		return !(cards.hasInitialSize() && score.isBlackjackScore());
 	}
 
 	@Override

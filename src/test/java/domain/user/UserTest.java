@@ -88,7 +88,7 @@ public class UserTest {
 	}
 
 	@Test
-	void isBlackjack_When_User_Score_21_And_Two_Cards_Return_True() {
+	void isNotBlackjack_When_User_Score_21_And_Two_Cards_Return_False() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
 		Card card2 = new Card(Symbol.ACE, Type.HEART);
 
@@ -96,11 +96,11 @@ public class UserTest {
 		dealer.addCard(card1);
 		dealer.addCard(card2);
 
-		assertTrue(dealer.isBlackjack());
+		assertFalse(dealer.isNotBlackjack());
 	}
 
 	@Test
-	void isBlackjack_When_User_Score_21_And_Three_Cards_Return_False() {
+	void isNotBlackjack_When_User_Score_21_And_Three_Cards_Return_True() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
 		Card card2 = new Card(Symbol.KING, Type.HEART);
 		Card card3 = new Card(Symbol.ACE, Type.HEART);
@@ -110,11 +110,11 @@ public class UserTest {
 		dealer.addCard(card2);
 		dealer.addCard(card3);
 
-		assertFalse(dealer.isBlackjack());
+		assertTrue(dealer.isNotBlackjack());
 	}
 
 	@Test
-	void isBlackjack_When_User_Score_20_And_Two_Cards_Return_False() {
+	void isNotBlackjack_When_User_Score_20_And_Two_Cards_Return_True() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
 		Card card2 = new Card(Symbol.KING, Type.HEART);
 
@@ -122,6 +122,6 @@ public class UserTest {
 		dealer.addCard(card1);
 		dealer.addCard(card2);
 
-		assertFalse(dealer.isBlackjack());
+		assertTrue(dealer.isNotBlackjack());
 	}
 }
