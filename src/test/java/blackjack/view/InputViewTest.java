@@ -25,13 +25,11 @@ class InputViewTest {
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes());
 		Scanner scanner = new Scanner(inputStream);
 
+		//when
 		InputView inputView = new InputView(scanner);
 
-		//when
-		NamesDTO namesDTO = inputView.inputPlayNames();
-
 		//then
-		assertThat(namesDTO).isEqualTo(new NamesDTO("allen,bebop"));
+		assertThat(inputView.inputPlayNames()).isInstanceOf(NamesDTO.class);
 	}
 
 	@DisplayName("이름입력시 빈칸 예외처리")
@@ -55,12 +53,10 @@ class InputViewTest {
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes());
 		Scanner scanner = new Scanner(inputStream);
 
+		//when
 		InputView inputView = new InputView(scanner);
 
-		//when
-		DrawRequestDTO expect = inputView.inputDrawRequest(new Gambler(new CardBundle(), "bebop"));
-
 		//then
-		assertThat(expect).isInstanceOf(DrawRequestDTO.class);
+		assertThat(inputView.inputDrawRequest(new Gambler(new CardBundle(), "bebop"))).isInstanceOf(DrawRequestDTO.class);
 	}
 }
