@@ -1,9 +1,13 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Report;
+import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.util.StringUtil;
 
@@ -11,6 +15,8 @@ public class OutputView {
 	private static final String NEWLINE = System.getProperty("line.separator");
 	private static final String INITIAL_DRAW_FORMAT = "%s와 %s에게 %d장의 나누었습니다.";
 	private static final String DEALER_DRAW_FORMAT = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
+	private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
+	private static final String SEPARATOR = ": ";
 
 	public static void printUsersInitialDraw(int initialDrawNumber, List<User> users) {
 		System.out.println(
@@ -22,7 +28,7 @@ public class OutputView {
 	}
 
 	public static void printUserHand(User user, List<Card> hand) {
-		System.out.println(user.getName() + ": " + StringUtil.joinCards(hand));
+		System.out.println(user.getName() + SEPARATOR + StringUtil.joinCards(hand));
 	}
 
 	public static void printDealerDrawCard() {
@@ -30,6 +36,19 @@ public class OutputView {
 	}
 
 	public static void printUserHandAndScore(User user) {
-		System.out.println(user.getName() + ": " + StringUtil.joinCards(user.getHand()) + " - 결과: " + user.getScore());
+		System.out.println(user.getName() + SEPARATOR
+			+ StringUtil.joinCards(user.getHand())
+			+ " - 결과: " + user.getScore());
+	}
+
+	public static void printBlackjackReport(Report blackJackReport) {
+		System.out.println(NEWLINE + FINAL_RESULT_MESSAGE);
+		System.out.println(StringUtil.joinDealerResult(blackJackReport.getDealerResult()));
+		printPlayersResult(blackJackReport.getPlayersResult());
+	}
+
+	private static void printPlayersResult(Map<Player, ResultType> playersResult) {
+		playersResult.forEach((player, resultType) ->
+			System.out.println(player.getName() + SEPARATOR + resultType.getAlias()));
 	}
 }

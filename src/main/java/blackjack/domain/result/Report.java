@@ -34,4 +34,12 @@ public class Report {
 			.map(player -> ResultType.from(dealer, player))
 			.collect(groupingBy(Function.identity(), counting()));
 	}
+
+	public Map<ResultType, Long> getDealerResult() {
+		return dealerResult;
+	}
+
+	public Map<Player, ResultType> getPlayersResult() {
+		return playersResult;
+	}
 }

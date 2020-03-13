@@ -5,6 +5,7 @@ import java.util.List;
 
 import blackjack.domain.DrawOpinion;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.Report;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -29,6 +30,9 @@ public class BlackjackController {
 		drawInitialCardsEachUser(users);
 		drawCardsEachUsers();
 		printUsersCardsAndScore(users);
+
+		Report blackJackReport = Report.from(dealer, players);
+		OutputView.printBlackjackReport(blackJackReport);
 	}
 
 	private List<User> generateUsers() {
