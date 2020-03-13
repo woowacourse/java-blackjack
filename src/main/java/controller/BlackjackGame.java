@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.YesOrNo;
+import util.YesOrNo;
 import domain.card.CardDeck;
 import domain.result.DealerResult;
 import domain.result.MatchCalculator;
@@ -27,42 +27,46 @@ public class BlackjackGame {
 	public void play() {
 		final List<Player> players = PlayerFactory.create(InputView.inputNames());
 		final Dealer dealer = new Dealer();
-		drawInitialCards(players, dealer);
-		drawOptionalCards(players, dealer);
+		drawInitialUsersCard(players, dealer);
+		drawAdditionalUsersCard(players, dealer);
 		printAllUserScore(players, dealer);
 		printGameResult(players, dealer);
 	}
 
-	private void drawInitialCards(List<Player> players, Dealer dealer) {
-		for (Player player : players) {
-			player.addCards(cardDeck.draw(), cardDeck.draw());
-		}
-		dealer.addCards(cardDeck.draw(), cardDeck.draw());
+	private void drawInitialUsersCard(List<Player> players, Dealer dealer) {
+		drawInitialPlayersCard(players);
+		drawInitialDealerCard(dealer);
 		OutputView.printInitialResult(players, dealer);
 	}
 
-	private void drawOptionalCards(List<Player> players, Dealer dealer) {
+	private void drawInitialPlayersCard(List<Player> players) {
+		for (Player player : players) {
+			player.addCards(cardDeck.draw(), cardDeck.draw());
+		}
+	}
+
+	private void drawInitialDealerCard(Dealer dealer) {
+		dealer.addCards(cardDeck.draw(), cardDeck.draw());
+	}
+
+	private void drawAdditionalUsersCard(List<Player> players, Dealer dealer) {
 		if (dealer.isBlackjack()) {
 			return;
 		}
-		drawCard(players, dealer);
+		drawAdditionalPlayersCard(players);
+		drawAdditionalDealerCard(dealer);
 	}
 
-	private void drawCard(List<Player> players, Dealer dealer) {
-		drawPlayersCard(players);
-		drawDealerCard(dealer);
-	}
-
-	private void drawPlayersCard(List<Player> players) {
+	private void drawAdditionalPlayersCard(List<Player> players) {
 		for (Player player : players) {
-			drawPlayerCard(player);
+			drawAdditionalPlayerCard(player);
 		}
 	}
 
-	private void drawPlayerCard(Player player) {
+	private void drawAdditionalPlayerCard(Player player) {
 		while (player.isDrawable() && isYes(player)) {
 			player.addCards(cardDeck.draw());
-			OutputView.printUserCard(player);
+			OutputView.printPlayerCard(player);
 		}
 	}
 
@@ -71,7 +75,7 @@ public class BlackjackGame {
 		return yesOrNo.isYes();
 	}
 
-	private void drawDealerCard(Dealer dealer) {
+	private void drawAdditionalDealerCard(Dealer dealer) {
 		if (dealer.isDrawable()) {
 			dealer.addCards(cardDeck.draw());
 			OutputView.printDealerDraw();

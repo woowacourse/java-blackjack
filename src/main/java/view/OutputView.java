@@ -49,7 +49,7 @@ public class OutputView {
 			NEW_LINE);
 	}
 
-	public static void printUserCard(User user) {
+	public static void printPlayerCard(User user) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(user.getName());
 		builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
