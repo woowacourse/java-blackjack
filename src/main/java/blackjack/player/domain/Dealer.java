@@ -1,11 +1,12 @@
 package blackjack.player.domain;
 
+import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.report.GameReport;
 
 public class Dealer extends Player {
 
-	private static final int HIT_VALUE = 16;
+	public static final int HIT_VALUE = 16;
 
 	public Dealer(CardBundle cardBundle) {
 		super(cardBundle, "딜러");
@@ -19,5 +20,9 @@ public class Dealer extends Player {
 	@Override
 	public GameReport createReport(Player player) {
 		return new GameReport(player.name, this.cardBundle.compare(player.cardBundle));
+	}
+
+	public Card getFirstCard() {
+		return cardBundle.getFirstCard();
 	}
 }

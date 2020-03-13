@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.card.domain.CardBundle;
@@ -33,9 +34,10 @@ public class BlackjackController {
 	}
 
 	private List<Player> makePlayers(Player dealer) {
-		List<Player> players = inputView.inputPlayNames()
-			.toPlayers();
+		List<Player> players = new ArrayList<>();
 		players.add(dealer);
+		players.addAll(inputView.inputPlayNames()
+			.toPlayers());
 		return players;
 	}
 

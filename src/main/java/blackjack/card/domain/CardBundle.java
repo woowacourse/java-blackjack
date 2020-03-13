@@ -37,6 +37,10 @@ public class CardBundle {
 		return resultScore;
 	}
 
+	public Card getFirstCard() {
+		return cards.get(0);
+	}
+
 	public boolean isBlackjack() {
 		return cards.size() == 2 && calculateScore() == BLACKJACK_MAXIMUM_VALUE;
 	}
