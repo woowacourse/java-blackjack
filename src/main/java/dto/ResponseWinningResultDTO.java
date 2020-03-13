@@ -32,7 +32,7 @@ public class ResponseWinningResultDTO {
         return sb.toString();
     }
 
-    public static ResponseWinningResultDTO create(Map<String, Boolean> winningPlayer) {
+    public static ResponseWinningResultDTO of(Map<String, Boolean> winningPlayer) {
         return new ResponseWinningResultDTO(winningPlayer);
     }
 }

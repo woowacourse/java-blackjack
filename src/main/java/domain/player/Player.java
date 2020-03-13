@@ -17,7 +17,7 @@ public abstract class Player {
     }
 
     public int sumCardNumber() {
-        return CardCalculator.calculateContainAce(this.cards);
+        return CardCalculator.calculateDeterminedAce(this.cards);
     }
 
     public abstract void insertCard(Cards cards);

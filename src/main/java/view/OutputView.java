@@ -1,6 +1,7 @@
 package view;
 
 import dto.ResponsePlayerDTO;
+import dto.ResponseWinningResultDTO;
 
 import java.util.List;
 
@@ -51,10 +52,14 @@ public class OutputView {
         }
     }
 
-    public static void printWinningResult(List<String> winningResult) {
+    public static void printWinningResult(ResponseWinningResultDTO responseWinningResultDTO) {
         System.out.println("## 최종 승패");
-        for (String result : winningResult) {
+        for (String result : responseWinningResultDTO.getWinningResult()) {
             System.out.println(result);
         }
+    }
+
+    public static void printUserCardsOverBlackJack(ResponsePlayerDTO responsePlayerDTO){
+        System.out.printf("%s는 21을 초과 하였습니다.\n",responsePlayerDTO.getName());
     }
 }

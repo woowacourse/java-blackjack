@@ -35,7 +35,7 @@ public class ResponsePlayerDTO {
         this.name = targetUser.getName();
     }
 
-    public static List<ResponsePlayerDTO> getResult(Players players) {
+    public static List<ResponsePlayerDTO> of(Players players) {
         List<ResponsePlayerDTO> responsePlayerDTOS = new ArrayList<>();
         responsePlayerDTOS.add(new ResponsePlayerDTO(players.getDealer()));
         responsePlayerDTOS.addAll(players.getUsers().stream()
@@ -44,7 +44,7 @@ public class ResponsePlayerDTO {
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 
-    public static ResponsePlayerDTO getResponsePlayerDTO(Player player){
+    public static ResponsePlayerDTO of(Player player){
         return new ResponsePlayerDTO(player);
     }
 

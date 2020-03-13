@@ -1,9 +1,11 @@
 package controller;
 
 import domain.AnswerType;
+import domain.CardCalculator;
 import domain.PlayerFactory;
 import domain.WinningResult;
 import domain.card.Cards;
+import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
 import dto.RequestAnswerDTO;
@@ -17,54 +19,58 @@ import java.util.List;
 
 public class BlackjackController {
 
-    public static final int BLACK_JACK = 21;
-
     public static void run() {
+        Cards cards = new Cards();
         RequestPlayerNameDTO requestPlayerNameDTO = InputView.inputPlayerName();
         PlayerFactory playerFactory = PlayerFactory.getInstance();
-        Cards cards = new Cards();
         Players players = playerFactory.createPlayers(cards, requestPlayerNameDTO.getPlayerName());
-        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.getResult(players);
+
+        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.of(players);
         OutputView.printInitialResult(responsePlayerDTOS);
 
         for (User user : players.getUsers()) {
-            AnswerType answerType = getAnswerType(user);
+            userService(cards, user);
+        }
+        DealerService(cards, players.getDealer());
+        result(players);
+    }
 
-            if (answerType.equals(AnswerType.NO)) {
+    private static void userService(Cards cards, User user) {
+        AnswerType answerType = getAnswer(user);
+
+        if (answerType.isEqualsAnswer(AnswerType.NO)) {
+            return;
+        }
+
+        while (answerType.isEqualsAnswer(AnswerType.YES) && CardCalculator.isUnderBlackJack(user.getCard())) {
+            user.insertCard(cards);
+            OutputView.printUserCard(ResponsePlayerDTO.of(user));
+
+            if (CardCalculator.isUnderBlackJack(user.getCard())) {
+                answerType = getAnswer(user);
                 continue;
             }
-            do {
-                user.insertCard(cards, answerType);
-
-                OutputView.printUserCard(ResponsePlayerDTO.getResponsePlayerDTO(user));
-                answerType = validateBlackJack(user, answerType);
-            } while (answerType.equals(AnswerType.YES) && isBlackJack(user));
+            OutputView.printUserCardsOverBlackJack(ResponsePlayerDTO.of(user));
         }
+    }
 
-        if (players.getDealer().isAdditionalCard(cards)) {
+    private static void DealerService(Cards cards, Dealer dealer) {
+        if (dealer.isAdditionalCard(cards)) {
             OutputView.printDealerAdditionalCard();
         }
+    }
 
-        OutputView.printFinalResult(ResponsePlayerDTO.getResult(players));
+    private static void result(Players players) {
+        OutputView.printFinalResult(ResponsePlayerDTO.of(players));
+
         WinningResult winningResult = new WinningResult(players);
-        ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
+        ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.of(
                 winningResult.getWinningResult());
-        OutputView.printWinningResult(responseWinningResultDTO.getWinningResult());
+        OutputView.printWinningResult(responseWinningResultDTO);
     }
 
-    private static AnswerType validateBlackJack(User user, AnswerType answerType) {
-        if (isBlackJack(user)) {
-            answerType = getAnswerType(user);
-        }
-        return answerType;
-    }
-
-    private static boolean isBlackJack(User user) {
-        return user.sumCardNumber() < BLACK_JACK;
-    }
-
-    private static AnswerType getAnswerType(User user) {
-        RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.getResponsePlayerDTO(user));
+    private static AnswerType getAnswer(User user) {
+        RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.of(user));
         return AnswerType.findAnswerType(requestAnswerDTO.getAnswer());
     }
 }
