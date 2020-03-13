@@ -92,4 +92,32 @@ class PlayingCardsTest {
 
         assertThat(playingCards.isNotBust()).isTrue();
     }
+
+    @Test
+    @DisplayName("블랙잭인 것을 확인한다")
+    void isBlackJack() {
+        playingCards.add(new Card(Symbol.ACE, Type.CLOVER));
+        playingCards.add(new Card(Symbol.TEN, Type.SPADE));
+
+        assertThat(playingCards.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 장수가 2장이 아닐 경우 블랙잭이 아닌 것을 확인한다")
+    void isNotBlackJack1() {
+        playingCards.add(new Card(Symbol.TWO, Type.CLOVER));
+        playingCards.add(new Card(Symbol.TEN, Type.SPADE));
+        playingCards.add(new Card(Symbol.NINE, Type.SPADE));
+
+        assertThat(playingCards.isNotBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수가 21점이 아닐 경우 블랙잭이 아닌 것을 확인한다")
+    void isNotBlackJack2() {
+        playingCards.add(new Card(Symbol.TWO, Type.CLOVER));
+        playingCards.add(new Card(Symbol.NINE, Type.SPADE));
+
+        assertThat(playingCards.isNotBlackJack()).isTrue();
+    }
 }

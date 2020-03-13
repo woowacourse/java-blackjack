@@ -2,9 +2,11 @@ package domain.card;
 
 import java.util.List;
 
+import static domain.card.Deck.INIT_CARDS_SIZE;
+
 public class PlayingCards {
     private static final int ACE_BONUS = 10;
-    private static final int BLACK_JACK = 21;
+    private static final int BLACKJACK_MAX_NUMBER = 21;
 
     private List<Card> cards;
 
@@ -28,7 +30,7 @@ public class PlayingCards {
     }
 
     private int addAceBonus(int result, Card card) {
-        if ((card.isAce()) && (result + ACE_BONUS <= BLACK_JACK)) {
+        if (card.isAce() && result + ACE_BONUS <= BLACKJACK_MAX_NUMBER) {
             return result + ACE_BONUS;
         }
         return result;
@@ -39,11 +41,19 @@ public class PlayingCards {
     }
 
     public boolean isBust() {
-        return BLACK_JACK < calculateScore();
+        return BLACKJACK_MAX_NUMBER < calculateScore();
     }
 
     public boolean isNotBust() {
-        return BLACK_JACK >= calculateScore();
+        return BLACKJACK_MAX_NUMBER >= calculateScore();
+    }
+
+    public boolean isBlackJack() {
+        return countCards() == INIT_CARDS_SIZE && calculateScore() == BLACKJACK_MAX_NUMBER;
+    }
+
+    public boolean isNotBlackJack() {
+        return countCards() != INIT_CARDS_SIZE || calculateScore() != BLACKJACK_MAX_NUMBER;
     }
 
     public List<Card> getCards() {

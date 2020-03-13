@@ -91,6 +91,35 @@ class PlayerTest {
         player.addCard(card1);
         player.addCard(card2);
 
-        assertThat(player.isBust()).isFalse();
+        assertThat(player.isNotBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭인지 확인")
+    void isBlackJack() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name);
+        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
+        Card card2 = new Card(Symbol.ACE, Type.CLOVER);
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이 아닌지 확인")
+    void isNotBlackJack() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name);
+        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
+        Card card2 = new Card(Symbol.KING, Type.CLOVER);
+
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.isNotBlackJack()).isTrue();
     }
 }

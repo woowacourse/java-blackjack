@@ -44,6 +44,14 @@ public abstract class Gamer {
         return playingCards.isNotBust();
     }
 
+    public boolean isBlackJack() {
+        return playingCards.isBlackJack();
+    }
+
+    public boolean isNotBlackJack() {
+        return playingCards.isNotBlackJack();
+    }
+
     public String getName() {
         return name;
     }
