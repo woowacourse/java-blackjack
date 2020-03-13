@@ -10,7 +10,7 @@ import domain.card.CardDeck;
 import domain.result.DealerResult;
 import domain.result.MatchCalculator;
 import domain.result.MatchResult;
-import domain.result.UserResult;
+import domain.result.PlayerResult;
 import domain.user.Dealer;
 import domain.user.PlayerFactory;
 import domain.user.User;
@@ -112,8 +112,8 @@ public class BlackjackGame {
 	}
 
 	private void printGameResult(List<User> users, Dealer dealer) {
-		List<UserResult> userResults = users.stream()
-			.map(user -> new UserResult(user, MatchResult.findMatchResult(user, dealer)))
+		List<PlayerResult> userResults = users.stream()
+			.map(user -> new PlayerResult(user, MatchResult.calculatePlayerMatchResult(user, dealer)))
 			.collect(Collectors.toList());
 		DealerResult dealerResult = new DealerResult(new MatchCalculator(users, dealer).getMatchResults());
 

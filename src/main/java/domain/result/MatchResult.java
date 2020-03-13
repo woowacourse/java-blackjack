@@ -11,7 +11,6 @@ public enum MatchResult {
 	LOSE("패", MatchResult::isPlayerLose);
 
 	private final String matchResult;
-
 	private final BiPredicate<User, User> resultCondition;
 
 	MatchResult(String matchResult, BiPredicate<User, User> resultCondition) {
@@ -19,7 +18,7 @@ public enum MatchResult {
 		this.resultCondition = resultCondition;
 	}
 
-	public static MatchResult findMatchResult(User player, User dealer) {
+	public static MatchResult calculatePlayerMatchResult(User player, User dealer) {
 		return Arrays.stream(values())
 			.filter(result -> result.resultCondition.test(player, dealer))
 			.findFirst()

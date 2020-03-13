@@ -4,17 +4,17 @@ import java.util.Objects;
 
 import domain.user.User;
 
-public class UserResult {
-	private final User user;
+public class PlayerResult {
+	private final User player;
 	private final MatchResult matchResult;
 
-	public UserResult(User user, MatchResult matchResult) {
-		this.user = Objects.requireNonNull(user);
+	public PlayerResult(User player, MatchResult matchResult) {
+		this.player = Objects.requireNonNull(player);
 		this.matchResult = Objects.requireNonNull(matchResult);
 	}
 
 	public String getName() {
-		return user.getName();
+		return player.getName();
 	}
 
 	public String getMatchResult() {

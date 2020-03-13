@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 import domain.result.DealerResult;
 import domain.result.MatchResult;
-import domain.result.UserResult;
+import domain.result.PlayerResult;
 import domain.user.User;
 
 public class OutputView {
@@ -73,10 +73,10 @@ public class OutputView {
 		return card.getTypeName() + card.getSymbol();
 	}
 
-	public static void printGameResult(List<UserResult> userResults, DealerResult dealerResult) {
+	public static void printGameResult(List<PlayerResult> playerResults, DealerResult dealerResult) {
 		System.out.println("## 최종 승패");
 		printDealerResult(dealerResult);
-		printUsersResult(userResults);
+		printUsersResult(playerResults);
 	}
 
 	private static void printDealerResult(DealerResult dealerResult) {
@@ -91,9 +91,9 @@ public class OutputView {
 		System.out.println(builder);
 	}
 
-	private static void printUsersResult(List<UserResult> userResults) {
+	private static void printUsersResult(List<PlayerResult> userResults) {
 		StringBuilder builder = new StringBuilder();
-		for (UserResult userResult : userResults) {
+		for (PlayerResult userResult : userResults) {
 			builder.append(userResult.getName());
 			builder.append(":");
 			builder.append(userResult.getMatchResult());

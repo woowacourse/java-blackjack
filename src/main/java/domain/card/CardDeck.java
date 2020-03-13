@@ -9,7 +9,6 @@ public class CardDeck {
 	private final List<Card> cards;
 	private final Stack<Integer> decks;
 
-
 	public CardDeck() {
 		this.cards = CardFactory.create();
 		this.decks = new Stack<>();
