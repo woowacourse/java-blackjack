@@ -1,6 +1,8 @@
-package model;
+package model.user;
 
 import exception.IllegalStringInputException;
+import model.card.CardFactory;
+import model.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

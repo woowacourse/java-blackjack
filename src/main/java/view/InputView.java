@@ -1,6 +1,6 @@
 package view;
 
-import model.Player;
+import model.user.Player;
 
 import java.util.Scanner;
 

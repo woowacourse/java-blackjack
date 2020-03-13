@@ -1,6 +1,7 @@
-package model;
+package model.user;
 
 import java.util.*;
+import model.card.Deck;
 import utils.StringUtils;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;

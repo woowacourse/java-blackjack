@@ -1,6 +1,10 @@
 package controller;
 
 import model.*;
+import model.card.Deck;
+import model.user.Dealer;
+import model.user.Player;
+import model.user.Players;
 import view.InputView;
 import view.OutputView;
 

@@ -1,7 +1,10 @@
 package Application;
 
 import controller.BlackJackGame;
-import model.*;
+import model.card.CardFactory;
+import model.card.Deck;
+import model.user.Dealer;
+import model.user.Players;
 import view.InputView;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;

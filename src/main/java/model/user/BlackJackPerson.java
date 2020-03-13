@@ -1,9 +1,11 @@
-package model;
+package model.user;
 
 import static controller.BlackJackGame.BLACK_JACK_COUNT;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.card.Card;
+import model.card.CardHand;
 
 public class BlackJackPerson {
     private static final String DELIMITER = ", ";

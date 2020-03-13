@@ -1,5 +1,10 @@
-package model;
+package model.user;
 
+import model.Result;
+import model.card.Card;
+import model.card.CardHand;
+import model.card.Symbol;
+import model.card.Type;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

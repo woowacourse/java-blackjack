@@ -1,6 +1,8 @@
-package model;
+package model.user;
 
 import java.util.*;
+import model.card.CardHand;
+import model.Result;
 
 import static controller.BlackJackGame.HIT_BOUNDARY;
 

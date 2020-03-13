@@ -3,6 +3,10 @@ package view;
 import model.*;
 
 import java.util.Map;
+import model.user.BlackJackPerson;
+import model.user.Dealer;
+import model.user.Player;
+import model.user.Players;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static controller.BlackJackGame.HIT_BOUNDARY;

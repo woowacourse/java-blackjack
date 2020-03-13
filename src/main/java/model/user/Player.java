@@ -1,6 +1,8 @@
-package model;
+package model.user;
 
 import java.util.Objects;
+import model.card.CardHand;
+import model.Result;
 
 public class Player extends BlackJackPerson {
     private Result result;

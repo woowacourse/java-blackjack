@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public enum Symbol {
     ACE(1, "A"),

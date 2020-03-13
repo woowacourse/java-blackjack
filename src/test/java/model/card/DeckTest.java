@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 import exception.EmptyDeckException;
 import org.junit.jupiter.api.BeforeEach;
