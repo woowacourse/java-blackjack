@@ -1,12 +1,5 @@
 package domain.user;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import domain.result.WinningResult;
-
 public class Dealer extends User {
 
     public static final String DEALER = "딜러";

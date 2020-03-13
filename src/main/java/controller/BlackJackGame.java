@@ -1,9 +1,6 @@
 package controller;
 
-import java.util.List;
-
 import domain.card.Deck;
-import domain.result.WinningResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;

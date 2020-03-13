@@ -13,26 +13,33 @@ public class Player extends User {
         return !cards.isBust() && !cards.isBlackJack() && !cards.isBlackJackPoint();
     }
 
-    //todo: 내부 구현 내용 개선
     public WinningResult modifyWinningResult(Dealer dealer) {
         if (cards.isBust()) {
             return WinningResult.LOSE;
         }
-        if (cards.isBlackJack()) {
-            if (dealer.cards.isBlackJack()) {
-                return WinningResult.DRAW;
-            }
-            return WinningResult.WIN;
-        }
         if (dealer.cards.isBust()) {
             return WinningResult.WIN;
         }
+        return bothNotBustCase(dealer);
+    }
+
+    private WinningResult bothNotBustCase(Dealer dealer) {
         if (calculatePoint() > dealer.calculatePoint()) {
             return WinningResult.WIN;
         }
         if (calculatePoint() == dealer.calculatePoint()) {
-            return WinningResult.DRAW;
+            return checkBlackJackCase(dealer);
         }
         return WinningResult.LOSE;
+    }
+
+    private WinningResult checkBlackJackCase(Dealer dealer) {
+        if (cards.isBlackJack() && !dealer.cards.isBlackJack()) {
+            return WinningResult.WIN;
+        }
+        if (!cards.isBlackJack() && dealer.cards.isBlackJack()) {
+            return WinningResult.LOSE;
+        }
+        return WinningResult.DRAW;
     }
 }

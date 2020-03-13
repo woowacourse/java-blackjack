@@ -31,7 +31,8 @@ public class GameResult {
     private void collectResult(Dealer dealer, Players players) {
         winningResultOfPlayers = players.decideWinner(dealer);
         winningResultOfPlayers.forEach(
-                (player, winningResult) -> winningResultOfDealer.computeIfPresent(winningResult, (key, value) -> value + 1));
+                (player, winningResult) -> winningResultOfDealer.computeIfPresent(winningResult,
+                        (key, value) -> value + 1));
     }
 
     public String getTotalWinningResults() {
