@@ -1,16 +1,18 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Score;
-import blackjack.domain.result.WinOrLose;
 import blackjack.domain.user.exception.PlayersException;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class Players {
+    private static final String SPLITTING_DELIMITER = ",";
+
     private final List<User> players;
 
     private Players(List<User> players) {
@@ -20,7 +22,7 @@ public class Players {
     }
 
     public static Players of(String playerNames) {
-        List<User> players = Arrays.stream(playerNames.split(","))
+        List<User> players = Arrays.stream(playerNames.split(SPLITTING_DELIMITER))
                 .map(String::trim)
                 .map(Player::of)
                 .collect(collectingAndThen(toList(),
@@ -42,22 +44,11 @@ public class Players {
 
     private void validateNames(List<User> Players) {
         boolean hasDealerName = Players.stream()
-                .anyMatch(player -> player.is("딜러"));
+                .anyMatch(player -> player.is(Dealer.NAME));
 
         if (hasDealerName) {
             throw new PlayersException("플레이어의 이름은 딜러일 수 없습니다.");
         }
-    }
-
-    public Map<User, WinOrLose> generateResult(User dealer) {
-        Map<User, WinOrLose> playerResults = new HashMap<>();
-        Score dealerScore = dealer.calculateScore();
-        for (User player : players) {
-            boolean isWinner = player.isWinner(dealerScore);
-            playerResults.put(player, WinOrLose.of(isWinner));
-        }
-
-        return playerResults;
     }
 
     public void giveCards(int index, Card... cards) {

@@ -14,19 +14,18 @@ public enum WinOrLose {
         this.isWinner = isWinner;
     }
 
-    public boolean getIsWinner() {
-        return isWinner;
-    }
-
-
     public static WinOrLose of(boolean isWinner) {
         return Arrays.stream(WinOrLose.values())
-                .filter(winOrLose -> winOrLose.getIsWinner()== isWinner)
+                .filter(winOrLose -> isWinner == winOrLose.isWinner)
                 .findFirst()
                 .get();
     }
 
     public String getName() {
         return name;
+    }
+
+    public WinOrLose reverse() {
+        return WinOrLose.of(!this.isWinner);
     }
 }

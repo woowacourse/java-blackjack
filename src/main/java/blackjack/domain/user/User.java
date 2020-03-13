@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
+import blackjack.domain.result.WinOrLose;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface User {
 
     String getName();
 
-    Boolean isWinner(Score dealerScore);
+    WinOrLose isWinner(Dealer dealer);
 
     boolean isNotBust();
 }

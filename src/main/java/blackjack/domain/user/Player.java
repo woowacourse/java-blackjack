@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Score;
+import blackjack.domain.result.WinOrLose;
 
 public class Player extends AbstractUser {
     private Player(String name) {
@@ -11,8 +12,9 @@ public class Player extends AbstractUser {
         return new Player(name);
     }
 
-    @Override
-    public Boolean isWinner(Score dealerScore) {
-        return calculateScore().isOver(dealerScore) && isNotBust();
+    public WinOrLose isWinner(Dealer dealer) {
+        Score dealerScore = dealer.calculateScore();
+        boolean isWinner = calculateScore().isOver(dealerScore) && isNotBust();
+        return WinOrLose.of(isWinner);
     }
 }

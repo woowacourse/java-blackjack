@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractUser implements User {
+    private static final int MAX_SCORE_NOT_BUST = 21;
     private static final int MAX_SCORE_TO_MAXIMIZE = 12;
     private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
@@ -27,7 +28,7 @@ public abstract class AbstractUser implements User {
 
     @Override
     public boolean isBust() {
-        return calculateScore().isOver(21);
+        return calculateScore().isOver(MAX_SCORE_NOT_BUST);
     }
 
     @Override
@@ -52,7 +53,7 @@ public abstract class AbstractUser implements User {
     }
 
     private Score sumScore() {
-        Score score = new Score(0);
+        Score score = Score.ZERO_SCORE;
 
         for (Card card : cards) {
             score = score.add(card.getScore());

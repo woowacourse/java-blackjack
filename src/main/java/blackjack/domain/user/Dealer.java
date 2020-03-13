@@ -1,9 +1,9 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Score;
+import blackjack.domain.result.WinOrLose;
 
 public class Dealer extends AbstractUser {
-    private static final String NAME = "딜러";
+    public static final String NAME = "딜러";
     public static final int MINIMUM_NUMBER_TO_STAY = 17;
 
     private Dealer() {
@@ -14,12 +14,12 @@ public class Dealer extends AbstractUser {
         return new Dealer();
     }
 
-    @Override
-    public Boolean isWinner(Score dealerScore) {
-        return true;
-    }
-
     public boolean shouldReceiveCard() {
         return calculateScore().isUnder(MINIMUM_NUMBER_TO_STAY);
+    }
+
+    @Override
+    public WinOrLose isWinner(Dealer dealer) {
+        return null;
     }
 }

@@ -3,27 +3,26 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ResultTest {
+class GameResultTest {
 
     @Test
     void of() {
-        User dealer = Dealer.create();
+        Dealer dealer = Dealer.create();
         Players players = Players.of("그니,무늬");
 
-        assertThat(Result.of(dealer, players)).isNotNull();
+        assertThat(GameResult.of(dealer, players)).isNotNull();
     }
 
     @Test
     void getDealerResult() {
-        User dealer = Dealer.create();
+        Dealer dealer = Dealer.create();
         dealer.giveCards(new Card(Symbol.ACE, Type.SPADE));
 
         Players players = Players.of("그니, 무늬, 포비");
@@ -32,8 +31,9 @@ class ResultTest {
                 new Card(Symbol.SEVEN, Type.HEART));
         players.giveCards(2, new Card(Symbol.TWO, Type.DIAMOND));
 
-        Result result = Result.of(dealer, players);
+        GameResult gameResult = GameResult.of(dealer, players);
 
-        assertThat(result.getDealerResult()).isEqualTo("2승 1패");
+        assertThat(gameResult.getDealerWinCount()).isEqualTo(2);
+        assertThat(gameResult.getDealerLoseCount()).isEqualTo(1);
     }
 }

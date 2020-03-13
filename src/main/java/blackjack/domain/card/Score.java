@@ -5,6 +5,7 @@ import blackjack.domain.card.exception.ScoreException;
 import java.util.Objects;
 
 public class Score {
+    public static final Score ZERO_SCORE = new Score(0);
     private final int score;
 
     public Score(int score) {
