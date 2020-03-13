@@ -7,6 +7,7 @@ public abstract class User {
     public static final String CARD = " 카드: ";
     public static final String DELIMITER = ", ";
     public static final String RESULT = " - 결과 : ";
+    public static final String BUSTED = "버스트";
     protected final String name;
     protected UserCards cards;
 
@@ -47,6 +48,14 @@ public abstract class User {
     public abstract String showInitialCardInfo();
 
     public String showFinalCardInfo() {
-        return showCardInfo() + RESULT + getTotalScore();
+        return showCardInfo() + RESULT + parseFinalScore();
+    }
+
+    private String parseFinalScore() {
+        int finalScore = this.getTotalScore();
+        if(finalScore > 21) {
+            return BUSTED;
+        }
+        return Integer.toString(finalScore);
     }
 }
