@@ -29,13 +29,14 @@ public class Player extends User {
         return winningResult;
     }
 
-    public void calculateWinningResult(int dealerScore) {
+    public WinningResult calculateWinningResult(int dealerScore) {
         if (BlackJackRule.isBust(dealerScore) && winningResult == WinningResult.UNDEFINED) {
             winningResult = WinningResult.WIN;
         }
         if (winningResult == WinningResult.UNDEFINED) {
             winningResult = WinningResult.calculate(dealerScore, cards.getScore());
         }
+        return winningResult;
     }
 
     public String getName() {
