@@ -48,7 +48,7 @@ class StringUtilTest {
 		dealerResult.put(ResultType.WIN, 2L);
 		dealerResult.put(ResultType.LOSE, 1L);
 
-		String expected = "Dealer : 2승 1패";
+		String expected = "Dealer: 2승 1패";
 		assertThat(StringUtil.joinDealerResult(dealerResult)).isEqualTo(expected);
 	}
 }
