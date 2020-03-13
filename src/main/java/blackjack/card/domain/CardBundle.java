@@ -16,14 +16,7 @@ public class CardBundle {
     }
 
     public GameResult findGameResult(CardBundle gamblerCardBundle) {
-        if (gamblerCardBundle.isBurst()) {
-            return GameResult.LOSE;
-        }
-        if (isBurst()) {
-            return GameResult.WIN;
-        }
-        int compare = Integer.compare(gamblerCardBundle.calculateScore(), this.calculateScore());
-        return GameResult.findByResult(compare);
+        return GameResult.findByComparing(gamblerCardBundle, this);
     }
 
     public int calculateScore() {
