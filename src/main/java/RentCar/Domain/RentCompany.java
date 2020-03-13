@@ -23,7 +23,7 @@ public class RentCompany {
         for(Car car : cars) {
             generateReport.append(car.getName());
             generateReport.append(" : ");
-            generateReport.append(car.getAmountOfOil());
+            generateReport.append((int) car.getChargeQuantity());
             generateReport.append("리터\n");
         }
         return generateReport.toString();

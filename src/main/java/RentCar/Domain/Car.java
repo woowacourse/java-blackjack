@@ -1,22 +1,32 @@
 package RentCar.Domain;
 
-public class Car {
+public abstract class Car {
 
-    protected final String name;
-    protected final int distance;
-    protected final int fuelEfficiency;
+    protected final double distance;
 
-    public Car(String name, int fuelEfficiency, int distance) {
-        this.name = name;
-        this.fuelEfficiency = fuelEfficiency;
+    public Car(int distance) {
         this.distance = distance;
     }
 
-    public String getName() {
-        return name;
-    }
+    /**
+     * 리터당 이동 거리. 즉, 연비
+     */
+    abstract double getDistancePerLiter();
 
-    public int getAmountOfOil() {
-        return distance / fuelEfficiency;
+    /**
+     * 여행하려는 거리
+     */
+    abstract double getTripDistance();
+
+    /**
+     * 차종의 이름
+     */
+    abstract String getName();
+
+    /**
+     * 주입해야할 연료량을 구한다.
+     */
+    double getChargeQuantity() {
+        return getTripDistance() / getDistancePerLiter();
     }
 }
