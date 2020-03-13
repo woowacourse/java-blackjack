@@ -1,7 +1,7 @@
 package view;
 
 import dto.RequestAnswerDTO;
-import dto.RequestPlayerNameDTO;
+import dto.RequestPlayerNamesDTO;
 import dto.ResponsePlayerDTO;
 
 import java.util.Scanner;
@@ -12,12 +12,12 @@ public class InputView {
     private InputView() {
     }
 
-    public static RequestPlayerNameDTO inputPlayerName() {
+    public static RequestPlayerNamesDTO inputPlayerName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         try {
             String playerName = SCANNER.nextLine();
             validatePlayerName(playerName);
-            return new RequestPlayerNameDTO(playerName);
+            return new RequestPlayerNamesDTO(playerName);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerName();
