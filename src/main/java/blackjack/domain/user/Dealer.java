@@ -9,5 +9,5 @@ public interface Dealer extends Player {
 
 	boolean shouldReceiveCard();
 
-	Card showFirstCard();
+	Card getFirstCard();
 }

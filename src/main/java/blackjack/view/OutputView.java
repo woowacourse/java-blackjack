@@ -30,7 +30,7 @@ public class OutputView {
     }
 
     private static void printOneOfDealerCard(Dealer dealer) {
-        System.out.printf("%s : %s" + NEW_LINE, dealer.getName(), dealer.showFirstCard());
+        System.out.printf("%s : %s" + NEW_LINE, dealer.getName(), dealer.getFirstCard().getName());
     }
 
     private static void printAllPlayerCards(Players players) {
@@ -54,7 +54,7 @@ public class OutputView {
 
 	public static void printDealerTurn(Dealer dealer) {
         System.out.printf("딜러는 %s미만이라 한장의 카드를 더 받았습니다." + NEW_LINE,
-                Dealer.MINIMUM_NUMBER_TO_STAY);
+                dealer.getMinimumNumberToStay());
 
         printIfBust(dealer);
     }
@@ -89,7 +89,7 @@ public class OutputView {
     public static void printResult(Result result) {
         System.out.println("## 최종 승패");
         System.out.println("딜러" + " : " + CreateDealerResult(result));
-        for (String player : result.getPlayerResults().keySet()) {
+        for (Player player : result.getPlayerResult().keySet()) {
             String playerResult = createPlayerResult(player, result);
             System.out.println(playerResult);
         }
@@ -100,9 +100,9 @@ public class OutputView {
                 result.getDealerWin(), result.getDealerLose());
     }
 
-    private static String createPlayerResult(String name, Result result) {
-        String resultWord = boolToResultWord(result.isWinner(name));
-        return String.format("%s : %s", name, resultWord);
+    private static String createPlayerResult(Player player, Result result) {
+        String resultWord = boolToResultWord(result.isWinner(player));
+        return String.format("%s : %s", player.getName(), resultWord);
     }
 
     private static String boolToResultWord(boolean bool) {

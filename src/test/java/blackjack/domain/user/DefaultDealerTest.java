@@ -55,7 +55,7 @@ class DefaultDealerTest {
 				Card.of(Symbol.SIX, Type.CLUB));
 
 		// then
-		assertThat(dealer.showFirstCard()).isEqualTo(Card.of(Symbol.TEN, Type.CLUB));
+		assertThat(dealer.getFirstCard()).isEqualTo(Card.of(Symbol.TEN, Type.CLUB));
 	}
 
 	@Test

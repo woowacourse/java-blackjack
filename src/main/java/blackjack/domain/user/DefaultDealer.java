@@ -20,7 +20,7 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 	}
 
 	@Override
-	public Card showFirstCard() {
+	public Card getFirstCard() {
 		return getCards().get(0);
 	}
 

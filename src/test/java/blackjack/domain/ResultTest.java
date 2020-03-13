@@ -5,21 +5,24 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
     private Result result;
+    private Players players;
 
     @BeforeEach
     void setUp() {
         Dealer dealer = DefaultDealer.dealer();
         dealer.giveCards(Card.of(Symbol.ACE, Type.SPADE));
 
-        Players players = Players.of("그니, 무늬, 포비");
+        players = Players.of("그니, 무늬, 포비");
         players.giveCards(0, Card.of(Symbol.TEN, Type.DIAMOND));
         players.giveCards(1, Card.of(Symbol.FIVE, Type.CLUB),
                 Card.of(Symbol.SEVEN, Type.HEART));
@@ -31,6 +34,13 @@ class ResultTest {
     @Test
     void of() {
         assertThat(result).isNotNull();
+    }
+
+    @Test
+    void isWinner() {
+        assertThat(result.isWinner(players.getPlayers().get(0))).isFalse();
+        assertThat(result.isWinner(players.getPlayers().get(1))).isTrue();
+        assertThat(result.isWinner(players.getPlayers().get(2))).isFalse();
     }
 
     @Test
