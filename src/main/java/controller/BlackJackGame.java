@@ -6,6 +6,7 @@ import domain.card.Deck;
 import domain.card.DeckFactory;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import domain.gamer.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -17,23 +18,20 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
     public void play() {
         Deck deck = DeckFactory.create();
-        List<String> playerNames = InputView.inputPlayerNames();
-        List<Player> players = playerNames.stream()
-                .map(name -> new Player(deck.dealInitCards(), name))
-                .collect(Collectors.toList());
+        Players players = Players.valueOf(deck, InputView.inputPlayerNames());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        OutputView.printInitGamersState(GamerDto.of(dealer), players.stream()
+        OutputView.printInitGamersState(GamerDto.of(dealer), players.getPlayers().stream()
                 .map(GamerDto::of)
                 .collect(Collectors.toList()));
 
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             receivePlayerCards(deck, player);
         }
         receiveDealerCards(deck, dealer);
 
         OutputView.printGamerCardsStateWithScore(GamerDto.of(dealer), dealer.calculateScore().getScore());
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore().getScore());
         }
         Map<PlayerResult, List<Player>> gameResults = calculateGameResults(players, dealer);
@@ -45,7 +43,6 @@ public class BlackJackGame {
                 .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player), Collectors.toList()));
         for (PlayerResult playerResult : PlayerResult.values()) {
             gameResults.putIfAbsent(playerResult, new ArrayList<>());
-            gameResults.get(playerResult);
         }
         return gameResults;
     }
