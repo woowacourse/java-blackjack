@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import domain.card.CardNumber;
 import org.assertj.core.api.Assertions;

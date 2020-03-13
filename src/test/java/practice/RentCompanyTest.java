@@ -1,5 +1,11 @@
+package practice;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import practice.Avante;
+import practice.K5;
+import practice.RentCompany;
+import practice.Sonata;
 
 
 public class RentCompanyTest {
@@ -16,11 +22,11 @@ public class RentCompanyTest {
 
         String report = company.generateReport();
         Assertions.assertThat(report).isEqualTo(
-                "Sonata : 15리터" + NEWLINE +
-                        "K5 : 20리터" + NEWLINE +
-                        "Sonata : 12리터" + NEWLINE +
-                        "Avante : 20리터" + NEWLINE +
-                        "K5 : 30리터" + NEWLINE
+                "practice.Sonata : 15리터" + NEWLINE +
+                        "practice.K5 : 20리터" + NEWLINE +
+                        "practice.Sonata : 12리터" + NEWLINE +
+                        "practice.Avante : 20리터" + NEWLINE +
+                        "practice.K5 : 30리터" + NEWLINE
         );
     }
 }

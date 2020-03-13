@@ -1,3 +1,5 @@
+package practice;
+
 public class Sonata extends Car {
     private static final double SONATA_LITER = 10d;
 
@@ -5,7 +7,7 @@ public class Sonata extends Car {
     private double distance;
 
     public Sonata(double distance) {
-        this.name = "Sonata";
+        this.name = "practice.Sonata";
         this.distance = distance;
     }
 

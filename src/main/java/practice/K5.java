@@ -1,3 +1,5 @@
+package practice;
+
 public class K5 extends Car {
     private static final double K5_LITER = 13d;
 
@@ -5,7 +7,7 @@ public class K5 extends Car {
     private double distance;
 
     public K5(double distance) {
-        this.name = "K5";
+        this.name = "practice.K5";
         this.distance = distance;
     }
 

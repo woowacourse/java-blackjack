@@ -1,3 +1,5 @@
+package practice;
+
 public class Avante extends Car {
     private static final double AVANTE_LITER = 15d;
 
@@ -5,7 +7,7 @@ public class Avante extends Car {
     private double distance;
 
     public Avante(double distance) {
-        this.name = "Avante";
+        this.name = "practice.Avante";
         this.distance = distance;
     }
 

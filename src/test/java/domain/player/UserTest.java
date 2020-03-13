@@ -1,5 +1,6 @@
-package domain;
+package domain.player;
 
+import domain.AnswerType;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
