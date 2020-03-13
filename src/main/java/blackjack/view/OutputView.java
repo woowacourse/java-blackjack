@@ -12,7 +12,7 @@ public class OutputView {
 		List<Player> gamblers = players.findGamblers();
 		Player dealer = players.findDealer();
 
-		System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", collectGamblersNames(gamblers)));
+		System.out.println(String.format("딜러와 %s에게 %d장을 나누었습니다.", collectGamblersNames(gamblers), Players.STARTING_CARD_SIZE));
 
 		System.out.println(String.format("%s", getCardInfo(dealer).split(",")[0]));
 		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));

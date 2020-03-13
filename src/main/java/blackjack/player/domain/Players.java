@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public class Players {
+    public static final int STARTING_CARD_SIZE = 2;
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -22,7 +23,7 @@ public class Players {
 
     public void drawStartingCard(CardDeck cardDeck) {
         checkState();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < STARTING_CARD_SIZE; i++) {
             players.forEach(player -> player.addCard(cardDeck.draw()));
         }
     }
