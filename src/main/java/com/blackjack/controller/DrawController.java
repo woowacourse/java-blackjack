@@ -7,10 +7,10 @@ import java.util.List;
 
 import com.blackjack.domain.DrawDecideType;
 import com.blackjack.domain.card.CardDeck;
-import com.blackjack.domain.user.Drawable;
+import com.blackjack.domain.user.User;
 
 class DrawController {
-	void draw(CardDeck cardDeck, Drawable dealer, List<Drawable> players) {
+	void draw(CardDeck cardDeck, User dealer, List<User> players) {
 		drawAtFirst(cardDeck, dealer, players);
 		printCardsAtFirst(dealer, players);
 
@@ -18,39 +18,38 @@ class DrawController {
 		drawDealerUntilEndTurn(cardDeck, dealer);
 	}
 
-	private void drawDealerUntilEndTurn(CardDeck cardDeck, Drawable dealer) {
+	private void drawDealerUntilEndTurn(CardDeck cardDeck, User dealer) {
 		while (dealer.canDraw()) {
 			dealer.draw(cardDeck);
 			printDealerDrawMessage();
 		}
 	}
 
-	private void drawAllPlayers(CardDeck cardDeck, List<Drawable> players) {
-		for (Drawable player : players) {
+	private void drawAllPlayers(CardDeck cardDeck, List<User> players) {
+		for (User player : players) {
 			drawPlayerUntilEndTurn(cardDeck, player);
 		}
 	}
 
-	private void drawPlayerUntilEndTurn(CardDeck cardDeck, Drawable player) {
+	private void drawPlayerUntilEndTurn(CardDeck cardDeck, User player) {
 		while (canDraw(player)) {
 			player.draw(cardDeck);
 			printUserCardInfo(player);
 		}
 	}
 
-	private boolean canDraw(Drawable player) {
+	private boolean canDraw(User player) {
 		return player.canDraw() && DrawDecideType.DRAW.equals(createDrawDecideType(player));
 	}
 
-	private DrawDecideType createDrawDecideType(Drawable player) {
+	private DrawDecideType createDrawDecideType(User player) {
 		return DrawDecideType.of(inputDrawDecideType(player));
 	}
 
-	private void drawAtFirst(CardDeck cardDeck, Drawable dealer, List<Drawable> players) {
+	private void drawAtFirst(CardDeck cardDeck, User dealer, List<User> players) {
 		dealer.drawAtFirst(cardDeck);
-		for (Drawable player : players) {
+		for (User player : players) {
 			player.drawAtFirst(cardDeck);
 		}
 	}
-
 }

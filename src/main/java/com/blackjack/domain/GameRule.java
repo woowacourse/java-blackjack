@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 import com.blackjack.domain.user.Dealer;
 import com.blackjack.domain.user.User;
 
-public class GameTable {
+public class GameRule {
 	private final Dealer dealer;
 	private final List<User> players;
 
-	public GameTable(Dealer dealer, List<User> players) {
+	public GameRule(Dealer dealer, List<User> players) {
 		this.dealer = dealer;
 		this.players = players;
 	}

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.ResultType;
 import com.blackjack.domain.card.Card;
-import com.blackjack.domain.user.Drawable;
 import com.blackjack.domain.user.User;
 
 public class OutputView {
@@ -16,13 +15,13 @@ public class OutputView {
 	private OutputView() {
 	}
 
-	public static void printCardsAtFirst(Drawable dealer, List<Drawable> players) {
+	public static void printCardsAtFirst(User dealer, List<User> players) {
 		printDrawTitle(players);
 		System.out.println(dealer.getName() + ": " + makeDealerFirstCardInfo(dealer));
 		printPlayersCardInfo(players);
 	}
 
-	public static void printUserCardInfo(Drawable player) {
+	public static void printUserCardInfo(User player) {
 		System.out.println(makeUserCardInfo(player));
 	}
 

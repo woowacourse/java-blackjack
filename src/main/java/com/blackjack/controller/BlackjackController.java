@@ -5,7 +5,7 @@ import static com.blackjack.view.OutputView.*;
 
 import java.util.List;
 
-import com.blackjack.domain.GameTable;
+import com.blackjack.domain.GameRule;
 import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.card.CardDeck;
 import com.blackjack.domain.user.Dealer;
@@ -19,7 +19,7 @@ public class BlackjackController {
 		List<User> players = createPlayers();
 
 		DrawController drawController = new DrawController();
-		drawController.draw(cardDeck, dealer, (List)players);
+		drawController.draw(cardDeck, dealer, players);
 
 		printCards(dealer, players);
 
@@ -27,8 +27,8 @@ public class BlackjackController {
 	}
 
 	private void printResult(Dealer dealer, List<User> players) {
-		GameTable gameTable = new GameTable(dealer, players);
-		PlayerRecords playerRecords = gameTable.calculateResult();
+		GameRule gameRule = new GameRule(dealer, players);
+		PlayerRecords playerRecords = gameRule.calculateResult();
 		printResultMessage();
 		printDealerRecord(playerRecords.calculateDealerResult());
 		printUserRecords(playerRecords, players);
