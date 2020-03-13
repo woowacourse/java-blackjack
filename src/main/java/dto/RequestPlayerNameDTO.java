@@ -13,7 +13,7 @@ public class RequestPlayerNameDTO {
         this.playerName = playerName;
     }
 
-    public List<String> getPlayerName(){
+    public List<String> getPlayerName() {
         return new ArrayList<>(Arrays.asList(playerName.split(DELIMITER)));
     }
 }

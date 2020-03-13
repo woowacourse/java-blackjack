@@ -34,12 +34,12 @@ public class Card {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private boolean isSameCard(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
-        return this.cardNumber.equals(cardNumber) && this.cardSuitSymbol.equals(cardSuitSymbol);
-    }
-
     public static List<Card> getCards() {
         return new ArrayList<>(cards);
+    }
+
+    private boolean isSameCard(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
+        return this.cardNumber.equals(cardNumber) && this.cardSuitSymbol.equals(cardSuitSymbol);
     }
 
     public boolean isAce() {

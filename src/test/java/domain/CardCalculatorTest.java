@@ -63,7 +63,7 @@ public class CardCalculatorTest {
     @DisplayName("블랙잭(총 합이 21) 인지 판단하는 메서드 테스트")
     @Test
     void isBlackjackTest() {
-        Player player = new User("subway",Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+        Player player = new User("subway", Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
 
         Assertions.assertThat(CardCalculator.isBlackJack(player.getCard())).isTrue();

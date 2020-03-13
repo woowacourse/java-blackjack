@@ -5,23 +5,20 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.card.Cards;
-import domain.player.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class UserTest {
-    private Card card1;
-    private Card card2;
     private Cards cards;
     private User user;
 
     @BeforeEach
     private void setup() {
-        card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
         cards = new Cards();
+        Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
         user = new User("pobi",card1, card2);
     }
 

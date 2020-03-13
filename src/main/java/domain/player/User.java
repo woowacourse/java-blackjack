@@ -12,11 +12,6 @@ public class User extends Player {
         this.name = name;
     }
 
-    @Override
-    public void insertCard(Cards cards) {
-        this.cards.add(cards.pop());
-    }
-
     public void insertCard(Cards cards, AnswerType answerType) {
         if (AnswerType.YES.equals(answerType)) {
             insertCard(cards);
@@ -25,5 +20,10 @@ public class User extends Player {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void insertCard(Cards cards) {
+        this.cards.add(cards.pop());
     }
 }

@@ -16,6 +16,6 @@ public enum AnswerType {
         return Arrays.stream(values())
                 .filter(answerType -> answerType.answer.equals(answer))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 문자를 입력하였습니다."));
     }
 }

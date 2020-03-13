@@ -15,7 +15,7 @@ public class Players {
         return (Dealer) players.stream()
                 .filter(player -> player instanceof Dealer)
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(() -> new IllegalArgumentException("딜러가 포함되어 있지 않습니다."));
     }
 
     public List<User> getUsers() {

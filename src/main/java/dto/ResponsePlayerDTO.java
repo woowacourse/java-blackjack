@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class ResponsePlayerDTO {
     private static final String DEALER_NAME = "딜러";
-    private static final String DELIMITER = ",";
+    private static final String DELIMITER = ", ";
 
     private String name;
     private String cardInfo;
@@ -22,7 +22,9 @@ public class ResponsePlayerDTO {
     private ResponsePlayerDTO(Player player) {
         setName(player);
         List<Card> cards = player.getCard();
-        this.cardInfo = cards.stream().map(Card::toString).collect(Collectors.joining(DELIMITER));
+        this.cardInfo = cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(DELIMITER));
         this.score = Integer.toString(player.sumCardNumber());
     }
 
@@ -44,7 +46,7 @@ public class ResponsePlayerDTO {
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 
-    public static ResponsePlayerDTO getResponsePlayerDTO(Player player){
+    public static ResponsePlayerDTO getResponsePlayerDTO(Player player) {
         return new ResponsePlayerDTO(player);
     }
 

@@ -47,7 +47,7 @@ public class OutputView {
     public static void printFinalResult(List<ResponsePlayerDTO> result) {
         for (ResponsePlayerDTO responsePlayerDTO : result) {
             System.out.println(responsePlayerDTO.getName() + "카드: "
-            + responsePlayerDTO.getCardInfo() + " - 결과: " + responsePlayerDTO.getScore());
+                    + responsePlayerDTO.getCardInfo() + " - 결과: " + responsePlayerDTO.getScore());
         }
     }
 

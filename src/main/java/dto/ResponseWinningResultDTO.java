@@ -10,11 +10,15 @@ public class ResponseWinningResultDTO {
         this.winningPlayer = winningPlayer;
     }
 
+    public static ResponseWinningResultDTO create(Map<String, Boolean> winningPlayer) {
+        return new ResponseWinningResultDTO(winningPlayer);
+    }
+
     public List<String> getWinningResult() {
         int allUserWinCount = (int) winningPlayer.values().stream().filter(win -> win).count();
         int allUserLoseCount = winningPlayer.values().size() - allUserWinCount;
-        List<String> result = new ArrayList<>(Collections.singletonList("딜러: " + allUserLoseCount + "승 "
-                + allUserWinCount + "패"));
+        List<String> result = new ArrayList<>(
+                Collections.singletonList("딜러: " + allUserLoseCount + "승 " + allUserWinCount + "패"));
         result.addAll(winningPlayer.entrySet().stream()
                 .map(entry -> winString(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList()));
@@ -30,9 +34,5 @@ public class ResponseWinningResultDTO {
         }
         sb.append(": 패");
         return sb.toString();
-    }
-
-    public static ResponseWinningResultDTO create(Map<String, Boolean> winningPlayer) {
-        return new ResponseWinningResultDTO(winningPlayer);
     }
 }

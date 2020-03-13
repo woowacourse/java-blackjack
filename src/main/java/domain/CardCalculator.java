@@ -29,12 +29,12 @@ public class CardCalculator {
     }
 
     public static boolean isBlackJack(List<Card> cards) {
-        int sum = calculateCards(cards);
+        int cardsSum = calculateCards(cards);
 
-        if (cards.stream().anyMatch(Card::isAce) && sum == STANDARD_ACE_ELEVEN) {
+        if (cards.stream().anyMatch(Card::isAce) && cardsSum == STANDARD_ACE_ELEVEN) {
             return true;
         }
-        return sum == BLACK_JACK;
+        return cardsSum == BLACK_JACK;
     }
 
     private static int calculateCards(List<Card> cards) {
@@ -44,14 +44,13 @@ public class CardCalculator {
     }
 
     public static int calculateContainAce(List<Card> cards) {
-        int playerCardSum = calculateCards(cards);
+        int playerCardsSum = calculateCards(cards);
 
         if (cards.stream()
                 .anyMatch(Card::isAce)
-                && playerCardSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
-            playerCardSum += SUM_CONTAIN_ACE;
+                && playerCardsSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
+            playerCardsSum += SUM_CONTAIN_ACE;
         }
-
-        return playerCardSum;
+        return playerCardsSum;
     }
 }

@@ -1,7 +1,7 @@
 package dto;
 
 public class RequestAnswerDTO {
-    private  String answer;
+    private String answer;
 
     public RequestAnswerDTO(String answer) {
         this.answer = answer;

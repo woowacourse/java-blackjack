@@ -2,10 +2,6 @@ package practice;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import practice.Avante;
-import practice.K5;
-import practice.RentCompany;
-import practice.Sonata;
 
 
 public class RentCompanyTest {
