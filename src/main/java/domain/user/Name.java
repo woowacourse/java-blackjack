@@ -1,18 +1,11 @@
 package domain.user;
 
-import java.util.List;
 import java.util.Objects;
 
-import domain.card.Card;
-
-public class Player extends User {
-	private static final int INITIAL_START_INDEX = 0;
-	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
-	private static final int INITIAL_TO_INDEX = 2;
-
+public class Name {
 	private final String name;
 
-	public Player(String name) {
+	public Name(String name) {
 		validEmptyAndNull(name);
 		this.name = name;
 	}
@@ -24,16 +17,6 @@ public class Player extends User {
 	}
 
 	@Override
-	public List<Card> getInitialCard() {
-		return cards.getCards().subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
-	}
-
-	@Override
-	public String getName() {
-		return this.name;
-	}
-
-	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -41,7 +24,7 @@ public class Player extends User {
 		if (object == null || getClass() != object.getClass()) {
 			return false;
 		}
-		Player that = (Player)object;
+		Name that = (Name)object;
 		return Objects.equals(this.name, that.name);
 	}
 

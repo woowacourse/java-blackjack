@@ -19,18 +19,4 @@ public class PlayerTest {
 
 		assertThat(player.isBlackjack()).isTrue();
 	}
-
-	@DisplayName("이름이 빈문자열일 때")
-	@Test
-	void createTest() {
-		assertThatThrownBy(() -> new Player(""))
-			.isInstanceOf(IllegalArgumentException.class);
-	}
-
-	@DisplayName("이름이 널일 때")
-	@Test
-	void createTest2() {
-		assertThatThrownBy(() -> new Player(null))
-			.isInstanceOf(IllegalArgumentException.class);
-	}
 }

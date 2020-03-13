@@ -31,13 +31,13 @@ public class BlackjackGame {
 		List<User> allUsers = initAllUsers();
 		drawInitialCards(allUsers);
 		printBlackjackUsers(allUsers);
-		drawOptionalCards(players, dealer);
-		printAllUserScore(players, dealer);
-		printGameResult(players, dealer);
+		drawOptionalCards();
+		printAllUserScore();
+		printGameResult();
 	}
 
 	private List<User> initAllUsers() {
-		List<User> allUsers = new ArrayList<>(players);
+		List<User> allUsers = new ArrayList<>();
 		allUsers.add(dealer);
 		return allUsers;
 	}
@@ -56,20 +56,20 @@ public class BlackjackGame {
 		OutputView.printBlackJackUser(blackjackUsers);
 	}
 
-	private void drawOptionalCards(List<User> player, Dealer dealer) {
+	private void drawOptionalCards() {
 		if (dealer.isBlackjack()) {
 			return;
 		}
-		drawCard(player, dealer);
+		drawCard();
 	}
 
-	private void drawCard(List<User> player, Dealer dealer) {
-		drawPlayersCard(player);
-		drawDealerCard(dealer);
+	private void drawCard() {
+		drawPlayersCard();
+		drawDealerCard();
 	}
 
-	private void drawPlayersCard(List<User> users) {
-		for (User user : users) {
+	private void drawPlayersCard() {
+		for (User user : players) {
 			drawPlayerCard(user);
 		}
 	}
@@ -78,7 +78,7 @@ public class BlackjackGame {
 		if (user.isBlackjack()) {
 			return;
 		}
-		while (isUserNotBust(user) && isContinuousFromInput(user)) {
+		while (isUserNotBust(user) && hasNeedMoreCard(user)) {
 			user.addCards(cardDeck.draw());
 			OutputView.printUserCard(user);
 		}
@@ -92,29 +92,29 @@ public class BlackjackGame {
 		return false;
 	}
 
-	private boolean isContinuousFromInput(User user) {
+	private boolean hasNeedMoreCard(User user) {
 		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputPlayerMoreDrawResponse(user.getName()));
 		return moreDrawResponse.isMoreDraw();
 	}
 
-	private void drawDealerCard(Dealer dealer) {
+	private void drawDealerCard() {
 		while (dealer.isDrawable()) {
 			dealer.addCards(cardDeck.draw());
 			OutputView.printDealerDraw();
 		}
 	}
 
-	private void printAllUserScore(List<User> users, Dealer dealer) {
-		List<User> allUsers = new ArrayList<>(users);
+	private void printAllUserScore() {
+		List<User> allUsers = new ArrayList<>(players);
 		allUsers.add(dealer);
 		OutputView.printUserResult(allUsers);
 	}
 
-	private void printGameResult(List<User> users, Dealer dealer) {
-		List<PlayerResult> userResults = users.stream()
+	private void printGameResult() {
+		List<PlayerResult> userResults = players.stream()
 			.map(user -> new PlayerResult(user, MatchResult.calculatePlayerMatchResult(user, dealer)))
 			.collect(Collectors.toList());
-		DealerResult dealerResult = new DealerResult(new MatchCalculator(users, dealer).getMatchResults());
+		DealerResult dealerResult = new DealerResult(new MatchCalculator(players, dealer).getMatchResults());
 
 		OutputView.printGameResult(userResults, dealerResult);
 	}
