@@ -1,6 +1,7 @@
 package domain.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import domain.card.Card;
@@ -13,8 +14,8 @@ public abstract class User {
 		this.cards = new Cards(new ArrayList<>());
 	}
 
-	public void addCards(List<Card> cards) {
-		this.cards.addAll(cards);
+	public void addCards(Card... cards) {
+		this.cards.addAll(Arrays.asList(cards));
 	}
 
 	public boolean isBlackjack() {

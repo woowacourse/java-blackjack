@@ -2,8 +2,6 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +15,8 @@ public class DealerTeat {
 	@Test
 	void isDrawableTest() {
 		Dealer dealer = new Dealer();
-		dealer.addCards(Arrays.asList(new Card(Symbol.HEART, Type.EIGHT),
-			new Card(Symbol.CLOVER, Type.EIGHT)));
+		dealer.addCards(new Card(Symbol.HEART, Type.EIGHT),
+			new Card(Symbol.CLOVER, Type.EIGHT));
 		assertThat(dealer.isDrawable()).isTrue();
 	}
 
@@ -26,8 +24,8 @@ public class DealerTeat {
 	@Test
 	void isDrawableTest2() {
 		Dealer dealer = new Dealer();
-		dealer.addCards(Arrays.asList(new Card(Symbol.HEART, Type.EIGHT),
-			new Card(Symbol.CLOVER, Type.NINE)));
+		dealer.addCards(new Card(Symbol.HEART, Type.EIGHT),
+			new Card(Symbol.CLOVER, Type.NINE));
 		assertThat(dealer.isDrawable()).isFalse();
 	}
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,33 +18,33 @@ import view.OutputView;
 
 public class BlackjackGame {
 	private final CardDeck cardDeck;
-	private final List<User> users;
+	private final List<User> players;
 	private final Dealer dealer;
 
 	public BlackjackGame(CardDeck cardDeck) {
-		users = PlayerFactory.create(InputView.inputNames());
+		players = PlayerFactory.create(InputView.inputNames());
 		dealer = new Dealer();
 		this.cardDeck = cardDeck;
 	}
 
-	public void run() {
+	public void play() {
 		List<User> allUsers = initAllUsers();
-		initCards(allUsers);
+		drawInitialCards(allUsers);
 		printBlackjackUsers(allUsers);
-		checkCanDraw(users, dealer);
-		printUserResult(users, dealer);
-		printGameResult(users, dealer);
+		drawOptionalCards(players, dealer);
+		printAllUserScore(players, dealer);
+		printGameResult(players, dealer);
 	}
 
 	private List<User> initAllUsers() {
-		List<User> allUsers = new ArrayList<>(users);
+		List<User> allUsers = new ArrayList<>(players);
 		allUsers.add(dealer);
 		return allUsers;
 	}
 
-	private void initCards(List<User> allUsers) {
+	private void drawInitialCards(List<User> allUsers) {
 		for (User user : allUsers) {
-			user.addCards(Arrays.asList(cardDeck.draw(), cardDeck.draw()));
+			user.addCards(cardDeck.draw(), cardDeck.draw());
 		}
 		OutputView.printInitialResult(allUsers);
 	}
@@ -57,15 +56,15 @@ public class BlackjackGame {
 		OutputView.printBlackJackUser(blackjackUsers);
 	}
 
-	private void checkCanDraw(List<User> users, Dealer dealer) {
+	private void drawOptionalCards(List<User> player, Dealer dealer) {
 		if (dealer.isBlackjack()) {
 			return;
 		}
-		drawCard(users, dealer);
+		drawCard(player, dealer);
 	}
 
-	private void drawCard(List<User> users, Dealer dealer) {
-		drawPlayersCard(users);
+	private void drawCard(List<User> player, Dealer dealer) {
+		drawPlayersCard(player);
 		drawDealerCard(dealer);
 	}
 
@@ -80,7 +79,7 @@ public class BlackjackGame {
 			return;
 		}
 		while (isUserNotBust(user) && isContinuousFromInput(user)) {
-			user.addCards(Arrays.asList(cardDeck.draw()));
+			user.addCards(cardDeck.draw());
 			OutputView.printUserCard(user);
 		}
 	}
@@ -100,12 +99,12 @@ public class BlackjackGame {
 
 	private void drawDealerCard(Dealer dealer) {
 		while (dealer.isDrawable()) {
-			dealer.addCards(Arrays.asList(cardDeck.draw()));
+			dealer.addCards(cardDeck.draw());
 			OutputView.printDealerDraw();
 		}
 	}
 
-	private void printUserResult(List<User> users, Dealer dealer) {
+	private void printAllUserScore(List<User> users, Dealer dealer) {
 		List<User> allUsers = new ArrayList<>(users);
 		allUsers.add(dealer);
 		OutputView.printUserResult(allUsers);

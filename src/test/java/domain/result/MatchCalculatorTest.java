@@ -22,13 +22,13 @@ class MatchCalculatorTest {
 		User player2 = new Player("test");
 		User player3 = new Player("test");
 
-		player.addCards(Arrays.asList(new Card(CLOVER, ACE), new Card(CLOVER, EIGHT)));
-		player2.addCards(Arrays.asList(new Card(CLOVER, ACE), new Card(CLOVER, NINE)));
-		player3.addCards(Arrays.asList(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));
+		player.addCards(new Card(CLOVER, ACE), new Card(CLOVER, EIGHT));
+		player2.addCards(new Card(CLOVER, ACE), new Card(CLOVER, NINE));
+		player3.addCards(new Card(CLOVER, ACE), new Card(CLOVER, TEN));
 
 		List<User> players = Arrays.asList(player, player2, player3);
 		Dealer dealer = new Dealer();
-		dealer.addCards(Arrays.asList(new Card(CLOVER, ACE), new Card(CLOVER, SEVEN)));
+		dealer.addCards(new Card(CLOVER, ACE), new Card(CLOVER, SEVEN));
 
 		MatchCalculator matchCalculator = new MatchCalculator(players, dealer);
 		assertThat(matchCalculator.getMatchResults())

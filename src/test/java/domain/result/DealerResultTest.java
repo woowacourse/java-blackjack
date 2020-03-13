@@ -27,6 +27,6 @@ class DealerResultTest {
 		expected.put(MatchResult.LOSE, 2L);
 		expected.put(MatchResult.WIN, 0L);
 		expected.put(MatchResult.DRAW, 0L);
-		assertThat(actual).containsExactlyInAnyOrderEntriesOf(expected);
+		assertThat(actual).isEqualTo(expected);
 	}
 }

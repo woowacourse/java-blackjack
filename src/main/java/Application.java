@@ -7,7 +7,7 @@ public class Application {
 		try {
 			CardDeck cardDeck = new CardDeck();
 			BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
-			blackjackGame.run();
+			blackjackGame.play();
 		} catch (RuntimeException e) {
 			OutputView.printExceptionMessage(e.getMessage());
 		}
