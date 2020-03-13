@@ -40,8 +40,6 @@ public abstract class User {
         return getDrawResult() + " - 결과: " + calculatePoint();
     }
 
-    public abstract String getTotalWinningResult();
-
     public String getName() {
         return name;
     }

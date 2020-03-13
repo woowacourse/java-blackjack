@@ -2,7 +2,9 @@ package domain.user;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
@@ -49,22 +51,12 @@ public class Players {
                 .collect(Collectors.joining("\n"));
     }
 
-    public void decideWinner(Dealer dealer) {
-        players.forEach(player -> player.win(dealer));
-    }
+    public Map<Player, WinningResult> decideWinner(Dealer dealer) {
+        Map<Player, WinningResult> winningResultOfPlayers = new LinkedHashMap<>();
 
-    public String getAllTotalWinningResults() {
-        return players.stream()
-                .map(Player::getTotalWinningResult)
-                .collect(Collectors.joining("\n"));
-    }
+        players.forEach(player -> winningResultOfPlayers.put(player, player.modifyWinningResult(dealer)));
 
-    public List<WinningResult> getWinningResults() {
-        return Collections.unmodifiableList(
-                players.stream()
-                        .map(Player::getWinningResult)
-                        .collect(Collectors.toList())
-        );
+        return Collections.unmodifiableMap(winningResultOfPlayers);
     }
 
     public List<Player> getPlayers() {

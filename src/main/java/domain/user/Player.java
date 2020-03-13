@@ -4,8 +4,6 @@ import domain.result.WinningResult;
 
 public class Player extends User {
 
-    WinningResult winningResult;
-
     public Player(String name) {
         super(name);
     }
@@ -16,34 +14,25 @@ public class Player extends User {
     }
 
     //todo: 내부 구현 내용 개선
-    public WinningResult win(Dealer dealer) {
+    public WinningResult modifyWinningResult(Dealer dealer) {
         if (cards.isBust()) {
-            return winningResult = WinningResult.LOSE;
+            return WinningResult.LOSE;
         }
         if (cards.isBlackJack()) {
             if (dealer.cards.isBlackJack()) {
-                return winningResult = WinningResult.DRAW;
+                return WinningResult.DRAW;
             }
-            return winningResult = WinningResult.WIN;
+            return WinningResult.WIN;
         }
         if (dealer.cards.isBust()) {
-            return winningResult = WinningResult.WIN;
+            return WinningResult.WIN;
         }
         if (calculatePoint() > dealer.calculatePoint()) {
-            return winningResult = WinningResult.WIN;
+            return WinningResult.WIN;
         }
         if (calculatePoint() == dealer.calculatePoint()) {
-            return winningResult = WinningResult.DRAW;
+            return WinningResult.DRAW;
         }
-        return winningResult = WinningResult.LOSE;
-    }
-
-    @Override
-    public String getTotalWinningResult() {
-        return name + ": " + winningResult.getResult();
-    }
-
-    public WinningResult getWinningResult() {
-        return winningResult;
+        return WinningResult.LOSE;
     }
 }

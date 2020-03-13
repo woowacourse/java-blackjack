@@ -52,11 +52,4 @@ public class BlackJackGame {
         String input = InputView.receiveYesOrNoInput(player.getName());
         return YesOrNo.of(input).isYes();
     }
-
-    public void reflectResult(Dealer dealer, Players players) {
-        players.decideWinner(dealer);
-
-        List<WinningResult> playerWinningResults = players.getWinningResults();
-        playerWinningResults.forEach(winningResult -> dealer.applyWinningResult(winningResult.reverse()));
-    }
 }

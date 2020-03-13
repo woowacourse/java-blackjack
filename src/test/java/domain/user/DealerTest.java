@@ -57,14 +57,4 @@ class DealerTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), false)
         );
     }
-
-    @Test
-    @DisplayName("딜러 승패 확인 결과")
-    void getWinningResult() {
-        String expected = "딜러: 0승 0패 1무승부";
-
-        dealer.applyWinningResult(WinningResult.DRAW);
-
-        assertThat(dealer.getTotalWinningResult()).isEqualTo(expected);
-    }
 }

@@ -64,7 +64,7 @@ class PlayerTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.SIX));
         dealer.draw(dealerCard);
 
-        assertThat(player.win(dealer)).isEqualTo(expected);
+        assertThat(player.modifyWinningResult(dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardSet() {
@@ -99,7 +99,7 @@ class PlayerTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(dealerCard);
 
-        assertThat(player.win(dealer)).isEqualTo(expected);
+        assertThat(player.modifyWinningResult(dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createOtherCardSet() {
@@ -107,29 +107,6 @@ class PlayerTest {
                 createCardsAndWinningResult(Type.ACE, Type.ACE, WinningResult.DRAW),
                 createCardsAndWinningResult(Type.ACE, Type.FIVE, WinningResult.WIN),
                 createCardsAndWinningResult(Type.THREE, Type.ACE, WinningResult.LOSE)
-        );
-    }
-
-    @ParameterizedTest
-    @DisplayName("승패 결과")
-    @MethodSource("createCardsAndResult")
-    void getWinningResult(Card card, String expected) {
-        player.draw(new Card(Symbol.DIAMOND, Type.SIX));
-        player.draw(card);
-
-        Dealer dealer = Dealer.appoint();
-        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
-
-        player.win(dealer);
-
-        assertThat(player.getTotalWinningResult()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> createCardsAndResult() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.HEART, Type.FIVE), "이름: 승"),
-                Arguments.of(new Card(Symbol.HEART, Type.TWO), "이름: 패"),
-                Arguments.of(new Card(Symbol.HEART, Type.FOUR), "이름: 무승부")
         );
     }
 

@@ -1,5 +1,6 @@
 package view;
 
+import domain.result.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -27,9 +28,8 @@ public class OutputView {
         System.out.println(players.getAllTotalDrawResults());
     }
 
-    public static void printWinningResult(Dealer dealer, Players players) {
+    public static void printWinningResult(GameResult gameResult) {
         System.out.println("\n## 최종 승패");
-        System.out.println(dealer.getTotalWinningResult());
-        System.out.println(players.getAllTotalWinningResults());
+        System.out.println(gameResult.getTotalWinningResults());
     }
 }

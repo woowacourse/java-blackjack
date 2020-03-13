@@ -1,5 +1,6 @@
 import controller.BlackJackGame;
 import domain.card.DeckFactory;
+import domain.result.GameResult;
 import domain.user.Dealer;
 import domain.user.Players;
 import view.InputView;
@@ -20,7 +21,7 @@ public class Application {
         blackJackGame.additionalDealOut(dealer, players);
         OutputView.printTotalResult(dealer, players);
 
-        blackJackGame.reflectResult(dealer, players);
-        OutputView.printWinningResult(dealer, players);
+        GameResult gameResult = GameResult.of(dealer, players);
+        OutputView.printWinningResult(gameResult);
     }
 }
