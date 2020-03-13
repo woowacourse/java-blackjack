@@ -1,15 +1,14 @@
 package blackjack.card.domain;
 
-import blackjack.card.domain.component.CardNumber;
-import blackjack.card.domain.component.Symbol;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Card {
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 
+public class Card {
 	private final Symbol symbol;
 	private final CardNumber cardNumber;
 
@@ -23,11 +22,11 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return this.cardNumber == CardNumber.ACE;
+		return cardNumber == CardNumber.ACE;
 	}
 
 	public int getScore() {
-		return this.cardNumber.getNumber();
+		return cardNumber.getNumber();
 	}
 
 	public int getNumber() {
@@ -67,5 +66,4 @@ public class Card {
 				.orElseThrow(AssertionError::new);
 		}
 	}
-
 }

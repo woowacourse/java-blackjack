@@ -36,13 +36,17 @@ public abstract class Player {
 		return !isBlackjack();
 	}
 
-	public abstract boolean isDealer();
+	public boolean isDealer() {
+		return this instanceof Dealer;
+	}
 
-	public abstract boolean isGambler();
+	public boolean isGambler() {
+		return this instanceof Gambler;
+	}
 
 	public abstract boolean isDrawable();
 
-	public abstract GameReport getReport(Player player);
+	public abstract GameReport createReport(Player player);
 
 	public List<Card> getCardBundle() {
 		return Collections.unmodifiableList(this.cardBundle.getCards());

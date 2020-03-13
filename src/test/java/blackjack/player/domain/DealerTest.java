@@ -1,16 +1,17 @@
 package blackjack.player.domain;
 
+import static org.assertj.core.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.GameResult;
 import blackjack.card.domain.component.CardNumber;
 import blackjack.card.domain.component.Symbol;
 import blackjack.player.domain.report.GameReport;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
@@ -26,7 +27,7 @@ class DealerTest {
 		gambler.addCard(Card.of(Symbol.DIAMOND, cardNumber));
 
 		//when
-		GameReport report = dealer.getReport(gambler);
+		GameReport report = dealer.createReport(gambler);
 
 		//then
 		assertThat(report).isEqualTo(new GameReport("bebop", result));

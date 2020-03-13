@@ -1,9 +1,9 @@
 package blackjack.player.domain;
 
+import java.util.Objects;
+
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.report.GameReport;
-
-import java.util.Objects;
 
 public class Gambler extends Player {
 	public Gambler(CardBundle cardBundle, String name) {
@@ -11,26 +11,12 @@ public class Gambler extends Player {
 	}
 
 	@Override
-	public boolean isDealer() {
-		return false;
-	}
-
-	@Override
-	public boolean isGambler() {
-		return true;
-	}
-
-	@Override
 	public boolean isDrawable() {
 		return isNotBurst() && isNotBlackjack();
 	}
 
-	private boolean isNotBlackjack() {
-		return !isBlackjack();
-	}
-
 	@Override
-	public GameReport getReport(Player player) {
+	public GameReport createReport(Player player) {
 		throw new UnsupportedOperationException();
 	}
 
