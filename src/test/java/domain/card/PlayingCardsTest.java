@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class PlayingCardsTest {
     void calculateScore() {
         playingCards.add(new Card(Symbol.TEN, Type.DIAMOND));
         playingCards.add(new Card(Symbol.FIVE, Type.DIAMOND));
-        assertThat(playingCards.calculateScore()).isEqualTo(15);
+        assertThat(playingCards.calculateScore()).isEqualTo(Score.valueOf(15));
     }
 
     @Test
@@ -45,7 +46,7 @@ class PlayingCardsTest {
     void calculateWithAceNotBurst() {
         playingCards.add(new Card(Symbol.TEN, Type.DIAMOND));
         playingCards.add(new Card(Symbol.ACE, Type.DIAMOND));
-        assertThat(playingCards.calculateScore()).isEqualTo(21);
+        assertThat(playingCards.calculateScore()).isEqualTo(Score.valueOf(21));
     }
 
     @Test
@@ -54,7 +55,7 @@ class PlayingCardsTest {
         playingCards.add(new Card(Symbol.TEN, Type.DIAMOND));
         playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
-        assertThat(playingCards.calculateScore()).isEqualTo(20);
+        assertThat(playingCards.calculateScore()).isEqualTo(Score.valueOf(20));
     }
 
     @Test
@@ -63,7 +64,7 @@ class PlayingCardsTest {
         playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
         playingCards.add(new Card(Symbol.ACE, Type.SPADE));
-        assertThat(playingCards.calculateScore()).isEqualTo(21);
+        assertThat(playingCards.calculateScore()).isEqualTo(Score.valueOf(21));
     }
 
     @Test

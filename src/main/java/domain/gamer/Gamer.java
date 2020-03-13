@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.Score;
 import domain.card.Card;
 import domain.card.PlayingCards;
 
@@ -16,11 +17,19 @@ public abstract class Gamer {
     }
 
     private static void validate(String name) {
-        if (Objects.isNull(name) || name.isEmpty()) {
-            throw new IllegalArgumentException("값을 올바르게 입력해주세요.");
-        }
+        validateNullAndEmpty(name);
+        validateWhiteSpace(name);
+    }
+
+    private static void validateWhiteSpace(String name) {
         if (name.chars().anyMatch(Character::isWhitespace)) {
             throw new IllegalArgumentException("공백 문자가 입력되었습니다.");
+        }
+    }
+
+    private static void validateNullAndEmpty(String name) {
+        if (Objects.isNull(name) || name.isEmpty()) {
+            throw new IllegalArgumentException("값을 올바르게 입력해주세요.");
         }
     }
 
@@ -28,7 +37,7 @@ public abstract class Gamer {
         playingCards.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         return playingCards.calculateScore();
     }
 

@@ -11,6 +11,6 @@ public class Dealer extends Gamer {
     }
 
     public boolean canGetCard() {
-        return playingCards.calculateScore() < ADD_THRESHOLD;
+        return calculateScore().isLessThen(ADD_THRESHOLD);
     }
 }

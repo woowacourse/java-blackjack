@@ -31,9 +31,9 @@ public class BlackJackGame {
         }
         receiveDealerCards(deck, dealer);
 
-        OutputView.printGamerCardsStateWithScore(GamerDto.of(dealer), dealer.calculateScore());
+        OutputView.printGamerCardsStateWithScore(GamerDto.of(dealer), dealer.calculateScore().getScore());
         for (Player player : players) {
-            OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore());
+            OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore().getScore());
         }
         Map<PlayerResult, List<Player>> gameResults = calculateGameResults(players, dealer);
         OutputView.printGameResult(gameResults);

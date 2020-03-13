@@ -9,7 +9,7 @@ public enum PlayerResult {
     WIN("승") {
         @Override
         boolean isMatch(Dealer dealer, Player player) {
-            return (player.isNotBust() && (dealer.isBust() || player.calculateScore() > dealer.calculateScore()))
+            return (player.isNotBust() && (dealer.isBust() || player.calculateScore().compareTo(dealer.calculateScore()) > 0))
                     || (dealer.isNotBlackJack() && player.isBlackJack());
         }
     },
@@ -24,7 +24,7 @@ public enum PlayerResult {
         @Override
         boolean isMatch(Dealer dealer, Player player) {
             return player.isBust()
-                    || player.calculateScore() < dealer.calculateScore()
+                    || player.calculateScore().compareTo(dealer.calculateScore()) < 0
                     || (dealer.isBlackJack() && player.isNotBlackJack());
         }
     };
