@@ -39,11 +39,7 @@ class DrawController {
 	}
 
 	private boolean canDraw(User player) {
-		return player.canDraw() && DrawDecideType.DRAW.equals(createDrawDecideType(player));
-	}
-
-	private DrawDecideType createDrawDecideType(User player) {
-		return DrawDecideType.of(inputDrawDecideType(player));
+		return player.canDraw() && DrawDecideType.isDraw(inputDrawDecideType(player));
 	}
 
 	private void drawAtFirst(CardDeck cardDeck, User dealer, List<User> players) {
