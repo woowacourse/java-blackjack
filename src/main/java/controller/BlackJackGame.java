@@ -34,13 +34,15 @@ public class BlackJackGame {
         for (Player player : players.getPlayers()) {
             OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore().getScore());
         }
-        Map<PlayerResult, List<Player>> gameResults = calculateGameResults(players, dealer);
+
+        Map<PlayerResult, List<GamerDto>> gameResults = calculateGameResults(players.getPlayers(), dealer);
         OutputView.printGameResult(gameResults);
     }
 
-    private Map<PlayerResult, List<Player>> calculateGameResults(List<Player> players, Dealer dealer) {
-        Map<PlayerResult, List<Player>> gameResults = players.stream()
-                .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player), Collectors.toList()));
+    private Map<PlayerResult, List<GamerDto>> calculateGameResults(List<Player> players, Dealer dealer) {
+        Map<PlayerResult, List<GamerDto>> gameResults = players.stream()
+                .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player),
+                        Collectors.mapping(GamerDto::of, Collectors.toList())));
         for (PlayerResult playerResult : PlayerResult.values()) {
             gameResults.putIfAbsent(playerResult, new ArrayList<>());
         }

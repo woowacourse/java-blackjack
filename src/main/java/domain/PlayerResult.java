@@ -35,12 +35,6 @@ public enum PlayerResult {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    abstract boolean isMatch(Dealer dealer, Player player);
-
     public static PlayerResult match(Dealer dealer, Player player) {
         return Arrays.stream(values())
                 .filter(result -> result.isMatch(dealer, player))
