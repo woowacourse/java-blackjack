@@ -22,7 +22,7 @@ public class Cards {
 	}
 
 	public boolean hasInitialSize() {
-		return this.cards.size() == INITIAL_CARDS_SIZE;
+		return cards.size() == INITIAL_CARDS_SIZE;
 	}
 
 	public boolean hasAce() {

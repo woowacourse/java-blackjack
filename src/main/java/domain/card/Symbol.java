@@ -24,10 +24,10 @@ public enum Symbol {
 	}
 
 	public int getScore() {
-		return this.score;
+		return score;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 }

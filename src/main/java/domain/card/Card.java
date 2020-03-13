@@ -16,7 +16,7 @@ public class Card {
 	}
 
 	public int getScore() {
-		return this.symbol.getScore();
+		return symbol.getScore();
 	}
 
 	@Override

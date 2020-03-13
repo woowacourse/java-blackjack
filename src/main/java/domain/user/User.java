@@ -41,7 +41,7 @@ public class User implements Comparable<User> {
 	}
 
 	public boolean canDrawMore() {
-		return drawStrategy.canDraw(this.score);
+		return drawStrategy.canDraw(score);
 	}
 
 	public boolean isNotBlackjack() {
