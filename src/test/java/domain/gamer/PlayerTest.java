@@ -34,13 +34,33 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 생성 시 예외를 반환한다.")
-    void constructorWithException() {
+    @DisplayName("플레이어가 생성 시 null 값이 들어오면 예외를 반환한다.")
+    void constructorWithExceptionInputNull() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
-        String name = "123";
+        String name = null;
         assertThatThrownBy(() -> new Player(playingCards, name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("알파벳 이외의 문자는 허용하지 않습니다.");
+                .hasMessage("값을 올바르게 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("플레이어가 생성 시 빈 값이 들어오면 예외를 반환한다.")
+    void constructorWithExceptionInputEmpty() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "";
+        assertThatThrownBy(() -> new Player(playingCards, name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("값을 올바르게 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("플레이어가 생성 시 공백 문자가 들어오면 예외를 반환한다.")
+    void constructorWithExceptionInputWhiteSpace() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "a b";
+        assertThatThrownBy(() -> new Player(playingCards, name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("공백 문자가 입력되었습니다.");
     }
 
     @Test
@@ -60,7 +80,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 버스트인지 확인")
+    @DisplayName("플레이어가 버스트가 아닌지 확인")
     void isNotBust() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "player";
