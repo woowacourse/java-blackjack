@@ -8,7 +8,8 @@ public class CardFactory {
 	private static List<Card> cards = new ArrayList<>();
 
 	static {
-		for (Type type : Type.values()) {
+		Type[] types = Type.values();
+		for (Type type : types) {
 			createCardsByType(type);
 		}
 	}

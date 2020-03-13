@@ -3,7 +3,6 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-
 	private final Symbol symbol;
 	private final Type type;
 
@@ -29,14 +28,16 @@ public class Card {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (object == null || getClass() != object.getClass()) {
 			return false;
-		Card card = (Card)o;
-		return symbol == card.symbol &&
-			type == card.type;
+		}
+		Card that = (Card)object;
+		return symbol == that.symbol &&
+			this.type == that.type;
 	}
 
 	@Override

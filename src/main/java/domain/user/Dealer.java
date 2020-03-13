@@ -8,11 +8,12 @@ public class Dealer extends User {
 	private static final int MAXIMUM_DRAWABLE_SCORE = 16;
 	private static final int INITIAL_FROM_INDEX = 0;
 	private static final int INITIAL_TO_INDEX = 1;
+	private static final String DEALER_DEFAULT_NAME = "딜러";
 
 	private final String name;
 
 	public Dealer() {
-		this.name = "딜러";
+		this.name = DEALER_DEFAULT_NAME;
 	}
 
 	public boolean isDrawable() {

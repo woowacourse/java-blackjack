@@ -9,6 +9,7 @@ public class Player extends User {
 	private static final int INITIAL_START_INDEX = 0;
 	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
 	private static final int INITIAL_TO_INDEX = 2;
+
 	private final String name;
 
 	public Player(String name) {
@@ -24,21 +25,6 @@ public class Player extends User {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Player player = (Player)o;
-		return Objects.equals(name, player.name);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(name);
-	}
-
-	@Override
 	public List<Card> getInitialCard() {
 		return cards.getCards().subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
 	}
@@ -46,5 +32,22 @@ public class Player extends User {
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		Player that = (Player)object;
+		return Objects.equals(this.name, that.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 }
