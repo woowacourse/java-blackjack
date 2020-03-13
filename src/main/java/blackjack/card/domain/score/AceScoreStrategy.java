@@ -28,7 +28,7 @@ public class AceScoreStrategy implements ScoreStrategy {
         int aceCount = getAceCount(cards);
         sum += aceCount * ACE_WEIGHT;
 
-        while (sum > MAXIMUM_VALUE) {
+        while (sum > MAXIMUM_VALUE && aceCount > 0) {
             sum -= ACE_WEIGHT;
             aceCount--;
         }
