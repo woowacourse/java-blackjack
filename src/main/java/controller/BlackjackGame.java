@@ -22,10 +22,10 @@ public class BlackjackGame {
 	private final List<User> users;
 	private final Dealer dealer;
 
-	public BlackjackGame(CardDivider cardDivider) {
+	public BlackjackGame() {
 		users = PlayerFactory.create(InputView.inputNames());
 		dealer = new Dealer();
-		this.cardDivider = cardDivider;
+		this.cardDivider = new CardDivider();
 	}
 
 	public void run() {
@@ -33,8 +33,8 @@ public class BlackjackGame {
 		initCards(allUsers);
 		printBlackjackUsers(allUsers);
 		checkCanDraw(users, dealer);
-		printUserResult(users, dealer);
-		printGameResult(users, dealer);
+		OutputView.printUserResult(allUsers);
+		showGameResult(users, dealer);
 	}
 
 	private List<User> initAllUsers() {
@@ -105,13 +105,7 @@ public class BlackjackGame {
 		}
 	}
 
-	private void printUserResult(List<User> users, Dealer dealer) {
-		List<User> allUsers = new ArrayList<>(users);
-		allUsers.add(dealer);
-		OutputView.printUserResult(allUsers);
-	}
-
-	private void printGameResult(List<User> users, Dealer dealer) {
+	private void showGameResult(List<User> users, Dealer dealer) {
 		List<UserResult> userResults = users.stream()
 			.map(user -> new UserResult(user, MatchResult.findMatchResult(user, dealer)))
 			.collect(Collectors.toList());
