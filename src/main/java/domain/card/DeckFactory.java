@@ -1,4 +1,4 @@
-package domain.deck;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -31,12 +31,12 @@ public class Dealer extends User {
     }
 
     public String getFirstDrawResult() {
-        return DEALER + "카드: " + cards.get(0).getName();
+        return DEALER + "카드: " + cards.getFirstCard().getName();
     }
 
     @Override
     public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack() && !isBlackJackPoint() && calculatePointAccordingToHasAce() < PIVOT;
+        return !cards.isBust() && !cards.isBlackJack() && !cards.isBlackJackPoint() && cards.calculatePointAccordingToHasAce() < PIVOT;
     }
 
     public void applyWinningResult(WinningResult winningResult) {

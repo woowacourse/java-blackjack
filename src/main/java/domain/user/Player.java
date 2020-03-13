@@ -12,27 +12,27 @@ public class Player extends User {
 
     @Override
     public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack() && !isBlackJackPoint();
+        return !cards.isBust() && !cards.isBlackJack() && !cards.isBlackJackPoint();
     }
 
     //todo: 내부 구현 내용 개선
     public WinningResult win(Dealer dealer) {
-        if (isBust()) {
+        if (cards.isBust()) {
             return winningResult = WinningResult.LOSE;
         }
-        if (isBlackJack()) {
-            if (dealer.isBlackJack()) {
+        if (cards.isBlackJack()) {
+            if (dealer.cards.isBlackJack()) {
                 return winningResult = WinningResult.DRAW;
             }
             return winningResult = WinningResult.WIN;
         }
-        if (dealer.isBust()) {
+        if (dealer.cards.isBust()) {
             return winningResult = WinningResult.WIN;
         }
-        if (calculatePointAccordingToHasAce() > dealer.calculatePointAccordingToHasAce()) {
+        if (calculatePoint() > dealer.calculatePoint()) {
             return winningResult = WinningResult.WIN;
         }
-        if (calculatePointAccordingToHasAce() == dealer.calculatePointAccordingToHasAce()) {
+        if (calculatePoint() == dealer.calculatePoint()) {
             return winningResult = WinningResult.DRAW;
         }
         return winningResult = WinningResult.LOSE;

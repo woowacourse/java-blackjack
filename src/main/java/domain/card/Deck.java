@@ -1,4 +1,4 @@
-package domain.deck;
+package domain.card;
 
 import java.util.Collections;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package domain.deck;
+package domain.card;
 
 public class Card {
 

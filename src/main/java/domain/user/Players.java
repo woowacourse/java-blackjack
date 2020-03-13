@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.card.Deck;
 import domain.result.WinningResult;
-import domain.deck.Deck;
 
 public class Players {
 

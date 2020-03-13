@@ -12,11 +12,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import domain.card.Card;
+import domain.card.DeckFactory;
+import domain.card.Symbol;
+import domain.card.Type;
 import domain.result.WinningResult;
-import domain.deck.Card;
-import domain.deck.DeckFactory;
-import domain.deck.Symbol;
-import domain.deck.Type;
 
 class PlayersTest {
 
@@ -33,14 +33,14 @@ class PlayersTest {
     void draw() {
         List<Integer> expected = players.getPlayers()
                 .stream()
-                .map(player -> player.cards.size() + 1)
+                .map(player -> player.cards.getCards().size() + 1)
                 .collect(Collectors.toList());
 
         players.draw(DeckFactory.getDeck());
 
         List<Integer> result = players.getPlayers()
                 .stream()
-                .map(player -> player.cards.size())
+                .map(player -> player.cards.getCards().size())
                 .collect(Collectors.toList());
 
         assertThat(expected).isEqualTo(result);
