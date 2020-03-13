@@ -6,20 +6,35 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    public static final int MAXIMUM_PLAYER_COUNT = 7;
-    public static final String OVER_MAXIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
+    private static final int MAXIMUM_PLAYER_COUNT = 7;
+    private static final String OVER_MAXIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
         String.format("참여 인원이 너무 많습니다. %d명 이내로만 가능합니다.", MAXIMUM_PLAYER_COUNT);
+    private static final String PLAYER_NAME_IS_BLANK_EXCEPTION_MESSAGE =
+        "참여인원의 이름은 공백이어선 안됩니다.";
 
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
-        validPlayerNames(playerNames);
+        validNotBlankPlayerNames(playerNames);
+        validCountsPlayerNames(playerNames);
         this.players = Collections.unmodifiableList(playerNames.stream()
             .map(Player::new)
             .collect(Collectors.toList()));
     }
 
-    private void validPlayerNames(List<String> playerNames) {
+    private void validNotBlankPlayerNames(List<String> playerNames) {
+        hasBlankName(playerNames);
+        if (playerNames.isEmpty() || hasBlankName(playerNames)) {
+            throw new IllegalArgumentException(PLAYER_NAME_IS_BLANK_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private boolean hasBlankName(List<String> playerNames) {
+        return playerNames.stream()
+            .anyMatch(name -> name.equals(""));
+    }
+
+    private void validCountsPlayerNames(List<String> playerNames) {
         if (playerNames.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException(OVER_MAXIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE);
         }

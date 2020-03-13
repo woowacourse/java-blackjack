@@ -27,15 +27,15 @@ public abstract class User {
 
     public abstract boolean canDrawCard();
 
+    public String getName() {
+        return name;
+    }
+
     public List<String> getCardsInfos() {
         return cards.getInfos();
     }
 
     public int getTotalScore() {
         return cards.getTotalScore();
-    }
-
-    public String getName() {
-        return name;
     }
 }

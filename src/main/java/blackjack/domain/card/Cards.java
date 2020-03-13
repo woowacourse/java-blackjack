@@ -47,19 +47,19 @@ public class Cards {
     }
 
     public int getTotalScore() {
-        if(isBust()) {
+        if (isBust()) {
             return 0;
         }
         return getScore();
+    }
+
+    public Outcome calculateOutcome(Cards comparisonCards) {
+        return Outcome.calculate(getTotalScore(), comparisonCards.getTotalScore());
     }
 
     public List<String> getInfos() {
         return cards.stream()
             .map(Card::getInfo)
             .collect(Collectors.toList());
-    }
-
-    public Outcome calculateOutcome(Cards comparisonCards) {
-        return Outcome.calculate(getTotalScore(), comparisonCards.getTotalScore());
     }
 }
