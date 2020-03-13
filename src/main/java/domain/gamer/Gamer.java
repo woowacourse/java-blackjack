@@ -68,4 +68,6 @@ public abstract class Gamer {
     public PlayingCards getPlayingCards() {
         return playingCards;
     }
+
+    public abstract boolean canGetCard();
 }

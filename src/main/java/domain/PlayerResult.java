@@ -41,4 +41,10 @@ public enum PlayerResult {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("승무패 조건에 맞지 않습니다."));
     }
+
+    public String getName() {
+        return name;
+    }
+
+    abstract boolean isMatch(Dealer dealer, Player player);
 }

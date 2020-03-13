@@ -6,4 +6,8 @@ public class Player extends Gamer {
     public Player(PlayingCards playingCards, String name) {
         super(playingCards, name);
     }
+
+    public boolean canGetCard() {
+        return isNotBust();
+    }
 }

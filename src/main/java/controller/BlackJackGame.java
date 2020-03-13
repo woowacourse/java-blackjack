@@ -57,7 +57,7 @@ public class BlackJackGame {
     }
 
     private void receivePlayerCards(Deck deck, Player player) {
-        while (player.isNotBust() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
+        while (player.canGetCard() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
             player.addCard(deck.dealCard());
             OutputView.printGamerCardsState(GamerDto.of(player));
         }
