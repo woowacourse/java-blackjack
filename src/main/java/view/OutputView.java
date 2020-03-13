@@ -15,6 +15,7 @@ public class OutputView {
 	private static final String CARD_STRING_FORMAT = " 카드: %s  ";
 	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
 	private static final String NEW_LINE = System.lineSeparator();
+	private static final String CARD_FORMAT = "%s%s";
 
 	public static void printInitialResult(List<User> users) {
 		StringBuilder builder = new StringBuilder();
@@ -67,7 +68,7 @@ public class OutputView {
 	}
 
 	private static String parseCardString(Card card) {
-		return card.getTypeName() + card.getSymbol();
+		return String.format(CARD_FORMAT, card.getTypeName(), card.getSymbol());
 	}
 
 	public static void printGameResult(List<UserResult> userResults, DealerResult dealerResult) {
