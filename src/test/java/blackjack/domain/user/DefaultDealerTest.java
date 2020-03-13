@@ -56,14 +56,14 @@ class DefaultDealerTest {
 
 	@Test
 	void isWinner() {
-		dealer.giveCards(tenClub, aceSpade);
-		assertThat(dealer.isWinner(dealer.getScore())).isTrue();
-
 		dealer.giveCards(tenClub);
-		assertThat(dealer.isWinner(dealer.getScore())).isTrue();
+		assertThat(dealer.isWinner(Score.of(11))).isTrue();
+
+		dealer.giveCards(tenClub, aceSpade);
+		assertThat(dealer.isWinner(Score.of(20))).isTrue();
 
 		dealer.giveCards(aceSpade);
-		assertThat(dealer.isWinner(dealer.getScore())).isFalse();
+		assertThat(dealer.isWinner(Score.of(0))).isFalse();
 	}
 
 	@Test
