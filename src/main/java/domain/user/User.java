@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.Score;
+import domain.ScoreType;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.user.strategy.draw.DrawStrategy;
@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class User implements Comparable<User> {
+	private static final int BLACKJACK_SCORE = 21;
+
 	protected Cards cards;
-	protected Score score;
+	protected int score;
 	protected DrawStrategy drawStrategy;
 
 	protected User() {
 		this.cards = new Cards(new ArrayList<>());
-		this.score = Score.of(this.cards);
+		this.score = ScoreType.of(this.cards);
 	}
 
 	public static User getInstance() {
@@ -31,7 +33,7 @@ public class User implements Comparable<User> {
 
 	public void addCard(Card card) {
 		this.cards.add(card);
-		this.score = Score.of(cards);
+		this.score = ScoreType.of(this.cards);
 	}
 
 	public Cards openAllCards() {
@@ -43,7 +45,11 @@ public class User implements Comparable<User> {
 	}
 
 	public boolean isNotBlackjack() {
-		return !(cards.hasInitialSize() && score.isBlackjackScore());
+		return !(cards.hasInitialSize() && isBlackjackScore());
+	}
+
+	public boolean isBlackjackScore() {
+		return score == BLACKJACK_SCORE;
 	}
 
 	@Override
@@ -61,6 +67,6 @@ public class User implements Comparable<User> {
 
 	@Override
 	public int compareTo(User other) {
-		return this.score.minus(other.score);
+		return this.score - other.score;
 	}
 }

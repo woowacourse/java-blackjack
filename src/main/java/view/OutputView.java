@@ -1,6 +1,6 @@
 package view;
 
-import domain.Score;
+import domain.ScoreType;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.result.Result;
@@ -46,7 +46,7 @@ public class OutputView {
 						.map(Card::toString)
 						.collect(joining(DELIMITER)) +
 				" - 결과: " +
-				Score.of(dealerCards));
+				ScoreType.of(dealerCards));
 
 		players.forEach(OutputView::printCardsResultOf);
 	}
@@ -61,7 +61,7 @@ public class OutputView {
 								.map(Card::toString)
 								.collect(joining(DELIMITER)) +
 						" - 결과: " +
-						Score.of(player.openAllCards())
+						ScoreType.of(player.openAllCards())
 		);
 	}
 
