@@ -30,14 +30,6 @@ public class BlackJackGame {
         }
     }
 
-    private static void compareScores(final Players players, final Dealer dealer) {
-        for (Player player : players) {
-            Result result = dealer.compareScore(player);
-            player.setResult(result);
-            dealer.setResult(result);
-        }
-    }
-
     private static void drawCardEachPlayer(Deck deck, Player player) {
         while (!player.isBust() && YesOrNo.findAnswer(InputView.inputYesOrNo(player)).isYes()) {
             player.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
@@ -49,6 +41,14 @@ public class BlackJackGame {
         if (dealer.isHitBound()) {
             OutputView.printDealerDraw(dealer);
             dealer.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
+        }
+    }
+
+    private static void compareScores(final Players players, final Dealer dealer) {
+        for (Player player : players) {
+            Result result = dealer.compareScore(player);
+            player.setResult(result);
+            dealer.setResult(result);
         }
     }
 }

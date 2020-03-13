@@ -7,7 +7,8 @@ import model.Result;
 import static controller.BlackJackGame.HIT_BOUNDARY;
 
 public class Dealer extends BlackJackPerson {
-    public static final int ZERO = 0;
+    private static final int ZERO = 0;
+    private static final int ONE_PLUS = 1;
     private final Map<Result, Integer> result = new HashMap<>();
 
     public Dealer(CardHand cardHand) {
@@ -26,10 +27,10 @@ public class Dealer extends BlackJackPerson {
             return Result.DRAW;
         }
         if (this.isBust()) {
-            return Result.WIN;
+            return Result.LOSE;
         }
         if (player.isBust()) {
-            return Result.LOSE;
+            return Result.WIN;
         }
         return Result.calculateResult(Integer.compare(getScore(), player.getScore()));
     }
@@ -38,10 +39,8 @@ public class Dealer extends BlackJackPerson {
         return Collections.unmodifiableMap(result);
     }
 
-    public void setResult(final Result result) {
-        Result oppositeResult = Result.oppositeResult(result);
-        int count = this.result.get(oppositeResult);
-        this.result.put(oppositeResult, count + 1);
+    public void setResult(Result result) {
+        this.result.put(result, this.result.get(result) + ONE_PLUS);
     }
 
     public boolean isHitBound() {

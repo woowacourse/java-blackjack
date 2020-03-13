@@ -70,22 +70,24 @@ public class OutputView {
         }
     }
 
-    public static void printDealerResult(Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-        Map<Result, Integer> result = dealer.getResult();
-        stringBuilder.append(dealer.getName())
-                .append(": ")
-                .append(result.get(Result.WIN))
-                .append("승 ")
-                .append(result.get(Result.LOSE))
-                .append("패");
-        System.out.println(stringBuilder.toString());
-    }
-
     public static void printResult(Players players, Dealer dealer) {
         System.out.println(NEW_LINE + NEW_LINE + "## 최종 승패");
         printDealerResult(dealer);
         printPlayersResult(players);
+    }
+
+    private static void printDealerResult(Dealer dealer) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Map<Result, Integer> result = dealer.getResult();
+        stringBuilder.append(dealer.getName())
+            .append(": ")
+            .append(result.get(Result.WIN))
+            .append("승 ")
+            .append(result.get(Result.DRAW))
+            .append("무 ")
+            .append(result.get(Result.LOSE))
+            .append("패");
+        System.out.println(stringBuilder.toString());
     }
 
     private static void printPlayersResult(Players players) {

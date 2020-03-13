@@ -12,7 +12,7 @@ public class Player extends BlackJackPerson {
     }
 
     public void setResult(Result result) {
-        this.result = result;
+        this.result = Result.oppositeResult(result);
     }
 
     public Result getResult() {

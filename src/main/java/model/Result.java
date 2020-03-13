@@ -3,8 +3,8 @@ package model;
 import java.util.Arrays;
 
 public enum Result {
-    WIN("승", -1),
-    LOSE("패", 1),
+    WIN("승", 1),
+    LOSE("패", -1),
     DRAW("무", 0);
 
     String result;
