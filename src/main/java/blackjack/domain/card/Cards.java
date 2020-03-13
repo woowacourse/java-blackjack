@@ -11,7 +11,7 @@ public class Cards {
 
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         if (cards.contains(card)) {

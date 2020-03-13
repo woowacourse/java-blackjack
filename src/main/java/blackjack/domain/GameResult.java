@@ -38,8 +38,7 @@ public class GameResult {
     private Map<Outcome, Integer> calculateDealerResults() {
         Map<Outcome, Integer> dealerResults = initialDealerResults;
         for (Outcome outcome : this.playerResults.values()) {
-            Outcome dealerOutcome = Outcome.converseOutcome(outcome);
-            dealerResults.put(dealerOutcome, dealerResults.get(dealerOutcome) + 1);
+            dealerResults.put(outcome.converse(), dealerResults.get(outcome.converse()) + 1);
         }
         return dealerResults;
     }
