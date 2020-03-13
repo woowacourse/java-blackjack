@@ -57,6 +57,10 @@ public class Score {
 		return this.score > score;
 	}
 
+	public boolean isMoreThan(Score score) {
+		return this.score > score.score;
+	}
+
 	public int getScore() {
 		return score;
 	}

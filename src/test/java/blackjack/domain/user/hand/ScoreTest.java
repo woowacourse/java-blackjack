@@ -63,4 +63,13 @@ class ScoreTest {
 
 		assertThat(score.isMoreThan(value)).isEqualTo(expected);
 	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"8,true", "9,false"})
+	void isMoreThan_InputScore_ReturnCompareResult(int value, boolean expected) {
+		Score score = Score.valueOf(9);
+		Score cmpScore = Score.valueOf(value);
+
+		assertThat(score.isMoreThan(cmpScore)).isEqualTo(expected);
+	}
 }
