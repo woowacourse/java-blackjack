@@ -25,10 +25,6 @@ public class Gambler extends Player {
 		return isNotBurst() && isNotBlackjack();
 	}
 
-	private boolean isNotBlackjack() {
-		return !isBlackjack();
-	}
-
 	@Override
 	public GameReport getReport(Player player) {
 		throw new UnsupportedOperationException();

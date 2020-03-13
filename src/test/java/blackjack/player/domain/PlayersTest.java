@@ -1,8 +1,12 @@
 package blackjack.player.domain;
 
+import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.CardDeck;
+import blackjack.card.domain.CardFactory;
 import blackjack.card.domain.GameResult;
 import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 import blackjack.player.domain.report.GameReport;
 import blackjack.player.domain.report.GameReports;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +17,7 @@ import java.util.List;
 
 import static blackjack.card.domain.CardBundleHelper.aCardBundle;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
     @DisplayName("딜러와 갬블러들을 비교해서 게임 결과 리스트를 받아오는 메서드")
@@ -61,5 +66,16 @@ class PlayersTest {
 
         //then
         assertThat(dealer.getClass()).isEqualTo(Dealer.class);
+    }
+
+    @DisplayName("2장씩 분배하는 것은 카드를 가진상태(게임의 시작이 아닌상태)에서 호출하면 Exception")
+    @Test
+    void drawStartingCard() {
+        Player player = new Gambler(new CardBundle(), "bebop");
+        player.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
+        Players players = new Players(Arrays.asList(player));
+
+        assertThatThrownBy(() -> players.drawStartingCard(CardDeck.getInstance(new CardFactory())))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

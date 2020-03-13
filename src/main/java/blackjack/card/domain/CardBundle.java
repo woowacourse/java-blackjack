@@ -39,6 +39,10 @@ public class CardBundle {
         return calculateScore() > BLACKJACK_VALUE;
     }
 
+    public boolean isNotEmpty() {
+        return !cards.isEmpty();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
