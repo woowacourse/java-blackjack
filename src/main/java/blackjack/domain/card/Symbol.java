@@ -16,6 +16,7 @@ public enum Symbol {
     KING("K", 10);
 
     private static final int ACE_LARGE_VALUE = 11;
+    static final int ACE_WEIGHT = ACE_LARGE_VALUE - ACE.value;
 
     private final String name;
     private final int value;
@@ -23,10 +24,6 @@ public enum Symbol {
     Symbol(String name, int value) {
         this.name = name;
         this.value = value;
-    }
-
-    public static int getAceWeight() {
-        return ACE_LARGE_VALUE - ACE.value;
     }
 
     public String getName() {

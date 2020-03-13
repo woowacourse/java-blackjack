@@ -6,6 +6,7 @@ import blackjack.domain.user.Players;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameResult {
 
@@ -29,6 +30,8 @@ public class GameResult {
 
     private Map<Player, Outcome> calculatePlayerResults(Dealer dealer, Players players) {
         Map<Player, Outcome> playerResults = new LinkedHashMap<>();
+        //players.getPlayers().stream()
+        //    .collect(Collectors.toMap(player -> player, player -> player.calculateOutcome(dealer)));
         for (Player player : players.getPlayers()) {
             playerResults.put(player, player.calculateOutcome(dealer));
         }

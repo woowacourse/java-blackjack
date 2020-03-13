@@ -4,7 +4,6 @@ import blackjack.domain.Outcome;
 import blackjack.util.BlackJackRule;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Cards {
@@ -24,15 +23,19 @@ public class Cards {
         int score = cards.stream()
             .mapToInt(Card::getValue)
             .sum();
-        return addAceWeight(score);
-    }
-
-    private int addAceWeight(int score) {
-        Optional<Card> aceCard = cards.stream().filter(Card::isAce).findFirst();
-        if (aceCard.isPresent() && !BlackJackRule.isBust(score + Symbol.getAceWeight())) {
-            score += Symbol.getAceWeight();
+        if (canAddAceWeight(score) && hasAce()) {
+            score += Symbol.ACE_WEIGHT;
         }
         return score;
+    }
+
+    private boolean canAddAceWeight(int score) {
+        return !BlackJackRule.isBust(score + Symbol.ACE_WEIGHT);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     public boolean isBust() {
@@ -50,12 +53,6 @@ public class Cards {
     }
 
     public Outcome calculateOutcome(Cards comparisonCards) {
-        if (isBust()) {
-            return Outcome.LOSE;
-        }
-        if (comparisonCards.isBust()) {
-            return Outcome.WIN;
-        }
         return Outcome.calculate(getScore(), comparisonCards.getScore());
     }
 }
