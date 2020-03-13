@@ -98,7 +98,7 @@ public class BlackjackGame {
 	}
 
 	private void drawDealerCard() {
-		while (dealer.isDrawable()) {
+		if (dealer.isDrawable()) {
 			dealer.addCards(cardDeck.draw());
 			OutputView.printDealerDraw();
 		}
