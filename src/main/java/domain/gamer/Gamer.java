@@ -40,6 +40,10 @@ public class Gamer {
 		return (hands.calculateTotalScore() == Hands.BLACKJACK) && hands.hasTwoCards();
 	}
 
+	public boolean canDraw() {
+		return hands.calculateTotalScore() < Hands.BLACKJACK;
+	}
+
 	public Hands getHands() {
 		return hands;
 	}
