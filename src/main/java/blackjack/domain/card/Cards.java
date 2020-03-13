@@ -18,7 +18,7 @@ public class Cards implements Deck {
         return new Cards(deck);
     }
 
-    public static Cards of(DeckFactory deckFactory) {
+    public static Cards ofDeckFactory(DeckFactory deckFactory) {
         return deckFactory.create();
     }
 
