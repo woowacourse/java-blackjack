@@ -15,7 +15,7 @@ public class BlackjackController {
 		BlackjackService.giveInitialCards(deck, dealer, players);
 		printInitialStatus(dealer.openCard(), players);
 
-		if (dealer.isBlackJack()) {
+		if (dealer.isBlackjack()) {
 			printResult(dealer, players);
 			return;
 		}

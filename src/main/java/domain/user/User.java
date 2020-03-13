@@ -34,15 +34,15 @@ public class User implements Comparable<User> {
 		this.score = Score.of(cards);
 	}
 
-	public boolean canDrawMore() {
-		return drawStrategy.canDraw(score);
-	}
-
 	public Cards openAllCards() {
 		return this.cards;
 	}
 
-	public boolean isBlackJack() {
+	public boolean canDrawMore() {
+		return drawStrategy.canDraw(this.score);
+	}
+
+	public boolean isBlackjack() {
 		return cards.hasInitialSize() && score.isBlackjackScore();
 	}
 
