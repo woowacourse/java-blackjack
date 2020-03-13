@@ -40,4 +40,25 @@ public class WinOrLoseTest {
                 Arguments.of(new ArrayList<>(Arrays.asList(ace, ten, king)), new ArrayList<>(Arrays.asList(ace, four, ten)))
         );
     }
+
+    @DisplayName("딜러가 버스트이고 플레이어는 버스트가 아닐 경우, WIN 반환")
+    @ParameterizedTest
+    @MethodSource("dealerBurstData")
+    void checkWinOrLose_dealerBurst_returnWin(List<Card> winCards, List<Card> loseCards) {
+        Player player = new Player("또링", new Hands(winCards));
+        Dealer dealer = new Dealer(new Hands(loseCards));
+
+        assertThat(WinOrLose.checkWinOrLose(player, dealer)).isEqualTo(WinOrLose.WIN);
+    }
+
+    static Stream<Arguments> dealerBurstData() {
+        Card ace = new Card(Symbol.ACE, Type.CLUB);
+        Card ten = new Card(Symbol.TEN, Type.SPADE);
+        Card king = new Card(Symbol.KING, Type.HEART);
+        Card four = new Card(Symbol.FOUR, Type.DIAMOND);
+
+        return Stream.of(
+                Arguments.of(new ArrayList<>(Arrays.asList(ace, king)), new ArrayList<>(Arrays.asList(ten, four, king)))
+        );
+    }
 }
