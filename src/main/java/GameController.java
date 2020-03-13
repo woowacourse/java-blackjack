@@ -19,9 +19,10 @@ public class GameController {
         players = new Players(InputView.inputPlayerNames(), deck);
         dealer = new Dealer(deck);
         OutputView.printInitialHands(players, dealer);
+        run();
     }
 
-    public void run() {
+    private void run() {
         hitOrStay();
         dealer.hit(deck);
         if (dealer.handSize() == 3) {
