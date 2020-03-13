@@ -3,7 +3,8 @@ package domain.result;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import domain.user.User;
+import domain.user.Dealer;
+import domain.user.Player;
 
 public enum MatchResult {
 	WIN("승", MatchResult::isPlayerWin),
@@ -13,14 +14,14 @@ public enum MatchResult {
 	private static final String ILLEGAL_RESULT_MESSAGE = "예측 불가능한 결과입니다.";
 
 	private final String matchResult;
-	private final BiPredicate<User, User> resultCondition;
+	private final BiPredicate<Player, Dealer> resultCondition;
 
-	MatchResult(String matchResult, BiPredicate<User, User> resultCondition) {
+	MatchResult(String matchResult, BiPredicate<Player, Dealer> resultCondition) {
 		this.matchResult = matchResult;
 		this.resultCondition = resultCondition;
 	}
 
-	public static MatchResult calculatePlayerMatchResult(User player, User dealer) {
+	public static MatchResult calculatePlayerMatchResult(Player player, Dealer dealer) {
 		return Arrays.stream(values())
 			.filter(result -> result.resultCondition.test(player, dealer))
 			.findFirst()
@@ -41,18 +42,18 @@ public enum MatchResult {
 		return this;
 	}
 
-	private static boolean isPlayerWin(User player, User dealer) {
+	private static boolean isPlayerWin(Player player, Dealer dealer) {
 		return (player.isBlackjack() && !dealer.isBlackjack()) ||
 			(!player.isBust() &&
 				((player.calculateScore() > dealer.calculateScore()) || dealer.isBust())
 			);
 	}
 
-	private static boolean isPlayerDraw(User player, User dealer) {
+	private static boolean isPlayerDraw(Player player, Dealer dealer) {
 		return dealer.isBlackjack() && player.isBlackjack();
 	}
 
-	private static boolean isPlayerLose(User player, User dealer) {
+	private static boolean isPlayerLose(Player player, Dealer dealer) {
 		return (!player.isBlackjack() && dealer.isBlackjack()) ||
 			(player.isBust()) || (player.calculateScore() <= dealer.calculateScore());
 	}

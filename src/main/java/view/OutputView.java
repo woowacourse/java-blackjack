@@ -14,6 +14,12 @@ public class OutputView {
 	private static final String JOINING_DELIMITER = ", ";
 	private static final String CARD_STRING_FORMAT = " 카드: %s  ";
 	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
+	private static final String DEALER_DRAW_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+	private static final String BLACK_JACK_MESSAGE = "%s 블랙잭!%s";
+	private static final String Colon = ":";
+	private static final String SPACE = " ";
+	private static final String PREFIX_DEALER_SCORE_RESULT_MESSAGE = "딜러: ";
+	private static final String PREFIX_TOTAL_GAME_RESULT_MESSAGE = "## 최종 승패";
 	private static final String NEW_LINE = System.lineSeparator();
 
 	private OutputView() {
@@ -31,11 +37,11 @@ public class OutputView {
 
 	public static void printBlackJackUser(List<User> users) {
 		for (User user : users) {
-			System.out.printf("%s 블랙잭!%s", user.getName(), NEW_LINE);
+			System.out.printf(BLACK_JACK_MESSAGE, user.getName(), NEW_LINE);
 		}
 	}
 
-	public static void printUserBust(User user) {
+	public static void printBust(User user) {
 		System.out.printf("%s 버스트!%s", user.getName(), NEW_LINE);
 	}
 
@@ -60,7 +66,7 @@ public class OutputView {
 	}
 
 	public static void printDealerDraw() {
-		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+		System.out.println(DEALER_DRAW_ONE_MORE_CARD_MESSAGE);
 	}
 
 	private static String parseCardsString(List<Card> cards) {
@@ -74,19 +80,19 @@ public class OutputView {
 	}
 
 	public static void printGameResult(List<PlayerResult> playerResults, DealerResult dealerResult) {
-		System.out.println("## 최종 승패");
+		System.out.println(PREFIX_TOTAL_GAME_RESULT_MESSAGE);
 		printDealerResult(dealerResult);
 		printUsersResult(playerResults);
 	}
 
 	private static void printDealerResult(DealerResult dealerResult) {
-		StringBuilder builder = new StringBuilder("딜러: ");
+		StringBuilder builder = new StringBuilder(PREFIX_DEALER_SCORE_RESULT_MESSAGE);
 
 		Map<MatchResult, Long> map = dealerResult.calculateDealerResult();
 		for (MatchResult matchResult : MatchResult.values()) {
 			builder.append(map.get(matchResult));
 			builder.append(matchResult.getMatchResult());
-			builder.append(" ");
+			builder.append(SPACE);
 		}
 		System.out.println(builder);
 	}
@@ -95,7 +101,7 @@ public class OutputView {
 		StringBuilder builder = new StringBuilder();
 		for (PlayerResult userResult : userResults) {
 			builder.append(userResult.getName());
-			builder.append(":");
+			builder.append(Colon);
 			builder.append(userResult.getMatchResult());
 			builder.append(NEW_LINE);
 		}

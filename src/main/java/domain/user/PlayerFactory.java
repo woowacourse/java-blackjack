@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class PlayerFactory {
 	private static final String DELIMITER = ",";
 
-	public static List<User> create(String combinedName) {
+	public static List<Player> create(String combinedName) {
 		return Arrays.stream(combinedName.split(DELIMITER))
 			.map(String::trim)
 			.map(Player::valueOf)

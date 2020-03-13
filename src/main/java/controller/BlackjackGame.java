@@ -11,6 +11,7 @@ import domain.result.MatchCalculator;
 import domain.result.MatchResult;
 import domain.result.PlayerResult;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.PlayerFactory;
 import domain.user.User;
 import view.InputView;
@@ -18,7 +19,7 @@ import view.OutputView;
 
 public class BlackjackGame {
 	private final CardDeck cardDeck;
-	private final List<User> players;
+	private final List<Player> players;
 	private final Dealer dealer;
 
 	public BlackjackGame(CardDeck cardDeck) {
@@ -69,31 +70,31 @@ public class BlackjackGame {
 	}
 
 	private void drawPlayersCard() {
-		for (User user : players) {
-			drawPlayerCard(user);
+		for (Player player : players) {
+			drawPlayerCard(player);
 		}
 	}
 
-	private void drawPlayerCard(User user) {
-		if (user.isBlackjack()) {
+	private void drawPlayerCard(Player player) {
+		if (player.isBlackjack()) {
 			return;
 		}
-		while (isUserNotBust(user) && hasNeedMoreCard(user)) {
-			user.addCards(cardDeck.draw());
-			OutputView.printUserCard(user);
+		while (isNotBust(player) && hasNeedMoreCard(player)) {
+			player.addCards(cardDeck.draw());
+			OutputView.printUserCard(player);
 		}
 	}
 
-	private boolean isUserNotBust(User user) {
-		if (!user.isBust()) {
+	private boolean isNotBust(Player player) {
+		if (!player.isBust()) {
 			return true;
 		}
-		OutputView.printUserBust(user);
+		OutputView.printBust(player);
 		return false;
 	}
 
-	private boolean hasNeedMoreCard(User user) {
-		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputPlayerMoreDrawResponse(user.getName()));
+	private boolean hasNeedMoreCard(Player player) {
+		MoreDrawResponse moreDrawResponse = MoreDrawResponse.of(InputView.inputMoreDrawResponse(player.getName()));
 		return moreDrawResponse.isMoreDraw();
 	}
 

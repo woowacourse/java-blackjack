@@ -6,19 +6,19 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import domain.user.Dealer;
-import domain.user.User;
+import domain.user.Player;
 
 public class MatchCalculator {
-	private final List<User> users;
+	private final List<Player> players;
 	private final Dealer dealer;
 
-	public MatchCalculator(List<User> users, Dealer dealer) {
-		this.users = new ArrayList<>(Objects.requireNonNull(users));
+	public MatchCalculator(List<Player> players, Dealer dealer) {
+		this.players = new ArrayList<>(Objects.requireNonNull(players));
 		this.dealer = Objects.requireNonNull(dealer);
 	}
 
 	public List<MatchResult> getMatchResults() {
-		return users.stream()
+		return players.stream()
 			.map(player -> MatchResult.calculatePlayerMatchResult(player, dealer))
 			.collect(Collectors.toList());
 	}

@@ -2,13 +2,13 @@ package domain.result;
 
 import java.util.Objects;
 
-import domain.user.User;
+import domain.user.Player;
 
 public class PlayerResult {
-	private final User player;
+	private final Player player;
 	private final MatchResult matchResult;
 
-	public PlayerResult(User player, MatchResult matchResult) {
+	public PlayerResult(Player player, MatchResult matchResult) {
 		this.player = Objects.requireNonNull(player);
 		this.matchResult = Objects.requireNonNull(matchResult);
 	}
