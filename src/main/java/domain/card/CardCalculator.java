@@ -1,6 +1,4 @@
-package domain;
-
-import domain.card.Card;
+package domain.card;
 
 import java.util.List;
 

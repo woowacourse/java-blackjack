@@ -1,10 +1,6 @@
-package domain;
+package domain.player;
 
 import domain.card.Cards;
-import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.Players;
-import domain.player.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

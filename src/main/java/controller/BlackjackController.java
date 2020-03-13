@@ -1,8 +1,8 @@
 package controller;
 
 import domain.AnswerType;
-import domain.CardCalculator;
-import domain.PlayerFactory;
+import domain.card.CardCalculator;
+import domain.player.PlayerFactory;
 import domain.WinningResult;
 import domain.card.Cards;
 import domain.player.Dealer;

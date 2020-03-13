@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.CardCalculator;
 import domain.player.Player;
 
 public class DecisionWinner {
