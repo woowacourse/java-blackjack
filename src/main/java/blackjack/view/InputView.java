@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Response;
-import blackjack.domain.User;
+import blackjack.domain.player.User;
 import blackjack.exception.ResponseNotMatchException;
 
 import java.util.Arrays;

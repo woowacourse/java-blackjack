@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Symbol;
-import blackjack.domain.Type;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 import blackjack.exception.CardDeckEmptyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,7 +38,7 @@ public class CardDeckTest {
     @DisplayName("카드 덱에서 랜덤으로 카드 한 장 추출 확인")
     @Test
     void getOneCardFromCardDeck() {
-        Card card = cardDeck.getOneCard();
+        Card card = cardDeck.pop();
         assertThat(card).isEqualTo(new Card(Symbol.CLOVER, Type.EIGHT));
     }
 
@@ -47,7 +46,7 @@ public class CardDeckTest {
     @Test
     void isEmptyTest() {
         CardDeck emptyCardDeck = new CardDeck(new ArrayList<>());
-        assertThatThrownBy(emptyCardDeck::getOneCard)
+        assertThatThrownBy(emptyCardDeck::pop)
                 .isInstanceOf(CardDeckEmptyException.class)
                 .hasMessage("카드 덱이 비었습니다.");
     }

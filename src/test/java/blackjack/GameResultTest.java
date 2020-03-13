@@ -1,6 +1,12 @@
 package blackjack;
 
 import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,8 +69,8 @@ public class GameResultTest {
     @Test
     void calculateGameResultByScore() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
-            user.addCard(cardDeck.getOneCard());
+            dealer.addCard(cardDeck.pop());
+            user.addCard(cardDeck.pop());
         }
         assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(UserResult.DRAW);
     }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import blackjack.exception.CardDeckEmptyException;
 
@@ -15,7 +15,7 @@ public class CardDeck {
         cardDeck = new ArrayList<>(cards);
     }
 
-    public Card getOneCard() {
+    public Card pop() {
         if (isEmpty()) {
             throw new CardDeckEmptyException("카드 덱이 비었습니다.");
         }

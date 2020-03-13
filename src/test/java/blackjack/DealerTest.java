@@ -1,6 +1,11 @@
 package blackjack;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +43,7 @@ public class DealerTest {
     @Test
     void addCardTest() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
+            dealer.addCard(cardDeck.pop());
         }
         assertThat(dealer.getCardsSize()).isEqualTo(2);
         assertThat(cardDeck.size()).isEqualTo(4);
@@ -48,7 +53,7 @@ public class DealerTest {
     @Test
     void calculateScoreTest() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
+            dealer.addCard(cardDeck.pop());
         }
         int score = dealer.calculateScore();
         assertThat(score).isEqualTo(19);
@@ -58,7 +63,7 @@ public class DealerTest {
     @Test
     void isUnderCriticalScore() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
+            dealer.addCard(cardDeck.pop());
         }
         assertThat(dealer.isUnderCriticalScore()).isFalse();
     }
@@ -74,7 +79,7 @@ public class DealerTest {
     @Test
     void getInitialCardsTest() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
+            dealer.addCard(cardDeck.pop());
         }
         assertThat(dealer.getInitialCards()).containsExactly(new Card(Symbol.CLOVER, Type.EIGHT));
     }

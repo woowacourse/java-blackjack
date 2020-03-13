@@ -1,6 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -22,26 +26,27 @@ public class BlackJackGame {
     }
 
     public void run() {
-        enrollUsers();
+        registerUsers();
         distributeCards();
         play();
         calculateResult();
     }
 
-    public void enrollUsers() {
-        users = InputView.inputUserNames().stream()
+    public void registerUsers() {
+        List<String> userNames = InputView.inputUserNames();
+        users = userNames.stream()
                 .map(User::new)
                 .collect(Collectors.toList());
     }
 
     private void distributeCards() {
-        OutputView.printDistributeConfirmMessage(dealer, users);
+        OutputView.printDistributeConfirmMessage(dealer, users, INITIAL_CARDS_SIZE);
         IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                .forEach(i -> dealer.addCard(cardDeck.getOneCard()));
+                .forEach(i -> dealer.addCard(cardDeck.pop()));
 
         for (User user : users) {
             IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                    .forEach(i -> user.addCard(cardDeck.getOneCard()));
+                    .forEach(i -> user.addCard(cardDeck.pop()));
         }
         OutputView.printInitialPlayerCards(dealer, users);
     }
@@ -56,7 +61,7 @@ public class BlackJackGame {
 
     private void eachUserPlay(User user) {
         while (user.isNoneStatus() && InputView.askOneMoreCard(user) == Response.YES) {
-            user.addCard(cardDeck.getOneCard());
+            user.addCard(cardDeck.pop());
             user.changeStatusIfBust();
             OutputView.printUserCards(user);
         }
@@ -65,7 +70,7 @@ public class BlackJackGame {
     private void dealerPlay() {
         dealer.changeStatusIfBlackJack();
         if (dealer.isUnderCriticalScore()) {
-            dealer.addCard(cardDeck.getOneCard());
+            dealer.addCard(cardDeck.pop());
             dealer.changeStatusIfBust();
             OutputView.printDealerPlayConfirmMessage();
         }

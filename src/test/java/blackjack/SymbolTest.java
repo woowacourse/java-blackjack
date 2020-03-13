@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.Symbol;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

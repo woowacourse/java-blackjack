@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.Status;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,8 +22,16 @@ public abstract class Player {
         this.cards.add(card);
     }
 
-    public int getCardsSize() {
-        return this.cards.size();
+    public void changeStatusIfBlackJack() {
+        if (calculateScore() == BLACKJACK_SCORE) {
+            this.status = Status.BLACKJACK;
+        }
+    }
+
+    public void changeStatusIfBust() {
+        if (calculateScore() > BLACKJACK_SCORE) {
+            this.status = Status.BUST;
+        }
     }
 
     public int calculateScore() {
@@ -42,12 +53,12 @@ public abstract class Player {
                 .anyMatch(Card::isAce);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Status getStatus() {
@@ -58,16 +69,8 @@ public abstract class Player {
         return Collections.unmodifiableList(cards);
     }
 
-    public void changeStatusIfBlackJack() {
-        if (calculateScore() == BLACKJACK_SCORE) {
-            this.status = Status.BLACKJACK;
-        }
-    }
-
-    public void changeStatusIfBust() {
-        if (calculateScore() > BLACKJACK_SCORE) {
-            this.status = Status.BUST;
-        }
+    public int getCardsSize() {
+        return this.cards.size();
     }
 
     public abstract List<Card> getInitialCards();

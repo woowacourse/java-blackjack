@@ -1,6 +1,11 @@
 package blackjack;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.User;
 import blackjack.exception.UserNameEmptyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +52,7 @@ public class UserTest {
     @Test
     void addCardTest() {
         for (int i = 0; i < 2; i++) {
-            user.addCard(cardDeck.getOneCard());
+            user.addCard(cardDeck.pop());
         }
         assertThat(user.getCardsSize()).isEqualTo(2);
         assertThat(cardDeck.size()).isEqualTo(4);
@@ -57,7 +62,7 @@ public class UserTest {
     @Test
     void calculateScoreTest() {
         for (int i = 0; i < 2; i++) {
-            user.addCard(cardDeck.getOneCard());
+            user.addCard(cardDeck.pop());
         }
         int score = user.calculateScore();
         assertThat(score).isEqualTo(19);
@@ -74,7 +79,7 @@ public class UserTest {
     @Test
     void getInitialCardsTest() {
         for (int i = 0; i < 2; i++) {
-            user.addCard(cardDeck.getOneCard());
+            user.addCard(cardDeck.pop());
         }
         assertThat(user.getInitialCards()).containsExactly(
                 new Card(Symbol.CLOVER, Type.EIGHT), new Card(Symbol.CLOVER, Type.ACE));
