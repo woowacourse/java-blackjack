@@ -11,11 +11,11 @@ public class Dealer extends User {
 
     @Override
     public boolean canDrawCard() {
-        return BlackJackRule.isDealerDraw(cards.getScore());
+        return BlackJackRule.isDealerDraw(userCards.getScore());
     }
 
     public String getFirstCardInfo() {
-        List<String> cardsInfos = cards.getInfos();
+        List<String> cardsInfos = userCards.getInfos();
         return cardsInfos.get(0);
     }
 }

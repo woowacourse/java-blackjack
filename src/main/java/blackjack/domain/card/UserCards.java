@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class UserCards {
 
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
 
@@ -53,8 +53,8 @@ public class Cards {
         return getScore();
     }
 
-    public Outcome calculateOutcome(Cards comparisonCards) {
-        return Outcome.calculate(getTotalScore(), comparisonCards.getTotalScore());
+    public Outcome calculateOutcome(UserCards comparisonUserCards) {
+        return Outcome.calculate(getTotalScore(), comparisonUserCards.getTotalScore());
     }
 
     public List<String> getInfos() {

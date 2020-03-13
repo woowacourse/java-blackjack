@@ -73,4 +73,8 @@ public class OutputView {
             System.out.print(gameResult.get(outcome) + outcome.getName() + " ");
         }
     }
+
+    public static void printExceptionMessage(String exceptionMessage) {
+        System.out.println(exceptionMessage);
+    }
 }

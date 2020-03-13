@@ -11,14 +11,22 @@ import blackjack.view.OutputView;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
+        try {
+            startGame();
+        } catch (Exception e) {
+            OutputView.printExceptionMessage(e.getMessage());
+        }
+    }
+
+    private static void startGame() {
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.inputNames());
         CardDeck cardDeck = new CardDeck();
-
         distributeFirstCards(dealer, players, cardDeck);
         drawMoreCards(dealer, players, cardDeck);
         printCalculatedResult(dealer, players);
     }
+
 
     private static void printCalculatedResult(Dealer dealer, Players players) {
         GameResult gameResult = new GameResult(dealer, players);

@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.UserCards;
 import java.util.List;
 
 public abstract class User {
@@ -9,7 +9,7 @@ public abstract class User {
     private static final int DEFAULT_DRAW_COUNT = 1;
 
     private final String name;
-    protected Cards cards = new Cards();
+    protected UserCards userCards = new UserCards();
 
     public User(String name) {
         this.name = name;
@@ -21,7 +21,7 @@ public abstract class User {
 
     public void drawCard(CardDeck cardDeck, int cardCount) {
         for (int i = 0; i < cardCount; i++) {
-            cards.add(cardDeck.draw());
+            userCards.add(cardDeck.draw());
         }
     }
 
@@ -32,10 +32,10 @@ public abstract class User {
     }
 
     public List<String> getCardsInfos() {
-        return cards.getInfos();
+        return userCards.getInfos();
     }
 
     public int getTotalScore() {
-        return cards.getTotalScore();
+        return userCards.getTotalScore();
     }
 }

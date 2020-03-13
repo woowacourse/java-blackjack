@@ -22,6 +22,6 @@ public class InputView {
         if (input.equals("y") || input.equals("n")) {
             return input.equals("y");
         }
-        throw new IllegalArgumentException("Not valid input (only y/n)");
+        throw new IllegalArgumentException("y와 n만 입력 가능합니다.");
     }
 }
