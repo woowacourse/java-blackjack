@@ -9,6 +9,7 @@ public class Player extends User {
 	private static final int INITIAL_START_INDEX = 0;
 	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
 	private static final int INITIAL_TO_INDEX = 2;
+	private static final String WRONG_NAME_MESSAGE = "이름에 빈값이 들어갈 수 없습니다.";
 
 	private final String name;
 
@@ -19,7 +20,7 @@ public class Player extends User {
 
 	private void validEmptyAndNull(String name) {
 		if (Objects.isNull(name) || name.isEmpty()) {
-			throw new IllegalArgumentException("이름에 빈값이 들어갈 수 없습니다.");
+			throw new IllegalArgumentException(WRONG_NAME_MESSAGE);
 		}
 
 	}
@@ -41,7 +42,8 @@ public class Player extends User {
 
 	@Override
 	public List<Card> getInitialCard() {
-		return cards.getCards().subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
+		return cards.getCards()
+			.subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
 	}
 
 	@Override

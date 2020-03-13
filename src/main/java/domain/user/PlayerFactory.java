@@ -1,18 +1,17 @@
 package domain.user;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerFactory {
 
 	private static final String DELIMITER = ",";
 
 	public static List<User> create(String combinedName) {
-		String[] names = combinedName.split(DELIMITER);
-		List<User> players = new ArrayList<>();
-		for (String name : names) {
-			players.add(new Player(name.trim()));
-		}
-		return players;
+		return Arrays.stream(combinedName.split(DELIMITER))
+			.map(String::trim)
+			.map(Player::new)
+			.collect(Collectors.toList());
 	}
 }

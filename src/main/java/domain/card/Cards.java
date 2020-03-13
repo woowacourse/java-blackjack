@@ -9,6 +9,7 @@ public class Cards {
 	private static final int BUST_SCORE = 22;
 	private static final int ACE_ADDITIONAL_SCORE = 10;
 	private static final int BLACKJACK_CARD_SIZE = 2;
+	private static final String EMPTY_CARDS_MESSAGE = "카드가 없습니다.";
 
 	private final List<Card> cards;
 
@@ -29,20 +30,27 @@ public class Cards {
 	}
 
 	public int calculateScore() {
-		int result = cards.stream()
-			.map(Card::getTypeScore)
-			.reduce(Integer::sum)
-			.orElseThrow(() -> new NoSuchElementException("카드가 없습니다."));
-
-		if (containsAce() && result + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
+		int result = sumScore();
+		if (containsAce() && canAddAceHiddenScore(result)) {
 			result += ACE_ADDITIONAL_SCORE;
 		}
 		return result;
 	}
 
+	private int sumScore() {
+		return cards.stream()
+			.map(Card::getTypeScore)
+			.reduce(Integer::sum)
+			.orElseThrow(() -> new NoSuchElementException(EMPTY_CARDS_MESSAGE));
+	}
+
 	private boolean containsAce() {
 		return cards.stream()
 			.anyMatch(Card::isAce);
+	}
+
+	private boolean canAddAceHiddenScore(int result) {
+		return result + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE;
 	}
 
 	public List<Card> getCards() {

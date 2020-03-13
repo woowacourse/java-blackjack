@@ -16,6 +16,7 @@ public class OutputView {
 	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
 	private static final String NEW_LINE = System.lineSeparator();
 	private static final String CARD_FORMAT = "%s%s";
+	private static final String BLANK = " ";
 
 	public static void printInitialResult(List<User> users) {
 		StringBuilder builder = new StringBuilder();
@@ -84,7 +85,7 @@ public class OutputView {
 		for (MatchResult matchResult : MatchResult.values()) {
 			builder.append(map.get(matchResult));
 			builder.append(matchResult.getMatchResult());
-			builder.append(" ");
+			builder.append(BLANK);
 		}
 		System.out.println(builder);
 	}

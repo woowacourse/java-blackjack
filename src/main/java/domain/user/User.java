@@ -22,7 +22,7 @@ public abstract class User {
 	}
 
 	public boolean isBust() {
-		return this.cards.isBust();
+		return cards.isBust();
 	}
 
 	public int calculateScore() {

@@ -55,4 +55,12 @@ public class MatchResultTest {
 		assertThat(MatchResult.findMatchResult(player, dealer))
 			.isEqualTo(MatchResult.DRAW);
 	}
+
+	@Test
+	void reverseWinAndLose() {
+		assertThat(MatchResult.WIN.reverseWinAndLose()).isEqualTo(MatchResult.LOSE);
+		assertThat(MatchResult.LOSE.reverseWinAndLose()).isEqualTo(MatchResult.WIN);
+		assertThat(MatchResult.DRAW.reverseWinAndLose()).isEqualTo(MatchResult.DRAW);
+		
+	}
 }

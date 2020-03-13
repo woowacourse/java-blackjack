@@ -10,6 +10,8 @@ public enum MatchResult {
 	DRAW("무", MatchResult::isPlayerDraw),
 	LOSE("패", MatchResult::isPlayerLose);
 
+	private static final String NO_SUCH_MESSAGE = "찾을 수 없는 경우입니다.";
+
 	private final String matchResult;
 	private final BiPredicate<User, User> resultCondition;
 
@@ -22,7 +24,7 @@ public enum MatchResult {
 		return Arrays.stream(values())
 			.filter(result -> result.resultCondition.test(player, dealer))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
+			.orElseThrow(() -> new IllegalArgumentException(NO_SUCH_MESSAGE));
 	}
 
 	public MatchResult reverseWinAndLose() {

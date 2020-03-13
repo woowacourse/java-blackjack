@@ -12,12 +12,16 @@ public class YesOrNo {
 	}
 
 	private void validateYesOrNo(String yesOrNo) {
-		if (!(YES_VALUE.equals(yesOrNo) || NO_VALUE.equals(yesOrNo))) {
+		if (isNotYesOrNo(yesOrNo)) {
 			throw new IllegalArgumentException("올바른 선택 값이 아닙니다.");
 		}
 	}
 
+	private boolean isNotYesOrNo(String yesOrNo) {
+		return !(YES_VALUE.equals(yesOrNo) || NO_VALUE.equals(yesOrNo));
+	}
+
 	public boolean isContinue() {
-		return this.yesOrNo.equals(YES_VALUE);
+		return YES_VALUE.equals(yesOrNo);
 	}
 }
