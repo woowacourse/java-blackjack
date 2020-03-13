@@ -22,9 +22,7 @@ public class AceScoreStrategy implements ScoreStrategy {
 
     @Override
     public int calculate(List<Card> cards) {
-        int sum = cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
+        int sum = ScoreStrategy.sum(cards);
         int aceCount = getAceCount(cards);
         sum += aceCount * ACE_WEIGHT;
 
