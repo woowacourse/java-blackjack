@@ -6,10 +6,10 @@ public enum WinningResult {
     LOSE("패"),
     UNDEFINED("미정");
 
-    private final String name;
+    private final String korean;
 
-    WinningResult(String name) {
-        this.name = name;
+    WinningResult(String korean) {
+        this.korean = korean;
     }
 
     public static WinningResult calculate(int dealerScore, int playerScore) {
@@ -22,7 +22,7 @@ public enum WinningResult {
         return LOSE;
     }
 
-    public String getName() {
-        return name;
+    public String getKorean() {
+        return korean;
     }
 }

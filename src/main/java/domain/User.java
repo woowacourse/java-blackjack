@@ -13,7 +13,7 @@ public abstract class User {
         }
     }
 
-    public abstract boolean isAbleDrawCards();
+    public abstract boolean canHit();
 
     public Cards getCards() {
         return cards;

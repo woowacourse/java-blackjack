@@ -6,7 +6,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean isAbleDrawCards() {
+    public boolean canHit() {
         return !((DealerCards) cards).isOverSixteen();
     }
 }

@@ -14,7 +14,7 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isAbleDrawCards() {
+    public boolean canHit() {
         if (cards.isBust()) {
             winningResult = WinningResult.LOSE;
             return false;

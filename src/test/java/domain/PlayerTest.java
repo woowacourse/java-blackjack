@@ -11,12 +11,12 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeck();
         Player player = new Player("jamie");
         player.drawCard(cardDeck);
-        Assertions.assertThat(player.isAbleDrawCards())
+        Assertions.assertThat(player.canHit())
                 .isTrue();
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-        Assertions.assertThat(player.isAbleDrawCards())
+        Assertions.assertThat(player.canHit())
                 .isFalse();
     }
 
@@ -25,13 +25,13 @@ public class PlayerTest {
     void isBustEqualLose() {
         CardDeck cardDeck = new CardDeck();
         Player player = new Player("하비");
-        player.isAbleDrawCards();
+        player.canHit();
         Assertions.assertThat(player.getWinningResult()).isEqualTo(WinningResult.UNDEFINED);
 
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-        player.isAbleDrawCards();
+        player.canHit();
         Assertions.assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
     }
 
