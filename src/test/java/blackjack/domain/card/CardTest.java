@@ -6,56 +6,56 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
-	private Card card1;
-	private Card card2;
-	private Card card3;
-	private Card card4;
+	private Card aceClub;
+	private Card twoHeart;
+	private Card threeDiamond;
+	private Card kingSpade;
 
 	@BeforeEach
 	void setUp() {
-		card1 = Card.of(Symbol.ACE, Type.CLUB);
-		card2 = Card.of(Symbol.TWO, Type.HEART);
-		card3 = Card.of(Symbol.THREE, Type.DIAMOND);
-		card4 = Card.of(Symbol.KING, Type.SPADE);
+		aceClub = Card.of(Symbol.ACE, Type.CLUB);
+		twoHeart = Card.of(Symbol.TWO, Type.HEART);
+		threeDiamond = Card.of(Symbol.THREE, Type.DIAMOND);
+		kingSpade = Card.of(Symbol.KING, Type.SPADE);
 	}
 
 	@Test
 	void Card() {
-		assertThat(card1).isNotNull();
-		assertThat(card2).isNotNull();
-		assertThat(card3).isNotNull();
-		assertThat(card4).isNotNull();
+		assertThat(aceClub).isNotNull();
+		assertThat(twoHeart).isNotNull();
+		assertThat(threeDiamond).isNotNull();
+		assertThat(kingSpade).isNotNull();
 	}
 
 	@Test
 	void isAce() {
-		assertThat(card1.isAce()).isTrue();
-		assertThat(card2.isAce()).isFalse();
-        assertThat(card3.isAce()).isFalse();
-        assertThat(card4.isAce()).isFalse();
+		assertThat(aceClub.isAce()).isTrue();
+		assertThat(twoHeart.isAce()).isFalse();
+        assertThat(threeDiamond.isAce()).isFalse();
+        assertThat(kingSpade.isAce()).isFalse();
     }
 
 	@Test
 	void getScore() {
-		assertThat(card1.getScore()).isEqualTo(Score.of(1));
-        assertThat(card2.getScore()).isEqualTo(Score.of(2));
-        assertThat(card3.getScore()).isEqualTo(Score.of(3));
-        assertThat(card4.getScore()).isEqualTo(Score.of(10));
+		assertThat(aceClub.getScore()).isEqualTo(Score.of(1));
+        assertThat(twoHeart.getScore()).isEqualTo(Score.of(2));
+        assertThat(threeDiamond.getScore()).isEqualTo(Score.of(3));
+        assertThat(kingSpade.getScore()).isEqualTo(Score.of(10));
     }
 
 	@Test
 	void equals() {
-		assertThat(card1).isEqualTo(Card.of(Symbol.ACE, Type.CLUB));
-        assertThat(card2).isEqualTo(Card.of(Symbol.TWO, Type.HEART));
-        assertThat(card3).isEqualTo(Card.of(Symbol.THREE, Type.DIAMOND));
-        assertThat(card4).isEqualTo(Card.of(Symbol.KING, Type.SPADE));
+		assertThat(aceClub).isEqualTo(Card.of(Symbol.ACE, Type.CLUB));
+        assertThat(twoHeart).isEqualTo(Card.of(Symbol.TWO, Type.HEART));
+        assertThat(threeDiamond).isEqualTo(Card.of(Symbol.THREE, Type.DIAMOND));
+        assertThat(kingSpade).isEqualTo(Card.of(Symbol.KING, Type.SPADE));
     }
 
 	@Test
 	void getName() {
-		assertThat(card1.getName()).isEqualTo("A 클로버");
-        assertThat(card2.getName()).isEqualTo("2 하트");
-        assertThat(card3.getName()).isEqualTo("3 다이아몬드");
-        assertThat(card4.getName()).isEqualTo("K 스페이드");
+		assertThat(aceClub.getName()).isEqualTo("A 클로버");
+        assertThat(twoHeart.getName()).isEqualTo("2 하트");
+        assertThat(threeDiamond.getName()).isEqualTo("3 다이아몬드");
+        assertThat(kingSpade.getName()).isEqualTo("K 스페이드");
 	}
 }

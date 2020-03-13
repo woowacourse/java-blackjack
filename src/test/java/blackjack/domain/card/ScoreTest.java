@@ -8,17 +8,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ScoreTest {
-	private Score score;
+	private Score zero;
+	private Score five;
+	private Score six;
+	private Score eleven;
 
 	@BeforeEach
 	void setUp() {
-		score = Score.of(5);
+		zero = Score.of(0);
+		five = Score.of(5);
+		six = Score.of(6);
+		eleven = Score.of(11);
 	}
 
 	@Test
 	void of() {
-		assertThat(Score.of(0)).isNotNull();
-		assertThat(score).isNotNull();
+		assertThat(zero).isNotNull();
+		assertThat(five).isNotNull();
+		assertThat(six).isNotNull();
+		assertThat(eleven).isNotNull();
 	}
 
 	@Test
@@ -31,25 +39,31 @@ class ScoreTest {
 	@Test
 	void add() {
 		// then
-		assertThat(score.add(Score.of(10)))
-				.isEqualTo(Score.of(15));
+		assertThat(zero.add(five)).isEqualTo(five);
+		assertThat(five.add(six)).isEqualTo(eleven);
 	}
 
 	@Test
 	void isUnder() {
-		assertThat(score.isUnder(6))
-				.isTrue();
+		assertThat(zero.isUnder(6)).isTrue();
+		assertThat(five.isUnder(6)).isTrue();
+		assertThat(six.isUnder(6)).isFalse();
+		assertThat(eleven.isUnder(6)).isFalse();
 	}
 
 	@Test
 	void isOver() {
-		assertThat(score.isOver(4))
-				.isTrue();
+		assertThat(zero.isOver(5)).isFalse();
+		assertThat(five.isOver(5)).isFalse();
+		assertThat(six.isOver(5)).isTrue();
+		assertThat(eleven.isOver(5)).isTrue();
 	}
 
 	@Test
 	void getScore() {
-		assertThat(score.getScore())
-				.isEqualTo(5);
+		assertThat(zero.getScore()).isEqualTo(0);
+		assertThat(five.getScore()).isEqualTo(5);
+		assertThat(six.getScore()).isEqualTo(6);
+		assertThat(eleven.getScore()).isEqualTo(11);
 	}
 }
