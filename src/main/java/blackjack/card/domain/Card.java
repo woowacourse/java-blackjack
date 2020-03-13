@@ -60,11 +60,21 @@ public class Card {
 		}
 
 		public static Card of(Symbol symbol, CardNumber cardNumber) {
+			validate(symbol, cardNumber);
 			return cache.stream()
-				.filter(card -> card.symbol == symbol)
-				.filter(card -> card.cardNumber == cardNumber)
-				.findFirst()
-				.orElseThrow(AssertionError::new);
+					.filter(card -> card.symbol == symbol)
+					.filter(card -> card.cardNumber == cardNumber)
+					.findFirst()
+					.orElseThrow(AssertionError::new);
+		}
+
+		private static void validate(Symbol symbol, CardNumber cardNumber) {
+			if (symbol == null) {
+				throw new IllegalArgumentException("Symbol이 비어있습니다.");
+			}
+			if (cardNumber == null) {
+				throw new IllegalArgumentException("CardNumber가 비어있습니다.");
+			}
 		}
 	}
 

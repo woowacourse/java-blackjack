@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CardTest {
 
@@ -40,5 +41,14 @@ class CardTest {
 		//then
 		assertThat(card.getSymbol()).isEqualTo(Symbol.DIAMOND.getName());
 		assertThat(card.getNumber()).isEqualTo(CardNumber.FIVE.getNumber());
+	}
+
+	@DisplayName("카드를 찾는 심볼과 번호가 null인 경우 Exception 발생")
+	@ParameterizedTest
+	@CsvSource(value = {",ACE,Symbol이 비어있습니다.", "HEART,,CardNumber가 비어있습니다."})
+	void ofException(Symbol symbol, CardNumber cardNumber, String message) {
+		assertThatThrownBy(() -> Card.of(symbol, cardNumber))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage(message);
 	}
 }
