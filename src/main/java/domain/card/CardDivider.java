@@ -1,6 +1,5 @@
 package domain.card;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,7 +8,6 @@ import java.util.Stack;
 public class CardDivider {
 	private final List<Card> cards;
 	private final Stack<Integer> orders;
-
 
 	public CardDivider() {
 		this.cards = CardFactory.create();

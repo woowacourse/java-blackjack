@@ -11,7 +11,6 @@ public enum MatchResult {
 	LOSE("패", MatchResult::isPlayerLose);
 
 	private final String matchResult;
-
 	private final BiPredicate<User, User> resultCondition;
 
 	MatchResult(String matchResult, BiPredicate<User, User> resultCondition) {
@@ -26,10 +25,6 @@ public enum MatchResult {
 			.orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
 	}
 
-	public String getMatchResult() {
-		return matchResult;
-	}
-
 	public MatchResult reverseWinAndLose() {
 		if (this == MatchResult.WIN) {
 			return MatchResult.LOSE;
@@ -38,6 +33,10 @@ public enum MatchResult {
 			return MatchResult.WIN;
 		}
 		return this;
+	}
+
+	public String getMatchResult() {
+		return matchResult;
 	}
 
 	private static boolean isPlayerWin(User player, User dealer) {

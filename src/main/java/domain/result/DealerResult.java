@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class DealerResult {
 	private static final long INIT_MATCH_COUNT = 0L;
+
 	private final List<MatchResult> playerMatchResults;
 
 	public DealerResult(List<MatchResult> playerMatchResults) {

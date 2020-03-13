@@ -16,9 +16,6 @@ public class OutputView {
 	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
 	private static final String NEW_LINE = System.lineSeparator();
 
-	private OutputView() {
-	}
-
 	public static void printInitialResult(List<User> users) {
 		StringBuilder builder = new StringBuilder();
 		for (User user : users) {

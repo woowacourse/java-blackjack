@@ -9,6 +9,7 @@ public class Player extends User {
 	private static final int INITIAL_START_INDEX = 0;
 	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
 	private static final int INITIAL_TO_INDEX = 2;
+
 	private final String name;
 
 	public Player(String name) {

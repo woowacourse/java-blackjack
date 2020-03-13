@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
-	private static List<Card> cards = new ArrayList<>();
+	private static final List<Card> CARDS = new ArrayList<>();
 
 	static {
 		for (Type type : Type.values()) {
@@ -15,12 +15,12 @@ public class CardFactory {
 
 	private static void createCardsByType(Type type) {
 		for (Symbol symbol : Symbol.values()) {
-			cards.add(new Card(symbol, type));
+			CARDS.add(new Card(symbol, type));
 		}
 	}
 
 	public static List<Card> create() {
-		return Collections.unmodifiableList(cards);
+		return Collections.unmodifiableList(CARDS);
 	}
 
 }
