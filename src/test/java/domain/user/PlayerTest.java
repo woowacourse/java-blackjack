@@ -2,24 +2,19 @@ package domain.user;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.*;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.card.Card;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.CardFactory;
 
 public class PlayerTest {
 
 	@Test
-	void isBlackjackTest() {
+	void getInitialCardTest() {
 		Player player = new Player("동글");
-		player.addCards(Arrays.asList(new Card(Symbol.CLOVER, Type.ACE),
-			new Card(Symbol.CLOVER, Type.JACK)));
+		player.addCards(CardFactory.create());
 
-		assertThat(player.isBlackjack()).isTrue();
+		assertThat(player.getInitialCard().size()).isEqualTo(2);
 	}
 
 	@DisplayName("이름이 빈문자열일 때")

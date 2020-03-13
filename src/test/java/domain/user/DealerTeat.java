@@ -1,6 +1,6 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.Arrays;
 
@@ -8,10 +8,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.CardFactory;
 import domain.card.Symbol;
 import domain.card.Type;
 
 public class DealerTeat {
+
+	@Test
+	void getInitialCardTest() {
+		Dealer dealer = new Dealer();
+		dealer.addCards(CardFactory.create());
+
+		assertThat(dealer.getInitialCard().size()).isEqualTo(1);
+	}
 
 	@DisplayName("카드 점수 합계가 16 이하인 경우, 카드 뽑기 여부 테스트")
 	@Test
