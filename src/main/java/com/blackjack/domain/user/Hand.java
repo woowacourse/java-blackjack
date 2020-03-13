@@ -6,13 +6,13 @@ import java.util.List;
 import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 
-public class Hands {
+public class Hand {
 	private static final int ACE_UPWARD_CONDITION = 11;
 	private static final int ACE_UPWARD_SCORE = 10;
 
 	private List<Card> cards;
 
-	public Hands(List<Card> cards) {
+	public Hand(List<Card> cards) {
 		this.cards = new ArrayList<>(cards);
 	}
 

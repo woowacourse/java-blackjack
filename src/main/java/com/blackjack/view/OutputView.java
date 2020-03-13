@@ -58,7 +58,7 @@ public class OutputView {
 	}
 
 	private static String makeDealerFirstCardInfo(User dealer) {
-		return dealer.getHands()
+		return dealer.getHand()
 				.getCards()
 				.get(0)
 				.toString();
@@ -69,7 +69,7 @@ public class OutputView {
 	}
 
 	private static String makeCardInfo(User user) {
-		return user.getHands()
+		return user.getHand()
 				.getCards()
 				.stream()
 				.map(Card::toString)

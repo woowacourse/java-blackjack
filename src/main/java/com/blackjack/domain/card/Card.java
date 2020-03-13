@@ -3,31 +3,31 @@ package com.blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-	private final Symbol symbol;
-	private final Type type;
+	private final CardNumber cardNumber;
+	private final CardSymbol cardSymbol;
 
-	public Card(Symbol symbol, Type type) {
-		validateNull(symbol, type);
-		this.symbol = symbol;
-		this.type = type;
+	public Card(CardNumber cardNumber, CardSymbol cardSymbol) {
+		validateNull(cardNumber, cardSymbol);
+		this.cardNumber = cardNumber;
+		this.cardSymbol = cardSymbol;
 	}
 
-	private void validateNull(Symbol symbol, Type type) {
-		if (Objects.isNull(symbol) || Objects.isNull(type)) {
-			throw new IllegalArgumentException("symbol 또는 type은 null값을 가질 수 없습니다.");
+	private void validateNull(CardNumber cardNumber, CardSymbol cardSymbol) {
+		if (Objects.isNull(cardNumber) || Objects.isNull(cardSymbol)) {
+			throw new IllegalArgumentException("카드의 번호와 문양은 null을 가질 수 없습니다.");
 		}
 	}
 
 	public int getScore() {
-		return symbol.getScore();
+		return cardNumber.getNumber();
 	}
 
 	public boolean isAce() {
-		return symbol.isAce();
+		return cardNumber.isAce();
 	}
 
 	@Override
 	public String toString() {
-		return symbol.toString() + type.toString();
+		return cardNumber.toString() + cardSymbol.toString();
 	}
 }

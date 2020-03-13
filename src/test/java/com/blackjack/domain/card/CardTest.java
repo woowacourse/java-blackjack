@@ -9,7 +9,7 @@ class CardTest {
 	@DisplayName("Symbol과 Type을 인자로 넣었을때 인스턴스 생성")
 	@Test
 	void constructor_SymbolAndType_CreateInsatnce() {
-		assertThat(new Card(Symbol.ACE, Type.CLUB)).isInstanceOf(Card.class);
+		assertThat(new Card(CardNumber.ACE, CardSymbol.CLUB)).isInstanceOf(Card.class);
 	}
 
 	@DisplayName("Symbol과 Type에 null을 인자로 넣었을때 예외 발생")
@@ -21,12 +21,12 @@ class CardTest {
 	@DisplayName("Symbol에 null을 인자로 넣었을때 예외 발생")
 	@Test
 	void constructor_SymbolNull_ThrownException() {
-		assertThatThrownBy(() -> new Card(null, Type.CLUB)).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> new Card(null, CardSymbol.CLUB)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("Type에 null을 인자로 넣었을때 예외 발생")
 	@Test
 	void constructor_TypeNull_ThrownException() {
-		assertThatThrownBy(() -> new Card(Symbol.ACE, null)).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> new Card(CardNumber.ACE, null)).isInstanceOf(IllegalArgumentException.class);
 	}
 }

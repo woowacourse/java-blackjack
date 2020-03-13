@@ -11,10 +11,10 @@ public abstract class User {
 	public static final int FIRST_DRAW_COUNT = 2;
 
 	private final Name name;
-	final Hands hands;
+	final Hand hand;
 
 	User(Name name) {
-		this.hands = new Hands(Collections.emptyList());
+		this.hand = new Hand(Collections.emptyList());
 		this.name = name;
 	}
 
@@ -26,7 +26,7 @@ public abstract class User {
 
 	public void draw(CardDeck cardDeck) {
 		Card card = cardDeck.pop();
-		hands.add(card);
+		hand.add(card);
 	}
 
 	public ResultType compareScoreTo(User user) {
@@ -36,7 +36,7 @@ public abstract class User {
 	}
 
 	public Score calculateScore() {
-		return hands.calculateScore();
+		return hand.calculateScore();
 	}
 
 	public abstract boolean canDraw();
@@ -45,7 +45,7 @@ public abstract class User {
 		return name.toString();
 	}
 
-	public Hands getHands() {
-		return hands;
+	public Hand getHand() {
+		return hand;
 	}
 }

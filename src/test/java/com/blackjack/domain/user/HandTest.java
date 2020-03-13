@@ -10,36 +10,36 @@ import org.junit.jupiter.api.Test;
 
 import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
-import com.blackjack.domain.card.Symbol;
-import com.blackjack.domain.card.Type;
+import com.blackjack.domain.card.CardNumber;
+import com.blackjack.domain.card.CardSymbol;
 
-class HandsTest {
+class HandTest {
 	@DisplayName("빈 리스트를 인자로 넣었을때 인스턴스 생성")
 	@Test
 	void constructor() {
-		assertThat(new Hands(Collections.emptyList())).isInstanceOf(Hands.class);
+		assertThat(new Hand(Collections.emptyList())).isInstanceOf(Hand.class);
 	}
 
 	@DisplayName("ACE를 포함하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_ExcludeAce_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(new Card(Symbol.SIX, Type.CLUB), new Card(Symbol.FIVE, Type.DIAMOND)));
-		assertThat(hands.calculateScore()).isEqualTo(new Score(11));
+		Hand hand = new Hand(Arrays.asList(new Card(CardNumber.SIX, CardSymbol.CLUB), new Card(CardNumber.FIVE, CardSymbol.DIAMOND)));
+		assertThat(hand.calculateScore()).isEqualTo(new Score(11));
 	}
 
 	@DisplayName("ACE를 포함하고 상향하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndNotUpward_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
-				new Card(Symbol.TEN, Type.DIAMOND),
-				new Card(Symbol.JACK, Type.DIAMOND)));
-		assertThat(hands.calculateScore()).isEqualTo(new Score(21));
+		Hand hand = new Hand(Arrays.asList(new Card(CardNumber.ACE, CardSymbol.CLUB),
+				new Card(CardNumber.TEN, CardSymbol.DIAMOND),
+				new Card(CardNumber.JACK, CardSymbol.DIAMOND)));
+		assertThat(hand.calculateScore()).isEqualTo(new Score(21));
 	}
 
 	@DisplayName("ACE를 포함하고 상향했을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndUpward_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.TEN, Type.DIAMOND)));
-		assertThat(hands.calculateScore()).isEqualTo(new Score(21));
+		Hand hand = new Hand(Arrays.asList(new Card(CardNumber.ACE, CardSymbol.CLUB), new Card(CardNumber.TEN, CardSymbol.DIAMOND)));
+		assertThat(hand.calculateScore()).isEqualTo(new Score(21));
 	}
 }
