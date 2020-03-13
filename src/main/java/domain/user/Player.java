@@ -10,10 +10,8 @@ public class Player extends User {
 	private static final int INITIAL_FROM_INDEX = INITIAL_START_INDEX;
 	private static final int INITIAL_TO_INDEX = 2;
 
-	private final Name name;
-
 	private Player(Name name) {
-		this.name = Objects.requireNonNull(name);
+		super(name);
 	}
 
 	public static Player valueOf(String name) {

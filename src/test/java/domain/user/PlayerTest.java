@@ -4,7 +4,6 @@ import static domain.card.Symbol.*;
 import static domain.card.Type.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.*;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;

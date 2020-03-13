@@ -23,5 +23,4 @@ public class CardFactory {
 	public static List<Card> create() {
 		return Collections.unmodifiableList(cards);
 	}
-
 }
