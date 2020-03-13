@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.WinOrLose;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
@@ -28,7 +29,7 @@ public class OutputView {
 
     private static void printInitialInfoHead(User dealer, Players players) {
         String playerNames = players.getPlayers().stream()
-                .map(User::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(JOINING_DELIMITER));
 
         System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
@@ -45,7 +46,7 @@ public class OutputView {
     }
 
     private static void printAllPlayerCards(Players players) {
-        for (User player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             printUserCard(player);
         }
     }
@@ -76,7 +77,7 @@ public class OutputView {
         printIfBust(dealer);
     }
 
-    public static void printFinalInfo(User dealer, Players players) {
+    public static void printFinalInfo(Dealer dealer, Players players) {
         List<User> users = new ArrayList<>();
         users.add(dealer);
         users.addAll(players.getPlayers());
@@ -100,9 +101,9 @@ public class OutputView {
     }
 
     private static void printPlayerResults(GameResult gameResult) {
-        Map<User, WinOrLose> playerResults = gameResult.getPlayerResults();
-        Set<User> players = playerResults.keySet();
-        for (User player : players) {
+        Map<Player, WinOrLose> playerResults = gameResult.getPlayerResults();
+        Set<Player> players = playerResults.keySet();
+        for (Player player : players) {
             WinOrLose winOrLose = playerResults.get(player);
             System.out.printf("%s : %s" + NEW_LINE, player.getName(), winOrLose.getName());
         }

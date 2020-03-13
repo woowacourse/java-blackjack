@@ -17,9 +17,4 @@ public class Dealer extends AbstractUser {
     public boolean shouldReceiveCard() {
         return calculateScore().isUnder(MINIMUM_NUMBER_TO_STAY);
     }
-
-    @Override
-    public WinOrLose isWinner(Dealer dealer) {
-        return null;
-    }
 }

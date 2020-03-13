@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class GameResult {
     private final List<WinOrLose> dealerResults;
-    private final Map<User, WinOrLose> playerResults;
+    private final Map<Player, WinOrLose> playerResults;
 
-    private GameResult(Map<User, WinOrLose> playerResults) {
+    private GameResult(Map<Player, WinOrLose> playerResults) {
         this.dealerResults = playerResults.values().stream()
                 .map(WinOrLose::reverse)
                 .collect(Collectors.toList());
@@ -21,9 +21,9 @@ public class GameResult {
     }
 
     public static GameResult of(Dealer dealer, Players players) {
-        Map<User, WinOrLose> userResults = new HashMap<>();
+        Map<Player, WinOrLose> userResults = new HashMap<>();
 
-        for (User player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             userResults.put(player, player.isWinner(dealer));
         }
 
@@ -40,8 +40,7 @@ public class GameResult {
         return dealerResults.size() - getDealerWinCount();
     }
 
-    public Map<User, WinOrLose> getPlayerResults() {
+    public Map<Player, WinOrLose> getPlayerResults() {
         return playerResults;
     }
-
 }

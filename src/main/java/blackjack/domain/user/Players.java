@@ -13,16 +13,16 @@ import static java.util.stream.Collectors.toList;
 public class Players {
     private static final String SPLITTING_DELIMITER = ",";
 
-    private final List<User> players;
+    private final List<Player> players;
 
-    private Players(List<User> players) {
+    private Players(List<Player> players) {
         validateDuplicatedName(players);
         validateNames(players);
         this.players = players;
     }
 
     public static Players of(String playerNames) {
-        List<User> players = Arrays.stream(playerNames.split(SPLITTING_DELIMITER))
+        List<Player> players = Arrays.stream(playerNames.split(SPLITTING_DELIMITER))
                 .map(String::trim)
                 .map(Player::of)
                 .collect(collectingAndThen(toList(),
@@ -31,9 +31,9 @@ public class Players {
         return new Players(players);
     }
 
-    private void validateDuplicatedName(List<User> Players) {
+    private void validateDuplicatedName(List<Player> Players) {
         int distinctCount = (int) Players.stream()
-                .map(User::getName)
+                .map(Player::getName)
                 .distinct()
                 .count();
 
@@ -42,7 +42,7 @@ public class Players {
         }
     }
 
-    private void validateNames(List<User> Players) {
+    private void validateNames(List<Player> Players) {
         boolean hasDealerName = Players.stream()
                 .anyMatch(player -> player.is(Dealer.NAME));
 
@@ -62,7 +62,7 @@ public class Players {
         return players.size();
     }
 
-    public List<User> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

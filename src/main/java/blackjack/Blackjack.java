@@ -3,8 +3,8 @@ package blackjack;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -24,7 +24,7 @@ public class Blackjack {
 
         OutputView.printInitialInfo(dealer, players);
 
-        for (User player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             while (player.isNotBust() && InputView.inputToHitOrStay(player).equals("y")) {
                 player.drawCards(deck.draw());
                 OutputView.printUserCard(player);
