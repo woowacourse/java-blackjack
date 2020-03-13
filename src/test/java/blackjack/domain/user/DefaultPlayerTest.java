@@ -105,12 +105,6 @@ public class DefaultPlayerTest {
 	}
 
 	@Test
-	void isName() {
-	    assertThat(player.isName("그니")).isTrue();
-        assertThat(player.isName("그니2")).isFalse();
-	}
-
-	@Test
 	void countCards() {
 	    // given
         player.giveCards(Card.of(Symbol.TEN, Type.CLUB),

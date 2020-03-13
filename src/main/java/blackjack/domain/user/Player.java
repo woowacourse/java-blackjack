@@ -6,8 +6,6 @@ import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface Player {
-    int MAX_SCORE = 21;
-
     void giveCards(Card... cards);
 
     Score calculateScore();
@@ -15,8 +13,6 @@ public interface Player {
     boolean isBust();
 
     List<Card> getCards();
-
-    boolean isName(String name);
 
     int countCards();
 

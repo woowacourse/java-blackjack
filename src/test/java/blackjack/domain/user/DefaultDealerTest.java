@@ -174,11 +174,6 @@ class DefaultDealerTest {
 	}
 
 	@Test
-	void isName() {
-		assertThat(dealer.isName("딜러")).isTrue();
-	}
-
-	@Test
 	void countCards() {
 		// given
 		dealer.giveCards(Card.of(Symbol.TEN, Type.CLUB),

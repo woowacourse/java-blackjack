@@ -6,6 +6,7 @@ import blackjack.domain.card.Score;
 import java.util.*;
 
 public abstract class AbstractPlayer implements Player {
+    public static final int MAX_SCORE = 21;
     private static final int MAX_SCORE_TO_MAXIMIZE = 12;
     private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
@@ -24,17 +25,12 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBust() {
-        return calculateScore().isOver(Player.MAX_SCORE);
+        return calculateScore().isOver(MAX_SCORE);
     }
 
     @Override
     public boolean isNotBust() {
         return !isBust();
-    }
-
-    @Override
-    public boolean isName(String name) {
-        return this.name.equals(name);
     }
 
     @Override
