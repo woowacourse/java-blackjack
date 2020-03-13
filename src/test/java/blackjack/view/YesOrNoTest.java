@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class YesOrNoTest {
 	private YesOrNo yes;
@@ -26,8 +25,7 @@ class YesOrNoTest {
 
 	@Test
 	void of_InvalidArgument_ShouldThrowException() {
-		assertThatThrownBy(() ->
-				YesOrNo.of("z"))
+		assertThatThrownBy(() -> YesOrNo.of("z"))
 				.isInstanceOf(YesOrNoException.class);
 	}
 

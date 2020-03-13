@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DefaultPlayerTest {
 	Player player;
@@ -148,10 +147,10 @@ public class DefaultPlayerTest {
 
 		player.giveCards(jackHeart, jackHeart);
 		assertThat(player.countCards()).isEqualTo(5);
-    }
+	}
 
 	@Test
 	void getName() {
-	    assertThat(player.getName()).isEqualTo("그니");
+		assertThat(player.getName()).isEqualTo("그니");
 	}
 }

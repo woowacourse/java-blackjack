@@ -6,21 +6,21 @@ import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface Player {
-    void giveCards(Card... cards);
+	void giveCards(Card... cards);
 
-    Score getScore();
+	Score getScore();
 
-    boolean isBust();
+	boolean isBust();
 
-    List<Card> getHand();
+	List<Card> getHand();
 
-    int countCards();
+	int countCards();
 
-    String getName();
+	String getName();
 
-    Boolean isWinner(Score dealerScore);
+	Boolean isWinner(Score dealerScore);
 
-    boolean isNotBust();
+	boolean isNotBust();
 
-    boolean isDealer();
+	boolean isDealer();
 }

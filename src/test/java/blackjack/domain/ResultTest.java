@@ -12,42 +12,42 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
-    private Result result;
-    private Players players;
+	private Result result;
+	private Players players;
 
-    @BeforeEach
-    void setUp() {
-        Dealer dealer = DefaultDealer.dealer();
-        dealer.giveCards(Card.of(Symbol.ACE, Type.SPADE));
+	@BeforeEach
+	void setUp() {
+		Dealer dealer = DefaultDealer.dealer();
+		dealer.giveCards(Card.of(Symbol.ACE, Type.SPADE));
 
-        players = Players.of("그니, 무늬, 포비");
-        players.giveCards(0, Card.of(Symbol.TEN, Type.DIAMOND));
-        players.giveCards(1, Card.of(Symbol.FIVE, Type.CLUB),
-                Card.of(Symbol.SEVEN, Type.HEART));
-        players.giveCards(2, Card.of(Symbol.TWO, Type.DIAMOND));
+		players = Players.of("그니, 무늬, 포비");
+		players.giveCards(0, Card.of(Symbol.TEN, Type.DIAMOND));
+		players.giveCards(1, Card.of(Symbol.FIVE, Type.CLUB),
+				Card.of(Symbol.SEVEN, Type.HEART));
+		players.giveCards(2, Card.of(Symbol.TWO, Type.DIAMOND));
 
-        result = Result.of(dealer, players);
-    }
+		result = Result.of(dealer, players);
+	}
 
-    @Test
-    void of() {
-        assertThat(result).isNotNull();
-    }
+	@Test
+	void of() {
+		assertThat(result).isNotNull();
+	}
 
-    @Test
-    void isWinner() {
-        assertThat(result.isWinner(players.getPlayers().get(0))).isFalse();
-        assertThat(result.isWinner(players.getPlayers().get(1))).isTrue();
-        assertThat(result.isWinner(players.getPlayers().get(2))).isFalse();
-    }
+	@Test
+	void isWinner() {
+		assertThat(result.isWinner(players.getPlayers().get(0))).isFalse();
+		assertThat(result.isWinner(players.getPlayers().get(1))).isTrue();
+		assertThat(result.isWinner(players.getPlayers().get(2))).isFalse();
+	}
 
-    @Test
-    void getDealerWin() {
-        assertThat(result.getDealerWin()).isEqualTo(2);
-    }
+	@Test
+	void getDealerWin() {
+		assertThat(result.getDealerWin()).isEqualTo(2);
+	}
 
-    @Test
-    void getDealerLose() {
-        assertThat(result.getDealerLose()).isEqualTo(1);
-    }
+	@Test
+	void getDealerLose() {
+		assertThat(result.getDealerLose()).isEqualTo(1);
+	}
 }

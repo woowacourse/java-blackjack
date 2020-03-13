@@ -9,8 +9,8 @@ public class ShuffledDeckFactory implements DeckFactory {
 	public Deck create() {
 		List<Card> deck = new ArrayList<>();
 		putAllCards(deck);
-
 		Collections.shuffle(deck);
+
 		return Deck.of(deck);
 	}
 

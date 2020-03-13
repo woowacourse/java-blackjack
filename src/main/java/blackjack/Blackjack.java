@@ -6,8 +6,8 @@ import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DefaultDealer;
-import blackjack.domain.user.Players;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import blackjack.domain.user.exceptions.PlayerException;
 import blackjack.domain.user.exceptions.PlayersException;
 import blackjack.view.ErrorView;
@@ -41,7 +41,7 @@ public class Blackjack {
 		try {
 			return Players.of(playerNames);
 		} catch (PlayersException | PlayerException e) {
-            ErrorView.print(e);
+			ErrorView.print(e);
 			return null;
 		}
 	}
