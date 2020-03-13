@@ -8,7 +8,6 @@ import exception.EmptyDeckException;
 
 public class Deck {
 	private static final int FIRST_CARD = 0;
-	private static final int ZERO = 0;
 
 	private final List<Card> deck;
 
@@ -18,7 +17,7 @@ public class Deck {
 	}
 
 	public Card drawCard() {
-		if (deck.size() == ZERO) {
+		if (deck.isEmpty()) {
 			throw new EmptyDeckException();
 		}
 		return deck.remove(FIRST_CARD);
