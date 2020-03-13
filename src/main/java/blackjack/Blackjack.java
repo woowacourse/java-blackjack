@@ -20,17 +20,8 @@ public class Blackjack {
 
         OutputView.printInitialInfo(dealer, players);
 
-        for (Player player : players.getPlayers()) {
-            while (player.isNotBust() && inputToHit(player)) {
-                player.drawCards(deck.draw());
-                OutputView.printUserCard(player);
-            }
-        }
-
-        while (dealer.shouldReceiveCard()) {
-            dealer.drawCards(deck.draw());
-            OutputView.printDealerTurn(dealer);
-        }
+        playAllPlayersTurn(players, deck);
+        playDealerTurn(dealer, deck);
 
         OutputView.printFinalInfo(dealer, players);
 
@@ -44,6 +35,26 @@ public class Blackjack {
             return hitOrStay.isToHit();
         } catch (HitOrStayException e) {
             return inputToHit(player);
+        }
+    }
+
+    private static void playAllPlayersTurn(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
+            playPlayerTurn(deck, player);
+        }
+    }
+
+    private static void playPlayerTurn(Deck deck, Player player) {
+        while (player.isNotBust() && inputToHit(player)) {
+            player.drawCards(deck.draw());
+            OutputView.printUserCard(player);
+        }
+    }
+
+    private static void playDealerTurn(Dealer dealer, Deck deck) {
+        while (dealer.shouldReceiveCard()) {
+            dealer.drawCards(deck.draw());
+            OutputView.printDealerTurn(dealer);
         }
     }
 }
