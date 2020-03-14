@@ -1,8 +1,10 @@
-package domain.player;
+package utils;
 
 import domain.card.cardfactory.Card;
 import domain.card.cardfactory.Shape;
 import domain.card.cardfactory.Symbol;
+import domain.player.Player;
+import domain.player.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class PlayerTest {
+class CardPrintUtilsTest {
 	@DisplayName("모든 카드 출력 테스트")
 	@Test
 	void toStringAllCardTest() {
@@ -21,7 +23,7 @@ class PlayerTest {
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));
 		user.cardDraw(cards);
 
-		assertThat(user.toStringAllCard()).isEqualTo("a카드 : A다이아몬드, 8스페이드");
+		assertThat(CardPrintUtils.formatNameAndAllCard(user)).isEqualTo("a카드 : A다이아몬드, 8스페이드");
 	}
 
 	@DisplayName("한장의 카드 출력 테스트")
@@ -33,6 +35,6 @@ class PlayerTest {
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));
 		user.cardDraw(cards);
 
-		assertThat(user.toStringOneCard()).isEqualTo("a카드 : A다이아몬드");
+		assertThat(CardPrintUtils.formatNameAndOneCard(user)).isEqualTo("a카드 : A다이아몬드");
 	}
 }

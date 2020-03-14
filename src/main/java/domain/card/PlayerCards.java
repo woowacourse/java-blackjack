@@ -5,11 +5,9 @@ import domain.card.cardfactory.Card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerCards {
 	private static final int FIRST_CARD_INDEX = 0;
-	private static final String CARD_DELIMITER = ", ";
 
 	private final List<Card> playerCards = new ArrayList<>();
 
@@ -45,14 +43,11 @@ public class PlayerCards {
 		return score;
 	}
 
-	public String toStringOneCard() {
-		return playerCards.get(FIRST_CARD_INDEX).toString();
+	public Card bringOneCard() {
+		return playerCards.get(FIRST_CARD_INDEX);
 	}
 
-	public String toStringAllCard() {
-		List<String> cardNames = playerCards.stream()
-				.map(Card::toString)
-				.collect(Collectors.toList());
-		return String.join(CARD_DELIMITER, cardNames);
+	public List<Card> getPlayerCards() {
+		return this.playerCards;
 	}
 }

@@ -4,6 +4,7 @@ import domain.GameResult;
 import domain.Result;
 import domain.Rull;
 import domain.player.Player;
+import utils.CardPrintUtils;
 
 import java.util.Map;
 
@@ -20,11 +21,11 @@ public class OutputView {
 	}
 
 	public static void printOneCard(Player player) {
-		System.out.println(player.toStringOneCard());
+		System.out.println(CardPrintUtils.formatNameAndOneCard(player));
 	}
 
 	public static void printAllCard(Player player) {
-		System.out.println(player.toStringAllCard());
+		System.out.println(CardPrintUtils.formatNameAndAllCard(player));
 	}
 
 	public static void printDealerHitMessage() {
@@ -33,7 +34,7 @@ public class OutputView {
 
 	public static void printFinalScore(Player player) {
 		System.out.println(String.format(STRING_FORMAT_FINAL_SCORE,
-				player.toStringAllCard(),
+				CardPrintUtils.formatNameAndAllCard(player),
 				player.calculateScore()));
 	}
 
