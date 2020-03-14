@@ -16,6 +16,8 @@ public class OutputView {
 
 	private static final String DELIMITER = ", ";
 
+	private OutputView() {}
+
 	public static void printInitialStatus(Card dealerCard, Players players) {
 		emptyLine();
 		System.out.println("딜러와 " + players.getNames() + "에게 2장의 카드를 나누었습니다.");
@@ -76,7 +78,7 @@ public class OutputView {
 				dealerResult.getOrDefault(ResultType.LOSE, 0L) + "패"
 		);
 		players.forEach(player ->
-				System.out.println(player + ": " + result.get(player).getName())
+				System.out.println(player + ": " + result.get(player).getOutputContent())
 		);
 	}
 
