@@ -1,6 +1,6 @@
 package blackjack.view.console;
 
-import blackjack.controller.dto.NamesRequestDto;
+import blackjack.controller.dto.request.NamesRequestDto;
 import blackjack.domain.rule.PlayerAnswer;
 import blackjack.view.InputView;
 

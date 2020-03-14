@@ -1,4 +1,4 @@
-package blackjack.controller.dto;
+package blackjack.controller.dto.response;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
@@ -20,8 +20,8 @@ public class HandResponseDto {
         this.score = score;
     }
 
-    public static HandResponseDto ofDealer(Dealer dealer) {
-        return new HandResponseDto(dealer.getName(), dealer.getHand().subList(0, 1), DEFAULT_SCORE);
+    public static HandResponseDto ofInitialDealer(Dealer dealer) {
+        return new HandResponseDto(dealer.getName(), dealer.getInitialHand(), DEFAULT_SCORE);
     }
 
     public static HandResponseDto of(Gamer gamer) {

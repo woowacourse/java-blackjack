@@ -24,10 +24,6 @@ public abstract class Gamer {
 
     public abstract String getName();
 
-    public String getCardStatus() {
-        return hand.getCardStatus();
-    }
-
     public List<Card> getHand() {
         return hand.getHand();
     }

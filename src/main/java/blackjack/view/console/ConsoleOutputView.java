@@ -1,7 +1,8 @@
 package blackjack.view.console;
 
-import blackjack.controller.dto.GamersResultResponse;
-import blackjack.controller.dto.HandResponseDto;
+import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.response.HandResponseDto;
+import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackResult;
@@ -9,7 +10,6 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ConsoleOutputView implements OutputView {
 
@@ -20,15 +20,13 @@ public class ConsoleOutputView implements OutputView {
     private static final String GAMERS_RESULT_FORMAT = "%s : %s";
 
     @Override
-    public void printInitialCard(List<HandResponseDto> handResponseDtos) {
+    public void printInitialCard(HandResponseDtos handResponseDtos) {
         System.out.println();
-        String names = handResponseDtos.stream()
-                .map(HandResponseDto::getOwnerName)
-                .collect(Collectors.joining(", "));
+        String names = StringParser.parseNamesToString(handResponseDtos.getHandResponseDtos());
         String handStatement = String.format(INITIAL_CARD_FORMAT, names);
         System.out.println(handStatement);
         System.out.println();
-        for (HandResponseDto handResponseDto : handResponseDtos) {
+        for (HandResponseDto handResponseDto : handResponseDtos.getHandResponseDtos()) {
             printHand(handResponseDto);
         }
     }
@@ -42,9 +40,9 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printHandWithScore(List<HandResponseDto> handResponseDtos) {
+    public void printHandWithScore(HandResponseDtos handResponseDtos) {
         System.out.println();
-        for (HandResponseDto handResponseDto : handResponseDtos) {
+        for (HandResponseDto handResponseDto : handResponseDtos.getHandResponseDtos()) {
             List<Card> hand = handResponseDto.getHand();
             String handString = StringParser.parseHandToString(hand);
             String result = String.format(HAND_WITH_SCORE_FORMAT, handResponseDto.getOwnerName(), handString, handResponseDto.getScore());

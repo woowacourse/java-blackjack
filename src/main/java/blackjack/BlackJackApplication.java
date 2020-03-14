@@ -1,8 +1,9 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.controller.dto.GamersResultResponse;
-import blackjack.controller.dto.HandResponseDto;
+import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.response.HandResponseDto;
+import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
@@ -13,8 +14,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.console.ConsoleInputView;
 import blackjack.view.console.ConsoleOutputView;
-
-import java.util.List;
 
 public class BlackJackApplication {
 
@@ -27,7 +26,7 @@ public class BlackJackApplication {
         Dealer dealer = new Dealer();
         Players players = blackjackController.createPlayers(consoleInputView.inputPlayerNames());
 
-        List<HandResponseDto> initialHand = blackjackController.initializeHand(dealer, players, deck);
+        HandResponseDtos initialHand = blackjackController.initializeHand(dealer, players, deck);
         consoleOutputView.printInitialCard(initialHand);
 
         for (Player player : players) {
@@ -45,7 +44,7 @@ public class BlackJackApplication {
             System.out.println(result);
         }
 
-        List<HandResponseDto> result = blackjackController.getFinalHand(dealer, players);
+        HandResponseDtos result = blackjackController.getFinalHand(dealer, players);
         consoleOutputView.printHandWithScore(result);
 
         GamersResultResponse gamersResultResponse = blackjackController.getResult(dealer, players);

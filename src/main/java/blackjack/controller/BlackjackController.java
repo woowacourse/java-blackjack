@@ -1,8 +1,9 @@
 package blackjack.controller;
 
-import blackjack.controller.dto.GamersResultResponse;
-import blackjack.controller.dto.HandResponseDto;
-import blackjack.controller.dto.NamesRequestDto;
+import blackjack.controller.dto.request.NamesRequestDto;
+import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.response.HandResponseDto;
+import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -24,14 +25,14 @@ public class BlackjackController {
         return Players.from(namesRequestDto.getNames());
     }
 
-    public List<HandResponseDto> initializeHand(Dealer dealer, Players players, Deck deck) {
+    public HandResponseDtos initializeHand(Dealer dealer, Players players, Deck deck) {
         HandInitializer.initialize(dealer, players, deck);
-        List<HandResponseDto> handResponseDtos = new ArrayList<>();
-        handResponseDtos.add(HandResponseDto.ofDealer(dealer));
+        List<HandResponseDto> handResponseDtoList = new ArrayList<>();
+        handResponseDtoList.add(HandResponseDto.ofInitialDealer(dealer));
         for (Player player : players) {
-            handResponseDtos.add(HandResponseDto.of(player));
+            handResponseDtoList.add(HandResponseDto.of(player));
         }
-        return handResponseDtos;
+        return new HandResponseDtos(handResponseDtoList);
     }
 
     public HandResponseDto drawMoreCard(Player player, Deck deck, PlayerAnswer playerAnswer) {
@@ -46,13 +47,13 @@ public class BlackjackController {
         return "딜러는 16이하라 한 장의 카드를 더 뽑았습니다.";
     }
 
-    public List<HandResponseDto> getFinalHand(Dealer dealer, Players players) {
+    public HandResponseDtos getFinalHand(Dealer dealer, Players players) {
         List<HandResponseDto> handResponseDtos = new ArrayList<>();
         handResponseDtos.add(HandResponseDto.of(dealer));
         for (Player player : players) {
             handResponseDtos.add(HandResponseDto.of(player));
         }
-        return handResponseDtos;
+        return new HandResponseDtos(handResponseDtos);
     }
 
     public GamersResultResponse getResult(Dealer dealer, Players players) {

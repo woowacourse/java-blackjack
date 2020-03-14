@@ -3,8 +3,8 @@ package blackjack.domain.card;
 import blackjack.domain.rule.CardCalculator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
 
@@ -18,13 +18,11 @@ public class Hand {
         return CardCalculator.calculate(hand);
     }
 
-    public String getCardStatus() {
-        return hand.stream()
-                .map(Card::toString)
-                .collect(Collectors.joining(", "));
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
-    public List<Card> getHand() {
-        return hand;
+    public List<Card> getFirstHand() {
+        return Collections.unmodifiableList(hand.subList(0, 1));
     }
 }

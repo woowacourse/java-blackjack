@@ -1,17 +1,16 @@
 package blackjack.view;
 
-import blackjack.controller.dto.GamersResultResponse;
-import blackjack.controller.dto.HandResponseDto;
-
-import java.util.List;
+import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.response.HandResponseDto;
+import blackjack.controller.dto.response.HandResponseDtos;
 
 public interface OutputView {
 
-    void printInitialCard(List<HandResponseDto> handResponseDtos);
+    void printInitialCard(HandResponseDtos handResponseDtos);
 
     void printHand(HandResponseDto handResponseDto);
 
-    void printHandWithScore(List<HandResponseDto> handResponseDto);
+    void printHandWithScore(HandResponseDtos handResponseDtos);
 
     void printResult(GamersResultResponse gamersResultResponse);
 

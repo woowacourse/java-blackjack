@@ -1,4 +1,4 @@
-package blackjack.controller.dto;
+package blackjack.controller.dto.response;
 
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackResult;
