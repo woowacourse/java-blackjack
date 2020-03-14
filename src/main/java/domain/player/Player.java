@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player implements PlayerInterface {
-	private static final String ERROR_MESSAGE_NAME_BLANK = "이름은 blank 값이 될 수 없습니다.";
+	private static final String ERROR_MESSAGE_NAME_BLANK = "이름은 공란이 될 수 없습니다.";
 
 	protected String name;
 	protected PlayerCards playerCards;

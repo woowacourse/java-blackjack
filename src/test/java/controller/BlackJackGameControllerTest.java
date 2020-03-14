@@ -12,9 +12,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 class BlackJackGameControllerTest {
-
-	@Test
 	@DisplayName("입력된 이름들로 유저가 올바르게 생성되는지 테스트")
+	@Test
 	void makeUsers() {
 		String names = "a,b,c";
 		List<User> result = new ArrayList<>();
@@ -25,6 +24,17 @@ class BlackJackGameControllerTest {
 		assertThat(BlackJackGameController.makeUsers(names)).isEqualTo(result);
 	}
 
+	@DisplayName("공란입력시 에러 테스트")
+	@Test
+	void makeUsersErrorTest() {
+		String names = "a,,b";
+		assertThatThrownBy(() -> BlackJackGameController.makeUsers(names))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("이름은 공란이 될 수 없습니다.");
+
+	}
+
+	@DisplayName("딜러가 16이하일 경우 계속해서 카드를 받는지")
 	@Test
 	void dealerHit() {
 		CardDeck cardDeck = new CardDeck();
