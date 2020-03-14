@@ -3,10 +3,10 @@ package controller;
 import domain.PlayerIntentionType;
 import domain.card.CardRepository;
 import domain.card.Deck;
+import domain.result.Result;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
-import service.BlackjackService;
 import view.InputView;
 
 import static view.InputView.*;
@@ -24,13 +24,13 @@ public class BlackjackController {
 	}
 
 	public void run() {
-		BlackjackService.giveInitialCards(deck, dealer, players);
+		deck.giveInitialCards(dealer, players);
 		printInitialStatus(dealer.openCard(), players);
 
 		if (dealer.isNotBlackjack()) {
 			players.forEach(player -> proceedExtraDraw(player, deck));
 			while (dealer.canDrawMore()) {
-				BlackjackService.addCard(dealer, deck);
+				deck.addCard(dealer);
 				printDealerDrawing();
 			}
 		}
@@ -40,12 +40,12 @@ public class BlackjackController {
 
 	private void printResult(Dealer dealer, Players players) {
 		printResultStatus(dealer.openAllCards(), players);
-		printTotalResult(BlackjackService.createResult(dealer, players), players);
+		printTotalResult(Result.from(dealer, players), players);
 	}
 
 	private void proceedExtraDraw(Player player, Deck deck) {
 		while (player.canDrawMore() && wantDraw(player)) {
-			BlackjackService.addCard(player, deck);
+			deck.addCard(player);
 			printCardsStatusOf(player);
 		}
 	}
