@@ -11,7 +11,7 @@ public abstract class User {
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
 
-    protected List<Card> cards;
+    protected final List<Card> cards;
     protected final Name name;
 
     protected User(String name) {
