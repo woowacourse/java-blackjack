@@ -16,7 +16,7 @@ class PlayersFactoryTest {
 	@ValueSource(strings = {"allen,kyle,bee", "pobi,jason,cu,woni,brown,jun"})
 	@DisplayName("Player의 list가 제대로 생성되는지 검사")
 	void createTest(String input) {
-		List<Player> players = PlayersFactory.of(input);
+		List<Player> players = PlayersFactory.newPlayers(input);
 		List<String> names = StringUtil.parseByComma(input);
 
 		for (String name : names) {
@@ -26,7 +26,7 @@ class PlayersFactoryTest {
 
 	@Test
 	void playersUnmodifiableTest() {
-		List<Player> players = PlayersFactory.of("pobi,jason,cu");
+		List<Player> players = PlayersFactory.newPlayers("pobi,jason,cu");
 
 		assertThatThrownBy(() -> {
 			players.add(new Player("brown"));

@@ -17,8 +17,8 @@ class ResultTypeTest {
 	@Test
 	@DisplayName("점수비교를 통해 올바른 결과(Enum)을 생성하는지 테스트")
 	void ofTest() {
-		assertThat(ResultType.of(Score.of(10), Score.of(17))).isEqualTo(ResultType.LOSE);
-		assertThat(ResultType.of(Score.of(21), Score.of(10))).isEqualTo(ResultType.WIN);
-		assertThat(ResultType.of(Score.of(5), Score.of(5))).isEqualTo(ResultType.DRAW);
+		assertThat(ResultType.of(Score.from(10), Score.from(17))).isEqualTo(ResultType.LOSE);
+		assertThat(ResultType.of(Score.from(21), Score.from(10))).isEqualTo(ResultType.WIN);
+		assertThat(ResultType.of(Score.from(5), Score.from(5))).isEqualTo(ResultType.DRAW);
 	}
 }

@@ -42,11 +42,11 @@ public abstract class Gamer {
 	}
 
 	public boolean canHit() {
-		return Score.calculate(cards).isLowerThan(getHitPoint());
+		return Score.from(cards).isLowerThan(getHitPoint());
 	}
 
 	public Score calculateScore() {
-		return Score.calculate(cards);
+		return Score.from(cards);
 	}
 
 	public List<Card> getCards() {

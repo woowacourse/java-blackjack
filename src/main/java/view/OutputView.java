@@ -80,7 +80,7 @@ public class OutputView {
 			.append(NEW_LINE);
 	}
 
-	public static void printDealerResult(TreeMap<ResultType, Integer> dealerResult) {
+	public static void printDealerResult(Map<ResultType, Integer> dealerResult) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
 		sb.append("딜러: ");

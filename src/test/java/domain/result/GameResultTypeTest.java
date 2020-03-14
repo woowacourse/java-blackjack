@@ -37,7 +37,7 @@ class GameResultTypeTest {
 	@Test
 	@DisplayName("게임 결과가 올바르게 생성되는지 확인")
 	void fromTest() {
-		GameResult gameResult = GameResult.from(players, dealer);
+		GameResult gameResult = GameResult.of(players, dealer);
 
 		Map<Player, ResultType> expected = new HashMap<>();
 		expected.put(players.get(0), ResultType.LOSE);
@@ -49,7 +49,7 @@ class GameResultTypeTest {
 	@Test
 	@DisplayName("딜러의 결과가 올바르게 생성되는지 확인")
 	void dealerResultTest() {
-		GameResult gameResult = GameResult.from(players, dealer);
+		GameResult gameResult = GameResult.of(players, dealer);
 
 		Map<ResultType, Integer> expected = new HashMap<>();
 		expected.put(ResultType.LOSE, 1);

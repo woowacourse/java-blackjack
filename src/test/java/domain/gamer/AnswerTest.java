@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class YesOrNoTest {
+class AnswerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"y", "Y", "n", "N"})
 	@DisplayName("올바른 YesOrNo를 입력한 경우 테스트")
 	void createTest(String input) {
-		YesOrNo yesOrNo = YesOrNo.of(input);
+		Answer answer = Answer.from(input);
 
-		assertThat(yesOrNo).isInstanceOf(YesOrNo.class);
+		assertThat(answer).isInstanceOf(Answer.class);
 	}
 
 	@ParameterizedTest
@@ -22,15 +22,15 @@ class YesOrNoTest {
 	@DisplayName("올바르지 않은 YesOrNo를 입력한 경우 테스트")
 	void createInvalidTest(String input) {
 		assertThatThrownBy(() -> {
-			YesOrNo.of(input);
+			Answer.from(input);
 		}).isInstanceOf(IllegalArgumentException.class)
-			.hasMessageMatching("Y 또는 N을 입력해야합니다.");
+			.hasMessageMatching("올바르지 않은 대답입니다.");
 	}
 
 	@Test
 	@DisplayName("isYes 테스트")
 	void isYesTest() {
-		assertThat(YesOrNo.YES.isYes()).isTrue();
-		assertThat(YesOrNo.NO.isYes()).isFalse();
+		assertThat(Answer.YES.isYes()).isTrue();
+		assertThat(Answer.NO.isYes()).isFalse();
 	}
 }

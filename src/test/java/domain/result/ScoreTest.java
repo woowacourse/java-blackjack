@@ -26,14 +26,14 @@ class ScoreTest {
 			new Card(Symbol.SIX, Type.CLUB)
 		);
 
-		assertThat(Score.calculate(cards)).isEqualTo(Score.of(21));
+		assertThat(Score.from(cards)).isEqualTo(Score.from(21));
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateWithAce")
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateWithAce(int expected, List<Card> cards) {
-		assertThat(Score.calculate(cards)).isEqualTo(Score.of(expected));
+		assertThat(Score.from(cards)).isEqualTo(Score.from(expected));
 	}
 
 	static Stream<Arguments> generateWithAce() {
@@ -49,8 +49,8 @@ class ScoreTest {
 	@Test
 	@DisplayName("점수를 올바르게 비교하는지 테스트")
 	void compareTest() {
-		Score twentyOne = Score.of(21);
-		Score ten = Score.of(10);
+		Score twentyOne = Score.from(21);
+		Score ten = Score.from(10);
 
 		assertThat(twentyOne.isBiggerThan(ten)).isTrue();
 		assertThat(ten.isLowerThan(twentyOne)).isTrue();
@@ -60,7 +60,7 @@ class ScoreTest {
 	@Test
 	@DisplayName("Bust여부를 정상적으로 확인하는지 테스트")
 	void bustTest() {
-		assertThat(Score.of(22).isBust()).isTrue();
-		assertThat(Score.of(21).isBust()).isFalse();
+		assertThat(Score.from(22).isBust()).isTrue();
+		assertThat(Score.from(21).isBust()).isFalse();
 	}
 }

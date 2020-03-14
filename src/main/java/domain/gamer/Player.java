@@ -11,6 +11,6 @@ public class Player extends Gamer {
 
 	@Override
 	public Score getHitPoint() {
-		return Score.of(PLAYER_HIT_CEILING);
+		return Score.from(PLAYER_HIT_CEILING);
 	}
 }

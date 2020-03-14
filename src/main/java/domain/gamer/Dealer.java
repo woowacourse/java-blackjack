@@ -12,6 +12,6 @@ public class Dealer extends Gamer {
 
 	@Override
 	public Score getHitPoint() {
-		return Score.of(DEALER_HIT_CEILING);
+		return Score.from(DEALER_HIT_CEILING);
 	}
 }
