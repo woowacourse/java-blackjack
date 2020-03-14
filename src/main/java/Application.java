@@ -58,7 +58,6 @@ public class Application {
 
     private static void giveCardsIfUserWant(final CardDeck cardDeck, final User user) {
         while (user.isNotBust() && UserIntention.of(InputView.inputMoreCard(user)).isYes()) {
-            System.out.println(user.isNotBust());
             CardDistributor.giveOneCard(cardDeck, user);
             OutputView.printStatus(user);
         }

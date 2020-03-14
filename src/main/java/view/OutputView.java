@@ -19,7 +19,7 @@ public class OutputView {
         List<String> usersName = new ArrayList<>();
 
         users.forEach(user -> usersName.add(user.getName()));
-        System.out.println("\n딜러와 " + String.join(DELIMITER, usersName) + "에게 " + INIT_DISTRIBUTE_COUNT + "장 나누었습니다.");
+        System.out.printf("\n딜러와 %s에게 %s장 나누었습니다.\n",String.join(DELIMITER, usersName),INIT_DISTRIBUTE_COUNT);
     }
 
     public static void printInitStatus(final Dealer dealer, final Users users) {
