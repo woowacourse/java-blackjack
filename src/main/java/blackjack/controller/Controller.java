@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.YesOrNo;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -17,10 +18,10 @@ public class Controller {
     private Players players;
     private CardDeck deck;
 
-    public Controller() {
-        dealer = new Dealer();
-        players = new Players(InputView.getNames());
-        deck = new CardDeck();
+    public Controller(Dealer dealer, Players players, CardDeck cardDeck) {
+        this.dealer = dealer;
+        this.players = players;
+        this.deck = cardDeck;
 
         for (Player player : players.getPlayers()) {
             setInitialCards(player, deck);
@@ -49,6 +50,7 @@ public class Controller {
 
         OutputView.printFinalResult(dealer, players);
     }
+
 
     private void playGameForPlayer(Player player, CardDeck deck) {
         while (proceed(player)) {
