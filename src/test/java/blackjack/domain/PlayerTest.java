@@ -18,7 +18,7 @@ class PlayerTest {
         player.addCard(new Card(CardNumber.JACK, CardFigure.HEART));
 
         boolean expected = true;
-        assertThat(player.canReceiveMoreCard()).isEqualTo(expected);
+        assertThat(player.receivable()).isEqualTo(expected);
     }
 
     @DisplayName("플레이어의 카드 합이 21초과일 때 확인")
@@ -30,6 +30,6 @@ class PlayerTest {
         player.addCard(new Card(CardNumber.FIVE, CardFigure.HEART));
 
         boolean expected = false;
-        assertThat(player.canReceiveMoreCard()).isEqualTo(expected);
+        assertThat(player.receivable()).isEqualTo(expected);
     }
 }

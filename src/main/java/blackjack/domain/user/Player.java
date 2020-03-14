@@ -15,7 +15,7 @@ public class Player extends User {
     }
 
     @Override
-    public boolean canReceiveMoreCard() {
+    public boolean receivable() {
         return super.computeSum() <= Cards.UPPER_LIMIT;
     }
 

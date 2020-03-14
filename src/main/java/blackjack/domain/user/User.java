@@ -55,5 +55,5 @@ public abstract class User {
         return cards.computeSum();
     }
 
-    public abstract boolean canReceiveMoreCard();
+    public abstract boolean receivable();
 }

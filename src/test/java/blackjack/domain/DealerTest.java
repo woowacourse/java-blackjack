@@ -26,7 +26,7 @@ public class DealerTest {
         dealer.addCard(cardDeck.getCard(CardNumber.FIVE, CardFigure.HEART));
 
         boolean expected = true;
-        assertThat(dealer.canReceiveMoreCard()).isEqualTo(expected);
+        assertThat(dealer.receivable()).isEqualTo(expected);
     }
 
     @DisplayName("딜러의 카드 합이 16초과할 때 확인")
@@ -39,7 +39,7 @@ public class DealerTest {
         dealer.addCard(cardDeck.getCard(CardNumber.KING, CardFigure.CLOVER));
 
         boolean expected = false;
-        assertThat(dealer.canReceiveMoreCard()).isEqualTo(expected);
+        assertThat(dealer.receivable()).isEqualTo(expected);
     }
 
     @DisplayName("플레이어의 계산 결과를 바탕으로 Dealer의 결과 계산")

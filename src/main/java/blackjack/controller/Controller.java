@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.YesOrNo;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -34,7 +35,7 @@ public class Controller {
             playGameForPlayer(player, deck);
         }
 
-        if (dealer.canReceiveMoreCard()) {
+        if (dealer.receivable()) {
             dealer.addCard(deck.getCard());
             OutputView.printDealerReceiveMoreCard(Dealer.LOWER_BOUND);
         }
@@ -49,22 +50,22 @@ public class Controller {
         OutputView.printFinalResult(dealer, players);
     }
 
-    private boolean proceed(String name) {
-        String input = InputView.getYorN(name);
-        if (input.equals("y")) {
-            return true;
-        }
-        if (input.equals("n")) {
-            return false;
-        }
-        throw new IllegalArgumentException(WRONG_INPUT_ERROR_MSG);
-    }
-
     private void playGameForPlayer(Player player, CardDeck deck) {
-        while (!player.canReceiveMoreCard() && proceed(player.getName())) {
+        while (proceed(player)) {
             player.addCard(deck.getCard());
             OutputView.printStatus(player.getName(), player.getCards());
         }
+    }
+
+    private boolean proceed(Player player) {
+        if (!player.receivable()) {
+            return  false;
+        }
+        YesOrNo answer = InputView.getYorN(player.getName());
+        if (YesOrNo.isYes(answer)) {
+            return true;
+        }
+        return false;
     }
 
     private void setInitialCards(User user, CardDeck deck) {

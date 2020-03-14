@@ -33,7 +33,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean canReceiveMoreCard() {
+    public boolean receivable() {
         if (super.computeSum() < LOWER_BOUND) {
             return true;
         }
