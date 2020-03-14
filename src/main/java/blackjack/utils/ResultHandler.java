@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class ResultHandler {
 
-    public static final String COLON = ": ";
-    public static final String NEW_LINE = "\n";
-    public static final String WINS = "승 ";
-    public static final String DRAWS = "무 ";
-    public static final String LOSES = "패";
+    private static final String COLON = ": ";
+    private static final String NEW_LINE = "\n";
+    private static final String WINS = "승 ";
+    private static final String DRAWS = "무 ";
+    private static final String LOSES = "패";
     private static final String DEALER = "딜러";
 
     public static String findAllWinners(Users users) {

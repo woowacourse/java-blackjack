@@ -34,7 +34,6 @@ public class BlackjackGameController {
     }
 
     private static void hitMoreCard(Users users, Deck deck) {
-        List<User> gameUsers = users.getUsers();
         users.getPlayer().forEach(user -> askForHit(deck, user));
     }
 
