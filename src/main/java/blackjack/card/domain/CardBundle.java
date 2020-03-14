@@ -30,11 +30,14 @@ public class CardBundle {
 			.mapToInt(Card::getScore)
 			.sum();
 
-		if (hasAce() && isNotBurst(resultScore + ACE_WEIGHT)) {
-			return resultScore + ACE_WEIGHT;
+		if (hasAce() && isNotBurst(addAceWeight(resultScore))) {
+			return addAceWeight(resultScore);
 		}
-
 		return resultScore;
+	}
+
+	private int addAceWeight(int resultScore) {
+		return resultScore + ACE_WEIGHT;
 	}
 
 	public Card getFirstCard() {

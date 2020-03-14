@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.card.domain.CardDeck;
+import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
 
 public class BlackjackRule {
@@ -10,5 +11,9 @@ public class BlackjackRule {
 		for (int i = 0; i < STARTING_CARD_COUNT; i++) {
 			players.drawCard(cardDeck);
 		}
+	}
+
+	public static boolean CheckEarlyTermination(Player dealer) {
+		return dealer.isBlackjack();
 	}
 }

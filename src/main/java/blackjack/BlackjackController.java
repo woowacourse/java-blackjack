@@ -25,7 +25,7 @@ public class BlackjackController {
 		Players players = new Players(makePlayers(dealer));
 
 		drawStartingCards(players);
-		if (dealer.isNotBlackjack()) {
+		if (BlackjackRule.CheckEarlyTermination(dealer)) {
 			drawGambler(players);
 			drawDealer(dealer);
 		}
