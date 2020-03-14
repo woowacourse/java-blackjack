@@ -27,12 +27,12 @@ public class DealerTest {
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         );
         cardDeck = new CardDeck(cards);
@@ -43,7 +43,7 @@ public class DealerTest {
     @Test
     void addCardTest() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.pop());
+            dealer.addCard(cardDeck);
         }
         assertThat(dealer.getCardsSize()).isEqualTo(2);
         assertThat(cardDeck.size()).isEqualTo(4);
@@ -53,7 +53,7 @@ public class DealerTest {
     @Test
     void calculateScoreTest() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.pop());
+            dealer.addCard(cardDeck);
         }
         int score = dealer.calculateScore();
         assertThat(score).isEqualTo(19);
@@ -63,7 +63,7 @@ public class DealerTest {
     @Test
     void isUnderCriticalScore() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.pop());
+            dealer.addCard(cardDeck);
         }
         assertThat(dealer.isUnderCriticalScore()).isFalse();
     }
@@ -79,15 +79,15 @@ public class DealerTest {
     @Test
     void getInitialCardsTest() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.pop());
+            dealer.addCard(cardDeck);
         }
         assertThat(dealer.getInitialCards()).containsExactly(new Card(Symbol.CLOVER, Type.EIGHT));
     }
 
     @AfterEach
     void tearDown() throws NoSuchFieldException, IllegalAccessException {
-        Field dealer_instance = Dealer.class.getDeclaredField("dealer_instance");
-        dealer_instance.setAccessible(true);
-        dealer_instance.set(null, null);
+        Field dealerInstance = Dealer.class.getDeclaredField("dealerInstance");
+        dealerInstance.setAccessible(true);
+        dealerInstance.set(null, null);
     }
 }

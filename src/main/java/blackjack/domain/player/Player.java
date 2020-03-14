@@ -37,12 +37,6 @@ public abstract class Player {
     public int calculateScore() {
         int scoreExceptAce = calculateScoreExceptAce();
         return calculateScoreIncludeAce(scoreExceptAce);
-
-//        int score = calculateRawScore();
-//        if (hasAce() && score <= ACE_CRITICAL_POINT) {
-//            score += ACE_UPPER_POINT - ACE_LOWER_POINT;
-//        }
-//        return score;
     }
 
     private int calculateScoreIncludeAce(int scoreExceptAce) {
@@ -63,12 +57,6 @@ public abstract class Player {
                 .mapToInt(Card::getPoint)
                 .sum();
     }
-
-//    private int calculateRawScore() {
-//        return cards.stream()
-//                .mapToInt(Card::getPoint)
-//                .sum();
-//    }
 
     private boolean hasAce() {
         return cards.stream()

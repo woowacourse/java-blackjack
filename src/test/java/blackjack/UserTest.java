@@ -27,12 +27,12 @@ public class UserTest {
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         );
         cardDeck = new CardDeck(cards);
@@ -52,7 +52,7 @@ public class UserTest {
     @Test
     void addCardTest() {
         for (int i = 0; i < 2; i++) {
-            user.addCard(cardDeck.pop());
+            user.addCard(cardDeck);
         }
         assertThat(user.getCardsSize()).isEqualTo(2);
         assertThat(cardDeck.size()).isEqualTo(4);
@@ -62,7 +62,7 @@ public class UserTest {
     @Test
     void calculateScoreTest() {
         for (int i = 0; i < 2; i++) {
-            user.addCard(cardDeck.pop());
+            user.addCard(cardDeck);
         }
         int score = user.calculateScore();
         assertThat(score).isEqualTo(19);
@@ -79,7 +79,7 @@ public class UserTest {
     @Test
     void getInitialCardsTest() {
         for (int i = 0; i < 2; i++) {
-            user.addCard(cardDeck.pop());
+            user.addCard(cardDeck);
         }
         assertThat(user.getInitialCards()).containsExactly(
                 new Card(Symbol.CLOVER, Type.EIGHT), new Card(Symbol.CLOVER, Type.ACE));

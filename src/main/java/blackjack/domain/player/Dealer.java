@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Dealer extends Player {
     private static final int DEALER_CRITICAL_SCORE = 16;
-    private static final String KOREAN_NAME = "딜러";
     private static final int DEALER_INITIAL_CARDS_SIZE = 1;
+    private static final String KOREAN_NAME = "딜러";
 
-    private static Dealer dealer_instance;
+    private static Dealer dealerInstance;
 
     private Dealer() {
         this.name = KOREAN_NAME;
@@ -18,10 +18,10 @@ public class Dealer extends Player {
     }
 
     public static Dealer getDealer() {
-        if (dealer_instance == null) {
-            dealer_instance = new Dealer();
+        if (dealerInstance == null) {
+            dealerInstance = new Dealer();
         }
-        return dealer_instance;
+        return dealerInstance;
     }
 
     public boolean isUnderCriticalScore() {

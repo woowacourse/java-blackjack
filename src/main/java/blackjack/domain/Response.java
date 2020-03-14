@@ -21,4 +21,15 @@ public enum Response {
                 .findFirst()
                 .orElseThrow(() -> new ResponseNotMatchException("y 또는 n을 입력해주세요."));
     }
+
+    public static boolean isYes(String inputResponse) {
+        String lowerCase = inputResponse.trim().toLowerCase();
+        return lowerCase.equals(YES.lowerCase);
+    }
+
+    public static boolean isCorrect(String inputResponse) {
+        String lowerCase = inputResponse.trim().toLowerCase();
+        return Arrays.stream(values())
+                .anyMatch(response -> response.lowerCase.equals(lowerCase));
+    }
 }

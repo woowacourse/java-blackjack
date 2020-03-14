@@ -18,6 +18,7 @@ public class OutputView {
     private static final String PLAYER_INFORMATION_FORMAT = "%s 카드: %s";
     private static final String COMMA_WITH_SPACE = ", ";
     private static final String ASK_ONE_MORE_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String ASK_CORRECT_RESPONSE_MESSAGE = "y 또는 n을 입력해주세요.";
     private static final String DEALER_PLAY_CONFIRM_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PLAYER_FINAL_INFORMATION_FORMAT = "%s 카드: %s - 결과 : %d";
     private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 승패";
@@ -52,12 +53,20 @@ public class OutputView {
 
     private static String combineCards(List<Card> cards) {
         return cards.stream()
-                .map(Card::toString)
+                .map(OutputView::informationOf)
                 .collect(Collectors.joining(COMMA_WITH_SPACE));
+    }
+
+    private static String informationOf(Card card) {
+        return card.getType().getSimpleName() + card.getSymbol().getKoreanName();
     }
 
     public static void printAskOneMoreCardMessage(User user) {
         System.out.println(String.format(ASK_ONE_MORE_CARD_MESSAGE_FORMAT, user.getName()));
+    }
+
+    public static void printCorrectResponseMessage() {
+        System.out.println(ASK_CORRECT_RESPONSE_MESSAGE);
     }
 
     public static void printExceptionMessage(String message) {

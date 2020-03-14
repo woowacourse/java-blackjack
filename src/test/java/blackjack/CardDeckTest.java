@@ -24,12 +24,12 @@ public class CardDeckTest {
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
                         new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         );
         cardDeck = new CardDeck(cards);

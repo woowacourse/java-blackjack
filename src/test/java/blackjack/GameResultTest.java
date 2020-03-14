@@ -30,12 +30,12 @@ public class GameResultTest {
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         );
         cardDeck = new CardDeck(cards);
@@ -69,8 +69,8 @@ public class GameResultTest {
     @Test
     void calculateGameResultByScore() {
         for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.pop());
-            user.addCard(cardDeck.pop());
+            dealer.addCard(cardDeck);
+            user.addCard(cardDeck);
         }
         assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(UserResult.DRAW);
     }

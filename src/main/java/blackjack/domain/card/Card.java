@@ -23,9 +23,12 @@ public class Card {
         return type == Type.ACE;
     }
 
-    @Override
-    public String toString() {
-        return type.getSimpleName() + symbol.getKoreanName();
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override
