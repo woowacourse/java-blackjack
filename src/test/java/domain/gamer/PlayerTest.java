@@ -1,9 +1,6 @@
 package domain.gamer;
 
-import domain.card.Card;
-import domain.card.PlayingCards;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +18,17 @@ class PlayerTest {
         Player player = new Player(playingCards, name);
         Card card = new Card(Symbol.QUEEN, Type.CLOVER);
         player.addCard(card);
+        assertThat(player.countCards()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("카드를 덱에서 추가 지급 받는다")
+    void hit() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name);
+        Deck deck = DeckFactory.create();
+        player.hit(deck);
         assertThat(player.countCards()).isEqualTo(1);
     }
 

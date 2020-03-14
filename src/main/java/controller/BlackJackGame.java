@@ -1,6 +1,7 @@
 package controller;
 
 import domain.PlayerResult;
+import domain.UserResponse;
 import domain.card.Deck;
 import domain.card.DeckFactory;
 import domain.gamer.Dealer;
@@ -57,9 +58,14 @@ public class BlackJackGame {
     }
 
     private void receivePlayerCards(Deck deck, Player player) {
-        while (player.isHittable() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
+        while (player.isHittable() && askResponse(player)) {
             player.hit(deck);
             OutputView.printGamerCardsState(GamerDto.of(player));
         }
+    }
+
+    private boolean askResponse(Player player) {
+        UserResponse userResponse = UserResponse.of(InputView.inputGetMoreCard(player.getName()));
+        return userResponse.isYes();
     }
 }
