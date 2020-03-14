@@ -21,16 +21,15 @@ public class CardPrintUtils {
 		return String.format(STRING_FORMAT_PRINT_CARD, player.getName(), toStringAllCard(playerCards));
 	}
 
-	public static String toStringOneCard(PlayerCards playerCards) {
+	private static String toStringOneCard(PlayerCards playerCards) {
 		Card oneCard = playerCards.bringOneCard();
 		return oneCard.toString();
 	}
 
-	public static String toStringAllCard(PlayerCards playerCards) {
+	private static String toStringAllCard(PlayerCards playerCards) {
 		List<Card> cards = playerCards.getPlayerCards();
-		List<String> cardNames = cards.stream()
+		return cards.stream()
 				.map(Card::toString)
-				.collect(Collectors.toList());
-		return String.join(CARD_DELIMITER, cardNames);
+				.collect(Collectors.joining(CARD_DELIMITER));
 	}
 }

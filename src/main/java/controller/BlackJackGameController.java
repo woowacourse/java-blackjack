@@ -71,7 +71,7 @@ public class BlackJackGameController {
 	}
 
 	public static void dealerHit(Dealer dealer, CardDeck cardDeck) {
-		while (dealer.calculateScore() <= Rull.DEALER_HIT_SCORE) {
+		while (dealer.isHit()) {
 			OutputView.printDealerHitMessage();
 			dealer.cardDraw(cardDeck.draw());
 		}
