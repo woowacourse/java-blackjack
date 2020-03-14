@@ -30,11 +30,22 @@ public class CardsTest {
     void getScore(String input, int expected) {
         Cards cards = new Cards();
         String[] inputSymbols = input.split(",");
+
         for (String inputSymbol : inputSymbols) {
             cards.addCard(Card.of("스페이드", inputSymbol));
         }
-
         assertThat(cards.getScore()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("블랙잭 여부 확인")
+    void isBlackJack() {
+        Cards cards = new Cards();
+
+        cards.addCard(Card.of("스페이드", "K"));
+        cards.addCard(Card.of("스페이드", "A"));
+        assertThat(cards.getScore()).isEqualTo(21);
+        assertThat(cards.getSize()).isEqualTo(2);
     }
 
     @ParameterizedTest
@@ -43,6 +54,7 @@ public class CardsTest {
     void isBust(String input, Boolean expected) {
         Cards cards = new Cards();
         String[] inputSymbols = input.split(",");
+
         for (String inputSymbol : inputSymbols) {
             cards.addCard(Card.of("스페이드", inputSymbol));
         }

@@ -20,6 +20,7 @@ public class ScoreTest {
     void add(String input, int expected) {
         Score result = new Score(0);
         String[] numbers = input.split(",");
+
         for (String number : numbers) {
             result = result.add(Integer.parseInt(number));
         }
