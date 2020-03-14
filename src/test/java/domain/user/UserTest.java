@@ -1,9 +1,8 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import domain.deck.Card;
+import domain.deck.Symbol;
+import domain.deck.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,9 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.deck.Card;
-import domain.deck.Symbol;
-import domain.deck.Type;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class UserTest {
 
@@ -22,14 +21,6 @@ class UserTest {
     @BeforeEach
     void setUp() {
         user = new Player("이름");
-    }
-
-    @Test
-    @DisplayName("빈 이름이 있는 경우 예외 처리")
-    void createPlayerWithEmptyName() {
-        assertThatThrownBy(() -> new Player(""))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("빈 이름이 있습니다.");
     }
 
     @Test

@@ -1,31 +1,22 @@
 package domain.user;
 
+import domain.deck.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.deck.Card;
-
 public abstract class User {
 
-    private static final String EMPTY = "";
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
-    private static final String NAME_ERROR_MESSAGE = "빈 이름이 있습니다.";
 
     protected List<Card> cards;
-    protected final String name;
+    protected final Name name;
 
     protected User(String name) {
-        validate(name);
         cards = new ArrayList<>();
-        this.name = name;
-    }
-
-    private void validate(String name) {
-        if (EMPTY.equals(name)) {
-            throw new IllegalArgumentException(NAME_ERROR_MESSAGE);
-        }
+        this.name = Name.of(name);
     }
 
     public void draw(Card card) {
@@ -78,6 +69,6 @@ public abstract class User {
     public abstract String getTotalWinningResult();
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 }
