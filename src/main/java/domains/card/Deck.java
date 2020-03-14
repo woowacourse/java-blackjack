@@ -12,7 +12,14 @@ public class Deck {
         this.deck = DeckFactory.create();
     }
 
+    public Deck(List<Card> deck) {
+        this.deck = deck;
+    }
+
     public Card draw() {
+        if (deck.isEmpty()) {
+            throw new InvalidDeckException(InvalidDeckException.DECK_IS_EMPTY);
+        }
         return deck.remove(FIRST_INDEX);
     }
 
