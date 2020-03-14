@@ -61,8 +61,8 @@ public class BlackjackGame {
 
 	public void initialDraw() {
 		for (int i = 0; i < INITIAL_DRAW_NUMBER; i++) {
-			dealer.draw(deck.deal());
-			players.forEach(player -> player.draw(deck.deal()));
+			draw(dealer);
+			players.forEach(player -> draw(player));
 		}
 	}
 
