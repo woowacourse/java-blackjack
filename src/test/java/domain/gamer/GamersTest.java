@@ -7,6 +7,8 @@ import domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,13 +41,14 @@ class GamersTest {
 		assertThat(gamers).isInstanceOf(Gamers.class);
 	}
 
-	@Test
+	@ParameterizedTest
+	@ValueSource(ints = {1, 2})
 	@DisplayName("모두에게 카드를 주는 기능 테스트")
-	void giveCardToAllTest() {
-		gamers.giveCardToAll(new Deck());
-		assertThat(gamers.getDealer().getCards().size()).isEqualTo(3);
-		assertThat(gamers.getPlayers().get(0).getCards().size()).isEqualTo(3);
-		assertThat(gamers.getPlayers().get(1).getCards().size()).isEqualTo(3);
+	void giveCardToAllTest(int count) {
+		gamers.giveCardToAll(new Deck(), count);
+		assertThat(gamers.getDealer().getCards().size()).isEqualTo(2 + count);
+		assertThat(gamers.getPlayers().get(0).getCards().size()).isEqualTo(2 + count);
+		assertThat(gamers.getPlayers().get(1).getCards().size()).isEqualTo(2 + count);
 	}
 
 	@Test

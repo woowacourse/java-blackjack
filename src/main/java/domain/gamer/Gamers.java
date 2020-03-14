@@ -25,7 +25,13 @@ public class Gamers {
 		return gamers;
 	}
 
-	public void giveCardToAll(Deck deck) {
+	public void giveCardToAll(Deck deck, int count) {
+		for (int i = 0; i < count; i++) {
+			giveCardToAll(deck);
+		}
+	}
+
+	private void giveCardToAll(Deck deck) {
 		for (Gamer gamer : gamers) {
 			gamer.hit(deck.drawCard());
 		}

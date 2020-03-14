@@ -9,6 +9,7 @@ import view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
+	private static final int FIRST_GIVE_CARD_COUNT = 2;
 	private final Gamers gamers;
 	private final Deck deck;
 
@@ -20,7 +21,7 @@ public class BlackJackController {
 	}
 
 	public void run() {
-		giveTwoCards();
+		init();
 		giveCardToPlayers();
 		giveCardToDealer();
 
@@ -30,9 +31,8 @@ public class BlackJackController {
 		OutputView.printPlayersResult(gameResult.playersResult());
 	}
 
-	private void giveTwoCards() {
-		gamers.giveCardToAll(deck);
-		gamers.giveCardToAll(deck);
+	private void init() {
+		gamers.giveCardToAll(deck, FIRST_GIVE_CARD_COUNT);
 		OutputView.printGiving(gamers);
 		OutputView.printFirstOpenedCards(gamers);
 	}
