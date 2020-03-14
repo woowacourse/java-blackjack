@@ -7,8 +7,7 @@ import java.util.List;
 public class DeckFactory {
     public static List<Card> create() {
         List<Card> cards = new ArrayList<>();
-        Symbol[] symbols = Symbol.values();
-        for (Symbol symbol : symbols) {
+        for (Symbol symbol : Symbol.values()) {
             createByType(cards, symbol);
         }
         Collections.shuffle(cards);
@@ -16,8 +15,7 @@ public class DeckFactory {
     }
 
     private static void createByType(List<Card> cards, Symbol symbol) {
-        Type[] types = Type.values();
-        for (Type type : types) {
+        for (Type type : Type.values()) {
             cards.add(new Card(symbol, type));
         }
     }

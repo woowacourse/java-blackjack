@@ -15,4 +15,12 @@ public class PlayersTest {
                 .isInstanceOf(InvalidPlayersException.class)
                 .hasMessage(InvalidPlayersException.DUPLICATION);
     }
+
+    @DisplayName("참가자가 5명 초과 할 경우 예외처리")
+    @Test
+    void checkNumberOfPlayers_OverFivePlayers_ExceptionThrown() {
+        assertThatThrownBy(() -> new Players("a,b,c,d,e,f", new Deck()))
+                .isInstanceOf(InvalidPlayersException.class)
+                .hasMessage(InvalidPlayersException.OVER_NUMBER_OF_PLAYERS);
+    }
 }
