@@ -1,6 +1,7 @@
 package blackjack.card.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,6 +20,10 @@ public class Card {
 
 	public static Card of(Symbol symbol, CardNumber cardNumber) {
 		return CardCache.of(symbol, cardNumber);
+	}
+
+	public static List<Card> getAllCards() {
+		return CardCache.getAllCards();
 	}
 
 	public boolean isAce() {
@@ -64,6 +69,10 @@ public class Card {
 				.filter(card -> card.cardNumber == cardNumber)
 				.findFirst()
 				.orElseThrow(AssertionError::new);
+		}
+
+		public static List<Card> getAllCards() {
+			return Collections.unmodifiableList(cache);
 		}
 	}
 }

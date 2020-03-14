@@ -42,9 +42,7 @@ public class BlackjackController {
 	}
 
 	private void drawStartingCards(Players players) {
-		for (int i = 0; i < 2; i++) {
-			players.drawCard(cardDeck);
-		}
+		BlackjackRule.drawStartingCard(players, cardDeck);
 		OutputView.showCards(players);
 	}
 
