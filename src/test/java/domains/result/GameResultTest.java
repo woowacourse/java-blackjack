@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -40,8 +42,12 @@ class GameResultTest {
 	@MethodSource("gameData")
 	void calculateDealerResult__ReturnWin(Players players, Dealer dealer) {
 		GameResult gameResult = new GameResult(players, dealer);
+		Map<ResultType, Long> totalResult = new HashMap<>();
+		totalResult.put(ResultType.WIN,1L);
+		totalResult.put(ResultType.DRAW,1L);
+		totalResult.put(ResultType.LOSE,1L);
 
-		assertThat(gameResult.calculateDealerResult()).isEqualTo("1승 1무 1패");
+		assertThat(gameResult.calculateDealerResult()).isEqualTo(totalResult);
 	}
 
 	static Stream<Arguments> gameData() {
