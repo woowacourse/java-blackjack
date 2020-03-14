@@ -1,13 +1,13 @@
 package view;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
 import domain.result.DealerResult;
 import domain.result.MatchResult;
-import domain.result.PlayerResult;
+import domain.result.PlayerResults;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -82,33 +82,24 @@ public class OutputView {
 		return card.getTypeName() + card.getSymbol();
 	}
 
-	public static void printGameResult(List<PlayerResult> playerResults, DealerResult dealerResult) {
+	public static void printGameResult(PlayerResults playerResults, DealerResult dealerResult) {
 		System.out.println(PREFIX_TOTAL_GAME_RESULT_MESSAGE);
 		printDealerResult(dealerResult);
 		printUsersResult(playerResults);
 	}
 
 	private static void printDealerResult(DealerResult dealerResult) {
-		StringBuilder builder = new StringBuilder(PREFIX_DEALER_SCORE_RESULT_MESSAGE);
-
-		Map<MatchResult, Long> map = dealerResult.calculateDealerResult();
-		for (MatchResult matchResult : MatchResult.values()) {
-			builder.append(map.get(matchResult));
-			builder.append(matchResult.getMatchResult());
-			builder.append(SPACE);
-		}
-		System.out.println(builder);
+		String result = Arrays.stream(MatchResult.values())
+			.map(matchResult -> dealerResult.getResultCount(matchResult) + matchResult.getMatchResult())
+			.collect(Collectors.joining(SPACE));
+		System.out.println(result);
 	}
 
-	private static void printUsersResult(List<PlayerResult> userResults) {
-		StringBuilder builder = new StringBuilder();
-		for (PlayerResult userResult : userResults) {
-			builder.append(userResult.getName());
-			builder.append(Colon);
-			builder.append(userResult.getMatchResult());
-			builder.append(NEW_LINE);
-		}
-		System.out.println(builder);
+	private static void printUsersResult(PlayerResults playerResults) {
+		String result = playerResults.getPlayerResults().stream()
+			.map(playerResult -> String.format("%s : %s", playerResult.getName(), playerResult.getMatchResult()))
+			.collect(Collectors.joining(NEW_LINE));
+		System.out.println(result);
 	}
 
 	public static void printExceptionMessage(String message) {

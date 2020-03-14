@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.result.MatchResult;
 
 public class Player extends User {
 	private static final int INITIAL_START_INDEX = 0;
@@ -34,6 +35,15 @@ public class Player extends User {
 	}
 
 	@Override
+	public boolean isDrawable() {
+		return !isBlackjack() && !isBust();
+	}
+
+	public MatchResult calculateMatchResult(Dealer dealer) {
+		return MatchResult.calculatePlayerMatchResult(this, dealer);
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -48,10 +58,5 @@ public class Player extends User {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
-	}
-
-	@Override
-	public boolean isDrawable() {
-		return !isBlackjack() && !isBust();
 	}
 }

@@ -3,8 +3,6 @@ package domain.result;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,12 +19,7 @@ class DealerResultTest {
 	@Test
 	void calculateDealerResultTest() {
 		DealerResult dealerResult = new DealerResult(Arrays.asList(MatchResult.WIN, MatchResult.WIN));
-		Map<MatchResult, Long> actual = dealerResult.calculateDealerResult();
 
-		Map<MatchResult, Long> expected = new HashMap<>();
-		expected.put(MatchResult.LOSE, 2L);
-		expected.put(MatchResult.WIN, 0L);
-		expected.put(MatchResult.DRAW, 0L);
-		assertThat(actual).isEqualTo(expected);
+		assertThat(dealerResult.getResultCount(MatchResult.LOSE)).isEqualTo(2L);
 	}
 }

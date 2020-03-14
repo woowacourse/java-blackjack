@@ -2,18 +2,16 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import util.YesOrNo;
 import domain.card.CardDeck;
 import domain.result.DealerResult;
-import domain.result.MatchCalculator;
-import domain.result.MatchResult;
-import domain.result.PlayerResult;
+import domain.result.PlayerResults;
+import domain.result.ResultCalculator;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerFactory;
 import domain.user.User;
+import util.YesOrNo;
 import view.InputView;
 import view.OutputView;
 
@@ -89,11 +87,9 @@ public class BlackjackGame {
 	}
 
 	private void printGameResult(List<Player> players, Dealer dealer) {
-		List<PlayerResult> userResults = players.stream()
-			.map(user -> new PlayerResult(user, MatchResult.calculatePlayerMatchResult(user, dealer)))
-			.collect(Collectors.toList());
-		DealerResult dealerResult = new DealerResult(new MatchCalculator(players, dealer).getMatchResults());
-
-		OutputView.printGameResult(userResults, dealerResult);
+		ResultCalculator calculator = new ResultCalculator(players, dealer);
+		PlayerResults playersResult = calculator.calculatePlayersResult();
+		DealerResult dealerResult = calculator.calculateDealerResults();
+		OutputView.printGameResult(playersResult, dealerResult);
 	}
 }
