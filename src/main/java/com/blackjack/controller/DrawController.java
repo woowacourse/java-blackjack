@@ -33,7 +33,7 @@ class DrawController {
 	}
 
 	private void drawPlayerUntilEndTurn(CardDeck cardDeck, User player) {
-		while (canDraw(player)) {
+		while (canDraw(player) && wantDraw(player)) {
 			player.draw(cardDeck);
 			printUserCardInfo(player);
 			System.out.println();
@@ -41,7 +41,11 @@ class DrawController {
 	}
 
 	private boolean canDraw(User player) {
-		return player.canDraw() && DrawDecideType.isDraw(inputDrawDecideType(player));
+		return player.canDraw();
+	}
+
+	private boolean wantDraw(User player) {
+		return DrawDecideType.isDraw(inputDrawDecideType(player));
 	}
 
 	private void drawAtFirst(CardDeck cardDeck, User dealer, List<User> players) {
