@@ -10,6 +10,7 @@ import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.result.GameResult;
 import domain.result.ResultType;
+import domain.result.Score;
 
 public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
@@ -63,19 +64,19 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printCardsScore(List<Player> players, Dealer dealer) {
+	public static void printCardsScore(GameResult gameResult) {
 		StringBuilder sb = new StringBuilder();
-		createScoreFormat(dealer, sb);
-		for (Player player : players) {
-			createScoreFormat(player, sb);
+		Map<Gamer, Score> scores = gameResult.getScores();
+		for (Map.Entry<Gamer, Score> gamerScoreEntry : scores.entrySet()) {
+			createScoreFormat(gamerScoreEntry.getKey(), gamerScoreEntry.getValue(), sb);
 		}
 		System.out.println(sb);
 	}
 
-	private static void createScoreFormat(Gamer gamer, StringBuilder sb) {
+	private static void createScoreFormat(Gamer gamer, Score score, StringBuilder sb) {
 		sb.append(createCardsFormat(gamer))
 			.append(" - 결과: ")
-			.append(gamer.calculateScore().getScore())
+			.append(score.getScore())
 			.append(NEW_LINE);
 	}
 

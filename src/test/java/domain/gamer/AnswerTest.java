@@ -23,7 +23,8 @@ class AnswerTest {
 	void createInvalidTest(String input) {
 		assertThatThrownBy(() -> {
 			Answer.of(input);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(IllegalArgumentException.class)
+		.hasMessageMatching(input + "는 올바르지 않은 타입입니다.");
 	}
 
 	@Test

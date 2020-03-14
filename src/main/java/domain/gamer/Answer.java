@@ -16,7 +16,7 @@ public enum Answer {
 		return Arrays.stream(Answer.values())
 			.filter(answer -> answer.state.equals(input.toUpperCase()))
 			.findFirst()
-			.orElseThrow(IllegalArgumentException::new);
+			.orElseThrow(()-> new IllegalArgumentException(String.format("%s는 올바르지 않은 타입입니다.",input)));
 	}
 
 	public boolean isYes() {
