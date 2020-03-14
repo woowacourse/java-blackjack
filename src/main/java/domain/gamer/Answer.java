@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import exception.YesOrNoFormatException;
+import exception.AnswerFormatException;
 
 import java.util.Arrays;
 
@@ -22,6 +22,6 @@ public enum Answer {
         return Arrays.stream(values())
                 .filter(x -> x.answerValue.equals(answer.toLowerCase()))
                 .findFirst()
-                .orElseThrow(() -> new YesOrNoFormatException("y 또는 n을 입력해주세요."));
+                .orElseThrow(AnswerFormatException::new);
     }
 }

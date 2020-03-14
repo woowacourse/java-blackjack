@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import exception.YesOrNoFormatException;
+import exception.AnswerFormatException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class AnswerTest {
     void illegalAnswerTest() {
         String answer = "a";
         Assertions.assertThatThrownBy(() -> Answer.findAnswer(answer))
-                .isInstanceOf(YesOrNoFormatException.class);
+                .isInstanceOf(AnswerFormatException.class);
     }
 
     @ParameterizedTest
