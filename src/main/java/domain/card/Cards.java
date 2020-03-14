@@ -2,16 +2,14 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
 	private static final int BUST_SCORE = 22;
-	private static final int ACE_ADDITIONAL_SCORE = 10;
 	private static final int BLACKJACK_CARD_SIZE = 2;
-	private static final String NOT_EXIST_CARD_EXCEPTION_MESSAGE = "카드가 없습니다.";
 	private static final String OUT_OF_CARD_SIZE_EXCEPTION_MESSAGE = "인자의 값이 카드 갯수보다 큽니다.";
 
 	private final List<Card> cards;
@@ -33,20 +31,16 @@ public class Cards {
 	}
 
 	public int calculateScore() {
-		int result = cards.stream()
-			.map(Card::getTypeScore)
-			.reduce(Integer::sum)
-			.orElseThrow(() -> new NoSuchElementException(NOT_EXIST_CARD_EXCEPTION_MESSAGE));
+		List<Card> cards = new ArrayList<>(this.cards);
+		cards.sort(Comparator.reverseOrder());
 
-		if (containsAce() && result + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
-			result += ACE_ADDITIONAL_SCORE;
+		int totalScore = 0;
+		for (Card card : cards) {
+			Symbol currentSymbol = card.getSymbol();
+			int currentScore = currentSymbol.calculateScore(totalScore, BLACKJACK_SCORE);
+			totalScore += currentScore;
 		}
-		return result;
-	}
-
-	private boolean containsAce() {
-		return cards.stream()
-			.anyMatch(Card::isAce);
+		return totalScore;
 	}
 
 	public List<Card> getCards() {

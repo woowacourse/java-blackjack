@@ -2,29 +2,30 @@ package domain.card;
 
 import java.util.Objects;
 
-public class Card {
-	private final Symbol symbol;
+public class Card implements Comparable<Card> {
 	private final Type type;
+	private final Symbol symbol;
 
-	public Card(Symbol symbol, Type type) {
-		this.symbol = symbol;
+	public Card(Type type, Symbol symbol) {
 		this.type = type;
-	}
-
-	public boolean isAce() {
-		return type.isAce();
-	}
-
-	public int getTypeScore() {
-		return this.type.getScore();
+		this.symbol = symbol;
 	}
 
 	public String getTypeName() {
-		return this.type.getName();
+		return symbol.getName();
 	}
 
-	public String getSymbol() {
-		return symbol.getName();
+	public String getType() {
+		return type.getName();
+	}
+
+	public Symbol getSymbol() {
+		return symbol;
+	}
+
+	@Override
+	public int compareTo(Card other) {
+		return Integer.compare(symbol.getScore(), other.symbol.getScore());
 	}
 
 	@Override
@@ -36,12 +37,12 @@ public class Card {
 			return false;
 		}
 		Card that = (Card)object;
-		return this.symbol == that.symbol &&
-			this.type == that.type;
+		return this.type == that.type &&
+			this.symbol == that.symbol;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(symbol, type);
+		return Objects.hash(type, symbol);
 	}
 }

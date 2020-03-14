@@ -68,7 +68,7 @@ public class CardsTest {
 
 	Cards createCards(List<Integer> numbers) {
 		return numbers.stream()
-			.map(num -> new Card(Symbol.CLOVER, Type.of(num)))
+			.map(num -> new Card(Type.CLOVER, Symbol.of(num)))
 			.collect(Collectors.collectingAndThen(Collectors.toList(), Cards::new));
 	}
 }

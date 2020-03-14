@@ -41,7 +41,7 @@ public enum MatchResult {
 		return matchResult;
 	}
 
-	public MatchResult swtichWinAndLose() {
+	public MatchResult switchWinAndLose() {
 		if (this == MatchResult.WIN) {
 			return MatchResult.LOSE;
 		}

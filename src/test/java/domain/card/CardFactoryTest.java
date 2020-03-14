@@ -12,9 +12,9 @@ public class CardFactoryTest {
 	@Test
 	void createTest() {
 		List<Card> cards = new ArrayList<>();
-		for (Type type : Type.values()) {
-			for (Symbol symbol : Symbol.values()) {
-				cards.add(new Card(symbol, type));
+		for (Symbol symbol : Symbol.values()) {
+			for (Type type : Type.values()) {
+				cards.add(new Card(type, symbol));
 			}
 		}
 

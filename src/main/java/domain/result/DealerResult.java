@@ -21,7 +21,7 @@ public class DealerResult {
 
 	private Map<MatchResult, Long> initDealerResult(List<MatchResult> playerMatchResults) {
 		Map<MatchResult, Long> result = playerMatchResults.stream()
-			.map(MatchResult::swtichWinAndLose)
+			.map(MatchResult::switchWinAndLose)
 			.collect(groupingBy(Function.identity(), counting()));
 
 		Arrays.stream(MatchResult.values())

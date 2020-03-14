@@ -8,18 +8,18 @@ public class CardFactory {
 	private static List<Card> cards = new ArrayList<>();
 
 	static {
-		Type[] types = Type.values();
-		for (Type type : types) {
-			createCardsByType(type);
+		Symbol[] symbols = Symbol.values();
+		for (Symbol symbol : symbols) {
+			createCardsByType(symbol);
 		}
 	}
 
 	private CardFactory() {
 	}
 
-	private static void createCardsByType(Type type) {
-		for (Symbol symbol : Symbol.values()) {
-			cards.add(new Card(symbol, type));
+	private static void createCardsByType(Symbol symbol) {
+		for (Type type : Type.values()) {
+			cards.add(new Card(type, symbol));
 		}
 	}
 

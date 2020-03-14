@@ -75,7 +75,7 @@ public class OutputView {
 	}
 
 	private static String parseCardString(Card card) {
-		return card.getTypeName() + card.getSymbol();
+		return card.getTypeName() + card.getType();
 	}
 
 	public static void printGameResult(PlayerResults playerResults, DealerResult dealerResult) {
