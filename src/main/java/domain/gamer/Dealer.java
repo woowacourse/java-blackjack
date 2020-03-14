@@ -16,7 +16,7 @@ public class Dealer extends Gamer {
 
     public void addCardAtDealer(Deck deck) {
         while (isDrawable()) {
-            addCard(deck.popCard(ADD_CARD_SIZE));
+            addCard(deck.popCard());
         }
     }
 }

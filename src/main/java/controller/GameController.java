@@ -10,8 +10,6 @@ import view.InputView;
 import view.OutputView;
 
 public class GameController {
-    private static final int ADD_CARD_SIZE = 1;
-
     public void run() {
         Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
         Deck deck = new Deck(CardsFactory.getCards());
@@ -36,7 +34,7 @@ public class GameController {
     private void drawCardOfPlayer(Deck deck, Player player) {
         while (player.isDrawable()
                 && Answer.findAnswer(InputView.inputAsDrawable(player)).isYes()) {
-            player.addCard(deck.popCard(ADD_CARD_SIZE));
+            player.addCard(deck.popCard());
             OutputView.printGamerCard(player);
         }
     }

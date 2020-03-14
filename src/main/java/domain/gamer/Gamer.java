@@ -9,7 +9,6 @@ import java.util.List;
 public abstract class Gamer {
     private static final int BUST_NUMBER = 22;
     private static final int ACE_HIDDEN_SCORE = 10;
-    protected static final int ADD_CARD_SIZE = 1;
 
     protected String name;
     protected final List<Card> cards = new ArrayList<>();

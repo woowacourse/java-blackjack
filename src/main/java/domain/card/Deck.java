@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Queue;
 
 public class Deck {
+	private static final int ADDITIONAL_DRAW_CARD_AMOUNT = 1;
+
 	private Queue<Card> deck;
 
 	public Deck(List<Card> deck) {
@@ -20,5 +22,9 @@ public class Deck {
 			cards.add(deck.poll());
 		}
 		return cards;
+	}
+
+	public List<Card> popCard() {
+		return popCard(ADDITIONAL_DRAW_CARD_AMOUNT);
 	}
 }
