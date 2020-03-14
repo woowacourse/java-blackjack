@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.Objects;
+
 /**
  * 카드 한장을 의미하는 객체
  */
@@ -14,6 +16,11 @@ public class Card {
 
     public boolean isAce() {
         return this.symbol.equals(Symbol.ACE);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.symbol, this.type);
     }
 
     @Override

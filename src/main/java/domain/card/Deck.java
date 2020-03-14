@@ -2,7 +2,10 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Deck {
     public static final int NUMBER_OF_FIRST_DEAL_CARDS = 2;
@@ -10,7 +13,14 @@ public class Deck {
     private List<Card> deck;
 
     public Deck(List<Card> deck) {
+        validateDuplicatedCards(deck);
         this.deck = deck;
+    }
+
+    private void validateDuplicatedCards(List<Card> deck) {
+        if (new HashSet<Card>(deck).size() < deck.size()) {
+            throw new IllegalArgumentException("덱에 중복된 카드가 존재할 수 없습니다.");
+        }
     }
 
     public void shuffle() {
