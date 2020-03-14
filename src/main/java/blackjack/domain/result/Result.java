@@ -9,7 +9,7 @@ import java.util.function.BiPredicate;
 public enum Result {
     WIN("승", (dealer, player) -> dealer.getTotalScore() < player.getTotalScore()),
     LOSE("패", (dealer, player) -> dealer.getTotalScore() > player.getTotalScore()),
-    DRAW("무승부", (dealer, player) -> dealer.getTotalScore() == player.getTotalScore());
+    DRAW("무", (dealer, player) -> dealer.getTotalScore() == player.getTotalScore());
 
     private final String name;
     private BiPredicate<Dealer, Player> condition;

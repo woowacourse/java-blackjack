@@ -20,6 +20,6 @@ public class Dealer extends User {
     }
 
     public boolean isUnderThreshold() {
-        return this.getTotalScore() <= THRESHOLD;
+        return (this.getTotalScore() <= THRESHOLD && !this.isBusted());
     }
 }
