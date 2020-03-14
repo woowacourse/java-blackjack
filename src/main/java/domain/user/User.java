@@ -3,6 +3,7 @@ package domain.user;
 import domain.ScoreType;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Deck;
 import domain.user.strategy.draw.DrawStrategy;
 
 import java.util.ArrayList;
@@ -33,6 +34,16 @@ public class User implements Comparable<User> {
 
 	public void addCard(Card card) {
 		this.cards.add(card);
+		this.score = ScoreType.of(this.cards);
+	}
+
+	public void addInitialCards(Deck deck) {
+		addCard(deck);
+		addCard(deck);
+	}
+
+	public void addCard(Deck deck) {
+		this.cards.add(deck.pop());
 		this.score = ScoreType.of(this.cards);
 	}
 

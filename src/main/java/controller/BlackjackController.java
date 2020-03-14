@@ -24,13 +24,17 @@ public class BlackjackController {
 	}
 
 	public void run() {
-		deck.giveInitialCards(dealer, players);
+		deck.shuffle();
+		dealer.addInitialCards(deck);
+		for (Player player : players) {
+			player.addInitialCards(deck);
+		}
 		printInitialStatus(dealer.openCard(), players);
 
 		if (dealer.isNotBlackjack()) {
 			players.forEach(player -> proceedExtraDraw(player, deck));
 			while (dealer.canDrawMore()) {
-				deck.addCard(dealer);
+				dealer.addCard(deck);
 				printDealerDrawing();
 			}
 		}
@@ -45,7 +49,7 @@ public class BlackjackController {
 
 	private void proceedExtraDraw(Player player, Deck deck) {
 		while (player.canDrawMore() && wantDraw(player)) {
-			deck.addCard(player);
+			player.addCard(deck);
 			printCardsStatusOf(player);
 		}
 	}
