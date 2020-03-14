@@ -59,7 +59,7 @@ public class OutputView {
 
     public static void printFinalResult(Map<Player, Result> totalResult) {
         System.out.println("## 최종 승패");
-        System.out.println(parseDealerTotalResult(calculatePlayerResultCount(totalResult)));
+        System.out.println(parseDealerFinalResult(calculatePlayerResultCount(totalResult)));
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
@@ -99,7 +99,7 @@ public class OutputView {
         return sb.toString();
     }
 
-    private static String parseDealerTotalResult(Map<Result, Integer> playerResult) {
+    private static String parseDealerFinalResult(Map<Result, Integer> playerResult) {
         return DEALER + COLON +
                 playerResult.get(Result.LOSE) + WINS +
                 playerResult.get(Result.DRAW) + DRAWS +
