@@ -6,36 +6,17 @@ import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public abstract class User {
-    private static final int MAX_NAME_LENGTH = 5;
     private static final String NULL_ERR_MSG = "%s이(가) 없습니다.";
-    private static final String MAX_PLAYER_NAME_ERR_MSG = "플레이어 이름은 최대 %자입니다.";
-    private String name;
+    private Name name;
     private Cards cards;
 
-    public User() {
-        this.name = "";
-        this.cards = new Cards();
-    }
-
     public User(String name) {
-        validateNotNull(name);
-        validateNameLength(name);
-        this.name = name;
+        this.name = new Name(name);
         cards = new Cards();
     }
 
-    private void validateNotNull(String name) {
-        Objects.requireNonNull(name, String.format(NULL_ERR_MSG, "사용자 이름"));
-    }
-
-    private void validateNameLength(String name) {
-        if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(String.format(MAX_PLAYER_NAME_ERR_MSG, MAX_NAME_LENGTH));
-        }
-    }
-
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public void addCard(Card card) {

@@ -27,6 +27,7 @@ public class Cards {
     }
 
     private int handleAce(int sum) {
+        // isACE
         int aceCount = (int) cards.stream()
                 .filter(x -> x.has(CardNumber.ACE))
                 .count();
