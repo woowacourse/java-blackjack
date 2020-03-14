@@ -1,7 +1,5 @@
 package com.blackjack.view;
 
-import static com.blackjack.domain.user.Dealer.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,8 +16,8 @@ public class OutputView {
 	private OutputView() {
 	}
 
-	public static void printCardsAtFirst(User dealer, List<User> players) {
-		printDrawTitle(players);
+	public static void printCardsAtFirst(User dealer, List<User> players, int firstDrawCount) {
+		printDrawTitle(players, firstDrawCount);
 		System.out.println(dealer.getName() + ": " + makeDealerFirstCardInfo(dealer));
 		printPlayersCardInfo(players);
 	}
@@ -28,8 +26,8 @@ public class OutputView {
 		System.out.print(makeUserCardInfo(player));
 	}
 
-	public static void printDealerDrawMessage() {
-		System.out.printf("딜러는 %d이하라 한 장의 카드를 더 받았습니다.\n", DRAW_CONDITION);
+	public static void printDealerDrawMessage(int drawCondition) {
+		System.out.printf("딜러는 %d이하라 한 장의 카드를 더 받았습니다.\n", drawCondition);
 	}
 
 	public static void printUserScore(Score score) {
@@ -76,11 +74,11 @@ public class OutputView {
 				.collect(Collectors.joining(DELIMITER));
 	}
 
-	private static void printDrawTitle(List<User> players) {
+	private static void printDrawTitle(List<User> players, int firstDrawCount) {
 		String playerNames = players.stream()
 				.map(User::getName)
 				.collect(Collectors.joining(DELIMITER));
-		System.out.printf("딜러와 %s에게 %d장의 카드를 나누었습니다.\n", playerNames, FIRST_DRAW_COUNT);
+		System.out.printf("딜러와 %s에게 %d장의 카드를 나누었습니다.\n", playerNames, firstDrawCount);
 	}
 
 }

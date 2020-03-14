@@ -1,5 +1,6 @@
 package com.blackjack.controller;
 
+import static com.blackjack.domain.user.Dealer.*;
 import static com.blackjack.view.InputView.*;
 import static com.blackjack.view.OutputView.*;
 
@@ -12,7 +13,7 @@ import com.blackjack.domain.user.User;
 class DrawController {
 	void draw(CardDeck cardDeck, User dealer, List<User> players) {
 		drawAtFirst(cardDeck, dealer, players);
-		printCardsAtFirst(dealer, players);
+		printCardsAtFirst(dealer, players, FIRST_DRAW_COUNT);
 
 		drawAllPlayers(cardDeck, players);
 		drawDealerUntilEndTurn(cardDeck, dealer);
@@ -21,7 +22,7 @@ class DrawController {
 	private void drawDealerUntilEndTurn(CardDeck cardDeck, User dealer) {
 		while (dealer.canDraw()) {
 			dealer.draw(cardDeck);
-			printDealerDrawMessage();
+			printDealerDrawMessage(DRAW_CONDITION);
 		}
 	}
 
