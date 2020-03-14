@@ -30,6 +30,6 @@ public class OutputView {
 
     public static void printWinningResult(GameResult gameResult) {
         System.out.println(NEWLINE + "## 최종 승패");
-        System.out.println(gameResult.getTotalWinningResults());
+        System.out.println(gameResult.getTotalResults());
     }
 }

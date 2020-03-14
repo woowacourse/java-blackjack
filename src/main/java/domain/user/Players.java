@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.ResultType;
-import domain.rule.PlayerRule;
+import domain.rule.Rules;
 import view.OutputView;
 
 public class Players {
@@ -54,12 +54,12 @@ public class Players {
                 .collect(Collectors.joining(OutputView.NEWLINE));
     }
 
-    public Map<Player, ResultType> decideWinner(Dealer dealer) {
-        Map<Player, ResultType> winningResultOfPlayers = new LinkedHashMap<>();
+    public Map<Player, ResultType> decideWinner(Dealer dealer, Rules rules) {
+        Map<Player, ResultType> resultOfPlayers = new LinkedHashMap<>();
 
-        players.forEach(player -> winningResultOfPlayers.put(player, PlayerRule.decideResultType(player, dealer)));
+        players.forEach(player -> resultOfPlayers.put(player, rules.decideResultType(player, dealer)));
 
-        return Collections.unmodifiableMap(winningResultOfPlayers);
+        return Collections.unmodifiableMap(resultOfPlayers);
     }
 
     public List<Player> getPlayers() {

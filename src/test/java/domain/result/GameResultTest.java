@@ -33,6 +33,6 @@ class GameResultTest {
 
         GameResult gameResult = GameResult.of(dealer, players);
 
-        assertThat(gameResult.getTotalWinningResults()).isEqualTo(expected);
+        assertThat(gameResult.getTotalResults()).isEqualTo(expected);
     }
 }

@@ -1,12 +1,11 @@
 package domain.rule;
 
-import java.util.Arrays;
 import java.util.function.BiFunction;
 
 import domain.result.ResultType;
 import domain.user.User;
 
-public enum PlayerRule {
+public enum PlayerResultRule implements Rule {
 
     PLAYER_BUST((player, dealer) -> player.isBust(), ResultType.LOSE),
     DEALER_BUST((player, dealer) -> dealer.isBust(), ResultType.WIN),
@@ -19,16 +18,18 @@ public enum PlayerRule {
     private final BiFunction<User, User, Boolean> condition;
     private final ResultType resultType;
 
-    PlayerRule(BiFunction<User, User, Boolean> condition, ResultType resultType) {
+    PlayerResultRule(BiFunction<User, User, Boolean> condition, ResultType resultType) {
         this.condition = condition;
         this.resultType = resultType;
     }
 
-    public static ResultType decideResultType(User player, User dealer) {
-        return Arrays.stream(PlayerRule.values())
-                .filter(playerRule -> playerRule.condition.apply(player, dealer))
-                .findFirst()
-                .get()
-                .resultType;
+    @Override
+    public Boolean condition(User first, User second) {
+        return condition.apply(first, second);
+    }
+
+    @Override
+    public ResultType getResultType() {
+        return resultType;
     }
 }

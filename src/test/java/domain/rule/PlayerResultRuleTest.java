@@ -2,6 +2,7 @@ package domain.rule;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,7 @@ import domain.result.ResultType;
 import domain.user.Dealer;
 import domain.user.Player;
 
-class PlayerRuleTest {
+class PlayerResultRuleTest {
 
     private Dealer dealer;
     private Player player;
@@ -41,7 +42,9 @@ class PlayerRuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.SIX));
         dealer.draw(dealerCard);
 
-        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(expected);
+        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
+
+        assertThat(rules.decideResultType(player, dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardSet() {
@@ -82,7 +85,9 @@ class PlayerRuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
-        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(ResultType.DRAW);
+        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
+
+        assertThat(rules.decideResultType(player, dealer)).isEqualTo(ResultType.DRAW);
     }
 
     @Test
@@ -95,7 +100,9 @@ class PlayerRuleTest {
         dealer.draw(new Card(Symbol.SPADE, Type.SIX));
         dealer.draw(new Card(Symbol.HEART, Type.FIVE));
 
-        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(ResultType.WIN);
+        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
+
+        assertThat(rules.decideResultType(player, dealer)).isEqualTo(ResultType.WIN);
     }
 
     @Test
@@ -108,6 +115,8 @@ class PlayerRuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
-        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(ResultType.LOSE);
+        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
+
+        assertThat(rules.decideResultType(player, dealer)).isEqualTo(ResultType.LOSE);
     }
 }
