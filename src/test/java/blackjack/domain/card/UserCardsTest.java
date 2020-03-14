@@ -33,22 +33,13 @@ public class UserCardsTest {
         userCards.add(new Card(Type.HEART, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        assertThat(userCards.getTotalScore()).isEqualTo(14);
+        assertThat(userCards.getScore()).isEqualTo(14);
 
         userCards = new UserCards();
         userCards.add(new Card(Type.DIAMOND, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.TWO));
-        assertThat(userCards.getTotalScore()).isEqualTo(14);
-    }
-
-    @DisplayName("Bust시 0으로 초기화 확인")
-    @Test
-    void getTotalSumBust() {
-        userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        userCards.add(new Card(Type.CLUB, Symbol.QUEEN));
-        userCards.add(new Card(Type.CLUB, Symbol.KING));
-        assertThat(userCards.getTotalScore()).isEqualTo(0);
+        assertThat(userCards.getScore()).isEqualTo(14);
     }
 
     @DisplayName("카드가 21을 넘는지 확인")

@@ -11,6 +11,6 @@ public class Player extends User {
     }
 
     public Outcome calculateOutcome(User dealer) {
-        return userCards.calculateOutcome(dealer.userCards);
+        return Outcome.from(userCards, dealer.userCards);
     }
 }
