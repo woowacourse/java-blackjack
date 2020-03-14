@@ -71,7 +71,8 @@ public class Controller {
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
-		OutputView.printResult(BlackjackGameDto.from(blackjackGame));
-		OutputView.printMatchResult(BlackjackGameDto.from(blackjackGame));
+		BlackjackGameDto blackjackGameDto = BlackjackGameDto.from(blackjackGame);
+		OutputView.printResult(blackjackGameDto);
+		OutputView.printMatchResult(blackjackGameDto);
 	}
 }
