@@ -8,19 +8,35 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player implements PlayerInterface {
+	private static final String ERROR_MESSAGE_NAME_BLANK = "이름은 blank 값이 될 수 없습니다.";
 	private static final String STRING_FORMAT_PRINT_CARD = "%s카드 : %s";
 
 	protected String name;
 	protected PlayerCards playerCards;
 
+	protected Player(String name) {
+		validateName(name);
+		this.name = name;
+		this.playerCards = new PlayerCards();
+	}
+
+	private void validateName(String name) {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_NAME_BLANK);
+		}
+	}
+
+	@Override
 	public void cardDraw(List<Card> cards) {
 		playerCards.addAll(cards);
 	}
 
+	@Override
 	public int calculateScore() {
 		return playerCards.calculateScore();
 	}
 
+	@Override
 	public int calculateBurstIsZeroScore() {
 		int score = playerCards.calculateScore();
 		if (score > Rull.MAX_SCORE) {
@@ -29,6 +45,7 @@ public class Player implements PlayerInterface {
 		return score;
 	}
 
+	@Override
 	public String toStringAllCard() {
 		return String.format(STRING_FORMAT_PRINT_CARD, this.name, playerCards.toStringAllCard());
 	}
@@ -37,6 +54,7 @@ public class Player implements PlayerInterface {
 		return String.format(STRING_FORMAT_PRINT_CARD, this.name, playerCards.toStringOneCard());
 	}
 
+	@Override
 	public String getName() {
 		return this.name;
 	}
