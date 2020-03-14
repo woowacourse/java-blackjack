@@ -18,7 +18,7 @@ public class Player extends Gamer {
     }
 
     public MatchResult findMatchResult(int dealerScore) {
-        if (calculateWithAce() > DRAW_CARD_PIVOT) {
+        if (calculateScore() > DRAW_CARD_PIVOT) {
             return MatchResult.LOSE;
         }
 
@@ -26,11 +26,11 @@ public class Player extends Gamer {
             return MatchResult.WIN;
         }
 
-        return MatchResult.of(calculateWithAce() - dealerScore);
+        return MatchResult.of(calculateScore() - dealerScore);
     }
 
     @Override
     public boolean isDrawable() {
-        return super.calculateWithAce() < DRAW_CARD_PIVOT;
+        return super.calculateScore() < DRAW_CARD_PIVOT;
     }
 }

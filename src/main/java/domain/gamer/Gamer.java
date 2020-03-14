@@ -24,8 +24,8 @@ public abstract class Gamer {
         this.cards.addAll(cards);
     }
 
-    public int calculateWithAce() {
-        int score = calculateScore();
+    public int calculateScore() {
+        int score = calculateScoreWithoutAce();
 
         if (isContainAce() && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
             return score + ACE_HIDDEN_SCORE;
@@ -34,7 +34,7 @@ public abstract class Gamer {
         return score;
     }
 
-    private int calculateScore() {
+    private int calculateScoreWithoutAce() {
         return cards.stream()
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getScore)

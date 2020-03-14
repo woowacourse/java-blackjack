@@ -19,7 +19,7 @@ public class GamerTest {
                 new Card(CardSuit.CLOVER, CardNumber.SEVEN),
                 new Card(CardSuit.CLOVER, CardNumber.TEN))
         );
-        assertThat(player.calculateWithAce()).isEqualTo(17);
+        assertThat(player.calculateScore()).isEqualTo(17);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class GamerTest {
                 new Card(CardSuit.CLOVER, CardNumber.ACE),
                 new Card(CardSuit.CLOVER, CardNumber.JACK))
         );
-        assertThat(player.calculateWithAce()).isEqualTo(21);
+        assertThat(player.calculateScore()).isEqualTo(21);
     }
 
     @Test
@@ -42,6 +42,6 @@ public class GamerTest {
                 new Card(CardSuit.CLOVER, CardNumber.JACK),
                 new Card(CardSuit.HEART, CardNumber.SIX))
         );
-        assertThat(player.calculateWithAce()).isEqualTo(17);
+        assertThat(player.calculateScore()).isEqualTo(17);
     }
 }
