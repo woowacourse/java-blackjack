@@ -19,7 +19,7 @@ public class GameResult {
 		this.playersResult = playersResult;
 	}
 
-	public static GameResult from(List<Player> players, Dealer dealer) {
+	public static GameResult of(List<Player> players, Dealer dealer) {
 		Map<Player, ResultType> playerToResult = new HashMap<>();
 		for (Player player : players) {
 			playerToResult.put(player, ResultType.of(player.calculateScore(), dealer.calculateScore()));
@@ -27,7 +27,7 @@ public class GameResult {
 		return new GameResult(playerToResult);
 	}
 
-	public TreeMap<ResultType, Integer> dealerResult() {
+	public Map<ResultType, Integer> dealerResult() {
 		List<ResultType> dealerResultType = playersResult.values()
 			.stream()
 			.map(ResultType::reverse)

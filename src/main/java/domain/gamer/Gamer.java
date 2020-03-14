@@ -35,7 +35,7 @@ public abstract class Gamer {
 		}
 	}
 
-	public abstract Score getHitPoint();
+	protected abstract Score getHitPoint();
 
 	public void hit(Card card) {
 		cards.add(card);

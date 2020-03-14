@@ -7,7 +7,6 @@ import domain.card.Card;
 import domain.card.Symbol;
 
 public class Score {
-	private static final int ZERO = 0;
 	private static final int TEN = 10;
 	private static final int BLACKJACK_SCORE = 21;
 
@@ -32,14 +31,14 @@ public class Score {
 	private static int calculateRaw(List<Card> cards) {
 		return cards.stream()
 			.map(Card::getSymbol)
-			.map(Symbol::getScore)
-			.reduce(ZERO, Integer::sum);
+			.mapToInt(Symbol::getScore)
+			.sum();
 	}
 
 	private static boolean containAce(List<Card> cards) {
 		return cards.stream()
 			.map(Card::getSymbol)
-			.anyMatch(symbol -> symbol == Symbol.ACE);
+			.anyMatch(Symbol::isAce);
 	}
 
 	public boolean isBiggerThan(Score other) {

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import util.StringUtil;
 
 public class PlayersFactory {
-	public static List<Player> of(String input) {
+	public static List<Player> create(String input) {
 		List<String> userNames = StringUtil.parseByComma(input);
 
 		List<Player> players = userNames.stream()

@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
@@ -14,10 +13,10 @@ import domain.result.ResultType;
 
 public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
+	private static final int FIRST_CARD = 0;
 
 	public static void printGiving(List<Player> players, Dealer dealer) {
 		StringBuilder sb = new StringBuilder();
-
 		sb.append(dealer.getName())
 			.append("와 ");
 		sb.append(players.stream()
@@ -32,7 +31,7 @@ public class OutputView {
 		StringBuilder sb = new StringBuilder();
 		sb.append(dealer.getName())
 			.append(": ")
-			.append(dealer.getCards().get(0).getCardInfo());
+			.append(dealer.getCards().get(FIRST_CARD).getCardInfo());
 		System.out.println(sb);
 	}
 
@@ -80,7 +79,7 @@ public class OutputView {
 			.append(NEW_LINE);
 	}
 
-	public static void printDealerResult(TreeMap<ResultType, Integer> dealerResult) {
+	public static void printDealerResult(Map<ResultType, Integer> dealerResult) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
 		sb.append("딜러: ");
