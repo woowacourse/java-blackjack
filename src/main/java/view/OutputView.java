@@ -55,7 +55,7 @@ public class OutputView {
         return cardsToString.toString();
     }
 
-    public static String printCard(Card card) {
+    private static String printCard(Card card) {
         StringBuilder cardToString = new StringBuilder();
         cardToString.append(card.getCardNumber().getCardInitial())
                 .append(card.getCardSuit().getSuit());
