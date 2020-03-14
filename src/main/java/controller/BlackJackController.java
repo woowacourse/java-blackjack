@@ -1,17 +1,16 @@
 package controller;
 
-import java.util.List;
-
 import domain.card.Deck;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.PlayersFactory;
-import domain.gamer.Answer;
+import domain.gamer.*;
 import domain.result.GameResult;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlackJackController {
+	private final List<Gamer> gamers;
 	private final List<Player> players;
 	private final Dealer dealer;
 	private final Deck deck;
@@ -20,13 +19,22 @@ public class BlackJackController {
 		this.players = PlayersFactory.newPlayers(InputView.inputUserNames());
 		this.dealer = new Dealer();
 		this.deck = new Deck();
+		this.gamers = createGamers();
+	}
+
+	private List<Gamer> createGamers() {
+		List<Gamer> gamers = new ArrayList<>();
+		gamers.add(dealer);
+		gamers.addAll(players);
+
+		return gamers;
 	}
 
 	public void run() {
 		giveTwoCards();
 		giveCardToPlayers();
 		giveCardToDealer();
-		OutputView.printCardsScore(players, dealer);
+		OutputView.printCardsAndScore(gamers);
 
 		GameResult gameResult = GameResult.of(players, dealer);
 		OutputView.printDealerResult(gameResult.dealerResult());
@@ -34,15 +42,12 @@ public class BlackJackController {
 	}
 
 	private void giveTwoCards() {
-		for (Player player : players) {
-			player.hit(deck.drawCard());
-			player.hit(deck.drawCard());
+		for (Gamer gamer : gamers) {
+			gamer.hit(deck.drawCard());
+			gamer.hit(deck.drawCard());
 		}
-		dealer.hit(deck.drawCard());
-		dealer.hit(deck.drawCard());
 		OutputView.printGiving(players, dealer);
-		OutputView.printDealerCard(dealer);
-		OutputView.printPlayersCard(players);
+		OutputView.printFirstOpenedCards(gamers);
 	}
 
 	private void giveCardToPlayers() {

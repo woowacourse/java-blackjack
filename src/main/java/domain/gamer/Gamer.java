@@ -49,6 +49,12 @@ public abstract class Gamer {
 		return Score.from(cards);
 	}
 
+	public List<Card> firstOpenedCards() {
+		return cards.subList(0, firstOpenedCardsCount());
+	}
+
+	protected abstract int firstOpenedCardsCount();
+
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}

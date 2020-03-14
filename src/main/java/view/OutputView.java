@@ -11,6 +11,7 @@ import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.result.GameResult;
 import domain.result.ResultType;
+import domain.result.Score;
 
 public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
@@ -19,65 +20,58 @@ public class OutputView {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(dealer.getName())
-			.append("와 ");
+				.append("와 ");
 		sb.append(players.stream()
-			.map(Player::getName)
-			.collect(Collectors.joining(", ")));
+				.map(Player::getName)
+				.collect(Collectors.joining(", ")));
 		sb.append("에게 2장의 카드를 나누었습니다.");
 		sb.append(NEW_LINE);
 		System.out.println(sb);
 	}
 
-	public static void printDealerCard(Dealer dealer) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(dealer.getName())
-			.append(": ")
-			.append(dealer.getCards().get(0).getCardInfo());
-		System.out.println(sb);
-	}
-
-	public static void printPlayersCard(List<Player> players) {
-		System.out.println();
-		for (Player player : players) {
-			printCards(player);
+	public static void printFirstOpenedCards(List<Gamer> gamers) {
+		for (Gamer gamer : gamers) {
+			printGamerCard(gamer.getName(), gamer.firstOpenedCards());
 		}
-		System.out.println();
 	}
 
-	public static void printCards(Gamer user) {
-		StringBuilder sb = createCardsFormat(user);
-		System.out.println(sb);
+	private static void printGamerCard(String name, List<Card> cards) {
+		System.out.println(createCardFormat(name, cards));
 	}
 
-	private static StringBuilder createCardsFormat(Gamer user) {
+	private static String createCardFormat(String name, List<Card> cards) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(user.getName())
-			.append(": ")
-			.append(user.getCards()
-				.stream()
-				.map(Card::getCardInfo)
-				.collect(Collectors.joining(", ")));
-		return sb;
+		sb.append(name)
+				.append(": ")
+				.append(cards.stream()
+						.map(Card::getCardInfo)
+						.collect(Collectors.joining(", ")));
+		return sb.toString();
+	}
+
+	public static void printCards(Gamer gamer) {
+		printGamerCard(gamer.getName(), gamer.getCards());
 	}
 
 	public static void printDealerCards() {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printCardsScore(List<Player> players, Dealer dealer) {
+	public static void printCardsAndScore(List<Gamer> gamers) {
 		StringBuilder sb = new StringBuilder();
-		createScoreFormat(dealer, sb);
-		for (Player player : players) {
-			createScoreFormat(player, sb);
+		for (Gamer gamer : gamers) {
+			sb.append(createCardFormat(gamer.getName(), gamer.getCards()))
+					.append(createScoreFormat(gamer.calculateScore()));
 		}
 		System.out.println(sb);
 	}
 
-	private static void createScoreFormat(Gamer gamer, StringBuilder sb) {
-		sb.append(createCardsFormat(gamer))
-			.append(" - 결과: ")
-			.append(gamer.calculateScore().getScore())
-			.append(NEW_LINE);
+	private static String createScoreFormat(Score score) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" - 결과: ")
+				.append(score.getScore())
+				.append(NEW_LINE);
+		return sb.toString();
 	}
 
 	public static void printDealerResult(Map<ResultType, Integer> dealerResult) {
@@ -96,9 +90,9 @@ public class OutputView {
 
 		for (Map.Entry<Player, ResultType> playerResultEntry : playersResult.entrySet()) {
 			sb.append(playerResultEntry.getKey().getName())
-				.append(": ")
-				.append(playerResultEntry.getValue().getResult())
-				.append(NEW_LINE);
+					.append(": ")
+					.append(playerResultEntry.getValue().getResult())
+					.append(NEW_LINE);
 		}
 		System.out.println(sb);
 	}
