@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.*;
-import blackjack.utils.DisplayHandler;
 import blackjack.utils.InputHandler;
 import blackjack.utils.ResultHandler;
 import blackjack.view.InputView;
@@ -16,10 +15,10 @@ public class BlackjackGameController {
         Users users = enrollUsers();
         Deck deck = new Deck(CardFactory.getInstance().issueNewCards());
         distributeInitialCards(users, deck);
-        OutputView.printInitialCardDistribution(DisplayHandler.parseInitialDistribution(users));
+        OutputView.printInitialCardDistribution(users);
         hitMoreCard(users, deck);
         decideDealerToHitCard(users, deck);
-        OutputView.printFinalCardScore(DisplayHandler.parseFinalScoreAnnouncement(users));
+        OutputView.printFinalCardScore(users);
         OutputView.printFinalResult(ResultHandler.findAllWinners(users));
     }
 
