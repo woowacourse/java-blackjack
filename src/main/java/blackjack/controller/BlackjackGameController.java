@@ -41,7 +41,7 @@ public class BlackjackGameController {
     private static void askForHit(Deck deck, User user) {
         while (InputView.askForHit(user.getName())) {
             user.receiveCard(deck.draw());
-            OutputView.printCardStatus(user.showCardInfo());
+            OutputView.printCardStatus(user);
             if (user.isBusted()) {
                 OutputView.printBusted(user.getName());
                 break;

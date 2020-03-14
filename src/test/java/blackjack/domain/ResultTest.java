@@ -6,7 +6,6 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.UserCards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,26 +27,26 @@ public class ResultTest {
         player1 = new Player("pobi");
         player2 = new Player("hiro");
         player3 = new Player("rebecca");
-        dealer.receiveInitialCards(new UserCards(
+        dealer.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.SPADE, Symbol.JACK),
                         new Card(Suit.HEART, Symbol.TEN)
-                )));
-        player1.receiveInitialCards(new UserCards(
+                ));
+        player1.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.SPADE, Symbol.ACE),
                         new Card(Suit.CLUB, Symbol.TEN)
-                )));
-        player2.receiveInitialCards(new UserCards(
+                ));
+        player2.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.DIAMOND, Symbol.FOUR),
                         new Card(Suit.CLUB, Symbol.KING)
-                )));
-        player3.receiveInitialCards(new UserCards(
+                ));
+        player3.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.CLUB, Symbol.TEN),
                         new Card(Suit.CLUB, Symbol.KING)
-                )));
+                ));
     }
 
     @Test

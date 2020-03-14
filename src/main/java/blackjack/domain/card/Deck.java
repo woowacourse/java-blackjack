@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.user.UserCards;
 import blackjack.exception.NoCardException;
 
 import java.util.Collections;

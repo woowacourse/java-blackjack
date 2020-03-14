@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -12,6 +13,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String CARD = " 카드: ";
+    private static final String RESULT = " - 결과 : ";
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = "\n";
     private static final String COLON = ": ";
@@ -24,8 +27,22 @@ public class OutputView {
         System.out.println(parseInitialDistribution(users));
     }
 
-    public static void printCardStatus(String cardInfo) {
-        System.out.println(cardInfo);
+    public static void printCardStatus(User user) {
+        System.out.println(showCardInfo(user));
+    }
+
+    private static String showCardInfo(User user) {
+        return user.getName() + CARD + String.join(DELIMITER, parseCardsName(user.getCards()));
+    }
+
+    private static List<String> parseCardsName(List<Card> cards) {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.toList());
+    }
+
+    private static String showFinalCardInfo(User user) {
+        return showCardInfo(user) + RESULT + user.getTotalScore();
     }
 
     public static void printBusted(String name) {
@@ -46,7 +63,7 @@ public class OutputView {
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
-    public static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
+    private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
         Map<Result, Integer> playerResult = new HashMap<>();
         playerResult.put(Result.WIN, 0);
         playerResult.put(Result.DRAW, 0);
@@ -65,13 +82,13 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER)) +
                 "에게 2장의 카드를 나누었습니다.\n\n" +
                 gameUsers.stream()
-                        .map(User::showInitialCardInfo)
+                        .map(OutputView::showCardInfo)
                         .collect(Collectors.joining(NEW_LINE));
     }
 
     private static String parseFinalScoreAnnouncement(Users users) {
         return users.getUsers().stream()
-                .map(User::showFinalCardInfo)
+                .map(OutputView::showFinalCardInfo)
                 .collect(Collectors.joining(NEW_LINE));
     }
 

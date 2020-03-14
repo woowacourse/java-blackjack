@@ -2,59 +2,70 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class User {
-    protected static final String CARD = " 카드: ";
-    protected static final String DELIMITER = ", ";
-    protected static final String RESULT = " - 결과 : ";
-    protected static final String BUSTED = "버스트";
+    private static final int ACE_INCREMENT = 10;
+    private static final int MAX_SCORE = 21;
+
     protected final String name;
-    protected UserCards userCards;
+    protected final List<Card> cards;
 
     public User(String name) {
         this.name = name;
+        this.cards = new LinkedList<>();
     }
 
     public void receiveInitialCards(List<Card> initialCards) {
-        this.userCards = new UserCards(initialCards);
+        this.cards.addAll(Objects.requireNonNull(initialCards));
     }
 
     public void receiveCard(Card card) {
-        userCards.add(card);
+        cards.add(card);
+    }
+
+    public void receiveCard(List<Card> newCards) {
+        cards.addAll(newCards);
     }
 
     public int getTotalScore() {
-        return userCards.getTotalScore();
+        int score = incrementAceScore(cards.stream()
+            .mapToInt(Card::getScore)
+            .sum());
+        if(score > MAX_SCORE) {
+            return 0;
+        }
+        return score;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public String showCardInfo() {
-        return name + CARD + String.join(DELIMITER, userCards.getCardInfo());
-    }
-
-    public abstract String showInitialCardInfo();
-
-    public String showFinalCardInfo() {
-        return showCardInfo() + RESULT + parseFinalScore();
-    }
-
     public boolean isBusted() {
-        return userCards.isBusted();
+        return getTotalScore() == 0;
     }
 
     public boolean isBlackJack() {
-        return userCards.isBlackJack();
+        return cards.size() == 2
+                && getTotalScore() == MAX_SCORE;
     }
 
-    private String parseFinalScore() {
-        int finalScore = this.getTotalScore();
-        if(finalScore == 0) {
-            return BUSTED;
-        }
-        return Integer.toString(finalScore);
+    public abstract List<Card> getInitialCards();
+
+    public List<Card> getCards() {
+        return cards;
     }
+
+    private int incrementAceScore(int score) {
+        if (cards.stream().anyMatch(Card::isAce) && score <= MAX_SCORE - ACE_INCREMENT) {
+            score += ACE_INCREMENT;
+        }
+        return score;
+    }
+
+
 }

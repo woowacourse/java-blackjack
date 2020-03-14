@@ -1,5 +1,9 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+
+import java.util.List;
+
 public class Player extends User {
 
     public Player(String name) {
@@ -7,7 +11,7 @@ public class Player extends User {
     }
 
     @Override
-    public String showInitialCardInfo() {
-        return super.showCardInfo();
+    public List<Card> getInitialCards() {
+        return super.getCards();
     }
 }
