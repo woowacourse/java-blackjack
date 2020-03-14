@@ -25,8 +25,8 @@ public class Users {
     }
 
     public List<User> getUsers() {
-        List<User> users = new LinkedList<>(players);
-        users.add(dealer);
+        List<User> users = new ArrayList<>(players);
+        users.add(0, dealer);
         return users;
     }
 
