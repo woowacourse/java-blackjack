@@ -8,12 +8,10 @@ import blackjack.utils.ResultHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
-
 public class BlackjackGameController {
     public static void run() {
         Users users = enrollUsers();
-        Deck deck = new Deck(CardFactory.getInstance().issueNewCards());
+        Deck deck = new Deck(CardFactory.getInstance().issueNewDeck());
         distributeInitialCards(users, deck);
         OutputView.printInitialCardDistribution(users);
         hitMoreCard(users, deck);
