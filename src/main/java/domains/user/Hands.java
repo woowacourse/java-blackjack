@@ -12,8 +12,6 @@ public class Hands {
     public static final int BURST_SCORE = 21;
 
     private List<Card> hands;
-    private int score = 0;
-    private boolean hasAce = false;
 
     public Hands(List<Card> hands) {
         this.hands = hands;
@@ -32,24 +30,28 @@ public class Hands {
     }
 
     public int score() {
-        score = hands.stream()
-                .peek(this::checkAce)
-                .mapToInt(Card::score)
-                .sum();
-        determineAceScore();
-        return this.score;
+        int score = 0;
+        boolean hasAce = false;
+        for (Card hand : hands) {
+            hasAce = checkAce(hand, hasAce);
+            score += hand.score();
+        }
+        score = determineAceScore(score, hasAce);
+        return score;
     }
 
-    private void determineAceScore() {
+    private int determineAceScore(int score, boolean hasAce) {
         if (score <= ACE_SCORE_CHANGE_POINT && hasAce) {
-            score += ACE_EXTRA_SCORE;
+            return score + ACE_EXTRA_SCORE;
         }
+        return score;
     }
 
-    private void checkAce(Card card) {
+    private boolean checkAce(Card card, boolean hasAce) {
         if (card.isAce()) {
-            hasAce = true;
+            return true;
         }
+        return hasAce;
     }
 
     public boolean isBurst() {

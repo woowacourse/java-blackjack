@@ -28,6 +28,14 @@ public class GameResult {
         calculateDealerResult();
     }
 
+    private boolean checkBurstPlayer(Player player) {
+        if (player.isBurst()) {
+            playerResult.put(player, WinOrDrawOrLose.LOSE);
+            return true;
+        }
+        return false;
+    }
+
     public WinOrDrawOrLose checkWinOrLose(Player player, Dealer dealer) {
         if (dealer.checkBurst() && !player.isBurst()) {
             return WinOrDrawOrLose.WIN;
@@ -39,14 +47,6 @@ public class GameResult {
             return WinOrDrawOrLose.LOSE;
         }
         return WinOrDrawOrLose.DRAW;
-    }
-
-    private boolean checkBurstPlayer(Player player) {
-        if (player.isBurst()) {
-            playerResult.put(player, WinOrDrawOrLose.LOSE);
-            return true;
-        }
-        return false;
     }
 
     public WinOrDrawOrLose getWinOrLose(Player player) {
