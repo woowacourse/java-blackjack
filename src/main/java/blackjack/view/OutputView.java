@@ -31,20 +31,6 @@ public class OutputView {
         System.out.println(showCardNames(user.getName(), user.getCards()));
     }
 
-    private static String showCardNames(String name, List<Card> cards) {
-        return name + CARD + String.join(DELIMITER, parseCardsName(cards));
-    }
-
-    private static List<String> parseCardsName(List<Card> cards) {
-        return cards.stream()
-                .map(Card::toString)
-                .collect(Collectors.toList());
-    }
-
-    private static String showFinalCardNames(User user) {
-        return showCardNames(user.getName(), user.getCards()) + RESULT + user.getTotalScore();
-    }
-
     public static void printBusted(String name) {
         System.out.println(name + "이(가) 버스트 되었습니다");
     }
@@ -63,6 +49,31 @@ public class OutputView {
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
+    private static String parseInitialDistribution(Users users) {
+        List<User> gameUsers = users.getUsers();
+        return gameUsers.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(DELIMITER)) +
+                "에게 2장의 카드를 나누었습니다.\n\n" +
+                gameUsers.stream()
+                        .map(user -> showCardNames(user.getName(), user.getInitialCards()))
+                        .collect(Collectors.joining(NEW_LINE));
+    }
+
+    private static String showCardNames(String name, List<Card> cards) {
+        return name + CARD + String.join(DELIMITER, parseCardsName(cards));
+    }
+
+    private static List<String> parseCardsName(List<Card> cards) {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.toList());
+    }
+
+    private static String showFinalCardNames(User user) {
+        return showCardNames(user.getName(), user.getCards()) + RESULT + user.getTotalScore();
+    }
+
     private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
         Map<Result, Integer> playerResult = new HashMap<>();
         playerResult.put(Result.WIN, 0);
@@ -73,17 +84,6 @@ public class OutputView {
             playerResult.put(r, playerResult.get(r) + 1);
         }
         return playerResult;
-    }
-
-    private static String parseInitialDistribution(Users users) {
-        List<User> gameUsers = users.getUsers();
-        return gameUsers.stream()
-                .map(User::getName)
-                .collect(Collectors.joining(DELIMITER)) +
-                "에게 2장의 카드를 나누었습니다.\n\n" +
-                gameUsers.stream()
-                        .map(user -> showCardNames(user.getName(), user.getInitialCards()))
-                        .collect(Collectors.joining(NEW_LINE));
     }
 
     private static String parseFinalScoreAnnouncement(Users users) {
