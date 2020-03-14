@@ -2,6 +2,7 @@ package domain;
 
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,12 +12,12 @@ import java.util.Map;
 public class GameResult {
     private final Map<String, Boolean> playerResult = new HashMap<>();
 
-    public GameResult(List<Player> players, Dealer dealer) {
+    public GameResult(Players players, Dealer dealer) {
         makeResult(players, dealer);
     }
 
-    private void makeResult(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
+    private void makeResult(Players players, Dealer dealer) {
+        for (Player player : players.get()) {
             playerResult.put(player.getName(), !dealer.isWinner(player));
         }
     }

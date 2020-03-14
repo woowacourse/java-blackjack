@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     CardDeck(List<Card> cards) {
         Collections.shuffle(cards);

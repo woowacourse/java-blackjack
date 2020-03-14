@@ -3,8 +3,8 @@ package view;
 import domain.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -19,8 +19,9 @@ public class OutputView {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDrawTurn(Dealer dealer, List<Player> players) {
-        String playerNames = players.stream()
+    public static void printFirstDrawFormat(Dealer dealer, Players players) {
+        String playerNames = players.get()
+                .stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(","));
         StringBuilder stringBuilder = new StringBuilder()
@@ -36,7 +37,7 @@ public class OutputView {
         System.out.println(status);
     }
 
-    public static void printAutoDraw(Dealer dealer) {
+    public static void printDealerDraw(Dealer dealer) {
         System.out.println(dealer.getName() + "는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
     }
 
