@@ -12,8 +12,8 @@ public class CardFactory {
         this.cards = Collections.unmodifiableList(generateAllCards());
     }
 
-    private LinkedList<Card> generateAllCards() {
-        LinkedList<Card> cards = new LinkedList<>();
+    private List<Card> generateAllCards() {
+        List<Card> cards = new LinkedList<>();
         Arrays.stream(Suit.values()).forEach(suit -> Arrays.stream(Symbol.values())
                 .map(symbol -> new Card(suit, symbol))
                 .forEach(cards::add));
@@ -24,7 +24,7 @@ public class CardFactory {
         return CardFactorySingletonHolder.instance;
     }
 
-    public LinkedList<Card> issueNewDeck() {
+    public List<Card> issueNewDeck() {
         return new LinkedList<>(cards);
     }
 
