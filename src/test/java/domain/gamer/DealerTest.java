@@ -53,7 +53,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(cards);
         Deck deck = new Deck(CardsFactory.getInstance());
-        dealer.addCardAtDealer(deck.popCard(1));
+        dealer.addCardAtDealer(deck);
         assertThat(dealer.getCards()).hasSize(expectedSize);
     }
 }

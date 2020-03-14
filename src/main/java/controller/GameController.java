@@ -24,7 +24,7 @@ public class GameController {
 
     private void addCardAtGamers(Gamers gamers, Deck deck) {
         addCardAtPlayers(gamers, deck);
-        gamers.getDealer().addCardAtDealer(deck.popCard(ADD_CARD_SIZE));
+        gamers.getDealer().addCardAtDealer(deck);
         OutputView.printAddCardAtDealer();
     }
 
