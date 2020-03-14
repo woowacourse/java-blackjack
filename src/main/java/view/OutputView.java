@@ -1,11 +1,11 @@
 package view;
 
-import domain.PlayerResult;
 import domain.gamer.dto.GamerDto;
 import domain.gamer.dto.GamerWithScoreDto;
+import domain.result.PlayerResult;
+import domain.result.dto.DealerResultDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -31,7 +31,14 @@ public class OutputView {
     }
 
     public static void printDealerHit(int hitThreshold) {
-        System.out.println(String.format("딜러의 점수가 %d미만이라 한 장의 카드를 더 받습니다.\n", hitThreshold));
+        System.out.println(String.format("\n딜러의 점수가 %d미만이라 한 장의 카드를 더 받습니다.", hitThreshold));
+    }
+
+    public static void printGamerCardsStateWithScores(List<GamerWithScoreDto> gamerWithScoreDtos) {
+        System.out.println();
+        for (GamerWithScoreDto gamerWithScoreDto : gamerWithScoreDtos) {
+            printGamerCardsStateWithScore(gamerWithScoreDto);
+        }
     }
 
     public static void printGamerCardsStateWithScore(GamerWithScoreDto gamerWithScoreDto) {
@@ -41,18 +48,17 @@ public class OutputView {
         System.out.printf("%s: %s - 결과: %d\n", gamerWithScoreDto.getName(), gamerCards, gamerWithScoreDto.getScore());
     }
 
-    public static void printGameResult(Map<PlayerResult, List<GamerDto>> gameResults) {
+    public static void printGameResultTitle() {
         System.out.println("\n## 최종 승패");
-        System.out.printf("딜러 : %d승, %d무, %d패 \n", gameResults.get(PlayerResult.LOSE).size(),
-                gameResults.get(PlayerResult.DRAW).size(), gameResults.get(PlayerResult.WIN).size());
-        for (PlayerResult playerResult : PlayerResult.values()) {
-            printEachResult(gameResults.get(playerResult), playerResult);
-        }
     }
 
-    private static void printEachResult(List<GamerDto> playerDtos, PlayerResult playerResult) {
-        for (GamerDto playerDto : playerDtos) {
-            System.out.println(playerDto.getName() + " : " + playerResult.getName());
-        }
+    public static void printDealerResult(DealerResultDto dealerResultDto) {
+        System.out.printf("딜러 : %d승, %d무, %d패 \n", dealerResultDto.getWinCount(),
+                dealerResultDto.getDrawCount(),
+                dealerResultDto.getLoseCount());
+    }
+
+    public static void printEachResult(GamerDto playerDto, PlayerResult playerResult) {
+        System.out.println(playerDto.getName() + " : " + playerResult.getName());
     }
 }

@@ -1,28 +1,27 @@
-package domain;
+package domain.result;
 
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.gamer.Gamer;
 
 import java.util.Arrays;
 
 public enum PlayerResult {
     WIN("승") {
         @Override
-        boolean isMatch(Dealer dealer, Player player) {
+        boolean isMatch(Gamer dealer, Gamer player) {
             return (player.isNotBust() && (dealer.isBust() || player.calculateScore().compareTo(dealer.calculateScore()) > 0))
                     || (dealer.isNotBlackJack() && player.isBlackJack());
         }
     },
     DRAW("무") {
         @Override
-        boolean isMatch(Dealer dealer, Player player) {
+        boolean isMatch(Gamer dealer, Gamer player) {
             return (player.isNotBust() && player.isNotBlackJack() && dealer.isNotBlackJack() && player.calculateScore() == dealer.calculateScore())
                     || (dealer.isBlackJack() && player.isBlackJack());
         }
     },
     LOSE("패") {
         @Override
-        boolean isMatch(Dealer dealer, Player player) {
+        boolean isMatch(Gamer dealer, Gamer player) {
             return player.isBust()
                     || player.calculateScore().compareTo(dealer.calculateScore()) < 0
                     || (dealer.isBlackJack() && player.isNotBlackJack());
@@ -35,7 +34,7 @@ public enum PlayerResult {
         this.name = name;
     }
 
-    public static PlayerResult match(Dealer dealer, Player player) {
+    public static PlayerResult match(Gamer dealer, Gamer player) {
         return Arrays.stream(values())
                 .filter(result -> result.isMatch(dealer, player))
                 .findAny()
@@ -46,5 +45,5 @@ public enum PlayerResult {
         return name;
     }
 
-    abstract boolean isMatch(Dealer dealer, Player player);
+    abstract boolean isMatch(Gamer dealer, Gamer player);
 }

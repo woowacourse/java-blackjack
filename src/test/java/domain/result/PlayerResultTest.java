@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import domain.card.Card;
 import domain.card.PlayingCards;
@@ -6,6 +6,7 @@ import domain.card.Symbol;
 import domain.card.Type;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,7 @@ public class PlayerResultTest {
         Dealer dealer = new Dealer(new PlayingCards(Arrays.asList(
                 new Card(Symbol.TEN, Type.CLOVER),
                 new Card(Symbol.NINE, Type.CLOVER))));
-        assertThat(PlayerResult.WIN.isMatch(dealer, player)).isTrue();
+        Assertions.assertThat(PlayerResult.WIN.isMatch(dealer, player)).isTrue();
     }
 
     @Test

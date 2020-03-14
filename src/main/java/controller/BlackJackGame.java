@@ -1,6 +1,5 @@
 package controller;
 
-import domain.PlayerResult;
 import domain.UserResponse;
 import domain.card.Deck;
 import domain.card.DeckFactory;
@@ -9,13 +8,13 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.gamer.dto.GamerDto;
 import domain.gamer.dto.GamerWithScoreDto;
+import domain.result.GameResults;
+import domain.result.dto.DealerResultDto;
 import view.InputView;
 import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
     public void play() {
@@ -23,34 +22,46 @@ public class BlackJackGame {
         Players players = Players.valueOf(deck, InputView.inputPlayerNames());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        List<GamerDto> playersDto = new ArrayList<>();
-        for (Player player : players) {
-            playersDto.add(GamerDto.of(player));
-        }
-        OutputView.printInitGamersState(GamerDto.ofWithFirstCard(dealer), playersDto, Deck.INIT_CARDS_SIZE);
+        OutputView.printInitGamersState(GamerDto.ofWithFirstCard(dealer),
+                createPlayerDtos(players), Deck.INIT_CARDS_SIZE);
+        receiveGamerCards(deck, players, dealer);
+        OutputView.printGamerCardsStateWithScores(createGamersWithScoreDtos(dealer, players));
 
+        printGameResult(dealer, players);
+    }
+
+    private List<GamerDto> createPlayerDtos(Players players) {
+        List<GamerDto> playerDtos = new ArrayList<>();
+        for (Player player : players) {
+            playerDtos.add(GamerDto.of(player));
+        }
+        return playerDtos;
+    }
+
+    private List<GamerWithScoreDto> createGamersWithScoreDtos(Dealer dealer, Players players) {
+        List<GamerWithScoreDto> gamersWithScoreDtos = new ArrayList<>();
+        gamersWithScoreDtos.add(GamerWithScoreDto.of(dealer));
+        for (Player player : players) {
+            gamersWithScoreDtos.add(GamerWithScoreDto.of(player));
+        }
+        return gamersWithScoreDtos;
+    }
+
+    private void printGameResult(Dealer dealer, Players players) {
+        GameResults gameResults = new GameResults(dealer, players);
+
+        OutputView.printGameResultTitle();
+        OutputView.printDealerResult(DealerResultDto.of(gameResults));
+        for (Player player : players) {
+            OutputView.printEachResult(GamerDto.of(player), gameResults.getPlayerResult(player));
+        }
+    }
+
+    private void receiveGamerCards(Deck deck, Players players, Dealer dealer) {
         for (Player player : players) {
             receivePlayerCards(deck, player);
         }
         receiveDealerCards(deck, dealer);
-
-        OutputView.printGamerCardsStateWithScore(GamerWithScoreDto.of(dealer));
-        for (Player player : players) {
-            OutputView.printGamerCardsStateWithScore(GamerWithScoreDto.of(player));
-        }
-
-        Map<PlayerResult, List<GamerDto>> gameResults = calculateGameResults(dealer, players.getPlayers());
-        OutputView.printGameResult(gameResults);
-    }
-
-    private Map<PlayerResult, List<GamerDto>> calculateGameResults(Dealer dealer, List<Player> players) {
-        Map<PlayerResult, List<GamerDto>> gameResults = players.stream()
-                .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player),
-                        Collectors.mapping(GamerDto::of, Collectors.toList())));
-        for (PlayerResult playerResult : PlayerResult.values()) {
-            gameResults.putIfAbsent(playerResult, new ArrayList<>());
-        }
-        return gameResults;
     }
 
     private void receiveDealerCards(Deck deck, Dealer dealer) {

@@ -2,7 +2,6 @@ package domain.gamer;
 
 import domain.card.Deck;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -26,10 +25,6 @@ public class Players implements Iterable<Player> {
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
             throw new IllegalArgumentException("중복되는 이름이 존재합니다.");
         }
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
     }
 
     @Override
