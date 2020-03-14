@@ -21,7 +21,6 @@ public class Deck {
         if (deck.size() < 1) {
             throw new IllegalStateException("덱에서 나누어주지 않은 카드가 한장도 없습니다.");
         }
-
         return this.deck.remove(0);
     }
 

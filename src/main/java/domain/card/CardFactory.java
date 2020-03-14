@@ -7,8 +7,7 @@ import java.util.List;
 public class CardFactory {
     public static Deck createDeck() {
         List<Card> cards = new ArrayList<>();
-        Symbol[] symbols = Symbol.values();
-        for (Symbol symbol : symbols) {
+        for (Symbol symbol : Symbol.values()) {
             createByType(cards, symbol);
         }
         return new Deck(cards);
