@@ -2,6 +2,8 @@ package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -31,46 +33,24 @@ public class SymbolTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Symbol.of("1"));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("심볼이 Ace인지 확인")
-    void isAce() {
-        assertThat(Symbol.of("10").isAce()).isFalse();
-        assertThat(Symbol.of("A").isAce()).isTrue();
+    @CsvSource(value = {"10:False", "5:False", "A:True"}, delimiter = ':')
+    void isAce(String input, Boolean expected) {
+        assertThat(Symbol.of(input).isAce()).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("심볼의 점수 확인")
-    void getPoint() {
-        assertThat(Symbol.of("A").getPoint()).isEqualTo(1);
-        assertThat(Symbol.of("2").getPoint()).isEqualTo(2);
-        assertThat(Symbol.of("3").getPoint()).isEqualTo(3);
-        assertThat(Symbol.of("4").getPoint()).isEqualTo(4);
-        assertThat(Symbol.of("5").getPoint()).isEqualTo(5);
-        assertThat(Symbol.of("6").getPoint()).isEqualTo(6);
-        assertThat(Symbol.of("7").getPoint()).isEqualTo(7);
-        assertThat(Symbol.of("8").getPoint()).isEqualTo(8);
-        assertThat(Symbol.of("9").getPoint()).isEqualTo(9);
-        assertThat(Symbol.of("10").getPoint()).isEqualTo(10);
-        assertThat(Symbol.of("J").getPoint()).isEqualTo(10);
-        assertThat(Symbol.of("Q").getPoint()).isEqualTo(10);
-        assertThat(Symbol.of("K").getPoint()).isEqualTo(10);
+    @CsvSource(value = {"A:1", "2:2", "3:3", "4:4", "5:5", "6:6", "7:7", "8:8", "9:9", "10:10", "J:10", "Q:10", "K:10"}, delimiter = ':')
+    void getPoint(String input, int expected) {
+        assertThat(Symbol.of(input).getPoint()).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("심볼의 Alias 확인")
-    void getAlias() {
-        assertThat(Symbol.of("A").getAlias()).isEqualTo("A");
-        assertThat(Symbol.of("2").getAlias()).isEqualTo("2");
-        assertThat(Symbol.of("3").getAlias()).isEqualTo("3");
-        assertThat(Symbol.of("4").getAlias()).isEqualTo("4");
-        assertThat(Symbol.of("5").getAlias()).isEqualTo("5");
-        assertThat(Symbol.of("6").getAlias()).isEqualTo("6");
-        assertThat(Symbol.of("7").getAlias()).isEqualTo("7");
-        assertThat(Symbol.of("8").getAlias()).isEqualTo("8");
-        assertThat(Symbol.of("9").getAlias()).isEqualTo("9");
-        assertThat(Symbol.of("10").getAlias()).isEqualTo("10");
-        assertThat(Symbol.of("J").getAlias()).isEqualTo("J");
-        assertThat(Symbol.of("Q").getAlias()).isEqualTo("Q");
-        assertThat(Symbol.of("K").getAlias()).isEqualTo("K");
+    @CsvSource(value = {"A:A", "2:2", "3:3", "4:4", "5:5", "6:6", "7:7", "8:8", "9:9", "10:10", "J:J", "Q:Q", "K:K"}, delimiter = ':')
+    void getAlias(String input, String expected) {
+        assertThat(Symbol.of(input).getAlias()).isEqualTo(expected);
     }
 }

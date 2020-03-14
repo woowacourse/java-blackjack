@@ -2,6 +2,8 @@ package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,12 +14,16 @@ public class ScoreTest {
         assertThat(new Score(0)).isEqualTo(Score.ZERO);
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Score 점수 덧셈")
-    void add() {
-        assertThat(Score.ZERO.add(10)).isEqualTo(new Score(10));
-        assertThat(new Score(2).add(3)).isEqualTo(new Score(5));
-        assertThat(new Score(2).add(3).add(5)).isEqualTo(new Score(10));
+    @CsvSource(value = {"0,10:10", "2,3:5", "2,3,5:10"}, delimiter = ':')
+    void add(String input, int expected) {
+        Score result = new Score(0);
+        String[] numbers = input.split(",");
+        for (String number : numbers) {
+            result = result.add(Integer.parseInt(number));
+        }
+        assertThat(result.getValue()).isEqualTo(new Score(expected).getValue());
     }
 
     @Test
@@ -26,9 +32,10 @@ public class ScoreTest {
         assertThat(new Score(11).addAceBonusIfNotBust()).isEqualTo(new Score(21));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("해당 스코어가 버스트가 아닌지 확인")
-    void isNotBust() {
-        assertThat(new Score(21).isNotBust()).isTrue();
+    @CsvSource(value = {"21:True", "22:False"}, delimiter = ':')
+    void isNotBust(int input, Boolean expected) {
+        assertThat(new Score(input).isNotBust()).isEqualTo(expected);
     }
 }

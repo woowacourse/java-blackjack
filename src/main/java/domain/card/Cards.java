@@ -26,27 +26,19 @@ public class Cards {
         Score score = Score.ZERO;
 
         for (Card card : cards) {
-            score = score.add(card.getPoint());
+            score.add(card.getPoint());
         }
         if (hasAce()) {
-            score = score.addAceBonusIfNotBust();
+            score.addAceBonusIfNotBust();
         }
         return score.getValue();
-    }
-
-    public boolean isBlackJack() {
-        return (cards.size() == BLACKJACK_SIZE) && (getScore() == BLACKJACK_SCORE);
-    }
-
-    public boolean isLessThan(final int criteria) {
-        return getScore() <= criteria;
     }
 
     public List<Card> getValue() {
         return Collections.unmodifiableList(cards);
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
