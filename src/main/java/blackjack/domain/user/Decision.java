@@ -17,10 +17,10 @@ public enum Decision {
         this.intended = intended;
     }
 
-    public static boolean of(String answer) {
+    public static boolean chosenBy(String decision) {
         return Arrays.stream(values())
-                .filter(x -> x.uppercase.equals(answer) ||
-                        x.lowercase.equals(answer))
+                .filter(x -> x.uppercase.equals(decision) ||
+                        x.lowercase.equals(decision))
                 .findFirst()
                 .map(a -> a.intended)
                 .orElseThrow(() -> new IllegalArgumentException(INPUT_AGAIN));
