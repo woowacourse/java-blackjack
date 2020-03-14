@@ -10,6 +10,7 @@ import java.util.Queue;
 
 public class CardDeck {
 	private static final int ONE_COUNT = 1;
+
 	private final Queue<Card> cards;
 
 	public CardDeck() {

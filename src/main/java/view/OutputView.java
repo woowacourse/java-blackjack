@@ -14,7 +14,6 @@ public class OutputView {
 	private static final String STRING_FORMAT_DEALER_RESULT = "딜러 : %d승 %d무 %d패";
 	private static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
 	private static final String COLON = " : ";
-	private static final int ZERO = 0;
 
 	public static void firstDrawMessage(String name, int firstDrawCount) {
 		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, name, firstDrawCount));
