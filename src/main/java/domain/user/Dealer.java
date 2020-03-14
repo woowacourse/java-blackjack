@@ -24,7 +24,7 @@ public class Dealer extends Player {
     }
 
     public String getFirstCardInfo() {
-        Card FirstCard = getCards().get(FIRST_CARD_INDEX);
-        return FirstCard.getCardInfo();
+        Card firstCard = getCards().get(FIRST_CARD_INDEX);
+        return firstCard.getCardInfo();
     }
 }
