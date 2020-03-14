@@ -17,7 +17,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.symbol.name().equals("ACE");
+        return this.symbol.isAce();
     }
 
     @Override

@@ -30,4 +30,8 @@ public enum Symbol {
     public String getName() {
         return this.name;
     }
+
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
 }
