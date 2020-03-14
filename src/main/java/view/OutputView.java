@@ -3,6 +3,7 @@ package view;
 import domain.PlayerResult;
 import domain.card.Card;
 import domain.gamer.dto.GamerDto;
+import domain.gamer.dto.GamerWithScoreDto;
 
 import java.util.List;
 import java.util.Map;
@@ -39,11 +40,11 @@ public class OutputView {
         System.out.println("딜러 16이하라 한 장의 카드를 더 받습니다.\n");
     }
 
-    public static void printGamerCardsStateWithScore(GamerDto gamerDto, int gamerScore) {
-        String gamerCards = gamerDto.getCards().stream()
+    public static void printGamerCardsStateWithScore(GamerWithScoreDto gamerWithScoreDto) {
+        String gamerCards = gamerWithScoreDto.getCards().stream()
                 .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
                 .collect(Collectors.joining(DELIMITER));
-        System.out.printf("%s: %s - 결과: %d\n", gamerDto.getName(), gamerCards, gamerScore);
+        System.out.printf("%s: %s - 결과: %d\n", gamerWithScoreDto.getName(), gamerCards, gamerWithScoreDto.getScore());
     }
 
     public static void printGameResult(Map<PlayerResult, List<GamerDto>> gameResults) {

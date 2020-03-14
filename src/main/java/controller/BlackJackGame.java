@@ -8,6 +8,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.gamer.dto.GamerDto;
+import domain.gamer.dto.GamerWithScoreDto;
 import view.InputView;
 import view.OutputView;
 
@@ -31,9 +32,9 @@ public class BlackJackGame {
         }
         receiveDealerCards(deck, dealer);
 
-        OutputView.printGamerCardsStateWithScore(GamerDto.of(dealer), dealer.calculateScore().getScore());
+        OutputView.printGamerCardsStateWithScore(GamerWithScoreDto.of(dealer));
         for (Player player : players.getPlayers()) {
-            OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore().getScore());
+            OutputView.printGamerCardsStateWithScore(GamerWithScoreDto.of(player));
         }
 
         Map<PlayerResult, List<GamerDto>> gameResults = calculateGameResults(dealer, players.getPlayers());
