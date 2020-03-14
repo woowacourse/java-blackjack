@@ -8,14 +8,16 @@ import blackjack.utils.ResultHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackjackGameController {
     public static void run() {
         Users users = enrollUsers();
         Deck deck = new Deck(CardFactory.getInstance().issueNewDeck());
         distributeInitialCards(users, deck);
         OutputView.printInitialCardDistribution(users);
-        hitMoreCard(users, deck);
-        decideDealerToHitCard(users, deck);
+        hitMoreCard(users.getPlayers(), deck);
+        decideDealerToHitCard(users.getDealer(), deck);
         OutputView.printFinalCardScore(users);
         OutputView.printFinalResult(ResultHandler.findAllWinners(users));
     }
@@ -31,8 +33,8 @@ public class BlackjackGameController {
                 .forEach(t -> t.receiveInitialCards(deck.drawInitialCards()));
     }
 
-    private static void hitMoreCard(Users users, Deck deck) {
-        users.getPlayer().forEach(user -> askForHit(deck, user));
+    private static void hitMoreCard(List<Player> players, Deck deck) {
+        players.forEach(user -> askForHit(deck, user));
     }
 
     private static void askForHit(Deck deck, User user) {
@@ -46,8 +48,7 @@ public class BlackjackGameController {
         }
     }
 
-    private static void decideDealerToHitCard(Users users, Deck deck) {
-        Dealer dealer = users.getDealer();
+    private static void decideDealerToHitCard(Dealer dealer, Deck deck) {
         while (dealer.isUnderThreshold()) {
             dealer.receiveCard(deck.drawCard());
             OutputView.printDealerHitMoreCard();

@@ -1,33 +1,34 @@
 package blackjack.domain.user;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Users {
-    public static final String NO_DEALER = "딜러가 없습니다";
-    private final List<User> users;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    public Users(List<User> users) {
-        this.users = Collections.unmodifiableList(users);
+    public Users(List<Player> players) {
+        this(new Dealer(), players);
+    }
+
+    public Users(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
+        this.players = Collections.unmodifiableList(players);
     }
 
     public List<User> getUsers() {
-        return this.users;
+        List<User> users = new LinkedList<>(players);
+        users.add(dealer);
+        return users;
     }
 
     public Dealer getDealer() {
-        return users.stream()
-                .filter(user -> user instanceof Dealer)
-                .findFirst()
-                .map(user -> (Dealer) user)
-                .orElseThrow(() -> new NullPointerException(NO_DEALER));
+        return this.dealer;
     }
 
-    public List<Player> getPlayer() {
-        return users.stream()
-                .filter(user -> user instanceof Player)
-                .map(user -> (Player) user)
-                .collect(Collectors.toList());
+    public List<Player> getPlayers() {
+        return this.players;
     }
 }

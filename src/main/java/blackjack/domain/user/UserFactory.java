@@ -11,12 +11,10 @@ public class UserFactory {
 
     public static Users generateUsers(List<String> userNames) {
         validatePlayerNumber(userNames);
-        List<User> users = new ArrayList<>();
-        users.add(new Dealer());
-        users.addAll(userNames.stream()
+        List<Player> players = userNames.stream()
                 .map(Player::new)
-                .collect(Collectors.toList()));
-        return new Users(users);
+                .collect(Collectors.toList());
+        return new Users(players);
     }
 
     private static void validatePlayerNumber(List<String> userNames) {

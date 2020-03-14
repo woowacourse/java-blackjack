@@ -21,7 +21,7 @@ public class ResultHandler {
     public static String findAllWinners(Users users) {
         Dealer dealer = users.getDealer();
         Map<Player, Result> totalResult = new LinkedHashMap<>();
-        users.getPlayer()
+        users.getPlayers()
                 .forEach(player -> totalResult.put(player, Result.of(dealer, player)));
         return parseAllPlayerResults(totalResult);
     }
