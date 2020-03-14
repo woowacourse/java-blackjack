@@ -19,7 +19,7 @@ public class OutputView {
         List<String> usersName = new ArrayList<>();
 
         users.forEach(user -> usersName.add(user.getName()));
-        System.out.printf("\n딜러와 %s에게 %s장 나누었습니다.\n",String.join(DELIMITER, usersName),INITIAL_DISTRIBUTE_COUNT);
+        System.out.printf("\n딜러와 %s에게 %s장 나누었습니다.\n", String.join(DELIMITER, usersName), INITIAL_DISTRIBUTE_COUNT);
     }
 
     public static void printInitialStatus(final Dealer dealer, final Users users) {
