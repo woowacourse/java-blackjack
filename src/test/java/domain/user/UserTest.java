@@ -1,15 +1,18 @@
 package domain.user;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.junit.jupiter.api.Assertions.*;
+
+import static domain.user.User.NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE;
 
 public class UserTest {
 
@@ -21,6 +24,35 @@ public class UserTest {
 
 		assertEquals(user, User.of(Collections.singletonList(card)));
 	}
+
+	@Test
+	void addInitialCards_User_Should_Have_Two_Cards() {
+		Deck deck = new Deck(CardRepository.toList());
+		User user = User.getInstance();
+		user.addInitialCards(deck);
+
+		assertThat(user.cards.toList().size()).isEqualTo(2);
+	}
+
+	@Test
+	void addCard_Add_One_Card_When_Valid_Deck() {
+		Deck deck = new Deck(CardRepository.toList());
+		User user = User.getInstance();
+		user.addCard(deck);
+
+		assertThat(user.cards.toList().size()).isEqualTo(1);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void addCard_Add_One_Card_When_Valid_Deck(Deck nullDeck) {
+		User user = User.getInstance();
+
+		assertThatNullPointerException().isThrownBy(() -> {
+			user.addCard(nullDeck);
+		}).withMessage(NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
+	}
+
 
 	@Test
 	void openAllCards_When_User_Has_Ace_Heart_And_Two_Heart_Return_Both() {

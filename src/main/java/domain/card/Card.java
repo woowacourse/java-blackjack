@@ -19,6 +19,13 @@ public class Card {
 		return symbol.getScore();
 	}
 
+	public int getScore(int userScore) {
+		if (isAce()) {
+			return symbol.getBigOrSmallAce(userScore);
+		}
+		return symbol.getScore();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

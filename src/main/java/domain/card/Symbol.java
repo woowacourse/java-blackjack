@@ -15,12 +15,22 @@ public enum Symbol {
 	QUEEN(10, "Q"),
 	KING(10, "K");
 
+	private static final int ACE_NEED_TO_BE_BIG_SCORE = 11;
+	private static final int ACE_GAP = 10;
+
 	private final int score;
 	private final String name;
 
 	Symbol(int score, String name) {
 		this.score = score;
 		this.name = name;
+	}
+
+	public int getBigOrSmallAce(int userScore) {
+		if (userScore <= ACE_NEED_TO_BE_BIG_SCORE) {
+			return ACE.score + ACE_GAP;
+		}
+		return ACE.score;
 	}
 
 	public int getScore() {

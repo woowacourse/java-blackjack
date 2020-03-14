@@ -1,10 +1,10 @@
 package view;
 
-import domain.ScoreType;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.result.Result;
 import domain.result.ResultType;
+import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 
@@ -29,7 +29,7 @@ public class OutputView {
 	public static void printCardsStatusOf(Player player) {
 		Cards cards = player.openAllCards();
 
-		System.out.println(String.format("%s 카드 %s",
+		System.out.println(String.format("%s 카드: %s",
 				player,
 				cards.toList().stream()
 						.map(Card::toString)
@@ -41,12 +41,12 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printResultStatus(Cards dealerCards, Players players) {
+	public static void printResultStatus(Dealer dealer, Players players) {
 		System.out.println(String.format("딜러: %s -결과: %d",
-				dealerCards.toList().stream()
+				dealer.openAllCards().toList().stream()
 						.map(Card::toString)
 						.collect(joining(DELIMITER)),
-				ScoreType.of(dealerCards)));
+				dealer.calculateScore()));
 
 		players.forEach(OutputView::printCardsResultOf);
 	}
@@ -59,7 +59,7 @@ public class OutputView {
 				cards.toList().stream()
 						.map(Card::toString)
 						.collect(joining(DELIMITER)),
-				ScoreType.of(player.openAllCards())));
+				player.calculateScore()));
 	}
 
 	public static void printTotalResult(Result result, Players players) {

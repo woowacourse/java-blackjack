@@ -43,7 +43,7 @@ public class BlackjackController {
 	}
 
 	private void printResult(Dealer dealer, Players players) {
-		printResultStatus(dealer.openAllCards(), players);
+		printResultStatus(dealer, players);
 		printTotalResult(Result.from(dealer, players), players);
 	}
 

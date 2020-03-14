@@ -40,6 +40,12 @@ public class Cards {
 				.sum();
 	}
 
+	public int getScoreWithAce(int userScore) {
+		return cards.stream()
+				.mapToInt(card -> card.getScore(userScore))
+				.sum();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

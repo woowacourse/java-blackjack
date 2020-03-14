@@ -1,6 +1,5 @@
 package domain.user;
 
-import domain.ScoreType;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -13,14 +12,13 @@ import java.util.Objects;
 public class User implements Comparable<User> {
 	public static final String NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE = "null이 인자로 올 수 없습니다.";
 	private static final int BLACKJACK_SCORE = 21;
+	private static final int BURST_RESULT_SCORE = 0;
 
 	protected Cards cards;
-	protected int score;
 	protected DrawStrategy drawStrategy;
 
 	protected User() {
 		this.cards = new Cards(new ArrayList<>());
-		this.score = ScoreType.of(this.cards);
 	}
 
 	public static User getInstance() {
@@ -37,7 +35,6 @@ public class User implements Comparable<User> {
 	public void addCard(Card card) {
 		Objects.requireNonNull(card, NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 		this.cards.add(card);
-		this.score = ScoreType.of(this.cards);
 	}
 
 	public void addInitialCards(Deck deck) {
@@ -48,7 +45,6 @@ public class User implements Comparable<User> {
 	public void addCard(Deck deck) {
 		Objects.requireNonNull(deck, NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 		this.cards.add(deck.pop());
-		this.score = ScoreType.of(this.cards);
 	}
 
 	public Cards openAllCards() {
@@ -56,7 +52,18 @@ public class User implements Comparable<User> {
 	}
 
 	public boolean canDrawMore() {
-		return drawStrategy.canDraw(score);
+		return drawStrategy.canDraw(calculateScore());
+	}
+
+	public int calculateScore() {
+		int userScore = cards.getScore();
+		if (userScore > BLACKJACK_SCORE) {
+			return BURST_RESULT_SCORE;
+		}
+		if (cards.hasAce()) {
+			return cards.getScoreWithAce(userScore);
+		}
+		return userScore;
 	}
 
 	public boolean isNotBlackjack() {
@@ -64,7 +71,7 @@ public class User implements Comparable<User> {
 	}
 
 	public boolean isBlackjackScore() {
-		return score == BLACKJACK_SCORE;
+		return calculateScore() == BLACKJACK_SCORE;
 	}
 
 	@Override
@@ -82,6 +89,6 @@ public class User implements Comparable<User> {
 
 	@Override
 	public int compareTo(User other) {
-		return this.score - other.score;
+		return this.calculateScore() - other.calculateScore();
 	}
 }
