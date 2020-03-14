@@ -28,10 +28,6 @@ public class Card {
 		return this.cardNumber == CardNumber.ACE;
 	}
 
-	public int getScore() {
-		return this.cardNumber.getNumber();
-	}
-
 	public int getNumber() {
 		return cardNumber.getNumber();
 	}

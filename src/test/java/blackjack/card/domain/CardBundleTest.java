@@ -35,7 +35,7 @@ class CardBundleTest {
     @CsvSource(value = {"ACE, 20", "TWO,21"})
     void calculateScore(CardNumber number, int expect) {
         //given
-        CardBundle cardBundle = new CardBundle();
+        CardBundle cardBundle = CardBundle.emptyBundle();
         cardBundle.addCard(Card.of(HEART, CardNumber.ACE));
         cardBundle.addCard(Card.of(HEART, CardNumber.EIGHT));
         cardBundle.addCard(Card.of(HEART, number));
@@ -52,10 +52,10 @@ class CardBundleTest {
     @CsvSource(value = {"TEN,WIN", "NINE,DRAW", "TWO,LOSE"})
     void compare(CardNumber number, GameResult expect) {
         //given
-        CardBundle dealerBundle = new CardBundle();
+        CardBundle dealerBundle = CardBundle.emptyBundle();
         dealerBundle.addCard(Card.of(HEART, CardNumber.NINE));
 
-        CardBundle gamblerBundle = new CardBundle();
+        CardBundle gamblerBundle = CardBundle.emptyBundle();
         gamblerBundle.addCard(Card.of(HEART, number));
 
         //when
@@ -69,12 +69,12 @@ class CardBundleTest {
     @CsvSource(value = {"ACE,TWO,LOSE", "TWO,ACE,WIN"})
     void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, GameResult expect) {
         //given
-        CardBundle dealerCardBundle = new CardBundle();
+        CardBundle dealerCardBundle = CardBundle.emptyBundle();
         dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
         dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
         dealerCardBundle.addCard(Card.of(HEART, dealerNumber));
 
-        CardBundle gamblerCardBundle = new CardBundle();
+        CardBundle gamblerCardBundle = CardBundle.emptyBundle();
         gamblerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
         gamblerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
         gamblerCardBundle.addCard(Card.of(HEART, gamblerNumber));

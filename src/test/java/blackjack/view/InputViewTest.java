@@ -57,6 +57,6 @@ class InputViewTest {
 		InputView inputView = new InputView(scanner);
 
 		//then
-		assertThat(inputView.inputDrawRequest(new Gambler(new CardBundle(), "bebop"))).isInstanceOf(DrawRequestDTO.class);
+		assertThat(inputView.inputDrawRequest(new Gambler(CardBundle.emptyBundle(), "bebop"))).isInstanceOf(DrawRequestDTO.class);
 	}
 }

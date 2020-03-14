@@ -3,7 +3,6 @@ package blackjack.player.domain;
 import blackjack.card.domain.CardDeck;
 import blackjack.player.domain.report.GameReports;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,10 +14,14 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<Player> players) {
-        if (players == null) {
-            players = new ArrayList<>();
-        }
+        validate(players);
         this.players = players;
+    }
+
+    private void validate(List<Player> players) {
+        if (players == null || players.isEmpty()) {
+            throw new IllegalArgumentException("게임참여자가 존재하지 않습니다.");
+        }
     }
 
     public void drawStartingCard(CardDeck cardDeck) {

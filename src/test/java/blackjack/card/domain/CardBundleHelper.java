@@ -5,7 +5,7 @@ import blackjack.card.domain.component.Symbol;
 
 public class CardBundleHelper {
 	public static CardBundle aCardBundle(CardNumber... cardNumbers) {
-		CardBundle cardBundle = new CardBundle();
+		CardBundle cardBundle = CardBundle.emptyBundle();
 		for (CardNumber cardNumber : cardNumbers) {
 			cardBundle.addCard(Card.of(Symbol.HEART, cardNumber));
 		}

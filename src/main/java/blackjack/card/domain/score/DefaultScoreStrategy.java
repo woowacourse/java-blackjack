@@ -12,6 +12,8 @@ public class DefaultScoreStrategy implements ScoreStrategy {
 
     @Override
     public int calculate(List<Card> cards) {
-        return ScoreStrategy.sum(cards);
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 }

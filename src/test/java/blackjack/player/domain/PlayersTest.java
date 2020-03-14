@@ -13,13 +13,30 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static blackjack.card.domain.CardBundleHelper.aCardBundle;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayersTest {
+
+    @DisplayName("게임 참여자가 존재하지 않으면 Exception")
+    @Test
+    void noPlayers() {
+        assertAll(
+                () -> assertThatThrownBy(() -> new Players(null))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("게임참여자가 존재하지 않습니다."),
+
+                () -> assertThatThrownBy(() -> new Players(Collections.emptyList()))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("게임참여자가 존재하지 않습니다.")
+        );
+    }
+
     @DisplayName("딜러와 갬블러들을 비교해서 게임 결과 리스트를 받아오는 메서드")
     @Test
     void getReports() {
@@ -45,7 +62,7 @@ class PlayersTest {
     @Test
     void findGamblers() {
         //given
-        Players players = new Players(Arrays.asList(new Gambler(new CardBundle(), "bebop"), new Dealer(new CardBundle())));
+        Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), "bebop"), new Dealer(CardBundle.emptyBundle())));
 
         //when
         List<Player> gamblers = players.findGamblers();
@@ -59,7 +76,7 @@ class PlayersTest {
     @Test
     void findDealer() {
         //given
-        Players players = new Players(Arrays.asList(new Gambler(new CardBundle(), "bebop"), new Dealer(new CardBundle())));
+        Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), "bebop"), new Dealer(CardBundle.emptyBundle())));
 
         //when
         Player dealer = players.findDealer();
@@ -71,7 +88,7 @@ class PlayersTest {
     @DisplayName("2장씩 분배하는 것은 카드를 가진상태(게임의 시작이 아닌상태)에서 호출하면 Exception")
     @Test
     void drawStartingCard() {
-        Player player = new Gambler(new CardBundle(), "bebop");
+        Player player = new Gambler(CardBundle.emptyBundle(), "bebop");
         player.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
         Players players = new Players(Arrays.asList(player));
 

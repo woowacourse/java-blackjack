@@ -1,6 +1,5 @@
 package blackjack.card.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
@@ -10,17 +9,16 @@ public class CardDeck {
     private final Stack<Card> blackjackCards;
 
     private CardDeck(CardCreateStrategy cardCreateStrategy) {
+        if (cardCreateStrategy == null) {
+            throw new IllegalArgumentException("카드를 생성 할 수 없습니다.");
+        }
         List<Card> cards = cardCreateStrategy.getCards();
-        Collections.shuffle(cards);
 
         this.blackjackCards = new Stack<>();
         this.blackjackCards.addAll(cards);
     }
 
     public static CardDeck getInstance(CardCreateStrategy cardCreateStrategy) {
-        if (cardCreateStrategy == null) {
-            throw new IllegalArgumentException("카드를 생성 할 수 없습니다.");
-        }
         return new CardDeck(cardCreateStrategy);
     }
 

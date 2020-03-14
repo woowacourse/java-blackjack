@@ -27,7 +27,7 @@ public class NamesDTO {
 
     public List<Player> toPlayers() {
         return names.stream()
-                .map(name -> new Gambler(new CardBundle(), name))
+                .map(name -> new Gambler(CardBundle.emptyBundle(), name))
                 .collect(Collectors.toList());
     }
 

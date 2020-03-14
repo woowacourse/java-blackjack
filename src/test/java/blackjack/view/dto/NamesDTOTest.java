@@ -22,8 +22,8 @@ class NamesDTOTest {
 		//given
 		String inputNames = "allen,bebop";
 		List<Player> result = Arrays.asList(
-			new Gambler(new CardBundle(), "allen"),
-			new Gambler(new CardBundle(), "bebop")
+				new Gambler(CardBundle.emptyBundle(), "allen"),
+				new Gambler(CardBundle.emptyBundle(), "bebop")
 		);
 
 		//when

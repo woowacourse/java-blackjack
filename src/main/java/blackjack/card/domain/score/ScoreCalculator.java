@@ -18,9 +18,13 @@ public enum ScoreCalculator {
 
     public static ScoreCalculator findByCards(List<Card> cards) {
         return Arrays.stream(values())
-                .filter(scoreCalculator -> scoreCalculator.scoreStrategy.support(cards))
+                .filter(scoreCalculator -> scoreCalculator.support(cards))
                 .findFirst()
                 .orElse(DEFAULT);
+    }
+
+    private boolean support(List<Card> card) {
+        return this.scoreStrategy.support(card);
     }
 
     public int calculate(List<Card> cards) {

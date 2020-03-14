@@ -18,26 +18,26 @@ class DealerTest {
 	@ParameterizedTest
 	@CsvSource(value = {"TWO,LOSE", "FIVE,DRAW", "SIX,WIN"})
 	void getReport(CardNumber cardNumber, GameResult result) {
-        //given
-        Player dealer = new Dealer(new CardBundle());
-        dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.FIVE));
+		//given
+		Player dealer = new Dealer(CardBundle.emptyBundle());
+		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.FIVE));
 
-        Player gambler = new Gambler(new CardBundle(), "bebop");
-        gambler.addCard(Card.of(Symbol.DIAMOND, cardNumber));
+		Player gambler = new Gambler(CardBundle.emptyBundle(), "bebop");
+		gambler.addCard(Card.of(Symbol.DIAMOND, cardNumber));
 
-        //when
-        GameReport report = dealer.createReport(gambler);
+		//when
+		GameReport report = dealer.createReport(gambler);
 
-        //then
-        assertThat(report).isEqualTo(new GameReport("bebop", result));
-    }
+		//then
+		assertThat(report).isEqualTo(new GameReport("bebop", result));
+	}
 
 	@DisplayName("딜러의 카드패가 16을 초과하면 뽑을수 없다.")
 	@ParameterizedTest
 	@CsvSource(value = {"TEN,false", "NINE,true"})
 	void isDrawable(CardNumber cardNumber, boolean result) {
 		//given
-		Player dealer = new Dealer(new CardBundle());
+		Player dealer = new Dealer(CardBundle.emptyBundle());
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.SEVEN));
 		dealer.addCard(Card.of(Symbol.DIAMOND, cardNumber));
 

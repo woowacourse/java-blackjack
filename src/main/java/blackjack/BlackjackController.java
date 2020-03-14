@@ -20,7 +20,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Player dealer = new Dealer(new CardBundle());
+        Player dealer = new Dealer(CardBundle.emptyBundle());
         Players players = new Players(makePlayers(dealer));
 
         drawStartingCards(players);

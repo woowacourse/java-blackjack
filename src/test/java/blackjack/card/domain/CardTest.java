@@ -25,7 +25,7 @@ class CardTest {
 	@CsvSource(value = {"ACE,1", "TEN,10", "KING,10"})
 	void name(CardNumber cardNumber, int result) {
 		Card card = Card.of(Symbol.CLUB, cardNumber);
-		assertThat(card.getScore()).isEqualTo(result);
+		assertThat(card.getNumber()).isEqualTo(result);
 	}
 
 	@DisplayName("싱글톤으로 만들어둔 CardCache에서 카드 가져오기")

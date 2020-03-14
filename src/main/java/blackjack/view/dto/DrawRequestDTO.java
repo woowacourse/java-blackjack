@@ -28,9 +28,13 @@ public class DrawRequestDTO {
 
 		public static PermittedRequest findByCommand(String command) {
 			return Arrays.stream(values())
-				.filter(permittedRequest -> permittedRequest.command.equals(command))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(String.format("%s는 올바른 요청이 아닙니다.", command)));
+					.filter(permittedRequest -> permittedRequest.equal(command))
+					.findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.format("%s는 올바른 요청이 아닙니다.", command)));
+		}
+
+		private boolean equal(String command) {
+			return this.command.equals(command);
 		}
 	}
 }

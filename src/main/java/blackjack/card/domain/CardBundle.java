@@ -9,7 +9,15 @@ import java.util.Objects;
 
 public class CardBundle {
     private static final int MAXIMUM_VALUE = 21;
+    private static final int STARTING_CARD_SIZE = 2;
     private final List<Card> cards = new ArrayList<>();
+
+    private CardBundle() {
+    }
+
+    public static CardBundle emptyBundle() {
+        return new CardBundle();
+    }
 
     public void addCard(Card card) {
         cards.add(card);
@@ -25,7 +33,7 @@ public class CardBundle {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == MAXIMUM_VALUE;
+        return cards.size() == STARTING_CARD_SIZE && calculateScore() == MAXIMUM_VALUE;
     }
 
     public boolean isBurst() {

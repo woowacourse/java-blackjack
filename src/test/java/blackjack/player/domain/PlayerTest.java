@@ -21,10 +21,10 @@ class PlayerTest {
     private static Stream<Arguments> playerProvider() {
         return Stream.of(
                 Arguments.of(
-                        new Dealer(new CardBundle()), false, true
+                        new Dealer(CardBundle.emptyBundle()), false, true
                 ),
                 Arguments.of(
-                        new Gambler(new CardBundle(), "pobi"), true, false
+                        new Gambler(CardBundle.emptyBundle(), "pobi"), true, false
                 )
         );
     }
@@ -43,7 +43,7 @@ class PlayerTest {
     private static Stream<Arguments> createArgumentsProvider() {
         return Stream.of(
                 Arguments.of(null, "bebop", "CardBundle이 비었습니다."),
-                Arguments.of(new CardBundle(), null, "이름이 비었습니다.")
+                Arguments.of(CardBundle.emptyBundle(), null, "이름이 비었습니다.")
         );
     }
 
@@ -52,7 +52,7 @@ class PlayerTest {
     @CsvSource(value = {"ACE,false", "KING,true"})
     void isBlackjack(CardNumber cardNumber, boolean result) {
         //given
-        Player player = new Dealer(new CardBundle());
+        Player player = new Dealer(CardBundle.emptyBundle());
         Symbol club = Symbol.CLUB;
         player.addCard(Card.of(club, CardNumber.ACE));
         player.addCard(Card.of(club, cardNumber));
@@ -80,7 +80,7 @@ class PlayerTest {
     @CsvSource(value = {"ACE,true", "TWO,false"})
     void isNotBurst(CardNumber cardNumber, boolean result) {
         //given
-        Player player = new Dealer(new CardBundle());
+        Player player = new Dealer(CardBundle.emptyBundle());
         player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
         player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
         player.addCard(Card.of(Symbol.HEART, cardNumber));
