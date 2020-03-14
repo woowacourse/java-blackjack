@@ -9,9 +9,9 @@ class ResultTypeTest {
 	@Test
 	@DisplayName("플레이어의 승패와 대칭되는 딜러의 승패가 반환되는지")
 	void reverseTest() {
-		assertThat(ResultType.reverse(ResultType.WIN)).isEqualTo(ResultType.LOSE);
-		assertThat(ResultType.reverse(ResultType.LOSE)).isEqualTo(ResultType.WIN);
-		assertThat(ResultType.reverse(ResultType.DRAW)).isEqualTo(ResultType.DRAW);
+		assertThat(ResultType.WIN.reverse()).isEqualTo(ResultType.LOSE);
+		assertThat(ResultType.LOSE.reverse()).isEqualTo(ResultType.WIN);
+		assertThat(ResultType.DRAW.reverse()).isEqualTo(ResultType.DRAW);
 	}
 
 	@Test
