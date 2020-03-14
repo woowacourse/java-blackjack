@@ -13,9 +13,9 @@ public class Deck {
     private static final String DECK_IS_EMPTY = "덱이 비었습니다";
     private static final int INITIAL_CARDS = 2;
 
-    private final LinkedList<Card> deck;
+    private final List<Card> deck;
 
-    public Deck(LinkedList<Card> cards) {
+    public Deck(List<Card> cards) {
         this.deck = Objects.requireNonNull(cards);
         Collections.shuffle(deck);
     }
@@ -24,7 +24,7 @@ public class Deck {
         if (deck.isEmpty()) {
             throw new NoCardException(DECK_IS_EMPTY);
         }
-        return deck.poll();
+        return deck.remove(deck.size()-1);
     }
 
     public List<Card> draw(int amount) {
