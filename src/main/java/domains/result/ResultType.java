@@ -3,18 +3,18 @@ package domains.result;
 import domains.user.Dealer;
 import domains.user.Player;
 
-public enum WinOrLose {
+public enum ResultType {
 	WIN("승"),
 	DRAW("무"),
 	LOSE("패");
 
 	private String winOrLose;
 
-	WinOrLose(String winOrLose) {
+	ResultType(String winOrLose) {
 		this.winOrLose = winOrLose;
 	}
 
-	public static WinOrLose checkWinOrLose(Player player, Dealer dealer) {
+	public static ResultType checkWinOrLose(Player player, Dealer dealer) {
 		if (player.score() > dealer.score()) {
 			return WIN;
 		}
@@ -24,7 +24,7 @@ public enum WinOrLose {
 		return DRAW;
 	}
 
-	public static WinOrLose oppose(WinOrLose outcome) {
+	public static ResultType oppose(ResultType outcome) {
 		if (WIN.equals(outcome)) {
 			return LOSE;
 		}

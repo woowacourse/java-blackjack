@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import domains.result.GameResult;
-import domains.result.WinOrLose;
+import domains.result.ResultType;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
@@ -53,7 +53,7 @@ public class OutputView {
 
 	public static void printGameResult(GameResult gameResult) {
 		System.out.println("딜러: " + gameResult.calculateDealerResult());
-		Map<Player, WinOrLose> result = gameResult.getGameResult();
+		Map<Player, ResultType> result = gameResult.getGameResult();
 		for (Player player : result.keySet()) {
 			System.out.println(player.getName() + ": " + result.get(player).getWinOrLose());
 		}

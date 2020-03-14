@@ -31,8 +31,8 @@ class GameResultTest {
 		Player ddoring = iterator.next();
 		Player smallBear = iterator.next();
 
-		assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(WinOrLose.WIN);
-		assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(WinOrLose.DRAW);
+		assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.WIN);
+		assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
 	}
 
 	@DisplayName("딜러의 게임 결과를 확인")

@@ -15,7 +15,7 @@ import domains.user.Players;
 public class GameResult {
 	private static final String BLANK = " ";
 
-	private Map<Player, WinOrLose> gameResult;
+	private Map<Player, ResultType> gameResult;
 
 	public GameResult(Players players, Dealer dealer) {
 		this.gameResult = new HashMap<>();
@@ -27,32 +27,32 @@ public class GameResult {
 			if (checkBurstPlayer(player)) {
 				continue;
 			}
-			gameResult.put(player, WinOrLose.checkWinOrLose(player, dealer));
+			gameResult.put(player, ResultType.checkWinOrLose(player, dealer));
 		}
 	}
 
 	private boolean checkBurstPlayer(Player player) {
 		if (player.isBurst()) {
-			gameResult.put(player, WinOrLose.LOSE);
+			gameResult.put(player, ResultType.LOSE);
 			return true;
 		}
 		return false;
 	}
 
-	public WinOrLose getWinOrLose(Player player) {
+	public ResultType getWinOrLose(Player player) {
 		return gameResult.get(player);
 	}
 
 	public String calculateDealerResult() {
-		Map<WinOrLose, Long> dealerGameResult = gameResult.values().stream()
-			.map(WinOrLose::oppose)
+		Map<ResultType, Long> dealerGameResult = gameResult.values().stream()
+			.map(ResultType::oppose)
 			.collect(
 				Collectors.collectingAndThen(Collectors.groupingBy(Function.identity(), counting()), EnumMap::new));
 
 		return convertToString(dealerGameResult);
 	}
 
-	private String convertToString(Map<WinOrLose, Long> dealerGameResult) {
+	private String convertToString(Map<ResultType, Long> dealerGameResult) {
 		return dealerGameResult.entrySet().stream().map(
 			result -> {
 				long count = result.getValue();
@@ -61,7 +61,7 @@ public class GameResult {
 			}).collect(Collectors.joining(BLANK));
 	}
 
-	public Map<Player, WinOrLose> getGameResult() {
+	public Map<Player, ResultType> getGameResult() {
 		return gameResult;
 	}
 }

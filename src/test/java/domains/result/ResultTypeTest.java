@@ -19,7 +19,7 @@ import domains.user.Dealer;
 import domains.user.Hands;
 import domains.user.Player;
 
-public class WinOrLoseTest {
+public class ResultTypeTest {
 	@DisplayName("플레이어가 이겼을 때, WIN 반환")
 	@ParameterizedTest
 	@MethodSource("winnerData")
@@ -27,7 +27,7 @@ public class WinOrLoseTest {
 		Player player = new Player("또링", new Hands(winCards));
 		Dealer dealer = new Dealer(new Hands(loseCards));
 
-		assertThat(WinOrLose.checkWinOrLose(player, dealer)).isEqualTo(WinOrLose.WIN);
+		assertThat(ResultType.checkWinOrLose(player, dealer)).isEqualTo(ResultType.WIN);
 	}
 
 	static Stream<Arguments> winnerData() {
