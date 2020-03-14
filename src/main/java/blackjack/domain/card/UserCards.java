@@ -42,13 +42,13 @@ public class UserCards {
         return cards.size() == BLACK_JACK_CARD_COUNT && getScore() == BLACK_JACK_SCORE;
     }
 
+    public boolean isOverScore(int score) {
+        return getScore() > score;
+    }
+
     public List<String> getInfos() {
         return cards.stream()
             .map(Card::toString)
             .collect(Collectors.toList());
-    }
-
-    public boolean isOverScore(int score) {
-        return getScore() > score;
     }
 }
