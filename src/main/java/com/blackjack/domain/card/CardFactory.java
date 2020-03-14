@@ -2,17 +2,17 @@ package com.blackjack.domain.card;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class CardFactory {
-	private static List<Card> cards;
+	private static final Set<Card> cards;
 
 	static {
 		cards = Arrays.stream(CardNumber.values())
 				.flatMap(CardFactory::createCards)
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 
 	private CardFactory() {
@@ -23,7 +23,7 @@ class CardFactory {
 				.map(cardSymbol -> new Card(cardNumber, cardSymbol));
 	}
 
-	static List<Card> create() {
-		return Collections.unmodifiableList(cards);
+	static Set<Card> create() {
+		return Collections.unmodifiableSet(cards);
 	}
 }
