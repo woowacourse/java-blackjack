@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Players implements Iterable<Player>{
     public static final String DELIMITER = ",";
 
-    List<Player> players;
+    private List<Player> players;
 
     public Players(String playerNames, Deck deck) {
         players = new ArrayList<>();
