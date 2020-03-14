@@ -35,5 +35,4 @@ class PlayerCardsTest {
 		cards.add(new Card(Symbol.FOUR, Shape.CLOVER));
 		assertThat(cards.calculateScore()).isEqualTo(14);
 	}
-
 }
