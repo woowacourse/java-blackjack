@@ -38,7 +38,7 @@ public class GameResult {
 
         resultOfPlayers = players.decideWinner(dealer, rules);
         resultOfPlayers.forEach(
-                (player, winningResult) -> resultOfDealer.computeIfPresent(winningResult.reverse(),
+                (player, result) -> resultOfDealer.computeIfPresent(result.reverse(),
                         (key, value) -> value + 1));
     }
 
@@ -50,7 +50,7 @@ public class GameResult {
         return Dealer.DEALER + COLON
                 + resultOfDealer.entrySet()
                 .stream()
-                .map(winningResult -> winningResult.getValue() + winningResult.getKey().getResult())
+                .map(result -> result.getValue() + result.getKey().getResult())
                 .collect(Collectors.joining(SPACE));
     }
 
