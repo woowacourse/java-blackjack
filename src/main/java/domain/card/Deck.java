@@ -22,11 +22,11 @@ public class Deck {
     }
 
     public List<Card> dealFirstCards() {
-        List<Card> twoCards = new ArrayList<>();
+        List<Card> firstDealtCards = new ArrayList<>();
 
         for (int i = 0; i < NUMBER_OF_FIRST_DEAL_CARDS; i++) {
-            twoCards.add(this.deal());
+            firstDealtCards.add(this.deal());
         }
-        return Collections.unmodifiableList(twoCards);
+        return Collections.unmodifiableList(firstDealtCards);
     }
 }

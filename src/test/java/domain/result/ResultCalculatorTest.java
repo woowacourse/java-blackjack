@@ -18,7 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ResultCalculatorTest {
-
     private static List<Card> makeCardList(Card card1, Card card2) {
         List<Card> cards = new ArrayList<>();
         cards.add(card1);

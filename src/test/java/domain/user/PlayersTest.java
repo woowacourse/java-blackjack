@@ -15,5 +15,4 @@ public class PlayersTest {
         assertThatThrownBy(() -> new Players(input)).
             isInstanceOf(NullPointerException.class);
     }
-
 }

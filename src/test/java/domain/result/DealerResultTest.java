@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerResultTest {
-
     @Test
     @DisplayName("Map 의 Value 값이 음수일 때 예외처리 테스트")
     void validateCountTest() {

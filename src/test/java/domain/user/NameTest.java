@@ -26,5 +26,4 @@ public class NameTest {
         Name playerName = new Name("오렌지");
         assertThat(playerName.isSame(name)).isEqualTo(result);
     }
-
 }

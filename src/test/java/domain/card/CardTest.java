@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
-
     @Test
     @DisplayName("해당 카드가 A인지 확인 테스트")
     void isAce() {

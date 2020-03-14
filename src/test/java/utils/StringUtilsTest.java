@@ -12,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 public class StringUtilsTest {
-
     @Test
     @DisplayName("string 형식의 입력을 리스트로 반환 테스트")
     void splitIntoIntListTest() {
