@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 
 public enum Outcome {
     PLAYER_WIN("승", "패", (player, dealer) ->
-        (player.getScore() > dealer.getScore() && !player.isBust()) || dealer.isBust()),
+        !player.isBust() && (player.getScore() > dealer.getScore() || dealer.isBust())),
     PLAYER_DRAW("무", "무", (player, dealer) ->
         player.getScore() == dealer.getScore() && !player.isBust()),
     PLAYER_LOSE("패", "승", (player, dealer) ->
