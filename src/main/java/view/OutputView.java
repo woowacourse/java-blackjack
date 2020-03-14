@@ -64,7 +64,7 @@ public class OutputView {
     }
 
     public static void printDealerHasReceivedMoreCard() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
+        System.out.printf("\n딜러는 %d이하라 한장의 카드를 더 받았습니다.", Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
         System.out.println();
     }
 

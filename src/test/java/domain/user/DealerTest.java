@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.CardFactory;
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
@@ -34,5 +35,26 @@ public class DealerTest {
         dealer.receiveCard(new Deck(cards));
 
         assertThat(dealer.isScoreSame(5)).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드를 더 받을수 없는 상태인지 잘 파악하는지 테스트")
+    void cannotReceiveCard() {
+        Deck deck = CardFactory.createDeck();
+        Dealer dealer = new Dealer();
+        dealer.receiveFirstCards(deck);
+        while (!dealer.isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD)) {
+            dealer.receiveCard(deck);
+        }
+        assertThat(dealer.canReceiveCard()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드를 더 받을수 있는 상태인지를 잘 파악하는지 테스트")
+    void canReceiveCard() {
+        Deck deck = CardFactory.createDeck();
+        Dealer dealer = new Dealer();
+        dealer.receiveFirstCards(deck);
+        assertThat(dealer.canReceiveCard()).isTrue();
     }
 }

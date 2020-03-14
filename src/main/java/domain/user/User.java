@@ -6,8 +6,9 @@ import domain.card.Deck;
 import java.util.List;
 
 public abstract class User implements Participant {
-
     protected Cards cards = new Cards();
+
+    abstract public boolean canReceiveCard();
 
     public void receiveFirstCards(Deck deck) {
         cards.put(deck.dealFirstCards());
@@ -25,7 +26,7 @@ public abstract class User implements Participant {
         cards.put(deck.deal());
     }
 
-    public List<Card> getCards() {
+   public List<Card> getCards() {
         return cards.getCards();
     }
 

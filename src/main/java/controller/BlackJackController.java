@@ -46,15 +46,11 @@ public class BlackJackController {
     }
 
     private static void dealToPlayer(Deck deck, Player player) {
-        while (willPlayerGetMoreCard(player)) {
+        String playerName = player.getName();
+        while (player.canReceiveCard() && InputView.askWantMoreCard(playerName)) {
             player.receiveCard(deck);
             OutputView.printPlayerCards(player);
         }
-    }
-
-    private static boolean willPlayerGetMoreCard(Player player) {
-        return player.isSmallerThan(Cards.BLACKJACK_SCORE)
-            && InputView.askWantMoreCard(player.getName());
     }
 
     private static void dealToDealer(Dealer dealer, Deck deck) {
