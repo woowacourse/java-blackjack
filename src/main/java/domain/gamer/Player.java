@@ -7,7 +7,8 @@ public class Player extends Gamer {
         super(playingCards, name);
     }
 
-    public boolean canGetCard() {
+    @Override
+    public boolean isHittable() {
         return isNotBust();
     }
 }

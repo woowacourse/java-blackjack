@@ -1,8 +1,8 @@
 package view;
 
-import common.GamerDto;
 import domain.PlayerResult;
 import domain.card.Card;
+import domain.gamer.dto.GamerDto;
 
 import java.util.List;
 import java.util.Map;

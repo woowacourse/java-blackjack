@@ -29,7 +29,7 @@ public enum PlayerResult {
         }
     };
 
-    private String name;
+    private final String name;
 
     PlayerResult(String name) {
         this.name = name;

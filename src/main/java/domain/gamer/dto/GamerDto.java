@@ -1,4 +1,4 @@
-package common;
+package domain.gamer.dto;
 
 import domain.card.Card;
 import domain.gamer.Gamer;
@@ -15,7 +15,7 @@ public class GamerDto {
     }
 
     public static GamerDto of(Gamer gamer) {
-        List<Card> cards = gamer.getPlayingCards().getCards();
+        List<Card> cards = gamer.getCards();
         return new GamerDto(gamer.getName(), cards);
     }
 

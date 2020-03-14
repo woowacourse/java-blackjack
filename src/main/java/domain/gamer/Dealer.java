@@ -10,7 +10,7 @@ public class Dealer extends Gamer {
         super(playingCards, DEALER_NAME);
     }
 
-    public boolean canGetCard() {
+    public boolean isHittable() {
         return calculateScore().isLessThen(ADD_THRESHOLD);
     }
 }

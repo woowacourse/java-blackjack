@@ -1,4 +1,4 @@
-package common;
+package domain.gamer.dto;
 
 import domain.card.Card;
 import domain.card.PlayingCards;

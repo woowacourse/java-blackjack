@@ -2,13 +2,16 @@ package domain.gamer;
 
 import domain.Score;
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.PlayingCards;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Gamer {
-    final PlayingCards playingCards;
-    final String name;
+    private final PlayingCards playingCards;
+    private final String name;
 
     public Gamer(PlayingCards playingCards, String name) {
         validate(name);
@@ -33,6 +36,10 @@ public abstract class Gamer {
         }
     }
 
+    public void hit(Deck deck) {
+        addCard(deck.dealCard());
+    }
+
     public void addCard(Card card) {
         playingCards.add(card);
     }
@@ -50,7 +57,7 @@ public abstract class Gamer {
     }
 
     public boolean isNotBust() {
-        return playingCards.isNotBust();
+        return !this.isBust();
     }
 
     public boolean isBlackJack() {
@@ -58,16 +65,16 @@ public abstract class Gamer {
     }
 
     public boolean isNotBlackJack() {
-        return playingCards.isNotBlackJack();
+        return !this.isBlackJack();
     }
 
     public String getName() {
         return name;
     }
 
-    public PlayingCards getPlayingCards() {
-        return playingCards;
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(playingCards.getCards());
     }
 
-    public abstract boolean canGetCard();
+    public abstract boolean isHittable();
 }

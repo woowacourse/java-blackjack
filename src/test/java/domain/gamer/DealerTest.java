@@ -39,7 +39,7 @@ class DealerTest {
                 new Card(Symbol.TEN, Type.HEART)));
         Dealer dealer = new Dealer(playingCards);
 
-        assertThat(dealer.canGetCard()).isTrue();
+        assertThat(dealer.isHittable()).isTrue();
     }
 
     @Test
@@ -49,6 +49,6 @@ class DealerTest {
                 new Card(Symbol.TEN, Type.HEART)));
         Dealer dealer = new Dealer(playingCards);
 
-        assertThat(dealer.canGetCard()).isFalse();
+        assertThat(dealer.isHittable()).isFalse();
     }
 }

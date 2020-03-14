@@ -1,12 +1,12 @@
 package controller;
 
-import common.GamerDto;
 import domain.PlayerResult;
 import domain.card.Deck;
 import domain.card.DeckFactory;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.gamer.dto.GamerDto;
 import view.InputView;
 import view.OutputView;
 
@@ -35,11 +35,11 @@ public class BlackJackGame {
             OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore().getScore());
         }
 
-        Map<PlayerResult, List<GamerDto>> gameResults = calculateGameResults(players.getPlayers(), dealer);
+        Map<PlayerResult, List<GamerDto>> gameResults = calculateGameResults(dealer, players.getPlayers());
         OutputView.printGameResult(gameResults);
     }
 
-    private Map<PlayerResult, List<GamerDto>> calculateGameResults(List<Player> players, Dealer dealer) {
+    private Map<PlayerResult, List<GamerDto>> calculateGameResults(Dealer dealer, List<Player> players) {
         Map<PlayerResult, List<GamerDto>> gameResults = players.stream()
                 .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player),
                         Collectors.mapping(GamerDto::of, Collectors.toList())));
@@ -50,15 +50,15 @@ public class BlackJackGame {
     }
 
     private void receiveDealerCards(Deck deck, Dealer dealer) {
-        while (dealer.canGetCard()) {
-            dealer.addCard(deck.dealCard());
+        while (dealer.isHittable()) {
+            dealer.hit(deck);
             OutputView.printDealerHit();
         }
     }
 
     private void receivePlayerCards(Deck deck, Player player) {
-        while (player.canGetCard() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
-            player.addCard(deck.dealCard());
+        while (player.isHittable() && InputView.inputGetMoreCard(player.getName()).equals("y")) {
+            player.hit(deck);
             OutputView.printGamerCardsState(GamerDto.of(player));
         }
     }
