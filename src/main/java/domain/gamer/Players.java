@@ -4,10 +4,11 @@ import domain.card.Deck;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public class Players implements Iterable<Player> {
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -29,5 +30,10 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return players.iterator();
     }
 }

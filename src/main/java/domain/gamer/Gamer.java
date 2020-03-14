@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Gamer {
+    private static final int MINIMUM_FIRST_CARD_COUNT = 1;
+
     private final PlayingCards playingCards;
     private final String name;
 
@@ -74,6 +76,13 @@ public abstract class Gamer {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(playingCards.getCards());
+    }
+
+    public List<Card> getFirstCard() {
+        if (playingCards.countCards() < MINIMUM_FIRST_CARD_COUNT) {
+            throw new IllegalArgumentException("카드가 한 장 이상 있어야 합니다.");
+        }
+        return Collections.unmodifiableList(getCards().subList(0, MINIMUM_FIRST_CARD_COUNT));
     }
 
     public abstract boolean isHittable();

@@ -23,17 +23,19 @@ public class BlackJackGame {
         Players players = Players.valueOf(deck, InputView.inputPlayerNames());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        OutputView.printInitGamersState(GamerDto.of(dealer), players.getPlayers().stream()
-                .map(GamerDto::of)
-                .collect(Collectors.toList()));
+        List<GamerDto> playersDto = new ArrayList<>();
+        for (Player player : players) {
+            playersDto.add(GamerDto.of(player));
+        }
+        OutputView.printInitGamersState(GamerDto.ofWithFirstCard(dealer), playersDto, Deck.INIT_CARDS_SIZE);
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             receivePlayerCards(deck, player);
         }
         receiveDealerCards(deck, dealer);
 
         OutputView.printGamerCardsStateWithScore(GamerWithScoreDto.of(dealer));
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             OutputView.printGamerCardsStateWithScore(GamerWithScoreDto.of(player));
         }
 
@@ -54,7 +56,7 @@ public class BlackJackGame {
     private void receiveDealerCards(Deck deck, Dealer dealer) {
         while (dealer.isHittable()) {
             dealer.hit(deck);
-            OutputView.printDealerHit();
+            OutputView.printDealerHit(Dealer.HIT_THRESHOLD);
         }
     }
 

@@ -130,4 +130,19 @@ class PlayerTest {
 
         assertThat(player.isNotBlackJack()).isTrue();
     }
+
+    @Test
+    @DisplayName("한 장의 카드 리스트를 반환")
+    void getFirstCard() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name);
+        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
+        Card card2 = new Card(Symbol.KING, Type.CLOVER);
+
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.getFirstCard()).hasSize(1);
+    }
 }

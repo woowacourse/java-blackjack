@@ -19,6 +19,11 @@ public class GamerDto {
         return new GamerDto(gamer.getName(), cards);
     }
 
+    public static GamerDto ofWithFirstCard(Gamer gamer) {
+        List<Card> cards = gamer.getFirstCard();
+        return new GamerDto(gamer.getName(), cards);
+    }
+
     public String getName() {
         return name;
     }
