@@ -28,7 +28,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("generateDealerScore")
 	@DisplayName("딜러의 점수에 따라서 플레이어가 승리하는지 패패하는지에 대한 테스트")
-	void winOrLoseTest(int dealerScore, WinOrLose expected) {
+	void winOrLoseTest(int dealerScore, MatchResult expected) {
 		Player player = new Player("pobi");
 		player.addCard(Arrays.asList(
 			new Card(CardSuit.CLOVER, CardNumber.EIGHT),
@@ -38,9 +38,9 @@ public class PlayerTest {
 
 	static Stream<Arguments> generateDealerScore() {
 		return Stream.of(
-			Arguments.of(20, WinOrLose.LOSE),
-			Arguments.of(17, WinOrLose.WIN),
-			Arguments.of(22, WinOrLose.WIN));
+			Arguments.of(20, MatchResult.LOSE),
+			Arguments.of(17, MatchResult.WIN),
+			Arguments.of(22, MatchResult.WIN));
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class PlayerTest {
 			new Card(CardSuit.CLOVER, CardNumber.EIGHT),
 			new Card(CardSuit.CLOVER, CardNumber.TEN),
 			new Card(CardSuit.HEART, CardNumber.KING)));
-		assertThat(player.isWinOrLose(17)).isEqualTo(WinOrLose.LOSE);
+		assertThat(player.isWinOrLose(17)).isEqualTo(MatchResult.LOSE);
 	}
 
 	@ParameterizedTest

@@ -17,16 +17,16 @@ public class Player extends Gamer {
         return !name.matches(PATTERN);
     }
 
-    public WinOrLose isWinOrLose(int dealerScore) {
+    public MatchResult isWinOrLose(int dealerScore) {
         if (calculateWithAce() > DRAW_CARD_PIVOT) {
-            return WinOrLose.LOSE;
+            return MatchResult.LOSE;
         }
 
         if (dealerScore > DRAW_CARD_PIVOT) {
-            return WinOrLose.WIN;
+            return MatchResult.WIN;
         }
 
-        return WinOrLose.of(calculateWithAce() - dealerScore);
+        return MatchResult.of(calculateWithAce() - dealerScore);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Gamers {
         dealer.addCard(deck.popCard(INIT_CARD_SIZE));
     }
 
-    public Map<String, WinOrLose> generateGameResults() {
+    public Map<String, MatchResult> generateGameResults() {
         return players.stream()
                 .collect(Collectors.toMap(Gamer::getName,
                         player -> player.isWinOrLose(dealer.calculateWithAce())));

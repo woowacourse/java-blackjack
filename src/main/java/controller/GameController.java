@@ -5,7 +5,7 @@ import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.gamer.YesOrNo;
+import domain.gamer.Answer;
 import view.InputView;
 import view.OutputView;
 
@@ -35,7 +35,7 @@ public class GameController {
 
     private void drawCardOfPlayer(Deck deck, Player player) {
         while (player.isDrawable()
-                && YesOrNo.findYesOrNo(InputView.inputAsDrawable(player)).getDrawable()) {
+                && Answer.findAnswer(InputView.inputAsDrawable(player)).getDrawable()) {
             player.addCard(deck.popCard(ADD_CARD_SIZE));
             OutputView.printGamerCard(player);
         }

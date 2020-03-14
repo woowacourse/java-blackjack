@@ -4,14 +4,14 @@ import exception.YesOrNoFormatException;
 
 import java.util.Arrays;
 
-public enum YesOrNo {
+public enum Answer {
     YES("y", true),
     NO("n", false);
 
     private String answerValue;
     private boolean drawable;
 
-    YesOrNo(String answerValue, boolean drawable) {
+    Answer(String answerValue, boolean drawable) {
         this.answerValue = answerValue;
         this.drawable = drawable;
     }
@@ -20,7 +20,7 @@ public enum YesOrNo {
         return drawable;
     }
 
-    public static YesOrNo findYesOrNo(String answer) {
+    public static Answer findAnswer(String answer) {
         return Arrays.stream(values())
                 .filter(x -> x.answerValue.equals(answer.toLowerCase()))
                 .findFirst()
