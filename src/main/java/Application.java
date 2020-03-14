@@ -1,5 +1,4 @@
 import controller.BlackjackGame;
-import domain.card.CardDeck;
 import view.OutputView;
 
 public class Application {

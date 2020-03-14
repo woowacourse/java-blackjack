@@ -100,6 +100,6 @@ class MatchResultTest {
 	@ParameterizedTest
 	@CsvSource(value = {"WIN,LOSE", "DRAW,DRAW", "LOSE,WIN"})
 	void reverseWinAndLoseTest(MatchResult inputResult, MatchResult expected) {
-		assertThat(inputResult.reverseWinAndLose()).isEqualTo(expected);
+		assertThat(inputResult.swtichWinAndLose()).isEqualTo(expected);
 	}
 }

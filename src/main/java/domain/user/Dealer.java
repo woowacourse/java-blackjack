@@ -1,6 +1,7 @@
 package domain.user;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
@@ -8,10 +9,9 @@ import domain.card.Cards;
 public class Dealer extends User {
 	private static final int MAXIMUM_DRAWABLE_SCORE = 16;
 	private static final int FIRST_SHOW_SIZE = 1;
-	private static final String DEALER_DEFAULT_NAME = "딜러";
 
 	public Dealer() {
-		super(new Name(DEALER_DEFAULT_NAME));
+		super(Name.ofDealer());
 	}
 
 	private Dealer(Name name, Cards cards) {
@@ -19,7 +19,7 @@ public class Dealer extends User {
 	}
 
 	public static Dealer fromCards(Card... cards) {
-		return new Dealer(new Name(DEALER_DEFAULT_NAME), new Cards(Arrays.asList(cards)));
+		return new Dealer(Name.ofDealer(), new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
 	@Override

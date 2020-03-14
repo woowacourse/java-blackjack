@@ -3,6 +3,7 @@ package domain.user;
 import java.util.Objects;
 
 public class Name {
+	private static final Name DEALER_DEFAULT_NAME = new Name("딜러");
 	private static final String NULL_OR_EMPTY_NAME_EXCEPTION_MESSAGE = "이름에 빈값이 들어갈 수 없습니다.";
 
 	private final String name;
@@ -16,6 +17,10 @@ public class Name {
 		if (Objects.isNull(name) || name.isEmpty()) {
 			throw new IllegalArgumentException(NULL_OR_EMPTY_NAME_EXCEPTION_MESSAGE);
 		}
+	}
+
+	public static Name ofDealer() {
+		return DEALER_DEFAULT_NAME;
 	}
 
 	public String getName() {

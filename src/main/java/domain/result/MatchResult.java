@@ -1,6 +1,7 @@
 package domain.result;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.BiPredicate;
 
 import domain.user.Dealer;
@@ -12,6 +13,7 @@ public enum MatchResult {
 	LOSE("패", MatchResult::isPlayerLose);
 
 	private static final String ILLEGAL_RESULT_MESSAGE = "예측 불가능한 결과입니다.";
+	private static final String PLAYER_AND_DEALER_NULL_EXCEPTION_MESSAGE = "객체에 NULL 값이 들어갈 수 없습니다..";
 
 	private final String matchResult;
 	private final BiPredicate<Player, Dealer> resultCondition;
@@ -22,17 +24,24 @@ public enum MatchResult {
 	}
 
 	public static MatchResult calculatePlayerMatchResult(Player player, Dealer dealer) {
+		validateNull(player, dealer);
 		return Arrays.stream(values())
 			.filter(result -> result.resultCondition.test(player, dealer))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_RESULT_MESSAGE));
 	}
 
+	private static void validateNull(Player player, Dealer dealer) {
+		if (Objects.isNull(player) || Objects.isNull(dealer)) {
+			throw new NullPointerException(PLAYER_AND_DEALER_NULL_EXCEPTION_MESSAGE);
+		}
+	}
+
 	public String getMatchResult() {
 		return matchResult;
 	}
 
-	public MatchResult reverseWinAndLose() {
+	public MatchResult swtichWinAndLose() {
 		if (this == MatchResult.WIN) {
 			return MatchResult.LOSE;
 		}
@@ -47,7 +56,7 @@ public enum MatchResult {
 		boolean isPlayerOnlyBlackjack = player.isBlackjack() && !dealer.isBlackjack();
 		boolean isPlayerScoreHigherThanDealers = player.hasHigherScoreThan(dealer);
 		boolean isDealerBust = dealer.isBust();
-		
+
 		return isNotPlayerBust && (isPlayerOnlyBlackjack || isPlayerScoreHigherThanDealers || isDealerBust);
 	}
 

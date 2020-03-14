@@ -55,7 +55,7 @@ public class PlayerTest {
 	void getInitialCardTest() {
 		Player player = Player.fromNameAndCards("name", new Card(HEART, EIGHT), new Card(CLOVER, NINE),
 			new Card(DIAMOND, TWO));
-		assertThat(player.getInitialCards()).containsExactly(new Card(HEART, EIGHT), new Card(CLOVER, NINE));
+		assertThat(player.getFirstShowCards()).containsExactly(new Card(HEART, EIGHT), new Card(CLOVER, NINE));
 	}
 
 	@DisplayName("플레이어의 카드 점수 합계가 21점이 넘어가는 경우 버스트다.")

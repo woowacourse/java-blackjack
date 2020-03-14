@@ -57,7 +57,7 @@ public abstract class User {
 		return name.getName();
 	}
 
-	public List<Card> getInitialCards() {
+	public List<Card> getFirstShowCards() {
 		return cards.getSubList(getFirstShowCardSize());
 	}
 

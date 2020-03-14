@@ -32,7 +32,7 @@ public class Player extends User {
 	}
 
 	public MatchResult calculateMatchResult(Dealer dealer) {
-		return MatchResult.calculatePlayerMatchResult(this, dealer);
+		return MatchResult.calculatePlayerMatchResult(this, Objects.requireNonNull(dealer));
 	}
 
 	@Override
