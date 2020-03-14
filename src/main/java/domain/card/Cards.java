@@ -25,10 +25,10 @@ public class Cards {
         Score score = Score.ZERO;
 
         for (Card card : cards) {
-            score.add(card.getPoint());
+            score = score.add(card.getPoint());
         }
         if (hasAce()) {
-            score.addAceBonusIfNotBust();
+            score = score.addAceBonusIfNotBust();
         }
         return score.getValue();
     }
