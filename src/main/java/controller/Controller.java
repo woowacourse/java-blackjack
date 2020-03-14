@@ -13,8 +13,6 @@ import domain.user.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.Arrays;
-
 public class Controller {
     private CardDeck cardDeck = CardFactory.createCardDeck();
 
@@ -32,7 +30,7 @@ public class Controller {
     }
 
     private Players createPlayers() {
-        Names names = new Names(Arrays.asList(InputView.requestName()));
+        Names names = new Names(InputView.requestName());
         return new Players(names);
     }
 
