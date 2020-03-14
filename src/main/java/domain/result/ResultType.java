@@ -6,16 +6,16 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 public enum ResultType {
-	WIN("승", value -> value > 0),
-	DRAW("무", value -> value == 0),
-	LOSE("패", value -> value < 0);
+	WIN(value -> value > 0, "승"),
+	DRAW( value -> value == 0, "무"),
+	LOSE(value -> value < 0, "패" );
 
-	private final String name;
 	private final Predicate<Integer> resultJudge;
+	private final String outputContent;
 
-	ResultType(String name, Predicate<Integer> resultJudge) {
-		this.name = name;
+	ResultType(Predicate<Integer> resultJudge, String outputContent) {
 		this.resultJudge = resultJudge;
+		this.outputContent = outputContent;
 	}
 
 	public static ResultType opposite(ResultType resultType) {
@@ -28,14 +28,14 @@ public enum ResultType {
 		return DRAW;
 	}
 
-	public static ResultType from(User user1, User user2) {
+	public static ResultType from(User user, User comparingUser) {
 		return Arrays.stream(ResultType.values())
-				.filter(type -> type.resultJudge.test(user1.compareTo(user2)))
+				.filter(type -> type.resultJudge.test(user.compareTo(comparingUser)))
 				.findFirst()
 				.orElseThrow(() -> new NullPointerException("원하는 결과를 찾을 수 없습니다."));
 	}
 
-	public String getName() {
-		return name;
+	public String getOutputContent() {
+		return outputContent;
 	}
 }
