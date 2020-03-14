@@ -1,7 +1,6 @@
 package domain.card.cardfactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
@@ -10,8 +9,7 @@ public class CardFactory {
 		for (Symbol symbol : Symbol.values()) {
 			makeCardByShape(cards, symbol);
 		}
-		Collections.shuffle(cards);
-		return Collections.unmodifiableList(cards);
+		return cards;
 	}
 
 	private static void makeCardByShape(List<Card> cards, Symbol symbol) {
