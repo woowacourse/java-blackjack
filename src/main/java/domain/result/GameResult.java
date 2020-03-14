@@ -51,6 +51,6 @@ public class GameResult {
 	}
 
 	public Map<Gamer, Score> getScores() {
-		return scores;
+		return Collections.unmodifiableMap(scores);
 	}
 }
