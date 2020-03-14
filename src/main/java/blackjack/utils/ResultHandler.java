@@ -23,7 +23,7 @@ public class ResultHandler {
         Map<Player, Result> totalResult = new LinkedHashMap<>();
         users.getPlayer()
                 .forEach(player -> totalResult.put(player, Result.of(dealer, player)));
-        return parseAllWinners(totalResult);
+        return parseAllPlayerResults(totalResult);
     }
 
     private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
@@ -38,7 +38,7 @@ public class ResultHandler {
         return playerResult;
     }
 
-    private static String parseAllWinners(Map<Player, Result> totalResult) {
+    private static String parseAllPlayerResults(Map<Player, Result> totalResult) {
         Map<Result, Integer> dealerResult = calculatePlayerResultCount(totalResult);
         StringBuilder sb = new StringBuilder();
 
