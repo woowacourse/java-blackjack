@@ -13,21 +13,9 @@ public class GameResult {
 	public GameResult(List<User> users, Dealer dealer) {
 		Map<String, Result> userResult = new HashMap<>();
 		for (User user : users) {
-			userResult.put(user.getName(), compareScore(user, dealer));
+			userResult.put(user.getName(), user.compareScore(dealer));
 		}
 		this.userResult = userResult;
-	}
-
-	public Result compareScore(User user, Dealer dealer) {
-		int dealerScore = dealer.calculateBurstIsZeroScore();
-		int userScore = user.calculateBurstIsZeroScore();
-		if (userScore > dealerScore) {
-			return Result.WIN;
-		}
-		if (userScore == dealerScore) {
-			return Result.DRAW;
-		}
-		return Result.LOSE;
 	}
 
 	public int calculateDealerWinCount() {
