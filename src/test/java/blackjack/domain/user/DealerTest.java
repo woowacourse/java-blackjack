@@ -57,4 +57,15 @@ class DealerTest {
 		}
 		return Stream.of(Arguments.of(dealer));
 	}
+
+	@Test
+	void getInitialHand_DealerDrawInitialTwoCards_ReturnOneCard() {
+		List<Card> cards = Arrays.asList(
+			new Card(Symbol.SEVEN, Type.CLUB),
+			new Card(Symbol.TWO, Type.DIAMOND));
+		Dealer dealer = Dealer.valueOf("dealer", cards);
+
+		assertThat(dealer.getInitialHand()).hasSize(1)
+			.isEqualTo(Arrays.asList(new Card(Symbol.SEVEN, Type.CLUB)));
+	}
 }

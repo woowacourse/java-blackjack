@@ -3,7 +3,6 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,19 +24,28 @@ class ResultTypeTest {
 	}
 
 	private static Stream<Arguments> provideDealerAndPlayerScoreWithReturnType() {
-		List<Card> dealerCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> pobiCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> sonyCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> stitchCards = Arrays.asList(new Card(Symbol.SEVEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
+		Dealer dealer = Dealer.valueOf("dealer", Arrays.asList(
+			new Card(Symbol.EIGHT, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
 
-		Player pobi = Player.valueOf("pobi", pobiCards);
-		Player sony = Player.valueOf("sony", sonyCards);
-		Player stitch = Player.valueOf("stitch", stitchCards);
+		Player pobi = Player.valueOf("pobi", Arrays.asList(
+			new Card(Symbol.QUEEN, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
+		Player sony = Player.valueOf("sony", Arrays.asList(
+			new Card(Symbol.EIGHT, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
+		Player stitch = Player.valueOf("stitch", Arrays.asList(
+			new Card(Symbol.SEVEN, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
+		Player bustPlayer = Player.valueOf("bust", Arrays.asList(
+			new Card(Symbol.TEN, Type.CLUB),
+			new Card(Symbol.KING, Type.DIAMOND),
+			new Card(Symbol.TWO, Type.CLUB)));
 
-		Dealer dealer = Dealer.valueOf("dealer", dealerCards);
 		return Stream.of(
-			Arguments.arguments(dealer, pobi, ResultType.LOSE),
-			Arguments.arguments(dealer, sony, ResultType.DRAW),
-			Arguments.arguments(dealer, stitch, ResultType.WIN));
+			Arguments.of(dealer, pobi, ResultType.LOSE),
+			Arguments.of(dealer, sony, ResultType.DRAW),
+			Arguments.of(dealer, stitch, ResultType.WIN),
+			Arguments.of(dealer, bustPlayer, ResultType.WIN));
 	}
 }

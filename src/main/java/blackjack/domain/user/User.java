@@ -12,7 +12,6 @@ import blackjack.domain.user.hand.Hand;
 
 public abstract class User {
 	private static final int DRAW_LOWER_BOUND = 1;
-	private static final int BLACKJACK_SCORE = 21;
 
 	protected final String name;
 	protected final Hand hand;
@@ -52,10 +51,6 @@ public abstract class User {
 		}
 	}
 
-	public boolean isBust() {
-		return hand.calculateScore().isMoreThan(BLACKJACK_SCORE);
-	}
-
 	public abstract boolean canDraw();
 
 	public abstract List<Card> getInitialHand();
@@ -70,6 +65,10 @@ public abstract class User {
 
 	public int getScore() {
 		return hand.calculateScore().getScore();
+	}
+
+	public int getBustHandledScore() {
+		return hand.calculateBustHandledScore().getScore();
 	}
 
 	@Override

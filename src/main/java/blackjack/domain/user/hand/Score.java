@@ -62,21 +62,4 @@ public class Score {
 	public int getScore() {
 		return score;
 	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-		if (object == null || getClass() != object.getClass()) {
-			return false;
-		}
-		Score that = (Score)object;
-		return score == that.score;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(score);
-	}
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import blackjack.domain.card.Card;
 
 public class Hand {
+	private static final int BLACKJACK_SCORE = 21;
+
 	private final List<Card> cards;
 
 	public Hand() {
@@ -25,6 +27,15 @@ public class Hand {
 
 		for (Card card : cards) {
 			score = score.add(card);
+		}
+		return score;
+	}
+
+	public Score calculateBustHandledScore() {
+		Score score = calculateScore();
+
+		if (score.getScore() > BLACKJACK_SCORE) {
+			return Score.ZERO;
 		}
 		return score;
 	}

@@ -54,14 +54,14 @@ public class BlackjackController {
 	}
 
 	private void drawCardsByOpinion(Player player) {
-		DrawOpinion drawOpinion;
-
-		do {
-			drawOpinion = DrawOpinion.of(InputView.inputDrawOpinion(player));
+		while (player.canDraw() && wantDraw(player)) {
 			player.draw(deck);
-
 			OutputView.printUserHand(player, player.getHand());
-		} while (player.canDraw() && DrawOpinion.YES.equals(drawOpinion));
+		}
+	}
+
+	private boolean wantDraw(Player player) {
+		return DrawOpinion.YES.equals(DrawOpinion.of(InputView.inputDrawOpinion(player)));
 	}
 
 	private void drawCardsDealer() {

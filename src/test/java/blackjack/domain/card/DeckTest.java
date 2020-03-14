@@ -2,6 +2,8 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,17 @@ class DeckTest {
 	@Test
 	void Deck_GetCardsFromCardRepository_GenerateInstance() {
 		assertThat(new Deck()).isInstanceOf(Deck.class);
+	}
+
+	@Test
+	void validate_DuplicateExistCards_InvalidDeckExceptionThrown() {
+		List<Card> cards = Arrays.asList(
+			new Card(Symbol.TEN, Type.CLUB),
+			new Card(Symbol.TEN, Type.CLUB));
+
+		assertThatThrownBy(() -> new Deck().refill(cards))
+			.isInstanceOf(InvalidDeckException.class)
+			.hasMessage(InvalidDeckException.INVALID);
 	}
 
 	@Test

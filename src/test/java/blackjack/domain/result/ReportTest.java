@@ -24,16 +24,19 @@ class ReportTest {
 
 	@BeforeEach
 	void setUp() {
-		List<Card> dealerCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> pobiCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> sonyCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> stitchCards = Arrays.asList(new Card(Symbol.SEVEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
+		dealer = Dealer.valueOf("dealer", Arrays.asList(
+			new Card(Symbol.EIGHT, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
 
-		Player pobi = Player.valueOf("pobi", pobiCards);
-		Player sony = Player.valueOf("sony", sonyCards);
-		Player stitch = Player.valueOf("stitch", stitchCards);
-
-		dealer = Dealer.valueOf("dealer", dealerCards);
+		Player pobi = Player.valueOf("pobi", Arrays.asList(
+			new Card(Symbol.QUEEN, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
+		Player sony = Player.valueOf("sony", Arrays.asList(
+			new Card(Symbol.EIGHT, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
+		Player stitch = Player.valueOf("stitch", Arrays.asList(
+			new Card(Symbol.SEVEN, Type.HEART),
+			new Card(Symbol.KING, Type.DIAMOND)));
 		players = Arrays.asList(pobi, sony, stitch);
 	}
 
