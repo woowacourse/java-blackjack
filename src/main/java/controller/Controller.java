@@ -52,7 +52,7 @@ public class Controller {
 	private static void progressDealer(BlackjackGame blackjackGame) {
 		while (blackjackGame.getDealer().canDraw()) {
 			OutputView.printDealerDraw();
-			blackjackGame.drawDealer();
+			blackjackGame.draw(blackjackGame.getDealer());
 		}
 	}
 

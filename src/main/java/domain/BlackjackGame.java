@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Player;
 
 /**
@@ -69,12 +70,8 @@ public class BlackjackGame {
 		return dealer.isBlackjack();
 	}
 
-	public void draw(Player player) {
-		player.draw(deck.deal());
-	}
-
-	public void drawDealer() {
-		dealer.draw(deck.deal());
+	public void draw(Gamer gamer) {
+		gamer.draw(deck.deal());
 	}
 
 	public List<Player> getPlayers() {
