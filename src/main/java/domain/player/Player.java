@@ -1,28 +1,24 @@
 package domain.player;
 
-import domain.card.CardCalculator;
 import domain.card.Card;
 import domain.card.Cards;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+public class Player extends User {
+    private String name;
 
-public abstract class Player {
-    protected List<Card> cards;
+    public Player(String name, Card... cards) {
 
-    public Player(Card... cards) {
-        this.cards = new ArrayList<>();
-        Collections.addAll(this.cards, cards);
+        super(cards);
+        this.name = name;
     }
 
-    public int sumCardNumber() {
-        return CardCalculator.calculateDeterminedAce(this.cards);
+    @Override
+    public void insertCard(Cards cards) {
+        this.cards.add(cards.pop());
+        validateDuplicateCard();
     }
 
-    public List<Card> getCard() {
-        return Collections.unmodifiableList(this.cards);
+    public String getName() {
+        return name;
     }
-
-    public abstract void insertCard(Cards cards);
 }

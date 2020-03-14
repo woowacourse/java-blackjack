@@ -1,7 +1,7 @@
 package view;
 
 import dto.ResponsePlayerDTO;
-import dto.ResponseWinningResultDTO;
+import dto.WinningPlayerResult;
 
 import java.util.List;
 
@@ -52,9 +52,9 @@ public class OutputView {
         }
     }
 
-    public static void printWinningResult(ResponseWinningResultDTO responseWinningResultDTO) {
+    public static void printWinningResult(WinningPlayerResult winningPlayerResult) {
         System.out.println("## 최종 승패");
-        for (String result : responseWinningResultDTO.getWinningResult()) {
+        for (String result : winningPlayerResult.getWinningResult()) {
             System.out.println(result);
         }
     }

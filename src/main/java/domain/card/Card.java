@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
-    private static List<Card> cards;
-
     private CardNumber cardNumber;
     private CardSuitSymbol cardSuitSymbol;
+    private static List<Card> cards;
+
+    private Card(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
+        this.cardNumber = cardNumber;
+        this.cardSuitSymbol = cardSuitSymbol;
+    }
 
     static {
         cards = new ArrayList<>();
@@ -20,11 +24,6 @@ public class Card {
         for (CardSuitSymbol cardSuitSymbol : CardSuitSymbol.values()) {
             cards.add(new Card(cardNumber, cardSuitSymbol));
         }
-    }
-
-    private Card(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
-        this.cardNumber = cardNumber;
-        this.cardSuitSymbol = cardSuitSymbol;
     }
 
     public static Card of(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {

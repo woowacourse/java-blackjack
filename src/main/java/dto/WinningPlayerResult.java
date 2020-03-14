@@ -3,18 +3,18 @@ package dto;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ResponseWinningResultDTO {
+public class WinningPlayerResult {
     private Map<String, Boolean> winningPlayer;
 
-    private ResponseWinningResultDTO(Map<String, Boolean> winningPlayer) {
+    private WinningPlayerResult(Map<String, Boolean> winningPlayer) {
         this.winningPlayer = winningPlayer;
     }
 
     public List<String> getWinningResult() {
         int allUserWinCount = (int) winningPlayer.values().stream().filter(win -> win).count();
         int allUserLoseCount = winningPlayer.values().size() - allUserWinCount;
-        List<String> result = new ArrayList<>(Collections.singletonList("딜러: " + allUserLoseCount + "승 "
-                + allUserWinCount + "패"));
+        List<String> result = new ArrayList<>(Collections.singletonList(String.format(
+                "딜러: %d승 %d패",allUserLoseCount ,allUserWinCount)));
 
         result.addAll(winningPlayer.entrySet().stream()
                 .map(entry -> winString(entry.getKey(), entry.getValue()))
@@ -33,7 +33,7 @@ public class ResponseWinningResultDTO {
         return sb.toString();
     }
 
-    public static ResponseWinningResultDTO of(Map<String, Boolean> winningPlayer) {
-        return new ResponseWinningResultDTO(winningPlayer);
+    public static WinningPlayerResult of(Map<String, Boolean> winningPlayer) {
+        return new WinningPlayerResult(winningPlayer);
     }
 }

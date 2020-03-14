@@ -2,16 +2,16 @@ package controller;
 
 import domain.AnswerType;
 import domain.card.CardCalculator;
-import domain.player.PlayerFactory;
+import domain.player.UserFactory;
 import domain.WinningResult;
 import domain.card.Cards;
 import domain.player.Dealer;
-import domain.player.Players;
-import domain.player.User;
-import dto.RequestAnswerDTO;
-import dto.RequestPlayerNameDTO;
+import domain.player.Users;
+import domain.player.Player;
+import dto.Answer;
+import dto.PlayerName;
 import dto.ResponsePlayerDTO;
-import dto.ResponseWinningResultDTO;
+import dto.WinningPlayerResult;
 import view.InputView;
 import view.OutputView;
 
@@ -21,36 +21,35 @@ public class BlackjackController {
 
     public static void run() {
         Cards cards = new Cards();
-        RequestPlayerNameDTO requestPlayerNameDTO = InputView.inputPlayerName();
-        PlayerFactory playerFactory = PlayerFactory.getInstance();
-        Players players = playerFactory.createPlayers(cards, requestPlayerNameDTO.getPlayerName());
+        PlayerName playerName = InputView.inputPlayerName();
+        Users users = UserFactory.createPlayers(cards, playerName.getPlayerName());
 
-        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.of(players);
+        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.of(users);
         OutputView.printInitialResult(responsePlayerDTOS);
 
-        for (User user : players.getUsers()) {
-            userService(cards, user);
+        for (Player player : users.getUsers()) {
+            userService(cards, player);
         }
-        DealerService(cards, players.getDealer());
-        result(players);
+        DealerService(cards, users.getDealer());
+        result(users);
     }
 
-    private static void userService(Cards cards, User user) {
-        AnswerType answerType = getAnswer(user);
+    private static void userService(Cards cards, Player player) {
+        AnswerType answerType = getAnswer(player);
 
         if (answerType.isEqualsAnswer(AnswerType.NO)) {
             return;
         }
 
-        while (answerType.isEqualsAnswer(AnswerType.YES) && CardCalculator.isUnderBlackJack(user.getCard())) {
-            user.insertCard(cards);
-            OutputView.printUserCard(ResponsePlayerDTO.of(user));
+        while (answerType.isEqualsAnswer(AnswerType.YES) && CardCalculator.isUnderBlackJack(player.getCard())) {
+            player.insertCard(cards);
+            OutputView.printUserCard(ResponsePlayerDTO.of(player));
 
-            if (CardCalculator.isUnderBlackJack(user.getCard())) {
-                answerType = getAnswer(user);
+            if (CardCalculator.isUnderBlackJack(player.getCard())) {
+                answerType = getAnswer(player);
                 continue;
             }
-            OutputView.printUserCardsOverBlackJack(ResponsePlayerDTO.of(user));
+            OutputView.printUserCardsOverBlackJack(ResponsePlayerDTO.of(player));
         }
     }
 
@@ -60,17 +59,17 @@ public class BlackjackController {
         }
     }
 
-    private static void result(Players players) {
-        OutputView.printFinalResult(ResponsePlayerDTO.of(players));
+    private static void result(Users users) {
+        OutputView.printFinalResult(ResponsePlayerDTO.of(users));
 
-        WinningResult winningResult = new WinningResult(players);
-        ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.of(
+        WinningResult winningResult = new WinningResult(users);
+        WinningPlayerResult winningPlayerResult = WinningPlayerResult.of(
                 winningResult.getWinningResult());
-        OutputView.printWinningResult(responseWinningResultDTO);
+        OutputView.printWinningResult(winningPlayerResult);
     }
 
-    private static AnswerType getAnswer(User user) {
-        RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.of(user));
-        return AnswerType.findAnswerType(requestAnswerDTO.getAnswer());
+    private static AnswerType getAnswer(Player player) {
+        Answer answer = InputView.inputAnswer(ResponsePlayerDTO.of(player));
+        return AnswerType.findAnswerType(answer.getAnswer());
     }
 }

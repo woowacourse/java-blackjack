@@ -5,7 +5,7 @@ import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.card.Cards;
 import domain.player.Dealer;
-import domain.player.Player;
+import domain.player.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class DealerTest {
     void insertCardTest() {
         Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
         Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Player dealer = new Dealer(card1, card2);
+        User dealer = new Dealer(card1, card2);
         Cards cards = new Cards();
         dealer.insertCard(cards);
 

@@ -4,9 +4,9 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.Players;
 import domain.player.User;
+import domain.player.Users;
+import domain.player.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,13 +36,13 @@ public class WinningResultTest {
 
     @Test
     void getterTest() {
-        Player dealer = new Dealer(card1, card2);
-        Player player1 = new User("Labin", card3, card4);
-        Player player2 = new User("Subway", card5, card6);
-        List<Player> playerList = new ArrayList<>(Arrays.asList(dealer, player1, player2));
-        Players players = new Players(playerList);
+        User dealer = new Dealer(card1, card2);
+        User user1 = new Player("Labin", card3, card4);
+        User user2 = new Player("Subway", card5, card6);
+        List<User> userList = new ArrayList<>(Arrays.asList(dealer, user1, user2));
+        Users users = new Users(userList);
 
-        WinningResult winningResult = new WinningResult(players);
+        WinningResult winningResult = new WinningResult(users);
         Map<String, Boolean> winningPlayerResult = winningResult.getWinningResult();
 
         Assertions.assertThat(winningPlayerResult.keySet()).containsSequence("Labin", "Subway");

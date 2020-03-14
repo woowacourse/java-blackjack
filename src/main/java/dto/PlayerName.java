@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequestPlayerNameDTO {
+public class PlayerName {
     private static final String DELIMITER = ",";
 
     private String playerName;
 
-    public RequestPlayerNameDTO(String playerName) {
+    public PlayerName(String playerName) {
         this.playerName = playerName;
     }
 

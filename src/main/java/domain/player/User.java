@@ -1,22 +1,35 @@
 package domain.player;
 
+import domain.card.CardCalculator;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class User extends Player {
-    private String name;
+import java.util.*;
+import java.util.stream.Collectors;
 
-    public User(String name, Card... cards) {
-        super(cards);
-        this.name = name;
+public abstract class User {
+    protected final List<Card> cards;
+
+    public User(Card... cards) {
+        this.cards = new ArrayList<>();
+        Collections.addAll(this.cards, cards);
+        validateDuplicateCard();
     }
 
-    @Override
-    public void insertCard(Cards cards) {
-        this.cards.add(cards.pop());
+    public int sumCardNumber() {
+        return CardCalculator.calculateDeterminedAce(this.cards);
     }
 
-    public String getName() {
-        return name;
+    public List<Card> getCard() {
+        return Collections.unmodifiableList(this.cards);
     }
+    
+    protected void validateDuplicateCard(){
+        Set<Card> cards = new HashSet<>(this.cards);
+        if(cards.size() != this.cards.size()){
+            throw new IllegalArgumentException("카드를 중복으로 받았습니다.");
+        }
+    }
+
+    public abstract void insertCard(Cards cards);
 }

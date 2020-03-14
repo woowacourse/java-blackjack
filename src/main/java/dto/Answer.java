@@ -1,9 +1,9 @@
 package dto;
 
-public class RequestAnswerDTO {
+public class Answer {
     private  String answer;
 
-    public RequestAnswerDTO(String answer) {
+    public Answer(String answer) {
         this.answer = answer;
     }
 

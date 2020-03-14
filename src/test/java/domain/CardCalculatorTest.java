@@ -2,8 +2,8 @@ package domain;
 
 import domain.card.*;
 import domain.player.Dealer;
-import domain.player.Player;
 import domain.player.User;
+import domain.player.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -60,9 +60,9 @@ public class CardCalculatorTest {
     @DisplayName("블랙잭(총 합이 21) 인지 판단하는 메서드 테스트")
     @Test
     void isBlackjackTest() {
-        Player player = new User("subway",Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+        User user = new Player("subway",Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
 
-        Assertions.assertThat(CardCalculator.isBlackJack(player.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.isBlackJack(user.getCard())).isTrue();
     }
 }

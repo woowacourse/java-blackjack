@@ -2,9 +2,9 @@ package dto;
 
 import domain.card.Card;
 import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.Players;
 import domain.player.User;
+import domain.player.Users;
+import domain.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,36 +19,36 @@ public class ResponsePlayerDTO {
     private String cardInfo;
     private String score;
 
-    private ResponsePlayerDTO(Player player) {
-        setName(player);
-        List<Card> cards = player.getCard();
+    private ResponsePlayerDTO(User user) {
+        setName(user);
+        List<Card> cards = user.getCard();
         this.cardInfo = cards.stream().map(Card::toString).collect(Collectors.joining(DELIMITER));
-        this.score = Integer.toString(player.sumCardNumber());
+        this.score = Integer.toString(user.sumCardNumber());
     }
 
-    private void setName(Player player) {
-        if (player instanceof Dealer) {
+    private void setName(User user) {
+        if (user instanceof Dealer) {
             this.name = DEALER_NAME;
             return;
         }
 
-        User User = (User) player;
-        this.name = User.getName();
+        Player player = (Player) user;
+        this.name = player.getName();
     }
 
-    public static List<ResponsePlayerDTO> of(Players players) {
+    public static List<ResponsePlayerDTO> of(Users users) {
         List<ResponsePlayerDTO> responsePlayerDTOS = new ArrayList<>();
 
-        responsePlayerDTOS.add(new ResponsePlayerDTO(players.getDealer()));
-        responsePlayerDTOS.addAll(players.getUsers().stream()
+        responsePlayerDTOS.add(new ResponsePlayerDTO(users.getDealer()));
+        responsePlayerDTOS.addAll(users.getUsers().stream()
                 .map(ResponsePlayerDTO::new)
                 .collect(Collectors.toList()));
 
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 
-    public static ResponsePlayerDTO of(Player player) {
-        return new ResponsePlayerDTO(player);
+    public static ResponsePlayerDTO of(User user) {
+        return new ResponsePlayerDTO(user);
     }
 
     public String getName() {

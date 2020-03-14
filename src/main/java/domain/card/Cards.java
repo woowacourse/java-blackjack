@@ -11,11 +11,11 @@ public class Cards {
 
     public Cards() {
         this.cardsDeck = Card.getCards();
+        Collections.shuffle(cardsDeck);
     }
 
     public Card pop() {
         validateCardsDeck();
-        Collections.shuffle(cardsDeck);
         return cardsDeck.remove(FIRST);
     }
 

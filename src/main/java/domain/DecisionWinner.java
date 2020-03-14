@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.CardCalculator;
-import domain.player.Player;
+import domain.player.User;
 
 public class DecisionWinner {
 
@@ -10,9 +10,9 @@ public class DecisionWinner {
     private DecisionWinner() {
     }
 
-    public static boolean compareWinner(Player targetPlayer, Player player) {
-        int playerCardSum = CardCalculator.calculateDeterminedAce(targetPlayer.getCard());
-        int dealerCardSum = CardCalculator.calculateDeterminedAce(player.getCard());
+    public static boolean compareWinner(User targetUser, User user) {
+        int playerCardSum = CardCalculator.calculateDeterminedAce(targetUser.getCard());
+        int dealerCardSum = CardCalculator.calculateDeterminedAce(user.getCard());
 
         return determineWin(playerCardSum, dealerCardSum);
     }

@@ -12,7 +12,7 @@
 
 - 딜러(Dealer): implements Player
     - 16을 기준으로 카드를 받을지 결정하는 메서드
-- 유저(User): implements Player
+- 유저(player): implements Player
     - 유저에는 이름 프로퍼티가 필요하다 -> 생성자에서 이름을 받도록 변경해야 한다
     - 승 / 패
     - enum Y / N 을 기준으로 카드를 받을지 결정하는 메서드
