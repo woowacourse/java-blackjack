@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
-    public static final String DECK_IS_EMPTY = "덱이 비었습니다";
+    private static final String DECK_IS_EMPTY = "덱이 비었습니다";
+
     private final LinkedList<Card> deck;
 
     public Deck(LinkedList<Card> cards) {

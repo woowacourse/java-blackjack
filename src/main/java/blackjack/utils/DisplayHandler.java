@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class DisplayHandler {
 
     public static final String DELIMITER = ", ";
-    public static final String INITIAL_CARDS_DISTRIBUTED = "에게 2장의 카드를 나누었습니다.\n\n";
+    private static final String INITIAL_CARDS_DISTRIBUTED = "에게 2장의 카드를 나누었습니다.\n\n";
     public static final String NEW_LINE = "\n";
 
     public static String parseInitialDistribution(Users users) {

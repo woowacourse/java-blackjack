@@ -8,7 +8,6 @@ public class BlackjackApplication {
             BlackjackGameController.run();
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            BlackjackGameController.run();
         }
     }
 }

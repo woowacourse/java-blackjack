@@ -36,9 +36,7 @@ public class BlackjackGameController {
 
     private static void hitMoreCard(Users users, Deck deck) {
         List<User> gameUsers = users.getUsers();
-        gameUsers.stream()
-                .filter(user -> user instanceof Player)
-                .forEach(user -> askForHit(deck, user));
+        users.getPlayer().forEach(user -> askForHit(deck, user));
     }
 
     private static void askForHit(Deck deck, User user) {
@@ -54,7 +52,7 @@ public class BlackjackGameController {
 
     private static void decideDealerToHitCard(Users users, Deck deck) {
         Dealer dealer = users.getDealer();
-        if (dealer.isUnderThreshold()) {
+        while (dealer.isUnderThreshold()) {
             dealer.receiveCard(deck.drawCard());
             OutputView.printDealerHitMoreCard();
         }
