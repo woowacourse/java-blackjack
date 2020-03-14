@@ -6,6 +6,7 @@ import java.util.List;
 
 public class AceScoreStrategy implements ScoreStrategy {
 
+    private static final int BIG_ACE_VALUE = 11;
     private static final int ACE_WEIGHT = 10;
     private static final int MAXIMUM_VALUE = 21;
 
@@ -22,14 +23,23 @@ public class AceScoreStrategy implements ScoreStrategy {
 
     @Override
     public int calculate(List<Card> cards) {
-        int sum = ScoreStrategy.sum(cards);
+        int sum = cards.stream()
+                .mapToInt(this::convertScore)
+                .sum();
+
         int aceCount = getAceCount(cards);
-        sum += aceCount * ACE_WEIGHT;
 
         while (sum > MAXIMUM_VALUE && aceCount > 0) {
             sum -= ACE_WEIGHT;
             aceCount--;
         }
         return sum;
+    }
+
+    private int convertScore(Card card) {
+        if (card.isAce()) {
+            return BIG_ACE_VALUE;
+        }
+        return card.getNumber();
     }
 }
