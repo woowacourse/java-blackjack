@@ -23,8 +23,8 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return cardNumber == card.cardNumber &&
-                cardFigure == card.cardFigure;
+        return cardNumber.equals(card.cardNumber) &&
+                cardFigure.equals(card.cardFigure);
     }
 
     @Override
@@ -33,17 +33,8 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.cardFigure.equals(CardNumber.ACE);
+        return this.cardNumber.equals(CardNumber.ACE);
     }
-//    public boolean has(CardNumber number) {
-//        Objects.requireNonNull(number, String.format(NULL_ERROR_MSG, "카드 번호"));
-//        return this.number == number;
-//    }
-//
-//    public boolean has(CardNumber number, CardFigure cardFigure) {
-//        Objects.requireNonNull(cardFigure, String.format(NULL_ERROR_MSG, "카드 모양"));
-//        return has(number) && this.cardFigure == cardFigure;
-//    }
 
     public CardFigure getCardFigure() {
         return cardFigure;

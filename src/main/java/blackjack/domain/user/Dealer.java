@@ -1,10 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.ResultType;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Dealer extends User {
     private static final String name = "딜러";

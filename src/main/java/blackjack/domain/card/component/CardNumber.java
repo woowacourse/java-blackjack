@@ -31,8 +31,4 @@ public enum CardNumber {
     public String getMessage() {
         return message;
     }
-
-    public boolean isAce() {
-        return this == CardNumber.ACE;
-    }
 }

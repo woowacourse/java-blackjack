@@ -14,10 +14,10 @@ public enum ResultType {
     }
 
     public static ResultType computeResult(Point playerPoint, Point dealerPoint) {
-        if (playerPoint.isBust()) {
+        if (playerPoint.overBust()) {
             return LOSE;
         }
-        if (dealerPoint.isBust()) {
+        if (dealerPoint.overBust()) {
             return WIN;
         }
 

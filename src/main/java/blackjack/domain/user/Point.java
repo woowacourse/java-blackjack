@@ -34,7 +34,7 @@ public class Point {
     private void handleAce(List<Card> cards) {
         int aceCount = getAceCount(cards);
         while (aceCount-- > 0) {
-            if (this.point < BUST_NUMBER) {
+            if (this.point > BUST_NUMBER) {
                 this.point -= CardNumber.ACE_DIFF;
             }
         }

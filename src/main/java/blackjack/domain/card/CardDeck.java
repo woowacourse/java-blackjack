@@ -23,11 +23,11 @@ public class CardDeck {
         }
     }
 
-    public int getSize() {
-        return cards.size();
-    }
-
     public Card getCard() {
         return cards.poll();
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }
