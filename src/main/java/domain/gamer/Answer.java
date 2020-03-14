@@ -5,19 +5,17 @@ import exception.YesOrNoFormatException;
 import java.util.Arrays;
 
 public enum Answer {
-    YES("y", true),
-    NO("n", false);
+    YES("y"),
+    NO("n");
 
     private String answerValue;
-    private boolean drawable;
 
-    Answer(String answerValue, boolean drawable) {
+    Answer(String answerValue) {
         this.answerValue = answerValue;
-        this.drawable = drawable;
     }
 
-    public boolean getDrawable() {
-        return drawable;
+    public boolean isYes() {
+        return this == YES;
     }
 
     public static Answer findAnswer(String answer) {

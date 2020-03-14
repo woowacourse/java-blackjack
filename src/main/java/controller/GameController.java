@@ -35,7 +35,7 @@ public class GameController {
 
     private void drawCardOfPlayer(Deck deck, Player player) {
         while (player.isDrawable()
-                && Answer.findAnswer(InputView.inputAsDrawable(player)).getDrawable()) {
+                && Answer.findAnswer(InputView.inputAsDrawable(player)).isYes()) {
             player.addCard(deck.popCard(ADD_CARD_SIZE));
             OutputView.printGamerCard(player);
         }
