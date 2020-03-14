@@ -5,10 +5,7 @@ import model.card.CardFactory;
 import model.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayersTest {
@@ -36,13 +33,6 @@ public class PlayersTest {
         assertThatThrownBy(() -> new Players(", ,", deck))
                 .isInstanceOf(IllegalStringInputException.class)
                 .hasMessageMatching("입력은 한 글자 이상이어야 합니다.");
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"pobi,crong,honux:pobi", "crong:crong", "DD,Tiger:Tiger"}, delimiter = ':')
-    void namesList_test(String input, String expected) {
-        Players names = new Players(input, deck);
-        assertThat(names.contains(new Player(expected, deck.draw(2)))).isTrue();
     }
 }
 

@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import model.card.Card;
 import model.card.CardHand;
 
@@ -48,4 +49,23 @@ public class BlackJackPerson {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BlackJackPerson that = (BlackJackPerson) o;
+        return Objects.equals(name, that.name) &&
+            Objects.equals(cardHand, that.cardHand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cardHand);
+    }
 }
+

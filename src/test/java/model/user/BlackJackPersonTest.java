@@ -52,12 +52,13 @@ public class BlackJackPersonTest {
     void Dealer_isBust_Test() {
         Player player = new Player(PLAYER_NAME, notBustHand1);
         Dealer dealer = new Dealer(bustHand1);
-        assertThat(dealer.compareScore(player) == Result.WIN).isTrue();
+        assertThat(dealer.compareScore(player) == Result.LOSE).isTrue();
     }
 
     @Test
     void isBust_Player_Test() {
         Player player = new Player(PLAYER_NAME, bustHand1);
-        assertThat(player.isBust()).isTrue();
+        Dealer dealer = new Dealer(notBustHand1);
+        assertThat(dealer.compareScore(player) == Result.WIN).isTrue();
     }
 }

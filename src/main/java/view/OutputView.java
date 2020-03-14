@@ -72,7 +72,7 @@ public class OutputView {
 
     private static void printDealerResult(Dealer dealer) {
         Map<Result, Integer> result = dealer.getResult();
-        System.out.printf("%s:  %d승 %d무 %d패",
+        System.out.printf("%s:  %d승 %d무 %d패" + NEW_LINE,
             dealer.getName(),
             result.get(Result.WIN),
             result.get(Result.DRAW),

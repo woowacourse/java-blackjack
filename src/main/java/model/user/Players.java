@@ -10,7 +10,7 @@ import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 public class Players implements Iterable<Player> {
 
     private static final String COMMA = ",";
-    private final List<Player> players = new ArrayList<>();
+    private final Set<Player> players = new HashSet<>();
 
     public Players(String input, Deck deck) {
         validate(input);
@@ -47,27 +47,6 @@ public class Players implements Iterable<Player> {
             names.add(player.getName());
         }
         return String.join(COMMA, names);
-    }
-
-    public boolean contains(Player player) {
-        return players.contains(player);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Players players1 = (Players) o;
-        return Objects.equals(players, players1.players);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(players);
     }
 
     @Override
