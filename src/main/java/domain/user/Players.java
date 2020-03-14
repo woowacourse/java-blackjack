@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> playerNames) {
@@ -34,5 +33,4 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(this.players);
     }
-
 }

@@ -5,7 +5,7 @@ public class Name {
 
     Name(String name) {
         if (name == null || name.isEmpty()) {
-            throw new NullPointerException("이름이 비어있습니다.");
+            throw new IllegalArgumentException("이름이 비어있습니다.");
         }
         this.name = name;
     }

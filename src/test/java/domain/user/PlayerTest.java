@@ -23,7 +23,7 @@ public class PlayerTest {
     @Test
     @DisplayName("초기 2장의 카드 받기 테스트")
     void receiveFirstCards() {
-        Deck deck = CardFactory.create();
+        Deck deck = CardFactory.createDeck();
         Player player = new Player("pobi");
         player.receiveFirstCards(deck);
         assertThat(player.getCards().size()).isEqualTo(2);
@@ -32,7 +32,7 @@ public class PlayerTest {
     @Test
     @DisplayName("한 장의 카드를 더 받기")
     void receiveCard() {
-        Deck deck = CardFactory.create();
+        Deck deck = CardFactory.createDeck();
         Player player = new Player("pobi");
         player.receiveFirstCards(deck);
         int sizeBeforeReceiveCard = player.getCards().size();

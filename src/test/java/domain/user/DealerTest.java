@@ -16,7 +16,7 @@ public class DealerTest {
     @Test
     @DisplayName("초기 2장의 카드 받기 테스트")
     void receiveFirstCards() {
-        Deck deck = CardFactory.create();
+        Deck deck = CardFactory.createDeck();
         Dealer dealer = new Dealer();
         dealer.receiveFirstCards(deck);
         assertThat(dealer.getCards().size()).isEqualTo(2);

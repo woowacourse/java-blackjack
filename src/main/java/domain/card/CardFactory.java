@@ -1,16 +1,26 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
-
-    public static Deck create() {
+    public static Deck createDeck() {
         List<Card> cards = new ArrayList<>();
         Symbol[] symbols = Symbol.values();
         for (Symbol symbol : symbols) {
             createByType(cards, symbol);
         }
+        return new Deck(cards);
+    }
+
+    public static Deck createShuffledDeck() {
+        List<Card> cards = new ArrayList<>();
+        Symbol[] symbols = Symbol.values();
+        for (Symbol symbol : symbols) {
+            createByType(cards, symbol);
+        }
+        Collections.shuffle(cards);
         return new Deck(cards);
     }
 
@@ -20,5 +30,4 @@ public class CardFactory {
             cards.add(new Card(symbol, type));
         }
     }
-
 }

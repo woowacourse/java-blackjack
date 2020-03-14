@@ -29,5 +29,4 @@ public class Deck {
         }
         return Collections.unmodifiableList(twoCards);
     }
-
 }

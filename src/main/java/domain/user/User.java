@@ -32,5 +32,4 @@ public abstract class User implements Participant {
     public int getTotalScore() {
         return cards.sumScores();
     }
-
 }

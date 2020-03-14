@@ -22,7 +22,8 @@ public class BlackJackController {
     private static void runWithoutExceptionCatch() {
         Players players = new Players(InputView.readPlayerNames());
         Dealer dealer = new Dealer();
-        Deck deck = createShuffledDeck();
+        Deck deck = CardFactory.createShuffledDeck();
+        ;
 
         doFirstDeal(players, dealer, deck);
         dealToPlayers(players, deck);
@@ -30,12 +31,6 @@ public class BlackJackController {
 
         OutputView.printFinalCardStatus(dealer, players);
         conclude(players, dealer);
-    }
-
-    private static Deck createShuffledDeck() {
-        Deck deck = CardFactory.create();
-        deck.shuffle();
-        return deck;
     }
 
     private static void doFirstDeal(Players players, Dealer dealer, Deck deck) {

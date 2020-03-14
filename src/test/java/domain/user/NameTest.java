@@ -14,8 +14,9 @@ public class NameTest {
     @NullAndEmptySource
     @DisplayName("플레이어 이름 null,empty 예외처리")
     void nullAndEmptyTest(String input) {
-        assertThatThrownBy(() -> new Name(input)).
-            isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> new Name(input))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이름이 비어있습니다.");
     }
 
     @ParameterizedTest

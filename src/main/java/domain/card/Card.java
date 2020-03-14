@@ -40,3 +40,9 @@ public class Card {
         return this.type.getKoreanName();
     }
 }
+
+
+
+
+
+
