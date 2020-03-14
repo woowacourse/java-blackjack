@@ -19,13 +19,13 @@ public class Application {
         final Dealer dealer = new Dealer();
         final Users users = new Users(UserFactory.create(InputView.inputNames()));
 
-        distributeInitCard(cardDeck, dealer, users);
-        initBrief(dealer, users);
+        distributeInitialCard(cardDeck, dealer, users);
+        distributeInfo(dealer, users);
         addMoreCards(cardDeck, dealer, users);
         printResults(dealer, users);
     }
 
-    private static void distributeInitCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
+    private static void distributeInitialCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
         distributeToPlayer(cardDeck, dealer);
         for (User user : users) {
             distributeToPlayer(cardDeck, user);
@@ -40,9 +40,9 @@ public class Application {
         }
     }
 
-    private static void initBrief(final Dealer dealer, final Users users) {
+    private static void distributeInfo(final Dealer dealer, final Users users) {
         OutputView.printDistributeMessage(users);
-        OutputView.printInitStatus(dealer, users);
+        OutputView.printInitialStatus(dealer, users);
     }
 
     private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Users users) {

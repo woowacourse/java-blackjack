@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
-    private static final String INIT_DISTRIBUTE_COUNT = "2";
+    private static final String INITIAL_DISTRIBUTE_COUNT = "2";
 
     public static void printDistributeMessage(final Users users) {
         List<String> usersName = new ArrayList<>();
 
         users.forEach(user -> usersName.add(user.getName()));
-        System.out.printf("\n딜러와 %s에게 %s장 나누었습니다.\n",String.join(DELIMITER, usersName),INIT_DISTRIBUTE_COUNT);
+        System.out.printf("\n딜러와 %s에게 %s장 나누었습니다.\n",String.join(DELIMITER, usersName),INITIAL_DISTRIBUTE_COUNT);
     }
 
-    public static void printInitStatus(final Dealer dealer, final Users users) {
+    public static void printInitialStatus(final Dealer dealer, final Users users) {
         printStatus(dealer);
         users.forEach(user -> printStatus(user));
         System.out.println();
