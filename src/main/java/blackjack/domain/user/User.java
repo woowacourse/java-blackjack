@@ -27,10 +27,6 @@ public abstract class User {
         cards.add(card);
     }
 
-    public void receiveCard(List<Card> newCards) {
-        cards.addAll(newCards);
-    }
-
     public int getTotalScore() {
         int score = incrementAceScore(cards.stream()
             .mapToInt(Card::getScore)

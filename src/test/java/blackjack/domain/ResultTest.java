@@ -7,6 +7,7 @@ import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -50,9 +51,18 @@ public class ResultTest {
     }
 
     @Test
+    @DisplayName("승, 무, 패 결과가 잘 나오는지 확인")
     void checkResult() {
         assertThat(Result.of(dealer, player1)).isEqualTo(Result.WIN);
         assertThat(Result.of(dealer, player2)).isEqualTo(Result.LOSE);
         assertThat(Result.of(dealer, player3)).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    @DisplayName("명칭을 잘 불러오는지 확인")
+    void checkgetName() {
+        assertThat(Result.WIN.getName()).isEqualTo("승");
+        assertThat(Result.DRAW.getName()).isEqualTo("무");
+        assertThat(Result.LOSE.getName()).isEqualTo("패");
     }
 }
