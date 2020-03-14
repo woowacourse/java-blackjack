@@ -22,7 +22,14 @@ public class Score {
 	}
 
 	private Score(int score) {
+		validate(score);
 		this.score = score;
+	}
+
+	private void validate(int score) {
+		if (score < 0) {
+			throw new InvalidScoreException(InvalidScoreException.INVALID);
+		}
 	}
 
 	public static Score valueOf(int number) {

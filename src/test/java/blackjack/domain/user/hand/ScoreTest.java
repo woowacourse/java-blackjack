@@ -13,6 +13,13 @@ import blackjack.domain.card.Type;
 
 class ScoreTest {
 	@Test
+	void validate_Negative_InvalidScoreExceptionThrown() {
+		assertThatThrownBy(() -> Score.valueOf(-1))
+			.isInstanceOf(InvalidScoreException.class)
+			.hasMessage(InvalidScoreException.INVALID);
+	}
+
+	@Test
 	void valueOf_InputInteger_ReturnInstance() {
 		assertThat(Score.valueOf(10)).isInstanceOf(Score.class)
 			.extracting("score").isEqualTo(10);
