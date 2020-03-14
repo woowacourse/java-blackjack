@@ -5,6 +5,7 @@ import blackjack.exception.NoCardException;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -17,10 +18,6 @@ public class Deck {
 
     public Deck(LinkedList<Card> cards) {
         this.deck = Objects.requireNonNull(cards);
-        shuffle();
-    }
-
-    private void shuffle() {
         Collections.shuffle(deck);
     }
 
@@ -32,7 +29,8 @@ public class Deck {
     }
 
     public UserCards drawInitialCards() {
-        return new UserCards(IntStream.of(0, INITIAL_CARDS).mapToObj(t -> this.drawCard())
-                .collect(Collectors.toList()));
+        List<Card> cards = IntStream.of(0, INITIAL_CARDS).mapToObj(t -> this.drawCard())
+                .collect(Collectors.toList());
+        return new UserCards(cards);
     }
 }

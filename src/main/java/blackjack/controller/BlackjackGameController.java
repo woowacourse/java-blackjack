@@ -4,7 +4,6 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.*;
 import blackjack.utils.InputHandler;
-import blackjack.utils.ResultHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,7 +18,7 @@ public class BlackjackGameController {
         hitMoreCard(users.getPlayers(), deck);
         decideDealerToHitCard(users.getDealer(), deck);
         OutputView.printFinalCardScore(users);
-        OutputView.printFinalResult(ResultHandler.findAllWinners(users));
+        OutputView.printFinalResult(users.calculateAllResults());
     }
 
     private static Users enrollUsers() {

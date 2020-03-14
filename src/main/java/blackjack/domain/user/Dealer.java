@@ -3,7 +3,7 @@ package blackjack.domain.user;
 public class Dealer extends User {
 
     private static final String DEALER = "딜러";
-    private static final int THRESHOLD = 16;
+    public static final int THRESHOLD = 16;
 
     public Dealer() {
         super(DEALER);
