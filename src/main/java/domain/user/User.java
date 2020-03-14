@@ -10,6 +10,7 @@ public abstract class User {
 
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
+    private static final int ACE_POINT = 10;
 
     protected final List<Card> cards;
     protected final Name name;
@@ -32,7 +33,7 @@ public abstract class User {
 
     public int calculatePointAccordingToHasAce() {
         if (isBust() && hasAce()) {
-            return calculatePoint() - 10;
+            return calculatePoint() - ACE_POINT;
         }
         return calculatePoint();
     }
