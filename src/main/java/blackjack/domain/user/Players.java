@@ -1,7 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.result.ResultType;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,28 +30,9 @@ public class Players {
         return players;
     }
 
-
-    public void computeResult(Dealer dealer) {
-        for (Player player : players) {
-            player.createResult(dealer);
-        }
-    }
-
-    public List<ResultType> getResult() {
-        return players.stream()
-                .map(Player::getResultType)
-                .collect(Collectors.toList());
-    }
-
     public List<String> getPlayerNames() {
         return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> showCardsInfo() {
-        return players.stream()
-                .map(Player::showCards)
+                .map(x -> x.getName().toString())
                 .collect(Collectors.toList());
     }
 }

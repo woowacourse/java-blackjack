@@ -7,14 +7,14 @@ import java.util.Objects;
 
 public class Card {
     private static final String NULL_ERROR_MSG = "%s이(가) 없습니다.";
-    private CardNumber number;
+    private CardNumber cardNumber;
     private CardFigure cardFigure;
 
-    public Card(CardNumber number, CardFigure cardFigure) {
-        Objects.requireNonNull(number, String.format(NULL_ERROR_MSG, "카드 번호"));
+    public Card(CardNumber cardNumber, CardFigure cardFigure) {
+        Objects.requireNonNull(cardNumber, String.format(NULL_ERROR_MSG, "카드 번호"));
         Objects.requireNonNull(cardFigure, String.format(NULL_ERROR_MSG, "카드 모양"));
 
-        this.number = number;
+        this.cardNumber = cardNumber;
         this.cardFigure = cardFigure;
     }
 
@@ -23,34 +23,33 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return number == card.number &&
+        return cardNumber == card.cardNumber &&
                 cardFigure == card.cardFigure;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, cardFigure);
+        return Objects.hash(cardNumber, cardFigure);
     }
 
-    public boolean has(CardNumber number) {
-        Objects.requireNonNull(number, String.format(NULL_ERROR_MSG, "카드 번호"));
-        return this.number == number;
+    public boolean isAce() {
+        return this.cardFigure.equals(CardNumber.ACE);
     }
-
-    public boolean has(CardNumber number, CardFigure cardFigure) {
-        Objects.requireNonNull(cardFigure, String.format(NULL_ERROR_MSG, "카드 모양"));
-        return has(number) && this.cardFigure == cardFigure;
-    }
+//    public boolean has(CardNumber number) {
+//        Objects.requireNonNull(number, String.format(NULL_ERROR_MSG, "카드 번호"));
+//        return this.number == number;
+//    }
+//
+//    public boolean has(CardNumber number, CardFigure cardFigure) {
+//        Objects.requireNonNull(cardFigure, String.format(NULL_ERROR_MSG, "카드 모양"));
+//        return has(number) && this.cardFigure == cardFigure;
+//    }
 
     public CardFigure getCardFigure() {
         return cardFigure;
     }
 
-    public int getNumber() {
-        return number.getNumber();
-    }
-
-    public String getMessage() {
-        return number.getMessage() + getCardFigure().getFigure();
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 }

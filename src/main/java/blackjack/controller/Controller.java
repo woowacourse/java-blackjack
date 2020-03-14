@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.YesOrNo;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDeckFactory;
+import blackjack.domain.result.Results;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -33,7 +33,7 @@ public class Controller {
 
     public void play() {
         for (Player player : players.getPlayers()) {
-            playGameForPlayer(player, deck);
+            playEachPlayer(player, deck);
         }
 
         if (dealer.receivable()) {
@@ -45,17 +45,15 @@ public class Controller {
     public void computeResult() {
         OutputView.printFinalStatus(players, dealer);
 
-        players.computeResult(dealer);
-        dealer.computeResult(players.getResult());
-
-        OutputView.printFinalResult(dealer, players);
+        Results results = Results.createResults(players, dealer);
+        OutputView.printFinalResult(results);
     }
 
 
-    private void playGameForPlayer(Player player, CardDeck deck) {
+    private void playEachPlayer(Player player, CardDeck deck) {
         while (proceed(player)) {
             player.addCard(deck.getCard());
-            OutputView.printStatus(player.getName(), player.getCards());
+            OutputView.printStatus(player);
         }
     }
 

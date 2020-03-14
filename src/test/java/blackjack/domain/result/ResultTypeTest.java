@@ -68,7 +68,7 @@ class ResultTypeTest {
     @ParameterizedTest
     @CsvSource(value = {"WIN,LOSE", "DRAW,DRAW", "LOSE,WIN"})
     void reverseTest(ResultType input, ResultType expected) {
-        ResultType actual = ResultType.reverse(input);
+        ResultType actual = ResultType.opposite(input);
         assertThat(actual).isEqualTo(expected);
     }
 }

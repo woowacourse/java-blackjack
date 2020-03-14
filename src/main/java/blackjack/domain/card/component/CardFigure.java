@@ -6,13 +6,13 @@ public enum CardFigure {
     HEART("하트"),
     SPADE("스페이드");
 
-    private final String figure;
+    private final String message;
 
-    CardFigure(String figure) {
-        this.figure = figure;
+    CardFigure(String message) {
+        this.message = message;
     }
 
-    public String getFigure() {
-        return figure;
+    public String getMessage() {
+        return message;
     }
 }

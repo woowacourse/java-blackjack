@@ -1,22 +1,25 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 public abstract class User {
     private static final String NULL_ERR_MSG = "%s이(가) 없습니다.";
     private Name name;
-    private Cards cards;
+    private Point point;
+    private List<Card> cards;
 
     public User(String name) {
         this.name = new Name(name);
-        cards = new Cards();
+        this.point = new Point();
+        this.cards = new ArrayList<>();
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public void addCard(Card card) {
@@ -24,16 +27,11 @@ public abstract class User {
         cards.add(card);
     }
 
-    public String showCards() {
-        return String.join(" ,", cards.getMessage());
-    }
-
-    public Cards getCards() {
+    public List<Card> getCards() {
         return cards;
     }
-
-    public int computeSum() {
-        return cards.computeSum();
+    public Point getPoint() {
+        return point;
     }
 
     public abstract boolean receivable();

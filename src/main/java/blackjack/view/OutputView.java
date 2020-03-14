@@ -1,11 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
-import blackjack.domain.result.ResultType;
+import blackjack.domain.result.Results;
+import blackjack.domain.user.*;
+
 
 public class OutputView {
     private static final String DELIMITER = ",";
@@ -20,34 +18,37 @@ public class OutputView {
         String playesNames = String.join(DELIMITER, players.getPlayerNames());
         System.out.println(String.format(SET_INIT_CARDS_MSG, playesNames));
 
-        printStatus(dealer.getName(), dealer.getFirstCard());
+        printStatus(dealer, dealer.getFirstCard());
         for (Player player : players.getPlayers()) {
-            Cards cards = player.getCards();
-            printStatus(player.getName(), cards);
+            printStatus(player);
         }
         System.out.println();
     }
 
-    public static void printStatus(String name, Card card) {
-        System.out.println(String.format(STATUS_FORMT, name, card.getMessage()));
+    public static void printStatus(User user, Card card) {
+        String formattedCard = ViewFormatter.formatCard(card);
+        String status = String.format(STATUS_FORMT, user.getName(), formattedCard);
+        System.out.println(status);
     }
 
-    public static void printStatus(String name, Cards cards) {
-        String cardInfo = String.join(DELIMITER, cards.getMessage());
-        System.out.println(String.format(STATUS_FORMT, name, cardInfo));
+    public static void printStatus(User user) {
+        String formattedCards = ViewFormatter.formatCards(user.getCards());
+        String status = String.format(STATUS_FORMT, user.getName(), formattedCards);
+        System.out.println(status);
     }
 
-    private static void printStatus(String name, Cards cards, int score) {
-        String cardInfo = String.join(DELIMITER, cards.getMessage());
-        System.out.println(String.format(FINAL_STATUS_FORMAT, name, cardInfo, score));
+    private static void printStatusWithScore(User user) {
+        String formattedCards = ViewFormatter.formatCards(user.getCards());
+        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.getPoint().getPoint());
+        System.out.println(status);
     }
 
     public static void printFinalStatus(Players players, Dealer dealer) {
         System.out.println();
-        printStatus(dealer.getName(), dealer.getCards(), dealer.computeSum());
+        printStatusWithScore(dealer);
 
         for (Player player : players.getPlayers()) {
-            printStatus(player.getName(), player.getCards(), player.computeSum());
+            printStatusWithScore(player);
         }
     }
 
@@ -56,18 +57,13 @@ public class OutputView {
         System.out.println(String.format(DEALER_RECEIVE_MORE_CARD_MSG, lowerBound));
     }
 
-    public static void printFinalResult(Dealer dealer, Players players) {
+    public static void printFinalResult(Results results) {
         System.out.println();
-        StringBuilder dealerMessage = new StringBuilder();
-        for (ResultType resultType : ResultType.values()) {
-            dealerMessage.append(dealer.getResultSum(resultType));
-            dealerMessage.append(resultType.getMessage());
-        }
-
         System.out.println("## 최종 승패");
-        System.out.println(String.format(String.format(STATUS_FORMT, dealer.getName(), dealerMessage)));
-        for (Player player : players.getPlayers()) {
-            System.out.println(String.format(STATUS_FORMT, player.getName(), player.getResultTypeMessage()));
-        }
+        String dealer = ViewFormatter.formatDealerResult(results.getDealerResult());
+        System.out.println(dealer);
+        results.getPlayerResult()
+                .forEach((k, v) ->
+                            System.out.println(ViewFormatter.formatPlayerResult(k, v.getMessage())));
     }
 }

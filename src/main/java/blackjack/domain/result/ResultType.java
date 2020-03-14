@@ -1,42 +1,36 @@
 package blackjack.domain.result;
 
-import java.util.List;
+import blackjack.domain.user.Point;
 
 public enum ResultType {
     WIN("승"),
-    LOSE("패"),
-    DRAW("무");
-    private static final int BUST = 21;
+    DRAW("무"),
+    LOSE("패");
+
     private final String message;
 
     ResultType(String message) {
         this.message = message;
     }
 
-    public static ResultType computeResult(int playerPoint, int dealerPoint) {
-        if (playerPoint > BUST) {
+    public static ResultType computeResult(Point playerPoint, Point dealerPoint) {
+        if (playerPoint.isBust()) {
             return LOSE;
         }
-        if (dealerPoint > BUST) {
+        if (dealerPoint.isBust()) {
             return WIN;
         }
 
-        if (playerPoint > dealerPoint) {
+        if (playerPoint.isBiggerThan(dealerPoint)) {
             return WIN;
         }
-        if (playerPoint == dealerPoint) {
+        if (playerPoint.isEqual(dealerPoint)) {
             return DRAW;
         }
         return LOSE;
     }
 
-    public static int computeSum(ResultType resultType, List<ResultType> resultTypes) {
-        return (int) resultTypes.stream()
-                .filter(element -> element == resultType)
-                .count();
-    }
-
-    public static ResultType reverse(ResultType resultType) {
+    public static ResultType opposite(ResultType resultType) {
         if (resultType == ResultType.WIN) {
             return ResultType.LOSE;
         }
