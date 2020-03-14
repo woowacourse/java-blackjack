@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.card.component;
 
 public enum CardNumber {
     TWO(2, "2"),

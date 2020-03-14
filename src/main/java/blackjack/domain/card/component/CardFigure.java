@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.card.component;
 
 public enum CardFigure {
     DIAMOND("다이아몬드"),

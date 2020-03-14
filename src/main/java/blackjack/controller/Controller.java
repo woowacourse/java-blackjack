@@ -8,7 +8,6 @@ import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
 
 public class Controller {
     private static int INITIAL_SET_CARD_SIZE = 2;
@@ -19,8 +18,7 @@ public class Controller {
 
     public Controller() {
         dealer = new Dealer();
-        List<String> names = InputView.getNames();
-        players = new Players(names);
+        players = new Players(InputView.getNames());
         deck = new CardDeck();
 
         for (Player player : players.getPlayers()) {
