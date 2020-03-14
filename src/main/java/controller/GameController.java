@@ -14,7 +14,7 @@ public class GameController {
 
     public void run() {
         Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
-        Deck deck = new Deck(CardsFactory.getInstance());
+        Deck deck = new Deck(CardsFactory.getCards());
         gamers.initCard(deck);
         OutputView.printInitCardGuide(gamers);
         OutputView.printGamersCard(gamers);
