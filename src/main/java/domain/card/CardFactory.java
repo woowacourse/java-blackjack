@@ -14,6 +14,9 @@ public class CardFactory {
 		}
 	}
 
+	private CardFactory() {
+	}
+
 	private static void createCardsByType(Type type) {
 		for (Symbol symbol : Symbol.values()) {
 			cards.add(new Card(symbol, type));

@@ -83,7 +83,7 @@ public class BlackjackGame {
 	private void printAllUserScore(List<Player> players, Dealer dealer) {
 		List<User> allUsers = new ArrayList<>(players);
 		allUsers.add(dealer);
-		OutputView.printUserResult(allUsers);
+		OutputView.printAllCardsAndScore(allUsers);
 	}
 
 	private void printGameResult(List<Player> players, Dealer dealer) {
