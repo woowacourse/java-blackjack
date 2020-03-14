@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -10,6 +11,8 @@ public class Cards {
 	private static final int BUST_SCORE = 22;
 	private static final int ACE_ADDITIONAL_SCORE = 10;
 	private static final int BLACKJACK_CARD_SIZE = 2;
+	private static final String NOT_EXIST_CARD_EXCEPTION_MESSAGE = "카드가 없습니다.";
+	private static final String OUT_OF_CARD_SIZE_EXCEPTION_MESSAGE = "인자의 값이 카드 갯수보다 큽니다.";
 
 	private final List<Card> cards;
 
@@ -17,8 +20,8 @@ public class Cards {
 		this.cards = new ArrayList<>(Objects.requireNonNull(cards));
 	}
 
-	public void addAll(List<Card> cards) {
-		this.cards.addAll(cards);
+	public void add(Card card) {
+		cards.add(Objects.requireNonNull(card));
 	}
 
 	public boolean isBlackjack() {
@@ -33,7 +36,7 @@ public class Cards {
 		int result = cards.stream()
 			.map(Card::getTypeScore)
 			.reduce(Integer::sum)
-			.orElseThrow(() -> new NoSuchElementException("카드가 없습니다."));
+			.orElseThrow(() -> new NoSuchElementException(NOT_EXIST_CARD_EXCEPTION_MESSAGE));
 
 		if (containsAce() && result + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
 			result += ACE_ADDITIONAL_SCORE;
@@ -47,6 +50,17 @@ public class Cards {
 	}
 
 	public List<Card> getCards() {
-		return cards;
+		return Collections.unmodifiableList(cards);
+	}
+
+	public List<Card> getSubList(int length) {
+		validateArgument(length);
+		return Collections.unmodifiableList(cards.subList(0, length));
+	}
+
+	private void validateArgument(int length) {
+		if (cards.size() < length) {
+			throw new IllegalArgumentException(OUT_OF_CARD_SIZE_EXCEPTION_MESSAGE);
+		}
 	}
 }

@@ -11,71 +11,65 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerFactory;
 import domain.user.User;
-import util.YesOrNo;
+import util.PlayerDrawResponse;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackGame {
-	private final CardDeck cardDeck;
-
-	public BlackjackGame(CardDeck cardDeck) {
-		this.cardDeck = cardDeck;
-	}
-
 	public void play() {
 		final List<Player> players = PlayerFactory.create(InputView.inputNames());
 		final Dealer dealer = new Dealer();
-		drawInitialUsersCard(players, dealer);
-		drawAdditionalUsersCard(players, dealer);
+		final CardDeck cardDeck = new CardDeck();
+		drawInitialUsersCard(players, dealer, cardDeck);
+		drawAdditionalUsersCard(players, dealer, cardDeck);
 		printAllUserScore(players, dealer);
 		printGameResult(players, dealer);
 	}
 
-	private void drawInitialUsersCard(List<Player> players, Dealer dealer) {
-		drawInitialPlayersCard(players);
-		drawInitialDealerCard(dealer);
+	private void drawInitialUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
+		drawInitialPlayersCard(players, cardDeck);
+		drawInitialDealerCard(dealer, cardDeck);
 		OutputView.printInitialResult(players, dealer);
 	}
 
-	private void drawInitialPlayersCard(List<Player> players) {
+	private void drawInitialPlayersCard(List<Player> players, CardDeck cardDeck) {
 		for (Player player : players) {
-			player.addCards(cardDeck.draw(), cardDeck.draw());
+			player.drawFirst(cardDeck);
 		}
 	}
 
-	private void drawInitialDealerCard(Dealer dealer) {
-		dealer.addCards(cardDeck.draw(), cardDeck.draw());
+	private void drawInitialDealerCard(Dealer dealer, CardDeck cardDeck) {
+		dealer.drawFirst(cardDeck);
 	}
 
-	private void drawAdditionalUsersCard(List<Player> players, Dealer dealer) {
+	private void drawAdditionalUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
 		if (dealer.isBlackjack()) {
 			return;
 		}
-		drawAdditionalPlayersCard(players);
-		drawAdditionalDealerCard(dealer);
+		drawAdditionalPlayersCard(players, cardDeck);
+		drawAdditionalDealerCard(dealer, cardDeck);
 	}
 
-	private void drawAdditionalPlayersCard(List<Player> players) {
+	private void drawAdditionalPlayersCard(List<Player> players, CardDeck cardDeck) {
 		for (Player player : players) {
-			drawAdditionalPlayerCard(player);
+			drawAdditionalPlayerCard(player, cardDeck);
 		}
 	}
 
-	private void drawAdditionalPlayerCard(Player player) {
+	private void drawAdditionalPlayerCard(Player player, CardDeck cardDeck) {
 		while (player.isDrawable() && isYes(player)) {
-			player.addCards(cardDeck.draw());
+			player.draw(cardDeck);
 			OutputView.printPlayerCard(player);
 		}
 	}
 
 	private boolean isYes(Player player) {
-		YesOrNo yesOrNo = YesOrNo.of(InputView.inputYesOrNo(player.getName()));
-		return yesOrNo.isYes();
+		return PlayerDrawResponse.isYes(InputView.inputYesOrNo(player.getName()));
 	}
 
-	private void drawAdditionalDealerCard(Dealer dealer) {
+	private void drawAdditionalDealerCard(Dealer dealer, CardDeck cardDeck) {
 		if (dealer.isDrawable()) {
-			dealer.addCards(cardDeck.draw());
+			dealer.draw(cardDeck);
 			OutputView.printDealerDraw();
 		}
 	}

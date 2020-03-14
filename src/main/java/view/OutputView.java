@@ -41,7 +41,7 @@ public class OutputView {
 
 	private static String getUserInitialDrawResult(User user) {
 		return String.format("%s %s %s", user.getName(),
-			String.format(CARD_STRING_FORMAT, parseCardsString(user.getInitialCard())),
+			String.format(CARD_STRING_FORMAT, parseCardsString(user.getInitialCards())),
 			NEW_LINE);
 	}
 

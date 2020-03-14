@@ -12,7 +12,7 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return this.type == Type.ACE;
+		return type.isAce();
 	}
 
 	public int getTypeScore() {

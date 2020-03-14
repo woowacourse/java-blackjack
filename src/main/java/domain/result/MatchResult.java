@@ -43,10 +43,12 @@ public enum MatchResult {
 	}
 
 	private static boolean isPlayerWin(Player player, Dealer dealer) {
-		return (player.isBlackjack() && !dealer.isBlackjack()) ||
-			(!player.isBust() &&
-				((player.calculateScore() > dealer.calculateScore()) || dealer.isBust())
-			);
+		boolean isNotPlayerBust = !player.isBust();
+		boolean isPlayerOnlyBlackjack = player.isBlackjack() && !dealer.isBlackjack();
+		boolean isPlayerScoreHigherThanDealers = player.hasHigherScoreThan(dealer);
+		boolean isDealerBust = dealer.isBust();
+		
+		return isNotPlayerBust && (isPlayerOnlyBlackjack || isPlayerScoreHigherThanDealers || isDealerBust);
 	}
 
 	private static boolean isPlayerDraw(Player player, Dealer dealer) {
@@ -54,7 +56,10 @@ public enum MatchResult {
 	}
 
 	private static boolean isPlayerLose(Player player, Dealer dealer) {
-		return (!player.isBlackjack() && dealer.isBlackjack()) ||
-			(player.isBust()) || (player.calculateScore() <= dealer.calculateScore());
+		boolean isPlayerBust = player.isBust();
+		boolean isDealerOnlyBlackjack = !player.isBlackjack() && dealer.isBlackjack();
+		boolean isNotPlayerScoreHigherThanDealers = !player.hasHigherScoreThan(dealer);
+
+		return isPlayerBust || isDealerOnlyBlackjack || isNotPlayerScoreHigherThanDealers;
 	}
 }

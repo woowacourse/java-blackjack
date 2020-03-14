@@ -22,14 +22,16 @@ public class PlayerResult {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (object == null || getClass() != object.getClass()) {
 			return false;
-		PlayerResult that = (PlayerResult)o;
+		}
+		PlayerResult that = (PlayerResult)object;
 		return Objects.equals(player, that.player) &&
-			matchResult == that.matchResult;
+			this.matchResult == that.matchResult;
 	}
 
 	@Override

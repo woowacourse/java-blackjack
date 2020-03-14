@@ -1,14 +1,16 @@
 package domain.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.card.CardDeck;
 import domain.card.Cards;
 
 public abstract class User {
+	private static final int FIRST_CARD_DRAW_SIZE = 2;
+
 	protected final Name name;
 	protected final Cards cards;
 
@@ -21,8 +23,14 @@ public abstract class User {
 		this.cards = Objects.requireNonNull(cards);
 	}
 
-	public void addCards(Card... cards) {
-		this.cards.addAll(Arrays.asList(cards));
+	public void drawFirst(CardDeck deck) {
+		for (int i = 0; i < FIRST_CARD_DRAW_SIZE; i++) {
+			draw(deck);
+		}
+	}
+
+	public void draw(CardDeck deck) {
+		cards.add(deck.draw());
 	}
 
 	public boolean isBlackjack() {
@@ -37,6 +45,10 @@ public abstract class User {
 		return cards.calculateScore();
 	}
 
+	public boolean hasHigherScoreThan(User other) {
+		return this.calculateScore() > other.calculateScore();
+	}
+
 	public List<Card> getCards() {
 		return cards.getCards();
 	}
@@ -45,7 +57,11 @@ public abstract class User {
 		return name.getName();
 	}
 
-	public abstract List<Card> getInitialCard();
+	public List<Card> getInitialCards() {
+		return cards.getSubList(getFirstShowCardSize());
+	}
+
+	protected abstract int getFirstShowCardSize();
 
 	public abstract boolean isDrawable();
 }

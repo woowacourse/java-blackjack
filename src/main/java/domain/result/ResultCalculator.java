@@ -3,6 +3,7 @@ package domain.result;
 import static java.util.stream.Collectors.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class ResultCalculator {
 	private final Dealer dealer;
 
 	public ResultCalculator(List<Player> players, Dealer dealer) {
-		this.players = new ArrayList<>(Objects.requireNonNull(players));
+		this.players = Collections.unmodifiableList(new ArrayList<>(Objects.requireNonNull(players)));
 		this.dealer = Objects.requireNonNull(dealer);
 	}
 
@@ -26,7 +27,7 @@ public class ResultCalculator {
 
 	public PlayerResults calculatePlayersResult() {
 		return players.stream()
-			.map(user -> new PlayerResult(user, user.calculateMatchResult(dealer)))
+			.map(player -> new PlayerResult(player, player.calculateMatchResult(dealer)))
 			.collect(collectingAndThen(toList(), PlayerResults::new));
 	}
 }

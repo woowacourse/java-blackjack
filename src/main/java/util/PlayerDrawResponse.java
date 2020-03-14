@@ -2,7 +2,7 @@ package util;
 
 import java.util.Arrays;
 
-public enum YesOrNo {
+public enum PlayerDrawResponse {
 	YES("y"),
 	NO("n");
 
@@ -10,18 +10,18 @@ public enum YesOrNo {
 
 	private final String value;
 
-	YesOrNo(String value) {
+	PlayerDrawResponse(String value) {
 		this.value = value;
 	}
 
-	public static YesOrNo of(String value) {
-		return Arrays.stream(values())
-			.filter(yesOrNo -> yesOrNo.value.equalsIgnoreCase(value))
-			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_VALUE_MESSAGE));
+	public static boolean isYes(String value) {
+		return of(value) == YES;
 	}
 
-	public boolean isYes() {
-		return this == YES;
+	private static PlayerDrawResponse of(String value) {
+		return Arrays.stream(values())
+			.filter(playerDrawResponse -> playerDrawResponse.value.equalsIgnoreCase(value))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_VALUE_MESSAGE));
 	}
 }

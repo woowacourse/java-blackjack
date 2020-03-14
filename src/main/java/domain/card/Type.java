@@ -17,6 +17,8 @@ public enum Type {
 	QUEEN("Q", 10),
 	KING("K", 10);
 
+	private static final String ILLEGAL_SCORE_VALUE_EXCEPTION_MESSAGE = "올바른 인자가 아닙니다.";
+
 	private final String name;
 	private final int score;
 
@@ -29,7 +31,7 @@ public enum Type {
 		return Arrays.stream(values())
 			.filter(val -> val.score == num)
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("올바른 인자가 아닙니다."));
+			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_SCORE_VALUE_EXCEPTION_MESSAGE));
 	}
 
 	public String getName() {
@@ -38,5 +40,9 @@ public enum Type {
 
 	public int getScore() {
 		return score;
+	}
+
+	public boolean isAce() {
+		return this == ACE;
 	}
 }
