@@ -15,8 +15,8 @@ public class Card {
 		return symbol.equals(Symbol.ACE);
 	}
 
-	public int getScore() {
-		return this.symbol.getScore();
+	public int getPoint() {
+		return symbol.getPoint();
 	}
 
 	@Override

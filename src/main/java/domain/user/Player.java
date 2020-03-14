@@ -5,13 +5,11 @@ import domain.user.strategy.draw.PlayerDrawStrategy;
 import java.util.Objects;
 
 public class Player extends User {
-	public static final String INPUT_EMPTY_NAME = "이름이 빈 문자열입니다.";
-
 	private final String name;
 
 	public Player(String name) {
 		if (name.isEmpty()) {
-			throw new IllegalArgumentException(INPUT_EMPTY_NAME);
+			throw new IllegalArgumentException("이름이 빈 문자열입니다.");
 		}
 		this.name = name;
 		super.drawStrategy = new PlayerDrawStrategy();
@@ -19,7 +17,7 @@ public class Player extends User {
 
 	@Override
 	public String toString() {
-		return this.name;
+		return name;
 	}
 
 	@Override

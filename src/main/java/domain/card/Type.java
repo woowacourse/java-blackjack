@@ -13,6 +13,6 @@ public enum Type {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 }

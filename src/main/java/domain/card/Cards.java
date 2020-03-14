@@ -21,8 +21,8 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public boolean hasInitialSize() {
-		return this.cards.size() == INITIAL_CARDS_SIZE;
+	public boolean isNotInitialSize() {
+		return cards.size() != INITIAL_CARDS_SIZE;
 	}
 
 	public boolean hasAce() {
@@ -30,9 +30,9 @@ public class Cards {
 				.anyMatch(Card::isAce);
 	}
 
-	public int getScore() {
+	public int getPoint() {
 		return cards.stream()
-				.mapToInt(Card::getScore)
+				.mapToInt(Card::getPoint)
 				.sum();
 	}
 

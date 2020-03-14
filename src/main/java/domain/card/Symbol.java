@@ -15,19 +15,19 @@ public enum Symbol {
 	QUEEN(10, "Q"),
 	KING(10, "K");
 
-	private final int score;
+	private final int point;
 	private final String name;
 
-	Symbol(int score, String name) {
-		this.score = score;
+	Symbol(int point, String name) {
+		this.point = point;
 		this.name = name;
 	}
 
-	public int getScore() {
-		return this.score;
+	public int getPoint() {
+		return point;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 }
