@@ -1,5 +1,5 @@
 import domain.card.CardDeck;
-import domain.game.WhetherAddCard;
+import domain.game.UserIntention;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -57,7 +57,7 @@ public class Application {
     }
 
     private static void giveCardsIfUserWant(final CardDeck cardDeck, final User user) {
-        while (user.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(user)).isYes()) {
+        while (user.isNotBust() && UserIntention.of(InputView.inputMoreCard(user)).isYes()) {
             CardDistributor.giveOneCard(cardDeck, user);
             OutputView.printStatus(user);
         }
