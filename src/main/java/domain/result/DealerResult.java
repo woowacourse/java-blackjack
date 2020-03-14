@@ -28,16 +28,8 @@ public class DealerResult {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (o instanceof DealerResult) {
-            return this.dealerResult.get(Result.WIN)
-                .equals(((DealerResult) o).dealerResult.get(Result.WIN))
-                && this.dealerResult.get(Result.LOSE)
-                .equals(((DealerResult) o).dealerResult.get(Result.LOSE))
-                && this.dealerResult.get(Result.DRAW)
-                .equals(((DealerResult) o).dealerResult.get(Result.DRAW));
+            return this.dealerResult.equals(((DealerResult) o).dealerResult);
         }
         return false;
     }
