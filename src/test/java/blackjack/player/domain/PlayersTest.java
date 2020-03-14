@@ -89,7 +89,7 @@ class PlayersTest {
     @Test
     void drawStartingCard() {
         Player player = new Gambler(CardBundle.emptyBundle(), "bebop");
-        player.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
+        player.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.ACE));
         Players players = new Players(Arrays.asList(player));
 
         assertThatThrownBy(() -> players.drawStartingCard(CardDeck.getInstance(new CardFactory())))

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class CardDeck {
+public class CardDeck implements CardDrawer {
 
     private final Stack<Card> blackjackCards;
 
@@ -26,6 +26,7 @@ public class CardDeck {
         return new CardDeck(cardCreateStrategy);
     }
 
+    @Override
     public Card draw() {
         checkEmpty();
         return blackjackCards.pop();

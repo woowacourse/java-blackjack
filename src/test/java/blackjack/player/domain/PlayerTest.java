@@ -54,8 +54,8 @@ class PlayerTest {
         //given
         Player player = new Dealer(CardBundle.emptyBundle());
         Symbol club = Symbol.CLUB;
-        player.addCard(Card.of(club, CardNumber.ACE));
-        player.addCard(Card.of(club, cardNumber));
+        player.drawCard(() -> Card.of(club, CardNumber.ACE));
+        player.drawCard(() -> Card.of(club, cardNumber));
 
         //when
         boolean isBlackjack = player.isBlackjack();
@@ -81,9 +81,9 @@ class PlayerTest {
     void isNotBurst(CardNumber cardNumber, boolean result) {
         //given
         Player player = new Dealer(CardBundle.emptyBundle());
-        player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
-        player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
-        player.addCard(Card.of(Symbol.HEART, cardNumber));
+        player.drawCard(() -> Card.of(Symbol.HEART, CardNumber.TEN));
+        player.drawCard(() -> Card.of(Symbol.HEART, CardNumber.TEN));
+        player.drawCard(() -> Card.of(Symbol.HEART, cardNumber));
         //when
         boolean notBurst = player.isNotBurst();
         //then

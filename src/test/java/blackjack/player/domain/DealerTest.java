@@ -20,10 +20,10 @@ class DealerTest {
 	void getReport(CardNumber cardNumber, GameResult result) {
 		//given
 		Dealer dealer = new Dealer(CardBundle.emptyBundle());
-		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.FIVE));
+		dealer.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.FIVE));
 
 		Player gambler = new Gambler(CardBundle.emptyBundle(), "bebop");
-		gambler.addCard(Card.of(Symbol.DIAMOND, cardNumber));
+		gambler.drawCard(() -> Card.of(Symbol.DIAMOND, cardNumber));
 
 		//when
 		GameReport report = dealer.createReport(gambler);
@@ -38,8 +38,8 @@ class DealerTest {
 	void isDrawable(CardNumber cardNumber, boolean result) {
 		//given
 		Player dealer = new Dealer(CardBundle.emptyBundle());
-		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.SEVEN));
-		dealer.addCard(Card.of(Symbol.DIAMOND, cardNumber));
+		dealer.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.SEVEN));
+		dealer.drawCard(() -> Card.of(Symbol.DIAMOND, cardNumber));
 
 		//when
 		boolean drawable = dealer.isDrawable();
