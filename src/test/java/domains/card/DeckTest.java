@@ -14,6 +14,6 @@ public class DeckTest {
 
         deck.draw();
 
-        assertThat(deck.isSize(--initialSize)).isTrue();
+        assertThat(deck.isSize(initialSize - 1)).isTrue();
     }
 }
