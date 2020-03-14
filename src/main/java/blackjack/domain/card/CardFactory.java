@@ -15,8 +15,7 @@ public class CardFactory {
 
     private static List<Card> setUp() {
         return Arrays.stream(Symbol.values())
-                .flatMap(symbol -> Arrays.stream(Type.values())
-                        .map(type -> new Card(symbol, type)))
+                .flatMap(symbol -> Arrays.stream(Type.values()).map(type -> new Card(symbol, type)))
                 .collect(Collectors.toList());
     }
 

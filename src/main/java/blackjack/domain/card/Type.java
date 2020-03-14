@@ -15,6 +15,10 @@ public enum Type {
     QUEEN(10, "Q"),
     KING(10, "K");
 
+    private static final int ACE_CRITICAL_POINT = 11;
+    private static final int ACE_UPPER_POINT = 11;
+    private static final int ACE_LOWER_POINT = 1;
+
     private final int point;
     private final String simpleName;
 
@@ -25,6 +29,13 @@ public enum Type {
 
     public int getPoint() {
         return point;
+    }
+
+    public int getPointOfAceUsing(int score) {
+        if (score > ACE_CRITICAL_POINT) {
+            return ACE_LOWER_POINT;
+        }
+        return ACE_UPPER_POINT;
     }
 
     public String getSimpleName() {

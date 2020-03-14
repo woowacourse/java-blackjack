@@ -2,28 +2,22 @@ package blackjack.domain.card;
 
 import blackjack.exception.CardDeckEmptyException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class CardDeck {
-    private static final int HEAD_INDEX = 0;
-    private static final int EMPTY_SIZE = 0;
-
-    private List<Card> cardDeck;
+    private Stack<Card> cardDeck;
 
     public CardDeck(List<Card> cards) {
-        cardDeck = new ArrayList<>(cards);
+        cardDeck = new Stack<>();
+        cardDeck.addAll(cards);
     }
 
     public Card pop() {
-        if (isEmpty()) {
+        if (cardDeck.isEmpty()) {
             throw new CardDeckEmptyException("카드 덱이 비었습니다.");
         }
-        return cardDeck.remove(HEAD_INDEX);
-    }
-
-    private boolean isEmpty() {
-        return this.cardDeck.size() == EMPTY_SIZE;
+        return cardDeck.pop();
     }
 
     public int size() {

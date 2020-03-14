@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
+import blackjack.domain.player.Users;
 import blackjack.domain.strategy.DealerStatusStrategy;
 
 import java.util.*;
@@ -13,9 +14,9 @@ public class GameResult {
         this.gameResult = result;
     }
 
-    public static GameResult calculateGameResult(Dealer dealer, List<User> users) {
+    public static GameResult calculateGameResult(Dealer dealer, Users users) {
         Map<User, UserResult> result = new LinkedHashMap<>();
-        for (User user : users) {
+        for (User user : users.getUsers()) {
             result.put(user, calculatePlayerResult(dealer, user));
         }
         return new GameResult(result);

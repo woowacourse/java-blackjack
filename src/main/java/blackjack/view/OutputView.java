@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
+import blackjack.domain.player.Users;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class OutputView {
         System.out.println(INPUT_USER_NAMES_GUIDE_MESSAGE);
     }
 
-    public static void printDistributeConfirmMessage(Dealer dealer, List<User> users, int initialCardSize) {
+    public static void printDistributeConfirmMessage(Dealer dealer, Users users, int initialCardSize) {
         String userNames = users.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(COMMA_WITH_SPACE));
@@ -33,10 +34,10 @@ public class OutputView {
         System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, initialCardSize));
     }
 
-    public static void printInitialPlayerCards(Dealer dealer, List<User> users) {
+    public static void printInitialPlayerCards(Dealer dealer, Users users) {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(users);
+        players.addAll(users.getUsers());
 
         for (Player player : players) {
             System.out.println(String.format(
@@ -67,10 +68,10 @@ public class OutputView {
         System.out.println(DEALER_PLAY_CONFIRM_MESSAGE);
     }
 
-    public static void printPlayerFinalScore(Dealer dealer, List<User> users) {
+    public static void printPlayerFinalScore(Dealer dealer, Users users) {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(users);
+        players.addAll(users.getUsers());
 
         for (Player player : players) {
             System.out.println(String.format(
