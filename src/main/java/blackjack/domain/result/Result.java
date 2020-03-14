@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -23,7 +23,7 @@ public enum Result {
         return Arrays.stream(Result.values())
                 .filter( result -> result.condition.test(dealer, player))
                 .findFirst()
-                .orElseThrow(() -> new NullPointerException("계산할 수 없습니다."));
+                .orElseThrow(() -> new NullPointerException("승패를 계산할 수 없습니다."));
     }
 
     public String getName() {
