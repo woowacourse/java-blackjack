@@ -14,8 +14,8 @@ public class GameResult {
 
     private static final String COLON = ": ";
     private static final String SPACE = " ";
-    private Map<WinningResult, Integer> winningResultOfDealer;
-    private Map<Player, WinningResult> winningResultOfPlayers;
+    private Map<ResultType, Integer> winningResultOfDealer;
+    private Map<Player, ResultType> winningResultOfPlayers;
 
     public static GameResult of(Dealer dealer, Players players) {
         return new GameResult(dealer, players);
@@ -24,7 +24,7 @@ public class GameResult {
     private GameResult(Dealer dealer, Players players) {
         winningResultOfDealer = new LinkedHashMap<>();
 
-        Arrays.stream(WinningResult.values())
+        Arrays.stream(ResultType.values())
                 .forEach(winningResult ->
                         winningResultOfDealer.put(winningResult, 0));
 

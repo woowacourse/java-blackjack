@@ -14,11 +14,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.result.WinningResult;
+import domain.result.ResultType;
 import domain.user.Dealer;
 import domain.user.Player;
 
-class RuleTest {
+class PlayerRuleTest {
 
     private Dealer dealer;
     private Player player;
@@ -32,7 +32,7 @@ class RuleTest {
     @ParameterizedTest
     @DisplayName("포인트 비교로 승자 확인")
     @MethodSource("createCardSet")
-    void reflect(Card playerCard, Card dealerCard, WinningResult expected) {
+    void reflect(Card playerCard, Card dealerCard, ResultType expected) {
         player.draw(new Card(Symbol.DIAMOND, Type.KING));
         player.draw(new Card(Symbol.DIAMOND, Type.SIX));
         player.draw(playerCard);
@@ -41,35 +41,35 @@ class RuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.SIX));
         dealer.draw(dealerCard);
 
-        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(expected);
+        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardSet() {
         return Stream.of(
                 //플레이어가 21점인 경우
-                createCardsAndWinningResult(Type.FIVE, Type.FIVE, WinningResult.DRAW),
-                createCardsAndWinningResult(Type.FIVE, Type.FOUR, WinningResult.WIN),
-                createCardsAndWinningResult(Type.FIVE, Type.SIX, WinningResult.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.FIVE, ResultType.DRAW),
+                createCardsAndWinningResult(Type.FIVE, Type.FOUR, ResultType.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.SIX, ResultType.WIN),
 
                 //플레이어가 버스트인 경우
-                createCardsAndWinningResult(Type.SIX, Type.SIX, WinningResult.LOSE),
-                createCardsAndWinningResult(Type.SIX, Type.FIVE, WinningResult.LOSE),
-                createCardsAndWinningResult(Type.SIX, Type.FOUR, WinningResult.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.SIX, ResultType.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FIVE, ResultType.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FOUR, ResultType.LOSE),
 
                 //플레이어가 21미만인 경우
-                createCardsAndWinningResult(Type.THREE, Type.TWO, WinningResult.WIN),
-                createCardsAndWinningResult(Type.THREE, Type.THREE, WinningResult.DRAW),
-                createCardsAndWinningResult(Type.THREE, Type.FOUR, WinningResult.LOSE),
-                createCardsAndWinningResult(Type.THREE, Type.FIVE, WinningResult.LOSE),
-                createCardsAndWinningResult(Type.THREE, Type.SIX, WinningResult.WIN)
+                createCardsAndWinningResult(Type.THREE, Type.TWO, ResultType.WIN),
+                createCardsAndWinningResult(Type.THREE, Type.THREE, ResultType.DRAW),
+                createCardsAndWinningResult(Type.THREE, Type.FOUR, ResultType.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.FIVE, ResultType.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.SIX, ResultType.WIN)
         );
     }
 
-    private static Arguments createCardsAndWinningResult(Type player, Type dealer, WinningResult winningResult) {
+    private static Arguments createCardsAndWinningResult(Type player, Type dealer, ResultType resultType) {
         return Arguments.of(
                 new Card(Symbol.HEART, player),
                 new Card(Symbol.SPADE, dealer),
-                winningResult
+                resultType
         );
     }
 
@@ -82,7 +82,7 @@ class RuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
-        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(WinningResult.DRAW);
+        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(ResultType.DRAW);
     }
 
     @Test
@@ -95,7 +95,7 @@ class RuleTest {
         dealer.draw(new Card(Symbol.SPADE, Type.SIX));
         dealer.draw(new Card(Symbol.HEART, Type.FIVE));
 
-        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(WinningResult.WIN);
+        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(ResultType.WIN);
     }
 
     @Test
@@ -108,6 +108,6 @@ class RuleTest {
         dealer.draw(new Card(Symbol.CLOVER, Type.KING));
         dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
-        assertThat(Rule.decideWinningResult(player, dealer)).isEqualTo(WinningResult.LOSE);
+        assertThat(PlayerRule.decideResultType(player, dealer)).isEqualTo(ResultType.LOSE);
     }
 }

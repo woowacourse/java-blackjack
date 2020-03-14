@@ -1,6 +1,6 @@
 package domain.result;
 
-public enum WinningResult {
+public enum ResultType {
 
     WIN("승"),
     LOSE("패"),
@@ -8,11 +8,11 @@ public enum WinningResult {
 
     private final String result;
 
-    WinningResult(String result) {
+    ResultType(String result) {
         this.result = result;
     }
 
-    public WinningResult reverse() {
+    public ResultType reverse() {
         if (this == WIN) {
             return LOSE;
         }
