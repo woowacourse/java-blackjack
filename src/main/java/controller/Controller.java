@@ -36,6 +36,18 @@ public class Controller {
         return new Players(names);
     }
 
+    private void drawFirstCards(Dealer dealer, Players players) {
+        OutputView.printFirstDrawFormat(dealer, players);
+        dealer.draw(cardDeck.draw());
+        dealer.draw(cardDeck.draw());
+        OutputView.printStatus(dealer.getFirstStatus());
+        for (Player player : players.get()) {
+            player.draw(cardDeck.draw());
+            player.draw(cardDeck.draw());
+            OutputView.printStatus(player.getStatus());
+        }
+    }
+
     private void drawMoreCards(Dealer dealer) {
         while (dealer.isDrawable(new DealerRule())) {
             OutputView.printDealerDraw(dealer);
@@ -54,18 +66,6 @@ public class Controller {
         OutputView.printCardFormat(player.getName());
         Answer answer = InputView.requestDraw();
         return answer.isAgree();
-    }
-
-    private void drawFirstCards(Dealer dealer, Players players) {
-        OutputView.printFirstDrawFormat(dealer, players);
-        dealer.draw(cardDeck.draw());
-        dealer.draw(cardDeck.draw());
-        OutputView.printStatus(dealer.getFirstStatus());
-        for (Player player : players.get()) {
-            player.draw(cardDeck.draw());
-            player.draw(cardDeck.draw());
-            OutputView.printStatus(player.getStatus());
-        }
     }
 
     private void passResult(Dealer dealer, Players players) {

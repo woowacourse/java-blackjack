@@ -14,6 +14,9 @@ public class Dealer extends User {
     }
 
     public boolean isWinner(User user) {
+        if (getScore() > BLACKJACK_FULL_SCORE) {
+            return false;
+        }
         return user.getScore() > BLACKJACK_FULL_SCORE || getScore() >= user.getScore();
     }
 }
