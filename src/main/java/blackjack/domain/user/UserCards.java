@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.exception.NoCardException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class UserCards {
 
     private void validateNullOrEmptyCard(List<Card> cards) {
         if (cards == null || cards.isEmpty()) {
-            throw new RuntimeException(NO_CARD);
+            throw new NoCardException(NO_CARD);
         }
     }
 
