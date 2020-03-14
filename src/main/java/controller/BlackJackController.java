@@ -6,52 +6,39 @@ import domain.result.GameResult;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
-	private final List<Gamer> gamers;
-	private final List<Player> players;
-	private final Dealer dealer;
+	private final Gamers gamers;
 	private final Deck deck;
 
 	public BlackJackController() {
-		this.players = PlayersFactory.newPlayers(InputView.inputUserNames());
-		this.dealer = new Dealer();
+		List<Player> players = PlayersFactory.newPlayers(InputView.inputUserNames());
+		Dealer dealer = new Dealer();
 		this.deck = new Deck();
-		this.gamers = createGamers();
-	}
-
-	private List<Gamer> createGamers() {
-		List<Gamer> gamers = new ArrayList<>();
-		gamers.add(dealer);
-		gamers.addAll(players);
-
-		return gamers;
+		this.gamers = new Gamers(players, dealer);
 	}
 
 	public void run() {
 		giveTwoCards();
 		giveCardToPlayers();
 		giveCardToDealer();
-		OutputView.printCardsAndScore(gamers);
 
-		GameResult gameResult = GameResult.of(players, dealer);
+		GameResult gameResult = new GameResult(gamers);
+		OutputView.printCardsAndScore(gameResult.gamersScore());
 		OutputView.printDealerResult(gameResult.dealerResult());
-		OutputView.printPlayersResult(gameResult);
+		OutputView.printPlayersResult(gameResult.playersResult());
 	}
 
 	private void giveTwoCards() {
-		for (Gamer gamer : gamers) {
-			gamer.hit(deck.drawCard());
-			gamer.hit(deck.drawCard());
-		}
-		OutputView.printGiving(players, dealer);
+		gamers.giveCardToAll(deck);
+		gamers.giveCardToAll(deck);
+		OutputView.printGiving(gamers);
 		OutputView.printFirstOpenedCards(gamers);
 	}
 
 	private void giveCardToPlayers() {
-		for (Player player : players) {
+		for (Player player : gamers.getPlayers()) {
 			giveCardToPlayer(player);
 		}
 	}
@@ -64,8 +51,8 @@ public class BlackJackController {
 	}
 
 	private void giveCardToDealer() {
-		while (dealer.canHit()) {
-			dealer.hit(deck.drawCard());
+		while (gamers.getDealer().canHit()) {
+			gamers.getDealer().hit(deck.drawCard());
 			OutputView.printDealerCards();
 		}
 	}

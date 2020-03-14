@@ -1,44 +1,51 @@
 package domain.result;
 
-import static java.util.stream.Collectors.*;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Gamers;
 import domain.gamer.Player;
 
-public class GameResult {
-	private final Map<Player, ResultType> playersResult;
+import java.util.*;
+import java.util.stream.Collectors;
 
-	private GameResult(Map<Player, ResultType> playersResult) {
-		this.playersResult = playersResult;
+import static java.util.stream.Collectors.toList;
+
+public class GameResult {
+	private final Map<Player, Score> playersScore;
+	private final Dealer dealer;
+	private final Score dealerScore;
+
+	public GameResult(Gamers gamers) {
+		this.playersScore = gamers.playersScore();
+		this.dealer = gamers.getDealer();
+		this.dealerScore = gamers.dealerScore();
 	}
 
-	public static GameResult of(List<Player> players, Dealer dealer) {
+	public Map<Player, ResultType> playersResult() {
 		Map<Player, ResultType> playerToResult = new HashMap<>();
-		for (Player player : players) {
-			playerToResult.put(player, ResultType.of(player.calculateScore(), dealer.calculateScore()));
+		for (Player player : playersScore.keySet()) {
+			playerToResult.put(player, ResultType.of(playersScore.get(player), dealerScore));
 		}
-		return new GameResult(playerToResult);
+
+		return playerToResult;
 	}
 
 	public Map<ResultType, Integer> dealerResult() {
-		List<ResultType> dealerResultType = playersResult.values()
-			.stream()
-			.map(ResultType::reverse)
-			.collect(toList());
+		List<ResultType> dealerResultType = playersResult()
+				.values()
+				.stream()
+				.map(ResultType::reverse)
+				.collect(toList());
 
 		return dealerResultType.stream()  //TreeMap을 만들기 위한 로직
-			.collect(Collectors.toMap(result -> result, result -> Collections.frequency(dealerResultType, result),
-				(v1, v2) -> v1, TreeMap::new));
+				.collect(Collectors.toMap(result -> result, result -> Collections.frequency(dealerResultType, result),
+						(v1, v2) -> v1, TreeMap::new));
 	}
 
-	public Map<Player, ResultType> getPlayersResult() {
-		return Collections.unmodifiableMap(playersResult);
+	public Map<Gamer, Score> gamersScore() {
+		Map<Gamer, Score> scores = new HashMap<>(playersScore);
+		scores.put(dealer, dealerScore);
+
+		return scores;
 	}
 }
