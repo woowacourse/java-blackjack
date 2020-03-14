@@ -11,11 +11,11 @@ public class UserCards {
     private static final String NO_CARD = "카드가 없습니다";
     private static final int ACE_INCREMENT = 10;
     private static final int BLACKJACK = 21;
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public UserCards(List<Card> cards) {
         validateNullOrEmptyCard(cards);
-        this.cards = new LinkedList<>(cards);
+        this.cards = cards;
     }
 
     private void validateNullOrEmptyCard(List<Card> cards) {
@@ -41,8 +41,12 @@ public class UserCards {
         return score;
     }
 
-    public void addCard(Card card) {
+    public void add(Card card) {
         cards.add(card);
+    }
+
+    public void add(List<Card> newCards) {
+        cards.addAll(newCards);
     }
 
     public List<String> getCardInfo() {

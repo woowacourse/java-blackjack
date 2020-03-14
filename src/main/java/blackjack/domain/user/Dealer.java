@@ -10,10 +10,10 @@ public class Dealer extends User {
     }
 
     public String showInitialCardInfo() {
-        return name + CARD + cards.getCardInfo().get(0);
+        return name + CARD + userCards.getCardInfo().get(0);
     }
 
     public boolean isUnderThreshold() {
-        return cards.getTotalScore() <= THRESHOLD;
+        return userCards.getTotalScore() <= THRESHOLD;
     }
 }

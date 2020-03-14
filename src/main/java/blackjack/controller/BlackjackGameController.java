@@ -10,6 +10,8 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackGameController {
+    private static final int INITIAL_CARDS = 2;
+
     public static void run() {
         Users users = enrollUsers();
         Deck deck = new Deck(CardFactory.getInstance().issueNewDeck());
@@ -29,7 +31,7 @@ public class BlackjackGameController {
 
     private static void distributeInitialCards(Users users, Deck deck) {
         users.getUsers()
-                .forEach(t -> t.receiveInitialCards(deck.drawInitialCards()));
+                .forEach(t -> t.receiveInitialCards(deck.draw(INITIAL_CARDS)));
     }
 
     private static void hitMoreCard(List<Player> players, Deck deck) {
@@ -38,7 +40,7 @@ public class BlackjackGameController {
 
     private static void askForHit(Deck deck, User user) {
         while (InputView.askForHit(user.getName())) {
-            user.receiveCard(deck.drawCard());
+            user.receiveCard(deck.draw());
             OutputView.printCardStatus(user.showCardInfo());
             if (user.isBusted()) {
                 OutputView.printBusted(user.getName());
@@ -49,7 +51,7 @@ public class BlackjackGameController {
 
     private static void decideDealerToHitCard(Dealer dealer, Deck deck) {
         while (dealer.isUnderThreshold()) {
-            dealer.receiveCard(deck.drawCard());
+            dealer.receiveCard(deck.draw());
             OutputView.printDealerHitMoreCard();
         }
     }

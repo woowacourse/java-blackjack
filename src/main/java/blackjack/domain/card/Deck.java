@@ -21,16 +21,15 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public Card drawCard() {
+    public Card draw() {
         if (deck.isEmpty()) {
             throw new NoCardException(DECK_IS_EMPTY);
         }
         return deck.poll();
     }
 
-    public UserCards drawInitialCards() {
-        List<Card> cards = IntStream.of(0, INITIAL_CARDS).mapToObj(t -> this.drawCard())
+    public List<Card> draw(int amount) {
+        return IntStream.of(0, amount).mapToObj(t -> this.draw())
                 .collect(Collectors.toList());
-        return new UserCards(cards);
     }
 }
