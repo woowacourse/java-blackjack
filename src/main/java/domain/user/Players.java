@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static domain.user.User.NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE;
 import static java.util.stream.Collectors.joining;
 
 public class Players implements Iterable<Player> {
@@ -37,6 +38,7 @@ public class Players implements Iterable<Player> {
 	}
 
 	public static Players of(String names) {
+		Objects.requireNonNull(names, NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 		String trimmedNames = names.trim();
 		return of(Arrays.stream(trimmedNames.split(SPLIT_DELIMITER))
 				.map(Player::new)

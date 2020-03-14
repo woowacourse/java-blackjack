@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class User implements Comparable<User> {
+	public static final String NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE = "null이 인자로 올 수 없습니다.";
 	private static final int BLACKJACK_SCORE = 21;
 
 	protected Cards cards;
@@ -27,12 +28,14 @@ public class User implements Comparable<User> {
 	}
 
 	public static User of(List<Card> cards) {
+		Objects.requireNonNull(cards, NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 		User user = new User();
 		cards.forEach(user::addCard);
 		return user;
 	}
 
 	public void addCard(Card card) {
+		Objects.requireNonNull(card, NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 		this.cards.add(card);
 		this.score = ScoreType.of(this.cards);
 	}
@@ -43,6 +46,7 @@ public class User implements Comparable<User> {
 	}
 
 	public void addCard(Deck deck) {
+		Objects.requireNonNull(deck, NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 		this.cards.add(deck.pop());
 		this.score = ScoreType.of(this.cards);
 	}
