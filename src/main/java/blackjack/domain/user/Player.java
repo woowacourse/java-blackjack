@@ -14,39 +14,4 @@ public class Player extends User {
     public String showInitialCardInfo() {
         return super.showCardInfo();
     }
-
-    public Result compareScore(Dealer dealer) {
-        if (isDraw(dealer)) {
-            return Result.DRAW;
-        }
-        if (isLose(dealer)) {
-            return Result.LOSE;
-        }
-        if (isWin(dealer)) {
-            return Result.WIN;
-        }
-        throw new RuntimeException(CANNOT_DETERMINE_RESULT);
-    }
-
-    private boolean isDraw(Dealer dealer) {
-        if (dealer.isBusted() && this.isBusted()) {
-            return true;
-        }
-        return dealer.getTotalScore() == this.getTotalScore();
-    }
-
-    private boolean isLose(Dealer dealer) {
-        if (!dealer.isBusted() && this.isBusted()) {
-            return true;
-        }
-        return dealer.getTotalScore() > this.getTotalScore();
-    }
-
-    private boolean isWin(Dealer dealer) {
-        if (dealer.isBusted() && !this.isBusted()) {
-            return true;
-        }
-        return dealer.getTotalScore() < this.getTotalScore();
-    }
-
 }

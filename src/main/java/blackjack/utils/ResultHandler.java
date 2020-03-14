@@ -16,12 +16,13 @@ public class ResultHandler {
     public static final String WINS = "승 ";
     public static final String DRAWS = "무 ";
     public static final String LOSES = "패";
+    private static final String DEALER = "딜러";
 
     public static String findAllWinners(Users users) {
         Dealer dealer = users.getDealer();
         Map<Player, Result> totalResult = new LinkedHashMap<>();
         users.getPlayer()
-                .forEach(player -> totalResult.put(player, player.compareScore(dealer)));
+                .forEach(player -> totalResult.put(player, Result.of(dealer, player)));
         return parseAllWinners(totalResult);
     }
 
@@ -49,7 +50,7 @@ public class ResultHandler {
 
     private static String parseDealerTotalResult(Map<Result, Integer> playerResult) {
         StringBuilder sb = new StringBuilder();
-        sb.append(Dealer.DEALER + COLON);
+        sb.append(DEALER + COLON);
         if (playerResult.get(Result.LOSE) > 0) {
             sb.append(playerResult.get(Result.LOSE)).append(WINS);
         }

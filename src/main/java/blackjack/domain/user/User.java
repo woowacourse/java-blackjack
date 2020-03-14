@@ -3,10 +3,10 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 public abstract class User {
-    public static final String CARD = " 카드: ";
-    public static final String DELIMITER = ", ";
-    public static final String RESULT = " - 결과 : ";
-    public static final String BUSTED = "버스트";
+    protected static final String CARD = " 카드: ";
+    protected static final String DELIMITER = ", ";
+    protected static final String RESULT = " - 결과 : ";
+    protected static final String BUSTED = "버스트";
     protected final String name;
     protected UserCards cards;
 
@@ -51,7 +51,7 @@ public abstract class User {
 
     private String parseFinalScore() {
         int finalScore = this.getTotalScore();
-        if(finalScore > 21) {
+        if(finalScore == 0) {
             return BUSTED;
         }
         return Integer.toString(finalScore);

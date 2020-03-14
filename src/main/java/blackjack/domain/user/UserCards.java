@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCards {
-    public static final String NO_CARD = "카드가 없습니다";
-    public static final int ACE_INCREMENT = 10;
-    public static final int BLACKJACK = 21;
+    private static final String NO_CARD = "카드가 없습니다";
+    private static final int ACE_INCREMENT = 10;
+    private static final int BLACKJACK = 21;
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
@@ -24,10 +24,12 @@ public class UserCards {
     }
 
     public int getTotalScore() {
-        int score = cards.stream()
+        int score = incrementAceScore(cards.stream()
                 .mapToInt(Card::getScore)
-                .sum();
-        score = incrementAceScore(score);
+                .sum());
+        if(score > BLACKJACK) {
+            return 0;
+        }
         return score;
     }
 
@@ -49,7 +51,7 @@ public class UserCards {
     }
 
     public boolean isBusted() {
-        return getTotalScore() > BLACKJACK;
+        return getTotalScore() == 0;
     }
 
     public boolean isBlackJack() {
