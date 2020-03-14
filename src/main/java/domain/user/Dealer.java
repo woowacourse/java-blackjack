@@ -17,13 +17,13 @@ public class Dealer extends Player {
 
     public boolean isWin(Player opponentPlayer) {
         boolean userBust = opponentPlayer.isBust();
-        boolean dealerWin = isNotBust() && (opponentPlayer.isBust() || getScore() > opponentPlayer.getScore());
+        boolean hasMoreScore = getScore() > opponentPlayer.getScore();
 
-        return userBust || dealerWin;
+        return userBust || (isNotBust() && hasMoreScore);
     }
 
     public String getFirstCardInfo() {
-        Card FirstCard = getCards().get(FIRST_CARD_INDEX);
-        return FirstCard.getCardInfo();
+        Card firstCard = getCards().get(FIRST_CARD_INDEX);
+        return firstCard.getCardInfo();
     }
 }

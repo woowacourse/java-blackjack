@@ -2,6 +2,8 @@ package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,11 +20,11 @@ public class CardTest {
         assertThat(Card.of("스페이드", "A").isAce()).isTrue();
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("카드 한 장의 점수 확인")
-    void getPoint() {
-        assertThat(Card.of("스페이드", "A").getPoint()).isEqualTo(1);
-        assertThat(Card.of("스페이드", "K").getPoint()).isEqualTo(10);
+    @CsvSource(value = {"A:1", "5:5", "K:10", "Q:10", "J:10", "10:10"}, delimiter = ':')
+    void getPoint(String input, int expected) {
+        assertThat(Card.of("스페이드", input).getPoint()).isEqualTo(expected);
     }
 
     @Test

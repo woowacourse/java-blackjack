@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static final int BLACKJACK_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
@@ -34,19 +33,11 @@ public class Cards {
         return score.getValue();
     }
 
-    public boolean isBlackJack() {
-        return (cards.size() == BLACKJACK_SIZE) && (getScore() == BLACKJACK_SCORE);
-    }
-
-    public boolean isLessThan(final int criteria) {
-        return getScore() <= criteria;
-    }
-
     public List<Card> getValue() {
         return Collections.unmodifiableList(cards);
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 

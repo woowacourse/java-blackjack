@@ -1,5 +1,5 @@
 import domain.card.CardDeck;
-import domain.game.WhetherAddCard;
+import domain.game.UserIntention;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -12,20 +12,18 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
-    private static final int DEFAULT_CARD_SIZE = 2;
-
     public static void main(String[] args) {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
         final Dealer dealer = new Dealer();
         final Users users = new Users(UserFactory.create(InputView.inputNames()));
 
-        distributeInitCard(cardDeck, dealer, users);
-        initBrief(dealer, users);
+        distributeInitialCard(cardDeck, dealer, users);
+        distributeInfo(dealer, users);
         addMoreCards(cardDeck, dealer, users);
         printResults(dealer, users);
     }
 
-    private static void distributeInitCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
+    private static void distributeInitialCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
         distributeToPlayer(cardDeck, dealer);
         for (User user : users) {
             distributeToPlayer(cardDeck, user);
@@ -33,16 +31,12 @@ public class Application {
     }
 
     private static void distributeToPlayer(final CardDeck cardDeck, final Player player) {
-        int distributeCount = DEFAULT_CARD_SIZE;
-
-        while (distributeCount-- > 0) {
-            CardDistributor.giveOneCard(cardDeck, player);
-        }
+        CardDistributor.distributeCards(cardDeck, player);
     }
 
-    private static void initBrief(final Dealer dealer, final Users users) {
+    private static void distributeInfo(final Dealer dealer, final Users users) {
         OutputView.printDistributeMessage(users);
-        OutputView.printInitStatus(dealer, users);
+        OutputView.printInitialStatus(dealer, users);
     }
 
     private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Users users) {
@@ -57,7 +51,7 @@ public class Application {
     }
 
     private static void giveCardsIfUserWant(final CardDeck cardDeck, final User user) {
-        while (user.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(user)).isYes()) {
+        while (user.isNotBust() && UserIntention.of(InputView.inputMoreCard(user)).isYes()) {
             CardDistributor.giveOneCard(cardDeck, user);
             OutputView.printStatus(user);
         }

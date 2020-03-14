@@ -2,6 +2,8 @@ package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -22,12 +24,10 @@ public class TypeTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Type.of("세모"));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("심볼 이름 확인")
-    void getName() {
-        assertThat(Type.of("스페이드").getName()).isEqualTo("스페이드");
-        assertThat(Type.of("하트").getName()).isEqualTo("하트");
-        assertThat(Type.of("클로버").getName()).isEqualTo("클로버");
-        assertThat(Type.of("다이아몬드").getName()).isEqualTo("다이아몬드");
+    @CsvSource(value = {"스페이드:스페이드", "하트:하트", "클로버:클로버", "다이아몬드:다이아몬드"}, delimiter = ':')
+    void getName(String input, String expected) {
+        assertThat(Type.of(input).getName()).isEqualTo(expected);
     }
 }

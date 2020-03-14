@@ -17,6 +17,7 @@ public class CardDeckTest {
     @DisplayName("CardDeck 카드 추출")
     void drawOne() {
         CardDeck cardDeck = new CardDeck(CardFactory.create());
+
         assertThat(cardDeck.drawOne()).isInstanceOf(Card.class);
     }
 }
