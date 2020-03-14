@@ -19,6 +19,10 @@ public enum PlayerIntentionType {
 				.orElseThrow(() -> new NullPointerException("옳지 않은 입력입니다."));
 	}
 
+	public static boolean isYes(PlayerIntentionType value) {
+		return YES.equals(value);
+	}
+
 	public String getValue() {
 		return value;
 	}

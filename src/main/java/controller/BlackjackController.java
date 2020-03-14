@@ -51,6 +51,6 @@ public class BlackjackController {
 	}
 
 	private boolean wantDraw(Player player) {
-		return PlayerIntentionType.YES.equals(PlayerIntentionType.of(inputPlayerIntention(player)));
+		return PlayerIntentionType.isYes(PlayerIntentionType.of(inputPlayerIntention(player)));
 	}
 }
