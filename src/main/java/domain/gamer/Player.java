@@ -11,7 +11,7 @@ public class Player extends Gamer {
 	}
 
 	@Override
-	public Score getHitPoint() {
+	protected Score getHitPoint() {
 		return Score.from(PLAYER_HIT_CEILING);
 	}
 

@@ -9,6 +9,8 @@ import domain.card.Card;
 import domain.result.Score;
 
 public abstract class Gamer {
+	private static final int ZERO = 0;
+
 	private final String name;
 	private final List<Card> cards;
 
@@ -35,7 +37,9 @@ public abstract class Gamer {
 		}
 	}
 
-	public abstract Score getHitPoint();
+	protected abstract Score getHitPoint();
+
+	protected abstract int firstOpenedCardsCount();
 
 	public void hit(Card card) {
 		cards.add(card);
@@ -50,10 +54,8 @@ public abstract class Gamer {
 	}
 
 	public List<Card> firstOpenedCards() {
-		return cards.subList(0, firstOpenedCardsCount());
+		return cards.subList(ZERO, firstOpenedCardsCount());
 	}
-
-	protected abstract int firstOpenedCardsCount();
 
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
@@ -69,9 +71,9 @@ public abstract class Gamer {
 			return true;
 		if (object == null || getClass() != object.getClass())
 			return false;
-		Gamer that = (Gamer)object;
+		Gamer that = (Gamer) object;
 		return Objects.equals(name, that.name) &&
-			Objects.equals(cards, that.cards);
+				Objects.equals(cards, that.cards);
 	}
 
 	@Override
