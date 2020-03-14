@@ -11,11 +11,13 @@ public abstract class User {
         "참여인원의 이름은 공백이어선 안됩니다.";
 
     private final String name;
+    private final int basesScoreCanDraw;
     protected UserCards userCards = new UserCards();
 
-    public User(String name) {
+    public User(String name, int basesScoreCanDraw) {
         validNotBlankOrNull(name);
         this.name = name;
+        this.basesScoreCanDraw = basesScoreCanDraw;
     }
 
     private void validNotBlankOrNull(String name) {
@@ -34,7 +36,9 @@ public abstract class User {
         }
     }
 
-    public abstract boolean canDrawCard();
+    public boolean canDrawCard() {
+        return !userCards.isOverScore(basesScoreCanDraw);
+    };
 
     public String getName() {
         return name;

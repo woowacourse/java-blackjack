@@ -1,17 +1,14 @@
 package blackjack.domain.user;
 
-import blackjack.util.BlackJackRule;
 import java.util.List;
 
 public class Dealer extends User {
 
-    public Dealer() {
-        super("딜러");
-    }
+    private static final String NAME = "딜러";
+    private static final int BASES_SCORE_CAN_DRAW = 16;
 
-    @Override
-    public boolean canDrawCard() {
-        return BlackJackRule.isDealerDraw(userCards.getScore());
+    public Dealer() {
+        super(NAME, BASES_SCORE_CAN_DRAW);
     }
 
     public String getFirstCardInfo() {

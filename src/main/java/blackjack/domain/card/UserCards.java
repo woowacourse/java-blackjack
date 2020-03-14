@@ -1,12 +1,14 @@
 package blackjack.domain.card;
 
 import blackjack.domain.Outcome;
-import blackjack.util.BlackJackRule;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCards {
+
+    private static final int BLACK_JACK_CARD_COUNT = 2;
+    private static final int BLACK_JACK_SCORE = 21;
 
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
 
@@ -19,7 +21,7 @@ public class UserCards {
         cards.add(card);
     }
 
-    public int getScore() {
+    private int getScore() {
         int score = cards.stream()
             .mapToInt(Card::getValue)
             .sum();
@@ -30,7 +32,7 @@ public class UserCards {
     }
 
     private boolean canAddAceWeight(int score) {
-        return !BlackJackRule.isBust(score + Symbol.ACE_WEIGHT);
+        return score + Symbol.ACE_WEIGHT <= BLACK_JACK_SCORE;
     }
 
     private boolean hasAce() {
@@ -39,15 +41,11 @@ public class UserCards {
     }
 
     public boolean isBust() {
-        return BlackJackRule.isBust(getScore());
+        return getScore() > BLACK_JACK_SCORE;
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && BlackJackRule.isBlackJack(getScore());
-    }
-
-    public boolean isOneMoreAddThenBust() {
-        return BlackJackRule.isBlackJack(getScore());
+        return cards.size() == BLACK_JACK_CARD_COUNT && getScore() == BLACK_JACK_SCORE;
     }
 
     public int getTotalScore() {
@@ -65,5 +63,9 @@ public class UserCards {
         return cards.stream()
             .map(Card::toString)
             .collect(Collectors.toList());
+    }
+
+    public boolean isOverScore(int score) {
+        return getScore() > score;
     }
 }

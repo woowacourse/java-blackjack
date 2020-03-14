@@ -63,18 +63,6 @@ public class UserCardsTest {
         assertThat(userCards.isBust()).isTrue();
     }
 
-    @DisplayName("카드가 21인지 확인")
-    @Test
-    void isOneMoreAddThenBust() {
-        userCards.add(new Card(Type.DIAMOND, Symbol.TWO));
-        userCards.add(new Card(Type.DIAMOND, Symbol.THREE));
-        userCards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        assertThat(userCards.isOneMoreAddThenBust()).isFalse();
-
-        userCards.add(new Card(Type.CLUB, Symbol.SIX));
-        assertThat(userCards.isOneMoreAddThenBust()).isTrue();
-    }
-
     @DisplayName("카드가 블랙잭인지 확인")
     @Test
     void isBlackJack() {

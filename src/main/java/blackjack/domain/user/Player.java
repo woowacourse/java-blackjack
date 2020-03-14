@@ -4,13 +4,10 @@ import blackjack.domain.Outcome;
 
 public class Player extends User {
 
-    public Player(String name) {
-        super(name);
-    }
+    private static final int BASES_SCORE_CAN_DRAW = 21;
 
-    @Override
-    public boolean canDrawCard() {
-        return !(userCards.isBust() || userCards.isOneMoreAddThenBust());
+    public Player(String name) {
+        super(name, BASES_SCORE_CAN_DRAW);
     }
 
     public Outcome calculateOutcome(User dealer) {
