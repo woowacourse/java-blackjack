@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Cards;
+import domain.result.Result;
 
 public class Player extends User {
     private Name name;
@@ -18,6 +19,33 @@ public class Player extends User {
             return true;
         }
         return false;
+    }
+
+    public Result calculateResult(Dealer dealer) {
+        if (isDraw(dealer)) {
+            return Result.DRAW;
+        }
+        if (isPlayerLose(dealer)) {
+            return Result.LOSE;
+        }
+        return Result.WIN;
+    }
+
+    private boolean isDraw(Dealer dealer) {
+        boolean isBothOverBlackJack = dealer.isLargerThan(Cards.BLACKJACK_SCORE)
+            && this.isLargerThan(Cards.BLACKJACK_SCORE);
+
+        return isBothOverBlackJack || dealer.isScoreSame(this.getTotalScore());
+    }
+
+    private boolean isPlayerLose(Dealer dealer) {
+        /*
+         * 딜러는 파산이 아닐 때
+         * 플레이어가 파산했거나, 딜러가 플레이어보다 점수가 높으면 짐.
+         * */
+        return !dealer.isLargerThan(Cards.BLACKJACK_SCORE)
+            && (this.isLargerThan(Cards.BLACKJACK_SCORE)
+            || dealer.isLargerThan(this.getTotalScore()));
     }
 
     public String getName() {

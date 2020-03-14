@@ -3,9 +3,15 @@ package domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.CardFactory;
 import domain.card.Cards;
 import domain.card.Deck;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.result.Result;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -59,5 +65,107 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         dealer.receiveFirstCards(deck);
         assertThat(dealer.canReceiveCard()).isTrue();
+    }
+
+    private static List<Card> makeCardList(Card card1, Card card2, Card card3) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        return cards;
+    }
+
+    private static List<Card> makeCardList(Card card1, Card card2) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        return cards;
+    }
+
+    @Test
+    @DisplayName("결과계산: 두명의 점수가 같은 경우 무승부")
+    void calculateResultWhenScoresSame() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("오렌지");
+        List<Card> deckForTest = new ArrayList<>();
+
+        deckForTest.add(new Card(Symbol.ACE, Type.HEART));
+        dealer.receiveCard(new Deck(deckForTest));
+
+        deckForTest.add(new Card(Symbol.ACE, Type.HEART));
+        player.receiveCard(new Deck(deckForTest));
+
+        assertThat(player.calculateResult(dealer)).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    @DisplayName("결과계산: 두명의 점수가 모두 21을 넘기는 경우")
+    void calculateResultWhenBothOverBlackJack() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("오렌지");
+
+        List<Card> deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
+            new Card(Symbol.JACK, Type.HEART), new Card(Symbol.KING, Type.HEART));
+        dealer.receiveFirstCards(new Deck(deckForTest));
+        dealer.receiveCard(new Deck(deckForTest));
+
+        deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
+            new Card(Symbol.JACK, Type.HEART), new Card(Symbol.NINE, Type.HEART));
+        player.receiveFirstCards(new Deck(deckForTest));
+        player.receiveCard(new Deck(deckForTest));
+
+        assertThat(player.calculateResult(dealer)).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    @DisplayName("결과계산: 플레이어만 21을 넘기는 경우")
+    void testWhenOnlyPlayerOverBlackJack() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("오렌지");
+
+        List<Card> deckForTest
+            = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.JACK, Type.HEART));
+        dealer.receiveFirstCards(new Deck(deckForTest));
+
+        deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
+            new Card(Symbol.JACK, Type.HEART), new Card(Symbol.NINE, Type.HEART));
+        player.receiveFirstCards(new Deck(deckForTest));
+        player.receiveCard(new Deck(deckForTest));
+
+        assertThat(player.calculateResult(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러만 21을 넘기는 경우")
+    void testWhenOnlyDealerOverBlackJack() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("오렌지");
+        List<Card> deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
+            new Card(Symbol.JACK, Type.HEART), new Card(Symbol.NINE, Type.HEART));
+
+        dealer.receiveFirstCards(new Deck(deckForTest));
+        dealer.receiveCard(new Deck(deckForTest));
+
+        deckForTest
+            = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.JACK, Type.HEART));
+        player.receiveFirstCards(new Deck(deckForTest));
+
+        assertThat(player.calculateResult(dealer)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 둘 다 21이하인 경우")
+    void testWhenBothLowerThanBlackJack() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("오렌지");
+        List<Card> deckForTest
+            = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.NINE, Type.HEART));
+        dealer.receiveFirstCards(new Deck(deckForTest));
+
+        deckForTest
+            = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.JACK, Type.HEART));
+        player.receiveFirstCards(new Deck(deckForTest));
+
+        assertThat(player.calculateResult(dealer)).isEqualTo(Result.WIN);
     }
 }

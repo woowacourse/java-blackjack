@@ -3,7 +3,6 @@ package controller;
 import domain.card.CardFactory;
 import domain.card.Cards;
 import domain.card.Deck;
-import domain.result.ResultCalculator;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -23,7 +22,6 @@ public class BlackJackController {
         Players players = new Players(InputView.readPlayerNames());
         Dealer dealer = new Dealer();
         Deck deck = CardFactory.createShuffledDeck();
-        ;
 
         doFirstDeal(players, dealer, deck);
         dealToPlayers(players, deck);
@@ -64,10 +62,7 @@ public class BlackJackController {
         OutputView.printResultMessage();
         OutputView.printDealerResult(dealer.calculateResult(players));
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(
-                player.getName(),
-                ResultCalculator.calculatePlayerResult(dealer, player)
-            );
+            OutputView.printPlayerResult(player.getName(), player.calculateResult(dealer));
         }
     }
 }
