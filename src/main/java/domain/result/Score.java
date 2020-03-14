@@ -1,9 +1,7 @@
 package domain.result;
 
-import domain.card.Card;
-import domain.card.Symbol;
+import domain.gamer.Gamer;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Score {
@@ -20,23 +18,12 @@ public class Score {
 		return new Score(score);
 	}
 
-	public static Score from(List<Card> cards) {
-		int rawScore = calculateRaw(cards);
-		if (containAce(cards) && rawScore + TEN <= BLACKJACK_SCORE) {
+	public static Score from(Gamer gamer) {
+		int rawScore = gamer.sumOfCards();
+		if (gamer.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
 			return new Score(rawScore + TEN);
 		}
 		return new Score(rawScore);
-	}
-
-	private static int calculateRaw(List<Card> cards) {
-		return cards.stream()
-				.mapToInt(Card::getScore)
-				.sum();
-	}
-
-	private static boolean containAce(List<Card> cards) {
-		return cards.stream()
-				.anyMatch(Card::isAce);
 	}
 
 	public boolean isBiggerThan(Score other) {

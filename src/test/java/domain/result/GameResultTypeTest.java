@@ -1,23 +1,22 @@
 package domain.result;
 
-import static org.assertj.core.api.Assertions.*;
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Gamers;
+import domain.gamer.Player;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import domain.gamer.Gamer;
-import domain.gamer.Gamers;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import domain.card.Card;
-import domain.card.Symbol;
-import domain.card.Type;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTypeTest {
 	private List<Player> players;
@@ -40,7 +39,7 @@ class GameResultTypeTest {
 	}
 
 	@Test
-	@DisplayName("게임 결과가 올바르게 생성되는지 확인")
+	@DisplayName("플레이어의 결과가 올바르게 생성되는지 확인")
 	void fromTest() {
 		GameResult gameResult = new GameResult(gamers);
 
@@ -70,9 +69,9 @@ class GameResultTypeTest {
 		GameResult gameResult = new GameResult(gamers);
 
 		Map<Gamer, Score> expected = new HashMap<>();
-		expected.put(players.get(0), players.get(0).calculateScore());
-		expected.put(players.get(1), players.get(1).calculateScore());
-		expected.put(dealer, dealer.calculateScore());
+		expected.put(players.get(0), Score.from(players.get(0)));
+		expected.put(players.get(1), Score.from(players.get(1)));
+		expected.put(dealer, Score.from(dealer));
 
 		assertThat(gameResult.gamersScore()).isEqualTo(expected);
 	}

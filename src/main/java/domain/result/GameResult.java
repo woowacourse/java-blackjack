@@ -16,9 +16,18 @@ public class GameResult {
 	private final Score dealerScore;
 
 	public GameResult(Gamers gamers) {
-		this.playersScore = gamers.playersScore();
+		this.playersScore = playersScore(gamers);
 		this.dealer = gamers.getDealer();
-		this.dealerScore = gamers.dealerScore();
+		this.dealerScore = Score.from(dealer);
+	}
+
+	public static Map<Player, Score> playersScore(Gamers gamers) {
+		Map<Player, Score> playerToScore = new HashMap<>();
+		for (Player player : gamers.getPlayers()) {
+			playerToScore.put(player, Score.from(player));
+		}
+
+		return playerToScore;
 	}
 
 	public Map<Player, ResultType> playersResult() {

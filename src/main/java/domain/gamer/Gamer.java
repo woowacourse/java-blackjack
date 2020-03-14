@@ -37,7 +37,7 @@ public abstract class Gamer {
 		}
 	}
 
-	protected abstract Score getHitPoint();
+	protected abstract int getHitPoint();
 
 	protected abstract int firstOpenedCardsCount();
 
@@ -46,15 +46,22 @@ public abstract class Gamer {
 	}
 
 	public boolean canHit() {
-		return Score.from(cards).isLowerThan(getHitPoint());
-	}
-
-	public Score calculateScore() {
-		return Score.from(cards);
+		return sumOfCards() < getHitPoint();
 	}
 
 	public List<Card> firstOpenedCards() {
 		return cards.subList(ZERO, firstOpenedCardsCount());
+	}
+
+	public int sumOfCards() {
+		return cards.stream()
+				.mapToInt(Card::getScore)
+				.sum();
+	}
+
+	public boolean hasAce() {
+		return cards.stream()
+				.anyMatch(Card::isAce);
 	}
 
 	public List<Card> getCards() {

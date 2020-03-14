@@ -71,4 +71,37 @@ class PlayerTest {
 		assertThat(player.getCards()).hasSize(3);
 	}
 
+	@Test
+	@DisplayName("카드의 합을 올바르게 계산하는지 테스트")
+	void sumOfCardTest() {
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
+		player.hit(new Card(Symbol.SIX, Type.DIAMOND));
+		assertThat(player.sumOfCards()).isEqualTo(21);
+
+		player.hit(new Card(Symbol.ACE, Type.HEART));
+		assertThat(player.sumOfCards()).isEqualTo(22);
+	}
+
+	@Test
+	@DisplayName("에이스를 포함하는지 여부를 테스트")
+	void hasAceTest() {
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+		assertThat(player.hasAce()).isFalse();
+
+		player.hit(new Card(Symbol.ACE, Type.CLUB));
+		assertThat(player.hasAce()).isTrue();
+	}
+
+	@Test
+	@DisplayName("플레이어가 처음에 2장의 패를 공개하는지 테스트")
+	void firstOpenedCardsTest() {
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+		player.hit(new Card(Symbol.NINE, Type.DIAMOND));
+
+		assertThat(player.firstOpenedCards()).hasSize(2);
+	}
 }

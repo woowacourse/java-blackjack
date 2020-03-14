@@ -1,9 +1,10 @@
 package domain.gamer;
 
 import domain.card.Deck;
-import domain.result.Score;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Gamers {
@@ -28,19 +29,6 @@ public class Gamers {
 		for (Gamer gamer : gamers) {
 			gamer.hit(deck.drawCard());
 		}
-	}
-
-	public Map<Player, Score> playersScore() {
-		Map<Player, Score> playerToScore = new HashMap<>();
-		for (Player player : getPlayers()) {
-			playerToScore.put(player, player.calculateScore());
-		}
-
-		return playerToScore;
-	}
-
-	public Score dealerScore() {
-		return getDealer().calculateScore();
 	}
 
 	public List<Player> getPlayers() {

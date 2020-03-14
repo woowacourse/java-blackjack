@@ -31,4 +31,14 @@ class DealerTest {
 
 		assertThat(dealer.canHit()).isFalse();
 	}
+
+	@Test
+	@DisplayName("딜러가 처음에 1장의 패를 공개하는지 테스트")
+	void firstOpenedCardsTest() {
+		Dealer dealer = new Dealer();
+		dealer.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
+		dealer.hit(new Card(Symbol.NINE, Type.DIAMOND));
+
+		assertThat(dealer.firstOpenedCards()).hasSize(1);
+	}
 }

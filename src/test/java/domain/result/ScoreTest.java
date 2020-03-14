@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,29 +21,32 @@ class ScoreTest {
 	@Test
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateScore() {
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.EIGHT, Type.CLUB),
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.SIX, Type.CLUB)
-		);
+		Player player = new Player("pobi");
+		player.hit(new Card(Symbol.EIGHT, Type.CLUB));
+		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
+		player.hit(new Card(Symbol.SIX, Type.CLUB));
 
-		assertThat(Score.from(cards)).isEqualTo(Score.from(21));
+		assertThat(Score.from(player)).isEqualTo(Score.from(21));
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateWithAce")
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateWithAce(int expected, List<Card> cards) {
-		assertThat(Score.from(cards)).isEqualTo(Score.from(expected));
+		Player player = new Player("pobi");
+		for (Card card : cards) {
+			player.hit(card);
+		}
+		assertThat(Score.from(player)).isEqualTo(Score.from(expected));
 	}
 
 	static Stream<Arguments> generateWithAce() {
 		Card ace = new Card(Symbol.ACE, Type.DIAMOND);
 		return Stream.of(
-			Arguments.of(12, Arrays.asList(ace, ace)),
-			Arguments.of(21, Arrays.asList(ace, new Card(Symbol.TEN, Type.DIAMOND))),
-			Arguments.of(14, Arrays.asList(ace, new Card(Symbol.THREE, Type.DIAMOND))),
-			Arguments.of(20, Arrays.asList(ace, new Card(Symbol.NINE, Type.DIAMOND), new Card(Symbol.TEN, Type.CLUB)))
+				Arguments.of(12, Arrays.asList(ace, ace)),
+				Arguments.of(21, Arrays.asList(ace, new Card(Symbol.TEN, Type.DIAMOND))),
+				Arguments.of(14, Arrays.asList(ace, new Card(Symbol.THREE, Type.DIAMOND))),
+				Arguments.of(20, Arrays.asList(ace, new Card(Symbol.NINE, Type.DIAMOND), new Card(Symbol.TEN, Type.CLUB)))
 		);
 	}
 
