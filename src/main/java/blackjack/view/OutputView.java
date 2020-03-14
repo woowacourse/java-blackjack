@@ -28,10 +28,10 @@ public class OutputView {
     }
 
     public static void printCardStatus(User user) {
-        System.out.println(showCardInfo(user.getName(), user.getCards()));
+        System.out.println(showCardNames(user.getName(), user.getCards()));
     }
 
-    private static String showCardInfo(String name, List<Card> cards) {
+    private static String showCardNames(String name, List<Card> cards) {
         return name + CARD + String.join(DELIMITER, parseCardsName(cards));
     }
 
@@ -41,8 +41,8 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static String showFinalCardInfo(User user) {
-        return showCardInfo(user.getName(), user.getCards()) + RESULT + user.getTotalScore();
+    private static String showFinalCardNames(User user) {
+        return showCardNames(user.getName(), user.getCards()) + RESULT + user.getTotalScore();
     }
 
     public static void printBusted(String name) {
@@ -82,13 +82,13 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER)) +
                 "에게 2장의 카드를 나누었습니다.\n\n" +
                 gameUsers.stream()
-                        .map(user -> showCardInfo(user.getName(), user.getInitialCards()))
+                        .map(user -> showCardNames(user.getName(), user.getInitialCards()))
                         .collect(Collectors.joining(NEW_LINE));
     }
 
     private static String parseFinalScoreAnnouncement(Users users) {
         return users.getUsers().stream()
-                .map(OutputView::showFinalCardInfo)
+                .map(OutputView::showFinalCardNames)
                 .collect(Collectors.joining(NEW_LINE));
     }
 
