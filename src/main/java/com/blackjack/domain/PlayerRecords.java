@@ -19,7 +19,7 @@ public class PlayerRecords {
 	public Map<ResultType, Long> calculateDealerResult() {
 		return records.values()
 				.stream()
-				.map(ResultType::convertResultType)
+				.map(ResultType::reverseResultType)
 				.collect(Collectors.groupingBy(Function.identity(), counting()));
 	}
 

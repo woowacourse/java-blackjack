@@ -22,7 +22,7 @@ public enum ResultType {
 				.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public ResultType convertResultType() {
+	public ResultType reverseResultType() {
 		if (isLose()) {
 			return WIN;
 		}
