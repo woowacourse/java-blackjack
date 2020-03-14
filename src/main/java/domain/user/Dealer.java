@@ -18,9 +18,8 @@ public class Dealer extends Player {
     public boolean isWin(Player opponentPlayer) {
         boolean userBust = opponentPlayer.isBust();
         boolean hasMoreScore = getScore() > opponentPlayer.getScore();
-        boolean dealerWin = isNotBust() && hasMoreScore;
 
-        return userBust || dealerWin;
+        return userBust || (isNotBust() && hasMoreScore);
     }
 
     public String getFirstCardInfo() {
