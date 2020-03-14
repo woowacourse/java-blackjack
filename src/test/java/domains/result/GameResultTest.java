@@ -48,7 +48,7 @@ public class GameResultTest {
     void calculateDealerResult__ReturnWin(Players players, Dealer dealer) {
         gameResult.create(players, dealer);
 
-        assertThat(gameResult.calculateDealerResult()).isEqualTo("0승 1무 1패");
+        assertThat(gameResult.calculateDealerResult()).isEqualTo("0승1무1패");
     }
 
     static Stream<Arguments> gameData() {

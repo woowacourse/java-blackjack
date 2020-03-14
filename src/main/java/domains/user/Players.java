@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class Players implements Iterable<Player>{
     public static final String DELIMITER = ",";
+    private static final int MAXIMUM_NUMBER_OF_PLAYERS = 5;
 
     private List<Player> players;
 
@@ -14,9 +15,16 @@ public class Players implements Iterable<Player>{
         players = new ArrayList<>();
         checkNull(playerNames);
         List<String> names = splitNames(playerNames);
+        checkNumberOfPlayers(names);
         checkDuplication(names);
         for (String name : names) {
             players.add(new Player(name, deck));
+        }
+    }
+
+    private void checkNumberOfPlayers(List<String> names) {
+        if (names.size() > MAXIMUM_NUMBER_OF_PLAYERS) {
+            throw new InvalidPlayersException(InvalidPlayersException.OVER_NUMBER_OF_PLAYERS);
         }
     }
 
