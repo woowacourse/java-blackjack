@@ -12,8 +12,6 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
-    private static final int DEFAULT_CARD_SIZE = 2;
-
     public static void main(String[] args) {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
         final Dealer dealer = new Dealer();
@@ -33,11 +31,7 @@ public class Application {
     }
 
     private static void distributeToPlayer(final CardDeck cardDeck, final Player player) {
-        int distributeCount = DEFAULT_CARD_SIZE;
-
-        while (distributeCount-- > 0) {
-            CardDistributor.giveOneCard(cardDeck, player);
-        }
+        CardDistributor.distributeCards(cardDeck, player);
     }
 
     private static void distributeInfo(final Dealer dealer, final Users users) {
