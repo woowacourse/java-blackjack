@@ -4,10 +4,11 @@ import dto.RequestAnswerDTO;
 import dto.RequestPlayerNamesDTO;
 import dto.ResponsePlayerDTO;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String DELIMITER = ",";
 
     private InputView() {
     }
@@ -17,7 +18,8 @@ public class InputView {
         try {
             String playerName = SCANNER.nextLine();
             validatePlayerNameEmpty(playerName);
-            return new RequestPlayerNamesDTO(playerName);
+            List<String> playerNames = validateDuplicateName(playerName);
+            return new RequestPlayerNamesDTO(playerNames);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerName();
@@ -28,6 +30,16 @@ public class InputView {
         if (playerName == null || playerName.isEmpty()) {
             throw new IllegalArgumentException("비어있는 이름을 입력할 수 없습니다.");
         }
+    }
+
+    private static List<String> validateDuplicateName(String playerName) {
+        String[] names = playerName.split(DELIMITER);
+        List<String> playerNames = Arrays.asList(names);
+        Set<String> duplicateNames = new HashSet<>(playerNames);
+        if (duplicateNames.size() != playerNames.size()) {
+            throw new IllegalArgumentException("중복된 이름을 입력하였습니다.");
+        }
+        return playerNames;
     }
 
     public static RequestAnswerDTO inputAnswer(ResponsePlayerDTO responsePlayerDTO) {

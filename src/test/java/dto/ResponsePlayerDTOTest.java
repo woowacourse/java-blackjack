@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.card.Card;
 import domain.card.CardNumber;
@@ -7,7 +7,6 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
-import dto.ResponsePlayerDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ public class ResponsePlayerDTOTest {
         ResponsePlayerDTO responsePlayerDTO = ResponsePlayerDTO.create(player);
 
         Assertions.assertThat(responsePlayerDTO.getName()).isEqualTo("subway");
-        Assertions.assertThat(responsePlayerDTO.getCardInfo()).isEqualTo("5클로버, 10클로버");
+        Assertions.assertThat(responsePlayerDTO.getCardNumber()).isEqualTo("5클로버, 10클로버");
         Assertions.assertThat(responsePlayerDTO.getScore()).isEqualTo("15");
     }
 
@@ -45,15 +44,15 @@ public class ResponsePlayerDTOTest {
         Assertions.assertThat(responsePlayerDTOS.size()).isEqualTo(3);
 
         Assertions.assertThat(responsePlayerDTOS.get(0).getName()).isEqualTo("딜러");
-        Assertions.assertThat(responsePlayerDTOS.get(0).getCardInfo()).isEqualTo("1클로버, 10클로버");
+        Assertions.assertThat(responsePlayerDTOS.get(0).getCardNumber()).isEqualTo("1클로버, 10클로버");
         Assertions.assertThat(responsePlayerDTOS.get(0).getScore()).isEqualTo("21");
 
         Assertions.assertThat(responsePlayerDTOS.get(1).getName()).isEqualTo("subway");
-        Assertions.assertThat(responsePlayerDTOS.get(1).getCardInfo()).isEqualTo("5클로버, 10클로버");
+        Assertions.assertThat(responsePlayerDTOS.get(1).getCardNumber()).isEqualTo("5클로버, 10클로버");
         Assertions.assertThat(responsePlayerDTOS.get(1).getScore()).isEqualTo("15");
 
         Assertions.assertThat(responsePlayerDTOS.get(2).getName()).isEqualTo("lavine");
-        Assertions.assertThat(responsePlayerDTOS.get(2).getCardInfo()).isEqualTo("5하트, 6다이아몬드");
+        Assertions.assertThat(responsePlayerDTOS.get(2).getCardNumber()).isEqualTo("5하트, 6다이아몬드");
         Assertions.assertThat(responsePlayerDTOS.get(2).getScore()).isEqualTo("11");
     }
 }

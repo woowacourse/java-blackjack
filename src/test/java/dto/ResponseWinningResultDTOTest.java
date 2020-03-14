@@ -1,6 +1,5 @@
-package domain.dto;
+package dto;
 
-import dto.ResponseWinningResultDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,11 @@ public class ResponseWinningResultDTOTest {
         winningPlayer.put("subway", false);
         ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(winningPlayer);
 
-        Assertions.assertThat(responseWinningResultDTO.getWinningResult()).containsSequence(
-                "딜러: 2승 1패", "pobi: 승", "subway: 패", "lavine: 패"
+        Assertions.assertThat(responseWinningResultDTO.getWinningPlayer().keySet()).containsSequence(
+                "pobi", "subway", "lavine"
+        );
+        Assertions.assertThat(responseWinningResultDTO.getWinningPlayer().values()).containsSequence(
+                true, false, false
         );
     }
 }
