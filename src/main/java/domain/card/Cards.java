@@ -49,15 +49,22 @@ public class Cards {
         return sumScores() == BLACKJACK_SCORE;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(this.cards);
-    }
-
     public boolean isLargerThan(int score) {
         return this.sumScores() > score;
     }
 
     public boolean isSmallerThan(int score) {
         return this.sumScores() < score;
+    }
+
+    public Card getAnyCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 한장도 없습니다.");
+        }
+        return this.cards.get(0);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(this.cards);
     }
 }

@@ -6,8 +6,7 @@ public class Dealer extends User {
 
     public Card getAnyCard() {
         return this.cards
-            .getCards()
-            .get(0);
+            .getAnyCard();
     }
 
     public boolean isScoreSame(int score) {
