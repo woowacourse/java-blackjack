@@ -1,10 +1,10 @@
-package domain;
+package domain.user;
 
 import java.util.Arrays;
 
 public enum PlayerIntentionType {
-	YES("y"),
-	NO("n");
+	WANT_DRAW("y"),
+	STAND("n");
 
 	private final String value;
 
@@ -12,10 +12,14 @@ public enum PlayerIntentionType {
 		this.value = value;
 	}
 
-	public static PlayerIntentionType of(String input) {
+	public static PlayerIntentionType of(String intention) {
 		return Arrays.stream(PlayerIntentionType.values())
-			.filter(type -> type.value.equals(input))
+			.filter(type -> type.value.equals(intention))
 			.findFirst()
 			.orElseThrow(NullPointerException::new);
+	}
+
+	public boolean isWantDraw() {
+		return WANT_DRAW.equals(this);
 	}
 }

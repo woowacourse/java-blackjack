@@ -48,19 +48,19 @@ public class CardsTest {
 
 	@Test
 	void getScore_When_One_Ace_Card_Return_1() {
-		assertThat(cards.getScore()).isEqualTo(1);
+		assertThat(cards.getPoint()).isEqualTo(1);
 	}
 
 	@Test
-	void hasInitialSize_When_Two_Cards_Return_True() {
+	void isNotInitialSize_When_Two_Cards_Return_False() {
 		cards.add(card);
-		assertThat(cards.hasInitialSize()).isTrue();
+		assertThat(cards.isNotInitialSize()).isFalse();
 	}
 
 	@Test
-	void hasInitialSize_When_Three_Cards_Return_False() {
+	void isNotInitialSize_When_Three_Cards_Return_True() {
 		cards.add(card);
 		cards.add(card);
-		assertThat(cards.hasInitialSize()).isFalse();
+		assertThat(cards.isNotInitialSize()).isTrue();
 	}
 }

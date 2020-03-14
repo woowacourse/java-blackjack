@@ -13,7 +13,7 @@ public class Dealer extends User {
 	}
 
 	public Card openOneCard() {
-		List<Card> dealerCards = cards.toList();
+		List<Card> dealerCards = hands.toList();
 		return dealerCards.get(FIRST_CARD_INDEX);
 	}
 }

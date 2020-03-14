@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-import static domain.user.Players.OVER_MAX_PLAYERS_COUNT;
-import static domain.user.Players.UNDER_MIN_PLAYERS_COUNT;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,14 +24,14 @@ public class PlayersTest {
 	void create_Over_Max_Count_Of_Players() {
 		assertThatIllegalArgumentException().isThrownBy(() ->
 				Players.of("1,2,3,4,5,6,7,8"))
-				.withMessage(OVER_MAX_PLAYERS_COUNT);
+				.withMessage("블랙잭의 최대 인원은 8명입니다.");
 	}
 
 	@Test
 	void create_Under_Min_Count_Of_Players() {
 		assertThatIllegalArgumentException().isThrownBy(() ->
 				Players.of(new ArrayList<>()))
-				.withMessage(UNDER_MIN_PLAYERS_COUNT);
+				.withMessage("블랙잭의 최소 인원은 1명입니다.");
 	}
 
 	@Test
