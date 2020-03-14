@@ -9,13 +9,17 @@ public class CardDeck {
     private final Stack<Card> blackjackCards;
 
     private CardDeck(CardCreateStrategy cardCreateStrategy) {
-        if (cardCreateStrategy == null) {
-            throw new IllegalArgumentException("카드를 생성 할 수 없습니다.");
-        }
+        validate(cardCreateStrategy);
         List<Card> cards = cardCreateStrategy.getCards();
 
         this.blackjackCards = new Stack<>();
         this.blackjackCards.addAll(cards);
+    }
+
+    private void validate(CardCreateStrategy cardCreateStrategy) {
+        if (cardCreateStrategy == null) {
+            throw new IllegalArgumentException("카드를 생성 할 수 없습니다.");
+        }
     }
 
     public static CardDeck getInstance(CardCreateStrategy cardCreateStrategy) {
