@@ -3,7 +3,6 @@ package blackjack.player.domain;
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.CardDeck;
-import blackjack.player.domain.report.GameReport;
 
 import java.util.Collections;
 import java.util.List;
@@ -69,5 +68,4 @@ public abstract class Player {
 
     public abstract boolean isDrawable();
 
-    public abstract GameReport createReport(Player player);
 }

@@ -2,8 +2,9 @@ package blackjack.player.domain;
 
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.report.GameReport;
+import blackjack.player.domain.report.Reportable;
 
-public class Dealer extends Player {
+public class Dealer extends Player implements Reportable {
 
     private static final int HIT_VALUE = 16;
 

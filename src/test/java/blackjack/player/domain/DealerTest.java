@@ -19,7 +19,7 @@ class DealerTest {
 	@CsvSource(value = {"TWO,LOSE", "FIVE,DRAW", "SIX,WIN"})
 	void getReport(CardNumber cardNumber, GameResult result) {
 		//given
-		Player dealer = new Dealer(CardBundle.emptyBundle());
+		Dealer dealer = new Dealer(CardBundle.emptyBundle());
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.FIVE));
 
 		Player gambler = new Gambler(CardBundle.emptyBundle(), "bebop");

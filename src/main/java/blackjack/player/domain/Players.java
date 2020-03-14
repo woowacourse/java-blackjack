@@ -40,7 +40,7 @@ public class Players {
     }
 
     public GameReports getReports() {
-        Player dealer = findDealer();
+        Dealer dealer = (Dealer) findDealer();
         List<Player> gamblers = findGamblers();
 
         return gamblers.stream()

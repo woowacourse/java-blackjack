@@ -1,7 +1,6 @@
 package blackjack.player.domain;
 
 import blackjack.card.domain.CardBundle;
-import blackjack.player.domain.report.GameReport;
 
 import java.util.Objects;
 
@@ -16,17 +15,12 @@ public class Gambler extends Player {
 	}
 
 	@Override
-    public GameReport createReport(Player player) {
-        throw new UnsupportedOperationException();
-    }
-
-	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Gambler gambler = (Gambler)o;
+		Gambler gambler = (Gambler) o;
 		return Objects.equals(name, gambler.name);
 	}
 
