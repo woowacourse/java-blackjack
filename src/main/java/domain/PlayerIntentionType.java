@@ -6,6 +6,7 @@ public enum PlayerIntentionType {
 	YES("y"),
 	NO("n");
 
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "옳지 않은 입력입니다.";
 	private final String value;
 
 	PlayerIntentionType(String value) {
@@ -16,7 +17,7 @@ public enum PlayerIntentionType {
 		return Arrays.stream(PlayerIntentionType.values())
 				.filter(value -> value.getValue().equals(input))
 				.findFirst()
-				.orElseThrow(() -> new NullPointerException("옳지 않은 입력입니다."));
+				.orElseThrow(() -> new NullPointerException(INVALID_INPUT_EXCEPTION_MESSAGE));
 	}
 
 	public static boolean isYes(PlayerIntentionType value) {
