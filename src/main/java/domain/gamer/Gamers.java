@@ -32,7 +32,7 @@ public class Gamers {
     public Map<String, MatchResult> generateGameResults() {
         return players.stream()
                 .collect(Collectors.toMap(Gamer::getName,
-                        player -> player.isWinOrLose(dealer.calculateWithAce())));
+                        player -> player.findMatchResult(dealer.calculateWithAce())));
     }
 
     public Dealer getDealer() {

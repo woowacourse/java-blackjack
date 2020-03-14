@@ -17,7 +17,7 @@ public class Player extends Gamer {
         return !name.matches(PATTERN);
     }
 
-    public MatchResult isWinOrLose(int dealerScore) {
+    public MatchResult findMatchResult(int dealerScore) {
         if (calculateWithAce() > DRAW_CARD_PIVOT) {
             return MatchResult.LOSE;
         }

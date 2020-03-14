@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CardFactory {
+public class CardsFactory {
     private static final List<Card> cards;
 
     static {

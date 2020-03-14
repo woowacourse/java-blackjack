@@ -1,6 +1,6 @@
 package controller;
 
-import domain.card.CardFactory;
+import domain.card.CardsFactory;
 import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
@@ -14,7 +14,7 @@ public class GameController {
 
     public void run() {
         Gamers gamers = new Gamers(InputView.inputAsPlayerName(), new Dealer());
-        Deck deck = new Deck(CardFactory.getInstance());
+        Deck deck = new Deck(CardsFactory.getInstance());
         gamers.initCard(deck);
         OutputView.printInitCardGuide(gamers);
         OutputView.printGamersCard(gamers);
