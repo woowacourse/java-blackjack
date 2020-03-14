@@ -10,7 +10,7 @@ public class OutputView {
     public static final String NEWLINE = System.getProperty("line.separator");
 
     public static void printFirstDealOutResult(Dealer dealer, Players players) {
-        System.out.println(String.format(NEWLINE + "딜러와 %s에게 2장을 나누었습니다.", players.getAllNames()));
+        System.out.printf(NEWLINE + "딜러와 %s에게 2장을 나누었습니다." + NEWLINE, players.getAllNames());
         System.out.println(dealer.getFirstDrawResult());
         System.out.println(players.getAllFirstDrawResults() + NEWLINE);
     }
@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     public static void printDealerDealOut() {
-        System.out.println(NEWLINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE);
+        System.out.println(NEWLINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printTotalResult(Dealer dealer, Players players) {

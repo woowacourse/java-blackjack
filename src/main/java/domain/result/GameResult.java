@@ -16,6 +16,7 @@ public class GameResult {
 
     private static final String COLON = ": ";
     private static final String SPACE = " ";
+
     private Map<ResultType, Integer> resultOfDealer;
     private Map<Player, ResultType> resultOfPlayers;
 
@@ -27,8 +28,8 @@ public class GameResult {
         resultOfDealer = new LinkedHashMap<>();
 
         Arrays.stream(ResultType.values())
-                .forEach(winningResult ->
-                        resultOfDealer.put(winningResult, 0));
+                .forEach(result ->
+                        resultOfDealer.put(result, 0));
 
         collectResult(dealer, players);
     }
@@ -38,7 +39,7 @@ public class GameResult {
 
         resultOfPlayers = players.decideWinner(dealer, rules);
         resultOfPlayers.forEach(
-                (player, result) -> resultOfDealer.computeIfPresent(result.reverse(),
+                (player, result) -> resultOfDealer.computeIfPresent(result.opposite(),
                         (key, value) -> value + 1));
     }
 

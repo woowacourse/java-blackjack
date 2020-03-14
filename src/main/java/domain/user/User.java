@@ -3,7 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Cards;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
     protected static final String CARD = "카드: ";
     private static final String EMPTY = "";
@@ -34,16 +34,21 @@ public abstract class User {
 
     public abstract boolean isAvailableToDraw();
 
-    public int calculatePoint() {
-        return cards.calculatePointAccordingToHasAce();
-    }
-
     public boolean isBust() {
         return cards.areBust();
     }
 
     public boolean isBlackJack() {
         return cards.areBlackJack();
+    }
+
+    @Override
+    public int compareTo(User user) {
+        return calculatePoint() - user.calculatePoint();
+    }
+
+    private int calculatePoint() {
+        return cards.calculatePointAccordingToHasAce();
     }
 
     public String getTotalDrawResult() {

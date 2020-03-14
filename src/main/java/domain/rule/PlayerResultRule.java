@@ -9,11 +9,11 @@ public enum PlayerResultRule implements Rule {
 
     PLAYER_BUST((player, dealer) -> player.isBust(), ResultType.LOSE),
     DEALER_BUST((player, dealer) -> dealer.isBust(), ResultType.WIN),
-    PLAYER_GREATER((player, dealer) -> player.calculatePoint() > dealer.calculatePoint(), ResultType.WIN),
-    DEALER_GREATER((player, dealer) -> player.calculatePoint() < dealer.calculatePoint(), ResultType.LOSE),
+    PLAYER_GREATER((player, dealer) -> player.compareTo(dealer) > 0, ResultType.WIN),
+    DEALER_GREATER((player, dealer) -> player.compareTo(dealer) < 0, ResultType.LOSE),
     PLAYER_ONLY_BLACK_JACK((player, dealer) -> player.isBlackJack() && !dealer.isBlackJack(), ResultType.WIN),
     DEALER_ONLY_BLACK_JACK((player, dealer) -> !player.isBlackJack() && dealer.isBlackJack(), ResultType.LOSE),
-    EQUALS((player, dealer) -> player.calculatePoint() == dealer.calculatePoint(), ResultType.DRAW);
+    EQUALS((player, dealer) -> player.compareTo(dealer) == 0, ResultType.DRAW);
 
     private final BiFunction<User, User, Boolean> condition;
     private final ResultType resultType;

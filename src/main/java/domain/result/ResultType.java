@@ -12,7 +12,7 @@ public enum ResultType {
         this.result = result;
     }
 
-    public ResultType reverse() {
+    public ResultType opposite() {
         if (this == WIN) {
             return LOSE;
         }
