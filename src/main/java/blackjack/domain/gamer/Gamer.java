@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.rule.CardCalculator;
 
+import java.util.List;
+
 public abstract class Gamer {
 
     protected Hand hand = new Hand();
@@ -24,5 +26,9 @@ public abstract class Gamer {
 
     public String getCardStatus() {
         return hand.getCardStatus();
+    }
+
+    public List<Card> getHand() {
+        return hand.getHand();
     }
 }

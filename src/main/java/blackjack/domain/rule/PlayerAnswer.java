@@ -12,5 +12,9 @@ public enum PlayerAnswer {
     public boolean isYes() {
         return this == Y;
     }
+
+    public boolean isNo() {
+        return this == N;
+    }
 }
 
