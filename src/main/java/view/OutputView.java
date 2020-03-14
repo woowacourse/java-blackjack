@@ -20,8 +20,8 @@ public class OutputView {
 
 	public static void printInitialStatus(Card dealerCard, Players players) {
 		emptyLine();
-		System.out.println("딜러와 " + players.getNames() + "에게 2장의 카드를 나누었습니다.");
-		System.out.println("딜러: " + dealerCard);
+		System.out.println(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.", players.getNames()));
+		System.out.println(String.format("딜러: %s", dealerCard));
 		players.forEach(OutputView::printCardsStatusOf);
 		emptyLine();
 	}
@@ -29,12 +29,11 @@ public class OutputView {
 	public static void printCardsStatusOf(Player player) {
 		Cards cards = player.openAllCards();
 
-		System.out.println(player +
-				"카드: " +
+		System.out.println(String.format("%s 카드 %s",
+				player,
 				cards.toList().stream()
 						.map(Card::toString)
-						.collect(joining(DELIMITER))
-		);
+						.collect(joining(DELIMITER))));
 	}
 
 	public static void printDealerDrawing() {
@@ -43,12 +42,11 @@ public class OutputView {
 	}
 
 	public static void printResultStatus(Cards dealerCards, Players players) {
-		System.out.println("딜러: " +
+		System.out.println(String.format("딜러: %s -결과: %d",
 				dealerCards.toList().stream()
 						.map(Card::toString)
-						.collect(joining(DELIMITER)) +
-				" - 결과: " +
-				ScoreType.of(dealerCards));
+						.collect(joining(DELIMITER)),
+				ScoreType.of(dealerCards)));
 
 		players.forEach(OutputView::printCardsResultOf);
 	}
@@ -56,15 +54,12 @@ public class OutputView {
 	private static void printCardsResultOf(Player player) {
 		Cards cards = player.openAllCards();
 
-		System.out.println(
-				player +
-						"카드: " +
-						cards.toList().stream()
-								.map(Card::toString)
-								.collect(joining(DELIMITER)) +
-						" - 결과: " +
-						ScoreType.of(player.openAllCards())
-		);
+		System.out.println(String.format("%s 카드: %s -결과: %d",
+				player,
+				cards.toList().stream()
+						.map(Card::toString)
+						.collect(joining(DELIMITER)),
+				ScoreType.of(player.openAllCards())));
 	}
 
 	public static void printTotalResult(Result result, Players players) {
@@ -72,14 +67,14 @@ public class OutputView {
 
 		emptyLine();
 		System.out.println("## 최종 승패");
-		System.out.println("딜러: " +
-				dealerResult.getOrDefault(ResultType.WIN, 0L) + "승 " +
-				dealerResult.getOrDefault(ResultType.DRAW, 0L) + "무 " +
-				dealerResult.getOrDefault(ResultType.LOSE, 0L) + "패"
-		);
+		System.out.println(String.format("딜러: %s승 %s무 %s패",
+				dealerResult.getOrDefault(ResultType.WIN, 0L),
+				dealerResult.getOrDefault(ResultType.DRAW, 0L),
+				dealerResult.getOrDefault(ResultType.LOSE, 0L)));
 		players.forEach(player ->
-				System.out.println(player + ": " + result.get(player).getOutputContent())
-		);
+				System.out.println(String.format("%s: %s",
+						player,
+						result.get(player).getOutputContent())));
 	}
 
 	private static void emptyLine() {
