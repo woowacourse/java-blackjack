@@ -84,23 +84,24 @@ public class OutputView {
 				player.calculateScore()));
 	}
 
-	private static void printPlayersWinOrLose(Map<String, MatchResult> playersWinOrLose) {
+	private static void printPlayersWinOrLose(GameResult gameResult) {
 		StringBuilder dealerResult = new StringBuilder();
 		dealerResult.append(NEWLINE)
 			.append("## 최종승패")
 			.append(NEWLINE)
 			.append("딜러 : ")
-			.append(printResultCount(playersWinOrLose, MatchResult.LOSE, MatchResult.WIN.getInitial()))
-			.append(printResultCount(playersWinOrLose, MatchResult.DRAW, MatchResult.DRAW.getInitial()))
-			.append(printResultCount(playersWinOrLose, MatchResult.WIN, MatchResult.LOSE.getInitial()));
+			.append(printResultCount(gameResult, MatchResult.LOSE, MatchResult.WIN.getInitial()))
+			.append(printResultCount(gameResult, MatchResult.DRAW, MatchResult.DRAW.getInitial()))
+			.append(printResultCount(gameResult, MatchResult.WIN, MatchResult.LOSE.getInitial()));
 		System.out.println(dealerResult.toString());
-		playersWinOrLose.forEach((a, b) -> System.out.println(a + " : " + b.getInitial()));
+		gameResult.getGameResult().forEach((a, b) -> System.out.println(a.getName() + " : " + b.getInitial()));
 	}
 
-	private static String printResultCount(Map<String, MatchResult> playersWinOrLose, MatchResult matchResult,
+	private static String printResultCount(GameResult gameResult, MatchResult matchResult,
 		String dealerInitial) {
 		StringBuilder winOrLoseAndCount = new StringBuilder();
-		winOrLoseAndCount.append(playersWinOrLose.values()
+		winOrLoseAndCount.append(gameResult.getGameResult()
+			.values()
 			.stream()
 			.filter(x -> x == matchResult)
 			.count())
