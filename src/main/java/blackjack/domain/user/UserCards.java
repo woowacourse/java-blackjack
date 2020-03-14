@@ -3,14 +3,13 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.exception.NoCardException;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCards {
     private static final String NO_CARD = "카드가 없습니다";
     private static final int ACE_INCREMENT = 10;
-    private static final int BLACKJACK = 21;
+    private static final int MAX_SCORE = 21;
     private final List<Card> cards;
 
     public UserCards(List<Card> cards) {
@@ -28,14 +27,14 @@ public class UserCards {
         int score = incrementAceScore(cards.stream()
                 .mapToInt(Card::getScore)
                 .sum());
-        if(score > BLACKJACK) {
+        if(score > MAX_SCORE) {
             return 0;
         }
         return score;
     }
 
     private int incrementAceScore(int score) {
-        if (cards.stream().anyMatch(Card::isAce) && score <= BLACKJACK - ACE_INCREMENT) {
+        if (cards.stream().anyMatch(Card::isAce) && score <= MAX_SCORE - ACE_INCREMENT) {
             score += ACE_INCREMENT;
         }
         return score;
@@ -61,6 +60,6 @@ public class UserCards {
 
     public boolean isBlackJack() {
         return cards.size() == 2
-                && getTotalScore() == BLACKJACK;
+                && getTotalScore() == MAX_SCORE;
     }
 }
