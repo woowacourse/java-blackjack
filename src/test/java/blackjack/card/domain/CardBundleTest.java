@@ -47,44 +47,6 @@ class CardBundleTest {
         assertThat(actual).isEqualTo(expect);
     }
 
-    @DisplayName("두 카드패를 비교해서 승자, 패자, 무승부를 결정")
-    @ParameterizedTest
-    @CsvSource(value = {"TEN,WIN", "NINE,DRAW", "TWO,LOSE"})
-    void compare(CardNumber number, GameResult expect) {
-        //given
-        CardBundle dealerBundle = CardBundle.emptyBundle();
-        dealerBundle.addCard(Card.of(HEART, CardNumber.NINE));
-
-        CardBundle gamblerBundle = CardBundle.emptyBundle();
-        gamblerBundle.addCard(Card.of(HEART, number));
-
-        //when
-        GameResult actual = dealerBundle.findGameResult(gamblerBundle);
-
-        assertThat(actual).isEqualTo(expect);
-    }
-
-    @DisplayName("버스트인사람은 무조건 패배")
-    @ParameterizedTest
-    @CsvSource(value = {"ACE,TWO,LOSE", "TWO,ACE,WIN"})
-    void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, GameResult expect) {
-        //given
-        CardBundle dealerCardBundle = CardBundle.emptyBundle();
-        dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
-        dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
-        dealerCardBundle.addCard(Card.of(HEART, dealerNumber));
-
-        CardBundle gamblerCardBundle = CardBundle.emptyBundle();
-        gamblerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
-        gamblerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
-        gamblerCardBundle.addCard(Card.of(HEART, gamblerNumber));
-
-        //when
-        GameResult actual = dealerCardBundle.findGameResult(gamblerCardBundle);
-
-        assertThat(actual).isEqualTo(expect);
-    }
-
     @DisplayName("CardBundle 이 블랙잭인지 아닌지 확인")
     @ParameterizedTest
     @MethodSource("cardBundleProvider")

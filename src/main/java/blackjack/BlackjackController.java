@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.card.domain.CardBundle;
-import blackjack.card.domain.CardDrawer;
+import blackjack.card.domain.Drawable;
 import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
@@ -11,11 +11,11 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
-    private final CardDrawer cardDrawer;
+    private final Drawable drawable;
     private final InputView inputView;
 
-    public BlackjackController(CardDrawer cardDrawer, InputView inputView) {
-        this.cardDrawer = cardDrawer;
+    public BlackjackController(Drawable drawable, InputView inputView) {
+        this.drawable = drawable;
         this.inputView = inputView;
     }
 
@@ -40,7 +40,7 @@ public class BlackjackController {
     }
 
     private void drawStartingCards(Players players) {
-        players.drawStartingCard(cardDrawer);
+        players.drawStartingCard(drawable);
         OutputView.showCards(players);
     }
 
@@ -52,14 +52,14 @@ public class BlackjackController {
 
     private void drawEachGambler(Player gambler) {
         while (gambler.isDrawable() && inputView.inputDrawRequest(gambler).isDraw()) {
-            gambler.drawCard(cardDrawer);
+            gambler.drawCard(drawable);
             OutputView.showCardInfo(gambler);
         }
     }
 
     private void drawDealer(Player dealer) {
         while (dealer.isDrawable()) {
-            dealer.drawCard(cardDrawer);
+            dealer.drawCard(drawable);
             OutputView.showDealerDrawMessage();
         }
     }

@@ -2,7 +2,7 @@ package blackjack.player.domain;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
-import blackjack.card.domain.CardDrawer;
+import blackjack.card.domain.Drawable;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +30,8 @@ public abstract class Player {
         return cardBundle.isNotEmpty();
     }
 
-    public void drawCard(CardDrawer cardDrawer) {
-        cardBundle.addCard(cardDrawer.draw());
+    public void drawCard(Drawable drawable) {
+        cardBundle.addCard(drawable.draw());
     }
 
     public int getScore() {

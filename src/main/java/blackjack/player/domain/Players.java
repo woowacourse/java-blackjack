@@ -1,6 +1,6 @@
 package blackjack.player.domain;
 
-import blackjack.card.domain.CardDrawer;
+import blackjack.card.domain.Drawable;
 import blackjack.player.domain.report.GameReports;
 
 import java.util.Collections;
@@ -24,10 +24,10 @@ public class Players {
         }
     }
 
-    public void drawStartingCard(CardDrawer cardDrawer) {
+    public void drawStartingCard(Drawable drawable) {
         checkState();
         for (int i = 0; i < STARTING_CARD_SIZE; i++) {
-            players.forEach(player -> player.drawCard(cardDrawer));
+            players.forEach(player -> player.drawCard(drawable));
         }
     }
 

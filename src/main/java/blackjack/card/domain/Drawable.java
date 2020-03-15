@@ -1,5 +1,5 @@
 package blackjack.card.domain;
 
-public interface CardDrawer {
+public interface Drawable {
     Card draw();
 }

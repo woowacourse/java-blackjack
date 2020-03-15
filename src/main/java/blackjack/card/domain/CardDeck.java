@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class CardDeck implements CardDrawer {
+public class CardDeck implements Drawable {
 
     private final Stack<Card> blackjackCards;
 

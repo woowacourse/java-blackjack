@@ -1,6 +1,7 @@
 package blackjack.player.domain;
 
 import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.GameResult;
 import blackjack.player.domain.report.GameReport;
 import blackjack.player.domain.report.Reportable;
 
@@ -18,7 +19,8 @@ public class Dealer extends Player implements Reportable {
     }
 
     @Override
-    public GameReport createReport(Player player) {
-        return new GameReport(player.name, this.cardBundle.findGameResult(player.cardBundle));
+    public GameReport createReport(Player gambler) {
+        GameResult gameResult = GameResult.findByComparing(gambler.cardBundle, this.cardBundle);
+        return new GameReport(gambler.name, gameResult);
     }
 }

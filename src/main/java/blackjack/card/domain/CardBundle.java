@@ -23,10 +23,6 @@ public class CardBundle {
         cards.add(card);
     }
 
-    public GameResult findGameResult(CardBundle gamblerCardBundle) {
-        return GameResult.findByComparing(gamblerCardBundle, this);
-    }
-
     public int calculateScore() {
         return ScoreCalculator.findByCards(cards)
                 .calculate(cards);
