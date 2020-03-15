@@ -23,8 +23,13 @@ public abstract class AbstractPlayer implements Player {
 	}
 
 	@Override
-	public void giveCards(Card... cards) {
-		this.hand.addAll(Arrays.asList(cards));
+	public void giveCard(Card card) {
+		hand.add(card);
+	}
+
+	@Override
+	public void giveCards(List<Card> cards) {
+		hand.addAll(cards);
 	}
 
 	@Override

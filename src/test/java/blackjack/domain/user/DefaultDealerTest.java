@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,20 +15,24 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultDealerTest {
+	private static Card aceSpade;
+	private static Card sixDiamond;
+	private static Card tenClub;
+	private static Card jackHeart;
+
 	private Dealer dealer;
-	private Card aceSpade;
-	private Card sixDiamond;
-	private Card tenClub;
-	private Card jackHeart;
 
-	@BeforeEach
-	void setUp() {
-		dealer = DefaultDealer.dealer();
-
+	@BeforeAll
+	static void beforeAll() {
 		aceSpade = Card.of(Symbol.ACE, Type.SPADE);
 		sixDiamond = Card.of(Symbol.SIX, Type.DIAMOND);
 		tenClub = Card.of(Symbol.TEN, Type.CLUB);
 		jackHeart = Card.of(Symbol.JACK, Type.HEART);
+	}
+
+	@BeforeEach
+	void setUp() {
+		dealer = DefaultDealer.dealer();
 	}
 
 	@Test
@@ -37,85 +42,88 @@ class DefaultDealerTest {
 	}
 
 	@Test
-	void shouldReceiveCard() {
-		dealer.giveCards(tenClub, sixDiamond);
+	void shouldReceiveCard_ShouldReturnTrue() {
+		dealer.giveCards(Arrays.asList(tenClub, sixDiamond));
 		assertThat(dealer.shouldReceiveCard()).isTrue();
+	}
 
-		dealer.giveCards(aceSpade);
+	@Test
+	void shouldReceiveCard_ShouldReturnFalse() {
+		dealer.giveCards(Arrays.asList(tenClub, sixDiamond, aceSpade));
 		assertThat(dealer.shouldReceiveCard()).isFalse();
 	}
 
 	@Test
-	void showFirstCard() {
-		dealer.giveCards(tenClub, sixDiamond);
+	void showFirstCard_isEqualToFirstCard() {
+		dealer.giveCards(Arrays.asList(tenClub, sixDiamond));
 		assertThat(dealer.getFirstCard()).isEqualTo(tenClub);
 
-		dealer.giveCards(jackHeart, aceSpade);
+		dealer.giveCards(Arrays.asList(jackHeart, aceSpade));
 		assertThat(dealer.getFirstCard()).isEqualTo(tenClub);
 	}
 
 	@Test
 	void isWinner() {
-		dealer.giveCards(tenClub);
+		dealer.giveCard(tenClub);
 		assertThat(dealer.isWinner(Score.of(11))).isTrue();
 
-		dealer.giveCards(tenClub, aceSpade);
+		dealer.giveCards(Arrays.asList(tenClub, aceSpade));
 		assertThat(dealer.isWinner(Score.of(20))).isTrue();
 
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		assertThat(dealer.isWinner(Score.of(0))).isFalse();
 	}
 
 	@Test
 	void giveCards() {
-		dealer.giveCards(aceSpade, sixDiamond);
+		dealer.giveCards(Arrays.asList(aceSpade, sixDiamond));
 		assertThat(dealer.getHand())
 				.isEqualTo(Arrays.asList(aceSpade, sixDiamond));
 
-		dealer.giveCards(tenClub, jackHeart);
+		dealer.giveCards(Arrays.asList(tenClub, jackHeart));
 		assertThat(dealer.getHand())
 				.isEqualTo(Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart));
 	}
 
 	@Test
 	void getScore() {
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		assertThat(dealer.getScore()).isEqualTo(Score.of(11));
 
-		dealer.giveCards(jackHeart);
+		dealer.giveCard(jackHeart);
 		assertThat(dealer.getScore()).isEqualTo(Score.of(21));
 
-		dealer.giveCards(sixDiamond);
+		dealer.giveCard(sixDiamond);
 		assertThat(dealer.getScore()).isEqualTo(Score.of(17));
 
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		assertThat(dealer.getScore()).isEqualTo(Score.of(18));
 
-		dealer.giveCards(sixDiamond);
+		dealer.giveCard(sixDiamond);
 		assertThat(dealer.getScore()).isEqualTo(Score.of(24));
 	}
 
 	@Test
 	void isBust() {
-		dealer.giveCards(tenClub, aceSpade);
+		dealer.giveCards(Arrays.asList(tenClub, aceSpade));
 		assertThat(dealer.isBust()).isFalse();
 
-		dealer.giveCards(tenClub);
+		dealer.giveCard(tenClub);
 		assertThat(dealer.isBust()).isFalse();
 
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		assertThat(dealer.isBust()).isTrue();
 	}
 
 	@Test
 	void isNotBust() {
-		dealer.giveCards(tenClub, aceSpade);
+		dealer.giveCards(Arrays.asList(tenClub, aceSpade));
 		assertThat(dealer.isNotBust()).isTrue();
 
-		dealer.giveCards(tenClub);
+		dealer.giveCard(tenClub);
 		assertThat(dealer.isNotBust()).isTrue();
 
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		assertThat(dealer.isNotBust()).isFalse();
 	}
 
@@ -127,38 +135,35 @@ class DefaultDealerTest {
 		// when-then
 		assertThat(dealer.getHand()).isEqualTo(expected);
 
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		expected.add(aceSpade);
 		assertThat(dealer.getHand()).isEqualTo(expected);
 
-		dealer.giveCards(sixDiamond);
+		dealer.giveCard(sixDiamond);
 		expected.add(sixDiamond);
 		assertThat(dealer.getHand()).isEqualTo(expected);
 
-		dealer.giveCards(tenClub);
+		dealer.giveCard(tenClub);
 		expected.add(tenClub);
 		assertThat(dealer.getHand()).isEqualTo(expected);
 
-		dealer.giveCards(jackHeart);
+		dealer.giveCard(jackHeart);
 		expected.add(jackHeart);
 		assertThat(dealer.getHand()).isEqualTo(expected);
 	}
 
 	@Test
 	void countCards() {
-		dealer.giveCards();
-		assertThat(dealer.countCards()).isEqualTo(0);
-
-		dealer.giveCards(aceSpade);
+		dealer.giveCard(aceSpade);
 		assertThat(dealer.countCards()).isEqualTo(1);
 
-		dealer.giveCards(tenClub);
+		dealer.giveCard(tenClub);
 		assertThat(dealer.countCards()).isEqualTo(2);
 
-		dealer.giveCards(sixDiamond);
+		dealer.giveCard(sixDiamond);
 		assertThat(dealer.countCards()).isEqualTo(3);
 
-		dealer.giveCards(jackHeart, jackHeart);
+		dealer.giveCards(Arrays.asList(jackHeart, jackHeart));
 		assertThat(dealer.countCards()).isEqualTo(5);
 	}
 

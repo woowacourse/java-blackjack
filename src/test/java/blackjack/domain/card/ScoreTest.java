@@ -31,8 +31,7 @@ class ScoreTest {
 
 	@Test
 	void of_IfMinus_ShouldThrowException() {
-		assertThatThrownBy(() ->
-				Score.of(-1))
+		assertThatThrownBy(() -> Score.of(-1))
 				.isInstanceOf(ScoreException.class);
 	}
 

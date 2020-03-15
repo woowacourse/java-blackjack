@@ -18,7 +18,7 @@ class ResultTest {
 	@BeforeEach
 	void setUp() {
 		Dealer dealer = DefaultDealer.dealer();
-		dealer.giveCards(Card.of(Symbol.ACE, Type.SPADE));
+		dealer.giveCard(Card.of(Symbol.ACE, Type.SPADE));
 
 		players = Players.of("그니, 무늬, 포비");
 		players.giveCards(0, Card.of(Symbol.TEN, Type.DIAMOND));

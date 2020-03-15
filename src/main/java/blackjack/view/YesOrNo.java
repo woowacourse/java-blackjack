@@ -9,6 +9,7 @@ public class YesOrNo {
 	private final String yesOrNo;
 
 	private YesOrNo(String yesOrNo) {
+		validateIsNotNull(yesOrNo);
 		validateIsYesOrNo(yesOrNo);
 		this.yesOrNo = yesOrNo;
 	}
@@ -16,6 +17,12 @@ public class YesOrNo {
 	public static YesOrNo of(String yesOrNo) {
 		String upperCase = yesOrNo.trim().toUpperCase();
 		return new YesOrNo(upperCase);
+	}
+
+	private void validateIsNotNull(String yesOrNo) {
+		if (yesOrNo == null) {
+			throw new YesOrNoException("yesOrNo는 null일 수 없습니다.");
+		}
 	}
 
 	private void validateIsYesOrNo(String yesOrNo) {

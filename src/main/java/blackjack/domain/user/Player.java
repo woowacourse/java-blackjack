@@ -1,12 +1,15 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Drawable;
 import blackjack.domain.card.Score;
 
 import java.util.List;
 
 public interface Player {
-	void giveCards(Card... cards);
+	void giveCard(Card card);
+
+	void giveCards(List<Card> cards);
 
 	Score getScore();
 

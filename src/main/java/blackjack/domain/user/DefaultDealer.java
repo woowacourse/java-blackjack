@@ -7,7 +7,7 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 	private static final int MINIMUM_NUMBER_TO_STAY = 17;
 
 	private DefaultDealer() {
-		super(NAME);
+		super(Dealer.NAME);
 	}
 
 	public static DefaultDealer dealer() {

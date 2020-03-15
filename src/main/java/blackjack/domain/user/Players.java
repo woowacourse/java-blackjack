@@ -59,7 +59,7 @@ public class Players {
 	public void giveCards(int index, Card... cards) {
 		for (Card card : cards) {
 			players.get(index)
-					.giveCards(card);
+					.giveCard(card);
 		}
 	}
 

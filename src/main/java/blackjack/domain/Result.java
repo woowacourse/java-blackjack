@@ -20,14 +20,14 @@ public class Result {
 	}
 
 	public static Result of(Dealer dealer, Players players) {
-		Map<Player, Boolean> playerResults = CreatePlayersResult(dealer, players);
+		Map<Player, Boolean> playerResults = createPlayersResult(dealer, players);
 		int dealerWin = calculateDealerWin(playerResults);
 		int dealerLose = calculateDealerLose(playerResults);
 
 		return new Result(playerResults, dealerWin, dealerLose);
 	}
 
-	private static Map<Player, Boolean> CreatePlayersResult(Dealer dealer, Players players) {
+	private static Map<Player, Boolean> createPlayersResult(Dealer dealer, Players players) {
 		Map<Player, Boolean> playerResults = new LinkedHashMap<>();
 		Score dealerScore = dealer.getScore();
 		for (Player player : players.getPlayers()) {

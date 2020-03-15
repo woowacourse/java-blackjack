@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,20 +15,24 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultPlayerTest {
-	Player player;
-	private Card aceSpade;
-	private Card sixDiamond;
-	private Card tenClub;
-	private Card jackHeart;
+	private static Card aceSpade;
+	private static Card sixDiamond;
+	private static Card tenClub;
+	private static Card jackHeart;
 
-	@BeforeEach
-	void setUp() {
-		player = DefaultPlayer.of("그니");
+	private Player player;
 
+	@BeforeAll
+	static void beforeAll() {
 		aceSpade = Card.of(Symbol.ACE, Type.SPADE);
 		sixDiamond = Card.of(Symbol.SIX, Type.DIAMOND);
 		tenClub = Card.of(Symbol.TEN, Type.CLUB);
 		jackHeart = Card.of(Symbol.JACK, Type.HEART);
+	}
+
+	@BeforeEach
+	void setUp() {
+		player = DefaultPlayer.of("그니");
 	}
 
 	@Test
@@ -37,72 +42,72 @@ public class DefaultPlayerTest {
 
 	@Test
 	void isWinner() {
-		player.giveCards(tenClub);
+		player.giveCard(tenClub);
 		assertThat(player.isWinner(Score.of(9))).isTrue();
 		assertThat(player.isWinner(Score.of(10))).isFalse();
 
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.isWinner(Score.of(20))).isTrue();
 		assertThat(player.isWinner(Score.of(21))).isFalse();
 
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.isWinner(Score.of(11))).isTrue();
 		assertThat(player.isWinner(Score.of(12))).isFalse();
 
-		player.giveCards(jackHeart);
+		player.giveCard(jackHeart);
 		assertThat(player.isWinner(Score.of(0))).isFalse();
 	}
 
 	@Test
 	void giveCards() {
-		player.giveCards(aceSpade, sixDiamond);
+		player.giveCards(Arrays.asList(aceSpade, sixDiamond));
 		assertThat(player.getHand())
 				.isEqualTo(Arrays.asList(aceSpade, sixDiamond));
 
-		player.giveCards(tenClub, jackHeart);
+		player.giveCards(Arrays.asList(tenClub, jackHeart));
 		assertThat(player.getHand())
 				.isEqualTo(Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart));
 	}
 
 	@Test
 	void getScore() {
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.getScore()).isEqualTo(Score.of(11));
 
-		player.giveCards(jackHeart);
+		player.giveCard(jackHeart);
 		assertThat(player.getScore()).isEqualTo(Score.of(21));
 
-		player.giveCards(sixDiamond);
+		player.giveCard(sixDiamond);
 		assertThat(player.getScore()).isEqualTo(Score.of(17));
 
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.getScore()).isEqualTo(Score.of(18));
 
-		player.giveCards(sixDiamond);
+		player.giveCard(sixDiamond);
 		assertThat(player.getScore()).isEqualTo(Score.of(24));
 	}
 
 	@Test
 	void isBust() {
-		player.giveCards(tenClub, aceSpade);
+		player.giveCards(Arrays.asList(tenClub, aceSpade));
 		assertThat(player.isBust()).isFalse();
 
-		player.giveCards(tenClub);
+		player.giveCard(tenClub);
 		assertThat(player.isBust()).isFalse();
 
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.isBust()).isTrue();
 	}
 
 	@Test
 	void isNotBust() {
-		player.giveCards(tenClub, aceSpade);
+		player.giveCards(Arrays.asList(tenClub, aceSpade));
 		assertThat(player.isNotBust()).isTrue();
 
-		player.giveCards(tenClub);
+		player.giveCard(tenClub);
 		assertThat(player.isNotBust()).isTrue();
 
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.isNotBust()).isFalse();
 	}
 
@@ -114,38 +119,35 @@ public class DefaultPlayerTest {
 		// when-then
 		assertThat(player.getHand()).isEqualTo(expected);
 
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		expected.add(aceSpade);
 		assertThat(player.getHand()).isEqualTo(expected);
 
-		player.giveCards(sixDiamond);
+		player.giveCard(sixDiamond);
 		expected.add(sixDiamond);
 		assertThat(player.getHand()).isEqualTo(expected);
 
-		player.giveCards(tenClub);
+		player.giveCard(tenClub);
 		expected.add(tenClub);
 		assertThat(player.getHand()).isEqualTo(expected);
 
-		player.giveCards(jackHeart);
+		player.giveCard(jackHeart);
 		expected.add(jackHeart);
 		assertThat(player.getHand()).isEqualTo(expected);
 	}
 
 	@Test
 	void countCards() {
-		player.giveCards();
-		assertThat(player.countCards()).isEqualTo(0);
-
-		player.giveCards(aceSpade);
+		player.giveCard(aceSpade);
 		assertThat(player.countCards()).isEqualTo(1);
 
-		player.giveCards(tenClub);
+		player.giveCard(tenClub);
 		assertThat(player.countCards()).isEqualTo(2);
 
-		player.giveCards(sixDiamond);
+		player.giveCard(sixDiamond);
 		assertThat(player.countCards()).isEqualTo(3);
 
-		player.giveCards(jackHeart, jackHeart);
+		player.giveCards(Arrays.asList(jackHeart, jackHeart));
 		assertThat(player.countCards()).isEqualTo(5);
 	}
 
