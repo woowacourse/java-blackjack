@@ -31,8 +31,9 @@ public class Hand {
 
     public int calculate() {
         int total = cards.stream()
-            .map(Card::getRankValue)
-            .reduce(0, Integer::sum);
+                .mapToInt(Card::getRankValue)
+                .sum();
+
         return reduceIfAceExists(total);
     }
 
