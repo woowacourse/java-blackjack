@@ -50,13 +50,6 @@ public class Controller {
 		}
 	}
 
-	private static void progressDealer(BlackjackGame blackjackGame) {
-		while (blackjackGame.getDealer().canDraw()) {
-			OutputView.printDealerDraw();
-			blackjackGame.draw(blackjackGame.getDealer());
-		}
-	}
-
 	private static void askMoreCard(Player player, BlackjackGame blackjackGame) {
 		if (player.isBlackjack()) {
 			return;
@@ -78,6 +71,13 @@ public class Controller {
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
 			return getYesOrNo(player);
+		}
+	}
+
+	private static void progressDealer(BlackjackGame blackjackGame) {
+		while (blackjackGame.getDealer().canDraw()) {
+			OutputView.printDealerDraw();
+			blackjackGame.draw(blackjackGame.getDealer());
 		}
 	}
 
