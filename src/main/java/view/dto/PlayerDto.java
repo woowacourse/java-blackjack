@@ -37,7 +37,8 @@ public class PlayerDto {
 	}
 
 	public boolean win(int score) {
-		return (hands.calculateTotalScore() <= Hands.BLACKJACK) && (score < hands.calculateTotalScore());
+		return (score <= Hands.BLACKJACK) && (hands.calculateTotalScore() <= Hands.BLACKJACK) && (score
+			< hands.calculateTotalScore());
 	}
 
 	public boolean isPush(int score) {

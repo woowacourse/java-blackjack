@@ -67,7 +67,7 @@ public class Controller {
 	}
 
 	private static boolean isContinue(Player player) {
-		return !player.isBust() && YES.equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+		return player.canHit() && YES.equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
 	}
 
 	private static void end(BlackjackGame blackjackGame) {

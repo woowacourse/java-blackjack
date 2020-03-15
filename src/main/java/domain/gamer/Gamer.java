@@ -1,5 +1,7 @@
 package domain.gamer;
 
+import java.util.Objects;
+
 import domain.card.Card;
 import domain.card.Hands;
 
@@ -42,6 +44,22 @@ public class Gamer {
 
 	public boolean canHit() {
 		return hands.calculateTotalScore() < Hands.BLACKJACK;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Gamer))
+			return false;
+		Gamer gamer = (Gamer)o;
+		return Objects.equals(name, gamer.name) &&
+			Objects.equals(hands, gamer.hands);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, hands);
 	}
 
 	public Hands getHands() {

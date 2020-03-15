@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import domain.card.Hands;
-
 /**
  *   딜러 클래스입니다.
  *
@@ -10,15 +8,12 @@ import domain.card.Hands;
 public class Dealer extends Gamer {
 	private static final int DRAW_CONDITION = 16;
 
-	private String name;
-	private Hands hands;
-
 	public Dealer() {
 		super("딜러");
 	}
 
 	@Override
 	public boolean canHit() {
-		return scoreHands() <= DRAW_CONDITION;
+		return super.scoreHands() <= DRAW_CONDITION;
 	}
 }
