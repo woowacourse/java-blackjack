@@ -7,21 +7,22 @@ import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface User {
-    void drawCards(Card... cards);
 
     Score calculateScore();
 
     boolean isBust();
 
-    List<Card> getCards();
-
     boolean is(String name);
 
     int countCards();
 
-    String getName();
-
     boolean isNotBust();
 
-    void drawCards(Deck deck, int drawingCount);
+    void drawCard(Deck deck);
+
+    void receiveInitialCards(Deck deck);
+
+    String getName();
+
+    List<Card> getCards();
 }

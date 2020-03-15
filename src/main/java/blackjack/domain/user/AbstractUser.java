@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,17 +21,6 @@ public abstract class AbstractUser implements User {
         this.cards = new ArrayList<>();
     }
 
-    @Override
-    public void drawCards(Deck deck, int drawingCount) {
-        for (int i = 0; i < drawingCount; i++) {
-            cards.add(deck.draw());
-        }
-    }
-
-    @Override
-    public void drawCards(Card... cards) {
-        this.cards.addAll(Arrays.asList(cards));
-    }
 
     @Override
     public boolean isBust() {
@@ -42,6 +30,17 @@ public abstract class AbstractUser implements User {
     @Override
     public boolean isNotBust() {
         return !isBust();
+    }
+
+    @Override
+    public void drawCard(Deck deck) {
+        cards.add(deck.draw());
+    }
+
+    @Override
+    public void receiveInitialCards(Deck deck) {
+        cards.add(deck.draw());
+        cards.add(deck.draw());
     }
 
     @Override
@@ -81,12 +80,12 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public String getName() {
+        return name;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

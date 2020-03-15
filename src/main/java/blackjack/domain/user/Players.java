@@ -1,10 +1,7 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.exception.PlayersException;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,9 +51,9 @@ public class Players {
         }
     }
 
-    public void drawCards(Deck deck, int eachDrawingCount) {
+    public void receiveTwoCards(Deck deck) {
         for (Player player : players) {
-            player.drawCards(deck, eachDrawingCount);
+            player.receiveInitialCards(deck);
         }
     }
 
