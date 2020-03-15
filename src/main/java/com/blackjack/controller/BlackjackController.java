@@ -7,7 +7,7 @@ import static com.blackjack.view.OutputView.printUserRecords;
 
 import java.util.List;
 
-import com.blackjack.domain.GameTable;
+import com.blackjack.domain.GameRule;
 import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.user.Dealer;
 import com.blackjack.domain.user.PlayerFactory;
@@ -34,9 +34,9 @@ public class BlackjackController {
 	}
 
 	private void printResult(Dealer dealer, List<User> players) {
-		GameTable gameTable = new GameTable(dealer, players);
+		GameRule gameRule = new GameRule(dealer, players);
 
-		PlayerRecords playerRecords = gameTable.calculateResult();
+		PlayerRecords playerRecords = gameRule.calculateResult();
 		printResultMessage();
 
 		printDealerRecord(playerRecords.calculateDealerResult());
