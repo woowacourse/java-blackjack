@@ -11,16 +11,6 @@ public enum ResultType {
 		this.alias = alias;
 	}
 
-	public ResultType convertResultType() {
-		if (WIN.equals(this)) {
-			return LOSE;
-		}
-		if (LOSE.equals(this)) {
-			return WIN;
-		}
-		return DRAW;
-	}
-
 	@Override
 	public String toString() {
 		return alias;
