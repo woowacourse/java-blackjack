@@ -21,6 +21,6 @@ public class WinningResultTest {
 
         WinningResult winningResult = new WinningResult(users);
 
-        Assertions.assertThat(winningResult.generateWinningUserResult()).size().isEqualTo(3);
+        Assertions.assertThat(winningResult.generateWinningUserResult(users)).size().isEqualTo(3);
     }
 }

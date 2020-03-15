@@ -6,7 +6,7 @@ import java.util.List;
 public class Cards {
     private static final int FIRST = 0;
 
-    private List<Card> cardsDeck;
+    private final List<Card> cardsDeck;
 
     public Cards() {
         this.cardsDeck = Card.getCards();

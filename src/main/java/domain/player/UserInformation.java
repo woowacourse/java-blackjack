@@ -1,9 +1,6 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +16,7 @@ public class UserInformation {
     public UserInformation(User user) {
         determineUser(user);
         List<Card> cards = user.getCard();
+
         this.cardInformation = cards.stream().map(Card::toString).collect(Collectors.joining(DELIMITER));
         this.score = Integer.toString(user.sumCardNumber());
     }

@@ -16,10 +16,10 @@ public class BlackjackController {
     public static void run() {
         Cards cards = new Cards();
         PlayersName playersName = new PlayersName(InputView.inputPlayerName());
+        OutputView.printInitialResult(playersName.getPlayerName());
+
         Users users = new Users(cards, playersName.getPlayerName());
         UsersInformation usersInformation = new UsersInformation(users);
-
-        OutputView.printInitialResult(playersName.getPlayerName());
         UserInformation dealerInformation = usersInformation.getDealerInformation();
         OutputView.printUserCard(dealerInformation.getName(), dealerInformation.getCardInformation());
 

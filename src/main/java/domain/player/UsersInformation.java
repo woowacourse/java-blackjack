@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UsersInformation {
-    public static final int DEALER_INDEX = 0;
+    private static final int DEALER_INDEX = 0;
+
     private List<UserInformation> usersInformation;
 
     public UsersInformation(Users users) {

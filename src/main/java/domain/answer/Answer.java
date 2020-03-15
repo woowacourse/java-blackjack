@@ -1,7 +1,7 @@
 package domain.answer;
 
 public class Answer {
-    private String answer;
+    private final String answer;
 
     public Answer(String answer) {
         validateAnswer(answer);
