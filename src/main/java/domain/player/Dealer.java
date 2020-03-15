@@ -1,7 +1,7 @@
 package domain.player;
 
-import domain.card.CardCalculator;
 import domain.card.Card;
+import domain.card.CardCalculator;
 
 public class Dealer extends User {
     private static final int ADDITIONAL_INSERT_CARD_STANDARD = 16;

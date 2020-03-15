@@ -17,18 +17,19 @@ public class UsersInformation {
         this.usersInformation.add(new UserInformation(users.getDealer()));
         this.usersInformation.addAll(users.getPlayers().stream()
                 .map(UserInformation::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList())
+        );
     }
 
     public List<UserInformation> getUsersInformation() {
         return Collections.unmodifiableList(this.usersInformation);
     }
 
-    public UserInformation getDealerInformation(){
+    public UserInformation getDealerInformation() {
         return usersInformation.get(DEALER_INDEX);
     }
 
-    public List<UserInformation> getPlayerInformation(){
+    public List<UserInformation> getPlayerInformation() {
         return usersInformation
                 .stream()
                 .filter(userInformation -> !userInformation.isSameName("딜러"))

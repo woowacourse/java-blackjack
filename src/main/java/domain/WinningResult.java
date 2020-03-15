@@ -1,8 +1,8 @@
 package domain;
 
+import domain.player.Player;
 import domain.player.User;
 import domain.player.Users;
-import domain.player.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,21 +19,26 @@ public class WinningResult {
         }
     }
 
-    public List<String> generateWinningUserResult() {
+    public List<String> generateWinningUserResult(Users users) {
         int allUserWinCount = (int) winningPlayerResult.values().stream().filter(win -> win).count();
         int allUserLoseCount = winningPlayerResult.values().size() - allUserWinCount;
 
         List<String> result = new ArrayList<>(Collections.singletonList(String.format(
-                "딜러: %d승 %d패",allUserLoseCount ,allUserWinCount)));
-        result.addAll(winningPlayerResult.entrySet().stream()
-                .map(entry -> winString(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList()));
+                "딜러: %d승 %d패", allUserLoseCount, allUserWinCount))
+        );
+
+        result.addAll(users.getPlayers()
+                .stream()
+                .map(player -> determineWin(player.getName(), winningPlayerResult.get(player.getName())))
+                .collect(Collectors.toList())
+        );
 
         return Collections.unmodifiableList(result);
     }
 
-    private String winString(String name, boolean isWin) {
+    private String determineWin(String name, boolean isWin) {
         StringBuilder stringBuilder = new StringBuilder();
+
         stringBuilder.append(name);
         if (isWin) {
             stringBuilder.append(": 승");

@@ -12,7 +12,7 @@ public class Player extends User {
     }
 
     private void validatePlayerName(String name) {
-        if (name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             throw new NullPointerException("플레이어 이름이 null 입니다.");
         }
     }

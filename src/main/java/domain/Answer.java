@@ -1,14 +1,15 @@
 package domain;
 
 public class Answer {
-    private  String answer;
+    private String answer;
 
     public Answer(String answer) {
         validateAnswer(answer);
         this.answer = answer;
     }
+
     private static void validateAnswer(String answer) {
-        if( !answer.equals("y") && !answer.equals("n")){
+        if (!answer.equals("y") && !answer.equals("n")) {
             throw new IllegalArgumentException("예는 y,아니오는 n 로 입력해주세요");
         }
     }

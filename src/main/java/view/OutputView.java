@@ -16,30 +16,20 @@ public class OutputView {
         System.out.println(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.",String.join(",", playerNames)));
     }
 
-    public static void printDealerCard(String name,String cardInformation) {
-        System.out.println("딜러카드: %s" + cardInformation.substring(0, cardInformation.indexOf(",")));
-    }
-
-    public static void printUserCard(List<UserInformation> result) {
-        for (int i = 1; i < result.size(); i++) {
-            UserInformation userInformation = result.get(i);
-            printUserCard(userInformation.getName(),userInformation.getCardInformation());
+    public static void printUserCard(String name,String cardInformation) {
+        if(name.equals("딜러")) {
+            System.out.printf("%s카드: %s\n", name, cardInformation.substring(0, cardInformation.indexOf(",")));
+            return;
         }
-    }
-
-    public static void printUserCard(String name, String CardInfo) {
-        System.out.println(name + "카드: " + CardInfo);
+        System.out.printf("%s카드: %s\n", name, cardInformation);
     }
 
     public static void printDealerAdditionalCard() {
         System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.");
     }
 
-    public static void printFinalResult(List<UserInformation> result) {
-        for (UserInformation userInformation : result) {
-            System.out.println(userInformation.getName() + "카드: "
-            + userInformation.getCardInformation() + " - 결과: " + userInformation.getScore());
-        }
+    public static void printFinalResult(String name,String cardInformation,String score) {
+            System.out.printf("%s카드: %s - 결과: %s\n",name, cardInformation, score);
     }
 
     public static void printWinningResult(List<String> winningPlayerResult) {

@@ -11,7 +11,8 @@ public class PlayersName {
     private List<String> playerName;
 
     public PlayersName(String playerName) {
-        this.playerName = new ArrayList<>(Arrays.asList(playerName.split(DELIMITER)));;
+        this.playerName = new ArrayList<>(Arrays.asList(playerName.split(DELIMITER)));
+        ;
     }
 
     public List<String> getPlayerName() {
