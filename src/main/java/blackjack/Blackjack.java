@@ -15,7 +15,7 @@ public class Blackjack {
         Deck deck = Deck.createWithShuffle();
 
         dealer.receiveInitialCards(deck);
-        players.receiveTwoCards(deck);
+        players.receiveInitialCards(deck);
 
         OutputView.printInitialInfo(dealer, players);
 
