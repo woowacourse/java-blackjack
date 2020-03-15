@@ -77,21 +77,4 @@ class CardsTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.SIX), 12)
         );
     }
-
-    @Test
-    @DisplayName("가지고 있는 카드 정보")
-    void getCardsDrawResult() {
-        cards.add(new Card(Symbol.CLOVER, Type.EIGHT));
-        cards.add(new Card(Symbol.DIAMOND, Type.ACE));
-
-        assertThat(cards.getCardsDrawResult()).isEqualTo("8클로버, A다이아몬드");
-    }
-
-    @Test
-    void getFirstCard() {
-        Card card = new Card(Symbol.CLOVER, Type.FIVE);
-        cards.add(card);
-
-        assertThat(cards.getFirstCard()).isEqualTo(card);
-    }
 }

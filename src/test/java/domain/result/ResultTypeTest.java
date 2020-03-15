@@ -29,7 +29,7 @@ class ResultTypeTest {
     @DisplayName("반전된 결과")
     @MethodSource("createReversWinningResult")
     void reverse(ResultType resultType, ResultType expected) {
-        assertThat(resultType.opposite()).isEqualTo(expected);
+        assertThat(resultType.getOppositeResult()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createReversWinningResult() {

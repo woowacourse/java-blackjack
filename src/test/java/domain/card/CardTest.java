@@ -37,10 +37,4 @@ class CardTest {
         Card card = new Card(Symbol.SPADE, Type.FIVE);
         assertThat(card.getPoint()).isEqualTo(5);
     }
-
-    @Test
-    void getName() {
-        Card card = new Card(Symbol.SPADE, Type.QUEEN);
-        assertThat(card.getName()).isEqualTo("Q스페이드");
-    }
 }

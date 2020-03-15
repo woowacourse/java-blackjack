@@ -1,10 +1,22 @@
 package domain.result;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ResultType {
 
     WIN("승"),
     LOSE("패"),
     DRAW("무승부");
+
+    private static Map<ResultType, ResultType> opposite;
+
+    static {
+        opposite = new HashMap<>();
+        opposite.put(ResultType.WIN, ResultType.LOSE);
+        opposite.put(ResultType.DRAW, ResultType.DRAW);
+        opposite.put(ResultType.LOSE, ResultType.WIN);
+    }
 
     private final String result;
 
@@ -12,14 +24,8 @@ public enum ResultType {
         this.result = result;
     }
 
-    public ResultType opposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
+    public ResultType getOppositeResult() {
+        return opposite.get(this);
     }
 
     public String getResult() {

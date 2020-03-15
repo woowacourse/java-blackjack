@@ -2,17 +2,15 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cards {
 
-    public static final String COMMA = ", ";
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
     private static final int FIRST_INDEX = 0;
     private static final int TEN = 10;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards() {
         cards = new ArrayList<>();
@@ -23,8 +21,8 @@ public class Cards {
     }
 
     public int calculatePointAccordingToHasAce() {
-        if (areBust() && hasAce()) {
-            return calculatePoint() - TEN;
+        if (hasAce() && calculatePoint() + TEN <= BLACK_JACK) {
+            return calculatePoint() + TEN;
         }
         return calculatePoint();
     }
@@ -36,7 +34,7 @@ public class Cards {
     }
 
     public boolean areBust() {
-        return calculatePoint() > BLACK_JACK;
+        return calculatePointAccordingToHasAce() > BLACK_JACK;
     }
 
     public boolean areBlackJack() {
@@ -44,7 +42,7 @@ public class Cards {
     }
 
     public boolean areBlackJackPoint() {
-        return calculatePoint() == BLACK_JACK;
+        return calculatePointAccordingToHasAce() == BLACK_JACK;
     }
 
     private boolean hasAce() {
@@ -54,12 +52,6 @@ public class Cards {
 
     public Card getFirstCard() {
         return cards.get(FIRST_INDEX);
-    }
-
-    public String getCardsDrawResult() {
-        return cards.stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(COMMA));
     }
 
     public List<Card> getCards() {

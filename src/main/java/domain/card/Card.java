@@ -18,7 +18,11 @@ public class Card {
         return type.getPoint();
     }
 
-    public String getName() {
-        return type.getName() + symbol.getName();
+    public String getSymbol() {
+        return symbol.getName();
+    }
+
+    public String getType() {
+        return type.getName();
     }
 }

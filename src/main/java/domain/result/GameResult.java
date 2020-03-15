@@ -1,64 +1,65 @@
 package domain.result;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import domain.rule.PlayerResultRule;
-import domain.rule.Rules;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
-import view.OutputView;
+import domain.user.User;
 
 public class GameResult {
 
-    private static final String COLON = ": ";
-    private static final String SPACE = " ";
-
-    private Map<ResultType, Integer> resultOfDealer;
     private Map<Player, ResultType> resultOfPlayers;
+    private Map<ResultType, Integer> resultOfDealer;
+    private Map<User, Integer> userToCardPoint;
 
     public static GameResult of(Dealer dealer, Players players) {
         return new GameResult(dealer, players);
     }
 
     private GameResult(Dealer dealer, Players players) {
-        resultOfDealer = new LinkedHashMap<>();
-
-        Arrays.stream(ResultType.values())
-                .forEach(result ->
-                        resultOfDealer.put(result, 0));
-
         collectResult(dealer, players);
+        createResultOfDealer();
+        createUserToCardPoint(dealer, players);
     }
 
     private void collectResult(Dealer dealer, Players players) {
-        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
+        resultOfPlayers = players.decideWinner(dealer);
+    }
 
-        resultOfPlayers = players.decideWinner(dealer, rules);
+    private void createResultOfDealer() {
+        Map<ResultType, Integer> resultOfDealer = new LinkedHashMap<>();
+
+        Arrays.stream(ResultType.values())
+                .forEach(result -> resultOfDealer.put(result, 0));
+
         resultOfPlayers.forEach(
-                (player, result) -> resultOfDealer.computeIfPresent(result.opposite(),
+                (player, result) -> resultOfDealer.computeIfPresent(result.getOppositeResult(),
                         (key, value) -> value + 1));
+
+        this.resultOfDealer = Collections.unmodifiableMap(resultOfDealer);
     }
 
-    public String getTotalResults() {
-        return getDealerResult() + OutputView.NEWLINE + getPlayersResult();
+    private void createUserToCardPoint(Dealer dealer, Players players) {
+        userToCardPoint = new LinkedHashMap<>();
+
+        userToCardPoint.put(dealer, dealer.calculatePoint());
+        players.getPlayers()
+                .forEach(player -> userToCardPoint.put(player, player.calculatePoint()));
     }
 
-    private String getDealerResult() {
-        return Dealer.DEALER + COLON
-                + resultOfDealer.entrySet()
-                .stream()
-                .map(result -> result.getValue() + result.getKey().getResult())
-                .collect(Collectors.joining(SPACE));
+    public Map<ResultType, Integer> getResultOfDealer() {
+        return resultOfDealer;
     }
 
-    private String getPlayersResult() {
-        return resultOfPlayers.entrySet()
-                .stream()
-                .map(player -> player.getKey().getName() + COLON + player.getValue().getResult())
-                .collect(Collectors.joining(OutputView.NEWLINE));
+    public Map<Player, ResultType> getResultOfPlayers() {
+        return resultOfPlayers;
+    }
+
+    public Map<User, Integer> getUserToCardPoint() {
+        return userToCardPoint;
     }
 }

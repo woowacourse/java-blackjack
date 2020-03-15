@@ -1,3 +1,5 @@
+import java.util.List;
+
 import controller.BlackJackGame;
 import domain.card.DeckFactory;
 import domain.result.GameResult;
@@ -9,8 +11,8 @@ import view.OutputView;
 public class Application {
 
     public static void main(String[] args) {
-        String names = InputView.receiveNameInput();
-        Players players = Players.of(names);
+        List<String> playerNames = InputView.receiveNameInput();
+        Players players = Players.of(playerNames);
         Dealer dealer = Dealer.appoint();
 
         BlackJackGame blackJackGame = BlackJackGame.set(DeckFactory.createDeck());
@@ -19,9 +21,9 @@ public class Application {
         OutputView.printFirstDealOutResult(dealer, players);
 
         blackJackGame.additionalDealOut(dealer, players);
-        OutputView.printTotalResult(dealer, players);
 
         GameResult gameResult = GameResult.of(dealer, players);
+        OutputView.printTotalResult(gameResult);
         OutputView.printWinningResult(gameResult);
     }
 }

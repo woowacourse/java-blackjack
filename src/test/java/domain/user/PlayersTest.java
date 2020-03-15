@@ -1,28 +1,43 @@
 package domain.user;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.DeckFactory;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.result.ResultType;
+import domain.rule.PlayerResultRule;
 
 class PlayersTest {
 
     private Players players;
 
+    @Mock
+    private Deck deck;
+
     @BeforeEach
     void setUp() {
-        String names = "pobi, jason, woo";
+        List<String> names = Arrays.asList("pobi", "jason", "woo");
         players = Players.of(names);
     }
 
@@ -45,43 +60,47 @@ class PlayersTest {
     }
 
     @ParameterizedTest
-    @DisplayName("모든 플레이어 이름")
-    @ValueSource(strings = {"pobi", "jason", "woo"})
-    void getAllNames(String name) {
-        String playerNames = players.getAllNames();
+    @DisplayName("승자 결과")
+    @MethodSource("createIndexAndResultType")
+    void decideWinner(int index, ResultType expected) {
+        MockitoAnnotations.initMocks(this);
+        Queue<Card> cards = new LinkedList<>(Arrays.asList(
+                new Card(Symbol.SPADE, Type.SIX),
+                new Card(Symbol.SPADE, Type.SEVEN),
+                new Card(Symbol.HEART, Type.FIVE),
+                new Card(Symbol.CLOVER, Type.SIX))
+        );
+        Map<Player, ResultType> resultOfPlayers;
 
-        assertThat(playerNames).contains(name);
-    }
+        given(deck.dealOut()).will(invocation -> cards.poll());
 
-    @Test
-    @DisplayName("모든 플레이어 첫 카드 분배 결과")
-    void getAllFirstDrawResult() {
-        players.getPlayers()
-                .forEach(player -> player.draw(new Card(Symbol.SPADE, Type.ACE)));
-        String expected = "pobi카드: A스페이드\njason카드: A스페이드\nwoo카드: A스페이드";
+        Dealer dealer = Dealer.appoint();
+        dealer.draw(deck);
 
-        assertThat(players.getAllFirstDrawResults()).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("모든 플레이어 최종 결과")
-    void getAllTotalDrawResult() {
+        players = Players.of(Arrays.asList("pobi", "jason", "woo"));
         players.getPlayers()
                 .get(0)
-                .draw(new Card(Symbol.SPADE, Type.ACE));
+                .draw(deck);
         players.getPlayers()
                 .get(1)
-                .draw(new Card(Symbol.SPADE, Type.THREE));
-        players.getPlayers()
-                .get(1)
-                .draw(new Card(Symbol.HEART, Type.FIVE));
+                .draw(deck);
         players.getPlayers()
                 .get(2)
-                .draw(new Card(Symbol.CLOVER, Type.KING));
-        String expected = "pobi카드: A스페이드 - 결과: 11\n"
-                + "jason카드: 3스페이드, 5하트 - 결과: 8\n"
-                + "woo카드: K클로버 - 결과: 10";
+                .draw(deck);
 
-        assertThat(players.getAllTotalDrawResults()).isEqualTo(expected);
+        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
+
+        resultOfPlayers = players.decideWinner(dealer, rules);
+        Player player = players.getPlayers().get(index);
+
+        assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> createIndexAndResultType() {
+        return Stream.of(
+                Arguments.of(0, ResultType.WIN),
+                Arguments.of(1, ResultType.LOSE),
+                Arguments.of(2, ResultType.DRAW)
+        );
     }
 }

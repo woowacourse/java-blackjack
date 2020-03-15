@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import domain.result.ResultType;
 import domain.user.User;
 
-public enum PlayerResultRule implements Rule {
+public enum PlayerResultRule {
 
     PLAYER_BUST((player, dealer) -> player.isBust(), ResultType.LOSE),
     DEALER_BUST((player, dealer) -> dealer.isBust(), ResultType.WIN),
@@ -23,12 +23,10 @@ public enum PlayerResultRule implements Rule {
         this.resultType = resultType;
     }
 
-    @Override
     public Boolean condition(User first, User second) {
         return condition.apply(first, second);
     }
 
-    @Override
     public ResultType getResultType() {
         return resultType;
     }
