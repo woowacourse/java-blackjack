@@ -6,7 +6,7 @@ import blackjack.domain.card.component.CardNumber;
 import java.util.List;
 
 public class Point {
-    private static int BUST_NUMBER = 21;
+    private static int BALCK_JACK = 21;
     private int point;
 
     public Point() {
@@ -34,18 +34,18 @@ public class Point {
     private void handleAce(List<Card> cards) {
         int aceCount = getAceCount(cards);
         while (aceCount-- > 0) {
-            if (this.point > BUST_NUMBER) {
+            if (this.point > BALCK_JACK) {
                 this.point -= CardNumber.ACE_DIFF;
             }
         }
     }
 
-    public boolean isBust() {
-        return this.point == 21;
+    public boolean isBlackJack() {
+        return this.point == BALCK_JACK;
     }
 
-    public boolean overBust() {
-        return this.point > 21;
+    public boolean isBust() {
+        return this.point > BALCK_JACK;
     }
 
     public boolean isBiggerThan(Point point) {

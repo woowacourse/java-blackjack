@@ -8,6 +8,6 @@ public class Player extends User {
     @Override
     public boolean receivable() {
         super.getPoint().computePoint(super.getCards());
-        return !super.getPoint().overBust();
+        return !super.getPoint().isBust();
     }
 }

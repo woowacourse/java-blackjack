@@ -62,10 +62,7 @@ public class Controller {
             return  false;
         }
         YesOrNo answer = InputView.getYorN(player.getName());
-        if (YesOrNo.isYes(answer)) {
-            return true;
-        }
-        return false;
+        return YesOrNo.isYes(answer);
     }
 
     private void setInitialCards(User user, CardDeck deck) {
