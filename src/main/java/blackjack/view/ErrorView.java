@@ -1,7 +1,7 @@
 package blackjack.view;
 
 public class ErrorView {
-	public static void print(Exception e) {
+	public static void printMessage(Exception e) {
 		System.out.println(e.getMessage());
 	}
 }

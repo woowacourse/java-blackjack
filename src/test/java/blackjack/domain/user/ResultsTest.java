@@ -1,11 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.DefaultDealer;
-import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +16,7 @@ class ResultsTest {
 
 	@BeforeEach
 	void setUp() {
-		Dealer dealer = DefaultDealer.dealer();
+		Player dealer = DefaultDealer.dealer();
 		dealer.giveCard(Card.of(Symbol.ACE, Type.SPADE));
 
 		players = Players.of("그니, 무늬, 포비");

@@ -1,6 +1,6 @@
-package blackjack.view;
+package blackjack.domain.user;
 
-import blackjack.view.exceptions.YesOrNoException;
+import blackjack.domain.user.exceptions.YesOrNoException;
 
 public class YesOrNo {
 	public static final String YES = "Y";

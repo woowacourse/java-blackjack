@@ -1,10 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.Results;
 import blackjack.domain.card.Card;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.Results;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,23 +13,19 @@ public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
 	public static final String BUST_MESSAGE = "버스트 되었습니다!!!";
 
-	public static void printStartInfo(Dealer dealer, Players players) {
+	public static void printStartInfo(Player dealer, Players players) {
 		printStartInfoHead(dealer, players);
-		printOneOfDealerCard(dealer);
+		printPlayerCard(dealer);
 		printAllPlayerCards(players);
 	}
 
-	private static void printStartInfoHead(Dealer dealer, Players players) {
+	private static void printStartInfoHead(Player dealer, Players players) {
 		String playerNames = players.getPlayers().stream()
 				.map(Player::getName)
 				.collect(Collectors.joining(", "));
 
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
 				dealer.getName(), playerNames, dealer.countCards());
-	}
-
-	private static void printOneOfDealerCard(Dealer dealer) {
-		System.out.printf("%s : %s" + NEW_LINE, dealer.getName(), dealer.getFirstCard().getName());
 	}
 
 	private static void printAllPlayerCards(Players players) {
@@ -47,14 +42,14 @@ public class OutputView {
 	}
 
 	private static String createPlayerCardInfo(Player player) {
-		return player.getHand().stream()
+		return player.getStartHand().stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
 	}
 
-	public static void printDealerTurn(Dealer dealer) {
+	public static void printDealerTurn(Player dealer) {
 		System.out.printf("딜러는 %s미만이라 한장의 카드를 더 받았습니다." + NEW_LINE,
-				dealer.MINIMUM_NUMBER_TO_STAY);
+				Player.MINIMUM_NUMBER_TO_DEALER_STAY);
 
 		printIfBust(dealer);
 	}
@@ -90,8 +85,7 @@ public class OutputView {
 		System.out.println("## 최종 승패");
 		System.out.println("딜러" + " : " + createDealerResult(results));
 		for (Player player : results.getPlayerResults().keySet()) {
-			String playerResult = createPlayerResult(player, results);
-			System.out.println(playerResult);
+			System.out.println(createPlayerResult(player, results));
 		}
 	}
 

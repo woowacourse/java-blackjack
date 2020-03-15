@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +21,7 @@ class DefaultDealerTest {
 	private static Card tenClub;
 	private static Card jackHeart;
 
-	private Dealer dealer;
+	private Player dealer;
 
 	@BeforeAll
 	static void beforeAll() {
@@ -42,24 +43,12 @@ class DefaultDealerTest {
 	}
 
 	@Test
-	void shouldReceiveCard_ShouldReturnTrue() {
+	void getStartHand_isEqualToFirstCard() {
 		dealer.giveCards(Arrays.asList(tenClub, sixDiamond));
-		assertThat(dealer.shouldReceiveCard()).isTrue();
-	}
-
-	@Test
-	void shouldReceiveCard_ShouldReturnFalse() {
-		dealer.giveCards(Arrays.asList(tenClub, sixDiamond, aceSpade));
-		assertThat(dealer.shouldReceiveCard()).isFalse();
-	}
-
-	@Test
-	void showFirstCard_isEqualToFirstCard() {
-		dealer.giveCards(Arrays.asList(tenClub, sixDiamond));
-		assertThat(dealer.getFirstCard()).isEqualTo(tenClub);
+		assertThat(dealer.getStartHand()).isEqualTo(Collections.singletonList(tenClub));
 
 		dealer.giveCards(Arrays.asList(jackHeart, aceSpade));
-		assertThat(dealer.getFirstCard()).isEqualTo(tenClub);
+		assertThat(dealer.getStartHand()).isEqualTo(Collections.singletonList(tenClub));
 	}
 
 	@Test
@@ -116,18 +105,6 @@ class DefaultDealerTest {
 	}
 
 	@Test
-	void isNotBust() {
-		dealer.giveCards(Arrays.asList(tenClub, aceSpade));
-		assertThat(dealer.isNotBust()).isTrue();
-
-		dealer.giveCard(tenClub);
-		assertThat(dealer.isNotBust()).isTrue();
-
-		dealer.giveCard(aceSpade);
-		assertThat(dealer.isNotBust()).isFalse();
-	}
-
-	@Test
 	void getCards() {
 		// given
 		List<Card> expected = new ArrayList<>();
@@ -171,5 +148,20 @@ class DefaultDealerTest {
 	void getName() {
 		// then
 		assertThat(dealer.getName()).isEqualTo("딜러");
+	}
+
+	@Test
+	void canReceiveCard_ReturnTrue() {
+		dealer.giveCard(tenClub);
+		dealer.giveCard(sixDiamond);
+		assertThat(dealer.canReceiveCard()).isTrue();
+	}
+
+	@Test
+	void canReceiveCard_ReturnFalse() {
+		dealer.giveCard(tenClub);
+		dealer.giveCard(sixDiamond);
+		dealer.giveCard(aceSpade);
+		assertThat(dealer.canReceiveCard()).isFalse();
 	}
 }

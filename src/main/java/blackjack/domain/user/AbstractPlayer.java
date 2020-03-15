@@ -18,10 +18,6 @@ public abstract class AbstractPlayer implements Player {
 		this.hand = new ArrayList<>();
 	}
 
-	protected int getMaxScore() {
-		return MAX_SCORE;
-	}
-
 	@Override
 	public void giveCard(Card card) {
 		hand.add(card);
@@ -35,11 +31,6 @@ public abstract class AbstractPlayer implements Player {
 	@Override
 	public boolean isBust() {
 		return getScore().isOver(MAX_SCORE);
-	}
-
-	@Override
-	public boolean isNotBust() {
-		return !isBust();
 	}
 
 	@Override

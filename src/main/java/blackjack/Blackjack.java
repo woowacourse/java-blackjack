@@ -1,26 +1,21 @@
 package blackjack;
 
-import blackjack.domain.Results;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.DefaultDealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.*;
 import blackjack.domain.user.exceptions.PlayerException;
 import blackjack.domain.user.exceptions.PlayersException;
+import blackjack.domain.user.exceptions.YesOrNoException;
 import blackjack.view.ErrorView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.YesOrNo;
-import blackjack.view.exceptions.YesOrNoException;
 
 public class Blackjack {
 	public static void main(String[] args) {
 		String playerNames = InputView.inputPlayerNames();
 		Players players = preparePlayers(playerNames);
-		Dealer dealer = DefaultDealer.dealer();
+		Player dealer = DefaultDealer.dealer();
 		Drawable deck = prepareDeck();
 
 		start(players, dealer, deck);
@@ -43,7 +38,7 @@ public class Blackjack {
 		try {
 			return Players.of(playerNames);
 		} catch (PlayersException | PlayerException e) {
-			ErrorView.print(e);
+			ErrorView.printMessage(e);
 			return null;
 		}
 	}
@@ -52,7 +47,7 @@ public class Blackjack {
 		return Deck.ofDeckFactory(new ShuffledDeckFactory());
 	}
 
-	private static void start(Players players, Dealer dealer, Drawable cards) {
+	private static void start(Players players, Player dealer, Drawable cards) {
 		players.giveCardEachPlayer(cards);
 		players.giveCardEachPlayer(cards);
 
@@ -76,7 +71,7 @@ public class Blackjack {
 
 	private static boolean willProgress(Player player) {
 		YesOrNo yesOrNo = prepareYesOrNo(player);
-		return player.isNotBust() && yesOrNo.isYes();
+		return player.canReceiveCard() && yesOrNo.isYes();
 	}
 
 	private static YesOrNo prepareYesOrNo(Player player) {
@@ -91,18 +86,19 @@ public class Blackjack {
 		try {
 			return YesOrNo.of(InputView.inputYesOrNo(player));
 		} catch (YesOrNoException e) {
+			ErrorView.printMessage(e);
 			return null;
 		}
 	}
 
-	private static void progressDealer(Dealer dealer, Drawable cards) {
-		while (dealer.shouldReceiveCard()) {
+	private static void progressDealer(Player dealer, Drawable cards) {
+		while (dealer.canReceiveCard()) {
 			dealer.giveCard(cards.draw());
 			OutputView.printDealerTurn(dealer);
 		}
 	}
 
-	private static void finish(Players players, Dealer dealer) {
+	private static void finish(Players players, Player dealer) {
 		OutputView.printFinalInfo(dealer, players);
 		Results results = Results.of(dealer, players);
 		OutputView.printResult(results);

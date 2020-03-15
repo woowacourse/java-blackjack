@@ -100,18 +100,6 @@ public class DefaultPlayerTest {
 	}
 
 	@Test
-	void isNotBust() {
-		player.giveCards(Arrays.asList(tenClub, aceSpade));
-		assertThat(player.isNotBust()).isTrue();
-
-		player.giveCard(tenClub);
-		assertThat(player.isNotBust()).isTrue();
-
-		player.giveCard(aceSpade);
-		assertThat(player.isNotBust()).isFalse();
-	}
-
-	@Test
 	void getCards() {
 		// given
 		List<Card> expected = new ArrayList<>();
@@ -154,5 +142,20 @@ public class DefaultPlayerTest {
 	@Test
 	void getName() {
 		assertThat(player.getName()).isEqualTo("그니");
+	}
+
+	@Test
+	void canReceiveCard_ReturnTrue() {
+		player.giveCard(tenClub);
+		player.giveCard(aceSpade);
+		assertThat(player.canReceiveCard()).isTrue();
+	}
+
+	@Test
+	void canReceiveCard_ReturnFalse() {
+		player.giveCard(tenClub);
+		player.giveCard(sixDiamond);
+		player.giveCard(sixDiamond);
+		assertThat(player.canReceiveCard()).isFalse();
 	}
 }

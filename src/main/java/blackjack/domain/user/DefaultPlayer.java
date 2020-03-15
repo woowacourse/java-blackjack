@@ -1,7 +1,10 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.exceptions.PlayerException;
+
+import java.util.List;
 
 public class DefaultPlayer extends AbstractPlayer {
 	private DefaultPlayer(String name) {
@@ -10,13 +13,18 @@ public class DefaultPlayer extends AbstractPlayer {
 	}
 
 	private void validateNameIsDifferentFromDealer(String name) {
-		if (name.equals(Dealer.NAME)) {
-			throw new PlayerException("플레이어의 이름은 " + Dealer.NAME + "일 수 없습니다.");
+		if (name.equals(DEALER_NAME)) {
+			throw new PlayerException("플레이어의 이름은 " + DEALER_NAME + "일 수 없습니다.");
 		}
 	}
 
 	public static DefaultPlayer of(String name) {
 		return new DefaultPlayer(name);
+	}
+
+	@Override
+	public List<Card> getStartHand() {
+		return getHand();
 	}
 
 	@Override
@@ -34,4 +42,10 @@ public class DefaultPlayer extends AbstractPlayer {
 	public boolean isDealer() {
 		return false;
 	}
+
+	@Override
+	public boolean canReceiveCard() {
+		return !isBust();
+	}
+
 }

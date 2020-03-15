@@ -1,9 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Score;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,7 +16,7 @@ public class Results {
 		this.dealerLose = dealerLose;
 	}
 
-	public static Results of(Dealer dealer, Players players) {
+	public static Results of(Player dealer, Players players) {
 		Map<Player, Boolean> playerResults = createPlayersResult(dealer, players);
 		int dealerWin = calculateDealerWin(playerResults);
 		int dealerLose = calculateDealerLose(playerResults);
@@ -27,7 +24,7 @@ public class Results {
 		return new Results(playerResults, dealerWin, dealerLose);
 	}
 
-	private static Map<Player, Boolean> createPlayersResult(Dealer dealer, Players players) {
+	private static Map<Player, Boolean> createPlayersResult(Player dealer, Players players) {
 		Map<Player, Boolean> playerResults = new LinkedHashMap<>();
 		Score dealerScore = dealer.getScore();
 		for (Player player : players.getPlayers()) {

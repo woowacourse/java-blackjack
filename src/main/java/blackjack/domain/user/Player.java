@@ -7,6 +7,9 @@ import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface Player {
+	String DEALER_NAME = "딜러";
+	int MINIMUM_NUMBER_TO_DEALER_STAY = 17;
+
 	void giveCard(Card card);
 
 	void giveCards(List<Card> cards);
@@ -14,6 +17,8 @@ public interface Player {
 	Score getScore();
 
 	boolean isBust();
+
+	List<Card> getStartHand();
 
 	List<Card> getHand();
 
@@ -23,7 +28,7 @@ public interface Player {
 
 	Boolean isWinner(Score dealerScore);
 
-	boolean isNotBust();
-
 	boolean isDealer();
+
+	boolean canReceiveCard();
 }

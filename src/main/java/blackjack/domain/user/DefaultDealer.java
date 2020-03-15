@@ -3,9 +3,12 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
-public class DefaultDealer extends AbstractPlayer implements Dealer {
+import java.util.Collections;
+import java.util.List;
+
+public class DefaultDealer extends AbstractPlayer {
 	private DefaultDealer() {
-		super(Dealer.NAME);
+		super(DEALER_NAME);
 	}
 
 	public static DefaultDealer dealer() {
@@ -13,22 +16,22 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 	}
 
 	@Override
-	public boolean shouldReceiveCard() {
-		return getScore().isUnder(MINIMUM_NUMBER_TO_STAY);
-	}
-
-	@Override
-	public Card getFirstCard() {
-		return getHand().get(0);
+	public List<Card> getStartHand() {
+		return Collections.singletonList(getHand().get(0));
 	}
 
 	@Override
 	public Boolean isWinner(Score dealerScore) {
-		return isNotBust();
+		return !isBust();
 	}
 
 	@Override
 	public boolean isDealer() {
 		return true;
+	}
+
+	@Override
+	public boolean canReceiveCard() {
+		return getScore().isUnder(MINIMUM_NUMBER_TO_DEALER_STAY);
 	}
 }

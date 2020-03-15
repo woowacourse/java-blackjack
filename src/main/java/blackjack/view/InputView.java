@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.user.Player;
-import blackjack.view.exceptions.YesOrNoException;
 
 import java.util.Scanner;
 
