@@ -13,7 +13,7 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Status;
 
 public class SimpleResult {
-    public static final String SPACE = " ";
+    private static final String SPACE = " ";
     private static final String LINE_BREAK = System.lineSeparator();
 
     private final ScoreBoard scoreBoard;

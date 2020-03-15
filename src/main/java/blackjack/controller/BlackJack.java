@@ -13,60 +13,70 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJack {
-
     public static final int BLACK_JACK_SCORE = 21;
 
-    public static void run() {
-        OutputView.nameInstruction();
-        Deck deck = Deck.create();
-        Dealer dealer = new Dealer();
-        Participants participants = getParticipants(dealer);
-        initialPhase(deck, participants);
-        userGamePhase(deck, participants);
-        dealerGamePhase(dealer);
-        endPhase(participants);
+    private final Deck deck;
+    private final Dealer dealer;
+    private Participants participants;
+
+    private BlackJack() {
+        this.deck = Deck.create();
+        this.dealer = new Dealer();
     }
 
-    private static Participants getParticipants(final Dealer dealer) {
+    public static void run() {
+        new BlackJack().play();
+    }
+
+    private void play() {
+        OutputView.nameInstruction();
+        this.participants = getParticipants();
+        initialPhase();
+        userGamePhase();
+        dealerGamePhase();
+        endPhase();
+    }
+
+    private Participants getParticipants() {
         try {
             return new Participants(dealer, InputView.getInput());
         } catch (InvalidPlayerException e) {
             OutputView.printError(e.getMessage());
-            return getParticipants(dealer);
+            return getParticipants();
         }
     }
 
-    private static void initialPhase(final Deck deck, final Participants participants) {
+    private void initialPhase() {
         OutputView.shareFirstPair(participants);
         participants.initialDraw(deck);
         OutputView.participantsStatus(participants);
     }
 
-    private static void userGamePhase(final Deck deck, final Participants participants) {
-        dealerDrawsMore(deck, participants.getDealer());
-        playersDrawMore(deck, participants.getPlayers());
+    private void userGamePhase() {
+        dealerDrawsMore(participants.getDealer());
+        playersDrawMore(participants.getPlayers());
     }
 
-    private static void dealerDrawsMore(final Deck deck, final Participant participant) {
+    private void dealerDrawsMore(final Participant participant) {
         participant.drawMoreCard(deck);
     }
 
-    private static void playersDrawMore(final Deck deck, final List<Participant> players) {
+    private void playersDrawMore(final List<Participant> players) {
         for (Participant player : players) {
-            playersChooseToDraw(deck, (Player)player);
+            playersChooseToDraw((Player)player);
         }
     }
 
-    private static void playersChooseToDraw(final Deck deck, final Player player) {
+    private void playersChooseToDraw(final Player player) {
         boolean wantsMoreCard;
         do {
             OutputView.moreCardInstruction(player);
-            wantsMoreCard = wantsToDrawMore(deck, player);
+            wantsMoreCard = wantsToDrawMore(player);
             OutputView.participantStatus(player);
         } while (wantsMoreCard && player.score() < BLACK_JACK_SCORE);
     }
 
-    private static boolean wantsToDrawMore(final Deck deck, final Player player) {
+    private boolean wantsToDrawMore(final Player player) {
         final boolean wantsMoreCard;
         wantsMoreCard = InputView.yesOrNo();
         if (wantsMoreCard) {
@@ -75,11 +85,11 @@ public class BlackJack {
         return wantsMoreCard;
     }
 
-    private static void dealerGamePhase(final Dealer dealer) {
+    private void dealerGamePhase() {
         OutputView.moreCardInstruction(dealer);
     }
 
-    private static void endPhase(final Participants participants) {
+    private void endPhase() {
         OutputView.result(participants);
         OutputView.statistics(new SimpleResult(participants));
     }
