@@ -32,10 +32,9 @@ public class Gamers {
         dealer.addCard(deck.popCard(INIT_CARD_SIZE));
     }
 
-
     public void addCardAtGamers(Deck deck) {
-        players.forEach(player -> drawCardOfPlayer(deck, player));
         dealer.addCardAtDealer(deck.popCard(ADD_CARD_SIZE));
+        players.forEach(player -> drawCardOfPlayer(deck, player));
         OutputView.printAddCardAtDealer();
     }
 
