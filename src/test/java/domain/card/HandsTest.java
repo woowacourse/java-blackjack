@@ -20,12 +20,4 @@ public class HandsTest {
 		hands.add(new Card(Type.DIAMOND, Symbol.KING));
 		assertThat(hands.calculateTotalScore()).isEqualTo(21);
 	}
-
-	private static Stream<Arguments> generateInput() {
-		return Stream.of(
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), true),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), true),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
-				new Card(Type.DIAMOND, Symbol.TWO)), false));
-	}
 }

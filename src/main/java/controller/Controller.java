@@ -1,6 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
+import domain.card.YesOrNo;
 import domain.gamer.Player;
 import dto.BlackjackGameDto;
 import dto.PlayerDto;
@@ -67,7 +68,17 @@ public class Controller {
 	}
 
 	private static boolean isContinue(Player player) {
-		return !player.isBust() && YES.equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+		return !player.isBust() && getYesOrNo(player).isYes();
+	}
+
+	private static YesOrNo getYesOrNo(Player player) {
+		try {
+			String choice = InputView.inputMoreCard(PlayerDto.from(player));
+			return YesOrNo.getChoice(choice);
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return getYesOrNo(player);
+		}
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
