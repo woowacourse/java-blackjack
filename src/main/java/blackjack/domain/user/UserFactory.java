@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserFactory {
-
+    public static final int MIN_PLAYER = 2;
     public static final int MAX_PLAYER = 8;
-    public static final String CANNOT_EXCEED_MAX_PLAYERS = "플레이어의 수는" + MAX_PLAYER + "명을 초과할 수 없습니다";
+    public static final String INVALID_AMOUNT_OF_PLAYERS = "플레이어의 수는 " + MIN_PLAYER + "명 이상, " + MAX_PLAYER + "명 이하여야 합니다";
 
     public static Users generateUsers(List<String> userNames) {
         validatePlayerNumber(userNames);
@@ -20,8 +20,8 @@ public class UserFactory {
     }
 
     private static void validatePlayerNumber(List<String> userNames) {
-        if (userNames.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException(CANNOT_EXCEED_MAX_PLAYERS);
+        if (userNames.size() > MAX_PLAYER || userNames.size() < MIN_PLAYER) {
+            throw new IllegalArgumentException(INVALID_AMOUNT_OF_PLAYERS);
         }
     }
 }

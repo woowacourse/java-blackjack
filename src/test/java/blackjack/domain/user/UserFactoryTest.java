@@ -12,6 +12,14 @@ public class UserFactoryTest {
     void moreThanMaxPlayerNumber() {
         assertThatThrownBy(() -> UserFactory.generateUsers(InputHandler.parseName("s, ab,cd,11,14,sdf,cu,lkl,hih")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("초과");
+                .hasMessageContaining("8명 이하");
+    }
+
+    @Test
+    @DisplayName("선수 이름이 1명 미만으로 입력됐을 때 exception ")
+    void lessThanMinPlayerNumber() {
+        assertThatThrownBy(() -> UserFactory.generateUsers(InputHandler.parseName("s,")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("2명 이상");
     }
 }
