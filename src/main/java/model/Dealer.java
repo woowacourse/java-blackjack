@@ -20,19 +20,6 @@ public class Dealer extends User {
         return cardHand.getCards().get(ZERO).toString();
     }
 
-    public Result compareScore(Player player) {
-        if (this.isBust() && player.isBust()) {
-            return Result.DRAW;
-        }
-        if (this.isBust()) {
-            return Result.WIN;
-        }
-        if (player.isBust()) {
-            return Result.LOSE;
-        }
-        return Result.calculateResult(Integer.compare(getScore(), player.getScore()));
-    }
-
     public Map<Result, Integer> getResult() {
         return Collections.unmodifiableMap(result);
     }

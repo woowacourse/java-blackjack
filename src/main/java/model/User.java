@@ -15,6 +15,10 @@ public abstract class User {
         this.cardHand = cardHand;
     }
 
+    public static int compare(final User dealer, final User player) {
+        return Integer.compare(dealer.getScore(), player.getScore());
+    }
+
     public abstract String toStringCardHand();
 
     public void drawCard(CardHand cardHand) {

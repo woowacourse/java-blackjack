@@ -20,11 +20,21 @@ public enum Result {
         return result;
     }
 
-    public static Result calculateResult(int compareValue) {
+    public static Result calculateResult(Dealer dealer, Player player) {
+        if (dealer.isBust() && player.isBust()) {
+            return DRAW;
+        }
+        if (dealer.isBust()) {
+            return WIN;
+        }
+        if (player.isBust()) {
+            return LOSE;
+        }
+        int compareValue = User.compare(dealer, player);
         return Arrays.stream(Result.values())
                 .filter(result -> result.isSameResult(compareValue))
                 .findFirst()
-                .get();
+                .orElseGet(()->DRAW);
     }
 
     private boolean isSameResult(int compareValue) {

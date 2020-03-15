@@ -28,18 +28,20 @@ public class BlackJackGame {
 
     private static void compareScores(final Players players, final Dealer dealer) {
         for (Player player : players) {
-            Result result = dealer.compareScore(player);
+            Result result = Result.calculateResult(dealer, player);
             player.setResult(result);
             dealer.setResult(result);
         }
     }
 
     private static void drawCardEachPlayer(Deck deck, Player player) {
-        YesOrNo yesOrNo = YesOrNo.getYesOrNoByValue(InputView.inputYesOrNo(player));
-        while (!player.isBust() && yesOrNo.getTrueOrFalse()) {
+        while (!player.isBust()) {
+            YesOrNo yesOrNo = YesOrNo.getYesOrNoByValue(InputView.inputYesOrNo(player));
+            if(!yesOrNo.getTrueOrFalse()){
+                break;
+            }
             player.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
             OutputView.printPlayerCard(player);
-            yesOrNo = YesOrNo.getYesOrNoByValue(InputView.inputYesOrNo(player));
         }
     }
 
