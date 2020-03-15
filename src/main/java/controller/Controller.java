@@ -10,9 +10,9 @@ import domain.user.Player;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
     private CardDeck cardDeck = CardFactory.createCardDeck();
@@ -33,13 +33,13 @@ public class Controller {
     private void drawMoreCards(Dealer dealer) {
         while (dealer.isDrawable()) {
             OutputView.printAutoDraw(dealer);
-            dealer.draw(cardDeck.draw());
+            dealer.draw(cardDeck);
         }
     }
 
     private void drawMoreCards(Player player) {
         while (player.isDrawable() && askPlayerDraw(player)) {
-            player.draw(cardDeck.draw());
+            player.draw(cardDeck);
             OutputView.printStatus(player.getStatus());
         }
     }
@@ -60,23 +60,18 @@ public class Controller {
 
     private void drawFirstCards(Dealer dealer, List<Player> players) {
         OutputView.printDrawTurn(dealer, players);
-        dealer.draw(cardDeck.draw());
-        dealer.draw(cardDeck.draw());
+        dealer.firstDraw(cardDeck);
         OutputView.printStatus(dealer.getFirstStatus());
         for (Player player : players) {
-            player.draw(cardDeck.draw());
-            player.draw(cardDeck.draw());
+            player.firstDraw(cardDeck);
             OutputView.printStatus(player.getStatus());
         }
     }
 
     private List<Player> createPlayers() {
-        List<Player> players = new ArrayList<>();
         Names names = new Names(Arrays.asList(InputView.requestName()));
-
-        for (String name : names.get()) {
-            players.add(new Player(name));
-        }
-        return players;
+        return names.get().stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 }
