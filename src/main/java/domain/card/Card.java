@@ -11,20 +11,12 @@ public class Card {
         this.type = type;
     }
 
-    public boolean isAce() {
+    boolean isAce() {
         return symbol == Symbol.ACE;
     }
 
-    public int getValue() {
+    int getValue() {
         return symbol.getValue();
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Symbol getSymbol() {
-        return symbol;
     }
 
     @Override
@@ -39,5 +31,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, type);
+    }
+
+    public String getPattern() {
+        return type.getPattern();
+    }
+
+    public String getWord() {
+        return symbol.getWord();
     }
 }

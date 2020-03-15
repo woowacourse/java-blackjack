@@ -21,8 +21,8 @@ public class BlackJackGame {
                 .map(name -> new Player(deck.getInitCards(), name))
                 .collect(Collectors.toList());
         Dealer dealer = new Dealer(deck.getInitCards());
-
-        OutputView.printInitGamersState(GamerDto.of(dealer), players.stream().map(GamerDto::of).collect(Collectors.toList()));
+        List<GamerDto> playerDtos = translateToDtos(players);
+        OutputView.printInitGamersState(GamerDto.of(dealer), playerDtos);
         receivePlayerCards(deck, players);
         receiveDealerCard(deck, dealer);
 
@@ -33,6 +33,10 @@ public class BlackJackGame {
         Map<PlayerResult, List<Player>> gameResults = calculateGameResults(players, dealer);
         OutputView.printGameResult(gameResults);
 }
+
+    private List<GamerDto> translateToDtos(List<Player> players) {
+        return players.stream().map(GamerDto::of).collect(Collectors.toList());
+    }
 
     private Map<PlayerResult, List<Player>> calculateGameResults(List<Player> players, Dealer dealer) {
         Map<PlayerResult, List<Player>> gameResults = players.stream()
