@@ -11,6 +11,7 @@ import java.util.List;
 public class Hands {
 	public static final int BLACKJACK_SCORE = 21;
 	private static final int ACE_TO_ELEVEN = 10;
+	private static final int BLACKJACK_SIZE = 2;
 
 	private List<Card> cards;
 
@@ -39,7 +40,7 @@ public class Hands {
 	}
 
 	public boolean isBlackjack() {
-		return (cards.size() == 2) && (calculateTotalScore() == BLACKJACK_SCORE);
+		return (cards.size() == BLACKJACK_SIZE) && (calculateTotalScore() == BLACKJACK_SCORE);
 	}
 
 	public void add(Card card) {
