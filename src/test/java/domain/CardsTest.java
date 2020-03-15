@@ -30,7 +30,7 @@ public class CardsTest {
     @DisplayName("pop 기능 테스트")
     @Test
     void popTest() {
-        Card popCard = cards.pop();
+        Card popCard = cards.giveCard();
 
         Assertions.assertThat(popCard).isInstanceOf(Card.class);
         Assertions.assertThat(cards).extracting("cardsDeck").asList().size().isNotEqualTo(Card.getCards().size());
@@ -41,7 +41,7 @@ public class CardsTest {
     void popWhenEmptyDeckTest() {
         Assertions.assertThatThrownBy(() -> {
             for (int i = 0; i < 53; i++) {
-                Card card = cards.pop();
+                Card card = cards.giveCard();
             }
         }).isInstanceOf(IllegalArgumentException.class);
     }

@@ -31,5 +31,5 @@ public abstract class User {
         }
     }
 
-    public abstract void insertCard(Cards cards);
+    public abstract void drawCard(Card cards);
 }

@@ -12,7 +12,7 @@ public enum AnswerType {
         this.answer = answer;
     }
 
-    public static AnswerType findAnswerType(String answer) {
+    public static AnswerType findAnswerValueOf(String answer) {
         return Arrays.stream(values())
                 .filter(answerType -> answerType.answer.equals(answer))
                 .findFirst()

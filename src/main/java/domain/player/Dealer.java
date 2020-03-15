@@ -2,7 +2,6 @@ package domain.player;
 
 import domain.card.CardCalculator;
 import domain.card.Card;
-import domain.card.Cards;
 
 public class Dealer extends User {
     private static final int ADDITIONAL_INSERT_CARD_STANDARD = 16;
@@ -11,18 +10,18 @@ public class Dealer extends User {
         super(cards);
     }
 
-    public boolean isAdditionalCard(Cards cards) {
+    public boolean isAdditionalCard(Card card) {
         if (CardCalculator.isUnderSixteen(this.cards)) {
-            insertCard(cards);
+            drawCard(card);
             return true;
         }
         return false;
     }
 
     @Override
-    public void insertCard(Cards cards) {
+    public void drawCard(Card cards) {
         if (sumCardNumber() <= ADDITIONAL_INSERT_CARD_STANDARD) {
-            this.cards.add(cards.pop());
+            this.cards.add(cards);
         }
         validateDuplicateCard();
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Card {
     private CardNumber cardNumber;
     private CardSuitSymbol cardSuitSymbol;
-    private static List<Card> cards;
+    private static final List<Card> CARDS;
 
     private Card(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
         this.cardNumber = cardNumber;
@@ -14,7 +14,7 @@ public class Card {
     }
 
     static {
-        cards = new ArrayList<>();
+        CARDS = new ArrayList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             addCard(cardNumber);
         }
@@ -22,12 +22,12 @@ public class Card {
 
     private static void addCard(CardNumber cardNumber) {
         for (CardSuitSymbol cardSuitSymbol : CardSuitSymbol.values()) {
-            cards.add(new Card(cardNumber, cardSuitSymbol));
+            CARDS.add(new Card(cardNumber, cardSuitSymbol));
         }
     }
 
     public static Card of(CardNumber cardNumber, CardSuitSymbol cardSuitSymbol) {
-        return cards.stream()
+        return CARDS.stream()
                 .filter(card -> card.isSameCard(cardNumber, cardSuitSymbol))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
@@ -38,7 +38,7 @@ public class Card {
     }
 
     public static List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return new ArrayList<>(CARDS);
     }
 
     public boolean isAce() {
