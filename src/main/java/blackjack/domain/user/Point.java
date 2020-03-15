@@ -38,12 +38,16 @@ public class Point implements Comparable<Point> {
         }
     }
 
-    public boolean isBlackJack() {
-        return this.point == BALCK_JACK;
+    public int diffWithBlackJack() {
+        return BALCK_JACK - this.point;
     }
 
     public boolean isBust() {
         return this.point > BALCK_JACK;
+    }
+
+    public boolean isNotBust() {
+        return !isBust();
     }
 
     public int getPoint() {
