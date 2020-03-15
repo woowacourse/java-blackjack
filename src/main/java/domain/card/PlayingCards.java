@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PlayingCards {
     private static final int ACE_BONUS = 10;
@@ -45,5 +46,18 @@ public class PlayingCards {
 
     public boolean isNotBust() {
         return calculateScore() <= BLACK_JACK;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayingCards that = (PlayingCards) o;
+        return Objects.equals(cards, that.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 }

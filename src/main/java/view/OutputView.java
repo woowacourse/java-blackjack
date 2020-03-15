@@ -1,13 +1,13 @@
 package view;
 
 import common.GamerDto;
+import domain.GameResult;
 import domain.PlayerResult;
 import domain.card.Card;
 import domain.gamer.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -60,25 +60,22 @@ public class OutputView {
         System.out.printf("%s: %s - 결과: %d\n", name, gamerCardsToPrint, gamerScore);
     }
 
-    public static void printGameResult(Map<PlayerResult, List<Player>> gameResults) {
+    public static void printGameResult(GameResult gameResult) {
         System.out.println("최종 승패");
-        printResultOfDealer(gameResults);
-        printResultOfPlayers(gameResults);
+        printResultOfDealer(gameResult);
+        printResultOfPlayers(gameResult);
     }
 
-    private static void printResultOfDealer(Map<PlayerResult, List<Player>> gameResults) {
-        int winSizeOfDealer = gameResults.get(PlayerResult.LOSE)
-                                            .size();
-        int drawSizeOfDealer = gameResults.get(PlayerResult.DRAW)
-                                            .size();
-        int loseSizeOfDealer = gameResults.get(PlayerResult.WIN)
-                                            .size();
+    private static void printResultOfDealer(GameResult gameResults) {
+        int winSizeOfDealer = gameResults.sizeOfDealerWins();
+        int drawSizeOfDealer = gameResults.sizeOfDraws();
+        int loseSizeOfDealer = gameResults.sizeOfDealerLosses();
         System.out.printf("딜러 : %d승, %d무, %d패 \n", winSizeOfDealer, drawSizeOfDealer, loseSizeOfDealer);
     }
 
-    private static void printResultOfPlayers(Map<PlayerResult, List<Player>> gameResults) {
+    private static void printResultOfPlayers(GameResult gameResult) {
         for (PlayerResult playerResult : PlayerResult.values()) {
-            printResultOfPlayer(gameResults.get(playerResult), playerResult);
+            printResultOfPlayer(gameResult.getPlayersOf(playerResult), playerResult);
         }
     }
 

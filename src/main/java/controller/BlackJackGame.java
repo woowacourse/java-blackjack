@@ -1,6 +1,7 @@
 package controller;
 
 import common.GamerDto;
+import domain.GameResult;
 import domain.PlayerResult;
 import domain.card.Deck;
 import domain.gamer.Dealer;
@@ -30,8 +31,8 @@ public class BlackJackGame {
         for(Player player : players) {
             OutputView.printGamerCardsStateWithScore(GamerDto.of(player), player.calculateScore());
         }
-        Map<PlayerResult, List<Player>> gameResults = calculateGameResults(players, dealer);
-        OutputView.printGameResult(gameResults);
+        GameResult gameResult = GameResult.calculate(players, dealer);
+        OutputView.printGameResult(gameResult);
 }
 
     private List<GamerDto> translateToDtos(List<Player> players) {
