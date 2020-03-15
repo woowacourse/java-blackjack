@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Gamers {
-	private static final int DEALER_INDEX = 0;
-	private static final int PLAYER_START_INDEX = 1;
+	private static final int FIRST_GIVE_CARD_COUNT = 2;
 
 	private final List<Gamer> gamers;
 
@@ -25,6 +24,10 @@ public class Gamers {
 		return gamers;
 	}
 
+	public void giveTwoCardToAll(Deck deck) {
+		giveCardToAll(deck, FIRST_GIVE_CARD_COUNT);
+	}
+
 	public void giveCardToAll(Deck deck, int count) {
 		for (int i = 0; i < count; i++) {
 			giveCardToAll(deck);
@@ -38,14 +41,18 @@ public class Gamers {
 	}
 
 	public List<Player> getPlayers() {
-		return gamers.subList(PLAYER_START_INDEX, gamers.size())
-				.stream()
-				.map(gamer -> (Player) gamer)
+		return gamers.stream()
+				.filter(gamer -> gamer.getClass() == Player.class)
+				.map(player -> (Player) player)
 				.collect(Collectors.toUnmodifiableList());
 	}
 
 	public Dealer getDealer() {
-		return (Dealer) gamers.get(DEALER_INDEX);
+		return gamers.stream()
+				.filter(gamer -> gamer.getClass() == Dealer.class)
+				.map(dealer -> (Dealer) dealer)
+				.findFirst()
+				.orElseThrow(AssertionError::new);
 	}
 
 	public List<Gamer> getGamers() {
