@@ -21,14 +21,6 @@ public class HandsTest {
 		assertThat(hands.calculateTotalScore()).isEqualTo(21);
 	}
 
-	private static Stream<Arguments> generateInput() {
-		return Stream.of(
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), true),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), true),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
-				new Card(Type.DIAMOND, Symbol.TWO)), false));
-	}
-
 	@Test
 	void ACE_유무() {
 		Hands hands1 = new Hands();
@@ -37,15 +29,34 @@ public class HandsTest {
 		assertThat(hands1.hasAce()).isEqualTo(true);
 	}
 
+	private static Stream<Arguments> generateInput() {
+		return Stream.of(
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), false),
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), true),
+			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
+				new Card(Type.DIAMOND, Symbol.TWO)), false));
+	}
+
 	@ParameterizedTest
 	@MethodSource("generateInput")
-	void 두_장인지(List<Card> cards, boolean expected) {
+	void isBlackjack_True_ScoreIs21AndHasTwoCards(List<Card> cards, boolean expected) {
 		Hands hands = new Hands();
 
 		for (Card card : cards) {
 			hands.add(card);
 		}
 
-		assertThat(hands.hasTwoCards()).isEqualTo(expected);
+		assertThat(hands.isBlackjack()).isEqualTo(expected);
+	}
+
+	@Test
+	void isBust_True_ScoreMoreThan21() {
+		Hands hands = new Hands();
+
+		hands.add(new Card(Type.DIAMOND, Symbol.KING));
+		hands.add(new Card(Type.SPADE, Symbol.KING));
+		hands.add(new Card(Type.DIAMOND, Symbol.TWO));
+
+		assertThat(hands.isBust()).isTrue();
 	}
 }

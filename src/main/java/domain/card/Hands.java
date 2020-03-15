@@ -9,7 +9,7 @@ import java.util.List;
  *    @author AnHyungJu, ParkDooWon
  */
 public class Hands {
-	public static final int BLACKJACK = 21;
+	public static final int BLACKJACK_SCORE = 21;
 	private static final int ACE_TO_ELEVEN = 10;
 
 	private List<Card> cards;
@@ -23,7 +23,7 @@ public class Hands {
 			.mapToInt(Card::score)
 			.sum();
 
-		if (hasAce() && (totalScore + ACE_TO_ELEVEN <= BLACKJACK)) {
+		if (hasAce() && (totalScore + ACE_TO_ELEVEN <= BLACKJACK_SCORE)) {
 			return totalScore + ACE_TO_ELEVEN;
 		}
 		return totalScore;
@@ -34,12 +34,16 @@ public class Hands {
 			.anyMatch(Card::isAce);
 	}
 
-	public void add(Card card) {
-		cards.add(card);
+	public boolean isBust() {
+		return calculateTotalScore() > BLACKJACK_SCORE;
 	}
 
-	public boolean hasTwoCards() {
-		return cards.size() == 2;
+	public boolean isBlackjack() {
+		return (cards.size() == 2) && (calculateTotalScore() == BLACKJACK_SCORE);
+	}
+
+	public void add(Card card) {
+		cards.add(card);
 	}
 
 	public List<Card> getCards() {
