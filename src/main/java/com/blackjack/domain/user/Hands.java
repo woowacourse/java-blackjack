@@ -9,6 +9,7 @@ import com.blackjack.domain.card.Card;
 public class Hands {
 	private static final int ACE_UPWARD_CONDITION = 11;
 	private static final int ACE_UPWARD_SCORE = 10;
+	private static final int BUST_LOWER_BOUND = 22;
 
 	private List<Card> cards;
 
@@ -24,9 +25,16 @@ public class Hands {
 		int totalScore = cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
-
 		totalScore = computeAceBy(totalScore);
+		totalScore = computeBustBy(totalScore);
 		return Score.valueOf(totalScore);
+	}
+
+	private int computeBustBy(int totalScore) {
+		if (totalScore >= BUST_LOWER_BOUND) {
+			totalScore = 0;
+		}
+		return totalScore;
 	}
 
 	private int computeAceBy(int totalScore) {

@@ -7,13 +7,12 @@ import java.util.Optional;
 
 public class Score {
 	private static final String SCORE_OUT_OF_RANGE_MESSAGE = "점수의 범위를 벗어났습니다.";
-	private static final int MIN_SCORE = 1;
-	private static final int MAX_SCORE = 30;
+	private static final int BUST_SCORE = 0;
 	private static final int BLACKJACK_SCORE = 21;
 	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 
 	static {
-		for (int score = MIN_SCORE; score <= MAX_SCORE; ++score) {
+		for (int score = BUST_SCORE; score <= BLACKJACK_SCORE; ++score) {
 			SCORE_CACHE.put(score, new Score(score));
 		}
 	}
@@ -31,7 +30,7 @@ public class Score {
 	}
 
 	private void validateBounds(int score) {
-		if (score < MIN_SCORE || score > MAX_SCORE) {
+		if (score < BUST_SCORE) {
 			throw new IllegalArgumentException(SCORE_OUT_OF_RANGE_MESSAGE);
 		}
 	}
@@ -41,7 +40,7 @@ public class Score {
 	}
 
 	public boolean isBust() {
-		return score > BLACKJACK_SCORE;
+		return score == BUST_SCORE;
 	}
 
 	@Override
