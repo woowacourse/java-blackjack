@@ -12,7 +12,7 @@ public enum BlackJackResult {
         this.koreanName = koreanName;
     }
 
-    public BlackJackResult reversed() {
+    public BlackJackResult reverse() {
         if (this == WIN)
             return LOSE;
         if (this == LOSE)

@@ -63,8 +63,8 @@ public class BlackjackController {
         for (Player player : players) {
             BlackJackResult result = PlayerResultMatcher.match(dealer, player);
             playersResult.put(player, result);
-            dealerResult.computeIfPresent(result.reversed(), (key, value) -> ++value);
-            dealerResult.putIfAbsent(result.reversed(), 1);
+            dealerResult.computeIfPresent(result.reverse(), (key, value) -> ++value);
+            dealerResult.putIfAbsent(result.reverse(), 1);
         }
 
         return new GamersResultResponse(dealerResult, playersResult);

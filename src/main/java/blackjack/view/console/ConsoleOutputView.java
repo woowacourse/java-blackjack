@@ -71,9 +71,6 @@ public class ConsoleOutputView implements OutputView {
     private static String makeDealerResult(Map<BlackJackResult, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<BlackJackResult, Integer> entry : dealerResult.entrySet()) {
-            if (entry.getValue() == 0) {
-                continue;
-            }
             stringBuilder.append(entry.getValue() + entry.getKey().getKoreanName());
         }
         return stringBuilder.toString();

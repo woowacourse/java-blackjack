@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Players implements Iterable<Player> {
@@ -13,6 +14,9 @@ public class Players implements Iterable<Player> {
     }
 
     public static Players from(List<String> names) {
+        if (Objects.isNull(names)) {
+            throw new IllegalArgumentException("잘못된 이름 형식입니다.");
+        }
         List<Player> players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());

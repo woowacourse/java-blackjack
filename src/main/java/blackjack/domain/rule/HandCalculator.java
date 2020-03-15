@@ -23,9 +23,14 @@ public class HandCalculator {
 
     private static int subtractIfContainingAce(List<Card> cards, int result) {
         for (Card card : cards) {
-            if (result > BUST_THRESHOLD && card.isAce()) {
-                result -= ACE_NUMBER_GAP;
-            }
+            result = subtract(result, card);
+        }
+        return result;
+    }
+
+    private static int subtract(int result, Card card) {
+        if (result > BUST_THRESHOLD && card.isAce()) {
+            result -= ACE_NUMBER_GAP;
         }
         return result;
     }

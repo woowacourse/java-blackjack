@@ -6,12 +6,16 @@ import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Hand {
 
     private final List<Card> hand = new ArrayList<>();
 
     public void add(Card card) {
+        if (Objects.isNull(card)) {
+            throw new IllegalArgumentException("카드가 입력되지 않았습니다.");
+        }
         hand.add(card);
     }
 

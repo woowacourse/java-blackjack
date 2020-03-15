@@ -10,10 +10,14 @@ public class CardFactory {
         List<Card> cards = new ArrayList<>();
 
         for (CardSymbol symbol : CardSymbol.values()) {
-            for (CardType type : CardType.values()) {
-                cards.add(new Card(symbol, type));
-            }
+            addCard(cards, symbol);
         }
         return cards;
+    }
+
+    private static void addCard(List<Card> cards, CardSymbol symbol) {
+        for (CardType type : CardType.values()) {
+            cards.add(new Card(symbol, type));
+        }
     }
 }
