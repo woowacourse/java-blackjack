@@ -1,7 +1,5 @@
 package view;
 
-import domain.UserInformation;
-
 import java.util.List;
 
 public class OutputView {

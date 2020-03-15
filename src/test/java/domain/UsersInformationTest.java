@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Cards;
 import domain.player.Users;
+import domain.player.UsersInformation;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

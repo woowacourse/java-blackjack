@@ -1,7 +1,5 @@
 package view;
 
-import domain.UserInformation;
-
 import java.util.Scanner;
 
 public class InputView {

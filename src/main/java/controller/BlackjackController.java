@@ -1,11 +1,11 @@
 package controller;
 
 import domain.*;
+import domain.answer.Answer;
+import domain.answer.AnswerType;
 import domain.card.CardCalculator;
 import domain.card.Cards;
-import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.Users;
+import domain.player.*;
 import view.InputView;
 import view.OutputView;
 
@@ -74,7 +74,9 @@ public class BlackjackController {
     }
 
     private static AnswerType getAnswer(Player player) {
-        Answer answer = new Answer(InputView.inputAnswer(player.getName()));
+        UserInformation userInformation = new UserInformation(player);
+        Answer answer = new Answer(InputView.inputAnswer(userInformation.getName()));
+
         return AnswerType.AnswerValueOf(answer.getAnswer());
     }
 }

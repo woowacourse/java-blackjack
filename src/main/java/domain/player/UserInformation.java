@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import domain.card.Card;
 import domain.player.Dealer;

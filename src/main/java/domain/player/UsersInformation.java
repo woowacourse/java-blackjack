@@ -1,6 +1,4 @@
-package domain;
-
-import domain.player.Users;
+package domain.player;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package domain;
+package domain.answer;
 
 public class Answer {
     private String answer;
