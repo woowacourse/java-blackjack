@@ -1,7 +1,7 @@
 package view;
 
 import domains.result.GameResult;
-import domains.result.WinOrDrawOrLose;
+import domains.result.KindOfGameResult;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
@@ -53,10 +53,10 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult) {
         System.out.println("딜러: "
-                + gameResult.getGameResult().get(WinOrDrawOrLose.LOSE) + WinOrDrawOrLose.WIN.getWinOrDrawOrLose()
-                + gameResult.getGameResult().get(WinOrDrawOrLose.DRAW) + WinOrDrawOrLose.DRAW.getWinOrDrawOrLose()
-                + gameResult.getGameResult().get(WinOrDrawOrLose.WIN) + WinOrDrawOrLose.LOSE.getWinOrDrawOrLose());
-        Map<Player, WinOrDrawOrLose> result = gameResult.getPlayerResult();
+                + gameResult.getGameResult().get(KindOfGameResult.LOSE) + KindOfGameResult.WIN.getWinOrDrawOrLose()
+                + gameResult.getGameResult().get(KindOfGameResult.DRAW) + KindOfGameResult.DRAW.getWinOrDrawOrLose()
+                + gameResult.getGameResult().get(KindOfGameResult.WIN) + KindOfGameResult.LOSE.getWinOrDrawOrLose());
+        Map<Player, KindOfGameResult> result = gameResult.getPlayerResult();
         for (Player player : result.keySet()) {
             System.out.println(player.getName() + ": " + result.get(player).getWinOrDrawOrLose());
         }
