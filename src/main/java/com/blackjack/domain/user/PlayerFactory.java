@@ -1,6 +1,6 @@
 package com.blackjack.domain.user;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,13 +12,16 @@ public class PlayerFactory {
 	private static final int MIN_PARTICIPANT = 1;
 	private static final int MAX_PARTICIPANT = 7;
 
+	private PlayerFactory() {
+	}
+
 	public static List<User> createPlayers(String input) {
 		List<Name> names = NameParser.parseName(input);
 		validateDuplication(names);
 		validateBounds(names);
 		return names.stream()
-			.map(Player::new)
-			.collect(toList());
+				.map(Player::new)
+				.collect(toList());
 	}
 
 	private static void validateDuplication(List<Name> names) {
