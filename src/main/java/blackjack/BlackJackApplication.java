@@ -10,6 +10,8 @@ import blackjack.view.OutputView;
 
 public class BlackJackApplication {
 
+    private static final int FIRST_TIME_DRAW_COUNT = 2;
+
     public static void main(String[] args) {
         try {
             startGame();
@@ -35,7 +37,7 @@ public class BlackJackApplication {
     }
 
     private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
-        dealer.drawCard(cardDeck, 2);
+        dealer.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         for (Player player : players.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
