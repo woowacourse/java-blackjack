@@ -12,16 +12,16 @@ public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
     public static final String SPACE = " ";
 
-    private Hand hand;
+    private Cards cards;
     private Map<Result, Integer> result;
 
     public Dealer() {
-        this.hand = new Hand();
+        this.cards = new Cards();
         this.result = new HashMap<>();
     }
 
     public int addedCardCount() {
-        return hand.addedCardCount();
+        return cards.addedCardCount();
     }
 
     @Override
@@ -49,12 +49,12 @@ public class Dealer implements Participant {
 
     @Override
     public void draw(Deck deck) {
-        hand.add(deck.pop());
+        cards.add(deck.pop());
     }
 
     @Override
     public int score() {
-        return hand.calculate();
+        return cards.calculate();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Dealer implements Participant {
     }
 
     private boolean needsMoreCard() {
-        return hand.calculate() < DEALER_DRAW_CRITERIA;
+        return cards.calculate() < DEALER_DRAW_CRITERIA;
     }
 
     @Override
@@ -74,17 +74,12 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean isBusted() {
-        return hand.isBusted();
-    }
-
-    @Override
     public String handStatus() {
-        return hand.toString();
+        return cards.toString();
     }
 
     // 테스트용
     public void draw(Card card) {
-        hand.add(card);
+        cards.add(card);
     }
 }

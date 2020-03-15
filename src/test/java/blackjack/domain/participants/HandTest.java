@@ -37,14 +37,6 @@ public class HandTest {
         new Card(Suit.SPADE, Rank.KING)
     );
 
-    @DisplayName("isBusted() 메서드가 작동됐는지 테스트")
-    @ParameterizedTest(name = "{0}")
-    @MethodSource("isBustedParameters")
-    void isBustedTest(String message, List<Card> cards, boolean expected) {
-        Hand hand = new Hand(cards);
-        assertThat(hand.isBusted()).isEqualTo(expected);
-    }
-
     static Stream<Arguments> isBustedParameters() {
         return Stream.of(
             Arguments.of("Bust 되지 않음",
@@ -59,9 +51,9 @@ public class HandTest {
     @DisplayName("calculate() 메서드를 통한 합계 테스트")
     @ParameterizedTest(name = "{0}")
     @MethodSource("cards")
-    void calculateTest(String message, List<Card> cards, int expected) {
-        Hand hand = new Hand(cards);
-        assertThat(hand.calculate()).isEqualTo(expected);
+    void calculateTest(String message, List<Card> cardList, int expected) {
+        Cards cards = new Cards(cardList);
+        assertThat(cards.calculate()).isEqualTo(expected);
     }
 
     static Stream<Arguments> cards() {

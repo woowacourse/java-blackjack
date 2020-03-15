@@ -11,8 +11,6 @@ public interface Participant {
 
     boolean isDealer();
 
-    boolean isBusted();
-
     String handStatus();
 
     String getName();

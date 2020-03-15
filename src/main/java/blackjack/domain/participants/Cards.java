@@ -6,19 +6,19 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 
-public class Hand {
+public class Cards {
     public static final int BLACK_JACK = 21;
     public static final int GAP_BETWEEN_ACE_VALUE = 10;
     public static final String DELIMITER = ", ";
 
     private List<Card> cards;
 
-    public Hand() {
+    public Cards() {
         this.cards = new ArrayList<>();
     }
 
     // 테스트용
-    Hand(final List<Card> cards) {
+    Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -28,10 +28,6 @@ public class Hand {
 
     public int addedCardCount() {
         return cards.size() - Participants.FIRST_CARDS_COUNT;
-    }
-
-    public boolean isBusted() {
-        return calculate() > BLACK_JACK;
     }
 
     public int calculate() {

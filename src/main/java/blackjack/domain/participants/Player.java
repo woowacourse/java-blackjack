@@ -7,14 +7,14 @@ import blackjack.domain.card.Deck;
 import blackjack.exceptions.InvalidPlayerException;
 
 public class Player implements Participant {
-    private final Hand hand;
+    private final Cards cards;
     private final String name;
     private Result result;
 
     public Player(final String name) {
         validate(name);
         this.name = name;
-        this.hand = new Hand();
+        this.cards = new Cards();
     }
 
     private void validate(final String name) {
@@ -29,7 +29,7 @@ public class Player implements Participant {
 
     @Override
     public int score() {
-        return hand.calculate();
+        return cards.calculate();
     }
 
     @Override
@@ -43,13 +43,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean isBusted() {
-        return hand.isBusted();
-    }
-
-    @Override
     public String handStatus() {
-        return hand.toString();
+        return cards.toString();
     }
 
     @Override
@@ -69,11 +64,11 @@ public class Player implements Participant {
 
     @Override
     public void draw(final Deck deck) {
-        hand.add(deck.pop());
+        cards.add(deck.pop());
     }
 
     // 테스트용
     public void draw(final Card card) {
-        hand.add(card);
+        cards.add(card);
     }
 }

@@ -13,6 +13,9 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
+
+    public static final int BLACK_JACK_SCORE = 21;
+
     public static void run() {
         OutputView.nameInstruction();
         Deck deck = Deck.create();
@@ -60,7 +63,7 @@ public class BlackJackController {
             OutputView.moreCardInstruction(player);
             wantsMoreCard = wantsToDrawMore(deck, player);
             OutputView.participantStatus(player);
-        } while (wantsMoreCard && !player.isBusted());
+        } while (wantsMoreCard && player.score() < BLACK_JACK_SCORE);
     }
 
     private static boolean wantsToDrawMore(final Deck deck, final Player player) {

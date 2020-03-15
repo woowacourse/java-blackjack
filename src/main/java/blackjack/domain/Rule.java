@@ -18,7 +18,7 @@ public class Rule {
     }
 
     private static void decideWinner(final Participant dealer, final Participant player) {
-        if (player.isBusted() || dealer.isBusted()) {
+        if (isBusted(player) || isBusted(dealer)) {
             decideWhenBusted(dealer, player);
             return;
         }
@@ -26,12 +26,12 @@ public class Rule {
     }
 
     private static void decideWhenBusted(final Participant dealer, final Participant player) {
-        if (player.isBusted()) {
+        if (isBusted(player)) {
             player.set(LOSE);
             dealer.set(WIN);
         }
 
-        if (!player.isBusted() && dealer.isBusted()) {
+        if (!isBusted(player) && isBusted(dealer)) {
             player.set(WIN);
             dealer.set(LOSE);
         }
@@ -52,5 +52,9 @@ public class Rule {
             player.set(LOSE);
             dealer.set(WIN);
         }
+    }
+
+    private static boolean isBusted(Participant participant) {
+        return participant.score() > 21;
     }
 }
