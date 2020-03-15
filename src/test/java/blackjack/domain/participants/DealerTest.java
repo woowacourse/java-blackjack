@@ -1,19 +1,19 @@
 package blackjack.domain.participants;
 
-import static blackjack.domain.participants.HandTest.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.List;
-import java.util.stream.Stream;
-
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static blackjack.domain.participants.HandTest.CARDS_21_ACE_AS_ONE;
+import static blackjack.domain.participants.HandTest.CARDS_8;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
@@ -34,7 +34,7 @@ public class DealerTest {
         for (Card card : cards) {
             dealer.draw(card);
         }
-        dealer.drawMoreCard(Deck.create());
+        dealer.drawMoreCard(new Deck());
         int willNotBeZeroIfDealerNeedsMoreCard = cards.size() - INITIAL_CARD_COUNT;
         boolean actual = dealer.addedCardCount() != willNotBeZeroIfDealerNeedsMoreCard;
         assertThat(actual).isEqualTo(expected);

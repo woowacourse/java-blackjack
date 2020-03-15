@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import java.util.List;
-
 import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participants.Dealer;
@@ -12,10 +10,12 @@ import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackJackController {
     public static void run() {
         OutputView.nameInstruction();
-        Deck deck = Deck.create();
+        Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Participants participants = getParticipants(dealer);
         initialPhase(deck, participants);

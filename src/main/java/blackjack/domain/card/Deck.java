@@ -6,28 +6,31 @@ import java.util.Stack;
 public class Deck {
     private Stack<Card> cards;
 
-    private Deck() {
-        this.cards = CardFactory.createCards();
+    public Deck() {
+        create();
     }
 
-    public static Deck create() {
-        Deck deck = new Deck();
-        deck.shuffle();
-        return deck;
+    private void create() {
+        this.cards = CardFactory.createCards();
+        shuffle();
     }
 
     private void shuffle() {
-        Collections.shuffle(cards);
+        Collections.shuffle(this.cards);
     }
 
     public Card pop() {
         if (cards.isEmpty()) {
-            this.cards = CardFactory.createCards();
+            create();
         }
         return cards.pop();
     }
 
     public int size() {
         return cards.size();
+    }
+
+    public void printDeck() {
+        System.out.println(cards.toString());
     }
 }
