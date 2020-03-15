@@ -1,10 +1,8 @@
 package domain.user;
 
-import static domain.user.HandCard.BLACKJACK_FULL_SCORE;
-
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
-    private static final int DRAW_MAX_SCORE = 16;
+    public static final int DRAW_MAX_SCORE = 16;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -20,6 +18,18 @@ public class Dealer extends User {
     }
 
     public boolean isWinner(User user) {
-        return BLACKJACK_FULL_SCORE < user.getScore() || user.getScore() <= getScore();
+        return isBustWin(user) || isBlackJackWin(user) || isScoreWin(user);
+    }
+
+    private boolean isBustWin(User user) {
+        return !isBust() && user.isBust();
+    }
+
+    private boolean isBlackJackWin(User user) {
+        return isBlackJack() && !user.isBlackJack();
+    }
+
+    private boolean isScoreWin(User user) {
+        return user.getScore() <= getScore() && !isBust();
     }
 }

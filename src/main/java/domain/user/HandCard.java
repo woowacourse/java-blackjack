@@ -46,12 +46,14 @@ public class HandCard {
 
     private boolean hasAce() {
         return cards.stream()
-                .map(Card::isAce)
-                .findAny()
-                .orElse(false);
+                .anyMatch(Card::isAce);
     }
 
-    public boolean isOver() {
+    public boolean isBust() {
         return BLACKJACK_FULL_SCORE < getScore();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && getScore() == BLACKJACK_FULL_SCORE;
     }
 }

@@ -53,5 +53,13 @@ public abstract class User {
         return handCard.getScore();
     }
 
-    abstract boolean isDrawable();
+    public boolean isBust() {
+        return handCard.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return handCard.isBlackJack();
+    }
+
+    public abstract boolean isDrawable();
 }
