@@ -5,7 +5,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Status;
 import blackjack.domain.PlayerResult;
 
-public class DealerNoneStrategy implements DealerStatusStrategy {
+public class DealerStatusNoneStrategy implements DealerStatusStrategy {
     @Override
     public PlayerResult calculateResultByPlayerStatus(Dealer dealer, Player player) {
         if (player.getStatus() == Status.BLACKJACK) {
