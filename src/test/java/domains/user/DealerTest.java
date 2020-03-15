@@ -84,4 +84,26 @@ public class DealerTest {
                 Arguments.of(new ArrayList<>(Arrays.asList(four, seven)))
         );
     }
+
+    @DisplayName("카드를 한 장 더 받았을 때, 버스트가 됐는지 확인")
+    @ParameterizedTest
+    @MethodSource("burstData")
+    void hit_ScoreOver21_BurstIsTrue(List<Card> hands) {
+        Hands hand = new Hands(hands);
+        Dealer dealer = new Dealer(hand);
+
+        dealer.hit(deck);
+
+        assertThat(dealer.isBurst()).isTrue();
+    }
+
+    static Stream<Arguments> burstData() {
+        Card five = new Card(Symbol.FIVE, Type.SPADE);
+        Card seven = new Card(Symbol.SEVEN, Type.HEART);
+        Card ten = new Card(Symbol.TEN, Type.CLUB);
+
+        return Stream.of(
+                Arguments.of(new ArrayList<>(Arrays.asList(five, seven, ten)))
+        );
+    }
 }

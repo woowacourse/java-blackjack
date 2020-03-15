@@ -37,7 +37,7 @@ public class GameResult {
     }
 
     public WinOrDrawOrLose checkWinOrLose(Player player, Dealer dealer) {
-        if (dealer.checkBurst() && !player.isBurst()) {
+        if (dealer.isBurst() && !player.isBurst()) {
             return WinOrDrawOrLose.WIN;
         }
         if (player.score() > dealer.score()) {

@@ -51,5 +51,8 @@ public class Player extends User {
     @Override
     public void hit(Deck deck) {
         hands.draw(deck);
+        if (hands.isBurst()) {
+            this.burst = true;
+        }
     }
 }
