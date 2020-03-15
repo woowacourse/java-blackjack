@@ -2,15 +2,12 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.exception.DeckException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Deck {
-    private final List<Card> deck;
+    private final Stack<Card> deck;
 
-    private Deck(List<Card> deck) {
+    private Deck(Stack<Card> deck) {
         this.deck = deck;
     }
 
@@ -19,11 +16,11 @@ public class Deck {
     }
 
     private static Deck create() {
-        List<Card> cards = new ArrayList<>();
+        Stack<Card> cards = new Stack<>();
 
         for (Symbol symbol : Symbol.values()) {
             for (Type type : Type.values()) {
-                cards.add(new Card(symbol, type));
+                cards.push(new Card(symbol, type));
             }
         }
 
@@ -39,9 +36,8 @@ public class Deck {
         if (deck.isEmpty()) {
             throw new DeckException("뽑을 카드가 없습니다.");
         }
-        return deck.remove(deck.size() - 1);
+        return deck.pop();
     }
-
 
 
     @Override
