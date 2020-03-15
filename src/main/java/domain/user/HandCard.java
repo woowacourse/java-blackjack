@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.rule.Drawable.ACE_BONUS_SCORE;
-import static domain.rule.Drawable.BLACKJACK_FULL_SCORE;
-
 public class HandCard {
+    public static final int ACE_BONUS_SCORE = 10;
+    public static final int BLACKJACK_FULL_SCORE = 21;
+
     private final List<Card> cards;
 
     public HandCard() {
