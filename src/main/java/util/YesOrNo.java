@@ -26,7 +26,8 @@ public class YesOrNo {
         }
     }
 
-    public boolean isYes() {
-        return "y".equals(answer);
+    public static boolean isYes(String answer) {
+        YesOrNo yesOrNo = YesOrNo.of(answer);
+        return "y".equals(yesOrNo.answer);
     }
 }

@@ -1,16 +1,16 @@
 package controller;
 
-import java.util.List;
-
-import domain.result.WinningResult;
 import domain.deck.Deck;
 import domain.deck.DeckFactory;
+import domain.result.WinningResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import util.YesOrNo;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
 
 public class BlackJackGame {
 
@@ -47,7 +47,7 @@ public class BlackJackGame {
 
     private boolean isYes(Player player) {
         String input = InputView.receiveYesOrNoInput(player.getName());
-        return YesOrNo.of(input).isYes();
+        return YesOrNo.isYes(input);
     }
 
     public void decideWinner(Dealer dealer, Players players) {

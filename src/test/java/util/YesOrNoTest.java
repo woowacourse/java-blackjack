@@ -1,12 +1,12 @@
 package util;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.*;
 
 class YesOrNoTest {
 
@@ -30,6 +30,6 @@ class YesOrNoTest {
     @DisplayName("입력값이 y(Y)인지 확")
     @CsvSource({"y,True", "Y,True", "n,False", "N,False"})
     void isYes(String input, boolean result) {
-        assertThat(YesOrNo.of(input).isYes()).isEqualTo(result);
+        assertThat(YesOrNo.isYes(input)).isEqualTo(result);
     }
 }
