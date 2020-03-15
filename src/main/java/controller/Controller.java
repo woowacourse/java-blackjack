@@ -13,6 +13,8 @@ import view.dto.PlayerDto;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class Controller {
+	private static final String YES = "Y";
+
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
 		progress(blackjackGame);
@@ -65,7 +67,7 @@ public class Controller {
 	}
 
 	private static boolean isContinue(Player player) {
-		return !player.isBust() && "Y".equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+		return !player.isBust() && YES.equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
