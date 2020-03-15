@@ -18,6 +18,19 @@ public class Card {
         this.cardFigure = cardFigure;
     }
 
+
+    public boolean isAce() {
+        return this.cardNumber.equals(CardNumber.ACE);
+    }
+
+    public CardFigure getCardFigure() {
+        return cardFigure;
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -30,17 +43,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardNumber, cardFigure);
-    }
-
-    public boolean isAce() {
-        return this.cardNumber.equals(CardNumber.ACE);
-    }
-
-    public CardFigure getCardFigure() {
-        return cardFigure;
-    }
-
-    public CardNumber getCardNumber() {
-        return cardNumber;
     }
 }
