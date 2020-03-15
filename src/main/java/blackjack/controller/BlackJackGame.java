@@ -1,20 +1,19 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
+import blackjack.exception.ResponseNotMatchException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BlackJackGame {
-    private static final int INITIAL_CARDS_SIZE = 2;
     private static final int START_INDEX = 0;
 
     private final Dealer dealer;
     private final CardDeck cardDeck;
-    private List<User> users;
+    private List<Player> players;
 
     public BlackJackGame() {
         dealer = Dealer.getDealer();
@@ -22,58 +21,62 @@ public class BlackJackGame {
     }
 
     public void run() {
-        enrollUsers();
+        enrollPlayers();
         distributeCards();
         play();
         calculateResult();
     }
 
-    public void enrollUsers() {
-        users = InputView.inputUserNames().stream()
-                .map(User::new)
+    public void enrollPlayers() {
+        players = InputView.inputUserNames().stream()
+                .map(Player::new)
                 .collect(Collectors.toList());
     }
 
     private void distributeCards() {
-        OutputView.printDistributeConfirmMessage(dealer, users);
-        IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                .forEach(i -> dealer.addCard(cardDeck.getOneCard()));
+        OutputView.printDistributeConfirmMessage(dealer, players);
+        dealer.receiveDistributedCards(cardDeck);
 
-        for (User user : users) {
-            IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                    .forEach(i -> user.addCard(cardDeck.getOneCard()));
+        for (Player player : players) {
+            player.receiveDistributedCards(cardDeck);
         }
-        OutputView.printInitialPlayerCards(dealer, users);
+
+        OutputView.printInitialPlayerCards(dealer, players);
     }
 
     private void play() {
-        for (User user : users) {
-            user.changeStatusIfBlackJack();
-            eachUserPlay(user);
+        for (Player player : players) {
+            playEachPlayerTurn(player);
         }
-        dealerPlay();
+        playDealerTurn();
     }
 
-    private void eachUserPlay(User user) {
-        while (user.isNoneStatus() && InputView.askOneMoreCard(user) == Response.YES) {
-            user.addCard(cardDeck.getOneCard());
-            user.changeStatusIfBust();
-            OutputView.printUserCards(user);
+    private void playEachPlayerTurn(User player) {
+        while (player.isReceivableOneMoreCard() && isResponseYesWithValidation(player)) {
+            player.receiveOneMoreCard(cardDeck);
+            OutputView.printUserCards(player);
         }
     }
 
-    private void dealerPlay() {
-        dealer.changeStatusIfBlackJack();
-        if (dealer.isUnderCriticalScore()) {
-            dealer.addCard(cardDeck.getOneCard());
-            dealer.changeStatusIfBust();
+    private boolean isResponseYesWithValidation(User player) {
+        try {
+            return Response.isYes(InputView.askOneMoreCard(player));
+        } catch (ResponseNotMatchException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return isResponseYesWithValidation(player);
+        }
+    }
+
+    private void playDealerTurn() {
+        if (dealer.isReceivableOneMoreCard()) {
+            dealer.receiveOneMoreCard(cardDeck);
             OutputView.printDealerPlayConfirmMessage();
         }
     }
 
     private void calculateResult() {
-        OutputView.printPlayerFinalScore(dealer, users);
-        GameResult gameResult = GameResult.calculateGameResult(dealer, users);
+        OutputView.printPlayerFinalScore(dealer, players);
+        GameResult gameResult = GameResult.calculateGameResult(dealer, players);
         OutputView.printGameResult(gameResult);
     }
 }

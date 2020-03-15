@@ -1,22 +1,22 @@
 package blackjack;
 
 import blackjack.domain.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
     private Dealer dealer;
-    private User user;
+    private List<Player> players;
     private List<Card> cards;
     private CardDeck cardDeck;
 
@@ -24,48 +24,84 @@ public class GameResultTest {
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.CLOVER, Type.ACE),
                         new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
-                        new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.SPADE, Type.ACE),
+                        new Card(Symbol.DIAMOND, Type.THREE),
+                        new Card(Symbol.SPADE, Type.ACE),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.SPADE, Type.JACK),
+                        new Card(Symbol.HEART, Type.SEVEN)
                 )
         );
         cardDeck = new CardDeck(cards);
         dealer = Dealer.getDealer();
-        user = new User("bossdog");
-    }
-
-    private static Stream<Arguments> StatusProvider() {
-        return Stream.of(
-                Arguments.of(Status.BLACKJACK, Status.BLACKJACK, UserResult.DRAW),
-                Arguments.of(Status.BLACKJACK, Status.BUST, UserResult.LOSE),
-                Arguments.of(Status.BLACKJACK, Status.NONE, UserResult.LOSE),
-                Arguments.of(Status.BUST, Status.BLACKJACK, UserResult.WIN),
-                Arguments.of(Status.BUST, Status.BUST, UserResult.LOSE),
-                Arguments.of(Status.BUST, Status.NONE, UserResult.WIN),
-                Arguments.of(Status.NONE, Status.BLACKJACK, UserResult.WIN),
-                Arguments.of(Status.NONE, Status.BUST, UserResult.LOSE),
-                Arguments.of(Status.NONE, Status.NONE, UserResult.LOSE)
+        players = new ArrayList<>(
+                Arrays.asList(
+                        new Player("bossdog"),
+                        new Player("yes"),
+                        new Player("pobi")
+                )
         );
+        players.forEach(player -> player.receiveDistributedCards(cardDeck));
+        players.get(2).receiveOneMoreCard(cardDeck);
     }
 
-    @DisplayName("딜러와 유저의 최종 상태에 따른 결과 계산")
-    @MethodSource("StatusProvider")
-    void calculateGameResult(Status dealerStatus, Status userStatus, UserResult userResult) {
-        dealer.setStatus(dealerStatus);
-        user.setStatus(userStatus);
-        assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(userResult);
-    }
-
-    @DisplayName("딜러와 유저의 최종 상태가 NONE일 경우 SCORE 기반 결과 계산")
+    @DisplayName("딜러 블랙잭인 경우 결과 확인")
     @Test
-    void calculateGameResultByScore() {
-        for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
-            user.addCard(cardDeck.getOneCard());
-        }
-        assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(UserResult.DRAW);
+    void calculateResultWhenDealerBlackJack() {
+        CardDeck dealerDeck = new CardDeck(new ArrayList<>(
+                Arrays.asList(
+                        new Card(Symbol.CLOVER, Type.TEN),
+                        new Card(Symbol.HEART, Type.ACE)
+                )
+        ));
+        dealer.receiveDistributedCards(dealerDeck);
+        Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
+
+        assertThat(result.get(players.get(0))).isEqualTo(PlayerResult.DRAW);
+        assertThat(result.get(players.get(1))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.get(2))).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @DisplayName("딜러 버스트인 경우 결과 확인")
+    @Test
+    void calculateResultWhenDealerBust() {
+        CardDeck dealerDeck = new CardDeck(new ArrayList<>(
+                Arrays.asList(
+                        new Card(Symbol.CLOVER, Type.FIVE),
+                        new Card(Symbol.HEART, Type.NINE),
+                        new Card(Symbol.SPADE, Type.JACK)
+                )
+        ));
+        dealer.receiveDistributedCards(dealerDeck);
+        dealer.receiveOneMoreCard(dealerDeck);
+        Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
+        assertThat(result.get(players.get(0))).isEqualTo(PlayerResult.WIN);
+        assertThat(result.get(players.get(1))).isEqualTo(PlayerResult.WIN);
+        assertThat(result.get(players.get(2))).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @DisplayName("딜러 NONE인 경우 점수 비교 결과 확인")
+    @Test
+    void calculateResultWhenDealerStatusNone() {
+        CardDeck dealerDeck = new CardDeck(new ArrayList<>(
+                Arrays.asList(
+                        new Card(Symbol.CLOVER, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.ACE)
+                )
+        ));
+        dealer.receiveDistributedCards(dealerDeck);
+        Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
+
+        assertThat(result.get(players.get(0))).isEqualTo(PlayerResult.WIN);
+        assertThat(result.get(players.get(1))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.get(2))).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @AfterEach
+    void tearDown() throws NoSuchFieldException, IllegalAccessException {
+        Field dealer_instance = Dealer.class.getDeclaredField("dealerInstance");
+        dealer_instance.setAccessible(true);
+        dealer_instance.set(null, null);
     }
 }

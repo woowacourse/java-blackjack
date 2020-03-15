@@ -5,30 +5,30 @@ import blackjack.domain.strategy.DealerStatusStrategy;
 import java.util.*;
 
 public class GameResult {
-    private Map<User, UserResult> gameResult;
+    private Map<Player, PlayerResult> gameResult;
 
-    private GameResult(Map<User, UserResult> result) {
+    private GameResult(Map<Player, PlayerResult> result) {
         this.gameResult = result;
     }
 
-    public static GameResult calculateGameResult(Dealer dealer, List<User> users) {
-        Map<User, UserResult> result = new LinkedHashMap<>();
-        for (User user : users) {
-            result.put(user, calculatePlayerResult(dealer, user));
+    public static GameResult calculateGameResult(Dealer dealer, List<Player> players) {
+        Map<Player, PlayerResult> result = new LinkedHashMap<>();
+        for (Player player : players) {
+            result.put(player, calculateResultByDealerStatusStrategy(dealer, player));
         }
         return new GameResult(result);
     }
 
-    public static UserResult calculatePlayerResult(Dealer dealer, User user) {
+    private static PlayerResult calculateResultByDealerStatusStrategy(Dealer dealer, Player player) {
         DealerStatusStrategy dealerStatusStrategy = dealer.status.getDealerStatusStrategy();
-        return dealerStatusStrategy.compute(dealer, user);
+        return dealerStatusStrategy.calculateResultByPlayerStatus(dealer, player);
     }
 
-    public Map<User, UserResult> getGameResult() {
+    public Map<Player, PlayerResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
     }
 
-    public String getKoreanName(User user) {
-        return gameResult.get(user).getKoreanName();
+    public String getKoreanName(Player player) {
+        return gameResult.get(player).getKoreanName();
     }
 }

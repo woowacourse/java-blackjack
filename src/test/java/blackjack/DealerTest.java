@@ -37,9 +37,7 @@ public class DealerTest {
     @DisplayName("카드 덱에서 뽑았을 때 유저가 가지고 있는 카드 수와 덱의 카드 수가 동시에 변하는지 확인")
     @Test
     void addCardTest() {
-        for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
-        }
+        dealer.receiveDistributedCards(cardDeck);
         assertThat(dealer.getCardsSize()).isEqualTo(2);
         assertThat(cardDeck.size()).isEqualTo(4);
     }
@@ -47,9 +45,7 @@ public class DealerTest {
     @DisplayName("현재 보유 중인 카드의 총 점수 계산")
     @Test
     void calculateScoreTest() {
-        for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
-        }
+        dealer.receiveDistributedCards(cardDeck);
         int score = dealer.calculateScore();
         assertThat(score).isEqualTo(19);
     }
@@ -57,31 +53,27 @@ public class DealerTest {
     @DisplayName("딜러의 점수가 16이하인지 확인")
     @Test
     void isUnderCriticalScore() {
-        for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
-        }
-        assertThat(dealer.isUnderCriticalScore()).isFalse();
+        dealer.receiveDistributedCards(cardDeck);
+        assertThat(dealer.isReceivableOneMoreCard()).isFalse();
     }
 
     @DisplayName("딜러의 이름을 반환하는지 확인")
     @Test
     void getNameTest() {
-        Player dealer = Dealer.getDealer();
+        User dealer = Dealer.getDealer();
         assertThat(dealer.getName()).isEqualTo("딜러");
     }
 
     @DisplayName("딜러의 초기 카드 오픈상태 확인")
     @Test
     void getInitialCardsTest() {
-        for (int i = 0; i < 2; i++) {
-            dealer.addCard(cardDeck.getOneCard());
-        }
+        dealer.receiveDistributedCards(cardDeck);
         assertThat(dealer.getInitialCards()).containsExactly(new Card(Symbol.CLOVER, Type.EIGHT));
     }
 
     @AfterEach
     void tearDown() throws NoSuchFieldException, IllegalAccessException {
-        Field dealer_instance = Dealer.class.getDeclaredField("dealer_instance");
+        Field dealer_instance = Dealer.class.getDeclaredField("dealerInstance");
         dealer_instance.setAccessible(true);
         dealer_instance.set(null, null);
     }

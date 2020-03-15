@@ -1,29 +1,29 @@
 package blackjack.domain.strategy;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Player;
 import blackjack.domain.Status;
-import blackjack.domain.User;
-import blackjack.domain.UserResult;
+import blackjack.domain.PlayerResult;
 
 public class DealerNoneStrategy implements DealerStatusStrategy {
     @Override
-    public UserResult compute(Dealer dealer, User user) {
-        if (user.getStatus() == Status.BLACKJACK) {
-            return UserResult.WIN;
+    public PlayerResult calculateResultByPlayerStatus(Dealer dealer, Player player) {
+        if (player.getStatus() == Status.BLACKJACK) {
+            return PlayerResult.WIN;
         }
-        if (user.getStatus() == Status.BUST) {
-            return UserResult.LOSE;
+        if (player.getStatus() == Status.BUST) {
+            return PlayerResult.LOSE;
         }
-        return compareScore(dealer, user);
+        return compareScore(dealer, player);
     }
 
-    private UserResult compareScore(Dealer dealer, User user) {
-        if (dealer.calculateScore() < user.calculateScore()) {
-            return UserResult.WIN;
+    private PlayerResult compareScore(Dealer dealer, Player player) {
+        if (dealer.calculateScore() < player.calculateScore()) {
+            return PlayerResult.WIN;
         }
-        if (dealer.calculateScore() == user.calculateScore()) {
-            return UserResult.DRAW;
+        if (dealer.calculateScore() == player.calculateScore()) {
+            return PlayerResult.DRAW;
         }
-        return UserResult.LOSE;
+        return PlayerResult.LOSE;
     }
 }

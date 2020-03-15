@@ -1,8 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Response;
 import blackjack.domain.User;
-import blackjack.exception.ResponseNotMatchException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,13 +18,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Response askOneMoreCard(User user) {
-        OutputView.printAskOneMoreCardMessage(user);
-        try {
-            return Response.of(SCANNER.nextLine());
-        } catch (ResponseNotMatchException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return askOneMoreCard(user);
-        }
+    public static String askOneMoreCard(User player) {
+        OutputView.printAskOneMoreCardMessage(player);
+        return SCANNER.nextLine();
     }
 }

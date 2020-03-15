@@ -1,16 +1,16 @@
 package blackjack.domain.strategy;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Player;
 import blackjack.domain.Status;
-import blackjack.domain.User;
-import blackjack.domain.UserResult;
+import blackjack.domain.PlayerResult;
 
 public class DealerBlackJackStrategy implements DealerStatusStrategy {
     @Override
-    public UserResult compute(Dealer dealer, User user) {
-        if (user.getStatus() == Status.BLACKJACK) {
-            return UserResult.DRAW;
+    public PlayerResult calculateResultByPlayerStatus(Dealer dealer, Player player) {
+        if (player.getStatus() == Status.BLACKJACK) {
+            return PlayerResult.DRAW;
         }
-        return UserResult.LOSE;
+        return PlayerResult.LOSE;
     }
 }

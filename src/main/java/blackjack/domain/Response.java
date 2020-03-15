@@ -14,7 +14,11 @@ public enum Response {
         this.lowerCase = lowerCase;
     }
 
-    public static Response of(String inputValue) {
+    public static boolean isYes(String inputValue) {
+        return of(inputValue) == YES;
+    }
+
+    private static Response of(String inputValue) {
         String lowerCase = inputValue.toLowerCase();
         return Arrays.stream(values())
                 .filter(response -> response.lowerCase.equals(lowerCase))

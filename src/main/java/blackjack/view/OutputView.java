@@ -22,27 +22,27 @@ public class OutputView {
         System.out.println(INPUT_USER_NAMES_GUIDE_MESSAGE);
     }
 
-    public static void printDistributeConfirmMessage(Dealer dealer, List<User> users) {
-        String userNames = users.stream()
-                .map(Player::getName)
+    public static void printDistributeConfirmMessage(Dealer dealer, List<Player> players) {
+        String userNames = players.stream()
+                .map(User::getName)
                 .collect(Collectors.joining(COMMA));
         System.out.println(NEW_LINE + String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames));
     }
 
-    public static void printInitialPlayerCards(Dealer dealer, List<User> users) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users);
+    public static void printInitialPlayerCards(Dealer dealer, List<Player> players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players);
 
-        for (Player player : players) {
+        for (User user : users) {
             System.out.println(String.format(
-                    PLAYER_INFORMATION_FORMAT, player.getName(), combineCards(player.getInitialCards())));
+                    PLAYER_INFORMATION_FORMAT, user.getName(), combineCards(user.getInitialCards())));
         }
     }
 
-    public static void printUserCards(User user) {
+    public static void printUserCards(User player) {
         System.out.println(String.format(
-                PLAYER_INFORMATION_FORMAT, user.getName(), combineCards(user.getCards())));
+                PLAYER_INFORMATION_FORMAT, player.getName(), combineCards(player.getCards())));
     }
 
     private static String combineCards(List<Card> cards) {
@@ -51,8 +51,8 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_SPACE));
     }
 
-    public static void printAskOneMoreCardMessage(User user) {
-        System.out.println(String.format(ASK_ONE_MORE_CARD_MESSAGE_FORMAT, user.getName()));
+    public static void printAskOneMoreCardMessage(User player) {
+        System.out.println(String.format(ASK_ONE_MORE_CARD_MESSAGE_FORMAT, player.getName()));
     }
 
     public static void printExceptionMessage(String message) {
@@ -63,24 +63,24 @@ public class OutputView {
         System.out.println(DEALER_PLAY_CONFIRM_MESSAGE);
     }
 
-    public static void printPlayerFinalScore(Dealer dealer, List<User> users) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users);
+    public static void printPlayerFinalScore(Dealer dealer, List<Player> players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players);
 
-        for (Player player : players) {
+        for (User user : users) {
             System.out.println(String.format(
                     PLAYER_FINAL_INFORMATION_FORMAT,
-                    player.getName(), combineCards(player.getCards()), player.calculateScore()));
+                    user.getName(), combineCards(user.getCards()), user.calculateScore()));
         }
     }
 
     public static void printGameResult(GameResult gameResult) {
 
         System.out.println(NEW_LINE + FINAL_RESULT_HEADER_MESSAGE + String.format("딜러 : %d승 %d무 %d패",
-                countDealerResult(gameResult, UserResult.LOSE),
-                countDealerResult(gameResult, UserResult.DRAW),
-                countDealerResult(gameResult, UserResult.WIN)
+                countDealerResult(gameResult, PlayerResult.LOSE),
+                countDealerResult(gameResult, PlayerResult.DRAW),
+                countDealerResult(gameResult, PlayerResult.WIN)
         ));
 
         gameResult.getGameResult()
@@ -89,11 +89,11 @@ public class OutputView {
                         user.getName(), gameResult.getKoreanName(user))));
     }
 
-    private static int countDealerResult(GameResult gameResult, UserResult userResult) {
+    private static int countDealerResult(GameResult gameResult, PlayerResult playerResult) {
         return (int) gameResult.getGameResult()
                 .values()
                 .stream()
-                .filter(result -> result.equals(userResult))
+                .filter(result -> result.equals(playerResult))
                 .count();
     }
 }

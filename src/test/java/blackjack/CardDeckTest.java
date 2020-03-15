@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,7 +35,7 @@ public class CardDeckTest {
         cardDeck = new CardDeck(cards);
     }
 
-    @DisplayName("카드 덱에서 랜덤으로 카드 한 장 추출 확인")
+    @DisplayName("카드 덱에서 카드 한 장 추출 확인")
     @Test
     void getOneCardFromCardDeck() {
         Card card = cardDeck.getOneCard();

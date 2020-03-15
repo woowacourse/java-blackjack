@@ -2,12 +2,12 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Dealer extends Player {
+public class Dealer extends User {
     private static final int DEALER_CRITICAL_SCORE = 16;
     private static final String KOREAN_NAME = "딜러";
     private static final int DEALER_INITIAL_CARDS_SIZE = 1;
 
-    private static Dealer dealer_instance;
+    private static Dealer dealerInstance;
 
     private Dealer() {
         this.name = KOREAN_NAME;
@@ -15,18 +15,19 @@ public class Dealer extends Player {
     }
 
     public static Dealer getDealer() {
-        if (dealer_instance == null) {
-            dealer_instance = new Dealer();
+        if (dealerInstance == null) {
+            dealerInstance = new Dealer();
         }
-        return dealer_instance;
-    }
-
-    public boolean isUnderCriticalScore() {
-        return calculateScore() <= DEALER_CRITICAL_SCORE;
+        return dealerInstance;
     }
 
     @Override
     public List<Card> getInitialCards() {
         return this.cards.subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
+    }
+
+    @Override
+    public boolean isReceivableOneMoreCard() {
+        return calculateScore() <= DEALER_CRITICAL_SCORE;
     }
 }
