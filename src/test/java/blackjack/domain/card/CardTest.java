@@ -78,10 +78,7 @@ public class CardTest {
 	@ParameterizedTest
 	@MethodSource("getName")
 	void getName(Card card, String expect) {
-		assertThat(aceClub.getName()).isEqualTo("A 클로버");
-		assertThat(twoHeart.getName()).isEqualTo("2 하트");
-		assertThat(threeDiamond.getName()).isEqualTo("3 다이아몬드");
-		assertThat(kingSpade.getName()).isEqualTo("K 스페이드");
+		assertThat(card.getName()).isEqualTo(expect);
 	}
 
 	static Stream<Arguments> getName() {

@@ -28,7 +28,6 @@ class DeckTest {
 
 	@Test
 	void of_IsNotNull() {
-		// then
 		assertThat(simpleDeck).isNotNull();
 	}
 
@@ -45,32 +44,34 @@ class DeckTest {
 		}
 
 		// then
-		assertThat(drawn)
-				.isEqualTo(expected);
+		assertThat(drawn).isEqualTo(expected);
 	}
 
 	@Test
 	void draw_ThereAreNoCard_ThrowDeckException() {
-		// given
-		for (int i = 0; i < 4; i++) {
-			simpleDeck.draw();
-		}
+		//given
+		Drawable emptyDeck = Deck.of(Collections.emptyList());
 
 		// then
-		assertThatThrownBy(() -> {
-			// when
-			simpleDeck.draw();
-		}).isInstanceOf(DeckException.class);
+		assertThatThrownBy(() -> emptyDeck.draw())
+				.isInstanceOf(DeckException.class);
 	}
 
 	@Test
-	void equals() {
+	void equals_IsTrue() {
 		// given
 		Drawable expected = Deck.of(fourCards);
-		Drawable notExpected = Deck.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
 
 		// then
 		assertThat(simpleDeck.equals(expected)).isTrue();
+	}
+
+	@Test
+	void equals_IsFalse() {
+		// given
+		Drawable notExpected = Deck.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
+
+		// then
 		assertThat(simpleDeck.equals(notExpected)).isFalse();
 	}
 }
