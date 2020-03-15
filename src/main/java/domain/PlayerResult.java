@@ -9,13 +9,13 @@ public enum PlayerResult {
     WIN("승") {
         @Override
         boolean isMatch(Dealer dealer, Player player) {
-            return !player.isBust() && (dealer.isBust() || player.calculateScore() > dealer.calculateScore());
+            return player.isNotBust() && (dealer.isBust() || player.calculateScore() > dealer.calculateScore());
         }
     },
     DRAW("무") {
         @Override
         boolean isMatch(Dealer dealer, Player player) {
-            return !dealer.isBust() && !player.isBust() && player.calculateScore() == dealer.calculateScore();
+            return dealer.isNotBust() && player.isNotBust() && player.calculateScore() == dealer.calculateScore();
         }
     },
     LOSE("패") {

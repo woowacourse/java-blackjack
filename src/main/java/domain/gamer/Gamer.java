@@ -22,13 +22,11 @@ public class Gamer {
         return playingCards.calculateScore();
     }
 
-    public int countCards() {
-        return playingCards.size();
-    }
-
     public boolean isBust() {
         return playingCards.isBust();
     }
+
+    public boolean isNotBust() {return playingCards.isNotBust();}
 
     public String getName() {
         return name;
@@ -36,5 +34,9 @@ public class Gamer {
 
     public List<Card> getPlayingCards() {
         return playingCards.getCards();
+    }
+
+    int countCards() {
+        return playingCards.size();
     }
 }

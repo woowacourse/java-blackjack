@@ -42,4 +42,8 @@ public class PlayingCards {
     public boolean isBust() {
         return BLACK_JACK < calculateScore();
     }
+
+    public boolean isNotBust() {
+        return calculateScore() <= BLACK_JACK;
+    }
 }
