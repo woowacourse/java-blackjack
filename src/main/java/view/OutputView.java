@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.rule.DealerRule.DRAW_MAX_SCORE;
+import static domain.user.Dealer.DRAW_MAX_SCORE;
 
 public class OutputView {
     public static void printNameFormat() {
@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     public static void printAutoDraw(Dealer dealer) {
-        System.out.println(dealer.getName() + "는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() + "는 " + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printStatusWithScore(String status, int score) {
