@@ -5,13 +5,13 @@ import domain.card.CardDeck;
 
 import java.util.Objects;
 
-public abstract class User {
+public abstract class BlackjackUser {
     private static final int FIRST_DRAW_CARD_COUNT = 2;
 
     protected final HandCard handCard = new HandCard();
     private final String name;
 
-    public User(String name) {
+    public BlackjackUser(String name) {
         validate(name);
         this.name = name;
     }
@@ -31,13 +31,13 @@ public abstract class User {
             throw new RuntimeException("이미 뽑아놓은 카드가 있습니다.");
         }
         for (int i = 0; i < FIRST_DRAW_CARD_COUNT; i++) {
-            Card card = cardDeck.draw();
+            Card card = cardDeck.pick();
             handCard.add(card);
         }
     }
 
     public void draw(CardDeck cardDeck) {
-        Card card = cardDeck.draw();
+        Card card = cardDeck.pick();
         handCard.add(card);
     }
 
@@ -57,8 +57,8 @@ public abstract class User {
         return handCard.isBust();
     }
 
-    public boolean isBlackJack() {
-        return handCard.isBlackJack();
+    public boolean isBlackjack() {
+        return handCard.isBlackjack();
     }
 
     public abstract boolean isDrawable();

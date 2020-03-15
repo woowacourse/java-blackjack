@@ -51,12 +51,12 @@ public class OutputView {
         Map<String, Boolean> playerResult = gameResult.getPlayerResult();
         for (String name : playerResult.keySet()) {
             System.out.print(name + ": ");
-            System.out.println(makeResultWord(playerResult.get(name)));
+            System.out.println(createResultWord(playerResult.get(name)));
         }
     }
 
-    private static String makeResultWord(Boolean result) {
-        if (result) {
+    private static String createResultWord(Boolean isWinner) {
+        if (isWinner) {
             return "승";
         }
         return "패";

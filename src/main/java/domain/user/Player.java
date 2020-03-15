@@ -1,8 +1,8 @@
 package domain.user;
 
-import static domain.user.HandCard.BLACKJACK_FULL_SCORE;
+import static domain.user.HandCard.PERFECT_SCORE;
 
-public class Player extends User {
+public class Player extends BlackjackUser {
 
     public Player(String name) {
         super(name);
@@ -10,6 +10,6 @@ public class Player extends User {
 
     @Override
     public boolean isDrawable() {
-        return getScore() <= BLACKJACK_FULL_SCORE;
+        return getScore() <= PERFECT_SCORE;
     }
 }

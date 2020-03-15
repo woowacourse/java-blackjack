@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
-public class UserTest {
+public class BlackjackUserTest {
 
     @Test
     void 뽑은_카드가_존재할때_첫번째_드로우_시도시_예외발생_확인_테스트() {

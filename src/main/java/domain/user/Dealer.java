@@ -1,6 +1,6 @@
 package domain.user;
 
-public class Dealer extends User {
+public class Dealer extends BlackjackUser {
     private static final String DEALER_NAME = "딜러";
     public static final int DRAW_MAX_SCORE = 16;
 
@@ -17,19 +17,19 @@ public class Dealer extends User {
         return getScore() <= DRAW_MAX_SCORE;
     }
 
-    public boolean isWinner(User user) {
-        return isBustWin(user) || isBlackJackWin(user) || isScoreWin(user);
+    public boolean isWinner(BlackjackUser blackjackUser) {
+        return isBustWin(blackjackUser) || isBlackjackWin(blackjackUser) || isScoreWin(blackjackUser);
     }
 
-    private boolean isBustWin(User user) {
-        return !isBust() && user.isBust();
+    private boolean isBustWin(BlackjackUser blackjackUser) {
+        return !isBust() && blackjackUser.isBust();
     }
 
-    private boolean isBlackJackWin(User user) {
-        return isBlackJack() && !user.isBlackJack();
+    private boolean isBlackjackWin(BlackjackUser blackjackUser) {
+        return isBlackjack() && !blackjackUser.isBlackjack();
     }
 
-    private boolean isScoreWin(User user) {
-        return user.getScore() <= getScore() && !isBust();
+    private boolean isScoreWin(BlackjackUser blackjackUser) {
+        return blackjackUser.getScore() <= getScore() && !isBust();
     }
 }

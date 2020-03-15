@@ -1,4 +1,5 @@
-import domain.user.HandCard;
+package domain.user;
+
 import domain.card.Card;
 import domain.card.CardFactory;
 import domain.card.Symbol;

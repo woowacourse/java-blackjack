@@ -12,10 +12,10 @@ public class GameResult {
     private final Map<String, Boolean> playerResult = new HashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
-        makeResult(players, dealer);
+        createResult(players, dealer);
     }
 
-    private void makeResult(List<Player> players, Dealer dealer) {
+    private void createResult(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             playerResult.put(player.getName(), !dealer.isWinner(player));
         }

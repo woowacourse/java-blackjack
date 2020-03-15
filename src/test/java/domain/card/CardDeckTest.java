@@ -21,7 +21,7 @@ public class CardDeckTest {
 
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(cardDeck.draw());
+            cards.add(cardDeck.pick());
         }
 
         Assertions.assertThat(cards.size()).isEqualTo(52);
@@ -32,10 +32,10 @@ public class CardDeckTest {
         CardDeck cardDeck = CardFactory.createCardDeck();
 
         for (int i = 0; i < 52; i++) {
-            cardDeck.draw();
+            cardDeck.pick();
         }
 
-        Assertions.assertThatThrownBy(() -> cardDeck.draw())
+        Assertions.assertThatThrownBy(() -> cardDeck.pick())
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("더 이상 뽑을 카드가 없습니다.");
     }

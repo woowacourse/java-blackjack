@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public class HandCard {
     public static final int ACE_BONUS_SCORE = 10;
-    public static final int BLACKJACK_FULL_SCORE = 21;
+    public static final int PERFECT_SCORE = 21;
+    public static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -38,7 +39,7 @@ public class HandCard {
     }
 
     private int getAceScore(int sum) {
-        if (sum <= (BLACKJACK_FULL_SCORE - ACE_BONUS_SCORE) && hasAce()) {
+        if (sum <= (PERFECT_SCORE - ACE_BONUS_SCORE) && hasAce()) {
             return sum + ACE_BONUS_SCORE;
         }
         return sum;
@@ -50,10 +51,10 @@ public class HandCard {
     }
 
     public boolean isBust() {
-        return BLACKJACK_FULL_SCORE < getScore();
+        return PERFECT_SCORE < getScore();
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == 2 && getScore() == BLACKJACK_FULL_SCORE;
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT && getScore() == PERFECT_SCORE;
     }
 }

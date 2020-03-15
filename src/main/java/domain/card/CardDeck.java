@@ -11,7 +11,7 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public Card draw() {
+    public Card pick() {
         if (cards.isEmpty()) {
             throw new RuntimeException("더 이상 뽑을 카드가 없습니다.");
         }

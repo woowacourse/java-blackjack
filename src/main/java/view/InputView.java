@@ -1,6 +1,6 @@
 package view;
 
-import domain.Answer;
+import domain.PlayerAnswer;
 
 import java.util.Scanner;
 
@@ -13,7 +13,7 @@ public class InputView {
         return scanner.nextLine().split(NAMES_DELIMITER);
     }
 
-    public static Answer requestDraw() {
-        return new Answer(scanner.nextLine());
+    public static PlayerAnswer requestDraw() {
+        return new PlayerAnswer(scanner.nextLine());
     }
 }

@@ -1,12 +1,12 @@
 package controller;
 
-import domain.Answer;
 import domain.GameResult;
-import domain.Names;
+import domain.PlayerAnswer;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
@@ -46,8 +46,8 @@ public class Controller {
 
     private boolean askPlayerDraw(Player player) {
         OutputView.printCardFormat(player.getName());
-        Answer answer = InputView.requestDraw();
-        return answer.isAgree();
+        PlayerAnswer playerAnswer = InputView.requestDraw();
+        return playerAnswer.isAgree();
     }
 
     private void passResult(Dealer dealer, List<Player> players) {
@@ -69,8 +69,8 @@ public class Controller {
     }
 
     private List<Player> createPlayers() {
-        Names names = new Names(Arrays.asList(InputView.requestName()));
-        return names.get().stream()
+        PlayerNames playerNames = new PlayerNames(Arrays.asList(InputView.requestName()));
+        return playerNames.get().stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }

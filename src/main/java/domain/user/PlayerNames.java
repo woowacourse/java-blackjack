@@ -1,11 +1,11 @@
-package domain;
+package domain.user;
 
 import java.util.*;
 
-public class Names {
+public class PlayerNames {
     private final List<String> names;
 
-    public Names(List<String> names) {
+    public PlayerNames(List<String> names) {
         validate(names);
         this.names = names;
     }
@@ -24,9 +24,7 @@ public class Names {
 
     private void validateEmptyName(List<String> names) {
         boolean hasEmptyName = names.stream()
-                .map(String::isEmpty)
-                .findAny()
-                .orElse(false);
+                .anyMatch(String::isEmpty);
         if (hasEmptyName) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
