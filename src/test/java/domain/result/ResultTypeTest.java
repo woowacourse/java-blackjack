@@ -19,6 +19,7 @@ class ResultTypeTest {
 	void ofTest() {
 		assertThat(ResultType.of(Score.from(10), Score.from(17))).isEqualTo(ResultType.LOSE);
 		assertThat(ResultType.of(Score.from(21), Score.from(10))).isEqualTo(ResultType.WIN);
+		assertThat(ResultType.of(Score.from(26), Score.from(10))).isEqualTo(ResultType.LOSE);
 		assertThat(ResultType.of(Score.from(5), Score.from(5))).isEqualTo(ResultType.DRAW);
 	}
 }
