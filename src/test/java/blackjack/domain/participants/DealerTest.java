@@ -1,7 +1,6 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,9 +15,6 @@ import static blackjack.domain.participants.HandTest.CARDS_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
-
-    public static final int INITIAL_CARD_COUNT = 2;
-
     @DisplayName("dealer 생성자 테스트")
     @Test
     void dealerValidConstructorTest() {
@@ -26,24 +22,19 @@ public class DealerTest {
         assertThat(new Dealer().getName()).isEqualTo("딜러");
     }
 
-    @DisplayName("drawMoreCard()가 카드패 합이 16 이하일때만 동작하는지 테스트")
-    @ParameterizedTest
-    @MethodSource("drawMoreCardArguments")
-    void drawMoreTest(List<Card> cards, boolean expected) {
-        Dealer dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.draw(card);
-        }
-        dealer.drawMoreCard(new Deck());
-        int willNotBeZeroIfDealerNeedsMoreCard = cards.size() - INITIAL_CARD_COUNT;
-        boolean actual = dealer.addedCardCount() != willNotBeZeroIfDealerNeedsMoreCard;
-        assertThat(actual).isEqualTo(expected);
+    static Stream<Arguments> needsMoreCardArguments() {
+        return Stream.of(
+                Arguments.of(CARDS_8, true),
+                Arguments.of(CARDS_21_ACE_AS_ONE, false)
+        );
     }
 
-    static Stream<Arguments> drawMoreCardArguments() {
-        return Stream.of(
-            Arguments.of(CARDS_8, true),
-            Arguments.of(CARDS_21_ACE_AS_ONE, false)
-        );
+    @DisplayName("needsMoreCard()가 카드패 합이 16 이하일때 true를 반환하는지 테스트")
+    @ParameterizedTest
+    @MethodSource("needsMoreCardArguments")
+    void needsMoreCardTest(List<Card> cards, boolean expected) {
+        Dealer dealer = new Dealer();
+        cards.forEach(dealer::draw);
+        assertThat(dealer.needsMoreCard()).isEqualTo(expected);
     }
 }
