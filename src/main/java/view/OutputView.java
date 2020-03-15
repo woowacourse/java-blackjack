@@ -40,7 +40,7 @@ public class OutputView {
 		System.out.println("딜러: " + dealerCards.toList().stream()
 			.map(Card::toString)
 			.collect(joining(DELIMITER)) +
-			" - 결과: " + ScoreType.getScoreOf(dealerCards));
+			" - 결과: " + ScoreType.of(dealerCards).getScore(dealerCards.getPoint()));
 
 		players.forEach(OutputView::printCardsResultOf);
 	}
@@ -51,7 +51,7 @@ public class OutputView {
 			cards.toList().stream()
 				.map(Card::toString)
 				.collect(joining(DELIMITER)) +
-			" - 결과: " + ScoreType.getScoreOf(player.openAllCards()));
+			" - 결과: " + ScoreType.of(cards).getScore(cards.getPoint()));
 	}
 
 	public static void printResult(Dealer dealer, Players players) {

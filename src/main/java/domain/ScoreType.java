@@ -14,6 +14,10 @@ public enum ScoreType {
 	BIG_ACE(
 		cards -> cards.hasAce() && cards.getPoint() <= 11,
 		cardsPoint -> cardsPoint + 10
+	),
+	NORMAL(
+		cards -> !BURST.scoreJudge.test(cards) && !BIG_ACE.scoreJudge.test(cards),
+		cardsPoint -> cardsPoint
 	);
 
 	private final Predicate<Cards> scoreJudge;
@@ -24,11 +28,14 @@ public enum ScoreType {
 		this.getScore = getScore;
 	}
 
-	public static int getScoreOf(Cards cards) {
+	public static ScoreType of(Cards cards) {
 		return Arrays.stream(ScoreType.values())
 			.filter(scoreType -> scoreType.scoreJudge.test(cards))
-			.mapToInt(scoreType -> scoreType.getScore.apply(cards.getPoint()))
 			.findFirst()
-			.orElse(cards.getPoint());
+			.orElseThrow(NullPointerException::new);
+	}
+
+	public int getScore(int cardsPoint) {
+		return getScore.apply(cardsPoint);
 	}
 }

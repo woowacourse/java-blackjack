@@ -29,18 +29,19 @@ public class User {
 
 	public static User of(List<Card> cards) {
 		User user = new User();
-		cards.forEach(card -> {
-			user.hands.add(card);
-			user.score = ScoreType.getScoreOf(user.hands);
-		});
+		cards.forEach(card -> user.hands.add(card));
+
+		Cards userCards = user.hands;
+		user.score = ScoreType.of(userCards).getScore(userCards.getPoint());
+
 		return user;
 	}
 
 	public void proceedInitialPhase(Deck deck) {
 		for (int i = 0; i < INITIAL_HANDS_SIZE; i++) {
 			hands.add(deck.pop());
-			score = ScoreType.getScoreOf(hands);
 		}
+		score = ScoreType.of(hands).getScore(hands.getPoint());
 	}
 
 	public boolean isNotBlackJack() {
@@ -51,10 +52,9 @@ public class User {
 		return drawStrategy.canDraw(score);
 	}
 
-
 	public void receive(Card card) {
 		hands.add(card);
-		score = ScoreType.getScoreOf(hands);
+		score = ScoreType.of(hands).getScore(hands.getPoint());
 	}
 
 	public Cards openAllCards() {
