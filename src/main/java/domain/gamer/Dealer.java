@@ -10,9 +10,6 @@ import domain.card.Hands;
 public class Dealer extends Gamer {
 	private static final int DRAW_CONDITION = 16;
 
-	private String name;
-	private Hands hands;
-
 	public Dealer() {
 		super("딜러");
 	}

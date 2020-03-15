@@ -8,8 +8,6 @@ import domain.card.Hands;
  *    @author AnHyungJu, ParkDooWon
  */
 public class Player extends Gamer {
-	private String name;
-	private Hands hands;
 
 	public Player(String name) {
 		super(name);
