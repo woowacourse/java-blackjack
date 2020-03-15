@@ -7,7 +7,7 @@ public class User extends Player {
 		super(name);
 	}
 
-	public Result compareScore(Dealer dealer) {
+	public Result compareScore(Gamer dealer) {
 		int dealerScore = dealer.calculateBurstIsZeroScore();
 		int userScore = calculateBurstIsZeroScore();
 		if (userScore > dealerScore) {

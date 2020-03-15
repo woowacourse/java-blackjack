@@ -5,7 +5,7 @@ import domain.card.cardfactory.Card;
 
 import java.util.List;
 
-public interface PlayerInterface {
+public interface Gamer {
 	void cardDraw(List<Card> cards);
 
 	int calculateScore();

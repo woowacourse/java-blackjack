@@ -7,7 +7,7 @@ import domain.card.cardfactory.Card;
 import java.util.List;
 import java.util.Objects;
 
-public class Player implements PlayerInterface {
+public class Player implements Gamer {
 	private static final String ERROR_MESSAGE_NAME_BLANK = "이름은 공란이 될 수 없습니다.";
 
 	protected String name;
