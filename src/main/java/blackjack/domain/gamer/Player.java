@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.result.BlackJackResult;
+
 import java.util.Objects;
 
 public class Player extends Gamer {
@@ -12,5 +14,9 @@ public class Player extends Gamer {
 
     public String getName() {
         return name;
+    }
+
+    public BlackJackResult match(Dealer dealer) {
+        return this.hand.match(dealer.hand);
     }
 }

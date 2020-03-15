@@ -1,4 +1,4 @@
-package blackjack.domain.rule;
+package blackjack.controller.dto.request;
 
 public enum PlayerAnswer {
 
