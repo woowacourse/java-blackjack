@@ -46,9 +46,9 @@ public class BlackJackController {
         participant.drawMoreCard(deck);
     }
 
-    private static void playersDrawMore(final Deck deck, final List<Participant> players) {
-        for (Participant player : players) {
-            playersChooseToDraw(deck, (Player)player);
+    private static void playersDrawMore(final Deck deck, final List<Player> players) {
+        for (Player player : players) {
+            playersChooseToDraw(deck, player);
         }
     }
 

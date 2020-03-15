@@ -1,18 +1,20 @@
 package blackjack.domain;
 
-import static blackjack.domain.participants.Result.*;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Player;
 
 import java.util.List;
 
-import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Participants;
+import static blackjack.domain.participants.Result.*;
 
 public class Rule {
 
     public static void judge(final Participants participants) {
-        Participant dealer = participants.getDealer();
-        List<Participant> players = participants.getPlayers();
-        for (Participant player : players) {
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
+        for (Player player : players) {
             decideWinner(dealer, player);
         }
     }

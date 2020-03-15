@@ -26,25 +26,26 @@ public class Participants implements Iterable<Participant> {
         }
     }
 
-    public Participant getDealer() {
-        return participants.stream()
-            .filter(Participant::isDealer)
-            .findFirst()
-            .orElseThrow(() ->
-                new InvalidParticipantsException("딜러가 없는 게임은 무효입니다.")
-            );
+    public Dealer getDealer() {
+        return (Dealer) participants.stream()
+                .filter(Participant::isDealer)
+                .findFirst()
+                .orElseThrow(() ->
+                        new InvalidParticipantsException("딜러가 없는 게임은 무효입니다.")
+                );
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return participants.stream()
-            .filter(participant -> !participant.isDealer())
-            .collect(Collectors.toList());
+                .filter(participant -> !participant.isDealer())
+                .map(participant -> (Player) participant)
+                .collect(Collectors.toList());
     }
 
     public String getNames() {
         return participants.stream()
-            .map(Participant::getName)
-            .collect(Collectors.joining(JOIN_DELIMITER));
+                .map(Participant::getName)
+                .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
     @Override
