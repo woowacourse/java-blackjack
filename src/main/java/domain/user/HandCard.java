@@ -16,6 +16,10 @@ public class HandCard {
         cards = new ArrayList<>();
     }
 
+    public boolean isNotEmpty() {
+        return !(cards.isEmpty());
+    }
+
     public void add(Card card) {
         cards.add(card);
     }

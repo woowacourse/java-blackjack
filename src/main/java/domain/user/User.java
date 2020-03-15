@@ -1,10 +1,13 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.CardDeck;
 
 import java.util.Objects;
 
 public abstract class User {
+    private static final int FIRST_DRAW_CARD_COUNT = 2;
+
     protected final HandCard handCard = new HandCard();
     private final String name;
 
@@ -23,7 +26,18 @@ public abstract class User {
         return name;
     }
 
-    public void draw(Card card) {
+    public void firstDraw(CardDeck cardDeck) {
+        if (handCard.isNotEmpty()) {
+            throw new RuntimeException("이미 뽑아놓은 카드가 있습니다.");
+        }
+        for (int i = 0; i < FIRST_DRAW_CARD_COUNT; i++) {
+            Card card = cardDeck.draw();
+            handCard.add(card);
+        }
+    }
+
+    public void draw(CardDeck cardDeck) {
+        Card card = cardDeck.draw();
         handCard.add(card);
     }
 
