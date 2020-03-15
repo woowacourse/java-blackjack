@@ -34,7 +34,7 @@ class ResultsTest {
 	}
 
 	@Test
-	void getResultOf() {
+	void getResult() {
 		assertThat(results.getResult(players.getPlayers().get(0))).isFalse();
 		assertThat(results.getResult(players.getPlayers().get(1))).isTrue();
 		assertThat(results.getResult(players.getPlayers().get(2))).isFalse();

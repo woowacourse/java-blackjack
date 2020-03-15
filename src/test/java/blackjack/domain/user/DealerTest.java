@@ -37,13 +37,13 @@ class DealerTest {
 	}
 
 	@Test
-	void create() {
+	void dealer_IsNotNull() {
 		// then
 		assertThat(dealer).isNotNull();
 	}
 
 	@Test
-	void getStartHand_isEqualToFirstCard() {
+	void getStartHand_IsEqualToFirstCard() {
 		dealer.giveCards(Arrays.asList(tenClub, sixDiamond));
 		assertThat(dealer.getStartHand()).isEqualTo(Collections.singletonList(tenClub));
 

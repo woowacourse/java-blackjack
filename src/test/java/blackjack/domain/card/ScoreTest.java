@@ -22,7 +22,7 @@ class ScoreTest {
 	}
 
 	@Test
-	void of() {
+	void of_IsNotNull() {
 		assertThat(zero).isNotNull();
 		assertThat(five).isNotNull();
 		assertThat(six).isNotNull();
@@ -30,7 +30,7 @@ class ScoreTest {
 	}
 
 	@Test
-	void of_IfMinus_ShouldThrowException() {
+	void of_IfMinus_ThrowScoreException() {
 		assertThatThrownBy(() -> Score.of(-1))
 				.isInstanceOf(ScoreException.class);
 	}

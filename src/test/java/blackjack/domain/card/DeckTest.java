@@ -27,7 +27,7 @@ class DeckTest {
 	}
 
 	@Test
-	void create() {
+	void of_IsNotNull() {
 		// then
 		assertThat(simpleDeck).isNotNull();
 	}
@@ -50,7 +50,7 @@ class DeckTest {
 	}
 
 	@Test
-	void draw_ThereAreNoCard_ShouldThrowException() {
+	void draw_ThereAreNoCard_ThrowDeckException() {
 		// given
 		for (int i = 0; i < 4; i++) {
 			simpleDeck.draw();

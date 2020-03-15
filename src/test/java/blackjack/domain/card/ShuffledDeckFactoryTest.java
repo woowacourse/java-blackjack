@@ -17,12 +17,12 @@ class ShuffledDeckFactoryTest {
 	}
 
 	@Test
-	void ShuffledDeckFactory() {
+	void ShuffledDeckFactory_IsNotNull() {
 		assertThat(deckFactory).isNotNull();
 	}
 
 	@Test
-	void create() {
+	void ofDeckFactory() {
 		// when
 		Drawable deck = Deck.ofDeckFactory(deckFactory);
 

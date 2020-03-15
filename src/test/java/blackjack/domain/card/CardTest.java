@@ -20,7 +20,7 @@ public class CardTest {
 	}
 
 	@Test
-	void Card() {
+	void Card_IsNotNull() {
 		assertThat(aceClub).isNotNull();
 		assertThat(twoHeart).isNotNull();
 		assertThat(threeDiamond).isNotNull();

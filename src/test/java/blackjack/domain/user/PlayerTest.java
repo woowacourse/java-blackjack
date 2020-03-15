@@ -36,7 +36,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	void create() {
+	void of_IsNotNull() {
 		assertThat(player).isNotNull();
 	}
 
