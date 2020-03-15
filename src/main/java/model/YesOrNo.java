@@ -3,50 +3,39 @@ package model;
 import exception.IllegalYesOrNoInputException;
 import utils.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
-public class YesOrNo {
-    private static Map<String, YesOrNo> cache = new HashMap<>();
+public enum YesOrNo {
+    YES("y", true),
+    NO("n", false);
 
     private String yesOrNo;
+    private boolean trueOrFalse;
 
-    static {
-        cache.put("y", new YesOrNo("Y"));
-        cache.put("n", new YesOrNo("N"));
+    YesOrNo(String yesOrNo, boolean trueOrFalse) {
+        this.yesOrNo = yesOrNo;
+        this.trueOrFalse = trueOrFalse;
     }
 
-    private YesOrNo(String input) {
-        this.yesOrNo = StringUtils.trimString(input);
-    }
-
-    public static YesOrNo of(String input) {
+    public static YesOrNo getYesOrNoByValue(String input){
         validate(input);
-        return cache.get(input.toLowerCase());
+        return Arrays.stream(YesOrNo.values())
+                .filter(yesOrNo1 -> yesOrNo1.isSameYesOrNo(input))
+                .findAny()
+                .orElseThrow(()->new IllegalYesOrNoInputException("Y 또는 N를 입력해 주세요."));
+    }
+
+    private boolean isSameYesOrNo(final String input) {
+        return yesOrNo.equalsIgnoreCase(input);
     }
 
     private static void validate(String input) {
         StringUtils.validateNull(input);
         StringUtils.validateEmpty(input);
-        validateYesOrNo(input);
     }
 
-    private static void validateYesOrNo(String input) {
-        if (!(isInputYes(input) || isInputNo(input))) {
-            throw new IllegalYesOrNoInputException("Y 또는 N를 입력해 주세요.");
-        }
-    }
-
-    private static boolean isInputNo(String input) {
-        return input.equalsIgnoreCase("N");
-    }
-
-    private static boolean isInputYes(String input) {
-        return input.equalsIgnoreCase("Y");
-    }
-
-    public boolean isInputYes() {
-        return isInputYes(yesOrNo);
+    public boolean getTrueOrFalse() {
+        return trueOrFalse;
     }
 }
 
