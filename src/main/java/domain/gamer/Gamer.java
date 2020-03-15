@@ -3,6 +3,8 @@ package domain.gamer;
 import domain.card.Card;
 import domain.card.PlayingCards;
 
+import java.util.List;
+
 public class Gamer {
     final PlayingCards playingCards;
     private final String name;
@@ -32,7 +34,7 @@ public class Gamer {
         return name;
     }
 
-    public PlayingCards getPlayingCards() {
-        return playingCards;
+    public List<Card> getPlayingCards() {
+        return playingCards.getCards();
     }
 }
