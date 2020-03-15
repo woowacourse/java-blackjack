@@ -32,10 +32,9 @@ public class CardHand implements Iterable<Card> {
 
     public int calculateScoreWithNoAce() {
         return cards.stream()
-                .map(Card::getSymbol)
-                .map(Symbol::getScore)
+                .mapToInt(Card::calculateScore)
                 .reduce(Integer::sum)
-                .get();
+                .orElseGet(()->0);
     }
 
     public boolean isAce() {

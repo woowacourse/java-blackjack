@@ -37,4 +37,8 @@ public class Card {
     public String toString() {
         return symbol.toString() + type.toString();
     }
+
+    public int calculateScore() {
+        return symbol.getScore();
+    }
 }
