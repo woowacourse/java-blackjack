@@ -5,6 +5,7 @@ import blackjack.domain.Result;
 public class Player extends User {
 
     public static final String CANNOT_DETERMINE_RESULT = "승패를 계산할 수 없습니다";
+    public static final int DRAW_VAL = 0;
 
     public Player(String name) {
         super(name);
@@ -32,21 +33,21 @@ public class Player extends User {
         if (dealer.isBusted() && this.isBusted()) {
             return true;
         }
-        return dealer.getTotalScore() == this.getTotalScore();
+        return dealer.compareScoreWith(this.getTotalScore()) == DRAW_VAL;
     }
 
     private boolean isLose(Dealer dealer) {
         if (!dealer.isBusted() && this.isBusted()) {
             return true;
         }
-        return dealer.getTotalScore() > this.getTotalScore();
+        return dealer.compareScoreWith(this.getTotalScore()) < DRAW_VAL;
     }
 
     private boolean isWin(Dealer dealer) {
         if (dealer.isBusted() && !this.isBusted()) {
             return true;
         }
-        return dealer.getTotalScore() < this.getTotalScore();
+        return dealer.compareScoreWith(this.getTotalScore()) > DRAW_VAL;
     }
 
 }

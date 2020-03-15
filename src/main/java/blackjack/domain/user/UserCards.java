@@ -59,4 +59,8 @@ public class UserCards {
                 .map(Card::toString)
                 .collect(Collectors.toList());
     }
+
+    public String firstCard() {
+        return this.getCardName().get(0);
+    }
 }

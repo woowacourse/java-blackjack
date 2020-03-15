@@ -1,7 +1,6 @@
 package blackjack.utils;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.view.InputView;
@@ -45,9 +44,7 @@ public class InputHandler {
     }
 
     public static void hitMoreCard(Users users, Deck deck) {
-        List<User> gameUsers = users.getUsers();
-        gameUsers.stream()
-                .filter(user -> user instanceof Player)
+        users.getPlayer()
                 .forEach(user -> askForHit(deck, user));
     }
 

@@ -10,10 +10,14 @@ public class Dealer extends User {
     }
 
     public String showInitialCardNames() {
-        return name + CARD + cards.getCardName().get(0);
+        return name + CARD + cards.firstCard();
     }
 
     public boolean isUnderThreshold() {
         return cards.calculateTotalScore() <= THRESHOLD;
+    }
+
+    public int compareScoreWith(int playerTotalScore) {
+        return this.getTotalScore() - playerTotalScore;
     }
 }
