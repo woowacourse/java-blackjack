@@ -11,14 +11,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class ScoreTest {
 	@DisplayName("올바른 범위의 정수를 인자로 넣었을때 인스턴스 생성")
 	@ParameterizedTest
-	@ValueSource(ints = {1, 30})
+	@ValueSource(ints = {0, 21})
 	void constructor(int num) {
 		assertThat(Score.valueOf(num)).isInstanceOf(Score.class);
 	}
 
 	@DisplayName("범위를 벗어난 정수를 인자로 넣었을때 예외 발생")
 	@ParameterizedTest
-	@ValueSource(ints = {0, 31})
+	@ValueSource(ints = {-1, 22})
 	void constructor_OutOfBoundsInt_ExceptionThrown(int num) {
 		assertThatThrownBy(() -> Score.valueOf(num)).isInstanceOf(IllegalArgumentException.class);
 	}

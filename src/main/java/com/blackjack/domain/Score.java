@@ -58,18 +58,18 @@ public class Score {
 		return Objects.hash(score);
 	}
 
-	@Override
-	public String toString() {
-		return String.valueOf(score);
-	}
-
-	public ResultType compareTo(Score dealerScore) {
-		if (score > dealerScore.score) {
+	public ResultType compareTo(Score that) {
+		if (score > that.score) {
 			return ResultType.WIN;
 		}
-		if (score < dealerScore.score) {
+		if (score < that.score) {
 			return ResultType.LOSE;
 		}
 		return ResultType.DRAW;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(score);
 	}
 }
