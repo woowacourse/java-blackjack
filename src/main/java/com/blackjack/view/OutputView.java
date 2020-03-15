@@ -53,6 +53,10 @@ public class OutputView {
 		System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, loseCount);
 	}
 
+	public static void printErrorMessage(String message) {
+		System.out.println(message);
+	}
+
 	private static String makePlayerScore(User player) {
 		return player.getHands().calculateScore().toString();
 	}
