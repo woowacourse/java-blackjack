@@ -32,8 +32,7 @@ public class Dealer implements Participant {
 
     @Override
     public void set(final Result result) {
-        this.result.putIfAbsent(result, 0);
-        this.result.put(result, this.result.get(result) + 1);
+        this.result.put(result, this.result.getOrDefault(result, 0) + 1);
     }
 
     @Override
