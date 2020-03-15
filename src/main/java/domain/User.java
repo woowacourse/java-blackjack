@@ -20,7 +20,8 @@ public abstract class User {
 	}
 
 	public int getScore() {
-		return cards.getScore();
+		return cards.getScore()
+				.getValue();
 	}
 
 	public int getCardSize() {
@@ -32,7 +33,8 @@ public abstract class User {
 	}
 
 	public boolean isBlackJack() {
-		return cards.isBlackJack();
+		return cards.getScore()
+				.isBlackjack(cards.getSize());
 	}
 
 	public boolean isNotBlackJack() {
@@ -40,7 +42,8 @@ public abstract class User {
 	}
 
 	public boolean isBust() {
-		return cards.isBust();
+		return cards.getScore()
+				.isBust();
 	}
 
 	public boolean isNotBust() {
@@ -48,7 +51,8 @@ public abstract class User {
 	}
 
 	public boolean isScoreGreaterThan(int score) {
-		return cards.isScoreGreaterThan(score);
+		return cards.getScore()
+				.isGreaterThan(score);
 	}
 
 	public abstract boolean isWin(User user);

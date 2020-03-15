@@ -15,31 +15,15 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public int getSize() {
-		return cards.size();
-	}
-
-	public int getScore() {
-		return score().getValue();
-	}
-
 	public void add(Card card) {
 		cards.add(card);
 	}
 
-	public boolean isBlackJack() {
-		return score().isBlackjack(cards.size());
+	public int getSize() {
+		return cards.size();
 	}
 
-	public boolean isBust() {
-		return score().isBust();
-	}
-
-	public boolean isScoreGreaterThan(int score) {
-		return score().isGreaterThan(score);
-	}
-
-	private Score score() {
+	public Score getScore() {
 		Score score = Score.ZERO;
 		for (Card card : cards) {
 			score = score.add(card.getPoint());

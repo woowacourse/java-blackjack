@@ -26,8 +26,10 @@ public class BlackJackController {
 	public void run() {
 		cardDeck.shuffle();
 		distributeTwoCard();
-		askMoreCard();
-		addCardIfNeed();
+		if (dealer.isNotBlackJack()) {
+			askMoreCard();
+			addCardIfNeed();
+		}
 		OutputView.printCardsResults(dealer, players);
 		OutputView.printGameResult(Results.calculate(dealer, players));
 	}

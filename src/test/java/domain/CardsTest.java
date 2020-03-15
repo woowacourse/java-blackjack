@@ -29,23 +29,6 @@ public class CardsTest {
 		cards.add(Card.of("스페이드", "K"));
 		cards.add(Card.of("스페이드", "3"));
 		cards.add(Card.of("스페이드", "A"));
-		assertThat(cards.getScore()).isEqualTo(14);
-	}
-
-	@Test
-	void isBlackJack() {
-		Cards cards = new Cards();
-		cards.add(Card.of("스페이드", "K"));
-		cards.add(Card.of("스페이드", "A"));
-		assertThat(cards.isBlackJack()).isTrue();
-	}
-
-	@Test
-	void isBust() {
-		Cards cards = new Cards();
-		cards.add(Card.of("스페이드", "J"));
-		cards.add(Card.of("스페이드", "Q"));
-		cards.add(Card.of("스페이드", "K"));
-		assertThat(cards.isBust()).isTrue();
+		assertThat(cards.getScore()).isEqualTo(new Score(14));
 	}
 }
