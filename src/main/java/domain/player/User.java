@@ -7,13 +7,13 @@ public class User extends Player {
 		super(name);
 	}
 
-	public Result compareScore(Gamer dealer) {
-		int dealerScore = dealer.calculateBurstIsZeroScore();
+	public Result compareScore(Gamer gamer) {
+		int toCompareScore = gamer.calculateBurstIsZeroScore();
 		int userScore = calculateBurstIsZeroScore();
-		if (userScore > dealerScore) {
+		if (userScore > toCompareScore) {
 			return Result.WIN;
 		}
-		if (userScore == dealerScore) {
+		if (userScore == toCompareScore) {
 			return Result.DRAW;
 		}
 		return Result.LOSE;
