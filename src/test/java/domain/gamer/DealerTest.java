@@ -52,7 +52,7 @@ public class DealerTest {
     void addCardAtDealerTest(List<Card> cards, int expectedSize) {
         Dealer dealer = new Dealer();
         dealer.addCard(cards);
-        Deck deck = new Deck(CardFactory.getInstance());
+        Deck deck = new Deck(CardsFactory.getInstance());
         dealer.addCardAtDealer(deck.popCard(1));
         assertThat(dealer.getCards()).hasSize(expectedSize);
     }

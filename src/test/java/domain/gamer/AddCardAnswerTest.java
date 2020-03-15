@@ -15,22 +15,22 @@ public class AddCardAnswerTest {
     @DisplayName("y 또는 n이 아닌 다른 문자가 들어오는 경우 예외처리 테스트")
     void notYesOrNoTest() {
         String answer = "a";
-        Assertions.assertThatThrownBy(() -> AddCardAnswer.findYesOrNo(answer))
+        Assertions.assertThatThrownBy(() -> AddCardAnswer.isYes(answer))
                 .isInstanceOf(YesOrNoFormatException.class);
     }
 
     @ParameterizedTest
     @MethodSource("generateYesOrNo")
     @DisplayName("y 또는 n이 제대로 들어오는 경우 테스트")
-    void correctYesOrNoTest(String answer, AddCardAnswer addCardAnswer) {
-        Assertions.assertThat(AddCardAnswer.findYesOrNo(answer)).isEqualTo(addCardAnswer);
+    void correctYesOrNoTest(String answer, boolean isYes) {
+        Assertions.assertThat(AddCardAnswer.isYes(answer)).isEqualTo(isYes);
     }
 
     static Stream<Arguments> generateYesOrNo() {
         return Stream.of(
-                Arguments.of("y", AddCardAnswer.YES),
-                Arguments.of("n", AddCardAnswer.NO),
-                Arguments.of("Y", AddCardAnswer.YES),
-                Arguments.of("N", AddCardAnswer.NO));
+                Arguments.of("y", true),
+                Arguments.of("n", false),
+                Arguments.of("Y", true),
+                Arguments.of("N", false));
     }
 }

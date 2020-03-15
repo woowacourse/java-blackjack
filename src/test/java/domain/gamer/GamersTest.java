@@ -19,7 +19,7 @@ public class GamersTest {
 
 	@Test
 	public void gamersCardInitTest() {
-		Deck deck = new Deck(CardFactory.getInstance());
+		Deck deck = new Deck(CardsFactory.getInstance());
 		Gamers gamers = new Gamers("pobi, json", new Dealer());
 		gamers.initCard(deck);
 		Player player = gamers.getPlayers().get(0);

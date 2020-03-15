@@ -16,14 +16,11 @@ public enum AddCardAnswer {
         this.drawable = drawable;
     }
 
-    public boolean getDrawable() {
-        return drawable;
-    }
-
-    public static AddCardAnswer findYesOrNo(String answer) {
+    public static boolean isYes(String answer) {
         return Arrays.stream(values())
                 .filter(x -> x.answerValue.equals(answer.toLowerCase()))
                 .findFirst()
-                .orElseThrow(() -> new YesOrNoFormatException("y 또는 n을 입력해주세요."));
+                .orElseThrow(() -> new YesOrNoFormatException("y 또는 n을 입력해주세요."))
+                .drawable;
     }
 }

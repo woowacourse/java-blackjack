@@ -2,6 +2,8 @@ package domain.gamer;
 
 import domain.card.Deck;
 import utils.InputUtils;
+import view.InputView;
+import view.OutputView;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Gamers {
     private static final int INIT_CARD_SIZE = 2;
+    private static final int ADD_CARD_SIZE = 1;
 
     private List<Player> players;
     private Dealer dealer;
@@ -27,6 +30,21 @@ public class Gamers {
     public void initCard(Deck deck) {
         players.forEach(player -> player.addCard(deck.popCard(INIT_CARD_SIZE)));
         dealer.addCard(deck.popCard(INIT_CARD_SIZE));
+    }
+
+
+    public void addCardAtGamers(Deck deck) {
+        players.forEach(player -> drawCardOfPlayer(deck, player));
+        dealer.addCardAtDealer(deck.popCard(ADD_CARD_SIZE));
+        OutputView.printAddCardAtDealer();
+    }
+
+    private void drawCardOfPlayer(Deck deck, Player player) {
+        while (player.isDrawable()
+                && AddCardAnswer.isYes(InputView.inputAsDrawable(player))) {
+            player.addCard(deck.popCard(ADD_CARD_SIZE));
+            OutputView.printGamerCard(player);
+        }
     }
 
     public Map<Player, MatchResult> generateGameResults() {
