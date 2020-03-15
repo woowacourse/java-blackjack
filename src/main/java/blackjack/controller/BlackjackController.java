@@ -9,9 +9,9 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.BlackJackResult;
-import blackjack.domain.result.PlayerResultMatcher;
 import blackjack.domain.rule.HandInitializer;
-import blackjack.domain.rule.PlayerAnswer;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -21,11 +21,35 @@ import java.util.Map;
 
 public class BlackjackController {
 
-    public Players createPlayers(NamesRequestDto namesRequestDto) {
+    private InputView inputView;
+    private OutputView outputView;
+
+    public BlackjackController(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
+    public void run(Dealer dealer, Deck deck) {
+        Players players = createPlayers(inputView.askPlayerNames());
+
+        HandResponseDtos handResponseDtos = initializeHand(dealer, players, deck);
+        outputView.printInitialHand(handResponseDtos);
+
+        runPlayersHitOrStay(deck, players);
+        runDealerDrawMoreCard(dealer, deck);
+
+        HandResponseDtos result = getFinalHand(dealer, players);
+        outputView.printHandWithScore(result);
+
+        GamersResultResponse gamersResultResponse = getResultResponse(dealer, players);
+        outputView.printResult(gamersResultResponse);
+    }
+
+    private Players createPlayers(NamesRequestDto namesRequestDto) {
         return Players.from(namesRequestDto.getNames());
     }
 
-    public HandResponseDtos initializeHand(Dealer dealer, Players players, Deck deck) {
+    private HandResponseDtos initializeHand(Dealer dealer, Players players, Deck deck) {
         HandInitializer.initialize(dealer, players, deck);
         List<HandResponseDto> handResponseDtoList = new ArrayList<>();
         handResponseDtoList.add(HandResponseDto.ofInitialDealer(dealer));
@@ -35,19 +59,29 @@ public class BlackjackController {
         return new HandResponseDtos(handResponseDtoList);
     }
 
-    public HandResponseDto drawMoreCard(Player player, Deck deck, PlayerAnswer playerAnswer) {
-        if (playerAnswer.isYes()) {
-            player.draw(deck.pick());
+    private void runPlayersHitOrStay(Deck deck, Players players) {
+        for (Player player : players) {
+            runOnePlayerHitOrStay(deck, player);
         }
-        return HandResponseDto.of(player);
     }
 
-    public String drawMoreCard(Dealer dealer, Deck deck) {
-        dealer.draw(deck.pick());
-        return "딜러는 16이하라 한 장의 카드를 더 뽑았습니다.";
+    private void runOnePlayerHitOrStay(Deck deck, Player player) {
+        String name = player.getName();
+        while (!player.isBusted() && inputView.askPlayerAnswer(name).isYes()) {
+            player.draw(deck.pick());
+            HandResponseDto handResponseDto = HandResponseDto.of(player);
+            outputView.printHand(handResponseDto);
+        }
     }
 
-    public HandResponseDtos getFinalHand(Dealer dealer, Players players) {
+    private void runDealerDrawMoreCard(Dealer dealer, Deck deck) {
+        while (dealer.shouldDrawCard()) {
+            dealer.draw(deck.pick());
+            outputView.printDealerDrawCard();
+        }
+    }
+
+    private HandResponseDtos getFinalHand(Dealer dealer, Players players) {
         List<HandResponseDto> handResponseDtos = new ArrayList<>();
         handResponseDtos.add(HandResponseDto.of(dealer));
         for (Player player : players) {
@@ -56,12 +90,11 @@ public class BlackjackController {
         return new HandResponseDtos(handResponseDtos);
     }
 
-    public GamersResultResponse getResult(Dealer dealer, Players players) {
-        EnumMap<BlackJackResult, Integer> dealerResult = new EnumMap<>(BlackJackResult.class);
+    private GamersResultResponse getResultResponse(Dealer dealer, Players players) {
         Map<Player, BlackJackResult> playersResult = new HashMap<>();
-
+        EnumMap<BlackJackResult, Integer> dealerResult = new EnumMap<>(BlackJackResult.class);
         for (Player player : players) {
-            BlackJackResult result = PlayerResultMatcher.match(dealer, player);
+            BlackJackResult result = player.match(dealer);
             playersResult.put(player, result);
             dealerResult.computeIfPresent(result.reverse(), (key, value) -> ++value);
             dealerResult.putIfAbsent(result.reverse(), 1);

@@ -18,9 +18,10 @@ public class ConsoleOutputView implements OutputView {
     private static final String HAND_WITH_SCORE_FORMAT = "%s 카드 : %s - 결과 : %d";
     private static final String RESULT_MESSAGE = "## 최종 승패";
     private static final String GAMERS_RESULT_FORMAT = "%s : %s";
+    public static final String DEALER_DRAW_ONE_MORE_CARD = "딜러는 16이하라 한 장의 카드를 더 뽑았습니다.";
 
     @Override
-    public void printInitialCard(HandResponseDtos handResponseDtos) {
+    public void printInitialHand(HandResponseDtos handResponseDtos) {
         System.out.println();
         String names = StringParser.parseNamesToString(handResponseDtos.getHandResponseDtos());
         String handStatement = String.format(INITIAL_CARD_FORMAT, names);
@@ -56,6 +57,11 @@ public class ConsoleOutputView implements OutputView {
         System.out.println(RESULT_MESSAGE);
         printDealerResult(gamersResultResponse.getDealerResult());
         printPlayersResult(gamersResultResponse.getPlayersResult());
+    }
+
+    @Override
+    public void printDealerDrawCard() {
+        System.out.println(DEALER_DRAW_ONE_MORE_CARD);
     }
 
     private static void printDealerResult(Map<BlackJackResult, Integer> dealerResult) {

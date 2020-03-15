@@ -1,5 +1,6 @@
 package blackjack.domain.rule;
 
+import blackjack.controller.dto.request.PlayerAnswer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

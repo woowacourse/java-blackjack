@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.controller.dto.request.NamesRequestDto;
-import blackjack.domain.rule.PlayerAnswer;
+import blackjack.controller.dto.request.PlayerAnswer;
 
 public interface InputView {
 
-    NamesRequestDto inputPlayerNames();
+    NamesRequestDto askPlayerNames();
 
-    PlayerAnswer inputPlayerAnswer(String name);
+    PlayerAnswer askPlayerAnswer(String name);
 
 }

@@ -25,7 +25,7 @@ public class HandResponseDto {
     }
 
     public static HandResponseDto of(Gamer gamer) {
-        return new HandResponseDto(gamer.getName(), gamer.getHand(), gamer.calculate().getScore());
+        return new HandResponseDto(gamer.getName(), gamer.getHand(), gamer.calculateScore());
     }
 
     public String getOwnerName() {

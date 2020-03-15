@@ -10,7 +10,7 @@ public class Dealer extends Gamer {
     private static final int DRAW_THRESHOLD = 16;
 
     public boolean shouldDrawCard() {
-        return !calculate().isBusted() && calculate().getScore() <= DRAW_THRESHOLD;
+        return !isBusted() && calculateScore() <= DRAW_THRESHOLD;
     }
 
     @Override

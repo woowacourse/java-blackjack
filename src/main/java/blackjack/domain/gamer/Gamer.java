@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.rule.Score;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public abstract class Gamer {
         return hand.isBusted();
     }
 
-    public Score calculate() {
+    public int calculateScore() {
         return hand.calculate();
     }
 

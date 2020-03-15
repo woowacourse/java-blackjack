@@ -32,6 +32,9 @@ public class Score {
     }
 
     public BlackJackResult match(Score target) {
+        if (isBusted()) {
+            return BlackJackResult.LOSE;
+        }
         if (this.score < target.score)
             return BlackJackResult.LOSE;
         if (this.score > target.score)

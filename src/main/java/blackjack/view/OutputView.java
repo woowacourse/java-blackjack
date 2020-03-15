@@ -6,12 +6,14 @@ import blackjack.controller.dto.response.HandResponseDtos;
 
 public interface OutputView {
 
-    void printInitialCard(HandResponseDtos handResponseDtos);
+    void printInitialHand(HandResponseDtos handResponseDtos);
 
     void printHand(HandResponseDto handResponseDto);
 
     void printHandWithScore(HandResponseDtos handResponseDtos);
 
     void printResult(GamersResultResponse gamersResultResponse);
+
+    void printDealerDrawCard();
 
 }

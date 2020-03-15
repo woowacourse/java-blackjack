@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.rule.HandCalculator;
 import blackjack.domain.rule.Score;
 
@@ -19,13 +20,21 @@ public class Hand {
         hand.add(card);
     }
 
-    public Score calculate() {
-        return HandCalculator.calculate(hand);
+    public int calculate() {
+        return sumScore().getScore();
     }
 
     public boolean isBusted() {
-        Score score = calculate();
+        Score score = sumScore();
         return score.isBusted();
+    }
+
+    public BlackJackResult match(Hand hand) {
+        return sumScore().match(hand.sumScore());
+    }
+
+    private Score sumScore() {
+        return HandCalculator.calculate(hand);
     }
 
     public List<Card> getHand() {
