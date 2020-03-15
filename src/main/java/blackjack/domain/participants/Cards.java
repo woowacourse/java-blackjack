@@ -32,7 +32,7 @@ public class Cards {
 
     public int calculate() {
         int total = cards.stream()
-            .map(Card::getRankValue)
+            .mapToInt(Card::getRankValue)
             .reduce(0, Integer::sum);
         return reduceIfAceExists(total);
     }
