@@ -1,16 +1,15 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CardDeck {
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
     public CardDeck() {
-        cards = CardFactory.getInstance();
+        cards = new LinkedList<>(Card.getInstance());
     }
 
     public void dealFirstCards(Participant participant) {
@@ -18,24 +17,12 @@ public class CardDeck {
         participant.addCard(giveCard());
     }
 
-    public boolean dealAdditionalCard(Dealer dealer) {
-        dealer.addCard(giveCard());
-        return true;
-    }
-
-    public boolean dealAdditionalCard(Player player, String reply) {
-        if ("y".equals(reply)) {
-            player.addCard(giveCard());
-            return true;
-        }
-        if ("n".equals(reply)) {
-            return false;
-        }
-        throw new IllegalArgumentException("응답은 y 혹은 n만 가능합니다.");
+    public void dealAdditionalCard(Participant participant) {
+        participant.addCard(giveCard());
     }
 
     private Card giveCard() {
-        return cards.remove(0);
+        return cards.poll();
     }
 
     public int getSize() {

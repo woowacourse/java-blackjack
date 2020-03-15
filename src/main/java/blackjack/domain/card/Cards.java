@@ -35,9 +35,9 @@ public class Cards {
         return sum;
     }
 
-    public List<String> showCardsInfo() {
+    public List<String> cardsInfo() {
         return cards.stream()
-                .map(Card::showCardInfo)
+                .map(Card::cardInfo)
                 .collect(Collectors.toList());
     }
 

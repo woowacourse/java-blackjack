@@ -10,8 +10,8 @@ public class CardsTest {
     @Test
     void sumTest() {
         Cards cards = new Cards();
-        cards.add(CardFactory.of(Type.THREE, Figure.CLOVER));
-        cards.add(CardFactory.of(Type.KING, Figure.CLOVER));
+        cards.add(Card.of(Type.THREE, Figure.CLOVER));
+        cards.add(Card.of(Type.KING, Figure.CLOVER));
 
         int expected = 13;
         assertThat(cards.computeScore()).isEqualTo(expected);
@@ -21,9 +21,9 @@ public class CardsTest {
     @Test
     void aceSumTest() {
         Cards cards = new Cards();
-        cards.add(CardFactory.of(Type.ACE, Figure.CLOVER));
-        cards.add(CardFactory.of(Type.KING, Figure.CLOVER));
-        cards.add(CardFactory.of(Type.QUEEN, Figure.HEART));
+        cards.add(Card.of(Type.ACE, Figure.CLOVER));
+        cards.add(Card.of(Type.KING, Figure.CLOVER));
+        cards.add(Card.of(Type.QUEEN, Figure.HEART));
 
         int expected = 21;
         assertThat(cards.computeScore()).isEqualTo(expected);
@@ -33,8 +33,8 @@ public class CardsTest {
     @Test
     void aceSumTest2() {
         Cards cards = new Cards();
-        cards.add(CardFactory.of(Type.ACE, Figure.CLOVER));
-        cards.add(CardFactory.of(Type.KING, Figure.CLOVER));
+        cards.add(Card.of(Type.ACE, Figure.CLOVER));
+        cards.add(Card.of(Type.KING, Figure.CLOVER));
 
         int expected = 21;
         assertThat(cards.computeScore()).isEqualTo(expected);

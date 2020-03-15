@@ -29,11 +29,9 @@ public class Dealer extends Participant {
     public DealerResult createDealerResult(List<PlayerResult> playerResults) {
         Map<ResultType, Integer> dealerResult = new HashMap<>();
 
-        for (ResultType resultType : ResultType.values()) {
-            int resultCount = (int) playerResults.stream()
-                    .filter(playerResult -> playerResult.getResultType() == resultType)
-                    .count();
-            dealerResult.put(ResultType.reverse(resultType), resultCount);
+        for (ResultType type : ResultType.values()) {
+            int resultCount = type.countSameResultType(playerResults);
+            dealerResult.put(type.reverse(), resultCount);      // 플레이어 승 = 딜러 패, 플레이어 패 = 딜러 승
         }
 
         return new DealerResult(name, dealerResult);

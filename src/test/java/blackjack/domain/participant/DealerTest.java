@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Figure;
 import blackjack.domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +13,8 @@ public class DealerTest {
     @Test
     void getMoreCardTest() {
         Dealer dealer = new Dealer();
-        dealer.addCard(CardFactory.of(Type.FIVE, Figure.CLOVER));
-        dealer.addCard(CardFactory.of(Type.FIVE, Figure.HEART));
+        dealer.addCard(Card.of(Type.FIVE, Figure.CLOVER));
+        dealer.addCard(Card.of(Type.FIVE, Figure.HEART));
 
         assertThat(dealer.canGetMoreCard()).isTrue();
     }
@@ -23,8 +23,8 @@ public class DealerTest {
     @Test
     void getMoreCardTest2() {
         Dealer dealer = new Dealer();
-        dealer.addCard(CardFactory.of(Type.QUEEN, Figure.CLOVER));
-        dealer.addCard(CardFactory.of(Type.KING, Figure.CLOVER));
+        dealer.addCard(Card.of(Type.QUEEN, Figure.CLOVER));
+        dealer.addCard(Card.of(Type.KING, Figure.CLOVER));
 
         assertThat(dealer.canGetMoreCard()).isFalse();
     }

@@ -20,7 +20,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String selectYesOrNo(String name) {
+    public static String readYesOrNo(String name) {
         System.out.println(String.format(SELECT_YES_OR_NO_MSG, name));
         return (scanner.nextLine()).trim();
     }

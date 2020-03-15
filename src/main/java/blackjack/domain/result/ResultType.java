@@ -1,11 +1,14 @@
 package blackjack.domain.result;
 
+import java.util.List;
+
 public enum ResultType {
     WIN("승"),
     LOSE("패"),
     DRAW("무");
 
     private static final int BUST = 21;
+
     private final String word;
 
     ResultType(String word) {
@@ -28,14 +31,20 @@ public enum ResultType {
         return LOSE;
     }
 
-    public static ResultType reverse(ResultType resultType) {
-        if (resultType == ResultType.WIN) {
-            return ResultType.LOSE;
+    public ResultType reverse() {
+        if (this == WIN) {
+            return LOSE;
         }
-        if (resultType == ResultType.LOSE) {
-            return ResultType.WIN;
+        if (this == LOSE) {
+            return WIN;
         }
-        return resultType;
+        return this;
+    }
+
+    public int countSameResultType(List<PlayerResult> playerResults) {
+        return (int) playerResults.stream()
+                .filter(playerResult -> playerResult.hasSameResult(this))
+                .count();
     }
 
     public String getWord() {

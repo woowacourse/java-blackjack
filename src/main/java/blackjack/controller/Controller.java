@@ -12,47 +12,61 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class Controller {
+    private final CardDeck deck = new CardDeck();
 
     public void run() {
-        List<String> names = InputView.enterNames();
-        Players players = new Players(names);
+        Players players = new Players(InputView.enterNames());
         Dealer dealer = new Dealer();
-        CardDeck deck = new CardDeck();
 
-        dealFirstCards(deck, dealer, players);
-        OutputView.printInitialStatus(players, dealer);
+        dealFirstCards(dealer, players);
 
-        dealAdditionalCards(deck, dealer, players);
+        dealAdditionalCards(players, dealer);
 
-        OutputView.printFinalStatus(players, dealer);
-
-        List<PlayerResult> playerResults = players.createPlayerResults(dealer);
-        DealerResult dealerResult = dealer.createDealerResult(playerResults);
-        OutputView.printFinalResult(dealerResult, playerResults);
+        showResult(players, dealer);
     }
 
-    private void dealFirstCards(CardDeck deck, Dealer dealer, Players players) {
+    private void dealFirstCards(Dealer dealer, Players players) {
         deck.dealFirstCards(dealer);
+
         for (Player player : players.getPlayers()) {
             deck.dealFirstCards(player);
         }
+
+        OutputView.printInitialStatus(players, dealer);
     }
 
-    private void dealAdditionalCards(CardDeck deck, Dealer dealer, Players players) {
+    private void dealAdditionalCards(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            while (player.canGetMoreCard()) {
-                String reply = InputView.selectYesOrNo(player.getName());
-                if (deck.dealAdditionalCard(player, reply)) {
-                    OutputView.printCardsStatus(player.getName(), player.showCards());
-                    continue;
-                }
-                break;
-            }
+            dealAdditionalCards(player);
         }
 
+        dealAdditionalCards(dealer);
+
+        OutputView.printFinalStatus(players, dealer);
+    }
+
+    private void dealAdditionalCards(Player player) {
+        while (player.canGetMoreCard() && player.wantMoreCard(readYesOrNo(player))) {
+            deck.dealAdditionalCard(player);
+            OutputView.printCardsStatus(player.name(), player.showCards());
+        }
+    }
+
+    private void dealAdditionalCards(Dealer dealer) {
         while (dealer.canGetMoreCard()) {
             deck.dealAdditionalCard(dealer);
-            OutputView.printDealerGetMoreCard(Dealer.LOWER_BOUND);
+            OutputView.printDealerGetMoreCard();
         }
+    }
+
+    private String readYesOrNo(Player player) {
+        return InputView.readYesOrNo(player.name());
+    }
+
+    private void showResult(Players players, Dealer dealer) {
+        List<PlayerResult> playerResults = players.createPlayerResults(dealer);
+        DealerResult dealerResult = dealer.createDealerResult(playerResults);
+
+        OutputView.printFinalResult(dealerResult, playerResults);
     }
 }
