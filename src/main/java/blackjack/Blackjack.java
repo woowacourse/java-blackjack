@@ -13,6 +13,8 @@ import blackjack.domain.user.exceptions.PlayersException;
 import blackjack.view.ErrorView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.YesOrNo;
+import blackjack.view.exceptions.YesOrNoException;
 
 public class Blackjack {
 	public static void main(String[] args) {
@@ -73,7 +75,24 @@ public class Blackjack {
 	}
 
 	private static boolean willProgress(Player player) {
-		return player.isNotBust() && InputView.inputYesOrNo(player).isYes();
+		YesOrNo yesOrNo = prepareYesOrNo(player);
+		return player.isNotBust() && yesOrNo.isYes();
+	}
+
+	private static YesOrNo prepareYesOrNo(Player player) {
+		YesOrNo yesOrNo;
+		do {
+			yesOrNo = prepareYesOrNoIfValid(player);
+		} while (yesOrNo == null);
+		return yesOrNo;
+	}
+
+	private static YesOrNo prepareYesOrNoIfValid(Player player) {
+		try {
+			return YesOrNo.of(InputView.inputYesOrNo(player));
+		} catch (YesOrNoException e) {
+			return null;
+		}
 	}
 
 	private static void progressDealer(Dealer dealer, Drawable cards) {

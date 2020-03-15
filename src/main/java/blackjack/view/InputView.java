@@ -14,22 +14,9 @@ public class InputView {
 		return scanner.nextLine();
 	}
 
-	public static YesOrNo inputYesOrNo(Player player) {
-		YesOrNo yesOrNo;
-		do {
-			yesOrNo = inputYesOrNoIfValid(player);
-		} while (yesOrNo == null);
-		return yesOrNo;
-	}
-
-	public static YesOrNo inputYesOrNoIfValid(Player player) {
+	public static String inputYesOrNo(Player player) {
 		System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getName());
-		try {
-			return YesOrNo.of(scanner.nextLine());
-		} catch (YesOrNoException e) {
-			ErrorView.print(e);
-			return null;
-		}
+		return scanner.nextLine();
 	}
 
 }
