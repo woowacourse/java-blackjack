@@ -13,10 +13,6 @@ import domain.card.Type;
 import domain.user.User;
 
 class ResultTypeTest {
-	// @Test
-	// void opposite_When_Win_Return_Lose() {
-	// 	assertEquals(ResultType.LOSE, ResultType.opposite(ResultType.WIN));
-	// }
 
 	@Test
 	void from_When_User_Has_More_Score_Return_WIN() {
