@@ -25,7 +25,7 @@ public enum PlayerResult {
         }
     };
 
-    private String resultState;
+    private final String resultState;
 
     PlayerResult(String resultState) {
         this.resultState = resultState;
