@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -16,6 +17,7 @@ import static domain.user.User.NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE;
 
 public class UserTest {
 
+	@DisplayName("addCard() 정상 동작 확인")
 	@Test
 	void addCard() {
 		Card card = new Card(Symbol.ACE, Type.CLOVER);
@@ -25,6 +27,7 @@ public class UserTest {
 		assertEquals(user, User.of(Collections.singletonList(card)));
 	}
 
+	@DisplayName("addInitialCards가 두장의 카드를 나눠주는지 확인")
 	@Test
 	void addInitialCards_User_Should_Have_Two_Cards() {
 		Deck deck = new Deck(CardRepository.toList());
@@ -34,6 +37,7 @@ public class UserTest {
 		assertThat(user.cards.toList().size()).isEqualTo(2);
 	}
 
+	@DisplayName("addCard가 정상적인 Deck에 대해 한장의 카드를 뽑아서 User에 추가하는지 확인")
 	@Test
 	void addCard_Add_One_Card_When_Valid_Deck() {
 		Deck deck = new Deck(CardRepository.toList());
@@ -43,9 +47,10 @@ public class UserTest {
 		assertThat(user.cards.toList().size()).isEqualTo(1);
 	}
 
+	@DisplayName("addCard가 null인 Deck에 대해 예외처리")
 	@ParameterizedTest
 	@NullSource
-	void addCard_Add_One_Card_When_Valid_Deck(Deck nullDeck) {
+	void addCard_Add_One_Card_When_Invalid_Deck(Deck nullDeck) {
 		User user = User.getInstance();
 
 		assertThatNullPointerException().isThrownBy(() -> {
@@ -53,7 +58,7 @@ public class UserTest {
 		}).withMessage(NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE);
 	}
 
-
+	@DisplayName("openAllCards가 두장의 카드를 반환하는지 확인")
 	@Test
 	void openAllCards_When_User_Has_Ace_Heart_And_Two_Heart_Return_Both() {
 		User user = new User();
@@ -69,6 +74,7 @@ public class UserTest {
 		assertEquals(cards, user.openAllCards());
 	}
 
+	@DisplayName("플레이어가 17점일 경우 canDrawMore()가 true 반환")
 	@Test
 	void canDrawMore_When_Player_Score_Is_17_Return_True() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
@@ -81,6 +87,7 @@ public class UserTest {
 		assertTrue(player.canDrawMore());
 	}
 
+	@DisplayName("플레이어가 22점일 경우 canDrawMore()가 false 반환")
 	@Test
 	void canDrawMore_When_Player_Score_Is_22_Return_False() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
@@ -95,6 +102,7 @@ public class UserTest {
 		assertFalse(player.canDrawMore());
 	}
 
+	@DisplayName("딜러가 16점일 경우 canDrawMore()가 true 반환")
 	@Test
 	void canDrawMore_When_Dealer_Score_Is_16_Return_True() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
@@ -107,6 +115,7 @@ public class UserTest {
 		assertTrue(dealer.canDrawMore());
 	}
 
+	@DisplayName("딜러가 17점일 경우 canDrawMore()가 false 반환")
 	@Test
 	void canDrawMore_When_Dealer_Score_Is_17_Return_False() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
@@ -119,6 +128,7 @@ public class UserTest {
 		assertFalse(dealer.canDrawMore());
 	}
 
+	@DisplayName("유저가 21점이고 두장의 카드를 가질 경우 isNotBlackjack()가 false 반환")
 	@Test
 	void isNotBlackjack_When_User_Score_21_And_Two_Cards_Return_False() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
@@ -131,6 +141,7 @@ public class UserTest {
 		assertFalse(dealer.isNotBlackjack());
 	}
 
+	@DisplayName("유저가 21점이고 세장의 카드를 가질 경우 isNotBlackjack()가 true 반환")
 	@Test
 	void isNotBlackjack_When_User_Score_21_And_Three_Cards_Return_True() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
@@ -145,6 +156,7 @@ public class UserTest {
 		assertTrue(dealer.isNotBlackjack());
 	}
 
+	@DisplayName("유저가 20점이고 두장의 카드를 가질 경우 isNotBlackjack()가 true 반환")
 	@Test
 	void isNotBlackjack_When_User_Score_20_And_Two_Cards_Return_True() {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);

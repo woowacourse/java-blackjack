@@ -6,6 +6,7 @@ import domain.card.Type;
 import domain.user.Player;
 import domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,15 +27,15 @@ class ResultTypeTest {
 		player2 = new Player("kouz");
 		player1.addCard(card1);
 		player2.addCard(card1);
-
-
 	}
 
+	@DisplayName("WIN에 대해 opposite() 동작시 LOSE 반환 확인")
 	@Test
 	void opposite_When_Win_Return_Lose() {
 		assertEquals(ResultType.LOSE, ResultType.opposite(ResultType.WIN));
 	}
 
+	@DisplayName("from()으로 ResultType 중 WIN이 생성되는지 확인")
 	@Test
 	void from_When_Player1_Win_Return_WIN() {
 		Card card3 = new Card(Symbol.SIX, Type.CLOVER);
@@ -45,6 +46,7 @@ class ResultTypeTest {
 		assertThat(ResultType.from(player1, player2)).isEqualTo(ResultType.WIN);
 	}
 
+	@DisplayName("from()으로 ResultType 중 DRAW가 생성되는지 확인")
 	@Test
 	void from_When_Player1_draw_Return_DRAW() {
 		player1.addCard(card2);
@@ -53,6 +55,7 @@ class ResultTypeTest {
 		assertThat(ResultType.from(player1, player2)).isEqualTo(ResultType.DRAW);
 	}
 
+	@DisplayName("from()으로 ResultType 중 LOSE가 생성되는지 확인")
 	@Test
 	void from_When_Player1_Lose_Return_LOSE() {
 		Card card3 = new Card(Symbol.SIX, Type.CLOVER);
