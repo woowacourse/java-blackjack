@@ -12,8 +12,7 @@ public class Blackjack {
         Players players = Players.of(playerNames);
         Dealer dealer = Dealer.create();
 
-        Deck deck = Deck.create();
-        deck.shuffle();
+        Deck deck = Deck.createWithShuffle();
 
         dealer.drawCards(deck, 2);
         players.drawCards(deck, 2);

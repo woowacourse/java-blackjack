@@ -14,16 +14,25 @@ public class Deck {
         this.deck = deck;
     }
 
-    public static Deck create() {
-        List<Card> deck = new ArrayList<>();
+    public static Deck createWithShuffle() {
+        return create().shuffle();
+    }
+
+    private static Deck create() {
+        List<Card> cards = new ArrayList<>();
 
         for (Symbol symbol : Symbol.values()) {
             for (Type type : Type.values()) {
-                deck.add(new Card(symbol, type));
+                cards.add(new Card(symbol, type));
             }
         }
 
-        return new Deck(deck);
+        return new Deck(cards);
+    }
+
+    private Deck shuffle() {
+        Collections.shuffle(deck);
+        return this;
     }
 
     public Card draw() {
@@ -33,9 +42,7 @@ public class Deck {
         return deck.remove(deck.size() - 1);
     }
 
-    public void shuffle() {
-        Collections.shuffle(deck);
-    }
+
 
     @Override
     public boolean equals(Object o) {

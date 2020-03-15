@@ -11,13 +11,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
     @Test
-    void create() {
-        assertThat(Deck.create()).isNotNull();
+    void createWithShuffle() {
+        assertThat(Deck.createWithShuffle()).isNotNull();
     }
 
     @Test
     void draw() {
-        Deck deck = Deck.create();
+        Deck deck = Deck.createWithShuffle();
 
         Set<Card> set = new HashSet<>();
 
@@ -31,7 +31,7 @@ class DeckTest {
 
     @Test
     void draw_ThereAreNoCard_ShouldThrowException() {
-        Deck deck = Deck.create();
+        Deck deck = Deck.createWithShuffle();
 
         for (int i = 0; i < 52; i++) {
             deck.draw();
@@ -43,21 +43,10 @@ class DeckTest {
     }
 
     @Test
-    void shuffle() {
-        Deck deck1 = Deck.create();
-        Deck deck2 = Deck.create();
-
-        deck1.shuffle();
+    void equals() {
+        Deck deck1 = Deck.createWithShuffle();
+        Deck deck2 = Deck.createWithShuffle();
 
         assertThat(deck1).isNotEqualTo(deck2);
     }
-
-    @Test
-    void equals() {
-        Deck deck1 = Deck.create();
-        Deck deck2 = Deck.create();
-
-        assertThat(deck1).isEqualTo(deck2);
-    }
-
 }
