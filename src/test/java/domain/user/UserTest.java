@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,12 +40,12 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("첫 카드 분배 결과")
-    void getDrawResult() {
+    @DisplayName("카드 분배 결과")
+    void getCards() {
         user.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         user.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(user.getDrawResult()).isEqualTo("이름카드: 8클로버, A다이아몬드");
+        assertThat(user.getCards()).isEqualTo(Arrays.asList("8클로버", "A다이아몬드"));
     }
 
     @ParameterizedTest
@@ -109,14 +110,5 @@ class UserTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), true),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.FIVE), false)
         );
-    }
-
-    @Test
-    @DisplayName("최종 보유 카드 및 포인트 계산 결과")
-    void getTotalDrawResult() {
-        user.draw(new Card(Symbol.DIAMOND, Type.KING));
-        user.draw(new Card(Symbol.DIAMOND, Type.SIX));
-
-        assertThat(user.getTotalDrawResult()).isEqualTo("이름카드: K다이아몬드, 6다이아몬드 - 결과: 16");
     }
 }

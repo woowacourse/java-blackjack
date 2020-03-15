@@ -24,11 +24,10 @@ public abstract class User {
         cards.add(card);
     }
 
-    public String getDrawResult() {
-        return name + "카드: "
-                + cards.stream()
+    public List<String> getCards() {
+        return cards.stream()
                 .map(Card::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.toList());
     }
 
     public int calculatePointAccordingToHasAce() {
@@ -61,10 +60,6 @@ public abstract class User {
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    public String getTotalDrawResult() {
-        return getDrawResult() + " - 결과: " + calculatePointAccordingToHasAce();
     }
 
     public abstract String getTotalWinningResult();

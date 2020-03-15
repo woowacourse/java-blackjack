@@ -17,7 +17,7 @@ public class Application {
         OutputView.printFirstDealOutResult(dealer, players);
 
         blackJackGame.additionalDealOut(dealer, players);
-        OutputView.printTotalResult(dealer, players);
+        OutputView.printAllTotalResult(dealer, players);
 
         blackJackGame.decideWinner(dealer, players);
         OutputView.printWinningResult(dealer, players);

@@ -1,9 +1,9 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import domain.deck.Card;
+import domain.deck.Symbol;
+import domain.deck.Type;
+import domain.result.WinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +11,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.result.WinningResult;
-import domain.deck.Card;
-import domain.deck.Symbol;
-import domain.deck.Type;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
@@ -33,11 +32,11 @@ class DealerTest {
 
     @Test
     @DisplayName("첫 카드 분배 결과")
-    void getFirstDrawResult() {
+    void getFirstCard() {
         dealer.draw(new Card(Symbol.CLOVER, Type.EIGHT));
         dealer.draw(new Card(Symbol.DIAMOND, Type.ACE));
 
-        assertThat(dealer.getFirstDrawResult()).isEqualTo("딜러카드: 8클로버");
+        assertThat(dealer.getFirstCard()).isEqualTo("8클로버");
     }
 
     @ParameterizedTest

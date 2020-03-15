@@ -1,11 +1,11 @@
 package domain.user;
 
+import domain.result.WinningResult;
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import domain.result.WinningResult;
 
 public class Dealer extends User {
 
@@ -30,8 +30,8 @@ public class Dealer extends User {
         return new Dealer();
     }
 
-    public String getFirstDrawResult() {
-        return DEALER + "카드: " + cards.get(0).getName();
+    public String getFirstCard() {
+        return cards.get(0).getName();
     }
 
     @Override

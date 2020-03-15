@@ -1,12 +1,12 @@
 package domain.user;
 
+import domain.deck.Deck;
+import domain.result.WinningResult;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import domain.result.WinningResult;
-import domain.deck.Deck;
 
 public class Players {
 
@@ -37,18 +37,6 @@ public class Players {
                 .collect(Collectors.joining(", "));
     }
 
-    public String getAllFirstDrawResult() {
-        return players.stream()
-                .map(Player::getDrawResult)
-                .collect(Collectors.joining("\n"));
-    }
-
-    public String getAllTotalDrawResult() {
-        return players.stream()
-                .map(Player::getTotalDrawResult)
-                .collect(Collectors.joining("\n"));
-    }
-
     public void decideWinner(Dealer dealer) {
         players.forEach(player -> player.win(dealer));
     }
@@ -59,12 +47,6 @@ public class Players {
                         .map(Player::getWinningResult)
                         .collect(Collectors.toList())
         );
-    }
-
-    public String getAllTotalWinningResult() {
-        return players.stream()
-                .map(Player::getTotalWinningResult)
-                .collect(Collectors.joining("\n"));
     }
 
     public List<Player> getPlayers() {
