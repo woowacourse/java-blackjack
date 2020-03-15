@@ -3,8 +3,10 @@ package blackjack.domain.result;
 import static java.util.stream.Collectors.*;
 
 import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import blackjack.domain.user.Dealer;
@@ -20,19 +22,28 @@ public class Report {
 	}
 
 	public static Report from(Dealer dealer, List<Player> players) {
+		validateUser(dealer, players);
 		return new Report(
 			generateDealerResult(dealer, players),
 			generatePlayersResult(dealer, players));
 	}
 
+	private static void validateUser(Dealer dealer, List<Player> players) {
+		if (Objects.isNull(dealer) || Objects.isNull(players) || players.isEmpty()) {
+			throw new InvalidReportException(InvalidReportException.NULL);
+		}
+	}
+
 	private static Map<Player, ResultType> generatePlayersResult(Dealer dealer, List<Player> players) {
 		return players.stream()
-			.collect(toMap(Function.identity(), player -> ResultType.from(player, dealer)));
+			.collect(collectingAndThen(
+				toMap(Function.identity(), player -> ResultType.of(player, dealer)),
+				LinkedHashMap::new));
 	}
 
 	private static Map<ResultType, Long> generateDealerResult(Dealer dealer, List<Player> players) {
 		return players.stream()
-			.map(player -> ResultType.from(dealer, player))
+			.map(player -> ResultType.of(dealer, player))
 			.collect(collectingAndThen(groupingBy(Function.identity(), counting()), EnumMap::new));
 	}
 

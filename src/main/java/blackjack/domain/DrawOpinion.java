@@ -18,4 +18,8 @@ public enum DrawOpinion {
 			.findAny()
 			.orElseThrow(() -> new InvalidDrawOpinionException(InvalidDrawOpinionException.INVALID));
 	}
+
+	public boolean isYes() {
+		return this.equals(YES);
+	}
 }

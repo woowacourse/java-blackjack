@@ -17,12 +17,6 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
 class ResultTypeTest {
-	@ParameterizedTest
-	@MethodSource("provideDealerAndPlayerScoreWithReturnType")
-	void from_DealerScoreAndPlayerScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
-		assertThat(ResultType.from(targetUser, compareUser)).isEqualTo(expected);
-	}
-
 	private static Stream<Arguments> provideDealerAndPlayerScoreWithReturnType() {
 		Dealer dealer = Dealer.valueOf("dealer", Arrays.asList(
 			new Card(Symbol.EIGHT, Type.HEART),
@@ -47,5 +41,11 @@ class ResultTypeTest {
 			Arguments.of(dealer, sony, ResultType.DRAW),
 			Arguments.of(dealer, stitch, ResultType.WIN),
 			Arguments.of(dealer, bustPlayer, ResultType.WIN));
+	}
+
+	@ParameterizedTest
+	@MethodSource("provideDealerAndPlayerScoreWithReturnType")
+	void of_DealerScoreAndPlayerScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
+		assertThat(ResultType.of(targetUser, compareUser)).isEqualTo(expected);
 	}
 }

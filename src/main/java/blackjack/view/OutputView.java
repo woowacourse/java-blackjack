@@ -35,6 +35,12 @@ public class OutputView {
 		System.out.println(String.format(DEALER_DRAW_FORMAT, Dealer.NAME, Dealer.DEALER_DRAWABLE_MAX_SCORE));
 	}
 
+	public static void printUsersCardsAndScore(List<User> users) {
+		for (User user : users) {
+			OutputView.printUserHandAndScore(user);
+		}
+	}
+
 	public static void printUserHandAndScore(User user) {
 		System.out.println(user.getName() + SEPARATOR
 			+ StringUtil.joinCards(user.getHand())

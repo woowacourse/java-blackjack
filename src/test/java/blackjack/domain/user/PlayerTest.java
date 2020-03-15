@@ -12,11 +12,24 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 
 class PlayerTest {
+	private static Stream<Arguments> provideUndrawablePlayer() {
+		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
+
+		Player player = new Player("player");
+		Deck deck = new Deck(CardFactory.create());
+
+		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
+			player.draw(deck);
+		}
+		return Stream.of(Arguments.of(player));
+	}
+
 	@Test
 	void Player_InputPlayerName_GenerateInstance() {
 		assertThat(new Player("player")).isInstanceOf(Player.class);
@@ -41,17 +54,5 @@ class PlayerTest {
 	@MethodSource("provideUndrawablePlayer")
 	void canDraw_CurrentScoreMoreThanDrawableMaxScore_ReturnFalse(Player player) {
 		assertThat(player.canDraw()).isFalse();
-	}
-
-	private static Stream<Arguments> provideUndrawablePlayer() {
-		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
-
-		Player player = new Player("player");
-		Deck deck = new Deck();
-
-		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			player.draw(deck);
-		}
-		return Stream.of(Arguments.of(player));
 	}
 }

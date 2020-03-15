@@ -7,9 +7,13 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
@@ -17,10 +21,23 @@ import blackjack.domain.card.Type;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerFactory;
+import blackjack.util.StringUtil;
 
 class ReportTest {
 	private Dealer dealer;
 	private List<Player> players;
+
+	private static Stream<Arguments> provideNullDealerOrNullPlayers() {
+		Dealer dealer = new Dealer(Dealer.NAME);
+		List<Player> players = Arrays.asList(
+			new Player("pobi"),
+			new Player("stitch"));
+
+		return Stream.of(
+			Arguments.of(null, players),
+			Arguments.of(dealer, null),
+			Arguments.of(null, null));
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -42,8 +59,18 @@ class ReportTest {
 
 	@Test
 	void from_DealerAndPlayers_GenerateInstance() {
-		assertThat(Report.from(new Dealer("dealer"), PlayerFactory.create("pobi, sony, stitch")))
+		assertThat(Report.from(new Dealer("dealer"),
+			PlayerFactory.create(StringUtil.parsingPlayerNames("pobi, sony, stitch"))))
 			.isInstanceOf(Report.class);
+	}
+
+	@ParameterizedTest
+	@MethodSource("provideNullDealerOrNullPlayers")
+	void validateUser_DealerOrPlayersHaveNullValue_InvalidReportExceptionThrown(Dealer nullDealer,
+		List<Player> nullPlayers) {
+		assertThatThrownBy(() -> Report.from(nullDealer, nullPlayers))
+			.isInstanceOf(InvalidReportException.class)
+			.hasMessage(InvalidReportException.NULL);
 	}
 
 	@Test

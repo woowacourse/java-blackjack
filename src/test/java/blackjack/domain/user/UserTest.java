@@ -7,7 +7,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.InvalidDeckException;
 
 class UserTest {
 	@Test
@@ -28,7 +30,7 @@ class UserTest {
 	@Test
 	void draw_DrawCard_AddDrawCardToHand() {
 		User user = new Dealer("user");
-		Deck deck = new Deck();
+		Deck deck = new Deck(CardFactory.create());
 		user.draw(deck);
 
 		assertThat(user).extracting("hand").asList()
@@ -37,9 +39,18 @@ class UserTest {
 	}
 
 	@Test
+	void validateDeck_Null_InvalidDeckExceptionThrown() {
+		User user = new Dealer("user");
+
+		assertThatThrownBy(() -> user.draw(null))
+			.isInstanceOf(InvalidDeckException.class)
+			.hasMessage(InvalidDeckException.NULL);
+	}
+
+	@Test
 	void draw_DrawNumberOfCards_AddDrawCardsToHand() {
 		User user = new Dealer("user");
-		Deck deck = new Deck();
+		Deck deck = new Deck(CardFactory.create());
 		user.draw(deck, 2);
 
 		assertThat(user).extracting("hand").asList()
@@ -50,7 +61,7 @@ class UserTest {
 	@Test
 	void validateDrawNumber_InvalidNumberOfCards_InvalidUserExceptionThrown() {
 		User user = new Dealer("user");
-		Deck deck = new Deck();
+		Deck deck = new Deck(CardFactory.create());
 
 		assertThatThrownBy(() -> user.draw(deck, 0))
 			.isInstanceOf(InvalidUserException.class)

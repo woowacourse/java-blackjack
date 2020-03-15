@@ -2,21 +2,17 @@ package blackjack.domain.card;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Deck {
-	private LinkedList<Card> cards;
+	private static final int TOP = 0;
 
-	public Deck() {
-		this.cards = refill(CardRepository.cards());
-	}
+	private final List<Card> cards;
 
-	LinkedList<Card> refill(List<Card> cards) {
+	public Deck(List<Card> cards) {
 		validate(cards);
-		LinkedList<Card> refillCards = new LinkedList<>(cards);
-		Collections.shuffle(refillCards);
-		return refillCards;
+		Collections.shuffle(cards);
+		this.cards = cards;
 	}
 
 	private void validate(List<Card> cards) {
@@ -29,8 +25,8 @@ public class Deck {
 
 	public Card draw() {
 		if (cards.isEmpty()) {
-			cards = refill(CardRepository.cards());
+			throw new InvalidDeckException(InvalidDeckException.DECK_EMPTY);
 		}
-		return cards.poll();
+		return cards.remove(TOP);
 	}
 }

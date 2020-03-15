@@ -12,10 +12,10 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return this.symbol.equals(Symbol.ACE);
+		return symbol.isAce();
 	}
 
-	public int getSymbolValue() {
+	public int getScore() {
 		return symbol.getScore();
 	}
 

@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import blackjack.util.StringUtil;
+
 class PlayerFactoryTest {
 	@Test
 	void create_PlayerNames_GeneratePlayerList() {
@@ -15,6 +17,6 @@ class PlayerFactoryTest {
 			new Player("sony"),
 			new Player("stitch"));
 
-		assertThat(PlayerFactory.create("pobi, sony, stitch")).isEqualTo(players);
+		assertThat(PlayerFactory.create(StringUtil.parsingPlayerNames("pobi, sony, stitch"))).isEqualTo(players);
 	}
 }

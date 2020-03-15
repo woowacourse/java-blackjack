@@ -1,79 +1,67 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
+import static blackjack.view.InputView.*;
+import static blackjack.view.OutputView.*;
+
 import java.util.List;
 
+import blackjack.domain.BlackjackTable;
 import blackjack.domain.DrawOpinion;
-import blackjack.domain.card.Deck;
 import blackjack.domain.result.Report;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
 public class BlackjackController {
-	private static final int INITIAL_DRAW_NUMBER = 2;
+	private final BlackjackTable blackjackTable;
 
-	private final Deck deck;
-	private final Dealer dealer;
-	private final List<Player> players;
-
-	public BlackjackController(Deck deck, Dealer dealer, List<Player> players) {
-		this.deck = deck;
-		this.dealer = dealer;
-		this.players = players;
+	public BlackjackController(BlackjackTable blackjackTable) {
+		this.blackjackTable = blackjackTable;
 	}
 
-	public void playGame() {
-		List<User> users = generateUsers();
-		drawInitialCardsEachUser(users);
-		OutputView.printUsersInitialDraw(INITIAL_DRAW_NUMBER, users);
+	public void playGame(Dealer dealer, List<Player> players) {
+		List<User> users = blackjackTable.collectToUsersFrom(dealer, players);
 
-		drawCardsEachUsers();
+		drawInitialCardsFrom(users);
+		continueDrawCardsEach(dealer, players);
+
 		printUsersCardsAndScore(users);
 
 		Report blackJackReport = Report.from(dealer, players);
-		OutputView.printBlackjackReport(blackJackReport);
+		printBlackjackReport(blackJackReport);
 	}
 
-	private List<User> generateUsers() {
-		List<User> users = new ArrayList<>();
-		users.add(dealer);
-		users.addAll(players);
-		return users;
+	private void drawInitialCardsFrom(List<User> users) {
+		blackjackTable.drawInitialCards(users);
+		printUsersInitialDraw(BlackjackTable.INITIAL_DRAW_NUMBER, users);
 	}
 
-	private void drawInitialCardsEachUser(List<User> users) {
-		users.forEach(user -> user.draw(deck, INITIAL_DRAW_NUMBER));
-	}
-
-	private void drawCardsEachUsers() {
-		players.forEach(this::drawCardsByOpinion);
-		drawCardsDealer();
-	}
-
-	private void drawCardsByOpinion(Player player) {
-		while (player.canDraw() && wantDraw(player)) {
-			player.draw(deck);
-			OutputView.printUserHand(player, player.getHand());
+	private void continueDrawCardsEach(Dealer dealer, List<Player> players) {
+		for (Player player : players) {
+			drawCardsFrom(player);
 		}
+		drawCardsFrom(dealer);
+	}
+
+	private void drawCardsFrom(Player player) {
+		while (canDraw(player) && wantDraw(player)) {
+			blackjackTable.drawCardFrom(player);
+			printUserHand(player, player.getHand());
+		}
+	}
+
+	private boolean canDraw(User user) {
+		return user.canDraw();
 	}
 
 	private boolean wantDraw(Player player) {
-		return DrawOpinion.YES.equals(DrawOpinion.of(InputView.inputDrawOpinion(player)));
+		return DrawOpinion.of(inputDrawOpinion(player)).isYes();
 	}
 
-	private void drawCardsDealer() {
-		while (dealer.canDraw()) {
-			dealer.draw(deck);
-			OutputView.printDealerDrawCard();
-		}
-	}
-
-	private void printUsersCardsAndScore(List<User> users) {
-		for (User user : users) {
-			OutputView.printUserHandAndScore(user);
+	private void drawCardsFrom(Dealer dealer) {
+		while (canDraw(dealer)) {
+			blackjackTable.drawCardFrom(dealer);
+			printDealerDrawCard();
 		}
 	}
 }

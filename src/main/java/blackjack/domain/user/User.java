@@ -8,11 +8,11 @@ import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.InvalidDeckException;
 import blackjack.domain.user.hand.Hand;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 	private static final int DRAW_LOWER_BOUND = 1;
-
 	protected final String name;
 	protected final Hand hand;
 
@@ -34,10 +34,18 @@ public abstract class User {
 	}
 
 	public void draw(Deck deck) {
+		validateDeck(deck);
 		hand.add(deck.draw());
 	}
 
+	private void validateDeck(Deck deck) {
+		if (Objects.isNull(deck)) {
+			throw new InvalidDeckException(InvalidDeckException.NULL);
+		}
+	}
+
 	public void draw(Deck deck, int drawNumber) {
+		validateDeck(deck);
 		validateDrawNumber(drawNumber);
 		List<Card> drawCards = IntStream.range(0, drawNumber)
 			.mapToObj(e -> deck.draw())
@@ -53,11 +61,11 @@ public abstract class User {
 
 	public abstract boolean canDraw();
 
-	public abstract List<Card> getInitialHand();
-
 	public String getName() {
 		return name;
 	}
+
+	public abstract List<Card> getInitialHand();
 
 	public List<Card> getHand() {
 		return hand.getCards();
@@ -67,8 +75,13 @@ public abstract class User {
 		return hand.calculateScore().getScore();
 	}
 
-	public int getBustHandledScore() {
+	private int getBustHandledScore() {
 		return hand.calculateBustHandledScore().getScore();
+	}
+
+	@Override
+	public int compareTo(User that) {
+		return Integer.compare(this.getBustHandledScore(), that.getBustHandledScore());
 	}
 
 	@Override

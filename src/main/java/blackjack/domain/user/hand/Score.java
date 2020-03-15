@@ -10,16 +10,16 @@ import blackjack.domain.card.Symbol;
 
 public class Score {
 	public static final Score ZERO = new Score(0);
+	public static final int BUST_SCORE = 22;
 	private static final Map<Integer, Score> CACHE = new HashMap<>();
 	private static final int ADDITIONAL_ACE_SCORE = 10;
-	private static final int BUST_SCORE = 22;
-
-	private final int score;
 
 	static {
 		IntStream.range(Symbol.ACE.getScore(), BUST_SCORE)
 			.forEach(score -> CACHE.put(score, new Score(score)));
 	}
+
+	private final int score;
 
 	private Score(int score) {
 		validate(score);
@@ -42,16 +42,27 @@ public class Score {
 	}
 
 	public static Score valueOf(Card card) {
-		return CACHE.get(card.getSymbolValue());
+		if (Objects.isNull(card)) {
+			throw new InvalidScoreException(InvalidScoreException.NULL);
+		}
+		return Score.valueOf(card.getScore());
 	}
 
 	public Score add(Card card) {
-		int currentScore = score + card.getSymbolValue();
-
-		if (card.isAce() && currentScore + ADDITIONAL_ACE_SCORE < BUST_SCORE) {
-			return Score.valueOf(currentScore + ADDITIONAL_ACE_SCORE);
+		if (Objects.isNull(card)) {
+			throw new InvalidScoreException(InvalidScoreException.NULL);
 		}
-		return Score.valueOf(currentScore);
+
+		int calculatedScore = score + card.getScore();
+
+		if (card.isAce() && isNotBustFromBigAceWith(calculatedScore)) {
+			calculatedScore += ADDITIONAL_ACE_SCORE;
+		}
+		return Score.valueOf(calculatedScore);
+	}
+
+	private boolean isNotBustFromBigAceWith(int calculatedScore) {
+		return calculatedScore + ADDITIONAL_ACE_SCORE < BUST_SCORE;
 	}
 
 	public boolean isLowerThan(int score) {
@@ -59,11 +70,7 @@ public class Score {
 	}
 
 	public boolean isMoreThan(int score) {
-		return this.score > score;
-	}
-
-	public boolean isMoreThan(Score score) {
-		return this.score > score.score;
+		return this.score >= score;
 	}
 
 	public int getScore() {

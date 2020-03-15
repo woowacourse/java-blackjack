@@ -1,17 +1,15 @@
 package blackjack.domain.user.hand;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.Card;
 
 public class Hand {
-	private static final int BLACKJACK_SCORE = 21;
-
 	private final List<Card> cards;
 
 	public Hand() {
-		this.cards = new LinkedList<>();
+		this.cards = new ArrayList<>();
 	}
 
 	public void add(Card card) {
@@ -34,7 +32,7 @@ public class Hand {
 	public Score calculateBustHandledScore() {
 		Score score = calculateScore();
 
-		if (score.getScore() > BLACKJACK_SCORE) {
+		if (score.isMoreThan(Score.BUST_SCORE)) {
 			return Score.ZERO;
 		}
 		return score;

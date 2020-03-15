@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
@@ -31,7 +32,15 @@ class ScoreTest {
 		Card card = new Card(symbol, Type.CLUB);
 
 		assertThat(Score.valueOf(card)).isInstanceOf(Score.class)
-			.extracting("score").isEqualTo(card.getSymbolValue());
+			.extracting("score").isEqualTo(card.getScore());
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void valueOf_InputNull_NullPointerExceptionThrown(Card card) {
+		assertThatThrownBy(() -> Score.valueOf(card))
+			.isInstanceOf(InvalidScoreException.class)
+			.hasMessage(InvalidScoreException.NULL);
 	}
 
 	@Test
@@ -64,19 +73,10 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"8,true", "9,false"})
+	@CsvSource(value = {"9,true", "10,false"})
 	void isMoreThan_InputIntegerScore_ReturnCompareResult(int value, boolean expected) {
 		Score score = Score.valueOf(9);
 
 		assertThat(score.isMoreThan(value)).isEqualTo(expected);
-	}
-
-	@ParameterizedTest
-	@CsvSource(value = {"8,true", "9,false"})
-	void isMoreThan_InputScore_ReturnCompareResult(int value, boolean expected) {
-		Score score = Score.valueOf(9);
-		Score cmpScore = Score.valueOf(value);
-
-		assertThat(score.isMoreThan(cmpScore)).isEqualTo(expected);
 	}
 }

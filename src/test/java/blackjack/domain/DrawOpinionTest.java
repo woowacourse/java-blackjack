@@ -16,4 +16,10 @@ class DrawOpinionTest {
 			.isInstanceOf(InvalidDrawOpinionException.class)
 			.hasMessage(InvalidDrawOpinionException.INVALID);
 	}
+
+	@Test
+	void isYes_PlayerDrawOpinionIsYes_ReturnTrue() {
+		DrawOpinion playerDrawOpinion = DrawOpinion.of("y");
+		assertThat(playerDrawOpinion.isYes()).isTrue();
+	}
 }
