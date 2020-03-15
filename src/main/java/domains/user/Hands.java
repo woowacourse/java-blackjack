@@ -48,10 +48,7 @@ public class Hands {
     }
 
     private boolean checkAce(Card card, boolean hasAce) {
-        if (card.isAce()) {
-            return true;
-        }
-        return hasAce;
+        return hasAce || card.isAce();
     }
 
     public boolean isBurst() {
