@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner sc = new Scanner(System.in);
-    public static final String NAME_SHOULD_BE_PRESENT = "이름은 최소 1개 이상이어야 합니다";
-    public static final String INPUT_AGAIN = "다시 입력해 주세요.";
+    private static final String NAME_SHOULD_BE_PRESENT = "이름은 최소 1개 이상이어야 합니다";
+    private static final String INPUT_AGAIN = "다시 입력해 주세요.";
 
     public static String inputPlayerName() {
         try {

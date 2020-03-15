@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ public class UserCards {
 
     public UserCards(List<Card> cards) {
         validateNullOrEmptyCard(cards);
-        this.cards = new LinkedList<>(cards);
+        this.cards = cards;
     }
 
     private void validateNullOrEmptyCard(List<Card> cards) {

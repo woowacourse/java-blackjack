@@ -3,12 +3,13 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 public abstract class User {
-    public static final int BLACKJACK = 21;
-    public static final String CARD = " 카드: ";
-    public static final String DELIMITER = ", ";
-    public static final String RESULT = " - 결과 : ";
-    public static final String BUSTED = "버스트";
-    public static final int BUSTED_VAL_RESET = 0;
+    private static final int MAX_VALID_SUM = 21;
+    private static final String CARD = " 카드: ";
+    private static final String DELIMITER = ", ";
+    private static final String RESULT = " - 결과 : ";
+    private static final String BUSTED = "버스트";
+    private static final int BUSTED_VAL_RESET = 0;
+    private static final String NO_CARD = "카드가 없습니다";
     protected final String name;
     protected UserCards cards;
 
@@ -18,11 +19,25 @@ public abstract class User {
     }
 
     public void receiveInitialCards(UserCards initialCards) {
+        validateInitialCards(initialCards);
         this.cards = initialCards;
     }
 
+    private void validateInitialCards(UserCards initialCards) {
+        if (initialCards == null) {
+            throw new NullPointerException(NO_CARD);
+        }
+    }
+
     public void receiveCard(Card card) {
+        validateCard(card);
         cards.addCard(card);
+    }
+
+    private void validateCard(Card card) {
+        if (card == null) {
+            throw new NullPointerException(NO_CARD);
+        }
     }
 
     public int getTotalScore() {
@@ -30,12 +45,12 @@ public abstract class User {
     }
 
     public boolean isBusted() {
-        return cards.getTotalScore() == 0;
+        return cards.getTotalScore() == BUSTED_VAL_RESET;
     }
 
     public boolean isBlackJack() {
         return cards.getCardInfo().size() == 2
-                && cards.getTotalScore() == BLACKJACK;
+                && cards.getTotalScore() == MAX_VALID_SUM;
     }
 
     public String getName() {
