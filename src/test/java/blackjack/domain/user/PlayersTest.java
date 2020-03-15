@@ -1,8 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,21 +23,23 @@ class PlayersTest {
 	}
 
 	@Test
-	void giveCards() {
+	void giveCardsEachPlayer() {
 		// given
-		Card card = Card.of(Symbol.ACE, Type.CLUB);
+		Card aceClub = Card.of(Symbol.ACE, Type.CLUB);
+		Card jackHeart = Card.of(Symbol.JACK, Type.HEART);
+		Card kingDiamond = Card.of(Symbol.KING, Type.DIAMOND);
+		Drawable deck = Deck.of(Arrays.asList(aceClub, jackHeart, kingDiamond));
 
 		// when
-		players.giveCards(0, card);
-		players.giveCards(2, card, card);
+		players.giveCardEachPlayer(deck);
 
 		// then
-		assertThat(players.getPlayers().get(0).getHand())
-				.isEqualTo(Collections.singletonList(card));
-		assertThat(players.getPlayers().get(1).getHand())
-				.isNotEqualTo(Collections.singletonList(card));
-		assertThat(players.getPlayers().get(2).getHand())
-				.isEqualTo(Arrays.asList(card, card));
+		assertThat(players.getPlayers().get(0).getHand().get(0))
+				.isEqualTo(kingDiamond);
+		assertThat(players.getPlayers().get(1).getHand().get(0))
+				.isEqualTo(jackHeart);
+		assertThat(players.getPlayers().get(2).getHand().get(0))
+				.isEqualTo(aceClub);
 	}
 
 	@Test

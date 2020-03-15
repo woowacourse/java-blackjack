@@ -9,6 +9,8 @@ import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
@@ -21,10 +23,10 @@ class ResultTest {
 		dealer.giveCard(Card.of(Symbol.ACE, Type.SPADE));
 
 		players = Players.of("그니, 무늬, 포비");
-		players.giveCards(0, Card.of(Symbol.TEN, Type.DIAMOND));
-		players.giveCards(1, Card.of(Symbol.FIVE, Type.CLUB),
-				Card.of(Symbol.SEVEN, Type.HEART));
-		players.giveCards(2, Card.of(Symbol.TWO, Type.DIAMOND));
+		players.getPlayers().get(0).giveCard(Card.of(Symbol.TEN, Type.DIAMOND));
+		players.getPlayers().get(1).giveCards(Arrays.asList(Card.of(Symbol.FIVE, Type.CLUB),
+				Card.of(Symbol.SEVEN, Type.HEART)));
+		players.getPlayers().get(2).giveCard(Card.of(Symbol.TWO, Type.DIAMOND));
 
 		result = Result.of(dealer, players);
 	}

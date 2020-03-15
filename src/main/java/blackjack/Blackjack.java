@@ -61,9 +61,8 @@ public class Blackjack {
 	}
 
 	private static void giveTwoCardEachPlayer(Players players, Drawable cards) {
-		for (int i = 0; i < players.memberSize(); i++) {
-			players.giveCards(i, cards.draw(), cards.draw());
-		}
+		players.giveCardEachPlayer(cards);
+		players.giveCardEachPlayer(cards);
 	}
 
 	private static void progressPlayers(Players players, Drawable cards) {

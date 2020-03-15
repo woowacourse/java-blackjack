@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Drawable;
 import blackjack.domain.user.exceptions.PlayersException;
 
 import java.util.Arrays;
@@ -56,10 +56,9 @@ public class Players {
 		}
 	}
 
-	public void giveCards(int index, Card... cards) {
-		for (Card card : cards) {
-			players.get(index)
-					.giveCard(card);
+	public void giveCardEachPlayer(Drawable deck) {
+		for (Player player : players) {
+			player.giveCard(deck.draw());
 		}
 	}
 
