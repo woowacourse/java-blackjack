@@ -47,24 +47,24 @@ public class Blackjack {
 		return Deck.ofDeckFactory(new ShuffledDeckFactory());
 	}
 
-	private static void start(Players players, Playable dealer, Drawable cards) {
-		players.giveCardEachPlayer(cards);
-		players.giveCardEachPlayer(cards);
+	private static void start(Players players, Playable dealer, Drawable deck) {
+		players.giveCardEachPlayer(deck);
+		players.giveCardEachPlayer(deck);
 
-		dealer.giveCards(cards.draw(2));
+		dealer.giveCards(deck.draw(2));
 
 		OutputView.printStartInfo(dealer, players);
 	}
 
-	private static void progressPlayers(Players players, Drawable cards) {
+	private static void progressPlayers(Players players, Drawable deck) {
 		for (Playable player : players.getPlayers()) {
-			progressPlayer(player, cards);
+			progressPlayer(player, deck);
 		}
 	}
 
-	private static void progressPlayer(Playable player, Drawable cards) {
+	private static void progressPlayer(Playable player, Drawable deck) {
 		while (willProgress(player)) {
-			player.giveCard(cards.draw());
+			player.giveCard(deck.draw());
 			OutputView.printPlayerCard(player);
 		}
 	}
@@ -94,9 +94,9 @@ public class Blackjack {
 		}
 	}
 
-	private static void progressDealer(Playable dealer, Drawable cards) {
+	private static void progressDealer(Playable dealer, Drawable deck) {
 		while (dealer.canReceiveCard()) {
-			dealer.giveCard(cards.draw());
+			dealer.giveCard(deck.draw());
 			OutputView.printDealerTurn(dealer);
 		}
 	}
