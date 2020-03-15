@@ -1,6 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
+import domain.GameResult;
 import domain.gamer.Player;
 import view.InputView;
 import view.OutputView;
@@ -75,7 +76,6 @@ public class Controller {
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
-		OutputView.printGameResult(BlackjackGameDto.from(blackjackGame));
-		OutputView.printMatchResult(BlackjackGameDto.from(blackjackGame));
+		OutputView.printGameResult(GameResult.of(blackjackGame));
 	}
 }

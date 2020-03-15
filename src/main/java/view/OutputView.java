@@ -2,7 +2,10 @@ package view;
 
 import java.util.stream.Collectors;
 
+import domain.GameResult;
+import domain.card.Card;
 import view.dto.BlackjackGameDto;
+import view.dto.DealerDto;
 import view.dto.PlayerDto;
 
 /**
@@ -30,10 +33,27 @@ public class OutputView {
 	}
 
 	public static void printInitialCards(BlackjackGameDto blackjackGameDto) {
-		System.out.println(blackjackGameDto.getDealer().showDealerInitialCard());
+		System.out.println(showDealerInitialCard(blackjackGameDto.getDealer()));
 		for (PlayerDto player : blackjackGameDto.getPlayers()) {
-			System.out.println(player.showCards());
+			System.out.println(showCards(player));
 		}
+	}
+
+	private static String showDealerInitialCard(DealerDto dealerDto) {
+		return dealerDto.getName()
+			+ ": "
+			+ "HIDDEN, "
+			+ dealerDto.getHands().getCards()
+			.get(1)
+			.shape();
+	}
+
+	private static String showCards(PlayerDto player) {
+		return player.getName()
+			+ ": "
+			+ player.getHands().getCards().stream()
+			.map(Card::shape)
+			.collect(Collectors.joining(", "));
 	}
 
 	public static void printDealerBlackjack() {
@@ -41,18 +61,14 @@ public class OutputView {
 	}
 
 	public static void printCards(PlayerDto playerDto) {
-		System.out.println(playerDto.showCards());
+		System.out.println(showCards(playerDto));
 	}
 
 	public static void printDealerDraw() {
 		System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
 	}
 
-	public static void printGameResult(BlackjackGameDto blackjackGameDto) {
-		System.out.println(blackjackGameDto.gameResult());
-	}
-
-	public static void printMatchResult(BlackjackGameDto blackjackGameDto) {
-		System.out.println(blackjackGameDto.matchResult());
+	public static void printGameResult(GameResult gameResult) {
+		System.out.println(gameResult.getGameResult());
 	}
 }

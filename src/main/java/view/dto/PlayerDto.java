@@ -1,8 +1,5 @@
 package view.dto;
 
-import java.util.stream.Collectors;
-
-import domain.card.Card;
 import domain.card.Hands;
 import domain.gamer.Player;
 
@@ -24,28 +21,11 @@ public class PlayerDto {
 		return new PlayerDto(player.getName(), player.getHands());
 	}
 
-	public String showCards() {
-		return this.name
-			+ ": "
-			+ hands.getCards().stream()
-			.map(Card::shape)
-			.collect(Collectors.joining(", "));
-	}
-
-	public int score() {
-		return hands.calculateTotalScore();
-	}
-
-	public boolean win(int score) {
-		return (score <= Hands.BLACKJACK_SCORE) && (hands.calculateTotalScore() <= Hands.BLACKJACK_SCORE) && (score
-			< hands.calculateTotalScore());
-	}
-
-	public boolean isPush(int score) {
-		return score <= Hands.BLACKJACK_SCORE && (score == hands.calculateTotalScore());
-	}
-
 	public String getName() {
 		return name;
+	}
+
+	public Hands getHands() {
+		return hands;
 	}
 }
