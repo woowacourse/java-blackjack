@@ -21,7 +21,7 @@ public class GameResult {
             if (checkBurstPlayer(player)) {
                 continue;
             }
-            playerResult.put(player, checkWinOrLose(player, dealer));
+            playerResult.put(player, player.checkKindOfGameResult(dealer));
         }
         calculateDealerResult();
     }
@@ -32,19 +32,6 @@ public class GameResult {
             return true;
         }
         return false;
-    }
-
-    public KindOfGameResult checkWinOrLose(Player player, Dealer dealer) {
-        if (dealer.isBurst() && !player.isBurst()) {
-            return KindOfGameResult.WIN;
-        }
-        if (player.score() > dealer.score()) {
-            return KindOfGameResult.WIN;
-        }
-        if (player.score() < dealer.score()) {
-            return KindOfGameResult.LOSE;
-        }
-        return KindOfGameResult.DRAW;
     }
 
     public KindOfGameResult getWinOrLose(Player player) {
