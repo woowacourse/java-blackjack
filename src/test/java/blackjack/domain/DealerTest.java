@@ -14,8 +14,8 @@ public class DealerTest {
     @Test
     void canReceiveMoreCardTest_SUM_UNDER_16() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(CardNumber.FIVE, CardFigure.CLOVER));
-        dealer.addCard(new Card(CardNumber.FIVE, CardFigure.HEART));
+        dealer.getCards().add(new Card(CardNumber.FIVE, CardFigure.CLOVER));
+        dealer.getCards().add(new Card(CardNumber.FIVE, CardFigure.HEART));
 
         boolean expected = true;
         assertThat(dealer.receivable()).isEqualTo(expected);
@@ -26,8 +26,8 @@ public class DealerTest {
     void canReceiveMoreCard_SUM_OVER_16() {
         Dealer dealer = new Dealer();
 
-        dealer.addCard(new Card(CardNumber.QUEEN, CardFigure.CLOVER));
-        dealer.addCard(new Card(CardNumber.KING, CardFigure.CLOVER));
+        dealer.getCards().add(new Card(CardNumber.QUEEN, CardFigure.CLOVER));
+        dealer.getCards().add(new Card(CardNumber.KING, CardFigure.CLOVER));
 
         boolean expected = false;
         assertThat(dealer.receivable()).isEqualTo(expected);

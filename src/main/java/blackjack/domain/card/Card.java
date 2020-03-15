@@ -31,6 +31,10 @@ public class Card {
         return cardNumber;
     }
 
+    public int getCardPoint() {
+        return cardNumber.getNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

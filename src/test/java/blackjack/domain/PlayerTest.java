@@ -15,8 +15,8 @@ class PlayerTest {
     @Test
     void canReceiveMoreCard_SUM_UNDER_21() {
         Player player = new Player("pobi");
-        player.addCard(new Card(CardNumber.ACE, CardFigure.CLOVER));
-        player.addCard(new Card(CardNumber.JACK, CardFigure.HEART));
+        player.getCards().add(new Card(CardNumber.ACE, CardFigure.CLOVER));
+        player.getCards().add(new Card(CardNumber.JACK, CardFigure.HEART));
 
         boolean expected = true;
         assertThat(player.receivable()).isEqualTo(expected);
@@ -26,9 +26,9 @@ class PlayerTest {
     @Test
     void canReceiveMoreCard_SUM_OVER_21() {
         Player player = new Player("pobi");
-        player.addCard(new Card(CardNumber.JACK, CardFigure.CLOVER));
-        player.addCard(new Card(CardNumber.KING, CardFigure.HEART));
-        player.addCard(new Card(CardNumber.FIVE, CardFigure.HEART));
+        player.getCards().add(new Card(CardNumber.JACK, CardFigure.CLOVER));
+        player.getCards().add(new Card(CardNumber.KING, CardFigure.HEART));
+        player.getCards().add(new Card(CardNumber.FIVE, CardFigure.HEART));
 
         boolean expected = false;
         assertThat(player.receivable()).isEqualTo(expected);

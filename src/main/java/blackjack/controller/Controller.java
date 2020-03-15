@@ -12,8 +12,6 @@ import blackjack.view.OutputView;
 
 
 public class Controller {
-    private static int INITIAL_SET_CARD_SIZE = 2;
-    private static String WRONG_INPUT_ERROR_MSG = "잘못된 입력입니다.";
     private Dealer dealer;
     private Players players;
     private CardDeck deck;
@@ -22,24 +20,27 @@ public class Controller {
         this.dealer = dealer;
         this.players = players;
         this.deck = cardDeck;
-
-        for (Player player : players.getPlayers()) {
-            setInitialCards(player, deck);
-        }
-        setInitialCards(dealer, deck);
-
-        OutputView.printInitialStatus(players, dealer);
     }
 
     public void play() {
+        setInitialCard(players, dealer);
+
         for (Player player : players.getPlayers()) {
             playEachPlayer(player, deck);
         }
 
         if (dealer.receivable()) {
-            dealer.addCard(deck.getCard());
+            dealer.drawCard(deck);
             OutputView.printDealerReceiveMoreCard(Dealer.LOWER_BOUND);
         }
+    }
+
+    private void setInitialCard(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            player.drawCard(deck);
+        }
+        dealer.drawCard(deck);
+        OutputView.printInitialStatus(players, dealer);
     }
 
     public void computeResult() {
@@ -49,10 +50,9 @@ public class Controller {
         OutputView.printFinalResult(results);
     }
 
-
     private void playEachPlayer(Player player, CardDeck deck) {
         while (proceed(player)) {
-            player.addCard(deck.getCard());
+            player.drawCard(deck);
             OutputView.printStatus(player);
         }
     }
@@ -63,11 +63,5 @@ public class Controller {
         }
         YesOrNo answer = InputView.getYorN(player.getName());
         return YesOrNo.isYes(answer);
-    }
-
-    private void setInitialCards(User user, CardDeck deck) {
-        for (int i = 0; i < INITIAL_SET_CARD_SIZE; i++) {
-            user.addCard(deck.getCard());
-        }
     }
 }
