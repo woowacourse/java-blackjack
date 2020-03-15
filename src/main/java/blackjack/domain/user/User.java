@@ -26,6 +26,7 @@ public abstract class User {
     public List<Card> getCards() {
         return cards;
     }
+
     public Point getPoint() {
         return point;
     }

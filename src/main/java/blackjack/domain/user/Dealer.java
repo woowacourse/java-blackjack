@@ -22,7 +22,7 @@ public class Dealer extends User implements GameRule {
     @Override
     public void drawCard(CardDeck deck) {
         Objects.requireNonNull(deck, String.format(NULL_ERR_MSG, "카드"));
-        int receivableCardSize = receivableCardSize();
+        int receivableCardSize = getReceivableCardSize();
         for (int i = 0; i < receivableCardSize; i++) {
             Card card = deck.getCard();
             super.getCards().add(card);
@@ -39,7 +39,7 @@ public class Dealer extends User implements GameRule {
     }
 
     @Override
-    public int receivableCardSize() {
+    public int getReceivableCardSize() {
         if (super.getCards().size() == 0) {
             return 2;
         }
