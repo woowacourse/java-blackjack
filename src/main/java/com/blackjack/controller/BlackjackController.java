@@ -18,10 +18,14 @@ public class BlackjackController {
 		Dealer dealer = new Dealer();
 		List<User> players = createPlayers();
 
-		DrawProceedController drawProceedController = new DrawProceedController();
-		drawProceedController.run(dealer, players);
+		draw(dealer, players);
 
 		printResult(dealer, players);
+	}
+
+	private void draw(Dealer dealer, List<User> players) {
+		DrawProceedController drawProceedController = new DrawProceedController();
+		drawProceedController.run(dealer, players);
 	}
 
 	private List<User> createPlayers() {
