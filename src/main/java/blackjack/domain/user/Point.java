@@ -19,7 +19,7 @@ public class Point implements Comparable<Point> {
 
     public void computePoint(List<Card> cards) {
         this.point = cards.stream()
-                .mapToInt(x -> x.getCardNumber().getNumber())
+                .mapToInt(x -> x.getCardPoint())
                 .sum();
         handleAce(cards);
     }
