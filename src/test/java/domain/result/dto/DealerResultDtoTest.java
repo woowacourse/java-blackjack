@@ -44,12 +44,4 @@ class DealerResultDtoTest {
     void of() {
         assertThat(dealerResultDto).isNotNull();
     }
-
-    @Test
-    @DisplayName("올바른 값을 가지는 지 테스트")
-    void checkValue() {
-        assertThat(dealerResultDto).hasFieldOrPropertyWithValue("winCount", 3)
-                .hasFieldOrPropertyWithValue("drawCount", 0)
-                .hasFieldOrPropertyWithValue("loseCount", 0);
-    }
 }

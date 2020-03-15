@@ -20,7 +20,21 @@ public class GameResults {
         return gameResults.get(player);
     }
 
-    public Map<Player, PlayerResult> getGameResults() {
-        return gameResults;
+    public int countWin() {
+        return (int) gameResults.values().stream()
+                .filter(result -> result.equals(PlayerResult.WIN))
+                .count();
+    }
+
+    public int countDraw() {
+        return (int) gameResults.values().stream()
+                .filter(result -> result.equals(PlayerResult.DRAW))
+                .count();
+    }
+
+    public int countLose() {
+        return (int) gameResults.values().stream()
+                .filter(result -> result.equals(PlayerResult.LOSE))
+                .count();
     }
 }
