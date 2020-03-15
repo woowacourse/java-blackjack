@@ -7,6 +7,7 @@ import java.util.Stack;
 
 public class Deck {
     private static final int INIT_CARDS_SIZE = 2;
+
     private final Stack<Card> cards;
 
     private Deck(Stack<Card> cards) {
