@@ -12,6 +12,7 @@ public class Dealer extends Gamer {
         super(DEALER_NAME);
     }
 
+    @Override
     public boolean isDrawable() {
         return result.getScore() <= DRAW_CARD_PIVOT;
     }
