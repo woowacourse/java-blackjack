@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import blackjack.domain.card.Card;
 
 public class Hand {
     public static final int BLACK_JACK = 21;
@@ -15,11 +15,6 @@ public class Hand {
 
     public Hand() {
         this.cards = new ArrayList<>();
-    }
-
-    // 테스트용
-    Hand(final List<Card> cards) {
-        this.cards = cards;
     }
 
     public void add(Card card) {

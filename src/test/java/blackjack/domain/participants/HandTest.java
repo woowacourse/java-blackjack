@@ -1,19 +1,18 @@
 package blackjack.domain.participants;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
     public static final List<Card> CARDS_8 = Arrays.asList(
@@ -41,7 +40,8 @@ public class HandTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("isBustedParameters")
     void isBustedTest(String message, List<Card> cards, boolean expected) {
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
         assertThat(hand.isBusted()).isEqualTo(expected);
     }
 
@@ -60,7 +60,8 @@ public class HandTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("cards")
     void calculateTest(String message, List<Card> cards, int expected) {
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
         assertThat(hand.calculate()).isEqualTo(expected);
     }
 
