@@ -76,10 +76,6 @@ public class BlackjackGame {
 	}
 
 	public void draw(Gamer gamer) {
-		players.stream()
-			.filter(player -> player.equals(gamer))
-			.findFirst()
-			.orElseThrow(IllegalArgumentException::new);
 		gamer.hit(deck.deal());
 	}
 

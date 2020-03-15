@@ -52,4 +52,14 @@ public class BlackjackGameTest {
 
 		assertThat(blackjackGame.isAllPlayersBust()).isTrue();
 	}
+
+	@Test
+	void testIsDealerBlackjack() {
+		BlackjackGame blackjackGame = new BlackjackGame(new String[] {"a"});
+
+		blackjackGame.getDealer().hit(new Card(Type.HEART, Symbol.KING));
+		blackjackGame.getDealer().hit(new Card(Type.HEART, Symbol.ACE));
+
+		assertThat(blackjackGame.isDealerBlackjack()).isTrue();
+	}
 }
