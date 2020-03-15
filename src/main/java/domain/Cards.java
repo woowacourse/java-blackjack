@@ -24,12 +24,20 @@ public class Cards {
 	}
 
 	public Score getScore() {
+		return reviseAceScore(calculateRawScore());
+	}
+
+	private Score calculateRawScore() {
 		Score score = Score.ZERO;
 		for (Card card : cards) {
 			score = score.add(card.getPoint());
 		}
+		return score;
+	}
+
+	private Score reviseAceScore(Score score) {
 		if (hasAce()) {
-			score = score.addAceBonusIfNotBust();
+			return score.addAceBonusIfNotBust();
 		}
 		return score;
 	}
