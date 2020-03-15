@@ -22,7 +22,6 @@ import domain.card.Type;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-@SuppressWarnings("NonAsciiCharacters")
 public class GamerTest {
 	private Gamer gamer;
 
@@ -65,7 +64,7 @@ public class GamerTest {
 
 	@ParameterizedTest
 	@MethodSource("generateBustInput")
-	void 버스트(List<Card> cards, boolean expected) {
+	void isBust_True_ScoreOver21(List<Card> cards, boolean expected) {
 		for (Card card : cards) {
 			gamer.hit(card);
 		}
@@ -74,7 +73,7 @@ public class GamerTest {
 
 	@ParameterizedTest
 	@MethodSource("generateBlackjackInput")
-	void 블랙잭(List<Card> cards, boolean expected) {
+	void isBlackjack_True_ScoreIs21_And_HasTwoCards(List<Card> cards, boolean expected) {
 		for (Card card : cards) {
 			gamer.hit(card);
 		}
@@ -83,7 +82,7 @@ public class GamerTest {
 
 	@ParameterizedTest
 	@MethodSource("generateDrawInput")
-	void 카드_받기(List<Card> cards, boolean expected) {
+	void canHit_True_ScoreLessThan21(List<Card> cards, boolean expected) {
 		for (Card card : cards) {
 			gamer.hit(card);
 		}
@@ -92,7 +91,7 @@ public class GamerTest {
 
 	@ParameterizedTest
 	@MethodSource("generateScoreInput")
-	void 손패_점수(List<Card> cards, int expected) {
+	void scoreHands_ExpectedScore_hasInputCards(List<Card> cards, int expected) {
 		for (Card card : cards) {
 			gamer.hit(card);
 		}
@@ -101,14 +100,14 @@ public class GamerTest {
 
 	@ParameterizedTest
 	@NullAndEmptySource
-	void 이름_null이나_빈_값(String name) {
+	void Should_ThrownException_When_NameIsNull_Or_Empty(String name) {
 		assertThatThrownBy(() -> new Gamer(name))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("null이나 빈 값");
 	}
 
 	@Test
-	void Getter() {
+	void testGetter() {
 		assertThat(gamer.getName()).isInstanceOf(String.class).isNotBlank();
 		assertThat(gamer.getHands()).isInstanceOf(Hands.class).isNotNull();
 	}

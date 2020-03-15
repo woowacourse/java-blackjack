@@ -29,18 +29,18 @@ public class DealerTest {
 				new Card(Type.DIAMOND, Symbol.TWO)), true));
 	}
 
-	@Test
-	void 생성() {
-		assertThat(new Dealer().getName()).isEqualTo("딜러");
-	}
-
 	@ParameterizedTest
 	@MethodSource("generateDrawInput")
-	void 카드_받기(List<Card> cards, boolean expected) {
+	void canHit_True_ScoreLessThan16(List<Card> cards, boolean expected) {
 		Dealer dealer = new Dealer();
 		for (Card card : cards) {
 			dealer.hit(card);
 		}
 		assertThat(dealer.canHit()).isEqualTo(expected);
+	}
+
+	@Test
+	void Should_DealersNameIs딜러_Always() {
+		assertThat(new Dealer().getName()).isEqualTo("딜러");
 	}
 }

@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-@SuppressWarnings("NonAsciiCharacters")
 public class DeckTest {
 	@Test
-	void 카드_나누기() {
+	void deal_isInstanceOfCardClass_Pass() {
 		assertThat(new Deck().deal()).isInstanceOf(Card.class);
 	}
 }

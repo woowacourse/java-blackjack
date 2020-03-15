@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
  *
  *    @author AnHyungJu
  */
-@SuppressWarnings("NonAsciiCharacters")
 public class PlayerTest {
 	@Test
-	void 생성() {
+	void testConstructor() {
 		Player player = new Player("a");
 
 		assertThat(player).isNotNull();

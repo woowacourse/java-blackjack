@@ -15,18 +15,17 @@ import domain.gamer.Player;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-@SuppressWarnings("NonAsciiCharacters")
 public class BlackjackGameTest {
 	@ParameterizedTest
 	@NullAndEmptySource
-	void 이름_null_이나_빈_값(String[] playersName) {
+	void Should_ThrownException_When_NameIsNull_OrEmpty(String[] playersName) {
 		assertThatThrownBy(() -> new BlackjackGame(playersName))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("null이나 빈 값");
 	}
 
 	@Test
-	void 이름_중복() {
+	void Should_ThrownException_When_NameIsDuplicated() {
 		String[] playersName = {"a", "a", "b"};
 		assertThatThrownBy(() -> new BlackjackGame(playersName))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -34,7 +33,7 @@ public class BlackjackGameTest {
 	}
 
 	@Test
-	void 인원수_초과() {
+	void Should_ThrownException_When_Overmanned() {
 		String[] playersName = {"a", "b", "c", "d", "e", "gg"};
 		assertThatThrownBy(() -> new BlackjackGame(playersName))
 			.isInstanceOf(IllegalArgumentException.class)

@@ -11,10 +11,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@SuppressWarnings("NonAsciiCharacters")
 public class HandsTest {
 	@Test
-	void 총_점수_계산() {
+	void calculateTotalScore_21_HasAceAndKing() {
 		Hands hands = new Hands();
 		hands.add(new Card(Type.HEART, Symbol.ACE));
 		hands.add(new Card(Type.DIAMOND, Symbol.KING));
@@ -22,7 +21,7 @@ public class HandsTest {
 	}
 
 	@Test
-	void ACE_유무() {
+	void hasAce_True_HaveAnyAce() {
 		Hands hands1 = new Hands();
 		hands1.add(new Card(Type.HEART, Symbol.ACE));
 		hands1.add(new Card(Type.DIAMOND, Symbol.KING));
