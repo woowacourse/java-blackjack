@@ -12,18 +12,13 @@ public class Dealer extends User {
     private static final String DEALER = "딜러";
     private static final int PIVOT = 17;
 
-    private static Map<WinningResult, Integer> winningResults;
-
-    static {
-        winningResults = new LinkedHashMap<>();
-
-        Arrays.stream(WinningResult.values())
-                .forEach(winningResult ->
-                        winningResults.put(winningResult, 0));
-    }
+    private Map<WinningResult, Integer> winningResults = new LinkedHashMap<>();
 
     private Dealer() {
         super(DEALER);
+        Arrays.stream(WinningResult.values())
+                .forEach(winningResult ->
+                        winningResults.put(winningResult, 0));
     }
 
     public static Dealer appoint() {
