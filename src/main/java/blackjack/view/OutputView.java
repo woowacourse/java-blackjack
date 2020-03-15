@@ -22,17 +22,18 @@ public class OutputView {
         System.out.println(INPUT_USER_NAMES_GUIDE_MESSAGE);
     }
 
-    public static void printDistributeConfirmMessage(Dealer dealer, List<Player> players) {
-        String userNames = players.stream()
+    public static void printDistributeConfirmMessage(Dealer dealer, Players players) {
+        String userNames = players.getPlayers()
+                .stream()
                 .map(User::getName)
                 .collect(Collectors.joining(COMMA));
         System.out.println(NEW_LINE + String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames));
     }
 
-    public static void printInitialPlayerCards(Dealer dealer, List<Player> players) {
+    public static void printInitialPlayerCards(Dealer dealer, Players players) {
         List<User> users = new ArrayList<>();
         users.add(dealer);
-        users.addAll(players);
+        users.addAll(players.getPlayers());
 
         for (User user : users) {
             System.out.println(String.format(
@@ -63,10 +64,10 @@ public class OutputView {
         System.out.println(DEALER_PLAY_CONFIRM_MESSAGE);
     }
 
-    public static void printPlayerFinalScore(Dealer dealer, List<Player> players) {
+    public static void printPlayerFinalScore(Dealer dealer, Players players) {
         List<User> users = new ArrayList<>();
         users.add(dealer);
-        users.addAll(players);
+        users.addAll(players.getPlayers());
 
         for (User user : users) {
             System.out.println(String.format(

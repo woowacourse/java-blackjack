@@ -5,13 +5,12 @@ import blackjack.exception.ResponseNotMatchException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private final Dealer dealer;
     private final CardDeck cardDeck;
-    private List<Player> players;
+    private Players players;
 
     public BlackJackGame() {
         dealer = Dealer.getDealer();
@@ -25,27 +24,24 @@ public class BlackJackGame {
         calculateResult();
     }
 
-    public void enrollPlayers() {
-        players = InputView.inputUserNames().stream()
+    private void enrollPlayers() {
+        players = new Players(InputView.inputUserNames().stream()
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     private void distributeCards() {
         OutputView.printDistributeConfirmMessage(dealer, players);
+
         dealer.receiveDistributedCards(cardDeck);
 
-        for (Player player : players) {
-            player.receiveDistributedCards(cardDeck);
-        }
-
+        players.receiveDistributedCardsAllPlayers(cardDeck);
         OutputView.printInitialPlayerCards(dealer, players);
     }
 
     private void play() {
-        for (Player player : players) {
-            playEachPlayerTurn(player);
-        }
+        players.getPlayers()
+                .forEach(this::playEachPlayerTurn);
         playDealerTurn();
     }
 

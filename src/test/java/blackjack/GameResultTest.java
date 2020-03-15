@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
     private Dealer dealer;
-    private List<Player> players;
+    private Players players;
     private List<Card> cards;
     private CardDeck cardDeck;
 
@@ -27,23 +27,25 @@ public class GameResultTest {
                         new Card(Symbol.DIAMOND, Type.JACK),
                         new Card(Symbol.SPADE, Type.ACE),
                         new Card(Symbol.DIAMOND, Type.THREE),
-                        new Card(Symbol.SPADE, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.JACK),
                         new Card(Symbol.SPADE, Type.JACK),
                         new Card(Symbol.HEART, Type.SEVEN)
                 )
         );
         cardDeck = new CardDeck(cards);
         dealer = Dealer.getDealer();
-        players = new ArrayList<>(
+        players = new Players(new ArrayList<>(
                 Arrays.asList(
                         new Player("bossdog"),
                         new Player("yes"),
                         new Player("pobi")
                 )
-        );
-        players.forEach(player -> player.receiveDistributedCards(cardDeck));
-        players.get(2).receiveOneMoreCard(cardDeck);
+        ));
+        players.getPlayers()
+                .forEach(player -> player.receiveDistributedCards(cardDeck));
+        players.getPlayers()
+                .get(2).receiveOneMoreCard(cardDeck);
     }
 
     @DisplayName("딜러 블랙잭인 경우 결과 확인")
@@ -58,9 +60,9 @@ public class GameResultTest {
         dealer.receiveDistributedCards(dealerDeck);
         Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
-        assertThat(result.get(players.get(0))).isEqualTo(PlayerResult.DRAW);
-        assertThat(result.get(players.get(1))).isEqualTo(PlayerResult.LOSE);
-        assertThat(result.get(players.get(2))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(PlayerResult.DRAW);
+        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(PlayerResult.LOSE);
     }
 
     @DisplayName("딜러 버스트인 경우 결과 확인")
@@ -76,9 +78,9 @@ public class GameResultTest {
         dealer.receiveDistributedCards(dealerDeck);
         dealer.receiveOneMoreCard(dealerDeck);
         Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
-        assertThat(result.get(players.get(0))).isEqualTo(PlayerResult.WIN);
-        assertThat(result.get(players.get(1))).isEqualTo(PlayerResult.WIN);
-        assertThat(result.get(players.get(2))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(PlayerResult.WIN);
+        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(PlayerResult.WIN);
+        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(PlayerResult.LOSE);
     }
 
     @DisplayName("딜러 NONE인 경우 점수 비교 결과 확인")
@@ -93,9 +95,9 @@ public class GameResultTest {
         dealer.receiveDistributedCards(dealerDeck);
         Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
-        assertThat(result.get(players.get(0))).isEqualTo(PlayerResult.WIN);
-        assertThat(result.get(players.get(1))).isEqualTo(PlayerResult.LOSE);
-        assertThat(result.get(players.get(2))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(PlayerResult.WIN);
+        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(PlayerResult.LOSE);
     }
 
     @AfterEach

@@ -11,11 +11,12 @@ public class GameResult {
         this.gameResult = result;
     }
 
-    public static GameResult calculateGameResult(Dealer dealer, List<Player> players) {
+    public static GameResult calculateGameResult(Dealer dealer, Players players) {
         Map<Player, PlayerResult> result = new LinkedHashMap<>();
-        for (Player player : players) {
-            result.put(player, calculateResultByDealerStatusStrategy(dealer, player));
-        }
+        players.getPlayers()
+                .forEach(player ->
+                        result.put(player, calculateResultByDealerStatusStrategy(dealer, player))
+                );
         return new GameResult(result);
     }
 
