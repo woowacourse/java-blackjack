@@ -7,13 +7,15 @@ import java.util.Stack;
 public class Deck {
 	private final Stack<Card> deck;
 
-	public Deck(List<Card> cards) {
-		deck = new Stack<>();
-		cards.forEach(deck::push);
+	private Deck(Stack<Card> deck) {
+		this.deck = deck;
 	}
 
-	public void shuffle() {
+	public static Deck of(List<Card> cards) {
+		Stack<Card> deck = new Stack<>();
+		cards.forEach(deck::push);
 		Collections.shuffle(deck);
+		return new Deck(deck);
 	}
 
 	public Card pop() {
