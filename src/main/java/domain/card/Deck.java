@@ -19,7 +19,7 @@ public class Deck {
         for (Type type : Type.values()) {
             cards.addAll(createBySymbol(type));
         }
-        return new Deck(cards);
+        return new Deck(shuffle(cards));
     }
 
     private static Stack<Card> createBySymbol(Type type) {
@@ -30,12 +30,12 @@ public class Deck {
         return cards;
     }
 
-    private void shuffle() {
+    private static Stack<Card> shuffle(Stack<Card> cards) {
         Collections.shuffle(cards);
+        return cards;
     }
 
     public Card handOutCard() {
-        shuffle();
         return cards.pop();
     }
 
