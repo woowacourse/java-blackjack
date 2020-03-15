@@ -56,22 +56,11 @@ public class User implements Comparable<User> {
 	}
 
 	public int calculateScore() {
-		int userScore = cards.getScore();
-		if (userScore > BLACKJACK_SCORE) {
-			return BURST_RESULT_SCORE;
-		}
-		if (cards.hasAce()) {
-			return cards.getScoreWithAce(userScore);
-		}
-		return userScore;
+		return cards.calculateScore();
 	}
 
 	public boolean isNotBlackjack() {
-		return !(cards.hasInitialSize() && isBlackjackScore());
-	}
-
-	public boolean isBlackjackScore() {
-		return calculateScore() == BLACKJACK_SCORE;
+		return cards.isNotBlackJack();
 	}
 
 	@Override

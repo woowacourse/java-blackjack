@@ -20,10 +20,7 @@ public class Card {
 	}
 
 	public int getScore(int userScore) {
-		if (isAce()) {
-			return symbol.getBigOrSmallAce(userScore);
-		}
-		return symbol.getScore();
+		return symbol.getConvertedScoreByJudge(userScore);
 	}
 
 	@Override
