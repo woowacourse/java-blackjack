@@ -22,7 +22,7 @@ class ShuffledDeckFactoryTest {
 	}
 
 	@Test
-	void ofDeckFactory() {
+	void ofDeckFactory_IsSizeFifteenAndNotDuplicated() {
 		// when
 		Drawable deck = Deck.ofDeckFactory(deckFactory);
 
