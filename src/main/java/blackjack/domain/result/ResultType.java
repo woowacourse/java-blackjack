@@ -1,39 +1,50 @@
 package blackjack.domain.result;
 
+import java.util.Arrays;
+import java.util.function.Predicate;
+
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import blackjack.domain.user.hand.Score;
 
 public enum ResultType {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN(value -> value > 0, "승"),
+    DRAW(value -> value == 0, "무"),
+    LOSE(value -> value < 0, "패");
 
+    private Predicate<Integer> compareResult;
     private final String alias;
 
-    ResultType(String alias) {
+    ResultType(Predicate<Integer> compareResult, String alias) {
+        this.compareResult = compareResult;
         this.alias = alias;
     }
 
     public static ResultType from(User targetUser, User compareUser) {
-        if (targetUser instanceof Player && targetUser.isBust()) {
-            return LOSE;
-        }
+        return Arrays.stream(values())
+            .filter(resultType -> resultType.compareResult.test(
+                Integer.compare(targetUser.getScore(), compareUser.getScore())))
+            .map(resultType -> findResultTypeWhenBothUserBust(targetUser, resultType))
+            .findAny()
+            .orElseThrow(() -> new NullPointerException("유효하지 않은 결과 타입입니다."));
+    }
 
-        if (compareUser.isBust()) {
-            return WIN;
+    private static ResultType findResultTypeWhenBothUserBust(User targetUser, ResultType resultType) {
+        if (isBustDealerAndPlayer(targetUser, resultType)) {
+            return findResultType(targetUser);
         }
+        return resultType;
+    }
 
-        if (targetUser.isBust()) {
-            return LOSE;
+    private static ResultType findResultType(User targetUser) {
+        if (targetUser instanceof Player) {
+            return ResultType.LOSE;
         }
+        return ResultType.WIN;
+    }
 
-        if (targetUser.getScore() > compareUser.getScore()) {
-            return WIN;
-        }
-        if (targetUser.getScore() < compareUser.getScore()) {
-            return LOSE;
-        }
-        return DRAW;
+    private static boolean isBustDealerAndPlayer(User targetUser, ResultType resultType) {
+        return resultType.alias.equals(DRAW.alias) && targetUser.getScore() == Score.BUST.getScore();
     }
 
     public String getAlias() {

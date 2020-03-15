@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import java.util.List;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.hand.Score;
 
 public class Player extends User {
 	private static final int PLAYER_DRAWABLE_MAX_SCORE = 21;
@@ -22,7 +23,7 @@ public class Player extends User {
 	@Override
 	public boolean canDraw() {
 		// NOTE : 의인화?!
-		return hand.calculateScore().isLowerThan(PLAYER_DRAWABLE_MAX_SCORE);
+		return hand.calculateScore().getScore() > Score.BUST.getScore();
 	}
 
 	@Override

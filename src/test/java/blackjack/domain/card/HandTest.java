@@ -59,4 +59,17 @@ class HandTest {
 		Score expected = Score.valueOf(19);
 		assertThat(hand.calculateScore()).isEqualTo(expected);
 	}
+
+	@Test
+	void calculateScore_WithBustCard_SumCards() {
+		Hand hand = new Hand();
+		List<Card> cards = Arrays.asList(
+			new Card(Symbol.FOUR, Type.HEART),
+			new Card(Symbol.EIGHT, Type.CLUB),
+			new Card(Symbol.TEN, Type.DIAMOND));
+		hand.add(cards);
+
+		Score expected = Score.BUST;
+		assertThat(hand.calculateScore()).isEqualTo(expected);
+	}
 }

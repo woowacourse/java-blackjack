@@ -72,4 +72,13 @@ class ScoreTest {
 
 		assertThat(score.isMoreThan(cmpScore)).isEqualTo(expected);
 	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"21,false", "22,true"})
+	void isBust_InputScore_ReturnBustResult(int value, boolean expected) {
+		Score score = Score.valueOf(value);
+
+		assertThat(score.isBust()).isEqualTo(expected);
+	}
+
 }

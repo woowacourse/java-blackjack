@@ -11,36 +11,36 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
 public class Report {
-	private final Map<ResultType, Long> dealerResult;
-	private final Map<Player, ResultType> playersResult;
+    private final Map<ResultType, Long> dealerResult;
+    private final Map<Player, ResultType> playersResult;
 
-	private Report(Map<ResultType, Long> dealerResult, Map<Player, ResultType> playersResult) {
-		this.dealerResult = dealerResult;
-		this.playersResult = playersResult;
-	}
+    private Report(Map<ResultType, Long> dealerResult, Map<Player, ResultType> playersResult) {
+        this.dealerResult = dealerResult;
+        this.playersResult = playersResult;
+    }
 
-	public static Report from(Dealer dealer, List<Player> players) {
-		return new Report(
-			generateDealerResult(dealer, players),
-			generatePlayersResult(dealer, players));
-	}
+    public static Report from(Dealer dealer, List<Player> players) {
+        return new Report(
+            generateDealerResult(dealer, players),
+            generatePlayersResult(dealer, players));
+    }
 
-	private static Map<Player, ResultType> generatePlayersResult(Dealer dealer, List<Player> players) {
-		return players.stream()
-			.collect(toMap(Function.identity(), player -> ResultType.from(player, dealer)));
-	}
+    private static Map<Player, ResultType> generatePlayersResult(Dealer dealer, List<Player> players) {
+        return players.stream()
+            .collect(toMap(Function.identity(), player -> ResultType.from(player, dealer)));
+    }
 
-	private static Map<ResultType, Long> generateDealerResult(Dealer dealer, List<Player> players) {
-		return players.stream()
-			.map(player -> ResultType.from(dealer, player))
-			.collect(collectingAndThen(groupingBy(Function.identity(), counting()), EnumMap::new));
-	}
+    private static Map<ResultType, Long> generateDealerResult(Dealer dealer, List<Player> players) {
+        return players.stream()
+            .map(player -> ResultType.from(dealer, player))
+            .collect(collectingAndThen(groupingBy(Function.identity(), counting()), EnumMap::new));
+    }
 
-	public Map<ResultType, Long> getDealerResult() {
-		return dealerResult;
-	}
+    public Map<ResultType, Long> getDealerResult() {
+        return dealerResult;
+    }
 
-	public Map<Player, ResultType> getPlayersResult() {
-		return playersResult;
-	}
+    public Map<Player, ResultType> getPlayersResult() {
+        return playersResult;
+    }
 }
