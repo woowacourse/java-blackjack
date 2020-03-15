@@ -70,8 +70,11 @@ public class Blackjack {
 	}
 
 	private static boolean willProgress(Player player) {
+		if (!player.canReceiveCard()) {
+			return false;
+		}
 		YesOrNo yesOrNo = prepareYesOrNo(player);
-		return player.canReceiveCard() && yesOrNo.isYes();
+		return yesOrNo.isYes();
 	}
 
 	private static YesOrNo prepareYesOrNo(Player player) {

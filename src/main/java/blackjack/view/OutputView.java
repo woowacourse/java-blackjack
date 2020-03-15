@@ -35,13 +35,13 @@ public class OutputView {
 	}
 
 	public static void printPlayerCard(Player player) {
-		String userCards = createPlayerCardInfo(player);
+		String userCards = createPlayerStartCardInfo(player);
 		System.out.printf("%s : %s" + NEW_LINE, player.getName(), userCards);
 
 		printIfBust(player);
 	}
 
-	private static String createPlayerCardInfo(Player player) {
+	private static String createPlayerStartCardInfo(Player player) {
 		return player.getStartHand().stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
@@ -72,6 +72,12 @@ public class OutputView {
 			System.out.printf("%s : %s - 결과: %s" + NEW_LINE,
 					player.getName(), userCards, score);
 		}
+	}
+
+	private static String createPlayerCardInfo(Player player) {
+		return player.getHand().stream()
+				.map(Card::getName)
+				.collect(Collectors.joining(", "));
 	}
 
 	private static String createResultScore(Player player) {
