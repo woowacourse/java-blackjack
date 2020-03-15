@@ -32,9 +32,9 @@ class DrawRequestDTOTest {
 	@DisplayName("입력한 커맨드가 y 면 true, n 이면 false")
 	@ParameterizedTest
 	@CsvSource(value = {"y,true", "n,false"})
-	void test(String command, boolean result) {
+	void test(String command, boolean expect) {
 		DrawRequestDTO drawRequestDTO = new DrawRequestDTO(command);
 
-		assertThat(drawRequestDTO.isDraw()).isEqualTo(result);
+		assertThat(drawRequestDTO.isDraw()).isEqualTo(expect);
 	}
 }

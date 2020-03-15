@@ -21,8 +21,7 @@ public class CardBundle {
 		if (isBurst()) {
 			return GameResult.WIN;
 		}
-		int compare = Integer.compare(gamblerCardBundle.calculateScore(), this.calculateScore());
-		return GameResult.findByResult(compare);
+		return GameResult.createGameResult(gamblerCardBundle.calculateScore(), this.calculateScore());
 	}
 
 	public int calculateScore() {

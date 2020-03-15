@@ -4,45 +4,55 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+// todo: 테스트코드 작성
 public class GameReports {
-    private final List<GameReport> gameReports;
+	private final List<GameReport> gameReports;
 
-    public GameReports(List<GameReport> gameReports) {
-        this.gameReports = gameReports;
-    }
+	public GameReports(List<GameReport> gameReports) {
+		validate(gameReports);
+		this.gameReports = gameReports;
+	}
 
-    public int getGamblerWinCount() {
-        return (int) gameReports.stream()
-                .filter(GameReport::isWin)
-                .count();
-    }
+	private void validate(List<GameReport> gameReports) {
+		if (gameReports == null || gameReports.isEmpty()) {
+			throw new IllegalArgumentException("승패정보가 없습니다.");
+		}
+	}
 
-    public int getGamblerDrawCount() {
-        return (int) gameReports.stream()
-                .filter(GameReport::isDraw)
-                .count();
-    }
+	public int getGamblerWinCount() {
+		return (int)gameReports.stream()
+			.filter(GameReport::isWin)
+			.count();
+	}
 
-    public int getGamblerLoseCount() {
-        return (int) gameReports.stream()
-                .filter(GameReport::isLose)
-                .count();
-    }
+	public int getGamblerDrawCount() {
+		return (int)gameReports.stream()
+			.filter(GameReport::isDraw)
+			.count();
+	}
 
-    public List<GameReport> getReports() {
-        return Collections.unmodifiableList(this.gameReports);
-    }
+	public int getGamblerLoseCount() {
+		return (int)gameReports.stream()
+			.filter(GameReport::isLose)
+			.count();
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GameReports that = (GameReports) o;
-        return Objects.equals(gameReports, that.gameReports);
-    }
+	public List<GameReport> getReports() {
+		return Collections.unmodifiableList(this.gameReports);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(gameReports);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		GameReports that = (GameReports)o;
+		return Objects.equals(gameReports, that.gameReports);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(gameReports);
+	}
 }

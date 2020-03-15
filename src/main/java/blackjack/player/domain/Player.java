@@ -7,13 +7,32 @@ import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.report.GameReport;
 
+//todo: 테스트코드 작성필요
 public abstract class Player {
 	protected final String name;
 	protected final CardBundle cardBundle;
 
 	public Player(CardBundle cardBundle, String name) {
+		validate(cardBundle, name);
 		this.cardBundle = cardBundle;
 		this.name = name;
+	}
+
+	private void validate(CardBundle cardBundle, String name) {
+		checkCardBundle(cardBundle);
+		checkName(name);
+	}
+
+	private void checkName(String name) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("플레이어의 이름이 존재하지 않습니다.");
+		}
+	}
+
+	private void checkCardBundle(CardBundle cardBundle) {
+		if (cardBundle == null) {
+			throw new IllegalArgumentException("카드번들이 존재하지 않습니다.");
+		}
 	}
 
 	public String getName() {

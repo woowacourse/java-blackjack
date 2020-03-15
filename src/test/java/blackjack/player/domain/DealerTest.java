@@ -18,7 +18,7 @@ class DealerTest {
 	@DisplayName("딜러와 겜블러가 비교하여 결과를 만들어 낸다.")
 	@ParameterizedTest
 	@CsvSource(value = {"TWO,LOSE", "FIVE,DRAW", "SIX,WIN"})
-	void getReport(CardNumber cardNumber, GameResult result) {
+	void getReport(CardNumber cardNumber, GameResult expect) {
 		//given
 		Player dealer = new Dealer(new CardBundle());
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.FIVE));
@@ -30,13 +30,13 @@ class DealerTest {
 		GameReport report = dealer.createReport(gambler);
 
 		//then
-		assertThat(report).isEqualTo(new GameReport("bebop", result));
+		assertThat(report).isEqualTo(new GameReport("bebop", expect));
 	}
 
 	@DisplayName("딜러의 카드패가 16을 초과하면 뽑을수 없다.")
 	@ParameterizedTest
 	@CsvSource(value = {"TEN,false", "NINE,true"})
-	void isDrawable(CardNumber cardNumber, boolean result) {
+	void isDrawable(CardNumber cardNumber, boolean expect) {
 		//given
 		Player dealer = new Dealer(new CardBundle());
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.SEVEN));
@@ -46,6 +46,6 @@ class DealerTest {
 		boolean drawable = dealer.isDrawable();
 
 		//then
-		assertThat(drawable).isEqualTo(result);
+		assertThat(drawable).isEqualTo(expect);
 	}
 }

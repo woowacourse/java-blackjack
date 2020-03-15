@@ -14,7 +14,7 @@ class CardBundleTest {
 	@DisplayName("카드의 점수 계산 로직, ACE가 있는 경우에 21을 넘지 않으면 10을 더한 점수를 반환한다.")
 	@ParameterizedTest
 	@CsvSource(value = {"ACE, 20", "TWO,21"})
-	void calculateScore(CardNumber number, int result) {
+	void calculateScore(CardNumber number, int expect) {
 		//given
 		CardBundle cardBundle = new CardBundle();
 		cardBundle.addCard(Card.of(HEART, CardNumber.ACE));
@@ -22,16 +22,16 @@ class CardBundleTest {
 		cardBundle.addCard(Card.of(HEART, number));
 
 		//when
-		int expect = cardBundle.calculateScore();
+		int actual = cardBundle.calculateScore();
 
 		//then
-		assertThat(expect).isEqualTo(result);
+		assertThat(actual).isEqualTo(expect);
 	}
 
 	@DisplayName("두 카드패를 비교해서 승자, 패자, 무승부를 결정")
 	@ParameterizedTest
 	@CsvSource(value = {"TEN,WIN", "NINE,DRAW", "TWO,LOSE"})
-	void compare(CardNumber number, GameResult result) {
+	void compare(CardNumber number, GameResult exppect) {
 		//given
 		CardBundle dealerBundle = new CardBundle();
 		dealerBundle.addCard(Card.of(HEART, CardNumber.NINE));
@@ -40,15 +40,15 @@ class CardBundleTest {
 		gamblerBundle.addCard(Card.of(HEART, number));
 
 		//when
-		GameResult expect = dealerBundle.compare(gamblerBundle);
+		GameResult result = dealerBundle.compare(gamblerBundle);
 
-		assertThat(expect).isEqualTo(result);
+		assertThat(result).isEqualTo(exppect);
 	}
 
 	@DisplayName("버스트인사람은 무조건 패배")
 	@ParameterizedTest
 	@CsvSource(value = {"ACE,TWO,LOSE", "TWO,ACE,WIN"})
-	void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, GameResult result) {
+	void compare2(CardNumber dealerNumber, CardNumber gamblerNumber, GameResult expect) {
 		//given
 		CardBundle dealerCardBundle = new CardBundle();
 		dealerCardBundle.addCard(Card.of(HEART, CardNumber.TEN));
@@ -61,8 +61,8 @@ class CardBundleTest {
 		gamblerCardBundle.addCard(Card.of(HEART, gamblerNumber));
 
 		//when
-		GameResult expect = dealerCardBundle.compare(gamblerCardBundle);
+		GameResult result = dealerCardBundle.compare(gamblerCardBundle);
 
-		assertThat(expect).isEqualTo(result);
+		assertThat(result).isEqualTo(expect);
 	}
 }

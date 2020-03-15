@@ -43,15 +43,15 @@ class PlayerTest {
 	@DisplayName("플레이어가 겜블러인지, 딜러인지 확인")
 	@ParameterizedTest
 	@MethodSource("playerProvider")
-	void test(Player player, boolean gamblerResult, boolean dealerResult) {
-		assertThat(player.isDealer()).isEqualTo(dealerResult);
-		assertThat(player.isGambler()).isEqualTo(gamblerResult);
+	void test(Player player, boolean gamblerExpect, boolean dealerExpect) {
+		assertThat(player.isDealer()).isEqualTo(dealerExpect);
+		assertThat(player.isGambler()).isEqualTo(gamblerExpect);
 	}
 
 	@DisplayName("플레이어의 패가 블랙잭인지 확인")
 	@ParameterizedTest
 	@CsvSource(value = {"ACE,false", "KING,true"})
-	void isBlackjack(CardNumber cardNumber, boolean result) {
+	void isBlackjack(CardNumber cardNumber, boolean expect) {
 		//given
 		Player player = new Dealer(new CardBundle());
 		Symbol club = Symbol.CLUB;
@@ -61,25 +61,25 @@ class PlayerTest {
 		//when
 		boolean isBlackjack = player.isBlackjack();
 		//then
-		assertThat(isBlackjack).isEqualTo(result);
+		assertThat(isBlackjack).isEqualTo(expect);
 	}
 
 	@DisplayName("플레이어의 패가 21이하인지 확인")
 	@ParameterizedTest
 	@MethodSource("cardBundleProvider")
-	void isBurst(CardBundle cardBundle, boolean result) {
+	void isBurst(CardBundle cardBundle, boolean expect) {
 		//given
 		Player player = new Dealer(cardBundle);
 		//when
 		boolean notBurst = player.isNotBurst();
 		//than
-		assertThat(notBurst).isEqualTo(result);
+		assertThat(notBurst).isEqualTo(expect);
 	}
 
 	@DisplayName("플레이어의 패가 21이하인지 확인")
 	@ParameterizedTest
 	@CsvSource(value = {"ACE,true", "TWO,false"})
-	void isNotBurst(CardNumber cardNumber, boolean result) {
+	void isNotBurst(CardNumber cardNumber, boolean expect) {
 		//given
 		Player player = new Dealer(new CardBundle());
 		player.addCard(Card.of(Symbol.HEART, CardNumber.TEN));
@@ -88,6 +88,6 @@ class PlayerTest {
 		//when
 		boolean notBurst = player.isNotBurst();
 		//then
-		assertThat(notBurst).isEqualTo(result);
+		assertThat(notBurst).isEqualTo(expect);
 	}
 }

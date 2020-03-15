@@ -1,30 +1,31 @@
 package blackjack.card.domain;
 
-import blackjack.card.domain.component.CardNumber;
-import blackjack.card.domain.component.Symbol;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.card.domain.component.CardNumber;
+import blackjack.card.domain.component.Symbol;
 
 class CardTest {
 
 	@DisplayName("카드가 ACE 인지 아닌지 확인")
 	@ParameterizedTest
 	@CsvSource(value = {"ACE,true", "TWO,false"})
-	void isAce(CardNumber cardNumber, boolean result) {
+	void isAce(CardNumber cardNumber, boolean expect) {
 		Card card = Card.of(Symbol.HEART, cardNumber);
-		assertThat(card.isAce()).isEqualTo(result);
+		assertThat(card.isAce()).isEqualTo(expect);
 	}
 
 	@DisplayName("카드의 점수를 반환하는 기능")
 	@ParameterizedTest
 	@CsvSource(value = {"ACE,1", "TEN,10", "KING,10"})
-	void name(CardNumber cardNumber, int result) {
+	void name(CardNumber cardNumber, int expect) {
 		Card card = Card.of(Symbol.CLUB, cardNumber);
-		assertThat(card.getScore()).isEqualTo(result);
+		assertThat(card.getScore()).isEqualTo(expect);
 	}
 
 	@DisplayName("싱글톤으로 만들어둔 CardCache에서 카드 가져오기")

@@ -13,7 +13,7 @@ public class BlackjackRule {
 		}
 	}
 
-	public static boolean CheckEarlyTermination(Player dealer) {
+	public static boolean checkEarlyTermination(Player dealer) {
 		return dealer.isBlackjack();
 	}
 }

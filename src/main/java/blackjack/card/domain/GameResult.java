@@ -15,11 +15,16 @@ public enum GameResult {
 		this.message = message;
 	}
 
-	public static GameResult findByResult(int result) {
+	private static GameResult findByResult(int result) {
 		return Arrays.stream(values())
 			.filter(gameResult -> gameResult.result == result)
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(String.format("%d 는 존재하지 않는 결과 값 입니다.", result)));
+	}
+
+	public static GameResult createGameResult(int gamblerScore, int dealerScore) {
+		int compare = Integer.compare(gamblerScore, dealerScore);
+		return findByResult(compare);
 	}
 
 	public String getMessage() {

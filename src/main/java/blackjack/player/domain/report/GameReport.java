@@ -1,51 +1,70 @@
 package blackjack.player.domain.report;
 
-import blackjack.card.domain.GameResult;
-
 import java.util.Objects;
 
+import blackjack.card.domain.GameResult;
+
+// todo: 테스트코드 작성 필요
 public class GameReport {
-    private final String name;
-    private final GameResult gameResult;
+	private final String name;
+	private final GameResult gameResult;
 
-    public GameReport(String name, GameResult gameResult) {
-        this.name = name;
-        this.gameResult = gameResult;
-    }
+	public GameReport(String name, GameResult gameResult) {
+		validate(name, gameResult);
+		this.name = name;
+		this.gameResult = gameResult;
+	}
 
-    public String getName() {
-        return name;
-    }
+	private void validate(String name, GameResult gameResult) {
+		checkName(name);
+		checkGameResult(gameResult);
+	}
 
-    public String getMessage() {
-        return gameResult.getMessage();
-    }
+	private void checkGameResult(GameResult gameResult) {
+		if (gameResult == null) {
+			throw new IllegalArgumentException("GameResult가 존재하지 유효하지 않습니다.");
+		}
+	}
 
-    public boolean isWin() {
-        return this.gameResult == GameResult.WIN;
-    }
+	private void checkName(String name) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("비어있는 이름을 사용했습니다.");
+		}
+	}
 
-    public boolean isDraw() {
-        return this.gameResult == GameResult.DRAW;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public boolean isLose() {
-        return this.gameResult == GameResult.LOSE;
-    }
+	public String getMessage() {
+		return gameResult.getMessage();
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        GameReport that = (GameReport) o;
-        return Objects.equals(name, that.name) &&
-                gameResult == that.gameResult;
-    }
+	public boolean isWin() {
+		return this.gameResult == GameResult.WIN;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, gameResult);
-    }
+	public boolean isDraw() {
+		return this.gameResult == GameResult.DRAW;
+	}
+
+	public boolean isLose() {
+		return this.gameResult == GameResult.LOSE;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		GameReport that = (GameReport)o;
+		return Objects.equals(name, that.name) &&
+			gameResult == that.gameResult;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, gameResult);
+	}
 }

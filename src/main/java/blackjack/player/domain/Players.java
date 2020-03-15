@@ -13,7 +13,15 @@ public class Players {
 	private final List<Player> players;
 
 	public Players(List<Player> players) {
+		validate(players);
 		this.players = players;
+	}
+
+	// todo : 테스트코드 작성
+	private void validate(List<Player> players) {
+		if (players == null || players.isEmpty()) {
+			throw new IllegalArgumentException("게임에 플레이어가 존재하지 않습니다.");
+		}
 	}
 
 	public void drawCard(CardDeck cardDeck) {

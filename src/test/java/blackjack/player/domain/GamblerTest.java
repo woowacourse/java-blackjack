@@ -43,8 +43,8 @@ class GamblerTest {
 	@DisplayName("겜블러는 버스트이거나 블랙잭이면 카드를 뽑을수 없다.")
 	@ParameterizedTest
 	@MethodSource("bundleProvider")
-	void isDrawable(boolean result, CardBundle cardBundle) {
+	void isDrawable(boolean expect, CardBundle cardBundle) {
 		Player gambler = new Gambler(cardBundle, "bebop");
-		assertThat(gambler.isDrawable()).isEqualTo(result);
+		assertThat(gambler.isDrawable()).isEqualTo(expect);
 	}
 }

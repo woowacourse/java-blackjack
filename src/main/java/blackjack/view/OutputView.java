@@ -3,6 +3,7 @@ package blackjack.view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.BlackjackRule;
 import blackjack.card.domain.Card;
 import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Player;
@@ -15,7 +16,11 @@ public class OutputView {
 		Dealer dealer = (Dealer)players.findDealer();
 		Card dealerCard = dealer.getFirstCard();
 
-		System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", collectGamblersNames(gamblers)));
+		System.out.println(
+			String.format("딜러와 %s에게 %d장을 나누었습니다."
+				, collectGamblersNames(gamblers)
+				, BlackjackRule.STARTING_CARD_COUNT)
+		);
 		System.out.println(String.format("%s: %s%s", dealer.getName(), dealerCard.getNumber(), dealerCard.getSymbol()));
 		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));
 	}
