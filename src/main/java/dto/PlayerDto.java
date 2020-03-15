@@ -1,8 +1,5 @@
 package dto;
 
-import java.util.stream.Collectors;
-
-import domain.card.Card;
 import domain.card.Hands;
 import domain.gamer.Player;
 import domain.gamer.PlayerGameResult;
@@ -12,35 +9,36 @@ import domain.gamer.PlayerGameResult;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-public class PlayerDto {
+public class PlayerDto implements GamerDto {
 	private String name;
 	private Hands hands;
 	private PlayerGameResult playerGameResult;
+	private int totalScore;
 
 	private PlayerDto(String name, Hands hands, PlayerGameResult playerGameResult) {
 		this.name = name;
 		this.hands = hands;
 		this.playerGameResult = playerGameResult;
+		this.totalScore = hands.calculateTotalScore();
 	}
 
 	public static PlayerDto from(Player player) {
 		return new PlayerDto(player.getName(), player.getHands(), player.getPlayerGameResult());
 	}
 
-	public String showCards() {
-		return this.name
-			+ ": "
-			+ hands.getCards().stream()
-			.map(Card::shape)
-			.collect(Collectors.joining(", "));
-	}
-
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public Hands getHands() {
 		return hands;
+	}
+
+	@Override
+	public int getTotalScore() {
+		return totalScore;
 	}
 
 	public PlayerGameResult getPlayerGameResult() {

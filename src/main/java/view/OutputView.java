@@ -3,9 +3,12 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.card.Card;
+import domain.card.Hands;
 import domain.gamer.PlayerGameResult;
 import dto.BlackjackGameDto;
 import dto.DealerDto;
+import dto.GamerDto;
 import dto.PlayerDto;
 
 /**
@@ -33,10 +36,20 @@ public class OutputView {
 	}
 
 	public static void printInitialCards(BlackjackGameDto blackjackGameDto) {
-		System.out.println(blackjackGameDto.getDealer().showDealerInitialCard());
+		System.out.println(showDealerInitialCard(blackjackGameDto.getDealer()));
 		for (PlayerDto player : blackjackGameDto.getPlayers()) {
-			System.out.println(player.showCards());
+			System.out.println(showCards(player));
 		}
+	}
+
+	private static String showDealerInitialCard(DealerDto dealer) {
+		Hands hands = dealer.getHands();
+		return dealer.getName()
+			+ ": "
+			+ "HIDDEN, "
+			+ hands.getCards()
+			.get(1)
+			.shape();
 	}
 
 	public static void printDealerBlackjack() {
@@ -44,7 +57,7 @@ public class OutputView {
 	}
 
 	public static void printCards(PlayerDto playerDto) {
-		System.out.println(playerDto.showCards());
+		System.out.println(showCards(playerDto));
 	}
 
 	public static void printDealerDraw() {
@@ -55,10 +68,19 @@ public class OutputView {
 		DealerDto dealerDto = blackjackGameDto.getDealer();
 		List<PlayerDto> playersDto = blackjackGameDto.getPlayers();
 
-		System.out.println(dealerDto.showCards() + " - " + dealerDto.getHands().calculateTotalScore());
-		for (PlayerDto player : playersDto) {
-			System.out.println(player.showCards() + " - " + player.getHands().calculateTotalScore());
+		System.out.println(showCards(dealerDto) + " - " + dealerDto.getTotalScore());
+		for (PlayerDto playerDto : playersDto) {
+			System.out.println(showCards(playerDto) + " - " + playerDto.getTotalScore());
 		}
+	}
+
+	private static String showCards(GamerDto gamerDto) {
+		Hands hands = gamerDto.getHands();
+		return gamerDto.getName()
+			+ ": "
+			+ hands.getCards().stream()
+			.map(Card::shape)
+			.collect(Collectors.joining(", "));
 	}
 
 	public static void printMatchResult(BlackjackGameDto blackjackGameDto) {
