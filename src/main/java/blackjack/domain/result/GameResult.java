@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.Participants;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -26,14 +26,15 @@ public class GameResult {
     private final Map<Player, Outcome> playerResults;
     private final Map<Outcome, Integer> dealerResults;
 
-    public GameResult(Dealer dealer, Players players) {
-        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, players));
+    public GameResult(Participants participants) {
+        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(participants));
         this.dealerResults = Collections.unmodifiableMap(calculateDealerResults());
     }
 
-    private Map<Player, Outcome> calculatePlayerResults(Dealer dealer, Players players) {
+    private Map<Player, Outcome> calculatePlayerResults(Participants participants) {
         Map<Player, Outcome> playerResults = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
+        Dealer dealer = participants.getDealer();
+        for (Player player : participants.getPlayers()) {
             playerResults.put(player, player.calculateOutcome(dealer));
         }
         return playerResults;

@@ -1,10 +1,11 @@
 package blackjack;
 
-import blackjack.domain.result.GameResult;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -21,34 +22,33 @@ public class BlackJackApplication {
     }
 
     private static void startGame() {
-        Dealer dealer = new Dealer();
-        Players players = new Players(InputView.inputNames());
+        Participants participants = new Participants(InputView.inputNames());
         CardDeck cardDeck = new CardDeck();
-        distributeFirstCards(dealer, players, cardDeck);
-        drawMoreCards(dealer, players, cardDeck);
-        printCalculatedResult(dealer, players);
+        distributeFirstCards(participants, cardDeck);
+        drawMoreCards(participants, cardDeck);
+        printCalculatedResult(participants);
     }
 
 
-    private static void printCalculatedResult(Dealer dealer, Players players) {
-        GameResult gameResult = new GameResult(dealer, players);
-        OutputView.printUsersCardsAndScore(dealer, players);
-        OutputView.printFinalResult(dealer, gameResult);
+    private static void printCalculatedResult(Participants participants) {
+        GameResult gameResult = new GameResult(participants);
+        OutputView.printUsersCardsAndScore(participants);
+        OutputView.printFinalResult(participants, gameResult);
     }
 
-    private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
-        dealer.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
-        for (Player player : players.getPlayers()) {
-            player.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
+    private static void distributeFirstCards(Participants participants, CardDeck cardDeck) {
+        for (User participant : participants.getParticipants()) {
+            participant.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         }
-        OutputView.printCardDistribution(players);
-        OutputView.printUsersCards(dealer, players);
+        OutputView.printCardDistribution(participants);
+        OutputView.printUsersCards(participants);
     }
 
-    private static void drawMoreCards(Dealer dealer, Players players, CardDeck cardDeck) {
-        for (Player player : players.getPlayers()) {
+    private static void drawMoreCards(Participants participants, CardDeck cardDeck) {
+        for (Player player : participants.getPlayers()) {
             drawMorePlayerCard(cardDeck, player);
         }
+        Dealer dealer = participants.getDealer();
         while (dealer.canDrawCard()) {
             OutputView.printDealerOneMoreCard();
             dealer.drawCard(cardDeck);

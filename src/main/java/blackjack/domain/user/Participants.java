@@ -1,11 +1,12 @@
 package blackjack.domain.user;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public class Participants {
 
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private static final int MINIMUM_PLAYER_COUNT = 1;
@@ -16,19 +17,23 @@ public class Players {
         String.format("참여 인원이 너무 많습니다. %d명 이내로만 가능합니다.", MAXIMUM_PLAYER_COUNT);
     private static final String UNDER_MINIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
         String.format("참여 인원은 %d명 이상이어야 합니다.", MINIMUM_PLAYER_COUNT);
+    private static final String NOT_DEALER_EXCEPTION_MESSAGE = "딜러가 없습니다.";
 
-    private final List<Player> players;
+    private final List<User> participants;
 
-    public Players(String playersName) {
+    public Participants(String playersName) {
         List<String> playerNames = createPlayerNames(playersName);
-        this.players = Collections.unmodifiableList(playerNames.stream()
+        List<User> participants = new ArrayList<>();
+        participants.add(new Dealer());
+        participants.addAll(playerNames.stream()
             .map(Player::new)
             .collect(Collectors.toList()));
+        this.participants = Collections.unmodifiableList(participants);
     }
 
     private List<String> createPlayerNames(String playersName) {
         List<String> playerNames = Arrays
-            .asList(playersName.replace(SPACE, Players.BLANK).split(DELIMITER));
+            .asList(playersName.replace(SPACE, Participants.BLANK).split(DELIMITER));
         validOverMinimumCount(playerNames);
         validUnderMaximumCount(playerNames);
         return playerNames;
@@ -46,13 +51,32 @@ public class Players {
         }
     }
 
+    public Dealer getDealer() {
+        return participants.stream()
+            .filter(participants -> participants instanceof Dealer)
+            .map(dealer -> (Dealer) dealer)
+            .findFirst()
+            .orElseThrow(() -> new IllegalAccessError(NOT_DEALER_EXCEPTION_MESSAGE));
+    }
+
     public List<Player> getPlayers() {
-        return players;
+        return participants.stream()
+            .filter(participants -> participants instanceof Player)
+            .map(player -> (Player) player)
+            .collect(Collectors.toList());
     }
 
     public List<String> getPlayerNames() {
-        return Collections.unmodifiableList(players.stream()
-            .map(User::getName)
+        return Collections.unmodifiableList(getPlayers().stream()
+            .map(Player::getName)
             .collect(Collectors.toList()));
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public String getDealerName() {
+        return getDealer().getName();
     }
 }

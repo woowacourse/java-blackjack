@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +19,14 @@ public class GameResultTest {
 
     @BeforeAll
     static void resetVariable() {
-        Dealer dealer = new Dealer();
-        Players players = new Players("Jamie,Ravie");
+        Participants participants = new Participants("Jamie,Ravie");
         CardDeck cardDeck = new CardDeck();
+        Dealer dealer = participants.getDealer();
         dealer.drawCard(new CardDeck(), 2);
-        for (Player player : players.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
-        gameResult = new GameResult(dealer, players);
+        gameResult = new GameResult(participants);
     }
 
     @DisplayName("플레이어의 승무패를 가져옴")
