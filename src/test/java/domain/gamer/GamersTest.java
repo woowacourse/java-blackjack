@@ -44,6 +44,6 @@ public class GamersTest {
 				new Card(CardSuit.CLOVER, CardNumber.TEN))
 		);
 
-		assertThat(gamers.generateGameResults().get("pobi")).isEqualTo(WinOrLose.LOSE);
+		assertThat(gamers.generateGameResults().get("pobi")).isEqualTo(MatchResult.LOSE);
 	}
 }
