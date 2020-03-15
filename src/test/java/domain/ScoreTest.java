@@ -27,7 +27,7 @@ public class ScoreTest {
     @DisplayName("음수 입력 시 Score 생성 예외 테스트")
     void valueOfException1() {
         assertThatThrownBy(() -> Score.valueOf(-1))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NegativeArraySizeException.class)
                 .hasMessage("Score 값은 양수이어야 합니다.");
     }
 

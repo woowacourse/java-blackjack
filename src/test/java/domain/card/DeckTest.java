@@ -18,7 +18,7 @@ class DeckTest {
         stack.push(new Card(Symbol.ACE, Type.CLOVER));
         stack.push(new Card(Symbol.ACE, Type.CLOVER));
         assertThatThrownBy(() -> new Deck(stack))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DeckDuplicationException.class)
                 .hasMessage("중복되는 카드가 존재합니다.");
     }
 

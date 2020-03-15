@@ -38,7 +38,7 @@ public enum PlayerResult {
         return Arrays.stream(values())
                 .filter(result -> result.isMatch(dealer, player))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("승무패 조건에 맞지 않습니다."));
+                .orElseThrow(() -> new NotFoundResultException("승무패 조건에 맞지 않습니다."));
     }
 
     public String getName() {

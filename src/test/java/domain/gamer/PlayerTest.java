@@ -47,7 +47,7 @@ class PlayerTest {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = null;
         assertThatThrownBy(() -> new Player(playingCards, name))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(EmptyNameException.class)
                 .hasMessage("값을 올바르게 입력해주세요.");
     }
 
@@ -57,7 +57,7 @@ class PlayerTest {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "";
         assertThatThrownBy(() -> new Player(playingCards, name))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(EmptyNameException.class)
                 .hasMessage("값을 올바르게 입력해주세요.");
     }
 

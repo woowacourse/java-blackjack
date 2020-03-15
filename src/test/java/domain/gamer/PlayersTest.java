@@ -24,7 +24,7 @@ public class PlayersTest {
     void valueOfWithException() {
         Deck deck = DeckFactory.create();
         assertThatThrownBy(() -> Players.valueOf(deck, Arrays.asList("a", "a", "c")))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicatedNameException.class)
                 .hasMessage("중복되는 이름이 존재합니다.");
     }
 }

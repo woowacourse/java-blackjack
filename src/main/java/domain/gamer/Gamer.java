@@ -28,13 +28,13 @@ public abstract class Gamer {
 
     private static void validateWhiteSpace(String name) {
         if (name.chars().anyMatch(Character::isWhitespace)) {
-            throw new IllegalArgumentException("공백 문자가 입력되었습니다.");
+            throw new WhiteSpaceNameException("공백 문자가 입력되었습니다.");
         }
     }
 
     private static void validateNullAndEmpty(String name) {
         if (Objects.isNull(name) || name.isEmpty()) {
-            throw new IllegalArgumentException("값을 올바르게 입력해주세요.");
+            throw new EmptyNameException("값을 올바르게 입력해주세요.");
         }
     }
 

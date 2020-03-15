@@ -23,7 +23,7 @@ public class Players implements Iterable<Player> {
 
     private static void validateDuplicateName(List<String> playerNames) {
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
-            throw new IllegalArgumentException("중복되는 이름이 존재합니다.");
+            throw new DuplicatedNameException("중복되는 이름이 존재합니다.");
         }
     }
 

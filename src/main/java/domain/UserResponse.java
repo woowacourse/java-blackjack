@@ -16,7 +16,7 @@ public enum UserResponse {
         return Arrays.stream(values())
                 .filter(userResponse -> userResponse.inputString.equals(inputString))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("값이 올바르지 않습니다."));
+                .orElseThrow(() -> new IllegalResponseException("값이 올바르지 않습니다."));
     }
 
     public boolean isYes() {
