@@ -14,13 +14,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DefaultPlayerTest {
+public class PlayerTest {
 	private static Card aceSpade;
 	private static Card sixDiamond;
 	private static Card tenClub;
 	private static Card jackHeart;
 
-	private Player player;
+	private Playable player;
 
 	@BeforeAll
 	static void beforeAll() {
@@ -32,7 +32,7 @@ public class DefaultPlayerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = DefaultPlayer.of("그니");
+		player = Player.of("그니");
 	}
 
 	@Test

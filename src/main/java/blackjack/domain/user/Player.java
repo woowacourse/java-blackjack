@@ -1,34 +1,51 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Drawable;
 import blackjack.domain.card.Score;
+import blackjack.domain.user.exceptions.PlayerException;
 
 import java.util.List;
 
-public interface Player {
-	String DEALER_NAME = "딜러";
-	int MINIMUM_NUMBER_TO_DEALER_STAY = 17;
+public class Player extends AbstractPlayer {
+	private Player(String name) {
+		super(name);
+		validateNameIsDifferentFromDealer(name);
+	}
 
-	void giveCard(Card card);
+	private void validateNameIsDifferentFromDealer(String name) {
+		if (name.equals(DEALER_NAME)) {
+			throw new PlayerException("플레이어의 이름은 " + DEALER_NAME + "일 수 없습니다.");
+		}
+	}
 
-	void giveCards(List<Card> cards);
+	public static Player of(String name) {
+		return new Player(name);
+	}
 
-	Score getScore();
+	@Override
+	public List<Card> getStartHand() {
+		return getHand();
+	}
 
-	boolean isBust();
+	@Override
+	public Boolean isWinner(Score dealerScore) {
+		if (isBust()) {
+			return false;
+		}
+		if (dealerScore.isOver(MAX_SCORE)) {
+			return true;
+		}
+		return getScore().isOver(dealerScore);
+	}
 
-	List<Card> getStartHand();
+	@Override
+	public boolean isDealer() {
+		return false;
+	}
 
-	List<Card> getHand();
+	@Override
+	public boolean canReceiveCard() {
+		return !isBust();
+	}
 
-	int countCards();
-
-	String getName();
-
-	Boolean isWinner(Score dealerScore);
-
-	boolean isDealer();
-
-	boolean canReceiveCard();
 }

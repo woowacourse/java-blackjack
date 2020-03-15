@@ -15,13 +15,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultDealerTest {
+class DealerTest {
 	private static Card aceSpade;
 	private static Card sixDiamond;
 	private static Card tenClub;
 	private static Card jackHeart;
 
-	private Player dealer;
+	private Playable dealer;
 
 	@BeforeAll
 	static void beforeAll() {
@@ -33,7 +33,7 @@ class DefaultDealerTest {
 
 	@BeforeEach
 	void setUp() {
-		dealer = DefaultDealer.dealer();
+		dealer = Dealer.dealer();
 	}
 
 	@Test

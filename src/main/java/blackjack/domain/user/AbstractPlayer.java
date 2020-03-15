@@ -5,7 +5,7 @@ import blackjack.domain.card.Score;
 
 import java.util.*;
 
-public abstract class AbstractPlayer implements Player {
+public abstract class AbstractPlayer implements Playable {
 	protected static final int MAX_SCORE = 21;
 	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
 	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;

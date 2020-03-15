@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.Playable;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.Results;
 
@@ -13,15 +13,15 @@ public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
 	public static final String BUST_MESSAGE = "버스트 되었습니다!!!";
 
-	public static void printStartInfo(Player dealer, Players players) {
+	public static void printStartInfo(Playable dealer, Players players) {
 		printStartInfoHead(dealer, players);
 		printPlayerCard(dealer);
 		printAllPlayerCards(players);
 	}
 
-	private static void printStartInfoHead(Player dealer, Players players) {
+	private static void printStartInfoHead(Playable dealer, Players players) {
 		String playerNames = players.getPlayers().stream()
-				.map(Player::getName)
+				.map(Playable::getName)
 				.collect(Collectors.joining(", "));
 
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
@@ -29,43 +29,43 @@ public class OutputView {
 	}
 
 	private static void printAllPlayerCards(Players players) {
-		for (Player player : players.getPlayers()) {
+		for (Playable player : players.getPlayers()) {
 			printPlayerCard(player);
 		}
 	}
 
-	public static void printPlayerCard(Player player) {
+	public static void printPlayerCard(Playable player) {
 		String userCards = createPlayerStartCardInfo(player);
 		System.out.printf("%s : %s" + NEW_LINE, player.getName(), userCards);
 
 		printIfBust(player);
 	}
 
-	private static String createPlayerStartCardInfo(Player player) {
+	private static String createPlayerStartCardInfo(Playable player) {
 		return player.getStartHand().stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
 	}
 
-	public static void printDealerTurn(Player dealer) {
+	public static void printDealerTurn(Playable dealer) {
 		System.out.printf("딜러는 %s미만이라 한장의 카드를 더 받았습니다." + NEW_LINE,
-				Player.MINIMUM_NUMBER_TO_DEALER_STAY);
+				Playable.MINIMUM_NUMBER_TO_DEALER_STAY);
 
 		printIfBust(dealer);
 	}
 
-	private static void printIfBust(Player player) {
+	private static void printIfBust(Playable player) {
 		if (player.isBust()) {
 			System.out.println(BUST_MESSAGE);
 		}
 	}
 
-	public static void printFinalInfo(Player dealer, Players players) {
-		List<Player> users = new ArrayList<>();
+	public static void printFinalInfo(Playable dealer, Players players) {
+		List<Playable> users = new ArrayList<>();
 		users.add(dealer);
 		users.addAll(players.getPlayers());
 
-		for (Player player : users) {
+		for (Playable player : users) {
 			String userCards = createPlayerCardInfo(player);
 			String score = createResultScore(player);
 
@@ -74,13 +74,13 @@ public class OutputView {
 		}
 	}
 
-	private static String createPlayerCardInfo(Player player) {
+	private static String createPlayerCardInfo(Playable player) {
 		return player.getHand().stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
 	}
 
-	private static String createResultScore(Player player) {
+	private static String createResultScore(Playable player) {
 		if (player.isBust()) {
 			return "bust";
 		}
@@ -90,7 +90,7 @@ public class OutputView {
 	public static void printResult(Results results) {
 		System.out.println("## 최종 승패");
 		System.out.println("딜러" + " : " + createDealerResult(results));
-		for (Player player : results.getPlayerResults().keySet()) {
+		for (Playable player : results.getPlayerResults().keySet()) {
 			System.out.println(createPlayerResult(player, results));
 		}
 	}
@@ -100,7 +100,7 @@ public class OutputView {
 				results.getDealerWin(), results.getDealerLose());
 	}
 
-	private static String createPlayerResult(Player player, Results results) {
+	private static String createPlayerResult(Playable player, Results results) {
 		String resultWord = boolToResultWord(results.getResult(player));
 		return String.format("%s : %s", player.getName(), resultWord);
 	}

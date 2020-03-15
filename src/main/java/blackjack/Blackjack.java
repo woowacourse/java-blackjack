@@ -15,7 +15,7 @@ public class Blackjack {
 	public static void main(String[] args) {
 		String playerNames = InputView.inputPlayerNames();
 		Players players = preparePlayers(playerNames);
-		Player dealer = DefaultDealer.dealer();
+		Playable dealer = Dealer.dealer();
 		Drawable deck = prepareDeck();
 
 		start(players, dealer, deck);
@@ -47,7 +47,7 @@ public class Blackjack {
 		return Deck.ofDeckFactory(new ShuffledDeckFactory());
 	}
 
-	private static void start(Players players, Player dealer, Drawable cards) {
+	private static void start(Players players, Playable dealer, Drawable cards) {
 		players.giveCardEachPlayer(cards);
 		players.giveCardEachPlayer(cards);
 
@@ -57,19 +57,19 @@ public class Blackjack {
 	}
 
 	private static void progressPlayers(Players players, Drawable cards) {
-		for (Player player : players.getPlayers()) {
+		for (Playable player : players.getPlayers()) {
 			progressPlayer(player, cards);
 		}
 	}
 
-	private static void progressPlayer(Player player, Drawable cards) {
+	private static void progressPlayer(Playable player, Drawable cards) {
 		while (willProgress(player)) {
 			player.giveCard(cards.draw());
 			OutputView.printPlayerCard(player);
 		}
 	}
 
-	private static boolean willProgress(Player player) {
+	private static boolean willProgress(Playable player) {
 		if (!player.canReceiveCard()) {
 			return false;
 		}
@@ -77,7 +77,7 @@ public class Blackjack {
 		return yesOrNo.isYes();
 	}
 
-	private static YesOrNo prepareYesOrNo(Player player) {
+	private static YesOrNo prepareYesOrNo(Playable player) {
 		YesOrNo yesOrNo;
 		do {
 			yesOrNo = prepareYesOrNoIfValid(player);
@@ -85,7 +85,7 @@ public class Blackjack {
 		return yesOrNo;
 	}
 
-	private static YesOrNo prepareYesOrNoIfValid(Player player) {
+	private static YesOrNo prepareYesOrNoIfValid(Playable player) {
 		try {
 			return YesOrNo.of(InputView.inputYesOrNo(player));
 		} catch (YesOrNoException e) {
@@ -94,14 +94,14 @@ public class Blackjack {
 		}
 	}
 
-	private static void progressDealer(Player dealer, Drawable cards) {
+	private static void progressDealer(Playable dealer, Drawable cards) {
 		while (dealer.canReceiveCard()) {
 			dealer.giveCard(cards.draw());
 			OutputView.printDealerTurn(dealer);
 		}
 	}
 
-	private static void finish(Players players, Player dealer) {
+	private static void finish(Players players, Playable dealer) {
 		OutputView.printFinalInfo(dealer, players);
 		Results results = Results.of(dealer, players);
 		OutputView.printResult(results);
