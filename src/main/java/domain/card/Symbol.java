@@ -15,12 +15,22 @@ public enum Symbol {
     QUEEN(10, "Q"),
     KING(10, "K");
 
+    private static final int ELEVEN_ACE_VALUE = 11;
+    private static final int ONE_ACE_VALUE = 1;
     private int value;
     private String word;
 
     Symbol(int value, String word) {
         this.value = value;
         this.word = word;
+    }
+
+    public void selectAce(int sumWithOutAceValue) {
+        if(sumWithOutAceValue + ELEVEN_ACE_VALUE <= 21) {
+            this.value = ELEVEN_ACE_VALUE;
+            return;
+        }
+        this.value = ONE_ACE_VALUE;
     }
 
     public String getWord() {

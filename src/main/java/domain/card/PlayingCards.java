@@ -3,7 +3,6 @@ package domain.card;
 import java.util.List;
 
 public class PlayingCards {
-    private static final int ACE_BONUS = 10;
     private static final int BLACK_JACK = 21;
     private List<Card> cards;
 
@@ -21,18 +20,21 @@ public class PlayingCards {
 
     public int calculateScore() {
         int result = cards.stream()
+                .filter(card -> card.getSymbol().getValue() != Symbol.ACE.getValue())
                 .mapToInt(Card::getValue)
                 .sum();
         for (Card card : cards) {
-            if (canAddAceBonus(result, card)) {
-                result += ACE_BONUS;
-            }
+            result = selectAce(result, card);
         }
         return result;
     }
 
-    private boolean canAddAceBonus(int result, Card card) {
-        return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
+    private int selectAce(int result, Card card) {
+        if(card.getSymbol().getValue() == Symbol.ACE.getValue()) {
+            card.changeAceCard(result);
+            result += card.getValue();
+        }
+        return result;
     }
 
     public int size() {

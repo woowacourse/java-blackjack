@@ -1,9 +1,6 @@
 package domain.gamer;
 
-import domain.card.Card;
-import domain.card.PlayingCards;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +23,8 @@ class DealerTest {
     void addCard() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         Dealer dealer = new Dealer(playingCards);
-        Card card = new Card(Symbol.ACE, Type.CLOVER);
-        dealer.addCard(card);
+        Deck deck = Deck.create();
+        dealer.addCard(deck);
 
         assertThat(dealer.countCards()).isEqualTo(1);
     }

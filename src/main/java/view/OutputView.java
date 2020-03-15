@@ -1,12 +1,15 @@
 package view;
 
-import common.GamerDto;
+import common.PlayerDto;
 import domain.PlayerResult;
+import domain.PlayersResult;
 import domain.card.Card;
+import domain.gamer.Dealer;
 import domain.gamer.Player;
+import domain.gamer.Players;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -14,51 +17,60 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final int FIRST_CARD_INDEX = 0;
 
-    public static void printInitGamersState(GamerDto dealerDto, List<GamerDto> playerDtos) {
+    public static void printInitGamersState(PlayerDto dealerDto, Players players) {
+        List<PlayerDto> playerDtos = new ArrayList<>();
+        for(int playerIndex=0; playerIndex < players.participantNumber(); playerIndex++){
+            Player player = players.eachPlayer(playerIndex);
+            playerDtos.add(new PlayerDto(player.getName(),player.getPlayingCards().getCards()));
+        }
         String dealerName = dealerDto.getName();
-        String playerNames = playerDtos.stream().map(GamerDto::getName).collect(Collectors.joining(DELIMITER));
-        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.\n", dealerName, playerNames);
+        String playerNames = playerDtos.stream().map(PlayerDto::getName).collect(Collectors.joining(DELIMITER));
+        System.out.println(String.format("%s와 %s에게 2장의 카드를 나누었습니다.",dealerName, playerNames));
         printInitDealerCard(dealerDto);
-        for (GamerDto playerDto : playerDtos) {
+        for (PlayerDto playerDto : playerDtos) {
             printGamerCardsState(playerDto);
         }
     }
 
-    private static void printInitDealerCard(GamerDto dealerDto) {
-        Card card =  dealerDto.getCards().get(FIRST_CARD_INDEX);
-        System.out.printf("%s: %s%s\n", dealerDto.getName(), card.getSymbol().getWord(), card.getType().getPattern());
+    public static void printAllPlayerCardsStateWithScore(Players players, Dealer dealer) {
+        printEachPlayerCardsStateWithScore(PlayerDto.of(dealer), dealer.calculateScore());
+        for(int playerIndex=0; playerIndex < players.participantNumber(); playerIndex++){
+            Player player = players.eachPlayer(playerIndex);
+            printEachPlayerCardsStateWithScore(PlayerDto.of(player), player.calculateScore());
+        }
+
     }
 
-    public static void printGamerCardsState(GamerDto gamerDto) {
-        String gamerCards = gamerDto.getCards().stream()
+    private static void printInitDealerCard(PlayerDto dealerDto) {
+        Card card =  dealerDto.getCards().get(FIRST_CARD_INDEX);
+        System.out.println(String.format("%s : %s%s"
+                ,dealerDto.getName(),card.getSymbol().getWord(), card.getType().getPattern()));
+    }
+
+    public static void printGamerCardsState(PlayerDto playerDto) {
+        String gamerCards = playerDto.getCards().stream()
                 .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
                 .collect(Collectors.joining(DELIMITER));
-        System.out.printf("%s: %s\n", gamerDto.getName(), gamerCards);
+        System.out.println(String.format("%s: %s", playerDto.getName(), gamerCards));
     }
 
     public static void printDealerHit() {
         System.out.println("딜러 16이하라 한 장의 카드를 더 받습니다.\n");
     }
 
-    public static void printGamerCardsStateWithScore(GamerDto gamerDto, int gamerScore) {
-        String gamerCards = gamerDto.getCards().stream()
+    private static void printEachPlayerCardsStateWithScore(PlayerDto playerDto, int gamerScore) {
+        String gamerCards = playerDto.getCards().stream()
                 .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
                 .collect(Collectors.joining(DELIMITER));
-        System.out.printf("%s: %s - 결과: %d\n", gamerDto.getName(), gamerCards, gamerScore);
+        System.out.println(String.format("%s: %s - 결과: %d", playerDto.getName(), gamerCards, gamerScore));
     }
 
-    public static void printGameResult(Map<PlayerResult, List<Player>> gameResults) {
+    public static void printGameResult(PlayersResult playersResult, Players players) {
         System.out.println("최종 승패");
-        System.out.printf("딜러 : %d승, %d무, %d패 \n", gameResults.get(PlayerResult.LOSE).size()
-                ,gameResults.get(PlayerResult.DRAW).size(),gameResults.get(PlayerResult.WIN).size());
-        for(PlayerResult playerResult : PlayerResult.values()) {
-            printEachResult(gameResults.get(playerResult), playerResult);
-        }
-    }
-
-    private static void printEachResult(List<Player> players, PlayerResult playerResult) {
-        for (Player player : players) {
-            System.out.println(player.getName() + " : " + playerResult.getResultState());
+        System.out.println(String.format("딜러 : %d승, %d무, %d패",playersResult.dealerWinCount()
+                ,playersResult.dealerDrawCount(),playersResult.dealerLoseCount()));
+        for(int playerIndex = 0; playerIndex < players.participantNumber(); playerIndex++) {
+            System.out.println(playersResult.playerGameResult(players.eachPlayer(playerIndex)));
         }
     }
 }

@@ -21,7 +21,7 @@ public class PlayerResultTest {
         Dealer dealer = new Dealer(new PlayingCards(Arrays.asList(
                 new Card(Symbol.TEN, Type.CLOVER),
                 new Card(Symbol.NINE, Type.CLOVER))));
-        assertThat(PlayerResult.WIN.isMatch(dealer, player)).isTrue();
+        assertThat(PlayerResult.match(dealer, player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class PlayerResultTest {
         Dealer dealer = new Dealer(new PlayingCards(Arrays.asList(
                 new Card(Symbol.TEN, Type.CLOVER),
                 new Card(Symbol.KING, Type.CLOVER))));
-        assertThat(PlayerResult.DRAW.isMatch(dealer, player)).isTrue();
+        assertThat(PlayerResult.match(dealer, player)).isEqualTo(PlayerResult.DRAW);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PlayerResultTest {
         Dealer dealer = new Dealer(new PlayingCards(Arrays.asList(
                 new Card(Symbol.TEN, Type.CLOVER),
                 new Card(Symbol.NINE, Type.CLOVER))));
-        assertThat(PlayerResult.LOSE.isMatch(dealer, player)).isTrue();
+        assertThat(PlayerResult.match(dealer, player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test

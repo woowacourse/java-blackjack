@@ -27,6 +27,10 @@ public class Card {
         return symbol;
     }
 
+    void changeAceCard(int sumWithOutAceScore) {
+        symbol.selectAce(sumWithOutAceScore);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
