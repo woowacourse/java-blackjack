@@ -1,6 +1,6 @@
 package com.blackjack.domain.card;
 
-public enum Symbol {
+public enum Denomination {
 	ACE(1, "A"),
 	TWO(2),
 	THREE(3),
@@ -18,11 +18,11 @@ public enum Symbol {
 	private int score;
 	private String alias;
 
-	Symbol(int score) {
+	Denomination(int score) {
 		this(score, String.valueOf(score));
 	}
 
-	Symbol(int score, String alias) {
+	Denomination(int score, String alias) {
 		this.score = score;
 		this.alias = alias;
 	}

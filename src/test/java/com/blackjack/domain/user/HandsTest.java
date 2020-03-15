@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
-import com.blackjack.domain.card.Symbol;
-import com.blackjack.domain.card.Type;
+import com.blackjack.domain.card.Denomination;
+import com.blackjack.domain.card.Suit;
 
 class HandsTest {
 	@DisplayName("빈 리스트를 인자로 넣었을때 인스턴스 생성")
@@ -24,16 +24,17 @@ class HandsTest {
 	@Test
 	void calculateScore_ExcludeAce_CreateTotalScore() {
 		Hands hands = new Hands(
-				Arrays.asList(Card.valueOf(Symbol.SIX, Type.CLUB), Card.valueOf(Symbol.FIVE, Type.DIAMOND)));
+				Arrays.asList(Card.valueOf(Denomination.SIX, Suit.CLUB),
+						Card.valueOf(Denomination.FIVE, Suit.DIAMOND)));
 		assertThat(hands.calculateScore()).isEqualTo(Score.valueOf(11));
 	}
 
 	@DisplayName("ACE를 포함하고 상향하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndNotUpward_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(Card.valueOf(Symbol.ACE, Type.CLUB),
-				Card.valueOf(Symbol.TEN, Type.DIAMOND),
-				Card.valueOf(Symbol.JACK, Type.DIAMOND)));
+		Hands hands = new Hands(Arrays.asList(Card.valueOf(Denomination.ACE, Suit.CLUB),
+				Card.valueOf(Denomination.TEN, Suit.DIAMOND),
+				Card.valueOf(Denomination.JACK, Suit.DIAMOND)));
 		assertThat(hands.calculateScore()).isEqualTo(Score.valueOf(21));
 	}
 
@@ -41,7 +42,7 @@ class HandsTest {
 	@Test
 	void calculateScore_IncludeAceAndUpward_CreateTotalScore() {
 		Hands hands = new Hands(
-				Arrays.asList(Card.valueOf(Symbol.ACE, Type.CLUB), Card.valueOf(Symbol.TEN, Type.DIAMOND)));
+				Arrays.asList(Card.valueOf(Denomination.ACE, Suit.CLUB), Card.valueOf(Denomination.TEN, Suit.DIAMOND)));
 		assertThat(hands.calculateScore()).isEqualTo(Score.valueOf(21));
 	}
 }

@@ -1,6 +1,6 @@
 package com.blackjack.domain.card;
 
-public enum Type {
+public enum Suit {
 	SPADE("스페이드"),
 	DIAMOND("다이아몬드"),
 	HEART("하트"),
@@ -8,7 +8,7 @@ public enum Type {
 
 	private String alias;
 
-	Type(String alias) {
+	Suit(String alias) {
 		this.alias = alias;
 	}
 
