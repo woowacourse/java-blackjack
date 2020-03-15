@@ -19,11 +19,16 @@ public class Score {
 	}
 
 	public static Score from(Gamer gamer) {
-		int rawScore = gamer.sumOfCards();
-		if (gamer.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
-			return new Score(rawScore + TEN);
+		int score = gamer.sumOfCards();
+
+		return new Score(reviseAceScore(gamer.hasAce(), score));
+	}
+
+	private static int reviseAceScore(boolean hasAce, int score) {
+		if (hasAce && (score + TEN <= BLACKJACK_SCORE)) {
+			score += TEN;
 		}
-		return new Score(rawScore);
+		return score;
 	}
 
 	public boolean isBiggerThan(Score other) {
