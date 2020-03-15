@@ -1,61 +1,93 @@
 package blackjack.domain.card;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
-	private Card aceClub;
-	private Card twoHeart;
-	private Card threeDiamond;
-	private Card kingSpade;
+	private static Card aceClub;
+	private static Card twoHeart;
+	private static Card threeDiamond;
+	private static Card kingSpade;
 
-	@BeforeEach
-	void setUp() {
+	@BeforeAll
+	static void beforeAll() {
 		aceClub = Card.of(Symbol.ACE, Type.CLUB);
 		twoHeart = Card.of(Symbol.TWO, Type.HEART);
 		threeDiamond = Card.of(Symbol.THREE, Type.DIAMOND);
 		kingSpade = Card.of(Symbol.KING, Type.SPADE);
 	}
 
-	@Test
-	void Card_IsNotNull() {
-		assertThat(aceClub).isNotNull();
-		assertThat(twoHeart).isNotNull();
-		assertThat(threeDiamond).isNotNull();
-		assertThat(kingSpade).isNotNull();
+	@ParameterizedTest
+	@MethodSource("Card_IsNotNull")
+	void Card_IsNotNull(Card card) {
+		assertThat(card).isNotNull();
+	}
+
+	static Stream<Card> Card_IsNotNull() {
+		return Stream.of(aceClub, twoHeart, threeDiamond, kingSpade);
 	}
 
 	@Test
-	void isAce() {
+	void isAce_IsTrue() {
 		assertThat(aceClub.isAce()).isTrue();
-		assertThat(twoHeart.isAce()).isFalse();
-		assertThat(threeDiamond.isAce()).isFalse();
-		assertThat(kingSpade.isAce()).isFalse();
 	}
 
-	@Test
-	void getScore() {
-		assertThat(aceClub.getScore()).isEqualTo(Score.of(1));
-		assertThat(twoHeart.getScore()).isEqualTo(Score.of(2));
-		assertThat(threeDiamond.getScore()).isEqualTo(Score.of(3));
-		assertThat(kingSpade.getScore()).isEqualTo(Score.of(10));
+	@ParameterizedTest
+	@MethodSource("isAce_IsFalse")
+	void isAce_IsFalse(Card card) {
+		assertThat(card.isAce()).isFalse();
 	}
 
-	@Test
-	void equals() {
-		assertThat(aceClub).isEqualTo(Card.of(Symbol.ACE, Type.CLUB));
-		assertThat(twoHeart).isEqualTo(Card.of(Symbol.TWO, Type.HEART));
-		assertThat(threeDiamond).isEqualTo(Card.of(Symbol.THREE, Type.DIAMOND));
-		assertThat(kingSpade).isEqualTo(Card.of(Symbol.KING, Type.SPADE));
+	static Stream<Card> isAce_IsFalse() {
+		return Stream.of(twoHeart, threeDiamond, kingSpade);
 	}
 
-	@Test
-	void getName() {
+	@ParameterizedTest
+	@MethodSource("getScore")
+	void getScore(Card card, int expect) {
+		assertThat(card.getScore()).isEqualTo(Score.of(expect));
+	}
+
+	static Stream<Arguments> getScore() {
+		return Stream.of(Arguments.of(aceClub, 1),
+				Arguments.of(twoHeart, 2),
+				Arguments.of(threeDiamond, 3),
+				Arguments.of(kingSpade, 10));
+	}
+
+	@ParameterizedTest
+	@MethodSource("equals")
+	void equals(Card card, Card expect) {
+		assertThat(card).isEqualTo(expect);
+	}
+
+	static Stream<Arguments> equals() {
+		return Stream.of(Arguments.of(aceClub, Card.of(Symbol.ACE, Type.CLUB)),
+				Arguments.of(twoHeart, Card.of(Symbol.TWO, Type.HEART)),
+				Arguments.of(threeDiamond, Card.of(Symbol.THREE, Type.DIAMOND)),
+				Arguments.of(kingSpade, Card.of(Symbol.KING, Type.SPADE)));
+	}
+
+	@ParameterizedTest
+	@MethodSource("getName")
+	void getName(Card card, String expect) {
 		assertThat(aceClub.getName()).isEqualTo("A 클로버");
 		assertThat(twoHeart.getName()).isEqualTo("2 하트");
 		assertThat(threeDiamond.getName()).isEqualTo("3 다이아몬드");
 		assertThat(kingSpade.getName()).isEqualTo("K 스페이드");
+	}
+
+	static Stream<Arguments> getName() {
+		return Stream.of(Arguments.of(aceClub, "A 클로버"),
+				Arguments.of(twoHeart, "2 하트"),
+				Arguments.of(threeDiamond, "3 다이아몬드"),
+				Arguments.of(kingSpade, "K 스페이드"));
 	}
 }
