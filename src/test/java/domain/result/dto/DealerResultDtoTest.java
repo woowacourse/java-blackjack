@@ -1,6 +1,9 @@
 package domain.result.dto;
 
-import domain.card.*;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Symbol;
+import domain.card.Type;
 import domain.gamer.Dealer;
 import domain.gamer.Players;
 import domain.result.GameResults;
@@ -12,7 +15,6 @@ import java.util.Arrays;
 import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DealerResultDtoTest {
     private Deck deck;
@@ -34,7 +36,7 @@ class DealerResultDtoTest {
         cards.push(new Card(Symbol.NINE, Type.CLOVER));
         deck = new Deck(cards);
         dealer = new Dealer(deck.dealInitCards());
-        players = Players.valueOf(deck, Arrays.asList("a","b","c"));
+        players = Players.valueOf(deck, Arrays.asList("a", "b", "c"));
         gameResults = new GameResults(dealer, players);
         dealerResultDto = DealerResultDto.of(gameResults);
     }

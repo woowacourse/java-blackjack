@@ -35,7 +35,7 @@ public class Score implements Comparable<Score> {
 
     private static void validatePositive(int score) {
         if (score < INIT_SCORE) {
-            throw new NegativeArraySizeException("Score 값은 양수이어야 합니다.");
+            throw new NegativeScoreException("Score 값은 양수이어야 합니다.");
         }
     }
 

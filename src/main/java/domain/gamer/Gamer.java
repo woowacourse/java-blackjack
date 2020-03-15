@@ -79,8 +79,8 @@ public abstract class Gamer {
     }
 
     public List<Card> getFirstCard() {
-        if (playingCards.countCards() < MINIMUM_FIRST_CARD_COUNT) {
-            throw new IllegalArgumentException("카드가 한 장 이상 있어야 합니다.");
+        if (playingCards.isEmpty()) {
+            throw new EmptyCardsException("카드가 한 장 이상 있어야 합니다.");
         }
         return Collections.unmodifiableList(getCards().subList(0, MINIMUM_FIRST_CARD_COUNT));
     }
