@@ -3,31 +3,27 @@ package blackjack.domain.card;
 import blackjack.domain.user.UserCards;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
-    public static final String DECK_IS_EMPTY = "덱이 비었습니다";
-    public static final int NUM_OF_INITAL_CARDS = 2;
-    private final LinkedList<Card> deck;
+    public static final int FIRST_ELEMENT = 0;
+    private static final String DECK_IS_EMPTY = "덱이 비었습니다";
+    private static final int NUM_OF_INITIAL_CARDS = 2;
+    private final List<Card> deck;
 
-    public Deck(LinkedList<Card> cards) {
+    public Deck(List<Card> cards) {
         this.deck = Objects.requireNonNull(cards);
-        shuffle();
-    }
-
-    private void shuffle() {
         Collections.shuffle(deck);
     }
 
-    public Card drawCard() {
+    public Card draw() {
         if (deck.isEmpty()) {
             throw new NullPointerException(DECK_IS_EMPTY);
         }
-        return deck.poll();
+        return deck.remove(FIRST_ELEMENT);
     }
 
     public UserCards drawInitialCards() {
@@ -35,7 +31,7 @@ public class Deck {
     }
 
     private List<Card> generateInitialCards() {
-        return IntStream.of(0, NUM_OF_INITAL_CARDS).mapToObj(t -> this.drawCard())
+        return IntStream.of(0, NUM_OF_INITIAL_CARDS).mapToObj(t -> this.draw())
                 .collect(Collectors.toList());
     }
 }

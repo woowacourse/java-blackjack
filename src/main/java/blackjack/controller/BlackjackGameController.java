@@ -37,7 +37,7 @@ public class BlackjackGameController {
     private static void decideDealerToHitCard(Users users, Deck deck) {
         Dealer dealer = users.getDealer();
         if (dealer.isUnderThreshold()) {
-            dealer.receiveCard(deck.drawCard());
+            dealer.receiveCard(deck.draw());
             OutputView.printDealerHitMoreCard();
         }
     }

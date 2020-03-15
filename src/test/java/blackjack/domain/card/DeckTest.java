@@ -15,9 +15,9 @@ public class DeckTest {
         Card card1 = new Card(Suit.CLUB, Symbol.SIX);
         Card card2 = new Card(Suit.HEART, Symbol.KING);
         Deck deck = new Deck(new LinkedList<>(Arrays.asList(card1, card2)));
-        deck.drawCard();
-        deck.drawCard();
-        assertThatThrownBy(deck::drawCard)
+        deck.draw();
+        deck.draw();
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("덱이 비었습니다");
     }

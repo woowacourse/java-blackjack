@@ -53,7 +53,7 @@ public class InputHandler {
 
     private static void askForHit(Deck deck, User user) {
         while (InputView.askForHit(user.getName())) {
-            user.receiveCard(deck.drawCard());
+            user.receiveCard(deck.draw());
             OutputView.printCardStatus(user.showCardInfo());
             if (user.isBusted()) {
                 OutputView.printBusted(user.getName());
