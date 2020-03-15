@@ -20,6 +20,10 @@ public enum CardNumber {
         this.cardNumber = cardNumber;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getCardNumber() {
         return this.cardNumber;
     }

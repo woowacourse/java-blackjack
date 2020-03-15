@@ -1,50 +1,31 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.List;
 
 public class CardCalculator {
-    private static final int SUM_WITH_ACE = 6;
-    private static final int STANDARD_ACE_ELEVEN = 11;
     private static final int BLACK_JACK = 21;
-    private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
     private static final int SUM_CONTAIN_ACE = 10;
 
     private CardCalculator() {
     }
 
-    public static boolean isUnderSixteen(List<Card> cards) {
-        validateNullCards(cards);
-
-        return isPresentAceAndUnderSumWithAce(cards) || isNotPresentAceAndUnderSixteen(cards);
-    }
-
-    private static void validateNullCards(List<Card> cards) {
-        if (cards == null || cards.size() == 0) {
+    private static void validateNullCards(Cards... cards) {
+        if (cards == null || cards.length == 0) {
             throw new NullPointerException("입력한 카드가 없습니다.");
         }
     }
 
-    private static boolean isNotPresentAceAndUnderSixteen(List<Card> cards) {
-        return cards.stream()
-                .noneMatch(Card::isAce) && calculateCards(cards) <= DEALER_STANDARD_ADDITIONAL_CARD;
-    }
-
-    private static boolean isPresentAceAndUnderSumWithAce(List<Card> cards) {
-        return cards.stream()
-                .anyMatch(Card::isAce) && calculateCards(cards) <= SUM_WITH_ACE;
-    }
-
-    public static boolean isBlackJack(List<Card> cards) {
+    public static int calculateAceStrategy(Cards cards) {
         validateNullCards(cards);
 
-        int cardsSum = calculateCards(cards);
-
-        if (cards.stream().anyMatch(Card::isAce) && cardsSum == STANDARD_ACE_ELEVEN) {
-            return true;
+        int playerCardsSum = calculateCards(cards.getCards());
+        if (cards.containAce() && playerCardsSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
+            playerCardsSum += SUM_CONTAIN_ACE;
         }
-        return cardsSum == BLACK_JACK;
+        return playerCardsSum;
     }
 
     private static int calculateCards(List<Card> cards) {
@@ -53,16 +34,18 @@ public class CardCalculator {
                 .sum();
     }
 
-    public static int calculateContainAce(List<Card> cards) {
-        validateNullCards(cards);
+    public static boolean determineWinner(Cards userCards, Cards dealerCards) {
+        validateNullCards(userCards, dealerCards);
 
-        int playerCardsSum = calculateCards(cards);
+        int userCardSum = calculateAceStrategy(userCards);
+        int dealerCardSum = calculateAceStrategy(dealerCards);
 
-        if (cards.stream()
-                .anyMatch(Card::isAce)
-                && playerCardsSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
-            playerCardsSum += SUM_CONTAIN_ACE;
+        if (userCardSum < BLACK_JACK && dealerCardSum > BLACK_JACK) {
+            return true;
         }
-        return playerCardsSum;
+        if (userCardSum > BLACK_JACK) {
+            return false;
+        }
+        return userCardSum >= dealerCardSum;
     }
 }

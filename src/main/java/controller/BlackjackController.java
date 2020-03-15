@@ -1,9 +1,11 @@
 package controller;
 
 import domain.Answer;
+import domain.BlackJackRule;
 import domain.PlayerFactory;
 import domain.WinningResult;
-import domain.card.Cards;
+import domain.card.CardDeck;
+import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
@@ -17,21 +19,21 @@ import view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
-    private static final int BLACK_JACK = 21;
+    private static BlackJackRule blackJackRule = new BlackJackRule();
 
     private BlackjackController() {
     }
 
     public static void run() {
-        Cards cards = new Cards();
+        CardDeck cardDeck = new CardDeck();
 
         RequestPlayerNamesDTO requestPlayerNamesDTO = inputRequestPlayerNamesDTO();
-        Players players = PlayerFactory.create(cards, requestPlayerNamesDTO.getPlayerName());
+        Players players = PlayerFactory.create(cardDeck, requestPlayerNamesDTO.getPlayerName());
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(players);
         OutputView.printInitialResult(responsePlayerDTOS);
 
-        pickCard(cards, players);
-        pickCardDealer(cards, players);
+        runUserBlackJack(cardDeck, players.getUsers());
+        runDealerBlackJack(cardDeck, players.getDealer());
 
         OutputView.printFinalResult(ResponsePlayerDTO.createResponsePlayerDTOs(players));
 
@@ -39,6 +41,26 @@ public class BlackjackController {
         ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
                 winningResult.getWinningResult());
         OutputView.printWinningResult(responseWinningResultDTO);
+    }
+
+    private static void runUserBlackJack(CardDeck cardDeck, List<User> users) {
+        for (User user : users) {
+            runBlackJackPerUser(cardDeck, user);
+        }
+    }
+
+    private static void runBlackJackPerUser(CardDeck cardDeck, User user) {
+        while (blackJackRule.isHit(user, getAnswer(user))) {
+            blackJackRule.hit(user, cardDeck.hit());
+            OutputView.printUserCard(ResponsePlayerDTO.create(user));
+        }
+    }
+
+    private static void runDealerBlackJack(CardDeck cardDeck, Dealer dealer) {
+        if (dealer.isAdditionalCard()) {
+            blackJackRule.hit(dealer, cardDeck.hit());
+            OutputView.printDealerAdditionalCard();
+        }
     }
 
     private static RequestPlayerNamesDTO inputRequestPlayerNamesDTO() {
@@ -50,51 +72,13 @@ public class BlackjackController {
         }
     }
 
-    private static void pickCard(Cards cards, Players players) {
-        for (User user : players.getUsers()) {
-            choosePickCard(cards, user);
-        }
-    }
-
-    private static void choosePickCard(Cards cards, User user) {
-        Answer answerType = getAnswerType(user);
-
-        if (answerType.isNo()) {
-            return;
-        }
-
-        do {
-            user.hitCard(cards, answerType);
-
-            OutputView.printUserCard(ResponsePlayerDTO.create(user));
-            answerType = validateBlackJack(user, answerType);
-        } while (Answer.YES.equals(answerType) && isBlackJack(user));
-    }
-
-    private static Answer validateBlackJack(Player user, Answer answerType) {
-        if (isBlackJack(user)) {
-            answerType = getAnswerType(user);
-        }
-        return answerType;
-    }
-
-    private static boolean isBlackJack(Player user) {
-        return user.sumCardNumber() < BLACK_JACK;
-    }
-
-    private static Answer getAnswerType(Player user) {
+    private static Answer getAnswer(Player user) {
         try {
             RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.create(user));
             return Answer.valueOf(requestAnswerDTO.getAnswer());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return getAnswerType(user);
-        }
-    }
-
-    private static void pickCardDealer(Cards cards, Players players) {
-        if (players.getDealer().isAdditionalCard(cards)) {
-            OutputView.printDealerAdditionalCard();
+            return getAnswer(user);
         }
     }
 }

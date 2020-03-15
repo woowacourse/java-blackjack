@@ -1,46 +1,70 @@
 package domain.card;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
-    private Cards cards;
-
-    @BeforeEach
-    private void setUp() {
-        cards = new Cards();
-    }
-
-    @DisplayName("Cards 객체 생성 테스트")
+    @DisplayName("입력한 카드 묶음이 생성되는지 테스트")
     @Test
-    void CardsTest() {
+    void ofTest() {
+        Cards cards = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND));
+
         Assertions.assertThat(cards).isInstanceOf(Cards.class);
+        Assertions.assertThat(cards.toString()).isEqualTo(
+                "1클로버, 10다이아몬드"
+        );
     }
 
-    @DisplayName("객체의 복사 테스트")
+    @DisplayName("16을 초과하는지 판단하는 메서드 테스트")
     @Test
-    void deepDuplicateTest() {
-        Assertions.assertThat(cards).extracting("cardsDeck").asList().size().isEqualTo(Card.getCards().size());
+    void isCardsSumUnderSixteenTest() {
+        Cards overSixteen = Cards.of(Card.of(CardNumber.KING, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
+        Cards underSixteen = Cards.of(Card.of(CardNumber.KING, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SIX, CardSuitSymbol.CLUB));
+
+        Assertions.assertThat(overSixteen.isCardsSumUnderSixteen()).isFalse();
+        Assertions.assertThat(underSixteen.isCardsSumUnderSixteen()).isTrue();
     }
 
-    @DisplayName("pop 기능 테스트")
+    @DisplayName("Cards 가 ace 를 갖고 있는지 판단하는 메서드 테스트")
     @Test
-    void popTest() {
-        Card popCard = cards.hit();
+    void containAceTest() {
+        Cards containAceCards = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
+        Cards notContainAceCards = Cards.of(Card.of(CardNumber.KING, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
 
-        Assertions.assertThat(popCard).isInstanceOf(Card.class);
-        Assertions.assertThat(cards).extracting("cardsDeck").asList().size().isNotEqualTo(Card.getCards().size());
+        Assertions.assertThat(containAceCards.containAce()).isTrue();
+        Assertions.assertThat(notContainAceCards.containAce()).isFalse();
     }
 
-    @DisplayName("카드 덱을 모두 소모했을 때 예외 처리 테스트")
+    @DisplayName("입력한 카드를 더하는지 테스트")
     @Test
-    void popWhenEmptyDeckTest() {
-        Assertions.assertThatThrownBy(() -> {
-            for (int i = 0; i < 53; i++) {
-                Card card = cards.hit();
-            }
-        }).isInstanceOf(IllegalArgumentException.class);
+    void addCardTest() {
+        Cards cards = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
+        Card card = Card.of(CardNumber.JACK, CardSuitSymbol.SPACE);
+        cards.addCard(card);
+
+        Assertions.assertThat(cards.getCards().size()).isEqualTo(3);
+        Assertions.assertThat(cards.toString()).isEqualTo(
+                "1클로버, 7클로버, 10스페이스"
+        );
+    }
+
+    @DisplayName("현재 카드 묶음이 블랙잭인지 테스트")
+    @Test
+    void isBlackJackTest() {
+        Cards blackJack = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
+        Cards notBlackJack = Cards.of(Card.of(CardNumber.KING, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND));
+
+        Assertions.assertThat(blackJack.isBlackJack()).isTrue();
+        Assertions.assertThat(notBlackJack.isBlackJack()).isFalse();
     }
 }

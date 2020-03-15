@@ -1,8 +1,6 @@
 package domain.player;
 
-import domain.CardCalculator;
 import domain.card.Card;
-import domain.card.Cards;
 
 public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
@@ -12,18 +10,7 @@ public class Dealer extends Player {
         super(DEALER_NAME, cards);
     }
 
-    public boolean isAdditionalCard(Cards cards) {
-        if (CardCalculator.isUnderSixteen(this.cards)) {
-            hitCard(cards);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void hitCard(Cards cards) {
-        if (sumCardNumber() <= STANDARD) {
-            this.cards.add(cards.hit());
-        }
+    public boolean isAdditionalCard() {
+        return sumCardNumber() <= STANDARD;
     }
 }

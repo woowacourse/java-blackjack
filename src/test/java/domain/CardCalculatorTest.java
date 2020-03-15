@@ -5,67 +5,72 @@ import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.card.Cards;
 import domain.player.Dealer;
-import domain.player.Player;
 import domain.player.User;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.activation.ActivationGroup_Stub;
+
 public class CardCalculatorTest {
-    private Cards cards;
-
-    @BeforeEach
-    private void setUp() {
-        cards = new Cards();
-    }
-
-    @DisplayName("딜러가 ace 와 10 을 갖고 있을 때 더 카드를 받지 않도록 하는지 테스트")
+    @DisplayName("카드의 총합 계산 테스트")
     @Test
-    void isUnderSixteenWithAceTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
-        dealer.isAdditionalCard(cards);
-
-        Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
-    }
-
-    @DisplayName("딜러가 ace 를 갖고 10 을 갖지 않을 때 더 카드를 받도록 하는지 테스트")
-    @Test
-    void isUnderSixteenWithAceWithoutTenTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB));
-        dealer.isAdditionalCard(cards);
-
-        Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
-    }
-
-    @DisplayName("딜러가 ace 가 없고 카드의 합이 17이상일 때 더 카드를 받지 않도록 하는지 테스트")
-    @Test
-    void isUnderSixteenWithoutAceGetCardTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
+    void getCardsSumTest() {
+        Cards cardsWithAceForEleven = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
-        dealer.isAdditionalCard(cards);
+        Cards cardsWithAceForOne = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND));
+        Cards cards = Cards.of(Card.of(CardNumber.QUEEN, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
 
-        Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
+        Assertions.assertThat(CardCalculator.calculateAceStrategy(cardsWithAceForEleven)).isEqualTo(18);
+        Assertions.assertThat(CardCalculator.calculateAceStrategy(cardsWithAceForOne)).isEqualTo(21);
+        Assertions.assertThat(CardCalculator.calculateAceStrategy(cards)).isEqualTo(17);
     }
 
-    @DisplayName("딜러가 ace 가 없고 카드의 합이 16이하일 때 카드를 받도록 하는지 테스트")
+    @DisplayName("유저가 블랙잭일 때 유저의 승")
     @Test
-    void isUnderSixteenWithoutAceTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SIX, CardSuitSymbol.CLUB));
-        dealer.isAdditionalCard(cards);
+    void userBlackJackTest() {
+        User user = new User("lavine",
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND), Card.of(CardNumber.KING, CardSuitSymbol.SPACE));
+        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE));
 
-        Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
+        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isTrue();
     }
 
-    @DisplayName("블랙잭(총 합이 21) 인지 판단하는 메서드 테스트")
+    @DisplayName("딜러만 블랙잭일 때 딜러의 승")
     @Test
-    void isBlackjackTest() {
-        Player player = new User("subway", Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
+    void dealerBlackJackTest() {
+        User user = new User("lavine",
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND), Card.of(CardNumber.THREE, CardSuitSymbol.SPACE));
+        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE));
 
-        Assertions.assertThat(CardCalculator.isBlackJack(player.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isFalse();
+    }
+
+    @DisplayName("유저와 딜러 둘 다 블랙잭이 아니고 유저의 수가 더 크면 유저의 승")
+    @Test
+    void userBiggerThenDealerTest() {
+        User user = new User("lavine",
+                Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND), Card.of(CardNumber.THREE, CardSuitSymbol.SPACE));
+        Dealer dealer = new Dealer(Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE));
+
+        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isTrue();
+    }
+
+    @DisplayName("유저와 딜러 둘 다 블랙잭이 아니고 딜러의 수가 더 크면 유저의 패")
+    @Test
+    void dealerBiggerThenUserTest() {
+        User user = new User("lavine",
+                Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND), Card.of(CardNumber.TWO, CardSuitSymbol.SPACE));
+        Dealer dealer = new Dealer(Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE));
+
+        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isFalse();
     }
 }

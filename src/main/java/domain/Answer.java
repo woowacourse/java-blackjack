@@ -1,8 +1,8 @@
 package domain;
 
 public enum Answer {
-    YES("y"),
-    NO("n");
+    Y("y"),
+    N("n");
 
     private String answer;
 
@@ -11,10 +11,6 @@ public enum Answer {
     }
 
     public boolean isYes() {
-        return this == YES;
-    }
-
-    public boolean isNo() {
-        return this == NO;
+        return this == Y;
     }
 }

@@ -1,17 +1,10 @@
 package domain.player;
 
-import domain.CardCalculator;
 import domain.card.Card;
 import domain.card.Cards;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public abstract class Player {
-    private static final String DELIMITER = ", ";
-    protected List<Card> cards;
+    protected Cards cards;
     protected String name;
 
     public Player(String name, Card... cards) {
@@ -19,17 +12,24 @@ public abstract class Player {
             throw new NullPointerException("플레이어의 이름 또는 카드를 입력하지 않았습니다.");
         }
 
-        this.cards = new ArrayList<>();
-        Collections.addAll(this.cards, cards);
+        this.cards = Cards.of(cards);
         this.name = name;
     }
 
-    public int sumCardNumber() {
-        return CardCalculator.calculateContainAce(this.cards);
+    public void hitCard(Card card) {
+        this.cards.addCard(card);
     }
 
-    public List<Card> getCard() {
-        return Collections.unmodifiableList(this.cards);
+    public boolean isBlackJack() {
+        return this.cards.isBlackJack();
+    }
+
+    public int sumCardNumber() {
+        return this.cards.getCardsSum();
+    }
+
+    public Cards getCard() {
+        return this.cards;
     }
 
     public String getName() {
@@ -37,10 +37,6 @@ public abstract class Player {
     }
 
     public String getCardNumber() {
-        return this.cards.stream()
-                .map(Card::toString)
-                .collect(Collectors.joining(DELIMITER));
+        return this.cards.toString();
     }
-
-    public abstract void hitCard(Cards cards);
 }

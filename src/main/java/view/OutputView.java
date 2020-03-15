@@ -51,7 +51,7 @@ public class OutputView {
     }
 
     public static void printDealerAdditionalCard() {
-        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.\n");
     }
 
     public static void printFinalResult(List<ResponsePlayerDTO> result) {

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.Cards;
+import domain.card.CardDeck;
 import domain.player.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,7 @@ public class PlayerFactoryTest {
     @DisplayName("팩토리에서 생성한 Player 의 유효성 검증")
     @Test
     void createPlayersTest() {
-        Cards cards = new Cards();
+        CardDeck cards = new CardDeck();
         List<String> playerName = new ArrayList<>(Arrays.asList("pobi", "json"));
 
         Assertions.assertThat(PlayerFactory.create(cards, playerName)).isInstanceOf(Players.class);

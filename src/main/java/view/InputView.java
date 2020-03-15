@@ -47,7 +47,7 @@ public class InputView {
         try {
             String answer = SCANNER.nextLine();
             validateAnswer(answer);
-            return new RequestAnswerDTO(answer);
+            return new RequestAnswerDTO(answer.toUpperCase());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputAnswer(responsePlayerDTO);

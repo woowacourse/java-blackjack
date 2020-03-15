@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayerTest {
+public class PlayersTest {
     private Player player1;
     private Player player2;
     private List<Player> playerList;

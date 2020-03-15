@@ -43,7 +43,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.cardNumber.equals(CardNumber.ACE);
+        return this.cardNumber.isAce();
     }
 
     public int getCardNumber() {
