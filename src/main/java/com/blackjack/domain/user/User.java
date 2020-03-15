@@ -1,6 +1,7 @@
 package com.blackjack.domain.user;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import com.blackjack.domain.ResultType;
 import com.blackjack.domain.Score;
@@ -10,12 +11,19 @@ import com.blackjack.domain.card.CardDeck;
 public abstract class User {
 	private static final int FIRST_DRAW_COUNT = 2;
 
-	private final Name name;
 	final Hands hands;
+	private final Name name;
 
 	User(Name name) {
-		this.hands = new Hands(Collections.emptyList());
+		validateNameIsNotNull(name);
 		this.name = name;
+		this.hands = new Hands(Collections.emptyList());
+	}
+
+	private void validateNameIsNotNull(Name name) {
+		if (Objects.isNull(name)) {
+			throw new IllegalArgumentException("이름이 존재하지 않습니다.");
+		}
 	}
 
 	public void drawAtFirst(CardDeck cardDeck) {
@@ -29,7 +37,7 @@ public abstract class User {
 		hands.add(card);
 	}
 
-	public ResultType compareScoreWithUser(User user) {
+	public ResultType compareScoreWith(User user) {
 		Score score = hands.calculateScore();
 		Score dealerScore = user.hands.calculateScore();
 		return score.compareTo(dealerScore);
