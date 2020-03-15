@@ -29,7 +29,7 @@ public abstract class User {
     }
 
     public boolean isBusted() {
-        return cards.getTotalScore() > BLACKJACK;
+        return cards.getTotalScore() == 0;
     }
 
     public boolean isBlackJack() {
@@ -53,7 +53,7 @@ public abstract class User {
 
     private String parseFinalScore() {
         int finalScore = this.getTotalScore();
-        if(finalScore > 21) {
+        if (finalScore == 0) {
             return BUSTED;
         }
         return Integer.toString(finalScore);

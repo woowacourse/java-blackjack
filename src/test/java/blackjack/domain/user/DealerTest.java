@@ -55,4 +55,14 @@ public class DealerTest {
         assertThat(dealer.isUnderThreshold()).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("딜러의 카드 합이 21을 초과하면 BUSTED로 표시되는지 확인")
+    void totalScoreOver21Busted() {
+        Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(new UserCards(Arrays.asList(
+                new Card(Suit.CLUB, Symbol.JACK),
+                new Card(Suit.SPADE, Symbol.SIX))));
+        dealer.receiveCard(new Card(Suit.DIAMOND, Symbol.QUEEN));
+        assertThat(dealer.showFinalCardInfo()).isEqualTo("딜러 카드: 클럽 잭, 스페이드 6, 다이아몬드 퀸 - 결과 : 버스트");
+    }
 }
