@@ -16,7 +16,7 @@ public class CardCalculator {
 
     private static int sumAll(List<Card> cards) {
         return cards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt(Card::getCardNumber)
                 .sum();
     }
 

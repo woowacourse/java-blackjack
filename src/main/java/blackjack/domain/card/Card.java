@@ -10,16 +10,20 @@ public class Card {
         this.cardType = cardType;
     }
 
-    @Override
-    public String toString() {
-        return cardSymbol.getCardSymbol() + cardType.getKoreanName();
+    public boolean isAce() {
+        return cardSymbol.isAce();
     }
 
-    public int getNumber() {
+    public int getCardNumber() {
         return cardSymbol.getCardNumber();
     }
 
-    public boolean isAce() {
-        return cardSymbol.isAce();
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    @Override
+    public String toString() {
+        return cardSymbol.getCardSymbol() + cardType.getKoreanName();
     }
 }

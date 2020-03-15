@@ -24,15 +24,15 @@ public enum CardSymbol {
         this.cardSymbol = cardSymbol;
     }
 
-    public String getCardSymbol() {
-        return cardSymbol;
+    public boolean isAce() {
+        return this == ACE;
     }
 
     public int getCardNumber() {
         return cardNumber;
     }
 
-    public boolean isAce() {
-        return this == ACE;
+    public String getCardSymbol() {
+        return cardSymbol;
     }
 }

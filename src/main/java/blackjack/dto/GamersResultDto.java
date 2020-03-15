@@ -6,33 +6,19 @@ import blackjack.domain.gamer.Players;
 import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.result.PlayerResultMatcher;
 
-import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class GamersResultDto {
+public final class GamersResultDto {
 
     private final Map<BlackJackResult, Integer> dealerResult;
     private final Map<Player, BlackJackResult> playersResult;
 
-    private GamersResultDto(Map<BlackJackResult, Integer> dealerResult, Map<Player, BlackJackResult> playersResult) {
-        this.dealerResult = Collections.unmodifiableMap(dealerResult);
-        this.playersResult = Collections.unmodifiableMap(playersResult);
-    }
-
-    public static GamersResultDto of(Dealer dealer, Players players) {
-        EnumMap<BlackJackResult, Integer> dealerResult = new EnumMap<>(BlackJackResult.class);
-        Map<Player, BlackJackResult> playersResult = new HashMap<>();
-
-        for (Player player : players) {
-            BlackJackResult result = PlayerResultMatcher.match(dealer, player);
-            playersResult.put(player, result);
-            dealerResult.computeIfPresent(result.reversed(), (key, value) -> ++value);
-            dealerResult.putIfAbsent(result.reversed(), 1);
-        }
-
-        return new GamersResultDto(dealerResult, playersResult);
+    protected GamersResultDto(Map<BlackJackResult, Integer> dealerResult, Map<Player, BlackJackResult> playersResult) {
+        this.dealerResult = dealerResult;
+        this.playersResult = playersResult;
     }
 
     public Map<BlackJackResult, Integer> getDealerResult() {

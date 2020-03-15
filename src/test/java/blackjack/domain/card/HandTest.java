@@ -13,6 +13,6 @@ class HandTest {
         hand.add(new Card(CardSymbol.ACE, CardType.SPADE));
         hand.add(new Card(CardSymbol.FIVE, CardType.HEART));
 
-        assertThat(hand.getCardStatus()).isEqualTo("A스페이드, 5하트");
+        assertThat(hand.getCardStatus().size()).isEqualTo(2);
     }
 }
