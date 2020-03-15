@@ -70,6 +70,11 @@ public class BlackjackGame {
 		return dealer.isBlackjack();
 	}
 
+	public boolean isAllPlayersBust() {
+		return players.stream()
+			.allMatch(Player::isBust);
+	}
+
 	public void draw(Gamer gamer) {
 		players.stream()
 			.filter(player -> player.equals(gamer))

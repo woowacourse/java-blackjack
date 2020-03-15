@@ -6,6 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.gamer.Player;
+
 /**
  *
  *    @author AnHyungJu, ParkDooWon
@@ -34,5 +39,18 @@ public class BlackjackGameTest {
 		assertThatThrownBy(() -> new BlackjackGame(playersName))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("초과");
+	}
+
+	@Test
+	void testIsAllPlayerBust() {
+		BlackjackGame blackjackGame = new BlackjackGame(new String[] {"a", "b"});
+
+		for (Player player : blackjackGame.getPlayers()) {
+			player.hit(new Card(Type.HEART, Symbol.KING));
+			player.hit(new Card(Type.SPADE, Symbol.KING));
+			player.hit(new Card(Type.CLUBS, Symbol.KING));
+		}
+
+		assertThat(blackjackGame.isAllPlayersBust()).isTrue();
 	}
 }

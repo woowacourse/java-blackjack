@@ -50,6 +50,10 @@ public class Controller {
 	}
 
 	private static void progressDealer(BlackjackGame blackjackGame) {
+		if (blackjackGame.isAllPlayersBust()) {
+			return;
+		}
+
 		while (blackjackGame.getDealer().canHit()) {
 			OutputView.printDealerDraw();
 			blackjackGame.drawDealer();
