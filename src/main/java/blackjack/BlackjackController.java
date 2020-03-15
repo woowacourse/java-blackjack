@@ -63,8 +63,8 @@ public class BlackjackController {
 
 	private void drawEachGambler(Player gambler) {
 		while (gambler.isDrawable() && inputView.inputDrawRequest(gambler).isDraw()) {
-			gambler.addCard(cardDeck.drawCard());
-			Consumer<CardDeck> c = cardDeck1 -> cardDeck.drawCard();
+			gambler.addCard(cardDeck.draw());
+			Consumer<CardDeck> c = cardDeck1 -> cardDeck.draw();
 			c.accept(cardDeck);
 			OutputView.showCardInfo(gambler);
 		}
@@ -72,7 +72,7 @@ public class BlackjackController {
 
 	private void drawDealer(Player dealer) {
 		while (dealer.isDrawable()) {
-			dealer.addCard(cardDeck.drawCard());
+			dealer.addCard(cardDeck.draw());
 			OutputView.showDealerDrawMessage();
 		}
 	}

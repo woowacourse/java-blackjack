@@ -19,7 +19,7 @@ public class CardDeck {
 		return new CardDeck(cards);
 	}
 
-	public Card drawCard() {
+	public Card draw() {
 		checkEmpty();
 		return blackjackCards.pop();
 	}

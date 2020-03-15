@@ -15,7 +15,7 @@ class CardDeckTest {
 	void drawCard() {
 		CardDeck cardDeck = CardDeck.getInstance(Collections.EMPTY_LIST);
 
-		assertThatThrownBy(cardDeck::drawCard)
+		assertThatThrownBy(cardDeck::draw)
 			.isInstanceOf(NoSuchElementException.class);
 	}
 

@@ -25,7 +25,7 @@ public class Players {
 	}
 
 	public void drawCard(CardDeck cardDeck) {
-		players.forEach(player -> player.addCard(cardDeck.drawCard()));
+		players.forEach(player -> player.addCard(cardDeck.draw()));
 	}
 
 	public GameReports getReports() {

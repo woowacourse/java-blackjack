@@ -14,7 +14,7 @@ public class CardBundle {
 		cards.add(card);
 	}
 
-	public GameResult compare(CardBundle gamblerCardBundle) {
+	public GameResult calculateWinOrLose(CardBundle gamblerCardBundle) {
 		if (gamblerCardBundle.isBurst()) {
 			return GameResult.LOSE;
 		}

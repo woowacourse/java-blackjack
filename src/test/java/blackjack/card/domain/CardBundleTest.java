@@ -40,7 +40,7 @@ class CardBundleTest {
 		gamblerBundle.addCard(Card.of(HEART, number));
 
 		//when
-		GameResult result = dealerBundle.compare(gamblerBundle);
+		GameResult result = dealerBundle.calculateWinOrLose(gamblerBundle);
 
 		assertThat(result).isEqualTo(exppect);
 	}
@@ -61,7 +61,7 @@ class CardBundleTest {
 		gamblerCardBundle.addCard(Card.of(HEART, gamblerNumber));
 
 		//when
-		GameResult result = dealerCardBundle.compare(gamblerCardBundle);
+		GameResult result = dealerCardBundle.calculateWinOrLose(gamblerCardBundle);
 
 		assertThat(result).isEqualTo(expect);
 	}

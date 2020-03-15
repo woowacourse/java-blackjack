@@ -19,7 +19,7 @@ public class Dealer extends Player {
 
 	@Override
 	public GameReport createReport(Player player) {
-		return new GameReport(player.name, this.cardBundle.compare(player.cardBundle));
+		return new GameReport(player.name, this.cardBundle.calculateWinOrLose(player.cardBundle));
 	}
 
 	public Card getFirstCard() {
