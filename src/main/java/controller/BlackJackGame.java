@@ -41,8 +41,8 @@ public class BlackJackGame {
 
     private static void drawCardEachPlayer(Deck deck, Player player) {
         while (!player.isBust()) {
-            YesOrNo yesOrNo = YesOrNo.getYesOrNoByValue(InputView.inputYesOrNo(player));
-            if(!yesOrNo.getTrueOrFalse()){
+            Answer answer = Answer.getYesOrNoByValue(InputView.inputYesOrNo(player));
+            if(!answer.getTrueOrFalse()){
                 break;
             }
             player.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));

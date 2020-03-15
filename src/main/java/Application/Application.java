@@ -4,8 +4,6 @@ import controller.BlackJackGame;
 import model.*;
 import view.InputView;
 
-import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
-
 public class Application {
 
     public static void main(String[] args) {

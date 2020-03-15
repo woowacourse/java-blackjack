@@ -5,24 +5,24 @@ import utils.StringUtils;
 
 import java.util.Arrays;
 
-public enum YesOrNo {
+public enum Answer {
     YES("y", true),
     NO("n", false);
 
     private String yesOrNo;
     private boolean trueOrFalse;
 
-    YesOrNo(String yesOrNo, boolean trueOrFalse) {
+    Answer(String yesOrNo, boolean trueOrFalse) {
         this.yesOrNo = yesOrNo;
         this.trueOrFalse = trueOrFalse;
     }
 
-    public static YesOrNo getYesOrNoByValue(String input){
+    public static Answer getYesOrNoByValue(String input){
         validate(input);
-        return Arrays.stream(YesOrNo.values())
-                .filter(yesOrNo1 -> yesOrNo1.isSameYesOrNo(input))
+        return Arrays.stream(Answer.values())
+                .filter(answer1 -> answer1.isSameYesOrNo(input))
                 .findAny()
-                .orElseThrow(()->new IllegalYesOrNoInputException("Y 또는 N를 입력해 주세요."));
+                .orElseThrow(()->new IllegalYesOrNoInputException(String.format("%s는 올바르지 않은 값입니다.",input)));
     }
 
     private boolean isSameYesOrNo(final String input) {
