@@ -10,12 +10,10 @@ import java.util.Map;
 public class GameResult {
     private Map<Player, WinOrDrawOrLose> playerResult;
     private Map<WinOrDrawOrLose, Integer> gameResult;
-    private Map<WinOrDrawOrLose, Integer> dealerResult;
 
     public GameResult() {
         this.playerResult = new HashMap<>();
         this.gameResult = new HashMap<>();
-        this.dealerResult = new HashMap<>();
     }
 
     public void create(Players players, Dealer dealer) {
@@ -61,17 +59,13 @@ public class GameResult {
         for (WinOrDrawOrLose result : playerResult.values()) {
             gameResult.put(result, gameResult.get(result) + 1);
         }
-
-        dealerResult.put(WinOrDrawOrLose.WIN, gameResult.get(WinOrDrawOrLose.LOSE));
-        dealerResult.put(WinOrDrawOrLose.DRAW, gameResult.get(WinOrDrawOrLose.DRAW));
-        dealerResult.put(WinOrDrawOrLose.LOSE, gameResult.get(WinOrDrawOrLose.WIN));
     }
 
     public Map<Player, WinOrDrawOrLose> getPlayerResult() {
         return playerResult;
     }
 
-    public Map<WinOrDrawOrLose, Integer> getDealerResult() {
-        return dealerResult;
+    public Map<WinOrDrawOrLose, Integer> getGameResult() {
+        return gameResult;
     }
 }

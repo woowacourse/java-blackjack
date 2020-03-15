@@ -53,9 +53,9 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult) {
         System.out.println("딜러: "
-                + gameResult.getDealerResult().get(WinOrDrawOrLose.WIN) + WinOrDrawOrLose.WIN.getWinOrDrawOrLose()
-                + gameResult.getDealerResult().get(WinOrDrawOrLose.DRAW) + WinOrDrawOrLose.DRAW.getWinOrDrawOrLose()
-                + gameResult.getDealerResult().get(WinOrDrawOrLose.LOSE) + WinOrDrawOrLose.LOSE.getWinOrDrawOrLose());
+                + gameResult.getGameResult().get(WinOrDrawOrLose.LOSE) + WinOrDrawOrLose.WIN.getWinOrDrawOrLose()
+                + gameResult.getGameResult().get(WinOrDrawOrLose.DRAW) + WinOrDrawOrLose.DRAW.getWinOrDrawOrLose()
+                + gameResult.getGameResult().get(WinOrDrawOrLose.WIN) + WinOrDrawOrLose.LOSE.getWinOrDrawOrLose());
         Map<Player, WinOrDrawOrLose> result = gameResult.getPlayerResult();
         for (Player player : result.keySet()) {
             System.out.println(player.getName() + ": " + result.get(player).getWinOrDrawOrLose());
