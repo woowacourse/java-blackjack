@@ -6,10 +6,10 @@ public class InputUtils {
 	private static final String ANSWER_N = "n";
 
 	public static boolean isHitToBoolean(String answer) {
-		if (answer.equalsIgnoreCase(ANSWER_Y)) {
+		if (ANSWER_Y.equalsIgnoreCase(answer)) {
 			return true;
 		}
-		if (answer.equalsIgnoreCase(ANSWER_N)) {
+		if (ANSWER_N.equalsIgnoreCase(answer)) {
 			return false;
 		}
 		throw new IllegalArgumentException(ERROR_MESSAGE_IS_HIT_ANSWER);
