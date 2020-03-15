@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Hands {
 	public static final int BLACKJACK = 21;
-	private static final int ACE_TO_ELEVEN = 10;
+	private static final int BEING_HIGH_NUMBER_OF_ACE = 10;
 
 	private List<Card> cards;
 
@@ -23,8 +23,8 @@ public class Hands {
 			.mapToInt(Card::score)
 			.sum();
 
-		if (hasAce() && (totalScore + ACE_TO_ELEVEN <= BLACKJACK)) {
-			return totalScore + ACE_TO_ELEVEN;
+		if (hasAce() && (totalScore + BEING_HIGH_NUMBER_OF_ACE <= BLACKJACK)) {
+			return totalScore + BEING_HIGH_NUMBER_OF_ACE;
 		}
 		return totalScore;
 	}
