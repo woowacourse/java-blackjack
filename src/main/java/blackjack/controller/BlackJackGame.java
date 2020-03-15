@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    private static final int START_INDEX = 0;
-
     private final Dealer dealer;
     private final CardDeck cardDeck;
     private List<Player> players;
