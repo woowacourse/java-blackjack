@@ -5,7 +5,7 @@ import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import domain.PlayersFactory;
-import domain.ResultCalculator;
+import domain.Results;
 import domain.WhetherAddCard;
 import view.InputView;
 import view.OutputView;
@@ -29,7 +29,7 @@ public class BlackJackController {
 		askMoreCard();
 		addCardIfNeed();
 		OutputView.printCardsResults(dealer, players);
-		OutputView.printGameResult(ResultCalculator.calculate(dealer, players));
+		OutputView.printGameResult(Results.calculate(dealer, players));
 	}
 
 	private void distributeTwoCard() {

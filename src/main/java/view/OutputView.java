@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 
 import domain.Card;
 import domain.Dealer;
+import domain.Name;
 import domain.Players;
-import domain.Result;
+import domain.Record;
 import domain.Results;
 import domain.User;
 
@@ -49,18 +50,19 @@ public class OutputView {
 
 	public static void printGameResult(Results results) {
 		System.out.println("## 최종 승패");
-		results.forEach(OutputView::printIndividualResult);
+		results.getValue()
+				.forEach(OutputView::printIndividualResult);
 	}
 
-	private static void printIndividualResult(Result result) {
-		if (result.hasMany()) {
-			System.out.printf("%s: %d승 %s패\n", result.getName(), result.getWinCount(), result.getLoseCount());
+	private static void printIndividualResult(Name name, Record record) {
+		if (record.hasMany()) {
+			System.out.printf("%s: %d승 %s패\n", name.getValue(), record.getWinCount(), record.getLoseCount());
 			return;
 		}
-		if (result.hasWin()) {
-			System.out.println(result.getName() + ": 승");
+		if (record.hasWin()) {
+			System.out.println(name.getValue() + ": 승");
 			return;
 		}
-		System.out.println(result.getName() + ": 패");
+		System.out.println(name.getValue() + ": 패");
 	}
 }
