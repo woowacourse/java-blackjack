@@ -29,7 +29,7 @@ public class Gamer {
 	}
 
 	public boolean isBust() {
-		return hands.calculateTotalScore() > Hands.BLACKJACK;
+		return hands.isBust();
 	}
 
 	public int scoreHands() {
@@ -37,7 +37,7 @@ public class Gamer {
 	}
 
 	public boolean isBlackjack() {
-		return (hands.calculateTotalScore() == Hands.BLACKJACK) && hands.hasTwoCards();
+		return hands.isBlackjack();
 	}
 
 	public Hands getHands() {

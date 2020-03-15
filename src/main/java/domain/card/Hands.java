@@ -18,6 +18,18 @@ public class Hands {
 		this.cards = new ArrayList<>();
 	}
 
+	public boolean isBust() {
+		return calculateTotalScore() > Hands.BLACKJACK;
+	}
+
+	public boolean isBlackjack() {
+		return (calculateTotalScore() == BLACKJACK) && hasTwoCards();
+	}
+
+	private boolean hasTwoCards() {
+		return cards.size() == 2;
+	}
+
 	public int calculateTotalScore() {
 		int totalScore = cards.stream()
 			.mapToInt(Card::score)
@@ -29,17 +41,13 @@ public class Hands {
 		return totalScore;
 	}
 
-	public boolean hasAce() {
+	private boolean hasAce() {
 		return cards.stream()
 			.anyMatch(Card::isAce);
 	}
 
 	public void add(Card card) {
 		cards.add(card);
-	}
-
-	public boolean hasTwoCards() {
-		return cards.size() == 2;
 	}
 
 	public List<Card> getCards() {

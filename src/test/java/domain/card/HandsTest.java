@@ -28,24 +28,4 @@ public class HandsTest {
 			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
 				new Card(Type.DIAMOND, Symbol.TWO)), false));
 	}
-
-	@Test
-	void ACE_유무() {
-		Hands hands1 = new Hands();
-		hands1.add(new Card(Type.HEART, Symbol.ACE));
-		hands1.add(new Card(Type.DIAMOND, Symbol.KING));
-		assertThat(hands1.hasAce()).isEqualTo(true);
-	}
-
-	@ParameterizedTest
-	@MethodSource("generateInput")
-	void 두_장인지(List<Card> cards, boolean expected) {
-		Hands hands = new Hands();
-
-		for (Card card : cards) {
-			hands.add(card);
-		}
-
-		assertThat(hands.hasTwoCards()).isEqualTo(expected);
-	}
 }
