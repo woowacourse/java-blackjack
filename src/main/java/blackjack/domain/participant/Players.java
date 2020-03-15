@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.participant.Name.EMPTY_NAME_ERR_MSG;
+import static blackjack.domain.participant.Name.NULL_NAME_ERR_MSG;
+
 public class Players {
     private static final int MAX_PLAYER = 5;
-    private static final String MAX_PLAYER_ERR_MSG = String.format("플레이어는 최대 %d명입니다.", MAX_PLAYER);
-    private static final String NULL_NAME_ERR_MSG = "플레이어의 이름이 없습니다.";
-    private static final String EMPTY_NAME_ERR_MSG = "플레이어의 이름에 빈 값이 올 수 없습니다.";
+    static final String MAX_PLAYER_ERR_MSG = String.format("플레이어는 최대 %d명입니다.", MAX_PLAYER);
 
     private final List<Player> players;
 
@@ -48,5 +49,18 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Players players1 = (Players) o;
+        return Objects.equals(players, players1.players);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(players);
     }
 }

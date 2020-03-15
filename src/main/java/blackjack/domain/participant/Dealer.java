@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
-    private static final String DEALER_NAME = "딜러";
+    static final String DEALER_NAME = "딜러";
     public static final int LOWER_BOUND = 16;
     private static final int FIRST_CARD = 1;
 

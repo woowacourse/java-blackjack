@@ -7,7 +7,7 @@ public enum ResultType {
     LOSE("패"),
     DRAW("무");
 
-    private static final int BUST = 21;
+    public static final int BUST = 21;
 
     private final String word;
 

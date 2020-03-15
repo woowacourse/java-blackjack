@@ -1,57 +1,48 @@
 package blackjack.domain.result;
 
+import blackjack.domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static blackjack.domain.result.ResultType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTypeTest {
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 리턴 확인 : 플레이어 우승 경우")
-    @Test
-    void name() {
-        ResultType resultType = ResultType.findResultByScore(20, 12);
-
-        assertThat(resultType).isEqualTo(ResultType.WIN);
+    @DisplayName("플레이어의 승/패/무 결과 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"15, 12, WIN", "15, 20, LOSE", "15, 15, DRAW", "15, 22, WIN", "22, 15, LOSE", "22, 22, LOSE", "21, 21, DRAW"})
+    void test1(int playerScore, int dealerScore, ResultType expectedResult) {
+        ResultType actualResult = ResultType.findResultByScore(playerScore, dealerScore);
+        assertThat(actualResult).isEqualTo(expectedResult);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 리턴 확인 : 플레이어 패 경우")
-    @Test
-    void name2() {
-        ResultType resultType = ResultType.findResultByScore(10, 12);
-
-        assertThat(resultType).isEqualTo(ResultType.LOSE);
+    @DisplayName("승/패/무 reverse 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"WIN, LOSE", "DRAW, DRAW", "LOSE, WIN"})
+    void test2(ResultType resultType, ResultType expectedType) {
+        ResultType actualType = resultType.reverse();
+        assertThat(actualType).isEqualTo(expectedType);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 리턴 확인 : 플레이어 무승부 경우")
-    @Test
-    void name3() {
-        ResultType resultType = ResultType.findResultByScore(20, 20);
+    @DisplayName("전달받은 플레이어 결과 리스트에서 해당 ResultType 개수 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"WIN, 2", "DRAW, 2", "LOSE, 1"})
+    void test3(ResultType resultType, int expectedCount) {
+        List<PlayerResult> playersResult = Arrays.asList(
+                new PlayerResult(new Name("포비"), WIN),
+                new PlayerResult(new Name("쪼밀리"), DRAW),
+                new PlayerResult(new Name("타미"), LOSE),
+                new PlayerResult(new Name("워니"), WIN),
+                new PlayerResult(new Name("CU"), DRAW)
+        );
 
-        assertThat(resultType).isEqualTo(ResultType.DRAW);
-    }
+        int actualCount = resultType.countSameResultType(playersResult);
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 리턴 확인 : 플레이어 패 경우 - 플레이어가 21을 초과하고, 딜러는 21을 초과하지 않을 때")
-    @Test
-    void name4() {
-        ResultType resultType = ResultType.findResultByScore(22, 20);
-
-        assertThat(resultType).isEqualTo(ResultType.LOSE);
-    }
-
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 리턴 확인 : 플레이어 패 경우 - 플레이어와 딜러 모두 21을 초과할 때")
-    @Test
-    void name5() {
-        ResultType resultType = ResultType.findResultByScore(20, 12);
-
-        assertThat(resultType).isEqualTo(ResultType.WIN);
-    }
-
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 리턴 확인 : 플레이어 승 경우 - 딜러가 21을 초과하고, 플레이어는 21초과하지 않을 때")
-    @Test
-    void name6() {
-        ResultType resultType = ResultType.findResultByScore(20, 12);
-
-        assertThat(resultType).isEqualTo(ResultType.WIN);
+        assertThat(actualCount).isEqualTo(expectedCount);
     }
 }

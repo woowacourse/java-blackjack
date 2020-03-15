@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Card {
-    private static final String NULL_ERROR_MSG = "생성자에 Null 이 들어올 수 없습니다.";
+    public static final String NULL_ERR_MSG = "생성자에 Null 이 들어올 수 없습니다.";
     private static final String INVALID_CARD_TYPE_OR_FIGURE_ERR_MSG = "존재하지 않는 카드 패턴입니다.";
     private static final List<Card> cards;
 
@@ -23,21 +23,21 @@ public class Card {
     }
 
     private Card(Type type, Figure figure) {
-        Objects.requireNonNull(type, NULL_ERROR_MSG);
-        Objects.requireNonNull(figure, NULL_ERROR_MSG);
+        Objects.requireNonNull(type, NULL_ERR_MSG);
+        Objects.requireNonNull(figure, NULL_ERR_MSG);
 
         this.type = type;
         this.figure = figure;
     }
 
-    public static List<Card> getInstance() {
+    public static List<Card> create() {
         Collections.shuffle(cards);
         return Collections.unmodifiableList(cards);
     }
 
     public static Card of(Type type, Figure figure) {
-        Objects.requireNonNull(type, NULL_ERROR_MSG);
-        Objects.requireNonNull(figure, NULL_ERROR_MSG);
+        Objects.requireNonNull(type, NULL_ERR_MSG);
+        Objects.requireNonNull(figure, NULL_ERR_MSG);
 
         Card expectedCard = new Card(type, figure);
 
@@ -51,7 +51,7 @@ public class Card {
         return this.type == Type.ACE;
     }
 
-    public int getCardValue() {
+    public int cardValue() {
         return type.getValue();
     }
 

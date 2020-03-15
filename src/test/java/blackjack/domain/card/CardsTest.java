@@ -3,40 +3,54 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CardsTest {
-    @DisplayName("카드 합 계산 확인")
+
+    @DisplayName("카드 합 계산: ACE를 포함하지 않는 경우")
     @Test
-    void sumTest() {
+    void test1() {
         Cards cards = new Cards();
         cards.add(Card.of(Type.THREE, Figure.CLOVER));
-        cards.add(Card.of(Type.KING, Figure.CLOVER));
+        cards.add(Card.of(Type.TWO, Figure.CLOVER));
 
-        int expected = 13;
-        assertThat(cards.computeScore()).isEqualTo(expected);
+        int actualScore = cards.computeScore();
+
+        assertThat(actualScore).isEqualTo(5);
     }
 
-    @DisplayName("Ace가 있을 때의 카드 합 계산 확인(21이 초과하는 경우)")
+    @DisplayName("카드 합 계산: ACE가 있는 경우")
     @Test
-    void aceSumTest() {
+    void test2() {
         Cards cards = new Cards();
+        cards.add(Card.of(Type.THREE, Figure.CLOVER));
         cards.add(Card.of(Type.ACE, Figure.CLOVER));
-        cards.add(Card.of(Type.KING, Figure.CLOVER));
-        cards.add(Card.of(Type.QUEEN, Figure.HEART));
+        // 카드 합이 21을 초과하지 않는 경우
+        assertThat(cards.computeScore()).isEqualTo(14);
 
-        int expected = 21;
-        assertThat(cards.computeScore()).isEqualTo(expected);
+        // 카드 합이 21을 초과하는 경우
+        cards.add(Card.of(Type.TEN, Figure.CLOVER));
+        assertThat(cards.computeScore()).isEqualTo(14);
+
+        // 카드 합이 21을 초과하고 ACE가 여러 개 일 때
+        cards.add(Card.of(Type.ACE, Figure.HEART));
+        assertThat(cards.computeScore()).isEqualTo(15);
     }
 
-    @DisplayName("Ace가 있을 때의 카드 합 계산 확인(21이 초과하지 않는 경우)")
+    @DisplayName("카드들 정보 확인")
     @Test
-    void aceSumTest2() {
+    void test3() {
         Cards cards = new Cards();
-        cards.add(Card.of(Type.ACE, Figure.CLOVER));
-        cards.add(Card.of(Type.KING, Figure.CLOVER));
+        cards.add(Card.of(Type.ACE, Figure.SPADE));
+        cards.add(Card.of(Type.FIVE, Figure.DIAMOND));
 
-        int expected = 21;
-        assertThat(cards.computeScore()).isEqualTo(expected);
+        List<String> expectedInfo = Arrays.asList("A스페이드", "5다이아몬드");
+
+        List<String> actualCardInfo = cards.cardsInfo();
+
+        assertThat(actualCardInfo).isEqualTo(expectedInfo);
     }
 }

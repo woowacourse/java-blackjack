@@ -6,15 +6,17 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class CardDeck {
+    static final int NUMBER_OF_FIRST_CARDS = 2;
     private final Queue<Card> cards;
 
     public CardDeck() {
-        cards = new LinkedList<>(Card.getInstance());
+        cards = new LinkedList<>(Card.create());
     }
 
     public void dealFirstCards(Participant participant) {
-        participant.addCard(giveCard());
-        participant.addCard(giveCard());
+        for (int i = 0; i < NUMBER_OF_FIRST_CARDS; i++) {
+            participant.addCard(giveCard());
+        }
     }
 
     public void dealAdditionalCard(Participant participant) {
@@ -25,7 +27,7 @@ public class CardDeck {
         return cards.poll();
     }
 
-    public int getSize() {
+    public int size() {
         return cards.size();
     }
 }

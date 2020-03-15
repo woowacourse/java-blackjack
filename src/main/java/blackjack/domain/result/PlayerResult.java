@@ -4,8 +4,9 @@ import blackjack.domain.participant.Name;
 
 import java.util.Objects;
 
+import static blackjack.domain.card.Card.NULL_ERR_MSG;
+
 public class PlayerResult {
-    private static final String NULL_ERR_MSG = "생성자에 Null이 들어올 수 없습니다.";
     private Name name;
     private ResultType resultType;
 
@@ -26,5 +27,19 @@ public class PlayerResult {
 
     public boolean hasSameResult(ResultType type) {
         return this.resultType == type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerResult that = (PlayerResult) o;
+        return Objects.equals(name, that.name) &&
+                resultType == that.resultType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, resultType);
     }
 }
