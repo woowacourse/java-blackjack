@@ -42,6 +42,10 @@ public class PlayingCards {
         return countCards() != INIT_CARDS_SIZE || calculateScore().isNotBlackJackScore();
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

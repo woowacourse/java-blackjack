@@ -145,4 +145,18 @@ class PlayerTest {
 
         assertThat(player.getFirstCard()).hasSize(1);
     }
+
+    @Test
+    @DisplayName("카드를 안가지고 있으면 예외처리")
+    void getFirstCardWithException() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name);
+
+        assertThatThrownBy(player::getFirstCard)
+                .isInstanceOf(EmptyCardsException.class)
+                .hasMessage("카드가 한 장 이상 있어야 합니다.");
+    }
+
+
 }
