@@ -1,5 +1,6 @@
 package model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -7,20 +8,31 @@ import java.util.List;
 
 import static model.UserTest.PLAYER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameResultTest {
-    static CardHand cardHandWin = new CardHand();
-    static CardHand cardHandLose = new CardHand();
-    static List<Player> players = new ArrayList<>();
-    static Dealer dealer = new Dealer(cardHandLose);
-    static {
-        cardHandWin.addCard(new Card(Symbol.KING, Type.CLUB));
-        cardHandWin.addCard(new Card(Symbol.KING, Type.DIAMOND));
+    CardHand cardHandWin1 = new CardHand();
+    CardHand cardHandWin2 = new CardHand();
+    CardHand cardHandLose = new CardHand();
+    Deck deckWin1;
+    Deck deckWin2;
+    Deck deckLose;
+    List<Player> players = new ArrayList<>();
+    Dealer dealer;
+
+    @BeforeEach
+    void init_field() {
+        cardHandWin1.addCard(new Card(Symbol.KING, Type.CLUB));
+        cardHandWin1.addCard(new Card(Symbol.KING, Type.DIAMOND));
+        cardHandWin2.addCard(new Card(Symbol.KING, Type.CLUB));
+        cardHandWin2.addCard(new Card(Symbol.KING, Type.DIAMOND));
         cardHandLose.addCard(new Card(Symbol.TWO, Type.DIAMOND));
         cardHandLose.addCard(new Card(Symbol.TWO, Type.CLUB));
-        players.add(new Player(PLAYER_NAME, cardHandWin));
-        players.add(new Player(PLAYER_NAME, cardHandWin));
+        deckWin1 = new Deck(cardHandWin1);
+        deckWin2 = new Deck(cardHandWin2);
+        deckLose = new Deck(cardHandLose);
+        players.add(new Player(PLAYER_NAME, deckWin1));
+        players.add(new Player(PLAYER_NAME, deckWin2));
+        dealer = new Dealer(deckLose);
     }
 
     @Test
@@ -29,5 +41,4 @@ class GameResultTest {
         gameResult.calculateResults();
         assertThat(gameResult.getDealerResult().get(Result.LOSE)).isEqualTo(2);
     }
-
 }

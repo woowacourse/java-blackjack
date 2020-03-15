@@ -4,21 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static controller.BlackJackGame.BLACK_JACK_COUNT;
+import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 
 public abstract class User {
     public static final String DELIMITER = ", ";
+    public static final String DEALER_NAME = "딜러";
 
     protected final String name;
     protected final CardHand cardHand;
 
-    public User(CardHand cardHand) {
-        this("딜러", cardHand);
+    public User(Deck deck) {
+        this(DEALER_NAME, deck);
     }
 
-    public User(String name, CardHand cardHand) {
+//    public User(CardHand cardHand){
+//        this(DEALER_NAME, cardHand);
+//    }
+
+    public User(String name, Deck deck) {
         this.name = name;
-        this.cardHand = cardHand;
+        this.cardHand = deck.draw(INITIAL_DRAW_COUNT);
     }
+
+//    public User(String name, CardHand cardHand) {
+//        this.name = name;
+//        this.cardHand = cardHand;
+//    }
+
+
 
     public static int compare(final User dealer, final User player) {
         return Integer.compare(dealer.getScore(), player.getScore());

@@ -12,7 +12,7 @@ public class Application {
         Deck deck = new Deck(CardFactory.createCardList());
         PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
         Players players = new Players(playerNames, deck);
-        Dealer dealer = new Dealer(deck.draw(INITIAL_DRAW_COUNT));
+        Dealer dealer = new Dealer(deck);
 
         BlackJackGame.play(players, dealer, deck);
     }

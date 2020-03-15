@@ -15,6 +15,10 @@ public class Deck {
         shuffle();
     }
 
+    public Deck(CardHand cardHand){
+        this.cards.addAll(cardHand.getCards());
+    }
+
     private void shuffle() {
         Collections.shuffle(cards);
     }

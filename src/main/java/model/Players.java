@@ -9,7 +9,7 @@ public class Players implements Iterable<Player> {
 
     public Players(PlayerNames names, Deck deck) {
         for (String name : names) {
-            players.add(new Player(name, deck.draw(INITIAL_DRAW_COUNT)));
+            players.add(new Player(name, deck));
         }
     }
 

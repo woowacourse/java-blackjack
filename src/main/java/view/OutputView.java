@@ -6,6 +6,7 @@ import java.util.Map;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static controller.BlackJackGame.HIT_BOUNDARY;
+import static model.User.DEALER_NAME;
 
 public class OutputView {
     public static final String DELIMITER = ": ";
@@ -74,7 +75,8 @@ public class OutputView {
 
     public static void printDealerResult(final Map<Result, Integer> result) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러: ")
+        stringBuilder.append(DEALER_NAME)
+                .append(DELIMITER)
                 .append(result.get(Result.WIN))
                 .append("승 ")
                 .append(result.get(Result.LOSE))

@@ -8,9 +8,13 @@ import static model.Player.DELIMITER;
 public class Dealer extends User {
     public static final int ZERO = 0;
 
-    public Dealer(CardHand cardHand) {
-        super(cardHand);
+    public Dealer(Deck deck) {
+        super(deck);
     }
+
+//    public Dealer(CardHand cardHand){
+//        super(cardHand);
+//    }
 
     public String toStringCardHandFirst() {
         return cardHand.getCards().get(ZERO).toString();
