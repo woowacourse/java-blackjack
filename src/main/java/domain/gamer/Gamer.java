@@ -7,37 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gamer {
-    private static final int BUST_NUMBER = 22;
-    private static final int ACE_HIDDEN_SCORE = 10;
-
     protected String name;
     protected final List<Card> cards = new ArrayList<>();
+    protected Result result;
 
     public Gamer(String name) {
         this.name = name;
+        this.result = new Result();
     }
 
     public abstract boolean isDrawable();
 
     public void addCard(List<Card> cards) {
         this.cards.addAll(cards);
-    }
-
-    public int calculateWithAce() {
-        int score = calculateScore();
-
-        if (isContainAce() && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
-            return score + ACE_HIDDEN_SCORE;
-        }
-
-        return score;
-    }
-
-    private int calculateScore() {
-        return cards.stream()
-                .map(Card::getCardNumber)
-                .mapToInt(CardNumber::getScore)
-                .sum();
+        result.calculateWithAce(this.cards, isContainAce());
     }
 
     public boolean isContainAce() {
@@ -51,5 +34,9 @@ public abstract class Gamer {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public Result getResult() {
+        return result;
     }
 }

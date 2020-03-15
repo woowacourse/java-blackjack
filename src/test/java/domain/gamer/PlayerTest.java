@@ -33,7 +33,7 @@ public class PlayerTest {
 		player.addCard(Arrays.asList(
 			new Card(CardSuit.CLOVER, CardNumber.EIGHT),
 			new Card(CardSuit.CLOVER, CardNumber.TEN)));
-		assertThat(player.isWinOrLose(dealerScore)).isEqualTo(expected);
+		assertThat(player.result.isMatchResult(dealerScore)).isEqualTo(expected);
 	}
 
 	static Stream<Arguments> generateDealerScore() {
@@ -51,7 +51,7 @@ public class PlayerTest {
 			new Card(CardSuit.CLOVER, CardNumber.EIGHT),
 			new Card(CardSuit.CLOVER, CardNumber.TEN),
 			new Card(CardSuit.HEART, CardNumber.KING)));
-		assertThat(player.isWinOrLose(17)).isEqualTo(MatchResult.LOSE);
+		assertThat(player.result.isMatchResult(17)).isEqualTo(MatchResult.LOSE);
 	}
 
 	@ParameterizedTest

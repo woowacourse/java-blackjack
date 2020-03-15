@@ -29,10 +29,10 @@ public class Gamers {
         dealer.addCard(deck.popCard(INIT_CARD_SIZE));
     }
 
-    public Map<String, MatchResult> generateGameResults() {
+    public Map<Player, MatchResult> generateGameResults() {
         return players.stream()
-                .collect(Collectors.toMap(Gamer::getName,
-                        player -> player.isWinOrLose(dealer.calculateWithAce())));
+                .collect(Collectors.toMap(player -> player,
+                        player -> player.result.isMatchResult(dealer.result.getScore())));
     }
 
     public Dealer getDealer() {
