@@ -2,8 +2,6 @@ package model;
 
 import java.util.*;
 
-import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
-
 public class Players implements Iterable<Player> {
     private final List<Player> players = new ArrayList<>();
 

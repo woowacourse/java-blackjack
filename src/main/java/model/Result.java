@@ -1,5 +1,7 @@
 package model;
 
+import exception.IllegalResultException;
+
 import java.util.Arrays;
 
 public enum Result {
@@ -34,7 +36,7 @@ public enum Result {
         return Arrays.stream(Result.values())
                 .filter(result -> result.isSameResult(compareValue))
                 .findFirst()
-                .orElseGet(()->DRAW);
+                .orElseThrow(()->new IllegalResultException("올바른 비교 값이 아닙니다."));
     }
 
     private boolean isSameResult(int compareValue) {

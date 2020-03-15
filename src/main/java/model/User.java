@@ -17,21 +17,10 @@ public abstract class User {
         this(DEALER_NAME, deck);
     }
 
-//    public User(CardHand cardHand){
-//        this(DEALER_NAME, cardHand);
-//    }
-
     public User(String name, Deck deck) {
         this.name = name;
         this.cardHand = deck.draw(INITIAL_DRAW_COUNT);
     }
-
-//    public User(String name, CardHand cardHand) {
-//        this.name = name;
-//        this.cardHand = cardHand;
-//    }
-
-
 
     public static int compare(final User dealer, final User player) {
         return Integer.compare(dealer.getScore(), player.getScore());
