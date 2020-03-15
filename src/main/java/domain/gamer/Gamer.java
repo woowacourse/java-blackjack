@@ -20,7 +20,7 @@ public abstract class Gamer {
 
     public void addCard(List<Card> cards) {
         this.cards.addAll(cards);
-        result.calculateWithAce(this.cards, isContainAce());
+        result.calculateScore(this.cards, isContainAce());
     }
 
     public boolean isContainAce() {

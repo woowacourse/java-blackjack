@@ -13,18 +13,14 @@ public class Result {
     private MatchResult matchResult;
     private int score;
 
-    public void calculateWithAce(List<Card> cards, boolean isContainAce) {
-        calculateScore(cards);
-        if (isContainAce && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
-            score += ACE_HIDDEN_SCORE;
-        }
-    }
-
-    private void calculateScore(List<Card> cards) {
+    public void calculateScore(List<Card> cards, boolean isContainAce) {
         score = cards.stream()
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getScore)
                 .sum();
+        if (isContainAce && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
+            score += ACE_HIDDEN_SCORE;
+        }
     }
 
     public MatchResult isMatchResult(int dealerScore) {
