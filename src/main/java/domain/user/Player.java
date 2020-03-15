@@ -29,10 +29,10 @@ public class Player extends User {
         if (dealer.isBust()) {
             return winningResult = WinningResult.WIN;
         }
-        if (calculatePointAccordingToHasAce() > dealer.calculatePointAccordingToHasAce()) {
+        if (calculatePoint() > dealer.calculatePoint()) {
             return winningResult = WinningResult.WIN;
         }
-        if (calculatePointAccordingToHasAce() == dealer.calculatePointAccordingToHasAce()) {
+        if (calculatePoint() == dealer.calculatePoint()) {
             return winningResult = WinningResult.DRAW;
         }
         return winningResult = WinningResult.LOSE;

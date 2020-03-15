@@ -30,21 +30,21 @@ public abstract class User {
                 .collect(Collectors.toList());
     }
 
-    public int calculatePointAccordingToHasAce() {
+    public int calculatePoint() {
         if (isBust() && hasAce()) {
-            return calculatePoint() - ACE_POINT;
+            return sumPoint() - ACE_POINT;
         }
-        return calculatePoint();
+        return sumPoint();
     }
 
-    private int calculatePoint() {
+    private int sumPoint() {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
     }
 
     public boolean isBust() {
-        return calculatePoint() > BLACK_JACK;
+        return sumPoint() > BLACK_JACK;
     }
 
     public boolean isBlackJack() {
@@ -52,7 +52,7 @@ public abstract class User {
     }
 
     public boolean isBlackJackPoint() {
-        return calculatePoint() == BLACK_JACK;
+        return sumPoint() == BLACK_JACK;
     }
 
     public abstract boolean isAvailableToDraw();

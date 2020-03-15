@@ -36,7 +36,7 @@ public class OutputView {
 
     private static void printTotalResult(User user) {
         System.out.println(user.getName() + "카드: " + printCards(user)
-                + " - 결과 : " + user.calculatePointAccordingToHasAce());
+                + " - 결과 : " + user.calculatePoint());
     }
 
     public static void printWinningResult(Dealer dealer, Players players) {

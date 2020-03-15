@@ -56,7 +56,7 @@ class UserTest {
         user.draw(new Card(Symbol.DIAMOND, Type.ACE));
         user.draw(card);
 
-        assertThat(user.calculatePointAccordingToHasAce()).isEqualTo(expected);
+        assertThat(user.calculatePoint()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardAndPoint() {
