@@ -20,7 +20,7 @@ public enum Result {
         return result;
     }
 
-    public static Result calculateResult(Dealer dealer, Player player) {
+    public static Result compete(Dealer dealer, Player player) {
         if (dealer.isBust() && player.isBust()) {
             return DRAW;
         }

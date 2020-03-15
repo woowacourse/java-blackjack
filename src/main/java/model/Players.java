@@ -13,6 +13,10 @@ public class Players implements Iterable<Player> {
         }
     }
 
+    public Players(List<Player> players){
+        this.players.addAll(players);
+    }
+
     public String getNames() {
         List<String> names = new ArrayList<>();
 

@@ -16,8 +16,9 @@ public class BlackJackGame {
         drawCardToPlayers(players, deck);
         hitOrStayForDealer(dealer, deck);
         OutputView.printFinalCardHandResult(players, dealer);
-        compareScores(players, dealer);
-        OutputView.printResult(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
+        gameResult.calculateResults();
+        OutputView.printResult(gameResult);
     }
 
     private static void drawCardToPlayers(final Players players, final Deck deck) {
@@ -26,13 +27,17 @@ public class BlackJackGame {
         }
     }
 
-    private static void compareScores(final Players players, final Dealer dealer) {
-        for (Player player : players) {
-            Result result = Result.calculateResult(dealer, player);
-            player.setResult(result);
-            dealer.setResult(result);
-        }
-    }
+//    private static void compareScores(final Players players, final Dealer dealer) {
+//        GameResult gameResult = new GameResult(players, dealer);
+//
+//        for (Player player : players) {
+//            Result result = Result.calculateResult(dealer, player);
+//            gameResult.calculateResults(result, player);
+//
+//            player.setResult(result);
+//            dealer.setResult(result);
+//        }
+//    }
 
     private static void drawCardEachPlayer(Deck deck, Player player) {
         while (!player.isBust()) {

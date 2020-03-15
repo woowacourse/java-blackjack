@@ -9,12 +9,4 @@ public class Player extends User {
     public Player(String name, CardHand cardHand) {
         super(name, cardHand);
     }
-
-    public void setResult(Result result) {
-        this.result = result;
-    }
-
-    public Result getResult() {
-        return result;
-    }
 }
