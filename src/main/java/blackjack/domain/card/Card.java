@@ -1,22 +1,18 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Card {
     private Suit suit;
     private Rank rank;
 
-    public Card(final Suit suit, final Rank rank) {
+    private Card(final Suit suit, final Rank rank) {
         this.suit = suit;
         this.rank = rank;
     }
 
-    public static Stack<Card> createCards() {
-        Stack<Card> cards = new Stack<>();
-        CardCache.cards.forEach(cards::push);
-        return cards;
+    public static Card from(Suit suit, Rank rank) {
+        return CardCache.cards.get(rank.getSymbol() + suit.getName());
     }
 
     public boolean isAce() {
@@ -33,7 +29,7 @@ public class Card {
     }
 
     private static class CardCache {
-        static final List<Card> cards = new ArrayList<>();
+        private static final Map<String, Card> cards = new HashMap<>();
 
         static {
             makeCards();
@@ -47,7 +43,7 @@ public class Card {
 
         private static void loop(final Suit suit) {
             for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
+                cards.put(rank.getSymbol() + suit.getName(), new Card(suit, rank));
             }
         }
 

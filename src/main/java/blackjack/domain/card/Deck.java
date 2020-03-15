@@ -7,7 +7,7 @@ public class Deck {
     private Stack<Card> cards;
 
     private Deck() {
-        this.cards = Card.createCards();
+        this.cards = CardFactory.createCards();
     }
 
     public static Deck create() {
@@ -22,7 +22,7 @@ public class Deck {
 
     public Card pop() {
         if (cards.isEmpty()) {
-            this.cards = Card.createCards();
+            this.cards = CardFactory.createCards();
         }
         return cards.pop();
     }

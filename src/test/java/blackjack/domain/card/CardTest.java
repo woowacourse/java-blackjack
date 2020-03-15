@@ -13,7 +13,7 @@ public class CardTest {
     @DisplayName("createCards() 메서드가 필요한 카드들을 생성하는지 테스트")
     @Test
     void createCardsTest() {
-        List<Card> cards = Card.createCards();
+        List<Card> cards = CardFactory.createCards();
         Assertions.assertThat(cards.size()).isEqualTo(DECK_SIZE);
     }
 }

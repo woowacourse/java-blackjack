@@ -17,24 +17,24 @@ import blackjack.domain.card.Suit;
 
 public class HandTest {
     public static final List<Card> CARDS_8 = Arrays.asList(
-        new Card(Suit.SPADE, Rank.TWO),
-        new Card(Suit.CLUB, Rank.TWO),
-        new Card(Suit.SPADE, Rank.TWO),
-        new Card(Suit.SPADE, Rank.TWO)
+        Card.from(Suit.SPADE, Rank.TWO),
+        Card.from(Suit.CLUB, Rank.TWO),
+        Card.from(Suit.SPADE, Rank.TWO),
+        Card.from(Suit.SPADE, Rank.TWO)
     );
     public static final List<Card> CARDS_21_ACE_AS_ONE = Arrays.asList(
-        new Card(Suit.SPADE, Rank.JACK),
-        new Card(Suit.CLUB, Rank.JACK),
-        new Card(Suit.SPADE, Rank.ACE)
+        Card.from(Suit.SPADE, Rank.JACK),
+        Card.from(Suit.CLUB, Rank.JACK),
+        Card.from(Suit.SPADE, Rank.ACE)
     );
     public static final List<Card> CARDS_21_ACE_AS_ELEVEN = Arrays.asList(
-        new Card(Suit.SPADE, Rank.ACE),
-        new Card(Suit.SPADE, Rank.KING)
+        Card.from(Suit.SPADE, Rank.ACE),
+        Card.from(Suit.SPADE, Rank.KING)
     );
     public static final List<Card> CARDS_22_BUSTED = Arrays.asList(
-        new Card(Suit.SPADE, Rank.TWO),
-        new Card(Suit.SPADE, Rank.KING),
-        new Card(Suit.SPADE, Rank.KING)
+        Card.from(Suit.SPADE, Rank.TWO),
+        Card.from(Suit.SPADE, Rank.KING),
+        Card.from(Suit.SPADE, Rank.KING)
     );
 
     @DisplayName("isBusted() 메서드가 작동됐는지 테스트")
