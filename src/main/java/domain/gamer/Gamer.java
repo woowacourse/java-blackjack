@@ -5,7 +5,7 @@ import domain.card.PlayingCards;
 
 public class Gamer {
     final PlayingCards playingCards;
-    final String name;
+    private final String name;
 
     public Gamer(PlayingCards playingCards, String name) {
         this.playingCards = playingCards;
