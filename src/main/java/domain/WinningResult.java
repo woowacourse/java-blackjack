@@ -26,7 +26,6 @@ public class WinningResult {
         List<String> result = new ArrayList<>(Collections.singletonList(String.format(
                 "딜러: %d승 %d패", allUserLoseCount, allUserWinCount))
         );
-
         result.addAll(users.getPlayers()
                 .stream()
                 .map(player -> determineWin(player.getName(), winningPlayerResult.get(player.getName())))

@@ -28,15 +28,15 @@ public class InputView {
         }
     }
 
-    public static String inputAnswer(UserInformation userInformation) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y,아니오는 n)", userInformation.getName());
+    public static String inputAnswer(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y,아니오는 n)", name);
         try {
             String answer = SCANNER.nextLine();
             validateNullOrEmpty(answer);
             return answer;
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return  inputAnswer(userInformation);
+            return  inputAnswer(name);
         }
     }
 

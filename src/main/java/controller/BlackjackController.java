@@ -74,7 +74,7 @@ public class BlackjackController {
     }
 
     private static AnswerType getAnswer(Player player) {
-        Answer answer = new Answer(InputView.inputAnswer(new UserInformation(player)));
+        Answer answer = new Answer(InputView.inputAnswer(player.getName()));
         return AnswerType.AnswerValueOf(answer.getAnswer());
     }
 }
