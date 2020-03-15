@@ -56,7 +56,7 @@ public abstract class AbstractUser implements User {
     }
 
     @Override
-    public boolean is(String name) {
+    public boolean hasName(String name) {
         return this.name.equals(name);
     }
 

@@ -44,7 +44,7 @@ public class Players {
 
     private void validateNames(List<Player> Players) {
         boolean hasDealerName = Players.stream()
-                .anyMatch(player -> player.is(Dealer.NAME));
+                .anyMatch(player -> player.hasName(Dealer.NAME));
 
         if (hasDealerName) {
             throw new PlayersException("플레이어의 이름은 딜러일 수 없습니다.");

@@ -12,7 +12,7 @@ public interface User {
 
     boolean isBust();
 
-    boolean is(String name);
+    boolean hasName(String name);
 
     int countCards();
 
