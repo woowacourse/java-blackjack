@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.exceptions.DeckException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
@@ -29,6 +30,15 @@ public class Deck implements Drawable {
 			throw new DeckException("뽑을 카드가 없습니다.");
 		}
 		return cards.pop();
+	}
+
+	@Override
+	public List<Card> draw(int num) {
+		List<Card> drawn = new ArrayList<>();
+		for (int i = 0; i < num; i++) {
+			drawn.add(draw());
+		}
+		return drawn;
 	}
 
 	@Override
