@@ -24,7 +24,7 @@ class ScoreTest {
 		Card card = new Card(symbol, Type.CLUB);
 
 		assertThat(Score.valueOf(card)).isInstanceOf(Score.class)
-			.extracting("score").isEqualTo(card.getSymbolValue());
+			.extracting("score").isEqualTo(card.getScore());
 	}
 
 	@Test

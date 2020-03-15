@@ -36,11 +36,11 @@ public class Score {
     }
 
     public static Score valueOf(Card card) {
-        return CACHE.get(card.getSymbolValue());
+        return CACHE.get(card.getScore());
     }
 
     public Score add(Card card) {
-        int currentScore = score + card.getSymbolValue();
+        int currentScore = score + card.getScore();
 
         if (card.isAce() && currentScore + ADDITIONAL_ACE_SCORE < BUST_SCORE) {
             return Score.valueOf(currentScore + ADDITIONAL_ACE_SCORE);

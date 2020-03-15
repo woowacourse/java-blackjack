@@ -31,7 +31,7 @@ public class BlackjackController {
         OutputView.printUsersInitialDraw(INITIAL_DRAW_NUMBER, users);
 
         drawCardsEachUsers();
-        printUsersCardsAndScore(users);
+        OutputView.printUserHandAndScore(users);
 
         Report blackJackReport = Report.from(dealer, players);
         OutputView.printBlackjackReport(blackJackReport);
@@ -54,10 +54,14 @@ public class BlackjackController {
     }
 
     private void drawCardsByOpinion(Player player) {
-        while (player.canDraw() && DrawOpinion.YES.equals(DrawOpinion.of(InputView.inputDrawOpinion(player)))) {
+        while (player.canDraw() && wantDraw(player)) {
             player.draw(deck);
             OutputView.printUserHand(player, player.getHand());
         }
+    }
+
+    private boolean wantDraw(Player player) {
+        return DrawOpinion.YES.equals(DrawOpinion.of(InputView.inputDrawOpinion(player)));
     }
 
     private void drawCardsDealer() {
@@ -67,9 +71,4 @@ public class BlackjackController {
         }
     }
 
-    private void printUsersCardsAndScore(List<User> users) {
-        for (User user : users) {
-            OutputView.printUserHandAndScore(user);
-        }
-    }
 }

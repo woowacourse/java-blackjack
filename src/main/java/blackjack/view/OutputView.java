@@ -35,10 +35,12 @@ public class OutputView {
 		System.out.println(String.format(DEALER_DRAW_FORMAT, Dealer.NAME, Dealer.DEALER_DRAWABLE_MAX_SCORE));
 	}
 
-	public static void printUserHandAndScore(User user) {
-		System.out.println(user.getName() + SEPARATOR
-			+ StringUtil.joinCards(user.getHand())
-			+ " - 결과: " + user.getScore());
+	public static void printUserHandAndScore(List<User> users) {
+		for (User user : users) {
+			System.out.println(user.getName() + SEPARATOR
+				+ StringUtil.joinCards(user.getHand())
+				+ " - 결과: " + user.getScore());
+		}
 	}
 
 	public static void printBlackjackReport(Report blackJackReport) {
