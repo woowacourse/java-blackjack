@@ -30,6 +30,6 @@ public class UserCardsTest {
         Card card1 = new Card(Suit.CLUB, Symbol.TEN);
         Card card2 = new Card(Suit.HEART, Symbol.KING);
         UserCards userCards = new UserCards(Arrays.asList(card1, card2));
-        assertThat(userCards.getTotalScore()).isEqualTo(20);
+        assertThat(userCards.calculateTotalScore()).isEqualTo(20);
     }
 }

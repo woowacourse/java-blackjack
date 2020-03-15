@@ -25,13 +25,13 @@ public class DisplayHandler {
 
     private static String joinInitialCardNames(List<User> gameUsers) {
         return gameUsers.stream()
-                .map(User::showInitialCardInfo)
+                .map(User::showInitialCardNames)
                 .collect(Collectors.joining(NEW_LINE));
     }
 
     public static String parseFinalScoreAnnouncement(Users users) {
         return users.getUsers().stream()
-                .map(User::showFinalCardInfo)
+                .map(User::showFinalCardNameScore)
                 .collect(Collectors.joining(NEW_LINE));
     }
 }

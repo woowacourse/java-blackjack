@@ -30,7 +30,7 @@ public class PlayerTest {
     @DisplayName("사용자가 초기 카드를 받는 것을 테스트")
     void receiveInitialCardsTest() {
         player.receiveInitialCards(initialCards);
-        assertThat(player.showCardInfo()).isEqualTo("pobi 카드: 클럽 6, 하트 킹");
+        assertThat(player.showCardNames()).isEqualTo("pobi 카드: 클럽 6, 하트 킹");
     }
 
     @Test
@@ -53,6 +53,6 @@ public class PlayerTest {
     @DisplayName("사용자가 갖고 있는 카드 정보를 모두 출력하는 기능 확인")
     void displayPlayerCardInfoTest() {
         player.receiveInitialCards(initialCards);
-        assertThat(player.showCardInfo()).isEqualTo("pobi 카드: 클럽 6, 하트 킹");
+        assertThat(player.showCardNames()).isEqualTo("pobi 카드: 클럽 6, 하트 킹");
     }
 }

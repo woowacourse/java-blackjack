@@ -43,7 +43,7 @@ public class DealerTest {
         ));
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(userCards);
-        assertThat(dealer.showInitialCardInfo()).isEqualTo("딜러 카드: 스페이드 잭");
+        assertThat(dealer.showInitialCardNames()).isEqualTo("딜러 카드: 스페이드 잭");
     }
 
     @ParameterizedTest
@@ -63,6 +63,6 @@ public class DealerTest {
                 new Card(Suit.CLUB, Symbol.JACK),
                 new Card(Suit.SPADE, Symbol.SIX))));
         dealer.receiveCard(new Card(Suit.DIAMOND, Symbol.QUEEN));
-        assertThat(dealer.showFinalCardInfo()).isEqualTo("딜러 카드: 클럽 잭, 스페이드 6, 다이아몬드 퀸 - 결과 : 버스트");
+        assertThat(dealer.showFinalCardNameScore()).isEqualTo("딜러 카드: 클럽 잭, 스페이드 6, 다이아몬드 퀸 - 결과 : 버스트");
     }
 }

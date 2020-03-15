@@ -9,11 +9,11 @@ public class Dealer extends User {
         super(DEALER);
     }
 
-    public String showInitialCardInfo() {
-        return name + CARD + cards.getCardInfo().get(0);
+    public String showInitialCardNames() {
+        return name + CARD + cards.getCardName().get(0);
     }
 
     public boolean isUnderThreshold() {
-        return cards.getTotalScore() <= THRESHOLD;
+        return cards.calculateTotalScore() <= THRESHOLD;
     }
 }

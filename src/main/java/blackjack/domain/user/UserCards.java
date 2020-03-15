@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCards {
-    public static final String NO_CARD = "카드가 없습니다";
-    public static final int INCREMENT_ACE_THRESHOLD = 11;
-    public static final int ACE_INCREMENT = 10;
-    public static final int BUST_BOUND = 21;
-    public static final int RESET_VAL = 0;
-    public static final int BUSTED_VAL_RESET = RESET_VAL;
+    private static final String NO_CARD = "카드가 없습니다";
+    private static final int INCREMENT_ACE_THRESHOLD = 11;
+    private static final int ACE_INCREMENT = 10;
+    private static final int BUST_BOUND = 21;
+    private static final int RESET_VAL = 0;
+    private static final int BUSTED_VAL_RESET = RESET_VAL;
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
@@ -25,19 +25,23 @@ public class UserCards {
         }
     }
 
-    public int getTotalScore() {
+    public int calculateTotalScore() {
         int score = incrementAceScore(cards.stream()
                 .mapToInt(Card::getScore)
                 .sum());
-        if (score > BUST_BOUND) {
-            score = BUSTED_VAL_RESET;
-        }
-        return score;
+        return resetScoreIfBusted(score);
     }
 
     private int incrementAceScore(int score) {
         if (hasAce() && score <= INCREMENT_ACE_THRESHOLD) {
             score += ACE_INCREMENT;
+        }
+        return score;
+    }
+
+    private int resetScoreIfBusted(int score) {
+        if (score > BUST_BOUND) {
+            score = BUSTED_VAL_RESET;
         }
         return score;
     }
@@ -50,7 +54,7 @@ public class UserCards {
         cards.add(card);
     }
 
-    public List<String> getCardInfo() {
+    public List<String> getCardName() {
         return cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.toList());

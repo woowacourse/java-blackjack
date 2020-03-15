@@ -11,8 +11,8 @@ public class Player extends User {
     }
 
     @Override
-    public String showInitialCardInfo() {
-        return super.showCardInfo();
+    public String showInitialCardNames() {
+        return super.showCardNames();
     }
 
     public Result compareScore(Dealer dealer) {
