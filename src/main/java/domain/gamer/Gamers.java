@@ -41,6 +41,10 @@ public class Gamers {
 	}
 
 	public List<Player> getPlayers() {
+		return findPlayers(gamers);
+	}
+
+	public static List<Player> findPlayers(List<Gamer> gamers) {
 		return gamers.stream()
 				.filter(gamer -> gamer.getClass() == Player.class)
 				.map(player -> (Player) player)
@@ -48,6 +52,10 @@ public class Gamers {
 	}
 
 	public Dealer getDealer() {
+		return findDealer(gamers);
+	}
+
+	public static Dealer findDealer(List<Gamer> gamers) {
 		return gamers.stream()
 				.filter(gamer -> gamer.getClass() == Dealer.class)
 				.map(dealer -> (Dealer) dealer)

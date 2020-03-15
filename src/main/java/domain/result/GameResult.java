@@ -6,34 +6,26 @@ import domain.gamer.Gamers;
 import domain.gamer.Player;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 public class GameResult {
-	private final Map<Player, Score> playersScore;
-	private final Dealer dealer;
-	private final Score dealerScore;
+	private final Map<Gamer, Score> gamerToScore;
 
 	public GameResult(Gamers gamers) {
-		this.playersScore = playersScore(gamers);
-		this.dealer = gamers.getDealer();
-		this.dealerScore = Score.from(dealer);
-	}
-
-	public static Map<Player, Score> playersScore(Gamers gamers) {
-		Map<Player, Score> playerToScore = new HashMap<>();
-		for (Player player : gamers.getPlayers()) {
-			playerToScore.put(player, Score.from(player));
-		}
-
-		return playerToScore;
+		this.gamerToScore = gamers.getGamers()
+				.stream()
+				.collect(Collectors.toMap(Function.identity(), Score::from));
 	}
 
 	public Map<Player, ResultType> playersResult() {
 		Map<Player, ResultType> playerToResult = new HashMap<>();
-		for (Player player : playersScore.keySet()) {
-			playerToResult.put(player, ResultType.of(playersScore.get(player), dealerScore));
+		Score dealerScore = gamerToScore.get(findDealer());
+
+		for (Player player : findPlayers()) {
+			playerToResult.put(player, ResultType.of(gamerToScore.get(player), dealerScore));
 		}
 
 		return playerToResult;
@@ -52,9 +44,18 @@ public class GameResult {
 	}
 
 	public Map<Gamer, Score> gamersScore() {
-		Map<Gamer, Score> scores = new HashMap<>(playersScore);
-		scores.put(dealer, dealerScore);
+		return gamerToScore;
+	}
 
-		return scores;
+	private List<Player> findPlayers() {
+		List<Gamer> gamers = new ArrayList<>(gamerToScore.keySet());
+
+		return Gamers.findPlayers(gamers);
+	}
+
+	private Dealer findDealer() {
+		List<Gamer> gamers = new ArrayList<>(gamerToScore.keySet());
+
+		return Gamers.findDealer(gamers);
 	}
 }
