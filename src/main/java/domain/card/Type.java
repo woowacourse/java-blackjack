@@ -25,11 +25,11 @@ public enum Type {
 		this.score = score;
 	}
 
-	public static Type of(Integer num) {
+	public static Type of(String passedName) {
 		return Arrays.stream(values())
-			.filter(val -> val.score == num)
+			.filter(type -> type.name.equals(passedName))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("올바른 인자가 아닙니다."));
+			.orElseThrow(() -> new IllegalArgumentException("잘못된 타입 이름입니다."));
 	}
 
 	public String getName() {

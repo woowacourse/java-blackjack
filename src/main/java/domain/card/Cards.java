@@ -21,6 +21,10 @@ public class Cards {
 		this.cards.addAll(cards);
 	}
 
+	public int size() {
+		return cards.size();
+	}
+
 	public boolean isBlackjack() {
 		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
 	}

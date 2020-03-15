@@ -3,6 +3,7 @@ package domain.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackjack.BlackjackUtils;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -18,11 +19,11 @@ public abstract class User {
 	}
 
 	public boolean isBlackjack() {
-		return cards.isBlackjack();
+		return BlackjackUtils.isBlackjack(cards);
 	}
 
 	public boolean isBust() {
-		return cards.isBust();
+		return BlackjackUtils.isBust(cards);
 	}
 
 	public int calculateScore() {

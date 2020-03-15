@@ -12,6 +12,10 @@ public class Card {
 		this.type = type;
 	}
 
+	public Card(String symbolName, String typeName) {
+		this(Symbol.of(symbolName), Type.of(typeName));
+	}
+
 	public boolean isAce() {
 		return this.type == Type.ACE;
 	}

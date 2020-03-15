@@ -1,4 +1,4 @@
-import controller.BlackjackGame;
+import blackjack.BlackjackGame;
 import view.OutputView;
 
 public class Application {
