@@ -8,6 +8,7 @@ public abstract class User {
     public static final String DELIMITER = ", ";
     public static final String RESULT = " - 결과 : ";
     public static final String BUSTED = "버스트";
+    public static final int BUSTED_VAL_RESET = 0;
     protected final String name;
     protected UserCards cards;
 
@@ -53,7 +54,7 @@ public abstract class User {
 
     private String parseFinalScore() {
         int finalScore = this.getTotalScore();
-        if (finalScore == 0) {
+        if (finalScore == BUSTED_VAL_RESET) {
             return BUSTED;
         }
         return Integer.toString(finalScore);

@@ -14,13 +14,19 @@ public class DisplayHandler {
 
     public static String parseInitialDistribution(Users users) {
         List<User> gameUsers = users.getUsers();
+        return joinUserNames(gameUsers) + INITIAL_CARDS_DISTRIBUTED + joinInitialCardNames(gameUsers);
+    }
+
+    private static String joinUserNames(List<User> gameUsers) {
         return gameUsers.stream()
                 .map(User::getName)
-                .collect(Collectors.joining(DELIMITER)) +
-                INITIAL_CARDS_DISTRIBUTED +
-                gameUsers.stream()
-                        .map(User::showInitialCardInfo)
-                        .collect(Collectors.joining(NEW_LINE));
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private static String joinInitialCardNames(List<User> gameUsers) {
+        return gameUsers.stream()
+                .map(User::showInitialCardInfo)
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     public static String parseFinalScoreAnnouncement(Users users) {

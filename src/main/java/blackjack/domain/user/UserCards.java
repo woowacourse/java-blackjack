@@ -12,6 +12,7 @@ public class UserCards {
     public static final int ACE_INCREMENT = 10;
     public static final int BUST_BOUND = 21;
     public static final int RESET_VAL = 0;
+    public static final int BUSTED_VAL_RESET = RESET_VAL;
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
@@ -30,16 +31,20 @@ public class UserCards {
                 .mapToInt(Card::getScore)
                 .sum());
         if (score > BUST_BOUND) {
-            score = RESET_VAL;
+            score = BUSTED_VAL_RESET;
         }
         return score;
     }
 
     private int incrementAceScore(int score) {
-        if (cards.stream().anyMatch(Card::isAce) && score <= INCREMENT_ACE_THRESHOLD) {
+        if (hasAce() && score <= INCREMENT_ACE_THRESHOLD) {
             score += ACE_INCREMENT;
         }
         return score;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public void addCard(Card card) {

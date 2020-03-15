@@ -14,10 +14,14 @@ public class CardFactory {
 
     private LinkedList<Card> generateAllCards() {
         LinkedList<Card> cards = new LinkedList<>();
-        Arrays.stream(Suit.values()).forEach(suit -> Arrays.stream(Symbol.values())
-                .map(symbol -> new Card(suit, symbol))
-                .forEach(cards::add));
+        Arrays.stream(Suit.values()).forEach(suit -> generateCardsBySuit(cards, suit));
         return cards;
+    }
+
+    private void generateCardsBySuit(LinkedList<Card> cards, Suit suit) {
+        Arrays.stream(Symbol.values())
+                .map(symbol -> new Card(suit, symbol))
+                .forEach(cards::add);
     }
 
     public static CardFactory getInstance() {
