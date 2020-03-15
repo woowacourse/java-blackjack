@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Outcome;
+import blackjack.domain.result.Outcome;
 
 public class Player extends User {
 
@@ -11,6 +11,6 @@ public class Player extends User {
     }
 
     public Outcome calculateOutcome(User dealer) {
-        return Outcome.from(userCards, dealer.userCards);
+        return Outcome.from(getScore(), dealer.getScore());
     }
 }

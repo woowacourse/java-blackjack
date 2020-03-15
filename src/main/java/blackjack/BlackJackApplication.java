@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -39,7 +39,7 @@ public class BlackJackApplication {
     private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
         dealer.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         for (Player player : players.getPlayers()) {
-            player.drawCard(cardDeck, 2);
+            player.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         }
         OutputView.printCardDistribution(players);
         OutputView.printUsersCards(dealer, players);

@@ -1,7 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.Outcome;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.Outcome;
+import blackjack.domain.result.Score;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -11,8 +12,8 @@ import java.util.Map;
 public class OutputView {
 
     public static void printCardDistribution(Players players) {
-        System.out
-            .printf("\n딜러와 %s에게 2장의 카드를 나누었습니다.\n", String.join(", ", players.getPlayerNames()));
+        System.out.printf("\n딜러와 %s에게 2장의 카드를 나누었습니다.\n"
+            , String.join(", ", players.getPlayerNames()));
     }
 
     public static void printUsersCards(Dealer dealer, Players players) {
@@ -28,7 +29,8 @@ public class OutputView {
     }
 
     private static String getUserCards(User user) {
-        return String.format("%s: %s", user.getName(), String.join(", ", user.getCardsInfos()));
+        return String.format("%s: %s", user.getName()
+            , String.join(", ", user.getCardsInfos()));
     }
 
     public static void printDealerOneMoreCard() {
@@ -44,7 +46,8 @@ public class OutputView {
     }
 
     public static void printUserCardsAndScore(User user) {
-        System.out.printf("%s - 결과: %s\n", getUserCards(user), user.getTotalScore());
+        Score userScore = user.getScore();
+        System.out.printf("%s - 결과: %s\n", getUserCards(user), userScore.getScore());
     }
 
     public static void printFinalResult(Dealer dealer, GameResult gameResult) {

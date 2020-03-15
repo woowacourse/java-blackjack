@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.result.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,42 +34,13 @@ public class UserCardsTest {
         userCards.add(new Card(Type.HEART, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        assertThat(userCards.getScore()).isEqualTo(14);
+        assertThat(userCards.getScore()).isEqualTo(new Score(14, 1));
 
         userCards = new UserCards();
         userCards.add(new Card(Type.DIAMOND, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.TWO));
-        assertThat(userCards.getScore()).isEqualTo(14);
-    }
-
-    @DisplayName("카드가 21을 넘는지 확인")
-    @Test
-    void isOverBlackJack() {
-        userCards.add(new Card(Type.DIAMOND, Symbol.TWO));
-        userCards.add(new Card(Type.DIAMOND, Symbol.THREE));
-        userCards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        assertThat(userCards.isBust()).isFalse();
-
-        userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        assertThat(userCards.isBust()).isTrue();
-    }
-
-    @DisplayName("카드가 블랙잭인지 확인")
-    @Test
-    void isBlackJack() {
-        userCards.add(new Card(Type.CLUB, Symbol.ACE));
-        userCards.add(new Card(Type.CLUB, Symbol.TEN));
-        assertThat(userCards.isBlackJack()).isTrue();
-
-        userCards.add(new Card(Type.SPADE, Symbol.EIGHT));
-        assertThat(userCards.isBlackJack()).isFalse();
-
-        userCards = new UserCards();
-        userCards.add(new Card(Type.SPADE, Symbol.TEN));
-        userCards.add(new Card(Type.SPADE, Symbol.EIGHT));
-        userCards.add(new Card(Type.SPADE, Symbol.THREE));
-        assertThat(userCards.isBlackJack()).isFalse();
+        assertThat(userCards.getScore()).isEqualTo(new Score(14, 1));
     }
 }
 
