@@ -1,6 +1,6 @@
 package com.blackjack.domain.user;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,23 +23,25 @@ class HandsTest {
 	@DisplayName("ACE를 포함하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_ExcludeAce_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(new Card(Symbol.SIX, Type.CLUB), new Card(Symbol.FIVE, Type.DIAMOND)));
-		assertThat(hands.calculateScore()).isEqualTo(new Score(11));
+		Hands hands = new Hands(
+				Arrays.asList(Card.valueOf(Symbol.SIX, Type.CLUB), Card.valueOf(Symbol.FIVE, Type.DIAMOND)));
+		assertThat(hands.calculateScore()).isEqualTo(Score.valueOf(11));
 	}
 
 	@DisplayName("ACE를 포함하고 상향하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndNotUpward_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.TEN, Type.DIAMOND),
-			new Card(Symbol.JACK, Type.DIAMOND)));
-		assertThat(hands.calculateScore()).isEqualTo(new Score(21));
+		Hands hands = new Hands(Arrays.asList(Card.valueOf(Symbol.ACE, Type.CLUB),
+				Card.valueOf(Symbol.TEN, Type.DIAMOND),
+				Card.valueOf(Symbol.JACK, Type.DIAMOND)));
+		assertThat(hands.calculateScore()).isEqualTo(Score.valueOf(21));
 	}
 
 	@DisplayName("ACE를 포함하고 상향했을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndUpward_CreateTotalScore() {
-		Hands hands = new Hands(Arrays.asList(new Card(Symbol.ACE, Type.CLUB), new Card(Symbol.TEN, Type.DIAMOND)));
-		assertThat(hands.calculateScore()).isEqualTo(new Score(21));
+		Hands hands = new Hands(
+				Arrays.asList(Card.valueOf(Symbol.ACE, Type.CLUB), Card.valueOf(Symbol.TEN, Type.DIAMOND)));
+		assertThat(hands.calculateScore()).isEqualTo(Score.valueOf(21));
 	}
 }
