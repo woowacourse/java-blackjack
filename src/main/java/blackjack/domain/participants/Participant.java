@@ -1,9 +1,10 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 public interface Participant {
-    void draw(Deck deck);
+    void draw(Card card);
 
     int score();
 

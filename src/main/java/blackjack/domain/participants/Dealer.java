@@ -1,12 +1,12 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 
 public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
@@ -48,8 +48,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void draw(Deck deck) {
-        hand.add(deck.pop());
+    public void draw(Card card) {
+        hand.add(card);
     }
 
     @Override
@@ -60,11 +60,11 @@ public class Dealer implements Participant {
     @Override
     public void drawMoreCard(final Deck deck) {
         while (needsMoreCard()) {
-            draw(deck);
+            draw(deck.pop());
         }
     }
 
-    private boolean needsMoreCard() {
+    public boolean needsMoreCard() {
         return hand.calculate() < DEALER_DRAW_CRITERIA;
     }
 
@@ -81,10 +81,5 @@ public class Dealer implements Participant {
     @Override
     public String handStatus() {
         return hand.toString();
-    }
-
-    // 테스트용
-    public void draw(Card card) {
-        hand.add(card);
     }
 }

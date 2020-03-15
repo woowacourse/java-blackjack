@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
-import java.util.Objects;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.exceptions.InvalidPlayerException;
+
+import java.util.Objects;
 
 public class Player implements Participant {
     private final Hand hand;
@@ -13,7 +13,7 @@ public class Player implements Participant {
 
     public Player(final String name) {
         validate(name);
-        this.name = name;
+        this.name = name.trim();
         this.hand = new Hand();
     }
 
@@ -34,7 +34,7 @@ public class Player implements Participant {
 
     @Override
     public void drawMoreCard(final Deck deck) {
-        draw(deck);
+        draw(deck.pop());
     }
 
     @Override
@@ -68,11 +68,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public void draw(final Deck deck) {
-        hand.add(deck.pop());
-    }
-
-    // 테스트용
     public void draw(final Card card) {
         hand.add(card);
     }

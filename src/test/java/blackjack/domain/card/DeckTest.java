@@ -20,11 +20,9 @@ public class DeckTest {
     @Test
     public void isEmptyTest() {
         Deck deck = new Deck();
-        deck.printDeck();
         for (int i = 0, end = deck.size() + 1; i < end; i++) {
             deck.pop();
         }
-        deck.printDeck();
         assertThat(deck.size()).isEqualTo(SIZE_AFTER_FIRST_POP);
     }
 }

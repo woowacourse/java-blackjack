@@ -2,10 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Participants;
-import blackjack.domain.participants.Player;
+import blackjack.domain.participants.*;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,19 +14,20 @@ public class BlackJackController {
         OutputView.nameInstruction();
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Participants participants = getParticipants(dealer);
+        Players players = new Players(InputView.getInput());
+        Participants participants = getParticipants(dealer, players);
         initialPhase(deck, participants);
         userGamePhase(deck, participants);
         dealerGamePhase(dealer);
         endPhase(participants);
     }
 
-    private static Participants getParticipants(final Dealer dealer) {
+    private static Participants getParticipants(final Dealer dealer, Players players) {
         try {
-            return new Participants(dealer, InputView.getInput());
+            return new Participants(dealer, players.getPlayers());
         } catch (InvalidPlayerException e) {
             OutputView.printError(e.getMessage());
-            return getParticipants(dealer);
+            return getParticipants(dealer, players);
         }
     }
 
@@ -67,7 +65,7 @@ public class BlackJackController {
         final boolean wantsMoreCard;
         wantsMoreCard = InputView.yesOrNo();
         if (wantsMoreCard) {
-            player.draw(deck);
+            player.draw(deck.pop());
         }
         return wantsMoreCard;
     }

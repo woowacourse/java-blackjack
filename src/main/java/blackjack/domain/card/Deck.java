@@ -29,8 +29,4 @@ public class Deck {
     public int size() {
         return cards.size();
     }
-
-    public void printDeck() {
-        System.out.println(cards.toString());
-    }
 }
