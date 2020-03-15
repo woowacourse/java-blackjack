@@ -42,7 +42,7 @@ public class GameController {
 
     private void needMoreCard(Player player) {
         while (player.needMoreCard(getAnswerForNeedMoreCard(player), deck)) {
-            if (player.checkBurst()) {
+            if (player.isBurst()) {
                 OutputView.printBurst(player);
                 break;
             }

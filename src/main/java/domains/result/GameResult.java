@@ -8,14 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, WinOrDrawOrLose> playerResult;
-    private Map<WinOrDrawOrLose, Integer> gameResult;
-    private Map<WinOrDrawOrLose, Integer> dealerResult;
+    private Map<Player, KindOfGameResult> playerResult;
+    private Map<KindOfGameResult, Integer> gameResult;
 
     public GameResult() {
         this.playerResult = new HashMap<>();
         this.gameResult = new HashMap<>();
-        this.dealerResult = new HashMap<>();
     }
 
     public void create(Players players, Dealer dealer) {
@@ -23,55 +21,38 @@ public class GameResult {
             if (checkBurstPlayer(player)) {
                 continue;
             }
-            playerResult.put(player, checkWinOrLose(player, dealer));
+            playerResult.put(player, player.checkKindOfGameResult(dealer));
         }
         calculateDealerResult();
     }
 
     private boolean checkBurstPlayer(Player player) {
         if (player.isBurst()) {
-            playerResult.put(player, WinOrDrawOrLose.LOSE);
+            playerResult.put(player, KindOfGameResult.LOSE);
             return true;
         }
         return false;
     }
 
-    public WinOrDrawOrLose checkWinOrLose(Player player, Dealer dealer) {
-        if (dealer.checkBurst() && !player.isBurst()) {
-            return WinOrDrawOrLose.WIN;
-        }
-        if (player.score() > dealer.score()) {
-            return WinOrDrawOrLose.WIN;
-        }
-        if (player.score() < dealer.score()) {
-            return WinOrDrawOrLose.LOSE;
-        }
-        return WinOrDrawOrLose.DRAW;
-    }
-
-    public WinOrDrawOrLose getWinOrLose(Player player) {
+    public KindOfGameResult getWinOrLose(Player player) {
         return playerResult.get(player);
     }
 
     private void calculateDealerResult() {
-        for (WinOrDrawOrLose winOrDrawOrLose : WinOrDrawOrLose.values()) {
-            gameResult.put(winOrDrawOrLose, 0);
+        for (KindOfGameResult kindOfGameResult : KindOfGameResult.values()) {
+            gameResult.put(kindOfGameResult, 0);
         }
 
-        for (WinOrDrawOrLose result : playerResult.values()) {
+        for (KindOfGameResult result : playerResult.values()) {
             gameResult.put(result, gameResult.get(result) + 1);
         }
-
-        dealerResult.put(WinOrDrawOrLose.WIN, gameResult.get(WinOrDrawOrLose.LOSE));
-        dealerResult.put(WinOrDrawOrLose.DRAW, gameResult.get(WinOrDrawOrLose.DRAW));
-        dealerResult.put(WinOrDrawOrLose.LOSE, gameResult.get(WinOrDrawOrLose.WIN));
     }
 
-    public Map<Player, WinOrDrawOrLose> getPlayerResult() {
+    public Map<Player, KindOfGameResult> getPlayerResult() {
         return playerResult;
     }
 
-    public Map<WinOrDrawOrLose, Integer> getDealerResult() {
-        return dealerResult;
+    public Map<KindOfGameResult, Integer> getGameResult() {
+        return gameResult;
     }
 }

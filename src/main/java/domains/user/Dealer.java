@@ -18,5 +18,8 @@ public class Dealer extends User {
         if (this.hands.score() <= DEALER_HIT_POINT) {
             this.hands.draw(deck);
         }
+        if (hands.isBurst()) {
+            this.burst = true;
+        }
     }
 }

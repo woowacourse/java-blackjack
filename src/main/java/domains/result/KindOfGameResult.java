@@ -1,11 +1,11 @@
 package domains.result;
 
-public enum WinOrDrawOrLose {
+public enum KindOfGameResult {
     WIN("승"), LOSE("패"), DRAW("무");
 
     private String winOrDrawOrLose;
 
-    WinOrDrawOrLose(String winOrDrawOrLose) {
+    KindOfGameResult(String winOrDrawOrLose) {
         this.winOrDrawOrLose = winOrDrawOrLose;
     }
 

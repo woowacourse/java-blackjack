@@ -8,13 +8,6 @@ public abstract class User {
 
     abstract void hit(Deck deck);
 
-    public boolean checkBurst() {
-        if (hands.isBurst()) {
-            this.burst = true;
-        }
-        return this.burst;
-    }
-
     public int handSize() {
         return hands.size();
     }

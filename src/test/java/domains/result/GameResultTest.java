@@ -36,17 +36,8 @@ public class GameResultTest {
         Player ddoring = iterator.next();
         Player smallBear = iterator.next();
 
-        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(WinOrDrawOrLose.WIN);
-        assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(WinOrDrawOrLose.DRAW);
-    }
-
-    @DisplayName("딜러의 게임 결과를 확인")
-    @ParameterizedTest
-    @MethodSource("gameData")
-    void getDealerResult_PlayerWin_DealerLose(Players players, Dealer dealer, Map<WinOrDrawOrLose, Integer> dealerResult) {
-        gameResult.create(players, dealer);
-
-        assertThat(gameResult.getDealerResult()).isEqualTo(dealerResult);
+        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(KindOfGameResult.WIN);
+        assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(KindOfGameResult.DRAW);
     }
 
     static Stream<Arguments> gameData() {
@@ -60,10 +51,10 @@ public class GameResultTest {
 
         Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));
 
-        Map<WinOrDrawOrLose, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(WinOrDrawOrLose.WIN, 0);
-        dealerResult.put(WinOrDrawOrLose.DRAW, 1);
-        dealerResult.put(WinOrDrawOrLose.LOSE, 1);
+        Map<KindOfGameResult, Integer> dealerResult = new HashMap<>();
+        dealerResult.put(KindOfGameResult.WIN, 0);
+        dealerResult.put(KindOfGameResult.DRAW, 1);
+        dealerResult.put(KindOfGameResult.LOSE, 1);
 
         return Stream.of(
                 Arguments.of(players, dealer, dealerResult)
