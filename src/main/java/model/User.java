@@ -1,8 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static controller.BlackJackGame.BLACK_JACK_COUNT;
 
 public abstract class User {
+    public static final String DELIMITER = ", ";
+
     protected final String name;
     protected final CardHand cardHand;
 
@@ -19,7 +24,14 @@ public abstract class User {
         return Integer.compare(dealer.getScore(), player.getScore());
     }
 
-    public abstract String toStringCardHand();
+    public String toStringCardHand() {
+        List<String> cardNames = new ArrayList<>();
+
+        for (Card card : cardHand) {
+            cardNames.add(card.toString());
+        }
+        return String.join(DELIMITER, cardNames);
+    }
 
     public void drawCard(CardHand cardHand) {
         for (Card drawCard : cardHand) {
