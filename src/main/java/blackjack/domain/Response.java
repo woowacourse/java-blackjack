@@ -8,6 +8,7 @@ public enum Response {
     YES("y"),
     NO("n");
 
+    private static final String RESPONSE_NOT_MATCH_EXCEPTION_MESSAGE = "y 또는 n을 입력해주세요.";
     private String lowerCase;
 
     Response(String lowerCase) {
@@ -23,6 +24,6 @@ public enum Response {
         return Arrays.stream(values())
                 .filter(response -> response.lowerCase.equals(lowerCase))
                 .findFirst()
-                .orElseThrow(() -> new ResponseNotMatchException("y 또는 n을 입력해주세요."));
+                .orElseThrow(() -> new ResponseNotMatchException(RESPONSE_NOT_MATCH_EXCEPTION_MESSAGE));
     }
 }
