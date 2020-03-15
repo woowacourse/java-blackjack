@@ -7,18 +7,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static final String JOIN_DELIMITER = ", ";
+
     public static void nameInstruction() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉽표 기준으로 분리)");
     }
 
     public static void shareFirstPair(Participants participants) {
-        String names = participants.getNames();
+        String names = readParticipantsName(participants);
         System.out.println(
                 String.format(System.lineSeparator() + "%s에게 %d장을 나누었습니다.",
                         names, Participants.FIRST_CARDS_COUNT
                 )
         );
     }
+
+    public static String readParticipantsName(Participants participants) {
+        return participants.getParticipants().stream()
+                .map(Participant::getName)
+                .collect(Collectors.joining(JOIN_DELIMITER));
+    }
+
 
     public static void participantsStatus(Participants participants) {
         for (Participant participant : participants) {

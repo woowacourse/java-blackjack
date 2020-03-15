@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 public class Participants implements Iterable<Participant> {
     public static final int FIRST_CARDS_COUNT = 2;
-    public static final String JOIN_DELIMITER = ", ";
 
     private final List<Participant> participants;
 
@@ -42,10 +41,8 @@ public class Participants implements Iterable<Participant> {
                 .collect(Collectors.toList());
     }
 
-    public String getNames() {
-        return participants.stream()
-                .map(Participant::getName)
-                .collect(Collectors.joining(JOIN_DELIMITER));
+    public List<Participant> getParticipants() {
+        return participants;
     }
 
     @Override
