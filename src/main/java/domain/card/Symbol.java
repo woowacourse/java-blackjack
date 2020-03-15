@@ -3,10 +3,10 @@ package domain.card;
 import java.util.Arrays;
 
 public enum Symbol {
-	ACE("1", 1),
-	TWO("2", 2),
-	THREE("3", 3),
-	FOUR("4", 4),
+	ACE("1", 1, 10),
+	TWO("2", 2, 0),
+	THREE("3", 3, 0),
+	FOUR("4", 4, 0),
 	FIVE("5", 5),
 	SIX("6", 6),
 	SEVEN("7", 7),
@@ -17,20 +17,25 @@ public enum Symbol {
 	QUEEN("Q", 10),
 	KING("K", 10);
 
-	private static final int ACE_ADDITIONAL_SCORE = 10;
 	private static final String ILLEGAL_SCORE_VALUE_EXCEPTION_MESSAGE = "올바른 인자가 아닙니다.";
 
 	private final String name;
-	private final int score;
+	private final int defaultScore;
+	private final int bonusScore;
 
-	Symbol(String name, int score) {
+	Symbol(String name, int defaultScore) {
+		this(name, defaultScore, 0);
+	}
+
+	Symbol(String name, int defaultScore, int bonusScore) {
 		this.name = name;
-		this.score = score;
+		this.defaultScore = defaultScore;
+		this.bonusScore = bonusScore;
 	}
 
 	public static Symbol of(Integer num) {
 		return Arrays.stream(values())
-			.filter(val -> val.score == num)
+			.filter(val -> val.defaultScore == num)
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_SCORE_VALUE_EXCEPTION_MESSAGE));
 	}
@@ -39,21 +44,18 @@ public enum Symbol {
 		return name;
 	}
 
-	public int getScore() {
-		return score;
+	public int getDefaultScore() {
+		return defaultScore;
 	}
 
-	public boolean isAce() {
-		return this == ACE;
+	public int getBonusScore() {
+		return bonusScore;
 	}
 
-	public int calculateScore(int totalScore, int blackjackScore) {
-		if (!isAce()) {
-			return getScore();
+	public int calculateBonusScore(int score, int comparingScore) {
+		if (score + bonusScore <= comparingScore) {
+			return bonusScore;
 		}
-		if (totalScore + getScore() + ACE_ADDITIONAL_SCORE <= blackjackScore) {
-			return getScore() + ACE_ADDITIONAL_SCORE;
-		}
-		return getScore();
+		return 0;
 	}
 }

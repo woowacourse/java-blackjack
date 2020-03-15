@@ -37,10 +37,6 @@ public enum MatchResult {
 		}
 	}
 
-	public String getMatchResult() {
-		return matchResult;
-	}
-
 	public MatchResult switchWinAndLose() {
 		if (this == MatchResult.WIN) {
 			return MatchResult.LOSE;
@@ -70,5 +66,9 @@ public enum MatchResult {
 		boolean isNotPlayerScoreHigherThanDealers = !player.hasHigherScoreThan(dealer);
 
 		return isPlayerBust || isDealerOnlyBlackjack || isNotPlayerScoreHigherThanDealers;
+	}
+
+	public String getMatchResult() {
+		return matchResult;
 	}
 }

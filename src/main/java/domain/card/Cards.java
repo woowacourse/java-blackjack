@@ -1,14 +1,14 @@
 package domain.card;
 
+import static java.util.Comparator.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-	private static final int BLACKJACK_SCORE = 21;
-	private static final int BUST_SCORE = 22;
+	private static final int MAXIMUM_SCORE = 21;
 	private static final int BLACKJACK_CARD_SIZE = 2;
 	private static final String OUT_OF_CARD_SIZE_EXCEPTION_MESSAGE = "인자의 값이 카드 갯수보다 큽니다.";
 
@@ -23,24 +23,33 @@ public class Cards {
 	}
 
 	public boolean isBlackjack() {
-		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
+		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == MAXIMUM_SCORE;
 	}
 
 	public boolean isBust() {
-		return calculateScore() >= BUST_SCORE;
+		return calculateScore() > MAXIMUM_SCORE;
 	}
 
 	public int calculateScore() {
-		List<Card> cards = new ArrayList<>(this.cards);
-		cards.sort(Comparator.reverseOrder());
+		int defaultScore = calculateDefaultScore();
+		return calculateWithBonusScore(defaultScore);
+	}
 
-		int totalScore = 0;
-		for (Card card : cards) {
-			Symbol currentSymbol = card.getSymbol();
-			int currentScore = currentSymbol.calculateScore(totalScore, BLACKJACK_SCORE);
-			totalScore += currentScore;
-		}
-		return totalScore;
+	private int calculateDefaultScore() {
+		return cards.stream()
+			.mapToInt(Card::getScore)
+			.sum();
+	}
+
+	private int calculateWithBonusScore(int defaultScore) {
+		return cards.stream()
+			.map(Card::getSymbol)
+			.sorted(comparingInt(Symbol::getBonusScore).reversed())
+			.reduce(defaultScore, this::appendBonusScore, Integer::sum);
+	}
+
+	private int appendBonusScore(int score, Symbol symbol) {
+		return score + symbol.calculateBonusScore(score, MAXIMUM_SCORE);
 	}
 
 	public List<Card> getCards() {

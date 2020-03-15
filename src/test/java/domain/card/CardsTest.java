@@ -39,6 +39,20 @@ public class CardsTest {
 		assertThat(cards.calculateScore()).isEqualTo(12);
 	}
 
+	@DisplayName("여러장의 에이스가 포함된 경우, 나머지 점수의 합이 10점이 넘어간다면, 에이스는 1점을 가져온다.")
+	@Test
+	void calculateScoreTest5() {
+		Cards cards = createCards(Arrays.asList(10, 1, 1, 1));
+		assertThat(cards.calculateScore()).isEqualTo(13);
+	}
+
+	@DisplayName("여러장의 에이스가 포함된 경우, 나머지 점수의 합이 10점이 넘어가지 않는다면, 에이스중 한장은 11점을 가져온다.")
+	@Test
+	void calculateScoreTest6() {
+		Cards cards = createCards(Arrays.asList(1, 1, 1));
+		assertThat(cards.calculateScore()).isEqualTo(13);
+	}
+
 	@DisplayName("블랙잭인 경우, 블랙잭 참 반환")
 	@Test
 	void isBlackjackTest1() {

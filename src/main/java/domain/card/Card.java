@@ -19,13 +19,17 @@ public class Card implements Comparable<Card> {
 		return type.getName();
 	}
 
+	public int getScore() {
+		return symbol.getDefaultScore();
+	}
+
 	public Symbol getSymbol() {
 		return symbol;
 	}
 
 	@Override
 	public int compareTo(Card other) {
-		return Integer.compare(symbol.getScore(), other.symbol.getScore());
+		return Integer.compare(symbol.getDefaultScore(), other.symbol.getDefaultScore());
 	}
 
 	@Override
