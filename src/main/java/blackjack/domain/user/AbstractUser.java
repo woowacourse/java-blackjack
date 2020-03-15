@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
+import blackjack.domain.user.exception.AbstractUserException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +40,17 @@ public abstract class AbstractUser implements User {
 
     @Override
     public void receiveInitialCards(Deck deck) {
+        validateOwnedCardsEmpty();
+        receiveTwoCards(deck);
+    }
+
+    private void validateOwnedCardsEmpty() {
+        if (!cards.isEmpty()) {
+            throw new AbstractUserException("가지고 있는 카드가 없을 때에만 초기 카드 2장을 받을 수 있습니다.");
+        }
+    }
+
+    private void receiveTwoCards(Deck deck) {
         cards.add(deck.draw());
         cards.add(deck.draw());
     }
