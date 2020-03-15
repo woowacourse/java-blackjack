@@ -33,6 +33,7 @@ class PlayerResultMatcherTest {
     @Test
     @DisplayName("player 버스트 x, dealer 버스트 o")
     void dealerBusted() {
+        player.draw(new Card(CardSymbol.KING, CardType.SPADE));
         makeGamerBust(dealer);
         assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.WIN);
     }
