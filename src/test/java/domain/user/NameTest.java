@@ -3,10 +3,16 @@ package domain.user;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class NameTest {
+
+    @Test
+    @DisplayName("생성 확인")
+    void create() {
+        assertThatCode(() -> Name.of("이름"))
+                .doesNotThrowAnyException();
+    }
 
     @Test
     @DisplayName("빈 이름이 있는 경우 예외 처리")

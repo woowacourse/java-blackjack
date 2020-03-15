@@ -1,4 +1,5 @@
 import controller.BlackJackGame;
+import domain.result.TotalResult;
 import domain.user.Dealer;
 import domain.user.Players;
 import view.InputView;
@@ -19,7 +20,6 @@ public class Application {
         blackJackGame.additionalDealOut(dealer, players);
         OutputView.printAllTotalResult(dealer, players);
 
-        blackJackGame.decideWinner(dealer, players);
-        OutputView.printWinningResult(dealer, players);
+        OutputView.printTotalResult(TotalResult.of(dealer, players));
     }
 }

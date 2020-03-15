@@ -62,8 +62,6 @@ public abstract class User {
                 .anyMatch(Card::isAce);
     }
 
-    public abstract String getTotalWinningResult();
-
     public String getName() {
         return name.getName();
     }

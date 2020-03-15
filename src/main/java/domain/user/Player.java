@@ -1,10 +1,11 @@
 package domain.user;
 
+import domain.result.Rule;
 import domain.result.WinningResult;
 
-public class Player extends User {
+import java.util.Arrays;
 
-    WinningResult winningResult;
+public class Player extends User {
 
     public Player(String name) {
         super(name);
@@ -15,35 +16,11 @@ public class Player extends User {
         return !isBust() && !isBlackJack() && !isBlackJackPoint();
     }
 
-    //todo: 내부 구현 내용 개선
     public WinningResult win(Dealer dealer) {
-        if (isBust()) {
-            return winningResult = WinningResult.LOSE;
-        }
-        if (isBlackJack()) {
-            if (dealer.isBlackJack()) {
-                return winningResult = WinningResult.DRAW;
-            }
-            return winningResult = WinningResult.WIN;
-        }
-        if (dealer.isBust()) {
-            return winningResult = WinningResult.WIN;
-        }
-        if (calculatePoint() > dealer.calculatePoint()) {
-            return winningResult = WinningResult.WIN;
-        }
-        if (calculatePoint() == dealer.calculatePoint()) {
-            return winningResult = WinningResult.DRAW;
-        }
-        return winningResult = WinningResult.LOSE;
-    }
-
-    @Override
-    public String getTotalWinningResult() {
-        return name + ": " + winningResult.getResult();
-    }
-
-    public WinningResult getWinningResult() {
-        return winningResult;
+        return Arrays.stream(Rule.values())
+                .filter(rule -> rule.compare(this, dealer))
+                .findFirst()
+                .get()
+                .getWinningResult();
     }
 }

@@ -1,15 +1,10 @@
 package domain.user;
 
-import domain.deck.Card;
 import domain.deck.DeckFactory;
-import domain.deck.Symbol;
-import domain.deck.Type;
-import domain.result.WinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
@@ -52,27 +47,5 @@ class PlayersTest {
         String playerNames = players.getAllNames();
 
         assertThat(playerNames).contains(name);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"0,승", "1,패", "2,무승부"})
-    void getWinningResults(int index, String expected) {
-        Dealer dealer = Dealer.appoint();
-        dealer.draw(new Card(Symbol.SPADE, Type.SIX));
-
-        players.getPlayers()
-                .get(0)
-                .draw(new Card(Symbol.SPADE, Type.SEVEN));
-        players.getPlayers()
-                .get(1)
-                .draw(new Card(Symbol.HEART, Type.FIVE));
-        players.getPlayers()
-                .get(2)
-                .draw(new Card(Symbol.CLOVER, Type.SIX));
-
-        players.decideWinner(dealer);
-
-        WinningResult winningResult = players.getWinningResults().get(index);
-        assertThat(winningResult.getResult()).isEqualTo(expected);
     }
 }

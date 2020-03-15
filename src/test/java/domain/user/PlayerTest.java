@@ -1,9 +1,9 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import domain.deck.Card;
+import domain.deck.Symbol;
+import domain.deck.Type;
+import domain.result.WinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +11,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.result.WinningResult;
-import domain.deck.Card;
-import domain.deck.Symbol;
-import domain.deck.Type;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class PlayerTest {
 
@@ -107,29 +107,6 @@ class PlayerTest {
                 createCardsAndWinningResult(Type.ACE, Type.ACE, WinningResult.DRAW),
                 createCardsAndWinningResult(Type.ACE, Type.FIVE, WinningResult.WIN),
                 createCardsAndWinningResult(Type.THREE, Type.ACE, WinningResult.LOSE)
-        );
-    }
-
-    @ParameterizedTest
-    @DisplayName("승패 결과")
-    @MethodSource("createCardsAndResult")
-    void getWinningResult(Card card, String expected) {
-        player.draw(new Card(Symbol.DIAMOND, Type.SIX));
-        player.draw(card);
-
-        Dealer dealer = Dealer.appoint();
-        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
-
-        player.win(dealer);
-
-        assertThat(player.getTotalWinningResult()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> createCardsAndResult() {
-        return Stream.of(
-                Arguments.of(new Card(Symbol.HEART, Type.FIVE), "이름: 승"),
-                Arguments.of(new Card(Symbol.HEART, Type.TWO), "이름: 패"),
-                Arguments.of(new Card(Symbol.HEART, Type.FOUR), "이름: 무승부")
         );
     }
 

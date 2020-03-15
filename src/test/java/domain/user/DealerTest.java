@@ -3,7 +3,6 @@ package domain.user;
 import domain.deck.Card;
 import domain.deck.Symbol;
 import domain.deck.Type;
-import domain.result.WinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,15 +54,5 @@ class DealerTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), false)
         );
-    }
-
-    @Test
-    @DisplayName("딜러 승패 확인 결과")
-    void getWinningResult() {
-        String expected = "딜러: 0승 0패 1무승부";
-
-        dealer.applyWinningResult(WinningResult.DRAW);
-
-        assertThat(dealer.getTotalWinningResult()).isEqualTo(expected);
     }
 }

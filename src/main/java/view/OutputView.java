@@ -1,9 +1,14 @@
 package view;
 
+import domain.result.TotalResult;
+import domain.result.WinningResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import domain.user.User;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -39,14 +44,29 @@ public class OutputView {
                 + " - 결과 : " + user.calculatePoint());
     }
 
-    public static void printWinningResult(Dealer dealer, Players players) {
+    public static void printTotalResult(TotalResult totalResult) {
         System.out.println("## 최종 승패");
-        System.out.println(dealer.getTotalWinningResult());
-        printPlayersWinningResult(players);
+        printDealerResult(totalResult.getDealerResult());
+        printPlayerResult(totalResult.getPlayersResult());
     }
 
-    private static void printPlayersWinningResult(Players players) {
-        players.getPlayers()
-                .forEach(player -> System.out.println(player.getTotalWinningResult()));
+    private static void printDealerResult(Map<WinningResult, Integer> dealerResult) {
+        System.out.println("딜러: "
+                + dealerResult.entrySet()
+                .stream()
+                .map(winningResult -> winningResult.getValue() + winningResult.getKey().getResult())
+                .collect(Collectors.joining(" ")));
+    }
+
+    private static void printPlayerResult(Map<Player, WinningResult> playersResult) {
+        playersResult.entrySet()
+                .forEach(OutputView::printResult);
+    }
+
+    private static void printResult(Map.Entry<Player, WinningResult> result) {
+        String name = result.getKey().getName();
+        String winningResult = result.getValue().getResult();
+
+        System.out.println(name + ": " + winningResult);
     }
 }
