@@ -8,23 +8,23 @@ import blackjack.domain.user.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Result {
-	private final Map<Player, Boolean> playerResult;
+public class Results {
+	private final Map<Player, Boolean> playerResults;
 	private final int dealerWin;
 	private final int dealerLose;
 
-	private Result(Map<Player, Boolean> playerResult, int dealerWin, int dealerLose) {
-		this.playerResult = playerResult;
+	private Results(Map<Player, Boolean> playerResults, int dealerWin, int dealerLose) {
+		this.playerResults = playerResults;
 		this.dealerWin = dealerWin;
 		this.dealerLose = dealerLose;
 	}
 
-	public static Result of(Dealer dealer, Players players) {
+	public static Results of(Dealer dealer, Players players) {
 		Map<Player, Boolean> playerResults = createPlayersResult(dealer, players);
 		int dealerWin = calculateDealerWin(playerResults);
 		int dealerLose = calculateDealerLose(playerResults);
 
-		return new Result(playerResults, dealerWin, dealerLose);
+		return new Results(playerResults, dealerWin, dealerLose);
 	}
 
 	private static Map<Player, Boolean> createPlayersResult(Dealer dealer, Players players) {
@@ -49,12 +49,12 @@ public class Result {
 				.count();
 	}
 
-	public boolean isWinner(Player player) {
-		return playerResult.get(player);
+	public boolean getResult(Player player) {
+		return playerResults.get(player);
 	}
 
-	public Map<Player, Boolean> getPlayerResult() {
-		return playerResult;
+	public Map<Player, Boolean> getPlayerResults() {
+		return playerResults;
 	}
 
 	public int getDealerWin() {

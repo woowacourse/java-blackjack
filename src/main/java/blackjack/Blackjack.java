@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.Result;
+import blackjack.domain.Results;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
@@ -104,7 +104,7 @@ public class Blackjack {
 
 	private static void finish(Players players, Dealer dealer) {
 		OutputView.printFinalInfo(dealer, players);
-		Result result = Result.of(dealer, players);
-		OutputView.printResult(result);
+		Results results = Results.of(dealer, players);
+		OutputView.printResult(results);
 	}
 }

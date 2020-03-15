@@ -13,8 +13,8 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ResultTest {
-	private Result result;
+class ResultsTest {
+	private Results results;
 	private Players players;
 
 	@BeforeEach
@@ -28,28 +28,28 @@ class ResultTest {
 				Card.of(Symbol.SEVEN, Type.HEART)));
 		players.getPlayers().get(2).giveCard(Card.of(Symbol.TWO, Type.DIAMOND));
 
-		result = Result.of(dealer, players);
+		results = Results.of(dealer, players);
 	}
 
 	@Test
 	void of() {
-		assertThat(result).isNotNull();
+		assertThat(results).isNotNull();
 	}
 
 	@Test
-	void isWinner() {
-		assertThat(result.isWinner(players.getPlayers().get(0))).isFalse();
-		assertThat(result.isWinner(players.getPlayers().get(1))).isTrue();
-		assertThat(result.isWinner(players.getPlayers().get(2))).isFalse();
+	void getResultOf() {
+		assertThat(results.getResult(players.getPlayers().get(0))).isFalse();
+		assertThat(results.getResult(players.getPlayers().get(1))).isTrue();
+		assertThat(results.getResult(players.getPlayers().get(2))).isFalse();
 	}
 
 	@Test
 	void getDealerWin() {
-		assertThat(result.getDealerWin()).isEqualTo(2);
+		assertThat(results.getDealerWin()).isEqualTo(2);
 	}
 
 	@Test
 	void getDealerLose() {
-		assertThat(result.getDealerLose()).isEqualTo(1);
+		assertThat(results.getDealerLose()).isEqualTo(1);
 	}
 }

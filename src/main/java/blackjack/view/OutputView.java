@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
+import blackjack.domain.Results;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -86,22 +86,22 @@ public class OutputView {
 		return String.valueOf(player.getScore().getScore());
 	}
 
-	public static void printResult(Result result) {
+	public static void printResult(Results results) {
 		System.out.println("## 최종 승패");
-		System.out.println("딜러" + " : " + CreateDealerResult(result));
-		for (Player player : result.getPlayerResult().keySet()) {
-			String playerResult = createPlayerResult(player, result);
+		System.out.println("딜러" + " : " + createDealerResult(results));
+		for (Player player : results.getPlayerResults().keySet()) {
+			String playerResult = createPlayerResult(player, results);
 			System.out.println(playerResult);
 		}
 	}
 
-	private static String CreateDealerResult(Result result) {
+	private static String createDealerResult(Results results) {
 		return String.format("%d승 %d패",
-				result.getDealerWin(), result.getDealerLose());
+				results.getDealerWin(), results.getDealerLose());
 	}
 
-	private static String createPlayerResult(Player player, Result result) {
-		String resultWord = boolToResultWord(result.isWinner(player));
+	private static String createPlayerResult(Player player, Results results) {
+		String resultWord = boolToResultWord(results.getResult(player));
 		return String.format("%s : %s", player.getName(), resultWord);
 	}
 
