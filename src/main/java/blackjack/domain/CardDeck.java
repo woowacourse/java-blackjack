@@ -3,21 +3,15 @@ package blackjack.domain;
 import blackjack.exception.CardDeckDuplicatedException;
 import blackjack.exception.CardDeckEmptyException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CardDeck {
-    private static final int HEAD_INDEX = 0;
-
-    private List<Card> cardDeck;
+    private final Queue<Card> cardDeck;
 
     public CardDeck(List<Card> cards) {
         checkCardDeckNull(cards);
-        checkCardDeckEmpty(cards);
         checkCardDeckDuplicated(cards);
-        cardDeck = new ArrayList<>(cards);
+        cardDeck = new LinkedList<>(cards);
     }
 
     private void checkCardDeckNull(List<Card> cards) {
@@ -34,12 +28,12 @@ public class CardDeck {
     }
 
     public Card getOneCard() {
-        checkCardDeckEmpty(cardDeck);
-        return cardDeck.remove(HEAD_INDEX);
+        checkCardDeckEmpty();
+        return cardDeck.poll();
     }
 
-    private void checkCardDeckEmpty(List<Card> cards) {
-        if (cards.isEmpty()) {
+    private void checkCardDeckEmpty() {
+        if (cardDeck.isEmpty()) {
             throw new CardDeckEmptyException("카드 덱이 비었습니다.");
         }
     }

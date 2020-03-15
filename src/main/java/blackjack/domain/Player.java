@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.exception.UserNameEmptyException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends User {
@@ -17,7 +18,8 @@ public class Player extends User {
 
     @Override
     public List<Card> getInitialCards() {
-        return this.cards.subList(START_INDEX, USER_INITIAL_CARDS_SIZE);
+        return new ArrayList<>(cards)
+                .subList(START_INDEX, USER_INITIAL_CARDS_SIZE);
     }
 
     @Override

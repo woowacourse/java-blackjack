@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends User {
@@ -23,7 +24,8 @@ public class Dealer extends User {
 
     @Override
     public List<Card> getInitialCards() {
-        return this.cards.subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
+        return new ArrayList<>(cards)
+                .subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
     }
 
     @Override
