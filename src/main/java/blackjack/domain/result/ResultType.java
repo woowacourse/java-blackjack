@@ -21,10 +21,10 @@ public enum ResultType {
             return WIN;
         }
 
-        if (playerPoint.isBiggerThan(dealerPoint)) {
+        if (playerPoint.compareTo(dealerPoint) == 1) {
             return WIN;
         }
-        if (playerPoint.isEqual(dealerPoint)) {
+        if (playerPoint.compareTo(dealerPoint) == 0) {
             return DRAW;
         }
         return LOSE;

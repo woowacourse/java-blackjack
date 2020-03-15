@@ -3,9 +3,10 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.component.CardNumber;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
-public class Point {
+public class Point implements Comparable<Point> {
     private static int BALCK_JACK = 21;
     private int point;
 
@@ -48,15 +49,19 @@ public class Point {
         return this.point > BALCK_JACK;
     }
 
-    public boolean isBiggerThan(Point point) {
-        return this.point > point.getPoint();
-    }
-
-    public boolean isEqual(Point point) {
-        return this.point == point.getPoint();
-    }
-
     public int getPoint() {
         return this.point;
+    }
+
+    @Override
+    public int compareTo(Point point) {
+        if (this.getPoint() > point.getPoint()) {
+            return  1;
+        }
+
+        if (this.getPoint() < point.getPoint()) {
+            return  -1;
+        }
+        return 0;
     }
 }
