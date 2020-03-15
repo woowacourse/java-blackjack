@@ -2,17 +2,17 @@ package blackjack.controller;
 
 import java.util.List;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
+import blackjack.domain.result.SimpleResult;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
+public class BlackJack {
 
     public static final int BLACK_JACK_SCORE = 21;
 
@@ -80,8 +80,7 @@ public class BlackJackController {
     }
 
     private static void endPhase(final Participants participants) {
-        Rule.judge(participants);
         OutputView.result(participants);
-        OutputView.statistics(participants);
+        OutputView.statistics(new SimpleResult(participants));
     }
 }

@@ -11,11 +11,7 @@ public interface Participant {
 
     boolean isDealer();
 
-    String handStatus();
+    String cards();
 
     String getName();
-
-    String gameResult();
-
-    void set(Result result);
 }

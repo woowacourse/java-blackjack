@@ -4,6 +4,7 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
+import blackjack.domain.result.SimpleResult;
 
 public class OutputView {
     public static void nameInstruction() {
@@ -53,14 +54,12 @@ public class OutputView {
     }
 
     public static String statusToString(Participant participant) {
-        return participant.getName() + ": " + participant.handStatus();
+        return participant.getName() + ": " + participant.cards();
     }
 
-    public static void statistics(Participants participants) {
+    public static void statistics(SimpleResult result) {
         System.out.println("## 최종 승패");
-        for (Participant participant : participants) {
-            System.out.println(participant.getName() + " : " + participant.gameResult());
-        }
+        System.out.println(result);
     }
 
     public static void printError(String message) {

@@ -9,7 +9,6 @@ import blackjack.exceptions.InvalidPlayerException;
 public class Player implements Participant {
     private final Cards cards;
     private final String name;
-    private Result result;
 
     public Player(final String name) {
         validate(name);
@@ -43,23 +42,13 @@ public class Player implements Participant {
     }
 
     @Override
-    public String handStatus() {
+    public String cards() {
         return cards.toString();
     }
 
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String gameResult() {
-        return result.getValue();
-    }
-
-    @Override
-    public void set(final Result result) {
-        this.result = result;
     }
 
     @Override

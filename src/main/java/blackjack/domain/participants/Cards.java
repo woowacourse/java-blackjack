@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.controller.BlackJack;
 import blackjack.domain.card.Card;
 
 public class Cards {
-    public static final int BLACK_JACK = 21;
     public static final int GAP_BETWEEN_ACE_VALUE = 10;
     public static final String DELIMITER = ", ";
 
@@ -39,7 +39,7 @@ public class Cards {
 
     private int reduceIfAceExists(int total) {
         int aceCount = countAce();
-        while (total > BLACK_JACK && aceCount > 0) {
+        while (total > BlackJack.BLACK_JACK_SCORE && aceCount > 0) {
             total -= GAP_BETWEEN_ACE_VALUE;
             aceCount--;
         }
