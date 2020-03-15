@@ -40,7 +40,7 @@ public class PlayerTest {
         assertThatThrownBy(() -> {
             new Player("");
         }).isInstanceOf(UserNameEmptyException.class)
-                .hasMessage("유저의 이름은 공백일 수 없습니다.");
+                .hasMessage("플레이어의 이름은 공백일 수 없습니다.");
     }
 
     @DisplayName("카드 덱에서 뽑았을 때 유저가 가지고 있는 카드 수와 덱의 카드 수가 동시에 변하는지 확인")

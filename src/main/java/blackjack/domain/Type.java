@@ -26,9 +26,9 @@ public enum Type {
         this.simpleName = simpleName;
     }
 
-    public static int chooseAcePoint(int score, final int BLACKJACK_SCORE) {
-        if (score < BLACKJACK_SCORE - ACE_UPPER_POINT) {
-            return ACE_UPPER_POINT;
+    public static int addExtraAcePointWhenUnderCriticalPoint(int score, final int BLACKJACK_SCORE) {
+        if (score <= BLACKJACK_SCORE - ACE_UPPER_POINT + ACE_LOWER_POINT) {
+            return ACE_UPPER_POINT - ACE_LOWER_POINT;
         }
         return ACE_LOWER_POINT;
     }

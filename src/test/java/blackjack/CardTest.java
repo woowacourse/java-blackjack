@@ -27,6 +27,7 @@ public class CardTest {
     @ParameterizedTest
     @MethodSource("CardProvider")
     void cardNamingByToStringTest(Card card, String expected) {
-        assertThat(card.toString()).isEqualTo(expected);
+        String cardName = card.getType().getSimpleName() + card.getSymbol().getKoreanName();
+        assertThat(cardName).isEqualTo(expected);
     }
 }

@@ -43,6 +43,11 @@ public class GameResultTest {
                 )
         ));
         players.getPlayers()
+                .stream()
+                .mapToInt(User::calculateScore)
+                .forEach(System.out::println);
+
+        players.getPlayers()
                 .forEach(player -> player.receiveDistributedCards(cardDeck));
         players.getPlayers()
                 .get(2).receiveOneMoreCard(cardDeck);

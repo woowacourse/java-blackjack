@@ -45,14 +45,13 @@ public abstract class User {
     public int calculateScore() {
         int score = calculateRawScore();
         if (hasAce()) {
-            score += Type.chooseAcePoint(score, BLACKJACK_SCORE);
+            score += Type.addExtraAcePointWhenUnderCriticalPoint(score, BLACKJACK_SCORE);
         }
         return score;
     }
 
     private int calculateRawScore() {
         return cards.stream()
-                .filter(card -> !card.isAce())
                 .mapToInt(Card::getPoint)
                 .sum();
     }

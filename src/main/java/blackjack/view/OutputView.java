@@ -48,7 +48,7 @@ public class OutputView {
 
     private static String combineCards(List<Card> cards) {
         return cards.stream()
-                .map(Card::toString)
+                .map(card -> card.getType().getSimpleName() + card.getSymbol().getKoreanName())
                 .collect(Collectors.joining(COMMA_WITH_SPACE));
     }
 
