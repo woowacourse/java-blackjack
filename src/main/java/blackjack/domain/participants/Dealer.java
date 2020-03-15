@@ -3,14 +3,11 @@ package blackjack.domain.participants;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
-    public static final String SPACE = " ";
 
     private Hand hand;
     private Map<Result, Integer> result;
@@ -29,15 +26,7 @@ public class Dealer implements Participant {
         return "딜러";
     }
 
-    @Override
-    public String gameResult() {
-        return Arrays.stream(Result.values())
-            .filter(result -> countResult(result) != 0)
-            .map(result -> countResult(result) + result.getValue())
-            .collect(Collectors.joining(SPACE));
-    }
-
-    public int countResult(final Result result) {
+    public int getResult(final Result result) {
         return this.result.getOrDefault(result, 0);
     }
 

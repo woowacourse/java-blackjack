@@ -32,9 +32,9 @@ public class RuleTest {
         Participants participants = new Participants(dealer, players);
         Rule.judge(participants);
 
-        assertThat(pobi.gameResult()).isEqualTo(LOSE.getValue());
-        assertThat(jason.gameResult()).isEqualTo(LOSE.getValue());
-        assertThat(dealer.countResult(WIN)).isEqualTo(2);
-        assertThat(dealer.countResult(LOSE)).isEqualTo(0);
+        assertThat(pobi.getResult().getValue()).isEqualTo(LOSE.getValue());
+        assertThat(jason.getResult().getValue()).isEqualTo(LOSE.getValue());
+        assertThat(dealer.getResult(WIN)).isEqualTo(2);
+        assertThat(dealer.getResult(LOSE)).isEqualTo(0);
     }
 }

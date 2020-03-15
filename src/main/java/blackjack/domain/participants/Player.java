@@ -57,9 +57,8 @@ public class Player implements Participant {
         return name;
     }
 
-    @Override
-    public String gameResult() {
-        return result.getValue();
+    public Result getResult() {
+        return result;
     }
 
     @Override
