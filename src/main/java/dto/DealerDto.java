@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 import domain.card.Hands;
 import domain.gamer.Dealer;
+import domain.gamer.DealerGameResult;
 
 /**
  *    딜러 DTO 클래스입니다.
@@ -14,14 +15,16 @@ import domain.gamer.Dealer;
 public class DealerDto {
 	private String name;
 	private Hands hands;
+	private DealerGameResult gameResult;
 
-	private DealerDto(String name, Hands hands) {
+	private DealerDto(String name, Hands hands, DealerGameResult gameResult) {
 		this.name = name;
 		this.hands = hands;
+		this.gameResult = gameResult;
 	}
 
 	public static DealerDto from(Dealer dealer) {
-		return new DealerDto(dealer.getName(), dealer.getHands());
+		return new DealerDto(dealer.getName(), dealer.getHands(), dealer.getDealerGameResult());
 	}
 
 	public String showDealerInitialCard() {
@@ -47,5 +50,9 @@ public class DealerDto {
 
 	public Hands getHands() {
 		return hands;
+	}
+
+	public DealerGameResult getGameResult() {
+		return gameResult;
 	}
 }

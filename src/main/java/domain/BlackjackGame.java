@@ -48,4 +48,22 @@ public class BlackjackGame {
 	public Dealer getDealer() {
 		return dealer;
 	}
+
+	public void createResult() {
+		int dealerScore = dealer.scoreHands();
+		players.findResult(dealerScore);
+		dealer.findResult(countPlayerLose(), countPlayerWin(), countPlayerDraw());
+	}
+
+	private int countPlayerLose() {
+		return players.countPlayerLose();
+	}
+
+	private int countPlayerWin() {
+		return players.countPlayerWin();
+	}
+
+	private int countPlayerDraw() {
+		return players.countPlayerDraw();
+	}
 }

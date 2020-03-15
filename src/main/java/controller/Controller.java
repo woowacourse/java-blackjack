@@ -82,8 +82,13 @@ public class Controller {
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
+		createGameResult(blackjackGame);
 		BlackjackGameDto blackjackGameDto = BlackjackGameDto.from(blackjackGame);
 		OutputView.printResult(blackjackGameDto);
 		OutputView.printMatchResult(blackjackGameDto);
+	}
+
+	private static void createGameResult(BlackjackGame blackjackGame) {
+		blackjackGame.createResult();
 	}
 }

@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.gamer.PlayerGameResult;
 import dto.BlackjackGameDto;
 import dto.DealerDto;
 import dto.PlayerDto;
@@ -63,30 +64,13 @@ public class OutputView {
 	public static void printMatchResult(BlackjackGameDto blackjackGameDto) {
 		System.out.println("## 최종 승패");
 		List<PlayerDto> players = blackjackGameDto.getPlayers();
-		int dealerScore = blackjackGameDto.getDealer().getHands().calculateTotalScore();
+		DealerDto dealerDto = blackjackGameDto.getDealer();
 
+		System.out.println(dealerDto.getName() + " : " + dealerDto.getGameResult().getWin() + "승 "
+			+ dealerDto.getGameResult().getLose() + "패 " + dealerDto.getGameResult().getDraw() + "무");
 		for (PlayerDto playerDto : players) {
-			printLoser(dealerScore, playerDto);
-			printDrawer(dealerScore, playerDto);
-			printWinner(dealerScore, playerDto);
-		}
-	}
-
-	private static void printWinner(int dealerScore, PlayerDto playerDto) {
-		if (!playerDto.isDefeat(dealerScore) && !playerDto.isDraw(dealerScore)) {
-			System.out.println(playerDto.getName() + " : 승");
-		}
-	}
-
-	private static void printDrawer(int dealerScore, PlayerDto playerDto) {
-		if (playerDto.isDraw(dealerScore)) {
-			System.out.println(playerDto.getName() + " : 무");
-		}
-	}
-
-	private static void printLoser(int dealerScore, PlayerDto playerDto) {
-		if (playerDto.isDefeat(dealerScore)) {
-			System.out.println(playerDto.getName() + " : 패");
+			PlayerGameResult playerGameResult = playerDto.getPlayerGameResult();
+			System.out.println(playerDto.getName() + ": " + playerGameResult.getResult());
 		}
 	}
 }

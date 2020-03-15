@@ -55,7 +55,30 @@ public class Players {
 		players.forEach(player -> player.draw(deck.deal()));
 	}
 
+	public void findResult(int dealerScore) {
+		players.forEach(player -> player.findResult(dealerScore));
+	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}
+
+	public int countPlayerLose() {
+		return (int)players.stream()
+			.filter(player -> player.getPlayerGameResult().isLose())
+			.count();
+	}
+
+	public int countPlayerWin() {
+		return (int)players.stream()
+			.filter(player -> player.getPlayerGameResult().isWin())
+			.count();
+	}
+
+	public int countPlayerDraw() {
+		return (int)players.stream()
+			.filter(player -> player.getPlayerGameResult().isDraw())
+			.count();
+	}
+
 }
