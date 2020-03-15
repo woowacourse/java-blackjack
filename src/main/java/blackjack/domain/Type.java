@@ -15,12 +15,22 @@ public enum Type {
     QUEEN(10, "Q"),
     KING(10, "K");
 
+    private static final int ACE_UPPER_POINT = 11;
+    private static final int ACE_LOWER_POINT = 1;
+
     private final int point;
     private final String simpleName;
 
     Type(int point, String simpleName) {
         this.point = point;
         this.simpleName = simpleName;
+    }
+
+    public static int chooseAcePoint(int score, final int BLACKJACK_SCORE) {
+        if (score < BLACKJACK_SCORE - ACE_UPPER_POINT) {
+            return ACE_UPPER_POINT;
+        }
+        return ACE_LOWER_POINT;
     }
 
     public int getPoint() {
