@@ -4,8 +4,7 @@ import blackjack.domain.card.Card;
 
 public interface Dealer extends Player {
 	String NAME = "딜러";
-
-	int getMinimumNumberToStay();
+	int MINIMUM_NUMBER_TO_STAY = 17;
 
 	boolean shouldReceiveCard();
 

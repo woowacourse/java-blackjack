@@ -4,8 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 
 public class DefaultDealer extends AbstractPlayer implements Dealer {
-	private static final int MINIMUM_NUMBER_TO_STAY = 17;
-
 	private DefaultDealer() {
 		super(Dealer.NAME);
 	}
@@ -27,11 +25,6 @@ public class DefaultDealer extends AbstractPlayer implements Dealer {
 	@Override
 	public Boolean isWinner(Score dealerScore) {
 		return isNotBust();
-	}
-
-	@Override
-	public int getMinimumNumberToStay() {
-		return MINIMUM_NUMBER_TO_STAY;
 	}
 
 	@Override

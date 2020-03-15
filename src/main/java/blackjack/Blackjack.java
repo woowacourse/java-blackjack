@@ -51,18 +51,12 @@ public class Blackjack {
 	}
 
 	private static void start(Players players, Dealer dealer, Drawable cards) {
-		giveTwoCardDealer(dealer, cards);
-		giveTwoCardEachPlayer(players, cards);
-		OutputView.printStartInfo(dealer, players);
-	}
+		players.giveCardEachPlayer(cards);
+		players.giveCardEachPlayer(cards);
 
-	private static void giveTwoCardDealer(Dealer dealer, Drawable cards) {
 		dealer.giveCards(cards.draw(2));
-	}
 
-	private static void giveTwoCardEachPlayer(Players players, Drawable cards) {
-		players.giveCardEachPlayer(cards);
-		players.giveCardEachPlayer(cards);
+		OutputView.printStartInfo(dealer, players);
 	}
 
 	private static void progressPlayers(Players players, Drawable cards) {

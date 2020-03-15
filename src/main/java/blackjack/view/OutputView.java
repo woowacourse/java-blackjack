@@ -54,7 +54,7 @@ public class OutputView {
 
 	public static void printDealerTurn(Dealer dealer) {
 		System.out.printf("딜러는 %s미만이라 한장의 카드를 더 받았습니다." + NEW_LINE,
-				dealer.getMinimumNumberToStay());
+				dealer.MINIMUM_NUMBER_TO_STAY);
 
 		printIfBust(dealer);
 	}
