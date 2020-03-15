@@ -1,23 +1,37 @@
 package model;
 
 import java.util.Arrays;
+import model.user.Dealer;
+import model.user.Player;
 
 public enum Result {
-    WIN("승", 1),
-    LOSE("패", -1),
-    DRAW("무", 0);
+    DRAW("무") {
+        boolean isResult(Dealer dealer, Player player) {
+            return (player.isBust() && dealer.isBust()) || dealer.getScore() == player.getScore();
+        }
+    },
+    WIN("승") {
+        boolean isResult(Dealer dealer, Player player) {
+            return player.isBust() || (!dealer.isBust() && dealer.getScore() > player.getScore());
+        }
+    },
+    LOSE("패") {
+        boolean isResult(Dealer dealer, Player player) {
+            return dealer.isBust() || (!player.isBust() && dealer.getScore() < player.getScore());
+        }
+    };
 
     String result;
-    int resultValue;
 
-    Result(String result, int resultValue) {
+    Result(String result) {
         this.result = result;
-        this.resultValue = resultValue;
     }
 
-    public static Result calculateResult(int compareValue) {
+    abstract boolean isResult(Dealer dealer, Player player);
+
+    public static Result calculateResult(Dealer dealer, Player player) {
         return Arrays.stream(Result.values())
-            .filter(result -> result.resultValue == compareValue)
+            .filter(result -> result.isResult(dealer, player))
             .findFirst()
             .get();
     }
@@ -32,12 +46,12 @@ public enum Result {
         return DRAW;
     }
 
-    private static boolean isLose(final Result result) {
-        return result == LOSE;
-    }
-
     private static boolean isWin(final Result result) {
         return result == WIN;
+    }
+
+    private static boolean isLose(final Result result) {
+        return result == LOSE;
     }
 
     @Override

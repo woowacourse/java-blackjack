@@ -22,19 +22,6 @@ public class Dealer extends BlackJackPerson {
         return cardHand.getCards().get(ZERO).toString();
     }
 
-    public Result compareScore(Player player) {
-        if (this.isBust() && player.isBust()) {
-            return Result.DRAW;
-        }
-        if (this.isBust()) {
-            return Result.LOSE;
-        }
-        if (player.isBust()) {
-            return Result.WIN;
-        }
-        return Result.calculateResult(Integer.compare(getScore(), player.getScore()));
-    }
-
     public Map<Result, Integer> getResult() {
         return Collections.unmodifiableMap(result);
     }

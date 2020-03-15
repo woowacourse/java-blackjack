@@ -1,5 +1,6 @@
 package controller;
 
+import javax.print.DocFlavor.READER;
 import model.*;
 import model.card.Deck;
 import model.user.Dealer;
@@ -45,7 +46,7 @@ public class BlackJackGame {
 
     private static void compareScores(Players players, Dealer dealer) {
         for (Player player : players) {
-            Result result = dealer.compareScore(player);
+            Result result = Result.calculateResult(dealer, player);
             player.setResult(result);
             dealer.setResult(result);
         }
