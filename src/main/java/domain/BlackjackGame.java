@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Player;
 
 /**
@@ -16,6 +17,7 @@ import domain.gamer.Player;
 public class BlackjackGame {
 	private static final int MAX_PLAYER = 5;
 	private static final int EMPTY = 0;
+	private static final int INITIAL_DRAW_SIZE = 2;
 
 	private List<Player> players;
 	private Dealer dealer;
@@ -58,7 +60,7 @@ public class BlackjackGame {
 	}
 
 	public void initialDraw() {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < INITIAL_DRAW_SIZE; i++) {
 			dealer.hit(deck.deal());
 			players.forEach(player -> player.hit(deck.deal()));
 		}
@@ -68,8 +70,12 @@ public class BlackjackGame {
 		return dealer.isBlackjack();
 	}
 
-	public void draw(Player player) {
-		player.hit(deck.deal());
+	public void draw(Gamer gamer) {
+		players.stream()
+			.filter(player -> player.equals(gamer))
+			.findFirst()
+			.orElseThrow(IllegalArgumentException::new);
+		gamer.hit(deck.deal());
 	}
 
 	public void drawDealer() {
