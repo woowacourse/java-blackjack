@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.exception.CardDeckEmptyException;
-
 import java.util.List;
 import java.util.Stack;
 
@@ -15,7 +13,7 @@ public class CardDeck {
 
     public Card pop() {
         if (cardDeck.isEmpty()) {
-            throw new CardDeckEmptyException("카드 덱이 비었습니다.");
+            throw new IllegalArgumentException("카드 덱이 비었습니다.");
         }
         return cardDeck.pop();
     }

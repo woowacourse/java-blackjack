@@ -3,68 +3,43 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.Status;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public abstract class Player {
-    protected static final int BLACKJACK_SCORE = 21;
     protected static final int START_INDEX = 0;
+    public static final int INITIAL_CARDS_SIZE = 2;
 
-    protected List<Card> cards = new ArrayList<>();
+    protected Cards cards;
     protected String name;
-    protected Status status;
+
+    public Player() {
+        this.cards = new Cards();
+    }
 
     public void addCard(CardDeck deck) {
         this.cards.add(deck.pop());
     }
 
-    public void changeStatusIfBlackJack() {
-        if (calculateScore() == BLACKJACK_SCORE) {
-            this.status = Status.BLACKJACK;
-        }
+    public void distributeInitialCards(CardDeck cardDeck) {
+        IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
+                .forEach(i -> this.addCard(cardDeck));
+
     }
 
-    public void changeStatusIfBust() {
-        if (calculateScore() > BLACKJACK_SCORE) {
-            this.status = Status.BUST;
-        }
+    public void changeStatus() {
+        this.cards.changeStatus();
     }
 
     public int calculateScore() {
-        int scoreExceptAce = calculateScoreExceptAce();
-        return calculateScoreIncludeAce(scoreExceptAce);
+        return this.cards.calculateScore();
     }
 
-    private int calculateScoreIncludeAce(int scoreExceptAce) {
-        List<Card> aceCards = this.cards.stream()
-                .filter(Card::isAce)
-                .collect(Collectors.toList());
-
-        int score = scoreExceptAce;
-        for (Card aceCard : aceCards) {
-            score += aceCard.getPointOfAceUsing(score);
-        }
-        return score;
-    }
-
-    private int calculateScoreExceptAce() {
-        return this.cards.stream()
-                .filter(Predicate.not(Card::isAce))
-                .mapToInt(Card::getPoint)
-                .sum();
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards.getCards());
     }
 
     public String getName() {
@@ -72,11 +47,7 @@ public abstract class Player {
     }
 
     public Status getStatus() {
-        return status;
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return this.cards.getStatus();
     }
 
     public int getCardsSize() {

@@ -43,28 +43,6 @@ public class GameResultTest {
         user = new User("bossdog");
     }
 
-    private static Stream<Arguments> StatusProvider() {
-        return Stream.of(
-                Arguments.of(Status.BLACKJACK, Status.BLACKJACK, UserResult.DRAW),
-                Arguments.of(Status.BLACKJACK, Status.BUST, UserResult.LOSE),
-                Arguments.of(Status.BLACKJACK, Status.NONE, UserResult.LOSE),
-                Arguments.of(Status.BUST, Status.BLACKJACK, UserResult.WIN),
-                Arguments.of(Status.BUST, Status.BUST, UserResult.LOSE),
-                Arguments.of(Status.BUST, Status.NONE, UserResult.WIN),
-                Arguments.of(Status.NONE, Status.BLACKJACK, UserResult.WIN),
-                Arguments.of(Status.NONE, Status.BUST, UserResult.LOSE),
-                Arguments.of(Status.NONE, Status.NONE, UserResult.LOSE)
-        );
-    }
-
-    @DisplayName("딜러와 유저의 최종 상태에 따른 결과 계산")
-    @MethodSource("StatusProvider")
-    void calculateGameResult(Status dealerStatus, Status userStatus, UserResult userResult) {
-        dealer.setStatus(dealerStatus);
-        user.setStatus(userStatus);
-        assertThat(GameResult.calculatePlayerResult(dealer, user)).isEqualTo(userResult);
-    }
-
     @DisplayName("딜러와 유저의 최종 상태가 NONE일 경우 SCORE 기반 결과 계산")
     @Test
     void calculateGameResultByScore() {

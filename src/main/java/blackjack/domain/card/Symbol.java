@@ -6,13 +6,13 @@ public enum Symbol {
     CLOVER("클로버"),
     SPADE("스페이드");
 
-    private final String KoreanName;
+    private final String koreanName;
 
     Symbol(String koreanName) {
-        this.KoreanName = koreanName;
+        this.koreanName = koreanName;
     }
 
     public String getKoreanName() {
-        return KoreanName;
+        return koreanName;
     }
 }

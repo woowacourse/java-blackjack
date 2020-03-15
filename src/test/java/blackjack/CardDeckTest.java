@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.exception.CardDeckEmptyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +46,7 @@ public class CardDeckTest {
     void isEmptyTest() {
         CardDeck emptyCardDeck = new CardDeck(new ArrayList<>());
         assertThatThrownBy(emptyCardDeck::pop)
-                .isInstanceOf(CardDeckEmptyException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 덱이 비었습니다.");
     }
 }

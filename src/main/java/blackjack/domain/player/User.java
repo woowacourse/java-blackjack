@@ -1,29 +1,25 @@
 package blackjack.domain.player;
 
-import blackjack.controller.BlackJackGame;
-import blackjack.domain.Status;
 import blackjack.domain.card.Card;
-import blackjack.exception.UserNameEmptyException;
 
 import java.util.List;
 
 public class User extends Player {
-    private static final String USER_NAME_EMPTY_EXCEPTION_MESSAGE = "유저의 이름은 공백일 수 없습니다.";
+    public static final String USER_NAME_EMPTY_EXCEPTION_MESSAGE = "유저의 이름은 공백일 수 없습니다.";
 
     public User(String name) {
         if (name.isEmpty()) {
-            throw new UserNameEmptyException(USER_NAME_EMPTY_EXCEPTION_MESSAGE);
+            throw new IllegalArgumentException(USER_NAME_EMPTY_EXCEPTION_MESSAGE);
         }
         this.name = name;
-        this.status = Status.NONE;
     }
 
     public boolean isNoneStatus() {
-        return this.status == Status.NONE;
+        return this.cards.isNoneStatus();
     }
 
     @Override
     public List<Card> getInitialCards() {
-        return this.cards.subList(START_INDEX, BlackJackGame.INITIAL_CARDS_SIZE);
+        return this.cards.getCards().subList(START_INDEX, INITIAL_CARDS_SIZE);
     }
 }

@@ -6,7 +6,6 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
-import blackjack.exception.UserNameEmptyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,8 +43,8 @@ public class UserTest {
     void emptyStringTest() {
         assertThatThrownBy(() -> {
             new User("");
-        }).isInstanceOf(UserNameEmptyException.class)
-                .hasMessage("유저의 이름은 공백일 수 없습니다.");
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(User.USER_NAME_EMPTY_EXCEPTION_MESSAGE);
     }
 
     @DisplayName("카드 덱에서 뽑았을 때 유저가 가지고 있는 카드 수와 덱의 카드 수가 동시에 변하는지 확인")

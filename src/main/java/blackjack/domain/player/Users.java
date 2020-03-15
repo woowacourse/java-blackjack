@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Users {
     private final List<User> users;
@@ -13,11 +12,13 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public Stream<User> stream() {
-        return this.users.stream();
-    }
-
     public List<User> getUsers() {
         return users;
+    }
+
+    public List<String> getNames() {
+        return this.users.stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
     }
 }

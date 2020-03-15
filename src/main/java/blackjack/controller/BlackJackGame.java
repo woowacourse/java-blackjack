@@ -10,12 +10,8 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BlackJackGame {
-    public static final int INITIAL_CARDS_SIZE = 2;
-    private static final int START_INDEX = 0;
-
     private final Dealer dealer;
     private final CardDeck cardDeck;
     private Users users;
@@ -38,20 +34,17 @@ public class BlackJackGame {
     }
 
     private void distributeCards() {
-        OutputView.printDistributeConfirmMessage(dealer, users, INITIAL_CARDS_SIZE);
-        IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                .forEach(i -> dealer.addCard(cardDeck));
-
+        dealer.distributeInitialCards(cardDeck);
         for (User user : users.getUsers()) {
-            IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                    .forEach(i -> user.addCard(cardDeck));
+            user.distributeInitialCards(cardDeck);
         }
+        OutputView.printDistributeConfirmMessage(dealer, users);
         OutputView.printInitialPlayerCards(dealer, users);
     }
 
     private void play() {
         for (User user : users.getUsers()) {
-            user.changeStatusIfBlackJack();
+            user.changeStatus();
             eachUserPlay(user);
         }
         dealerPlay();
@@ -60,16 +53,16 @@ public class BlackJackGame {
     private void eachUserPlay(User user) {
         while (user.isNoneStatus() && Response.isYes(InputView.askOneMoreCard(user))) {
             user.addCard(cardDeck);
-            user.changeStatusIfBust();
+            user.changeStatus();
             OutputView.printUserCards(user);
         }
     }
 
     private void dealerPlay() {
-        dealer.changeStatusIfBlackJack();
+        dealer.changeStatus();
         if (dealer.isUnderCriticalScore()) {
             dealer.addCard(cardDeck);
-            dealer.changeStatusIfBust();
+            dealer.changeStatus();
             OutputView.printDealerPlayConfirmMessage();
         }
     }

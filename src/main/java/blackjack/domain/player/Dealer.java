@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Status;
 import blackjack.domain.card.Card;
 
 import java.util.List;
@@ -14,7 +13,6 @@ public class Dealer extends Player {
 
     private Dealer() {
         this.name = KOREAN_NAME;
-        this.status = Status.NONE;
     }
 
     public static Dealer getDealer() {
@@ -30,6 +28,6 @@ public class Dealer extends Player {
 
     @Override
     public List<Card> getInitialCards() {
-        return this.cards.subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
+        return this.cards.getCards().subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
     }
 }

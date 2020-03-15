@@ -20,11 +20,11 @@ public enum Type {
     private static final int ACE_LOWER_POINT = 1;
 
     private final int point;
-    private final String simpleName;
+    private final String name;
 
-    Type(int point, String simpleName) {
+    Type(int point, String name) {
         this.point = point;
-        this.simpleName = simpleName;
+        this.name = name;
     }
 
     public int getPoint() {
@@ -38,7 +38,7 @@ public enum Type {
         return ACE_UPPER_POINT;
     }
 
-    public String getSimpleName() {
-        return simpleName;
+    public String getName() {
+        return name;
     }
 }

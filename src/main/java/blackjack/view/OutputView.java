@@ -27,12 +27,10 @@ public class OutputView {
         System.out.println(INPUT_USER_NAMES_GUIDE_MESSAGE);
     }
 
-    public static void printDistributeConfirmMessage(Dealer dealer, Users users, int initialCardSize) {
-        String userNames = users.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(COMMA_WITH_SPACE));
+    public static void printDistributeConfirmMessage(Dealer dealer, Users users) {
+        String userNames = String.join(COMMA_WITH_SPACE, users.getNames());
         System.out.println(NEW_LINE);
-        System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, initialCardSize));
+        System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Player.INITIAL_CARDS_SIZE));
     }
 
     public static void printInitialPlayerCards(Dealer dealer, Users users) {
@@ -58,7 +56,7 @@ public class OutputView {
     }
 
     private static String informationOf(Card card) {
-        return card.getType().getSimpleName() + card.getSymbol().getKoreanName();
+        return card.getType().getName() + card.getSymbol().getKoreanName();
     }
 
     public static void printAskOneMoreCardMessage(User user) {

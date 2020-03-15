@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.exception.ResponseNotMatchException;
-
 import java.util.Arrays;
 
 public enum Response {
@@ -19,7 +17,7 @@ public enum Response {
         return Arrays.stream(values())
                 .filter(response -> response.lowerCase.equals(lowerCase))
                 .findFirst()
-                .orElseThrow(() -> new ResponseNotMatchException("y 또는 n을 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
     }
 
     public static boolean isYes(String inputResponse) {
