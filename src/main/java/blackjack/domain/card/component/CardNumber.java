@@ -13,7 +13,7 @@ public enum CardNumber {
     KING(10, "K"),
     QUEEN(10, "Q"),
     JACK(10, "J"),
-    ACE(11, "A");
+    ACE(1, "A");
 
     private final int number;
     private final String message;

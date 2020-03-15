@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.component.CardNumber;
 
-import javax.print.DocFlavor;
 import java.util.List;
 
 public class Point implements Comparable<Point> {
@@ -34,10 +33,8 @@ public class Point implements Comparable<Point> {
 
     private void handleAce(List<Card> cards) {
         int aceCount = getAceCount(cards);
-        while (aceCount-- > 0) {
-            if (this.point > BALCK_JACK) {
-                this.point -= CardNumber.ACE_DIFF;
-            }
+        if ((point < BALCK_JACK) && (aceCount > 0)) {
+            point += CardNumber.ACE_DIFF;
         }
     }
 
