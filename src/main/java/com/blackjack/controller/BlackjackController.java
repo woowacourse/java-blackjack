@@ -19,7 +19,6 @@ public class BlackjackController {
 		List<User> players = createPlayers();
 
 		draw(dealer, players);
-
 		printResult(dealer, players);
 	}
 

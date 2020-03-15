@@ -25,8 +25,8 @@ public class Hands {
 		int totalScore = cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
-		totalScore = computeAceBy(totalScore);
 		totalScore = computeBustBy(totalScore);
+		totalScore = computeAceBy(totalScore);
 		return Score.valueOf(totalScore);
 	}
 
@@ -45,7 +45,8 @@ public class Hands {
 	}
 
 	private boolean hasAce() {
-		return cards.stream().anyMatch(Card::isAce);
+		return cards.stream()
+				.anyMatch(Card::isAce);
 	}
 
 	public List<Card> getCards() {

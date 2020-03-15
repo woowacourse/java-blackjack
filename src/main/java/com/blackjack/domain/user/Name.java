@@ -9,10 +9,14 @@ public class Name {
 	private final String name;
 
 	public Name(String name) {
+		validate(name);
+		this.name = name;
+	}
+
+	private void validate(String name) {
 		validateNullOrEmpty(name);
 		validateBlank(name);
 		validateLength(name);
-		this.name = name;
 	}
 
 	private void validateLength(String name) {

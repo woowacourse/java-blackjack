@@ -13,13 +13,6 @@ import com.blackjack.domain.card.CardDeck;
 import com.blackjack.domain.user.Dealer;
 import com.blackjack.domain.user.User;
 
-/**
- * GameProceedController class
- *
- * @version 1.0.0
- * @author K.S.KIM
- * @since 2020/03/15
- */
 public class DrawProceedController {
 	private final CardDeck cardDeck;
 
