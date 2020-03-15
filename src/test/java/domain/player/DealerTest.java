@@ -16,7 +16,7 @@ public class DealerTest {
         Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
         Player dealer = new Dealer(card1, card2);
         Cards cards = new Cards();
-        dealer.insertCard(cards);
+        dealer.hitCard(cards);
 
         Assertions.assertThat(dealer).extracting("cards").asList().size().isEqualTo(3);
     }

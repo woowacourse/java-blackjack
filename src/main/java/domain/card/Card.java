@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
-    private static List<Card> cards;
+    private static final List<Card> cards;
 
     private CardNumber cardNumber;
     private CardSuitSymbol cardSuitSymbol;

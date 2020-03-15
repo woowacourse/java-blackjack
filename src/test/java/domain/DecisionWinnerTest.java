@@ -14,9 +14,9 @@ public class DecisionWinnerTest {
     @Test
     void userAndDealerBothBlackjackTest() {
         User user = new User("subway", Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
 
         Assertions.assertThat(DecisionWinner.compareWinner(user, dealer)).isTrue();
     }
@@ -25,7 +25,7 @@ public class DecisionWinnerTest {
     @Test
     void onlyUserBlackjackTest() {
         User user = new User("subway", Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB));
 
@@ -36,9 +36,9 @@ public class DecisionWinnerTest {
     @Test
     void onlyDealerBlackjackTest() {
         User user = new User("subway", Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
 
         Assertions.assertThat(DecisionWinner.compareWinner(user, dealer)).isFalse();
     }
@@ -47,9 +47,9 @@ public class DecisionWinnerTest {
     @Test
     void dealerWinWithoutBlackjackTest() {
         User user = new User("subway", Card.of(CardNumber.SIX, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
         Dealer dealer = new Dealer(Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
 
         Assertions.assertThat(DecisionWinner.compareWinner(user, dealer)).isFalse();
     }

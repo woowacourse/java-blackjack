@@ -15,6 +15,10 @@ public abstract class Player {
     protected String name;
 
     public Player(String name, Card... cards) {
+        if ((name == null || name.trim().length() == 0) || (cards == null || cards.length == 0)) {
+            throw new NullPointerException("플레이어의 이름 또는 카드를 입력하지 않았습니다.");
+        }
+
         this.cards = new ArrayList<>();
         Collections.addAll(this.cards, cards);
         this.name = name;
@@ -38,5 +42,5 @@ public abstract class Player {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public abstract void insertCard(Cards cards);
+    public abstract void hitCard(Cards cards);
 }

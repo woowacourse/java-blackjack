@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.AnswerType;
+import domain.Answer;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -9,14 +9,14 @@ public class User extends Player {
         super(name, cards);
     }
 
-    public void insertCard(Cards cards, AnswerType answerType) {
-        if (AnswerType.YES.equals(answerType)) {
-            insertCard(cards);
+    public void hitCard(Cards cards, Answer answerType) {
+        if (answerType.isYes()) {
+            hitCard(cards);
         }
     }
 
     @Override
-    public void insertCard(Cards cards) {
-        this.cards.add(cards.pop());
+    public void hitCard(Cards cards) {
+        this.cards.add(cards.hit());
     }
 }

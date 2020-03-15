@@ -15,7 +15,15 @@ public class CardCalculator {
     }
 
     public static boolean isUnderSixteen(List<Card> cards) {
+        validateNullCards(cards);
+
         return isPresentAceAndUnderSumWithAce(cards) || isNotPresentAceAndUnderSixteen(cards);
+    }
+
+    private static void validateNullCards(List<Card> cards) {
+        if (cards == null || cards.size() == 0) {
+            throw new NullPointerException("입력한 카드가 없습니다.");
+        }
     }
 
     private static boolean isNotPresentAceAndUnderSixteen(List<Card> cards) {
@@ -29,6 +37,8 @@ public class CardCalculator {
     }
 
     public static boolean isBlackJack(List<Card> cards) {
+        validateNullCards(cards);
+
         int cardsSum = calculateCards(cards);
 
         if (cards.stream().anyMatch(Card::isAce) && cardsSum == STANDARD_ACE_ELEVEN) {
@@ -44,6 +54,8 @@ public class CardCalculator {
     }
 
     public static int calculateContainAce(List<Card> cards) {
+        validateNullCards(cards);
+
         int playerCardsSum = calculateCards(cards);
 
         if (cards.stream()

@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.AnswerType;
+import domain.Answer;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
@@ -25,8 +25,8 @@ public class UserTest {
     @DisplayName("y를 입력 받을때 카드를 받는지 결정하는 메서드")
     @Test
     void yes_insertCard() {
-        AnswerType answerType = AnswerType.YES;
-        user.insertCard(cards, answerType);
+        Answer answerType = Answer.YES;
+        user.hitCard(cards, answerType);
 
         Assertions.assertThat(user).extracting("cards").asList().size().isEqualTo(3);
     }
@@ -34,8 +34,8 @@ public class UserTest {
     @DisplayName("n를 입력 받을때 카드를 받는지 결정하는 메서드")
     @Test
     void no_insertCard() {
-        AnswerType answerType = AnswerType.NO;
-        user.insertCard(cards, answerType);
+        Answer answerType = Answer.NO;
+        user.hitCard(cards, answerType);
 
         Assertions.assertThat(user).extracting("cards").asList().size().isEqualTo(2);
     }

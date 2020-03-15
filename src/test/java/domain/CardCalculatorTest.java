@@ -24,7 +24,7 @@ public class CardCalculatorTest {
     @Test
     void isUnderSixteenWithAceTest() {
         Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
         dealer.isAdditionalCard(cards);
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
@@ -64,7 +64,7 @@ public class CardCalculatorTest {
     @Test
     void isBlackjackTest() {
         Player player = new User("subway", Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
 
         Assertions.assertThat(CardCalculator.isBlackJack(player.getCard())).isTrue();
     }

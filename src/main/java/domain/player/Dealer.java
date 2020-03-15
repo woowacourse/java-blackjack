@@ -14,16 +14,16 @@ public class Dealer extends Player {
 
     public boolean isAdditionalCard(Cards cards) {
         if (CardCalculator.isUnderSixteen(this.cards)) {
-            insertCard(cards);
+            hitCard(cards);
             return true;
         }
         return false;
     }
 
     @Override
-    public void insertCard(Cards cards) {
+    public void hitCard(Cards cards) {
         if (sumCardNumber() <= STANDARD) {
-            this.cards.add(cards.pop());
+            this.cards.add(cards.hit());
         }
     }
 }

@@ -1,6 +1,6 @@
 package controller;
 
-import domain.AnswerType;
+import domain.Answer;
 import domain.PlayerFactory;
 import domain.WinningResult;
 import domain.card.Cards;
@@ -23,11 +23,10 @@ public class BlackjackController {
     }
 
     public static void run() {
-        PlayerFactory playerFactory = PlayerFactory.getInstance();
         Cards cards = new Cards();
 
         RequestPlayerNamesDTO requestPlayerNamesDTO = inputRequestPlayerNamesDTO();
-        Players players = playerFactory.createPlayers(cards, requestPlayerNamesDTO.getPlayerName());
+        Players players = PlayerFactory.create(cards, requestPlayerNamesDTO.getPlayerName());
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(players);
         OutputView.printInitialResult(responsePlayerDTOS);
 
@@ -58,21 +57,21 @@ public class BlackjackController {
     }
 
     private static void choosePickCard(Cards cards, User user) {
-        AnswerType answerType = getAnswerType(user);
+        Answer answerType = getAnswerType(user);
 
-        if (answerType.equals(AnswerType.NO)) {
+        if (answerType.isNo()) {
             return;
         }
 
         do {
-            user.insertCard(cards, answerType);
+            user.hitCard(cards, answerType);
 
             OutputView.printUserCard(ResponsePlayerDTO.create(user));
             answerType = validateBlackJack(user, answerType);
-        } while (AnswerType.YES.equals(answerType) && isBlackJack(user));
+        } while (Answer.YES.equals(answerType) && isBlackJack(user));
     }
 
-    private static AnswerType validateBlackJack(Player user, AnswerType answerType) {
+    private static Answer validateBlackJack(Player user, Answer answerType) {
         if (isBlackJack(user)) {
             answerType = getAnswerType(user);
         }
@@ -83,10 +82,10 @@ public class BlackjackController {
         return user.sumCardNumber() < BLACK_JACK;
     }
 
-    private static AnswerType getAnswerType(Player user) {
+    private static Answer getAnswerType(Player user) {
         try {
             RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.create(user));
-            return AnswerType.findAnswerType(requestAnswerDTO.getAnswer());
+            return Answer.valueOf(requestAnswerDTO.getAnswer());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return getAnswerType(user);
