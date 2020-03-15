@@ -1,12 +1,12 @@
 package domain.card;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class CardDeck {
-    private List<Card> cards;
+    private Stack<Card> cards;
 
-    CardDeck(List<Card> cards) {
+    CardDeck(Stack<Card> cards) {
         Collections.shuffle(cards);
         this.cards = cards;
     }
@@ -15,6 +15,6 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new RuntimeException("더 이상 뽑을 카드가 없습니다.");
         }
-        return cards.remove(0);
+        return cards.pop();
     }
 }

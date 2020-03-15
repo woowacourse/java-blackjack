@@ -2,15 +2,11 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class CardFactory {
-    private static final List<Card> cards;
-
-    static {
-        cards = createCards();
-    }
+    private static final List<Card> cards = createCards();
 
     private static List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
@@ -30,14 +26,16 @@ public class CardFactory {
 
     public static Card of(Type type, Symbol symbol) {
         for (Card card : cards) {
-            if (card.equals(new Card(type, symbol))) {
+            if (card.isSameWith(type, symbol)) {
                 return card;
             }
         }
         throw new IllegalArgumentException("값을 찾을 수 없습니다.");
     }
 
-    public static CardDeck createCardDeck(){
-        return new CardDeck(new LinkedList<>(cards));
+    public static CardDeck createCardDeck() {
+        Stack<Card> cards = new Stack<>();
+        cards.addAll(CardFactory.cards);
+        return new CardDeck(cards);
     }
 }

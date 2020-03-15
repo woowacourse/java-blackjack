@@ -3,8 +3,6 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private static final String ERROR_NULL_MESSAGE = "잘못된 값이 들어왔습니다.";
-
     private final Type type;
     private final Symbol symbol;
 
@@ -17,22 +15,12 @@ public class Card {
 
     private void validateNull(Type type, Symbol symbol) {
         if (Objects.isNull(type) || Objects.isNull(symbol)) {
-            throw new IllegalArgumentException(ERROR_NULL_MESSAGE);
+            throw new IllegalArgumentException("잘못된 값이 들어왔습니다.");
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return Objects.equals(type, card.type) &&
-                Objects.equals(symbol, card.symbol);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, symbol);
+    public boolean isSameWith(Type type, Symbol symbol) {
+        return this.type == type && this.symbol == symbol;
     }
 
     public boolean isAce() {
