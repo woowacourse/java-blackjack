@@ -17,14 +17,17 @@ public class CardCalculatorTest {
     @DisplayName("카드의 총합 계산 테스트")
     @Test
     void getCardsSumTest() {
-        Cards cardsWithAceForEleven = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
-        Cards cardsWithAceForOne = Cards.of(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+        Cards cardsWithAceForEleven = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB))));
+        Cards cardsWithAceForOne = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
-                Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND));
-        Cards cards = Cards.of(Card.of(CardNumber.QUEEN, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
+                Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND))));
+        Cards cards = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.QUEEN, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB))));
 
         Assertions.assertThat(CardCalculator.calculateAceStrategy(cardsWithAceForEleven)).isEqualTo(18);
         Assertions.assertThat(CardCalculator.calculateAceStrategy(cardsWithAceForOne)).isEqualTo(21);

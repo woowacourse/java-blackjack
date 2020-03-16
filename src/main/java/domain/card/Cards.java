@@ -2,7 +2,6 @@ package domain.card;
 
 import domain.CardCalculator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,16 +15,6 @@ public class Cards {
 
     private Cards(List<Card> cards) {
         this.cards = cards;
-    }
-
-    public static Cards of(Card... cards) {
-        if (cards == null || cards.length == 0) {
-            throw new NullPointerException(NO_CARDS);
-        }
-
-        List<Card> cardList = new ArrayList<>();
-        Collections.addAll(cardList, cards);
-        return new Cards(cardList);
     }
 
     public static Cards of(List<Card> cards) {
