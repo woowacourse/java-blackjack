@@ -12,11 +12,11 @@ public class DealerCardsTest {
         dealerCards.add(new Card(Type.DIAMOND, Symbol.TWO));
         dealerCards.add(new Card(Type.DIAMOND, Symbol.THREE));
         dealerCards.add(new Card(Type.DIAMOND, Symbol.JACK));
-        Assertions.assertThat(dealerCards.isOverSixteen())
+        Assertions.assertThat(dealerCards.canHit())
                 .isFalse();
 
         dealerCards.add(new Card(Type.CLUB, Symbol.TWO));
-        Assertions.assertThat(dealerCards.isOverSixteen())
+        Assertions.assertThat(dealerCards.canHit())
                 .isTrue();
     }
 }

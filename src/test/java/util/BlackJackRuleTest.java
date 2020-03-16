@@ -25,7 +25,7 @@ public class BlackJackRuleTest {
     @DisplayName("16초과 여부 확인")
     @Test
     void isOverSixteen() {
-        assertThat(BlackJackRule.isOverSixteen(16)).isFalse();
-        assertThat(BlackJackRule.isOverSixteen(17)).isTrue();
+        assertThat(BlackJackRule.canDealerHit(16)).isFalse();
+        assertThat(BlackJackRule.canDealerHit(17)).isTrue();
     }
 }

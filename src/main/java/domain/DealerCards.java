@@ -3,7 +3,7 @@ package domain;
 import util.BlackJackRule;
 
 public class DealerCards extends Cards {
-    public boolean isOverSixteen() {
-        return BlackJackRule.isOverSixteen(getScore());
+    public boolean canHit() {
+        return BlackJackRule.canDealerHit(getScore());
     }
 }
