@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
@@ -28,6 +29,14 @@ public class GameResultTest {
             player.drawCard(cardDeck, 2);
         }
         gameResult = new GameResult(participants);
+    }
+
+    @DisplayName("생성자 NULL일 경우 예외")
+    @Test
+    void validNotNull() {
+        assertThatThrownBy(() -> new GameResult(null))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("잘못");
     }
 
     @DisplayName("플레이어의 승무패를 가져옴")

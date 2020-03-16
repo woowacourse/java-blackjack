@@ -10,6 +10,14 @@ import org.junit.jupiter.api.Test;
 
 public class ParticipantsTest {
 
+    @DisplayName("생성자 NULL일 경우 예외")
+    @Test
+    void create() {
+        assertThatThrownBy(() -> new Participants(null))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("잘못");
+    }
+
     @DisplayName("플레이어 최대인원 초과시 예외 발생")
     @Test
     void validMaximumPlayerCount() {

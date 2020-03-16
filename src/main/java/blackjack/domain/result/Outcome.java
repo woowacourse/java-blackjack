@@ -45,11 +45,6 @@ public enum Outcome {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static boolean isCriteriaScoreOnlyBlackJack(Score criteriaScore,
-        Score comparisonScore) {
-        return criteriaScore.isBlackJack() && !comparisonScore.isBlackJack();
-    }
-
     public String getName() {
         return name;
     }

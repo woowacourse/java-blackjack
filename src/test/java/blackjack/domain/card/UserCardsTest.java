@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.result.Score;
+import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,16 @@ public class UserCardsTest {
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.TWO));
         assertThat(userCards.getScore()).isEqualTo(new Score(4, true, 1));
+    }
+
+    @DisplayName("카드 없을경우 예외")
+    @Test
+    void validNoCard() {
+        Dealer dealer = new Dealer();
+        assertThatThrownBy(dealer::getFirstCardInfo).isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("없");
+        assertThatThrownBy(dealer::getCardsInfos).isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("없");
     }
 }
 

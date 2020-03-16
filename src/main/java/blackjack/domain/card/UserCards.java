@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class UserCards {
 
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
+    private static final String NO_CARD_EXCEPTION_MESSAGE = "카드가 없습니다.";
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -31,6 +32,9 @@ public class UserCards {
     }
 
     public List<String> getInfos() {
+        if (cards.isEmpty()) {
+            throw new NullPointerException(NO_CARD_EXCEPTION_MESSAGE);
+        }
         return cards.stream()
             .map(Card::toString)
             .collect(Collectors.toList());

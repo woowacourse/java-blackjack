@@ -1,15 +1,14 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Symbol;
 import java.util.Objects;
 
 public class Score {
 
+    private static final boolean HAS_NOT_ACE = false;
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK_SCORE = 21;
     private static final int MINIMUM_SCORE_AND_COUNT = 1;
     private static final int ACE_WEIGHT = 10;
-    private static final boolean HAS_NOT_ACE = false;
     private static final String BLACK_JACK = "BLACKJACK";
     private static final String BUST = "BUST";
     private static final String EQUAL_OR_UNDER_MINIMUM_SCORE_OR_COUNT_EXCEPTION_MESSAGE =

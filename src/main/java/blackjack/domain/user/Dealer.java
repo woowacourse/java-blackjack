@@ -6,6 +6,7 @@ public class Dealer extends User {
 
     private static final String NAME = "딜러";
     private static final int BASES_SCORE_CAN_DRAW = 16;
+    private static final int FIRST_INDEX = 0;
 
     public Dealer() {
         super(NAME, BASES_SCORE_CAN_DRAW);
@@ -13,6 +14,6 @@ public class Dealer extends User {
 
     public String getFirstCardInfo() {
         List<String> cardsInfos = userCards.getInfos();
-        return cardsInfos.get(0);
+        return cardsInfos.get(FIRST_INDEX);
     }
 }

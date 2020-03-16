@@ -14,6 +14,7 @@ public class GameResult {
 
     private static final int INITIAL_COUNT = 0;
     private static final Map<Outcome, Integer> initialDealerResults;
+    private static final String NULL_USE_EXCEPTION_MESSAGE = "잘못된 인자 - Null 사용";
 
     static {
         Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
@@ -29,8 +30,15 @@ public class GameResult {
     private final Map<Outcome, Integer> dealerResults;
 
     public GameResult(Participants participants) {
+        validNotNull(participants);
         this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(participants));
         this.dealerResults = Collections.unmodifiableMap(calculateDealerResults());
+    }
+
+    private void validNotNull(Participants participants) {
+        if(participants == null) {
+            throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
+        }
     }
 
     private Map<Player, Outcome> calculatePlayerResults(Participants participants) {

@@ -9,6 +9,7 @@ public class Participants {
 
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private static final int MINIMUM_PLAYER_COUNT = 1;
+    private static final String NULL_USE_EXCEPTION_MESSAGE = "잘못된 인자 - Null 사용";
     private static final String OVER_MAXIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
         String.format("참여 인원이 너무 많습니다. %d명 이내로만 가능합니다.", MAXIMUM_PLAYER_COUNT);
     private static final String UNDER_MINIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
@@ -18,9 +19,16 @@ public class Participants {
     private final List<User> participants;
 
     public Participants(List<String> playerNames) {
+        validNotNull(playerNames);
         validOverMinimumCount(playerNames);
         validUnderMaximumCount(playerNames);
         this.participants = getParticipants(playerNames);
+    }
+
+    private void validNotNull(List<String> playerNames) {
+        if (playerNames == null) {
+            throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
+        }
     }
 
     private void validOverMinimumCount(List<String> playerNames) {
