@@ -42,7 +42,7 @@ class PlayersTest {
 	@Test
 	void giveCardsEachPlayer() {
 		// given
-		Players players = Players.of("포비, 그니, 씨유");
+		Players players = Players.of(KUENI_POBI_SUMMER);
 		Card aceClub = Card.of(Symbol.ACE, Type.CLUB);
 		Card jackHeart = Card.of(Symbol.JACK, Type.HEART);
 		Card kingDiamond = Card.of(Symbol.KING, Type.DIAMOND);

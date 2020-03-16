@@ -4,15 +4,21 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.user.exceptions.AbstractPlayerException;
+import blackjack.domain.user.exceptions.PlayerException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 	private static Card aceSpade;
@@ -38,6 +44,23 @@ public class PlayerTest {
 	@Test
 	void of_IsNotNull() {
 		assertThat(player).isNotNull();
+	}
+
+	@Test
+	void of_ThrowPlayerException() {
+		assertThatThrownBy(() -> Player.of("딜러"))
+				.isInstanceOf(PlayerException.class);
+	}
+
+	@ParameterizedTest
+	@MethodSource("of_ThrowAbstractException")
+	void of_ThrowAbstractException(String invalidName) {
+		assertThatThrownBy(() -> Player.of(invalidName))
+				.isInstanceOf(AbstractPlayerException.class);
+	}
+
+	static Stream<String> of_ThrowAbstractException() {
+		return Stream.of(null, "", " ", "  ", "   ");
 	}
 
 	@Test
