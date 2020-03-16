@@ -17,7 +17,6 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(users.stream()
-                .filter(player -> player instanceof Player)
                 .map(player -> (Player) player)
                 .collect(Collectors.toList()));
     }

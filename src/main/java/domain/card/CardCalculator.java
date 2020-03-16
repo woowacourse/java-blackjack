@@ -27,6 +27,10 @@ public class CardCalculator {
         return sum < BLACK_JACK;
     }
 
+    public static boolean isMoreThanBlackJack(List<Card> cards) {
+        return !isUnderBlackJack(cards);
+    }
+
     public static int calculateDeterminedAce(List<Card> cards) {
         int playerCardSum = calculateCards(cards);
 

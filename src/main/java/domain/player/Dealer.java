@@ -8,6 +8,7 @@ public class Dealer extends User {
 
     public Dealer(Card... cards) {
         super(cards);
+        this.name = "딜러";
     }
 
     public boolean isAdditionalCard(Card card) {

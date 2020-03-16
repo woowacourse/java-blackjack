@@ -1,87 +1,72 @@
 package controller;
 
-import domain.*;
+import domain.WinningResult;
 import domain.answer.Answer;
 import domain.answer.AnswerType;
 import domain.card.CardCalculator;
 import domain.card.Cards;
-import domain.player.*;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Players;
+import domain.player.PlayersName;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class BlackjackController {
+    private Cards cards;
+    private PlayersName playersName;
 
-    public static void run() {
-        Cards cards = new Cards();
-        PlayersName playersName = new PlayersName(InputView.inputPlayerName());
-        OutputView.printInitialResult(playersName.getPlayerName());
+    public BlackjackController() {
+        cards = new Cards();
+        playersName = new PlayersName(InputView.inputPlayerName());
+        OutputView.printInitial(playersName.getPlayerName());
+    }
 
-        Dealer dealer = new Dealer(cards.giveCard(),cards.giveCard());
+    public void run() {
+        Dealer dealer = new Dealer(cards.giveCard(), cards.giveCard());
         Players players = new Players(cards, playersName.getPlayerName());
 
-        UsersInformations playersInformations = new UsersInformations(players);
-        UserInformation dealerInformation = new UserInformation(dealer);
-        OutputView.printUserCard(dealerInformation.getName(), dealerInformation.getCardInformation());
-
-        List<UserInformation> playersInformation = playersInformations.getPlayerInformation();
-        playersInformation.forEach(playerInformation ->
-                OutputView.printUserCard(playerInformation.getName(), playerInformation.getCardInformation())
-        );
+        OutputView.printUserCard(dealer.getName(),dealer.cardToString());
+        for(Player player:players.getPlayers()){
+            OutputView.printUserCard(player.getName(),player.cardToString());
+        }
 
         for (Player player : players.getPlayers()) {
             userService(cards, player);
         }
         DealerService(cards, dealer);
-        result(players,dealer);
+        result(players, dealer);
     }
 
-    private static void userService(Cards cards, Player player) {
-        AnswerType answerType = getAnswer(player);
-
-        if (answerType.isEqualsAnswer(AnswerType.NO)) {
-            return;
-        }
-
-        while (answerType.isEqualsAnswer(AnswerType.YES) && CardCalculator.isUnderBlackJack(player.getCard())) {
+    private void userService(Cards cards, Player player) {
+        OutputView.printNewLine();
+        while (CardCalculator.isUnderBlackJack(player.getCard()) && getAnswer(player).isEqualsAnswer(AnswerType.YES)) {
             player.drawCard(cards.giveCard());
-            UserInformation usersInformation = new UserInformation(player);
-            OutputView.printUserCard(usersInformation.getName(), usersInformation.getCardInformation());
-
-            if (CardCalculator.isUnderBlackJack(player.getCard())) {
-                answerType = getAnswer(player);
-                continue;
-            }
-            OutputView.printUserCardsOverBlackJack(usersInformation.getName());
+            OutputView.printUserCard(player.getName(), player.cardToString());
+        }
+        if(CardCalculator.isMoreThanBlackJack(player.getCard())){
+            OutputView.printUserCardsOverBlackJack(player.getName());
         }
     }
 
-    private static void DealerService(Cards cards, Dealer dealer) {
+    private void DealerService(Cards cards, Dealer dealer) {
         if (dealer.isAdditionalCard(cards.giveCard())) {
             OutputView.printDealerAdditionalCard();
         }
     }
 
-    private static void result(Players players,Dealer dealer) {
-        UserInformation dealerInformation = new UserInformation(dealer);
-        UsersInformations playerInformations = new UsersInformations(players);
+    private void result(Players players, Dealer dealer) {
+        OutputView.printFinalResult(dealer.getName(),dealer.cardToString(),dealer.sumCardNumber());
+        for(Player player: players.getPlayers()) {
+            OutputView.printFinalResult(player.getName(),player.cardToString(),player.sumCardNumber());
+        }
 
-        OutputView.printFinalResult(
-                dealerInformation.getName(),dealerInformation.getCardInformation(),dealerInformation.getScore()
-        );
-        playerInformations.getPlayerInformation()
-                .forEach(userInformation -> OutputView.printFinalResult(
-                        userInformation.getName(), userInformation.getCardInformation(), userInformation.getScore())
-                );
-
-        WinningResult winningResult = new WinningResult(players,dealer);
+        WinningResult winningResult = new WinningResult(players, dealer);
         OutputView.printWinningResult(winningResult.generateWinningUserResult(players));
     }
 
     private static AnswerType getAnswer(Player player) {
-        UserInformation userInformation = new UserInformation(player);
-        Answer answer = new Answer(InputView.inputAnswer(userInformation.getName()));
+        Answer answer = new Answer(InputView.inputAnswer(player.getName()));
 
         return AnswerType.AnswerValueOf(answer.getAnswer());
     }
