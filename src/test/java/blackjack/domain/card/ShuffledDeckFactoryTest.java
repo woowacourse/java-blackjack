@@ -22,9 +22,9 @@ class ShuffledDeckFactoryTest {
 	}
 
 	@Test
-	void ofDeckFactory_IsSizeFifteenAndNotDuplicated() {
+	void create_ReturnSizeFifteenAndNotDuplicatedDeck() {
 		// when
-		Drawable deck = Deck.ofDeckFactory(deckFactory);
+		Drawable deck = deckFactory.create();
 
 		// then
 		Set<Card> cards = new HashSet<>();

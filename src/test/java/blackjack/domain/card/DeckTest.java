@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,6 +54,20 @@ class DeckTest {
 	@Test
 	void of_EmptyList_IsNotNull() {
 		assertThat(Deck.of(Collections.emptyList())).isNotNull();
+	}
+
+	@Test
+	void ofDeckFactory_ShuffledDeckFactory_IsSizeFifteenAndNotDuplicated() {
+		// when
+		Drawable deck = Deck.ofDeckFactory(new ShuffledDeckFactory());
+
+		// then
+		Set<Card> cards = new HashSet<>();
+		for (int i = 0; i < 52; i++) {
+			cards.add(deck.draw());
+		}
+
+		assertThat(cards.size()).isEqualTo(52);
 	}
 
 	@ParameterizedTest
