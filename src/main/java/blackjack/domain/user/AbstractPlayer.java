@@ -1,11 +1,10 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.exceptions.AbstractPlayerException;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,14 +14,14 @@ public abstract class AbstractPlayer implements Playable {
 	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
 	private final String name;
-	private final List<Card> hand;
+	private final Hand hand;
 
 	protected AbstractPlayer(String name) {
 		validateNameIsNotNull(name);
 		validateNameIsNotBlank(name);
 
 		this.name = name;
-		this.hand = new ArrayList<>();
+		this.hand = new Hand();
 	}
 
 	private void validateNameIsNotNull(String name) {
@@ -64,28 +63,19 @@ public abstract class AbstractPlayer implements Playable {
 	}
 
 	private Score sumScore() {
-		Score score = Score.of(0);
-
-		for (Card card : hand) {
-			score = score.add(card.getScore());
-		}
-		return score;
+		return hand.sumScore();
 	}
 
 	private Score maximize(Score score) {
-		if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
+		if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hand.hasAce()) {
 			return score.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
 		}
 		return score;
 	}
 
-	private boolean hasAce() {
-		return hand.stream().anyMatch(Card::isAce);
-	}
-
 	@Override
 	public List<Card> getHand() {
-		return Collections.unmodifiableList(hand);
+		return hand.getHand();
 	}
 
 	@Override
@@ -111,7 +101,7 @@ public abstract class AbstractPlayer implements Playable {
 	public String toString() {
 		return "AbstractPlayer{" +
 				"name='" + name + '\'' +
-				", cards=" + hand +
+				", hand=" + hand +
 				'}';
 	}
 }
