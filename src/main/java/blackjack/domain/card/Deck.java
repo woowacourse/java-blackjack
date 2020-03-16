@@ -28,7 +28,7 @@ public class Deck {
     }
 
     public List<Card> draw(int amount) {
-        return IntStream.of(0, amount).mapToObj(t -> this.draw())
+        return IntStream.range(0, amount).mapToObj(t -> this.draw())
                 .collect(Collectors.toList());
     }
 }
