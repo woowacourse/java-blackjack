@@ -24,10 +24,8 @@ public class BlackjackController {
         Players players = new Players(makePlayers(dealer));
 
         drawStartingCards(players);
-        if (dealer.isNotBlackjack()) {
-            drawGambler(players);
-            drawDealer(dealer);
-        }
+        drawGambler(players);
+        drawDealer(dealer);
 
         OutputView.showReports(players);
     }
