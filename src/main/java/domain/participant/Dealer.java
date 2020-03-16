@@ -1,14 +1,12 @@
 package domain.participant;
 
-import domain.ParticipantCards;
 import domain.card.CardDeck;
 
 public class Dealer extends Participant {
     private static final int DEALER_STANDARD_SCORE = 16;
 
     public Dealer() {
-        this.name = "딜러";
-        this.cards = new ParticipantCards();
+        super("딜러");
     }
 
     public String toStringFirstDraw() {

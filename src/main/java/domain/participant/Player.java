@@ -1,14 +1,12 @@
 package domain.participant;
 
-import domain.ParticipantCards;
 import domain.result.Result;
 
 public class Player extends Participant {
 
     public Player(String name) {
+        super(name);
         validateName(name);
-        this.name = name;
-        this.cards = new ParticipantCards();
     }
 
     private void validateName(String name) {

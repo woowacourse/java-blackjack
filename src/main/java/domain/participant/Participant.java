@@ -11,6 +11,11 @@ public class Participant implements ParticipantInterface {
     String name;
     ParticipantCards cards;
 
+    Participant(String name) {
+        this.name = name;
+        this.cards = new ParticipantCards();
+    }
+
     public void firstDraw(CardDeck cardDeck) {
         for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
             cards.add(cardDeck.draw());
