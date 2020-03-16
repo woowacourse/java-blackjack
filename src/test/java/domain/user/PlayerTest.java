@@ -1,26 +1,29 @@
 package domain.user;
 
-import domain.card.CardFactory;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("NonAsciiCharacters")
 public class PlayerTest {
     private Player createPlayer() {
         Player player = new Player("KIM");
+
         Type type = Type.valueOf("SPADE");
         Symbol symbol = Symbol.valueOf("ACE");
-        player.draw(CardFactory.of(type, symbol));
+        player.draw(CardDeckGeneratorForTest.createByOneCard(CardFactory.of(type, symbol)));
         type = Type.valueOf("HEART");
         symbol = Symbol.valueOf("SEVEN");
-        player.draw(CardFactory.of(type, symbol));
+        player.draw(CardDeckGeneratorForTest.createByOneCard(CardFactory.of(type, symbol)));
         type = Type.valueOf("CLUB");
         symbol = Symbol.valueOf("KING");
-        player.draw(CardFactory.of(type, symbol));
+        player.draw(CardDeckGeneratorForTest.createByOneCard(CardFactory.of(type, symbol)));
+
         return player;
     }
 
