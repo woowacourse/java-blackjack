@@ -17,13 +17,9 @@ public class Dealer extends User {
         return this.hands.size() == 3;
     }
 
-    @Override
-    public void hit(Deck deck) {
+    public void hitOrStay(Deck deck) {
         if (this.hands.score() <= DEALER_HIT_POINT) {
-            this.hands.draw(deck);
-        }
-        if (hands.isBurst()) {
-            this.burst = true;
+            hit(deck);
         }
     }
 }

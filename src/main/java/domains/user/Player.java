@@ -46,6 +46,7 @@ public class Player extends User {
     }
 
     public ResultType checkResultType(Dealer dealer) {
+        // TODO : 결과를 어떻게 할까요?
         if (dealer.isBurst() && !this.isBurst()) {
             return ResultType.WIN;
         }
@@ -60,13 +61,5 @@ public class Player extends User {
 
     public String getName() {
         return name.toString();
-    }
-
-    @Override
-    public void hit(Deck deck) {
-        hands.draw(deck);
-        if (hands.isBurst()) {
-            this.burst = true;
-        }
     }
 }

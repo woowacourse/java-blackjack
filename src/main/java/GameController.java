@@ -10,11 +10,9 @@ public class GameController {
     private Deck deck;
     private Players players;
     private Dealer dealer;
-    private GameResult gameResult;
 
     public GameController() {
         deck = new Deck();
-        gameResult = new GameResult();
         OutputView.printInputPlayerNames();
         players = new Players(InputView.inputPlayerNames(), deck);
         dealer = new Dealer(deck);
@@ -23,15 +21,15 @@ public class GameController {
     }
 
     private void run() {
-        // TODO
+        // TODO : 딜러도 hitOrStay로 바껴야 하지 않을까요?
         hitOrStay();
-        dealer.hit(deck);
+
         if (dealer.isHit()) {
             OutputView.printDealerHitCard();
         }
         OutputView.printAllHands(players, dealer);
 
-        gameResult.create(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
         OutputView.printGameResult(gameResult);
     }
 
@@ -39,6 +37,8 @@ public class GameController {
         for (Player player : players) {
             needMoreCard(player);
         }
+
+        dealer.hitOrStay(deck);
     }
 
     private void needMoreCard(Player player) {
