@@ -17,9 +17,13 @@ public class User {
     private final String name;
     private final List<Card> cards;
 
-    protected User(String name) {
+    User(String name) {
+        this(name, new ArrayList<>());
+    }
+
+    User(String name, List<Card> cards) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = cards;
     }
 
     public boolean isBust() {

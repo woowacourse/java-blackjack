@@ -5,6 +5,7 @@ import blackjack.domain.card.ProcessStrategy;
 import blackjack.domain.card.ShuffleStrategy;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.user.*;
+import blackjack.domain.user.exception.HitOrStayException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
