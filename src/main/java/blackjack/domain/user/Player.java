@@ -31,10 +31,10 @@ public class Player extends User implements GameRule {
     @Override
     public int getReceivableCardSize() {
         if (getCards().size() == 0) {
-            return 2;
+            return INITIAL_CARD_SIZE;
         }
         if (receivable()) {
-            return  1;
+            return ADDITIONAL_CARD_SIZE;
         }
         return 0;
     }

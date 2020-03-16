@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User {
+    protected static int INITIAL_CARD_SIZE = 2;
+    protected static int ADDITIONAL_CARD_SIZE = 1;
+
     private Name name;
     private Point point;
     private List<Card> cards;
