@@ -18,6 +18,10 @@ public class AllGamers {
     private final Dealer dealer;
     private final List<Player> players;
 
+    public AllGamers(List<Player> players) {
+        this(new Dealer(), players);
+    }
+
     public AllGamers(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;

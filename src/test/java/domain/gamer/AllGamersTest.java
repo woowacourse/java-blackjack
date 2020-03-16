@@ -18,13 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AllGamersTest {
     @Test
     void 첫_페이즈_드로우_테스트() {
-        Dealer dealer = new Dealer();
         Player player1 = new Player("phobi");
         Player player2 = new Player("jason");
 
         List<Player> players = Arrays.asList(player1, player2);
 
-        AllGamers allGamers = new AllGamers(dealer, players);
+        AllGamers allGamers = new AllGamers(players);
         allGamers.drawFirstPhase(new CardDeck());
 
         for (Gamer gamer : allGamers.getGamers()) {

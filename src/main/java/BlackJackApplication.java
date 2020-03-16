@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
     public static void main(String[] args) {
         List<Player> players = inputPlayerNames();
-        Dealer dealer = new Dealer();
-        AllGamers allGamers = new AllGamers(dealer, players);
+        AllGamers allGamers = new AllGamers(players);
         CardDeck cardDeck = new CardDeck();
         OutputView.printEmptyLine();
 
