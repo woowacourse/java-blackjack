@@ -18,18 +18,6 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 
 class DealerTest {
-	private static Stream<Arguments> provideUndrawableDealer() {
-		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
-
-		Dealer dealer = new Dealer("dealer");
-		Deck deck = new Deck(CardFactory.create());
-
-		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			dealer.draw(deck);
-		}
-		return Stream.of(Arguments.of(dealer));
-	}
-
 	@Test
 	void Dealer_InputDealerName_GenerateInstance() {
 		Dealer dealer = new Dealer("dealer");
@@ -41,8 +29,8 @@ class DealerTest {
 	@Test
 	void valueOf_InputDealerNameAndCards_GenerateInstance() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
 
 		assertThat(new Dealer("dealer", cards)).isInstanceOf(Dealer.class)
 			.extracting("hand").isEqualTo(cards);
@@ -59,14 +47,26 @@ class DealerTest {
 		assertThat(dealer.canDraw()).isFalse();
 	}
 
+	private static Stream<Arguments> provideUndrawableDealer() {
+		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
+
+		Dealer dealer = new Dealer("dealer");
+		Deck deck = new Deck(CardFactory.create());
+
+		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
+			dealer.draw(deck);
+		}
+		return Stream.of(Arguments.of(dealer));
+	}
+
 	@Test
 	void getInitialHand_DealerDrawInitialTwoCards_ReturnOneCard() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
 		Dealer dealer = Dealer.valueOf("dealer", cards);
 
 		assertThat(dealer.getInitialHand()).hasSize(1)
-			.isEqualTo(Arrays.asList(new Card(Symbol.SEVEN, Type.CLUB)));
+			.isEqualTo(Arrays.asList(Card.of(Symbol.SEVEN, Type.CLUB)));
 	}
 }

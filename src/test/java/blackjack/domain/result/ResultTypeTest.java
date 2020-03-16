@@ -19,22 +19,22 @@ import blackjack.domain.user.User;
 class ResultTypeTest {
 	private static Stream<Arguments> provideDealerAndPlayerScoreWithReturnType() {
 		Dealer dealer = Dealer.valueOf("dealer", Arrays.asList(
-			new Card(Symbol.EIGHT, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 
 		Player pobi = Player.valueOf("pobi", Arrays.asList(
-			new Card(Symbol.QUEEN, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.QUEEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		Player sony = Player.valueOf("sony", Arrays.asList(
-			new Card(Symbol.EIGHT, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		Player stitch = Player.valueOf("stitch", Arrays.asList(
-			new Card(Symbol.SEVEN, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.SEVEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		Player bustPlayer = Player.valueOf("bust", Arrays.asList(
-			new Card(Symbol.TEN, Type.CLUB),
-			new Card(Symbol.KING, Type.DIAMOND),
-			new Card(Symbol.TWO, Type.CLUB)));
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.KING, Type.DIAMOND),
+			Card.of(Symbol.TWO, Type.CLUB)));
 
 		return Stream.of(
 			Arguments.of(dealer, pobi, ResultType.LOSE),

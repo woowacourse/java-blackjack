@@ -32,8 +32,8 @@ class DeckTest {
 	@Test
 	void validate_DuplicateExistCards_InvalidDeckExceptionThrown() {
 		LinkedList<Card> cards = new LinkedList<>(Arrays.asList(
-			new Card(Symbol.TEN, Type.CLUB),
-			new Card(Symbol.TEN, Type.CLUB)));
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.TEN, Type.CLUB)));
 
 		assertThatThrownBy(() -> new Deck(cards))
 			.isInstanceOf(InvalidDeckException.class)

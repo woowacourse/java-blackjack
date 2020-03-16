@@ -31,7 +31,8 @@ public enum Symbol {
 		return score;
 	}
 
-	public String getSymbol() {
+	@Override
+	public String toString() {
 		return symbol;
 	}
 }

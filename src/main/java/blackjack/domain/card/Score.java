@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import blackjack.domain.exceptions.InvalidScoreException;
@@ -10,12 +10,12 @@ import blackjack.domain.exceptions.InvalidScoreException;
 public class Score {
 	static final int BUST_SCORE = 22;
 	static final Score ZERO = new Score(0);
-	private static final Map<Integer, Score> CACHE = new HashMap<>();
-	private static final int ADDITIONAL_ACE_SCORE = 10;
+	static final Score ADDITIONAL_ACE_SCORE = new Score(10);
+	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 
 	static {
-		IntStream.range(Symbol.ACE.getScore(), BUST_SCORE)
-			.forEach(score -> CACHE.put(score, new Score(score)));
+		IntStream.range(0, BUST_SCORE)
+			.forEach(score -> SCORE_CACHE.put(score, new Score(score)));
 	}
 
 	private final int score;
@@ -32,36 +32,20 @@ public class Score {
 	}
 
 	public static Score valueOf(int number) {
-		Score score = CACHE.get(number);
-
-		if (Objects.isNull(score)) {
-			score = new Score(number);
-		}
-		return score;
+		return Optional.ofNullable(SCORE_CACHE.get(number))
+			.orElse(new Score(number));
 	}
 
 	public static Score valueOf(Card card) {
-		if (Objects.isNull(card)) {
-			throw new InvalidScoreException(InvalidScoreException.NULL);
-		}
-		return Score.valueOf(card.getScore());
+		return Optional.ofNullable(card)
+			.map(value -> Score.valueOf(value.getScore()))
+			.orElseThrow(() -> new InvalidScoreException(InvalidScoreException.NULL));
 	}
 
-	public Score add(Card card) {
-		if (Objects.isNull(card)) {
-			throw new InvalidScoreException(InvalidScoreException.NULL);
-		}
-
-		int calculatedScore = score + card.getScore();
-
-		if (card.isAce() && isNotBustFromBigAceWith(calculatedScore)) {
-			calculatedScore += ADDITIONAL_ACE_SCORE;
-		}
-		return Score.valueOf(calculatedScore);
-	}
-
-	private boolean isNotBustFromBigAceWith(int calculatedScore) {
-		return calculatedScore + ADDITIONAL_ACE_SCORE < BUST_SCORE;
+	public Score add(Score score) {
+		return Optional.ofNullable(score)
+			.map(value -> Score.valueOf(this.score + value.score))
+			.orElseThrow(() -> new InvalidScoreException(InvalidScoreException.NULL));
 	}
 
 	public boolean isLowerThan(int score) {

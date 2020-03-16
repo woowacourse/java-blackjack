@@ -6,13 +6,22 @@ public class Card {
 	private final Symbol symbol;
 	private final Type type;
 
-	public Card(Symbol symbol, Type type) {
+	Card(Symbol symbol, Type type) {
 		this.symbol = symbol;
 		this.type = type;
 	}
 
+	public static Card of(Symbol symbol, Type type) {
+		return CardFactory.pickUp(symbol, type)
+			.orElse(new Card(symbol, type));
+	}
+
 	public boolean isAce() {
 		return symbol.isAce();
+	}
+
+	public static String name(Symbol symbol, Type type) {
+		return String.format("%s%s", symbol, type);
 	}
 
 	public int getScore() {
@@ -39,6 +48,6 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return symbol.getSymbol() + type.getType();
+		return name(this.symbol, this.type);
 	}
 }

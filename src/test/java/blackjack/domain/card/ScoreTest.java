@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import blackjack.domain.exceptions.InvalidScoreException;
 
@@ -27,7 +28,7 @@ class ScoreTest {
 	@ParameterizedTest
 	@EnumSource(value = Symbol.class)
 	void valueOf_InputCard_ReturnInstance(Symbol symbol) {
-		Card card = new Card(symbol, Type.CLUB);
+		Card card = Card.of(symbol, Type.CLUB);
 
 		assertThat(Score.valueOf(card)).isInstanceOf(Score.class)
 			.extracting("score").isEqualTo(card.getScore());
@@ -41,25 +42,12 @@ class ScoreTest {
 			.hasMessage(InvalidScoreException.NULL);
 	}
 
-	@Test
-	void add_InputCard_addScore() {
-		Card card = new Card(Symbol.TWO, Type.CLUB);
-		assertThat(Score.ZERO.add(card)).extracting("score").isEqualTo(2);
-	}
+	@ParameterizedTest
+	@ValueSource(ints = {1, 5, 10})
+	void add_InputScore_addScore(int value) {
+		Score score = Score.valueOf(value);
 
-	@Test
-	void add_ACECardAddBy11_addScore() {
-		Card card = new Card(Symbol.ACE, Type.CLUB);
-
-		assertThat(Score.ZERO.add(card)).extracting("score").isEqualTo(11);
-	}
-
-	@Test
-	void add_ACECardAddBy1_addScore() {
-		Card card = new Card(Symbol.ACE, Type.CLUB);
-		Score score = Score.valueOf(11);
-
-		assertThat(score.add(card)).extracting("score").isEqualTo(12);
+		assertThat(Score.ZERO.add(score)).extracting("score").isEqualTo(value);
 	}
 
 	@ParameterizedTest

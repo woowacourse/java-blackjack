@@ -7,6 +7,6 @@ import org.junit.jupiter.api.Test;
 class CardTest {
 	@Test
 	void Card_SymbolAndType_GenerateInstance() {
-		assertThat(new Card(Symbol.ACE, Type.CLUB)).isInstanceOf(Card.class);
+		assertThat(Card.of(Symbol.ACE, Type.CLUB)).isInstanceOf(Card.class);
 	}
 }

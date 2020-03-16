@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
@@ -38,8 +39,8 @@ class PlayerTest {
 	@Test
 	void valueOf_InputPlayerNameAndCards_GenerateInstance() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
 
 		assertThat(new Player("player", cards)).isInstanceOf(Player.class)
 			.extracting("hand").isEqualTo(cards);
@@ -54,5 +55,14 @@ class PlayerTest {
 	@MethodSource("provideUndrawablePlayer")
 	void canDraw_CurrentScoreMoreThanDrawableMaxScore_ReturnFalse(Player player) {
 		assertThat(player.canDraw()).isFalse();
+	}
+
+	@Test
+	void getInitialHand_PlayerDrawTwoCardsInitially_HasTwoCards() {
+		Deck deck = new Deck(CardFactory.create());
+		Player player = new Player("player");
+		player.draw(deck, BlackjackTable.INITIAL_DRAW_NUMBER);
+
+		assertThat(player.getInitialHand()).hasSize(BlackjackTable.INITIAL_DRAW_NUMBER);
 	}
 }

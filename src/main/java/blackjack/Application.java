@@ -18,9 +18,9 @@ public class Application {
 		Deck deck = new Deck(CardFactory.create());
 		Dealer dealer = new Dealer(Dealer.NAME);
 		List<Player> players = PlayerFactory.create(parsingPlayerNames(InputView.inputPlayerNames()));
-		BlackjackTable blackjackTable = new BlackjackTable(deck);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		BlackjackController blackjackController = new BlackjackController(blackjackTable);
-		blackjackController.playGame(dealer, players);
+		blackjackController.run();
 	}
 }

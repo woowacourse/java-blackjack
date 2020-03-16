@@ -7,76 +7,67 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
 
+import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.exceptions.InvalidReportException;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.PlayerFactory;
-import blackjack.util.StringUtil;
 
 class ReportTest {
+	private Deck deck;
 	private Dealer dealer;
 	private List<Player> players;
 
-	private static Stream<Arguments> provideNullDealerOrNullPlayers() {
-		Dealer dealer = new Dealer(Dealer.NAME);
-		List<Player> players = Arrays.asList(
-			new Player("pobi"),
-			new Player("stitch"));
-
-		return Stream.of(
-			Arguments.of(null, players),
-			Arguments.of(dealer, null),
-			Arguments.of(null, null));
-	}
-
 	@BeforeEach
 	void setUp() {
+		deck = new Deck(CardFactory.create());
+
 		dealer = Dealer.valueOf("dealer", Arrays.asList(
-			new Card(Symbol.EIGHT, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 
 		Player pobi = Player.valueOf("pobi", Arrays.asList(
-			new Card(Symbol.QUEEN, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.QUEEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		Player sony = Player.valueOf("sony", Arrays.asList(
-			new Card(Symbol.EIGHT, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		Player stitch = Player.valueOf("stitch", Arrays.asList(
-			new Card(Symbol.SEVEN, Type.HEART),
-			new Card(Symbol.KING, Type.DIAMOND)));
+			Card.of(Symbol.SEVEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		players = Arrays.asList(pobi, sony, stitch);
 	}
 
 	@Test
 	void from_DealerAndPlayers_GenerateInstance() {
-		assertThat(Report.from(new Dealer("dealer"),
-			PlayerFactory.create(StringUtil.parsingPlayerNames("pobi, sony, stitch"))))
+		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+
+		assertThat(Report.from(blackjackTable))
 			.isInstanceOf(Report.class);
 	}
 
 	@ParameterizedTest
-	@MethodSource("provideNullDealerOrNullPlayers")
-	void validateUser_DealerOrPlayersHaveNullValue_InvalidReportExceptionThrown(Dealer nullDealer,
-		List<Player> nullPlayers) {
-		assertThatThrownBy(() -> Report.from(nullDealer, nullPlayers))
+	@NullSource
+	void validate_DealerOrPlayersHaveNullValue_InvalidReportExceptionThrown(BlackjackTable blackjackTable) {
+		assertThatThrownBy(() -> Report.from(blackjackTable))
 			.isInstanceOf(InvalidReportException.class)
 			.hasMessage(InvalidReportException.EMPTY);
 	}
 
 	@Test
 	void generatePlayersResult_dealerAndPlayers_MapOfPlayerAndResultType() {
-		Report report = Report.from(dealer, players);
+		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+		Report report = Report.from(blackjackTable);
 
 		Map<Player, ResultType> expected = new HashMap<>();
 		expected.put(players.get(0), ResultType.WIN);
@@ -87,7 +78,8 @@ class ReportTest {
 
 	@Test
 	void generateDealerResult_dealerAndPlayers_MapOfResultTypeAndCount() {
-		Report report = Report.from(dealer, players);
+		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+		Report report = Report.from(blackjackTable);
 
 		Map<ResultType, Long> expected = new EnumMap<>(ResultType.class);
 		expected.put(ResultType.WIN, 1L);

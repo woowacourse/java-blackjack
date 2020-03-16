@@ -6,15 +6,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class CardFactory {
-	private static final List<Card> CARDS;
+	private static final Map<String, Card> CARDS;
 
 	static {
 		CARDS = Arrays.stream(Symbol.values())
 			.flatMap(CardFactory::createBy)
-			.collect(collectingAndThen(toList(), Collections::unmodifiableList));
+			.collect(collectingAndThen(toMap(Card::toString, Function.identity()), Collections::unmodifiableMap));
 	}
 
 	private static Stream<Card> createBy(Symbol symbol) {
@@ -22,7 +25,11 @@ public class CardFactory {
 			.map(type -> new Card(symbol, type));
 	}
 
+	static Optional<Card> pickUp(Symbol symbol, Type type) {
+		return Optional.ofNullable(CARDS.get(Card.name(symbol, type)));
+	}
+
 	public static List<Card> create() {
-		return new ArrayList<>(CARDS);
+		return new ArrayList<>(CARDS.values());
 	}
 }

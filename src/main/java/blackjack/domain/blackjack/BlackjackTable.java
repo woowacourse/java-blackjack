@@ -12,25 +12,55 @@ public class BlackjackTable {
 	public static final int INITIAL_DRAW_NUMBER = 2;
 
 	private final Deck deck;
+	private final Dealer dealer;
+	private final List<Player> players;
 
-	public BlackjackTable(Deck deck) {
+	public BlackjackTable(Deck deck, Dealer dealer, List<Player> players) {
 		this.deck = deck;
+		this.dealer = dealer;
+		this.players = players;
 	}
 
-	public List<User> collectToUsersFrom(Dealer dealer, List<Player> players) {
+	public void setUp() {
+		for (User user : collectToUsers()) {
+			user.draw(deck, INITIAL_DRAW_NUMBER);
+		}
+	}
+
+	public List<User> collectToUsers() {
 		List<User> users = new ArrayList<>();
 		users.add(dealer);
 		users.addAll(players);
 		return users;
 	}
 
-	public void drawInitialCards(List<User> users) {
-		for (User user : users) {
-			user.draw(deck, INITIAL_DRAW_NUMBER);
+	public void playWith(UserDecisions userDecisions) {
+		for (Player player : players) {
+			drawCardFrom(player, userDecisions);
+		}
+		drawCardFrom(dealer, userDecisions);
+
+	}
+
+	private void drawCardFrom(Player player, UserDecisions userDecisions) {
+		while (player.canDraw() && userDecisions.isHit(player)) {
+			player.draw(deck);
+			userDecisions.handStatus(player);
 		}
 	}
 
-	public void drawCardFrom(User user) {
-		user.draw(deck);
+	private void drawCardFrom(Dealer dealer, UserDecisions userDecisions) {
+		while (dealer.canDraw()) {
+			dealer.draw(deck);
+			userDecisions.dealerChoice();
+		}
+	}
+
+	public Dealer getDealer() {
+		return dealer;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
 	}
 }

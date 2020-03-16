@@ -1,16 +1,13 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.*;
-import static blackjack.view.OutputView.*;
-
 import java.util.List;
 
 import blackjack.domain.blackjack.BlackjackTable;
-import blackjack.domain.blackjack.DrawOpinion;
+import blackjack.domain.blackjack.UserDecisions;
 import blackjack.domain.result.Report;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackController {
 	private final BlackjackTable blackjackTable;
@@ -19,50 +16,18 @@ public class BlackjackController {
 		this.blackjackTable = blackjackTable;
 	}
 
-	public void playGame(Dealer dealer, List<Player> players) {
-		List<User> users = blackjackTable.collectToUsersFrom(dealer, players);
+	public void run() {
+		List<User> users = blackjackTable.collectToUsers();
+		UserDecisions userDecisions =
+			new UserDecisions(InputView::inputChoiceFrom, OutputView::printUserHand, OutputView::printDealerDrawCard);
 
-		drawInitialCardsFrom(users);
-		continueDrawCardsEach(dealer, players);
+		blackjackTable.setUp();
+		OutputView.printUsersInitialDraw(BlackjackTable.INITIAL_DRAW_NUMBER, users);
 
-		printUsersCardsAndScore(users);
+		blackjackTable.playWith(userDecisions);
 
-		Report blackJackReport = Report.from(dealer, players);
-		printBlackjackReport(blackJackReport);
-	}
-
-	private void drawInitialCardsFrom(List<User> users) {
-		blackjackTable.drawInitialCards(users);
-		printUsersInitialDraw(BlackjackTable.INITIAL_DRAW_NUMBER, users);
-	}
-
-	private void continueDrawCardsEach(Dealer dealer, List<Player> players) {
-		for (Player player : players) {
-			drawCardsFrom(player);
-		}
-		drawCardsFrom(dealer);
-	}
-
-	private void drawCardsFrom(Player player) {
-		while (canDraw(player) && wantDraw(player)) {
-			blackjackTable.drawCardFrom(player);
-			printUserHand(player, player.getHand());
-		}
-	}
-
-	private boolean canDraw(User user) {
-		return user.canDraw();
-	}
-
-	private boolean wantDraw(Player player) {
-		return DrawOpinion.of(inputDrawOpinion(player))
-			.isYes();
-	}
-
-	private void drawCardsFrom(Dealer dealer) {
-		while (canDraw(dealer)) {
-			blackjackTable.drawCardFrom(dealer);
-			printDealerDrawCard();
-		}
+		Report blackJackReport = Report.from(blackjackTable);
+		OutputView.printUsersCardsAndScore(users);
+		OutputView.printBlackjackReport(blackJackReport);
 	}
 }

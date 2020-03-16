@@ -54,9 +54,9 @@ class StringUtilTest {
 	@Test
 	void joinCards_CardList_JoinCardsToString() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.TWO, Type.HEART),
-			new Card(Symbol.EIGHT, Type.DIAMOND)
+			Card.of(Symbol.ACE, Type.CLUB),
+			Card.of(Symbol.TWO, Type.HEART),
+			Card.of(Symbol.EIGHT, Type.DIAMOND)
 		);
 
 		String expected = "A클럽, 2하트, 8다이아몬드";

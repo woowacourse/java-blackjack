@@ -21,7 +21,6 @@ public class Player extends User {
 
 	@Override
 	public boolean canDraw() {
-		// NOTE : 의인화?!
 		return hand.calculateScore().isLowerThan(PLAYER_DRAWABLE_MAX_SCORE);
 	}
 

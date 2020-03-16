@@ -19,12 +19,26 @@ public class Hand {
 	}
 
 	public Score calculateScore() {
-		Score score = Score.ZERO;
+		Score score = cards.stream()
+			.map(Score::valueOf)
+			.reduce(Score.ZERO, Score::add);
+		return aceHandledScore(score);
+	}
 
-		for (Card card : cards) {
-			score = score.add(card);
+	private Score aceHandledScore(Score score) {
+		if (hasAce() && isNotBustBy(score)) {
+			score = score.add(Score.ADDITIONAL_ACE_SCORE);
 		}
 		return score;
+	}
+
+	private boolean isNotBustBy(Score score) {
+		return score.add(Score.ADDITIONAL_ACE_SCORE).getScore() < Score.BUST_SCORE;
+	}
+
+	private boolean hasAce() {
+		return cards.stream()
+			.anyMatch(Card::isAce);
 	}
 
 	public Score calculateBustHandledScore() {

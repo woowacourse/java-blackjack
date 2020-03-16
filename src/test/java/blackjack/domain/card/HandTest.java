@@ -16,7 +16,7 @@ class HandTest {
 	@Test
 	void add_Card_AddCardToHand() {
 		Hand hand = new Hand();
-		Card card = new Card(Symbol.ACE, Type.CLUB);
+		Card card = Card.of(Symbol.ACE, Type.CLUB);
 		hand.add(card);
 
 		assertThat(hand).extracting("cards").asList().contains(card);
@@ -26,8 +26,8 @@ class HandTest {
 	void add_CardList_AddCardsToHand() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
+			Card.of(Symbol.ACE, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
 		hand.add(cards);
 
 		assertThat(hand).extracting("cards").asList().containsAll(cards);
@@ -37,8 +37,8 @@ class HandTest {
 	void calculateScore_SumCards() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.TWO, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
+			Card.of(Symbol.TWO, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
 		hand.add(cards);
 
 		Score expected = Score.valueOf(10);
@@ -49,8 +49,20 @@ class HandTest {
 	void calculateScore_WithAceCard_SumCards() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
+			Card.of(Symbol.TWO, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
+		hand.add(cards);
+
+		Score expected = Score.valueOf(10);
+		assertThat(hand.calculateScore()).isEqualTo(expected);
+	}
+
+	@Test
+	void aceHandledScore_InputScore_ReturnAceHandledScore() {
+		Hand hand = new Hand();
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.ACE, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
 		hand.add(cards);
 
 		Score expected = Score.valueOf(19);
@@ -61,9 +73,9 @@ class HandTest {
 	void calculateBustHandledScore_BustScore_ReturnZeroScore() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.JACK, Type.DIAMOND),
-			new Card(Symbol.QUEEN, Type.HEART),
-			new Card(Symbol.TWO, Type.SPADE));
+			Card.of(Symbol.JACK, Type.DIAMOND),
+			Card.of(Symbol.QUEEN, Type.HEART),
+			Card.of(Symbol.TWO, Type.SPADE));
 		hand.add(cards);
 
 		Score expected = Score.ZERO;

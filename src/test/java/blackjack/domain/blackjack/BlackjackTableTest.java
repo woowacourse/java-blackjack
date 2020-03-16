@@ -6,17 +6,15 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -38,55 +36,57 @@ class BlackjackTableTest {
 
 	@Test
 	void BlackjackTable_InputDeck_GenerateInstance() {
-		Assertions.assertThat(new BlackjackTable(deck)).isInstanceOf(BlackjackTable.class);
+		assertThat(new BlackjackTable(deck, dealer, players)).isInstanceOf(BlackjackTable.class);
 	}
 
 	@Test
-	void collectToUsersFrom_DealerAndPlayers_ReturnUserList() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck);
+	void setUp_DealerAndPlayer_DrawInitialCardsForEachUsers() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+		blackjackTable.setUp();
 
-		List<User> expected = new ArrayList<>();
-		expected.add(dealer);
-		expected.addAll(players);
-		assertThat(blackjackTable.collectToUsersFrom(dealer, players)).isEqualTo(expected);
-	}
-
-	@Test
-	void drawInitialCards_DealerAndPlayer_DrawInitialCardsForEachUsers() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck);
-		List<User> users = blackjackTable.collectToUsersFrom(dealer, players);
-		blackjackTable.drawInitialCards(users);
-
-		// NOTE: 2020-03-15 테스트에서 forEach를 사용해도 괜찮은가
-		for (User user : users) {
+		for (User user : blackjackTable.collectToUsers()) {
 			assertThat(user).extracting("hand").asList().hasSize(INITIAL_DRAW_NUMBER);
 		}
 	}
 
-	@ParameterizedTest
-	@MethodSource("provideDealerOrPlayer")
-	void drawCardFrom_User_DrawOneCardAndReturnDrownCards(User user) {
-		BlackjackTable blackjackTable = new BlackjackTable(deck);
-		blackjackTable.drawCardFrom(user);
+	@Test
+	void collectToUsers_DealerAndPlayers_ReturnUserList() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
-		assertThat(user).extracting("hand").asList().hasSize(INITIAL_DRAW_NUMBER + 1);
+		List<User> expected = new ArrayList<>();
+		expected.add(dealer);
+		expected.addAll(players);
+		assertThat(blackjackTable.collectToUsers()).isEqualTo(expected);
 	}
 
-	private static Stream<Arguments> provideDealerOrPlayer() {
-		Deck deck = new Deck(CardFactory.create());
+	@Test
+	void playWith_UserDecisions_PlayGameWithUserDecisions() {
+		Dealer drownDealer = Dealer.valueOf("dealer", Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.SPADE),
+			Card.of(Symbol.FOUR, Type.DIAMOND)));
+		List<Player> drownPlayers = Arrays.asList(
+			Player.valueOf("pobi", Arrays.asList(
+				Card.of(Symbol.TEN, Type.CLUB),
+				Card.of(Symbol.ACE, Type.SPADE),
+				Card.of(Symbol.KING, Type.DIAMOND))),
+			Player.valueOf("pobi", Arrays.asList(
+				Card.of(Symbol.TEN, Type.CLUB),
+				Card.of(Symbol.ACE, Type.SPADE),
+				Card.of(Symbol.KING, Type.DIAMOND))),
+			Player.valueOf("pobi", Arrays.asList(
+				Card.of(Symbol.TEN, Type.CLUB),
+				Card.of(Symbol.ACE, Type.SPADE),
+				Card.of(Symbol.KING, Type.DIAMOND))));
+		BlackjackTable blackjackTable = new BlackjackTable(deck, drownDealer, drownPlayers);
+		UserDecisions userDecisions = new UserDecisions(
+			(Player player) -> "y",
+			(User user, List<Card> cards) -> System.out.println(),
+			System.out::println);
+		blackjackTable.playWith(userDecisions);
 
-		Dealer dealer = new Dealer(Dealer.NAME);
-		dealer.draw(deck, INITIAL_DRAW_NUMBER);
-
-		Player pobi = new Player("pobi");
-		pobi.draw(deck, INITIAL_DRAW_NUMBER);
-
-		Player sony = new Player("sony");
-		sony.draw(deck, INITIAL_DRAW_NUMBER);
-
-		return Stream.of(
-			Arguments.of(dealer),
-			Arguments.of(pobi),
-			Arguments.of(sony));
+		for (User user : blackjackTable.collectToUsers()) {
+			assertThat(user).extracting("hand").asList().hasSize(4);
+		}
 	}
 }
