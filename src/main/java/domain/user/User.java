@@ -51,4 +51,8 @@ public abstract class User {
     public int getScore() {
         return handCard.getScore();
     }
+
+    public boolean isOver() {
+        return handCard.isOver();
+    }
 }

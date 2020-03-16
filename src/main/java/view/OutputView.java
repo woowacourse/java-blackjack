@@ -34,6 +34,11 @@ public class OutputView {
         System.out.println(user.getStatus());
     }
 
+    public static void printStatus(Dealer dealer) {
+        String dealerStatus = dealer.getStatus().split(",")[0];
+        System.out.println(dealerStatus);
+    }
+
     public static void printStatus(Players players) {
         for (String status : players.getStatus()) {
             System.out.println(status);

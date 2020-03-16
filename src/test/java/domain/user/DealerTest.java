@@ -24,6 +24,6 @@ public class DealerTest {
         type = Type.valueOf("HEART");
         symbol = Symbol.valueOf("SEVEN");
         dealer.draw(CardFactory.of(type, symbol));
-        Assertions.assertThat(dealer.getFirstStatus()).isEqualTo("딜러: A스페이드");
+        Assertions.assertThat(dealer.getStatus()).isEqualTo("딜러: A스페이드");
     }
 }
