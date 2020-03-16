@@ -13,8 +13,6 @@ import view.OutputView;
 
 public class BlackJackGameController {
 
-    private static final int DEALER_STANDARD_SCORE = 16;
-
     public static void run() {
         Players players = setPlayers();
         Dealer dealer = new Dealer();
@@ -29,7 +27,7 @@ public class BlackJackGameController {
         for (Player player : players.getPlayers()) {
             performPlayersHit(cardDeck, player);
         }
-        performDealerHit(dealer, cardDeck);
+        OutputView.printDealerAdditionalCard(dealer.performHit(cardDeck));
 
         OutputView.printFinalScoreBoard(dealer, players);
         Map<String, Result> userResultMap = players.putResultIntoMap(dealer);
@@ -55,13 +53,6 @@ public class BlackJackGameController {
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             return setPlayers();
-        }
-    }
-
-    static void performDealerHit(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.calculateScore() <= DEALER_STANDARD_SCORE) {
-            OutputView.printDealerAdditionalCard();
-            dealer.receive(cardDeck);
         }
     }
 

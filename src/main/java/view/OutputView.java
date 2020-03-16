@@ -34,8 +34,11 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerAdditionalCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+    public static void printDealerAdditionalCard(int hitNumber) {
+        for (int i = 0; i < hitNumber; i++) {
+            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+        System.out.println();
     }
 
     private static void printFinalScore(Participant participant) {
