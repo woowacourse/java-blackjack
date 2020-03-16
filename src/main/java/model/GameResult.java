@@ -5,16 +5,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    Players players;
-    Dealer dealer;
-    Map<Player, Result> playerResult = new LinkedHashMap<>();
-    Map<Result, Integer> dealerResult = new LinkedHashMap<>();
+    public static final int DEFAULT_RESULT = 0;
+    
+    private Players players;
+    private Dealer dealer;
+    private Map<Player, Result> playerResult = new LinkedHashMap<>();
+    private Map<Result, Integer> dealerResult = new LinkedHashMap<>();
 
     public GameResult(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
         for(Result result : Result.values()){
-            dealerResult.put(result, 0);
+            dealerResult.put(result, DEFAULT_RESULT);
         }
     }
 

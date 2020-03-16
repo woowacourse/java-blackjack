@@ -3,23 +3,17 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static controller.BlackJackGame.BLACK_JACK_COUNT;
-import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
+import static controller.BlackJackGame.*;
 
 public abstract class User {
     public static final String DELIMITER = ", ";
-    public static final String DEALER_NAME = "딜러";
 
     protected final String name;
     protected final CardHand cardHand;
 
-    public User(Deck deck) {
-        this(DEALER_NAME, deck);
-    }
-
-    public User(String name, Deck deck) {
+    public User(String name, Deck deck, int initialDrawCount) {
         this.name = name;
-        this.cardHand = deck.draw(INITIAL_DRAW_COUNT);
+        this.cardHand = deck.draw(initialDrawCount);
     }
 
     public static int compare(final User dealer, final User player) {
@@ -35,8 +29,8 @@ public abstract class User {
         return String.join(DELIMITER, cardNames);
     }
 
-    public void drawCard(CardHand cardHand) {
-        for (Card drawCard : cardHand) {
+    public void drawCard(Deck deck, int drawCount) {
+        for (Card drawCard : deck.draw(drawCount)) {
             this.cardHand.addCard(drawCard);
         }
     }

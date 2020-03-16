@@ -10,12 +10,18 @@ public class BlackJackGame {
     public static final int HIT_BOUNDARY = 16;
     public static final int BLACK_JACK_COUNT = 21;
 
-    public static void play(Players players, Dealer dealer, Deck deck) {
+    public static void play() {
+        Deck deck = new Deck(CardFactory.createCardList());
+        PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
+        Players players = new Players(playerNames, deck, INITIAL_DRAW_COUNT);
+        Dealer dealer = new Dealer(deck, INITIAL_DRAW_COUNT);
+
         OutputView.printInitialCards(players, dealer);
         OutputView.printUsersCard(players, dealer);
         drawCardToPlayers(players, deck);
         hitOrStayForDealer(dealer, deck);
         OutputView.printFinalCardHandResult(players, dealer);
+
         GameResult gameResult = new GameResult(players, dealer);
         gameResult.calculateResults();
         OutputView.printResult(gameResult);
@@ -33,7 +39,7 @@ public class BlackJackGame {
             if(!answer.getTrueOrFalse()){
                 break;
             }
-            player.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
+            player.drawCard(deck, ADDITIONAL_DRAW_COUNT);
             OutputView.printPlayerCard(player);
         }
     }
@@ -41,7 +47,7 @@ public class BlackJackGame {
     private static void hitOrStayForDealer(Dealer dealer, Deck deck) {
         if (dealer.isHitBound()) {
             OutputView.printDealerDraw(dealer);
-            dealer.drawCard(deck.draw(ADDITIONAL_DRAW_COUNT));
+            dealer.drawCard(deck, ADDITIONAL_DRAW_COUNT);
         }
     }
 }
