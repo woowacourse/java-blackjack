@@ -3,7 +3,6 @@ package dto;
 import domain.player.Player;
 import domain.player.Players;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

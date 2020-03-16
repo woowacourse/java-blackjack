@@ -24,10 +24,6 @@ public class PlayerFactory {
         players.addAll(playerNames.stream()
                 .map(name -> new User(name, cardDeck.initialDraw()))
                 .collect(Collectors.toList()));
-//        List<Player> players = playerNames.stream()
-//                .map(name -> new User(name, cardDeck.initialDraw()))
-//                .collect(Collectors.toList());
-//        players.add(new Dealer(cardDeck.initialDraw()));
         return new Players(players);
     }
 }
