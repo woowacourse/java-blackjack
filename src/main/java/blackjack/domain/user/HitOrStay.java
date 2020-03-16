@@ -8,7 +8,6 @@ public enum HitOrStay {
     STAY("n");
 
     private String input;
-    private boolean toHit;
 
     HitOrStay (String input) {
         this.input = input;
@@ -22,6 +21,6 @@ public enum HitOrStay {
     }
 
     public boolean isToHit() {
-        return toHit;
+        return this == HIT;
     }
 }
