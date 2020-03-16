@@ -2,7 +2,7 @@ package domain.card;
 
 import java.util.Objects;
 
-public class Card implements Comparable<Card> {
+public class Card {
 	private final Type type;
 	private final Symbol symbol;
 
@@ -25,11 +25,6 @@ public class Card implements Comparable<Card> {
 
 	public Symbol getSymbol() {
 		return symbol;
-	}
-
-	@Override
-	public int compareTo(Card other) {
-		return Integer.compare(symbol.getDefaultScore(), other.symbol.getDefaultScore());
 	}
 
 	@Override
