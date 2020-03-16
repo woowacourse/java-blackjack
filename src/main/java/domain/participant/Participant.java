@@ -10,8 +10,8 @@ public class Participant implements ParticipantInterface {
     private static final int INITIAL_CARD_NUMBER = 2;
     private static final int MAX_SCORE = 21;
 
-    String name;
-    ParticipantCards cards;
+    private String name;
+    private ParticipantCards cards;
 
     Participant(String name) {
         this.name = name;
@@ -56,7 +56,7 @@ public class Participant implements ParticipantInterface {
         if (o == null || getClass() != o.getClass())
             return false;
         Player player = (Player)o;
-        return Objects.equals(name, player.name);
+        return Objects.equals(name, player.getName());
     }
 
     @Override
