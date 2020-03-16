@@ -60,7 +60,7 @@ public class OutputView {
         printPlayersResult(result);
     }
 
-    public static void printDealerResult(Map<String, Result> userResultMap) {
+    private static void printDealerResult(Map<String, Result> userResultMap) {
         StringBuilder sb = new StringBuilder("딜러: ");
         int dealerWin = 0;
         int dealerDraw = 0;
@@ -80,7 +80,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void printPlayersResult(Map<String, Result> userResultMap) {
+    private static void printPlayersResult(Map<String, Result> userResultMap) {
         for (String playerName : userResultMap.keySet()) {
             System.out.println(playerName + ": " + userResultMap.get(playerName));
         }

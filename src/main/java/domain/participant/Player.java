@@ -19,7 +19,7 @@ public class Player extends Participant {
         if (this.isBust() || isLowerThanDealerScore(dealer)) {
             return Result.패;
         }
-        if (dealer.isBust() || !isLowerThanDealerScore(dealer)) {
+        if (dealer.isBust() || isHigherThanDealerScore(dealer)) {
             return Result.승;
         }
         return Result.무;
@@ -28,5 +28,11 @@ public class Player extends Participant {
     private boolean isLowerThanDealerScore(Dealer dealer) {
         return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() < dealer.calculateScore());
     }
+
+    private boolean isHigherThanDealerScore(Dealer dealer) {
+        return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() > dealer.calculateScore());
+    }
+
+
 
 }

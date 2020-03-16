@@ -11,7 +11,7 @@ import view.OutputView;
 
 public class BlackJackGameController {
 
-    public static final int CRITERION = 21;
+    private static final int CRITERION = 21;
 
     public static void run() {
         Players players = setPlayers();

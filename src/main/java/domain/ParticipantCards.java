@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.card.Symbol.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +11,7 @@ public class ParticipantCards {
     private static final int MAX_SCORE = 21;
     private static final int ACE_BONUS = 10;
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int ACE_SCORE = 1;
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -30,7 +29,7 @@ public class ParticipantCards {
     }
 
     private boolean checkIfAce(Card card) {
-        return card.equals(ACE);
+        return card.getScore() == ACE_SCORE;
     }
 
     private int calculateFinalScore(int score, boolean containAce) {

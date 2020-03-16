@@ -1,4 +1,4 @@
-package domain.utils;
+package utils;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,9 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import utils.InputUtils;
-
-public class InputUtilsTest {
+class InputUtilsTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"u", "1", ""})

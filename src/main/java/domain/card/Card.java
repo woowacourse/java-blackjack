@@ -9,12 +9,12 @@ public class Card {
         this.shape = shape;
     }
 
+    public int getScore() {
+        return symbol.getScore();
+    }
+
     @Override
     public String toString() {
         return symbol + shape.toString();
-    }
-
-    public int getScore() {
-        return symbol.getScore();
     }
 }

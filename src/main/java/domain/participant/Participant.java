@@ -3,6 +3,7 @@ package domain.participant;
 import java.util.Objects;
 
 import domain.ParticipantCards;
+import domain.card.Card;
 import domain.card.CardDeck;
 
 public class Participant implements ParticipantInterface {
@@ -25,6 +26,10 @@ public class Participant implements ParticipantInterface {
 
     public void receive(CardDeck cardDeck) {
         cards.add(cardDeck.draw());
+    }
+
+    void receiveForTest(Card card) {
+        cards.add(card);
     }
 
     public int calculateScore() {

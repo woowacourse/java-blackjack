@@ -9,10 +9,6 @@ public class Dealer extends Participant {
         super("딜러");
     }
 
-    public String toStringFirstDraw() {
-        return name + " : " + cards.toStringOneCard();
-    }
-
     public int performHit(CardDeck cardDeck) {
         int hitNumber = 0;
         while (this.calculateScore() <= DEALER_STANDARD_SCORE) {
@@ -20,5 +16,9 @@ public class Dealer extends Participant {
             this.receive(cardDeck);
         }
         return hitNumber;
+    }
+
+    public String toStringFirstDraw() {
+        return name + " : " + cards.toStringOneCard();
     }
 }
