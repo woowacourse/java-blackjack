@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.WinOrLose;
+import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -101,11 +101,11 @@ public class OutputView {
     }
 
     private static void printPlayerResults(GameResult gameResult) {
-        Map<Player, WinOrLose> playerResults = gameResult.getPlayerResults();
+        Map<Player, ResultType> playerResults = gameResult.getPlayerResults();
         Set<Player> players = playerResults.keySet();
         for (Player player : players) {
-            WinOrLose winOrLose = playerResults.get(player);
-            System.out.printf("%s : %s" + NEW_LINE, player.getName(), winOrLose.getName());
+            ResultType resultType = playerResults.get(player);
+            System.out.printf("%s : %s" + NEW_LINE, player.getName(), resultType.getName());
         }
     }
 

@@ -10,21 +10,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameResult {
-    private final List<WinOrLose> dealerResults;
-    private final Map<Player, WinOrLose> playerResults;
+    private final List<ResultType> dealerResults;
+    private final Map<Player, ResultType> playerResults;
 
-    private GameResult(Map<Player, WinOrLose> playerResults) {
+    private GameResult(Map<Player, ResultType> playerResults) {
         this.dealerResults = playerResults.values().stream()
-                .map(WinOrLose::reverse)
+                .map(ResultType::reverse)
                 .collect(Collectors.toList());
         this.playerResults = playerResults;
     }
 
     public static GameResult of(Dealer dealer, Players players) {
-        Map<Player, WinOrLose> userResults = new HashMap<>();
+        Map<Player, ResultType> userResults = new HashMap<>();
 
         for (Player player : players.getPlayers()) {
-            userResults.put(player, player.isWinner(dealer));
+            userResults.put(player, PlayerResult.of(player, dealer));
         }
 
         return new GameResult(userResults);
@@ -32,7 +32,7 @@ public class GameResult {
 
     public long getDealerWinCount() {
         return dealerResults.stream()
-                .filter(dealerResult -> dealerResult == WinOrLose.WIN)
+                .filter(dealerResult -> dealerResult == ResultType.WIN)
                 .count();
     }
 
@@ -40,7 +40,7 @@ public class GameResult {
         return dealerResults.size() - getDealerWinCount();
     }
 
-    public Map<Player, WinOrLose> getPlayerResults() {
+    public Map<Player, ResultType> getPlayerResults() {
         return playerResults;
     }
 }

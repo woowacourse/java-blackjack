@@ -22,7 +22,6 @@ public abstract class AbstractUser implements User {
         this.cards = new ArrayList<>();
     }
 
-
     @Override
     public boolean isBust() {
         return calculateScore().isOver(MAX_SCORE_NUMBER_NOT_BUST);
@@ -99,5 +98,17 @@ public abstract class AbstractUser implements User {
     @Override
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isOverScore(User other) {
+        return calculateScore().isOver(other.calculateScore());
+    }
+
+    public boolean isUnderScore(User other) {
+        return !isOverScore(other);
+    }
+
+    public boolean isSameScore(User other) {
+        return calculateScore().equals(other.calculateScore());
     }
 }
