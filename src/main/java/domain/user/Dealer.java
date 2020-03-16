@@ -17,6 +17,6 @@ public class Dealer extends User {
         if (getScore() > BLACKJACK_FULL_SCORE) {
             return false;
         }
-        return user.getScore() > BLACKJACK_FULL_SCORE || getScore() >= user.getScore();
+        return user.getScore() > BLACKJACK_FULL_SCORE || handCard.getScore() >= user.getScore();
     }
 }

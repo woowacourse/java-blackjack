@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.Names;
+import domain.card.CardDeck;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,5 +19,11 @@ public class Players {
 
     public List<Player> get() {
         return Collections.unmodifiableList(players);
+    }
+
+    public void firstDraw(CardDeck cardDeck) {
+        for (Player player : players) {
+            player.firstDraw(cardDeck);
+        }
     }
 }
