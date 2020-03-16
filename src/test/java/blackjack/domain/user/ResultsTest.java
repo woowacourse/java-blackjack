@@ -31,28 +31,28 @@ class ResultsTest {
 	}
 
 	@Test
-	void of() {
+	void of_HasThreeMember_IsNotNull() {
 		assertThat(results).isNotNull();
 	}
 
 	@Test
-	void getResult_IsReturnTrue() {
+	void getResult_ResultOfIndexIsWin_IsReturnTrue() {
 		assertThat(results.getResult(players.getPlayers().get(1))).isTrue();
 	}
 
 	@ParameterizedTest
 	@ValueSource(ints = {0, 2})
-	void getResult_IsReturnFalse(int index) {
+	void getResult_ResultOfIndexIsLose_IsReturnFalse(int index) {
 		assertThat(results.getResult(players.getPlayers().get(index))).isFalse();
 	}
 
 	@Test
-	void getDealerWin() {
+	void getDealerWin_DealerWonTwice_IsEqualToTwo() {
 		assertThat(results.getDealerWin()).isEqualTo(2);
 	}
 
 	@Test
-	void getDealerLose() {
+	void getDealerLose_DealerLoseOnce_IsEqualToOne() {
 		assertThat(results.getDealerLose()).isEqualTo(1);
 	}
 }
