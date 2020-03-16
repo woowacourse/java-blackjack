@@ -20,6 +20,11 @@ public class BlackjackController {
 		Dealer dealer = new Dealer();
 		List<User> players = createPlayers();
 
+		proceedGame(dealer, players);
+		printResult(dealer, players);
+	}
+
+	private void proceedGame(Dealer dealer, List<User> players) {
 		GameTable gameTable = new GameTable(dealer, players);
 		gameTable.drawAtFirst();
 		printCardsAtFirst(dealer, players, FIRST_DRAW_COUNT);
@@ -28,8 +33,6 @@ public class BlackjackController {
 		drawDealerUntilEndTurn(gameTable, dealer);
 
 		printUserCards(dealer, players);
-
-		printResult(dealer, players);
 	}
 
 	private void printUserCards(Dealer dealer, List<User> players) {
