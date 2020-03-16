@@ -30,14 +30,14 @@ public class CardFactory {
 
     public static Card of(Type type, Symbol symbol) {
         for (Card card : cards) {
-            if (card.equals(new Card(type, symbol))) {
+            if (card.isSameByElements(type, symbol)) {
                 return card;
             }
         }
         throw new IllegalArgumentException("값을 찾을 수 없습니다.");
     }
 
-    public static CardDeck createCardDeck(){
+    public static CardDeck createCardDeck() {
         return new CardDeck(new LinkedList<>(cards));
     }
 }

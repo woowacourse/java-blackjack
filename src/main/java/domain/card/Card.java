@@ -46,4 +46,8 @@ public class Card {
     public String getName() {
         return symbol.getName() + type.getType();
     }
+
+    public boolean isSameByElements(Type type, Symbol symbol) {
+        return this.type == type && this.symbol == symbol;
+    }
 }

@@ -48,4 +48,8 @@ public class HandCard {
     public boolean isOver() {
         return BLACKJACK_FULL_SCORE < getScore();
     }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
 }
