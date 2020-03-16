@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-public class Dealer extends AbstractUser {
+public class Dealer extends User {
     public static final String NAME = "딜러";
     public static final int MINIMUM_NUMBER_TO_STAY = 17;
 
