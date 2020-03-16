@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static blackjack.domain.card.Symbol.*;
+import static blackjack.domain.card.Type.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
@@ -18,44 +20,44 @@ public class CardTest {
 
 	@BeforeAll
 	static void beforeAll() {
-		aceClub = Card.of(Symbol.ACE, Type.CLUB);
-		twoHeart = Card.of(Symbol.TWO, Type.HEART);
-		threeDiamond = Card.of(Symbol.THREE, Type.DIAMOND);
-		kingSpade = Card.of(Symbol.KING, Type.SPADE);
+		aceClub = Card.of(ACE, CLUB);
+		twoHeart = Card.of(TWO, HEART);
+		threeDiamond = Card.of(THREE, DIAMOND);
+		kingSpade = Card.of(KING, SPADE);
 	}
 
 	@ParameterizedTest
-	@MethodSource("Card_IsNotNull")
-	void Card_IsNotNull(Card card) {
+	@MethodSource("of_ValidInput_IsNotNull")
+	void of_ValidInput_IsNotNull(Card card) {
 		assertThat(card).isNotNull();
 	}
 
-	static Stream<Card> Card_IsNotNull() {
+	static Stream<Card> of_ValidInput_IsNotNull() {
 		return Stream.of(aceClub, twoHeart, threeDiamond, kingSpade);
 	}
 
 	@Test
-	void isAce_IsTrue() {
+	void isAce_AceClub_IsTrue() {
 		assertThat(aceClub.isAce()).isTrue();
 	}
 
 	@ParameterizedTest
-	@MethodSource("isAce_IsFalse")
-	void isAce_IsFalse(Card card) {
+	@MethodSource("isAce_NotAce_IsFalse")
+	void isAce_NotAce_IsFalse(Card card) {
 		assertThat(card.isAce()).isFalse();
 	}
 
-	static Stream<Card> isAce_IsFalse() {
+	static Stream<Card> isAce_NotAce_IsFalse() {
 		return Stream.of(twoHeart, threeDiamond, kingSpade);
 	}
 
 	@ParameterizedTest
-	@MethodSource("getScore")
-	void getScore(Card card, int expect) {
-		assertThat(card.getScore()).isEqualTo(Score.of(expect));
+	@MethodSource("getScore_Card_ReturnScore")
+	void getScore_Card_ReturnScore(Card card, int score) {
+		assertThat(card.getScore()).isEqualTo(Score.of(score));
 	}
 
-	static Stream<Arguments> getScore() {
+	static Stream<Arguments> getScore_Card_ReturnScore() {
 		return Stream.of(Arguments.of(aceClub, 1),
 				Arguments.of(twoHeart, 2),
 				Arguments.of(threeDiamond, 3),
@@ -63,25 +65,25 @@ public class CardTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("equals")
-	void equals(Card card, Card expect) {
+	@MethodSource("equals_Card_isEqualToCardHavingSameValues")
+	void equals_Card_isEqualToCardHavingSameValues(Card card, Card expect) {
 		assertThat(card).isEqualTo(expect);
 	}
 
-	static Stream<Arguments> equals() {
-		return Stream.of(Arguments.of(aceClub, Card.of(Symbol.ACE, Type.CLUB)),
-				Arguments.of(twoHeart, Card.of(Symbol.TWO, Type.HEART)),
-				Arguments.of(threeDiamond, Card.of(Symbol.THREE, Type.DIAMOND)),
-				Arguments.of(kingSpade, Card.of(Symbol.KING, Type.SPADE)));
+	static Stream<Arguments> equals_Card_isEqualToCardHavingSameValues() {
+		return Stream.of(Arguments.of(aceClub, Card.of(ACE, CLUB)),
+				Arguments.of(twoHeart, Card.of(TWO, HEART)),
+				Arguments.of(threeDiamond, Card.of(THREE, DIAMOND)),
+				Arguments.of(kingSpade, Card.of(KING, SPADE)));
 	}
 
 	@ParameterizedTest
-	@MethodSource("getName")
-	void getName(Card card, String expect) {
-		assertThat(card.getName()).isEqualTo(expect);
+	@MethodSource("getName_Card_ReturnCardName")
+	void getName_Card_ReturnCardName(Card card, String cardName) {
+		assertThat(card.getName()).isEqualTo(cardName);
 	}
 
-	static Stream<Arguments> getName() {
+	static Stream<Arguments> getName_Card_ReturnCardName() {
 		return Stream.of(Arguments.of(aceClub, "A 클로버"),
 				Arguments.of(twoHeart, "2 하트"),
 				Arguments.of(threeDiamond, "3 다이아몬드"),
