@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.user.*;
+import blackjack.domain.user.exceptions.AbstractPlayerException;
 import blackjack.domain.user.exceptions.PlayerException;
 import blackjack.domain.user.exceptions.PlayersException;
 import blackjack.domain.user.exceptions.YesOrNoException;
@@ -13,8 +14,7 @@ import blackjack.view.OutputView;
 
 public class Blackjack {
 	public static void main(String[] args) {
-		String playerNames = InputView.inputPlayerNames();
-		Players players = preparePlayers(playerNames);
+		Players players = preparePlayers();
 		Playable dealer = Dealer.dealer();
 		Drawable deck = prepareDeck();
 
@@ -26,18 +26,18 @@ public class Blackjack {
 		finish(players, dealer);
 	}
 
-	private static Players preparePlayers(String playerNames) {
+	private static Players preparePlayers() {
 		Players players;
 		do {
-			players = preparePlayersIfValid(playerNames);
+			players = preparePlayersIfValid();
 		} while (players == null);
 		return players;
 	}
 
-	private static Players preparePlayersIfValid(String playerNames) {
+	private static Players preparePlayersIfValid() {
 		try {
-			return Players.of(playerNames);
-		} catch (PlayersException | PlayerException e) {
+			return Players.of(InputView.inputPlayerNames());
+		} catch (PlayersException | PlayerException |AbstractPlayerException e) {
 			ErrorView.printMessage(e);
 			return null;
 		}
