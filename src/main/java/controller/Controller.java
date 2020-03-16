@@ -36,12 +36,10 @@ public class Controller {
 
     private void drawFirstCards(Dealer dealer, Players players) {
         OutputView.printFirstDrawFormat(dealer, players);
-        dealer.draw(cardDeck.draw());
-        dealer.draw(cardDeck.draw());
+        dealer.firstDraw(cardDeck);
         OutputView.printStatus(dealer.getFirstStatus());
         for (Player player : players.get()) {
-            player.draw(cardDeck.draw());
-            player.draw(cardDeck.draw());
+            player.firstDraw(cardDeck);
             OutputView.printStatus(player.getStatus());
         }
     }
@@ -49,13 +47,13 @@ public class Controller {
     private void drawMoreCards(Dealer dealer) {
         while (dealer.isDrawable(new DealerRule())) {
             OutputView.printDealerDraw(dealer);
-            dealer.draw(cardDeck.draw());
+            dealer.draw(cardDeck);
         }
     }
 
     private void drawMoreCards(Player player) {
         while (player.isDrawable(new PlayerRule()) && askPlayerDraw(player)) {
-            player.draw(cardDeck.draw());
+            player.draw(cardDeck);
             OutputView.printStatus(player.getStatus());
         }
     }

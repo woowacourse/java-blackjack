@@ -42,9 +42,7 @@ public class HandCard {
 
     private boolean hasAce() {
         return cards.stream()
-                .map(Card::isAce)
-                .findAny()
-                .orElse(false);
+                .anyMatch(Card::isAce);
     }
 
     public boolean isOver() {
