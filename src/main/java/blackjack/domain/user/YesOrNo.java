@@ -9,19 +9,12 @@ public class YesOrNo {
 	private final String yesOrNo;
 
 	private YesOrNo(String yesOrNo) {
-		validateIsNotNull(yesOrNo);
 		validateIsYesOrNo(yesOrNo);
 		this.yesOrNo = yesOrNo;
 	}
 
-	private void validateIsNotNull(String yesOrNo) {
-		if (yesOrNo == null) {
-			throw new YesOrNoException("yesOrNo는 null일 수 없습니다.");
-		}
-	}
-
 	private void validateIsYesOrNo(String yesOrNo) {
-		if (yesOrNo.equals(YES) || yesOrNo.equals(NO)) {
+		if (YES.equals(yesOrNo) || NO.equals(yesOrNo)) {
 			return;
 		}
 		throw new YesOrNoException("Y/y나 N/n을 입력해야합니다.");
