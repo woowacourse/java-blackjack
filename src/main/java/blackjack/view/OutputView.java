@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
-import blackjack.domain.user.Users;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,12 +23,21 @@ public class OutputView {
     private static final String LOSES = "패";
     private static final String DEALER = "딜러";
 
-    public static void printInitialCardDistribution(Users users) {
-        System.out.println(parseInitialDistribution(users));
+    public static void printInitialCardDistribution(BlackjackGame game) {
+        List<Player> players = game.getPlayers();
+        System.out.println(players.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(DELIMITER)) +
+                "에게 2장의 카드를 나누었습니다.\n\n" +
+                showInitialCardStatus(game.getDealer()) + "\n" +
+                players.stream()
+                        .map(OutputView::showInitialCardStatus)
+                        .collect(Collectors.joining(NEW_LINE))
+        );
     }
 
-    public static void printCardStatus(User user) {
-        System.out.println(showCardNames(user.getName(), user.getCards()));
+    public static void printUserStatus(User user) {
+        System.out.println(showCurrentCardStatus(user));
     }
 
     public static void printBusted(String name) {
@@ -39,8 +48,8 @@ public class OutputView {
         System.out.println("딜러는 " + Dealer.THRESHOLD + "이하라 한 장의 카드를 더 받았습니다\n");
     }
 
-    public static void printFinalCardScore(Users users) {
-        System.out.println("\n## 결과 : \n" + parseFinalScoreAnnouncement(users) + "\n");
+    public static void printFinalCardScore(BlackjackGame game) {
+        System.out.println("\n## 결과 : \n" + parseFinalScoreAnnouncement(game) + "\n");
     }
 
     public static void printFinalResult(Map<Player, Result> totalResult) {
@@ -49,18 +58,16 @@ public class OutputView {
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
-    private static String parseInitialDistribution(Users users) {
-        List<User> gameUsers = users.getUsers();
-        return gameUsers.stream()
-                .map(User::getName)
-                .collect(Collectors.joining(DELIMITER)) +
-                "에게 2장의 카드를 나누었습니다.\n\n" +
-                gameUsers.stream()
-                        .map(user -> showCardNames(user.getName(), user.getInitialCards()))
-                        .collect(Collectors.joining(NEW_LINE));
+
+    private static String showInitialCardStatus(User user) {
+        return parsePlayerStatus(user.getName(), user.getInitialCards());
     }
 
-    private static String showCardNames(String name, List<Card> cards) {
+    public static String showCurrentCardStatus(User user) {
+        return parsePlayerStatus(user.getName(), user.getCards());
+    }
+
+    private static String parsePlayerStatus(String name, List<Card> cards) {
         return name + CARD + String.join(DELIMITER, parseCardsName(cards));
     }
 
@@ -70,8 +77,8 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static String showFinalCardNames(User user) {
-        return showCardNames(user.getName(), user.getCards()) + RESULT + user.getTotalScore();
+    private static String showFinalResultPerUsers(User user) {
+        return showCurrentCardStatus(user) + RESULT + user.getTotalScore();
     }
 
     private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
@@ -86,10 +93,11 @@ public class OutputView {
         return playerResult;
     }
 
-    private static String parseFinalScoreAnnouncement(Users users) {
-        return users.getUsers().stream()
-                .map(OutputView::showFinalCardNames)
-                .collect(Collectors.joining(NEW_LINE));
+    private static String parseFinalScoreAnnouncement(BlackjackGame game) {
+        return showFinalResultPerUsers(game.getDealer()) + "\n" +
+                game.getPlayers().stream()
+                        .map(OutputView::showFinalResultPerUsers)
+                        .collect(Collectors.joining(NEW_LINE));
     }
 
     private static String parseAllPlayerResults(Map<Player, Result> totalResult) {

@@ -57,5 +57,4 @@ public class DealerTest {
         dealer.receiveInitialCards(cards);
         assertThat(dealer.isUnderThreshold()).isEqualTo(expected);
     }
-
 }
