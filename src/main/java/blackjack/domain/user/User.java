@@ -3,13 +3,13 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
-import blackjack.domain.user.exception.AbstractUserException;
+import blackjack.domain.user.exception.UserException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class User {
+public class User {
     private static final int MAX_SCORE_NUMBER_NOT_BUST = 21;
     private static final int MAX_SCORE_NUMBER_TO_MAXIMIZE = 12;
     private static final Score ADDING_SCORE_TO_MAXIMIZE = new Score(10);
@@ -41,7 +41,7 @@ public abstract class User {
 
     private void validateOwnedCardsEmpty() {
         if (!cards.isEmpty()) {
-            throw new AbstractUserException("가지고 있는 카드가 없을 때에만 초기 카드 2장을 받을 수 있습니다.");
+            throw new UserException("가지고 있는 카드가 없을 때에만 초기 카드 2장을 받을 수 있습니다.");
         }
     }
 
