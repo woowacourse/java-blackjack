@@ -1,6 +1,5 @@
 package domain;
 
-import domain.card.Card;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.Player;
@@ -14,23 +13,15 @@ public class PlayerFactory {
     private PlayerFactory() {
     }
 
-    public static Players create(CardDeck cards, List<String> playerNames) {
-        if (cards == null || (playerNames == null || playerNames.size() == 0)) {
+    public static Players create(CardDeck cardDeck, List<String> playerNames) {
+        if (cardDeck == null || (playerNames == null || playerNames.size() == 0)) {
             throw new NullPointerException("플레이어를 생성할 수 없습니다.");
         }
 
         List<Player> players = playerNames.stream()
-                .map(name -> new User(name, getInitialCards(cards)))
+                .map(name -> new User(name, cardDeck.initialDraw()))
                 .collect(Collectors.toList());
-        players.add(new Dealer(getInitialCards(cards)));
+        players.add(new Dealer(cardDeck.initialDraw()));
         return new Players(players);
-    }
-
-    private static Card[] getInitialCards(CardDeck cards) {
-        Card[] initialCards = new Card[2];
-        for (int i = 0; i < 2; i++) {
-            initialCards[i] = cards.hit();
-        }
-        return initialCards;
     }
 }

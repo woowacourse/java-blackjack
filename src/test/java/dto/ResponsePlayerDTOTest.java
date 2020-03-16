@@ -19,8 +19,8 @@ public class ResponsePlayerDTOTest {
     @DisplayName("create 테스트")
     @Test
     void createTest() {
-        Player player = new User("subway", Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
+        Player player = new User("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
         ResponsePlayerDTO responsePlayerDTO = ResponsePlayerDTO.create(player);
 
         Assertions.assertThat(responsePlayerDTO.getName()).isEqualTo("subway");
@@ -31,12 +31,12 @@ public class ResponsePlayerDTOTest {
     @DisplayName("Players 로 ResponsePlayerDTO List 생성 테스트")
     @Test
     void createResponsePlayerDTOsTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
-        User subway = new User("subway", Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB));
-        User lavine = new User("lavine", Card.of(CardNumber.FIVE, CardSuitSymbol.HEART),
-                Card.of(CardNumber.SIX, CardSuitSymbol.DIAMOND));
+        Dealer dealer = new Dealer(Arrays.asList(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
+        User subway = new User("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
+        User lavine = new User("lavine", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.HEART),
+                Card.of(CardNumber.SIX, CardSuitSymbol.DIAMOND)));
         List<Player> playerList = new ArrayList<>(Arrays.asList(dealer, subway, lavine));
         Players players = new Players(playerList);
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(players);

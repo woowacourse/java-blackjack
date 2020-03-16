@@ -56,7 +56,7 @@ public class BlackjackController {
 
         Answer answer = getAnswer(user);
         while (blackJackRule.isHit(user, answer)) {
-            blackJackRule.hit(user, cardDeck.hit());
+            blackJackRule.hit(user, cardDeck.drawCard());
             OutputView.printUserCard(ResponsePlayerDTO.create(user));
             if (blackJackRule.isUserCardSumOverBlackJack(user)) {
                 break;
@@ -67,7 +67,7 @@ public class BlackjackController {
 
     private static void runDealerBlackJack(CardDeck cardDeck, Dealer dealer) {
         if (dealer.isAdditionalCard()) {
-            blackJackRule.hit(dealer, cardDeck.hit());
+            blackJackRule.hit(dealer, cardDeck.drawCard());
             OutputView.printDealerAdditionalCard();
         }
     }

@@ -11,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class UserTest {
     private CardDeck cardDeck;
     private User user;
@@ -21,7 +24,7 @@ public class UserTest {
         cardDeck = new CardDeck();
         Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
         Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        user = new User("pobi", card1, card2);
+        user = new User("pobi", new ArrayList<>(Arrays.asList(card1, card2)));
         blackJackRule = new BlackJackRule();
     }
 
@@ -30,7 +33,7 @@ public class UserTest {
     void yes_insertCard() {
         Answer answer = Answer.Y;
         if (blackJackRule.isHit(user, answer)) {
-            blackJackRule.hit(user, cardDeck.hit());
+            blackJackRule.hit(user, cardDeck.drawCard());
         }
 
         Assertions.assertThat(user.getCard().getCards().size()).isEqualTo(3);
@@ -41,7 +44,7 @@ public class UserTest {
     void no_insertCard() {
         Answer answer = Answer.N;
         if (blackJackRule.isHit(user, answer)) {
-            blackJackRule.hit(user, cardDeck.hit());
+            blackJackRule.hit(user, cardDeck.drawCard());
         }
 
         Assertions.assertThat(user.getCard().getCards().size()).isEqualTo(2);

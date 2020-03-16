@@ -3,12 +3,15 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
+import java.util.List;
+
 public abstract class Player {
     protected Cards cards;
     protected String name;
 
-    public Player(String name, Card... cards) {
-        if ((name == null || name.trim().length() == 0) || (cards == null || cards.length == 0)) {
+    public Player(String name, List<Card> cards) {
+        if ((name == null || name.trim().length() == 0)
+                || (cards == null || cards.size() == 0)) {
             throw new NullPointerException("플레이어의 이름 또는 카드를 입력하지 않았습니다.");
         }
 

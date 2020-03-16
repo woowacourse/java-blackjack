@@ -25,9 +25,9 @@ public class PlayersTest {
         Card card4 = Card.of(CardNumber.KING, CardSuitSymbol.HEART);
         Card card5 = Card.of(CardNumber.TWO, CardSuitSymbol.CLUB);
         Card card6 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        Player dealer = new Dealer(card1, card2);
-        player1 = new User("lavine", card3, card4);
-        player2 = new User("Subway", card5, card6);
+        Player dealer = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
+        player1 = new User("lavine", new ArrayList<>(Arrays.asList(card3, card4)));
+        player2 = new User("Subway", new ArrayList<>(Arrays.asList(card5, card6)));
         playerList = new ArrayList(Arrays.asList(dealer, player1, player2));
     }
 

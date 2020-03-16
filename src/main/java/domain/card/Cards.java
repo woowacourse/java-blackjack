@@ -30,6 +30,14 @@ public class Cards {
         return new Cards(cardList);
     }
 
+    public static Cards of(List<Card> cards) {
+        if (cards == null || cards.size() == 0) {
+            throw new NullPointerException(NO_CARDS);
+        }
+
+        return new Cards(cards);
+    }
+
     private void validateNullCards() {
         if (this.cards == null || this.cards.isEmpty()) {
             throw new NullPointerException(NO_CARDS);
@@ -60,7 +68,8 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return containAce() && this.cards.size() == BLACK_JACK_SIZE
+        return containAce()
+                && this.cards.size() == BLACK_JACK_SIZE
                 && CardCalculator.calculateAceStrategy(this) == STANDARD_ACE_ELEVEN;
     }
 
