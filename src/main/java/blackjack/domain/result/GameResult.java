@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameResult {
 
@@ -52,7 +53,9 @@ public class GameResult {
         return playerResults;
     }
 
-    public Map<Outcome, Integer> getDealerResults() {
-        return dealerResults;
+    public Map<Outcome, Integer> getDealerResultsNoZero() {
+        return dealerResults.keySet().stream()
+            .filter(outcome -> dealerResults.get(outcome) != 0)
+            .collect(Collectors.toMap(outcome -> outcome, dealerResults::get));
     }
 }

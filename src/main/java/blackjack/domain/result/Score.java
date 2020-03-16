@@ -8,7 +8,7 @@ public class Score {
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK_SCORE = 21;
     private static final int MINIMUM_SCORE_AND_COUNT = 1;
-    private static final boolean DEFAULT_HAS_ACE = false;
+    private static final boolean HAS_NOT_ACE = false;
     private static final String EQUAL_OR_UNDER_MINIMUM_SCORE_OR_COUNT_EXCEPTION_MESSAGE =
         String.format("최소값은 %d이상이어야 합니다.", MINIMUM_SCORE_AND_COUNT);
 
@@ -16,7 +16,7 @@ public class Score {
     private final int count;
 
     public Score(int score) {
-        this(score, DEFAULT_HAS_ACE, MINIMUM_SCORE_AND_COUNT);
+        this(score, HAS_NOT_ACE, MINIMUM_SCORE_AND_COUNT);
     }
 
     public Score(int score, boolean hasAce, int count) {
@@ -47,8 +47,8 @@ public class Score {
         return score;
     }
 
-    public boolean isOverScore(Score score) {
-        return this.score > score.score;
+    public boolean isEqualOrOverScore(Score score) {
+        return this.score >= score.score;
 
     }
 

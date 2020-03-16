@@ -22,7 +22,7 @@ public class CardDeck {
     }
 
     public Card draw() {
-        if (cardDeck.size() == 0) {
+        if (cardDeck.isEmpty()) {
             throw new IndexOutOfBoundsException(CARD_DECK_IS_EMPTY_EXCEPTION_MESSAGE);
         }
         return cardDeck.remove(cardDeck.size() - 1);

@@ -43,10 +43,11 @@ public class GameResultTest {
     @DisplayName("딜러의 승무패를 가져옴")
     @Test
     void checkDealerResult() {
-        Map<Outcome, Integer> dealerResults = gameResult.getDealerResults();
+        Map<Outcome, Integer> dealerResults = gameResult.getDealerResultsNoZero();
         int total = 0;
         for (Outcome outcome : dealerResults.keySet()) {
             total += dealerResults.get(outcome);
+            assertThat(dealerResults.get(outcome) != 0).isTrue();
         }
         assertThat(total).isEqualTo(2);
     }

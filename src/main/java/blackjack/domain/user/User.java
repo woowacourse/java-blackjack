@@ -38,7 +38,7 @@ public abstract class User {
     }
 
     public boolean canDrawCard() {
-        return basesScoreCanDraw.isOverScore(userCards.getScore());
+        return basesScoreCanDraw.isEqualOrOverScore(userCards.getScore());
     }
 
     public String getName() {

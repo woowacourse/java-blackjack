@@ -29,12 +29,6 @@ public class BlackJackApplication {
         printCalculatedResult(participants);
     }
 
-    private static void printCalculatedResult(Participants participants) {
-        GameResult gameResult = new GameResult(participants);
-        OutputView.printUsersCardsAndScore(participants);
-        OutputView.printFinalResult(participants, gameResult);
-    }
-
     private static void distributeFirstCards(Participants participants, CardDeck cardDeck) {
         for (User participant : participants.getParticipants()) {
             participant.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
@@ -45,19 +39,28 @@ public class BlackJackApplication {
 
     private static void drawMoreCards(Participants participants, CardDeck cardDeck) {
         for (Player player : participants.getPlayers()) {
-            drawMorePlayerCard(cardDeck, player);
+            drawMorePlayerCardManual(cardDeck, player);
         }
-        Dealer dealer = participants.getDealer();
-        while (dealer.canDrawCard()) {
-            OutputView.printDealerOneMoreCard();
-            dealer.drawCard(cardDeck);
-        }
+        drawMoreDealerCardAuto(cardDeck, participants.getDealer());
     }
 
-    private static void drawMorePlayerCard(CardDeck cardDeck, Player player) {
+    private static void drawMorePlayerCardManual(CardDeck cardDeck, Player player) {
         while (player.canDrawCard() && InputView.inputMoreCard(player)) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }
+    }
+
+    private static void drawMoreDealerCardAuto(CardDeck cardDeck, Dealer dealer) {
+        while (dealer.canDrawCard()) {
+            OutputView.printDealerOneMoreCard(dealer);
+            dealer.drawCard(cardDeck);
+        }
+    }
+
+    private static void printCalculatedResult(Participants participants) {
+        GameResult gameResult = new GameResult(participants);
+        OutputView.printUsersCardsAndScore(participants);
+        OutputView.printFinalResult(participants, gameResult);
     }
 }
