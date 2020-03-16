@@ -43,7 +43,7 @@ public class InputView {
     }
 
     public static RequestAnswerDTO inputAnswer(ResponsePlayerDTO responsePlayerDTO) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)", responsePlayerDTO.getName());
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)\n", responsePlayerDTO.getName());
         try {
             String answer = SCANNER.nextLine();
             validateAnswer(answer);

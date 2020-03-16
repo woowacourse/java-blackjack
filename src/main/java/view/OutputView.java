@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DELIMITER = ",";
+    private static final String DELIMITER = ", ";
     private static final int DEALER_INDEX = 0;
     private static final int START_USER_INDEX = 1;
 
@@ -23,6 +23,7 @@ public class OutputView {
 
     public static void printInitialResult(List<ResponsePlayerDTO> result) {
         StringBuilder sb = new StringBuilder();
+        sb.append(System.lineSeparator());
         for (int i = 0; i < result.size() - 1; i++) {
             sb.append(result.get(i).getName());
             sb.append(DELIMITER);
@@ -51,10 +52,11 @@ public class OutputView {
     }
 
     public static void printDealerAdditionalCard() {
-        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.\n");
+        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.");
     }
 
     public static void printFinalResult(List<ResponsePlayerDTO> result) {
+        System.out.println();
         for (ResponsePlayerDTO responsePlayerDTO : result) {
             System.out.println(responsePlayerDTO.getName() + "카드: "
                     + responsePlayerDTO.getCardNumbers() + " - 결과: " + responsePlayerDTO.getScore());
@@ -62,7 +64,7 @@ public class OutputView {
     }
 
     public static void printWinningResult(ResponseWinningResultDTO responseWinningResultDTO) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         Map<String, Boolean> winningPlayer = responseWinningResultDTO.getWinningPlayer();
         for (String result : getWinningResult(winningPlayer)) {
             System.out.println(result);

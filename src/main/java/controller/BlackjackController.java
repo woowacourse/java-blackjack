@@ -50,9 +50,18 @@ public class BlackjackController {
     }
 
     private static void runBlackJackPerUser(CardDeck cardDeck, User user) {
-        while (blackJackRule.isHit(user, getAnswer(user))) {
+        if (user.isBlackJack()) {
+            return;
+        }
+
+        Answer answer = getAnswer(user);
+        while (blackJackRule.isHit(user, answer)) {
             blackJackRule.hit(user, cardDeck.hit());
             OutputView.printUserCard(ResponsePlayerDTO.create(user));
+            if (blackJackRule.isUserCardSumOverBlackJack(user)) {
+                break;
+            }
+            answer = getAnswer(user);
         }
     }
 

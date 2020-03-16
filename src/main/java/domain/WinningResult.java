@@ -4,7 +4,7 @@ import domain.player.Dealer;
 import domain.player.Players;
 import domain.player.User;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WinningResult {
@@ -15,7 +15,7 @@ public class WinningResult {
             throw new NullPointerException("결과를 계산할 플레이어가 없습니다.");
         }
 
-        winningPlayer = new HashMap<>();
+        winningPlayer = new LinkedHashMap<>();
 
         Dealer dealer = players.getDealer();
         for (User user : players.getUsers()) {
