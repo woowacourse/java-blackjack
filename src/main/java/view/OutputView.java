@@ -2,6 +2,7 @@ package view;
 
 import java.util.Map;
 
+import domain.PlayerResult;
 import domain.Players;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -52,10 +53,11 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(Map<String, Result> userResultMap) {
+    public static void printFinalResult(PlayerResult playerResult) {
         System.out.println("\n## 최종 승패");
-        printDealerResult(userResultMap);
-        printPlayersResult(userResultMap);
+        Map<String, Result> result = playerResult.getResult();
+        printDealerResult(result);
+        printPlayersResult(result);
     }
 
     public static void printDealerResult(Map<String, Result> userResultMap) {

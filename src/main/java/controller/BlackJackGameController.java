@@ -1,12 +1,10 @@
 package controller;
 
-import java.util.Map;
-
+import domain.PlayerResult;
 import domain.Players;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.result.Result;
 import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
@@ -32,8 +30,8 @@ public class BlackJackGameController {
         OutputView.printDealerAdditionalCard(dealer.performHit(cardDeck));
 
         OutputView.printFinalScoreBoard(dealer, players);
-        Map<String, Result> userResultMap = players.putResultIntoMap(dealer);
-        OutputView.printFinalResult(userResultMap);
+        PlayerResult playerResult = new PlayerResult(players.putResultIntoMap(dealer));
+        OutputView.printFinalResult(playerResult);
     }
 
     private static void performPlayersHit(CardDeck cardDeck, Player player) {
