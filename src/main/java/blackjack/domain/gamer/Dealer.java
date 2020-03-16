@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import static blackjack.domain.rule.Score.SCORES;
 
 public class Dealer extends Gamer {
 
@@ -8,7 +9,10 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDrawCard() {
-        return calculateSum() <= DRAW_THRESHOLD;
+        if (handScore().compareTo(SCORES.get(DRAW_THRESHOLD)) > 0) {
+            return false;
+        }
+        return true;
     }
 
     @Override

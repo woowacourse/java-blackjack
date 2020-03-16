@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class CardCalculator {
+public class HandCalculator {
 
     public static final int BUST_THRESHOLD = 21;
     private static final int ACE_NUMBER_GAP = 10;

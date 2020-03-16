@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.rule.Score;
 
 public class PlayerResultMatcher {
 
@@ -16,10 +17,15 @@ public class PlayerResultMatcher {
     }
 
     private static BlackJackResult findWinner(Dealer dealer, Player player) {
-        if (dealer.calculateSum() < player.calculateSum()) {
+        Score dealerScore = dealer.handScore();
+        Score playerScore = player.handScore();
+
+        int matchResult = playerScore.compareTo(dealerScore);
+
+        if (matchResult > 0) {
             return BlackJackResult.WIN;
         }
-        if (dealer.calculateSum() > player.calculateSum()) {
+        if (matchResult < 0) {
             return BlackJackResult.LOSE;
         }
         return BlackJackResult.DRAW;

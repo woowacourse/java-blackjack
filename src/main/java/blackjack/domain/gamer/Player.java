@@ -1,6 +1,8 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.rule.CardCalculator;
+import blackjack.domain.rule.HandCalculator;
+
+import static blackjack.domain.rule.Score.SCORES;
 
 import java.util.Objects;
 
@@ -14,7 +16,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canDrawCard() {
-        return calculateSum() <= CardCalculator.BUST_THRESHOLD;
+        return !handScore().isBusted();
     }
 
     @Override

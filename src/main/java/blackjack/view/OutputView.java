@@ -60,12 +60,12 @@ public class OutputView {
     }
 
     private static void printCardStatusAndResult(Gamer gamer) {
-        System.out.println(String.format(CARD_STATUS_AND_RESULT_FORMAT, gamer.getName(), makeHandResult(gamer.getHand()), gamer.calculateSum()));
+        System.out.println(String.format(CARD_STATUS_AND_RESULT_FORMAT, gamer.getName(), makeHandResult(gamer.getHand()), gamer.getHandScore()));
     }
 
     private static String makeHandResult(List<Card> cards) {
         return cards.stream()
-                .map(card -> String.format(CARD_FORMAT, card.getCardNumber(), card.getCardType()))
+                .map(card -> String.format(CARD_FORMAT, card.getCardNumber(), card.getCardType().getKoreanName()))
                 .collect(Collectors.joining(DELIMITER));
     }
 
