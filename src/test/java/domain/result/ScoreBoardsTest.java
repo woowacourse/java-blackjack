@@ -15,7 +15,7 @@ import domain.card.Card;
 import domain.user.Dealer;
 import domain.user.Player;
 
-class ResultCalculatorTest {
+class ScoreBoardsTest {
 	@DisplayName("플레이어들 각각 딜러와 점수를 비교한 뒤, 딜러의 게임 전적 반환이 제대로 이뤄지는지 확인한다.")
 	@Test
 	void calculateDealerResultTest() {
@@ -26,7 +26,7 @@ class ResultCalculatorTest {
 		List<Player> players = Arrays.asList(player, player2, player3);
 		Dealer dealer = Dealer.fromCards(new Card(CLOVER, ACE), new Card(CLOVER, SEVEN));
 
-		ResultCalculator resultCalculator = new ResultCalculator(players, dealer);
+		ScoreBoards resultCalculator = ScoreBoards.fromAllUsers(players, dealer);
 		DealerResult dealerResult = resultCalculator.calculateDealerResults();
 		assertThat(dealerResult.getResultCount(LOSE)).isEqualTo(3L);
 	}
@@ -41,7 +41,7 @@ class ResultCalculatorTest {
 		List<Player> players = Arrays.asList(player, player2, player3);
 		Dealer dealer = Dealer.fromCards(new Card(CLOVER, ACE), new Card(CLOVER, SEVEN));
 
-		ResultCalculator resultCalculator = new ResultCalculator(players, dealer);
+		ScoreBoards resultCalculator = ScoreBoards.fromAllUsers(players, dealer);
 		PlayerResults playerResults = resultCalculator.calculatePlayersResult();
 		assertThat(playerResults.getPlayerResults()).containsExactlyInAnyOrder(new PlayerResult(player, WIN),
 			new PlayerResult(player2, WIN), new PlayerResult(player3, WIN));

@@ -31,19 +31,19 @@ public class Cards {
 	}
 
 	public int calculateScore() {
-		int defaultScore = calculateDefaultScore();
-		return calculateWithBonusScore(defaultScore);
+		return reviseScore(sumTotalDefaultScore());
 	}
 
-	private int calculateDefaultScore() {
+	private int sumTotalDefaultScore() {
 		return cards.stream()
 			.mapToInt(Card::getScore)
 			.sum();
 	}
 
-	private int calculateWithBonusScore(int defaultScore) {
+	private int reviseScore(int defaultScore) {
 		return cards.stream()
 			.map(Card::getSymbol)
+			.filter(Symbol::hasBonusScore)
 			.sorted(comparingInt(Symbol::getBonusScore).reversed())
 			.reduce(defaultScore, this::appendBonusScore, Integer::sum);
 	}

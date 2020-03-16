@@ -18,13 +18,14 @@ public enum Symbol {
 	KING("K", 10);
 
 	private static final String ILLEGAL_SCORE_VALUE_EXCEPTION_MESSAGE = "올바른 인자가 아닙니다.";
+	private static final int DEFAULT_BONUS_SCORE = 0;
 
 	private final String name;
 	private final int defaultScore;
 	private final int bonusScore;
 
 	Symbol(String name, int defaultScore) {
-		this(name, defaultScore, 0);
+		this(name, defaultScore, DEFAULT_BONUS_SCORE);
 	}
 
 	Symbol(String name, int defaultScore, int bonusScore) {
@@ -52,10 +53,14 @@ public enum Symbol {
 		return bonusScore;
 	}
 
+	public boolean hasBonusScore() {
+		return bonusScore > DEFAULT_BONUS_SCORE;
+	}
+
 	public int calculateBonusScore(int score, int comparingScore) {
 		if (score + bonusScore <= comparingScore) {
 			return bonusScore;
 		}
-		return 0;
+		return DEFAULT_BONUS_SCORE;
 	}
 }

@@ -1,16 +1,14 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import domain.card.CardDeck;
 import domain.result.DealerResult;
 import domain.result.PlayerResults;
-import domain.result.ResultCalculator;
+import domain.result.ScoreBoards;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerFactory;
-import domain.user.User;
 import util.PlayerDrawResponse;
 import view.InputView;
 import view.OutputView;
@@ -23,7 +21,6 @@ public class BlackjackGame {
 		drawInitialUsersCard(players, dealer, cardDeck);
 		drawAdditionalUsersCard(players, dealer, cardDeck);
 		printAllUserScore(players, dealer);
-		printGameResult(players, dealer);
 	}
 
 	private void drawInitialUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
@@ -75,15 +72,10 @@ public class BlackjackGame {
 	}
 
 	private void printAllUserScore(List<Player> players, Dealer dealer) {
-		List<User> allUsers = new ArrayList<>(players);
-		allUsers.add(dealer);
-		OutputView.printAllCardsAndScore(allUsers);
-	}
-
-	private void printGameResult(List<Player> players, Dealer dealer) {
-		ResultCalculator calculator = new ResultCalculator(players, dealer);
-		PlayerResults playersResult = calculator.calculatePlayersResult();
-		DealerResult dealerResult = calculator.calculateDealerResults();
-		OutputView.printGameResult(playersResult, dealerResult);
+		ScoreBoards scoreBoards = ScoreBoards.fromAllUsers(players, dealer);
+		OutputView.printUsersCardsAndScore(scoreBoards);
+		DealerResult dealerResult = scoreBoards.calculateDealerResults();
+		PlayerResults playerResults = scoreBoards.calculatePlayersResult();
+		OutputView.printGameResult(playerResults, dealerResult);
 	}
 }

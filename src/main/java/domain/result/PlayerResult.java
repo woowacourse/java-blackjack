@@ -2,19 +2,19 @@ package domain.result;
 
 import java.util.Objects;
 
-import domain.user.Player;
+import domain.user.User;
 
 public class PlayerResult {
-	private final Player player;
+	private final User user;
 	private final MatchResult matchResult;
 
-	public PlayerResult(Player player, MatchResult matchResult) {
-		this.player = Objects.requireNonNull(player);
+	public PlayerResult(User user, MatchResult matchResult) {
+		this.user = Objects.requireNonNull(user);
 		this.matchResult = Objects.requireNonNull(matchResult);
 	}
 
 	public String getName() {
-		return player.getName();
+		return user.getName();
 	}
 
 	public String getMatchResult() {
@@ -30,12 +30,12 @@ public class PlayerResult {
 			return false;
 		}
 		PlayerResult that = (PlayerResult)object;
-		return Objects.equals(player, that.player) &&
+		return Objects.equals(user, that.user) &&
 			this.matchResult == that.matchResult;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(player, matchResult);
+		return Objects.hash(user, matchResult);
 	}
 }

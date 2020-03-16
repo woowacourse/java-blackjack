@@ -11,7 +11,7 @@ public class Card implements Comparable<Card> {
 		this.symbol = symbol;
 	}
 
-	public String getTypeName() {
+	public String getSymbolName() {
 		return symbol.getName();
 	}
 
