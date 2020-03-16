@@ -28,7 +28,7 @@ public class OutputView {
         System.out.println(players.stream()
                 .map(User::getName)
                 .collect(Collectors.joining(DELIMITER)) +
-                "에게 2장의 카드를 나누었습니다.\n\n" +
+                "에게 " + BlackjackGame.INITIAL_CARDS + "장의 카드를 나누었습니다.\n\n" +
                 showInitialCardStatus(game.getDealer()) + "\n" +
                 players.stream()
                         .map(OutputView::showInitialCardStatus)
