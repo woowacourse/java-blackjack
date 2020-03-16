@@ -30,7 +30,7 @@ public class Report {
 
 	private static void validateUser(Dealer dealer, List<Player> players) {
 		if (Objects.isNull(dealer) || Objects.isNull(players) || players.isEmpty()) {
-			throw new InvalidReportException(InvalidReportException.NULL);
+			throw new InvalidReportException(InvalidReportException.EMPTY);
 		}
 	}
 

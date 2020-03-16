@@ -9,8 +9,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 
 public class Score {
-	public static final Score ZERO = new Score(0);
-	public static final int BUST_SCORE = 22;
+	static final int BUST_SCORE = 22;
+	static final Score ZERO = new Score(0);
 	private static final Map<Integer, Score> CACHE = new HashMap<>();
 	private static final int ADDITIONAL_ACE_SCORE = 10;
 

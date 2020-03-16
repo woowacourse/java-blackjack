@@ -70,7 +70,7 @@ class ReportTest {
 		List<Player> nullPlayers) {
 		assertThatThrownBy(() -> Report.from(nullDealer, nullPlayers))
 			.isInstanceOf(InvalidReportException.class)
-			.hasMessage(InvalidReportException.NULL);
+			.hasMessage(InvalidReportException.EMPTY);
 	}
 
 	@Test
