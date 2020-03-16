@@ -5,8 +5,6 @@ import domain.GameResult;
 import domain.Names;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
-import domain.rule.DealerRule;
-import domain.rule.PlayerRule;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -25,7 +23,6 @@ public class Controller {
             drawMoreCards(player);
         }
         drawMoreCards(dealer);
-
         passResult(dealer, players);
     }
 
@@ -43,14 +40,14 @@ public class Controller {
     }
 
     private void drawMoreCards(Dealer dealer) {
-        while (dealer.isDrawable(new DealerRule())) {
+        while (dealer.isDrawable()) {
             OutputView.printDealerDraw(dealer);
             dealer.draw(cardDeck);
         }
     }
 
     private void drawMoreCards(Player player) {
-        while (player.isDrawable(new PlayerRule()) && askPlayerDraw(player)) {
+        while (player.isDrawable() && askPlayerDraw(player)) {
             player.draw(cardDeck);
             OutputView.printStatus(player);
         }

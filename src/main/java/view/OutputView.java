@@ -7,9 +7,8 @@ import domain.user.Players;
 import domain.user.User;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static domain.rule.DealerRule.DRAW_MAX_SCORE;
+import static domain.user.Dealer.DRAW_MAX_SCORE;
 
 public class OutputView {
     public static void printNameFormat() {
@@ -21,10 +20,7 @@ public class OutputView {
     }
 
     public static void printFirstDrawFormat(Dealer dealer, Players players) {
-        String playerNames = players.get()
-                .stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(","));
+        String playerNames = String.join(",", players.getName());
         StringBuilder stringBuilder = new StringBuilder()
                 .append(dealer.getName())
                 .append("와 ")
@@ -39,13 +35,13 @@ public class OutputView {
     }
 
     public static void printStatus(Players players) {
-        for (Player player : players.get()) {
-            System.out.println(player.getStatus());
+        for (String status : players.getStatus()) {
+            System.out.println(status);
         }
     }
 
     public static void printDealerDraw(Dealer dealer) {
-        System.out.println(dealer.getName() + "는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() +  " 는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printStatusWithScore(User user) {

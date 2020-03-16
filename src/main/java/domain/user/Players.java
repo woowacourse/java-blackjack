@@ -26,4 +26,16 @@ public class Players {
             player.firstDraw(cardDeck);
         }
     }
+
+    public List<String> getStatus() {
+        return players.stream()
+                .map(Player::getStatus)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getName() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
 }

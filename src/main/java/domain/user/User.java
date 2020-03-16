@@ -1,13 +1,11 @@
 package domain.user;
 
 import domain.card.CardDeck;
-import domain.rule.Drawable;
 
 import java.util.Objects;
 
 public abstract class User {
-    public static final int FIRST_DRAW_NUMBER = 2;
-    public static final String ERROR_VALIDATE_MESSAGE = "잘못된 입력입니다.";
+    private static final int FIRST_DRAW_NUMBER = 2;
 
     protected final HandCard handCard = new HandCard();
     private final String name;
@@ -17,15 +15,9 @@ public abstract class User {
         this.name = name;
     }
 
-    private void validateDrawable(Drawable drawable) {
-        if (Objects.isNull(drawable)) {
-            throw new IllegalArgumentException(ERROR_VALIDATE_MESSAGE);
-        }
-    }
-
     private void validate(String name) {
         if (Objects.isNull(name) || name.isEmpty()) {
-            throw new IllegalArgumentException(ERROR_VALIDATE_MESSAGE);
+            throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
 
@@ -46,6 +38,8 @@ public abstract class User {
         }
     }
 
+    public abstract boolean isDrawable();
+
     public String getStatus() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name)
@@ -56,10 +50,5 @@ public abstract class User {
 
     public int getScore() {
         return handCard.getScore();
-    }
-
-    public boolean isDrawable(Drawable drawable) {
-        validateDrawable(drawable);
-        return drawable.check(getScore());
     }
 }
