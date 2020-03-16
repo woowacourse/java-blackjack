@@ -6,26 +6,25 @@ import java.util.List;
 
 public class CardFactory {
     public static Deck createDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (Symbol symbol : Symbol.values()) {
-            createByType(cards, symbol);
-        }
-        return new Deck(cards);
+        return new Deck(makeDeckCardList());
     }
 
     public static Deck createShuffledDeck() {
-        List<Card> cards = new ArrayList<>();
-        Symbol[] symbols = Symbol.values();
-        for (Symbol symbol : symbols) {
-            createByType(cards, symbol);
-        }
+        List<Card> cards = makeDeckCardList();
         Collections.shuffle(cards);
         return new Deck(cards);
     }
 
+    private static List<Card> makeDeckCardList() {
+        List<Card> cards = new ArrayList<>();
+        for (Symbol symbol : Symbol.values()) {
+            createByType(cards, symbol);
+        }
+        return cards;
+    }
+
     private static void createByType(List<Card> cards, Symbol symbol) {
-        Type[] types = Type.values();
-        for (Type type : types) {
+        for (Type type : Type.values()) {
             cards.add(new Card(symbol, type));
         }
     }
