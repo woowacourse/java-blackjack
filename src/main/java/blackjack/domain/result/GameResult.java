@@ -12,14 +12,15 @@ import java.util.stream.Collectors;
 
 public class GameResult {
 
-    private final static Map<Outcome, Integer> initialDealerResults;
+    private static final int INITIAL_COUNT = 0;
+    private static final Map<Outcome, Integer> initialDealerResults;
 
     static {
         Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
         List<Outcome> dealerOutcomes = Arrays.asList(Outcome.values());
         Collections.reverse(dealerOutcomes);
         for (Outcome outcome : dealerOutcomes) {
-            dealerResults.put(outcome, 0);
+            dealerResults.put(outcome, INITIAL_COUNT);
         }
         initialDealerResults = dealerResults;
     }
@@ -33,12 +34,11 @@ public class GameResult {
     }
 
     private Map<Player, Outcome> calculatePlayerResults(Participants participants) {
-        Map<Player, Outcome> playerResults = new LinkedHashMap<>();
         Dealer dealer = participants.getDealer();
-        for (Player player : participants.getPlayers()) {
-            playerResults.put(player, player.calculateOutcome(dealer));
-        }
-        return playerResults;
+        return participants.getPlayers().stream()
+            .collect(Collectors
+                .toMap(player -> player, player -> player.calculateOutcome(dealer), (a1, a2) -> a1,
+                    LinkedHashMap::new));
     }
 
     private Map<Outcome, Integer> calculateDealerResults() {
@@ -54,8 +54,8 @@ public class GameResult {
     }
 
     public Map<Outcome, Integer> getDealerResultsNoZero() {
-        return dealerResults.keySet().stream()
+        return Collections.unmodifiableMap(dealerResults.keySet().stream()
             .filter(outcome -> dealerResults.get(outcome) != 0)
-            .collect(Collectors.toMap(outcome -> outcome, dealerResults::get));
+            .collect(Collectors.toMap(outcome -> outcome, dealerResults::get)));
     }
 }

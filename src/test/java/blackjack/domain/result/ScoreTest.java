@@ -42,7 +42,7 @@ public class ScoreTest {
     @Test
     void isSame() {
         Score scoreBlackJack = new Score(21, false, 2);
-        Score scoreBlackJackToo = new Score(21, false,2);
+        Score scoreBlackJackToo = new Score(21, false, 2);
         Score scoreBust = new Score(22);
         Score scoreBustToo = new Score(22);
         Score scoreTwentyOne = new Score(21);
@@ -51,5 +51,18 @@ public class ScoreTest {
         assertThat(scoreBust.equals(scoreBustToo)).isTrue();
         assertThat(scoreBlackJack.equals(scoreBust)).isFalse();
         assertThat(scoreBlackJack.equals(scoreTwentyOne)).isFalse();
+    }
+
+    @DisplayName("Over확인")
+    @Test
+    void isOverScore() {
+        Score scoreTwentyTwo = new Score(22);
+        Score scoreTwentyOne = new Score(21);
+
+        assertThat(scoreTwentyTwo.isMoreThanScore(scoreTwentyTwo)).isFalse();
+        assertThat(scoreTwentyTwo.isMoreThanScore(scoreTwentyOne)).isTrue();
+
+        assertThat(scoreTwentyOne.isMoreThanScore(scoreTwentyTwo)).isFalse();
+        assertThat(scoreTwentyOne.isMoreThanScore(scoreTwentyOne)).isFalse();
     }
 }

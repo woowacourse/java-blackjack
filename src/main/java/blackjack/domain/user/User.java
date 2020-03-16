@@ -17,12 +17,12 @@ public abstract class User {
 
     public User(String name, int basesScoreCanDraw) {
         validNotBlankOrNull(name);
-        this.name = name;
+        this.name = name.trim();
         this.basesScoreCanDraw = new Score(basesScoreCanDraw);
     }
 
     private void validNotBlankOrNull(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException(PLAYER_NAME_IS_BLANK_EXCEPTION_MESSAGE);
         }
     }
@@ -38,7 +38,8 @@ public abstract class User {
     }
 
     public boolean canDrawCard() {
-        return basesScoreCanDraw.isEqualOrOverScore(userCards.getScore());
+        return basesScoreCanDraw.isMoreThanScore(userCards.getScore())
+            || basesScoreCanDraw.equals(userCards.getScore());
     }
 
     public String getName() {

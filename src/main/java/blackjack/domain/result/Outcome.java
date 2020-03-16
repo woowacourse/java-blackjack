@@ -5,12 +5,14 @@ import java.util.function.BiPredicate;
 
 public enum Outcome {
     PLAYER_WIN("승", "패", (playerScore, dealerScore) ->
-        !playerScore.isBust() &&
-            (playerScore.getScore() > dealerScore.getScore() || dealerScore.isBust())),
+        (playerScore.isBlackJack() && !dealerScore.isBlackJack()) ||
+            (!playerScore.isBust()
+            && (playerScore.isMoreThanScore(dealerScore) || dealerScore.isBust()))),
     PLAYER_DRAW("무", "무", (playerScore, dealerScore) ->
-        playerScore.getScore() == dealerScore.getScore() && !playerScore.isBust()),
+        playerScore.equals(dealerScore) && !playerScore.isBust()),
     PLAYER_LOSE("패", "승", (playerScore, dealerScore) ->
-        playerScore.getScore() < dealerScore.getScore() || playerScore.isBust());
+        (!playerScore.isBlackJack() && dealerScore.isBlackJack()) ||
+        dealerScore.isMoreThanScore(playerScore) || playerScore.isBust());
 
     private final String name;
     private final String converseName;

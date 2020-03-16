@@ -53,7 +53,7 @@ public class OutputView {
 
     public static void printUserCardsAndScore(User user) {
         Score userScore = user.getScore();
-        System.out.printf("%s - 결과: %s", getUserCards(user), userScore.getScore());
+        System.out.printf("%s - 결과: %s", getUserCards(user), userScore.getScoreResult());
         System.out.println();
     }
 

@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +9,6 @@ public class Participants {
 
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private static final int MINIMUM_PLAYER_COUNT = 1;
-    private static final String SPACE = " ";
-    private static final String BLANK = "";
-    private static final String DELIMITER = ",";
     private static final String OVER_MAXIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
         String.format("참여 인원이 너무 많습니다. %d명 이내로만 가능합니다.", MAXIMUM_PLAYER_COUNT);
     private static final String UNDER_MINIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
@@ -21,22 +17,10 @@ public class Participants {
 
     private final List<User> participants;
 
-    public Participants(String playersName) {
-        List<String> playerNames = createPlayerNames(playersName);
-        List<User> participants = new ArrayList<>();
-        participants.add(new Dealer());
-        participants.addAll(playerNames.stream()
-            .map(Player::new)
-            .collect(Collectors.toList()));
-        this.participants = Collections.unmodifiableList(participants);
-    }
-
-    private List<String> createPlayerNames(String playersName) {
-        List<String> playerNames = Arrays
-            .asList(playersName.replace(SPACE, Participants.BLANK).split(DELIMITER));
+    public Participants(List<String> playerNames) {
         validOverMinimumCount(playerNames);
         validUnderMaximumCount(playerNames);
-        return playerNames;
+        this.participants = getParticipants(playerNames);
     }
 
     private void validOverMinimumCount(List<String> playerNames) {
@@ -51,6 +35,15 @@ public class Participants {
         }
     }
 
+    private List<User> getParticipants(List<String> playerNames) {
+        List<User> participants = new ArrayList<>();
+        participants.add(new Dealer());
+        participants.addAll(playerNames.stream()
+            .map(Player::new)
+            .collect(Collectors.toList()));
+        return Collections.unmodifiableList(participants);
+    }
+
     public Dealer getDealer() {
         return participants.stream()
             .filter(participants -> participants instanceof Dealer)
@@ -60,10 +53,10 @@ public class Participants {
     }
 
     public List<Player> getPlayers() {
-        return participants.stream()
+        return Collections.unmodifiableList(participants.stream()
             .filter(participants -> participants instanceof Player)
             .map(player -> (Player) player)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
     }
 
     public List<String> getPlayerNames() {

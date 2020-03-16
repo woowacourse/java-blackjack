@@ -19,7 +19,8 @@ public class GameResultTest {
 
     @BeforeAll
     static void resetVariable() {
-        Participants participants = new Participants("Jamie,Ravie");
+        List<String> playerNames = Arrays.asList("Jamie,Ravie".split(","));
+        Participants participants = new Participants(playerNames);
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = participants.getDealer();
         dealer.drawCard(new CardDeck(), 2);
