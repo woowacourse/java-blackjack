@@ -17,7 +17,7 @@ public class BlackJackGame {
     private Users users;
 
     public BlackJackGame() {
-        dealer = Dealer.getDealer();
+        dealer = new Dealer();
         cardDeck = new CardDeck(CardFactory.createCardDeck());
     }
 
@@ -44,25 +44,25 @@ public class BlackJackGame {
 
     private void play() {
         for (User user : users.getUsers()) {
-            user.changeStatus();
             eachUserPlay(user);
         }
         dealerPlay();
     }
 
     private void eachUserPlay(User user) {
+        user.changeStatusIfBlackJack();
         while (user.isNoneStatus() && Response.isYes(InputView.askOneMoreCard(user))) {
             user.addCard(cardDeck);
-            user.changeStatus();
+            user.changeStatusIfBust();
             OutputView.printUserCards(user);
         }
     }
 
     private void dealerPlay() {
-        dealer.changeStatus();
+        dealer.changeStatusIfBlackJack();
         if (dealer.isUnderCriticalScore()) {
             dealer.addCard(cardDeck);
-            dealer.changeStatus();
+            dealer.changeStatusIfBust();
             OutputView.printDealerPlayConfirmMessage();
         }
     }

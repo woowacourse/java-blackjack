@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String COMMA = ",";
+    private static final String USER_NAME_SPLIT_DELIMITER = ",";
 
     public static List<String> inputUserNames() {
         OutputView.printInputUserNamesGuideMessage();
-        return Arrays.stream(SCANNER.nextLine().split(COMMA))
+        return Arrays.stream(SCANNER.nextLine().split(USER_NAME_SPLIT_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }

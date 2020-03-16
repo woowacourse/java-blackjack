@@ -6,12 +6,10 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +34,7 @@ public class DealerTest {
                 )
         );
         cardDeck = new CardDeck(cards);
-        dealer = Dealer.getDealer();
+        dealer = new Dealer();
     }
 
     @DisplayName("카드 덱에서 뽑았을 때 유저가 가지고 있는 카드 수와 덱의 카드 수가 동시에 변하는지 확인")
@@ -71,7 +69,7 @@ public class DealerTest {
     @DisplayName("딜러의 이름을 반환하는지 확인")
     @Test
     void getNameTest() {
-        Player dealer = Dealer.getDealer();
+        Player dealer = new Dealer();
         assertThat(dealer.getName()).isEqualTo("딜러");
     }
 
@@ -82,12 +80,5 @@ public class DealerTest {
             dealer.addCard(cardDeck);
         }
         assertThat(dealer.getInitialCards()).containsExactly(new Card(Symbol.CLOVER, Type.EIGHT));
-    }
-
-    @AfterEach
-    void tearDown() throws NoSuchFieldException, IllegalAccessException {
-        Field dealerInstance = Dealer.class.getDeclaredField("dealerInstance");
-        dealerInstance.setAccessible(true);
-        dealerInstance.set(null, null);
     }
 }

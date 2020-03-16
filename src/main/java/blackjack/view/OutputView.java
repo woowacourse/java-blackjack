@@ -67,10 +67,6 @@ public class OutputView {
         System.out.println(ASK_CORRECT_RESPONSE_MESSAGE);
     }
 
-    public static void printExceptionMessage(String message) {
-        System.out.println(message);
-    }
-
     public static void printDealerPlayConfirmMessage() {
         System.out.println(DEALER_PLAY_CONFIRM_MESSAGE);
     }

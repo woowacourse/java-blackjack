@@ -9,17 +9,8 @@ public class Dealer extends Player {
     private static final int DEALER_INITIAL_CARDS_SIZE = 1;
     private static final String KOREAN_NAME = "딜러";
 
-    private static Dealer dealerInstance;
-
-    private Dealer() {
+    public Dealer() {
         this.name = KOREAN_NAME;
-    }
-
-    public static Dealer getDealer() {
-        if (dealerInstance == null) {
-            dealerInstance = new Dealer();
-        }
-        return dealerInstance;
     }
 
     public boolean isUnderCriticalScore() {

@@ -14,10 +14,6 @@ public class User extends Player {
         this.name = name;
     }
 
-    public boolean isNoneStatus() {
-        return this.cards.isNoneStatus();
-    }
-
     @Override
     public List<Card> getInitialCards() {
         return this.cards.getCards().subList(START_INDEX, INITIAL_CARDS_SIZE);

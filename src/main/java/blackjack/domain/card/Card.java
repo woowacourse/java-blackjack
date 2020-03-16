@@ -11,14 +11,6 @@ public class Card {
         this.type = type;
     }
 
-    public int getPoint() {
-        return type.getPoint();
-    }
-
-    public int getPointOfAceUsing(int score) {
-        return type.getPointOfAceUsing(score);
-    }
-
     public boolean isAce() {
         return type == Type.ACE;
     }
