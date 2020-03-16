@@ -1,32 +1,22 @@
 package domain.player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UsersInformation {
-    private static final int DEALER_INDEX = 0;
+public class UsersInformations {
 
     private List<UserInformation> usersInformation;
 
-    public UsersInformation(Users users) {
+    public UsersInformations(Players players) {
         this.usersInformation = new ArrayList<>();
 
-        this.usersInformation.add(new UserInformation(users.getDealer()));
-        this.usersInformation.addAll(users.getPlayers().stream()
+        this.usersInformation.addAll(players.getPlayers().stream()
                 .map(UserInformation::new)
                 .collect(Collectors.toList())
         );
     }
 
-    public List<UserInformation> getUsersInformation() {
-        return Collections.unmodifiableList(this.usersInformation);
-    }
-
-    public UserInformation getDealerInformation() {
-        return usersInformation.get(DEALER_INDEX);
-    }
 
     public List<UserInformation> getPlayerInformation() {
         return usersInformation

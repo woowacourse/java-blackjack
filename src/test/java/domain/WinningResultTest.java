@@ -1,7 +1,8 @@
 package domain;
 
 import domain.card.Cards;
-import domain.player.Users;
+import domain.player.Dealer;
+import domain.player.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,11 @@ public class WinningResultTest {
     void getterTest() {
         List<String> playerName = new ArrayList<>(Arrays.asList("pobi", "subway"));
         Cards cards = new Cards();
-        Users users = new Users(cards,playerName);
+        Dealer dealer = new Dealer(cards.giveCard(), cards.giveCard());
+        Players players = new Players(cards,playerName);
 
-        WinningResult winningResult = new WinningResult(users);
+        WinningResult winningResult = new WinningResult(players,dealer);
 
-        Assertions.assertThat(winningResult.generateWinningUserResult(users)).size().isEqualTo(3);
+        Assertions.assertThat(winningResult.generateWinningUserResult(players)).size().isEqualTo(3);
     }
 }

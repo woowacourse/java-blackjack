@@ -18,21 +18,23 @@ public class BlackjackController {
         PlayersName playersName = new PlayersName(InputView.inputPlayerName());
         OutputView.printInitialResult(playersName.getPlayerName());
 
-        Users users = new Users(cards, playersName.getPlayerName());
-        UsersInformation usersInformation = new UsersInformation(users);
-        UserInformation dealerInformation = usersInformation.getDealerInformation();
+        Dealer dealer = new Dealer(cards.giveCard(),cards.giveCard());
+        Players players = new Players(cards, playersName.getPlayerName());
+
+        UsersInformations playersInformations = new UsersInformations(players);
+        UserInformation dealerInformation = new UserInformation(dealer);
         OutputView.printUserCard(dealerInformation.getName(), dealerInformation.getCardInformation());
 
-        List<UserInformation> playersInformation = usersInformation.getPlayerInformation();
+        List<UserInformation> playersInformation = playersInformations.getPlayerInformation();
         playersInformation.forEach(playerInformation ->
                 OutputView.printUserCard(playerInformation.getName(), playerInformation.getCardInformation())
         );
 
-        for (Player player : users.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             userService(cards, player);
         }
-        DealerService(cards, users.getDealer());
-        result(users);
+        DealerService(cards, dealer);
+        result(players,dealer);
     }
 
     private static void userService(Cards cards, Player player) {
@@ -61,16 +63,20 @@ public class BlackjackController {
         }
     }
 
-    private static void result(Users users) {
-        UsersInformation usersInformation = new UsersInformation(users);
+    private static void result(Players players,Dealer dealer) {
+        UserInformation dealerInformation = new UserInformation(dealer);
+        UsersInformations playerInformations = new UsersInformations(players);
 
-        usersInformation.getUsersInformation()
+        OutputView.printFinalResult(
+                dealerInformation.getName(),dealerInformation.getCardInformation(),dealerInformation.getScore()
+        );
+        playerInformations.getPlayerInformation()
                 .forEach(userInformation -> OutputView.printFinalResult(
                         userInformation.getName(), userInformation.getCardInformation(), userInformation.getScore())
                 );
 
-        WinningResult winningResult = new WinningResult(users);
-        OutputView.printWinningResult(winningResult.generateWinningUserResult(users));
+        WinningResult winningResult = new WinningResult(players,dealer);
+        OutputView.printWinningResult(winningResult.generateWinningUserResult(players));
     }
 
     private static AnswerType getAnswer(Player player) {
