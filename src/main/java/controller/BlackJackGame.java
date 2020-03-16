@@ -27,18 +27,6 @@ public class BlackJackGame {
         }
     }
 
-//    private static void compareScores(final Players players, final Dealer dealer) {
-//        GameResult gameResult = new GameResult(players, dealer);
-//
-//        for (Player player : players) {
-//            Result result = Result.calculateResult(dealer, player);
-//            gameResult.calculateResults(result, player);
-//
-//            player.setResult(result);
-//            dealer.setResult(result);
-//        }
-//    }
-
     private static void drawCardEachPlayer(Deck deck, Player player) {
         while (!player.isBust()) {
             Answer answer = Answer.getYesOrNoByValue(InputView.inputYesOrNo(player));
