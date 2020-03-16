@@ -11,7 +11,7 @@ public class Players implements Iterable<Player> {
         }
     }
 
-    public Players(List<Player> players){
+    public Players(List<Player> players) {
         this.players.addAll(players);
     }
 

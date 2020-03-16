@@ -17,12 +17,12 @@ public enum Answer {
         this.trueOrFalse = trueOrFalse;
     }
 
-    public static Answer getYesOrNoByValue(String input){
+    public static Answer getYesOrNoByValue(String input) {
         validate(input);
         return Arrays.stream(Answer.values())
                 .filter(answer -> answer.isSameYesOrNo(input))
                 .findAny()
-                .orElseThrow(()->new IllegalYesOrNoInputException(String.format("%s는 올바르지 않은 값입니다.",input)));
+                .orElseThrow(() -> new IllegalYesOrNoInputException(String.format("%s는 올바르지 않은 값입니다.", input)));
     }
 
     private boolean isSameYesOrNo(final String input) {

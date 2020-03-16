@@ -1,8 +1,11 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static controller.BlackJackGame.ADDITIONAL_DRAW_COUNT;
+import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static model.UserTest.PLAYER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +18,7 @@ public class ResultTest {
     Deck notBustDeck1;
 
     @BeforeEach
-    void init_field(){
+    void init_field() {
         bustHand1.addCard(new Card(Symbol.KING, Type.DIAMOND));
         bustHand1.addCard(new Card(Symbol.QUEEN, Type.DIAMOND));
         bustHand1.addCard(new Card(Symbol.JACK, Type.DIAMOND));
@@ -31,19 +34,21 @@ public class ResultTest {
     }
 
     @Test
+    @DisplayName("딜러와 플레이어 모두 21을 넘긴 경우 플레이 DRAW")
     void both_isBust_Test() {
-        Player player = new Player(PLAYER_NAME, bustDeck1);
-        Dealer dealer = new Dealer(bustDeck2);
-        player.drawCard(bustDeck1.draw(1));
-        dealer.drawCard(bustDeck2.draw(1));
+        Player player = new Player(PLAYER_NAME, bustDeck1, INITIAL_DRAW_COUNT);
+        Dealer dealer = new Dealer(bustDeck2, INITIAL_DRAW_COUNT);
+        player.drawCard(bustDeck1, ADDITIONAL_DRAW_COUNT);
+        dealer.drawCard(bustDeck2, ADDITIONAL_DRAW_COUNT);
         assertThat(Result.compete(dealer, player) == Result.DRAW).isTrue();
     }
 
     @Test
+    @DisplayName("딜러만 21을 넘긴 경우 플레이어 WIN")
     void Dealer_isBust_Test() {
-        Player player = new Player(PLAYER_NAME, notBustDeck1);
-        Dealer dealer = new Dealer(bustDeck1);
-        dealer.drawCard(bustDeck1.draw(1));
+        Player player = new Player(PLAYER_NAME, notBustDeck1, INITIAL_DRAW_COUNT);
+        Dealer dealer = new Dealer(bustDeck1, INITIAL_DRAW_COUNT);
+        dealer.drawCard(bustDeck1, ADDITIONAL_DRAW_COUNT);
         assertThat(Result.compete(dealer, player) == Result.WIN).isTrue();
     }
 }

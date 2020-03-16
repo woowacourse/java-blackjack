@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static controller.BlackJackGame.HIT_BOUNDARY;
-import static model.User.DEALER_NAME;
+import static model.Dealer.DEALER_NAME;
 
 public class OutputView {
     public static final String DELIMITER = ": ";

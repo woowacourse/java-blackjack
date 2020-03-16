@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static model.UserTest.PLAYER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,13 +31,13 @@ class GameResultTest {
         deckWin1 = new Deck(cardHandWin1);
         deckWin2 = new Deck(cardHandWin2);
         deckLose = new Deck(cardHandLose);
-        players.add(new Player(PLAYER_NAME, deckWin1));
-        players.add(new Player(PLAYER_NAME, deckWin2));
-        dealer = new Dealer(deckLose);
+        players.add(new Player(PLAYER_NAME, deckWin1, INITIAL_DRAW_COUNT));
+        players.add(new Player(PLAYER_NAME, deckWin2, INITIAL_DRAW_COUNT));
+        dealer = new Dealer(deckLose, INITIAL_DRAW_COUNT);
     }
 
     @Test
-    void gameResultTest(){
+    void gameResultTest() {
         GameResult gameResult = new GameResult(new Players(players), dealer);
         gameResult.calculateResults();
         assertThat(gameResult.getDealerResult().get(Result.LOSE)).isEqualTo(2);

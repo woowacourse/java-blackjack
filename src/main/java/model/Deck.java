@@ -14,7 +14,7 @@ public class Deck {
         shuffle();
     }
 
-    public Deck(CardHand cardHand){
+    public Deck(CardHand cardHand) {
         this.cards.addAll(cardHand.getCards());
     }
 

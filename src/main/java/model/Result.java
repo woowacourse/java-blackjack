@@ -36,7 +36,7 @@ public enum Result {
         return Arrays.stream(Result.values())
                 .filter(result -> result.isSameResult(compareValue))
                 .findFirst()
-                .orElseThrow(()->new IllegalResultException("올바른 비교 값이 아닙니다."));
+                .orElseThrow(() -> new IllegalResultException("올바른 비교 값이 아닙니다."));
     }
 
     private boolean isSameResult(int compareValue) {
