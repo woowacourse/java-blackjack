@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -46,30 +45,36 @@ public class PlayerTest {
 	}
 
 	@Test
-	void of_IsNotNull() {
+	void of_ValidPlayer_IsNotNull() {
 		assertThat(player).isNotNull();
 	}
 
 	@Test
-	void of_ThrowPlayerException() {
+	void of_HasDealerName_ThrowPlayerException() {
 		assertThatThrownBy(() -> Player.of("딜러"))
 				.isInstanceOf(PlayerException.class);
 	}
 
+	@Test
+	void of_Null_ThrowAbstractException() {
+		assertThatThrownBy(() -> Player.of(null))
+				.isInstanceOf(AbstractPlayerException.class);
+	}
+
 	@ParameterizedTest
-	@MethodSource("of_ThrowAbstractException")
-	void of_ThrowAbstractException(String invalidName) {
+	@MethodSource("of_HasBlank_ThrowAbstractException")
+	void of_HasBlank_ThrowAbstractException(String invalidName) {
 		assertThatThrownBy(() -> Player.of(invalidName))
 				.isInstanceOf(AbstractPlayerException.class);
 	}
 
-	static Stream<String> of_ThrowAbstractException() {
+	static Stream<String> of_HasBlank_ThrowAbstractException() {
 		return Stream.of(null, "", " ", "  ", "   ");
 	}
 
 	@ParameterizedTest
-	@MethodSource("giveCard")
-	void giveCard(List<Card> cards) {
+	@MethodSource("giveCard_Cards_GiveTopCardPlayer")
+	void giveCard_Cards_GiveTopCardPlayer(List<Card> cards) {
 		// given
 		for (Card card : cards) {
 			player.giveCard(card);
@@ -79,7 +84,7 @@ public class PlayerTest {
 		assertThat(player.getHand()).isEqualTo(cards);
 	}
 
-	static Stream<Arguments> giveCard() {
+	static Stream<Arguments> giveCard_Cards_GiveTopCardPlayer() {
 		return Stream.of(Arguments.of(Collections.singletonList(aceSpade)),
 				Arguments.of(Collections.singletonList(sixDiamond)),
 				Arguments.of(Arrays.asList(tenClub, jackHeart)),
@@ -88,13 +93,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("giveCards")
-	void giveCards(List<Card> cards) {
+	@MethodSource("giveCards_Cards_GiveCardsPlayer")
+	void giveCards_Cards_GiveCardsPlayer(List<Card> cards) {
 		player.giveCards(cards);
 		assertThat(player.getHand()).isEqualTo(cards);
 	}
 
-	static Stream<List<Card>> giveCards() {
+	static Stream<List<Card>> giveCards_Cards_GiveCardsPlayer() {
 		return Stream.of(Collections.singletonList(aceSpade),
 				Collections.singletonList(sixDiamond),
 				Arrays.asList(tenClub, jackHeart),
@@ -103,13 +108,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isWinner_ReturnTrue")
-	void isWinner_ReturnTrue(List<Card> cards, int score) {
+	@MethodSource("isWinner_HasScoreBiggerThanInputScore_ReturnTrue")
+	void isWinner_HasScoreBiggerThanInputScore_ReturnTrue(List<Card> cards, int score) {
 		player.giveCards(cards);
 		assertThat(player.isWinner(Score.of(score))).isTrue();
 	}
 
-	static Stream<Arguments> isWinner_ReturnTrue() {
+	static Stream<Arguments> isWinner_HasScoreBiggerThanInputScore_ReturnTrue() {
 		return Stream.of(Arguments.of(Collections.singletonList(tenClub), 9),
 				Arguments.of(Collections.singletonList(aceSpade), 10),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart), 20),
@@ -119,13 +124,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isWinner_ReturnFalse")
-	void isWinner_ReturnFalse(List<Card> cards, int score) {
+	@MethodSource("isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse")
+	void isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse(List<Card> cards, int score) {
 		player.giveCards(cards);
 		assertThat(player.isWinner(Score.of(score))).isFalse();
 	}
 
-	static Stream<Arguments> isWinner_ReturnFalse() {
+	static Stream<Arguments> isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse() {
 		return Stream.of(Arguments.of(Collections.singletonList(tenClub), 10),
 				Arguments.of(Collections.singletonList(aceSpade), 11),
 				Arguments.of(Arrays.asList(jackHeart, sixDiamond), 16),
@@ -134,13 +139,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("getScore")
-	void getScore(List<Card> cards, int score) {
+	@MethodSource("getScore_HasCards_ReturnScore")
+	void getScore_HasCards_ReturnScore(List<Card> cards, int score) {
 		player.giveCards(cards);
 		assertThat(player.getScore()).isEqualTo(Score.of(score));
 	}
 
-	static Stream<Arguments> getScore() {
+	static Stream<Arguments> getScore_HasCards_ReturnScore() {
 		return Stream.of(Arguments.of(Collections.singletonList(aceSpade), 11),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
@@ -149,26 +154,26 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isBust_ReturnTrue")
-	void isBust_ReturnTrue(List<Card> cards) {
+	@MethodSource("isBust_ScoreMoreThanTwelve_ReturnTrue")
+	void isBust_ScoreMoreThanTwelve_ReturnTrue(List<Card> cards) {
 		player.giveCards(cards);
 		assertThat(player.isBust()).isTrue();
 	}
 
-	static Stream<List<Card>> isBust_ReturnTrue() {
+	static Stream<List<Card>> isBust_ScoreMoreThanTwelve_ReturnTrue() {
 		return Stream.of(Arrays.asList(tenClub, tenClub, twoClub),
 				Arrays.asList(jackHeart, sixDiamond, sixDiamond),
 				Arrays.asList(jackHeart, jackHeart, aceSpade, aceSpade));
 	}
 
 	@ParameterizedTest
-	@MethodSource("isBust_ReturnFalse")
-	void isBust_ReturnFalse(List<Card> cards) {
+	@MethodSource("isBust_ScoreSameOrLessThanTwelve_ReturnFalse")
+	void isBust_ScoreSameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
 		player.giveCards(cards);
 		assertThat(player.isBust()).isFalse();
 	}
 
-	static Stream<List<Card>> isBust_ReturnFalse() {
+	static Stream<List<Card>> isBust_ScoreSameOrLessThanTwelve_ReturnFalse() {
 		return Stream.of(Collections.emptyList(),
 				Collections.singletonList(aceSpade),
 				Arrays.asList(tenClub, aceSpade),
@@ -176,13 +181,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("getCards")
-	void getCards(List<Card> cards) {
+	@MethodSource("getCards_HasCards_ReturnCards")
+	void getCards_HasCards_ReturnCards(List<Card> cards) {
 		player.giveCards(cards);
 		assertThat(player.getHand()).isEqualTo(cards);
 	}
 
-	static Stream<List<Card>> getCards() {
+	static Stream<List<Card>> getCards_HasCards_ReturnCards() {
 		return Stream.of(Collections.emptyList(),
 				Collections.singletonList(aceSpade),
 				Arrays.asList(aceSpade, tenClub),
@@ -190,13 +195,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("countCards")
-	void countCards(List<Card> cards, int count) {
+	@MethodSource("countCards_HasCards_ReturnCount")
+	void countCards_HasCards_ReturnCount(List<Card> cards, int count) {
 		player.giveCards(cards);
 		assertThat(player.countCards()).isEqualTo(count);
 	}
 
-	static Stream<Arguments> countCards() {
+	static Stream<Arguments> countCards_HasCards_ReturnCount() {
 		return Stream.of(Arguments.of(Collections.emptyList(), 0),
 				Arguments.of(Collections.singletonList(aceSpade), 1),
 				Arguments.of(Arrays.asList(twoClub, twoClub), 2),
@@ -204,18 +209,18 @@ public class PlayerTest {
 	}
 
 	@Test
-	void getName() {
+	void getName_HasName_ReturnName() {
 		assertThat(player.getName()).isEqualTo("그니");
 	}
 
 	@ParameterizedTest
-	@MethodSource("canReceiveCard_ReturnTrue")
-	void canReceiveCard_ReturnTrue(List<Card> cards) {
+	@MethodSource("canReceiveCard_NotBusted_ReturnTrue")
+	void canReceiveCard_NotBusted_ReturnTrue(List<Card> cards) {
 		player.giveCards(cards);
 		assertThat(player.canReceiveCard()).isTrue();
 	}
 
-	static Stream<List<Card>> canReceiveCard_ReturnTrue() {
+	static Stream<List<Card>> canReceiveCard_NotBusted_ReturnTrue() {
 		return Stream.of(Arrays.asList(tenClub, aceSpade),
 				Arrays.asList(jackHeart, jackHeart, aceSpade),
 				Collections.emptyList(),
@@ -223,13 +228,13 @@ public class PlayerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("canReceiveCard_ReturnFalse")
-	void canReceiveCard_ReturnFalse(List<Card> cards) {
+	@MethodSource("canReceiveCard_Busted_ReturnFalse")
+	void canReceiveCard_Busted_ReturnFalse(List<Card> cards) {
 		player.giveCards(cards);
 		assertThat(player.canReceiveCard()).isFalse();
 	}
 
-	static Stream<List<Card>> canReceiveCard_ReturnFalse() {
+	static Stream<List<Card>> canReceiveCard_Busted_ReturnFalse() {
 		return Stream.of(Arrays.asList(tenClub, sixDiamond, sixDiamond),
 				Arrays.asList(tenClub, tenClub, aceSpade, aceSpade),
 				Arrays.asList(tenClub, tenClub, twoClub, twoClub),
