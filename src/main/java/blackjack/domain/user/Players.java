@@ -19,11 +19,9 @@ public class Players {
             throw new IllegalArgumentException(MAX_PLAYER_ERR_MSG);
         }
 
-        players = new ArrayList<>();
-
-        for (String name : names) {
-            players.add(new Player(name));
-        }
+        players = names.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
