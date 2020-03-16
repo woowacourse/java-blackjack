@@ -19,10 +19,6 @@ public class Score {
         this(score, DEFAULT_HAS_ACE, MINIMUM_SCORE_AND_COUNT);
     }
 
-    public Score(int score, int count) {
-        this(score, DEFAULT_HAS_ACE, count);
-    }
-
     public Score(int score, boolean hasAce, int count) {
         if (hasAce && score + Symbol.ACE_WEIGHT <= BLACK_JACK_SCORE) {
             score += Symbol.ACE_WEIGHT;

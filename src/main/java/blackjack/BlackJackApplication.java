@@ -29,7 +29,6 @@ public class BlackJackApplication {
         printCalculatedResult(participants);
     }
 
-
     private static void printCalculatedResult(Participants participants) {
         GameResult gameResult = new GameResult(participants);
         OutputView.printUsersCardsAndScore(participants);
