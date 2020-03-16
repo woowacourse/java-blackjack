@@ -13,7 +13,7 @@ class RankTest {
 
     @Test
     void getScoreTest() {
-        assertThat(Rank.K.extractScoreValue()).isEqualTo(10);
-        assertThat(Rank.SEVEN.extractScoreValue()).isEqualTo(7);
+        assertThat(Rank.K.getValue()).isEqualTo(10);
+        assertThat(Rank.SEVEN.getValue()).isEqualTo(7);
     }
 }

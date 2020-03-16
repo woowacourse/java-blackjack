@@ -18,16 +18,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HandCardsTest {
     private static Stream<Arguments> generateCards() {
         return Stream.of(
-                Arguments.of(new int[]{2, 3}, 5),
-                Arguments.of(new int[]{3, 6, 11}, 19),
-                Arguments.of(new int[]{1, 2, 3}, 6),
-                Arguments.of(new int[]{1, 7, 9}, 17)
+                Arguments.of(new Rank[]{Rank.TWO, Rank.THREE}, 5),
+                Arguments.of(new Rank[]{Rank.THREE, Rank.SIX, Rank.K}, 19),
+                Arguments.of(new Rank[]{Rank.ACE, Rank.TWO, Rank.THREE}, 6),
+                Arguments.of(new Rank[]{Rank.ACE, Rank.SEVEN, Rank.NINE}, 17)
         );
     }
 
-    private static List<Card> parseNumbersToCards(int... input) {
+    private static List<Card> parseNumbersToCards(Rank... input) {
         return Arrays.stream(input)
-                .mapToObj(i -> Card.of(Rank.of(i), Suit.CLOVER))
+                .map(i -> Card.of(i, Suit.CLOVER))
                 .collect(toList());
     }
 
@@ -41,7 +41,7 @@ class HandCardsTest {
 
     @ParameterizedTest
     @MethodSource("generateCards")
-    void 순수한합구하기테스트(int[] ranks, int expectedScore) {
+    void 순수한합구하기테스트(Rank[] ranks, int expectedScore) {
         HandCards handCards = new HandCards(parseNumbersToCards(ranks));
 
         assertThat(handCards.calculateDefaultSum()).isEqualTo(new Score(expectedScore));
@@ -49,8 +49,8 @@ class HandCardsTest {
 
     @Test
     void 에이스가지는지테스트() {
-        HandCards handCardsWithAce = new HandCards(parseNumbersToCards(1, 2, 3));
-        HandCards handCardsWithoutAce = new HandCards(parseNumbersToCards(2, 3, 4));
+        HandCards handCardsWithAce = new HandCards(parseNumbersToCards(Rank.ACE, Rank.TWO, Rank.THREE));
+        HandCards handCardsWithoutAce = new HandCards(parseNumbersToCards(Rank.TWO, Rank.THREE, Rank.FOUR));
 
         assertThat(handCardsWithAce.hasAce()).isTrue();
         assertThat(handCardsWithoutAce.hasAce()).isFalse();

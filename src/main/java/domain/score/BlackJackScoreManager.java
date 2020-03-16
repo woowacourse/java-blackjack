@@ -4,8 +4,7 @@ import domain.card.possessable.CardPossessable;
 import domain.card.possessable.HandCards;
 
 public class BlackJackScoreManager implements ScoreManagable {
-    private BlackJackScoreManager() {
-    }
+    private BlackJackScoreManager() { }
 
     public static Calculatable calculate(HandCards handCards) {
         Calculatable defaultSum = handCards.calculateDefaultSum();

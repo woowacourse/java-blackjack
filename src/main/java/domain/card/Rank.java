@@ -13,11 +13,10 @@ public enum Rank {
     EIGHT(8),
     NINE(9),
     J(10),
-    Q(11),
-    K(12);
+    Q(10),
+    K(10);
 
     private static final String NO_EXIST_MESSAGE = "적절한 숫자의 랭크가 존재하지 않습니다.";
-    private static final int ALPHABET_SCORE = 10;
 
     private final int value;
 
@@ -32,11 +31,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException(NO_EXIST_MESSAGE));
     }
 
-    public int extractScoreValue() {
-        if (this == Rank.K || this == Rank.Q || this == Rank.J) {
-            return ALPHABET_SCORE;
-        }
-
+    public int getValue() {
         return value;
     }
 

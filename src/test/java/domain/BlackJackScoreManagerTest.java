@@ -21,22 +21,22 @@ class BlackJackScoreManagerTest {
 
     private static Stream<Arguments> generateCards() {
         return Stream.of(
-                Arguments.of(new int[]{2, 3}, 5),
-                Arguments.of(new int[]{3, 6, 11}, 19),
-                Arguments.of(new int[]{1, 2, 3}, 16),
-                Arguments.of(new int[]{1, 7, 9}, 17)
+                Arguments.of(new Rank[]{Rank.TWO, Rank.THREE}, 5),
+                Arguments.of(new Rank[]{Rank.THREE, Rank.SIX, Rank.K}, 19),
+                Arguments.of(new Rank[]{Rank.ACE, Rank.TWO, Rank.THREE}, 16),
+                Arguments.of(new Rank[]{Rank.ACE, Rank.SEVEN, Rank.NINE}, 17)
         );
     }
 
-    private static List<Card> parseNumbersToCards(int... input) {
+    private static List<Card> parseNumbersToCards(Rank... input) {
         return Arrays.stream(input)
-                .mapToObj(i -> Card.of(Rank.of(i), Suit.CLOVER))
+                .map(i -> Card.of(i, Suit.CLOVER))
                 .collect(toList());
     }
 
     @ParameterizedTest
     @MethodSource("generateCards")
-    void calculate(int[] numbers, int expectedScore) {
+    void calculate(Rank[] numbers, int expectedScore) {
         HandCards handCards = new HandCards(parseNumbersToCards(numbers));
 
         assertThat(BlackJackScoreManager.calculate(handCards)).isEqualTo(new Score(expectedScore));

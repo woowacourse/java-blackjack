@@ -32,7 +32,7 @@ public class Card {
     }
 
     public int extractScore() {
-        return rank.extractScoreValue();
+        return rank.getValue();
     }
 
     @Override
