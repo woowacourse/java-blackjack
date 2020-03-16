@@ -17,12 +17,12 @@ public class Player extends Participant {
 
     public Result beatDealer(Dealer dealer) {
         if (this.isBust() || isLowerThanDealerScore(dealer)) {
-            return Result.패;
+            return Result.LOSE;
         }
         if (dealer.isBust() || isHigherThanDealerScore(dealer)) {
-            return Result.승;
+            return Result.WIN;
         }
-        return Result.무;
+        return Result.DRAW;
     }
 
     private boolean isLowerThanDealerScore(Dealer dealer) {

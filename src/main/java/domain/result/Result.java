@@ -1,7 +1,7 @@
 package domain.result;
 
 public enum Result {
-    승,
-    패,
-    무
+    WIN,
+    LOSE,
+    DRAW
 }
