@@ -21,7 +21,7 @@ public class GameResult {
             if (checkBurstPlayer(player)) {
                 continue;
             }
-            playerResult.put(player, player.checkKindOfGameResult(dealer));
+            playerResult.put(player, player.checkResultType(dealer));
         }
         calculateDealerResult();
     }

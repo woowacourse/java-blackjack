@@ -45,7 +45,7 @@ public class Player extends User {
         throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);
     }
 
-    public ResultType checkKindOfGameResult(Dealer dealer) {
+    public ResultType checkResultType(Dealer dealer) {
         if (dealer.isBurst() && !this.isBurst()) {
             return ResultType.WIN;
         }

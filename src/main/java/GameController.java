@@ -23,9 +23,10 @@ public class GameController {
     }
 
     private void run() {
+        // TODO
         hitOrStay();
         dealer.hit(deck);
-        if (dealer.handSize() == 3) {
+        if (dealer.isHit()) {
             OutputView.printDealerHitCard();
         }
         OutputView.printAllHands(players, dealer);
