@@ -22,7 +22,7 @@ public enum Outcome {
         this.compare = compare;
     }
 
-    public static Outcome from(Score playerScore, Score dealerScore) {
+    public static Outcome of(Score playerScore, Score dealerScore) {
         return Arrays.stream(values())
             .filter(outcome -> outcome.compare.test(playerScore, dealerScore))
             .findAny()
