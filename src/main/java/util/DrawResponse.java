@@ -2,7 +2,7 @@ package util;
 
 import java.util.Arrays;
 
-public enum PlayerDrawResponse {
+public enum DrawResponse {
 	YES("y"),
 	NO("n");
 
@@ -10,7 +10,7 @@ public enum PlayerDrawResponse {
 
 	private final String value;
 
-	PlayerDrawResponse(String value) {
+	DrawResponse(String value) {
 		this.value = value;
 	}
 
@@ -18,9 +18,9 @@ public enum PlayerDrawResponse {
 		return of(value) == YES;
 	}
 
-	private static PlayerDrawResponse of(String value) {
+	private static DrawResponse of(String value) {
 		return Arrays.stream(values())
-			.filter(playerDrawResponse -> playerDrawResponse.value.equalsIgnoreCase(value))
+			.filter(drawResponse -> drawResponse.value.equalsIgnoreCase(value))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(ILLEGAL_VALUE_MESSAGE));
 	}

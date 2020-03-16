@@ -9,7 +9,7 @@ import domain.result.ScoreBoards;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerFactory;
-import util.PlayerDrawResponse;
+import util.DrawResponse;
 import view.InputView;
 import view.OutputView;
 
@@ -20,7 +20,7 @@ public class BlackjackGame {
 		final CardDeck cardDeck = new CardDeck();
 		drawInitialUsersCard(players, dealer, cardDeck);
 		drawAdditionalUsersCard(players, dealer, cardDeck);
-		printAllUserScore(players, dealer);
+		printResult(players, dealer);
 	}
 
 	private void drawInitialUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
@@ -40,9 +40,6 @@ public class BlackjackGame {
 	}
 
 	private void drawAdditionalUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-		if (dealer.isBlackjack()) {
-			return;
-		}
 		drawAdditionalPlayersCard(players, cardDeck);
 		drawAdditionalDealerCard(dealer, cardDeck);
 	}
@@ -61,7 +58,7 @@ public class BlackjackGame {
 	}
 
 	private boolean isYes(Player player) {
-		return PlayerDrawResponse.isYes(InputView.inputYesOrNo(player.getName()));
+		return DrawResponse.isYes(InputView.inputYesOrNo(player.getName()));
 	}
 
 	private void drawAdditionalDealerCard(Dealer dealer, CardDeck cardDeck) {
@@ -71,7 +68,7 @@ public class BlackjackGame {
 		}
 	}
 
-	private void printAllUserScore(List<Player> players, Dealer dealer) {
+	private void printResult(List<Player> players, Dealer dealer) {
 		ScoreBoards scoreBoards = ScoreBoards.fromAllUsers(players, dealer);
 		OutputView.printUsersCardsAndScore(scoreBoards);
 		DealerResult dealerResult = scoreBoards.calculateDealerResults();
