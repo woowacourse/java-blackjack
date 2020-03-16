@@ -19,14 +19,14 @@ public class Cards {
 
     public static Cards of(List<Card> cards) {
         if (cards == null || cards.isEmpty()) {
-            throw new NullPointerException(NO_CARDS);
+            throw new IllegalArgumentException(NO_CARDS);
         }
 
         return new Cards(cards);
     }
 
     public boolean isCardsSumUnderSixteen() {
-        return CardCalculator.calculateAceStrategy(this) <= DEALER_STANDARD_ADDITIONAL_CARD;
+        return getCardsSum() <= DEALER_STANDARD_ADDITIONAL_CARD;
     }
 
     public boolean containAce() {
@@ -42,14 +42,14 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public int getCardsSum() {
-        return CardCalculator.calculateAceStrategy(this);
-    }
-
     public boolean isBlackJack() {
         return containAce()
                 && this.cards.size() == BLACK_JACK_SIZE
                 && getCardsSum() == STANDARD_ACE_ELEVEN;
+    }
+
+    public int getCardsSum() {
+        return CardCalculator.calculateAceStrategy(this);
     }
 
     public List<Card> getCards() {

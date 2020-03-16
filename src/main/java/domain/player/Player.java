@@ -14,8 +14,8 @@ public abstract class Player {
 
     public Player(String name, List<Card> cards) {
         if ((name == null || name.trim().length() == 0)
-                || (cards == null || cards.size() == 0)) {
-            throw new NullPointerException("플레이어의 이름 또는 카드를 입력하지 않았습니다.");
+                || (cards == null || cards.isEmpty())) {
+            throw new IllegalArgumentException("플레이어의 이름 또는 카드를 입력하지 않았습니다.");
         }
 
         this.cards = Cards.of(cards);
@@ -23,6 +23,9 @@ public abstract class Player {
     }
 
     public void hitCard(Card card) {
+        if (card == null) {
+            throw new NullPointerException("입력한 카드가 없습니다.");
+        }
         this.cards.addCard(card);
     }
 

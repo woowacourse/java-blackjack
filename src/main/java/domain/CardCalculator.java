@@ -12,14 +12,10 @@ public class CardCalculator {
     private CardCalculator() {
     }
 
-    private static void validateNullCards(Cards... cards) {
-        if (cards == null || cards.length == 0) {
+    public static int calculateAceStrategy(Cards cards) {
+        if (cards == null) {
             throw new NullPointerException("입력한 카드가 없습니다.");
         }
-    }
-
-    public static int calculateAceStrategy(Cards cards) {
-        validateNullCards(cards);
 
         int playerCardsSum = calculateCards(cards.getCards());
         if (cards.containAce() && playerCardsSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
@@ -35,7 +31,9 @@ public class CardCalculator {
     }
 
     public static boolean determineWinner(Cards userCards, Cards dealerCards) {
-        validateNullCards(userCards, dealerCards);
+        if (userCards == null || dealerCards == null) {
+            throw new NullPointerException("유저 또는 딜러의 카드를 입력하지 않았습니다.");
+        }
 
         int userCardSum = calculateAceStrategy(userCards);
         int dealerCardSum = calculateAceStrategy(dealerCards);

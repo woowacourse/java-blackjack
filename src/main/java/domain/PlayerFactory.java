@@ -15,7 +15,7 @@ public class PlayerFactory {
 
     public static Players create(CardDeck cardDeck, List<String> playerNames) {
         if (cardDeck == null || (playerNames == null || playerNames.isEmpty())) {
-            throw new NullPointerException("플레이어를 생성할 수 없습니다.");
+            throw new IllegalArgumentException("플레이어를 생성할 수 없습니다.");
         }
 
         List<Player> players = playerNames.stream()

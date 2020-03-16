@@ -29,19 +29,19 @@ public class DealerTest {
         Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
         Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
         Dealer dealerWithAceUnderSixteen = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
-        if (dealerWithAceUnderSixteen.isAdditionalCard()) {
+        if (dealerWithAceUnderSixteen.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealerWithAceUnderSixteen, cardDeck.drawCard());
         }
 
         Card card3 = Card.of(CardNumber.QUEEN, CardSuitSymbol.DIAMOND);
         Dealer dealerWithoutAceUnderSixteen = new Dealer(new ArrayList<>(Arrays.asList(card2, card3)));
-        if (dealerWithoutAceUnderSixteen.isAdditionalCard()) {
+        if (dealerWithoutAceUnderSixteen.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealerWithoutAceUnderSixteen, cardDeck.drawCard());
         }
 
         Card card4 = Card.of(CardNumber.NINE, CardSuitSymbol.CLUB);
         Dealer dealerOverSixteen = new Dealer(new ArrayList<>(Arrays.asList(card3, card4)));
-        if (dealerOverSixteen.isAdditionalCard()) {
+        if (dealerOverSixteen.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealerOverSixteen, cardDeck.drawCard());
         }
 
@@ -56,7 +56,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
-        if (dealer.isAdditionalCard()) {
+        if (dealer.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
         }
 
@@ -69,7 +69,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB))));
-        if (dealer.isAdditionalCard()) {
+        if (dealer.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
         }
 
@@ -82,7 +82,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB))));
-        if (dealer.isAdditionalCard()) {
+        if (dealer.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
         }
 
@@ -95,7 +95,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SIX, CardSuitSymbol.CLUB))));
-        if (dealer.isAdditionalCard()) {
+        if (dealer.getCard().isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
         }
 
