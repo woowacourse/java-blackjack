@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Arrays;
 
 /**
- *   class description
+ *   Yes와 No를 가지는 enum
  *
  *   @author ParkDooWon, AnHyungJu  
  */

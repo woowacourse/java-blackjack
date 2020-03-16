@@ -3,7 +3,7 @@ package dto;
 import domain.card.Hands;
 
 /**
- *   class description
+ *   PlayerDto, DealerDto의 인터페이스
  *
  *   @author ParkDooWon
  */

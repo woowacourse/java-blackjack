@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import domain.card.Deck;
 
 /**
- *   class description
+ *   Player 리스트를 가진 일급 콜렉션
  *
  *   @author ParkDooWon
  */

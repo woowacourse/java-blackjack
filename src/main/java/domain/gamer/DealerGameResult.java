@@ -1,14 +1,14 @@
 package domain.gamer;
 
 /**
- *   class description
+ *    Dealer의 점수를 가지는 클래스
  *
  *   @author ParkDooWon
  */
 public class DealerGameResult {
-	int win;
-	int lose;
-	int draw;
+	private int win;
+	private int lose;
+	private int draw;
 
 	DealerGameResult(int win, int lose, int draw) {
 		this.win = win;

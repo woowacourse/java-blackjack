@@ -3,7 +3,7 @@ package domain.gamer;
 import domain.card.Hands;
 
 /**
- *   class description
+ *   Player의 승무패를 가지는 클래스
  *
  *   @author ParkDooWon
  */
