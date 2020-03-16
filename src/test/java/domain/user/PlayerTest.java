@@ -1,13 +1,13 @@
 package domain.user;
 
-import domain.card.*;
+import domain.card.CardDeckGeneratorForTest;
+import domain.card.CardFactory;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class PlayerTest {

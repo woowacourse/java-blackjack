@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Answer;
+import domain.PlayerAnswer;
 import domain.GameResult;
 import domain.Names;
 import domain.card.CardDeck;
@@ -55,8 +55,8 @@ public class Controller {
 
     private boolean askPlayerDraw(Player player) {
         OutputView.printCardFormat(player);
-        Answer answer = InputView.requestDraw();
-        return answer.isAgree();
+        PlayerAnswer playerAnswer = InputView.requestDraw();
+        return playerAnswer.isAgree();
     }
 
     private void passResult(Dealer dealer, Players players) {

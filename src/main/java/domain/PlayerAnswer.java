@@ -2,12 +2,12 @@ package domain;
 
 import java.util.Objects;
 
-public class Answer {
+public class PlayerAnswer {
     private static final String INPUT_TRUE = "y";
     private static final String INPUT_FALSE = "n";
     private final boolean answer;
 
-    public Answer(String userAnswer) {
+    public PlayerAnswer(String userAnswer) {
         validateValue(userAnswer);
         answer = INPUT_TRUE.equals(userAnswer);
     }
@@ -27,9 +27,5 @@ public class Answer {
 
     public boolean isAgree() {
         return answer;
-    }
-
-    public boolean isDisagree() {
-        return !answer;
     }
 }

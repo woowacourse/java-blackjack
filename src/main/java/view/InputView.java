@@ -1,6 +1,6 @@
 package view;
 
-import domain.Answer;
+import domain.PlayerAnswer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,7 @@ public class InputView {
         return Arrays.asList(splitNames);
     }
 
-    public static Answer requestDraw() {
-        return new Answer(scanner.nextLine());
+    public static PlayerAnswer requestDraw() {
+        return new PlayerAnswer(scanner.nextLine());
     }
 }
