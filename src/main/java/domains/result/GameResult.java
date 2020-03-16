@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class GameResult {
     private Map<Player, ResultType> playerResult = new HashMap<>();
-    private Map<ResultType, Integer> gameResult = new HashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
         create(players, dealer);
@@ -22,7 +21,6 @@ public class GameResult {
             }
             playerResult.put(player, player.checkResultType(dealer));
         }
-        calculateDealerResult();
     }
 
     private boolean checkBurstPlayer(Player player) {
@@ -37,22 +35,21 @@ public class GameResult {
         return playerResult.get(player);
     }
 
-    private void calculateDealerResult() {
-        // TODO : 방향을 잡지 못했어요.
+    public Map<ResultType, Integer> calculateDealerResult() {
+        Map<ResultType, Integer> dealerResult = new HashMap<>();
+
         for (ResultType resultType : ResultType.values()) {
-            gameResult.put(resultType, 0);
+            dealerResult.put(resultType, 0);
         }
 
         for (ResultType result : playerResult.values()) {
-            gameResult.put(result, gameResult.get(result) + 1);
+            dealerResult.put(result.oppose(), dealerResult.get(result) + 1);
         }
+
+        return dealerResult;
     }
 
     public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
-    }
-
-    public Map<ResultType, Integer> getGameResult() {
-        return gameResult;
     }
 }

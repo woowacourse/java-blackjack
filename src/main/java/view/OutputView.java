@@ -9,8 +9,11 @@ import domains.user.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final CharSequence BLANK = " ";
+
     public static void printInputPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
@@ -52,13 +55,22 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResult gameResult) {
-        System.out.println("딜러: "
-                + gameResult.getGameResult().get(ResultType.LOSE) + ResultType.WIN.getWinOrDrawOrLose()
-                + gameResult.getGameResult().get(ResultType.DRAW) + ResultType.DRAW.getWinOrDrawOrLose()
-                + gameResult.getGameResult().get(ResultType.WIN) + ResultType.LOSE.getWinOrDrawOrLose());
+        Map<ResultType, Integer> dealerResult = gameResult.calculateDealerResult();
+
+        System.out.println("딜러: " + convertToString(dealerResult));
+
         Map<Player, ResultType> result = gameResult.getPlayerResult();
         for (Player player : result.keySet()) {
-            System.out.println(player.getName() + ": " + result.get(player).getWinOrDrawOrLose());
+            System.out.println(player.getName() + ": " + result.get(player).getResultType());
         }
+    }
+
+    private static String convertToString(Map<ResultType, Integer> dealerGameResult) {
+        return dealerGameResult.entrySet().stream().map(
+                result -> {
+                    long count = result.getValue();
+                    String resultName = result.getKey().getResultType();
+                    return count + resultName;
+                }).collect(Collectors.joining(BLANK));
     }
 }

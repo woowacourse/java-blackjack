@@ -21,7 +21,6 @@ public class GameController {
     }
 
     private void run() {
-        // TODO : 딜러도 hitOrStay로 바껴야 하지 않을까요?
         hitOrStay();
 
         if (dealer.isHit()) {

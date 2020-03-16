@@ -7,7 +7,6 @@ import domains.user.Dealer;
 import domains.user.Hands;
 import domains.user.Player;
 import domains.user.Players;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -32,6 +31,15 @@ public class GameResultTest {
 
         assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.WIN);
         assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
+    }
+
+    @DisplayName("플레이어들의 결과를 바탕으로 딜러의 결과를 생성 및 반환")
+    @ParameterizedTest
+    @MethodSource("gameData")
+    void calculateDealerResult_PlayersResult_ReturnDealerResult(Players players, Dealer dealer, Map<ResultType, Integer> dealerResult) {
+        GameResult gameResult = new GameResult(players, dealer);
+
+        assertThat(gameResult.calculateDealerResult()).isEqualTo(dealerResult);
     }
 
     static Stream<Arguments> gameData() {
