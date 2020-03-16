@@ -5,7 +5,6 @@ import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,11 +24,6 @@ public class DealerTest {
         dealer = new Dealer();
     }
 
-    @Test
-    void getDealerName() {
-        assertThat(dealer.getName()).isEqualTo("딜러");
-    }
-
     @ParameterizedTest
     @MethodSource("createCards")
     @DisplayName("딜러가 갖고 있는 카드의 합이 16 이하인지 확인")
@@ -37,7 +31,7 @@ public class DealerTest {
         for (Card card : cards) {
             dealer.draw(card);
         }
-        assertThat(dealer.shouldDrawCard()).isEqualTo(shouldDrawCard);
+        assertThat(dealer.canDrawCard()).isEqualTo(shouldDrawCard);
     }
 
     private static Stream<Arguments> createCards() {

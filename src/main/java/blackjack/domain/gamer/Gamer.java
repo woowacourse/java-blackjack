@@ -6,12 +6,14 @@ import blackjack.domain.rule.CardCalculator;
 
 import java.util.List;
 
-public abstract class Gamer {
+public abstract class Gamer implements Comparable<Gamer> {
 
     protected Hand hand = new Hand();
+    private int score = 0;
 
     public void draw(Card card) {
         hand.add(card);
+        score = hand.calculateSum();
     }
 
     public boolean isBusted() {
@@ -22,9 +24,16 @@ public abstract class Gamer {
         return hand.calculateSum();
     }
 
-    public List<Card> getCardStatus() {
+    public abstract boolean canDrawCard();
+
+    public abstract String getName();
+
+    public List<Card> getHand() {
         return hand.getCardStatus();
     }
 
-    public abstract String getName();
+    @Override
+    public int compareTo(Gamer o) {
+        return Integer.compare(this.score, o.score);
+    }
 }

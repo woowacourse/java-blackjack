@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.rule.CardCalculator;
+
 import java.util.Objects;
 
 public class Player extends Gamer {
@@ -10,6 +12,12 @@ public class Player extends Gamer {
         this.name = Objects.requireNonNull(name);
     }
 
+    @Override
+    public boolean canDrawCard() {
+        return calculateSum() <= CardCalculator.BUST_THRESHOLD;
+    }
+
+    @Override
     public String getName() {
         return name;
     }

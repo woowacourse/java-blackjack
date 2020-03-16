@@ -13,10 +13,12 @@ public enum BlackJackResult {
     }
 
     public BlackJackResult reversed() {
-        if (this == WIN)
+        if (this == WIN) {
             return LOSE;
-        if (this == LOSE)
+        }
+        if (this == LOSE) {
             return WIN;
+        }
         return DRAW;
     }
 

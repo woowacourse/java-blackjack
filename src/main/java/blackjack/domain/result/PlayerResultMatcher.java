@@ -6,10 +6,12 @@ import blackjack.domain.gamer.Player;
 public class PlayerResultMatcher {
 
     public static BlackJackResult match(Dealer dealer, Player player) {
-        if (player.isBusted())
+        if (player.isBusted()) {
             return BlackJackResult.LOSE;
-        if (dealer.isBusted())
+        }
+        if (dealer.isBusted()) {
             return BlackJackResult.WIN;
+        }
         return findWinner(dealer, player);
     }
 

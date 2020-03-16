@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.BlackJackMaster;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
@@ -17,10 +16,10 @@ public class BlackJackApplication {
         Dealer dealer = new Dealer();
         Players players = Players.of(InputView.askPlayerNames().get());
 
-        BlackJackMaster.initializeCard(dealer, players, deck);
+        BlackJackController.initializeCard(dealer, players, deck);
         OutputView.printInitialCards(dealer, players);
 
-        BlackJackMaster.drawMoreCard(dealer, players, deck);
+        BlackJackController.drawMoreCard(dealer, players, deck);
         OutputView.printGamerScore(dealer, players);
 
         GamersResultDto gamersResultDto = GamersResultAssembler.of(dealer, players);

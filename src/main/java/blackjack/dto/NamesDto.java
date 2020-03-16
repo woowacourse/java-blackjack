@@ -12,9 +12,9 @@ public class NamesDto {
     }
 
     private List<String> validate(String names) {
-            List<String> splittedNames = Arrays.stream(names.split(","))
-                    .map(String::trim)
-                    .collect(Collectors.toList());
+        List<String> splittedNames = Arrays.stream(names.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
 
         if (names == null || splittedNames.isEmpty())
             throw new NullPointerException("비어있는 값을 입력하셨습니다");

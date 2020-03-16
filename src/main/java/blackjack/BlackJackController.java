@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
@@ -9,7 +9,7 @@ import blackjack.domain.rule.PlayerAnswer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackMaster {
+public class BlackJackController {
 
     public static void initializeCard(Dealer dealer, Players players, Deck deck) {
         HandInitializer.initialize(dealer, players, deck);
@@ -27,14 +27,14 @@ public class BlackJackMaster {
     }
 
     private static void drawCardForDealer(Dealer dealer, Deck deck) {
-        while (dealer.shouldDrawCard()) {
+        while (dealer.canDrawCard()) {
             dealer.draw(deck.pick());
             OutputView.printDealerDrewCard();
         }
     }
 
     private static void hitOrStand(Player player, Deck deck) {
-        while (!player.isBusted() && wantMoreCard(player)) {
+        while (player.canDrawCard() && wantMoreCard(player)) {
             player.draw(deck.pick());
             OutputView.printPlayerHand(player);
         }

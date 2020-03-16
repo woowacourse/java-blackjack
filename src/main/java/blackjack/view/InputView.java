@@ -3,11 +3,7 @@ package blackjack.view;
 import blackjack.domain.gamer.Player;
 import blackjack.dto.NamesDto;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-
-import static java.util.stream.Collectors.toList;
 
 public class InputView {
 
