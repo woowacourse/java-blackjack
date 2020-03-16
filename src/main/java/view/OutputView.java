@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     private static void printAnyDealerCard(Dealer dealer) {
-        Card anyDealerCard = dealer.getAnyCard();
+        Card anyDealerCard = dealer.getFirstCard();
         System.out.println("딜러: " + anyDealerCard.getSymbolName() + anyDealerCard.getTypeKorean());
     }
 

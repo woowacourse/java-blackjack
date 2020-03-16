@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer extends User {
-    public Card getAnyCard() {
+    public Card getFirstCard() {
         return this.cards
-            .getAnyCard();
+            .getFirstCard();
     }
 
     public boolean isScoreSame(int score) {
