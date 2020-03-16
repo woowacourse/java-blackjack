@@ -11,6 +11,16 @@ public enum Result {
         this.korean = resultKorean;
     }
 
+    public Result getOpponentResult() {
+        if (this == Result.WIN) {
+            return Result.LOSE;
+        }
+        if (this == Result.LOSE) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
+    }
+
     @Override
     public String toString() {
         return this.korean;

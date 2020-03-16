@@ -32,23 +32,13 @@ public class Dealer extends User {
             .forEach(result -> dealerResult.put(result, 0));
 
         for (Player player : players.getPlayers()) {
-            Result playerResult = calculateDealerResult(player);
+            Result playerResult = calculateResult(player);
             dealerResult.replace(playerResult, dealerResult.get(playerResult) + 1);
         }
         return new DealerResult(dealerResult);
     }
 
-    private Result calculateDealerResult(Player player) {
-        if (calculateResult(player).equals(Result.WIN)) {
-            return Result.WIN;
-        }
-        if (calculateResult(player).equals(Result.LOSE)) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
-    }
-
-    private Result calculateResult(Player player) {
+    public Result calculateResult(Player player) {
         if (draw(player)) {
             return Result.DRAW;
         }

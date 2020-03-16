@@ -62,7 +62,10 @@ public class BlackJackController {
         OutputView.printResultMessage();
         OutputView.printDealerResult(dealer.calculateResult(players));
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(player.getName(), player.calculateResult(dealer));
+            OutputView.printPlayerResult(
+                player.getName(),
+                dealer.calculateResult(player).getOpponentResult()
+            );
         }
     }
 }
