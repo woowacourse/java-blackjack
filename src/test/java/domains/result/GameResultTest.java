@@ -19,18 +19,12 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
-    private GameResult gameResult;
-
-    @BeforeEach
-    void setUp() {
-        gameResult = new GameResult();
-    }
 
     @DisplayName("참가자들과 딜러의 게임 결과를 계산하여 승패를 반환")
     @ParameterizedTest
     @MethodSource("gameData")
     void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
-        gameResult.create(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
 
         Iterator<Player> iterator = players.iterator();
         Player ddoring = iterator.next();

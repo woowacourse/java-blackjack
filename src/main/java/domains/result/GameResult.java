@@ -8,15 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, ResultType> playerResult;
-    private Map<ResultType, Integer> gameResult;
+    private Map<Player, ResultType> playerResult = new HashMap<>();
+    private Map<ResultType, Integer> gameResult = new HashMap<>();
 
-    public GameResult() {
-        this.playerResult = new HashMap<>();
-        this.gameResult = new HashMap<>();
+    public GameResult(Players players, Dealer dealer) {
+        create(players, dealer);
     }
 
-    public void create(Players players, Dealer dealer) {
+    private void create(Players players, Dealer dealer) {
         for (Player player : players) {
             if (checkBurstPlayer(player)) {
                 continue;
@@ -39,6 +38,7 @@ public class GameResult {
     }
 
     private void calculateDealerResult() {
+        // TODO : 방향을 잡지 못했어요.
         for (ResultType resultType : ResultType.values()) {
             gameResult.put(resultType, 0);
         }
