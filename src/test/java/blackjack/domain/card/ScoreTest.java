@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.exceptions.ScoreException;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -28,28 +27,28 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("of_IsNotNull")
-	void of_IsNotNull(Score score) {
+	@MethodSource("of_ZeroOrPlusNum_IsNotNull")
+	void of_ZeroOrPlusNum_IsNotNull(Score score) {
 		assertThat(score).isNotNull();
 	}
 
-	static Stream<Score> of_IsNotNull() {
+	static Stream<Score> of_ZeroOrPlusNum_IsNotNull() {
 		return Stream.of(zero, five, six, eleven);
 	}
 
 	@Test
-	void of_IfMinus_ThrowScoreException() {
+	void of_MinusNum_ThrowScoreException() {
 		assertThatThrownBy(() -> Score.of(-1))
 				.isInstanceOf(ScoreException.class);
 	}
 
 	@ParameterizedTest
-	@MethodSource("add")
-	void add(Score a, Score b, Score expect) {
+	@MethodSource("add_TwoScore_ReturnAddedScore")
+	void add_TwoScore_ReturnAddedScore(Score a, Score b, Score expect) {
 		assertThat(a.add(b)).isEqualTo(expect);
 	}
 
-	static Stream<Arguments> add() {
+	static Stream<Arguments> add_TwoScore_ReturnAddedScore() {
 		return Stream.of(Arguments.of(zero, five, five),
 				Arguments.of(zero, six, six),
 				Arguments.of(zero, zero, zero),
@@ -57,12 +56,12 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isUnder_ReturnTrue")
-	void isUnder_ReturnTrue(Score score, int num) {
+	@MethodSource("isUnder_ScoreSmallerThanNum_ReturnTrue")
+	void isUnder_ScoreSmallerThanNum_ReturnTrue(Score score, int num) {
 		assertThat(score.isUnder(num)).isTrue();
 	}
 
-	static Stream<Arguments> isUnder_ReturnTrue() {
+	static Stream<Arguments> isUnder_ScoreSmallerThanNum_ReturnTrue() {
 		return Stream.of(Arguments.of(zero, 1),
 				Arguments.of(five, 6),
 				Arguments.of(five, 21),
@@ -71,12 +70,12 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isUnder_ReturnFalse")
-	void isUnder_ReturnFalse(Score score, int num) {
+	@MethodSource("isUnder_ScoreSameOrBiggerThanNum_ReturnFalse")
+	void isUnder_ScoreSameOrBiggerThanNum_ReturnFalse(Score score, int num) {
 		assertThat(score.isUnder(num)).isFalse();
 	}
 
-	static Stream<Arguments> isUnder_ReturnFalse() {
+	static Stream<Arguments> isUnder_ScoreSameOrBiggerThanNum_ReturnFalse() {
 		return Stream.of(Arguments.of(zero, 0),
 				Arguments.of(five, 5),
 				Arguments.of(five, 4),
@@ -86,12 +85,12 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isOver_ReturnTrue")
-	void isOver_ReturnTrue(Score score, int num) {
+	@MethodSource("isOver_ScoreBiggerThanNum_ReturnTrue")
+	void isOver_ScoreBiggerThanNum_ReturnTrue(Score score, int num) {
 		assertThat(score.isOver(num)).isTrue();
 	}
 
-	static Stream<Arguments> isOver_ReturnTrue() {
+	static Stream<Arguments> isOver_ScoreBiggerThanNum_ReturnTrue() {
 		return Stream.of(Arguments.of(five, 4),
 				Arguments.of(six, 5),
 				Arguments.of(eleven, 10),
@@ -100,12 +99,12 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isOver_ReturnFalse")
-	void isOver_ReturnFalse(Score score, int num) {
+	@MethodSource("isOver_ScoreSameOrSmallerThanNum_ReturnFalse")
+	void isOver_ScoreSameOrSmallerThanNum_ReturnFalse(Score score, int num) {
 		assertThat(score.isOver(num)).isFalse();
 	}
 
-	static Stream<Arguments> isOver_ReturnFalse() {
+	static Stream<Arguments> isOver_ScoreSameOrSmallerThanNum_ReturnFalse() {
 		return Stream.of(Arguments.of(zero, 0),
 				Arguments.of(five, 5),
 				Arguments.of(six, 6),
@@ -115,15 +114,12 @@ class ScoreTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("getScore")
-	void getScore(Score score, int expect) {
-		assertThat(zero.getScore()).isEqualTo(0);
-		assertThat(five.getScore()).isEqualTo(5);
-		assertThat(six.getScore()).isEqualTo(6);
-		assertThat(eleven.getScore()).isEqualTo(11);
+	@MethodSource("getScore_Score_IsEqualToExpect")
+	void getScore_Score_IsEqualToExpect(Score score, int expect) {
+		assertThat(score.getScore()).isEqualTo(expect);
 	}
 
-	static Stream<Arguments> getScore() {
+	static Stream<Arguments> getScore_Score_IsEqualToExpect() {
 		return Stream.of(Arguments.of(zero, 0),
 				Arguments.of(five, 5),
 				Arguments.of(six, 6),
