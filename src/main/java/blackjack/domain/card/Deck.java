@@ -11,11 +11,13 @@ public class Deck {
         this.deck = deck;
     }
 
-    public static Deck createWithShuffle() {
-        return create().shuffle();
+    public static Deck create(ProcessStrategy processStrategy) {
+        Stack<Card> cards = createInOrder();
+        processStrategy.shuffle(cards);
+        return new Deck(cards);
     }
 
-    private static Deck create() {
+    private static Stack<Card> createInOrder() {
         Stack<Card> cards = new Stack<>();
 
         for (Symbol symbol : Symbol.values()) {
@@ -24,12 +26,7 @@ public class Deck {
             }
         }
 
-        return new Deck(cards);
-    }
-
-    private Deck shuffle() {
-        Collections.shuffle(deck);
-        return this;
+        return cards;
     }
 
     public Card draw() {

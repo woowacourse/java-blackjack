@@ -1,6 +1,8 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.ProcessStrategy;
+import blackjack.domain.card.ShuffleStrategy;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.user.*;
 import blackjack.view.InputView;
@@ -12,7 +14,8 @@ public class Blackjack {
         Players players = Players.of(playerNames);
         Dealer dealer = Dealer.create();
 
-        Deck deck = Deck.createWithShuffle();
+        ProcessStrategy processStrategy = new ShuffleStrategy();
+        Deck deck = Deck.create(processStrategy);
 
         dealer.receiveInitialCards(deck);
         players.receiveInitialCards(deck);
