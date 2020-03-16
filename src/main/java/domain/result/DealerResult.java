@@ -28,13 +28,6 @@ public class DealerResult extends BlackJackResult<Map<WinLose, Integer>> {
 
     @Override
     public String toString() {
-        return getGamerName() + ": " + convertNullToZero(winLose.get(WinLose.WIN)) + "WIN " + convertNullToZero(winLose.get(WinLose.LOSE)) + "LOSE";
-    }
-
-    private String convertNullToZero(Integer input) {
-        if (input == null) {
-            return "0";
-        }
-        return Integer.toString(input);
+        return getGamerName() + ": " + winLose.getOrDefault(winLose.get(WinLose.WIN), 0) + "WIN " + winLose.getOrDefault(WinLose.LOSE, 0) + "LOSE";
     }
 }
