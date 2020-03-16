@@ -14,20 +14,9 @@ public class Players {
 	private final List<Playable> players;
 
 	private Players(List<Playable> players) {
+		validatePlayersIsNotEmpty(players);
 		validateDistinctNames(players);
-		validateNotContainsDealer(players);
-		validateIsSizeNotZero(players);
 		this.players = players;
-	}
-
-	public static Players of(String playerNames) {
-		List<Playable> players = Arrays.stream(playerNames.split(","))
-				.map(String::trim)
-				.map(Player::of)
-				.collect(collectingAndThen(toList(),
-						Collections::unmodifiableList));
-
-		return new Players(players);
 	}
 
 	private void validateDistinctNames(List<Playable> Players) {
@@ -41,19 +30,27 @@ public class Players {
 		}
 	}
 
-	private void validateNotContainsDealer(List<Playable> players) {
-		boolean hasDealer = players.stream()
-				.anyMatch(Playable::isDealer);
-
-		if (hasDealer) {
-			throw new PlayersException("딜러는 플레이어 목록에 포함될 수 없습니다.");
-		}
-	}
-
-	private void validateIsSizeNotZero(List<Playable> players) {
+	private void validatePlayersIsNotEmpty(List<Playable> players) {
 		if (players.isEmpty()) {
 			throw new PlayersException("플레이어는 한 명 이상이어야 합니다.");
 		}
+	}
+
+	public static Players of(String playerNames) {
+		if (playerNames == null) {
+			return new Players(Collections.emptyList());
+		}
+
+		List<Playable> players = playerNamesToPlayableList(playerNames);
+		return new Players(players);
+	}
+
+	private static List<Playable> playerNamesToPlayableList(String playerNames) {
+		return Arrays.stream(playerNames.split(","))
+				.map(String::trim)
+				.map(Player::of)
+				.collect(collectingAndThen(toList(),
+						Collections::unmodifiableList));
 	}
 
 	public void giveCardEachPlayer(Drawable deck) {
