@@ -3,9 +3,13 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackApplication {
+
+    public static final int FIRST_CARD_COUNT = 2;
+
     public static void main(String[] args) {
         Dealer dealer = new Dealer();
-        Players players = new Players(InputView.inputNames());
+        Names names = new Names(InputView.inputNames());
+        Players players = new Players(names);
         CardDeck cardDeck = new CardDeck();
         try {
             distributeFirstCards(dealer, players, cardDeck);
@@ -36,9 +40,9 @@ public class BlackJackApplication {
     }
 
     private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
-        dealer.drawCard(cardDeck, 2);
+        dealer.drawCard(cardDeck, FIRST_CARD_COUNT);
         for (Player player : players.getPlayers()) {
-            player.drawCard(cardDeck, 2);
+            player.drawCard(cardDeck, FIRST_CARD_COUNT);
         }
         OutputView.printFirstCards(dealer, players);
     }

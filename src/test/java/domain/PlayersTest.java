@@ -12,24 +12,20 @@ public class PlayersTest {
     @Test
     @DisplayName("이름을 받아서 플레이어들을 생성해줌")
     void players() {
-        List<String> playerNames = new ArrayList<>();
-        playerNames.add("pobi");
-        playerNames.add("jason");
+        Names playerNames = new Names("pobi,habi");
         Players players = new Players(playerNames);
         List<Player> playerList = players.getPlayers();
-        assertThat(playerList.get(0).getName()).isEqualTo("pobi");
-        assertThat(playerList.get(1).getName()).isEqualTo("jason");
+        assertThat(playerList.get(0).getName().toString()).isEqualTo("pobi");
+        assertThat(playerList.get(1).getName().toString()).isEqualTo("habi");
     }
 
     @Test
     @DisplayName("플레이어들의 이름을 받아오는 테스트")
     void getPlayerNames() {
-        List<String> playerNames = new ArrayList<>();
-        playerNames.add("pobi");
-        playerNames.add("jason");
+        Names playerNames = new Names("pobi,habi");
         Players players = new Players(playerNames);
-        playerNames = players.getPlayerNames();
-        assertThat(playerNames.get(0)).isEqualTo("pobi");
-        assertThat(playerNames.get(1)).isEqualTo("jason");
+        List<Name> names = players.getPlayerNames();
+        assertThat(names.get(0).toString()).isEqualTo("pobi");
+        assertThat(names.get(1).toString()).isEqualTo("habi");
     }
 }

@@ -1,16 +1,22 @@
 package domain;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+    CardDeck cardDeck = new CardDeck();
+    Player player;
+
+    @BeforeEach
+    void init() {
+        player = new Player(new Name("jamie"));
+    }
+
     @Test
     @DisplayName("드로우 테스트")
     void isAbleDrawCard() {
-        CardDeck cardDeck = new CardDeck();
-        Player player = new Player("jamie");
-        player.drawCard(cardDeck);
         Assertions.assertThat(player.canHit())
                 .isTrue();
         for (int i = 0; i < 12; i++) {
@@ -23,8 +29,6 @@ public class PlayerTest {
     @Test
     @DisplayName("Bust 패배 테스트")
     void isBustEqualLose() {
-        CardDeck cardDeck = new CardDeck();
-        Player player = new Player("하비");
         player.canHit();
         Assertions.assertThat(player.getWinningResult()).isEqualTo(WinningResult.UNDEFINED);
 
@@ -38,8 +42,6 @@ public class PlayerTest {
     @Test
     @DisplayName("승무패 결과 산정 테스트 - 패배")
     void calculateWinningResult_lose() {
-        CardDeck cardDeck = new CardDeck();
-        Player player = new Player("제이미");
         player.drawCard(cardDeck);
         player.calculateWinningResult(17);
         Assertions.assertThat(player.getWinningResult())
@@ -49,8 +51,6 @@ public class PlayerTest {
     @Test
     @DisplayName("승무패 결과 산정 테스트 - 승리")
     void calculateWinningResult_win() {
-        CardDeck cardDeck = new CardDeck();
-        Player player = new Player("제이미");
         player.drawCard(cardDeck);
         player.calculateWinningResult(22);
         Assertions.assertThat(player.getWinningResult())

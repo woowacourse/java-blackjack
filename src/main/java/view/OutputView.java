@@ -15,7 +15,7 @@ public class OutputView {
     }
 
     private static void printFirstDrawMessage(Players players) {
-        System.out.println("\n딜러와 " + String.join(DELIMITER, players.getPlayerNames())
+        System.out.println("\n딜러와 " + String.join(DELIMITER, players.getPlayerNames().toString())
                 + "에게 2장의 카드를 나누었습니다.");
     }
 
@@ -24,11 +24,11 @@ public class OutputView {
     }
 
     public static void printUsersCards(Dealer dealer, Players players, boolean withScore) {
-        printUserCards("딜러", dealer, withScore);
+        printUserCards(new Name("딜러"), dealer, withScore);
         printPlayersCards(players, withScore);
     }
 
-    public static void printUserCards(String name, User user, boolean withScore) {
+    public static void printUserCards(Name name, User user, boolean withScore) {
         System.out.print(name + ": " + user.getCards());
         if (withScore) {
             System.out.print("- 결과: " + user.getCards().getScore());

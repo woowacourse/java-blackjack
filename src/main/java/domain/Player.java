@@ -3,11 +3,10 @@ package domain;
 import util.BlackJackRule;
 
 public class Player extends User {
-
-    private final String name;
+    private final Name name;
     private WinningResult winningResult;
 
-    public Player(String name) {
+    public Player(Name name) {
         this.name = name;
         this.winningResult = WinningResult.UNDEFINED;
         cards = new Cards();
@@ -39,7 +38,7 @@ public class Player extends User {
         return winningResult;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 }
