@@ -24,6 +24,7 @@ class DealerTest {
 
         Deck deck = new Deck(cards);
         dealer.drawCard(deck);
+        dealer.drawCard(deck);
 
         assertThat(dealer.shouldReceiveCard()).isTrue();
     }

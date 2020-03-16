@@ -5,7 +5,7 @@ public class Player extends User {
         super(name);
     }
 
-    static Player of(String name) {
+    public static Player of(String name) {
         return new Player(name);
     }
 }

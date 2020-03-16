@@ -43,7 +43,9 @@ public class GameResult {
     }
 
     public long getDealerLoseCount() {
-        return dealerResults.size() - getDealerWinCount();
+        return dealerResults.stream()
+                .filter(ResultType::isDraw)
+                .count();
     }
 
     public Map<Player, ResultType> getPlayerResults() {
