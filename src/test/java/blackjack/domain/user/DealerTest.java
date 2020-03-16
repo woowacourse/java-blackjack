@@ -47,8 +47,8 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("giveCard")
-	void giveCard(List<Card> cards) {
+	@MethodSource("giveCard_Cards_GiveCardsHandOfDealer")
+	void giveCard_Cards_GiveCardsHandOfDealer(List<Card> cards) {
 		// given
 		for (Card card : cards) {
 			dealer.giveCard(card);
@@ -58,7 +58,7 @@ class DealerTest {
 		assertThat(dealer.getHand()).isEqualTo(cards);
 	}
 
-	static Stream<Arguments> giveCard() {
+	static Stream<Arguments> giveCard_Cards_GiveCardsHandOfDealer() {
 		return Stream.of(Arguments.of(Collections.singletonList(aceSpade)),
 				Arguments.of(Collections.singletonList(sixDiamond)),
 				Arguments.of(Arrays.asList(tenClub, jackHeart)),
@@ -67,13 +67,13 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("giveCards")
-	void giveCards(List<Card> cards) {
+	@MethodSource("giveCards_Cards_GiveCardsHandOfDealer")
+	void giveCards_Cards_GiveCardsHandOfDealer(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.getHand()).isEqualTo(cards);
 	}
 
-	static Stream<List<Card>> giveCards() {
+	static Stream<List<Card>> giveCards_Cards_GiveCardsHandOfDealer() {
 		return Stream.of(Collections.singletonList(aceSpade),
 				Collections.singletonList(sixDiamond),
 				Arrays.asList(tenClub, jackHeart),
@@ -82,13 +82,13 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("getStartHand_IsEqualToListOfFirstCard")
-	void getStartHand_IsEqualToListOfFirstCard(List<Card> cards, List<Card> expect) {
+	@MethodSource("getStartHand_Cards_IsEqualToFirstCardList")
+	void getStartHand_Cards_IsEqualToFirstCardList(List<Card> cards, List<Card> firstCardList) {
 		dealer.giveCards(cards);
-		assertThat(dealer.getStartHand()).isEqualTo(expect);
+		assertThat(dealer.getStartHand()).isEqualTo(firstCardList);
 	}
 
-	static Stream<Arguments> getStartHand_IsEqualToListOfFirstCard() {
+	static Stream<Arguments> getStartHand_Cards_IsEqualToFirstCardList() {
 		return Stream.of(
 				Arguments.of(Collections.singletonList(aceSpade),
 						Collections.singletonList(aceSpade)),
@@ -101,13 +101,13 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isWinner_ReturnTrue")
-	void isWinner_ReturnTrue(List<Card> cards) {
+	@MethodSource("isWinner_NotBusted_ReturnTrue")
+	void isWinner_NotBusted_ReturnTrue(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.isWinner(Score.of(21))).isTrue();
 	}
 
-	static Stream<List<Card>> isWinner_ReturnTrue() {
+	static Stream<List<Card>> isWinner_NotBusted_ReturnTrue() {
 		return Stream.of(Collections.singletonList(aceSpade),
 				Collections.singletonList(sixDiamond),
 				Arrays.asList(tenClub, jackHeart),
@@ -116,26 +116,26 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isWinner_ReturnFalse")
-	void isWinner_ReturnFalse(List<Card> cards) {
+	@MethodSource("isWinner_Busted_ReturnFalse")
+	void isWinner_Busted_ReturnFalse(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.isWinner(Score.of(0))).isFalse();
 	}
 
-	static Stream<List<Card>> isWinner_ReturnFalse() {
+	static Stream<List<Card>> isWinner_Busted_ReturnFalse() {
 		return Stream.of(Arrays.asList(aceSpade, tenClub, tenClub, aceSpade),
 				Arrays.asList(twoClub, jackHeart, jackHeart),
 				Arrays.asList(tenClub, sixDiamond, sixDiamond));
 	}
 
 	@ParameterizedTest
-	@MethodSource("getScore")
-	void getScore(List<Card> cards, int score) {
+	@MethodSource("getScore_ReturnItsScore")
+	void getScore_ReturnItsScore(List<Card> cards, int score) {
 		dealer.giveCards(cards);
 		assertThat(dealer.getScore()).isEqualTo(Score.of(score));
 	}
 
-	static Stream<Arguments> getScore() {
+	static Stream<Arguments> getScore_ReturnItsScore() {
 		return Stream.of(Arguments.of(Collections.singletonList(aceSpade), 11),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
@@ -144,26 +144,26 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("isBust_ReturnTrue")
-	void isBust_ReturnTrue(List<Card> cards) {
+	@MethodSource("isBust_MoreThanTwentyOne_ReturnTrue")
+	void isBust_MoreThanTwentyOne_ReturnTrue(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.isBust()).isTrue();
 	}
 
-	static Stream<List<Card>> isBust_ReturnTrue() {
+	static Stream<List<Card>> isBust_MoreThanTwentyOne_ReturnTrue() {
 		return Stream.of(Arrays.asList(tenClub, tenClub, twoClub),
 				Arrays.asList(jackHeart, sixDiamond, sixDiamond),
 				Arrays.asList(jackHeart, jackHeart, aceSpade, aceSpade));
 	}
 
 	@ParameterizedTest
-	@MethodSource("isBust_ReturnFalse")
-	void isBust_ReturnFalse(List<Card> cards) {
+	@MethodSource("isBust_SameOrLessThanTwelve_ReturnFalse")
+	void isBust_SameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.isBust()).isFalse();
 	}
 
-	static Stream<List<Card>> isBust_ReturnFalse() {
+	static Stream<List<Card>> isBust_SameOrLessThanTwelve_ReturnFalse() {
 		return Stream.of(Collections.emptyList(),
 				Collections.singletonList(aceSpade),
 				Arrays.asList(tenClub, aceSpade),
@@ -171,13 +171,13 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("getCards")
-	void getCards(List<Card> cards) {
+	@MethodSource("getCards_ReturnHand")
+	void getCards_ReturnHand(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.getHand()).isEqualTo(cards);
 	}
 
-	static Stream<List<Card>> getCards() {
+	static Stream<List<Card>> getCards_ReturnHand() {
 		return Stream.of(Collections.emptyList(),
 				Collections.singletonList(aceSpade),
 				Arrays.asList(aceSpade, tenClub),
@@ -185,13 +185,13 @@ class DealerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("countCards")
-	void countCards(List<Card> cards, int count) {
+	@MethodSource("countCards_ReturnCount")
+	void countCards_ReturnCount(List<Card> cards, int count) {
 		dealer.giveCards(cards);
 		assertThat(dealer.countCards()).isEqualTo(count);
 	}
 
-	static Stream<Arguments> countCards() {
+	static Stream<Arguments> countCards_ReturnCount() {
 		return Stream.of(Arguments.of(Collections.emptyList(), 0),
 				Arguments.of(Collections.singletonList(aceSpade), 1),
 				Arguments.of(Arrays.asList(twoClub, twoClub), 2),
@@ -199,31 +199,31 @@ class DealerTest {
 	}
 
 	@Test
-	void getName() {
+	void getName_Dealer_ReturnDealerName() {
 		assertThat(dealer.getName()).isEqualTo("딜러");
 	}
 
 	@ParameterizedTest
-	@MethodSource("canReceiveCard_ReturnTrue")
-	void canReceiveCard_ReturnTrue(List<Card> cards) {
+	@MethodSource("canReceiveCard_LessThanSeventeen_ReturnTrue")
+	void canReceiveCard_LessThanSeventeen_ReturnTrue(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.canReceiveCard()).isTrue();
 	}
 
-	static Stream<List<Card>> canReceiveCard_ReturnTrue() {
+	static Stream<List<Card>> canReceiveCard_LessThanSeventeen_ReturnTrue() {
 		return Stream.of(Arrays.asList(tenClub, sixDiamond),
 				Collections.emptyList(),
 				Arrays.asList(tenClub, twoClub, twoClub, aceSpade, aceSpade));
 	}
 
 	@ParameterizedTest
-	@MethodSource("canReceiveCard_ReturnFalse")
-	void canReceiveCard_ReturnFalse(List<Card> cards) {
+	@MethodSource("canReceiveCard_MoreThanSixteen_ReturnFalse")
+	void canReceiveCard_MoreThanSixteen_ReturnFalse(List<Card> cards) {
 		dealer.giveCards(cards);
 		assertThat(dealer.canReceiveCard()).isFalse();
 	}
 
-	static Stream<List<Card>> canReceiveCard_ReturnFalse() {
+	static Stream<List<Card>> canReceiveCard_MoreThanSixteen_ReturnFalse() {
 		return Stream.of(Arrays.asList(tenClub, sixDiamond, aceSpade),
 				Arrays.asList(tenClub, aceSpade),
 				Arrays.asList(jackHeart, jackHeart));
