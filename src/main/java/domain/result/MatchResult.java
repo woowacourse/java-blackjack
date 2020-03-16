@@ -42,17 +42,14 @@ public enum MatchResult {
 	}
 
 	private static boolean isPlayerWin(User player, User dealer) {
-		return (player.isBlackjack() && !dealer.isBlackjack()) ||
-			(!player.isBust() && ((player.calculateScore()
-				> dealer.calculateScore()) || dealer.isBust()));
+		return Referee.isPlayerWin(player, dealer);
 	}
 
 	private static boolean isPlayerDraw(User player, User dealer) {
-		return dealer.isBlackjack() && player.isBlackjack();
+		return Referee.isPlayerDraw(player, dealer);
 	}
 
 	private static boolean isPlayerLose(User player, User dealer) {
-		return (!player.isBlackjack() && dealer.isBlackjack()) ||
-			(player.isBust()) || (player.calculateScore() <= dealer.calculateScore());
+		return Referee.isPlayerLose(player, dealer);
 	}
 }
