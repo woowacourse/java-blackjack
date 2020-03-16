@@ -1,11 +1,11 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.NoneStrategy;
 import blackjack.domain.user.exception.PlayersException;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
@@ -19,7 +19,7 @@ class PlayersTest {
         assertThatThrownBy(() -> {
             Players.of("무늬, 무늬, 포비");
         }).isInstanceOf(PlayersException.class)
-        .hasMessage("중복된 이름이 있으면 안 됩니다.");
+                .hasMessage("중복된 이름이 있으면 안 됩니다.");
     }
 
     @Test
@@ -27,13 +27,13 @@ class PlayersTest {
         assertThatThrownBy(() -> {
             Players.of("무늬, 그니, 포비, 딜러");
         }).isInstanceOf(PlayersException.class)
-        .hasMessage("플레이어의 이름은 딜러일 수 없습니다.");
+                .hasMessage("플레이어의 이름은 딜러일 수 없습니다.");
     }
 
     @Test
     void receiveInitialCards() {
         Players players = Players.of("무늬, 그니, 포비");
-        Deck deck = Deck.create(new NoneStrategy());
+        Deck deck = Deck.createWithShuffle();
 
         players.receiveInitialCards(deck);
 

@@ -5,19 +5,17 @@ import blackjack.domain.card.exception.DeckException;
 import java.util.*;
 
 public class Deck {
-    private final Stack<Card> deck;
+    private final Stack<Card> cards;
 
-    public Deck(Stack<Card> deck) {
-        this.deck = deck;
+    public Deck(Stack<Card> cards) {
+        this.cards = cards;
     }
 
-    public static Deck create(ProcessStrategy processStrategy) {
-        Stack<Card> cards = createInOrder();
-        processStrategy.shuffle(cards);
-        return new Deck(cards);
+    public static Deck createWithShuffle() {
+        return createInOrder().shuffle();
     }
 
-    private static Stack<Card> createInOrder() {
+    private static Deck createInOrder() {
         Stack<Card> cards = new Stack<>();
 
         for (Symbol symbol : Symbol.values()) {
@@ -26,34 +24,38 @@ public class Deck {
             }
         }
 
-        return cards;
+        return new Deck(cards);
+    }
+
+    private Deck shuffle() {
+        Collections.shuffle(cards);
+        return this;
     }
 
     public Card draw() {
-        if (deck.isEmpty()) {
+        if (cards.isEmpty()) {
             throw new DeckException("뽑을 카드가 없습니다.");
         }
-        return deck.pop();
+        return cards.pop();
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Deck deck1 = (Deck) o;
-        return Objects.equals(deck, deck1.deck);
+        return Objects.equals(cards, deck1.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deck);
+        return Objects.hash(cards);
     }
 
     @Override
     public String toString() {
         return "Deck{" +
-                "deck=" + deck +
+                "cards=" + cards +
                 '}';
     }
 }

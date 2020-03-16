@@ -36,7 +36,7 @@ class UserTest {
     void drawCard() {
         List<Card> cards = new ArrayList<>();
         User user = new User("무늬", cards);
-        Deck deck = Deck.create(new ShuffleStrategy());
+        Deck deck = Deck.createWithShuffle();
 
         user.drawCard(deck);
 
@@ -50,7 +50,7 @@ class UserTest {
                     new Card(Symbol.KING, Type.HEART));
             User user = new User("무늬", cards);
 
-            Deck deck = Deck.create(new ShuffleStrategy());
+            Deck deck = Deck.createWithShuffle();
 
             user.receiveInitialCards(deck);
         }).isInstanceOf(UserException.class);
