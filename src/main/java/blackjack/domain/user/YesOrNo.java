@@ -14,11 +14,6 @@ public class YesOrNo {
 		this.yesOrNo = yesOrNo;
 	}
 
-	public static YesOrNo of(String yesOrNo) {
-		String upperCase = yesOrNo.trim().toUpperCase();
-		return new YesOrNo(upperCase);
-	}
-
 	private void validateIsNotNull(String yesOrNo) {
 		if (yesOrNo == null) {
 			throw new YesOrNoException("yesOrNo는 null일 수 없습니다.");
@@ -30,6 +25,15 @@ public class YesOrNo {
 			return;
 		}
 		throw new YesOrNoException("Y/y나 N/n을 입력해야합니다.");
+	}
+
+	public static YesOrNo of(String yesOrNo) {
+		if (yesOrNo == null) {
+			return new YesOrNo("");
+		}
+
+		String upperCase = yesOrNo.trim().toUpperCase();
+		return new YesOrNo(upperCase);
 	}
 
 	public boolean isYes() {

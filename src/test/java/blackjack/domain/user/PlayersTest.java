@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,18 +47,18 @@ class PlayersTest {
 		Card aceClub = Card.of(Symbol.ACE, Type.CLUB);
 		Card jackHeart = Card.of(Symbol.JACK, Type.HEART);
 		Card kingDiamond = Card.of(Symbol.KING, Type.DIAMOND);
-		Drawable deck = Deck.of(Arrays.asList(aceClub, jackHeart, kingDiamond));
+
+		List<Card> cards = Arrays.asList(aceClub, jackHeart, kingDiamond);
+		Drawable deck = Deck.of(cards);
 
 		// when
 		players.giveCardEachPlayer(deck);
 
 		// then
-		assertThat(players.getPlayers().get(0).getHand().get(0))
-				.isEqualTo(kingDiamond);
-		assertThat(players.getPlayers().get(1).getHand().get(0))
-				.isEqualTo(jackHeart);
-		assertThat(players.getPlayers().get(2).getHand().get(0))
-				.isEqualTo(aceClub);
+		for (int i = 0; i < players.memberSize(); i++) {
+			assertThat(players.getPlayers().get(i).getHand().get(0))
+					.isEqualTo(cards.get(players.memberSize() - i - 1));
+		}
 	}
 
 	@ParameterizedTest

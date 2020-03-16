@@ -5,6 +5,8 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
@@ -34,10 +36,14 @@ class ResultsTest {
 	}
 
 	@Test
-	void getResult() {
-		assertThat(results.getResult(players.getPlayers().get(0))).isFalse();
+	void getResult_IsReturnTrue() {
 		assertThat(results.getResult(players.getPlayers().get(1))).isTrue();
-		assertThat(results.getResult(players.getPlayers().get(2))).isFalse();
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 2})
+	void getResult_IsReturnFalse(int index) {
+		assertThat(results.getResult(players.getPlayers().get(index))).isFalse();
 	}
 
 	@Test
