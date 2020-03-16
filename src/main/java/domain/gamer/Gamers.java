@@ -60,7 +60,7 @@ public class Gamers {
 				.filter(gamer -> gamer.getClass() == Dealer.class)
 				.map(dealer -> (Dealer) dealer)
 				.findFirst()
-				.orElseThrow(AssertionError::new);
+				.orElseThrow(() -> new AssertionError("딜러는 반드시 존재해야합니다."));
 	}
 
 	public List<Gamer> getGamers() {

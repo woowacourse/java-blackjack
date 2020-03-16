@@ -4,11 +4,13 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import util.ListUtil;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class GameResult {
@@ -32,15 +34,11 @@ public class GameResult {
 	}
 
 	public Map<ResultType, Integer> dealerResult() {
-		List<ResultType> dealerResultType = playersResult()
+		return playersResult()
 				.values()
 				.stream()
 				.map(ResultType::reverse)
-				.collect(toList());
-
-		return dealerResultType.stream()  //TreeMap을 만들기 위한 로직
-				.collect(Collectors.toMap(result -> result, result -> Collections.frequency(dealerResultType, result),
-						(v1, v2) -> v1, TreeMap::new));
+				.collect(collectingAndThen(toList(), ListUtil::countFrequency));
 	}
 
 	public Map<Gamer, Score> gamersScore() {

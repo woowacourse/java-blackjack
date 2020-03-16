@@ -1,12 +1,12 @@
 package domain.gamer;
 
+import domain.card.Card;
+import domain.result.Score;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import domain.card.Card;
-import domain.result.Score;
 
 public abstract class Gamer {
 	private static final int ZERO = 0;
@@ -46,7 +46,7 @@ public abstract class Gamer {
 	}
 
 	public boolean canHit() {
-		return sumOfCards() < getHitPoint();
+		return Score.from(this).isLowerThan(Score.from(getHitPoint()));
 	}
 
 	public List<Card> firstOpenedCards() {

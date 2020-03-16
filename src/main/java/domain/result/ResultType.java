@@ -38,7 +38,7 @@ public enum ResultType {
 		return Arrays.stream(ResultType.values())
 				.filter(result -> result.expression.apply(myScore, otherScore))
 				.findFirst()
-				.get();
+				.orElseThrow(() -> new AssertionError("반드시 하나의 결과와 매칭돼야 합니다."));
 	}
 
 	public ResultType reverse() {

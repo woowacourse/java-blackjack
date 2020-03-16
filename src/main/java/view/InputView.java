@@ -1,8 +1,8 @@
 package view;
 
-import java.util.Scanner;
-
 import domain.gamer.Player;
+
+import java.util.Scanner;
 
 public class InputView {
 	private static final Scanner scanner = new Scanner(System.in);
@@ -15,7 +15,7 @@ public class InputView {
 	public static String inputReceiveMore(Player player) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(player.getName())
-			.append("는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+				.append("는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 		System.out.println(sb);
 		return scanner.nextLine();
 	}
