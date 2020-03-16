@@ -21,7 +21,7 @@ public class ScoreBoards {
 	}
 
 	public static ScoreBoards fromAllUsers(List<Player> players, Dealer dealer) {
-		Objects.requireNonNull(players);
+		players = Collections.unmodifiableList(new ArrayList<>(Objects.requireNonNull(players)));
 		Objects.requireNonNull(dealer);
 
 		List<ScoreBoard> playerBoards = players.stream()
