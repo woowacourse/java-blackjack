@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Cards;
 
 public class Dealer extends User {
 
@@ -13,6 +14,10 @@ public class Dealer extends User {
         return this.cards
                 .getCards()
                 .get(0);
+    }
+
+    public boolean isReceiveAble(){
+        return !isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
     }
 
     public boolean isScoreSame(int score) {

@@ -58,12 +58,12 @@ public class BlackJackController {
     }
 
     private static boolean willPlayerGetMoreCard(Player player) {
-        return player.isSmallerThan(Cards.BLACKJACK_SCORE)
+        return player.isReceiveAble()
             && InputView.askWantMoreCard(player.getName());
     }
 
     private static void dealToDealer(Dealer dealer, Deck deck) {
-        while (!dealer.isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD)) {
+        while (dealer.isReceiveAble()) {
             dealer.receiveCard(deck);
             OutputView.printDealerHasReceivedMoreCard();
         }
