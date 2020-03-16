@@ -1,26 +1,30 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class ShuffledDeckFactory implements DeckFactory {
 	@Override
 	public Deck create() {
-		List<Card> deck = createAllCards();
-		Collections.shuffle(deck);
+		List<Card> cards = createCards();
+		Collections.shuffle(cards);
 
-		return Deck.of(deck);
+		return Deck.of(cards);
 	}
 
-	private List<Card> createAllCards() {
-		List<Card> deck = new ArrayList<>();
+	private List<Card> createCards() {
+		List<Card> cards = new ArrayList<>();
 		for (Symbol symbol : Symbol.values()) {
-			Arrays.stream(Type.values())
-					.forEach(type -> deck.add(Card.of(symbol, type)));
+			attachEachTypeToSymbolAndPutItInCards(cards, symbol);
 		}
 
-		return deck;
+		return cards;
+	}
+
+	private void attachEachTypeToSymbolAndPutItInCards(List<Card> deck, Symbol symbol) {
+		for (Type type : Type.values()) {
+			deck.add(Card.of(symbol, type));
+		}
 	}
 }
