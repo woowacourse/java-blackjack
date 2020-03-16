@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class UserCards {
 
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
-    private static final int ZERO = 0;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -23,15 +22,12 @@ public class UserCards {
         int score = cards.stream()
             .mapToInt(Card::getValue)
             .sum();
-        return new Score(score + getAdjustAceScore(score), cards.size());
+        return new Score(score, hasAce(), cards.size());
     }
 
-    private int getAdjustAceScore(int score) {
-        if (!(new Score(score + Symbol.ACE_WEIGHT).isBust())
-            && cards.stream().anyMatch(Card::isAce)) {
-            return Symbol.ACE_WEIGHT;
-        }
-        return ZERO;
+    public boolean hasAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     public List<String> getInfos() {

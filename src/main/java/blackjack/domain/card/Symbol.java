@@ -16,7 +16,7 @@ public enum Symbol {
     KING("K", 10);
 
     private static final int ACE_LARGE_VALUE = 11;
-    static final int ACE_WEIGHT = ACE_LARGE_VALUE - ACE.value;
+    public static final int ACE_WEIGHT = ACE_LARGE_VALUE - ACE.value;
 
     private final String name;
     private final int value;

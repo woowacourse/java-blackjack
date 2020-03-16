@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Symbol;
 import java.util.Objects;
 
 public class Score {
@@ -7,6 +8,7 @@ public class Score {
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK_SCORE = 21;
     private static final int MINIMUM_SCORE_AND_COUNT = 1;
+    private static final boolean DEFAULT_HAS_ACE = false;
     private static final String EQUAL_OR_UNDER_MINIMUM_SCORE_OR_COUNT_EXCEPTION_MESSAGE =
         String.format("최소값은 %d이상이어야 합니다.", MINIMUM_SCORE_AND_COUNT);
 
@@ -14,11 +16,17 @@ public class Score {
     private final int count;
 
     public Score(int score) {
-        this.score = score;
-        this.count = MINIMUM_SCORE_AND_COUNT;
+        this(score, DEFAULT_HAS_ACE, MINIMUM_SCORE_AND_COUNT);
     }
 
     public Score(int score, int count) {
+        this(score, DEFAULT_HAS_ACE, count);
+    }
+
+    public Score(int score, boolean hasAce, int count) {
+        if (hasAce && score + Symbol.ACE_WEIGHT <= BLACK_JACK_SCORE) {
+            score += Symbol.ACE_WEIGHT;
+        }
         invalidScoreAndCount(score, count);
         this.score = score;
         this.count = count;

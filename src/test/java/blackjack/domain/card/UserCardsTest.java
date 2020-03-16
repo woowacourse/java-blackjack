@@ -34,13 +34,13 @@ public class UserCardsTest {
         userCards.add(new Card(Type.HEART, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        assertThat(userCards.getScore()).isEqualTo(new Score(14, 1));
+        assertThat(userCards.getScore()).isEqualTo(new Score(14, true, 1));
 
         userCards = new UserCards();
         userCards.add(new Card(Type.DIAMOND, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.TWO));
-        assertThat(userCards.getScore()).isEqualTo(new Score(14, 1));
+        assertThat(userCards.getScore()).isEqualTo(new Score(4, true, 1));
     }
 }
 

@@ -3,17 +3,17 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardDeck;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    private CardDeck cardDeck;
-    private Dealer dealer;
+    private static CardDeck cardDeck;
+    private static Dealer dealer;
 
-    @BeforeEach
-    void resetVariable() {
+    @BeforeAll
+    static void resetVariable() {
         cardDeck = new CardDeck();
         dealer = new Dealer();
     }
