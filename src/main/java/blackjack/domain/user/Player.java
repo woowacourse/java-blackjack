@@ -18,19 +18,19 @@ public class Player extends User implements GameRule {
         int receivableCardSize = getReceivableCardSize();
         for (int i = 0; i < receivableCardSize; i++) {
             Card card = deck.getCard();
-            super.getCards().add(card);
+            getCards().add(card);
         }
     }
 
     @Override
     public boolean receivable() {
-        super.getPoint().computePoint(super.getCards());
-        return !super.getPoint().isBust();
+        getPoint().computePoint(getCards());
+        return !getPoint().isBust();
     }
 
     @Override
     public int getReceivableCardSize() {
-        if (super.getCards().size() == 0) {
+        if (getCards().size() == 0) {
             return 2;
         }
         if (receivable()) {

@@ -16,7 +16,7 @@ public class Dealer extends User implements GameRule {
     }
 
     public Card getFirstCard() {
-        return super.getCards().get(0);
+        return getCards().get(0);
     }
 
     @Override
@@ -25,14 +25,14 @@ public class Dealer extends User implements GameRule {
         int receivableCardSize = getReceivableCardSize();
         for (int i = 0; i < receivableCardSize; i++) {
             Card card = deck.getCard();
-            super.getCards().add(card);
+            getCards().add(card);
         }
     }
 
     @Override
     public boolean receivable() {
-        super.getPoint().computePoint(super.getCards());
-        if (super.getPoint().compareTo(new Point(LOWER_BOUND)) == -1) {
+        getPoint().computePoint(getCards());
+        if (getPoint().compareTo(new Point(LOWER_BOUND)) == -1) {
             return true;
         }
         return false;
@@ -40,7 +40,7 @@ public class Dealer extends User implements GameRule {
 
     @Override
     public int getReceivableCardSize() {
-        if (super.getCards().size() == 0) {
+        if (getCards().size() == 0) {
             return 2;
         }
         if (receivable()) {
