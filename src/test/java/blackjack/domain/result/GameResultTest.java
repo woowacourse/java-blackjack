@@ -47,7 +47,6 @@ public class GameResultTest {
         int total = 0;
         for (Outcome outcome : dealerResults.keySet()) {
             total += dealerResults.get(outcome);
-            System.out.println(outcome + " + " + dealerResults.get(outcome));
         }
         assertThat(total).isEqualTo(2);
     }

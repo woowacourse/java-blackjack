@@ -58,7 +58,6 @@ public class Score {
         }
         Score score1 = (Score) o;
         return score == score1.score &&
-            isBust() == score1.isBust() &&
             isBlackJack() == score1.isBlackJack();
     }
 
