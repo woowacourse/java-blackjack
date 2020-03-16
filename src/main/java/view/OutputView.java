@@ -6,9 +6,10 @@ import domain.card.Deck;
 import domain.result.DealerResult;
 import domain.result.Result;
 import domain.user.Dealer;
-import domain.user.Participant;
 import domain.user.Player;
 import domain.user.Players;
+import domain.user.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -39,9 +40,9 @@ public class OutputView {
         printUserCards(player.getName(), player);
     }
 
-    private static void printUserCards(String name, Participant participant) {
+    private static void printUserCards(String name, User user) {
         System.out.print(name + "카드 : "
-            + formatCardStatus(participant.getCards())
+            + formatCardStatus(user.getCards())
         );
     }
 

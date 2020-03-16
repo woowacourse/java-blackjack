@@ -6,12 +6,13 @@ import domain.user.Player;
 import domain.user.Players;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ResultCalculator {
 
     public static DealerResult calculateDealerResult(Dealer dealer, Players players) {
-        Map<Result, Integer> dealerResult = new HashMap<>();
+        Map<Result, Integer> dealerResult = new LinkedHashMap<>();
         Arrays.stream(Result.values())
             .forEach(result -> dealerResult.put(result, 0));
 

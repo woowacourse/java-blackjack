@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DealerResult {
+    private static final String NEGATIVE_COUNT_ERROR_MESSAGE = "횟수가 음수일 수 없습니다.";
     private final Map<Result, Integer> dealerResult;
 
     public DealerResult(final Map<Result, Integer> dealerResult) {
@@ -18,7 +19,7 @@ public class DealerResult {
             .anyMatch(entry -> entry.getValue() < 0);
 
         if (hasNegativeCount) {
-            throw new IllegalArgumentException("횟수가 음수일 수 없습니다.");
+            throw new IllegalArgumentException(NEGATIVE_COUNT_ERROR_MESSAGE);
         }
     }
 

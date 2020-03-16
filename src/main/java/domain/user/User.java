@@ -5,7 +5,7 @@ import domain.card.Cards;
 import domain.card.Deck;
 import java.util.List;
 
-public abstract class User implements Participant {
+public abstract class User{
 
     protected Cards cards = new Cards();
 
