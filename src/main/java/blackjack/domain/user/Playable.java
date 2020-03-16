@@ -28,7 +28,5 @@ public interface Playable {
 
 	Boolean isWinner(Score dealerScore);
 
-	boolean isDealer();
-
 	boolean canReceiveCard();
 }

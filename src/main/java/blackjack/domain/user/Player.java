@@ -39,11 +39,6 @@ public class Player extends AbstractPlayer {
 	}
 
 	@Override
-	public boolean isDealer() {
-		return false;
-	}
-
-	@Override
 	public boolean canReceiveCard() {
 		return !isBust();
 	}

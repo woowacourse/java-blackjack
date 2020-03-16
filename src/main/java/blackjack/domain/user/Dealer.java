@@ -26,11 +26,6 @@ public class Dealer extends AbstractPlayer {
 	}
 
 	@Override
-	public boolean isDealer() {
-		return true;
-	}
-
-	@Override
 	public boolean canReceiveCard() {
 		return getScore().isUnder(MINIMUM_NUMBER_TO_DEALER_STAY);
 	}
