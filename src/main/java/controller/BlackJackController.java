@@ -24,10 +24,7 @@ public class BlackJackController {
 		giveCardToPlayers();
 		giveCardToDealer();
 
-		GameResult gameResult = new GameResult(gamers);
-		OutputView.printCardsAndScore(gameResult.gamersScore());
-		OutputView.printDealerResult(gameResult.dealerResult());
-		OutputView.printPlayersResult(gameResult.playersResult());
+		OutputView.printResult(new GameResult(gamers));
 	}
 
 	private void init() {

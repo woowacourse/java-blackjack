@@ -47,7 +47,7 @@ class GameResultTypeTest {
 		expected.put(players.get(0), ResultType.LOSE);
 		expected.put(players.get(1), ResultType.WIN);
 
-		assertThat(gameResult.playersResult()).isEqualTo(expected);
+		assertThat(gameResult.getPlayersResult()).isEqualTo(expected);
 	}
 
 	@Test
@@ -59,7 +59,7 @@ class GameResultTypeTest {
 		expected.put(ResultType.LOSE, 1);
 		expected.put(ResultType.WIN, 1);
 
-		assertThat(gameResult.dealerResult()).isEqualTo(expected);
+		assertThat(gameResult.getDealerResult()).isEqualTo(expected);
 
 	}
 
@@ -73,6 +73,6 @@ class GameResultTypeTest {
 		expected.put(players.get(1), players.get(1).calculateScore());
 		expected.put(dealer, dealer.calculateScore());
 
-		assertThat(gameResult.gamersScore()).isEqualTo(expected);
+		assertThat(gameResult.getGamersScore()).isEqualTo(expected);
 	}
 }

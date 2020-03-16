@@ -59,7 +59,13 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printCardsAndScore(Map<Gamer, Score> gamerToScore) {
+	public static void printResult(GameResult gameResult) {
+		printCardsAndScore(gameResult.getGamersScore());
+		printDealerResult(gameResult.getDealerResult());
+		printPlayersResult(gameResult.getPlayersResult());
+	}
+
+	private static void printCardsAndScore(Map<Gamer, Score> gamerToScore) {
 		StringBuilder sb = new StringBuilder();
 		for (Gamer gamer : gamerToScore.keySet()) {
 			sb.append(createCardFormat(gamer.getName(), gamer.getCards()))
@@ -76,7 +82,7 @@ public class OutputView {
 		return sb.toString();
 	}
 
-	public static void printDealerResult(Map<ResultType, Integer> dealerResult) {
+	private static void printDealerResult(Map<ResultType, Integer> dealerResult) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
 		sb.append("딜러: ");
@@ -86,7 +92,7 @@ public class OutputView {
 		System.out.println(sb);
 	}
 
-	public static void printPlayersResult(Map<Player, ResultType> playersResult) {
+	private static void printPlayersResult(Map<Player, ResultType> playersResult) {
 		StringBuilder sb = new StringBuilder();
 		for (Map.Entry<Player, ResultType> playerResultEntry : playersResult.entrySet()) {
 			sb.append(playerResultEntry.getKey().getName())
