@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
@@ -38,6 +39,14 @@ class PlayerTest {
 				aCardBundle(CardNumber.KING, CardNumber.ACE), true
 			)
 		);
+	}
+
+	@DisplayName("플레이어의 이름이 없으면 Exception")
+	@ParameterizedTest
+	@NullAndEmptySource
+	void name(String arongName) {
+		assertThatThrownBy(() -> new Gambler(new CardBundle(), arongName))
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("플레이어가 겜블러인지, 딜러인지 확인")

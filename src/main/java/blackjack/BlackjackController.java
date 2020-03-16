@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.CardDeck;
 import blackjack.player.domain.Dealer;
+import blackjack.player.domain.Gambler;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
 import blackjack.view.InputView;
@@ -16,7 +17,6 @@ public class BlackjackController {
 	private final CardDeck cardDeck;
 	private final InputView inputView;
 
-	//todo: 검증로직 구현
 	public BlackjackController(CardDeck cardDeck, InputView inputView) {
 		checkCardDeck(cardDeck);
 		this.cardDeck = cardDeck;
@@ -34,10 +34,8 @@ public class BlackjackController {
 		Players players = new Players(makePlayers(dealer));
 
 		drawStartingCards(players);
-		if (BlackjackRule.checkEarlyTermination(dealer)) {
-			drawGambler(players);
-			drawDealer(dealer);
-		}
+		turnGamblers(players);
+		turnDealer(dealer);
 
 		OutputView.showReports(players);
 	}
@@ -55,25 +53,24 @@ public class BlackjackController {
 		OutputView.showCards(players);
 	}
 
-	private void drawGambler(Players players) {
+	private void turnGamblers(Players players) {
 		for (Player player : players.findGamblers()) {
-			drawEachGambler(player);
+			turnGambler(player);
 		}
 	}
 
-	private void drawEachGambler(Player gambler) {
-		while (gambler.isDrawable() && inputView.inputDrawRequest(gambler).isDraw()) {
-			gambler.addCard(cardDeck.draw());
-			Consumer<CardDeck> c = cardDeck1 -> cardDeck.draw();
-			c.accept(cardDeck);
-			OutputView.showCardInfo(gambler);
+	private void turnGambler(Player gambler) {
+		Consumer<Gambler> consumer = OutputView::showCardInfo;
+		while (gambler.isHit() && inputView.inputDrawRequest(gambler).isDraw()) {
+			gambler.addCard(cardDeck.draw(), consumer);
+			// OutputView.showCardInfo(gambler);
 		}
 	}
 
-	private void drawDealer(Player dealer) {
-		while (dealer.isDrawable()) {
-			dealer.addCard(cardDeck.draw());
-			OutputView.showDealerDrawMessage();
+	private void turnDealer(Player dealer) {
+		while (dealer.isHit()) {
+			dealer.addCard(cardDeck.draw(), OutputView::showDealerDrawMessage);
+			// OutputView.showDealerDrawMessage();
 		}
 	}
 }

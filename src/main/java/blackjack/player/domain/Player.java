@@ -2,12 +2,12 @@ package blackjack.player.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.report.GameReport;
 
-//todo: 테스트코드 작성필요
 public abstract class Player {
 	protected final String name;
 	protected final CardBundle cardBundle;
@@ -43,6 +43,16 @@ public abstract class Player {
 		cardBundle.addCard(card);
 	}
 
+	public void addCard(Card card, Consumer consumer) {
+		cardBundle.addCard(card);
+		consumer.accept(this);
+	}
+
+	public void addCard(Card card, Runnable runnable) {
+		cardBundle.addCard(card);
+		runnable.run();
+	}
+
 	public boolean isNotBurst() {
 		return cardBundle.isNotBurst();
 	}
@@ -63,7 +73,7 @@ public abstract class Player {
 		return this instanceof Gambler;
 	}
 
-	public abstract boolean isDrawable();
+	public abstract boolean isHit();
 
 	public abstract GameReport createReport(Player player);
 

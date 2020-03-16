@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import blackjack.card.domain.GameResult;
 
-// todo: 테스트코드 작성 필요
 public class GameReport {
 	private final String name;
 	private final GameResult gameResult;

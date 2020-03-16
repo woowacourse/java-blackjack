@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-// todo: 테스트코드 작성
 public class GameReports {
 	private final List<GameReport> gameReports;
 

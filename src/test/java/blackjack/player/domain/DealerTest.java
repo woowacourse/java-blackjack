@@ -43,7 +43,7 @@ class DealerTest {
 		dealer.addCard(Card.of(Symbol.DIAMOND, cardNumber));
 
 		//when
-		boolean drawable = dealer.isDrawable();
+		boolean drawable = dealer.isHit();
 
 		//then
 		assertThat(drawable).isEqualTo(expect);

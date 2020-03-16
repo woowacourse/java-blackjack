@@ -11,7 +11,7 @@ public class Gambler extends Player {
 	}
 
 	@Override
-	public boolean isDrawable() {
+	public boolean isHit() {
 		return isNotBurst() && isNotBlackjack();
 	}
 

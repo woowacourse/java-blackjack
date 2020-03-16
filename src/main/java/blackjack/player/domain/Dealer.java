@@ -13,7 +13,7 @@ public class Dealer extends Player {
 	}
 
 	@Override
-	public boolean isDrawable() {
+	public boolean isHit() {
 		return cardBundle.calculateScore() <= HIT_VALUE;
 	}
 

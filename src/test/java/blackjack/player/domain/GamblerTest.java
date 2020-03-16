@@ -45,6 +45,6 @@ class GamblerTest {
 	@MethodSource("bundleProvider")
 	void isDrawable(boolean expect, CardBundle cardBundle) {
 		Player gambler = new Gambler(cardBundle, "bebop");
-		assertThat(gambler.isDrawable()).isEqualTo(expect);
+		assertThat(gambler.isHit()).isEqualTo(expect);
 	}
 }
