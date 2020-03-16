@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.user.exception;
 
 public class HitOrStayException extends RuntimeException {
     public HitOrStayException() {

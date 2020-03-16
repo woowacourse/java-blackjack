@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.user.exception.HitOrStayException;
+
 import java.util.Arrays;
 
 public enum HitOrStay {
