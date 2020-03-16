@@ -25,23 +25,25 @@ class PlayersTest {
 
 	@ParameterizedTest
 	@ValueSource(strings = {KUENI, KUENI_POBI, KUENI_POBI_SUMMER, ENGLISH_SIX})
-	void of_IsNotNull(String playerNames) {
+	void of_ValidNames_IsNotNull(String playerNames) {
 		assertThat(Players.of(playerNames)).isNotNull();
 	}
 
-	@ParameterizedTest
-	@MethodSource("of_ThrowPlayersException")
-	void of_ThrowPlayersException(String invalidNames) {
-		assertThatThrownBy(() -> Players.of(invalidNames))
+	@Test
+	void of_Null_ThrowPlayersException() {
+		assertThatThrownBy(() -> Players.of(NULL))
 				.isInstanceOf(PlayersException.class);
 	}
 
-	static Stream<String> of_ThrowPlayersException() {
-		return Stream.of(NULL, HAS_DUPLICATION);
+	@Test
+	void of_HasDuplication_ThrowPlayersException() {
+		assertThatThrownBy(() -> Players.of(HAS_DUPLICATION))
+				.isInstanceOf(PlayersException.class);
 	}
 
-	@Test
-	void giveCardsEachPlayer() {
+	@ParameterizedTest
+	@CsvSource(value = {"0,2", "1,1", "2,0"})
+	void giveCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCard(int playerIndex, int cardIndex) {
 		// given
 		Players players = Players.of(KUENI_POBI_SUMMER);
 		Card aceClub = Card.of(Symbol.ACE, Type.CLUB);
@@ -55,17 +57,15 @@ class PlayersTest {
 		players.giveCardEachPlayer(deck);
 
 		// then
-		for (int i = 0; i < players.memberSize(); i++) {
-			assertThat(players.getPlayers().get(i).getHand().get(0))
-					.isEqualTo(cards.get(players.memberSize() - i - 1));
-		}
+		assertThat(players.getPlayers().get(playerIndex).getHand().get(0))
+				.isEqualTo(cards.get(cardIndex));
 	}
 
 	@ParameterizedTest
 	@CsvSource(value = {KUENI + ":1", KUENI_POBI + ":2", KUENI_POBI_SUMMER + ":3", ENGLISH_SIX + ":6"},
 			delimiter = ':')
-	void memberSize(String members, int size) {
-		Players players = Players.of(members);
-		assertThat(players.memberSize()).isEqualTo(size);
+	void memberSize_PlayerNames_HasMemberSize(String PlayerNames, int memberSize) {
+		Players players = Players.of(PlayerNames);
+		assertThat(players.memberSize()).isEqualTo(memberSize);
 	}
 }
