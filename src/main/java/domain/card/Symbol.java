@@ -16,6 +16,7 @@ public enum Symbol {
     KING(10, "K");
 
     static final int ALTERNATE_ACE_SCORE = 11;
+    private static final int MIN_SUM_FOR_ACE_IS_ONE = 12;
 
     private int score;
     private String symbolName;
@@ -23,6 +24,10 @@ public enum Symbol {
     Symbol(int score, String symbolName) {
         this.score = score;
         this.symbolName = symbolName;
+    }
+
+    static boolean isAceEleven(int scoreAceAsOne) {
+        return scoreAceAsOne < MIN_SUM_FOR_ACE_IS_ONE;
     }
 
     public int getScore() {
