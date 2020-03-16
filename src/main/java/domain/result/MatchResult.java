@@ -6,9 +6,9 @@ import java.util.function.BiPredicate;
 import domain.user.User;
 
 public enum MatchResult {
-	WIN("승", MatchResult::isPlayerWin),
-	DRAW("무", MatchResult::isPlayerDraw),
-	LOSE("패", MatchResult::isPlayerLose);
+	WIN("승", Referee::isPlayerWin),
+	DRAW("무", Referee::isPlayerDraw),
+	LOSE("패", Referee::isPlayerLose);
 
 	private static final String NO_SUCH_MESSAGE = "찾을 수 없는 경우입니다.";
 
@@ -39,17 +39,5 @@ public enum MatchResult {
 
 	public String getMatchResult() {
 		return matchResult;
-	}
-
-	private static boolean isPlayerWin(User player, User dealer) {
-		return Referee.isPlayerWin(player, dealer);
-	}
-
-	private static boolean isPlayerDraw(User player, User dealer) {
-		return Referee.isPlayerDraw(player, dealer);
-	}
-
-	private static boolean isPlayerLose(User player, User dealer) {
-		return Referee.isPlayerLose(player, dealer);
 	}
 }
