@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Score implements Comparable<Score> {
-	private static final int MIN_SCORE = 0;
-	private static final int MAX_SCORE = 21;
+	private static final int BUSTED = 0;
+	private static final int BUST_THRESHOLD = 21;
 
 	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 
 	static {
-		for (int i = MIN_SCORE; i <= MAX_SCORE; i++) {
+		for (int i = BUSTED; i <= BUST_THRESHOLD; i++) {
 			SCORE_CACHE.put(i, new Score(i));
 		}
 	}
@@ -23,18 +23,10 @@ public class Score implements Comparable<Score> {
 	}
 
 	static Score of(int score) {
-		validateBound(score);
-		return SCORE_CACHE.get(score);
-	}
-
-	private static void validateBound(int score) {
-		if (score < MIN_SCORE || score > MAX_SCORE) {
-			throw new IllegalArgumentException("점수의 범위를 벗어났습니다.");
+		if (score > BUST_THRESHOLD) {
+			return SCORE_CACHE.get(BUSTED);
 		}
-	}
-
-	public boolean isLowerThan(int drawCondition) {
-		return score <= drawCondition;
+		return SCORE_CACHE.get(score);
 	}
 
 	@Override

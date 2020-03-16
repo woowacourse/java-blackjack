@@ -25,9 +25,15 @@ public class GameRule {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> player.compareScoreTo(dealer),
+						player -> compareScoreTo(player, dealer),
 						(r1, r2) -> r1,
 						LinkedHashMap::new
 				), PlayerRecords::new));
+	}
+
+	private ResultType compareScoreTo(User player, User dealer) {
+		Score playerScore = Score.of(player.calculateScore());
+		Score dealerScore = Score.of(dealer.calculateScore());
+		return ResultType.of(playerScore.compareTo(dealerScore));
 	}
 }
