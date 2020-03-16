@@ -3,10 +3,7 @@ package domain;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class GameResult {
     private Map<PlayerResult, List<Player>> playerResults;
@@ -16,11 +13,17 @@ public class GameResult {
     };
 
     public static GameResult calculate(List<Player> players, Dealer dealer) {
-        Map<PlayerResult, List<Player>> playerResults = players.stream()
-                .collect(Collectors.groupingBy(player -> PlayerResult.match(dealer, player), Collectors.toList()));
+        // todo: refac
+        Map<PlayerResult, List<Player>> playerResults = new HashMap<>();
+        for (PlayerResult playerResult : PlayerResult.values()) {
+            playerResults.put(playerResult, new ArrayList<>());
+        }
 
-        for(PlayerResult playerResult : PlayerResult.values()) {
-            playerResults.putIfAbsent(playerResult, new ArrayList<>());
+        for (Player player : players) {
+            PlayerResult playerResult = PlayerResult.match(dealer, player);
+            // todo: refac, remove get
+            playerResults.get(playerResult).add(player);
+
         }
 
         return new GameResult(playerResults);
