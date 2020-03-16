@@ -36,8 +36,9 @@ public class OutputView {
     }
 
     private static void printDealerCard(List<ResponsePlayerDTO> result) {
-        String firstDealerCard = result.get(DEALER_INDEX).getCardNumbers().substring(0,
-                result.get(DEALER_INDEX).getCardNumbers().indexOf(DELIMITER));
+        ResponsePlayerDTO dealerDTO = result.get(DEALER_INDEX);
+        List<String> dealerCardNumbers = dealerDTO.getCardNumbers();
+        String firstDealerCard = dealerCardNumbers.get(DEALER_INDEX);
         System.out.println(result.get(DEALER_INDEX).getName() + "카드: " + firstDealerCard);
     }
 
@@ -48,7 +49,7 @@ public class OutputView {
     }
 
     public static void printUserCard(ResponsePlayerDTO result) {
-        System.out.println(result.getName() + "카드: " + result.getCardNumbers());
+        System.out.println(result.getName() + "카드: " + String.join(DELIMITER, result.getCardNumbers()));
     }
 
     public static void printDealerAdditionalCard() {
@@ -59,7 +60,8 @@ public class OutputView {
         System.out.println();
         for (ResponsePlayerDTO responsePlayerDTO : result) {
             System.out.println(responsePlayerDTO.getName() + "카드: "
-                    + responsePlayerDTO.getCardNumbers() + " - 결과: " + responsePlayerDTO.getScore());
+                    + String.join(DELIMITER, responsePlayerDTO.getCardNumbers())
+                    + " - 결과: " + responsePlayerDTO.getScore());
         }
     }
 

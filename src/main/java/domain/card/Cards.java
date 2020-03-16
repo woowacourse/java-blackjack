@@ -5,14 +5,12 @@ import domain.CardCalculator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cards {
-    private static final String DELIMITER = ", ";
     private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
-    private static final String NO_CARDS = "입력한 카드가 없습니다.";
     private static final int BLACK_JACK_SIZE = 2;
     private static final int STANDARD_ACE_ELEVEN = 21;
+    private static final String NO_CARDS = "입력한 카드가 없습니다.";
 
     private List<Card> cards;
 
@@ -75,12 +73,5 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
-    }
-
-    @Override
-    public String toString() {
-        return this.cards.stream()
-                .map(Card::toString)
-                .collect(Collectors.joining(DELIMITER));
     }
 }

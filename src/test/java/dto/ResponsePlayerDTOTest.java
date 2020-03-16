@@ -24,7 +24,7 @@ public class ResponsePlayerDTOTest {
         ResponsePlayerDTO responsePlayerDTO = ResponsePlayerDTO.create(player);
 
         Assertions.assertThat(responsePlayerDTO.getName()).isEqualTo("subway");
-        Assertions.assertThat(responsePlayerDTO.getCardNumbers()).isEqualTo("5클로버, 10클로버");
+        Assertions.assertThat(responsePlayerDTO.getCardNumbers()).containsSequence("5클로버", "10클로버");
         Assertions.assertThat(responsePlayerDTO.getScore()).isEqualTo("15");
     }
 
@@ -44,15 +44,15 @@ public class ResponsePlayerDTOTest {
         Assertions.assertThat(responsePlayerDTOS.size()).isEqualTo(3);
 
         Assertions.assertThat(responsePlayerDTOS.get(0).getName()).isEqualTo("딜러");
-        Assertions.assertThat(responsePlayerDTOS.get(0).getCardNumbers()).isEqualTo("1클로버, 10클로버");
+        Assertions.assertThat(responsePlayerDTOS.get(0).getCardNumbers()).containsSequence("1클로버", "10클로버");
         Assertions.assertThat(responsePlayerDTOS.get(0).getScore()).isEqualTo("21");
 
         Assertions.assertThat(responsePlayerDTOS.get(1).getName()).isEqualTo("subway");
-        Assertions.assertThat(responsePlayerDTOS.get(1).getCardNumbers()).isEqualTo("5클로버, 10클로버");
+        Assertions.assertThat(responsePlayerDTOS.get(1).getCardNumbers()).containsSequence("5클로버", "10클로버");
         Assertions.assertThat(responsePlayerDTOS.get(1).getScore()).isEqualTo("15");
 
         Assertions.assertThat(responsePlayerDTOS.get(2).getName()).isEqualTo("lavine");
-        Assertions.assertThat(responsePlayerDTOS.get(2).getCardNumbers()).isEqualTo("5하트, 6다이아몬드");
+        Assertions.assertThat(responsePlayerDTOS.get(2).getCardNumbers()).containsSequence("5하트", "6다이아몬드");
         Assertions.assertThat(responsePlayerDTOS.get(2).getScore()).isEqualTo("11");
     }
 }

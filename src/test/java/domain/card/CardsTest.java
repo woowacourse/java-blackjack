@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.Collectors;
+
 public class CardsTest {
     @DisplayName("입력한 카드 묶음이 생성되는지 테스트")
     @Test
@@ -12,7 +14,10 @@ public class CardsTest {
                 Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND));
 
         Assertions.assertThat(cards).isInstanceOf(Cards.class);
-        Assertions.assertThat(cards.toString()).isEqualTo(
+        String cardsString = cards.getCards().stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
+        Assertions.assertThat(cardsString).isEqualTo(
                 "1클로버, 10다이아몬드"
         );
     }
@@ -50,7 +55,10 @@ public class CardsTest {
         cards.addCard(card);
 
         Assertions.assertThat(cards.getCards().size()).isEqualTo(3);
-        Assertions.assertThat(cards.toString()).isEqualTo(
+        String cardsString = cards.getCards().stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
+        Assertions.assertThat(cardsString).isEqualTo(
                 "1클로버, 7클로버, 10스페이스"
         );
     }

@@ -3,7 +3,10 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Player {
     protected Cards cards;
@@ -39,7 +42,10 @@ public abstract class Player {
         return this.name;
     }
 
-    public String getCardNumber() {
-        return this.cards.toString();
+    public List<String> getCardNumbers() {
+        List<String> cardNumbers = new ArrayList<>(this.cards.getCards().stream()
+                .map(Card::toString)
+                .collect(Collectors.toList()));
+        return Collections.unmodifiableList(cardNumbers);
     }
 }

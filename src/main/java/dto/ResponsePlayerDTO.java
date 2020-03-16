@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 public class ResponsePlayerDTO {
     private String name;
-    private String cardNumbers;
+    private List<String> cardNumbers;
     private String score;
 
     private ResponsePlayerDTO(Player player) {
         this.name = player.getName();
-        this.cardNumbers = player.getCardNumber();
+        this.cardNumbers = player.getCardNumbers();
         this.score = Integer.toString(player.sumCardNumber());
     }
 
@@ -36,7 +36,7 @@ public class ResponsePlayerDTO {
         return this.name;
     }
 
-    public String getCardNumbers() {
+    public List<String> getCardNumbers() {
         return this.cardNumbers;
     }
 
