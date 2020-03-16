@@ -1,15 +1,15 @@
 package domain.gamer;
 
-import static org.assertj.core.api.Assertions.*;
-
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import domain.card.Card;
-import domain.card.Symbol;
-import domain.card.Type;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 	@Test
@@ -69,30 +69,6 @@ class PlayerTest {
 		player.hit(new Card(Symbol.SIX, Type.DIAMOND));
 
 		assertThat(player.getCards()).hasSize(3);
-	}
-
-	@Test
-	@DisplayName("카드의 합을 올바르게 계산하는지 테스트")
-	void sumOfCardTest() {
-		Player player = new Player("pobi");
-		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
-		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
-		player.hit(new Card(Symbol.SIX, Type.DIAMOND));
-		assertThat(player.sumOfCards()).isEqualTo(21);
-
-		player.hit(new Card(Symbol.ACE, Type.HEART));
-		assertThat(player.sumOfCards()).isEqualTo(22);
-	}
-
-	@Test
-	@DisplayName("에이스를 포함하는지 여부를 테스트")
-	void hasAceTest() {
-		Player player = new Player("pobi");
-		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
-		assertThat(player.hasAce()).isFalse();
-
-		player.hit(new Card(Symbol.ACE, Type.CLUB));
-		assertThat(player.hasAce()).isTrue();
 	}
 
 	@Test

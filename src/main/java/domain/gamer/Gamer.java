@@ -1,10 +1,9 @@
 package domain.gamer;
 
 import domain.card.Card;
+import domain.card.Hands;
 import domain.result.Score;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,12 +11,12 @@ public abstract class Gamer {
 	private static final int ZERO = 0;
 
 	private final String name;
-	private final List<Card> cards;
+	private final Hands hands;
 
 	public Gamer(String name) {
 		validate(name);
 		this.name = name;
-		this.cards = new ArrayList<>();
+		this.hands = Hands.createEmpty();
 	}
 
 	private void validate(String name) {
@@ -42,30 +41,24 @@ public abstract class Gamer {
 	protected abstract int firstOpenedCardsCount();
 
 	public void hit(Card card) {
-		cards.add(card);
+		hands.add(card);
 	}
 
 	public boolean canHit() {
-		return Score.from(this).isLowerThan(Score.from(getHitPoint()));
+		return calculateScore().isLowerThan(Score.from(getHitPoint()));
+	}
+
+	public Score calculateScore() {
+		return Score.from(hands);
 	}
 
 	public List<Card> firstOpenedCards() {
-		return cards.subList(ZERO, firstOpenedCardsCount());
-	}
-
-	public int sumOfCards() {
-		return cards.stream()
-				.mapToInt(Card::getScore)
-				.sum();
-	}
-
-	public boolean hasAce() {
-		return cards.stream()
-				.anyMatch(Card::isAce);
+		return hands.getCards()
+				.subList(ZERO, firstOpenedCardsCount());
 	}
 
 	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
+		return hands.getCards();
 	}
 
 	public String getName() {
@@ -73,18 +66,16 @@ public abstract class Gamer {
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object)
-			return true;
-		if (object == null || getClass() != object.getClass())
-			return false;
-		Gamer that = (Gamer) object;
-		return Objects.equals(name, that.name) &&
-				Objects.equals(cards, that.cards);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Gamer gamer = (Gamer) o;
+		return Objects.equals(name, gamer.name) &&
+				Objects.equals(hands, gamer.hands);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, cards);
+		return Objects.hash(name, hands);
 	}
 }

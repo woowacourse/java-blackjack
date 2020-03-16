@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.card.Hands;
 import domain.gamer.Gamer;
 
 import java.util.Objects;
@@ -18,10 +19,10 @@ public class Score {
 		return new Score(score);
 	}
 
-	public static Score from(Gamer gamer) {
-		int score = gamer.sumOfCards();
+	public static Score from(Hands hands) {
+		int score = hands.sumOfCards();
 
-		return new Score(reviseAceScore(gamer.hasAce(), score));
+		return new Score(reviseAceScore(hands.hasAce(), score));
 	}
 
 	private static int reviseAceScore(boolean hasAce, int score) {

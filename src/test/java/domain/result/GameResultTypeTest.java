@@ -69,9 +69,9 @@ class GameResultTypeTest {
 		GameResult gameResult = new GameResult(gamers);
 
 		Map<Gamer, Score> expected = new HashMap<>();
-		expected.put(players.get(0), Score.from(players.get(0)));
-		expected.put(players.get(1), Score.from(players.get(1)));
-		expected.put(dealer, Score.from(dealer));
+		expected.put(players.get(0), players.get(0).calculateScore());
+		expected.put(players.get(1), players.get(1).calculateScore());
+		expected.put(dealer, dealer.calculateScore());
 
 		assertThat(gameResult.gamersScore()).isEqualTo(expected);
 	}
