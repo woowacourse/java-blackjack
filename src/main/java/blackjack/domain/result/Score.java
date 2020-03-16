@@ -64,6 +64,6 @@ public class Score {
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, count);
+        return Objects.hash(score, isBlackJack());
     }
 }
