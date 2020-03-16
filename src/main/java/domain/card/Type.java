@@ -17,6 +17,8 @@ public enum Type {
 	QUEEN("Q", 10),
 	KING("K", 10);
 
+	private static final String WRONG_TYPE_MESSAGE = "잘못된 타입 이름입니다.";
+
 	private final String name;
 	private final int score;
 
@@ -29,7 +31,7 @@ public enum Type {
 		return Arrays.stream(values())
 			.filter(type -> type.name.equals(passedName))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 타입 이름입니다."));
+			.orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_MESSAGE));
 	}
 
 	public String getName() {

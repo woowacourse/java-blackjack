@@ -1,6 +1,8 @@
 package domain;
 
 public class YesOrNo {
+	private static final String WRONG_INPUT_MESSAGE = "올바른 선택 값이 아닙니다.";
+
 	private static final String YES_VALUE = "y";
 	private static final String NO_VALUE = "n";
 
@@ -13,7 +15,7 @@ public class YesOrNo {
 
 	private void validateYesOrNo(String yesOrNo) {
 		if (isNotYesOrNo(yesOrNo)) {
-			throw new IllegalArgumentException("올바른 선택 값이 아닙니다.");
+			throw new IllegalArgumentException(WRONG_INPUT_MESSAGE);
 		}
 	}
 

@@ -3,7 +3,8 @@ package domain.result;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import domain.user.User;
+import domain.result.score.DealerFinalScore;
+import domain.result.score.PlayerFinalScore;
 
 public enum MatchResult {
 	WIN("승", Referee::isPlayerWin),
@@ -13,16 +14,16 @@ public enum MatchResult {
 	private static final String NO_SUCH_MESSAGE = "찾을 수 없는 경우입니다.";
 
 	private final String matchResult;
-	private final BiPredicate<User, User> resultCondition;
+	private final BiPredicate<PlayerFinalScore, DealerFinalScore> resultCondition;
 
-	MatchResult(String matchResult, BiPredicate<User, User> resultCondition) {
+	MatchResult(String matchResult, BiPredicate<PlayerFinalScore, DealerFinalScore> resultCondition) {
 		this.matchResult = matchResult;
 		this.resultCondition = resultCondition;
 	}
 
-	public static MatchResult findMatchResult(User player, User dealer) {
+	public static MatchResult findMatchResult(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {
 		return Arrays.stream(values())
-			.filter(result -> result.resultCondition.test(player, dealer))
+			.filter(result -> result.resultCondition.test(playerScore, dealerScore))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException(NO_SUCH_MESSAGE));
 	}

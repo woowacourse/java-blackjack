@@ -20,4 +20,8 @@ public class UserResult {
 	public String getMatchResult() {
 		return matchResult.getMatchResult();
 	}
+
+	public MatchResult getReverseResult() {
+		return matchResult.reverseWinAndLose();
+	}
 }

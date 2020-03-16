@@ -81,7 +81,7 @@ public class OutputView {
 	private static void printDealerResult(DealerResult dealerResult) {
 		StringBuilder builder = new StringBuilder("딜러: ");
 
-		Map<MatchResult, Long> map = dealerResult.calculateDealerResult();
+		Map<MatchResult, Long> map = dealerResult.reversePlayersResult();
 		for (MatchResult matchResult : MatchResult.values()) {
 			builder.append(map.get(matchResult));
 			builder.append(matchResult.getMatchResult());

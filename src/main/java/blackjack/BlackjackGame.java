@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 import domain.YesOrNo;
 import domain.card.CardDivider;
 import domain.result.DealerResult;
-import domain.result.MatchCalculator;
 import domain.result.MatchResult;
 import domain.result.UserResult;
+import domain.result.score.DealerFinalScore;
+import domain.result.score.PlayerFinalScore;
 import domain.user.Dealer;
 import domain.user.PlayerFactory;
 import domain.user.User;
@@ -32,9 +33,9 @@ public class BlackjackGame {
 		List<User> allUsers = initAllUsers();
 		initCards(allUsers);
 		printBlackjackUsers(allUsers);
-		checkCanDraw(users, dealer);
+		checkCanDraw();
 		OutputView.printUserResult(allUsers);
-		showGameResult(users, dealer);
+		showGameResult();
 	}
 
 	private List<User> initAllUsers() {
@@ -57,7 +58,7 @@ public class BlackjackGame {
 		OutputView.printBlackJackUser(blackjackUsers);
 	}
 
-	private void checkCanDraw(List<User> users, Dealer dealer) {
+	private void checkCanDraw() {
 		if (dealer.isBlackjack()) {
 			return;
 		}
@@ -105,12 +106,19 @@ public class BlackjackGame {
 		}
 	}
 
-	private void showGameResult(List<User> users, Dealer dealer) {
-		List<UserResult> userResults = users.stream()
-			.map(user -> new UserResult(user, MatchResult.findMatchResult(user, dealer)))
-			.collect(Collectors.toList());
-		DealerResult dealerResult = new DealerResult(new MatchCalculator(users, dealer).getMatchResults());
+	private void showGameResult() {
+		DealerFinalScore dealerFinalScore = new DealerFinalScore(dealer);
+
+		List<UserResult> userResults = createUserResults(dealerFinalScore);
+		DealerResult dealerResult = new DealerResult(userResults);
 
 		OutputView.printGameResult(userResults, dealerResult);
+	}
+
+	private List<UserResult> createUserResults(DealerFinalScore dealerFinalScore) {
+		return users.stream()
+			.map(user -> new UserResult(user, MatchResult
+				.findMatchResult(new PlayerFinalScore(user), dealerFinalScore)))
+			.collect(Collectors.toList());
 	}
 }

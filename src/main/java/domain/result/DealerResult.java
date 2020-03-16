@@ -10,15 +10,15 @@ import java.util.stream.Collectors;
 public class DealerResult {
 	private static final long INIT_MATCH_COUNT = 0L;
 
-	private final List<MatchResult> playerMatchResults;
+	private final List<UserResult> playerResults;
 
-	public DealerResult(List<MatchResult> playerMatchResults) {
-		this.playerMatchResults = Objects.requireNonNull(playerMatchResults);
+	public DealerResult(List<UserResult> playerResults) {
+		this.playerResults = Objects.requireNonNull(playerResults);
 	}
 
-	public Map<MatchResult, Long> calculateDealerResult() {
-		Map<MatchResult, Long> result = playerMatchResults.stream()
-			.map(MatchResult::reverseWinAndLose)
+	public Map<MatchResult, Long> reversePlayersResult() {
+		Map<MatchResult, Long> result = playerResults.stream()
+			.map(UserResult::getReverseResult)
 			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
 		Arrays.stream(MatchResult.values())

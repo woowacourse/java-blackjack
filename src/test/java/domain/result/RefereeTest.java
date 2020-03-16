@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.result.score.DealerFinalScore;
+import domain.result.score.PlayerFinalScore;
 import domain.user.Dealer;
 import domain.user.Player;
 
@@ -28,7 +30,8 @@ public class RefereeTest {
 		player.addCards(Arrays.asList(new Card("하트", "3")));
 		dealer.addCards(Arrays.asList(new Card("하트", "2")));
 
-		assertThat(Referee.isPlayerWin(player, dealer)).isTrue();
+		assertThat(Referee.isPlayerWin(
+			new PlayerFinalScore(player), new DealerFinalScore(dealer))).isTrue();
 	}
 
 	@DisplayName("플레이어가 지는 경우")
@@ -37,7 +40,8 @@ public class RefereeTest {
 		player.addCards(Arrays.asList(new Card("하트", "2")));
 		dealer.addCards(Arrays.asList(new Card("하트", "2")));
 
-		assertThat(Referee.isPlayerLose(player, dealer)).isTrue();
+		assertThat(Referee.isPlayerLose(
+			new PlayerFinalScore(player), new DealerFinalScore(dealer))).isTrue();
 	}
 
 	@DisplayName("비기는 경우")
@@ -48,6 +52,7 @@ public class RefereeTest {
 		dealer.addCards(Arrays.asList(new Card("하트", "1"),
 			new Card("하트", "K")));
 
-		assertThat(Referee.isPlayerDraw(player, dealer)).isTrue();
+		assertThat(Referee.isPlayerDraw(
+			new PlayerFinalScore(player), new DealerFinalScore(dealer))).isTrue();
 	}
 }

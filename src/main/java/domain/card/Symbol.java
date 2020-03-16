@@ -8,6 +8,8 @@ public enum Symbol {
 	HEART("하트"),
 	SPADE("스페이드");
 
+	private static final String WRONG_SYMBOL_MESSAGE = "잘못된 심볼 이름입니다.";
+	
 	private final String name;
 
 	Symbol(String name) {
@@ -18,7 +20,7 @@ public enum Symbol {
 		return Arrays.stream(Symbol.values())
 			.filter(symbol -> symbol.name.equals(passedName))
 			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 심볼 이름입니다."));
+			.orElseThrow(() -> new IllegalArgumentException(WRONG_SYMBOL_MESSAGE));
 	}
 
 	public String getName() {

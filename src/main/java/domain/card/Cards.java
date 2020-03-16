@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
@@ -13,7 +14,7 @@ public class Cards {
 	private final List<Card> cards;
 
 	public Cards(List<Card> cards) {
-		this.cards = new ArrayList<>(cards);
+		this.cards = new ArrayList<>(Objects.requireNonNull(cards));
 	}
 
 	public void addAll(List<Card> cards) {
