@@ -1,12 +1,13 @@
 package blackjack.domain.user;
 
+
+import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class User {
+public abstract class User implements GameRule {
     protected static int INITIAL_CARD_SIZE = 2;
     protected static int ADDITIONAL_CARD_SIZE = 1;
 

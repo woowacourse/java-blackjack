@@ -1,12 +1,11 @@
 package blackjack.domain.user;
 
-import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 
 import java.util.Objects;
 
-public class Player extends User implements GameRule {
+public class Player extends User {
     private static final String NULL_ERR_MSG = "%s이(가) 없습니다.";
     public Player(String name) {
         super(name);

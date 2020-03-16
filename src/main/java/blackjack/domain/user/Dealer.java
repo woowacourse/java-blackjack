@@ -1,12 +1,11 @@
 package blackjack.domain.user;
 
-import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 
 import java.util.Objects;
 
-public class Dealer extends User implements GameRule {
+public class Dealer extends User {
     private static final String NULL_ERR_MSG = "%s이(가) 없습니다.";
     private static final String name = "딜러";
     public static final int LOWER_BOUND = 16;
