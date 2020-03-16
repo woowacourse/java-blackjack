@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     public static void printDealerDraw(Dealer dealer) {
-        System.out.println(dealer.getName() +  " 는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() + " 는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printStatusWithScore(User user) {
@@ -59,10 +59,10 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + gameResult.calculateDealerWins() + "승 " + gameResult.calculateDealerLoses() + "패");
 
         Map<String, Boolean> playerResult = gameResult.getPlayerResult();
-        for (String name : playerResult.keySet()) {
+        playerResult.keySet().forEach(name -> {
             System.out.print(name + ": ");
             System.out.println(makeResultWord(playerResult.get(name)));
-        }
+        });
     }
 
     private static String makeResultWord(Boolean result) {
