@@ -1,5 +1,6 @@
 package view;
 
+import domain.card.SelectAnswerType;
 import domain.gamer.Player;
 
 import java.util.Arrays;
@@ -23,6 +24,6 @@ public class InputView {
 
     public static boolean askDrawMore(Player player) {
         System.out.println(player.getName() + " 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return YesNo.of(SCANNER.nextLine()).getYesNo();
+        return SelectAnswerType.of(SCANNER.nextLine()).getYes();
     }
 }
