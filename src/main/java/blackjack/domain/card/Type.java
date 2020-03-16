@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
 public enum Type {
-	SPADE("스페이드"),
-	HEART("하트"),
-	CLUB("클럽"),
-	DIAMOND("다이아몬드");
+	SPADE("♠"),
+	HEART("♥"),
+	CLUB("♣"),
+	DIAMOND("♦");
 
 	private final String type;
 
