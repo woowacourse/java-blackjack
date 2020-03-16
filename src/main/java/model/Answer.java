@@ -20,7 +20,7 @@ public enum Answer {
     public static Answer getYesOrNoByValue(String input){
         validate(input);
         return Arrays.stream(Answer.values())
-                .filter(answer1 -> answer1.isSameYesOrNo(input))
+                .filter(answer -> answer.isSameYesOrNo(input))
                 .findAny()
                 .orElseThrow(()->new IllegalYesOrNoInputException(String.format("%s는 올바르지 않은 값입니다.",input)));
     }
