@@ -1,18 +1,38 @@
 package domain.gamer;
 
-import domain.card.possessable.HandCards;
+import domain.card.Card;
+import domain.card.cardDrawable.Hand;
+import domain.result.Score;
+import domain.result.WinLose;
 
-import static domain.score.ScoreManagable.DEALER_DRAW_THRESHOLD;
+import java.util.Arrays;
+import java.util.List;
 
-public class Dealer extends Gamer {
+import static domain.result.ScoreCalculable.DEALER_DRAW_THRESHOLD;
+
+public class Dealer extends AbstractGamer {
     public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(DEALER_NAME, new HandCards());
+        super(DEALER_NAME, new Hand());
     }
 
     @Override
     public boolean canDrawMore() {
-        return DEALER_DRAW_THRESHOLD.isLargerOrEqualThan(calculateScore());
+        return calculateScore().isLowOrEqualThan(new Score(DEALER_DRAW_THRESHOLD));
+    }
+
+    @Override
+    public List<Card> showInitialCards() {
+        return Arrays.asList(hand.getOneCard());
+    }
+
+    @Override
+    public WinLose determineWinLose(Gamer counterParts) {
+        if (WinLose.determineWinner(counterParts, this) == this) {
+            return WinLose.WIN;
+        }
+
+        return WinLose.LOSE;
     }
 }

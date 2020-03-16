@@ -2,13 +2,11 @@ package domain.card.providable;
 
 import domain.card.Card;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class CardDeck implements CardProvidable {
-    private static final int FIRST = 0;
-    private final List<Card> cards = new ArrayList<>();
+    private final Stack<Card> cards = new Stack<>();
 
     public CardDeck() {
         cards.addAll(Card.getAllCards());
@@ -21,6 +19,6 @@ public class CardDeck implements CardProvidable {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없습니다.");
         }
 
-        return cards.remove(FIRST);
+        return cards.pop();
     }
 }

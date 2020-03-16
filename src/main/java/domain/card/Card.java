@@ -1,11 +1,13 @@
 package domain.card;
 
+import domain.result.Score;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Card {
-    private static final String CARD_NO_EXSIST_MESSAGE = "적절한 number 또는 symbol의 카드가 존재하지 않습니다.";
+    private static final String CARD_NO_EXIST_MESSAGE = "적절한 number 또는 symbol의 카드가 존재하지 않습니다.";
     private final Rank rank;
     private final Suit suit;
 
@@ -17,10 +19,13 @@ public class Card {
     public static Card of(Rank rank, Suit suit) {
         return CardCache.cards
                 .stream()
-                .filter(card -> card.rank == rank)
-                .filter(card -> card.suit == suit)
+                .filter(card -> card.isCardOf(rank, suit))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXSIST_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXIST_MESSAGE));
+    }
+
+    private boolean isCardOf(Rank rank, Suit suit) {
+        return this.rank == rank && this.suit == suit;
     }
 
     public boolean isAce() {
@@ -31,8 +36,8 @@ public class Card {
         return Collections.unmodifiableList(CardCache.cards);
     }
 
-    public int extractScore() {
-        return rank.extractScoreValue();
+    public Score extractScore() {
+        return rank.getScore();
     }
 
     @Override

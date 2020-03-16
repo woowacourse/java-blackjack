@@ -1,71 +1,22 @@
 package domain.gamer;
 
-import domain.card.possessable.CardPossessable;
+import domain.card.Card;
 import domain.card.providable.CardProvidable;
+import domain.result.Score;
 import domain.result.WinLose;
-import domain.score.Calculatable;
 
-import java.util.Objects;
+import java.util.List;
 
-import static domain.score.ScoreManagable.BLACK_JACK_SCORE;
+public interface Gamer {
+    void drawCard(CardProvidable cardProvidable);
 
-public abstract class Gamer implements BlackJackGameable {
-    private final String name;
-    private final CardPossessable cardPossessable;
+    boolean canDrawMore();
 
-    Gamer(String name, CardPossessable cards) {
-        this.name = name;
-        this.cardPossessable = cards;
-    }
+    List<Card> showInitialCards();
 
-    @Override
-    public WinLose determineWinLose(BlackJackGameable counterParts) {
-        if (this.calculateScore().isLargerThan(BLACK_JACK_SCORE)) {
-            return WinLose.LOSE;
-        }
+    List<Card> showAllCards();
 
-        if (counterParts.calculateScore().isLargerThan(BLACK_JACK_SCORE)) {
-            return WinLose.WIN;
-        }
+    Score calculateScore();
 
-        if (this.calculateScore().isLargerThan(counterParts.calculateScore())) {
-            return WinLose.WIN;
-        }
-
-        return WinLose.LOSE;
-    }
-
-    @Override
-    public void drawCard(CardProvidable cardProvidable) {
-        cardPossessable.drawCard(cardProvidable);
-    }
-
-    @Override
-    public Calculatable calculateScore() {
-        return cardPossessable.calculateScore();
-    }
-
-    @Override
-    public abstract boolean canDrawMore();
-
-    public CardPossessable getCardsOnHand() {
-        return cardPossessable;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Gamer that = (Gamer) o;
-        return Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+    WinLose determineWinLose(Gamer counterParts);
 }

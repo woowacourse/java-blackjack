@@ -1,30 +1,26 @@
-package domain.score;
+package domain.result;
 
 import java.util.Objects;
 
-public class Score implements Calculatable {
+public class Score {
     private final int value;
 
     public Score(int value) {
         this.value = value;
     }
 
-    @Override
-    public Calculatable plus(Calculatable score) {
-        return new Score(this.value + score.getValue());
+    public Score plus(Score score) {
+        return new Score(this.value + value);
     }
 
-    @Override
-    public boolean isLargerThan(Calculatable score) {
-        return this.value > score.getValue();
+    public boolean isBiggerThan(Score score) {
+        return this.value > score.value;
     }
 
-    @Override
-    public boolean isLargerOrEqualThan(Calculatable score) {
-        return this.value >= score.getValue();
+    public boolean isLowOrEqualThan(Score score) {
+        return this.value <= score.value;
     }
 
-    @Override
     public int getValue() {
         return value;
     }

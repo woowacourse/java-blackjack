@@ -1,26 +1,25 @@
-package domain.card.possessable;
+package domain.card.cardDrawable;
 
 import domain.card.Card;
 import domain.card.providable.CardProvidable;
-import domain.score.BlackJackScoreManager;
-import domain.score.Calculatable;
-import domain.score.Score;
+import domain.result.Score;
+import domain.result.ScoreCalculable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HandCards implements CardPossessable {
+public class Hand implements CardDrawable, ScoreCalculable {
     private static final String DELIMITER = ", ";
     private static final int FIRST_INDEX = 0;
 
     private final List<Card> cards;
 
-    public HandCards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
-    public HandCards(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -30,29 +29,40 @@ public class HandCards implements CardPossessable {
     }
 
     @Override
-    public Calculatable calculateScore() {
-        return BlackJackScoreManager.calculate(this);
+    public Score calculateScore() {
+        int defaultSum = calculateDefaultSum();
+
+        if (this.hasAce()) {
+            return new Score(updateAceScore(defaultSum));
+        }
+
+        return new Score(defaultSum);
     }
 
-    @Override
-    public Calculatable calculateDefaultSum() {
-        return new Score(cards.stream()
-                .mapToInt(Card::extractScore)
-                .sum());
+    private int calculateDefaultSum() {
+        return cards.stream()
+                .map(Card::extractScore)
+                .mapToInt(Score::getValue)
+                .sum();
     }
 
-    @Override
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
 
-    @Override
+    private int updateAceScore(int score) {
+        if (score + ACE_ADDITIONAL_SCORE <= BLACK_JACK_SCORE) {
+            return score + ACE_ADDITIONAL_SCORE;
+        }
+
+        return score;
+    }
+
     public Card getOneCard() {
         return cards.get(FIRST_INDEX);
     }
 
-    @Override
     public List<Card> getCards() {
         return cards;
     }
