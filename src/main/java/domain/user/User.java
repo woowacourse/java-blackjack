@@ -3,6 +3,8 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
+import domain.result.Result;
+
 import java.util.List;
 
 public abstract class User{
@@ -32,5 +34,4 @@ public abstract class User{
     public int getTotalScore() {
         return cards.sumScores();
     }
-
 }
