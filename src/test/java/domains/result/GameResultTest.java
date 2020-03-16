@@ -36,8 +36,8 @@ public class GameResultTest {
         Player ddoring = iterator.next();
         Player smallBear = iterator.next();
 
-        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(KindOfGameResult.WIN);
-        assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(KindOfGameResult.DRAW);
+        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.WIN);
+        assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
     }
 
     static Stream<Arguments> gameData() {
@@ -51,10 +51,10 @@ public class GameResultTest {
 
         Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));
 
-        Map<KindOfGameResult, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(KindOfGameResult.WIN, 0);
-        dealerResult.put(KindOfGameResult.DRAW, 1);
-        dealerResult.put(KindOfGameResult.LOSE, 1);
+        Map<ResultType, Integer> dealerResult = new HashMap<>();
+        dealerResult.put(ResultType.WIN, 0);
+        dealerResult.put(ResultType.DRAW, 1);
+        dealerResult.put(ResultType.LOSE, 1);
 
         return Stream.of(
                 Arguments.of(players, dealer, dealerResult)

@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, KindOfGameResult> playerResult;
-    private Map<KindOfGameResult, Integer> gameResult;
+    private Map<Player, ResultType> playerResult;
+    private Map<ResultType, Integer> gameResult;
 
     public GameResult() {
         this.playerResult = new HashMap<>();
@@ -28,31 +28,31 @@ public class GameResult {
 
     private boolean checkBurstPlayer(Player player) {
         if (player.isBurst()) {
-            playerResult.put(player, KindOfGameResult.LOSE);
+            playerResult.put(player, ResultType.LOSE);
             return true;
         }
         return false;
     }
 
-    public KindOfGameResult getWinOrLose(Player player) {
+    public ResultType getWinOrLose(Player player) {
         return playerResult.get(player);
     }
 
     private void calculateDealerResult() {
-        for (KindOfGameResult kindOfGameResult : KindOfGameResult.values()) {
-            gameResult.put(kindOfGameResult, 0);
+        for (ResultType resultType : ResultType.values()) {
+            gameResult.put(resultType, 0);
         }
 
-        for (KindOfGameResult result : playerResult.values()) {
+        for (ResultType result : playerResult.values()) {
             gameResult.put(result, gameResult.get(result) + 1);
         }
     }
 
-    public Map<Player, KindOfGameResult> getPlayerResult() {
+    public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
     }
 
-    public Map<KindOfGameResult, Integer> getGameResult() {
+    public Map<ResultType, Integer> getGameResult() {
         return gameResult;
     }
 }

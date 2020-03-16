@@ -1,7 +1,7 @@
 package domains.user;
 
 import domains.card.Deck;
-import domains.result.KindOfGameResult;
+import domains.result.ResultType;
 
 import java.util.Objects;
 
@@ -45,17 +45,17 @@ public class Player extends User {
         throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);
     }
 
-    public KindOfGameResult checkKindOfGameResult(Dealer dealer) {
+    public ResultType checkKindOfGameResult(Dealer dealer) {
         if (dealer.isBurst() && !this.isBurst()) {
-            return KindOfGameResult.WIN;
+            return ResultType.WIN;
         }
         if (this.score() > dealer.score()) {
-            return KindOfGameResult.WIN;
+            return ResultType.WIN;
         }
         if (this.score() < dealer.score()) {
-            return KindOfGameResult.LOSE;
+            return ResultType.LOSE;
         }
-        return KindOfGameResult.DRAW;
+        return ResultType.DRAW;
     }
 
     public String getName() {
