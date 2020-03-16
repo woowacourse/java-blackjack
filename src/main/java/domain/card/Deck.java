@@ -2,10 +2,8 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Deck {
     public static final int NUMBER_OF_FIRST_DEAL_CARDS = 2;
@@ -28,7 +26,7 @@ public class Deck {
     }
 
     public Card deal() {
-        if (deck.size() < 1) {
+        if (deck.isEmpty()) {
             throw new IllegalStateException("덱에서 나누어주지 않은 카드가 한장도 없습니다.");
         }
         return this.deck.remove(0);

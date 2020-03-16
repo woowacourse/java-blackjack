@@ -57,7 +57,7 @@ public class Cards {
         return this.sumScores() < score;
     }
 
-    public Card getAnyCard() {
+    public Card getFirstCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 한장도 없습니다.");
         }

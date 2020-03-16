@@ -22,8 +22,8 @@ public class PlayerTest {
     @NullAndEmptySource
     @DisplayName("Player 생성 시 이름 인자의 null, empty 체크")
     void nullAndEmptyTest(String input) {
-        assertThatThrownBy(() -> new Player(input)).
-            isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> new Player(input))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

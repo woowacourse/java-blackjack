@@ -8,17 +8,14 @@ public class Player extends User {
 
     public Player(String name) {
         if (name == null || name.isEmpty()) {
-            throw new NullPointerException("이름이 비어있습니다.");
+            throw new IllegalArgumentException("이름이 비어있습니다.");
         }
         this.name = new Name(name);
     }
 
     @Override
     public boolean canReceiveCard() {
-        if (this.isSmallerThan(Cards.BLACKJACK_SCORE)) {
-            return true;
-        }
-        return false;
+        return this.isSmallerThan(Cards.BLACKJACK_SCORE);
     }
 
     public Result calculateResult(Dealer dealer) {
