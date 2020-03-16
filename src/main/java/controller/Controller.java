@@ -14,8 +14,6 @@ import view.OutputView;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class Controller {
-	private static final String YES = "Y";
-
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
 		progress(blackjackGame);

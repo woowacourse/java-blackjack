@@ -15,15 +15,15 @@ public class DealerDto implements GamerDto {
 	private DealerGameResult gameResult;
 	private int totalScore;
 
-	private DealerDto(String name, Hands hands, DealerGameResult gameResult) {
-		this.name = name;
-		this.hands = hands;
-		this.gameResult = gameResult;
+	private DealerDto(Dealer dealer) {
+		this.name = dealer.getName();
+		this.hands = dealer.getHands();
+		this.gameResult = dealer.getDealerGameResult();
 		this.totalScore = hands.calculateTotalScore();
 	}
 
 	public static DealerDto from(Dealer dealer) {
-		return new DealerDto(dealer.getName(), dealer.getHands(), dealer.getDealerGameResult());
+		return new DealerDto(dealer);
 	}
 
 	@Override

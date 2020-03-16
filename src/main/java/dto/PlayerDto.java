@@ -15,15 +15,15 @@ public class PlayerDto implements GamerDto {
 	private PlayerGameResult playerGameResult;
 	private int totalScore;
 
-	private PlayerDto(String name, Hands hands, PlayerGameResult playerGameResult) {
-		this.name = name;
-		this.hands = hands;
-		this.playerGameResult = playerGameResult;
+	private PlayerDto(Player player) {
+		this.name = player.getName();
+		this.hands = player.getHands();
+		this.playerGameResult = player.getPlayerGameResult();
 		this.totalScore = hands.calculateTotalScore();
 	}
 
 	public static PlayerDto from(Player player) {
-		return new PlayerDto(player.getName(), player.getHands(), player.getPlayerGameResult());
+		return new PlayerDto(player);
 	}
 
 	@Override
