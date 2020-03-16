@@ -2,14 +2,14 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.*;
 import blackjack.domain.user.exception.UserException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserTest {
     @Test
