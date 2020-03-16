@@ -16,23 +16,17 @@ public class Player extends Participant {
     }
 
     public Result beatDealer(Dealer dealer) {
-        int dealerScore = dealer.calculateScore();
-        int userScore = this.calculateScore();
-        if (dealerScore > 21 && userScore > 21) {
+        if (this.isBust() || isLowerThanDealerScore(dealer)) {
             return Result.패;
         }
-        if (dealerScore > 21) {
+        if (dealer.isBust() || !isLowerThanDealerScore(dealer)) {
             return Result.승;
         }
-        if (userScore > 21) {
-            return Result.패;
-        }
-        if (dealerScore == userScore) {
-            return Result.무;
-        }
-        if (dealerScore > userScore) {
-            return Result.패;
-        }
-        return Result.승;
+        return Result.무;
     }
+
+    private boolean isLowerThanDealerScore(Dealer dealer) {
+        return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() < dealer.calculateScore());
+    }
+
 }

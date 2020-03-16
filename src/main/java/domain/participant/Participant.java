@@ -7,6 +7,7 @@ import domain.card.CardDeck;
 
 public class Participant implements ParticipantInterface {
     private static final int INITIAL_CARD_NUMBER = 2;
+    private static final int MAX_SCORE = 21;
 
     String name;
     ParticipantCards cards;
@@ -30,6 +31,10 @@ public class Participant implements ParticipantInterface {
         return cards.calculateScore();
     }
 
+    boolean isBust() {
+        return (this.calculateScore() > MAX_SCORE);
+    }
+
     public String getName() {
         return this.name;
     }
@@ -48,6 +53,7 @@ public class Participant implements ParticipantInterface {
         Player player = (Player)o;
         return Objects.equals(name, player.name);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(name);
