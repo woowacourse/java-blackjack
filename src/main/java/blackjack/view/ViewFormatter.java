@@ -11,11 +11,10 @@ import java.util.stream.Collectors;
 public class ViewFormatter {
     public static String formatCard(Card card) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(card.getCardNumber().getMessage());
-        stringBuffer.append(card.getCardFigure().getMessage());
+        stringBuffer.append(card.getCardNumber());
+        stringBuffer.append(card.getCardFigure());
         return stringBuffer.toString();
     }
-
 
     public static String formatCards(List<Card> cards) {
         List<String> formattedCards = cards.stream()
