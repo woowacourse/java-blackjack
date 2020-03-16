@@ -4,15 +4,29 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Outcome {
-    PLAYER_WIN("승", "패", (playerScore, dealerScore) ->
-        (playerScore.isBlackJack() && !dealerScore.isBlackJack()) ||
-            (!playerScore.isBust()
-            && (playerScore.isMoreThanScore(dealerScore) || dealerScore.isBust()))),
-    PLAYER_DRAW("무", "무", (playerScore, dealerScore) ->
-        playerScore.equals(dealerScore) && !playerScore.isBust()),
-    PLAYER_LOSE("패", "승", (playerScore, dealerScore) ->
-        (!playerScore.isBlackJack() && dealerScore.isBlackJack()) ||
-        dealerScore.isMoreThanScore(playerScore) || playerScore.isBust());
+    PLAYER_WIN("승", "패", Outcome::isPlayerWin),
+    PLAYER_DRAW("무", "무", Outcome::isPlayerDraw),
+    PLAYER_LOSE("패", "승", Outcome::isPlayerLose);
+
+    private static boolean isPlayerWin(Score playerScore, Score dealerScore) {
+        boolean playerOnlyBlackJack = playerScore.isBlackJack() && !dealerScore.isBlackJack();
+        boolean dealerOnlyBust = !playerScore.isBust() && dealerScore.isBust();
+        boolean playerNotBustAndMoreThanDealer =
+            !playerScore.isBust() && playerScore.isMoreThanScore(dealerScore);
+
+        return playerOnlyBlackJack || dealerOnlyBust || playerNotBustAndMoreThanDealer;
+    }
+
+    private static boolean isPlayerDraw(Score playerScore, Score dealerScore) {
+        return playerScore.equals(dealerScore) && !playerScore.isBust();
+    }
+
+    private static boolean isPlayerLose(Score playerScore, Score dealerScore) {
+        boolean dealerOnlyBlackJack = !playerScore.isBlackJack() && dealerScore.isBlackJack();
+
+        return dealerOnlyBlackJack || dealerScore.isMoreThanScore(playerScore)
+            || playerScore.isBust();
+    }
 
     private final String name;
     private final String converseName;
@@ -29,6 +43,11 @@ public enum Outcome {
             .filter(outcome -> outcome.compare.test(playerScore, dealerScore))
             .findAny()
             .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static boolean isCriteriaScoreOnlyBlackJack(Score criteriaScore,
+        Score comparisonScore) {
+        return criteriaScore.isBlackJack() && !comparisonScore.isBlackJack();
     }
 
     public String getName() {
