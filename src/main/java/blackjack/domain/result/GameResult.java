@@ -32,7 +32,13 @@ public class GameResult {
 
     public long getDealerWinCount() {
         return dealerResults.stream()
-                .filter(dealerResult -> dealerResult == ResultType.WIN)
+                .filter(ResultType::isWin)
+                .count();
+    }
+
+    public long getDealerDrawCount() {
+        return dealerResults.stream()
+                .filter(ResultType::isDraw)
                 .count();
     }
 

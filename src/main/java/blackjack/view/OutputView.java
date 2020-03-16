@@ -111,8 +111,9 @@ public class OutputView {
 
     private static void printDealerResults(GameResult gameResult) {
         long dealerWinCount = gameResult.getDealerWinCount();
+        long dealerDrawCount = gameResult.getDealerDrawCount();
         long dealerLoseCount = gameResult.getDealerLoseCount();
 
-        System.out.printf("%s : %d승 %d패" + NEW_LINE, Dealer.NAME, dealerWinCount, dealerLoseCount);
+        System.out.printf("%s : %d승 %무 %d패" + NEW_LINE, Dealer.NAME, dealerWinCount, dealerDrawCount, dealerLoseCount);
     }
 }
