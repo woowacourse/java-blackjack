@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.card.Symbol.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +10,6 @@ import domain.card.Card;
 
 public class ParticipantCards {
     private static final String DELIMITER = ", ";
-    private static final int ACE_SCORE = 1;
     private static final int MAX_SCORE = 21;
     private static final int ACE_BONUS = 10;
     private static final int FIRST_CARD_INDEX = 0;
@@ -20,14 +21,16 @@ public class ParticipantCards {
 
     public int calculateScore() {
         int score = 0;
-        boolean containAce = false;
+        boolean containsAce = false;
         for (Card card : cards) {
-            if (card.getScore() == ACE_SCORE) {
-                containAce = true;
-            }
+            containsAce = checkIfAce(card);
             score += card.getScore();
         }
-        return calculateFinalScore(score, containAce);
+        return calculateFinalScore(score, containsAce);
+    }
+
+    private boolean checkIfAce(Card card) {
+        return card.equals(ACE);
     }
 
     private int calculateFinalScore(int score, boolean containAce) {
