@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.ResultType;
-import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.user.User;
 
@@ -20,6 +19,7 @@ public class OutputView {
 		printDrawTitle(players, firstDrawCount);
 		System.out.println(dealer.getName() + ": " + makeDealerFirstCardInfo(dealer));
 		printPlayersCardInfo(players);
+		System.out.println();
 	}
 
 	public static void printUserCardInfo(User player) {
@@ -30,8 +30,8 @@ public class OutputView {
 		System.out.printf("딜러는 %d이하라 한 장의 카드를 더 받았습니다.\n", drawCondition);
 	}
 
-	public static void printUserScore(Score score) {
-		System.out.printf(" - 결과: %s\n", score);
+	public static void printUserScore(int score) {
+		System.out.printf(" - 결과: %d\n", score);
 	}
 
 	public static void printResultMessage() {
