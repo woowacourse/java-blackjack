@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
+import blackjack.domain.exceptions.InvalidReportException;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 

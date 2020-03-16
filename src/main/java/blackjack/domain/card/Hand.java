@@ -1,9 +1,7 @@
-package blackjack.domain.user.hand;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import blackjack.domain.card.Card;
 
 public class Hand {
 	private final List<Card> cards;

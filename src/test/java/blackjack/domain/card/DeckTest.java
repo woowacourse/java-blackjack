@@ -11,6 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import blackjack.domain.exceptions.InvalidDeckException;
+
 class DeckTest {
 	private static Stream<Arguments> provideEmptyDeck() {
 		int initDeckSize = CardFactory.create().size();

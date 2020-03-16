@@ -5,8 +5,8 @@ import static blackjack.view.OutputView.*;
 
 import java.util.List;
 
-import blackjack.domain.BlackjackTable;
-import blackjack.domain.DrawOpinion;
+import blackjack.domain.blackjack.BlackjackTable;
+import blackjack.domain.blackjack.DrawOpinion;
 import blackjack.domain.result.Report;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -55,7 +55,8 @@ public class BlackjackController {
 	}
 
 	private boolean wantDraw(Player player) {
-		return DrawOpinion.of(inputDrawOpinion(player)).isYes();
+		return DrawOpinion.of(inputDrawOpinion(player))
+			.isYes();
 	}
 
 	private void drawCardsFrom(Dealer dealer) {

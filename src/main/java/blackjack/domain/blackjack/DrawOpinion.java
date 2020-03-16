@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
 import java.util.Arrays;
+
+import blackjack.domain.exceptions.InvalidDrawOpinionException;
 
 public enum DrawOpinion {
 	YES("y"),

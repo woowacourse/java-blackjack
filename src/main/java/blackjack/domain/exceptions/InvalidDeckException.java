@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.exceptions;
 
 public class InvalidDeckException extends IllegalArgumentException {
 	public static final String INVALID = "카드 덱에 중복이 존재합니다.";

@@ -1,12 +1,11 @@
-package blackjack.domain.user.hand;
+package blackjack.domain.card;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.exceptions.InvalidScoreException;
 
 public class Score {
 	static final int BUST_SCORE = 22;

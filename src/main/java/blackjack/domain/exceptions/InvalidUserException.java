@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.exceptions;
 
 public class InvalidUserException extends IllegalArgumentException {
 	public static final String NULL_OR_EMPTY = "유효하지 않은 유저의 이름입니다.";

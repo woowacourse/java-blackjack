@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.user.hand.Hand;
-import blackjack.domain.user.hand.Score;
-
 class HandTest {
 	@Test
 	void Hand_GenerateInstance() {

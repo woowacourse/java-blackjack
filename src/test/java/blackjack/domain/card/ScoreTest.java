@@ -1,4 +1,4 @@
-package blackjack.domain.user.hand;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,9 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
-import blackjack.domain.card.Type;
+import blackjack.domain.exceptions.InvalidScoreException;
 
 class ScoreTest {
 	@Test

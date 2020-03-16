@@ -9,7 +9,8 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.InvalidDeckException;
+import blackjack.domain.exceptions.InvalidDeckException;
+import blackjack.domain.exceptions.InvalidUserException;
 
 class UserTest {
 	@Test

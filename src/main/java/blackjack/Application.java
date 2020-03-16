@@ -5,7 +5,7 @@ import static blackjack.util.StringUtil.*;
 import java.util.List;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.BlackjackTable;
+import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;

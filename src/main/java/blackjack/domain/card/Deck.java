@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import blackjack.domain.exceptions.InvalidDeckException;
+
 public class Deck {
 	private static final int TOP = 0;
 

@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
-import static blackjack.domain.BlackjackTable.*;
+import static blackjack.domain.blackjack.BlackjackTable.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +38,7 @@ class BlackjackTableTest {
 
 	@Test
 	void BlackjackTable_InputDeck_GenerateInstance() {
-		assertThat(new BlackjackTable(deck)).isInstanceOf(BlackjackTable.class);
+		Assertions.assertThat(new BlackjackTable(deck)).isInstanceOf(BlackjackTable.class);
 	}
 
 	@Test

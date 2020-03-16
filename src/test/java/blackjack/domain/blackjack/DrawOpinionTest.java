@@ -1,13 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import blackjack.domain.exceptions.InvalidDrawOpinionException;
 
 class DrawOpinionTest {
 	@Test
 	void of_InputDrawOpinion_ReturnInstance() {
-		assertThat(DrawOpinion.of("y")).isEqualTo(DrawOpinion.YES);
+		Assertions.assertThat(DrawOpinion.of("y")).isEqualTo(DrawOpinion.YES);
 	}
 
 	@Test

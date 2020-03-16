@@ -8,8 +8,9 @@ import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.InvalidDeckException;
-import blackjack.domain.user.hand.Hand;
+import blackjack.domain.card.Hand;
+import blackjack.domain.exceptions.InvalidDeckException;
+import blackjack.domain.exceptions.InvalidUserException;
 
 public abstract class User implements Comparable<User> {
 	private static final int DRAW_LOWER_BOUND = 1;
