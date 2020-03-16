@@ -14,9 +14,9 @@ public interface Participant {
 
     boolean isBusted();
 
+    void set(Result result);
+
     String handStatus();
 
     String getName();
-
-    void set(Result result);
 }

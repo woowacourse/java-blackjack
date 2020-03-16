@@ -22,15 +22,6 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public String getName() {
-        return "딜러";
-    }
-
-    public int getResult(final Result result) {
-        return this.result.getOrDefault(result, 0);
-    }
-
-    @Override
     public void set(final Result result) {
         this.result.put(result, this.result.getOrDefault(result, 0) + 1);
     }
@@ -69,5 +60,14 @@ public class Dealer implements Participant {
     @Override
     public String handStatus() {
         return hand.toString();
+    }
+
+    public int getResult(final Result result) {
+        return this.result.getOrDefault(result, 0);
+    }
+
+    @Override
+    public String getName() {
+        return "딜러";
     }
 }

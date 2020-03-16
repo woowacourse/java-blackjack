@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
-    public static final int BLACK_JACK = 21;
-    public static final int GAP_BETWEEN_ACE_VALUE = 10;
-    public static final String DELIMITER = ", ";
+    private static final int BLACK_JACK = 21;
+    private static final int GAP_BETWEEN_ACE_VALUE = 10;
+    private static final String DELIMITER = ", ";
 
     private List<Card> cards;
 

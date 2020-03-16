@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeckTest {
-    public static final int SIZE_AFTER_FIRST_POP = new Deck().size() - 1;
+    private static final int SIZE_AFTER_FIRST_POP = new Deck().size() - 1;
 
     @DisplayName("pop()을 통해 카드 한 장을 뺴오는지")
     @Test

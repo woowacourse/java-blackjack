@@ -7,6 +7,9 @@ public class InputView {
     public static final String YES_OR_NO = "[yn]";
     public static final String YES = "y";
 
+    private InputView() {
+    }
+
     public static String getInput() {
         return scanner.nextLine();
     }
