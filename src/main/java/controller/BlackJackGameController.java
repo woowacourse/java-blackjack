@@ -30,7 +30,8 @@ public class BlackJackGameController {
         OutputView.printDealerAdditionalCard(dealer.performHit(cardDeck));
 
         OutputView.printFinalScoreBoard(dealer, players);
-        PlayerResult playerResult = new PlayerResult(players.putResultIntoMap(dealer));
+        PlayerResult playerResult = new PlayerResult();
+        playerResult.deduceResult(players, dealer);
         OutputView.printFinalResult(playerResult);
     }
 

@@ -1,16 +1,12 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.card.CardDeck;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import domain.result.Result;
 
 public class Players {
     private List<Player> players;
@@ -34,17 +30,7 @@ public class Players {
         }
     }
 
-    public Map<String, Result> putResultIntoMap(Dealer dealer) {
-        Map<String, Result> userResultMap = new HashMap<>();
-        for (Player player : players) {
-            userResultMap.put(player.getName(), player.beatDealer(dealer));
-        }
-        return userResultMap;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
-
-
 }
