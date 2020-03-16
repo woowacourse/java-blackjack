@@ -86,7 +86,7 @@ public class BlackjackController {
     private static Answer getAnswer(Player user) {
         try {
             RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.create(user));
-            return Answer.valueOf(requestAnswerDTO.getAnswer());
+            return Answer.of(requestAnswerDTO.getAnswer());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return getAnswer(user);

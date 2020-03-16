@@ -28,9 +28,9 @@ public class BlackJackRuleTest {
                 Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))));
         BlackJackRule blackJackRule = new BlackJackRule();
 
-        Assertions.assertThat(blackJackRule.isHit(blackJackUser, Answer.Y)).isFalse();
-        Assertions.assertThat(blackJackRule.isHit(overBlackJackUser, Answer.Y)).isFalse();
-        Assertions.assertThat(blackJackRule.isHit(hitUser, Answer.Y)).isTrue();
-        Assertions.assertThat(blackJackRule.isHit(hitUser, Answer.N)).isFalse();
+        Assertions.assertThat(blackJackRule.isHit(blackJackUser, Answer.YES)).isFalse();
+        Assertions.assertThat(blackJackRule.isHit(overBlackJackUser, Answer.YES)).isFalse();
+        Assertions.assertThat(blackJackRule.isHit(hitUser, Answer.YES)).isTrue();
+        Assertions.assertThat(blackJackRule.isHit(hitUser, Answer.NO)).isFalse();
     }
 }
