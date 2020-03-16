@@ -1,14 +1,13 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
-	private static final int BUST_SCORE = 22;
 	private static final int ACE_ADDITIONAL_SCORE = 10;
-	private static final int BLACKJACK_CARD_SIZE = 2;
 	private static final String EMPTY_CARDS_MESSAGE = "카드가 없습니다.";
 
 	private final List<Card> cards;
@@ -23,14 +22,6 @@ public class Cards {
 
 	public int size() {
 		return cards.size();
-	}
-
-	public boolean isBlackjack() {
-		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
-	}
-
-	public boolean isBust() {
-		return calculateScore() >= BUST_SCORE;
 	}
 
 	public int calculateScore() {
@@ -58,6 +49,6 @@ public class Cards {
 	}
 
 	public List<Card> getCards() {
-		return cards;
+		return Collections.unmodifiableList(cards);
 	}
 }
