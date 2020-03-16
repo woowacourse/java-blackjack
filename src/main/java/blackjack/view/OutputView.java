@@ -46,7 +46,7 @@ public class OutputView {
 
     public static void moreCardInstruction(Dealer dealer) {
         System.out.println();
-        for (int i = 0; i < dealer.addedCardCount(); i++) {
+        for (int i = 0; i < dealer.countAddedCard(); i++) {
             System.out.println(
                     String.format("%s는 %d 미만이라 한 장의 카드를 더 받았습니다.",
                             dealer.getName(), Dealer.DEALER_DRAW_CRITERIA)

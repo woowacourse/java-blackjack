@@ -17,8 +17,8 @@ public class Dealer implements Participant {
         this.result = new HashMap<>();
     }
 
-    public int addedCardCount() {
-        return hand.addedCardCount();
+    public int countAddedCard() {
+        return hand.countAddedCard();
     }
 
     @Override

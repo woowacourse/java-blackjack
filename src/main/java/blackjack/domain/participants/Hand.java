@@ -21,7 +21,7 @@ public class Hand {
         this.cards.add(card);
     }
 
-    public int addedCardCount() {
+    public int countAddedCard() {
         return cards.size() - Participants.FIRST_CARDS_COUNT;
     }
 
