@@ -48,8 +48,7 @@ public class Blackjack {
 	}
 
 	private static void start(Players players, Playable dealer, Drawable deck) {
-		players.giveCardEachPlayer(deck);
-		players.giveCardEachPlayer(deck);
+		players.giveCardEachPlayerTwice(deck);
 
 		dealer.giveCards(deck.draw(2));
 

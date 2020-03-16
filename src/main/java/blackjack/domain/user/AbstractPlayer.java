@@ -3,9 +3,11 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.exceptions.AbstractPlayerException;
-import blackjack.domain.user.exceptions.PlayerException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractPlayer implements Playable {
 	protected static final int MAX_SCORE = 21;

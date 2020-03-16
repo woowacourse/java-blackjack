@@ -53,10 +53,15 @@ public class Players {
 						Collections::unmodifiableList));
 	}
 
-	public void giveCardEachPlayer(Drawable deck) {
+	private void giveCardEachPlayer(Drawable deck) {
 		for (Playable player : players) {
 			player.giveCard(deck.draw());
 		}
+	}
+
+	public void giveCardEachPlayerTwice(Drawable deck) {
+		giveCardEachPlayer(deck);
+		giveCardEachPlayer(deck);
 	}
 
 	public int memberSize() {
