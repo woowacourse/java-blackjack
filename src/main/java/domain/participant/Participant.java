@@ -5,10 +5,12 @@ import java.util.Objects;
 import domain.ParticipantCards;
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.exception.OverScoreException;
 
 public class Participant implements ParticipantInterface {
     private static final int INITIAL_CARD_NUMBER = 2;
     private static final int MAX_SCORE = 21;
+    private static final int CRITERION = 21;
 
     private String name;
     private ParticipantCards cards;
@@ -25,6 +27,9 @@ public class Participant implements ParticipantInterface {
     }
 
     public void receive(CardDeck cardDeck) {
+        if (calculateScore() >= CRITERION) {
+            throw new OverScoreException("카드의 총 점수가 21을 넘으므로 카드를 뽑으실 수 없습니다.");
+        }
         cards.add(cardDeck.draw());
     }
 
@@ -42,6 +47,10 @@ public class Participant implements ParticipantInterface {
 
     public String getName() {
         return this.name;
+    }
+
+    ParticipantCards getCards() {
+        return this.cards;
     }
 
     @Override

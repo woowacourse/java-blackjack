@@ -19,6 +19,6 @@ public class Dealer extends Participant {
     }
 
     public String toStringFirstDraw() {
-        return name + " : " + cards.toStringOneCard();
+        return getName() + " : " + this.getCards().toStringOneCard();
     }
 }

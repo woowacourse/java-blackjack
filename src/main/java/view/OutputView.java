@@ -76,7 +76,7 @@ public class OutputView {
                 dealerWin++;
             }
         }
-        sb.append(dealerWin).append("WIN ").append(dealerDraw).append("DRAW ").append(dealerLose).append("LOSE");
+        sb.append(dealerWin).append("승 ").append(dealerDraw).append("무 ").append(dealerLose).append("패");
         System.out.println(sb);
     }
 

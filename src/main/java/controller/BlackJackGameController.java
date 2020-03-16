@@ -3,6 +3,7 @@ package controller;
 import domain.PlayerResult;
 import domain.Players;
 import domain.card.CardDeck;
+import domain.exception.OverScoreException;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import utils.InputUtils;
@@ -10,8 +11,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackGameController {
-
-    private static final int CRITERION = 21;
 
     public static void run() {
         Players players = setPlayers();
@@ -37,10 +36,13 @@ public class BlackJackGameController {
 
     private static void performPlayersHit(CardDeck cardDeck, Player player) {
         try {
-            while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player)) && player.calculateScore() <= CRITERION) {
+            while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
                 player.receive(cardDeck);
                 OutputView.printCardStatus(player);
             }
+        } catch (OverScoreException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            OutputView.printCardStatus(player);
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             performPlayersHit(cardDeck, player);
