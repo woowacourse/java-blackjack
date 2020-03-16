@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.Symbol;
-import blackjack.domain.result.Result;
+import blackjack.domain.game.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.BeforeEach;

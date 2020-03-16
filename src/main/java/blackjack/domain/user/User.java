@@ -1,16 +1,13 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.GameRule;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public abstract class User {
-    private static final int ACE_INCREMENT = 10;
-    private static final int MAX_SCORE = 21;
-
     protected final String name;
     protected final List<Card> cards;
 
@@ -28,13 +25,7 @@ public abstract class User {
     }
 
     public int getTotalScore() {
-        int score = incrementAceScore(cards.stream()
-            .mapToInt(Card::getScore)
-            .sum());
-        if(score > MAX_SCORE) {
-            return 0;
-        }
-        return score;
+        return GameRule.calculateTotalScore(cards);
     }
 
     public String getName() {
@@ -42,12 +33,11 @@ public abstract class User {
     }
 
     public boolean isBusted() {
-        return getTotalScore() == 0;
+        return GameRule.isBusted(cards);
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2
-                && getTotalScore() == MAX_SCORE;
+        return GameRule.isBlackjack(cards);
     }
 
     public abstract List<Card> getInitialCards();
@@ -55,13 +45,4 @@ public abstract class User {
     public List<Card> getCards() {
         return cards;
     }
-
-    private int incrementAceScore(int score) {
-        if (cards.stream().anyMatch(Card::isAce) && score <= MAX_SCORE - ACE_INCREMENT) {
-            score += ACE_INCREMENT;
-        }
-        return score;
-    }
-
-
 }
