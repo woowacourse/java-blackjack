@@ -13,6 +13,8 @@ import view.OutputView;
 
 public class BlackJackGameController {
 
+    public static final int CRITERION = 21;
+
     public static void run() {
         Players players = setPlayers();
         Dealer dealer = new Dealer();
@@ -36,7 +38,7 @@ public class BlackJackGameController {
 
     private static void performPlayersHit(CardDeck cardDeck, Player player) {
         try {
-            while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
+            while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player)) && player.calculateScore() <= CRITERION) {
                 player.receive(cardDeck);
                 OutputView.printCardStatus(player);
             }
