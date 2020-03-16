@@ -24,4 +24,8 @@ public class Players {
                 .map(player -> (User) player)
                 .collect(Collectors.toList()));
     }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }

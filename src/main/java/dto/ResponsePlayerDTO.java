@@ -20,11 +20,9 @@ public class ResponsePlayerDTO {
     }
 
     public static List<ResponsePlayerDTO> createResponsePlayerDTOs(Players players) {
-        List<ResponsePlayerDTO> responsePlayerDTOS = new ArrayList<>();
-        responsePlayerDTOS.add(new ResponsePlayerDTO(players.getDealer()));
-        responsePlayerDTOS.addAll(players.getUsers().stream()
+        List<ResponsePlayerDTO> responsePlayerDTOS = players.getPlayers().stream()
                 .map(ResponsePlayerDTO::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 

@@ -6,6 +6,7 @@ import domain.player.Player;
 import domain.player.Players;
 import domain.player.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,10 +19,15 @@ public class PlayerFactory {
             throw new IllegalArgumentException("플레이어를 생성할 수 없습니다.");
         }
 
-        List<Player> players = playerNames.stream()
-                .map(name -> new User(name, cardDeck.initialDraw()))
-                .collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
         players.add(new Dealer(cardDeck.initialDraw()));
+        players.addAll(playerNames.stream()
+                .map(name -> new User(name, cardDeck.initialDraw()))
+                .collect(Collectors.toList()));
+//        List<Player> players = playerNames.stream()
+//                .map(name -> new User(name, cardDeck.initialDraw()))
+//                .collect(Collectors.toList());
+//        players.add(new Dealer(cardDeck.initialDraw()));
         return new Players(players);
     }
 }
