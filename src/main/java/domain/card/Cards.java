@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
     private static final int BLACK_JACK_SIZE = 2;
+    private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
     private static final int STANDARD_ACE_ELEVEN = 21;
     private static final String NO_CARDS = "입력한 카드가 없습니다.";
 
@@ -18,26 +18,18 @@ public class Cards {
     }
 
     public static Cards of(List<Card> cards) {
-        if (cards == null || cards.size() == 0) {
+        if (cards == null || cards.isEmpty()) {
             throw new NullPointerException(NO_CARDS);
         }
 
         return new Cards(cards);
     }
 
-    private void validateNullCards() {
-        if (this.cards == null || this.cards.isEmpty()) {
-            throw new NullPointerException(NO_CARDS);
-        }
-    }
-
     public boolean isCardsSumUnderSixteen() {
-        validateNullCards();
         return CardCalculator.calculateAceStrategy(this) <= DEALER_STANDARD_ADDITIONAL_CARD;
     }
 
     public boolean containAce() {
-        validateNullCards();
         return this.cards.stream()
                 .anyMatch(Card::isAce);
     }
@@ -57,7 +49,7 @@ public class Cards {
     public boolean isBlackJack() {
         return containAce()
                 && this.cards.size() == BLACK_JACK_SIZE
-                && CardCalculator.calculateAceStrategy(this) == STANDARD_ACE_ELEVEN;
+                && getCardsSum() == STANDARD_ACE_ELEVEN;
     }
 
     public List<Card> getCards() {

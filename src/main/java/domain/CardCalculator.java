@@ -40,7 +40,7 @@ public class CardCalculator {
         int userCardSum = calculateAceStrategy(userCards);
         int dealerCardSum = calculateAceStrategy(dealerCards);
 
-        if (userCardSum < BLACK_JACK && dealerCardSum > BLACK_JACK) {
+        if (userCardSum <= BLACK_JACK && dealerCardSum > BLACK_JACK) {
             return true;
         }
         if (userCardSum > BLACK_JACK) {

@@ -85,4 +85,20 @@ public class CardCalculatorTest {
 
         Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isFalse();
     }
+
+    @DisplayName("딜러가 21을 넘는다면 무조건 유저의 승")
+    @Test
+    void test() {
+        User user = new User("pobi", new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.ACE, CardSuitSymbol.SPACE)
+        )));
+        Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.JACK, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND)
+        )));
+
+        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isTrue();
+    }
 }
