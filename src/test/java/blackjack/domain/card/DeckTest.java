@@ -1,50 +1,90 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.exceptions.DeckException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
+	private static Card threeHeart;
+	private static Card fourDiamond;
+	private static Card fiveClub;
+
+	@Test
+	void of_SimpleDeck_IsNotNull() {
+		assertThat(simpleDeck).isNotNull();
+	}
+
+	private static Card sixSpade;
+
 	private Drawable simpleDeck;
 	private List<Card> fourCards;
 
+	@BeforeAll
+	static void beforeAll() {
+		threeHeart = Card.of(Symbol.THREE, Type.HEART);
+		fourDiamond = Card.of(Symbol.FOUR, Type.DIAMOND);
+		fiveClub = Card.of(Symbol.FIVE, Type.CLUB);
+		sixSpade = Card.of(Symbol.SIX, Type.SPADE);
+	}
+
 	@BeforeEach
 	void setUp() {
-		fourCards = new ArrayList<>(Arrays.asList(Card.of(Symbol.THREE, Type.HEART),
-				Card.of(Symbol.FOUR, Type.DIAMOND),
-				Card.of(Symbol.FIVE, Type.CLUB),
-				Card.of(Symbol.SIX, Type.SPADE)));
+		fourCards = new ArrayList<>(Arrays.asList(threeHeart,
+				fourDiamond,
+				fiveClub,
+				sixSpade));
 
 		simpleDeck = Deck.of(fourCards);
 	}
 
 	@Test
-	void of_IsNotNull() {
+	void of_FourCards_IsNotNull() {
 		assertThat(simpleDeck).isNotNull();
 	}
 
 	@Test
-	void draw() {
-		// given
-		List<Card> expected = new ArrayList<>(fourCards);
-		Collections.reverse(expected);
+	void of_EmptyList_IsNotNull() {
+		assertThat(Deck.of(Collections.emptyList())).isNotNull();
+	}
 
-		// when
-		List<Card> drawn = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-			drawn.add(simpleDeck.draw());
-		}
+	@ParameterizedTest
+	@MethodSource("draw_Deck_ReturnTopCard")
+	void draw_Deck_ReturnTopCard(List<Card> cards) {
+		Drawable deck = Deck.of(cards);
+		assertThat(deck.draw()).isEqualTo(cards.get(cards.size() - 1));
+	}
 
-		// then
-		assertThat(drawn).isEqualTo(expected);
+	static Stream<List<Card>> draw_Deck_ReturnTopCard() {
+		return Stream.of(Collections.singletonList(threeHeart),
+				Arrays.asList(threeHeart, fourDiamond),
+				Arrays.asList(threeHeart, fourDiamond, fiveClub, sixSpade),
+				Arrays.asList(threeHeart, threeHeart, fourDiamond, threeHeart));
+	}
+
+	@ParameterizedTest
+	@MethodSource("draw_OnceDrawnDeck_ReturnSecondTopCard")
+	void draw_OnceDrawnDeck_ReturnSecondTopCard(List<Card> cards) {
+		Drawable deck = Deck.of(cards);
+		deck.draw();
+		assertThat(deck.draw()).isEqualTo(cards.get(cards.size() - 2));
+	}
+
+	static Stream<List<Card>> draw_OnceDrawnDeck_ReturnSecondTopCard() {
+		return Stream.of(Arrays.asList(threeHeart, fourDiamond),
+				Arrays.asList(threeHeart, fourDiamond, fiveClub, sixSpade),
+				Arrays.asList(threeHeart, threeHeart, fourDiamond, threeHeart));
 	}
 
 	@Test
@@ -58,20 +98,30 @@ class DeckTest {
 	}
 
 	@Test
-	void equals_IsTrue() {
+	void equals_SimpleDeck_IsEqualToDeckHavingSameCards() {
 		// given
 		Drawable expected = Deck.of(fourCards);
 
 		// then
-		assertThat(simpleDeck.equals(expected)).isTrue();
+		assertThat(simpleDeck).isEqualTo(expected);
 	}
 
 	@Test
-	void equals_IsFalse() {
+	void equals_EmptyDeck_IsEqualToOtherEmptyDeck() {
+		// given
+		Drawable emptyDeck = Deck.of(Collections.emptyList());
+		Drawable otherEmptyDeck = Deck.of(Collections.emptyList());
+
+		// then
+		assertThat(emptyDeck).isEqualTo(otherEmptyDeck);
+	}
+
+	@Test
+	void equals_SimpleDeck_IsNotEqualToDeckHavingDifferentCards() {
 		// given
 		Drawable notExpected = Deck.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
 
 		// then
-		assertThat(simpleDeck.equals(notExpected)).isFalse();
+		assertThat(simpleDeck).isNotEqualTo(notExpected);
 	}
 }
