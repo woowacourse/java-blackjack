@@ -14,7 +14,7 @@ import static blackjack.domain.participants.Result.LOSE;
 import static blackjack.domain.participants.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RuleTest {
+public class RuleImplTest {
 
     @DisplayName("decideWinner()이 참가자들의 Result를 올바르게 바꾸는지")
     @Test
@@ -30,7 +30,8 @@ public class RuleTest {
         List<Player> players = Arrays.asList(pobi, jason);
 
         Participants participants = new Participants(dealer, players);
-        Rule.judge(participants);
+        Rule ruleImpl = new RuleImpl();
+        ruleImpl.judgeBasic(participants);
 
         assertThat(pobi.getResult().getValue()).isEqualTo(LOSE.getValue());
         assertThat(jason.getResult().getValue()).isEqualTo(LOSE.getValue());

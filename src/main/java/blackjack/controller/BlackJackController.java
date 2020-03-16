@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Rule;
+import blackjack.domain.RuleImpl;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participants.*;
 import blackjack.exceptions.InvalidPlayerException;
@@ -75,7 +76,8 @@ public class BlackJackController {
     }
 
     private static void endPhase(final Participants participants) {
-        Rule.judge(participants);
+        Rule rule = new RuleImpl();
+        rule.judgeBasic(participants);
         OutputView.result(participants);
         OutputView.statistics(participants);
     }
