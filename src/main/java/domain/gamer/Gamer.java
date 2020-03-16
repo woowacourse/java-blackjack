@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gamer {
-    protected String name;
+    private String name;
     protected final List<Card> cards = new ArrayList<>();
     protected Result result;
 
