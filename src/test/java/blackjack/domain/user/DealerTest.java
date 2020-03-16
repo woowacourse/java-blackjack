@@ -69,10 +69,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("giveCards")
 	void giveCards(List<Card> cards) {
-		// given
 		dealer.giveCards(cards);
-
-		// then
 		assertThat(dealer.getHand()).isEqualTo(cards);
 	}
 
