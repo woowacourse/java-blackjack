@@ -6,19 +6,20 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printNewLine(){
+    public static void printNewLine() {
         System.out.println();
     }
+
     public static void printErrorMessage(String message) {
         System.out.println(message);
     }
 
     public static void printInitial(List<String> playerNames) {
-        System.out.println(String.format("\n딜러와 %s에게 2장의 카드를 나누었습니다.",String.join(",", playerNames)));
+        System.out.println(String.format("\n딜러와 %s에게 2장의 카드를 나누었습니다.", String.join(",", playerNames)));
     }
 
-    public static void printUserCard(String name,String cardInformation) {
-        if(name.equals("딜러")) {
+    public static void printUserCard(String name, String cardInformation) {
+        if (name.equals("딜러")) {
             System.out.printf("%s: %s\n", name, cardInformation.substring(0, cardInformation.indexOf(",")));
             return;
         }
@@ -29,8 +30,8 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.\n");
     }
 
-    public static void printFinalResult(String name,String cardInformation,int score) {
-        System.out.printf("%s카드: %s - 결과: %s\n",name, cardInformation, score);
+    public static void printFinalResult(String name, String cardInformation, int score) {
+        System.out.printf("%s카드: %s - 결과: %s\n", name, cardInformation, score);
     }
 
     public static void printWinningResult(List<String> winningPlayerResult) {
@@ -40,7 +41,7 @@ public class OutputView {
         }
     }
 
-    public static void printUserCardsOverBlackJack(String name){
+    public static void printUserCardsOverBlackJack(String name) {
         System.out.printf("%s는 카트합이 21 이상입니다. 턴 종료.\n", name);
     }
 }

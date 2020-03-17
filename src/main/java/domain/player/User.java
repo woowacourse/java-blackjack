@@ -10,7 +10,7 @@ public abstract class User {
     protected String name;
     protected final List<Card> cards;
 
-    public User (Card... cards) {
+    public User(Card... cards) {
         this.cards = new ArrayList<>();
         Collections.addAll(this.cards, cards);
         validateDuplicateCard();
@@ -20,10 +20,10 @@ public abstract class User {
         return CardCalculator.calculateDeterminedAce(this.cards);
     }
 
-    public String cardToString(){
+    public String cardToString() {
         List<String> cardString = cards.stream().map(Card::toString).collect(Collectors.toList());
 
-        return String.join(",",cardString);
+        return String.join(",", cardString);
     }
 
     public List<Card> getCard() {

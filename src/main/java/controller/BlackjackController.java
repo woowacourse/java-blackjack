@@ -15,50 +15,59 @@ import view.OutputView;
 public class BlackjackController {
     private Cards cards;
     private PlayersName playersName;
+    private Dealer dealer;
+    private Players players;
 
     public BlackjackController() {
         cards = new Cards();
         playersName = new PlayersName(InputView.inputPlayerName());
         OutputView.printInitial(playersName.getPlayerName());
+        ready();
     }
 
     public void run() {
-        Dealer dealer = new Dealer(cards.giveCard(), cards.giveCard());
-        Players players = new Players(cards, playersName.getPlayerName());
-
-        OutputView.printUserCard(dealer.getName(),dealer.cardToString());
-        for(Player player:players.getPlayers()){
-            OutputView.printUserCard(player.getName(),player.cardToString());
-        }
-
-        for (Player player : players.getPlayers()) {
-            userService(cards, player);
-        }
-        DealerService(cards, dealer);
-        result(players, dealer);
+        startGame();
+        result();
     }
 
-    private void userService(Cards cards, Player player) {
+    private void ready() {
+        dealer = new Dealer(cards.giveCard(), cards.giveCard());
+        players = new Players(cards, playersName.getPlayerName());
+
+        OutputView.printUserCard(dealer.getName(), dealer.cardToString());
+        for (Player player : players.getPlayers()) {
+            OutputView.printUserCard(player.getName(), player.cardToString());
+        }
+    }
+
+    private void startGame() {
+        for (Player player : players.getPlayers()) {
+            playerTurn(player);
+        }
+        dealerTurn();
+    }
+
+    private void playerTurn(Player player) {
         OutputView.printNewLine();
         while (CardCalculator.isUnderBlackJack(player.getCard()) && getAnswer(player).isEqualsAnswer(AnswerType.YES)) {
             player.drawCard(cards.giveCard());
             OutputView.printUserCard(player.getName(), player.cardToString());
         }
-        if(CardCalculator.isMoreThanBlackJack(player.getCard())){
+        if (CardCalculator.isMoreThanBlackJack(player.getCard())) {
             OutputView.printUserCardsOverBlackJack(player.getName());
         }
     }
 
-    private void DealerService(Cards cards, Dealer dealer) {
+    private void dealerTurn() {
         if (dealer.isAdditionalCard(cards.giveCard())) {
             OutputView.printDealerAdditionalCard();
         }
     }
 
-    private void result(Players players, Dealer dealer) {
-        OutputView.printFinalResult(dealer.getName(),dealer.cardToString(),dealer.sumCardNumber());
-        for(Player player: players.getPlayers()) {
-            OutputView.printFinalResult(player.getName(),player.cardToString(),player.sumCardNumber());
+    private void result() {
+        OutputView.printFinalResult(dealer.getName(), dealer.cardToString(), dealer.sumCardNumber());
+        for (Player player : players.getPlayers()) {
+            OutputView.printFinalResult(player.getName(), player.cardToString(), player.sumCardNumber());
         }
 
         WinningResult winningResult = new WinningResult(players, dealer);

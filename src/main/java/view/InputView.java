@@ -34,7 +34,7 @@ public class InputView {
             return answer;
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return  inputAnswer(name);
+            return inputAnswer(name);
         }
     }
 

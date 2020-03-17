@@ -9,7 +9,7 @@ public class Answer {
     }
 
     private static void validateAnswer(String answer) {
-        if (!answer.equals("y") && !answer.equals("n")) {
+        if (!"y".equals(answer) && !"n".equals(answer)) {
             throw new IllegalArgumentException("예는 y,아니오는 n 로 입력해주세요");
         }
     }
