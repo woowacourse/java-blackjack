@@ -31,7 +31,7 @@ public class BlackjackController {
     }
 
     private void ready() {
-        dealer = new Dealer(cards.giveCard(), cards.giveCard());
+        dealer = new Dealer(cards.giveTwoCardStartGame());
         players = new Players(cards, playersName.getPlayerName());
 
         OutputView.printUserCard(dealer.getName(), dealer.cardToString());

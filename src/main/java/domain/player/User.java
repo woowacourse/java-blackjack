@@ -7,12 +7,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class User {
+    private static final int START_CARD_DECK_SIZE = 2;
+
     protected String name;
     protected final List<Card> cards;
 
-    public User(Card... cards) {
-        this.cards = new ArrayList<>();
-        Collections.addAll(this.cards, cards);
+    public User(List<Card> userCardDeck) {
+        if(userCardDeck == null || userCardDeck.size() < START_CARD_DECK_SIZE){
+            throw new IllegalArgumentException("2장의 카드를 정상적으로 받지 않았습니다.");
+        }
+        this.cards = userCardDeck;
         validateDuplicateCard();
     }
 

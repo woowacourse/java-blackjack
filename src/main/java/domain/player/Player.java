@@ -2,10 +2,12 @@ package domain.player;
 
 import domain.card.Card;
 
+import java.util.List;
+
 public class Player extends User {
 
-    public Player(String name, Card... cards) {
-        super(cards);
+    public Player(String name, List<Card> userCardDeck) {
+        super(userCardDeck);
         validatePlayerName(name);
         this.name = name;
     }

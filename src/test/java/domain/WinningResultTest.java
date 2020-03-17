@@ -18,7 +18,7 @@ public class WinningResultTest {
     void getterTest() {
         List<String> playerName = new ArrayList<>(Arrays.asList("pobi", "subway"));
         Cards cards = new Cards();
-        Dealer dealer = new Dealer(cards.giveCard(), cards.giveCard());
+        Dealer dealer = new Dealer(cards.giveTwoCardStartGame());
         Players players = new Players(cards,playerName);
 
         WinningResult winningResult = new WinningResult(players,dealer);

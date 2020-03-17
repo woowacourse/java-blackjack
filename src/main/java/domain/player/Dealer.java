@@ -3,11 +3,13 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardCalculator;
 
+import java.util.List;
+
 public class Dealer extends User {
     private static final int ADDITIONAL_INSERT_CARD_STANDARD = 16;
 
-    public Dealer(Card... cards) {
-        super(cards);
+    public Dealer(List<Card> userCardDeck) {
+        super(userCardDeck);
         this.name = "딜러";
     }
 

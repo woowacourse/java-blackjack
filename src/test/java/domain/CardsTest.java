@@ -38,4 +38,11 @@ public class CardsTest {
             }
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void giveTwoCardStartGameTest() {
+        Cards cards = new Cards();
+
+        Assertions.assertThat(cards.giveTwoCardStartGame().size()).isEqualTo(2);
+    }
 }

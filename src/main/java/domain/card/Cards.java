@@ -22,6 +22,11 @@ public class Cards {
         }
     }
 
+    public List<Card> giveTwoCardStartGame(){
+
+        return new ArrayList<>(Arrays.asList(giveCard(),giveCard()));
+    }
+
     public Card giveCard() {
         validateCardsDeck();
         return cardsDeck.remove(FIRST);

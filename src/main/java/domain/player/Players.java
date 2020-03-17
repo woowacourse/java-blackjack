@@ -11,7 +11,7 @@ public class Players {
 
     public Players(Cards cards, List<String> playerNames) {
         this.users = playerNames.stream()
-                .map(name -> new Player(name, cards.giveCard(), cards.giveCard()))
+                .map(name -> new Player(name, cards.giveTwoCardStartGame()))
                 .collect(Collectors.toList());
     }
 
