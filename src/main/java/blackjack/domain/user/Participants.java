@@ -15,8 +15,8 @@ public final class Participants {
     private static final String UNDER_MINIMUM_PLAYER_COUNT_EXCEPTION_MESSAGE =
         String.format("참여 인원은 %d명 이상이어야 합니다.", MINIMUM_PLAYER_COUNT);
 
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final User dealer;
+    private final List<User> players;
 
     public Participants(List<String> playerNames) {
         validNotNull(playerNames);
@@ -46,27 +46,25 @@ public final class Participants {
         }
     }
 
-    public Dealer getDealer() {
+    public User getDealer() {
         return dealer;
     }
 
-    public List<Player> getPlayers() {
+    public List<User> getPlayers() {
         return players;
-    }
-
-    public List<String> getPlayerNames() {
-        return Collections.unmodifiableList(players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toList()));
     }
 
     public List<User> getParticipants() {
         List<User> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(players.stream()
-            .map(player -> (User) player)
+        participants.addAll(players);
+        return Collections.unmodifiableList(participants);
+    }
+
+    public List<String> getPlayerNames() {
+        return Collections.unmodifiableList(players.stream()
+            .map(User::getName)
             .collect(Collectors.toList()));
-        return participants;
     }
 
     public String getDealerName() {

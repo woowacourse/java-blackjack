@@ -38,20 +38,20 @@ public class BlackJackApplication {
     }
 
     private static void drawMoreCards(Participants participants, CardDeck cardDeck) {
-        for (Player player : participants.getPlayers()) {
+        for (User player : participants.getPlayers()) {
             drawMorePlayerCardManual(cardDeck, player);
         }
         drawMoreDealerCardAuto(cardDeck, participants.getDealer());
     }
 
-    private static void drawMorePlayerCardManual(CardDeck cardDeck, Player player) {
+    private static void drawMorePlayerCardManual(CardDeck cardDeck, User player) {
         while (player.canDrawCard() && InputView.inputMoreCard(player)) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }
     }
 
-    private static void drawMoreDealerCardAuto(CardDeck cardDeck, Dealer dealer) {
+    private static void drawMoreDealerCardAuto(CardDeck cardDeck, User dealer) {
         while (dealer.canDrawCard()) {
             OutputView.printDealerOneMoreCard(dealer);
             dealer.drawCard(cardDeck);

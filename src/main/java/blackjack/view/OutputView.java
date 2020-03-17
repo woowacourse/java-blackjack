@@ -20,16 +20,16 @@ public class OutputView {
     }
 
     public static void printUsersCards(Participants participants) {
-        Dealer dealer = participants.getDealer();
+        User dealer = participants.getDealer();
         System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
         System.out.println();
-        for (Player player : participants.getPlayers()) {
+        for (User player : participants.getPlayers()) {
             printPlayerCards(player);
         }
         System.out.println();
     }
 
-    public static void printPlayerCards(Player player) {
+    public static void printPlayerCards(User player) {
         System.out.println(getUserCards(player));
     }
 
@@ -38,7 +38,7 @@ public class OutputView {
             , String.join(", ", user.getCardsInfos()));
     }
 
-    public static void printDealerOneMoreCard(Dealer dealer) {
+    public static void printDealerOneMoreCard(User dealer) {
         System.out.println();
         System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
         System.out.println();
@@ -64,7 +64,7 @@ public class OutputView {
         printPlayerFinalResult(participantsResult.getPlayersResult());
     }
 
-    private static void printDealerFinalResult(Dealer dealer, Map<Outcome, Integer> gameResult) {
+    private static void printDealerFinalResult(User dealer, Map<Outcome, Integer> gameResult) {
         System.out.printf("%s: ", dealer.getName());
         for (Outcome outcome : gameResult.keySet()) {
             System.out.print(gameResult.get(outcome) + outcome.getConverseName() + " ");
@@ -72,8 +72,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printPlayerFinalResult(Map<Player, Outcome> playersResult) {
-        for (Player player : playersResult.keySet()) {
+    private static void printPlayerFinalResult(Map<User, Outcome> playersResult) {
+        for (User player : playersResult.keySet()) {
             Outcome outcome = playersResult.get(player);
             System.out.printf("%s: %s", player.getName(), outcome.getName());
             System.out.println();

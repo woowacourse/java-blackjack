@@ -16,10 +16,6 @@ public final class Player extends User {
         return userCards.getInfos();
     }
 
-    public Outcome calculateOutcome(User dealer) {
-        return Outcome.of(getScore(), dealer.getScore());
-    }
-
     @Override
     public boolean canDrawCard() {
         return getScore().isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);

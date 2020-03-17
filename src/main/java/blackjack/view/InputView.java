@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +14,7 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().replace(" ", "").split(","));
     }
 
-    public static boolean inputMoreCard(Player player) {
+    public static boolean inputMoreCard(User player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
         String input = scanner.nextLine();
         if (input.equals("y") || input.equals("n")) {

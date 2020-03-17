@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserCards;
 import blackjack.domain.result.CardsResult;
+import blackjack.domain.result.Outcome;
 import java.util.List;
 
 public abstract class User {
@@ -38,6 +39,10 @@ public abstract class User {
     public abstract List<String> getFirstCardInfo();
 
     public abstract boolean canDrawCard();
+
+    public Outcome calculateOutcome(User user) {
+        return Outcome.of(getScore(), user.getScore());
+    }
 
     public final String getName() {
         return name;

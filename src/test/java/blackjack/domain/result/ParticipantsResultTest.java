@@ -7,6 +7,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,9 @@ public class ParticipantsResultTest {
         List<String> playerNames = Arrays.asList("Jamie,Ravie".split(","));
         Participants participants = new Participants(playerNames);
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = participants.getDealer();
+        User dealer = participants.getDealer();
         dealer.drawCard(new CardDeck(), 2);
-        for (Player player : participants.getPlayers()) {
+        for (User player : participants.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
         participantsResult = new ParticipantsResult(participants);
@@ -42,10 +43,10 @@ public class ParticipantsResultTest {
     @DisplayName("플레이어의 승무패를 가져옴")
     @Test
     void checkPlayersResult() {
-        Map<Player, Outcome> playerResult = participantsResult.getPlayersResult();
+        Map<User, Outcome> playerResult = participantsResult.getPlayersResult();
         List<Outcome> outcomes = Arrays.asList(Outcome.values());
 
-        for (Player player : playerResult.keySet()) {
+        for (User player : playerResult.keySet()) {
             assertThat(outcomes.contains(playerResult.get(player))).isTrue();
         }
     }
