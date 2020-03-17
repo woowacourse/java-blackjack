@@ -5,7 +5,7 @@ public class Dealer extends User {
     public static final int MINIMUM_NUMBER_TO_STAY = 17;
 
     private Dealer() {
-        super(NAME);
+        super(NAME, Cards.emptyCards());
     }
 
     public static Dealer create() {

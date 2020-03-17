@@ -41,8 +41,8 @@ class GameResultTest {
 
     private void drawDealerCards(Deck deckForDealer) {
         dealer = Dealer.create();
-        dealer.drawCard(deckForDealer);
-        dealer.drawCard(deckForDealer);
+        dealer.drawCardsInTurn(deckForDealer);
+        dealer.drawCardsInTurn(deckForDealer);
     }
 
     private Deck createDeckForPlayers() {
@@ -63,8 +63,8 @@ class GameResultTest {
     private void drawPlayersCards(Deck deckForPlayers) {
         players = Players.of("그니, 무늬, 포비");
         for (Player player : players.getPlayers()) {
-            player.drawCard(deckForPlayers);
-            player.drawCard(deckForPlayers);
+            player.drawCardsInTurn(deckForPlayers);
+            player.drawCardsInTurn(deckForPlayers);
         }
     }
 

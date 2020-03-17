@@ -4,9 +4,7 @@ import blackjack.domain.card.*;
 import blackjack.domain.user.exception.UserException;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,31 +12,32 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class UserTest {
     @Test
     void isBust() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
                 new Card(Symbol.KING, Type.HEART),
-                new Card(Symbol.TWO, Type.DIAMOND));
+                new Card(Symbol.TWO, Type.DIAMOND)));
         User user = new User("무늬", cards);
 
         assertThat(user.isBust()).isTrue();
+        assertThat(user.isNotBust()).isFalse();
     }
 
     @Test
     void isNotBust() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
                 new Card(Symbol.KING, Type.HEART),
-                new Card(Symbol.ACE, Type.DIAMOND));
+                new Card(Symbol.ACE, Type.DIAMOND)));
         User user = new User("무늬", cards);
 
         assertThat(user.isNotBust()).isTrue();
+        assertThat(user.isBust()).isFalse();
     }
 
     @Test
     void drawCard() {
-        List<Card> cards = new ArrayList<>();
-        User user = new User("무늬", cards);
+        User user = new User("무늬", Cards.emptyCards());
         Deck deck = Deck.createWithShuffle();
 
-        user.drawCard(deck);
+        user.drawCardsInTurn(deck);
 
         assertThat(user.getCards().size()).isEqualTo(1);
     }
@@ -46,20 +45,20 @@ class UserTest {
     @Test
     void receiveInitialCards_NotEmptyCards_ShouldThrowException() {
         assertThatThrownBy(() -> {
-            List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                    new Card(Symbol.KING, Type.HEART));
+            Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                    new Card(Symbol.KING, Type.HEART)));
             User user = new User("무늬", cards);
 
             Deck deck = Deck.createWithShuffle();
 
-            user.receiveInitialCards(deck);
+            user.drawCardsAtFirst(deck);
         }).isInstanceOf(UserException.class);
     }
 
     @Test
     void calculateScore_HasNoAce() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User user = new User("무늬", cards);
 
         assertThat(user.calculateScore()).isEqualTo(new Score(20));
@@ -67,8 +66,8 @@ class UserTest {
 
     @Test
     void calculateScore_HasAce_ShouldMaximizeAce() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User user = new User("무늬", cards);
 
         assertThat(user.calculateScore()).isEqualTo(new Score(21));
@@ -76,9 +75,9 @@ class UserTest {
 
     @Test
     void calculateScore_HasAce_ShouldNotMaximizeAce() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
                 new Card(Symbol.KING, Type.HEART),
-                new Card(Symbol.QUEEN, Type.CLUB));
+                new Card(Symbol.QUEEN, Type.CLUB)));
         User user = new User("무늬", cards);
 
         assertThat(user.calculateScore()).isEqualTo(new Score(21));
@@ -86,12 +85,12 @@ class UserTest {
 
     @Test
     void isOverScore() {
-        List<Card> greaterScoreCards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards greaterScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User greaterScoreUser = new User("무늬", greaterScoreCards);
 
-        List<Card> lessScoreCards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.NINE, Type.HEART));
+        Cards lessScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.NINE, Type.HEART)));
         User lessScoreUser = new User("그니", lessScoreCards);
 
         assertThat(greaterScoreUser.isOverScore(lessScoreUser)).isTrue();
@@ -100,12 +99,12 @@ class UserTest {
 
     @Test
     void isUnderScore() {
-        List<Card> lessScoreCards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.NINE, Type.HEART));
+        Cards lessScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.NINE, Type.HEART)));
         User lessScoreUser = new User("무늬", lessScoreCards);
 
-        List<Card> greaterScoreCards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards greaterScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User greaterScoreUser = new User("그니", greaterScoreCards);
 
         assertThat(lessScoreUser.isUnderScore(greaterScoreUser)).isTrue();
@@ -114,8 +113,8 @@ class UserTest {
 
     @Test
     void isSameScore_ShouldReturnTrue() {
-        List<Card> sameCards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards sameCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User user = new User("무늬", sameCards);
         User other = new User("그니", sameCards);
 
@@ -125,11 +124,11 @@ class UserTest {
 
     @Test
     void isSameScore_ShouldReturnFalse() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User user = new User("무늬", cards);
-        List<Card> anotherCards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.NINE, Type.HEART));
+        Cards anotherCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.NINE, Type.HEART)));
         User other = new User("그니", anotherCards);
 
         assertThat(user.isSameScore(other)).isFalse();
@@ -138,8 +137,8 @@ class UserTest {
 
     @Test
     void countCards() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART));
+        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
+                new Card(Symbol.KING, Type.HEART)));
         User user = new User("무늬", cards);
 
         assertThat(user.getCards().size()).isEqualTo(2);

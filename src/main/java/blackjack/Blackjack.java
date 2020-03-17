@@ -15,8 +15,8 @@ public class Blackjack {
 
         Deck deck = Deck.createWithShuffle();
 
-        dealer.receiveInitialCards(deck);
-        players.receiveInitialCards(deck);
+        dealer.drawCardsAtFirst(deck);
+        players.drawCardsAtFirst(deck);
 
         OutputView.printInitialInfo(dealer, players);
 
@@ -46,14 +46,14 @@ public class Blackjack {
 
     private static void playPlayerTurn(Deck deck, Player player) {
         while (player.isNotBust() && inputToHit(player)) {
-            player.drawCard(deck);
+            player.drawCardsInTurn(deck);
             OutputView.printUserCard(player);
         }
     }
 
     private static void playDealerTurn(Dealer dealer, Deck deck) {
         while (dealer.shouldReceiveCard()) {
-            dealer.drawCard(deck);
+            dealer.drawCardsInTurn(deck);
             OutputView.printDealerTurn(dealer);
         }
     }

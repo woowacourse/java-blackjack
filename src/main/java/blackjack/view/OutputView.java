@@ -33,7 +33,7 @@ public class OutputView {
                 .collect(Collectors.joining(JOINING_DELIMITER));
 
         System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
-                dealer.getName(), playerNames, User.INITIAL_DRAWING_NUMBER);
+                dealer.getName(), playerNames, User.DRAWING_NUMBER_INITIALLY);
     }
 
     private static void printInitialDealerCard(User dealer) {
@@ -114,6 +114,6 @@ public class OutputView {
         long dealerDrawCount = gameResult.getDealerDrawCount();
         long dealerLoseCount = gameResult.getDealerLoseCount();
 
-        System.out.printf("%s : %d승 %무 %d패" + NEW_LINE, Dealer.NAME, dealerWinCount, dealerDrawCount, dealerLoseCount);
+        System.out.printf("%s : %d승 %d무 %d패" + NEW_LINE, Dealer.NAME, dealerWinCount, dealerDrawCount, dealerLoseCount);
     }
 }

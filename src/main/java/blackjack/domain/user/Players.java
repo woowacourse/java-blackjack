@@ -51,9 +51,9 @@ public class Players {
         }
     }
 
-    public void receiveInitialCards(Deck deck) {
+    public void drawCardsAtFirst(Deck deck) {
         for (Player player : players) {
-            player.receiveInitialCards(deck);
+            player.drawCardsAtFirst(deck);
         }
     }
 

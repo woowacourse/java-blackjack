@@ -1,11 +1,14 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 import org.junit.jupiter.api.Test;
 
 import java.util.Stack;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
@@ -23,8 +26,8 @@ class DealerTest {
         cards.add(new Card(Symbol.EIGHT, Type.SPADE));
 
         Deck deck = new Deck(cards);
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+        dealer.drawCardsInTurn(deck);
+        dealer.drawCardsInTurn(deck);
 
         assertThat(dealer.shouldReceiveCard()).isTrue();
     }
@@ -38,8 +41,8 @@ class DealerTest {
         cards.add(new Card(Symbol.NINE, Type.SPADE));
 
         Deck deck = new Deck(cards);
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+        dealer.drawCardsInTurn(deck);
+        dealer.drawCardsInTurn(deck);
 
         assertThat(dealer.shouldReceiveCard()).isFalse();
     }

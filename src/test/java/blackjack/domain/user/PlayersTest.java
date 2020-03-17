@@ -35,7 +35,7 @@ class PlayersTest {
         Players players = Players.of("무늬, 그니, 포비");
         Deck deck = Deck.createWithShuffle();
 
-        players.receiveInitialCards(deck);
+        players.drawCardsAtFirst(deck);
 
         for (Player player : players.getPlayers()) {
             assertThat(player.getCards().size()).isEqualTo(2);
