@@ -1,11 +1,11 @@
 package domain.user;
 
-public class Money {
+public class BettingMoney {
 
     private static final int CRITERIA = 0;
     private final int money;
 
-    public Money(int money) {
+    public BettingMoney(int money) {
         validate(money);
         this.money = money;
     }

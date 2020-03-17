@@ -7,7 +7,7 @@ import java.util.Map;
 
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.Players;
+import domain.user.PlayersInfo;
 import domain.user.User;
 
 public class GameResult {
@@ -16,18 +16,18 @@ public class GameResult {
     private Map<ResultType, Integer> resultOfDealer;
     private Map<User, Integer> userToCardPoint;
 
-    public static GameResult of(Dealer dealer, Players players) {
-        return new GameResult(dealer, players);
+    public static GameResult of(Dealer dealer, PlayersInfo playersInfo) {
+        return new GameResult(dealer, playersInfo);
     }
 
-    private GameResult(Dealer dealer, Players players) {
-        collectResult(dealer, players);
+    private GameResult(Dealer dealer, PlayersInfo playersInfo) {
+        collectResult(dealer, playersInfo);
         createResultOfDealer();
-        createUserToCardPoint(dealer, players);
+        createUserToCardPoint(dealer, playersInfo);
     }
 
-    private void collectResult(Dealer dealer, Players players) {
-        resultOfPlayers = players.decideWinner(dealer);
+    private void collectResult(Dealer dealer, PlayersInfo playersInfo) {
+        resultOfPlayers = playersInfo.decideWinner(dealer);
     }
 
     private void createResultOfDealer() {
@@ -43,11 +43,11 @@ public class GameResult {
         this.resultOfDealer = Collections.unmodifiableMap(resultOfDealer);
     }
 
-    private void createUserToCardPoint(Dealer dealer, Players players) {
+    private void createUserToCardPoint(Dealer dealer, PlayersInfo playersInfo) {
         userToCardPoint = new LinkedHashMap<>();
 
         userToCardPoint.put(dealer, dealer.calculatePoint());
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .forEach(player -> userToCardPoint.put(player, player.calculatePoint()));
     }
 

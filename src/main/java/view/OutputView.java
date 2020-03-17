@@ -8,7 +8,7 @@ import domain.card.Card;
 import domain.result.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.Players;
+import domain.user.PlayersInfo;
 import domain.user.User;
 
 public class OutputView {
@@ -20,14 +20,14 @@ public class OutputView {
     private static final String COLON = ": ";
     private static final String SPACE = " ";
 
-    public static void printFirstDealOutResult(Dealer dealer, Players players) {
-        printFirstDealOut(players);
+    public static void printFirstDealOutResult(Dealer dealer, PlayersInfo playersInfo) {
+        printFirstDealOut(playersInfo);
         printDealerFirstDealOutResult(dealer);
-        printPlayersFirstDealOutResult(players);
+        printPlayersFirstDealOutResult(playersInfo);
     }
 
-    private static void printFirstDealOut(Players players) {
-        String allNames = players.getPlayers()
+    private static void printFirstDealOut(PlayersInfo playersInfo) {
+        String allNames = playersInfo.getPlayers()
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(COMMA));
@@ -41,8 +41,8 @@ public class OutputView {
         System.out.println(dealerFirstDealOutResult);
     }
 
-    private static void printPlayersFirstDealOutResult(Players players) {
-        players.getPlayers()
+    private static void printPlayersFirstDealOutResult(PlayersInfo playersInfo) {
+        playersInfo.getPlayers()
                 .forEach(player -> System.out.println(printUserDealOutResult(player)));
         System.out.println();
     }

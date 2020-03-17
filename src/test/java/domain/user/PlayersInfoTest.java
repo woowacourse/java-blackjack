@@ -32,9 +32,9 @@ import domain.card.Type;
 import domain.result.ResultType;
 import view.OutputView;
 
-class PlayersTest {
+class PlayersInfoTest {
 
-    private Players players;
+    private PlayersInfo playersInfo;
 
     @Mock
     private Deck deck;
@@ -47,20 +47,20 @@ class PlayersTest {
                         (e1, e2) -> {
                             throw new AssertionError("중복된 키가 있습니다.");
                         }, LinkedHashMap::new));
-        players = Players.of(playerInfo);
+        playersInfo = PlayersInfo.of(playerInfo);
     }
 
     @Test
     @DisplayName("각 플레이어 draw")
     void draw() {
-        List<Integer> expected = players.getPlayers()
+        List<Integer> expected = playersInfo.getPlayers()
                 .stream()
                 .map(player -> player.cards.getCards().size() + 1)
                 .collect(Collectors.toList());
 
-        players.draw(DeckFactory.createDeck());
+        playersInfo.draw(DeckFactory.createDeck());
 
-        List<Integer> result = players.getPlayers()
+        List<Integer> result = playersInfo.getPlayers()
                 .stream()
                 .map(player -> player.cards.getCards().size())
                 .collect(Collectors.toList());
@@ -86,18 +86,18 @@ class PlayersTest {
         Dealer dealer = Dealer.appoint();
         dealer.draw(deck);
 
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .get(0)
                 .draw(deck);
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .get(1)
                 .draw(deck);
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .get(2)
                 .draw(deck);
 
-        resultOfPlayers = players.decideWinner(dealer);
-        Player player = players.getPlayers().get(index);
+        resultOfPlayers = playersInfo.decideWinner(dealer);
+        Player player = playersInfo.getPlayers().get(index);
 
         assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
     }
@@ -124,10 +124,10 @@ class PlayersTest {
 
         given(deck.dealOut()).will(invocation -> cards.poll());
 
-        Players mockPlayers = Players.of(Collections.singletonMap("pobi", 1000));
-        mockPlayers.additionalDealOut(deck, (name) -> true, OutputView::printPlayerDealOutResult);
+        PlayersInfo mockPlayersInfo = PlayersInfo.of(Collections.singletonMap("pobi", 1000));
+        mockPlayersInfo.additionalDealOut(deck, (name) -> true, OutputView::printPlayerDealOutResult);
 
-        List<Card> actual = mockPlayers.getPlayers().get(0).getCards();
+        List<Card> actual = mockPlayersInfo.getPlayers().get(0).getCards();
 
         assertThat(actual).containsAll(expected);
     }

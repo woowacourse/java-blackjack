@@ -27,11 +27,11 @@ import domain.card.Symbol;
 import domain.card.Type;
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.Players;
+import domain.user.PlayersInfo;
 
 class GameResultTest {
 
-    private Players players;
+    private PlayersInfo playersInfo;
     private Dealer dealer;
 
     @Mock
@@ -46,7 +46,7 @@ class GameResultTest {
                         (e1, e2) -> {
                             throw new AssertionError("중복된 키가 있습니다.");
                         }, LinkedHashMap::new));
-        players = Players.of(playerInfo);
+        playersInfo = PlayersInfo.of(playerInfo);
         Queue<Card> cards = new LinkedList<>(Arrays.asList(
                 new Card(Symbol.SPADE, Type.SIX),
                 new Card(Symbol.SPADE, Type.SEVEN),
@@ -58,13 +58,13 @@ class GameResultTest {
         dealer = Dealer.appoint();
         dealer.draw(deck);
 
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .get(0)
                 .draw(deck);
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .get(1)
                 .draw(deck);
-        players.getPlayers()
+        playersInfo.getPlayers()
                 .get(2)
                 .draw(deck);
     }
@@ -74,8 +74,8 @@ class GameResultTest {
     @MethodSource("createIndexAndResultOfPlayers")
     void getResultOfPlayers(int index, ResultType expected) {
         Map<Player, ResultType> resultOfPlayers;
-        resultOfPlayers = GameResult.of(dealer, players).getResultOfPlayers();
-        Player player = players.getPlayers().get(index);
+        resultOfPlayers = GameResult.of(dealer, playersInfo).getResultOfPlayers();
+        Player player = playersInfo.getPlayers().get(index);
 
         assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
     }
@@ -93,8 +93,8 @@ class GameResultTest {
     @MethodSource("createIndexAndResultOfDealer")
     void getResultOfDealer(int index, ResultType expected) {
         Map<Player, ResultType> resultOfPlayers;
-        resultOfPlayers = GameResult.of(dealer, players).getResultOfPlayers();
-        Player player = players.getPlayers().get(index);
+        resultOfPlayers = GameResult.of(dealer, playersInfo).getResultOfPlayers();
+        Player player = playersInfo.getPlayers().get(index);
 
         assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
     }

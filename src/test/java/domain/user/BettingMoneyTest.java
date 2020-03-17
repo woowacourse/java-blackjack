@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class MoneyTest {
+class BettingMoneyTest {
 
     @Test
     @DisplayName("생성 확인")
     void create() {
-        assertThatCode(() -> new Money(1000))
+        assertThatCode(() -> new BettingMoney(1000))
                 .doesNotThrowAnyException();
     }
 
@@ -20,7 +20,7 @@ class MoneyTest {
     @DisplayName("0 이하일 경우")
     @ValueSource(ints = {0, -1})
     void createWithInvalidInput(int money) {
-        assertThatThrownBy(() -> new Money(money))
+        assertThatThrownBy(() -> new BettingMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팀금액은 0원 이하일 수 없습니다.");
     }
