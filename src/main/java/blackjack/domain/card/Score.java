@@ -5,6 +5,14 @@ import blackjack.domain.card.exceptions.ScoreException;
 import java.util.Objects;
 
 public final class Score {
+	public static final int MINIMUM_SCORE = 0;
+	public static final int ZERO = 0;
+	public static final Score zero;
+
+	static {
+		zero = Score.of(ZERO);
+	}
+
 	private final int score;
 
 	private Score(int score) {
@@ -16,8 +24,12 @@ public final class Score {
 		return new Score(score);
 	}
 
+	public static Score zero() {
+		return zero;
+	}
+
 	private void validateRange(int score) {
-		if (score < 0) {
+		if (score < MINIMUM_SCORE) {
 			throw new ScoreException("점수는 양수이어야 합니다.");
 		}
 	}

@@ -33,7 +33,7 @@ public final class Hand {
 	}
 
 	private Score simpleSum() {
-		Score score = Score.of(0);
+		Score score = Score.zero();
 
 		for (Card card : hand) {
 			score = score.add(card.getScore());
