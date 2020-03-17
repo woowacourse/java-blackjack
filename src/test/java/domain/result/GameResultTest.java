@@ -4,10 +4,13 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +41,12 @@ class GameResultTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         List<String> names = Arrays.asList("pobi", "jason", "woo");
-        players = Players.of(names);
+        Map<String, Integer> playerInfo = names.stream()
+                .collect(Collectors.toMap(Function.identity(), name -> 1000,
+                        (e1, e2) -> {
+                            throw new AssertionError("중복된 키가 있습니다.");
+                        }, LinkedHashMap::new));
+        players = Players.of(playerInfo);
         Queue<Card> cards = new LinkedList<>(Arrays.asList(
                 new Card(Symbol.SPADE, Type.SIX),
                 new Card(Symbol.SPADE, Type.SEVEN),
@@ -50,7 +58,6 @@ class GameResultTest {
         dealer = Dealer.appoint();
         dealer.draw(deck);
 
-        players = Players.of(Arrays.asList("pobi", "jason", "woo"));
         players.getPlayers()
                 .get(0)
                 .draw(deck);

@@ -15,13 +15,15 @@ public class Players {
 
     private List<Player> players;
 
-    public static Players of(List<String> playerNames) {
+    public static Players of(Map<String, Integer> playerNames) {
         return new Players(playerNames);
     }
 
-    private Players(List<String> playerNames) {
-        this.players = playerNames.stream()
-                .map(Player::new)
+    private Players(Map<String, Integer> playerNames) {
+        this.players = playerNames
+                .entrySet()
+                .stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
 

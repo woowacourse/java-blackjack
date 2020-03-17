@@ -35,13 +35,13 @@ class PlayerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         dealer = Dealer.appoint();
-        player = new Player("이름");
+        player = new Player("이름", 1000);
     }
 
     @Test
     @DisplayName("생성 확인")
     void create() {
-        assertThatCode(() -> new Player("이름"))
+        assertThatCode(() -> new Player("이름", 1000))
                 .doesNotThrowAnyException();
     }
 

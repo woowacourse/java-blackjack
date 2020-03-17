@@ -22,6 +22,11 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public static int receiveMoneyInput(String name) {
+        System.out.println(OutputView.NEWLINE + name + "의 배팅 금액은?");
+        return Integer.parseInt(SCANNER.nextLine());
+    }
+
     public static String receiveYesOrNoInput(String name) {
         System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         return SCANNER.nextLine();

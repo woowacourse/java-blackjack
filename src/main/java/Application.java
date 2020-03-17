@@ -1,4 +1,6 @@
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import controller.BlackJackGame;
 import domain.card.DeckFactory;
@@ -12,7 +14,10 @@ public class Application {
 
     public static void main(String[] args) {
         List<String> playerNames = InputView.receiveNameInput();
-        Players players = Players.of(playerNames);
+        Map<String, Integer> playerInfo = new LinkedHashMap<>();
+        playerNames.forEach(name -> playerInfo.put(name, InputView.receiveMoneyInput(name)));
+
+        Players players = Players.of(playerInfo);
         Dealer dealer = Dealer.appoint();
 
         BlackJackGame blackJackGame = BlackJackGame.set(DeckFactory.createDeck());

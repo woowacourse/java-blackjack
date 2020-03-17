@@ -6,10 +6,12 @@ import static org.mockito.BDDMockito.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,7 +42,12 @@ class PlayersTest {
     @BeforeEach
     void setUp() {
         List<String> names = Arrays.asList("pobi", "jason", "woo");
-        players = Players.of(names);
+        Map<String, Integer> playerInfo = names.stream()
+                .collect(Collectors.toMap(Function.identity(), name -> 1000,
+                        (e1, e2) -> {
+                            throw new AssertionError("중복된 키가 있습니다.");
+                        }, LinkedHashMap::new));
+        players = Players.of(playerInfo);
     }
 
     @Test
@@ -79,7 +86,6 @@ class PlayersTest {
         Dealer dealer = Dealer.appoint();
         dealer.draw(deck);
 
-        players = Players.of(Arrays.asList("pobi", "jason", "woo"));
         players.getPlayers()
                 .get(0)
                 .draw(deck);
@@ -118,7 +124,7 @@ class PlayersTest {
 
         given(deck.dealOut()).will(invocation -> cards.poll());
 
-        Players mockPlayers = Players.of(Collections.singletonList("pobi"));
+        Players mockPlayers = Players.of(Collections.singletonMap("pobi", 1000));
         mockPlayers.additionalDealOut(deck, (name) -> true, OutputView::printPlayerDealOutResult);
 
         List<Card> actual = mockPlayers.getPlayers().get(0).getCards();

@@ -7,8 +7,11 @@ import domain.rule.PlayerResultRule;
 
 public class Player extends User {
 
-    public Player(String name) {
+    private Money money;
+
+    public Player(String name, int money) {
         super(name);
+        this.money = new Money(money);
     }
 
     @Override
