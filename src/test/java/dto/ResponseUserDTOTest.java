@@ -5,8 +5,8 @@ import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.player.Dealer;
 import domain.player.Player;
-import domain.player.Players;
 import domain.player.User;
+import domain.player.Users;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,31 +15,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ResponsePlayerDTOTest {
+public class ResponseUserDTOTest {
     @DisplayName("create 테스트")
     @Test
     void createTest() {
-        Player player = new User("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
+        User user = new Player("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
-        ResponsePlayerDTO responsePlayerDTO = ResponsePlayerDTO.create(player);
+        ResponsePlayerDTO responsePlayerDTO = ResponsePlayerDTO.create(user);
 
         Assertions.assertThat(responsePlayerDTO.getName()).isEqualTo("subway");
         Assertions.assertThat(responsePlayerDTO.getCardNumbers()).containsSequence("5클로버", "10클로버");
         Assertions.assertThat(responsePlayerDTO.getScore()).isEqualTo("15");
     }
 
-    @DisplayName("Players 로 ResponsePlayerDTO List 생성 테스트")
+    @DisplayName("Users 로 ResponsePlayerDTO List 생성 테스트")
     @Test
     void createResponsePlayerDTOsTest() {
         Dealer dealer = new Dealer(Arrays.asList(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
-        User subway = new User("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
+        Player subway = new Player("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
-        User lavine = new User("lavine", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.HEART),
+        Player lavine = new Player("lavine", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.HEART),
                 Card.of(CardNumber.SIX, CardSuitSymbol.DIAMOND)));
-        List<Player> playerList = new ArrayList<>(Arrays.asList(dealer, subway, lavine));
-        Players players = new Players(playerList);
-        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(players);
+        List<User> userList = new ArrayList<>(Arrays.asList(dealer, subway, lavine));
+        Users users = new Users(userList);
+        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(users);
 
         Assertions.assertThat(responsePlayerDTOS.size()).isEqualTo(3);
 

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PlayersTest {
-    private Player player1;
-    private Player player2;
-    private List<Player> playerList;
+public class UsersTest {
+    private User user1;
+    private User user2;
+    private List<User> userList;
 
     @BeforeEach
     private void setup() {
@@ -25,38 +25,38 @@ public class PlayersTest {
         Card card4 = Card.of(CardNumber.KING, CardSuitSymbol.HEART);
         Card card5 = Card.of(CardNumber.TWO, CardSuitSymbol.CLUB);
         Card card6 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        Player dealer = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
-        player1 = new User("lavine", new ArrayList<>(Arrays.asList(card3, card4)));
-        player2 = new User("Subway", new ArrayList<>(Arrays.asList(card5, card6)));
-        playerList = new ArrayList(Arrays.asList(dealer, player1, player2));
+        User dealer = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
+        user1 = new Player("lavine", new ArrayList<>(Arrays.asList(card3, card4)));
+        user2 = new Player("Subway", new ArrayList<>(Arrays.asList(card5, card6)));
+        userList = new ArrayList(Arrays.asList(dealer, user1, user2));
     }
 
-    @DisplayName("Players 생성자 테스트")
+    @DisplayName("Users 생성자 테스트")
     @Test
     void playersConstructorTest() {
-        Players players = new Players(playerList);
+        Users users = new Users(userList);
 
-        Assertions.assertThat(players).isInstanceOf(Players.class);
+        Assertions.assertThat(users).isInstanceOf(Users.class);
     }
 
     @DisplayName("딜러를 반환하는 메서드 테스트")
     @Test
     void getDealerTest() {
-        Players players = new Players(playerList);
-        Dealer targetDealer = players.getDealer();
+        Users users = new Users(userList);
+        Dealer targetDealer = users.getDealer();
 
         Assertions.assertThat(targetDealer).isInstanceOf(Dealer.class);
     }
 
-    @DisplayName("Players 에서 유저만 추출하는 메서드 테스트")
+    @DisplayName("Users 에서 유저만 추출하는 메서드 테스트")
     @Test
     void getUsersTest() {
-        Players players = new Players(playerList);
-        List<User> users = players.getUsers();
+        Users users = new Users(userList);
+        List<Player> players = users.getPlayer();
 
-        for (User user : users) {
-            Assertions.assertThat(user).isInstanceOf(User.class);
+        for (Player player : players) {
+            Assertions.assertThat(player).isInstanceOf(Player.class);
         }
-        Assertions.assertThat(users).containsSequence((User) player1, (User) player2);
+        Assertions.assertThat(players).containsExactly((Player) user1, (Player) user2);
     }
 }

@@ -5,8 +5,8 @@ import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.player.Dealer;
 import domain.player.Player;
-import domain.player.Players;
 import domain.player.User;
+import domain.player.Users;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,13 +27,13 @@ public class WinningResultTest {
         Card card5 = Card.of(CardNumber.TWO, CardSuitSymbol.CLUB);
         Card card6 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
 
-        Player dealer = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
-        Player player1 = new User("lavine", new ArrayList<>(Arrays.asList(card3, card4)));
-        Player player2 = new User("Subway", new ArrayList<>(Arrays.asList(card5, card6)));
-        List<Player> playerList = new ArrayList<>(Arrays.asList(dealer, player1, player2));
-        Players players = new Players(playerList);
+        User dealer = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
+        User user1 = new Player("lavine", new ArrayList<>(Arrays.asList(card3, card4)));
+        User user2 = new Player("Subway", new ArrayList<>(Arrays.asList(card5, card6)));
+        List<User> userList = new ArrayList<>(Arrays.asList(dealer, user1, user2));
+        Users users = new Users(userList);
 
-        WinningResult winningResult = new WinningResult(players);
+        WinningResult winningResult = new WinningResult(users);
         Map<String, Boolean> winningPlayerResult = winningResult.getWinningResult();
 
         Assertions.assertThat(winningPlayerResult.keySet()).containsSequence("lavine", "Subway");

@@ -7,9 +7,9 @@ import domain.WinningResult;
 import domain.card.CardDeck;
 import domain.card.Cards;
 import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.Players;
 import domain.player.User;
+import domain.player.Users;
+import domain.player.Player;
 import dto.RequestAnswerDTO;
 import dto.RequestPlayerNamesDTO;
 import dto.ResponsePlayerDTO;
@@ -29,35 +29,35 @@ public class BlackjackController {
         CardDeck cardDeck = new CardDeck();
 
         RequestPlayerNamesDTO requestPlayerNamesDTO = inputRequestPlayerNamesDTO();
-        Players players = PlayerFactory.create(cardDeck, requestPlayerNamesDTO.getPlayerName());
-        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(players);
+        Users users = PlayerFactory.create(cardDeck, requestPlayerNamesDTO.getPlayerName());
+        List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(users);
         OutputView.printInitialResult(responsePlayerDTOS);
 
-        runUserBlackJack(cardDeck, players.getUsers());
-        runDealerBlackJack(cardDeck, players.getDealer());
+        runUserBlackJack(cardDeck, users.getPlayer());
+        runDealerBlackJack(cardDeck, users.getDealer());
 
-        OutputView.printFinalResult(ResponsePlayerDTO.createResponsePlayerDTOs(players));
+        OutputView.printFinalResult(ResponsePlayerDTO.createResponsePlayerDTOs(users));
 
-        WinningResult winningResult = new WinningResult(players);
+        WinningResult winningResult = new WinningResult(users);
         ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
                 winningResult.getWinningResult());
         OutputView.printWinningResult(responseWinningResultDTO);
     }
 
-    private static void runUserBlackJack(CardDeck cardDeck, List<User> users) {
-        for (User user : users) {
-            runBlackJackPerUser(cardDeck, user);
+    private static void runUserBlackJack(CardDeck cardDeck, List<Player> players) {
+        for (Player player : players) {
+            runBlackJackPerUser(cardDeck, player);
         }
     }
 
-    private static void runBlackJackPerUser(CardDeck cardDeck, User user) {
-        if (user.isBlackJack()) {
+    private static void runBlackJackPerUser(CardDeck cardDeck, Player player) {
+        if (player.isBlackJack()) {
             return;
         }
 
-        while (blackJackRule.isHit(user) && getAnswer(user).isYes()) {
-            blackJackRule.hit(user, cardDeck.drawCard());
-            OutputView.printUserCard(ResponsePlayerDTO.create(user));
+        while (blackJackRule.isHit(player) && getAnswer(player).isYes()) {
+            blackJackRule.hit(player, cardDeck.drawCard());
+            OutputView.printUserCard(ResponsePlayerDTO.create(player));
         }
     }
 
@@ -78,7 +78,7 @@ public class BlackjackController {
         }
     }
 
-    private static Answer getAnswer(Player user) {
+    private static Answer getAnswer(User user) {
         try {
             RequestAnswerDTO requestAnswerDTO = InputView.inputAnswer(ResponsePlayerDTO.create(user));
             return Answer.of(requestAnswerDTO.getAnswer());

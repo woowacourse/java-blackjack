@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequestPlayerNamesDTOTest {
+public class RequestUserNamesDTOTest {
     @DisplayName("플레이어의 이름을 , 를 기준으로 나눠서 반환하는지 테스트")
     @Test
     void getPlayerNameTest() {

@@ -5,7 +5,7 @@ import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
 import domain.card.Cards;
 import domain.player.Dealer;
-import domain.player.User;
+import domain.player.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,59 +37,59 @@ public class CardCalculatorTest {
     @DisplayName("유저가 블랙잭일 때 유저의 승")
     @Test
     void userBlackJackTest() {
-        User user = new User("lavine", new ArrayList<>(Arrays.asList(
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isTrue();
     }
 
     @DisplayName("딜러만 블랙잭일 때 딜러의 승")
     @Test
     void dealerBlackJackTest() {
-        User user = new User("lavine", new ArrayList<>(Arrays.asList(
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.THREE, CardSuitSymbol.SPACE))));
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isFalse();
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isFalse();
     }
 
     @DisplayName("유저와 딜러 둘 다 블랙잭이 아니고 유저의 수가 더 크면 유저의 승")
     @Test
     void userBiggerThenDealerTest() {
-        User user = new User("lavine", new ArrayList<>(Arrays.asList(
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.THREE, CardSuitSymbol.SPACE))));
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isTrue();
     }
 
     @DisplayName("유저와 딜러 둘 다 블랙잭이 아니고 딜러의 수가 더 크면 유저의 패")
     @Test
     void dealerBiggerThenUserTest() {
-        User user = new User("lavine", new ArrayList<>(Arrays.asList(
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))));
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isFalse();
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isFalse();
     }
 
     @DisplayName("딜러가 21을 넘는다면 무조건 유저의 승")
     @Test
     void test() {
-        User user = new User("pobi", new ArrayList<>(Arrays.asList(
+        Player player = new Player("pobi", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
                 Card.of(CardNumber.ACE, CardSuitSymbol.SPACE)
         )));
@@ -99,6 +99,6 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND)
         )));
 
-        Assertions.assertThat(CardCalculator.determineWinner(user.getCard(), dealer.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isTrue();
     }
 }

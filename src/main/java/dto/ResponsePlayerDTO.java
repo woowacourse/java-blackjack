@@ -1,7 +1,7 @@
 package dto;
 
-import domain.player.Player;
-import domain.player.Players;
+import domain.player.User;
+import domain.player.Users;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,21 +12,21 @@ public class ResponsePlayerDTO {
     private List<String> cardNumbers;
     private String score;
 
-    private ResponsePlayerDTO(Player player) {
-        this.name = player.getName();
-        this.cardNumbers = player.getCardNumbers();
-        this.score = Integer.toString(player.sumCardNumber());
+    private ResponsePlayerDTO(User user) {
+        this.name = user.getName();
+        this.cardNumbers = user.getCardNumbers();
+        this.score = Integer.toString(user.sumCardNumber());
     }
 
-    public static List<ResponsePlayerDTO> createResponsePlayerDTOs(Players players) {
-        List<ResponsePlayerDTO> responsePlayerDTOS = players.getPlayers().stream()
+    public static List<ResponsePlayerDTO> createResponsePlayerDTOs(Users users) {
+        List<ResponsePlayerDTO> responsePlayerDTOS = users.getUsers().stream()
                 .map(ResponsePlayerDTO::new)
                 .collect(Collectors.toList());
         return Collections.unmodifiableList(responsePlayerDTOS);
     }
 
-    public static ResponsePlayerDTO create(Player player) {
-        return new ResponsePlayerDTO(player);
+    public static ResponsePlayerDTO create(User user) {
+        return new ResponsePlayerDTO(user);
     }
 
     public String getName() {
