@@ -6,9 +6,12 @@ import second.domain.score.ScoreCalculator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HandCards {
+    private static final String DELIMITER = ", ";
     private static final int FIRST_INDEX = 0;
+
     private final List<Card> cards;
 
     public HandCards(List<Card> cards) {
@@ -40,5 +43,12 @@ public class HandCards {
 
     public Card getOneCard() {
         return cards.get(FIRST_INDEX);
+    }
+
+    @Override
+    public String toString() {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(DELIMITER));
     }
 }

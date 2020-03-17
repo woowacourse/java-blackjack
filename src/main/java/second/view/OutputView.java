@@ -1,12 +1,15 @@
 package second.view;
 
-import second.domain.card.HandCards;
 import second.domain.player.AllGamers;
 import second.domain.player.Dealer;
 import second.domain.player.Gamer;
 import second.domain.player.Player;
+import second.domain.result.ResultType;
+import second.domain.result.Results;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -70,23 +73,67 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-//    public static void printScore(AllGamers allGamers) {
-//        String scores = allGamers.getGamers().stream()
-//                .map(gamer -> parseGamerState(gamer) + " - 결과: " + gamer.calculateScore().getValue())
-//                .collect(Collectors.joining("\n"));
-//        System.out.println(scores);
-//    }
-//
-//    public static void printReults(AllBlackJackResults allBlackJackResults) {
-//        StringBuilder stringBuilder = new StringBuilder();
-//
-//        stringBuilder.append("##최종승패\n");
-//        stringBuilder.append(allBlackJackResults.extractDealerResult().toString());
-//        stringBuilder.append("\n");
-//        stringBuilder.append(allBlackJackResults.extractPlayerResults().stream()
-//                .map(PlayerResult::toString)
-//                .collect(Collectors.joining("\n")));
-//
-//        System.out.println(stringBuilder.toString());
-//    }
+    public static void printResults(Results results) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("##최종승패\n");
+        stringBuilder.append(parseDealerResultToString(results.getDealerResult()));
+        stringBuilder.append(parsePlayerResultsToString(results.getPlayerResults()));
+
+        System.out.println(stringBuilder.toString());
+    }
+
+    public static void printScore(Gamer gamer) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(parseGamerState(gamer));
+        stringBuilder.append(" - 결과: ");
+        stringBuilder.append(gamer.getScore().getvalue());
+        stringBuilder.append("\n");
+
+        System.out.println(stringBuilder.toString());
+    }
+
+    private static String parseDealerResultToString(Map<ResultType, Integer> dealerWinLoses) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("딜러: ");
+        stringBuilder.append(parseNullToZero(dealerWinLoses.get(ResultType.WIN)));
+        stringBuilder.append(ResultType.WIN.getName());
+        stringBuilder.append(parseNullToZero(dealerWinLoses.get(ResultType.LOSE)));
+        stringBuilder.append(ResultType.LOSE.getName());
+        stringBuilder.append("\n");
+
+        return stringBuilder.toString();
+    }
+
+    private static int parseNullToZero(Integer input) {
+        if (input == null) {
+            return 0;
+        }
+
+        return input;
+    }
+
+    private static String parsePlayerResultsToString(Map<ResultType, List<Player>> playerResults) {
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Player> winners = playerResults.get(ResultType.WIN);
+        List<Player> losers = playerResults.get(ResultType.LOSE);
+
+        if(Objects.nonNull(winners)) {
+            for (Player winner : winners) {
+                stringBuilder.append(winner.getName());
+                stringBuilder.append(": 승\n");
+            }
+        }
+
+        if(Objects.nonNull(losers)) {
+            for (Player loser : losers) {
+                stringBuilder.append(loser.getName());
+                stringBuilder.append(": 패\n");
+            }
+        }
+
+        return stringBuilder.toString();
+    }
 }

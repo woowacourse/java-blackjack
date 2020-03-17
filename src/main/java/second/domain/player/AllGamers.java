@@ -3,6 +3,7 @@ package second.domain.player;
 import second.domain.ICardDeck;
 import second.domain.result.PlayerResult;
 import second.domain.result.ResultType;
+import second.domain.result.Results;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,23 +45,6 @@ public class AllGamers {
         for (int i = 0; i < INITIAL_CARD_AMOUNT; i++) {
             gamer.drawCard(cardProvidable);
         }
-    }
-
-//    public AllBlackJackResults determineResults() {
-//        List<BlackJackResult> gameResult = new ArrayList<>(determinePlayersResults());
-//        gameResult.add(new DealerResult(determinePlayersResults()));
-//
-//        return new AllBlackJackResults(gameResult);
-//    }
-
-    private List<PlayerResult> determinePlayersResults() {
-        return players.stream()
-                .map(player -> new PlayerResult(player.getName(), ResultType.from(player, dealer)))
-                .collect(toList());
-    }
-
-    public List<Gamer> getGamers() {
-        return Collections.unmodifiableList(joinGamers());
     }
 
     public List<Player> getPlayers() {

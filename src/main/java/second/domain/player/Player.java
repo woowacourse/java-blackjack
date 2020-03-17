@@ -13,6 +13,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean canDrawMore() {
-        return isBust();
+        return !isBust();
     }
 }

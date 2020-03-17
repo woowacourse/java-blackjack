@@ -1,5 +1,6 @@
 package second.domain.player;
 
+import first.domain.card.Rank;
 import second.domain.ICardDeck;
 import second.domain.IPlayer;
 import second.domain.card.Card;
@@ -48,5 +49,9 @@ public abstract class Gamer implements IPlayer {
 
     public HandCards getHandCards() {
         return handCards;
+    }
+
+    public Score getScore() {
+        return score;
     }
 }

@@ -5,6 +5,7 @@ import second.domain.player.AllGamers;
 import second.domain.player.Dealer;
 import second.domain.player.Gamer;
 import second.domain.player.Player;
+import second.domain.result.Results;
 import second.view.InputView;
 import second.view.OutputView;
 
@@ -23,7 +24,7 @@ public class BlackJackApplication {
 
         doDrawMorePhase(allGamers, cardDeck);
 
-        // doResultsPhase(allGamers);
+        doResultsPhase(allGamers.getDealer(), allGamers.getPlayers());
     }
 
     private static List<Player> inputPlayerNames() {
@@ -81,10 +82,21 @@ public class BlackJackApplication {
         return player.canDrawMore();
     }
 
-//    private static void doResultsPhase(AllGamers allGamers) {
-//        OutputView.printScore(allGamers);
-//        OutputView.printEmptyLine();
-//
-//        OutputView.printReults(allGamers.determineResults());
-//    }
+    private static void doResultsPhase(Dealer dealer, List<Player> players) {
+        printScores(dealer, players);
+        printResults(dealer, players);
+    }
+
+    private static void printScores(Dealer dealer, List<Player> players) {
+        OutputView.printScore(dealer);
+        players.forEach(player -> OutputView.printScore(player));
+
+        OutputView.printEmptyLine();
+    }
+
+    private static void printResults(Dealer dealer, List<Player> players) {
+        Results results = new Results(players, dealer);
+
+        OutputView.printResults(results);
+    }
 }

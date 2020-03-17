@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum ResultType {
-    WIN("승", ((player, player2) -> player.isLargerScoreThan(player2))),
-    LOSE("패", ((player, player2) -> !player.isLargerScoreThan(player2)));
+    WIN("승", ((player, player2) -> player2.isBust() || player.isLargerScoreThan(player2))),
+    LOSE("패", ((player, player2) -> player.isBust() || player2.isLargerScoreThan(player)));
 
     private final String name;
     private final BiPredicate<Gamer, Gamer> resultJudge;
