@@ -10,7 +10,6 @@ import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.result.GameResult;
 import domain.result.Profit;
-import domain.result.ResultType;
 import domain.result.Score;
 
 public class OutputView {

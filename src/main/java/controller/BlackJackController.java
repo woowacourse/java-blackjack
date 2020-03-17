@@ -6,9 +6,10 @@ import domain.card.Deck;
 import domain.gamer.Answer;
 import domain.gamer.Dealer;
 import domain.gamer.Money;
+import domain.gamer.MoneyFactory;
 import domain.gamer.Name;
-import domain.gamer.Player;
 import domain.gamer.NameFactory;
+import domain.gamer.Player;
 import domain.gamer.PlayersFactory;
 import domain.result.GameResult;
 import view.InputView;
@@ -38,8 +39,8 @@ public class BlackJackController {
 
 	private List<Player> createPlayers() {
 		List<Name> names = NameFactory.create(InputView.inputUserNames());
-		List<Money> bettingMoney = Money.list(InputView.inputMoney(names));
-		return PlayersFactory.from(names, bettingMoney);
+		List<Money> bettingMoney = MoneyFactory.create(InputView.inputMoney(names));
+		return PlayersFactory.of(names, bettingMoney);
 	}
 
 	private void giveTwoCards() {

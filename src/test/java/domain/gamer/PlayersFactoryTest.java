@@ -17,7 +17,7 @@ class PlayersFactoryTest {
 		List<String> input = StringUtil.parseByComma("pobi,jason,brown");
 		List<Name> names = NameFactory.create("pobi,jason,brown");
 		List<Money> monies = Arrays.asList(Money.ZERO, Money.ZERO, Money.ZERO);
-		List<Player> players = PlayersFactory.from(names, monies);
+		List<Player> players = PlayersFactory.of(names, monies);
 
 		for (Player player : players) {
 			assertThat(input).contains(player.getName());

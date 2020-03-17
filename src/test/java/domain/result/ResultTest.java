@@ -20,11 +20,11 @@ import domain.gamer.Money;
 import domain.gamer.Name;
 import domain.gamer.Player;
 
-class ResultTypeTest {
+class ResultTest {
 	@ParameterizedTest
 	@MethodSource("cardInput")
 	@DisplayName("점수비교를 통해 올바른 결과(Enum)을 생성하는지 테스트")
-	void ofTest(List<Card> playerCards, List<Card> dealerCards, ResultType expected) {
+	void ofTest(List<Card> playerCards, List<Card> dealerCards, Result expected) {
 		Player player = new Player(new Name("pobi"), Money.ZERO);
 		for (Card card : playerCards) {
 			player.hit(card);
@@ -34,7 +34,7 @@ class ResultTypeTest {
 			dealer.hit(card);
 		}
 
-		assertThat(ResultType.of(player, dealer)).isEqualTo(expected);
+		assertThat(Result.of(player, dealer)).isEqualTo(expected);
 	}
 
 	static Stream<Arguments> cardInput() {
@@ -43,24 +43,24 @@ class ResultTypeTest {
 		Card six = new Card(Symbol.SIX, Type.CLUB);
 		Card ten = new Card(Symbol.TEN, Type.CLUB);
 
-		return Stream.of(Arguments.of(Arrays.asList(seven, six), Arrays.asList(seven, six, ace), ResultType.LOSE),
-			Arguments.of(Arrays.asList(ten, ace), Arrays.asList(seven, six, ace), ResultType.BLACK_JACK),
-			Arguments.of(Arrays.asList(ten, ace), Arrays.asList(ten, ace), ResultType.DRAW),
-			Arguments.of(Arrays.asList(six), Arrays.asList(six), ResultType.DRAW),
-			Arguments.of(Arrays.asList(ten, six), Arrays.asList(seven, six, ace), ResultType.WIN),
-			Arguments.of(Arrays.asList(ace, six), Arrays.asList(seven, six, ace), ResultType.WIN),
-			Arguments.of(Arrays.asList(ten, ten, six), Arrays.asList(seven, six, ace), ResultType.LOSE),
-			Arguments.of(Arrays.asList(ten, ten, ten), Arrays.asList(ten, ten, six), ResultType.LOSE));
+		return Stream.of(Arguments.of(Arrays.asList(seven, six), Arrays.asList(seven, six, ace), Result.LOSE),
+			Arguments.of(Arrays.asList(ten, ace), Arrays.asList(seven, six, ace), Result.BLACK_JACK),
+			Arguments.of(Arrays.asList(ten, ace), Arrays.asList(ten, ace), Result.DRAW),
+			Arguments.of(Arrays.asList(six), Arrays.asList(six), Result.DRAW),
+			Arguments.of(Arrays.asList(ten, six), Arrays.asList(seven, six, ace), Result.WIN),
+			Arguments.of(Arrays.asList(ace, six), Arrays.asList(seven, six, ace), Result.WIN),
+			Arguments.of(Arrays.asList(ten, ten, six), Arrays.asList(seven, six, ace), Result.LOSE),
+			Arguments.of(Arrays.asList(ten, ten, ten), Arrays.asList(ten, ten, six), Result.LOSE));
 	}
 
 	@Test
 	@DisplayName("게임결과에 따라 정확한 수익금을 계산하는지 테스트")
 	void calculateTest() {
-		Money money = new Money(10000);
+		Money money = Money.of(10000);
 
-		assertThat(ResultType.BLACK_JACK.calculateProfit(money)).isEqualTo(5000);
-		assertThat(ResultType.WIN.calculateProfit(money)).isEqualTo(10000);
-		assertThat(ResultType.DRAW.calculateProfit(money)).isEqualTo(0);
-		assertThat(ResultType.LOSE.calculateProfit(money)).isEqualTo(-10000);
+		assertThat(Result.BLACK_JACK.calculate(money)).isEqualTo(5000);
+		assertThat(Result.WIN.calculate(money)).isEqualTo(10000);
+		assertThat(Result.DRAW.calculate(money)).isEqualTo(0);
+		assertThat(Result.LOSE.calculate(money)).isEqualTo(-10000);
 	}
 }

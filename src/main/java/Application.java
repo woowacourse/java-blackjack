@@ -1,11 +1,11 @@
 import controller.BlackJackController;
 
-public class Main {
+public class Application {
 	public static void main(String[] args) {
 		try {
 			new BlackJackController().run();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }

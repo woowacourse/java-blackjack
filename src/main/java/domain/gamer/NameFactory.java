@@ -9,7 +9,6 @@ import util.StringUtil;
 public class NameFactory {
 	public static List<Name> create(String input) {
 		List<String> userNames = StringUtil.parseByComma(input);
-
 		List<Name> names = userNames.stream()
 			.map(Name::new)
 			.collect(Collectors.toList());

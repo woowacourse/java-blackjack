@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Profit {
 	public static final Profit ZERO = new Profit(0);
+
 	private final double profit;
 
 	public Profit(double profit) {
@@ -12,6 +13,10 @@ public class Profit {
 
 	public Profit plus(Profit other) {
 		return new Profit(this.profit + other.profit);
+	}
+
+	public Profit negative() {
+		return new Profit(this.profit * -1);
 	}
 
 	public double getProfit() {
@@ -31,9 +36,5 @@ public class Profit {
 	@Override
 	public int hashCode() {
 		return Objects.hash(profit);
-	}
-
-	public Profit negative() {
-		return new Profit(this.profit * -1);
 	}
 }

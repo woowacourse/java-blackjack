@@ -12,9 +12,13 @@ public class CardFactory {
 
 	static {
 		for (Type type : Type.values()) {
-			for (Symbol symbol : Symbol.values()) {
-				cards.add(new Card(symbol, type));
-			}
+			createBySymbol(type);
+		}
+	}
+
+	private static void createBySymbol(Type type) {
+		for (Symbol symbol : Symbol.values()) {
+			cards.add(new Card(symbol, type));
 		}
 	}
 

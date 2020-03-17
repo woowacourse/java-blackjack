@@ -19,13 +19,14 @@ import domain.gamer.Money;
 import domain.gamer.Name;
 import domain.gamer.Player;
 
-class GameResultTypeTest {
+class GameResultTest {
 	private List<Player> players;
 	private Dealer dealer;
 
 	@BeforeEach
 	void setUp() {
-		players = Arrays.asList(new Player(new Name("pobi"), new Money(10000)), new Player(new Name("jason"), new Money(5000)));
+		players = Arrays.asList(new Player(new Name("pobi"), Money.of(10000)),
+			new Player(new Name("jason"), Money.of(5000)));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));

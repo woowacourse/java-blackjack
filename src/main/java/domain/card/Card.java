@@ -11,6 +11,10 @@ public class Card {
 		this.type = type;
 	}
 
+	public boolean isAce() {
+		return symbol.isAce();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -27,19 +31,12 @@ public class Card {
 		return Objects.hash(symbol, type);
 	}
 
-	public Symbol getSymbol() {
-		return symbol;
-	}
-
 	public String getCardInfo() {
-		return symbol.toString() +" "+ type.toString();
+		return symbol.toString() + " " + type.toString();
 	}
 
 	public int getScore() {
 		return this.symbol.getScore();
 	}
 
-	public boolean isAce() {
-		return this.symbol == Symbol.ACE;
-	}
 }
