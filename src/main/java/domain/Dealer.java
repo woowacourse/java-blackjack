@@ -21,11 +21,12 @@ public class Dealer extends User {
 		return getScore() <= SHOULD_ADD_CARD_POINT;
 	}
 
-	public boolean isWin(User that) {
-		return that.isBust() || (isNotBust() && isScoreGreaterThan(that.getScore()));
-	}
-
 	public Card getFirstCard() {
 		return getCards().get(FIRST_CARD_INDEX);
+	}
+
+	@Override
+	public boolean isWin(User that) {
+		return that.isBust() || (isNotBust() && isScoreGreaterThan(that.getScore()));
 	}
 }

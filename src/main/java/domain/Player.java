@@ -5,6 +5,7 @@ public class Player extends User {
 		super(name);
 	}
 
+	@Override
 	public boolean isWin(User that) {
 		return isNotBust() && (that.isBust() || isScoreGreaterThan(that.getScore()));
 	}
