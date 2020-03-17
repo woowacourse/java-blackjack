@@ -22,6 +22,10 @@ public enum ResultType {
         this.name = name;
     }
 
+    public ResultType reverse() {
+        return CACHE_FOR_REVERSE.get(this);
+    }
+
     public String getName() {
         return name;
     }

@@ -27,7 +27,7 @@ public class GameResult {
         }
 
         Map<ResultType, Integer> dealerResults = Arrays.stream(ResultType.values())
-                .collect(Collectors.toMap(result -> result, result -> Collections.frequency(playerResults.values(), result),
+                .collect(Collectors.toMap(result -> result, result -> Collections.frequency(playerResults.values(), result.reverse()),
                         (v1, v2) -> {throw new AssertionError();},
                         LinkedHashMap::new));
 
