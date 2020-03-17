@@ -3,6 +3,7 @@ package com.blackjack.domain.card;
 import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -16,11 +17,15 @@ public class CardDeck {
 		this.cards = cards;
 	}
 
+	public static CardDeck create(List<Card> cards) {
+		Stack<Card> deck = new Stack<>();
+		deck.addAll(cards);
+		Collections.shuffle(deck);
+		return new CardDeck(deck);
+	}
+
 	public static CardDeck create() {
-		Stack<Card> cards = new Stack<>();
-		cards.addAll(Card.values());
-		Collections.shuffle(cards);
-		return new CardDeck(cards);
+		return create(Card.values());
 	}
 
 	private void validateDuplicate(Stack<Card> cards) {
