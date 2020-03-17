@@ -1,21 +1,22 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Players {
-    public static final int MAX_PLAYER_NUMBER = 7;
-    public static final String INVALID_INPUT_SIZE_EXCEPTION_MESSAGE = "Input player over 7 exception.";
+    private static final int MAX_PLAYER_NUMBER = 7;
+    private static final String INVALID_INPUT_SIZE_EXCEPTION_MESSAGE = "Input player over 7 exception.";
 
     private final List<Player> players;
 
     public Players(Names playerNames) {
         validatePlayers(playerNames.getNames());
+
         List<Player> players = new ArrayList<>();
+
         for (Name playerName : playerNames.getNames()) {
-            players.add(new Player(playerName));
+            Player player = new Player(playerName);
+            players.add(player);
         }
         this.players = Collections.unmodifiableList(players);
     }
@@ -36,5 +37,11 @@ public class Players {
             playerNames.add(player.getName());
         }
         return Collections.unmodifiableList(playerNames);
+    }
+
+    public List<Integer> getAllScore() {
+        return players.stream()
+                .map(User::getScore)
+                .collect(Collectors.toList());
     }
 }
