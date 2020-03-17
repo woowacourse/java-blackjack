@@ -22,6 +22,6 @@ public class DecisionTest {
     void wrongInput(String value) {
         assertThatThrownBy(() -> Decision.chosenBy(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("다시 입력");
+                .hasMessageContaining("올바르지 않은 입력");
     }
 }

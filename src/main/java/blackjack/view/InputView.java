@@ -28,7 +28,7 @@ public class InputView {
             validateNullAndEmptyInput(input, INPUT_AGAIN);
             return Decision.chosenBy(input);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(INPUT_AGAIN);
             return askForHit(name);
         }
     }
