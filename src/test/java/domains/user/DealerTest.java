@@ -40,7 +40,7 @@ public class DealerTest {
         Hands hand = new Hands(hands);
         Dealer dealer = new Dealer(hand);
 
-        dealer.hit(deck);
+        dealer.hitOrStay(deck);
 
         assertThat(dealer.handSize()).isEqualTo(2);
     }

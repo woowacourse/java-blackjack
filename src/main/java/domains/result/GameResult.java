@@ -8,51 +8,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, KindOfGameResult> playerResult;
-    private Map<KindOfGameResult, Integer> gameResult;
+    private Map<Player, ResultType> playerResult = new HashMap<>();
 
-    public GameResult() {
-        this.playerResult = new HashMap<>();
-        this.gameResult = new HashMap<>();
+    public GameResult(Players players, Dealer dealer) {
+        create(players, dealer);
     }
 
-    public void create(Players players, Dealer dealer) {
+    private void create(Players players, Dealer dealer) {
         for (Player player : players) {
-            if (checkBurstPlayer(player)) {
-                continue;
-            }
-            playerResult.put(player, player.checkKindOfGameResult(dealer));
+            playerResult.put(player, player.checkResultType(dealer));
         }
-        calculateDealerResult();
     }
 
-    private boolean checkBurstPlayer(Player player) {
-        if (player.isBurst()) {
-            playerResult.put(player, KindOfGameResult.LOSE);
-            return true;
-        }
-        return false;
-    }
-
-    public KindOfGameResult getWinOrLose(Player player) {
+    public ResultType getWinOrLose(Player player) {
         return playerResult.get(player);
     }
 
-    private void calculateDealerResult() {
-        for (KindOfGameResult kindOfGameResult : KindOfGameResult.values()) {
-            gameResult.put(kindOfGameResult, 0);
+    public Map<ResultType, Integer> calculateDealerResult() {
+        Map<ResultType, Integer> dealerResult = new HashMap<>();
+
+        for (ResultType resultType : ResultType.values()) {
+            dealerResult.put(resultType, 0);
         }
 
-        for (KindOfGameResult result : playerResult.values()) {
-            gameResult.put(result, gameResult.get(result) + 1);
+        for (ResultType result : playerResult.values()) {
+            dealerResult.put(result.oppose(), dealerResult.get(result) + 1);
         }
+
+        return dealerResult;
     }
 
-    public Map<Player, KindOfGameResult> getPlayerResult() {
+    public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
-    }
-
-    public Map<KindOfGameResult, Integer> getGameResult() {
-        return gameResult;
     }
 }

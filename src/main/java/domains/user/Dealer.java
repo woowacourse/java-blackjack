@@ -13,13 +13,13 @@ public class Dealer extends User {
         this.hands = hands;
     }
 
-    @Override
-    public void hit(Deck deck) {
+    public boolean isHit() {
+        return this.hands.size() == 3;
+    }
+
+    public void hitOrStay(Deck deck) {
         if (this.hands.score() <= DEALER_HIT_POINT) {
-            this.hands.draw(deck);
-        }
-        if (hands.isBurst()) {
-            this.burst = true;
+            hit(deck);
         }
     }
 }
