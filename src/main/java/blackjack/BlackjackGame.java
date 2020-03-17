@@ -25,10 +25,10 @@ public class BlackjackGame {
 	private final Dealer dealer;
 
 	public BlackjackGame() {
-		users = PlayerFactory.create(InputView.inputNames());
+		this.cardDivider = new CardDivider();
 		ruleChecker = new RuleChecker();
 		dealer = new Dealer();
-		this.cardDivider = new CardDivider();
+		users = PlayerFactory.create(InputView.inputNames());
 	}
 
 	public void run() {
