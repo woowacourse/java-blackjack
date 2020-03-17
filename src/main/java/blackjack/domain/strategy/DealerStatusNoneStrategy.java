@@ -6,7 +6,7 @@ public class DealerStatusNoneStrategy implements DealerStatusStrategy {
     @Override
     public PlayerResult calculateResultByPlayerStatus(Dealer dealer, Player player) {
         if (player.getStatus() == Status.BLACKJACK) {
-            return PlayerResult.WIN;
+            return PlayerResult.BLACKJACK_WIN;
         }
         if (player.getStatus() == Status.BUST) {
             return PlayerResult.LOSE;

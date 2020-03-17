@@ -11,6 +11,9 @@ public class DealerBustStrategy implements DealerStatusStrategy {
         if (player.getStatus() == Status.BUST) {
             return PlayerResult.LOSE;
         }
+        if (player.getStatus() == Status.BLACKJACK) {
+            return PlayerResult.BLACKJACK_WIN;
+        }
         return PlayerResult.WIN;
     }
 }

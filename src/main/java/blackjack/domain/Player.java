@@ -32,6 +32,10 @@ public class Player extends User {
         }
     }
 
+    public int getBettingMoney() {
+        return bettingMoney;
+    }
+
     @Override
     public List<Card> getInitialCards() {
         return cards.getCards()
