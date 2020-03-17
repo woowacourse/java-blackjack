@@ -36,6 +36,10 @@ public class CardBundle {
         return calculateScore() > MAXIMUM_VALUE;
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     public boolean isNotEmpty() {
         return !cards.isEmpty();
     }

@@ -18,22 +18,11 @@ public class GameReports {
         }
     }
 
-    public int getGamblerWinCount() {
-        return (int) gameReports.stream()
-                .filter(GameReport::isWin)
-                .count();
-    }
-
-    public int getGamblerDrawCount() {
-        return (int) gameReports.stream()
-                .filter(GameReport::isDraw)
-                .count();
-    }
-
-    public int getGamblerLoseCount() {
-        return (int) gameReports.stream()
-                .filter(GameReport::isLose)
-                .count();
+    public double getTotalGamblerMoney() {
+        return gameReports.stream()
+                .filter(GameReport::isNotDraw)
+                .mapToDouble(GameReport::getMoney)
+                .sum();
     }
 
     public List<GameReport> getReports() {

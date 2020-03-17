@@ -1,16 +1,19 @@
 package blackjack.player.domain.report;
 
 import blackjack.card.domain.GameResult;
+import blackjack.generic.BettingMoney;
 
 import java.util.Objects;
 
 public class GameReport {
     private final String name;
+    private final double money;
     private final GameResult gameResult;
 
-    public GameReport(String name, GameResult gameResult) {
+    public GameReport(String name, BettingMoney bettingMoney, GameResult gameResult) {
         validate(name, gameResult);
         this.name = name;
+        this.money = bettingMoney.getMoney();
         this.gameResult = gameResult;
     }
 
@@ -27,20 +30,12 @@ public class GameReport {
         return name;
     }
 
-    public String getMessage() {
-        return gameResult.getMessage();
+    public Double getMoney() {
+        return this.money;
     }
 
-    public boolean isWin() {
-        return this.gameResult == GameResult.WIN;
-    }
-
-    public boolean isDraw() {
-        return this.gameResult == GameResult.DRAW;
-    }
-
-    public boolean isLose() {
-        return this.gameResult == GameResult.LOSE;
+    public boolean isNotDraw() {
+        return this.gameResult != GameResult.DRAW;
     }
 
     @Override

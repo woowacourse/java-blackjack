@@ -25,7 +25,9 @@ class GameResultTest {
     private static Stream<Arguments> nullCardBundleProvider() {
         return Stream.of(
                 Arguments.of(null, aCardBundle(CardNumber.TWO), "갬블러의 카드가 없습니다."),
-                Arguments.of(aCardBundle(CardNumber.ACE), null, "딜러의 카드가 없습니다.")
+                Arguments.of(aCardBundle(), aCardBundle(CardNumber.TWO), "갬블러의 카드가 없습니다."),
+                Arguments.of(aCardBundle(CardNumber.ACE), null, "딜러의 카드가 없습니다."),
+                Arguments.of(aCardBundle(CardNumber.ACE), aCardBundle(), "딜러의 카드가 없습니다.")
         );
     }
 
@@ -33,16 +35,16 @@ class GameResultTest {
     @ParameterizedTest
     @MethodSource("cardBundleProvider")
     void findByResult(CardBundle gamblerCardBundle, CardBundle dealerCardBundle, GameResult expect) {
-        GameResult actual = GameResult.findByComparing(gamblerCardBundle, dealerCardBundle);
+        GameResult actual = GameResult.findByCardBundles(gamblerCardBundle, dealerCardBundle);
 
         assertThat(actual).isEqualTo(expect);
     }
 
-    @DisplayName("GameResult에서 값(승,무,패) 찾기")
+    @DisplayName("GameResult 인자에 null, empty 값 전달시")
     @ParameterizedTest
     @MethodSource("nullCardBundleProvider")
     void findByResultException(CardBundle gamblerCardBundle, CardBundle dealerCardBundle, String message) {
-        assertThatThrownBy(() -> GameResult.findByComparing(gamblerCardBundle, dealerCardBundle))
+        assertThatThrownBy(() -> GameResult.findByCardBundles(gamblerCardBundle, dealerCardBundle))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(message);
     }

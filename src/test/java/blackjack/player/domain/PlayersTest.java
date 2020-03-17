@@ -53,9 +53,9 @@ class PlayersTest {
 
         //then
         assertThat(reports).isEqualTo(new GameReports(Arrays.asList(
-                new GameReport("bebop", GameResult.WIN),
-                new GameReport("pobi", GameResult.DRAW),
-                new GameReport("allen", GameResult.LOSE)))
+                new GameReport("bebop", BettingMoney.of(0), GameResult.WIN),
+                new GameReport("pobi", BettingMoney.of(0), GameResult.DRAW),
+                new GameReport("allen", BettingMoney.of(0), GameResult.LOSE)))
         );
     }
 
@@ -66,7 +66,7 @@ class PlayersTest {
         Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0))), new Dealer(CardBundle.emptyBundle())));
 
         //when
-        List<Player> gamblers = players.findGamblers();
+        List<Gambler> gamblers = players.findGamblers();
         Player player = gamblers.get(0);
 
         //then

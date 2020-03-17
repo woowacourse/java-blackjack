@@ -20,8 +20,11 @@ public class Dealer extends Player implements Reportable {
     }
 
     @Override
-    public GameReport createReport(Player gambler) {
-        GameResult gameResult = GameResult.findByComparing(gambler.cardBundle, this.cardBundle);
-        return new GameReport(gambler.getName(), gameResult);
+    public GameReport createReport(Gambler gambler) {
+        GameResult gameResult = GameResult.findByCardBundles(gambler.cardBundle, this.cardBundle);
+        double rate = gameResult.getRate(gambler.cardBundle);
+        BettingMoney earnMoney = gambler.getResultMoney(rate);
+
+        return new GameReport(gambler.getName(), earnMoney, gameResult);
     }
 }

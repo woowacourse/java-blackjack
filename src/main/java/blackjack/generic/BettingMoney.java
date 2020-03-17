@@ -35,6 +35,10 @@ public final class BettingMoney {
         return new BettingMoney(money * LOSE_WEIGHT);
     }
 
+    public BettingMoney multipleRate(double rate) {
+        return new BettingMoney(this.money * rate);
+    }
+
     public double getMoney() {
         return money;
     }
@@ -51,4 +55,5 @@ public final class BettingMoney {
     public int hashCode() {
         return Objects.hash(money);
     }
+
 }

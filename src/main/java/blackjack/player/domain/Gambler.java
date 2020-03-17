@@ -1,12 +1,17 @@
 package blackjack.player.domain;
 
 import blackjack.card.domain.CardBundle;
+import blackjack.generic.BettingMoney;
 
 import java.util.Objects;
 
 public class Gambler extends Player {
 	public Gambler(CardBundle cardBundle, PlayerInfo playerInfo) {
 		super(cardBundle, playerInfo);
+	}
+
+	public BettingMoney getResultMoney(Double rate) {
+		return super.playerInfo.getBettingMoney().multipleRate(rate);
 	}
 
 	@Override

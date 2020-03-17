@@ -1,7 +1,7 @@
 package blackjack.player.domain.report;
 
-import blackjack.player.domain.Player;
+import blackjack.player.domain.Gambler;
 
 public interface Reportable {
-    GameReport createReport(Player player);
+    GameReport createReport(Gambler player);
 }

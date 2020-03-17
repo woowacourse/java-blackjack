@@ -1,4 +1,4 @@
-package blackjack.card.domain.resultstrategy;
+package blackjack.card.domain.gameresult;
 
 import blackjack.card.domain.CardBundle;
 
@@ -8,15 +8,11 @@ public class WinStrategy extends GameResultStrategy {
 
     @Override
     protected boolean enough(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return isOnlyDealerBurst(gamblerCardBundle, dealerCardBundle) || isOnlyGamblerBlackjack(gamblerCardBundle, dealerCardBundle);
+        return dealerCardBundle.isBurst() || isOnlyGamblerBlackjack(gamblerCardBundle, dealerCardBundle);
     }
 
     private boolean isOnlyGamblerBlackjack(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
         return gamblerCardBundle.isBlackjack() && !dealerCardBundle.isBlackjack();
-    }
-
-    private boolean isOnlyDealerBurst(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return dealerCardBundle.isBurst() && !gamblerCardBundle.isBurst();
     }
 
     @Override

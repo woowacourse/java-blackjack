@@ -29,4 +29,8 @@ public class PlayerInfo {
     public Player toEntity() {
         return new Gambler(CardBundle.emptyBundle(), this);
     }
+
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
 }
