@@ -1,13 +1,10 @@
 package domain.result;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import domain.gamer.Money;
 
 class ProfitTest {
 
@@ -17,5 +14,4 @@ class ProfitTest {
 	void plusTest(double first, double second, double expected) {
 		assertThat(new Profit(first).plus(new Profit(second))).isEqualTo(new Profit(expected));
 	}
-
 }
