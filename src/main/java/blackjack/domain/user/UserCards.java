@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserCards {
     private static final String NO_CARD = "카드가 없습니다";
@@ -54,13 +53,7 @@ public class UserCards {
         cards.add(card);
     }
 
-    public List<String> getCardName() {
-        return cards.stream()
-                .map(Card::toString)
-                .collect(Collectors.toList());
-    }
-
-    public String firstCard() {
-        return this.getCardName().get(0);
+    public List<Card> getCards() {
+        return cards;
     }
 }

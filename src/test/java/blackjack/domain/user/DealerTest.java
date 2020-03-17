@@ -38,13 +38,12 @@ public class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 하나만 표시하는지 확인")
     void displayDealerCardInfo() {
-        UserCards userCards = new UserCards(Arrays.asList(
-                new Card(Suit.SPADE, Symbol.JACK),
-                new Card(Suit.DIAMOND, Symbol.THREE)
-        ));
+        Card card1 = new Card(Suit.SPADE, Symbol.JACK);
+        Card card2 = new Card(Suit.DIAMOND, Symbol.THREE);
+        UserCards userCards = new UserCards(Arrays.asList(card1, card2));
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(userCards);
-        assertThat(dealer.showInitialCardNames()).isEqualTo("딜러 카드: 스페이드J");
+        assertThat(dealer.getInitialCards()).containsExactly(card1);
     }
 
     @ParameterizedTest
@@ -64,6 +63,6 @@ public class DealerTest {
                 new Card(Suit.CLUB, Symbol.JACK),
                 new Card(Suit.SPADE, Symbol.SIX)))));
         dealer.receiveCard(new Card(Suit.DIAMOND, Symbol.QUEEN));
-        assertThat(dealer.showFinalCardNameScore()).isEqualTo("딜러 카드: 클럽J, 스페이드6, 다이아몬드Q - 결과 : 버스트");
+        assertThat(dealer.isBusted()).isTrue();
     }
 }

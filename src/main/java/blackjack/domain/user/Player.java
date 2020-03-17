@@ -1,6 +1,9 @@
 package blackjack.domain.user;
 
 import blackjack.domain.Result;
+import blackjack.domain.card.Card;
+
+import java.util.List;
 
 public class Player extends User {
 
@@ -12,8 +15,8 @@ public class Player extends User {
     }
 
     @Override
-    public String showInitialCardNames() {
-        return super.showCardNames();
+    public List<Card> getInitialCards() {
+        return getCards();
     }
 
     public Result compareScore(Dealer dealer) {

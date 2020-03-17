@@ -1,16 +1,17 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+
+import java.util.List;
+
 public class Dealer extends User {
 
     public static final String DEALER = "딜러";
     public static final int THRESHOLD = 16;
+    public static final int INITIAL_SHOW_CARD_AMOUNT = 1;
 
     public Dealer() {
         super(DEALER);
-    }
-
-    public String showInitialCardNames() {
-        return name + CARD + cards.firstCard();
     }
 
     public boolean isUnderThreshold() {
@@ -19,5 +20,10 @@ public class Dealer extends User {
 
     public int compareScoreWith(int playerTotalScore) {
         return this.getTotalScore() - playerTotalScore;
+    }
+
+    @Override
+    public List<Card> getInitialCards() {
+        return this.cards.getCards().subList(0, INITIAL_SHOW_CARD_AMOUNT);
     }
 }

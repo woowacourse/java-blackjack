@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
@@ -13,7 +14,6 @@ public abstract class User {
     private static final int BUSTED_VAL_RESET = 0;
     protected final String name;
     protected UserCards cards;
-
 
     public User(String name) {
         validateUserName(name);
@@ -45,7 +45,7 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        return cards.getCardName().size() == 2
+        return cards.getCards().size() == 2
                 && cards.calculateTotalScore() == MAX_VALID_SUM;
     }
 
@@ -53,21 +53,9 @@ public abstract class User {
         return this.name;
     }
 
-    public String showCardNames() {
-        return name + CARD + String.join(DELIMITER, cards.getCardName());
-    }
+    public abstract List<Card> getInitialCards();
 
-    public abstract String showInitialCardNames();
-
-    public String showFinalCardNameScore() {
-        return showCardNames() + RESULT + parseTotalScore();
-    }
-
-    private String parseTotalScore() {
-        int finalScore = this.getTotalScore();
-        if (finalScore == BUSTED_VAL_RESET) {
-            return BUSTED;
-        }
-        return Integer.toString(finalScore);
+    public List<Card> getCards() {
+        return this.cards.getCards();
     }
 }

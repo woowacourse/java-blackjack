@@ -26,9 +26,9 @@ public class InputView {
             System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
             String input = sc.nextLine();
             validateNullAndEmptyInput(input, INPUT_AGAIN);
-            return Decision.of(input);
+            return Decision.chosenBy(input);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(INPUT_AGAIN);
             return askForHit(name);
         }
     }
