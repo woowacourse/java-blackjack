@@ -5,45 +5,41 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Stack;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class DealerTest {
-
     @Test
     void create() {
         assertThat(Dealer.create()).isNotNull();
     }
 
-    @Test
-    void shouldReceiveCard_returnTrue() {
+    @ParameterizedTest
+    @MethodSource("createCardAndResult")
+    void shouldDrawCard(Card card, boolean result) {
         Dealer dealer = Dealer.create();
 
-        Stack<Card> cards = new Stack<>();
-        cards.add(new Card(Symbol.EIGHT, Type.SPADE));
-        cards.add(new Card(Symbol.EIGHT, Type.SPADE));
-
-        Deck deck = new Deck(cards);
-        dealer.drawCardsInTurn(deck);
+        Deck deck = mock(Deck.class);
+        when(deck.draw()).thenReturn(new Card(Symbol.KING, Type.SPADE));
         dealer.drawCardsInTurn(deck);
 
-        assertThat(dealer.shouldReceiveCard()).isTrue();
+        when(deck.draw()).thenReturn(card);
+        dealer.drawCardsInTurn(deck);
+
+        assertThat(dealer.shouldDrawCard()).isEqualTo(result);
     }
 
-    @Test
-    void shouldReceiveCard_returnFalse() {
-        Dealer dealer = Dealer.create();
-
-        Stack<Card> cards = new Stack<>();
-        cards.add(new Card(Symbol.EIGHT, Type.SPADE));
-        cards.add(new Card(Symbol.NINE, Type.SPADE));
-
-        Deck deck = new Deck(cards);
-        dealer.drawCardsInTurn(deck);
-        dealer.drawCardsInTurn(deck);
-
-        assertThat(dealer.shouldReceiveCard()).isFalse();
+    private static Stream<Arguments> createCardAndResult() {
+        return Stream.of(
+                Arguments.of(new Card(Symbol.SIX, Type.SPADE), true),
+                Arguments.of(new Card(Symbol.SEVEN, Type.SPADE), false)
+        );
     }
 }

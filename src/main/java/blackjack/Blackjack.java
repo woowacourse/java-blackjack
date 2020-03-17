@@ -54,7 +54,7 @@ public class Blackjack {
     }
 
     private static void playDealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.shouldReceiveCard()) {
+        while (dealer.shouldDrawCard()) {
             dealer.drawCardsInTurn(deck);
             OutputView.printDealerTurn(dealer);
         }

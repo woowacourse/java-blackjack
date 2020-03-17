@@ -12,7 +12,7 @@ public class Dealer extends User {
         return new Dealer();
     }
 
-    public boolean shouldReceiveCard() {
+    public boolean shouldDrawCard() {
         return calculateScore().isUnder(MINIMUM_NUMBER_TO_STAY);
     }
 }
