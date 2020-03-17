@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 
 public enum ResultType {
 	WIN("승", "패", (myScore, otherScore) -> {
-		return (!myScore.isBust() && otherScore.isBust()) || myScore.isBiggerThan(otherScore);
+		return (!myScore.isBust() && (otherScore.isBust() || myScore.isBiggerThan(otherScore)));
 	}),
 	DRAW("무", "무", (myScore, otherScore) -> {
 		return !myScore.isBust() && !otherScore.isBust() && myScore.isEqualTo(otherScore);
