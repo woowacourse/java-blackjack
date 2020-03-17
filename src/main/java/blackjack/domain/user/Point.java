@@ -52,13 +52,6 @@ public class Point implements Comparable<Point> {
 
     @Override
     public int compareTo(Point point) {
-        if (this.getPoint() > point.getPoint()) {
-            return 1;
-        }
-
-        if (this.getPoint() < point.getPoint()) {
-            return -1;
-        }
-        return 0;
+        return this.getPoint() - point.getPoint();
     }
 }
