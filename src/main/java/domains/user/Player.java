@@ -46,6 +46,9 @@ public class Player extends User {
     }
 
     public ResultType checkResultType(Dealer dealer) {
+        if (this.isBurst()) {
+            return ResultType.LOSE;
+        }
         if (dealer.isBurst() && !this.isBurst()) {
             return ResultType.WIN;
         }

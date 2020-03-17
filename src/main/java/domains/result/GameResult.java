@@ -16,19 +16,8 @@ public class GameResult {
 
     private void create(Players players, Dealer dealer) {
         for (Player player : players) {
-            if (checkBurstPlayer(player)) {
-                continue;
-            }
             playerResult.put(player, player.checkResultType(dealer));
         }
-    }
-
-    private boolean checkBurstPlayer(Player player) {
-        if (player.isBurst()) {
-            playerResult.put(player, ResultType.LOSE);
-            return true;
-        }
-        return false;
     }
 
     public ResultType getWinOrLose(Player player) {
