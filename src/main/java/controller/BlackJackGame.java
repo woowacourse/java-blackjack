@@ -16,6 +16,7 @@ public class BlackJackGame {
         List<String> playerNames = InputView.inputPlayerNames();
         Players players = new Players(playerNames, deck);
         Dealer dealer = new Dealer(deck.getInitCards());
+        PlayersResult playersResult = new PlayersResult(players, dealer);
 
         OutputView.printInitGamersState(PlayerDto.of(dealer),players);
 
@@ -24,11 +25,6 @@ public class BlackJackGame {
 
         OutputView.printDealerHit();
         OutputView.printAllPlayerCardsStateWithScore(players,dealer);
-        PlayersResult playersResult = new PlayersResult(players, dealer);
         OutputView.printGameResult(playersResult,players);
     }
-
-
-
-
 }
