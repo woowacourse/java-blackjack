@@ -85,7 +85,7 @@ public class OutputView {
     }
 
     public static void printResultMessage() {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
     public static void printDealerResult(DealerResult result) {

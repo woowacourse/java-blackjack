@@ -5,9 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static final int MIN_SUM_FOR_ACE_IS_ONE = 12;
     public static final int BLACKJACK_SCORE = 21;
     public static final int MAX_SUM_FOR_DEALER_MORE_CARD = 16;
+    private static final int MIN_SUM_FOR_ACE_IS_ONE = 12;
+    private static final int CARDS_SIZE_WHEN_BLACKJACK = 2;
 
     private List<Card> cards = new ArrayList<>();
 
@@ -46,7 +47,8 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return sumScores() == BLACKJACK_SCORE;
+        return sumScores() == BLACKJACK_SCORE
+            && this.cards.size() == CARDS_SIZE_WHEN_BLACKJACK;
     }
 
     public boolean isLargerThan(int score) {

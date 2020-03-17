@@ -80,8 +80,22 @@ public class CardsTest {
     }
 
     @Test
+    @DisplayName("합이 21 보다 작아서 블랙잭이 아닌 경우")
     void isBlackJackWhenFalse() {
         cardList = makeCardList(new Card(Symbol.TWO, Type.CLUB), new Card(Symbol.QUEEN, Type.CLUB));
+        Cards cards = new Cards();
+        cards.put(cardList);
+        assertThat(cards.isBlackJack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("합이 21 이지만 3장 이상이라서 블랙잭이 아닌 경우")
+    void isBlackJackWhenFalseButSumIsBlackJack() {
+        cardList = makeCardList(
+            new Card(Symbol.ACE, Type.CLUB),
+            new Card(Symbol.TWO, Type.CLUB),
+            new Card(Symbol.EIGHT, Type.CLUB)
+        );
         Cards cards = new Cards();
         cards.put(cardList);
         assertThat(cards.isBlackJack()).isFalse();
