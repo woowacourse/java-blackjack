@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-	public static final String DELIMITER = ",";
+	private static final String DELIMITER = ",";
 	private static final String NEWLINE = "\n";
 
 	public static void printPlayerNamesGuide() {

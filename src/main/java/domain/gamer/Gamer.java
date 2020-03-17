@@ -10,8 +10,8 @@ public abstract class Gamer {
     private static final int BUST_NUMBER = 22;
     private static final int ACE_HIDDEN_SCORE = 10;
 
-    protected String name;
-    protected final List<Card> cards = new ArrayList<>();
+    private String name;
+    private final List<Card> cards = new ArrayList<>();
 
     public Gamer(String name) {
         this.name = name;
