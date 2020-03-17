@@ -3,7 +3,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackApplication {
-
     public static final int FIRST_CARD_COUNT = 2;
 
     public static void main(String[] args) {
@@ -21,10 +20,6 @@ public class BlackJackApplication {
     }
 
     private static void printCalculatedResult(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
-            WinningResult winningResult = player.calculateWinningResult(dealer.getCards().getScore());
-            dealer.reflectWinningResult(winningResult);
-        }
         OutputView.printUsersCards(dealer, players, true);
         OutputView.printFinalResult(dealer, players);
     }
@@ -50,7 +45,7 @@ public class BlackJackApplication {
     private static void drawMorePlayerCard(CardDeck cardDeck, Player player) {
         while (player.canHit() && InputView.inputMoreCard(player)) {
             player.drawCard(cardDeck);
-            OutputView.printUserCards(player.getName(), player, false);
+            OutputView.printUserCards(player, false);
         }
     }
 }

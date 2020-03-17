@@ -15,10 +15,11 @@ public enum Symbol {
     QUEEN("Q", 10),
     KING("K", 10);
 
+    private static final int ACE_WEIGHT = 11 - ACE.value;
+
     private final String symbol;
     private final int value;
 
-    private static final int ACE_WEIGHT = 11 - ACE.value;
 
     Symbol(String symbol, int value) {
         this.symbol = symbol;
