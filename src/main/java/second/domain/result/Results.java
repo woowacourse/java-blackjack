@@ -13,17 +13,17 @@ public class Results {
     private final Map<ResultType, List<Player>> playerResults;
     private final Map<ResultType, Integer> dealerResults;
 
-    public Results(List<Player> players, Dealer dealer) {
+    public Results(final List<Player> players, final Dealer dealer) {
         this.playerResults = generatePlayerResults(players, dealer);
         this.dealerResults = generateDealerResult(players, dealer);
     }
 
-    private Map<ResultType, List<Player>> generatePlayerResults(List<Player> players, Dealer dealer) {
+    private Map<ResultType, List<Player>> generatePlayerResults(final List<Player> players, final Dealer dealer) {
         return players.stream()
                 .collect(groupingBy(player -> ResultType.from(player, dealer)));
     }
 
-    private Map<ResultType, Integer> generateDealerResult(List<Player> players, Dealer dealer) {
+    private Map<ResultType, Integer> generateDealerResult(final List<Player> players, final Dealer dealer) {
         return players.stream()
                 .collect(groupingBy(player -> ResultType.from(dealer, player), summingInt(x -> 1)));
     }

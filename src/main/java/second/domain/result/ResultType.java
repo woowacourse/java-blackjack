@@ -12,12 +12,12 @@ public enum ResultType {
     private final String name;
     private final BiPredicate<Gamer, Gamer> resultJudge;
 
-    ResultType(String name, BiPredicate<Gamer, Gamer> resultJudge) {
+    ResultType(final String name, final BiPredicate<Gamer, Gamer> resultJudge) {
         this.name = name;
         this.resultJudge = resultJudge;
     }
 
-    public static ResultType from(Gamer result, Gamer compared) {
+    public static ResultType from(final Gamer result, final Gamer compared) {
         return Arrays.stream(ResultType.values())
                 .filter(type -> type.resultJudge.test(result, compared))
                 .findFirst()

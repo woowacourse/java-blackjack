@@ -1,8 +1,5 @@
 package second.domain.card;
 
-import second.domain.ICardDeck;
-import second.domain.score.ScoreCalculator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +11,7 @@ public class HandCards {
 
     private final List<Card> cards;
 
-    public HandCards(List<Card> cards) {
+    public HandCards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -37,7 +34,7 @@ public class HandCards {
                 .sum();
     }
 
-    public List<Card> getCards() {
+    List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 

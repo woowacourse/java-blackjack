@@ -3,7 +3,6 @@ package second;
 import second.domain.card.CardDeck;
 import second.domain.player.AllGamers;
 import second.domain.player.Dealer;
-import second.domain.player.Gamer;
 import second.domain.player.Player;
 import second.domain.result.Results;
 import second.view.InputView;
@@ -64,7 +63,7 @@ public class BlackJackApplication {
 
     private static void drawIfWant(CardDeck cardDeck, Player player) {
         while (canDrawMore(player)) {
-            if (!InputView.askDrawMore(player)) {
+            if (InputView.askDrawMore(player) == false) {
                 OutputView.printGamerState(player);
                 break;
             }
@@ -89,7 +88,7 @@ public class BlackJackApplication {
 
     private static void printScores(Dealer dealer, List<Player> players) {
         OutputView.printScore(dealer);
-        players.forEach(player -> OutputView.printScore(player));
+        players.forEach(OutputView::printScore);
 
         OutputView.printEmptyLine();
     }

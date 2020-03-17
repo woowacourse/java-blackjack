@@ -9,12 +9,12 @@ public enum SelectAnswerType {
     private final String value;
     private final boolean isYes;
 
-    SelectAnswerType(String value, boolean isYes) {
+    SelectAnswerType(final String value, final boolean isYes) {
         this.value = value;
         this.isYes = isYes;
     }
 
-    public static SelectAnswerType of(String yesno) {
+    public static SelectAnswerType of(final String yesno) {
         return Arrays.stream(SelectAnswerType.values())
                 .filter(eachSelectAnswerType -> yesno.equals(eachSelectAnswerType.value))
                 .findAny()

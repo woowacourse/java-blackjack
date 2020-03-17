@@ -88,7 +88,7 @@ public class OutputView {
 
         stringBuilder.append(parseGamerState(gamer));
         stringBuilder.append(" - 결과: ");
-        stringBuilder.append(gamer.getScore().getvalue());
+        stringBuilder.append(gamer.getScore().getValue());
         stringBuilder.append("\n");
 
         System.out.println(stringBuilder.toString());
@@ -120,20 +120,19 @@ public class OutputView {
         List<Player> winners = playerResults.get(ResultType.WIN);
         List<Player> losers = playerResults.get(ResultType.LOSE);
 
-        if(Objects.nonNull(winners)) {
-            for (Player winner : winners) {
-                stringBuilder.append(winner.getName());
-                stringBuilder.append(": 승\n");
-            }
-        }
+        appendPlayerResult(stringBuilder, winners, ": 승\n");
 
-        if(Objects.nonNull(losers)) {
-            for (Player loser : losers) {
-                stringBuilder.append(loser.getName());
-                stringBuilder.append(": 패\n");
-            }
-        }
+        appendPlayerResult(stringBuilder, losers, ": 패\n");
 
         return stringBuilder.toString();
+    }
+
+    private static void appendPlayerResult(StringBuilder stringBuilder, List<Player> players, String resultTail) {
+        if (Objects.nonNull(players)) {
+            for (Player winner : players) {
+                stringBuilder.append(winner.getName());
+                stringBuilder.append(resultTail);
+            }
+        }
     }
 }

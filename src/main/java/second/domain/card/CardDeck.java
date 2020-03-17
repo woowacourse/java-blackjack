@@ -1,11 +1,11 @@
 package second.domain.card;
 
-import second.domain.ICardDeck;
-
 import java.util.Collections;
 import java.util.Stack;
 
-public class CardDeck implements second.domain.ICardDeck {
+public class CardDeck implements ICardDeck {
+    private static final String NO_MORE_CARD_EXIST_MESSAGE = "더 이상 카드를 뽑을 수 없습니다.";
+
     private final Stack<Card> cards = new Stack<>();
 
     public CardDeck() {
@@ -16,7 +16,7 @@ public class CardDeck implements second.domain.ICardDeck {
     @Override
     public Card pickCard() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("더 이상 카드를 뽑을 수 없습니다.");
+            throw new IllegalStateException(NO_MORE_CARD_EXIST_MESSAGE);
         }
 
         return cards.pop();

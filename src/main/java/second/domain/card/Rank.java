@@ -20,23 +20,23 @@ public enum Rank {
 
     private final int value;
 
-    Rank(int value) {
+    Rank(final int value) {
         this.value = value;
     }
 
-    public static Rank of(int value) {
+    public static Rank of(final int value) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NO_EXIST_RANK_MESSAGE));
     }
 
-    public int getValue() {
-        return value;
+    public boolean is(final Rank rank) {
+        return this == rank;
     }
 
-    public boolean is(Rank rank) {
-        return this == rank;
+    public int getValue() {
+        return value;
     }
 }
 

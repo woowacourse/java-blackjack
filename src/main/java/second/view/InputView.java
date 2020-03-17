@@ -1,6 +1,6 @@
 package second.view;
 
-import first.domain.card.SelectAnswerType;
+import second.domain.card.SelectAnswerType;
 import second.domain.player.Gamer;
 
 import java.util.Arrays;
