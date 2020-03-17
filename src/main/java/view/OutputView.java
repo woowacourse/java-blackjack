@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     private static void printFirstDealerCards(Dealer dealer) {
-        System.out.println("딜러: " + dealer.getCards().getCards().get(0));
+        System.out.println("딜러: " + dealer.getFirstCard());
     }
 
     public static void printUsersCards(Dealer dealer, Players players, boolean withScore) {
@@ -31,7 +31,7 @@ public class OutputView {
     public static void printUserCards(Name name, User user, boolean withScore) {
         System.out.print(name + ": " + user.getCards());
         if (withScore) {
-            System.out.print("- 결과: " + user.getCards().getScore());
+            System.out.print("- 결과: " + user.getScore());
         }
         System.out.println();
     }

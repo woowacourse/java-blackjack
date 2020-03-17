@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer extends User {
+    public static final int FIRST_INDEX = 0;
     private Map<WinningResult, Integer> winningResult;
 
     public Dealer() {
@@ -33,5 +34,9 @@ public class Dealer extends User {
 
     public Map<WinningResult, Integer> getWinningResult() {
         return winningResult;
+    }
+
+    public Card getFirstCard() {
+        return cards.getCards().get(FIRST_INDEX);
     }
 }

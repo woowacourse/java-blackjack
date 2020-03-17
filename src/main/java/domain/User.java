@@ -18,4 +18,8 @@ public abstract class User {
     public Cards getCards() {
         return cards;
     }
+
+    public int getScore() {
+        return cards.getScore();
+    }
 }
