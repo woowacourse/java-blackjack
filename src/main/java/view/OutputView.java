@@ -65,33 +65,23 @@ public class OutputView {
         }
     }
 
-    public static void printWinningResult(ResponseWinningResultDTO responseWinningResultDTO) {
-        System.out.println("\n## 최종 승패");
-        Map<String, Boolean> winningPlayer = responseWinningResultDTO.getWinningPlayer();
-        for (String result : getWinningResult(winningPlayer)) {
+    public static void printFinalProfit(ResponseWinningResultDTO responseWinningResultDTO) {
+        System.out.println("\n## 최종 수익");
+        Map<String, Double> winningProfit = responseWinningResultDTO.getWinningProfit();
+        for (String result : getWinningProfit(winningProfit)) {
             System.out.println(result);
         }
     }
 
-    public static List<String> getWinningResult(Map<String, Boolean> winningPlayer) {
-        int allUserWinCount = (int) winningPlayer.values().stream().filter(win -> win).count();
-        int allUserLoseCount = winningPlayer.values().size() - allUserWinCount;
+    public static List<String> getWinningProfit(Map<String, Double> winningProfit) {
+        double dealerProfit = -1 * winningProfit.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .sum();
         List<String> result = new ArrayList<>(
-                Collections.singletonList("딜러: " + allUserLoseCount + "승 " + allUserWinCount + "패"));
-        result.addAll(winningPlayer.entrySet().stream()
-                .map(entry -> winString(entry.getKey(), entry.getValue()))
+                Collections.singletonList(String.format("딜러: %.1f", dealerProfit)));
+        result.addAll(winningProfit.entrySet().stream()
+                .map(entry -> String.format("%s: %.1f", entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList()));
         return result;
-    }
-
-    private static String winString(String name, boolean isWin) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        if (isWin) {
-            sb.append(": 승");
-            return sb.toString();
-        }
-        sb.append(": 패");
-        return sb.toString();
     }
 }

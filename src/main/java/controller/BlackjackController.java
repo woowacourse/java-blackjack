@@ -11,13 +11,15 @@ import domain.player.User;
 import domain.player.Users;
 import domain.player.Player;
 import dto.RequestAnswerDTO;
-import dto.RequestPlayerNamesDTO;
+import dto.RequestPlayerInformationDTO;
 import dto.ResponsePlayerDTO;
 import dto.ResponseWinningResultDTO;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
     private static BlackJackRule blackJackRule = new BlackJackRule();
@@ -28,8 +30,12 @@ public class BlackjackController {
     public static void run() {
         CardDeck cardDeck = new CardDeck();
 
-        RequestPlayerNamesDTO requestPlayerNamesDTO = inputRequestPlayerNamesDTO();
-        Users users = PlayerFactory.create(cardDeck, requestPlayerNamesDTO.getPlayerName());
+        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = InputView.inputPlayerInformation();
+        Map<String, Integer> playerInformations = new LinkedHashMap<>();
+        for (RequestPlayerInformationDTO requestPlayerInformationDTO : requestPlayerInformationDTOS) {
+            playerInformations.put(requestPlayerInformationDTO.getPlayerName(), requestPlayerInformationDTO.getMoney());
+        }
+        Users users = PlayerFactory.create(cardDeck, playerInformations);
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(users);
         OutputView.printInitialResult(responsePlayerDTOS);
 
@@ -40,8 +46,8 @@ public class BlackjackController {
 
         WinningResult winningResult = new WinningResult(users);
         ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
-                winningResult.getWinningPlayer());
-        OutputView.printWinningResult(responseWinningResultDTO);
+                winningResult.getWinningResult());
+        OutputView.printFinalProfit(responseWinningResultDTO);
     }
 
     private static void runUserBlackJack(CardDeck cardDeck, List<Player> players) {
@@ -66,15 +72,6 @@ public class BlackjackController {
         if (dealerCards.isCardsSumUnderSixteen()) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
             OutputView.printDealerAdditionalCard();
-        }
-    }
-
-    private static RequestPlayerNamesDTO inputRequestPlayerNamesDTO() {
-        try {
-            return InputView.inputPlayerName();
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return inputRequestPlayerNamesDTO();
         }
     }
 

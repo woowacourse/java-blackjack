@@ -1,7 +1,7 @@
 package view;
 
 import dto.RequestAnswerDTO;
-import dto.RequestPlayerNamesDTO;
+import dto.RequestPlayerInformationDTO;
 import dto.ResponsePlayerDTO;
 
 import java.util.*;
@@ -13,16 +13,35 @@ public class InputView {
     private InputView() {
     }
 
-    public static RequestPlayerNamesDTO inputPlayerName() {
+    private static List<String> inputPlayerName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         try {
             String playerName = SCANNER.nextLine();
             validatePlayerNameEmpty(playerName);
-            List<String> playerNames = validateDuplicateName(playerName);
-            return new RequestPlayerNamesDTO(playerNames);
+            return validateDuplicateName(playerName);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerName();
+        }
+    }
+
+    public static List<RequestPlayerInformationDTO> inputPlayerInformation() {
+        List<String> playerNames = inputPlayerName();
+        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = new ArrayList<>();
+        for (String name : playerNames) {
+            System.out.printf("\n%s의 배팅 금액은?\n", name);
+            int money = validateInputMoney();
+            requestPlayerInformationDTOS.add(new RequestPlayerInformationDTO(name, money));
+        }
+        return requestPlayerInformationDTOS;
+    }
+
+    private static int validateInputMoney() {
+        try {
+            return Integer.parseInt(SCANNER.nextLine());
+        } catch (NumberFormatException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return validateInputMoney();
         }
     }
 

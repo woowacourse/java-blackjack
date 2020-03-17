@@ -11,17 +11,17 @@ public class ResponseWinningResultDTOTest {
     @DisplayName("승 패 정보가 올바르게 담기는지 테스트")
     @Test
     void getWinningResultTest() {
-        Map<String, Boolean> winningPlayer = new LinkedHashMap<>();
-        winningPlayer.put("pobi", true);
-        winningPlayer.put("lavine", false);
-        winningPlayer.put("subway", false);
-        ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(winningPlayer);
+        Map<String, Double> winningProfit = new LinkedHashMap<>();
+        winningProfit.put("pobi", 10000d);
+        winningProfit.put("lavine", -10000d);
+        winningProfit.put("subway", -10000d);
+        ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(winningProfit);
 
-        Assertions.assertThat(responseWinningResultDTO.getWinningPlayer().keySet()).containsSequence(
+        Assertions.assertThat(responseWinningResultDTO.getWinningProfit().keySet()).containsExactly(
                 "pobi", "lavine", "subway"
         );
-        Assertions.assertThat(responseWinningResultDTO.getWinningPlayer().values()).containsSequence(
-                true, false, false
+        Assertions.assertThat(responseWinningResultDTO.getWinningProfit().values()).containsExactly(
+                10000d, -10000d, -10000d
         );
     }
 }
