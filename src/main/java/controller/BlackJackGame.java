@@ -14,7 +14,8 @@ public class BlackJackGame {
     public void play() {
         Deck deck = Deck.create();
         List<String> playerNames = InputView.inputPlayerNames();
-        Players players = new Players(playerNames, deck);
+        List<Integer> playerMoneys = InputView.inputPlayerMoney(playerNames);
+        Players players = new Players(playerNames, playerMoneys, deck);
         Dealer dealer = new Dealer(deck.getInitCards());
         PlayersResult playersResult = new PlayersResult(players, dealer);
 

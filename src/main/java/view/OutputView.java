@@ -69,8 +69,8 @@ public class OutputView {
         System.out.println("최종 승패");
         System.out.println(String.format("딜러 : %d승, %d무, %d패",playersResult.dealerWinCount()
                 ,playersResult.dealerDrawCount(),playersResult.dealerLoseCount()));
-        for(int playerIndex = 0; playerIndex < players.participantNumber(); playerIndex++) {
-            System.out.println(playersResult.playerGameResult(players.eachPlayer(playerIndex)));
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + " : " + playersResult.getPlayerResults().get(player).getResultState());
         }
     }
 }

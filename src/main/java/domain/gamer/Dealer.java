@@ -6,10 +6,10 @@ import domain.card.PlayingCards;
 public class Dealer extends Player {
     private static final int ADD_THRESHOLD = 17;
     private static final String DEALER_NAME = "딜러";
+    private static final int INIT_DEALER_MONEY = 0;
 
     public Dealer(PlayingCards playingCards) {
-        super(playingCards, DEALER_NAME);
-
+        super(DEALER_NAME, INIT_DEALER_MONEY, playingCards);
     }
 
     public void receiveDealerCard(Deck deck) {

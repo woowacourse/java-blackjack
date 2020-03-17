@@ -5,12 +5,14 @@ import domain.card.PlayingCards;
 
 public class Player {
 
-    final PlayingCards playingCards;
     private final String name;
+    private final int playerMoney;
+    final PlayingCards playingCards;
 
-    public Player(PlayingCards playingCards, String name) {
-        this.playingCards = playingCards;
+    public Player(String name, int playerMoney, PlayingCards playingCards) {
         this.name = name;
+        this.playerMoney = playerMoney;
+        this.playingCards = playingCards;
     }
 
     public void addCard(Deck deck) {

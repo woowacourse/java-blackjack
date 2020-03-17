@@ -4,10 +4,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayersResult {
     Map<Player, PlayerResult> playerResults;
@@ -38,19 +35,16 @@ public class PlayersResult {
         return resultCount;
     }
 
+    public Map<Player, PlayerResult> getPlayerResults() {
+        return Collections.unmodifiableMap(playerResults);
+    }
+
     private Map<Player, PlayerResult> calculateGameResults(Players players, Dealer dealer) {
-        List<Player> playerExceptDealer = new ArrayList<>();
-        for(int playerIndex = 0; playerIndex < players.participantNumber(); playerIndex++) {
-            playerExceptDealer.add(players.eachPlayer(playerIndex));
-        }
+        List<Player> playerExceptDealer = players.getPlayers();
         Map<Player, PlayerResult> playersResultWithOutDealer= new HashMap<>();
         for(Player player : playerExceptDealer) {
             playersResultWithOutDealer.put(player,PlayerResult.match(dealer, player));
         }
         return playersResultWithOutDealer;
-    }
-
-    public String playerGameResult(Player player) {
-        return player.getName() + " : " + playerResults.get(player).getResultState();
     }
 }
