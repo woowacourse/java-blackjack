@@ -175,4 +175,28 @@ public class PlayerResultTest {
                 new Card(Symbol.NINE, Type.CLOVER))));
         assertThat(PlayerResult.match(dealer, player)).isEqualTo(PlayerResult.LOSE);
     }
+
+    @Test
+    @DisplayName("블랙잭 수익 배율만큼 곱해주는 기능")
+    void multiplyBlackJack() {
+        assertThat(PlayerResult.BLACKJACK_WIN.multiply(1000)).isEqualTo(1500);
+    }
+
+    @Test
+    @DisplayName("승 수익 배율만큼 곱해주는 기능")
+    void multiplyWin() {
+        assertThat(PlayerResult.WIN.multiply(1000)).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("무 배율만큼 곱해주는 기능")
+    void multiplyDraw() {
+        assertThat(PlayerResult.DRAW.multiply(1000)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("패 배율만큼 곱해주는 기능")
+    void multiplyLose() {
+        assertThat(PlayerResult.LOSE.multiply(1000)).isEqualTo(-1000);
+    }
 }

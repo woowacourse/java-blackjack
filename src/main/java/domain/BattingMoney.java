@@ -1,5 +1,7 @@
 package domain;
 
+import domain.result.PlayerResult;
+
 public class BattingMoney {
     private final int battingMoney;
 
@@ -16,5 +18,9 @@ public class BattingMoney {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("올바른 값을 입력해주세요.");
         }
+    }
+
+    public int calculateEarning(PlayerResult playerResult) {
+        return playerResult.multiply(battingMoney);
     }
 }

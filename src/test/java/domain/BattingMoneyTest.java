@@ -1,5 +1,6 @@
 package domain;
 
+import domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +30,33 @@ public class BattingMoneyTest {
         assertThatThrownBy(() -> new BattingMoney("a"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 값을 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("블랙잭 승에 따른 배팅 수익 계산")
+    void calculateEarningBlackJack() {
+        battingMoney = new BattingMoney(10000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.BLACKJACK_WIN)). isEqualTo(15000);
+    }
+
+    @Test
+    @DisplayName("승에 따른 배팅 수익 계산")
+    void calculateEarningWin() {
+        battingMoney = new BattingMoney(10000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.WIN)). isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("무에 따른 배팅 수익 계산")
+    void calculateEarningDraw() {
+        battingMoney = new BattingMoney(10000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.DRAW)). isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("패에 따른 배팅 수익 계산")
+    void calculateEarningLose() {
+        battingMoney = new BattingMoney(10000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.LOSE)). isEqualTo(-10000);
     }
 }
