@@ -22,11 +22,27 @@ public abstract class Gamer {
 	}
 
 	public boolean canHit() {
-		return Score.calculate(hand).isLowerThan(getHitPoint());
+		return Score.from(hand).isLowerThan(getHitPoint());
 	}
 
-	public Score calculateScore() {
-		return Score.calculate(hand);
+	public Score getScore() {
+		return Score.from(hand);
+	}
+
+	public boolean isBust() {
+		return getScore().isBiggerThan(Score.BLACKJACK);
+	}
+
+	public boolean isBiggerThan(Gamer gamer) {
+		return getScore().isBiggerThan(gamer.getScore());
+	}
+
+	public boolean isEqualTo(Gamer gamer) {
+		return getScore().isEqualTo(gamer.getScore());
+	}
+
+	public boolean isLowerThan(Gamer gamer) {
+		return getScore().isLowerThan(gamer.getScore());
 	}
 
 	public List<Card> getCards() {

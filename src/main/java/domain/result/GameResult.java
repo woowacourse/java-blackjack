@@ -27,10 +27,10 @@ public class GameResult {
 		Map<Player, ResultType> playerToResult = new HashMap<>();
 		Map<Gamer, Score> scores = new LinkedHashMap<>();
 
-		scores.put(dealer, dealer.calculateScore());
+		scores.put(dealer, dealer.getScore());
 		for (Player player : players) {
-			playerToResult.put(player, ResultType.of(player.calculateScore(), dealer.calculateScore()));
-			scores.put(player, player.calculateScore());
+			playerToResult.put(player, ResultType.of(player, dealer));
+			scores.put(player, player.getScore());
 		}
 		return new GameResult(playerToResult, scores);
 	}

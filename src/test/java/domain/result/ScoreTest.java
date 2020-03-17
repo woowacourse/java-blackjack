@@ -26,7 +26,7 @@ class ScoreTest {
 		hand.add(new Card(Symbol.SEVEN, Type.CLUB));
 		hand.add(new Card(Symbol.SIX, Type.CLUB));
 
-		assertThat(Score.calculate(hand)).isEqualTo(Score.of(21));
+		assertThat(Score.from(hand)).isEqualTo(Score.of(21));
 	}
 
 	@ParameterizedTest
@@ -38,7 +38,7 @@ class ScoreTest {
 			hand.add(card);
 		}
 
-		assertThat(Score.calculate(hand)).isEqualTo(Score.of(expected));
+		assertThat(Score.from(hand)).isEqualTo(Score.of(expected));
 	}
 
 	static Stream<Arguments> generateWithAce() {

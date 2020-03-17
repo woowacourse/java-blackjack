@@ -1,15 +1,13 @@
 package domain.result;
 
-import java.util.List;
 import java.util.Objects;
 
-import domain.card.Card;
 import domain.card.Hand;
-import domain.card.Symbol;
 
 public class Score {
-	private static final int TEN = 10;
 	private static final int BLACKJACK_SCORE = 21;
+	public static final Score BLACKJACK = Score.of(BLACKJACK_SCORE);
+	private static final int TEN = 10;
 
 	private final int score;
 
@@ -21,19 +19,12 @@ public class Score {
 		return new Score(score);
 	}
 
-	public static Score calculate(Hand hand) {
+	public static Score from(Hand hand) {
 		int rawScore = hand.calculate();
 		if (hand.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
 			return new Score(rawScore + TEN);
 		}
 		return new Score(rawScore);
-	}
-
-
-	private static boolean containAce(List<Card> cards) {
-		return cards.stream()
-			.map(Card::getSymbol)
-			.anyMatch(Symbol::isAce);
 	}
 
 	public boolean isBiggerThan(Score other) {
