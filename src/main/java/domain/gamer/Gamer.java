@@ -26,6 +26,8 @@ public abstract class Gamer {
 		}
 	}
 
+	public abstract boolean canHit();
+
 	public void hit(Card card) {
 		hands.add(card);
 	}
@@ -42,7 +44,14 @@ public abstract class Gamer {
 		return hands.isBlackjack();
 	}
 
-	public abstract boolean canHit();
+	public boolean wins(int score) {
+		return (score > Hands.BLACKJACK_SCORE) || ((this.scoreHands() <= Hands.BLACKJACK_SCORE) && (score
+			< this.scoreHands()));
+	}
+
+	public boolean isPush(int score) {
+		return score <= Hands.BLACKJACK_SCORE && (score == this.scoreHands());
+	}
 
 	@Override
 	public String toString() {

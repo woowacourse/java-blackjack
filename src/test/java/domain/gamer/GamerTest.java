@@ -46,14 +46,6 @@ public class GamerTest {
 				new Card(Type.DIAMOND, Symbol.TWO)), false));
 	}
 
-	private static Stream<Arguments> generateDrawInput() {
-		return Stream.of(
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), true),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.KING)), false),
-			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.ACE), new Card(Type.DIAMOND, Symbol.NINE),
-				new Card(Type.DIAMOND, Symbol.TWO)), true));
-	}
-
 	private static Stream<Arguments> generateScoreInput() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(new Card(Type.HEART, Symbol.TWO), new Card(Type.DIAMOND, Symbol.TWO)), 4),
@@ -81,15 +73,6 @@ public class GamerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("generateDrawInput")
-	void canHit_True_ScoreLessThan21(List<Card> cards, boolean expected) {
-		for (Card card : cards) {
-			gamer.hit(card);
-		}
-		assertThat(gamer.canHit()).isEqualTo(expected);
-	}
-
-	@ParameterizedTest
 	@MethodSource("generateScoreInput")
 	void scoreHands_ExpectedScore_hasInputCards(List<Card> cards, int expected) {
 		for (Card card : cards) {
@@ -104,6 +87,18 @@ public class GamerTest {
 		assertThatThrownBy(() -> new Player(name))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("null이나 빈 값");
+	}
+
+	@Test
+	void wins_True_scoreOverGivenScore() {
+		gamer.hit(new Card(Type.HEART, Symbol.ACE));
+		assertThat(gamer.wins(10)).isTrue();
+	}
+
+	@Test
+	void isPush_True_scoreEqualsGivenScore() {
+		gamer.hit(new Card(Type.DIAMOND, Symbol.FIVE));
+		assertThat(gamer.isPush(5)).isTrue();
 	}
 
 	@Test
