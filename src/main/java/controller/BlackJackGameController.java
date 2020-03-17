@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameResult;
+import domain.Players;
 import domain.Rull;
 import domain.card.CardDeck;
 import domain.player.Dealer;
@@ -17,11 +18,12 @@ public class BlackJackGameController {
 
 	public static void run() {
 		String userName = InputView.inputUserNames();
-		List<User> users = makeUsers(userName);
 		Dealer dealer = new Dealer();
+		List<User> users = makeUsers(userName);
+		Players players = new Players(dealer, users);
 		CardDeck cardDeck = new CardDeck();
 
-		firstDraw(users, dealer, cardDeck);
+		firstDraw(players, cardDeck);
 		printFirstDrawCards(userName, users, dealer);
 
 		hit(users, dealer, cardDeck);
@@ -46,6 +48,10 @@ public class BlackJackGameController {
 		for (User user : users) {
 			user.cardDraw(cardDeck.draw(Rull.FIRST_DRAW_COUNT));
 		}
+	}
+
+	private static void firstDraw(Players players, CardDeck cardDeck) {
+		players.cardDraw(cardDeck);
 	}
 
 	private static void printFirstDrawCards(String name, List<User> users, Dealer dealer) {
