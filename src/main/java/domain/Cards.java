@@ -8,7 +8,8 @@ import java.util.Objects;
 
 public class Cards {
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
-    public static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+    private static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+
     private List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {

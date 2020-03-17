@@ -6,8 +6,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Names {
-    public static final String EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE = "Empty or null names exception.";
-    public static final String DELIMITER = ",";
+    private static final String EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE = "Empty or null names exception.";
+    private static final String DELIMITER = ",";
 
     private List<Name> names;
 

@@ -3,9 +3,9 @@ package domain;
 import java.util.Objects;
 
 public class Name {
-    public static final int MAX_NAME_LENGTH = 100;
-    public static final String EMPTY_OR_NULL_EXCEPTION_MESSAGE = "Empty or null names exception.";
-    public static final String OVER_MAX_NAME_LENGTH_EXCEPTION_MESSAGE = "Too long name exception.";
+    private static final int MAX_NAME_LENGTH = 100;
+    private static final String EMPTY_OR_NULL_EXCEPTION_MESSAGE = "Empty or null names exception.";
+    private static final String OVER_MAX_NAME_LENGTH_EXCEPTION_MESSAGE = "Too long name exception.";
 
     private final String name;
 
