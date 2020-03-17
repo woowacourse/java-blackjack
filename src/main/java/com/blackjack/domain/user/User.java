@@ -40,7 +40,7 @@ public abstract class User {
 	public ResultType compareScoreWith(User user) {
 		Score score = hands.calculateScore();
 		Score dealerScore = user.hands.calculateScore();
-		return score.compareTo(dealerScore);
+		return ResultType.of(score.compareTo(dealerScore));
 	}
 
 	public abstract boolean canDraw();

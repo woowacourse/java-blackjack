@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Score {
+public class Score implements Comparable<Score> {
+	public static final int BLACKJACK_SCORE = 21;
 	private static final String SCORE_OUT_OF_RANGE_MESSAGE = "점수의 범위를 벗어났습니다.";
 	private static final int BUST_SCORE = 0;
-	private static final int BLACKJACK_SCORE = 21;
 	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 
 	static {
@@ -26,7 +26,7 @@ public class Score {
 
 	public static Score valueOf(int value) {
 		return Optional.ofNullable(SCORE_CACHE.get(value))
-				.orElseThrow(() -> new IllegalArgumentException(SCORE_OUT_OF_RANGE_MESSAGE));
+				.orElse(new Score(value));
 	}
 
 	private void validateBounds(int score) {
@@ -44,6 +44,11 @@ public class Score {
 	}
 
 	@Override
+	public int compareTo(Score that) {
+		return Integer.compare(this.score, that.score);
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -56,16 +61,6 @@ public class Score {
 	@Override
 	public int hashCode() {
 		return Objects.hash(score);
-	}
-
-	public ResultType compareTo(Score that) {
-		if (score > that.score) {
-			return ResultType.WIN;
-		}
-		if (score < that.score) {
-			return ResultType.LOSE;
-		}
-		return ResultType.DRAW;
 	}
 
 	@Override
