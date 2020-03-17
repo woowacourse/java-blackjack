@@ -25,20 +25,4 @@ public enum ResultType {
     public String getName() {
         return name;
     }
-
-    public static ResultType reverse(ResultType result) {
-        return CACHE_FOR_REVERSE.get(result);
-    }
-
-    public boolean isWin() {
-        return this == ResultType.WIN;
-    }
-
-    public boolean isDraw() {
-        return this == ResultType.DRAW;
-    }
-
-    public boolean isLose() {
-        return this == ResultType.LOSE;
-    }
 }
