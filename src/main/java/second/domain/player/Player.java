@@ -14,8 +14,12 @@ public abstract class Player implements IPlayer {
         this.handCards = handCards;
     }
 
-    boolean isSmallerOrEqualThan(final Score score) {
-        return !handCards.isLargerThan(score);
+    public boolean isSmallerOrEqualThan(final Score score) {
+        return !handCards.isLargerScoreThan(score);
+    }
+
+    public boolean isLargerScoreThan(final Player Player) {
+        return handCards.isLargerScoreThan(Player.handCards);
     }
 
     @Override

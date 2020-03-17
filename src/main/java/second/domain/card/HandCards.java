@@ -6,13 +6,12 @@ import second.domain.score.ScoreCalculator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 public class HandCards {
     private final List<Card> cards;
     private Score score;
 
-    public HandCards(final List<Card> cards) {
+    public HandCards(List<Card> cards) {
         this.cards = cards;
         this.score = ScoreCalculator.calculate(this);
     }
@@ -52,8 +51,12 @@ public class HandCards {
                 .sum();
     }
 
-    public boolean isLargerThan(Score score) {
+    public boolean isLargerScoreThan(Score score) {
         return this.score.isLargerThan(score);
+    }
+
+    public boolean isLargerScoreThan(HandCards handCards) {
+        return this.score.isLargerThan(handCards.score);
     }
 
     public List<Card> getCards() {
