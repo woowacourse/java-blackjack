@@ -44,7 +44,7 @@ public class Cards {
     public boolean isBlackJack() {
         return containAce()
                 && this.cards.size() == BLACK_JACK_SIZE
-                && CardCalculator.isUnderBlackJack(this);
+                && CardCalculator.isCardSumBlackJack(this);
     }
 
     public int getCardsSum() {

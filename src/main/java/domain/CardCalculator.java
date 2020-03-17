@@ -47,7 +47,7 @@ public class CardCalculator {
         return userCardSum >= dealerCardSum;
     }
 
-    public static boolean isUnderBlackJack(Cards cards) {
-        return calculateAceStrategy(cards) <= BLACK_JACK;
+    public static boolean isCardSumBlackJack(Cards cards) {
+        return calculateAceStrategy(cards) == BLACK_JACK;
     }
 }

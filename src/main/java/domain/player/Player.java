@@ -10,6 +10,7 @@ public class Player extends User {
 
     public Player(String name, List<Card> cards) {
         super(name, cards);
+        this.money = new Money(1);
     }
 
     public Player(String name, List<Card> cards,int money) {
