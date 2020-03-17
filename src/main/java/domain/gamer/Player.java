@@ -18,15 +18,11 @@ public class Player extends Gamer {
 	}
 
 	public MatchResult findMatchResult(int dealerScore) {
-		if (calculateScore() > DRAW_CARD_PIVOT) {
-			return MatchResult.LOSE;
+		if (isBlackJack()) {
+			return MatchResult.BLACKJACK;
 		}
 
-		if (dealerScore > DRAW_CARD_PIVOT) {
-			return MatchResult.WIN;
-		}
-
-		return MatchResult.of(calculateScore() - dealerScore);
+		return MatchResult.of(calculateScore(), dealerScore, getCards().size());
 	}
 
 	@Override

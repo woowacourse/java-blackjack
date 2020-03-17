@@ -25,6 +25,10 @@ public abstract class Gamer {
 		this.cards.addAll(cards);
 	}
 
+	public boolean isBlackJack() {
+		return calculateScore() == 21 && cards.size() == 2;
+	}
+
 	public int calculateScore() {
 		int score = calculateScoreWithoutAce();
 
