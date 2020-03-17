@@ -7,6 +7,8 @@ public class Player extends User {
 
 	@Override
 	public boolean isWin(User that) {
-		return isNotBust() && (that.isBust() || isScoreGreaterThan(that.getScore()));
+		boolean isScoreWin = isNotBust() && (that.isBust() || isScoreGreaterThan(that.getScore()));
+		boolean isBlackJackWin = isBlackJack() && that.isNotBlackJack();
+		return isScoreWin || isBlackJackWin;
 	}
 }

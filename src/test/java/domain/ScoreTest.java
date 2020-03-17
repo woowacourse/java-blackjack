@@ -54,7 +54,7 @@ public class ScoreTest {
 	void isGreaterThan() {
 		Score score = new Score(21);
 		assertThat(score.isGreaterThan(20)).isTrue();
-		assertThat(score.isGreaterThan(21)).isTrue();
+		assertThat(score.isGreaterThan(21)).isFalse();
 		assertThat(score.isGreaterThan(22)).isFalse();
 	}
 }

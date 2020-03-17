@@ -54,6 +54,14 @@ public abstract class User {
 		return cards.getScore()
 				.isGreaterThan(score);
 	}
+	
+	public boolean isLose(User that) {
+		return !isWin(that) && !isDraw(that);
+	}
 
-	public abstract boolean isWin(User user);
+	public boolean isDraw(User that) {
+		return !isWin(that) && !that.isWin(this);
+	}
+
+	public abstract boolean isWin(User that);
 }

@@ -17,9 +17,7 @@ public class OutputView {
 	}
 
 	public static void printFirstDistribute(Dealer dealer, Players players) {
-		String playersName = players.getNames()
-				.stream()
-				.collect(Collectors.joining(", "));
+		String playersName = String.join(", ", players.getNames());
 		System.out.printf("%s와 %s에게 두 장의 카드를 나누었습니다.\n", dealer.getName(), playersName);
 		printCards(dealer.getName(), Arrays.asList(dealer.getFirstCard()));
 		players.forEach(player -> printCards(player.getName(), player.getCards()));
@@ -56,11 +54,17 @@ public class OutputView {
 
 	private static void printIndividualResult(Name name, Record record) {
 		if (record.hasMany()) {
-			System.out.printf("%s: %d승 %s패\n", name.getValue(), record.getWinCount(), record.getLoseCount());
+			System.out.printf(
+					"%s: %d승 %d무 %s패\n", name.getValue(), record.getWinCount(), record.getDrawCount(),
+					record.getLoseCount());
 			return;
 		}
 		if (record.hasWin()) {
 			System.out.println(name.getValue() + ": 승");
+			return;
+		}
+		if (record.hasDraw()) {
+			System.out.println(name.getValue() + ": 무");
 			return;
 		}
 		System.out.println(name.getValue() + ": 패");

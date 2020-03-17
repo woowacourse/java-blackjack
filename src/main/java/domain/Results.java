@@ -20,22 +20,25 @@ public class Results {
 	public static Results calculate(Dealer dealer, Players players) {
 		Map<Name, Record> results = new LinkedHashMap<>();
 		results.put(new Name(dealer.getName()), calculateByDealer(dealer, players));
-		players.forEach(player -> results.put(new Name(player.getName()), calculateByPlayer(player, dealer)));
+		players.forEach(player -> results.put(new Name(player.getName()), calculateByUser(player, dealer)));
 		return new Results(results);
 	}
 
 	private static Record calculateByDealer(Dealer dealer, Players players) {
-		List<Boolean> result = new ArrayList<>();
-		players.forEach(player -> result.add(dealer.isWin(player)));
-		int winCount = (int)result.stream().filter(Boolean::booleanValue).count();
-		int loseCount = result.size() - winCount;
-		return new Record(winCount, loseCount);
+		List<Record> records = new ArrayList<>();
+		players.forEach(player -> records.add(calculateByUser(dealer, player)));
+		return records.stream()
+				.reduce(Record::add)
+				.get();
 	}
 
-	private static Record calculateByPlayer(Player player, Dealer dealer) {
-		if (player.isWin(dealer)) {
-			return new Record(1, 0);
+	private static Record calculateByUser(User source, User target) {
+		if (source.isWin(target)) {
+			return new Record(1, 0, 0);
 		}
-		return new Record(0, 1);
+		if (source.isDraw(target)) {
+			return new Record(0, 1, 0);
+		}
+		return new Record(0, 0, 1);
 	}
 }

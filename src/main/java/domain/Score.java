@@ -48,7 +48,7 @@ public class Score {
 	}
 
 	public boolean isGreaterThan(int score) {
-		return this.score >= score;
+		return this.score > score;
 	}
 
 	@Override

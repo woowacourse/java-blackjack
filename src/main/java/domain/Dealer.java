@@ -27,6 +27,8 @@ public class Dealer extends User {
 
 	@Override
 	public boolean isWin(User that) {
-		return that.isBust() || (isNotBust() && isScoreGreaterThan(that.getScore()));
+		boolean isScoreWin = that.isBust() || (isNotBust() && isScoreGreaterThan(that.getScore()));
+		boolean isBlackJackWin = isBlackJack() && that.isNotBlackJack();
+		return isScoreWin || isBlackJackWin;
 	}
 }
