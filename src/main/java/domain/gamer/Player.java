@@ -20,4 +20,9 @@ public class Player extends Gamer {
 	public boolean isPush(int score) {
 		return score <= Hands.BLACKJACK_SCORE && (score == this.scoreHands());
 	}
+
+	@Override
+	public boolean canHit() {
+		return scoreHands() < Hands.BLACKJACK_SCORE;
+	}
 }

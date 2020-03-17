@@ -14,6 +14,6 @@ public class Dealer extends Gamer {
 
 	@Override
 	public boolean canHit() {
-		return super.scoreHands() <= DRAW_CONDITION;
+		return scoreHands() <= DRAW_CONDITION;
 	}
 }

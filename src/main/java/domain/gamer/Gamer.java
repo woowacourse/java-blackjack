@@ -10,7 +10,7 @@ import domain.card.Hands;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-public class Gamer {
+public abstract class Gamer {
 	private String name;
 	private Hands hands;
 
@@ -42,8 +42,14 @@ public class Gamer {
 		return hands.isBlackjack();
 	}
 
-	public boolean canHit() {
-		return hands.calculateTotalScore() < Hands.BLACKJACK_SCORE;
+	public abstract boolean canHit();
+
+	@Override
+	public String toString() {
+		return "Gamer{" +
+			"name='" + name + '\'' +
+			", hands=" + hands +
+			'}';
 	}
 
 	@Override
