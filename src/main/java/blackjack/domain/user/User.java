@@ -1,7 +1,5 @@
 package blackjack.domain.user;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -12,20 +10,28 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
 
+// TODO: 2020-03-17 interface 분리
 public abstract class User implements Comparable<User> {
 	private static final int DRAW_LOWER_BOUND = 1;
+
 	protected final String name;
 	protected final Hand hand;
 
-	public User(String name) {
+	User(String name, Hand hand) {
 		validate(name);
+		validate(hand);
 		this.name = name.trim();
-		this.hand = new Hand();
+		this.hand = hand;
 	}
 
-	User(String name, List<Card> cards) {
-		this(name);
-		this.hand.add(cards);
+	private void validate(Hand hand) {
+		if (Objects.isNull(hand)) {
+			throw new InvalidUserException(InvalidUserException.NULL_HAND);
+		}
+	}
+
+	User(String name) {
+		this(name, new Hand());
 	}
 
 	private void validate(String name) {
@@ -35,26 +41,23 @@ public abstract class User implements Comparable<User> {
 	}
 
 	public void draw(Deck deck) {
-		validateDeck(deck);
+		validate(deck);
 		hand.add(deck.draw());
 	}
 
-	private void validateDeck(Deck deck) {
+	private void validate(Deck deck) {
 		if (Objects.isNull(deck)) {
 			throw new InvalidDeckException(InvalidDeckException.NULL);
 		}
 	}
 
 	public void draw(Deck deck, int drawNumber) {
-		validateDeck(deck);
-		validateDrawNumber(drawNumber);
-		List<Card> drawCards = IntStream.range(0, drawNumber)
-			.mapToObj(e -> deck.draw())
-			.collect(toList());
-		hand.add(drawCards);
+		validate(drawNumber);
+		IntStream.range(0, drawNumber)
+			.forEach(e -> draw(deck));
 	}
 
-	protected void validateDrawNumber(int drawNumber) {
+	protected void validate(int drawNumber) {
 		if (drawNumber < DRAW_LOWER_BOUND) {
 			throw new InvalidUserException(InvalidUserException.INVALID_DRAW_NUMBER);
 		}
@@ -66,7 +69,7 @@ public abstract class User implements Comparable<User> {
 		return name;
 	}
 
-	public abstract List<Card> getInitialHand();
+	public abstract List<Card> getInitialDealtHand();
 
 	public List<Card> getHand() {
 		return hand.getCards();
@@ -93,12 +96,12 @@ public abstract class User implements Comparable<User> {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		User that = (User)o;
-		return name.equals(that.name);
+		User user = (User)o;
+		return Objects.equals(name, user.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(name, hand);
 	}
 }

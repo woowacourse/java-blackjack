@@ -25,6 +25,7 @@ public class Deck {
 		}
 	}
 
+	// NOTE: 2020-03-17 interface 분리가 가능?
 	public Card draw() {
 		if (cards.isEmpty()) {
 			throw new InvalidDeckException(InvalidDeckException.DECK_EMPTY);

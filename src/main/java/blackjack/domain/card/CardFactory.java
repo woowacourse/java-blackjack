@@ -12,10 +12,10 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class CardFactory {
-	private static final Map<String, Card> CARDS;
+	private static final Map<String, Card> CARD_CACHE;
 
 	static {
-		CARDS = Arrays.stream(Symbol.values())
+		CARD_CACHE = Arrays.stream(Symbol.values())
 			.flatMap(CardFactory::createBy)
 			.collect(collectingAndThen(toMap(Card::toString, Function.identity()), Collections::unmodifiableMap));
 	}
@@ -25,11 +25,12 @@ public class CardFactory {
 			.map(type -> new Card(symbol, type));
 	}
 
-	static Optional<Card> pickUp(Symbol symbol, Type type) {
-		return Optional.ofNullable(CARDS.get(Card.name(symbol, type)));
+	static Card pickUp(Symbol symbol, Type type) {
+		return Optional.ofNullable(CARD_CACHE.get(Card.name(symbol, type)))
+			.orElse(new Card(symbol, type));
 	}
 
 	public static List<Card> create() {
-		return new ArrayList<>(CARDS.values());
+		return new ArrayList<>(CARD_CACHE.values());
 	}
 }

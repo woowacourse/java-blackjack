@@ -2,7 +2,7 @@ package blackjack.view;
 
 import java.util.Scanner;
 
-import blackjack.domain.user.User;
+import blackjack.domain.user.Player;
 
 public class InputView {
 	private static final Scanner SCANNER = new Scanner(System.in);
@@ -13,8 +13,8 @@ public class InputView {
 		return SCANNER.nextLine();
 	}
 
-	public static String inputChoiceFrom(User user) {
-		System.out.println(String.format(CHOICE_FORMAT, user.getName()));
+	public static String inputChoiceFromPlayer(Player player) {
+		System.out.println(String.format(CHOICE_FORMAT, player.getName()));
 		return SCANNER.nextLine();
 	}
 }

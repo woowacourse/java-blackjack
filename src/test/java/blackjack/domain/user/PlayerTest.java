@@ -42,7 +42,7 @@ class PlayerTest {
 			Card.of(Symbol.SEVEN, Type.CLUB),
 			Card.of(Symbol.TWO, Type.DIAMOND));
 
-		assertThat(new Player("player", cards)).isInstanceOf(Player.class)
+		assertThat(Player.valueOf("player", cards)).isInstanceOf(Player.class)
 			.extracting("hand").isEqualTo(cards);
 	}
 
@@ -58,11 +58,11 @@ class PlayerTest {
 	}
 
 	@Test
-	void getInitialHand_PlayerDrawTwoCardsInitially_HasTwoCards() {
+	void getInitialDealtHand_PlayerDealInitialTwoCards_HasTwoCards() {
 		Deck deck = new Deck(CardFactory.create());
 		Player player = new Player("player");
-		player.draw(deck, BlackjackTable.INITIAL_DRAW_NUMBER);
+		player.draw(deck, BlackjackTable.INITIAL_DEAL_NUMBER);
 
-		assertThat(player.getInitialHand()).hasSize(BlackjackTable.INITIAL_DRAW_NUMBER);
+		assertThat(player.getInitialDealtHand()).hasSize(BlackjackTable.INITIAL_DEAL_NUMBER);
 	}
 }

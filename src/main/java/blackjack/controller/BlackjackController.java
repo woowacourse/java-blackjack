@@ -17,17 +17,16 @@ public class BlackjackController {
 	}
 
 	public void run() {
-		List<User> users = blackjackTable.collectToUsers();
-		UserDecisions userDecisions =
-			new UserDecisions(InputView::inputChoiceFrom, OutputView::printUserHand, OutputView::printDealerDrawCard);
+		List<User> users = blackjackTable.collectUsers();
+		blackjackTable.dealInitialHand();
+		OutputView.printUsersInitialDealtHand(BlackjackTable.INITIAL_DEAL_NUMBER, users);
 
-		blackjackTable.setUp();
-		OutputView.printUsersInitialDraw(BlackjackTable.INITIAL_DRAW_NUMBER, users);
-
+		UserDecisions userDecisions = new UserDecisions(InputView::inputChoiceFromPlayer, OutputView::printUserHand,
+			OutputView::printDealerDraw);
 		blackjackTable.playWith(userDecisions);
 
 		Report blackJackReport = Report.from(blackjackTable);
-		OutputView.printUsersCardsAndScore(users);
+		OutputView.printUsersHandAndScore(users);
 		OutputView.printBlackjackReport(blackJackReport);
 	}
 }

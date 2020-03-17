@@ -40,7 +40,7 @@ class UserTest {
 	}
 
 	@Test
-	void validateDeck_Null_InvalidDeckExceptionThrown() {
+	void validate_Null_InvalidDeckExceptionThrown() {
 		User user = new Dealer("user");
 
 		assertThatThrownBy(() -> user.draw(null))
@@ -60,7 +60,7 @@ class UserTest {
 	}
 
 	@Test
-	void validateDrawNumber_InvalidNumberOfCards_InvalidUserExceptionThrown() {
+	void validate_InvalidNumberOfCards_InvalidUserExceptionThrown() {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
 

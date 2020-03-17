@@ -18,24 +18,25 @@ public class OutputView {
 	private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
 	private static final String SEPARATOR = ": ";
 
-	public static void printUsersInitialDraw(int initialDrawNumber, List<User> users) {
+	public static void printUsersInitialDealtHand(int initialDrawNumber, List<User> users) {
 		System.out.println(
 			String.format(NEWLINE + INITIAL_DRAW_FORMAT,
 				Dealer.NAME,
 				StringUtil.joinPlayerNames(users),
 				initialDrawNumber));
-		users.forEach(user -> printUserHand(user, user.getInitialHand()));
+		users.forEach(user -> printUserHand(user, user.getInitialDealtHand()));
 	}
 
 	public static void printUserHand(User user, List<Card> hand) {
 		System.out.println(user.getName() + SEPARATOR + StringUtil.joinCards(hand));
 	}
 
-	public static void printDealerDrawCard() {
+	public static void printDealerDraw() {
 		System.out.println(String.format(DEALER_DRAW_FORMAT, Dealer.NAME, Dealer.DEALER_DRAWABLE_MAX_SCORE));
 	}
 
-	public static void printUsersCardsAndScore(List<User> users) {
+	public static void printUsersHandAndScore(List<User> users) {
+		printNewLine();
 		for (User user : users) {
 			OutputView.printUserHandAndScore(user);
 		}
@@ -54,10 +55,18 @@ public class OutputView {
 	}
 
 	private static void printPlayersResult(Map<Player, ResultType> playersResult) {
-		playersResult.forEach((player, resultType) -> printUserResult(player.getName(), resultType.getAlias()));
+		for (Map.Entry<Player, ResultType> entry : playersResult.entrySet()) {
+			Player player = entry.getKey();
+			ResultType resultType = entry.getValue();
+			printUserResult(player.getName(), resultType.getAlias());
+		}
 	}
 
 	private static void printUserResult(String name, String result) {
 		System.out.println(name + SEPARATOR + result);
+	}
+
+	private static void printNewLine() {
+		System.out.print(NEWLINE);
 	}
 }

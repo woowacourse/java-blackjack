@@ -59,7 +59,7 @@ class StringUtilTest {
 			Card.of(Symbol.EIGHT, Type.DIAMOND)
 		);
 
-		String expected = "A클럽, 2하트, 8다이아몬드";
+		String expected = "A♣, 2♥, 8♦";
 		assertThat(StringUtil.joinCards(cards)).isEqualTo(expected);
 	}
 

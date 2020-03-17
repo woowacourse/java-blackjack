@@ -58,7 +58,7 @@ class HandTest {
 	}
 
 	@Test
-	void aceHandledScore_InputScore_ReturnAceHandledScore() {
+	void aceHandled_InputScore_ReturnAceHandledScore() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.ACE, Type.CLUB),
@@ -79,6 +79,18 @@ class HandTest {
 		hand.add(cards);
 
 		Score expected = Score.ZERO;
+		assertThat(hand.calculateBustHandledScore()).isEqualTo(expected);
+	}
+
+	@Test
+	void calculateBustHandledScore_NotBustScore_ReturnScore() {
+		Hand hand = new Hand();
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.JACK, Type.DIAMOND),
+			Card.of(Symbol.QUEEN, Type.HEART));
+		hand.add(cards);
+
+		Score expected = Score.valueOf(20);
 		assertThat(hand.calculateBustHandledScore()).isEqualTo(expected);
 	}
 }

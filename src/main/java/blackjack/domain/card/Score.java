@@ -14,7 +14,7 @@ public class Score {
 	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 
 	static {
-		IntStream.range(0, BUST_SCORE)
+		IntStream.range(1, BUST_SCORE)
 			.forEach(score -> SCORE_CACHE.put(score, new Score(score)));
 	}
 

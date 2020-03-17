@@ -35,11 +35,11 @@ public class UserDecisions {
 			.isHit();
 	}
 
-	public void handStatus(Player player) {
+	public void showHandStatus(Player player) {
 		handStatus.accept(player, player.getHand());
 	}
 
-	public void dealerChoice() {
+	public void showDealerHitStatus() {
 		dealerChoice.run();
 	}
 }

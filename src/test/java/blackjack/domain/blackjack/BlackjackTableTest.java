@@ -40,25 +40,26 @@ class BlackjackTableTest {
 	}
 
 	@Test
-	void setUp_DealerAndPlayer_DrawInitialCardsForEachUsers() {
+	void dealInitialHand_DealerAndPlayer_DrawInitialCardsForEachUsers() {
 		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
-		blackjackTable.setUp();
+		blackjackTable.dealInitialHand();
 
-		for (User user : blackjackTable.collectToUsers()) {
-			assertThat(user).extracting("hand").asList().hasSize(INITIAL_DRAW_NUMBER);
+		for (User user : blackjackTable.collectUsers()) {
+			assertThat(user).extracting("hand").asList().hasSize(INITIAL_DEAL_NUMBER);
 		}
 	}
 
 	@Test
-	void collectToUsers_DealerAndPlayers_ReturnUserList() {
+	void collectUsers_DealerAndPlayers_ReturnUserList() {
 		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		List<User> expected = new ArrayList<>();
 		expected.add(dealer);
 		expected.addAll(players);
-		assertThat(blackjackTable.collectToUsers()).isEqualTo(expected);
+		assertThat(blackjackTable.collectUsers()).isEqualTo(expected);
 	}
 
+	// TODO: 2020-03-17 리뷰어에게 테스트 작성에 대해 물어보기
 	@Test
 	void playWith_UserDecisions_PlayGameWithUserDecisions() {
 		Dealer drownDealer = Dealer.valueOf("dealer", Arrays.asList(
@@ -85,7 +86,7 @@ class BlackjackTableTest {
 			System.out::println);
 		blackjackTable.playWith(userDecisions);
 
-		for (User user : blackjackTable.collectToUsers()) {
+		for (User user : blackjackTable.collectUsers()) {
 			assertThat(user).extracting("hand").asList().hasSize(4);
 		}
 	}

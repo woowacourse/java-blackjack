@@ -12,16 +12,24 @@ public class Card {
 	}
 
 	public static Card of(Symbol symbol, Type type) {
-		return CardFactory.pickUp(symbol, type)
-			.orElse(new Card(symbol, type));
+		validate(symbol, type);
+		return CardFactory.pickUp(symbol, type);
+	}
+
+	// TODO: 2020-03-17 exception custom 진행하기, test 작성
+	private static void validate(Symbol symbol, Type type) {
+		if (Objects.isNull(symbol) || Objects.isNull(type)) {
+			throw new IllegalArgumentException("symbol 또는 type이 존재하지 않습니다.");
+		}
 	}
 
 	public boolean isAce() {
 		return symbol.isAce();
 	}
 
-	public static String name(Symbol symbol, Type type) {
-		return String.format("%s%s", symbol, type);
+	static String name(Symbol symbol, Type type) {
+		validate(symbol, type);
+		return symbol.toString() + type.toString();
 	}
 
 	public int getScore() {

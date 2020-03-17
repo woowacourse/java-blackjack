@@ -32,7 +32,7 @@ class DealerTest {
 			Card.of(Symbol.SEVEN, Type.CLUB),
 			Card.of(Symbol.TWO, Type.DIAMOND));
 
-		assertThat(new Dealer("dealer", cards)).isInstanceOf(Dealer.class)
+		assertThat(Dealer.valueOf("dealer", cards)).isInstanceOf(Dealer.class)
 			.extracting("hand").isEqualTo(cards);
 	}
 
@@ -60,13 +60,13 @@ class DealerTest {
 	}
 
 	@Test
-	void getInitialHand_DealerDrawInitialTwoCards_ReturnOneCard() {
+	void getInitialDealtHand_DealerDealInitialTwoCards_ReturnOneCard() {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.SEVEN, Type.CLUB),
 			Card.of(Symbol.TWO, Type.DIAMOND));
 		Dealer dealer = Dealer.valueOf("dealer", cards);
 
-		assertThat(dealer.getInitialHand()).hasSize(1)
+		assertThat(dealer.getInitialDealtHand()).hasSize(1)
 			.isEqualTo(Arrays.asList(Card.of(Symbol.SEVEN, Type.CLUB)));
 	}
 }

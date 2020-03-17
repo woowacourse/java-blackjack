@@ -17,25 +17,25 @@ class UserDecisionsTest {
 	@Test
 	void UserDecisions_InputFunctionAndBiConsumerAndRunnable_GenerateInstance() {
 		Function<Player, String> choice = (Player player) -> "y";
-		BiConsumer<User, List<Card>> handStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable dealerChoice = () -> System.out.println("test");
+		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
+		Runnable showDealerHitStatus = () -> System.out.println("test");
 
-		assertThat(new UserDecisions(choice, handStatus, dealerChoice)).isInstanceOf(UserDecisions.class);
+		assertThat(new UserDecisions(choice, showHandStatus, showDealerHitStatus)).isInstanceOf(UserDecisions.class);
 	}
 
 	@Test
 	void validate_NullSource_InvalidUserDecisionsExceptionThrown() {
 		Function<Player, String> choice = (Player player) -> "y";
-		BiConsumer<User, List<Card>> handStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable dealerChoice = () -> System.out.println("test");
+		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
+		Runnable showDealerHitStatus = () -> System.out.println("test");
 
-		assertThatThrownBy(() -> new UserDecisions(null, handStatus, dealerChoice))
+		assertThatThrownBy(() -> new UserDecisions(null, showHandStatus, showDealerHitStatus))
 			.isInstanceOf(InvalidUserDecisionsException.class)
 			.hasMessage(InvalidUserDecisionsException.NULL);
-		assertThatThrownBy(() -> new UserDecisions(choice, null, dealerChoice))
+		assertThatThrownBy(() -> new UserDecisions(choice, null, showDealerHitStatus))
 			.isInstanceOf(InvalidUserDecisionsException.class)
 			.hasMessage(InvalidUserDecisionsException.NULL);
-		assertThatThrownBy(() -> new UserDecisions(choice, handStatus, null))
+		assertThatThrownBy(() -> new UserDecisions(choice, showHandStatus, null))
 			.isInstanceOf(InvalidUserDecisionsException.class)
 			.hasMessage(InvalidUserDecisionsException.NULL);
 	}
@@ -44,9 +44,9 @@ class UserDecisionsTest {
 	void isHit_InputUserDecisionsHitPlayer_ReturnTrue() {
 		Player testPlayer = new Player("player");
 		Function<Player, String> choice = (Player player) -> "y";
-		BiConsumer<User, List<Card>> handStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable dealerChoice = () -> System.out.println("test");
-		UserDecisions userDecisions = new UserDecisions(choice, handStatus, dealerChoice);
+		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
+		Runnable showDealerHitStatus = () -> System.out.println("test");
+		UserDecisions userDecisions = new UserDecisions(choice, showHandStatus, showDealerHitStatus);
 
 		assertThat(userDecisions.isHit(testPlayer)).isTrue();
 	}
