@@ -5,6 +5,7 @@ import domain.card.Hand;
 import java.util.Objects;
 
 public class Score {
+	public static final Score BLACKJACK = Score.from(21);
 	private static final int TEN = 10;
 	private static final int BLACKJACK_SCORE = 21;
 

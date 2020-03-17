@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Hand {
+	private static final int BLACKJACK_CARD_SIZE = 2;
+
 	private final List<Card> cards;
 
 	private Hand(List<Card> cards) {
@@ -18,6 +20,10 @@ public class Hand {
 
 	public void add(Card card) {
 		cards.add(card);
+	}
+
+	public boolean hasTwoCards() {
+		return cards.size() == BLACKJACK_CARD_SIZE;
 	}
 
 	public int sumOfCards() {

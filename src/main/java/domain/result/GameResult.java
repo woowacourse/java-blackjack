@@ -22,23 +22,23 @@ public class GameResult {
 	private final Map<ResultType, Integer> dealerResult;
 
 	public GameResult(Gamers gamers) {
-		this.gamersScore = calculateGamersScore(gamers);
-		this.playersResult = findPlayersResult(this.gamersScore);
+		this.gamersScore = findScoreBy(gamers);
+		this.playersResult = findPlayersResult();
 		this.dealerResult = findDealerResult(this.playersResult);
 	}
 
-	private Map<Gamer, Score> calculateGamersScore(Gamers gamers) {
+	private Map<Gamer, Score> findScoreBy(Gamers gamers) {
 		return gamers.getGamers()
 				.stream()
-				.collect(Collectors.toMap(Function.identity(), Gamer::calculateScore));
+				.collect(Collectors.toMap(Function.identity(), Gamer::getScore));
 	}
 
-	private Map<Player, ResultType> findPlayersResult(Map<Gamer, Score> gamersScore) {
+	private Map<Player, ResultType> findPlayersResult() {
 		Map<Player, ResultType> playerToResult = new HashMap<>();
-		Score dealerScore = gamersScore.get(findDealer());
+		Dealer dealer = findDealer();
 
 		for (Player player : findPlayers()) {
-			playerToResult.put(player, ResultType.of(gamersScore.get(player), dealerScore));
+			playerToResult.put(player, ResultType.of(player, dealer));
 		}
 
 		return playerToResult;

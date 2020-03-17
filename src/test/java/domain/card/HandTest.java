@@ -13,6 +13,17 @@ class HandTest {
 	}
 
 	@Test
+	@DisplayName("2개의 카드를 갖는지를 올바르게 판단하는지 테스트")
+	void hasTwoCardsTest() {
+		Hand hand = Hand.createEmpty();
+		hand.add(new Card(Symbol.EIGHT, Type.DIAMOND));
+		assertThat(hand.hasTwoCards()).isFalse();
+
+		hand.add(new Card(Symbol.ACE, Type.HEART));
+		assertThat(hand.hasTwoCards()).isTrue();
+	}
+
+	@Test
 	@DisplayName("카드의 합을 올바르게 계산하는지 테스트")
 	void sumOfCardTest() {
 		Hand hand = Hand.createEmpty();

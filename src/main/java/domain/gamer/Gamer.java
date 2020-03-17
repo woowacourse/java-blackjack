@@ -40,16 +40,36 @@ public abstract class Gamer {
 
 	protected abstract int firstOpenedCardsCount();
 
+	public Score getScore() {
+		return Score.from(hand);
+	}
+
 	public void hit(Card card) {
 		hand.add(card);
 	}
 
 	public boolean canHit() {
-		return calculateScore().isLowerThan(Score.from(getHitPoint()));
+		return getScore().isLowerThan(Score.from(getHitPoint()));
 	}
 
-	public Score calculateScore() {
-		return Score.from(hand);
+	public boolean hasTwoCards() {
+		return hand.hasTwoCards();
+	}
+
+	public boolean isBust() {
+		return getScore().isBiggerThan(Score.BLACKJACK);
+	}
+
+	public boolean isBiggerThan(Gamer gamer) {
+		return getScore().isBiggerThan(gamer.getScore());
+	}
+
+	public boolean isEqualTo(Gamer gamer) {
+		return getScore().isEqualTo(gamer.getScore());
+	}
+
+	public boolean isLowerThan(Gamer gamer) {
+		return getScore().isLowerThan(gamer.getScore());
 	}
 
 	public List<Card> firstOpenedCards() {
