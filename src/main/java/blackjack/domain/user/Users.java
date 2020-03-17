@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.exception.NoDealerException;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +23,7 @@ public class Users {
                 .filter(user -> user instanceof Dealer)
                 .findFirst()
                 .map(user -> (Dealer) user)
-                .orElseThrow(() -> new NullPointerException(NO_DEALER));
+                .orElseThrow(() -> new NoDealerException(NO_DEALER));
     }
 
     public List<Player> getPlayer() {

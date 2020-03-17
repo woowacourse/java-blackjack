@@ -2,6 +2,8 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
+import java.util.Objects;
+
 public abstract class User {
     private static final int MAX_VALID_SUM = 21;
     public static final String CARD = " 카드: ";
@@ -9,7 +11,6 @@ public abstract class User {
     private static final String RESULT = " - 결과 : ";
     private static final String BUSTED = "버스트";
     private static final int BUSTED_VAL_RESET = 0;
-    private static final String NO_CARD = "카드가 없습니다";
     protected final String name;
     protected UserCards cards;
 
@@ -20,31 +21,19 @@ public abstract class User {
     }
 
     private void validateUserName(String name) {
-        if (name == null) {
-            throw new NullPointerException("이름이 입력되지 않았습니다");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("이름은 필수입니다");
         }
     }
 
     public void receiveInitialCards(UserCards initialCards) {
-        validateInitialCards(initialCards);
+        Objects.requireNonNull(initialCards, "초기 카드는 필수입니다");
         this.cards = initialCards;
     }
 
-    private void validateInitialCards(UserCards initialCards) {
-        if (initialCards == null) {
-            throw new NullPointerException(NO_CARD);
-        }
-    }
-
     public void receiveCard(Card card) {
-        validateCard(card);
+        Objects.requireNonNull(card, "카드는 필수입니다");
         cards.addCard(card);
-    }
-
-    private void validateCard(Card card) {
-        if (card == null) {
-            throw new NullPointerException(NO_CARD);
-        }
     }
 
     public int getTotalScore() {
