@@ -25,7 +25,7 @@ public class HandCardsTest {
     void drawCard() {
         HandCards handCards = new HandCards(new ArrayList<>());
 
-        handCards.drawCard(new CardDeck());
+        handCards.drawCard(Card.of(Rank.ACE, Suit.CLOVER));
         List<Card> result = handCards.getCards();
 
         assertThat(result.size()).isEqualTo(1);

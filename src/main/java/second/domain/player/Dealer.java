@@ -10,7 +10,7 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDrawMore() {
-        return isSmallerOrEqualThan(DEALER_DRAW_THRESHOLD);
+        return !isLargerScoreThan(DEALER_DRAW_THRESHOLD);
     }
 
     public Dealer() {

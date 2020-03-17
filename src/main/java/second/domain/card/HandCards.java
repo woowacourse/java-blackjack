@@ -10,35 +10,17 @@ import java.util.List;
 public class HandCards {
     private static final int FIRST_INDEX = 0;
     private final List<Card> cards;
-    private Score score;
 
     public HandCards(List<Card> cards) {
         this.cards = cards;
-        this.score = ScoreCalculator.calculate(this);
     }
 
     public HandCards() {
         this(new ArrayList<>());
     }
 
-    public void drawCard(final ICardDeck cardDeck) {
-        final Card drawCard = cardDeck.pickCard();
-
-        addCard(drawCard);
-
-        plusScore(drawCard);
-    }
-
-    private void plusScore(Card drawCard) {
-        score = score.plus(drawCard.extractScore());
-    }
-
-    private void addCard(Card drawCard) {
+    public void drawCard(final Card drawCard) {
         cards.add(drawCard);
-    }
-
-    public boolean isBust() {
-        return score.isBust();
     }
 
     public boolean hasAce() {
@@ -50,14 +32,6 @@ public class HandCards {
         return cards.stream()
                 .mapToInt(Card::extractScore)
                 .sum();
-    }
-
-    public boolean isLargerScoreThan(Score score) {
-        return this.score.isLargerThan(score);
-    }
-
-    public boolean isLargerScoreThan(HandCards handCards) {
-        return this.score.isLargerThan(handCards.score);
     }
 
     public List<Card> getCards() {
