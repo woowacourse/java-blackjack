@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Card {
-	private static final String SYMBOL_OR_TYPE_IS_NULL_MESSAGE = "denomination 또는 suit는 null을 가질 수 없습니다.";
-
 	private final Denomination denomination;
 	private final Suit suit;
 
@@ -24,7 +22,7 @@ public class Card {
 				.stream()
 				.filter(card -> card.isSameCard(denomination, suit))
 				.findAny()
-				.orElseThrow(() -> new IllegalArgumentException(SYMBOL_OR_TYPE_IS_NULL_MESSAGE));
+				.orElse(new Card(denomination, suit));
 	}
 
 	public static List<Card> values() {
@@ -33,7 +31,7 @@ public class Card {
 
 	private void validateNull(Denomination denomination, Suit suit) {
 		if (Objects.isNull(denomination) || Objects.isNull(suit)) {
-			throw new IllegalArgumentException(SYMBOL_OR_TYPE_IS_NULL_MESSAGE);
+			throw new IllegalArgumentException("denomination 또는 suit는 null을 가질 수 없습니다.");
 		}
 	}
 
