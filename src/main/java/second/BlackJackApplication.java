@@ -23,7 +23,7 @@ public class BlackJackApplication {
 
         doDrawMorePhase(allGamers, cardDeck);
 
-        doResultsPhase(allGamers.getDealer(), allGamers.getPlayers());
+        doResultsPhase(allGamers);
     }
 
     private static List<Player> inputPlayerNames() {
@@ -81,9 +81,9 @@ public class BlackJackApplication {
         return player.canDrawMore();
     }
 
-    private static void doResultsPhase(Dealer dealer, List<Player> players) {
-        printScores(dealer, players);
-        printResults(dealer, players);
+    private static void doResultsPhase(AllGamers allGamers) {
+        printScores(allGamers.getDealer(), allGamers.getPlayers());
+        printResults(allGamers.getDealer(), allGamers.getPlayers());
     }
 
     private static void printScores(Dealer dealer, List<Player> players) {
