@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.card.CardDeck.NUMBER_OF_FIRST_CARDS;
 import static blackjack.domain.result.ResultType.BUST;
 
 public class Cards {
@@ -20,7 +21,6 @@ public class Cards {
         int sum = cards.stream()
                 .mapToInt(Card::cardValue)
                 .sum();
-
         return handleAce(sum);
     }
 
@@ -45,6 +45,14 @@ public class Cards {
 
     public int size() {
         return cards.size();
+    }
+
+    public boolean isBlackJack() {
+        return computeScore() == BUST && cards.size() == NUMBER_OF_FIRST_CARDS;
+    }
+
+    public boolean isBust() {
+        return computeScore() > BUST;
     }
 
     @Override

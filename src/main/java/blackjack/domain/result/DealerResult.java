@@ -35,6 +35,7 @@ public class DealerResult {
 
     public String showDealerRecord() {
         return Arrays.stream(ResultType.values())
+                .filter(dealerResult::containsKey)
                 .map(type -> dealerResult.get(type) + type.getWord())
                 .collect(Collectors.joining(DELIMITER));
     }

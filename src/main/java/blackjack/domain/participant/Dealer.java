@@ -31,7 +31,15 @@ public class Dealer extends Participant {
 
         for (ResultType type : ResultType.values()) {
             int resultCount = type.countSameResultType(playerResults);
-            dealerResult.put(type.reverse(), resultCount);      // 플레이어 승 = 딜러 패, 플레이어 패 = 딜러 승
+            ResultType reverseType = type.reverse();
+
+            if (dealerResult.containsKey(reverseType)) {
+                int count = dealerResult.get(reverseType);
+                dealerResult.put(reverseType, count + resultCount);
+                continue;
+            }
+
+            dealerResult.put(reverseType, resultCount);      // 플레이어 승 = 딜러 패, 플레이어 패 = 딜러 승, 플레이어 블랙잭 = 딜러 패
         }
 
         return new DealerResult(name, dealerResult);

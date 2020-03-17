@@ -20,7 +20,7 @@ public class Player extends Participant {
     }
 
     public PlayerResult createPlayerResult(Dealer dealer) {
-        ResultType resultType = ResultType.findResultByScore(computeScore(), dealer.computeScore());
+        ResultType resultType = ResultType.findResult(getCards(), dealer.getCards());
         return new PlayerResult(name, resultType);
     }
 
