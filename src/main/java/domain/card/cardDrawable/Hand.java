@@ -59,6 +59,10 @@ public class Hand implements CardDrawable, ScoreCalculable {
         return score;
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     public Card getOneCard() {
         return cards.get(FIRST_INDEX);
     }

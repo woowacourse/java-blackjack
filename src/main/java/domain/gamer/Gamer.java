@@ -8,13 +8,15 @@ import domain.result.WinLose;
 import java.util.List;
 
 public interface Gamer {
+    void drawInitialCards(CardProvidable cardProvidable);
+
     void drawCard(CardProvidable cardProvidable);
 
     boolean canDrawMore();
 
-    List<Card> showInitialCards();
+    List<Card> openInitialCards();
 
-    List<Card> showAllCards();
+    List<Card> openAllCards();
 
     Score calculateScore();
 

@@ -1,21 +1,14 @@
 import domain.card.providable.CardDeck;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Player;
-import domain.result.WinLose;
+import domain.result.Results;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingInt;
-
 public class BlackJackApplication {
-    private static final int INITIAL_CARDS_AMOUNT = 2;
-
     public static void main(String[] args) {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
@@ -37,17 +30,11 @@ public class BlackJackApplication {
     }
 
     private static void doInitialDrawPhase(Dealer dealer, List<Player> players, CardDeck cardDeck) {
-        drawInitialCards(dealer, cardDeck);
-        players.forEach(player -> drawInitialCards(player, cardDeck));
+        dealer.drawInitialCards(cardDeck);
+        players.forEach(player -> player.drawInitialCards(cardDeck));
 
         OutputView.printInitialCards(dealer, players);
         OutputView.printEmptyLine();
-    }
-
-    private static void drawInitialCards(Gamer gamer, CardDeck cardDeck) {
-        for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
-            gamer.drawCard(cardDeck);
-        }
     }
 
     private static void doAdditionalDrawPhase(Dealer dealer, List<Player> players, CardDeck cardDeck) {
@@ -104,20 +91,8 @@ public class BlackJackApplication {
     }
 
     private static void printResults(Dealer dealer, List<Player> players) {
-        List<WinLose> playerWinLoses = determinePlayerWinLoses(dealer, players);
-        Map<WinLose, Integer> dealerWinLoses = determineDealerWinLoses(playerWinLoses);
+        Results results = new Results(players, dealer);
 
-        OutputView.printResults(dealerWinLoses, players, playerWinLoses);
-    }
-
-    private static List<WinLose> determinePlayerWinLoses(Dealer dealer, List<Player> players) {
-        return players.stream()
-                .map(player -> player.determineWinLose(dealer))
-                .collect(Collectors.toList());
-    }
-
-    private static Map<WinLose, Integer> determineDealerWinLoses(List<WinLose> winLoses) {
-        return winLoses.stream()
-                .collect(groupingBy(WinLose::reverse, summingInt(x -> 1)));
+        OutputView.printResults(results);
     }
 }

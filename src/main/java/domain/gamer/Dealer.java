@@ -3,7 +3,6 @@ package domain.gamer;
 import domain.card.Card;
 import domain.card.cardDrawable.Hand;
 import domain.result.Score;
-import domain.result.WinLose;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,16 +22,7 @@ public class Dealer extends AbstractGamer {
     }
 
     @Override
-    public List<Card> showInitialCards() {
+    public List<Card> openInitialCards() {
         return Arrays.asList(hand.getOneCard());
-    }
-
-    @Override
-    public WinLose determineWinLose(Gamer counterParts) {
-        if (WinLose.determineWinner(counterParts, this) == this) {
-            return WinLose.WIN;
-        }
-
-        return WinLose.LOSE;
     }
 }

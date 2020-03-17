@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.gamer.AbstractGamer;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import domain.result.Results;
 import domain.result.WinLose;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class OutputView {
 
         stringBuilder.append(gamer.getName());
         stringBuilder.append(": ");
-        stringBuilder.append(parseCards(gamer.showInitialCards()));
+        stringBuilder.append(parseCards(gamer.openInitialCards()));
         stringBuilder.append("\n");
 
         return stringBuilder.toString();
@@ -56,7 +57,7 @@ public class OutputView {
     }
 
     private static String parseGamerState(AbstractGamer gamer) {
-        return gamer.getName() + ": " + parseCards(gamer.showAllCards());
+        return gamer.getName() + ": " + parseCards(gamer.openAllCards());
     }
 
     public static void printCanNotDrawMessage(Player player) {
@@ -78,17 +79,17 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    public static void printResults(Map<WinLose, Integer> dealerWinLoses, List<Player> players, List<WinLose> playerWinLoses) {
+    public static void printResults(Results results) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("##최종승패\n");
-        stringBuilder.append(parseDealerWinLosesToString(dealerWinLoses));
-        stringBuilder.append(parsePlayerWinLosesToString(players, playerWinLoses));
+        stringBuilder.append(parseDealerResultToString(results.getDealerResult()));
+        stringBuilder.append(parsePlayerResultsToString(results.getPlayerResults()));
 
         System.out.println(stringBuilder.toString());
     }
 
-    private static String parseDealerWinLosesToString(Map<WinLose, Integer> dealerWinLoses) {
+    private static String parseDealerResultToString(Map<WinLose, Integer> dealerWinLoses) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("딜러: ");
@@ -109,17 +110,21 @@ public class OutputView {
         return input;
     }
 
-    private static String parsePlayerWinLosesToString(List<Player> players, List<WinLose> playerWinLoses) {
+    private static String parsePlayerResultsToString(Map<WinLose, List<Player>> playerResults) {
         StringBuilder stringBuilder = new StringBuilder();
+        List<Player> winners = playerResults.get(WinLose.WIN);
+        List<Player> losers = playerResults.get(WinLose.LOSE);
 
-        for (int i = 0; i < players.size(); i++) {
-            stringBuilder.append(players.get(i).getName());
-            stringBuilder.append(": ");
-            stringBuilder.append(playerWinLoses.get(i).getValue());
-            stringBuilder.append("\n");
+        for (Player winner : winners) {
+            stringBuilder.append(winner.getName());
+            stringBuilder.append(": 승\n");
+        }
+
+        for (Player loser : losers) {
+            stringBuilder.append(loser.getName());
+            stringBuilder.append(": 패\n");
         }
 
         return stringBuilder.toString();
     }
-
 }

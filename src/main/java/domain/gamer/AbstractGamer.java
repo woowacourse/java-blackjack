@@ -12,6 +12,8 @@ import java.util.Objects;
 import static domain.result.ScoreCalculable.BLACK_JACK_SCORE;
 
 public abstract class AbstractGamer implements Gamer {
+    private static final int INITIAL_CARDS_AMOUNT = 2;
+
     protected final Hand hand;
     private final String name;
 
@@ -21,12 +23,27 @@ public abstract class AbstractGamer implements Gamer {
     }
 
     @Override
+    public void drawInitialCards(CardProvidable cardProvidable) {
+        validateEmptyHand();
+
+        for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
+            this.drawCard(cardProvidable);
+        }
+    }
+
+    private void validateEmptyHand() {
+        if (!hand.isEmpty()) {
+            throw new IllegalStateException("손패가 비어있지 않습니다.");
+        }
+    }
+
+    @Override
     public void drawCard(CardProvidable cardProvidable) {
         hand.drawCard(cardProvidable);
     }
 
     @Override
-    public List<Card> showAllCards() {
+    public List<Card> openAllCards() {
         return hand.getCards();
     }
 
@@ -37,19 +54,18 @@ public abstract class AbstractGamer implements Gamer {
 
     @Override
     public WinLose determineWinLose(Gamer counterPart) {
-        if (this.calculateScore().isBiggerThan(new Score(BLACK_JACK_SCORE))) {
+        Score myScore = this.calculateScore();
+        Score counterPartScore = counterPart.calculateScore();
+
+        if (myScore.isBiggerThan(new Score(BLACK_JACK_SCORE))) {
             return WinLose.LOSE;
         }
 
-        if (counterPart.calculateScore().isBiggerThan(new Score(BLACK_JACK_SCORE))) {
+        if (counterPartScore.isBiggerThan(new Score(BLACK_JACK_SCORE))) {
             return WinLose.WIN;
         }
 
-        if (WinLose.determineWinner(this, counterPart) == this) {
-            return WinLose.WIN;
-        }
-
-        return WinLose.LOSE;
+        return WinLose.determineWinLose(myScore, counterPartScore);
     }
 
     public String getName() {

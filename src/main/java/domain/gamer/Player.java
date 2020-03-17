@@ -19,7 +19,7 @@ public class Player extends AbstractGamer {
     }
 
     @Override
-    public List<Card> showInitialCards() {
-        return super.showAllCards();
+    public List<Card> openInitialCards() {
+        return super.openAllCards();
     }
 }
