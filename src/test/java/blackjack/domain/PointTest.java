@@ -21,8 +21,7 @@ public class PointTest {
         cards.add(new Card(CardNumber.THREE, CardFigure.CLOVER));
         cards.add(new Card(CardNumber.KING, CardFigure.CLOVER));
 
-        Point point = new Point();
-        point.computePoint(cards);
+        Point point = new Point(cards);
 
         int expected = 13;
         int actual = point.getPoint();
@@ -37,8 +36,7 @@ public class PointTest {
         cards.add(new Card(CardNumber.KING, CardFigure.CLOVER));
         cards.add(new Card(CardNumber.QUEEN, CardFigure.HEART));
 
-        Point point = new Point();
-        point.computePoint(cards);
+        Point point = new Point(cards);
 
         int expected = 21;
         int actual = point.getPoint();
@@ -52,8 +50,7 @@ public class PointTest {
         cards.add(new Card(CardNumber.ACE, CardFigure.CLOVER));
         cards.add(new Card(CardNumber.KING, CardFigure.CLOVER));
 
-        Point point = new Point();
-        point.computePoint(cards);
+        Point point = new Point(cards);
 
         int expected = 21;
         int actual = point.getPoint();

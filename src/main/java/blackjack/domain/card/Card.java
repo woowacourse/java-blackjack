@@ -23,12 +23,12 @@ public class Card {
         return this.cardNumber.equals(CardNumber.ACE);
     }
 
-    public CardFigure getCardFigure() {
-        return cardFigure;
+    public String getCardFigure() {
+        return cardFigure.getMessage();
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public String  getCardNumber() {
+        return cardNumber.getMessage();
     }
 
     public int getCardPoint() {

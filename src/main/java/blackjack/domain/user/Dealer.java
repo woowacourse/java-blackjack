@@ -30,8 +30,8 @@ public class Dealer extends User {
 
     @Override
     public boolean receivable() {
-        getPoint().computePoint(getCards());
-        if (getPoint().compareTo(new Point(LOWER_BOUND)) == -1) {
+        Point point = new Point(getCards());
+        if (point.compareTo(new Point(LOWER_BOUND)) == -1) {
             return true;
         }
         return false;
@@ -43,7 +43,7 @@ public class Dealer extends User {
             return INITIAL_CARD_SIZE;
         }
         if (receivable()) {
-            return  ADDITIONAL_CARD_SIZE;
+            return ADDITIONAL_CARD_SIZE;
         }
         return 0;
     }

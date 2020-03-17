@@ -1,9 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Name;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +31,7 @@ public class Results {
     }
 
     private static ResultType computePlayerResult(Player player, Dealer dealer) {
-        return ResultType.computeResult(player.getPoint(), dealer.getPoint());
+        return ResultType.computeResult(new Point(player.getCards()), new Point(dealer.getCards()));
     }
 
     public Map<Name, ResultType> getPlayerResult() {

@@ -6,19 +6,14 @@ import blackjack.domain.card.component.CardNumber;
 import java.util.List;
 
 public class Point implements Comparable<Point> {
-    private static int INITIAL_POINT = 0;
     private static int BALCK_JACK = 21;
     private int point;
-
-    public Point() {
-        this.point = INITIAL_POINT;
-    }
 
     public Point(int point) {
         this.point = point;
     }
 
-    public void computePoint(List<Card> cards) {
+    public Point (List<Card> cards) {
         this.point = cards.stream()
                 .mapToInt(x -> x.getCardPoint())
                 .sum();
@@ -58,11 +53,11 @@ public class Point implements Comparable<Point> {
     @Override
     public int compareTo(Point point) {
         if (this.getPoint() > point.getPoint()) {
-            return  1;
+            return 1;
         }
 
         if (this.getPoint() < point.getPoint()) {
-            return  -1;
+            return -1;
         }
         return 0;
     }
