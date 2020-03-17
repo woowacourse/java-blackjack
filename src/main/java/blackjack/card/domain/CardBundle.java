@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import blackjack.BlackjackRule;
+
 public class CardBundle {
 	private static final int ACE_WEIGHT = 10;
 	private static final int BLACKJACK_MAXIMUM_VALUE = 21;
@@ -44,7 +46,8 @@ public class CardBundle {
 	}
 
 	public boolean isBlackjack() {
-		return cards.size() == 2 && calculateScore() == BLACKJACK_MAXIMUM_VALUE;
+		return cards.size() == BlackjackRule.STARTING_CARD_COUNT
+			&& calculateScore() == BLACKJACK_MAXIMUM_VALUE;
 	}
 
 	private boolean hasAce() {

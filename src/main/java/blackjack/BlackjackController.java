@@ -42,9 +42,9 @@ public class BlackjackController {
 
 	private List<Player> makePlayers(Player dealer) {
 		List<Player> players = new ArrayList<>();
+		List<Player> gamblers = inputView.inputPlayNames().toPlayers();
 		players.add(dealer);
-		players.addAll(inputView.inputPlayNames()
-			.toPlayers());
+		players.addAll(gamblers);
 		return players;
 	}
 

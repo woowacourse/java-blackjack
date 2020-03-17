@@ -7,7 +7,7 @@ import blackjack.player.domain.report.GameReport;
 
 public class Gambler extends Player {
 	public Gambler(CardBundle cardBundle, String name) {
-		super(cardBundle, name);
+		super(cardBundle, name, bettingMoney);
 	}
 
 	@Override
