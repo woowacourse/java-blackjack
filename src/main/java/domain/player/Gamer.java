@@ -1,6 +1,5 @@
 package domain.player;
 
-
 import domain.card.cardfactory.Card;
 
 import java.util.List;

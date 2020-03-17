@@ -13,7 +13,7 @@ public class GameResult {
 
 	private final Map<String, Double> userResult;
 
-	public GameResult(List<User> users, Dealer dealer, Boolean firstDrawBlackJack) {
+	public GameResult(List<User> users, Dealer dealer, boolean firstDrawBlackJack) {
 		Map<String, Double> userResult = new HashMap<>();
 		for (User user : users) {
 			double income = user.compareScore(dealer, firstDrawBlackJack);

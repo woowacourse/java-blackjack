@@ -15,7 +15,7 @@ public class OutputView {
 	private static final String FINAL_RESULT_MESSAGE = "\n## 최종 수익";
 	private static final String COLON = " : ";
 
-	public static void firstDrawMessage(String name, int firstDrawCount) {
+	public static void firstDrawMessageHead(String name, int firstDrawCount) {
 		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, name, firstDrawCount));
 	}
 

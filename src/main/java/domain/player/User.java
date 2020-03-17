@@ -20,6 +20,16 @@ public class User extends Player {
 		return normalCompare(gamerToCompare);
 	}
 
+	private double blackJackCompare(Gamer gamerToCompare) {
+		if (!this.isBlackJack()) {
+			return bettingMoney * MINUS_CONVERTER;
+		}
+		if (gamerToCompare.isBlackJack()) {
+			return ZERO_MONEY;
+		}
+		return bettingMoney * Rull.BLACK_JACK_BONUS;
+	}
+
 	private double normalCompare(Gamer gamerToCompare) {
 		int toCompareScore = gamerToCompare.calculateBurstIsZeroScore();
 		int userScore = calculateBurstIsZeroScore();
@@ -28,16 +38,6 @@ public class User extends Player {
 		}
 		if (userScore == toCompareScore) {
 			return ZERO_MONEY;
-		}
-		return bettingMoney * MINUS_CONVERTER;
-	}
-
-	private double blackJackCompare(Gamer gamerToCompare) {
-		if (isBlackJack()) {
-			if (gamerToCompare.isBlackJack()) {
-				return ZERO_MONEY;
-			}
-			return bettingMoney * Rull.BLACK_JACK_BONUS;
 		}
 		return bettingMoney * MINUS_CONVERTER;
 	}
