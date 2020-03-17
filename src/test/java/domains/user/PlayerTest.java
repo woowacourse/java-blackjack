@@ -4,6 +4,7 @@ import domains.card.Card;
 import domains.card.Deck;
 import domains.card.Symbol;
 import domains.card.Type;
+import domains.user.name.PlayerName;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class PlayerTest {
     @BeforeAll
     static void setUp() {
         deck = new Deck();
-        player = new Player("또링", deck);
+        player = new Player(new PlayerName("또링"), "4000", deck);
     }
 
     @DisplayName("생성했을 때, 두 장의 카드를 보유하고 있는지 확인")
@@ -50,7 +51,7 @@ public class PlayerTest {
     @MethodSource("burstData")
     void hit_ScoreOver21_BurstIsTrue(List<Card> hands) {
         Hands hand = new Hands(hands);
-        Player dealer = new Player("작은곰", hand);
+        Player dealer = new Player(new PlayerName("작은곰"), "100000", hand);
 
         dealer.hit(deck);
 

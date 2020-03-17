@@ -5,6 +5,7 @@ import domains.card.Deck;
 public class User {
     protected Hands hands;
     protected boolean burst = false;
+    protected boolean blackJack = false;
 
     public void hit(Deck deck) {
         hands.draw(deck);
@@ -27,5 +28,9 @@ public class User {
 
     public boolean isBurst() {
         return burst;
+    }
+
+    protected boolean isBlackJack() {
+        return blackJack;
     }
 }

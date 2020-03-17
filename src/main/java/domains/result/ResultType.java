@@ -17,7 +17,7 @@ public enum ResultType {
     }
 
     public ResultType oppose() {
-        if (this == WIN) {
+        if (this == WIN || this == BLACKJACK) {
             return LOSE;
         }
         if (this == LOSE) {

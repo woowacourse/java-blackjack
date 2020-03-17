@@ -19,6 +19,7 @@ public class Hands {
 
     public Hands(Deck deck) {
         this.hands = deck.initialDraw();
+
     }
 
     public int size() {

@@ -7,6 +7,7 @@ import domains.user.Dealer;
 import domains.user.Hands;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.name.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,7 +30,7 @@ public class GameResultTest {
         Player ddoring = iterator.next();
         Player smallBear = iterator.next();
 
-        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.WIN);
+        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.BLACKJACK);
         assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
     }
 
@@ -47,8 +48,8 @@ public class GameResultTest {
         Card king = new Card(Symbol.KING, Type.HEART);
         Card four = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        Player ddoring = new Player("또링", new Hands(Arrays.asList(ace, king)));
-        Player smallBear = new Player("작은곰", new Hands(Arrays.asList(ace, four)));
+        Player ddoring = new Player(new PlayerName("또링"), "4000", new Hands(Arrays.asList(ace, king)));
+        Player smallBear = new Player(new PlayerName("작은곰"), "4000", new Hands(Arrays.asList(ace, four)));
         Players players = new Players(new ArrayList<>(Arrays.asList(ddoring, smallBear)));
 
         Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));
@@ -57,6 +58,7 @@ public class GameResultTest {
         dealerResult.put(ResultType.WIN, 0);
         dealerResult.put(ResultType.DRAW, 1);
         dealerResult.put(ResultType.LOSE, 1);
+        dealerResult.put(ResultType.BLACKJACK, 0);
 
         return Stream.of(
                 Arguments.of(players, dealer, dealerResult)

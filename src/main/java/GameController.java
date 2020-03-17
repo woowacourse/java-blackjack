@@ -25,6 +25,7 @@ public class GameController {
         dealer = new Dealer(deck);
 
         OutputView.printInitialHands(players, dealer);
+
         run();
     }
 
@@ -44,6 +45,7 @@ public class GameController {
         OutputView.printAllHands(players, dealer);
 
         GameResult gameResult = new GameResult(players, dealer);
+        //돈계산
         OutputView.printGameResult(gameResult);
     }
 
