@@ -56,7 +56,7 @@ public class Controller {
 
 		while (blackjackGame.getDealer().canHit()) {
 			OutputView.printDealerDraw();
-			blackjackGame.drawDealer();
+			blackjackGame.draw(blackjackGame.getDealer());
 		}
 	}
 

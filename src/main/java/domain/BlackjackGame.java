@@ -79,10 +79,6 @@ public class BlackjackGame {
 		gamer.hit(deck.deal());
 	}
 
-	public void drawDealer() {
-		dealer.hit(deck.deal());
-	}
-
 	public List<Player> getPlayers() {
 		return players;
 	}
