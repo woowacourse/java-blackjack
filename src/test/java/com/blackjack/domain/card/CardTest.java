@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class CardTest {
 	@DisplayName("Symbol과 Type을 인자로 넣었을때 인스턴스 생성")
 	@Test
-	void constructor_SymbolAndType_CreateInsatnce() {
+	void constructor_SymbolAndType_CreateInstance() {
 		assertThat(Card.valueOf(Denomination.ACE, Suit.CLUB)).isInstanceOf(Card.class);
 	}
 

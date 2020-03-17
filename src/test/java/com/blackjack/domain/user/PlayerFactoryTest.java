@@ -1,11 +1,11 @@
 package com.blackjack.domain.user;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerFactoryTest {
+class PlayerFactoryTest {
 	@DisplayName("인자로 중복되는 이름을 넣었을 때 예외 발생")
 	@Test
 	void createPlayers_DuplicatedName_ExceptionThrown() {
