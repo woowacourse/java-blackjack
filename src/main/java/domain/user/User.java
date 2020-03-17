@@ -11,8 +11,6 @@ import java.util.Objects;
 
 public class User implements Comparable<User> {
 	public static final String NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE = "null이 인자로 올 수 없습니다.";
-	private static final int BLACKJACK_SCORE = 21;
-	private static final int BURST_RESULT_SCORE = 0;
 
 	protected Cards cards;
 	protected DrawStrategy drawStrategy;
