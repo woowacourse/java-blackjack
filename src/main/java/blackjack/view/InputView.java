@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.player.domain.Player;
+import blackjack.domain.player.Player;
 import blackjack.view.dto.DrawRequestDTO;
 import blackjack.view.dto.NameMoneyDTO;
 import blackjack.view.dto.NamesDTO;

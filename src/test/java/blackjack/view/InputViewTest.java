@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.card.domain.CardBundle;
+import blackjack.domain.card.CardBundle;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.PlayerInfo;
 import blackjack.generic.BettingMoney;
-import blackjack.player.domain.Gambler;
-import blackjack.player.domain.PlayerInfo;
 import blackjack.view.dto.DrawRequestDTO;
 import blackjack.view.dto.NamesDTO;
 import org.junit.jupiter.api.DisplayName;

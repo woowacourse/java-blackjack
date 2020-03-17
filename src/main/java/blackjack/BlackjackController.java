@@ -1,11 +1,11 @@
 package blackjack;
 
-import blackjack.card.domain.CardBundle;
-import blackjack.card.domain.Drawable;
-import blackjack.player.domain.Dealer;
-import blackjack.player.domain.Player;
-import blackjack.player.domain.PlayerInfo;
-import blackjack.player.domain.Players;
+import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.Drawable;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.PlayerInfo;
+import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.NameMoneyDTO;

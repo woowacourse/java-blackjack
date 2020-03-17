@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.card.domain.Card;
-import blackjack.player.domain.Dealer;
-import blackjack.player.domain.Gambler;
-import blackjack.player.domain.Player;
-import blackjack.player.domain.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.view.dto.GameStatisticsDTO;
 
 import java.util.List;

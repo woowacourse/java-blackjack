@@ -1,7 +1,7 @@
 package blackjack.view.dto;
 
-import blackjack.player.domain.report.GameReport;
-import blackjack.player.domain.report.GameReports;
+import blackjack.domain.report.GameReport;
+import blackjack.domain.report.GameReports;
 
 import java.util.List;
 import java.util.stream.Collectors;
