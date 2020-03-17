@@ -27,7 +27,16 @@ public class Card {
     }
 
     private boolean is(Rank rank, Suit suit) {
-        return this.rank == rank && this.suit == suit;
+        return this.rank.is(rank) && this.suit.is(suit);
+    }
+
+    // Rank 클래스에 isAce() 메서드를 또 만드는게 나을까 아니면 지금 is메서드를 활용하는게 나을까
+    public boolean isAce() {
+        return rank.is(Rank.ACE);
+    }
+
+    public int extractScore() {
+        return rank.getValue();
     }
 
     @Override

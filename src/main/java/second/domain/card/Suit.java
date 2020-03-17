@@ -12,6 +12,10 @@ public enum Suit {
         this.name = name;
     }
 
+    public boolean is(Suit suit) {
+        return this == suit;
+    }
+
     @Override
     public String toString() {
         return name;

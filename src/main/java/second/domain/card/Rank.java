@@ -34,5 +34,9 @@ public enum Rank {
     public int getValue() {
         return value;
     }
+
+    public boolean is(Rank rank) {
+        return this == rank;
+    }
 }
 
