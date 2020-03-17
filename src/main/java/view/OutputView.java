@@ -1,6 +1,6 @@
 package view;
 
-import domain.gamer.dto.GamerDto;
+import domain.gamer.dto.GamerWithCardsDto;
 import domain.gamer.dto.GamerWithScoreDto;
 import domain.result.PlayerResult;
 import domain.result.dto.DealerResultDto;
@@ -11,23 +11,23 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DELIMITER = ", ";
 
-    public static void printInitGamersState(GamerDto dealerDto, List<GamerDto> playerDtos, int initCardsSize) {
+    public static void printInitGamersState(GamerWithCardsDto dealerDto, List<GamerWithCardsDto> playerDtos, int initCardsSize) {
         String dealerName = dealerDto.getName();
         String playerNames = playerDtos.stream()
-                .map(GamerDto::getName)
+                .map(GamerWithCardsDto::getName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.printf("%s와 %s에게 %d장의 카드를 나누었습니다.\n", dealerName, playerNames, initCardsSize);
         printGamerCardsState(dealerDto);
-        for (GamerDto playerDto : playerDtos) {
+        for (GamerWithCardsDto playerDto : playerDtos) {
             printGamerCardsState(playerDto);
         }
     }
 
-    public static void printGamerCardsState(GamerDto gamerDto) {
-        String gamerCards = gamerDto.getCards().stream()
+    public static void printGamerCardsState(GamerWithCardsDto gamerWithCardsDto) {
+        String gamerCards = gamerWithCardsDto.getCards().stream()
                 .map(card -> card.getSymbol().getWord() + card.getType().getPattern())
                 .collect(Collectors.joining(DELIMITER));
-        System.out.printf("%s: %s\n", gamerDto.getName(), gamerCards);
+        System.out.printf("%s: %s\n", gamerWithCardsDto.getName(), gamerCards);
     }
 
     public static void printDealerHit(int hitThreshold) {
@@ -58,7 +58,7 @@ public class OutputView {
                 dealerResultDto.getLoseCount());
     }
 
-    public static void printEachResult(GamerDto playerDto, PlayerResult playerResult) {
+    public static void printEachResult(GamerWithCardsDto playerDto, PlayerResult playerResult) {
         System.out.println(playerDto.getName() + " : " + playerResult.getName());
     }
 }

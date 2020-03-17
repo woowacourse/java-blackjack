@@ -6,7 +6,7 @@ import domain.card.DeckFactory;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.gamer.dto.GamerDto;
+import domain.gamer.dto.GamerWithCardsDto;
 import domain.gamer.dto.GamerWithScoreDto;
 import domain.result.GameResults;
 import domain.result.dto.DealerResultDto;
@@ -22,7 +22,7 @@ public class BlackJackGame {
         Players players = Players.valueOf(deck, InputView.inputPlayerNames());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        OutputView.printInitGamersState(GamerDto.ofWithFirstCard(dealer),
+        OutputView.printInitGamersState(GamerWithCardsDto.ofWithFirstCard(dealer),
                 createPlayerDtos(players), Deck.INIT_CARDS_SIZE);
         receiveGamerCards(deck, players, dealer);
         OutputView.printGamerCardsStateWithScores(createGamersWithScoreDtos(dealer, players));
@@ -30,10 +30,10 @@ public class BlackJackGame {
         printGameResult(dealer, players);
     }
 
-    private List<GamerDto> createPlayerDtos(Players players) {
-        List<GamerDto> playerDtos = new ArrayList<>();
+    private List<GamerWithCardsDto> createPlayerDtos(Players players) {
+        List<GamerWithCardsDto> playerDtos = new ArrayList<>();
         for (Player player : players) {
-            playerDtos.add(GamerDto.of(player));
+            playerDtos.add(GamerWithCardsDto.of(player));
         }
         return playerDtos;
     }
@@ -53,7 +53,7 @@ public class BlackJackGame {
         OutputView.printGameResultTitle();
         OutputView.printDealerResult(DealerResultDto.of(gameResults));
         for (Player player : players) {
-            OutputView.printEachResult(GamerDto.of(player), gameResults.getPlayerResult(player));
+            OutputView.printEachResult(GamerWithCardsDto.of(player), gameResults.getPlayerResult(player));
         }
     }
 
@@ -74,7 +74,7 @@ public class BlackJackGame {
     private void receivePlayerCards(Deck deck, Player player) {
         while (player.isHittable() && askResponse(player)) {
             player.hit(deck);
-            OutputView.printGamerCardsState(GamerDto.of(player));
+            OutputView.printGamerCardsState(GamerWithCardsDto.of(player));
         }
     }
 

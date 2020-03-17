@@ -24,7 +24,7 @@ class GamerWithScoreDtoTest {
 
     @Test
     void of() {
-        assertThat(GamerDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
+        assertThat(GamerWithCardsDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
     }
 
     @Test

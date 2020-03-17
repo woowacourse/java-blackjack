@@ -36,27 +36,27 @@ public class BattingMoneyTest {
     @DisplayName("블랙잭 승에 따른 배팅 수익 계산")
     void calculateEarningBlackJack() {
         battingMoney = new BattingMoney(10000);
-        assertThat(battingMoney.calculateEarning(PlayerResult.BLACKJACK_WIN)). isEqualTo(15000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.BLACKJACK_WIN)).isEqualTo(15000);
     }
 
     @Test
     @DisplayName("승에 따른 배팅 수익 계산")
     void calculateEarningWin() {
         battingMoney = new BattingMoney(10000);
-        assertThat(battingMoney.calculateEarning(PlayerResult.WIN)). isEqualTo(10000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.WIN)).isEqualTo(10000);
     }
 
     @Test
     @DisplayName("무에 따른 배팅 수익 계산")
     void calculateEarningDraw() {
         battingMoney = new BattingMoney(10000);
-        assertThat(battingMoney.calculateEarning(PlayerResult.DRAW)). isEqualTo(0);
+        assertThat(battingMoney.calculateEarning(PlayerResult.DRAW)).isEqualTo(0);
     }
 
     @Test
     @DisplayName("패에 따른 배팅 수익 계산")
     void calculateEarningLose() {
         battingMoney = new BattingMoney(10000);
-        assertThat(battingMoney.calculateEarning(PlayerResult.LOSE)). isEqualTo(-10000);
+        assertThat(battingMoney.calculateEarning(PlayerResult.LOSE)).isEqualTo(-10000);
     }
 }

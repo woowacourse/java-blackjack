@@ -51,7 +51,7 @@ public enum PlayerResult {
     }
 
     public int multiply(int battingMoney) {
-        return (int)(battingMoney * earningRate);
+        return (int) (battingMoney * earningRate);
     }
 
     public String getName() {

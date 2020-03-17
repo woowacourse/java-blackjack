@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.card.*;
+import domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,24 @@ class PlayerTest {
         String name = "player";
         Player player = new Player(playingCards, name);
         assertThat(player).isNotNull();
+    }
+
+    @Test
+    @DisplayName("배팅액 입력 - 플레이어가 생성된다")
+    void constructorWithBattingMoney() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name, 1000);
+        assertThat(player).isNotNull();
+    }
+
+    @Test
+    @DisplayName("배팅 결과에 대한 플레이어 배팅 수익 계산")
+    void calculateEarning() {
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        String name = "player";
+        Player player = new Player(playingCards, name, 1000);
+        assertThat(player.calculateEarning(PlayerResult.WIN)).isEqualTo(1000);
     }
 
     @Test
