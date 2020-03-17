@@ -103,7 +103,7 @@ public class DealerTest {
         Map<Result, Integer> expected = makeDealerResultMap(0, 1, 1);
 
         Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("오렌지", "히히"));
+        Players players = new Players(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
 
         makePlayerScoreBlackJack(players.getPlayers().get(0));    // 딜러를 이김
         makePlayerScoreEighteen(players.getPlayers().get(1));     // 딜러와 비김

@@ -6,6 +6,7 @@ import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -19,7 +20,7 @@ public class BlackJackController {
     }
 
     private static void runWithoutExceptionCatch() {
-        Players players = new Players(InputView.readPlayerNames());
+        Players players = readPlayers();
         Dealer dealer = new Dealer();
         Deck deck = CardFactory.createShuffledDeck();
 
@@ -27,8 +28,13 @@ public class BlackJackController {
         dealToPlayers(players, deck);
         dealToDealer(dealer, deck);
 
-        OutputView.printFinalCardStatus(dealer, players);
         conclude(players, dealer);
+    }
+
+    private static Players readPlayers() {
+        List<String> playerNames = InputView.readPlayerNames();
+        List<Integer> betAmounts = InputView.readBetAmounts(playerNames);
+        return new Players(playerNames, betAmounts);
     }
 
     private static void doFirstDeal(Players players, Dealer dealer, Deck deck) {
@@ -59,6 +65,7 @@ public class BlackJackController {
     }
 
     private static void conclude(Players players, Dealer dealer) {
+        OutputView.printFinalCardStatus(dealer, players);
         OutputView.printResultMessage();
         OutputView.printDealerResult(dealer.calculateResult(players));
         for (Player player : players.getPlayers()) {
