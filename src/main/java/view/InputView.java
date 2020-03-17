@@ -18,4 +18,9 @@ public class InputView {
 		System.out.println(String.format(STRING_FORMAT_IS_HIT, user.getName()));
 		return scanner.next();
 	}
+
+	public static String inputMoney(User user) {
+		System.out.println(String.format("%s의 베팅금액은?", user.getName()));
+		return scanner.next();
+	}
 }
