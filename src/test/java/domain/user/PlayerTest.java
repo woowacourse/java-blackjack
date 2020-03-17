@@ -21,7 +21,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.result.ResultType;
+import domain.result.Ratio;
 
 class PlayerTest {
 
@@ -71,7 +71,7 @@ class PlayerTest {
     @ParameterizedTest
     @DisplayName("포인트 비교로 승자 확인")
     @MethodSource("createCardSet")
-    void reflect(Card playerCard, Card dealerCard, ResultType expected) {
+    void reflect(Card playerCard, Card dealerCard, Ratio expected) {
         Queue<Card> cards = new LinkedList<>(Arrays.asList(
                 new Card(Symbol.DIAMOND, Type.KING),
                 new Card(Symbol.DIAMOND, Type.SIX),
@@ -89,35 +89,35 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(dealerCard);
         dealer.draw(deck);
 
-        assertThat(player.decideResultType(dealer)).isEqualTo(expected);
+        assertThat(player.decideRatio(dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardSet() {
         return Stream.of(
                 //플레이어가 21점인 경우
-                createCardsAndWinningResult(Type.FIVE, Type.FIVE, ResultType.DRAW),
-                createCardsAndWinningResult(Type.FIVE, Type.FOUR, ResultType.WIN),
-                createCardsAndWinningResult(Type.FIVE, Type.SIX, ResultType.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.FIVE, Ratio.DRAW),
+                createCardsAndWinningResult(Type.FIVE, Type.FOUR, Ratio.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.SIX, Ratio.WIN),
 
                 //플레이어가 버스트인 경우
-                createCardsAndWinningResult(Type.SIX, Type.SIX, ResultType.LOSE),
-                createCardsAndWinningResult(Type.SIX, Type.FIVE, ResultType.LOSE),
-                createCardsAndWinningResult(Type.SIX, Type.FOUR, ResultType.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.SIX, Ratio.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FIVE, Ratio.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FOUR, Ratio.LOSE),
 
                 //플레이어가 21미만인 경우
-                createCardsAndWinningResult(Type.THREE, Type.TWO, ResultType.WIN),
-                createCardsAndWinningResult(Type.THREE, Type.THREE, ResultType.DRAW),
-                createCardsAndWinningResult(Type.THREE, Type.FOUR, ResultType.LOSE),
-                createCardsAndWinningResult(Type.THREE, Type.FIVE, ResultType.LOSE),
-                createCardsAndWinningResult(Type.THREE, Type.SIX, ResultType.WIN)
+                createCardsAndWinningResult(Type.THREE, Type.TWO, Ratio.WIN),
+                createCardsAndWinningResult(Type.THREE, Type.THREE, Ratio.DRAW),
+                createCardsAndWinningResult(Type.THREE, Type.FOUR, Ratio.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.FIVE, Ratio.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.SIX, Ratio.WIN)
         );
     }
 
-    private static Arguments createCardsAndWinningResult(Type player, Type dealer, ResultType resultType) {
+    private static Arguments createCardsAndWinningResult(Type player, Type dealer, Ratio ratio) {
         return Arguments.of(
                 new Card(Symbol.HEART, player),
                 new Card(Symbol.SPADE, dealer),
-                resultType
+                ratio
         );
     }
 
@@ -134,7 +134,7 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.ACE));
         dealer.draw(deck);
 
-        assertThat(player.decideResultType(dealer)).isEqualTo(ResultType.DRAW);
+        assertThat(player.decideRatio(dealer)).isEqualTo(Ratio.DRAW);
     }
 
     @Test
@@ -152,7 +152,7 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.FIVE));
         dealer.draw(deck);
 
-        assertThat(player.decideResultType(dealer)).isEqualTo(ResultType.WIN);
+        assertThat(player.decideRatio(dealer)).isEqualTo(Ratio.BLACKJACK);
     }
 
     @Test
@@ -170,6 +170,6 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.ACE));
         dealer.draw(deck);
 
-        assertThat(player.decideResultType(dealer)).isEqualTo(ResultType.LOSE);
+        assertThat(player.decideRatio(dealer)).isEqualTo(Ratio.LOSE);
     }
 }

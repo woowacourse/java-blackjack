@@ -68,24 +68,24 @@ public class OutputView {
     }
 
     private static void printDealerGameResult(GameResult gameResult) {
-        String dealerGameResult = Dealer.NAME + COLON
-                + gameResult.getResultOfDealer()
-                .entrySet()
-                .stream()
-                .map(result -> result.getValue() + result.getKey().getResult())
-                .collect(Collectors.joining(SPACE));
+        // String dealerGameResult = Dealer.NAME + COLON
+        //         + gameResult.getResultOfDealer()
+        //         .entrySet()
+        //         .stream()
+        //         .map(result -> result.getValue() + result.getKey().getRatio())
+        //         .collect(Collectors.joining(SPACE));
 
-        System.out.println(dealerGameResult);
+        // System.out.println(dealerGameResult);
     }
 
     private static void printPlayersGameResult(GameResult gameResult) {
-        String playersGameResult = gameResult.getResultOfPlayers()
-                .entrySet()
-                .stream()
-                .map(player -> player.getKey().getName() + COLON + player.getValue().getResult())
-                .collect(Collectors.joining(NEWLINE));
-
-        System.out.println(playersGameResult);
+        // String playersGameResult = gameResult.getResultOfPlayers()
+        //         .entrySet()
+        //         .stream()
+        //         .map(player -> player.getKey().getName() + COLON + player.getValue().getRatio())
+        //         .collect(Collectors.joining(NEWLINE));
+        //
+        // System.out.println(playersGameResult);
     }
 
     private static String printUserDealOutResult(User user) {

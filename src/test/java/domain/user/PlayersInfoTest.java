@@ -13,14 +13,10 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -29,7 +25,6 @@ import domain.card.Deck;
 import domain.card.DeckFactory;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.result.ResultType;
 import view.OutputView;
 
 class PlayersInfoTest {
@@ -66,48 +61,6 @@ class PlayersInfoTest {
                 .collect(Collectors.toList());
 
         assertThat(expected).isEqualTo(result);
-    }
-
-    @ParameterizedTest
-    @DisplayName("승자 결과")
-    @MethodSource("createIndexAndResultType")
-    void decideWinner(int index, ResultType expected) {
-        MockitoAnnotations.initMocks(this);
-        Queue<Card> cards = new LinkedList<>(Arrays.asList(
-                new Card(Symbol.SPADE, Type.SIX),
-                new Card(Symbol.SPADE, Type.SEVEN),
-                new Card(Symbol.HEART, Type.FIVE),
-                new Card(Symbol.CLOVER, Type.SIX))
-        );
-        Map<Player, ResultType> resultOfPlayers;
-
-        given(deck.dealOut()).will(invocation -> cards.poll());
-
-        Dealer dealer = Dealer.appoint();
-        dealer.draw(deck);
-
-        playersInfo.getPlayers()
-                .get(0)
-                .draw(deck);
-        playersInfo.getPlayers()
-                .get(1)
-                .draw(deck);
-        playersInfo.getPlayers()
-                .get(2)
-                .draw(deck);
-
-        resultOfPlayers = playersInfo.decideWinner(dealer);
-        Player player = playersInfo.getPlayers().get(index);
-
-        assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> createIndexAndResultType() {
-        return Stream.of(
-                Arguments.of(0, ResultType.WIN),
-                Arguments.of(1, ResultType.LOSE),
-                Arguments.of(2, ResultType.DRAW)
-        );
     }
 
     @Test

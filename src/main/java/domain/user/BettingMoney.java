@@ -3,6 +3,7 @@ package domain.user;
 public class BettingMoney {
 
     private static final int CRITERIA = 0;
+
     private final int money;
 
     public BettingMoney(int money) {

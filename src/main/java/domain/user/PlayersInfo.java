@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import domain.card.Deck;
-import domain.result.ResultType;
 
 public class PlayersInfo {
 
@@ -40,12 +39,13 @@ public class PlayersInfo {
         });
     }
 
-    public Map<Player, ResultType> decideWinner(Dealer dealer) {
-        Map<Player, ResultType> resultOfPlayers = new LinkedHashMap<>();
+    public Map<Player, Double> calculateProfit(Dealer dealer) {
+        Map<Player, Double> profitOfPlayers = new LinkedHashMap<>();
 
-        playersInfo.forEach((player, bettingMoney) -> resultOfPlayers.put(player, player.decideResultType(dealer)));
+        playersInfo.forEach((player, bettingMoney) ->
+                        profitOfPlayers.put(player, bettingMoney.getMoney() * player.decideRatio(dealer).getRatio()));
 
-        return Collections.unmodifiableMap(resultOfPlayers);
+        return Collections.unmodifiableMap(profitOfPlayers);
     }
 
     public List<Player> getPlayers() {

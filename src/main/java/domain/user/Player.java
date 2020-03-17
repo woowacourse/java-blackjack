@@ -2,8 +2,8 @@ package domain.user;
 
 import java.util.Arrays;
 
-import domain.result.ResultType;
-import domain.rule.PlayerResultRule;
+import domain.result.PlayerResultRule;
+import domain.result.Ratio;
 
 public class Player extends User {
 
@@ -16,11 +16,11 @@ public class Player extends User {
         return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint();
     }
 
-    public ResultType decideResultType(Dealer dealer) {
+    public Ratio decideRatio(Dealer dealer) {
         return Arrays.stream(PlayerResultRule.values())
                 .filter(rule -> rule.condition(this, dealer))
                 .findFirst()
                 .orElseThrow(() -> new AssertionError("게임 규칙이 올바르지 않습니다."))
-                .getResultType();
+                .getRatio();
     }
 }

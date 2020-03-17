@@ -40,7 +40,7 @@ class GameResultTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        List<String> names = Arrays.asList("pobi", "jason", "woo");
+        List<String> names = Arrays.asList("pobi", "jason", "woo", "lowoon");
         Map<String, Integer> playerInfo = names.stream()
                 .collect(Collectors.toMap(Function.identity(), name -> 1000,
                         (e1, e2) -> {
@@ -51,8 +51,10 @@ class GameResultTest {
                 new Card(Symbol.SPADE, Type.SIX),
                 new Card(Symbol.SPADE, Type.SEVEN),
                 new Card(Symbol.HEART, Type.FIVE),
-                new Card(Symbol.CLOVER, Type.SIX))
-        );
+                new Card(Symbol.CLOVER, Type.SIX),
+                new Card(Symbol.SPADE, Type.ACE),
+                new Card(Symbol.CLOVER, Type.KING)
+        ));
         given(deck.dealOut()).will(invocation -> cards.poll());
 
         dealer = Dealer.appoint();
@@ -67,43 +69,31 @@ class GameResultTest {
         playersInfo.getPlayers()
                 .get(2)
                 .draw(deck);
+        playersInfo.getPlayers()
+                .get(3)
+                .draw(deck);
+        playersInfo.getPlayers()
+                .get(3)
+                .draw(deck);
     }
 
     @ParameterizedTest
     @DisplayName("플레이어들 게임 결과")
-    @MethodSource("createIndexAndResultOfPlayers")
-    void getResultOfPlayers(int index, ResultType expected) {
-        Map<Player, ResultType> resultOfPlayers;
-        resultOfPlayers = GameResult.of(dealer, playersInfo).getResultOfPlayers();
+    @MethodSource("createIndexAndProfitOfPlayers")
+    void getProfitOfPlayers(int index, double expected) {
+        Map<Player, Double> profitOfPlayers;
+        profitOfPlayers = GameResult.of(dealer, playersInfo).getProfitOfPlayers();
         Player player = playersInfo.getPlayers().get(index);
 
-        assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
+        assertThat(profitOfPlayers.get(player)).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> createIndexAndResultOfPlayers() {
+    private static Stream<Arguments> createIndexAndProfitOfPlayers() {
         return Stream.of(
-                Arguments.of(0, ResultType.WIN),
-                Arguments.of(1, ResultType.LOSE),
-                Arguments.of(2, ResultType.DRAW)
-        );
-    }
-
-    @ParameterizedTest
-    @DisplayName("플레이어들 게임 결과")
-    @MethodSource("createIndexAndResultOfDealer")
-    void getResultOfDealer(int index, ResultType expected) {
-        Map<Player, ResultType> resultOfPlayers;
-        resultOfPlayers = GameResult.of(dealer, playersInfo).getResultOfPlayers();
-        Player player = playersInfo.getPlayers().get(index);
-
-        assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> createIndexAndResultOfDealer() {
-        return Stream.of(
-                Arguments.of(0, ResultType.WIN),
-                Arguments.of(1, ResultType.LOSE),
-                Arguments.of(2, ResultType.DRAW)
+                Arguments.of(0, 1000),
+                Arguments.of(1, -1000),
+                Arguments.of(2, 0),
+                Arguments.of(3, 1500)
         );
     }
 }
