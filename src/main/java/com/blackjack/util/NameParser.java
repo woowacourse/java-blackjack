@@ -15,8 +15,8 @@ public class NameParser {
 
 	public static List<Name> parseName(String input) {
 		return Stream.of(input.split(DELIMITER))
-				.map(String::trim)
-				.map(Name::new)
-				.collect(toList());
+			.map(String::trim)
+			.map(Name::new)
+			.collect(toList());
 	}
 }

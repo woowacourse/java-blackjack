@@ -1,8 +1,7 @@
 package com.blackjack.domain;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,25 +14,22 @@ public class GameRule {
 	private final List<User> players;
 
 	public GameRule(Dealer dealer, List<User> players) {
-		Objects.requireNonNull(dealer);
-		Objects.requireNonNull(players);
+		validateNullOrEmpty(dealer, players);
 		this.dealer = dealer;
 		this.players = players;
+	}
+
+	private void validateNullOrEmpty(Dealer dealer, List<User> players) {
+		if (Objects.isNull(dealer) || Objects.isNull(players) || players.isEmpty()) {
+			throw new IllegalArgumentException("딜러 또는 플레이어가 존재하지 않습니다.");
+		}
 	}
 
 	public PlayerRecords calculateResult() {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> compareScoreTo(player, dealer),
-						(r1, r2) -> r1,
-						LinkedHashMap::new
+						player -> player.compareScoreWith(dealer)
 				), PlayerRecords::new));
-	}
-
-	private ResultType compareScoreTo(User player, User dealer) {
-		Score playerScore = Score.of(player.calculateScore());
-		Score dealerScore = Score.of(dealer.calculateScore());
-		return ResultType.of(playerScore.compareTo(dealerScore));
 	}
 }

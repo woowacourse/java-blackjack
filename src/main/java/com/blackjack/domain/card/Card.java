@@ -1,33 +1,81 @@
 package com.blackjack.domain.card;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Card {
-	private final CardNumber cardNumber;
-	private final CardSymbol cardSymbol;
+	private final Denomination denomination;
+	private final Suit suit;
 
-	public Card(CardNumber cardNumber, CardSymbol cardSymbol) {
-		validateNull(cardNumber, cardSymbol);
-		this.cardNumber = cardNumber;
-		this.cardSymbol = cardSymbol;
+	private Card(Denomination denomination, Suit suit) {
+		validateNull(denomination, suit);
+		this.denomination = denomination;
+		this.suit = suit;
 	}
 
-	private void validateNull(CardNumber cardNumber, CardSymbol cardSymbol) {
-		if (Objects.isNull(cardNumber) || Objects.isNull(cardSymbol)) {
-			throw new IllegalArgumentException("카드의 번호와 문양은 null을 가질 수 없습니다.");
+	public static Card valueOf(Denomination denomination, Suit suit) {
+		return CardCache.CARD_CACHE
+				.stream()
+				.filter(card -> card.isSameCard(denomination, suit))
+				.findAny()
+				.orElse(new Card(denomination, suit));
+	}
+
+	public static List<Card> values() {
+		return Collections.unmodifiableList(CardCache.CARD_CACHE);
+	}
+
+	private void validateNull(Denomination denomination, Suit suit) {
+		if (Objects.isNull(denomination) || Objects.isNull(suit)) {
+			throw new IllegalArgumentException("denomination 또는 suit는 null을 가질 수 없습니다.");
 		}
 	}
 
-	public int getNumber() {
-		return cardNumber.getNumber();
+	public boolean isAce() {
+		return denomination.isAce();
 	}
 
-	public boolean isAce() {
-		return cardNumber.isAce();
+	private boolean isSameCard(Denomination denomination, Suit suit) {
+		return isSameSymbol(denomination) && isSameType(suit);
+	}
+
+	private boolean isSameSymbol(Denomination denomination) {
+		return this.denomination.equals(denomination);
+	}
+
+	private boolean isSameType(Suit suit) {
+		return this.suit.equals(suit);
+	}
+
+	public int getScore() {
+		return denomination.getScore();
 	}
 
 	@Override
 	public String toString() {
-		return cardNumber.toString() + cardSymbol.toString();
+		return denomination.toString() + suit.toString();
+	}
+
+	private static class CardCache {
+		private static final List<Card> CARD_CACHE = new ArrayList<>();
+
+		static {
+			CARD_CACHE.addAll(generateCards());
+		}
+
+		private static List<Card> generateCards() {
+			return Stream.of(Denomination.values())
+					.flatMap(CardCache::generateCardsBySymbol)
+					.collect(Collectors.toList());
+		}
+
+		private static Stream<Card> generateCardsBySymbol(Denomination denomination) {
+			return Stream.of(Suit.values())
+					.map(suit -> new Card(denomination, suit));
+		}
 	}
 }

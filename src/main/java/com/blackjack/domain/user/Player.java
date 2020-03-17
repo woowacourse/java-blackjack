@@ -1,7 +1,9 @@
 package com.blackjack.domain.user;
 
+import com.blackjack.domain.Score;
+
 public class Player extends User {
-	private static final int DRAW_CONDITION = 20;
+	private static final int DRAW_CONDITION = 21;
 
 	Player(Name name) {
 		super(name);
@@ -9,7 +11,7 @@ public class Player extends User {
 
 	@Override
 	public boolean canDraw() {
-		int score = hand.calculateScore();
-		return score <= DRAW_CONDITION;
+		Score score = hands.calculateScore();
+		return !score.isBust() && score.isLowerThan(DRAW_CONDITION);
 	}
 }

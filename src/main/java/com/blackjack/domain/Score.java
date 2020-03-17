@@ -3,35 +3,49 @@ package com.blackjack.domain;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Score implements Comparable<Score> {
-	private static final int BUSTED = 0;
-	private static final int BUST_THRESHOLD = 21;
-
+	public static final int BLACKJACK_SCORE = 21;
+	private static final String SCORE_OUT_OF_RANGE_MESSAGE = "점수의 범위를 벗어났습니다.";
+	private static final int BUST_SCORE = 0;
 	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 
 	static {
-		for (int i = BUSTED; i <= BUST_THRESHOLD; i++) {
-			SCORE_CACHE.put(i, new Score(i));
+		for (int score = BUST_SCORE; score <= BLACKJACK_SCORE; ++score) {
+			SCORE_CACHE.put(score, new Score(score));
 		}
 	}
 
 	private final int score;
 
 	private Score(int score) {
+		validateBounds(score);
 		this.score = score;
 	}
 
-	static Score of(int score) {
-		if (score > BUST_THRESHOLD) {
-			return SCORE_CACHE.get(BUSTED);
+	public static Score valueOf(int value) {
+		return Optional.ofNullable(SCORE_CACHE.get(value))
+				.orElse(new Score(value));
+	}
+
+	private void validateBounds(int score) {
+		if (score < BUST_SCORE) {
+			throw new IllegalArgumentException(SCORE_OUT_OF_RANGE_MESSAGE);
 		}
-		return SCORE_CACHE.get(score);
+	}
+
+	public boolean isLowerThan(int drawCondition) {
+		return score < drawCondition;
+	}
+
+	public boolean isBust() {
+		return score == BUST_SCORE;
 	}
 
 	@Override
-	public int compareTo(Score o) {
-		return Integer.compare(score, o.score);
+	public int compareTo(Score that) {
+		return Integer.compare(this.score, that.score);
 	}
 
 	@Override

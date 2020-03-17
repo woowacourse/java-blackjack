@@ -1,43 +1,30 @@
 package com.blackjack.domain;
 
-import java.util.Arrays;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public enum ResultType {
-	WIN("승", 1),
-	DRAW("무", 0),
-	LOSE("패", -1);
+	WIN("승", (compareResult) -> compareResult > 0),
+	DRAW("무", (compareResult) -> compareResult == 0),
+	LOSE("패", (compareResult) -> compareResult < 0);
 
+	Predicate<Integer> match;
 	private String alias;
-	private int compareResult;
 
-	ResultType(String alias, int compareResult) {
+	ResultType(String alias, Predicate<Integer> match) {
 		this.alias = alias;
-		this.compareResult = compareResult;
+		this.match = match;
 	}
 
-	public static ResultType of(int compare) {
-		return Arrays.stream(values())
-				.filter(resultType -> resultType.compareResult == compare)
+	public static ResultType of(int compareResult) {
+		return Stream.of(values())
+				.filter(resultType -> resultType.isMatch(compareResult))
 				.findAny()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new IllegalArgumentException("일치하는 결과가 없습니다."));
 	}
 
-	public ResultType reverseResultType() {
-		if (isLose()) {
-			return WIN;
-		}
-		if (isWin()) {
-			return LOSE;
-		}
-		return DRAW;
-	}
-
-	private boolean isWin() {
-		return WIN.equals(this);
-	}
-
-	private boolean isLose() {
-		return LOSE.equals(this);
+	private boolean isMatch(int compareResult) {
+		return match.test(compareResult);
 	}
 
 	@Override
