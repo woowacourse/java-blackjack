@@ -9,11 +9,16 @@ public class Dealer extends User {
     private static final int FIRST_INDEX = 0;
 
     public Dealer() {
-        super(NAME, BASES_SCORE_CAN_DRAW);
+        super(NAME);
     }
 
     public String getFirstCardInfo() {
         List<String> cardsInfos = userCards.getInfos();
         return cardsInfos.get(FIRST_INDEX);
+    }
+
+    @Override
+    public boolean canDrawCard() {
+        return getScore().isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);
     }
 }

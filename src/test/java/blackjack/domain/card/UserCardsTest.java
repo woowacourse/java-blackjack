@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.result.Score;
+import blackjack.domain.result.CardsResult;
 import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,13 +35,13 @@ public class UserCardsTest {
         userCards.add(new Card(Type.HEART, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        assertThat(userCards.getScore()).isEqualTo(new Score(14, true, 1));
+        assertThat(userCards.getScore()).isEqualTo(new CardsResult(14, true, 1));
 
         userCards = new UserCards();
         userCards.add(new Card(Type.DIAMOND, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.ACE));
         userCards.add(new Card(Type.CLUB, Symbol.TWO));
-        assertThat(userCards.getScore()).isEqualTo(new Score(4, true, 1));
+        assertThat(userCards.getScore()).isEqualTo(new CardsResult(4, true, 1));
     }
 
     @DisplayName("카드 없을경우 예외")

@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserCards;
-import blackjack.domain.result.Score;
+import blackjack.domain.result.CardsResult;
 import java.util.List;
 
 public abstract class User {
@@ -12,13 +12,11 @@ public abstract class User {
         "참여인원의 이름은 공백이어선 안됩니다.";
 
     private final String name;
-    private final Score basesScoreCanDraw;
     protected UserCards userCards = new UserCards();
 
-    public User(String name, int basesScoreCanDraw) {
+    public User(String name) {
         validNotBlankOrNull(name);
         this.name = name.trim();
-        this.basesScoreCanDraw = new Score(basesScoreCanDraw);
     }
 
     private void validNotBlankOrNull(String name) {
@@ -37,16 +35,13 @@ public abstract class User {
         }
     }
 
-    public boolean canDrawCard() {
-        return basesScoreCanDraw.isMoreThanScore(userCards.getScore())
-            || basesScoreCanDraw.equals(userCards.getScore());
-    }
+    public abstract boolean canDrawCard();
 
     public String getName() {
         return name;
     }
 
-    public Score getScore() {
+    public CardsResult getScore() {
         return userCards.getScore();
     }
 

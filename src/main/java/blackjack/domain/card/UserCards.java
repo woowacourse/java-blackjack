@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.result.Score;
+import blackjack.domain.result.CardsResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,11 +19,11 @@ public class UserCards {
         cards.add(card);
     }
 
-    public Score getScore() {
+    public CardsResult getScore() {
         int score = cards.stream()
             .mapToInt(Card::getValue)
             .sum();
-        return new Score(score, hasAce(), cards.size());
+        return new CardsResult(score, hasAce(), cards.size());
     }
 
     public boolean hasAce() {

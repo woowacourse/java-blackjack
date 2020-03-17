@@ -8,39 +8,44 @@ public enum Outcome {
     PLAYER_DRAW("무", "무", Outcome::isPlayerDraw),
     PLAYER_LOSE("패", "승", Outcome::isPlayerLose);
 
-    private static boolean isPlayerWin(Score playerScore, Score dealerScore) {
-        boolean playerOnlyBlackJack = playerScore.isBlackJack() && !dealerScore.isBlackJack();
-        boolean dealerOnlyBust = !playerScore.isBust() && dealerScore.isBust();
+    private static boolean isPlayerWin(CardsResult playerCardsResult,
+        CardsResult dealerCardsResult) {
+        boolean playerOnlyBlackJack =
+            playerCardsResult.isBlackJack() && !dealerCardsResult.isBlackJack();
+        boolean dealerOnlyBust = !playerCardsResult.isBust() && dealerCardsResult.isBust();
         boolean playerNotBustAndMoreThanDealer =
-            !playerScore.isBust() && playerScore.isMoreThanScore(dealerScore);
+            !playerCardsResult.isBust() && playerCardsResult.isMoreThanScore(dealerCardsResult);
 
         return playerOnlyBlackJack || dealerOnlyBust || playerNotBustAndMoreThanDealer;
     }
 
-    private static boolean isPlayerDraw(Score playerScore, Score dealerScore) {
-        return playerScore.equals(dealerScore) && !playerScore.isBust();
+    private static boolean isPlayerDraw(
+        CardsResult playerCardsResult, CardsResult dealerCardsResult) {
+        return playerCardsResult.equals(dealerCardsResult) && !playerCardsResult.isBust();
     }
 
-    private static boolean isPlayerLose(Score playerScore, Score dealerScore) {
-        boolean dealerOnlyBlackJack = !playerScore.isBlackJack() && dealerScore.isBlackJack();
+    private static boolean isPlayerLose(
+        CardsResult playerCardsResult, CardsResult dealerCardsResult) {
+        boolean dealerOnlyBlackJack =
+            !playerCardsResult.isBlackJack() && dealerCardsResult.isBlackJack();
 
-        return dealerOnlyBlackJack || dealerScore.isMoreThanScore(playerScore)
-            || playerScore.isBust();
+        return dealerOnlyBlackJack || dealerCardsResult.isMoreThanScore(playerCardsResult)
+            || playerCardsResult.isBust();
     }
 
     private final String name;
     private final String converseName;
-    private final BiPredicate<Score, Score> compare;
+    private final BiPredicate<CardsResult, CardsResult> compare;
 
-    Outcome(String name, String converseName, BiPredicate<Score, Score> compare) {
+    Outcome(String name, String converseName, BiPredicate<CardsResult, CardsResult> compare) {
         this.name = name;
         this.converseName = converseName;
         this.compare = compare;
     }
 
-    public static Outcome of(Score playerScore, Score dealerScore) {
+    public static Outcome of(CardsResult playerCardsResult, CardsResult dealerCardsResult) {
         return Arrays.stream(values())
-            .filter(outcome -> outcome.compare.test(playerScore, dealerScore))
+            .filter(outcome -> outcome.compare.test(playerCardsResult, dealerCardsResult))
             .findAny()
             .orElseThrow(IllegalArgumentException::new);
     }

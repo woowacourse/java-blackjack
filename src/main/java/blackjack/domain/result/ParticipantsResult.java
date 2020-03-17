@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.Participants;
+import blackjack.domain.user.Player;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GameResult {
+public class ParticipantsResult {
 
     private static final int INITIAL_COUNT = 0;
     private static final Map<Outcome, Integer> initialDealerResults;
@@ -29,14 +29,14 @@ public class GameResult {
     private final Map<Player, Outcome> playerResults;
     private final Map<Outcome, Integer> dealerResults;
 
-    public GameResult(Participants participants) {
+    public ParticipantsResult(Participants participants) {
         validNotNull(participants);
         this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(participants));
         this.dealerResults = Collections.unmodifiableMap(calculateDealerResults());
     }
 
     private void validNotNull(Participants participants) {
-        if(participants == null) {
+        if (participants == null) {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
     }

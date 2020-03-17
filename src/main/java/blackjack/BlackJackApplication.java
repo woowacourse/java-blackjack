@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ParticipantsResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
@@ -59,8 +59,8 @@ public class BlackJackApplication {
     }
 
     private static void printCalculatedResult(Participants participants) {
-        GameResult gameResult = new GameResult(participants);
+        ParticipantsResult participantsResult = new ParticipantsResult(participants);
         OutputView.printUsersCardsAndScore(participants);
-        OutputView.printFinalResult(participants, gameResult);
+        OutputView.printFinalResult(participants, participantsResult);
     }
 }

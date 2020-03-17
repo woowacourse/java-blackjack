@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ParticipantsResult;
 import blackjack.domain.result.Outcome;
-import blackjack.domain.result.Score;
+import blackjack.domain.result.CardsResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
@@ -52,16 +52,16 @@ public class OutputView {
     }
 
     public static void printUserCardsAndScore(User user) {
-        Score userScore = user.getScore();
-        System.out.printf("%s - 결과: %s", getUserCards(user), userScore.getScoreResult());
+        CardsResult userCardsResult = user.getScore();
+        System.out.printf("%s - 결과: %s", getUserCards(user), userCardsResult.getResult());
         System.out.println();
     }
 
-    public static void printFinalResult(Participants participants, GameResult gameResult) {
+    public static void printFinalResult(Participants participants, ParticipantsResult participantsResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        printDealerFinalResult(participants.getDealer(), gameResult.getDealerResultsNoZero());
-        printPlayerFinalResult(gameResult.getPlayersResult());
+        printDealerFinalResult(participants.getDealer(), participantsResult.getDealerResultsNoZero());
+        printPlayerFinalResult(participantsResult.getPlayersResult());
     }
 
     private static void printDealerFinalResult(Dealer dealer, Map<Outcome, Integer> gameResult) {

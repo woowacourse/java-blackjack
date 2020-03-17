@@ -10,10 +10,10 @@ public class OutcomeTest {
     @DisplayName("정적 팩터리")
     @Test
     void calculateWinPlayerMoreThanDealer() {
-        Score bust = new Score(22);
-        Score twentyOne = new Score(21);
-        Score twenty = new Score(20);
-        Score nineteen = new Score(19);
+        CardsResult bust = new CardsResult(22);
+        CardsResult twentyOne = new CardsResult(21);
+        CardsResult twenty = new CardsResult(20);
+        CardsResult nineteen = new CardsResult(19);
 
         assertThat(Outcome.of(twenty, nineteen)).isEqualTo(Outcome.PLAYER_WIN);
         assertThat(Outcome.of(bust, twentyOne)).isEqualTo(Outcome.PLAYER_LOSE);

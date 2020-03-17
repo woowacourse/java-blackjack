@@ -14,9 +14,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class GameResultTest {
+public class ParticipantsResultTest {
 
-    private static GameResult gameResult;
+    private static ParticipantsResult participantsResult;
 
     @BeforeAll
     static void resetVariable() {
@@ -28,13 +28,13 @@ public class GameResultTest {
         for (Player player : participants.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
-        gameResult = new GameResult(participants);
+        participantsResult = new ParticipantsResult(participants);
     }
 
     @DisplayName("생성자 NULL일 경우 예외")
     @Test
     void validNotNull() {
-        assertThatThrownBy(() -> new GameResult(null))
+        assertThatThrownBy(() -> new ParticipantsResult(null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("잘못");
     }
@@ -42,7 +42,7 @@ public class GameResultTest {
     @DisplayName("플레이어의 승무패를 가져옴")
     @Test
     void checkPlayersResult() {
-        Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
+        Map<Player, Outcome> playerResult = participantsResult.getPlayersResult();
         List<Outcome> outcomes = Arrays.asList(Outcome.values());
 
         for (Player player : playerResult.keySet()) {
@@ -53,7 +53,7 @@ public class GameResultTest {
     @DisplayName("딜러의 승무패를 가져옴")
     @Test
     void checkDealerResult() {
-        Map<Outcome, Integer> dealerResults = gameResult.getDealerResultsNoZero();
+        Map<Outcome, Integer> dealerResults = participantsResult.getDealerResultsNoZero();
         int total = 0;
         for (Outcome outcome : dealerResults.keySet()) {
             total += dealerResults.get(outcome);
