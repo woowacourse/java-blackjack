@@ -1,5 +1,7 @@
 package com.blackjack.domain.user;
 
+import static com.blackjack.domain.Score.BLACKJACK_SCORE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,6 @@ import com.blackjack.domain.card.Card;
 public class Hands {
 	private static final int ACE_UPWARD_CONDITION = 11;
 	private static final int ACE_UPWARD_SCORE = 10;
-	private static final int BUST_LOWER_BOUND = 22;
 
 	private List<Card> cards;
 
@@ -31,7 +32,7 @@ public class Hands {
 	}
 
 	private int computeBustBy(int totalScore) {
-		if (totalScore >= BUST_LOWER_BOUND) {
+		if (totalScore > BLACKJACK_SCORE) {
 			totalScore = 0;
 		}
 		return totalScore;
