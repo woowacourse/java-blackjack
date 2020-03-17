@@ -1,24 +1,25 @@
 package domain.player;
 
-import domain.Result;
-
 public class User extends Player {
-	private final int bettingMoney;
+	public static final int MINUS_CONVERTER = -1;
+	private static final int ZERO_MONEY = 0;
+
+	private final double bettingMoney;
 
 	public User(String name, int bettingMoney) {
 		super(name);
 		this.bettingMoney = bettingMoney;
 	}
 
-	public Result compareScore(Gamer gamer) {
+	public double compareScore(Gamer gamer) {
 		int toCompareScore = gamer.calculateBurstIsZeroScore();
 		int userScore = calculateBurstIsZeroScore();
 		if (userScore > toCompareScore) {
-			return Result.WIN;
+			return bettingMoney;
 		}
 		if (userScore == toCompareScore) {
-			return Result.DRAW;
+			return ZERO_MONEY;
 		}
-		return Result.LOSE;
+		return bettingMoney * MINUS_CONVERTER;
 	}
 }

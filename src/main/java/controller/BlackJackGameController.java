@@ -29,7 +29,7 @@ public class BlackJackGameController {
 		printScore(users, dealer);
 
 		GameResult gameResult = new GameResult(users, dealer);
-
+		printResult(gameResult);
 	}
 
 	public static List<User> makeUsers(String names) {
