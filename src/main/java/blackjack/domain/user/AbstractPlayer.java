@@ -10,8 +10,6 @@ import java.util.Objects;
 
 public abstract class AbstractPlayer implements Playable {
 	protected static final int MAX_SCORE = 21;
-	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
-	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 
 	private final String name;
 	private final Hand hand;
@@ -58,19 +56,7 @@ public abstract class AbstractPlayer implements Playable {
 
 	@Override
 	public Score getScore() {
-		Score score = sumScore();
-		return maximize(score);
-	}
-
-	private Score sumScore() {
-		return hand.sumScore();
-	}
-
-	private Score maximize(Score score) {
-		if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hand.hasAce()) {
-			return score.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
-		}
-		return score;
+		return hand.getScore();
 	}
 
 	@Override

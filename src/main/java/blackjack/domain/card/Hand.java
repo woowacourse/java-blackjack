@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Hand {
+	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
+	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
+
 	private final List<Card> hand;
 
 	public Hand() {
@@ -24,7 +27,12 @@ public class Hand {
 		return hand.size();
 	}
 
-	public Score sumScore() {
+	public Score getScore() {
+		Score score = simpleSum();
+		return maximizeIfHasAce(score);
+	}
+
+	public Score simpleSum() {
 		Score score = Score.of(0);
 
 		for (Card card : hand) {
@@ -33,7 +41,14 @@ public class Hand {
 		return score;
 	}
 
-	public boolean hasAce() {
+	private Score maximizeIfHasAce(Score score) {
+		if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
+			return score.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
+		}
+		return score;
+	}
+
+	private boolean hasAce() {
 		return hand.stream().anyMatch(Card::isAce);
 	}
 
