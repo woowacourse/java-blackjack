@@ -30,6 +30,14 @@ public class GameResult {
                 .forEach(player -> userToCardPoint.put(player, player.calculatePoint()));
     }
 
+    public double getProfitOfDealer() {
+        double totalProfitOfPlayers = profitOfPlayers.values()
+                .stream()
+                .reduce(0D, Double::sum);
+
+        return totalProfitOfPlayers * (-1);
+    }
+
     public Map<User, Integer> getUserToCardPoint() {
         return userToCardPoint;
     }

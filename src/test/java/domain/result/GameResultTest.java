@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -78,7 +79,7 @@ class GameResultTest {
     }
 
     @ParameterizedTest
-    @DisplayName("플레이어들 게임 결과")
+    @DisplayName("플레이어들 수익")
     @MethodSource("createIndexAndProfitOfPlayers")
     void getProfitOfPlayers(int index, double expected) {
         Map<Player, Double> profitOfPlayers;
@@ -95,5 +96,13 @@ class GameResultTest {
                 Arguments.of(2, 0),
                 Arguments.of(3, 1500)
         );
+    }
+
+    @Test
+    @DisplayName("딜러 최종 수익")
+    void getProfitOfDealer() {
+        GameResult gameResult = GameResult.of(dealer, playersInfo);
+
+        assertThat(gameResult.getProfitOfDealer()).isEqualTo(-1500);
     }
 }

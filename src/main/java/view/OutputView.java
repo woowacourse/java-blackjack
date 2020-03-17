@@ -63,29 +63,9 @@ public class OutputView {
 
     public static void printWinningResult(GameResult gameResult) {
         System.out.println(NEWLINE + "## 최종 승패");
-        printDealerGameResult(gameResult);
-        printPlayersGameResult(gameResult);
-    }
-
-    private static void printDealerGameResult(GameResult gameResult) {
-        // String dealerGameResult = Dealer.NAME + COLON
-        //         + gameResult.getResultOfDealer()
-        //         .entrySet()
-        //         .stream()
-        //         .map(result -> result.getValue() + result.getKey().getRatio())
-        //         .collect(Collectors.joining(SPACE));
-
-        // System.out.println(dealerGameResult);
-    }
-
-    private static void printPlayersGameResult(GameResult gameResult) {
-        // String playersGameResult = gameResult.getResultOfPlayers()
-        //         .entrySet()
-        //         .stream()
-        //         .map(player -> player.getKey().getName() + COLON + player.getValue().getRatio())
-        //         .collect(Collectors.joining(NEWLINE));
-        //
-        // System.out.println(playersGameResult);
+        System.out.printf("%s%s%.0f" + NEWLINE, Dealer.NAME, COLON, gameResult.getProfitOfDealer());
+        gameResult.getProfitOfPlayers()
+                .forEach((key, value) -> System.out.printf("%s%s%.0f" + NEWLINE, key.getName(), COLON, value));
     }
 
     private static String printUserDealOutResult(User user) {
