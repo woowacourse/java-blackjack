@@ -1,7 +1,13 @@
 package domain;
 
 public abstract class User {
+    private final Name name;
     protected Cards cards;
+
+    public User(Name name) {
+        this.name = name;
+        this.cards = new Cards();
+    }
 
     public void drawCard(CardDeck cardDeck) {
         drawCard(cardDeck, 1);
@@ -15,11 +21,15 @@ public abstract class User {
 
     public abstract boolean canHit();
 
+    public int getScore() {
+        return cards.getScore();
+    }
+
     public Cards getCards() {
         return cards;
     }
 
-    public int getScore() {
-        return cards.getScore();
+    public Name getName() {
+        return name;
     }
 }
