@@ -20,10 +20,7 @@ public class Dealer extends User {
 
     @Override
     public boolean canReceiveCard() {
-        if (!this.isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD)) {
-            return true;
-        }
-        return false;
+        return !this.isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
     }
 
     public DealerResult calculateResult(Players players) {
