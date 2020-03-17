@@ -48,3 +48,4 @@ public enum Rank {
         return Integer.toString(this.value);
     }
 }
+
