@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.result.Outcome;
 
-public class Player extends User {
+public final class Player extends User {
 
     private static final int BASES_SCORE_CAN_DRAW = 21;
 

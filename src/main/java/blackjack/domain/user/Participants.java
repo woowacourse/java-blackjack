@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants {
+public final class Participants {
 
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private static final int MINIMUM_PLAYER_COUNT = 1;

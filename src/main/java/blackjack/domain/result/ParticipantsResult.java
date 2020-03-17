@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ParticipantsResult {
+public final class ParticipantsResult {
 
     private static final int INITIAL_COUNT = 0;
     private static final Map<Outcome, Integer> initialDealerResults;

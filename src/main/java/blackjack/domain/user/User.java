@@ -25,11 +25,11 @@ public abstract class User {
         }
     }
 
-    public void drawCard(CardDeck cardDeck) {
+    public final void drawCard(CardDeck cardDeck) {
         drawCard(cardDeck, DEFAULT_DRAW_COUNT);
     }
 
-    public void drawCard(CardDeck cardDeck, int cardCount) {
+    public final void drawCard(CardDeck cardDeck, int cardCount) {
         for (int i = 0; i < cardCount; i++) {
             userCards.add(cardDeck.draw());
         }
@@ -37,15 +37,15 @@ public abstract class User {
 
     public abstract boolean canDrawCard();
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public CardsResult getScore() {
+    public final CardsResult getScore() {
         return userCards.getScore();
     }
 
-    public List<String> getCardsInfos() {
+    public final List<String> getCardsInfos() {
         return userCards.getInfos();
     }
 }

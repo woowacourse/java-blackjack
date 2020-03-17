@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import java.util.List;
 
-public class Dealer extends User {
+public final class Dealer extends User {
 
     private static final String NAME = "딜러";
     private static final int BASES_SCORE_CAN_DRAW = 16;

@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public class Card {
+public final class Card {
 
     private static final String NULL_USE_EXCEPTION_MESSAGE = "잘못된 인자 - Null 사용";
 

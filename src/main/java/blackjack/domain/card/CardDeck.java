@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class CardDeck {
+public final class CardDeck {
 
     private static final String CARD_DECK_IS_EMPTY_EXCEPTION_MESSAGE
         = "카드덱에 카드가 남아있지 않습니다.";

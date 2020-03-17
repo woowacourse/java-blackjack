@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import java.util.Objects;
 
-public class CardsResult {
+public final class CardsResult {
 
     private static final boolean HAS_NOT_ACE = false;
     private static final int BLACK_JACK_CARD_COUNT = 2;
