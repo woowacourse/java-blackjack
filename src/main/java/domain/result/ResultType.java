@@ -4,8 +4,6 @@ import domain.gamer.Gamer;
 import domain.gamer.Money;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.BiFunction;
 
 public enum ResultType {
@@ -23,8 +21,6 @@ public enum ResultType {
 		return gamer.isBust() || gamer.isLowerThan(otherGamer);
 	});
 
-	private static final Map<ResultType, ResultType> resultToReverse;
-
 	private final String result;
 	private final double times;
 	private final BiFunction<Gamer, Gamer, Boolean> expression;
@@ -33,13 +29,6 @@ public enum ResultType {
 		this.result = result;
 		this.times = times;
 		this.expression = expression;
-	}
-
-	static {
-		resultToReverse = new HashMap<>();
-		resultToReverse.put(WIN, LOSE);
-		resultToReverse.put(DRAW, DRAW);
-		resultToReverse.put(LOSE, WIN);
 	}
 
 	public static ResultType of(Gamer gamer, Gamer otherGamer) {
@@ -59,10 +48,6 @@ public enum ResultType {
 
 	public double calculateProfit(Money money) {
 		return money.multiply(this.times);
-	}
-
-	public ResultType reverse() {
-		return resultToReverse.get(this);
 	}
 
 	public String getResult() {

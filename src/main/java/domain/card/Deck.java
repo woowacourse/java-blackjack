@@ -1,10 +1,10 @@
 package domain.card;
 
+import exception.EmptyDeckException;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
-import exception.EmptyDeckException;
 
 public class Deck {
 	private static final int FIRST_CARD = 0;
