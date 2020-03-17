@@ -30,7 +30,7 @@ public class Results {
         return new Results(playerResult, dealerResult);
     }
 
-    private static ResultType computePlayerResult(Player player, Dealer dealer) {
+    private static ResultType computePlayerResult(User player, User dealer) {
         return ResultType.computeResult(new Point(player.getCards()), new Point(dealer.getCards()));
     }
 

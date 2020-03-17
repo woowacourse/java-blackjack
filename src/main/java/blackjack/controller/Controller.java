@@ -57,7 +57,7 @@ public class Controller {
         }
     }
 
-    private boolean proceed(Player player) {
+    private boolean proceed(User player) {
         if (!player.receivable()) {
             return  false;
         }
