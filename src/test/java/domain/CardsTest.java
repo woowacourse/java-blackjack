@@ -17,14 +17,8 @@ public class CardsTest {
 
     @DisplayName("Cards 객체 생성 테스트")
     @Test
-    void CardsTest() {
+    void cardsConstructTest() {
         Assertions.assertThat(cards).isInstanceOf(Cards.class);
-    }
-
-    @DisplayName("객체의 복사 테스트")
-    @Test
-    void deepDuplicateTest() {
-        Assertions.assertThat(cards).extracting("cardsDeck").asList().size().isEqualTo(Card.getCards().size());
     }
 
     @DisplayName("pop 기능 테스트")
@@ -33,14 +27,13 @@ public class CardsTest {
         Card popCard = cards.giveCard();
 
         Assertions.assertThat(popCard).isInstanceOf(Card.class);
-        Assertions.assertThat(cards).extracting("cardsDeck").asList().size().isNotEqualTo(Card.getCards().size());
     }
 
     @DisplayName("카드 덱을 모두 소모했을 때 예외 처리 테스트")
     @Test
     void popWhenEmptyDeckTest() {
         Assertions.assertThatThrownBy(() -> {
-            for (int i = 0; i < 53; i++) {
+            for (int i = 0; i < 49; i++) {
                 Card card = cards.giveCard();
             }
         }).isInstanceOf(IllegalArgumentException.class);

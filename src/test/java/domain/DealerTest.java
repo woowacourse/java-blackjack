@@ -14,11 +14,10 @@ public class DealerTest {
     @DisplayName("16을 기준으로 카드를 받는지 결정하는 메서드")
     @Test
     void insertCardTest() {
-        Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Card card3 = Card.of(CardNumber.TEN, CardSuitSymbol.CLUB);
+        Card card1 = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card card2 = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card card3 = new Card(CardNumber.KING, CardSuitSymbol.CLUB);
         User dealer = new Dealer(card1, card2);
-        Cards cards = new Cards();
         dealer.drawCard(card3);
 
         Assertions.assertThat(dealer).extracting("cards").asList().size().isEqualTo(3);
@@ -27,8 +26,8 @@ public class DealerTest {
     @DisplayName("중복된 카드가 주어지면 에러")
     @Test
     void validateDuplicateCard() {
-        Card card1 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card card1 = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card card2 = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
 
         Assertions.assertThatThrownBy(() -> new Dealer(card1, card2)).isInstanceOf(IllegalArgumentException.class);
     }

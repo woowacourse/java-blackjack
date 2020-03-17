@@ -20,8 +20,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 와 10 을 갖고 있을 때 더 카드를 받지 않도록 하는지 테스트")
     @Test
     void isUnderSixteenWithAceTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+        Dealer dealer = new Dealer(new Card(CardNumber.ACE, CardSuitSymbol.CLUB),
+                new Card(CardNumber.KING, CardSuitSymbol.CLUB));
         dealer.isAdditionalCard(cards.giveCard());
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
@@ -30,8 +30,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 를 갖고 10 을 갖지 않을 때 더 카드를 받도록 하는지 테스트")
     @Test
     void isUnderSixteenWithAceWithoutTenTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB));
+        Dealer dealer = new Dealer(new Card(CardNumber.ACE, CardSuitSymbol.CLUB),
+                new Card(CardNumber.FIVE, CardSuitSymbol.CLUB));
         dealer.isAdditionalCard(cards.giveCard());
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
@@ -40,8 +40,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 가 없고 카드의 합이 17이상일 때 더 카드를 받지 않도록 하는지 테스트")
     @Test
     void isUnderSixteenWithoutAceGetCardTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB));
+        Dealer dealer = new Dealer(new Card(CardNumber.JACK, CardSuitSymbol.CLUB),
+                new Card(CardNumber.SEVEN, CardSuitSymbol.CLUB));
         dealer.isAdditionalCard(cards.giveCard());
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
@@ -50,8 +50,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 가 없고 카드의 합이 16이하일 때 카드를 받도록 하는지 테스트")
     @Test
     void isUnderSixteenWithoutAceTest() {
-        Dealer dealer = new Dealer(Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SIX, CardSuitSymbol.CLUB));
+        Dealer dealer = new Dealer(new Card(CardNumber.JACK, CardSuitSymbol.CLUB),
+                new Card(CardNumber.SIX, CardSuitSymbol.CLUB));
         dealer.isAdditionalCard(cards.giveCard());
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
@@ -60,8 +60,8 @@ public class CardCalculatorTest {
     @DisplayName("블랙잭(총 합이 21) 인지 판단하는 메서드 테스트")
     @Test
     void isBlackjackTest() {
-        User user = new Player("subway",Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.TEN, CardSuitSymbol.CLUB));
+        User user = new Player("subway",new Card(CardNumber.ACE, CardSuitSymbol.CLUB),
+                new Card(CardNumber.KING, CardSuitSymbol.CLUB));
 
         Assertions.assertThat(CardCalculator.isBlackJack(user.getCard())).isTrue();
     }
