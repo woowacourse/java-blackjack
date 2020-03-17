@@ -31,7 +31,7 @@ public class BlackjackGame {
         Dealer dealer = users.getDealer();
         Map<Player, Result> totalResult = new LinkedHashMap<>();
         users.getPlayer()
-                .forEach(player -> totalResult.put(player, player.compareScore(dealer)));
+                .forEach(player -> totalResult.put(player, Result.of(dealer, player)));
         return totalResult;
     }
 

@@ -18,8 +18,8 @@ public class Dealer extends User {
         return cards.calculateTotalScore() <= THRESHOLD;
     }
 
-    public int compareScoreWith(int playerTotalScore) {
-        return this.getTotalScore() - playerTotalScore;
+    public int compareScoreWith(Player player) {
+        return this.getTotalScore() - player.getTotalScore();
     }
 
     @Override

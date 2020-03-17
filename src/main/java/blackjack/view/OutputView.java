@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -19,7 +20,7 @@ public class OutputView {
     public static void printInitialCardDistribution(Users users) {
         List<User> gameUsers = users.getUsers();
         printUserNames(gameUsers);
-        System.out.println("에게 2장의 카드를 나누었습니다.\n");
+        System.out.println("에게 " + Deck.NUM_OF_INITIAL_CARDS + "장의 카드를 나누었습니다.\n");
         gameUsers.forEach(OutputView::printInitialCardStatus);
     }
 
