@@ -4,13 +4,27 @@ import second.domain.card.HandCards;
 import second.domain.card.Score;
 
 public class ScoreCalculator {
-    private final ScoreCalculateStrategy scoreCalculateStrategy;
+    public static final Score BLACK_JACK_SCORE = new Score(21);
+    private static final Score ACE_ADDITIONAL_SCORE = new Score(10);
 
-    public ScoreCalculator(ScoreCalculateStrategy scoreCalculateStrategy) {
-        this.scoreCalculateStrategy = scoreCalculateStrategy;
+    private ScoreCalculator() { }
+
+    public static Score calculate(HandCards handCards) {
+        Score defaultSum = new Score(handCards.calculateDefaultSum());
+
+        if (handCards.hasAce()) {
+            return updateAceScore(defaultSum);
+        }
+
+        return defaultSum;
     }
 
-    public Score calculate(HandCards handCards) {
-        return scoreCalculateStrategy.calculate(handCards);
+    private static Score updateAceScore(Score score) {
+        Score bigAceScore = score.plus(ACE_ADDITIONAL_SCORE);
+        if (bigAceScore.isLargerThan(BLACK_JACK_SCORE)) {
+            return score;
+        }
+
+        return score.plus(ACE_ADDITIONAL_SCORE);
     }
 }

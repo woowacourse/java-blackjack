@@ -5,7 +5,7 @@ import second.domain.ICardDeck;
 import java.util.Collections;
 import java.util.Stack;
 
-public class CardDeck implements ICardDeck {
+public class CardDeck implements second.domain.ICardDeck {
     private final Stack<Card> cards = new Stack<>();
 
     public CardDeck() {

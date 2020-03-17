@@ -8,25 +8,25 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class CardDeckTest {
     @Test
     void 카드덱_생성() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck CardDeck = new CardDeck();
 
-        assertThat(cardDeck).isInstanceOf(CardDeck.class);
+        assertThat(CardDeck).isInstanceOf(CardDeck.class);
     }
 
     @Test
     void drawCard() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck CardDeck = new CardDeck();
 
-        assertThat(cardDeck.pickCard()).isInstanceOf(Card.class);
+        assertThat(CardDeck.pickCard()).isInstanceOf(Card.class);
     }
 
     @Test
     void 카드_수를_넘어가는_뽑기() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck CardDeck = new CardDeck();
         for (int i = 0; i < 48; i++) {
-            cardDeck.pickCard();
+            CardDeck.pickCard();
         }
 
-        assertThatThrownBy(() -> cardDeck.pickCard()).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> CardDeck.pickCard()).isInstanceOf(IllegalStateException.class);
     }
 }

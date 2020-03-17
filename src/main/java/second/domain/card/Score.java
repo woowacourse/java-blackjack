@@ -1,5 +1,7 @@
 package second.domain.card;
 
+import second.domain.score.ScoreCalculator;
+
 import java.util.Objects;
 
 public class Score {
@@ -15,6 +17,14 @@ public class Score {
 
     public Score plus(Score value) {
         return new Score(this.value + value.value);
+    }
+
+    public Score plus(int value) {
+        return new Score(this.value + value);
+    }
+
+    public boolean isBust() {
+        return ScoreCalculator.BLACK_JACK_SCORE.isLargerThan(this);
     }
 
     public int getvalue() {
