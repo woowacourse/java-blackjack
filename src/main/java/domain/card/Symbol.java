@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public enum Symbol {
-	ACE(1, "A", userScore -> userScore <= 11 && userScore + 11 <= 21, () -> 1 + 10),
+	ACE(1, "A", userScore -> userScore <= 11, () -> 1 + 10),
 	TWO(2, "2"),
 	THREE(3, "3"),
 	FOUR(4, "4"),
