@@ -20,6 +20,10 @@ public class Dealer extends User {
         return dealerInstance;
     }
 
+    public int getCriticalScore() {
+        return DEALER_CRITICAL_SCORE;
+    }
+
     @Override
     public List<Card> getInitialCards() {
         return cards.getCards()

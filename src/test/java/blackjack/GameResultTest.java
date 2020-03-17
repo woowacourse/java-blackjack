@@ -37,9 +37,9 @@ public class GameResultTest {
         dealer = Dealer.getDealer();
         players = new Players(new ArrayList<>(
                 Arrays.asList(
-                        new Player("bossdog"),
-                        new Player("yes"),
-                        new Player("pobi")
+                        new Player("bossdog", 1),
+                        new Player("yes", 1),
+                        new Player("pobi", 1)
                 )
         ));
 
