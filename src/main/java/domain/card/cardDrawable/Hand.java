@@ -59,6 +59,11 @@ public class Hand implements CardDrawable, ScoreCalculable {
         return score;
     }
 
+    @Override
+    public boolean isBurst() {
+        return calculateScore().isBiggerThan(new Score(BLACK_JACK_SCORE));
+    }
+
     public boolean isEmpty() {
         return cards.isEmpty();
     }

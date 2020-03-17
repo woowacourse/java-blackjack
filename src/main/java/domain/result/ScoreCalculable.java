@@ -6,4 +6,6 @@ public interface ScoreCalculable {
     int ACE_ADDITIONAL_SCORE = 10;
 
     Score calculateScore();
+
+    boolean isBurst();
 }
