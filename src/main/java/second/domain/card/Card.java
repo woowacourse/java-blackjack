@@ -14,6 +14,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public static List<Card> makeAllCards() {
+        return Collections.unmodifiableList(CardCache.cards);
+    }
+
     public static Card of(Rank rank, Suit suit) {
         return CardCache.cards
                 .stream()
@@ -24,10 +28,6 @@ public class Card {
 
     private boolean is(Rank rank, Suit suit) {
         return this.rank == rank && this.suit == suit;
-    }
-
-    public static List<Card> getAllCards() {
-        return Collections.unmodifiableList(CardCache.cards);
     }
 
     @Override
