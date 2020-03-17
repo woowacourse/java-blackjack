@@ -42,6 +42,10 @@ public abstract class User {
 
     public abstract List<Card> getInitialCards();
 
+    public int compareScore(User user) {
+        return this.getTotalScore() - user.getTotalScore();
+    }
+
     public List<Card> getCards() {
         return cards;
     }

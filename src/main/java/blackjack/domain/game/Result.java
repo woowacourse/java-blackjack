@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
-    WIN("승", (dealer, player) -> dealer.getTotalScore() < player.getTotalScore()),
-    LOSE("패", (dealer, player) -> dealer.getTotalScore() > player.getTotalScore()),
-    DRAW("무", (dealer, player) -> dealer.getTotalScore() == player.getTotalScore());
+    WIN("승", (dealer, player) -> dealer.compareScore(player) < 0),
+    LOSE("패", (dealer, player) -> dealer.compareScore(player) > 0),
+    DRAW("무", (dealer, player) -> dealer.compareScore(player) == 0);
 
     private final String name;
     private BiPredicate<Dealer, Player> condition;

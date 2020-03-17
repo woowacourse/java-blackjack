@@ -6,7 +6,7 @@ public enum Decision {
     Y("Y", "y", true),
     N("N", "n", false);
 
-    public static final String INPUT_AGAIN = "다시 입력해 주세요";
+    public static final String INPUT_AGAIN = "올바르지 않은 입력입니다.";
     private String uppercase;
     private String lowercase;
     private boolean intended;
