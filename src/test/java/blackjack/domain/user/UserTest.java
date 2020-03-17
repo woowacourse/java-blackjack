@@ -33,7 +33,7 @@ class UserTest {
     }
 
     @Test
-    void drawCard() {
+    void drawCardInTurn() {
         User user = new User("무늬", Cards.emptyCards());
         Deck deck = Deck.createWithShuffle();
 
@@ -43,7 +43,7 @@ class UserTest {
     }
 
     @Test
-    void receiveInitialCards_NotEmptyCards_ShouldThrowException() {
+    void drawCardInTurn_NotEmptyCards_ShouldThrowException() {
         assertThatThrownBy(() -> {
             Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
                     new Card(Symbol.KING, Type.HEART)));
@@ -133,14 +133,5 @@ class UserTest {
 
         assertThat(user.isSameScore(other)).isFalse();
         assertThat(other.isSameScore(user)).isFalse();
-    }
-
-    @Test
-    void countCards() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User user = new User("무늬", cards);
-
-        assertThat(user.getCards().size()).isEqualTo(2);
     }
 }
