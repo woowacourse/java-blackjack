@@ -15,6 +15,7 @@ import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.gamer.Dealer;
+import domain.gamer.Name;
 import domain.gamer.Player;
 
 class GameResultTypeTest {
@@ -23,7 +24,7 @@ class GameResultTypeTest {
 
 	@BeforeEach
 	void setUp() {
-		players = Arrays.asList(new Player("pobi"), new Player("jason"));
+		players = Arrays.asList(new Player(new Name("pobi")), new Player(new Name("jason")));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));

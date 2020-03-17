@@ -6,30 +6,19 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import util.StringUtil;
 
 class PlayersFactoryTest {
-	@ParameterizedTest
-	@ValueSource(strings = {"allen,kyle,bee", "pobi,jason,cu,woni,brown,jun"})
-	@DisplayName("Player의 list가 제대로 생성되는지 검사")
-	void createTest(String input) {
-		List<Player> players = PlayersFactory.create(input);
-		List<String> names = StringUtil.parseByComma(input);
+	@Test
+	@DisplayName("입력받은 이름에 맞는 플레이어를 생성하는지 테스트합니다.")
+	void createTest() {
+		List<String> input = StringUtil.parseByComma("pobi,jason,brown");
+		List<Name> names = NameFactory.create("pobi,jason,brown");
+		List<Player> players = PlayersFactory.from(names);
 
 		for (Player player : players) {
-			assertThat(names).contains(player.getName());
+			assertThat(input).contains(player.getName());
 		}
-	}
-
-	@Test
-	void playersUnmodifiableTest() {
-		List<Player> players = PlayersFactory.create("pobi,jason,cu");
-
-		assertThatThrownBy(() -> {
-			players.add(new Player("brown"));
-		}).isInstanceOf(UnsupportedOperationException.class);
 	}
 }

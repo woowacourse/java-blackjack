@@ -6,6 +6,7 @@ import domain.card.Deck;
 import domain.gamer.Answer;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import domain.gamer.NameFactory;
 import domain.gamer.PlayersFactory;
 import domain.result.GameResult;
 import view.InputView;
@@ -17,7 +18,7 @@ public class BlackJackController {
 	private final Deck deck;
 
 	public BlackJackController() {
-		this.players = PlayersFactory.create(InputView.inputUserNames());
+		this.players = PlayersFactory.from(NameFactory.create(InputView.inputUserNames()));
 		this.dealer = new Dealer();
 		this.deck = new Deck();
 	}

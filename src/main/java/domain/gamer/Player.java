@@ -5,7 +5,7 @@ import domain.result.Score;
 public class Player extends Gamer {
 	private static final int PLAYER_HIT_CEILING = 21;
 
-	public Player(String name) {
+	public Player(Name name) {
 		super(name);
 	}
 

@@ -7,7 +7,7 @@ public class Dealer extends Gamer {
 	private static final int DEALER_HIT_CEILING = 17;
 
 	public Dealer() {
-		super(DEALER_NAME);
+		super(new Name(DEALER_NAME));
 	}
 
 	@Override
