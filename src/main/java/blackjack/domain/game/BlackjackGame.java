@@ -35,4 +35,12 @@ public class BlackjackGame {
         return totalResult;
     }
 
+    public boolean decideDealerToHitCard() {
+        Dealer dealer = users.getDealer();
+        if (dealer.isUnderThreshold()) {
+            dealer.receiveCard(deck.draw());
+            return true;
+        }
+        return false;
+    }
 }

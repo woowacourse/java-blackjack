@@ -1,14 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.Result;
+import blackjack.domain.TotalResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,7 +42,7 @@ public class OutputView {
     }
 
     public static void printDealerHitMoreCard() {
-        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다\n");
+        System.out.println("딜러는 " + Dealer.THRESHOLD + "이하라 한 장의 카드를 더 받았습니다\n");
     }
 
     public static void printFinalCardScore(Users users) {
@@ -66,31 +65,19 @@ public class OutputView {
         return Integer.toString(finalScore);
     }
 
-    public static void printFinalResult(Map<Player, Result> totalResult) {
+    public static void printFinalResult(TotalResult totalResult, Map<Result, Integer> dealerResult) {
         System.out.println("## 최종 승패");
-        System.out.println(parseAllWinners(totalResult));
+        System.out.println(parseAllWinners(totalResult, dealerResult));
     }
 
-    private static String parseAllWinners(Map<Player, Result> totalResult) {
-        Map<Result, Integer> dealerResult = calculatePlayerResultCount(totalResult);
+    private static String parseAllWinners(TotalResult totalResult, Map<Result, Integer> dealerResult) {
+
         StringBuilder sb = new StringBuilder();
 
         sb.append(parseDealerTotalResult(dealerResult));
-        totalResult.forEach((player, result) ->
+        totalResult.getTotalResult().forEach((player, result) ->
                 sb.append(player.getName()).append(": ").append(result.getName()).append(NEW_LINE));
         return sb.toString();
-    }
-
-    private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
-        Map<Result, Integer> playerResult = new HashMap<>();
-        playerResult.put(Result.WIN, 0);
-        playerResult.put(Result.DRAW, 0);
-        playerResult.put(Result.LOSE, 0);
-
-        for (Result r : totalResult.values()) {
-            playerResult.put(r, playerResult.get(r) + 1);
-        }
-        return playerResult;
     }
 
     private static String parseDealerTotalResult(Map<Result, Integer> playerResult) {

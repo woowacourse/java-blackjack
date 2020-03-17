@@ -1,14 +1,17 @@
 package blackjack.controller;
 
+import blackjack.domain.Result;
+import blackjack.domain.TotalResult;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.UserFactory;
 import blackjack.domain.user.Users;
 import blackjack.utils.InputHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.Map;
 
 public class BlackjackGameController {
     public static void run() {
@@ -18,9 +21,11 @@ public class BlackjackGameController {
         blackjackGame.distributeInitialCards();
         OutputView.printInitialCardDistribution(users);
         InputHandler.hitMoreCard(users, deck);
-        decideDealerToHitCard(users, deck);
+        dealerHitsAdditionalCard(blackjackGame);
         OutputView.printFinalCardScore(users);
-        OutputView.printFinalResult(blackjackGame.calculateAllResult(users));
+        TotalResult totalResult = new TotalResult(blackjackGame.calculateAllResult(users));
+        Map<Result, Integer> dealerResult = totalResult.calculatePlayerResultCount();
+        OutputView.printFinalResult(totalResult, dealerResult);
     }
 
     private static Users enrollUsers() {
@@ -29,11 +34,10 @@ public class BlackjackGameController {
         );
     }
 
-    private static void decideDealerToHitCard(Users users, Deck deck) {
-        Dealer dealer = users.getDealer();
-        if (dealer.isUnderThreshold()) {
-            dealer.receiveCard(deck.draw());
+    private static void dealerHitsAdditionalCard(BlackjackGame game) {
+        while (game.decideDealerToHitCard()) {
             OutputView.printDealerHitMoreCard();
         }
     }
+
 }
