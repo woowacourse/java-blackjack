@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.result.Outcome;
+import java.util.List;
 
 public final class Player extends User {
 
@@ -8,6 +9,11 @@ public final class Player extends User {
 
     public Player(String name) {
         super(name);
+    }
+
+    @Override
+    public List<String> getFirstCardInfo() {
+        return userCards.getInfos();
     }
 
     public Outcome calculateOutcome(User dealer) {

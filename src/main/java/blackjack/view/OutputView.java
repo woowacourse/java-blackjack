@@ -21,7 +21,7 @@ public class OutputView {
 
     public static void printUsersCards(Participants participants) {
         Dealer dealer = participants.getDealer();
-        System.out.printf("%s: %s", dealer.getName(), dealer.getFirstCardInfo());
+        System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
         System.out.println();
         for (Player player : participants.getPlayers()) {
             printPlayerCards(player);

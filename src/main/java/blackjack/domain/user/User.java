@@ -35,6 +35,8 @@ public abstract class User {
         }
     }
 
+    public abstract List<String> getFirstCardInfo();
+
     public abstract boolean canDrawCard();
 
     public final String getName() {
