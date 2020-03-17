@@ -1,7 +1,7 @@
 package domain.gamer;
 
 import domain.card.Card;
-import domain.card.Hands;
+import domain.card.Hand;
 import domain.result.Score;
 
 import java.util.List;
@@ -11,12 +11,12 @@ public abstract class Gamer {
 	private static final int ZERO = 0;
 
 	private final String name;
-	private final Hands hands;
+	private final Hand hand;
 
 	public Gamer(String name) {
 		validate(name);
 		this.name = name;
-		this.hands = Hands.createEmpty();
+		this.hand = Hand.createEmpty();
 	}
 
 	private void validate(String name) {
@@ -41,7 +41,7 @@ public abstract class Gamer {
 	protected abstract int firstOpenedCardsCount();
 
 	public void hit(Card card) {
-		hands.add(card);
+		hand.add(card);
 	}
 
 	public boolean canHit() {
@@ -49,16 +49,16 @@ public abstract class Gamer {
 	}
 
 	public Score calculateScore() {
-		return Score.from(hands);
+		return Score.from(hand);
 	}
 
 	public List<Card> firstOpenedCards() {
-		return hands.getCards()
+		return hand.getCards()
 				.subList(ZERO, firstOpenedCardsCount());
 	}
 
 	public List<Card> getCards() {
-		return hands.getCards();
+		return hand.getCards();
 	}
 
 	public String getName() {
@@ -71,11 +71,11 @@ public abstract class Gamer {
 		if (o == null || getClass() != o.getClass()) return false;
 		Gamer gamer = (Gamer) o;
 		return Objects.equals(name, gamer.name) &&
-				Objects.equals(hands, gamer.hands);
+				Objects.equals(hand, gamer.hand);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, hands);
+		return Objects.hash(name, hand);
 	}
 }

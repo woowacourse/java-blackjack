@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Hands {
+public class Hand {
 	private final List<Card> cards;
 
-	private Hands(List<Card> cards) {
+	private Hand(List<Card> cards) {
 		this.cards = cards;
 	}
 
-	public static Hands createEmpty() {
-		return new Hands(new ArrayList<>());
+	public static Hand createEmpty() {
+		return new Hand(new ArrayList<>());
 	}
 
 	public void add(Card card) {
@@ -39,8 +39,8 @@ public class Hands {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Hands hands = (Hands) o;
-		return Objects.equals(cards, hands.cards);
+		Hand hand = (Hand) o;
+		return Objects.equals(cards, hand.cards);
 	}
 
 	@Override
