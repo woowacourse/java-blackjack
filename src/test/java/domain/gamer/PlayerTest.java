@@ -22,14 +22,14 @@ public class PlayerTest {
 	@Test
 	@DisplayName("잘못된 이름 입력시 예외처리")
 	void isValidNameTest() {
-		assertThatThrownBy(() -> new Player("po/bi")).isInstanceOf(NameFormatException.class);
+		assertThatThrownBy(() -> new Player("po/bi", "50")).isInstanceOf(NameFormatException.class);
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateDealerScore")
 	@DisplayName("딜러의 점수에 따라서 플레이어가 승리하는지 패패하는지에 대한 테스트")
 	void winOrLoseTest(int dealerScore, MatchResult expected) {
-		Player player = new Player("pobi");
+		Player player = new Player("pobi", "50");
 		player.addCard(Arrays.asList(
 			new Card(CardSuit.CLOVER, CardNumber.EIGHT),
 			new Card(CardSuit.CLOVER, CardNumber.TEN)));
@@ -46,7 +46,7 @@ public class PlayerTest {
 	@Test
 	@DisplayName("플레이어가 버스트가 되었을 경우 패패 테스트")
 	void isPlayerBustTest() {
-		Player player = new Player("pobi");
+		Player player = new Player("pobi", "50");
 		player.addCard(Arrays.asList(
 			new Card(CardSuit.CLOVER, CardNumber.EIGHT),
 			new Card(CardSuit.CLOVER, CardNumber.TEN),
@@ -57,7 +57,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("generateCards")
 	public void isDrawableTest(List<Card> cards, boolean expected) {
-		Player player = new Player("pobi");
+		Player player = new Player("pobi", "50");
 		player.addCard(cards);
 		assertThat(player.isDrawable()).isEqualTo(expected);
 	}

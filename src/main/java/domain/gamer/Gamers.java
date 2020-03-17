@@ -15,11 +15,8 @@ public class Gamers {
 	private List<Player> players;
 	private Dealer dealer;
 
-	public Gamers(String players, Dealer dealer) {
-		this.players = InputUtils.splitAsDelimiter(players)
-			.stream()
-			.map(Player::new)
-			.collect(toList());
+	public Gamers(List<Player> players, Dealer dealer) {
+		this.players = players;
 		this.dealer = dealer;
 	}
 

@@ -7,49 +7,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gamer {
-    private static final int BUST_NUMBER = 22;
-    private static final int ACE_HIDDEN_SCORE = 10;
+	private static final int BUST_NUMBER = 22;
+	private static final int ACE_HIDDEN_SCORE = 10;
 
-    private String name;
-    private final List<Card> cards = new ArrayList<>();
+	private String name;
+	private final List<Card> cards = new ArrayList<>();
+	private Money money;
 
-    public Gamer(String name) {
-        this.name = name;
-    }
+	public Gamer(String name, String money) {
+		this.name = name;
+		this.money = new Money(money);
+	}
 
-    public abstract boolean isDrawable();
+	public abstract boolean isDrawable();
 
-    public void addCard(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
+	public void addCard(List<Card> cards) {
+		this.cards.addAll(cards);
+	}
 
-    public int calculateScore() {
-        int score = calculateScoreWithoutAce();
+	public int calculateScore() {
+		int score = calculateScoreWithoutAce();
 
-        if (isContainAce() && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
-            return score + ACE_HIDDEN_SCORE;
-        }
+		if (isContainAce() && score + ACE_HIDDEN_SCORE < BUST_NUMBER) {
+			return score + ACE_HIDDEN_SCORE;
+		}
 
-        return score;
-    }
+		return score;
+	}
 
-    private int calculateScoreWithoutAce() {
-        return cards.stream()
-                .map(Card::getCardNumber)
-                .mapToInt(CardNumber::getScore)
-                .sum();
-    }
+	private int calculateScoreWithoutAce() {
+		return cards.stream()
+			.map(Card::getCardNumber)
+			.mapToInt(CardNumber::getScore)
+			.sum();
+	}
 
-    public boolean isContainAce() {
-        return cards.stream()
-                .anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
-    }
+	public boolean isContainAce() {
+		return cards.stream()
+			.anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public List<Card> getCards() {
-        return cards;
-    }
+	public List<Card> getCards() {
+		return cards;
+	}
 }

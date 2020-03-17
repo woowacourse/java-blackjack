@@ -108,4 +108,8 @@ public class OutputView {
 			.append(dealerInitial);
 		return winOrLoseAndCount.toString();
 	}
+
+	public static void printBettingMoneyGuide(String playerName) {
+		System.out.printf("%s의 배팅 금액은? %s", playerName, NEWLINE);
+	}
 }
