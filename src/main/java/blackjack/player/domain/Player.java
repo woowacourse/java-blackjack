@@ -8,21 +8,21 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Player {
-    protected final String name;
+    protected final PlayerInfo playerInfo;
     protected final CardBundle cardBundle;
 
-    public Player(CardBundle cardBundle, String name) {
-        validate(cardBundle, name);
+    public Player(CardBundle cardBundle, PlayerInfo playerInfo) {
+        validate(cardBundle, playerInfo);
         this.cardBundle = cardBundle;
-        this.name = name;
+        this.playerInfo = playerInfo;
     }
 
-    private void validate(CardBundle cardBundle, String name) {
+    private void validate(CardBundle cardBundle, PlayerInfo playerInfo) {
         if (cardBundle == null) {
             throw new IllegalArgumentException("CardBundle이 비었습니다.");
         }
-        if (name == null) {
-            throw new IllegalArgumentException("이름이 비었습니다.");
+        if (playerInfo == null) {
+            throw new IllegalArgumentException("PlayerInfo가 비었습니다.");
         }
     }
 
@@ -59,7 +59,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return this.name;
+        return this.playerInfo.getName();
     }
 
     public abstract boolean isDrawable();

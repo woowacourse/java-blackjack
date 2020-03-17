@@ -2,6 +2,7 @@ package blackjack.player.domain;
 
 import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.component.CardNumber;
+import blackjack.generic.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -32,7 +33,7 @@ class GamblerTest {
 	@ParameterizedTest
 	@MethodSource("bundleProvider")
 	void isDrawable(boolean result, CardBundle cardBundle) {
-		Player gambler = new Gambler(cardBundle, "bebop");
+		Player gambler = new Gambler(cardBundle, new PlayerInfo("bebop", BettingMoney.of(0)));
 		assertThat(gambler.isDrawable()).isEqualTo(result);
 	}
 }

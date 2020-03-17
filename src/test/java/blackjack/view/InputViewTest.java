@@ -1,7 +1,9 @@
 package blackjack.view;
 
 import blackjack.card.domain.CardBundle;
+import blackjack.generic.BettingMoney;
 import blackjack.player.domain.Gambler;
+import blackjack.player.domain.PlayerInfo;
 import blackjack.view.dto.DrawRequestDTO;
 import blackjack.view.dto.NamesDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +59,6 @@ class InputViewTest {
 		InputView inputView = new InputView(scanner);
 
 		//then
-		assertThat(inputView.inputDrawRequest(new Gambler(CardBundle.emptyBundle(), "bebop"))).isInstanceOf(DrawRequestDTO.class);
+		assertThat(inputView.inputDrawRequest(new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0))))).isInstanceOf(DrawRequestDTO.class);
 	}
 }

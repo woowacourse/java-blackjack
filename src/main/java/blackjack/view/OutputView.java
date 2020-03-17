@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.card.domain.Card;
+import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
 import blackjack.view.dto.GameStatisticsDTO;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     public static void showCards(Players players) {
         List<Player> gamblers = players.findGamblers();
-        Player dealer = players.findDealer();
+        Dealer dealer = players.findDealer();
 
         System.out.println(String.format("딜러와 %s에게 %d장을 나누었습니다.", collectGamblersNames(gamblers), Players.STARTING_CARD_SIZE));
 

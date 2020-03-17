@@ -5,8 +5,8 @@ import blackjack.card.domain.CardBundle;
 import java.util.Objects;
 
 public class Gambler extends Player {
-	public Gambler(CardBundle cardBundle, String name) {
-		super(cardBundle, name);
+	public Gambler(CardBundle cardBundle, PlayerInfo playerInfo) {
+		super(cardBundle, playerInfo);
 	}
 
 	@Override
@@ -21,11 +21,11 @@ public class Gambler extends Player {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Gambler gambler = (Gambler) o;
-		return Objects.equals(name, gambler.name);
+		return Objects.equals(playerInfo, gambler.playerInfo);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(playerInfo);
 	}
 }

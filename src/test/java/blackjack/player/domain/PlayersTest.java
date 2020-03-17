@@ -7,6 +7,7 @@ import blackjack.card.domain.CardFactory;
 import blackjack.card.domain.GameResult;
 import blackjack.card.domain.component.CardNumber;
 import blackjack.card.domain.component.Symbol;
+import blackjack.generic.BettingMoney;
 import blackjack.player.domain.report.GameReport;
 import blackjack.player.domain.report.GameReports;
 import org.junit.jupiter.api.DisplayName;
@@ -42,9 +43,9 @@ class PlayersTest {
     void getReports() {
         //given
         Player dealer = new Dealer(aCardBundle(CardNumber.KING, CardNumber.KING));
-        Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), "bebop");
-        Player gambler2 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING), "pobi");
-        Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE), "allen");
+        Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), new PlayerInfo("bebop", BettingMoney.of(0)));
+        Player gambler2 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING), new PlayerInfo("pobi", BettingMoney.of(0)));
+        Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE), new PlayerInfo("allen", BettingMoney.of(0)));
         Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3));
 
         //when
@@ -62,7 +63,7 @@ class PlayersTest {
     @Test
     void findGamblers() {
         //given
-        Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), "bebop"), new Dealer(CardBundle.emptyBundle())));
+        Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0))), new Dealer(CardBundle.emptyBundle())));
 
         //when
         List<Player> gamblers = players.findGamblers();
@@ -76,7 +77,7 @@ class PlayersTest {
     @Test
     void findDealer() {
         //given
-        Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), "bebop"), new Dealer(CardBundle.emptyBundle())));
+        Players players = new Players(Arrays.asList(new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0))), new Dealer(CardBundle.emptyBundle())));
 
         //when
         Player dealer = players.findDealer();
@@ -88,7 +89,7 @@ class PlayersTest {
     @DisplayName("2장씩 분배하는 것은 카드를 가진상태(게임의 시작이 아닌상태)에서 호출하면 Exception")
     @Test
     void drawStartingCard() {
-        Player player = new Gambler(CardBundle.emptyBundle(), "bebop");
+        Player player = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0)));
         player.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.ACE));
         Players players = new Players(Arrays.asList(player));
 

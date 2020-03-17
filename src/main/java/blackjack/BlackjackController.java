@@ -4,11 +4,16 @@ import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.Drawable;
 import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Player;
+import blackjack.player.domain.PlayerInfo;
 import blackjack.player.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.NameMoneyDTO;
+import blackjack.view.dto.NamesDTO;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class BlackjackController {
     private final Drawable drawable;
@@ -31,8 +36,13 @@ public class BlackjackController {
     }
 
     private List<Player> makePlayers(Player dealer) {
-        List<Player> players = inputView.inputPlayNames()
-                .toPlayers();
+        NamesDTO namesDTO = inputView.inputPlayNames();
+        List<NameMoneyDTO> nameMoneyDTOs = inputView.inputBettingMoney(namesDTO.getNames());
+
+        List<Player> players = nameMoneyDTOs.stream()
+                .map(NameMoneyDTO::toEntity)
+                .map(PlayerInfo::toEntity)
+                .collect(toList());
         players.add(dealer);
         return players;
     }

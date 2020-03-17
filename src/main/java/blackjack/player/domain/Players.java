@@ -40,7 +40,7 @@ public class Players {
     }
 
     public GameReports getReports() {
-        Dealer dealer = (Dealer) findDealer();
+        Dealer dealer = findDealer();
         List<Player> gamblers = findGamblers();
 
         return gamblers.stream()
@@ -54,8 +54,8 @@ public class Players {
                 .collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
     }
 
-    public Player findDealer() {
-        return players.stream()
+    public Dealer findDealer() {
+        return (Dealer) players.stream()
                 .filter(player -> player.getClass().equals(Dealer.class))
                 .findFirst()
                 .orElseThrow(AssertionError::new);

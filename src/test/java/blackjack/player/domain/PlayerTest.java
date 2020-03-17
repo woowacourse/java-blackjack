@@ -4,6 +4,7 @@ import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.component.CardNumber;
 import blackjack.card.domain.component.Symbol;
+import blackjack.generic.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,17 +19,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
-    private static Stream<Arguments> playerProvider() {
-        return Stream.of(
-                Arguments.of(
-                        new Dealer(CardBundle.emptyBundle()), false, true
-                ),
-                Arguments.of(
-                        new Gambler(CardBundle.emptyBundle(), "pobi"), true, false
-                )
-        );
-    }
-
     private static Stream<Arguments> cardBundleProvider() {
         return Stream.of(
                 Arguments.of(
@@ -42,8 +32,8 @@ class PlayerTest {
 
     private static Stream<Arguments> createArgumentsProvider() {
         return Stream.of(
-                Arguments.of(null, "bebop", "CardBundle이 비었습니다."),
-                Arguments.of(CardBundle.emptyBundle(), null, "이름이 비었습니다.")
+                Arguments.of(null, new PlayerInfo("bebop", BettingMoney.of(0)), "CardBundle이 비었습니다."),
+                Arguments.of(CardBundle.emptyBundle(), null, "PlayerInfo가 비었습니다.")
         );
     }
 
@@ -90,12 +80,12 @@ class PlayerTest {
         assertThat(notBurst).isEqualTo(result);
     }
 
-    @DisplayName("생성시 카드번들 혹은 이름이 없다면 Exception 발생")
+    @DisplayName("생성시 카드번들 혹은 플레이어정보가 없다면 Exception 발생")
     @ParameterizedTest
     @MethodSource("createArgumentsProvider")
-    void create(CardBundle cardBundle, String name, String messgae) {
-        assertThatThrownBy(() -> new Gambler(cardBundle, name))
+    void create(CardBundle cardBundle, PlayerInfo playerInfo, String message) {
+        assertThatThrownBy(() -> new Gambler(cardBundle, playerInfo))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(messgae);
+                .hasMessage(message);
     }
 }

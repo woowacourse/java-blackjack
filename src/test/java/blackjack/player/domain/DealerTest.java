@@ -5,6 +5,7 @@ import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.GameResult;
 import blackjack.card.domain.component.CardNumber;
 import blackjack.card.domain.component.Symbol;
+import blackjack.generic.BettingMoney;
 import blackjack.player.domain.report.GameReport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,19 +19,19 @@ class DealerTest {
 	@ParameterizedTest
 	@CsvSource(value = {"TWO,LOSE", "FIVE,DRAW", "SIX,WIN"})
 	void getReport(CardNumber cardNumber, GameResult result) {
-		//given
-		Dealer dealer = new Dealer(CardBundle.emptyBundle());
-		dealer.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.FIVE));
+        //given
+        Dealer dealer = new Dealer(CardBundle.emptyBundle());
+        dealer.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.FIVE));
 
-		Player gambler = new Gambler(CardBundle.emptyBundle(), "bebop");
-		gambler.drawCard(() -> Card.of(Symbol.DIAMOND, cardNumber));
+        Player gambler = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0)));
+        gambler.drawCard(() -> Card.of(Symbol.DIAMOND, cardNumber));
 
-		//when
-		GameReport report = dealer.createReport(gambler);
+        //when
+        GameReport report = dealer.createReport(gambler);
 
-		//then
-		assertThat(report).isEqualTo(new GameReport("bebop", result));
-	}
+        //then
+        assertThat(report).isEqualTo(new GameReport("bebop", result));
+    }
 
 	@DisplayName("딜러의 카드패가 16을 초과하면 뽑을수 없다.")
 	@ParameterizedTest
