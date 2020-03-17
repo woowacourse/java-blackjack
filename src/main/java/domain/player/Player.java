@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.Rull;
+import domain.Rule;
 import domain.card.PlayerCards;
 import domain.card.cardfactory.Card;
 
@@ -38,15 +38,15 @@ public class Player implements Gamer {
 	@Override
 	public int calculateBurstIsZeroScore() {
 		int score = playerCards.calculateScore();
-		if (score > Rull.MAX_SCORE) {
-			return Rull.BASE_SCORE;
+		if (score > Rule.MAX_SCORE) {
+			return Rule.BASE_SCORE;
 		}
 		return score;
 	}
 
 	@Override
 	public boolean isBlackJack() {
-		return playerCards.calculateScore() == Rull.MAX_SCORE;
+		return playerCards.calculateScore() == Rule.MAX_SCORE;
 	}
 
 	public PlayerCards getPlayerCards() {

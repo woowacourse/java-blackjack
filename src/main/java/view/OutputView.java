@@ -1,7 +1,7 @@
 package view;
 
 import domain.GameResult;
-import domain.Rull;
+import domain.Rule;
 import domain.player.Player;
 import utils.CardPrintUtils;
 
@@ -28,7 +28,7 @@ public class OutputView {
 	}
 
 	public static void printDealerHitMessage() {
-		System.out.println(String.format(STRING_FORMAT_DEALER_HIT_MESSAGE, Rull.DEALER_HIT_SCORE));
+		System.out.println(String.format(STRING_FORMAT_DEALER_HIT_MESSAGE, Rule.DEALER_HIT_SCORE));
 	}
 
 	public static void printFinalScore(Player player) {

@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.Rull;
+import domain.Rule;
 
 public class User extends Player {
 	private static final int MINUS_CONVERTER = -1;
@@ -11,6 +11,10 @@ public class User extends Player {
 	public User(String name, int bettingMoney) {
 		super(name);
 		this.bettingMoney = bettingMoney;
+	}
+
+	public boolean isPossibleAddCard() {
+		return playerCards.calculateScore() <= Rule.MAX_SCORE;
 	}
 
 	public double compareScore(Gamer gamerToCompare, boolean firstDrawBlackJack) {
@@ -27,7 +31,7 @@ public class User extends Player {
 		if (gamerToCompare.isBlackJack()) {
 			return ZERO_MONEY;
 		}
-		return bettingMoney * Rull.BLACK_JACK_BONUS;
+		return bettingMoney * Rule.BLACK_JACK_BONUS;
 	}
 
 	private double normalCompare(Gamer gamerToCompare) {

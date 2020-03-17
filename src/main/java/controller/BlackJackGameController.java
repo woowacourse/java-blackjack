@@ -1,7 +1,7 @@
 package controller;
 
 import domain.GameResult;
-import domain.Rull;
+import domain.Rule;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.User;
@@ -39,20 +39,21 @@ public class BlackJackGameController {
 		List<User> users = new ArrayList<>();
 		String[] userNames = names.split(NAME_DELIMITER);
 		for (String name : userNames) {
-			users.add(new User(name, InputUtils.toInt(InputView.inputMoney(name))));
+			int bettingMoney = InputUtils.toInt(InputView.inputMoney(name));
+			users.add(new User(name, bettingMoney));
 		}
 		return users;
 	}
 
 	private static void firstDraw(List<User> users, Dealer dealer, CardDeck cardDeck) {
-		dealer.cardDraw(cardDeck.draw(Rull.FIRST_DRAW_COUNT));
+		dealer.cardDraw(cardDeck.draw(Rule.FIRST_DRAW_COUNT));
 		for (User user : users) {
-			user.cardDraw(cardDeck.draw(Rull.FIRST_DRAW_COUNT));
+			user.cardDraw(cardDeck.draw(Rule.FIRST_DRAW_COUNT));
 		}
 	}
 
 	private static void printFirstDrawCards(String name, List<User> users, Dealer dealer) {
-		OutputView.firstDrawMessageHead(name, Rull.FIRST_DRAW_COUNT);
+		OutputView.firstDrawMessageHead(name, Rule.FIRST_DRAW_COUNT);
 		OutputView.printOneCard(dealer);
 		for (User user : users) {
 			OutputView.printAllCard(user);
@@ -74,7 +75,7 @@ public class BlackJackGameController {
 	}
 
 	private static void userHit(User user, CardDeck cardDeck) {
-		while (InputUtils.isHitToBoolean(InputView.inputIsHit(user))) {
+		while (user.isPossibleAddCard() && InputUtils.isHitToBoolean(InputView.inputIsHit(user))) {
 			user.cardDraw(cardDeck.draw());
 			OutputView.printAllCard(user);
 		}
