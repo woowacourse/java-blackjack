@@ -4,48 +4,38 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameResult {
-    private final List<ResultType> dealerResults;
+    private final Map<ResultType, Integer> dealerResults;
     private final Map<Player, ResultType> playerResults;
 
-    private GameResult(Map<Player, ResultType> playerResults) {
-        this.dealerResults = playerResults.values().stream()
-                .map(ResultType::reverse)
-                .collect(Collectors.toList());
+    private GameResult(Map<ResultType, Integer> dealerResults, Map<Player, ResultType> playerResults) {
+        this.dealerResults = dealerResults;
         this.playerResults = playerResults;
     }
 
     public static GameResult of(Dealer dealer, Players players) {
-        Map<Player, ResultType> userResults = new HashMap<>();
+        Map<Player, ResultType> playerResults = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
-            userResults.put(player, PlayerResult.of(player, dealer));
+            playerResults.put(player, PlayerResult.of(player, dealer));
         }
 
-        return new GameResult(userResults);
+        Map<ResultType, Integer> dealerResults = Arrays.stream(ResultType.values())
+                .collect(Collectors.toMap(result -> result, result -> Collections.frequency(playerResults.values(), result),
+                        (v1, v2) -> {throw new AssertionError();},
+                        LinkedHashMap::new));
+
+        return new GameResult(dealerResults, playerResults);
     }
 
-    public long getDealerWinCount() {
-        return dealerResults.stream()
-                .filter(ResultType::isWin)
-                .count();
-    }
-
-    public long getDealerDrawCount() {
-        return dealerResults.stream()
-                .filter(ResultType::isDraw)
-                .count();
-    }
-
-    public long getDealerLoseCount() {
-        return dealerResults.stream()
-                .filter(ResultType::isLose)
-                .count();
+    public Map<ResultType, Integer> getDealerResults() {
+        return dealerResults;
     }
 
     public Map<Player, ResultType> getPlayerResults() {

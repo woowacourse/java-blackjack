@@ -110,9 +110,11 @@ public class OutputView {
     }
 
     private static void printDealerResults(GameResult gameResult) {
-        long dealerWinCount = gameResult.getDealerWinCount();
-        long dealerDrawCount = gameResult.getDealerDrawCount();
-        long dealerLoseCount = gameResult.getDealerLoseCount();
+        Map<ResultType, Integer> dealerResults = gameResult.getDealerResults();
+
+        int dealerWinCount = dealerResults.get(ResultType.WIN);
+        int dealerDrawCount = dealerResults.get(ResultType.DRAW);
+        int dealerLoseCount = dealerResults.get(ResultType.LOSE);
 
         System.out.printf("%s : %d승 %d무 %d패" + NEW_LINE, Dealer.NAME, dealerWinCount, dealerDrawCount, dealerLoseCount);
     }
