@@ -17,7 +17,7 @@ public class Player extends User {
         this.money = new Money(money);
     }
 
-    public Money getMoney() {
-        return money;
+    public int getMoney() {
+        return money.getMoney();
     }
 }
