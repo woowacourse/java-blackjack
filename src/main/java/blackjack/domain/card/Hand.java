@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Hand {
+public final class Hand {
 	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
 	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 

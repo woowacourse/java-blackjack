@@ -6,7 +6,7 @@ import blackjack.domain.card.Score;
 import java.util.Collections;
 import java.util.List;
 
-public class Dealer extends AbstractPlayer {
+public final class Dealer extends AbstractPlayer {
 	private Dealer() {
 		super(DEALER_NAME);
 	}

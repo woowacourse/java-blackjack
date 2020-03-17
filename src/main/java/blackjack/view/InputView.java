@@ -4,7 +4,7 @@ import blackjack.domain.user.Playable;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 	private static final Scanner scanner = new Scanner(System.in);
 	private static final String NEW_LINE = System.lineSeparator();
 

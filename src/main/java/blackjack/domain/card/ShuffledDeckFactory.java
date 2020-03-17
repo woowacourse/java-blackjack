@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ShuffledDeckFactory implements DeckFactory {
+public final class ShuffledDeckFactory implements DeckFactory {
 	@Override
 	public Deck create() {
 		List<Card> cards = createCards();

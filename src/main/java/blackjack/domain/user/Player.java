@@ -6,7 +6,7 @@ import blackjack.domain.user.exceptions.PlayerException;
 
 import java.util.List;
 
-public class Player extends AbstractPlayer {
+public final class Player extends AbstractPlayer {
 	private Player(String name) {
 		super(name);
 		validateNameIsDifferentFromDealer(name);

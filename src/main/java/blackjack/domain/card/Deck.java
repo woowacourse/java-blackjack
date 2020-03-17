@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
 
-public class Deck implements Drawable {
+public final class Deck implements Drawable {
 	private final Stack<Card> cards;
 
 	private Deck(Stack<Card> cards) {

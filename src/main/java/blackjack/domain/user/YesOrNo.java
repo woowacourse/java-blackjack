@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.user.exceptions.YesOrNoException;
 
-public class YesOrNo {
+public final class YesOrNo {
 	public static final String YES = "Y";
 	public static final String NO = "N";
 

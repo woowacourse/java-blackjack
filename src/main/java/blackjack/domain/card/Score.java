@@ -4,7 +4,7 @@ import blackjack.domain.card.exceptions.ScoreException;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 	private final int score;
 
 	private Score(int score) {

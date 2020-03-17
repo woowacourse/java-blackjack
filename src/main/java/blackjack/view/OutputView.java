@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
 	public static final String BUST_MESSAGE = "버스트 되었습니다!!!";
 

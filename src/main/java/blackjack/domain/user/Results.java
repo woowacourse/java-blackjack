@@ -5,7 +5,7 @@ import blackjack.domain.card.Score;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Results {
+public final class Results {
 	private final Map<Playable, Boolean> playerResults;
 	private final int dealerWin;
 	private final int dealerLose;

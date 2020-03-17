@@ -10,7 +10,7 @@ import java.util.List;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-public class Players {
+public final class Players {
 	private final List<Playable> players;
 
 	private Players(List<Playable> players) {
