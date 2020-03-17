@@ -21,7 +21,7 @@ public class GameResult {
     }
 
     private static PlayerResult calculateResultByDealerStatusStrategy(Dealer dealer, Player player) {
-        DealerStatusStrategy dealerStatusStrategy = dealer.status.getDealerStatusStrategy();
+        DealerStatusStrategy dealerStatusStrategy = dealer.getStatus().getDealerStatusStrategy();
         return dealerStatusStrategy.calculateResultByPlayerStatus(dealer, player);
     }
 

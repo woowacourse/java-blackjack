@@ -43,7 +43,7 @@ public class OutputView {
 
     public static void printUserCards(User player) {
         System.out.println(String.format(
-                PLAYER_INFORMATION_FORMAT, player.getName(), combineCards(player.getCards())));
+                PLAYER_INFORMATION_FORMAT, player.getName(), combineCards(player.getRawCards())));
     }
 
     private static String combineCards(List<Card> cards) {
@@ -72,7 +72,7 @@ public class OutputView {
         for (User user : users) {
             System.out.println(String.format(
                     PLAYER_FINAL_INFORMATION_FORMAT,
-                    user.getName(), combineCards(user.getCards()), user.calculateScore()));
+                    user.getName(), combineCards(user.getRawCards()), user.getCards().calculateScore()));
         }
     }
 

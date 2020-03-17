@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.exception.UserNameEmptyException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends User {
@@ -14,17 +13,16 @@ public class Player extends User {
             throw new UserNameEmptyException(PLAYER_NAME_EMPTY_EXCEPTION_MESSAGE);
         }
         this.name = name;
-        this.status = Status.NONE;
     }
 
     @Override
     public List<Card> getInitialCards() {
-        return new ArrayList<>(cards)
+        return cards.getCards()
                 .subList(START_INDEX, USER_INITIAL_CARDS_SIZE);
     }
 
     @Override
     public boolean isReceivableOneMoreCard() {
-        return this.status == Status.NONE;
+        return cards.isStatusNone();
     }
 }

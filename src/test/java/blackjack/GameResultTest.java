@@ -42,10 +42,6 @@ public class GameResultTest {
                         new Player("pobi")
                 )
         ));
-        players.getPlayers()
-                .stream()
-                .mapToInt(User::calculateScore)
-                .forEach(System.out::println);
 
         players.getPlayers()
                 .forEach(player -> player.receiveDistributedCards(cardDeck));
