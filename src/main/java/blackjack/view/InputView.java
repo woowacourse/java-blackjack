@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.User;
-import blackjack.exception.BettingMoneyNegativeException;
 
 import java.util.Arrays;
 import java.util.List;

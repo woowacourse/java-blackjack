@@ -41,8 +41,4 @@ public class CardDeck {
             throw new CardDeckEmptyException(CARD_DECK_EMPTY_EXCEPTION_MESSAGE);
         }
     }
-
-    public int size() {
-        return this.cardDeck.size();
-    }
 }
