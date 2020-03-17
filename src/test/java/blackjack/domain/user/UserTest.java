@@ -8,14 +8,24 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class UserTest {
+    private Cards cards;
+    private User user;
+
+    private User userWithScore(int scoreValue) {
+        cards = mock(Cards.class);
+
+        when(cards.calculateScore()).thenReturn(new Score(scoreValue));
+
+        return new User("무늬", cards);
+    }
+
     @Test
     void isBust() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART),
-                new Card(Symbol.TWO, Type.DIAMOND)));
-        User user = new User("무늬", cards);
+        user = userWithScore(22);
 
         assertThat(user.isBust()).isTrue();
         assertThat(user.isNotBust()).isFalse();
@@ -23,10 +33,7 @@ class UserTest {
 
     @Test
     void isNotBust() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART),
-                new Card(Symbol.ACE, Type.DIAMOND)));
-        User user = new User("무늬", cards);
+        user = userWithScore(21);
 
         assertThat(user.isNotBust()).isTrue();
         assertThat(user.isBust()).isFalse();
