@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +22,10 @@ public class PlayerTest {
     void setUp() {
         card1 = new Card(Suit.CLUB, Symbol.SIX);
         card2 = new Card(Suit.HEART, Symbol.KING);
-        initialCards = new UserCards(Arrays.asList(card1, card2));
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        initialCards = new UserCards(cards);
         player = new Player("pobi");
 
     }

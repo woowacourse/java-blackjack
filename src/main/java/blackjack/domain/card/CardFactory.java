@@ -12,13 +12,13 @@ public class CardFactory {
         this.cards = Collections.unmodifiableList(generateAllCards());
     }
 
-    private LinkedList<Card> generateAllCards() {
-        LinkedList<Card> cards = new LinkedList<>();
+    private List<Card> generateAllCards() {
+        List<Card> cards = new LinkedList<>();
         Arrays.stream(Suit.values()).forEach(suit -> generateCardsBySuit(cards, suit));
         return cards;
     }
 
-    private void generateCardsBySuit(LinkedList<Card> cards, Suit suit) {
+    private void generateCardsBySuit(List<Card> cards, Suit suit) {
         Arrays.stream(Symbol.values())
                 .map(symbol -> new Card(suit, symbol))
                 .forEach(cards::add);
@@ -28,7 +28,7 @@ public class CardFactory {
         return CardFactorySingletonHolder.instance;
     }
 
-    public LinkedList<Card> issueNewCards() {
+    public List<Card> issueNewCards() {
         return new LinkedList<>(cards);
     }
 

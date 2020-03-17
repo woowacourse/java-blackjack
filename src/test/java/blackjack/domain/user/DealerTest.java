@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -59,10 +60,10 @@ public class DealerTest {
     @DisplayName("딜러의 카드 합이 21을 초과하면 BUSTED로 표시되는지 확인")
     void totalScoreOver21Busted() {
         Dealer dealer = new Dealer();
-        dealer.receiveInitialCards(new UserCards(Arrays.asList(
+        dealer.receiveInitialCards(new UserCards(new ArrayList<>(Arrays.asList(
                 new Card(Suit.CLUB, Symbol.JACK),
-                new Card(Suit.SPADE, Symbol.SIX))));
+                new Card(Suit.SPADE, Symbol.SIX)))));
         dealer.receiveCard(new Card(Suit.DIAMOND, Symbol.QUEEN));
-        assertThat(dealer.showFinalCardNameScore()).isEqualTo("딜러 카드: 클럽 잭, 스페이드 6, 다이아몬드 퀸 - 결과 : 버스트");
+        assertThat(dealer.showFinalCardNameScore()).isEqualTo("딜러 카드: 클럽J, 스페이드6, 다이아몬드Q - 결과 : 버스트");
     }
 }

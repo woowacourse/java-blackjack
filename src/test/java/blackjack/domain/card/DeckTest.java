@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.exception.EmptyDeckException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class DeckTest {
         deck.draw();
         deck.draw();
         assertThatThrownBy(deck::draw)
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("덱이 비었습니다");
+                .isInstanceOf(EmptyDeckException.class)
+                .hasMessageContaining("덱이 비어있습니다");
     }
 }
