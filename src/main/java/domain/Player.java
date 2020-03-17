@@ -3,19 +3,13 @@ package domain;
 import util.BlackJackRule;
 
 public class Player extends User {
-    private final Name name;
-    private WinningResult winningResult;
-
     public Player(Name name) {
-        this.name = name;
-        this.winningResult = WinningResult.UNDEFINED;
-        cards = new Cards();
+        super(name);
     }
 
     @Override
     public boolean canHit() {
         if (cards.isBust()) {
-            winningResult = WinningResult.LOSE;
             return false;
         }
         if (cards.isBlackJack()) {
@@ -24,21 +18,19 @@ public class Player extends User {
         return true;
     }
 
-    public WinningResult getWinningResult() {
-        return winningResult;
-    }
-
-    public WinningResult calculateWinningResult(int dealerScore) {
-        if (BlackJackRule.isBust(dealerScore) && winningResult == WinningResult.UNDEFINED) {
-            winningResult = WinningResult.WIN;
+    public WinningResult getWinningResult(int dealerScore) {
+        if (cards.isBust()) {
+            return WinningResult.LOSE;
         }
-        if (winningResult == WinningResult.UNDEFINED) {
-            winningResult = WinningResult.calculate(dealerScore, cards.getScore());
+        if (BlackJackRule.isBust(dealerScore)) {
+            return WinningResult.WIN;
         }
-        return winningResult;
-    }
-
-    public Name getName() {
-        return name;
+        if (dealerScore < getScore()) {
+            return WinningResult.WIN;
+        }
+        if (dealerScore == getScore()) {
+            return WinningResult.DRAW;
+        }
+        return WinningResult.LOSE;
     }
 }

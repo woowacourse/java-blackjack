@@ -29,22 +29,17 @@ public class PlayerTest {
     @Test
     @DisplayName("Bust 패배 테스트")
     void isBustEqualLose() {
-        player.canHit();
-        Assertions.assertThat(player.getWinningResult()).isEqualTo(WinningResult.UNDEFINED);
-
         for (int i = 0; i < 12; i++) {
             player.drawCard(cardDeck);
         }
-        player.canHit();
-        Assertions.assertThat(player.getWinningResult()).isEqualTo(WinningResult.LOSE);
+        Assertions.assertThat(player.getWinningResult(17)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
     @DisplayName("승무패 결과 산정 테스트 - 패배")
     void calculateWinningResult_lose() {
         player.drawCard(cardDeck);
-        player.calculateWinningResult(17);
-        Assertions.assertThat(player.getWinningResult())
+        Assertions.assertThat(player.getWinningResult(17))
                 .isEqualTo(WinningResult.LOSE);
     }
 
@@ -52,8 +47,7 @@ public class PlayerTest {
     @DisplayName("승무패 결과 산정 테스트 - 승리")
     void calculateWinningResult_win() {
         player.drawCard(cardDeck);
-        player.calculateWinningResult(22);
-        Assertions.assertThat(player.getWinningResult())
+        Assertions.assertThat(player.getWinningResult(22))
                 .isEqualTo(WinningResult.WIN);
     }
 }
