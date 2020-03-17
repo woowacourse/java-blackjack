@@ -31,14 +31,14 @@ public class CardDeck {
         }
     }
 
-    public Card getOneCard() {
-        checkCardDeckEmpty();
-        return cardDeck.poll();
-    }
-
     private void checkCardDeckEmpty() {
         if (cardDeck.isEmpty()) {
             throw new CardDeckEmptyException(CARD_DECK_EMPTY_EXCEPTION_MESSAGE);
         }
+    }
+
+    public Card getOneCard() {
+        checkCardDeckEmpty();
+        return cardDeck.poll();
     }
 }

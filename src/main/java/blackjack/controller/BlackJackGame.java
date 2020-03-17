@@ -26,7 +26,7 @@ public class BlackJackGame {
     }
 
     private void enrollPlayers() {
-        List<String> playerNames = InputView.inputUserNames();
+        List<String> playerNames = InputView.inputPlayerNames();
         players = new Players(playerNames.stream()
                 .map(this::createEachPlayer)
                 .collect(Collectors.toList()));
@@ -47,7 +47,7 @@ public class BlackJackGame {
         dealer.receiveDistributedCards(cardDeck);
 
         players.receiveDistributedCardsAllPlayers(cardDeck);
-        OutputView.printInitialPlayerCards(dealer, players);
+        OutputView.printInitialUserCards(dealer, players);
     }
 
     private void play() {
@@ -75,12 +75,12 @@ public class BlackJackGame {
     private void playDealerTurn() {
         if (dealer.isReceivableOneMoreCard()) {
             dealer.receiveOneMoreCard(cardDeck);
-            OutputView.printDealerPlayConfirmMessage(dealer.getCriticalScore());
+            OutputView.printDealerPlayConfirmMessage(Dealer.getCriticalScore());
         }
     }
 
     private void calculateResult() {
-        OutputView.printPlayerFinalScore(dealer, players);
+        OutputView.printUserFinalScore(dealer, players);
         GameResult gameResult = GameResult.calculateGameResult(dealer, players);
         OutputView.printGameResult(gameResult);
     }

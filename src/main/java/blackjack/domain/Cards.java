@@ -68,6 +68,10 @@ public class Cards {
         return calculateScore() <= targetScore;
     }
 
+    public static int getInitialSize() {
+        return INITIAL_CARDS_SIZE;
+    }
+
     public Status getStatus() {
         return status;
     }

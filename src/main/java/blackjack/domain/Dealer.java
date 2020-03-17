@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Dealer extends User {
     private static final int DEALER_CRITICAL_SCORE = 16;
-    private static final String KOREAN_NAME = "딜러";
     private static final int DEALER_INITIAL_CARDS_SIZE = 1;
+    private static final String KOREAN_NAME = "딜러";
 
     private static Dealer dealerInstance;
 
@@ -20,7 +20,7 @@ public class Dealer extends User {
         return dealerInstance;
     }
 
-    public int getCriticalScore() {
+    public static int getCriticalScore() {
         return DEALER_CRITICAL_SCORE;
     }
 
