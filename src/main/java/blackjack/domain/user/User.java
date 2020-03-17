@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ public abstract class User {
     private static final int MAX_VALID_SUM = 21;
     private static final int BUSTED_VAL_RESET = 0;
     protected final String name;
-    protected UserCards cards;
+    protected UserCards cards = new UserCards(new LinkedList<>());
 
     public User(String name) {
         validateUserName(name);
@@ -23,9 +24,9 @@ public abstract class User {
         }
     }
 
-    public void receiveInitialCards(UserCards initialCards) {
+    public void receiveInitialCards(List<Card> initialCards) {
         Objects.requireNonNull(initialCards, "초기 카드는 필수입니다");
-        this.cards = initialCards;
+        cards.addCard(initialCards);
     }
 
     public void receiveCard(Card card) {

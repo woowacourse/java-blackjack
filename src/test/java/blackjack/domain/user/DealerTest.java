@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,14 +19,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DealerTest {
     private static Stream<Arguments> generateStandardDealer() {
         return Stream.of(
-                Arguments.of(new UserCards(Arrays.asList(
+                Arguments.of(Arrays.asList(
                         new Card(Suit.DIAMOND, Symbol.SIX),
                         new Card(Suit.HEART, Symbol.KING)
-                )), true),
-                Arguments.of(new UserCards(Arrays.asList(
+                ), true),
+                Arguments.of(Arrays.asList(
                         new Card(Suit.CLUB, Symbol.JACK),
                         new Card(Suit.SPADE, Symbol.SEVEN)
-                )), false)
+                ), false)
         );
     }
 
@@ -40,16 +41,16 @@ public class DealerTest {
     void displayDealerCardInfo() {
         Card card1 = new Card(Suit.SPADE, Symbol.JACK);
         Card card2 = new Card(Suit.DIAMOND, Symbol.THREE);
-        UserCards userCards = new UserCards(Arrays.asList(card1, card2));
+        List<Card> cards = Arrays.asList(card1, card2);
         Dealer dealer = new Dealer();
-        dealer.receiveInitialCards(userCards);
+        dealer.receiveInitialCards(cards);
         assertThat(dealer.getInitialCards()).containsExactly(card1);
     }
 
     @ParameterizedTest
     @DisplayName("딜러의 카드 합이 16 이하인지 확인")
     @MethodSource("generateStandardDealer")
-    void scoreUnderSixteenTest(UserCards userCards, boolean expected) {
+    void scoreUnderSixteenTest(List<Card> userCards, boolean expected) {
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(userCards);
         assertThat(dealer.isUnderThreshold()).isEqualTo(expected);
@@ -59,9 +60,9 @@ public class DealerTest {
     @DisplayName("딜러의 카드 합이 21을 초과하면 BUSTED로 표시되는지 확인")
     void totalScoreOver21Busted() {
         Dealer dealer = new Dealer();
-        dealer.receiveInitialCards(new UserCards(new ArrayList<>(Arrays.asList(
+        dealer.receiveInitialCards(new ArrayList<>(Arrays.asList(
                 new Card(Suit.CLUB, Symbol.JACK),
-                new Card(Suit.SPADE, Symbol.SIX)))));
+                new Card(Suit.SPADE, Symbol.SIX))));
         dealer.receiveCard(new Card(Suit.DIAMOND, Symbol.QUEEN));
         assertThat(dealer.isBusted()).isTrue();
     }

@@ -3,9 +3,10 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserCards {
-    private static final String NO_CARD = "카드가 없습니다";
+    private static final String NULL_CARDS = "카드가 없습니다";
     private static final int INCREMENT_ACE_THRESHOLD = 11;
     private static final int ACE_INCREMENT = 10;
     private static final int BUST_BOUND = 21;
@@ -14,14 +15,8 @@ public class UserCards {
     private List<Card> cards;
 
     public UserCards(List<Card> cards) {
-        validateNullOrEmptyCard(cards);
+        Objects.requireNonNull(cards, NULL_CARDS);
         this.cards = cards;
-    }
-
-    private void validateNullOrEmptyCard(List<Card> cards) {
-        if (cards == null || cards.isEmpty()) {
-            throw new RuntimeException(NO_CARD);
-        }
     }
 
     public int calculateTotalScore() {
@@ -51,6 +46,10 @@ public class UserCards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public void addCard(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public List<Card> getCards() {

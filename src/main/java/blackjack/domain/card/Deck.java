@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.user.UserCards;
 import blackjack.exception.EmptyDeckException;
 
 import java.util.Collections;
@@ -27,8 +26,8 @@ public class Deck {
         return deck.pop();
     }
 
-    public UserCards drawInitialCards() {
-        return new UserCards(generateInitialCards());
+    public List<Card> drawInitialCards() {
+        return generateInitialCards();
     }
 
     private List<Card> generateInitialCards() {
