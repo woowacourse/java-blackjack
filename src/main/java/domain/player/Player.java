@@ -44,6 +44,11 @@ public class Player implements Gamer {
 		return score;
 	}
 
+	@Override
+	public boolean isBlackJack() {
+		return playerCards.calculateScore() == Rull.MAX_SCORE;
+	}
+
 	public PlayerCards getPlayerCards() {
 		return playerCards;
 	}

@@ -1,7 +1,6 @@
 package controller;
 
 import domain.GameResult;
-import domain.Players;
 import domain.Rull;
 import domain.card.CardDeck;
 import domain.player.Dealer;
@@ -20,18 +19,32 @@ public class BlackJackGameController {
 		String userName = InputView.inputUserNames();
 		Dealer dealer = new Dealer();
 		List<User> users = makeUsers(userName);
-		Players players = new Players(dealer, users);
 		CardDeck cardDeck = new CardDeck();
 
-		firstDraw(players, cardDeck);
+		firstDraw(users, dealer, cardDeck);
 		printFirstDrawCards(userName, users, dealer);
 
-		hit(users, dealer, cardDeck);
+		boolean isFirstDrawBlackJack = isFirstDrawBlackJack(users, dealer);
+		if (!isFirstDrawBlackJack) {
+			hit(users, dealer, cardDeck);
+		}
 
 		printScore(users, dealer);
 
-		GameResult gameResult = new GameResult(users, dealer);
+		GameResult gameResult = new GameResult(users, dealer, isFirstDrawBlackJack);
 		printResult(gameResult);
+	}
+
+	private static boolean isFirstDrawBlackJack(List<User> users, Dealer dealer) {
+		if (dealer.isBlackJack()) {
+			return true;
+		}
+		for (User user : users) {
+			if (user.isBlackJack()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static List<User> makeUsers(String names) {
@@ -48,10 +61,6 @@ public class BlackJackGameController {
 		for (User user : users) {
 			user.cardDraw(cardDeck.draw(Rull.FIRST_DRAW_COUNT));
 		}
-	}
-
-	private static void firstDraw(Players players, CardDeck cardDeck) {
-		players.cardDraw(cardDeck);
 	}
 
 	private static void printFirstDrawCards(String name, List<User> users, Dealer dealer) {

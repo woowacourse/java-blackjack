@@ -11,4 +11,6 @@ public interface Gamer {
 	int calculateScore();
 
 	int calculateBurstIsZeroScore();
+
+	boolean isBlackJack();
 }
