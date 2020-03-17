@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.result.Outcome;
 import java.util.List;
 
 public final class Player extends User {
