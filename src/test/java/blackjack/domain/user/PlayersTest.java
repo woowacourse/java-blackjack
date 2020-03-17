@@ -61,8 +61,8 @@ class PlayersTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("giveCardsEachPlayerTwice_ReceiveThreeCard_EachPlayerHasItselfsCards")
-	void giveCardsEachPlayerTwice_ReceiveThreeCard_EachPlayerHasItselfsCards(int index, List<Card> expect) {
+	@MethodSource("giveTwoCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCards")
+	void giveTwoCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCards(int index, List<Card> expect) {
 		// given
 		Players players = Players.of(KUENI_POBI_SUMMER);
 		List<Card> cards = Arrays.asList(aceClub, twoHeart, threeDiamond, fourSpade, fiveClub, sixHeart);
@@ -76,10 +76,10 @@ class PlayersTest {
 				.isEqualTo(expect);
 	}
 
-	static Stream<Arguments> giveCardsEachPlayerTwice_ReceiveThreeCard_EachPlayerHasItselfsCards() {
-		return Stream.of(Arguments.of(0, Arrays.asList(sixHeart, threeDiamond)),
-				Arguments.of(1, Arrays.asList(fiveClub, twoHeart)),
-				Arguments.of(2, Arrays.asList(fourSpade, aceClub)));
+	static Stream<Arguments> giveTwoCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCards() {
+		return Stream.of(Arguments.of(0, Arrays.asList(sixHeart, fiveClub)),
+				Arguments.of(1, Arrays.asList(fourSpade, threeDiamond)),
+				Arguments.of(2, Arrays.asList(twoHeart, aceClub)));
 	}
 
 	@ParameterizedTest
