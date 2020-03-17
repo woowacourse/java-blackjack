@@ -5,11 +5,18 @@ import domain.gamer.Gamer;
 import java.util.Arrays;
 
 public enum PlayerResult {
+    BLACKJACK_WIN("블랙잭승") {
+        @Override
+        boolean isMatch(Gamer dealer, Gamer player) {
+            return (dealer.isNotBlackJack() && player.isBlackJack());
+        }
+    },
+
     WIN("승") {
         @Override
         boolean isMatch(Gamer dealer, Gamer player) {
             return (player.isNotBust() && (dealer.isBust() || player.calculateScore().compareTo(dealer.calculateScore()) > 0))
-                    || (dealer.isNotBlackJack() && player.isBlackJack());
+                    && player.isNotBlackJack();
         }
     },
     DRAW("무") {
