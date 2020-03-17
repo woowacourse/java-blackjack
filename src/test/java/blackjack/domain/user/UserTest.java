@@ -8,8 +8,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserTest {
     private Cards cards;
@@ -52,93 +51,55 @@ class UserTest {
     @Test
     void drawCardInTurn_NotEmptyCards_ShouldThrowException() {
         assertThatThrownBy(() -> {
-            Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                    new Card(Symbol.KING, Type.HEART)));
-            User user = new User("무늬", cards);
 
+            user = userWithCards();
             Deck deck = Deck.createWithShuffle();
 
             user.drawCardsAtFirst(deck);
+
         }).isInstanceOf(UserException.class);
     }
 
-    @Test
-    void calculateScore_HasNoAce() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User user = new User("무늬", cards);
+    private User userWithCards() {
+        cards = mock(Cards.class);
 
-        assertThat(user.calculateScore()).isEqualTo(new Score(20));
+        when(cards.isNotEmpty()).thenReturn(true);
+
+        return new User("무늬", cards);
     }
 
     @Test
-    void calculateScore_HasAce_ShouldMaximizeAce() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User user = new User("무늬", cards);
+    void calculateScore() {
+        userWithCards().calculateScore();
 
-        assertThat(user.calculateScore()).isEqualTo(new Score(21));
-    }
-
-    @Test
-    void calculateScore_HasAce_ShouldNotMaximizeAce() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.ACE, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART),
-                new Card(Symbol.QUEEN, Type.CLUB)));
-        User user = new User("무늬", cards);
-
-        assertThat(user.calculateScore()).isEqualTo(new Score(21));
+        verify(cards).calculateScore();
     }
 
     @Test
     void isOverScore() {
-        Cards greaterScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User greaterScoreUser = new User("무늬", greaterScoreCards);
+        user = userWithScore(21);
+        User other = userWithScore(20);
 
-        Cards lessScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.NINE, Type.HEART)));
-        User lessScoreUser = new User("그니", lessScoreCards);
-
-        assertThat(greaterScoreUser.isOverScore(lessScoreUser)).isTrue();
-        assertThat(lessScoreUser.isOverScore(greaterScoreUser)).isFalse();
+        assertThat(user.isOverScore(other)).isTrue();
+        assertThat(other.isOverScore(user)).isFalse();
     }
 
     @Test
     void isUnderScore() {
-        Cards lessScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.NINE, Type.HEART)));
-        User lessScoreUser = new User("무늬", lessScoreCards);
+        user = userWithScore(10);
+        User other = userWithScore(11);
 
-        Cards greaterScoreCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User greaterScoreUser = new User("그니", greaterScoreCards);
-
-        assertThat(lessScoreUser.isUnderScore(greaterScoreUser)).isTrue();
-        assertThat(greaterScoreUser.isUnderScore(lessScoreUser)).isFalse();
+        assertThat(user.isUnderScore(other)).isTrue();
+        assertThat(other.isUnderScore(user)).isFalse();
     }
 
     @Test
-    void isSameScore_ShouldReturnTrue() {
-        Cards sameCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User user = new User("무늬", sameCards);
-        User other = new User("그니", sameCards);
+    void isSameScore() {
+        user = userWithScore(1);
+        User otherWithSameScore = userWithScore(1);
+        User otherWithDifferentScore = userWithScore(2);
 
-        assertThat(user.isSameScore(other)).isTrue();
-        assertThat(other.isSameScore(user)).isTrue();
-    }
-
-    @Test
-    void isSameScore_ShouldReturnFalse() {
-        Cards cards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.KING, Type.HEART)));
-        User user = new User("무늬", cards);
-        Cards anotherCards = Cards.from(Arrays.asList(new Card(Symbol.QUEEN, Type.CLUB),
-                new Card(Symbol.NINE, Type.HEART)));
-        User other = new User("그니", anotherCards);
-
-        assertThat(user.isSameScore(other)).isFalse();
-        assertThat(other.isSameScore(user)).isFalse();
+        assertThat(user.isSameScore(otherWithSameScore)).isTrue();
+        assertThat(user.isSameScore(otherWithDifferentScore)).isFalse();
     }
 }
