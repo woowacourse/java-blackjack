@@ -19,8 +19,8 @@ public class InputView {
 		return scanner.next();
 	}
 
-	public static String inputMoney(User user) {
-		System.out.println(String.format("%s의 베팅금액은?", user.getName()));
+	public static String inputMoney(String name) {
+		System.out.println(String.format("%s의 베팅금액은?", name));
 		return scanner.next();
 	}
 }

@@ -14,4 +14,6 @@ public class InputUtils {
 		}
 		throw new IllegalArgumentException(ERROR_MESSAGE_IS_HIT_ANSWER);
 	}
+
+
 }

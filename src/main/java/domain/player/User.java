@@ -3,8 +3,11 @@ package domain.player;
 import domain.Result;
 
 public class User extends Player {
-	public User(String name) {
+	private final int bettingMoney;
+
+	public User(String name, int bettingMoney) {
 		super(name);
+		this.bettingMoney = bettingMoney;
 	}
 
 	public Result compareScore(Gamer gamer) {

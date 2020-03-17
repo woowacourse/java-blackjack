@@ -29,14 +29,14 @@ public class BlackJackGameController {
 		printScore(users, dealer);
 
 		GameResult gameResult = new GameResult(users, dealer);
-		printResult(gameResult);
+
 	}
 
 	public static List<User> makeUsers(String names) {
 		List<User> users = new ArrayList<>();
 		String[] userNames = names.split(NAME_DELIMITER);
 		for (String name : userNames) {
-			users.add(new User(name));
+			users.add(new User(name, Integer.parseInt(InputView.inputMoney(name))));
 		}
 		return users;
 	}
