@@ -55,14 +55,9 @@ public class BlackjackController {
             return;
         }
 
-        Answer answer = getAnswer(user);
-        while (blackJackRule.isHit(user, answer)) {
+        while (blackJackRule.isHit(user) && getAnswer(user).isYes()) {
             blackJackRule.hit(user, cardDeck.drawCard());
             OutputView.printUserCard(ResponsePlayerDTO.create(user));
-            if (blackJackRule.isUserCardSumOverBlackJack(user)) {
-                break;
-            }
-            answer = getAnswer(user);
         }
     }
 

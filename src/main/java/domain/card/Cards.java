@@ -8,7 +8,6 @@ import java.util.List;
 public class Cards {
     private static final int BLACK_JACK_SIZE = 2;
     private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
-    private static final int STANDARD_ACE_ELEVEN = 21;
     private static final String NO_CARDS = "입력한 카드가 없습니다.";
 
     private List<Card> cards;
@@ -45,7 +44,7 @@ public class Cards {
     public boolean isBlackJack() {
         return containAce()
                 && this.cards.size() == BLACK_JACK_SIZE
-                && getCardsSum() == STANDARD_ACE_ELEVEN;
+                && CardCalculator.isUnderBlackJack(this);
     }
 
     public int getCardsSum() {

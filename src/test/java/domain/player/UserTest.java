@@ -31,8 +31,7 @@ public class UserTest {
     @DisplayName("y를 입력 받을때 카드를 받는지 결정하는 메서드")
     @Test
     void yes_insertCard() {
-        Answer answer = Answer.YES;
-        if (blackJackRule.isHit(user, answer)) {
+        if (blackJackRule.isHit(user)) {
             blackJackRule.hit(user, cardDeck.drawCard());
         }
 
@@ -42,11 +41,10 @@ public class UserTest {
     @DisplayName("n를 입력 받을때 카드를 받는지 결정하는 메서드")
     @Test
     void no_insertCard() {
-        Answer answer = Answer.NO;
-        if (blackJackRule.isHit(user, answer)) {
+        if (blackJackRule.isHit(user)) {
             blackJackRule.hit(user, cardDeck.drawCard());
         }
 
-        Assertions.assertThat(user.getCard().getCards().size()).isEqualTo(2);
+        Assertions.assertThat(user.getCard().getCards().size()).isEqualTo(3);
     }
 }
