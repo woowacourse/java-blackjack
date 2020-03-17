@@ -6,7 +6,7 @@ public class Dealer extends Gamer {
 	private static final int DEALER_FIRST_OPENED_COUNT = 1;
 
 	public Dealer() {
-		super(DEALER_NAME);
+		super(new Name(DEALER_NAME));
 	}
 
 	@Override

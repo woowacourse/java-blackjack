@@ -4,7 +4,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,18 +12,15 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 public class GameResult {
 	private final Map<Gamer, Score> gamersScore;
-	private final Map<Player, ResultType> playersResult;
-	private final Map<ResultType, Integer> dealerResult;
+	private final Map<Player, Profit> playersToProfit;
+	private final Profit dealerResult;
 
 	public GameResult(Gamers gamers) {
 		this.gamersScore = findScoreBy(gamers);
-		this.playersResult = findPlayersResult();
-		this.dealerResult = findDealerResult(this.playersResult);
+		this.playersToProfit = findPlayersResult();
+		this.dealerResult = findDealerResult();
 	}
 
 	private Map<Gamer, Score> findScoreBy(Gamers gamers) {
@@ -33,23 +29,23 @@ public class GameResult {
 				.collect(Collectors.toMap(Function.identity(), Gamer::getScore));
 	}
 
-	private Map<Player, ResultType> findPlayersResult() {
-		Map<Player, ResultType> playerToResult = new HashMap<>();
+	private Map<Player, Profit> findPlayersResult() {
+		Map<Player, Profit> playerToResult = new HashMap<>();
 		Dealer dealer = findDealer();
 
 		for (Player player : findPlayers()) {
-			playerToResult.put(player, ResultType.of(player, dealer));
+			ResultType result = ResultType.of(player, dealer);
+			playerToResult.put(player, new Profit(result.calculateProfit(player.getMoney())));
 		}
-
 		return playerToResult;
 	}
 
-	private Map<ResultType, Integer> findDealerResult(Map<Player, ResultType> playersResult) {
-		return playersResult
-				.values()
-				.stream()
-				.map(ResultType::reverse)
-				.collect(collectingAndThen(toList(), ListUtil::countFrequency));
+	private Profit findDealerResult() {
+		Profit profit = Profit.ZERO;
+		for (Profit each : playersToProfit.values()) {
+			profit = profit.plus(each.negative());
+		}
+		return profit;
 	}
 
 	private List<Player> findPlayers() {
@@ -68,11 +64,11 @@ public class GameResult {
 		return gamersScore;
 	}
 
-	public Map<Player, ResultType> getPlayersResult() {
-		return playersResult;
+	public Map<Player, Profit> getPlayersToProfit() {
+		return playersToProfit;
 	}
 
-	public Map<ResultType, Integer> getDealerResult() {
+	public Profit getDealerResult() {
 		return dealerResult;
 	}
 }

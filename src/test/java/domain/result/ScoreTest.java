@@ -1,11 +1,10 @@
 package domain.result;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.gamer.Money;
+import domain.gamer.Name;
 import domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,15 +12,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.card.Card;
-import domain.card.Symbol;
-import domain.card.Type;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
 	@Test
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateScore() {
-		Player player = new Player("pobi");
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		player.hit(new Card(Symbol.EIGHT, Type.CLUB));
 		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
 		player.hit(new Card(Symbol.SIX, Type.CLUB));
@@ -33,7 +34,7 @@ class ScoreTest {
 	@MethodSource("generateWithAce")
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateWithAce(int expected, List<Card> cards) {
-		Player player = new Player("pobi");
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		for (Card card : cards) {
 			player.hit(card);
 		}

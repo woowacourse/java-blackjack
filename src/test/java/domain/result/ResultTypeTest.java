@@ -5,6 +5,7 @@ import domain.card.Symbol;
 import domain.card.Type;
 import domain.gamer.Dealer;
 import domain.gamer.Money;
+import domain.gamer.Name;
 import domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class ResultTypeTest {
 	@MethodSource("cardInput")
 	@DisplayName("점수비교를 통해 올바른 결과(Enum)을 생성하는지 테스트")
 	void ofTest(List<Card> playerCards, List<Card> dealerCards, ResultType expected) {
-		Player player = new Player("pobi");
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		for (Card card : playerCards) {
 			player.hit(card);
 		}

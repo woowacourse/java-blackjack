@@ -2,6 +2,7 @@ package domain.gamer;
 
 import util.StringUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,9 +18,10 @@ public class Name {
 	public static List<Name> list(String input) {
 		List<String> userNames = StringUtil.parseByComma(input);
 
-		return userNames.stream()
+		List<Name> names = userNames.stream()
 				.map(Name::new)
-				.collect(Collectors.toUnmodifiableList());
+				.collect(Collectors.toList());
+		return Collections.unmodifiableList(names);
 	}
 
 	private void validate(String name) {

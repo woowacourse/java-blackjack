@@ -22,7 +22,7 @@ class GamersTest {
 
 	@BeforeEach
 	void setUp() {
-		players = Arrays.asList(new Player("pobi"), new Player("jason"));
+		players = Arrays.asList(new Player(new Name("pobi"), Money.ZERO), new Player(new Name("jason"), Money.ZERO));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));

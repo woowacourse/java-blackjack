@@ -1,18 +1,15 @@
 package domain.gamer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import util.StringUtil;
 
 public class PlayersFactory {
-	public static List<Player> newPlayers(String input) {
-		List<String> userNames = StringUtil.parseByComma(input);
-
-		List<Player> players = userNames.stream()
-			.map(Player::new)
-			.collect(Collectors.toList());
+	public static List<Player> of(List<Name> names, List<Money> bettingMoney) {
+		List<Player> players = new ArrayList<>();
+		for (int i = 0; i < names.size(); i++) {
+			players.add(new Player(names.get(i), bettingMoney.get(i)));
+		}
 		return Collections.unmodifiableList(players);
 	}
 }

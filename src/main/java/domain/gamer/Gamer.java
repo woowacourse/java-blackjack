@@ -10,30 +10,12 @@ import java.util.Objects;
 public abstract class Gamer {
 	private static final int ZERO = 0;
 
-	private final String name;
+	private final Name name;
 	private final Hand hand;
 
-	public Gamer(String name) {
-		validate(name);
+	public Gamer(Name name) {
 		this.name = name;
 		this.hand = Hand.createEmpty();
-	}
-
-	private void validate(String name) {
-		validateNull(name);
-		validateSpace(name);
-	}
-
-	private void validateNull(String name) {
-		if (Objects.isNull(name)) {
-			throw new NullPointerException("이름은 null이 될 수 없습니다.");
-		}
-	}
-
-	private void validateSpace(String name) {
-		if (name.trim().isEmpty()) {
-			throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-		}
 	}
 
 	protected abstract int getHitPoint();
@@ -82,7 +64,7 @@ public abstract class Gamer {
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 
 	@Override

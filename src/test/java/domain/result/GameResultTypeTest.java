@@ -3,10 +3,7 @@ package domain.result;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.gamer.Dealer;
-import domain.gamer.Gamer;
-import domain.gamer.Gamers;
-import domain.gamer.Player;
+import domain.gamer.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +22,8 @@ class GameResultTypeTest {
 
 	@BeforeEach
 	void setUp() {
-		players = Arrays.asList(new Player("pobi"), new Player("jason"));
+		players = Arrays.asList(new Player(new Name("pobi"), new Money(10000)),
+				new Player(new Name("jason"), new Money(5000)));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));
@@ -43,11 +41,11 @@ class GameResultTypeTest {
 	void fromTest() {
 		GameResult gameResult = new GameResult(gamers);
 
-		Map<Player, ResultType> expected = new HashMap<>();
-		expected.put(players.get(0), ResultType.LOSE);
-		expected.put(players.get(1), ResultType.WIN);
+		Map<Player, Profit> expected = new HashMap<>();
+		expected.put(players.get(0), new Profit(-10000));
+		expected.put(players.get(1), new Profit(5000));
 
-		assertThat(gameResult.getPlayersResult()).isEqualTo(expected);
+		assertThat(gameResult.getPlayersToProfit()).isEqualTo(expected);
 	}
 
 	@Test
@@ -55,12 +53,7 @@ class GameResultTypeTest {
 	void dealerResultTest() {
 		GameResult gameResult = new GameResult(gamers);
 
-		Map<ResultType, Integer> expected = new HashMap<>();
-		expected.put(ResultType.LOSE, 1);
-		expected.put(ResultType.WIN, 1);
-
-		assertThat(gameResult.getDealerResult()).isEqualTo(expected);
-
+		assertThat(gameResult.getDealerResult()).isEqualTo(new Profit(5000));
 	}
 
 	@Test

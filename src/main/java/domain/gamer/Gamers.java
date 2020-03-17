@@ -48,7 +48,7 @@ public class Gamers {
 		return gamers.stream()
 				.filter(gamer -> gamer.getClass() == Player.class)
 				.map(player -> (Player) player)
-				.collect(Collectors.toUnmodifiableList());
+				.collect(Collectors.toList());
 	}
 
 	public Dealer getDealer() {
