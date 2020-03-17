@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.GameResult;
+import domain.YesOrNo;
 import domain.gamer.Player;
 import view.InputView;
 import view.OutputView;
@@ -14,8 +15,6 @@ import view.dto.PlayerDto;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class Controller {
-	private static final String YES = "Y";
-
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
 		progress(blackjackGame);
@@ -72,7 +71,16 @@ public class Controller {
 	}
 
 	private static boolean isContinue(Player player) {
-		return player.canHit() && YES.equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+		return player.canHit() && inputYesOrNo(player).isYes();
+	}
+
+	private static YesOrNo inputYesOrNo(Player player) {
+		try {
+			return YesOrNo.of(InputView.inputMoreCard(PlayerDto.from(player)));
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return inputYesOrNo(player);
+		}
 	}
 
 	private static void end(BlackjackGame blackjackGame) {

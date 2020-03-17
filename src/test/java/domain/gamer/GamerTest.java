@@ -27,7 +27,7 @@ public class GamerTest {
 
 	@BeforeEach
 	void setUp() {
-		gamer = new Gamer("a");
+		gamer = new Player("a");
 	}
 
 	private static Stream<Arguments> generateBustInput() {
@@ -101,7 +101,7 @@ public class GamerTest {
 	@ParameterizedTest
 	@NullAndEmptySource
 	void Should_ThrownException_When_NameIsNull_Or_Empty(String name) {
-		assertThatThrownBy(() -> new Gamer(name))
+		assertThatThrownBy(() -> new Player(name))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("null이나 빈 값");
 	}

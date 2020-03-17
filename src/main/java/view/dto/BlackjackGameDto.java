@@ -13,7 +13,6 @@ import domain.gamer.Player;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class BlackjackGameDto {
-	private static final String NEW_LINE = "\n";
 	private List<PlayerDto> players;
 	private DealerDto dealer;
 
