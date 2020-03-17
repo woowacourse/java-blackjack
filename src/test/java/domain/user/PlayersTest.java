@@ -3,7 +3,9 @@ package domain.user;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,7 @@ import domain.card.DeckFactory;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.result.ResultType;
-import domain.rule.PlayerResultRule;
+import view.OutputView;
 
 class PlayersTest {
 
@@ -88,9 +90,7 @@ class PlayersTest {
                 .get(2)
                 .draw(deck);
 
-        Rules rules = new Rules(Arrays.asList(PlayerResultRule.values()));
-
-        resultOfPlayers = players.decideWinner(dealer, rules);
+        resultOfPlayers = players.decideWinner(dealer);
         Player player = players.getPlayers().get(index);
 
         assertThat(resultOfPlayers.get(player)).isEqualTo(expected);
@@ -102,5 +102,27 @@ class PlayersTest {
                 Arguments.of(1, ResultType.LOSE),
                 Arguments.of(2, ResultType.DRAW)
         );
+    }
+
+    @Test
+    @DisplayName("추가 드로우")
+    void additionalDealOut() {
+        MockitoAnnotations.initMocks(this);
+        Queue<Card> cards = new LinkedList<>(Arrays.asList(
+                new Card(Symbol.SPADE, Type.SIX),
+                new Card(Symbol.SPADE, Type.SEVEN),
+                new Card(Symbol.HEART, Type.FIVE),
+                new Card(Symbol.CLOVER, Type.SIX))
+        );
+        List<Card> expected = new ArrayList<>(cards);
+
+        given(deck.dealOut()).will(invocation -> cards.poll());
+
+        Players mockPlayers = Players.of(Collections.singletonList("pobi"));
+        mockPlayers.additionalDealOut(deck, (name) -> true, OutputView::printPlayerDealOutResult);
+
+        List<Card> actual = mockPlayers.getPlayers().get(0).getCards();
+
+        assertThat(actual).containsAll(expected);
     }
 }

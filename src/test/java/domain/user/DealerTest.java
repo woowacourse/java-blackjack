@@ -3,8 +3,10 @@ package domain.user;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.stream.Stream;
 
@@ -21,6 +23,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
+import view.OutputView;
 
 class DealerTest {
 
@@ -60,5 +63,22 @@ class DealerTest {
                 Arguments.of(new Card(Symbol.DIAMOND, Type.SEVEN), false),
                 Arguments.of(new Card(Symbol.DIAMOND, Type.ACE), false)
         );
+    }
+
+    @Test
+    @DisplayName("추가 드로우")
+    void additionalDealOut() {
+        MockitoAnnotations.initMocks(this);
+        Queue<Card> cards = new LinkedList<>(Arrays.asList(
+                new Card(Symbol.SPADE, Type.SIX),
+                new Card(Symbol.SPADE, Type.SEVEN),
+                new Card(Symbol.HEART, Type.FIVE))
+        );
+        List<Card> expected = new ArrayList<>(cards);
+
+        given(deck.dealOut()).will(invocation -> cards.poll());
+        dealer.additionalDealOut(deck, OutputView::printDealerDealOut);
+
+        assertThat(dealer.getCards()).containsAll(expected);
     }
 }
