@@ -1,16 +1,13 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
     private static final int MAX_VALID_SUM = 21;
-    public static final String CARD = " 카드: ";
-    private static final String DELIMITER = ", ";
-    private static final String RESULT = " - 결과 : ";
-    private static final String BUSTED = "버스트";
     private static final int BUSTED_VAL_RESET = 0;
     protected final String name;
     protected UserCards cards;
@@ -45,7 +42,7 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        return cards.getCards().size() == 2
+        return cards.getCards().size() == Deck.NUM_OF_INITIAL_CARDS
                 && cards.calculateTotalScore() == MAX_VALID_SUM;
     }
 

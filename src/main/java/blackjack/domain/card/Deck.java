@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
-    private static final int NUM_OF_INITIAL_CARDS = 2;
+    public static final int NUM_OF_INITIAL_CARDS = 2;
     private final Stack<Card> deck;
 
     public Deck(List<Card> cards) {
