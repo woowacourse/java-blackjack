@@ -1,7 +1,7 @@
 package second.domain;
 
-import first.domain.card.Card;
+import second.domain.card.CardDeck;
 
 public interface IHandCards {
-    void drawCard();
+    void drawCard(CardDeck cardDeck);
 }

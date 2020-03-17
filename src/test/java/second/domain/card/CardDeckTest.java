@@ -17,16 +17,16 @@ class CardDeckTest {
     void drawCard() {
         CardDeck cardDeck = new CardDeck();
 
-        assertThat(cardDeck.drawCard()).isInstanceOf(Card.class);
+        assertThat(cardDeck.pickCard()).isInstanceOf(Card.class);
     }
 
     @Test
     void 카드_수를_넘어가는_뽑기() {
         CardDeck cardDeck = new CardDeck();
         for (int i = 0; i < 48; i++) {
-            cardDeck.drawCard();
+            cardDeck.pickCard();
         }
 
-        assertThatThrownBy(() -> cardDeck.drawCard()).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> cardDeck.pickCard()).isInstanceOf(IllegalStateException.class);
     }
 }

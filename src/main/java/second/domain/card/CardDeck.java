@@ -14,7 +14,7 @@ public class CardDeck implements ICardDeck {
     }
 
     @Override
-    public Card drawCard() {
+    public Card pickCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없습니다.");
         }
