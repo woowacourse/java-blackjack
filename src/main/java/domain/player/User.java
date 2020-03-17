@@ -14,7 +14,7 @@ public class User extends Player {
 	}
 
 	public boolean isPossibleAddCard() {
-		return playerCards.calculateScore() <= Rule.MAX_SCORE;
+		return playerCards.calculateScore() < Rule.MAX_SCORE;
 	}
 
 	public double compareScore(Gamer gamerToCompare, boolean firstDrawBlackJack) {
