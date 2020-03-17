@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameRule;
+import blackjack.domain.game.ScoreRule;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +25,7 @@ public abstract class User {
     }
 
     public int getTotalScore() {
-        return GameRule.calculateTotalScore(cards);
+        return ScoreRule.calculateTotalScore(cards);
     }
 
     public String getName() {
@@ -33,11 +33,11 @@ public abstract class User {
     }
 
     public boolean isBusted() {
-        return GameRule.isBusted(cards);
+        return ScoreRule.isBusted(cards);
     }
 
     public boolean isBlackJack() {
-        return GameRule.isBlackjack(cards);
+        return ScoreRule.isBlackjack(cards);
     }
 
     public abstract List<Card> getInitialCards();

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class GameRule {
+public class ScoreRule {
     private static final int MAX_SCORE = 21;
     private static final int ACE_INCREMENT = 10;
 
@@ -14,11 +14,7 @@ public class GameRule {
     }
 
     public static boolean isBusted(List<Card> cards) {
-
-        if (calculateTotalScore(cards) == 0) {
-            return true;
-        }
-        return false;
+        return calculateTotalScore(cards) == 0;
     }
 
     private static int incrementAceScore(List<Card> cards, int score) {
