@@ -19,8 +19,8 @@ class PlayersFactoryTest {
 		List<Player> players = PlayersFactory.create(input);
 		List<String> names = StringUtil.parseByComma(input);
 
-		for (String name : names) {
-			assertThat(players).contains(new Player(name));
+		for (Player player : players) {
+			assertThat(names).contains(player.getName());
 		}
 	}
 

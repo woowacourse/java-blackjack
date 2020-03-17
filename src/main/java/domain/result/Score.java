@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Symbol;
 
 public class Score {
@@ -20,20 +21,14 @@ public class Score {
 		return new Score(score);
 	}
 
-	public static Score calculate(List<Card> cards) {
-		int rawScore = calculateRaw(cards);
-		if (containAce(cards) && rawScore + TEN <= BLACKJACK_SCORE) {
+	public static Score calculate(Hand hand) {
+		int rawScore = hand.calculate();
+		if (hand.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
 			return new Score(rawScore + TEN);
 		}
 		return new Score(rawScore);
 	}
 
-	private static int calculateRaw(List<Card> cards) {
-		return cards.stream()
-			.map(Card::getSymbol)
-			.mapToInt(Symbol::getScore)
-			.sum();
-	}
 
 	private static boolean containAce(List<Card> cards) {
 		return cards.stream()

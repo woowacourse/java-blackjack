@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Symbol;
 import domain.card.Type;
 
@@ -20,20 +21,24 @@ class ScoreTest {
 	@Test
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateScore() {
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.EIGHT, Type.CLUB),
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.SIX, Type.CLUB)
-		);
+		Hand hand = Hand.fromEmpty();
+		hand.add(new Card(Symbol.EIGHT, Type.CLUB));
+		hand.add(new Card(Symbol.SEVEN, Type.CLUB));
+		hand.add(new Card(Symbol.SIX, Type.CLUB));
 
-		assertThat(Score.calculate(cards)).isEqualTo(Score.of(21));
+		assertThat(Score.calculate(hand)).isEqualTo(Score.of(21));
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateWithAce")
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateWithAce(int expected, List<Card> cards) {
-		assertThat(Score.calculate(cards)).isEqualTo(Score.of(expected));
+		Hand hand = Hand.fromEmpty();
+		for (Card card : cards) {
+			hand.add(card);
+		}
+
+		assertThat(Score.calculate(hand)).isEqualTo(Score.of(expected));
 	}
 
 	static Stream<Arguments> generateWithAce() {

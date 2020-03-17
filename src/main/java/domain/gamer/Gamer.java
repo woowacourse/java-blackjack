@@ -6,16 +6,17 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.result.Score;
 
 public abstract class Gamer {
 	private final String name;
-	private final List<Card> cards;
+	private final Hand hand;
 
 	public Gamer(String name) {
 		validate(name);
 		this.name = name;
-		this.cards = new ArrayList<>();
+		this.hand = Hand.fromEmpty();
 	}
 
 	private void validate(String name) {
@@ -38,19 +39,19 @@ public abstract class Gamer {
 	protected abstract Score getHitPoint();
 
 	public void hit(Card card) {
-		cards.add(card);
+		hand.add(card);
 	}
 
 	public boolean canHit() {
-		return Score.calculate(cards).isLowerThan(getHitPoint());
+		return Score.calculate(hand).isLowerThan(getHitPoint());
 	}
 
 	public Score calculateScore() {
-		return Score.calculate(cards);
+		return Score.calculate(hand);
 	}
 
 	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
+		return hand.getCards();
 	}
 
 	public String getName() {
@@ -65,11 +66,11 @@ public abstract class Gamer {
 			return false;
 		Gamer that = (Gamer)object;
 		return Objects.equals(name, that.name) &&
-			Objects.equals(cards, that.cards);
+			Objects.equals(hand, that.hand);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, cards);
+		return Objects.hash(name, hand);
 	}
 }
