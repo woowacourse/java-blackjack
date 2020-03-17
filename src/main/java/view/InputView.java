@@ -9,6 +9,10 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public static String inputBettingMoney() {
+        return scanner.nextLine();
+    }
+
     public static String inputYesOrNo() {
         return scanner.nextLine();
     }

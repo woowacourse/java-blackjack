@@ -2,6 +2,7 @@ package domains.user;
 
 import domains.card.Deck;
 import domains.result.ResultType;
+import domains.user.name.PlayerName;
 
 import java.util.Objects;
 
@@ -10,6 +11,13 @@ public class Player extends User {
     private static final String NO = "n";
 
     private PlayerName name;
+    private BettingMoney bettingMoney;
+
+    public Player(PlayerName name, String bettingMoney, Deck deck) {
+        this.name = name;
+        this.bettingMoney = new BettingMoney(bettingMoney);
+        this.hands = new Hands(deck);
+    }
 
     public Player(String name, Deck deck) {
         this.name = new PlayerName(name);

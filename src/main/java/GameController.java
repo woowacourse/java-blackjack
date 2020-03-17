@@ -3,6 +3,8 @@ import domains.result.GameResult;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.name.PlayerName;
+import domains.user.name.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
@@ -13,11 +15,24 @@ public class GameController {
 
     public GameController() {
         deck = new Deck();
+        players = new Players();
+
         OutputView.printInputPlayerNames();
-        players = new Players(InputView.inputPlayerNames(), deck);
+        PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
+
+        bet(playerNames);
+
         dealer = new Dealer(deck);
+
         OutputView.printInitialHands(players, dealer);
         run();
+    }
+
+    private void bet(PlayerNames playerNames) {
+        for (PlayerName name : playerNames) {
+            OutputView.printInputBettingMoney(name);
+            players.add(new Player(name, InputView.inputBettingMoney(), deck));
+        }
     }
 
     private void run() {
