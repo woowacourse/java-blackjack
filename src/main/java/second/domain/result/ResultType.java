@@ -1,6 +1,6 @@
 package second.domain.result;
 
-import second.domain.player.Player;
+import second.domain.player.Gamer;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -10,14 +10,14 @@ public enum ResultType {
     LOSE("패", ((player, player2) -> !player.isLargerScoreThan(player2)));
 
     private final String name;
-    private final BiPredicate<Player, Player> resultJudge;
+    private final BiPredicate<Gamer, Gamer> resultJudge;
 
-    ResultType(String name, BiPredicate<Player, Player> resultJudge) {
+    ResultType(String name, BiPredicate<Gamer, Gamer> resultJudge) {
         this.name = name;
         this.resultJudge = resultJudge;
     }
 
-    public static ResultType from(Player result, Player compared) {
+    public static ResultType from(Gamer result, Gamer compared) {
         return Arrays.stream(ResultType.values())
                 .filter(type -> type.resultJudge.test(result, compared))
                 .findFirst()

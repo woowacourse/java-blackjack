@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class HandCards {
+    private static final int FIRST_INDEX = 0;
     private final List<Card> cards;
     private Score score;
 
@@ -61,5 +62,9 @@ public class HandCards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public Card getOneCard() {
+        return cards.get(FIRST_INDEX);
     }
 }
