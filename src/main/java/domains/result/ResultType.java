@@ -1,7 +1,10 @@
 package domains.result;
 
 public enum ResultType {
-    WIN("승"), LOSE("패"), DRAW("무");
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무"),
+    BLACKJACK("블랙잭");
 
     private String resultType;
 

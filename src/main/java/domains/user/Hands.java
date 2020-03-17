@@ -55,6 +55,10 @@ public class Hands {
         return score() > BURST_SCORE;
     }
 
+    public boolean isBlackJack() {
+        return score() == BURST_SCORE;
+    }
+
     @Override
     public String toString() {
         List<String> cards = new ArrayList<>();
