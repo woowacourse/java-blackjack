@@ -2,15 +2,17 @@ package blackjack;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.user.*;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.HitOrStay;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import blackjack.domain.user.exception.HitOrStayException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Blackjack {
     public static void main(String[] args) {
-        String playerNames = InputView.inputPlayerNames();
-        Players players = Players.of(playerNames);
+        Players players = Players.of(InputView.inputPlayerNames());
         Dealer dealer = Dealer.create();
 
         Deck deck = Deck.createWithShuffle();

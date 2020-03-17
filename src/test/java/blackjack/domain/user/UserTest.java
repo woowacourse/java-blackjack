@@ -1,10 +1,9 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
 import blackjack.domain.user.exception.UserException;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
