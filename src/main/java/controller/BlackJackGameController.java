@@ -89,6 +89,7 @@ public class BlackJackGameController {
 	}
 
 	private static void printScore(List<User> users, Dealer dealer) {
+		System.out.println();
 		OutputView.printFinalScore(dealer);
 		for (User user : users) {
 			OutputView.printFinalScore(user);
