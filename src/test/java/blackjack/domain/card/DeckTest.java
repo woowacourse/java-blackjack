@@ -108,6 +108,35 @@ class DeckTest {
 				.isInstanceOf(DeckException.class);
 	}
 
+	@ParameterizedTest
+	@MethodSource("drawTwoCards_MoreThanTwoCards_ReturnTwoCards")
+	void drawTwoCards_MoreThanTwoCards_ReturnTwoCards(List<Card> cards) {
+		Drawable deck = Deck.of(cards);
+
+		assertThat(deck.drawTwoCards()).containsExactly(cards.get(cards.size() - 1), cards.get(cards.size() - 2));
+	}
+
+	static Stream<List<Card>> drawTwoCards_MoreThanTwoCards_ReturnTwoCards() {
+		return Stream.of(Arrays.asList(threeHeart, fourDiamond),
+				Arrays.asList(threeHeart, fourDiamond, fiveClub, sixSpade),
+				Arrays.asList(threeHeart, threeHeart, fourDiamond, threeHeart));
+	}
+
+	@ParameterizedTest
+	@MethodSource("drawTwoCards_LessThanTwoCards_ThrowDeckException")
+	void drawTwoCards_LessThanTwoCards_ThrowDeckException(List<Card> cards) {
+		Drawable deck = Deck.of(cards);
+
+		assertThatThrownBy(() -> deck.drawTwoCards())
+				.isInstanceOf(DeckException.class);
+	}
+
+	static Stream<List<Card>> drawTwoCards_LessThanTwoCards_ThrowDeckException() {
+		return Stream.of(Collections.emptyList(),
+				Collections.singletonList(threeHeart),
+				Collections.singletonList(fourDiamond));
+	}
+
 	@Test
 	void equals_SimpleDeck_IsEqualToDeckHavingSameCards() {
 		// given

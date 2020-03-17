@@ -51,7 +51,7 @@ public class Blackjack {
 	private static void start(Players players, Playable dealer, Drawable deck) {
 		players.giveTwoCardsEachPlayer(deck);
 
-		dealer.giveCards(deck.draw(2));
+		dealer.giveCards(deck.drawTwoCards());
 
 		OutputView.printStartInfo(dealer, players);
 	}

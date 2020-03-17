@@ -6,12 +6,6 @@ import java.util.Objects;
 
 public final class Score {
 	public static final int MINIMUM_SCORE = 0;
-	public static final int ZERO = 0;
-	public static final Score zero;
-
-	static {
-		zero = Score.of(ZERO);
-	}
 
 	private final int score;
 
@@ -25,7 +19,7 @@ public final class Score {
 	}
 
 	public static Score zero() {
-		return zero;
+		return new Score(0);
 	}
 
 	private void validateRange(int score) {

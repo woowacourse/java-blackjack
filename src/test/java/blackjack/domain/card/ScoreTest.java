@@ -20,7 +20,7 @@ class ScoreTest {
 
 	@BeforeAll
 	static void beforeAll() {
-		zero = Score.of(0);
+		zero = Score.zero();
 		five = Score.of(5);
 		six = Score.of(6);
 		eleven = Score.of(11);
@@ -125,5 +125,4 @@ class ScoreTest {
 				Arguments.of(six, 6),
 				Arguments.of(eleven, 11));
 	}
-
 }

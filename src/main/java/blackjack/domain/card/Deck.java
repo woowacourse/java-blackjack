@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.Stack;
 
 public final class Deck implements Drawable {
+	public static final int TWO = 2;
+
 	private final Stack<Card> cards;
 
 	private Deck(Stack<Card> cards) {
@@ -33,9 +35,9 @@ public final class Deck implements Drawable {
 	}
 
 	@Override
-	public List<Card> draw(int num) {
+	public List<Card> drawTwoCards() {
 		List<Card> drawn = new ArrayList<>();
-		for (int i = 0; i < num; i++) {
+		for (int i = 0; i < TWO; i++) {
 			drawn.add(draw());
 		}
 		return drawn;
