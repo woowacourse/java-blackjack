@@ -20,7 +20,7 @@ public class BlackjackGameController {
         hitMoreCard(game.getPlayers(), game);
         dealerHitsAdditionalCard(game);
         OutputView.printFinalCardScore(game);
-        OutputView.printFinalResult(game.calculateAllResults());
+        OutputView.printFinalResult(game.calculateResultsPerPlayer(), game.calculateTotalResultCount());
     }
 
     private static List<Player> enrollPlayers() {

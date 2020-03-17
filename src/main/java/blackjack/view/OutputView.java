@@ -7,7 +7,6 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,12 +51,11 @@ public class OutputView {
         System.out.println("\n## 결과 : \n" + parseFinalScoreAnnouncement(game) + "\n");
     }
 
-    public static void printFinalResult(Map<Player, Result> totalResult) {
+    public static void printFinalResult(Map<Player, Result> totalResult, Map<Result, Integer> resultCount) {
         System.out.println("## 최종 승패");
-        System.out.println(parseDealerFinalResult(calculatePlayerResultCount(totalResult)));
+        System.out.println(parseDealerFinalResult(resultCount));
         System.out.println(parseAllPlayerResults(totalResult));
     }
-
 
     private static String showInitialCardStatus(User user) {
         return parsePlayerStatus(user.getName(), user.getInitialCards());
@@ -79,18 +77,6 @@ public class OutputView {
 
     private static String showFinalResultPerUsers(User user) {
         return showCurrentCardStatus(user) + RESULT + user.getTotalScore();
-    }
-
-    private static Map<Result, Integer> calculatePlayerResultCount(Map<Player, Result> totalResult) {
-        Map<Result, Integer> playerResult = new HashMap<>();
-        playerResult.put(Result.WIN, 0);
-        playerResult.put(Result.DRAW, 0);
-        playerResult.put(Result.LOSE, 0);
-
-        for (Result r : totalResult.values()) {
-            playerResult.put(r, playerResult.get(r) + 1);
-        }
-        return playerResult;
     }
 
     private static String parseFinalScoreAnnouncement(BlackjackGame game) {

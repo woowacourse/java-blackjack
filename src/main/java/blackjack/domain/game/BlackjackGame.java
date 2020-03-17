@@ -4,10 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 블랙잭 게임을 진행하는 클래스
@@ -45,10 +42,22 @@ public class BlackjackGame {
         return false;
     }
 
-    public Map<Player, Result> calculateAllResults() {
+    public Map<Player, Result> calculateResultsPerPlayer() {
         Map<Player, Result> totalResult = new LinkedHashMap<>();
         players.forEach(player -> totalResult.put(player, Result.of(dealer, player)));
         return totalResult;
+    }
+
+    public Map<Result, Integer> calculateTotalResultCount() {
+        Map<Result, Integer> playerResult = new HashMap<>();
+        playerResult.put(Result.WIN, 0);
+        playerResult.put(Result.DRAW, 0);
+        playerResult.put(Result.LOSE, 0);
+
+        for (Result r : calculateResultsPerPlayer().values()) {
+            playerResult.put(r, playerResult.get(r) + 1);
+        }
+        return playerResult;
     }
 
     public List<Player> getPlayers() {
