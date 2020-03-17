@@ -1,9 +1,9 @@
 package blackjack.card.domain;
 
-import blackjack.card.domain.result.DrawStrategy;
-import blackjack.card.domain.result.GameResultStrategy;
-import blackjack.card.domain.result.LoseStrategy;
-import blackjack.card.domain.result.WinStrategy;
+import blackjack.card.domain.resultstrategy.DrawStrategy;
+import blackjack.card.domain.resultstrategy.GameResultStrategy;
+import blackjack.card.domain.resultstrategy.LoseStrategy;
+import blackjack.card.domain.resultstrategy.WinStrategy;
 
 import java.util.Arrays;
 
