@@ -59,7 +59,7 @@ public final class Players {
 		}
 	}
 
-	public void giveCardEachPlayerTwice(Drawable deck) {
+	public void giveTwoCardsEachPlayer(Drawable deck) {
 		giveCardEachPlayer(deck);
 		giveCardEachPlayer(deck);
 	}

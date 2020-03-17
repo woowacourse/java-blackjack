@@ -32,7 +32,7 @@ public final class Hand {
 		return maximizeIfHasAce(score);
 	}
 
-	public Score simpleSum() {
+	private Score simpleSum() {
 		Score score = Score.of(0);
 
 		for (Card card : hand) {

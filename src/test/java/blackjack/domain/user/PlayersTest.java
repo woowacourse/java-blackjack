@@ -69,7 +69,7 @@ class PlayersTest {
 		Drawable deck = Deck.of(cards);
 
 		// when
-		players.giveCardEachPlayerTwice(deck);
+		players.giveTwoCardsEachPlayer(deck);
 
 		// then
 		assertThat(players.getPlayers().get(index).getHand())

@@ -13,6 +13,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Blackjack {
+
 	public static void main(String[] args) {
 		Players players = preparePlayers();
 		Playable dealer = Dealer.dealer();
@@ -48,7 +49,7 @@ public class Blackjack {
 	}
 
 	private static void start(Players players, Playable dealer, Drawable deck) {
-		players.giveCardEachPlayerTwice(deck);
+		players.giveTwoCardsEachPlayer(deck);
 
 		dealer.giveCards(deck.draw(2));
 
