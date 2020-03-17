@@ -29,9 +29,8 @@ public class BlackJackGameController {
 			hit(users, dealer, cardDeck);
 		}
 
-		printScore(users, dealer);
-
 		GameResult gameResult = new GameResult(users, dealer, isFirstDrawBlackJack);
+		printScore(users, dealer);
 		printResult(gameResult);
 	}
 
