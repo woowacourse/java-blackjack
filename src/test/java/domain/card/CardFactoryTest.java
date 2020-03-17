@@ -11,10 +11,6 @@ public class CardFactoryTest {
 
 	@Test
 	void createTest() {
-<<<<<<< HEAD
-=======
-
->>>>>>> [Feat] Card 객체 추가
 		List<Card> cards = new ArrayList<>();
 		for (Type type : Type.values()) {
 			for (Symbol symbol : Symbol.values()) {
@@ -24,7 +20,6 @@ public class CardFactoryTest {
 
 		assertThat(CardFactory.create()).isEqualTo(cards);
 	}
-<<<<<<< HEAD
 
 	@Test
 	void sizeTest() {
@@ -32,7 +27,4 @@ public class CardFactoryTest {
 
 		assertThat(size).isEqualTo(52);
 	}
-
-=======
->>>>>>> [Feat] Card 객체 추가
 }

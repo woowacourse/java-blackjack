@@ -20,11 +20,13 @@ import view.OutputView;
 
 public class BlackjackGame {
 	private final CardDivider cardDivider;
+	private final RuleChecker ruleChecker;
 	private final List<User> users;
 	private final Dealer dealer;
 
 	public BlackjackGame() {
 		users = PlayerFactory.create(InputView.inputNames());
+		ruleChecker = new RuleChecker();
 		dealer = new Dealer();
 		this.cardDivider = new CardDivider();
 	}
@@ -53,13 +55,13 @@ public class BlackjackGame {
 
 	private void printBlackjackUsers(List<User> allUsers) {
 		List<User> blackjackUsers = allUsers.stream()
-			.filter(User::isBlackjack)
+			.filter(user -> ruleChecker.isBlackjack(user))
 			.collect(Collectors.toList());
 		OutputView.printBlackJackUser(blackjackUsers);
 	}
 
 	private void checkCanDraw() {
-		if (dealer.isBlackjack()) {
+		if (ruleChecker.isBlackjack(dealer)) {
 			return;
 		}
 		drawCard(users, dealer);
@@ -77,7 +79,7 @@ public class BlackjackGame {
 	}
 
 	private void drawPlayerCard(User user) {
-		if (user.isBlackjack()) {
+		if (ruleChecker.isBlackjack(dealer)) {
 			return;
 		}
 		while (isUserNotBust(user) && isContinuousFromInput(user)) {
@@ -87,7 +89,7 @@ public class BlackjackGame {
 	}
 
 	private boolean isUserNotBust(User user) {
-		if (!user.isBust()) {
+		if (ruleChecker.isBust(user) == false) {
 			return true;
 		}
 		OutputView.printUserBust(user);

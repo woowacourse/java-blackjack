@@ -11,8 +11,9 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.user.Player;
 
-public class BlackjackUtilsTest {
+public class RuleCheckerTest {
 	private Player player;
+	private RuleChecker ruleChecker = new RuleChecker();
 
 	@BeforeEach
 	void setUp() {
@@ -24,7 +25,7 @@ public class BlackjackUtilsTest {
 	@DisplayName("블랙잭인 경우")
 	@Test
 	void isBlackjackTest1() {
-		assertThat(player.isBlackjack()).isTrue();
+		assertThat(ruleChecker.isBlackjack(player)).isTrue();
 	}
 
 	@DisplayName("블랙잭 아닌 경우")
@@ -32,7 +33,7 @@ public class BlackjackUtilsTest {
 	void isBlackjackTest2() {
 		player.addCards(Arrays.asList(new Card("하트", "10")));
 
-		assertThat(player.isBlackjack()).isFalse();
+		assertThat(ruleChecker.isBlackjack(player)).isFalse();
 	}
 
 	@DisplayName("버스트인 경우")
@@ -41,12 +42,12 @@ public class BlackjackUtilsTest {
 		player.addCards(Arrays.asList(new Card("하트", "K"),
 			new Card("하트", "1")));
 
-		assertThat(player.isBust()).isTrue();
+		assertThat(ruleChecker.isBust(player)).isTrue();
 	}
 
 	@DisplayName("버스트가 아닌 경우")
 	@Test
 	void isBustTest2() {
-		assertThat(player.isBust()).isFalse();
+		assertThat(ruleChecker.isBust(player)).isFalse();
 	}
 }
