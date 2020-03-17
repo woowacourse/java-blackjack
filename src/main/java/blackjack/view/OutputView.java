@@ -33,7 +33,7 @@ public class OutputView {
                 .collect(Collectors.joining(JOINING_DELIMITER));
 
         System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
-                dealer.getName(), playerNames, dealer.countCards());
+                dealer.getName(), playerNames, User.INITIAL_DRAWING_NUMBER);
     }
 
     private static void printInitialDealerCard(User dealer) {

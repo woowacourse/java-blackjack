@@ -11,6 +11,7 @@ import java.util.List;
 
 public class User {
     private static final int MAX_SCORE_NUMBER_NOT_BUST = 21;
+    public static final int INITIAL_DRAWING_NUMBER = 2;
     private static final int MAX_SCORE_NUMBER_TO_MAXIMIZE = 12;
     private static final Score ADDING_SCORE_TO_MAXIMIZE = new Score(10);
 
@@ -40,7 +41,7 @@ public class User {
 
     public void receiveInitialCards(Deck deck) {
         validateOwnedCardsEmpty();
-        receiveTwoCards(deck);
+        receiveCards(deck, INITIAL_DRAWING_NUMBER);
     }
 
     private void validateOwnedCardsEmpty() {
@@ -49,9 +50,10 @@ public class User {
         }
     }
 
-    private void receiveTwoCards(Deck deck) {
-        cards.add(deck.draw());
-        cards.add(deck.draw());
+    private void receiveCards(Deck deck, int drawingNumber) {
+        for (int i = 0; i < drawingNumber; i++) {
+            cards.add(deck.draw());
+        }
     }
 
     public boolean hasName(String name) {
@@ -101,9 +103,5 @@ public class User {
 
     public boolean isSameScore(User other) {
         return calculateScore().equals(other.calculateScore());
-    }
-
-    public int countCards() {
-        return cards.size();
     }
 }

@@ -38,7 +38,7 @@ class PlayersTest {
         players.receiveInitialCards(deck);
 
         for (Player player : players.getPlayers()) {
-            assertThat(player.countCards()).isEqualTo(2);
+            assertThat(player.getCards().size()).isEqualTo(2);
         }
     }
 }

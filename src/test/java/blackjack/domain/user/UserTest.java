@@ -40,7 +40,7 @@ class UserTest {
 
         user.drawCard(deck);
 
-        assertThat(user.countCards()).isEqualTo(1);
+        assertThat(user.getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -142,6 +142,6 @@ class UserTest {
                 new Card(Symbol.KING, Type.HEART));
         User user = new User("무늬", cards);
 
-        assertThat(user.countCards()).isEqualTo(2);
+        assertThat(user.getCards().size()).isEqualTo(2);
     }
 }
