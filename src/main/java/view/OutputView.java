@@ -15,8 +15,8 @@ public class OutputView {
 	private static final String FINAL_RESULT_MESSAGE = "\n## 최종 수익";
 	private static final String COLON = " : ";
 
-	public static void firstDrawMessageHead(String name, int firstDrawCount) {
-		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, name, firstDrawCount));
+	public static void firstDrawMessageHead(String userNames, int firstDrawCount) {
+		System.out.println(String.format(STRING_FORMAT_FIRST_DRAW_MESSAGE, userNames, firstDrawCount));
 	}
 
 	public static void printOneCard(Player player) {
@@ -37,7 +37,7 @@ public class OutputView {
 				player.calculateScore()));
 	}
 
-	public static void printFinalResultMessage() {
+	public static void printFinalResultHeadMessage() {
 		System.out.println(FINAL_RESULT_MESSAGE);
 	}
 

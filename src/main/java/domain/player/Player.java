@@ -50,7 +50,7 @@ public class Player implements Gamer {
 	}
 
 	public PlayerCards getPlayerCards() {
-		return playerCards;
+		return this.playerCards;
 	}
 
 	public String getName() {
