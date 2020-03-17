@@ -1,7 +1,10 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import domain.gamer.Name;
 import domain.gamer.Player;
 
 public class InputView {
@@ -18,5 +21,14 @@ public class InputView {
 			.append("는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 		System.out.println(sb);
 		return scanner.nextLine();
+	}
+
+	public static List<String> inputMoney(List<Name> names) {
+		List<String> bettingMoney = new ArrayList<>();
+		for (Name name : names) {
+			System.out.println(name.getName()+ "의 배팅 금액은?");
+			bettingMoney.add(scanner.nextLine());
+		}
+		return bettingMoney;
 	}
 }

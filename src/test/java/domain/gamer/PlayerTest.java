@@ -15,7 +15,7 @@ class PlayerTest {
 	@Test
 	@DisplayName("플레이어가 지급받은 카드를 갖고 있는지 확인")
 	void receiveCard() {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		player.hit(new Card(Symbol.ACE, Type.CLUB));
 
 		assertThat(player.getCards()).contains(new Card(Symbol.ACE, Type.CLUB));
@@ -24,7 +24,7 @@ class PlayerTest {
 	@Test
 	@DisplayName("20이하의 경우 추가 카드를 받을 수 있는지")
 	void canReceiveMore() {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		player.hit(new Card(Symbol.SEVEN, Type.DIAMOND));
 		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
 		player.hit(new Card(Symbol.SIX, Type.DIAMOND));
@@ -35,7 +35,7 @@ class PlayerTest {
 	@Test
 	@DisplayName("20초과의 경우 추가 카드를 받을 수 없는지")
 	void canNotReceiveMore() {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
 		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
 		player.hit(new Card(Symbol.SIX, Type.DIAMOND));
@@ -46,7 +46,7 @@ class PlayerTest {
 	@Test
 	@DisplayName("hit을 할 경우 카드가 하나 추가되는지 테스트")
 	void hitTest() {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		player.hit(new Card(Symbol.EIGHT, Type.DIAMOND));
 		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
 		player.hit(new Card(Symbol.SIX, Type.DIAMOND));

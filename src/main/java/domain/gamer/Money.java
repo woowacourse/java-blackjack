@@ -1,9 +1,20 @@
 package domain.gamer;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Money {
+	public static final Money ZERO = new Money(0);
+
 	private final double money;
+
+	public Money(double money) {
+		if (money < 0) {
+			throw new IllegalArgumentException("Money는 음수가 될 수 없습니다.");
+		}
+		this.money = money;
+	}
 
 	public Money(String money) {
 		this(stringToDouble(money));
@@ -11,10 +22,6 @@ public class Money {
 
 	public Money(int money) {
 		this((double)money);
-	}
-
-	public Money(double money) {
-		this.money = money;
 	}
 
 	private static double stringToDouble(String money) {
@@ -25,12 +32,14 @@ public class Money {
 		}
 	}
 
-	public Money plus(Money other) {
-		return new Money(this.money + other.money);
+	public static List<Money> list(List<String> bettingMoney) {
+		return bettingMoney.stream()
+			.map(Money::new)
+			.collect(Collectors.toList());
 	}
 
-	public Money multiply(double ratio) {
-		return new Money(this.money * ratio);
+	public double multiply(double ratio) {
+		return this.money * ratio;
 	}
 
 	@Override

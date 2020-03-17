@@ -16,23 +16,16 @@ import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.gamer.Dealer;
+import domain.gamer.Money;
 import domain.gamer.Name;
 import domain.gamer.Player;
 
 class ResultTypeTest {
-	@Test
-	@DisplayName("플레이어의 승패와 대칭되는 딜러의 승패가 반환되는지")
-	void reverseTest() {
-		assertThat(ResultType.reverse(ResultType.WIN)).isEqualTo(ResultType.LOSE);
-		assertThat(ResultType.reverse(ResultType.LOSE)).isEqualTo(ResultType.WIN);
-		assertThat(ResultType.reverse(ResultType.DRAW)).isEqualTo(ResultType.DRAW);
-	}
-
 	@ParameterizedTest
 	@MethodSource("cardInput")
 	@DisplayName("점수비교를 통해 올바른 결과(Enum)을 생성하는지 테스트")
 	void ofTest(List<Card> playerCards, List<Card> dealerCards, ResultType expected) {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		for (Card card : playerCards) {
 			player.hit(card);
 		}
@@ -58,5 +51,16 @@ class ResultTypeTest {
 			Arguments.of(Arrays.asList(ace, six), Arrays.asList(seven, six, ace), ResultType.WIN),
 			Arguments.of(Arrays.asList(ten, ten, six), Arrays.asList(seven, six, ace), ResultType.LOSE),
 			Arguments.of(Arrays.asList(ten, ten, ten), Arrays.asList(ten, ten, six), ResultType.LOSE));
+	}
+
+	@Test
+	@DisplayName("게임결과에 따라 정확한 수익금을 계산하는지 테스트")
+	void calculateTest() {
+		Money money = new Money(10000);
+
+		assertThat(ResultType.BLACK_JACK.calculateProfit(money)).isEqualTo(5000);
+		assertThat(ResultType.WIN.calculateProfit(money)).isEqualTo(10000);
+		assertThat(ResultType.DRAW.calculateProfit(money)).isEqualTo(0);
+		assertThat(ResultType.LOSE.calculateProfit(money)).isEqualTo(-10000);
 	}
 }

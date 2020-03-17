@@ -26,17 +26,26 @@ class MoneyTest {
 		assertThat(new Money(10000)).isInstanceOf(Money.class);
 	}
 
-	@ParameterizedTest
-	@CsvSource(value = {"3000.0,5000.0,8000.0", "3000.0,2000.0, 5000.0"})
-	@DisplayName("더하기 연산을 올바르게 수행하는지 테스트")
-	void plusTest(double first, double second, double expected) {
-		assertThat(new Money(first).plus(new Money(second))).isEqualTo(new Money(expected));
+	@Test
+	@DisplayName("배팅금액이 음수인 경우 예외를 반환하는지 테스트")
+	void minusBettingMoney() {
+		assertThatThrownBy(() -> {
+			new Money(-10000);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	@DisplayName("배팅금액이 Double로 변환이 불가능한 경우 예외를 반환하는지 테스트")
+	void nullBettingMoney() {
+		assertThatThrownBy(() -> {
+			new Money("1000a");
+		}).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@ParameterizedTest
 	@CsvSource(value = {"3000.0,1 ,3000.0", "3000.0, 1.5, 4500.0", "1000,-1,-1000"})
 	@DisplayName("더하기 연산을 올바르게 수행하는지 테스트")
 	void multiplyTest(double first, double second, double expected) {
-		assertThat(new Money(first).multiply(second)).isEqualTo(new Money(expected));
+		assertThat(new Money(first).multiply(second)).isEqualTo(expected);
 	}
 }

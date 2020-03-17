@@ -2,6 +2,7 @@ package domain.gamer;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,8 @@ class PlayersFactoryTest {
 	void createTest() {
 		List<String> input = StringUtil.parseByComma("pobi,jason,brown");
 		List<Name> names = NameFactory.create("pobi,jason,brown");
-		List<Player> players = PlayersFactory.from(names);
+		List<Money> monies = Arrays.asList(Money.ZERO, Money.ZERO, Money.ZERO);
+		List<Player> players = PlayersFactory.from(names, monies);
 
 		for (Player player : players) {
 			assertThat(input).contains(player.getName());
