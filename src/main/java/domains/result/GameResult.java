@@ -10,6 +10,10 @@ import java.util.Map;
 public class GameResult {
     private Map<Player, ResultType> playerResult = new HashMap<>();
 
+    public GameResult(Map<Player, ResultType> playerResult) {
+        this.playerResult = playerResult;
+    }
+
     public GameResult(Players players, Dealer dealer) {
         create(players, dealer);
     }

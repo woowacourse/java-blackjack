@@ -2,16 +2,20 @@ package domains.user;
 
 import java.util.Objects;
 
-public class BettingMoney {
+public class Money {
     public static final int MINIMUM_MONEY = 1;
     private int money;
 
-    public BettingMoney(String input) {
+    public Money(String input) {
         checkNullAndEmpty(input);
         checkNumberFormat(input);
         int money = Integer.parseInt(input);
         checkNumberBound(money);
         this.money = money;
+    }
+
+    public Money(int money){
+        this(String.valueOf(money));
     }
 
     private void checkNumberBound(int money) {
@@ -32,5 +36,22 @@ public class BettingMoney {
         } catch (NumberFormatException e) {
             throw new InvalidBettingMoneyException(InvalidBettingMoneyException.NOT_NUMBER_FORMAT);
         }
+    }
+
+    public Money multiply(double profitRate){
+        return new Money((int)(this.money * profitRate));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Money)) return false;
+        Money money1 = (Money) o;
+        return money == money1.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }

@@ -11,11 +11,11 @@ public class Player extends User {
     private static final String NO = "n";
 
     private PlayerName name;
-    private BettingMoney bettingMoney;
+    private Money bettingMoney;
 
     public Player(PlayerName name, String bettingMoney, Hands hands) {
         this.name = name;
-        this.bettingMoney = new BettingMoney(bettingMoney);
+        this.bettingMoney = new Money(bettingMoney);
         this.hands = hands;
         this.blackJack = hands.isBlackJack();
     }
@@ -69,5 +69,9 @@ public class Player extends User {
 
     public String getName() {
         return name.toString();
+    }
+
+    public Money getBettingMoney() {
+        return this.bettingMoney;
     }
 }
