@@ -1,5 +1,6 @@
 package controller;
 
+import domain.GameParticipant;
 import domain.PlayerResult;
 import domain.Players;
 import domain.card.CardDeck;
@@ -14,30 +15,27 @@ public class BlackJackGameController {
 
     public static void run() {
         Players players = setPlayers();
-        Dealer dealer = new Dealer();
-        CardDeck cardDeck = new CardDeck();
+        GameParticipant participant = new GameParticipant(players);
+        participant.initialDraw();
+        OutputView.printInitialDraw(participant);
 
-        dealer.firstDraw(cardDeck);
-        players.firstDraw(cardDeck);
-        OutputView.printInitialDrawInstruction(players);
-        OutputView.printDealerInitialDraw(dealer);
-        OutputView.printCardStatusForAllPlayers(players);
-
+        Dealer dealer = participant.getDealer();
+        CardDeck cardDeck = participant.getCardDeck();
         for (Player player : players.getPlayers()) {
             performPlayersHit(cardDeck, player);
         }
         OutputView.printDealerAdditionalCard(dealer.performHit(cardDeck));
 
-        OutputView.printFinalScoreBoard(dealer, players);
+        OutputView.printFinalScoreBoard(participant);
         PlayerResult playerResult = new PlayerResult();
-        playerResult.deduceResult(players, dealer);
+        playerResult.deduceResult(participant);
         OutputView.printFinalResult(playerResult);
     }
 
     private static void performPlayersHit(CardDeck cardDeck, Player player) {
         try {
             while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
-                player.receive(cardDeck);
+                player.receive(cardDeck.draw());
                 OutputView.printCardStatus(player);
             }
         } catch (OverScoreException e) {

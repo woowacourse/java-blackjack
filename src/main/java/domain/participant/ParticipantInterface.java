@@ -1,11 +1,8 @@
 package domain.participant;
 
-import domain.card.CardDeck;
-
 public interface ParticipantInterface {
-    void firstDraw(CardDeck cardDeck);
 
-    void receive(CardDeck cardDeck);
+    // void receiveCardDeckCard(CardDeck cardDeck);
 
     String getName();
 

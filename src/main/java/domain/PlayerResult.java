@@ -14,7 +14,9 @@ public class PlayerResult {
         playerResult = new HashMap<>();
     }
 
-    public void deduceResult(Players players, Dealer dealer) {
+    public void deduceResult(GameParticipant participant) {
+        Dealer dealer = participant.getDealer();
+        Players players = participant.getPlayers();
         for (Player player : players.getPlayers()) {
             playerResult.put(player.getName(), player.beatDealer(dealer));
         }

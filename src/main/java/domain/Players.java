@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.card.CardDeck;
 import domain.participant.Participant;
 import domain.participant.Player;
 
@@ -22,12 +21,6 @@ public class Players {
 
     public List<String> getUserNames() {
         return players.stream().map(Participant::getName).collect(Collectors.toList());
-    }
-
-    public void firstDraw(CardDeck cardDeck) {
-        for (Player player : players) {
-            player.firstDraw(cardDeck);
-        }
     }
 
     public List<Player> getPlayers() {

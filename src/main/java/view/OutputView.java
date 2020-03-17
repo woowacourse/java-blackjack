@@ -2,6 +2,7 @@ package view;
 
 import java.util.Map;
 
+import domain.GameParticipant;
 import domain.PlayerResult;
 import domain.Players;
 import domain.participant.Dealer;
@@ -13,14 +14,21 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public static void printInitialDrawInstruction(Players users) {
+    private static void printInitialDrawInstruction(GameParticipant participant) {
+        Players players = participant.getPlayers();
         StringBuilder drawInstruction = new StringBuilder();
-        String userNames = String.join(DELIMITER, users.getUserNames());
+        String userNames = String.join(DELIMITER, players.getUserNames());
         drawInstruction.append("\n딜러와 ").append(userNames).append("에게 2장의 카드를 나누었습니다.");
         System.out.println(drawInstruction);
     }
 
-    public static void printDealerInitialDraw(Dealer dealer) {
+    public static void printInitialDraw(GameParticipant participant) {
+        printInitialDrawInstruction(participant);
+        printDealerInitialDraw(participant.getDealer());
+        printCardStatusForAllPlayers(participant.getPlayers());
+    }
+
+    private static void printDealerInitialDraw(Dealer dealer) {
         System.out.println(dealer.toStringFirstDraw());
     }
 
@@ -28,7 +36,7 @@ public class OutputView {
         System.out.println(player.toString());
     }
 
-    public static void printCardStatusForAllPlayers(Players players) {
+    private static void printCardStatusForAllPlayers(Players players) {
         for (Player player : players.getPlayers()) {
             printCardStatus(player);
         }
@@ -46,7 +54,9 @@ public class OutputView {
         System.out.println(participant.toString() + " - 결과 : " + participant.calculateScore());
     }
 
-    public static void printFinalScoreBoard(Dealer dealer, Players players) {
+    public static void printFinalScoreBoard(GameParticipant gameParticipant) {
+        Dealer dealer = gameParticipant.getDealer();
+        Players players = gameParticipant.getPlayers();
         printFinalScore(dealer);
         for (Player player : players.getPlayers()) {
             printFinalScore(player);

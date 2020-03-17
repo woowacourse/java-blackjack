@@ -33,10 +33,10 @@ class PlayerTest {
     void isPlayerBust() {
         Player player = new Player("플레이어");
         Dealer dealer = new Dealer();
-        player.receiveForTest(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        player.receiveForTest(new Card(Symbol.EIGHT, Shape.스페이드));
-        player.receiveForTest(new Card(Symbol.EIGHT, Shape.하트));
-        dealer.receiveForTest(new Card(Symbol.FOUR, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
+        player.receive(new Card(Symbol.EIGHT, Shape.스페이드));
+        player.receive(new Card(Symbol.EIGHT, Shape.하트));
+        dealer.receive(new Card(Symbol.FOUR, Shape.스페이드));
         assertThat(player.beatDealer(dealer)).isEqualTo(Result.LOSE);
     }
 
@@ -45,9 +45,9 @@ class PlayerTest {
     void isPlayerWin() {
         Player player = new Player("플레이어");
         Dealer dealer = new Dealer();
-        player.receiveForTest(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        player.receiveForTest(new Card(Symbol.EIGHT, Shape.하트));
-        dealer.receiveForTest(new Card(Symbol.FOUR, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
+        player.receive(new Card(Symbol.EIGHT, Shape.하트));
+        dealer.receive(new Card(Symbol.FOUR, Shape.스페이드));
         assertThat(player.beatDealer(dealer)).isEqualTo(Result.WIN);
     }
 
@@ -56,8 +56,8 @@ class PlayerTest {
     void isPlayerDraw() {
         Player player = new Player("플레이어");
         Dealer dealer = new Dealer();
-        player.receiveForTest(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        dealer.receiveForTest(new Card(Symbol.SEVEN, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
+        dealer.receive(new Card(Symbol.SEVEN, Shape.스페이드));
         assertThat(player.beatDealer(dealer)).isEqualTo(Result.DRAW);
     }
 

@@ -13,7 +13,7 @@ public class Dealer extends Participant {
         int hitNumber = 0;
         while (this.calculateScore() <= DEALER_STANDARD_SCORE) {
             hitNumber++;
-            this.receive(cardDeck);
+            this.receive(cardDeck.draw());
         }
         return hitNumber;
     }

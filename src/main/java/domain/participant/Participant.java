@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import domain.ParticipantCards;
 import domain.card.Card;
-import domain.card.CardDeck;
 import domain.exception.OverScoreException;
 
 public class Participant implements ParticipantInterface {
@@ -20,20 +19,10 @@ public class Participant implements ParticipantInterface {
         this.cards = new ParticipantCards();
     }
 
-    public void firstDraw(CardDeck cardDeck) {
-        for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
-            cards.add(cardDeck.draw());
-        }
-    }
-
-    public void receive(CardDeck cardDeck) {
+    public void receive(Card card) {
         if (calculateScore() >= CRITERION) {
             throw new OverScoreException("카드의 총 점수가 21을 넘으므로 카드를 뽑으실 수 없습니다.");
         }
-        cards.add(cardDeck.draw());
-    }
-
-    void receiveForTest(Card card) {
         cards.add(card);
     }
 
