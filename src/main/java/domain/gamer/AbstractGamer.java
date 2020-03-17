@@ -9,8 +9,6 @@ import domain.result.WinLose;
 import java.util.List;
 import java.util.Objects;
 
-import static domain.result.ScoreCalculable.BLACK_JACK_SCORE;
-
 public abstract class AbstractGamer implements Gamer {
     private static final int INITIAL_CARDS_AMOUNT = 2;
 
@@ -53,19 +51,21 @@ public abstract class AbstractGamer implements Gamer {
     }
 
     @Override
-    public WinLose determineWinLose(Gamer counterPart) {
-        Score myScore = this.calculateScore();
-        Score counterPartScore = counterPart.calculateScore();
+    public boolean isBurst() {
+        return hand.isBurst();
+    }
 
-        if (myScore.isBiggerThan(new Score(BLACK_JACK_SCORE))) {
+    @Override
+    public WinLose determineWinLose(Gamer counterPart) {
+        if (this.isBurst()) {
             return WinLose.LOSE;
         }
 
-        if (counterPartScore.isBiggerThan(new Score(BLACK_JACK_SCORE))) {
+        if (counterPart.isBurst()) {
             return WinLose.WIN;
         }
 
-        return WinLose.determineWinLose(myScore, counterPartScore);
+        return WinLose.determineWinLose(this, counterPart);
     }
 
     public String getName() {

@@ -20,5 +20,7 @@ public interface Gamer {
 
     Score calculateScore();
 
+    boolean isBurst();
+
     WinLose determineWinLose(Gamer counterParts);
 }

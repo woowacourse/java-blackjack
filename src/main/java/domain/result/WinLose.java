@@ -1,5 +1,7 @@
 package domain.result;
 
+import domain.gamer.Gamer;
+
 public enum WinLose {
     WIN("승"),
     LOSE("패");
@@ -10,8 +12,8 @@ public enum WinLose {
         this.value = value;
     }
 
-    public static WinLose determineWinLose(Score myScore, Score counterPartScore) {
-        if (myScore.isBiggerThan(counterPartScore)) {
+    public static WinLose determineWinLose(Gamer me, Gamer counterPart) {
+        if (me.calculateScore().isBiggerThan(counterPart.calculateScore())) {
             return WinLose.WIN;
         }
 

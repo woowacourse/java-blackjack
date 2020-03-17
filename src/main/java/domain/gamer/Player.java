@@ -12,7 +12,7 @@ public class Player extends AbstractGamer {
 
     @Override
     public boolean canDrawMore() {
-        return hand.isBurst();
+        return this.isBurst();
     }
 
     @Override

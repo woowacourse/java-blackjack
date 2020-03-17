@@ -18,7 +18,7 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final String NO_EXIST_MESSAGE = "적절한 숫자의 랭크가 존재하지 않습니다.";
+    private static final String NO_EXIST_MESSAGE = "해당하는 랭크가 존재하지 않습니다.";
 
     private final String name;
     private final Score score;
