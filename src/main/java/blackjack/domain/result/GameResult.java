@@ -44,7 +44,7 @@ public class GameResult {
 
     public long getDealerLoseCount() {
         return dealerResults.stream()
-                .filter(ResultType::isDraw)
+                .filter(ResultType::isLose)
                 .count();
     }
 
