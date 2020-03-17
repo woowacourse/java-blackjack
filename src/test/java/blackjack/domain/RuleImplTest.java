@@ -1,18 +1,18 @@
 package blackjack.domain;
 
-import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Participants;
-import blackjack.domain.participants.Player;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static blackjack.domain.participants.HandTest.*;
+import static blackjack.domain.participants.Result.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static blackjack.domain.participants.HandTest.*;
-import static blackjack.domain.participants.Result.LOSE;
-import static blackjack.domain.participants.Result.WIN;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Player;
 
 public class RuleImplTest {
 

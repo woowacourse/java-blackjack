@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;

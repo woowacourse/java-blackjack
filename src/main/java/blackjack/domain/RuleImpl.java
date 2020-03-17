@@ -1,13 +1,13 @@
 package blackjack.domain;
 
+import static blackjack.domain.participants.Result.*;
+
+import java.util.List;
+
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-
-import java.util.List;
-
-import static blackjack.domain.participants.Result.*;
 
 public class RuleImpl implements Rule {
 

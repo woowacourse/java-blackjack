@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import blackjack.domain.card.Card;
 
 public class Hand {
     private static final int BLACK_JACK = 21;
@@ -26,13 +26,13 @@ public class Hand {
     }
 
     public boolean isBusted() {
-        return calculate() > BLACK_JACK;
+        return calculate() >= BLACK_JACK;
     }
 
     public int calculate() {
         int total = cards.stream()
-                .mapToInt(Card::getRankValue)
-                .sum();
+            .mapToInt(Card::getRankValue)
+            .sum();
 
         return reduceIfAceExists(total);
     }
