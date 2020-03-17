@@ -33,6 +33,10 @@ public abstract class Gamer {
 		return getScore().isBiggerThan(Score.BLACKJACK);
 	}
 
+	public boolean hasTwoCards() {
+		return hand.hasTwoCards();
+	}
+
 	public boolean isBiggerThan(Gamer gamer) {
 		return getScore().isBiggerThan(gamer.getScore());
 	}
