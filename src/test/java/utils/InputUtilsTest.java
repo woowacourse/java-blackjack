@@ -29,4 +29,39 @@ class InputUtilsTest {
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("y,n 중 하나만 입력하세요.");
 	}
+
+	@DisplayName("int 로 변환 테스트")
+	@Test
+	void toInt() {
+		String input = "500";
+
+		assertThat(InputUtils.toInt(input)).isEqualTo(500);
+	}
+
+	@DisplayName("문자가 아닌 문자 입력시 toInt 테스트")
+	@Test
+	void toIntWithError() {
+		String input = "a1";
+
+		assertThatThrownBy(() -> InputUtils.toInt(input))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("숫자가 아닌 문자를 입력하였습니다.");
+	}
+
+	@DisplayName("0이하의 숫자 입력시 toInt 테스트")
+	@Test
+	void toIntWithError2() {
+		String zero = "0";
+
+		assertThatThrownBy(() -> InputUtils.toInt(zero))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("0이하의 숫자를 입력하였습니다.");
+
+		String minus = "-1";
+
+		assertThatThrownBy(() -> InputUtils.toInt(minus))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("0이하의 숫자를 입력하였습니다.");
+
+	}
 }

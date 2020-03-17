@@ -17,7 +17,7 @@ class CardPrintUtilsTest {
 	@DisplayName("모든 카드 출력 테스트")
 	@Test
 	void toStringAllCardTest() {
-		Player user = new User("a");
+		Player user = new User("a", 0);
 		List<Card> cards = new ArrayList<>();
 		cards.add(new Card(Symbol.ACE, Shape.DIAMOND));
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));
@@ -29,7 +29,7 @@ class CardPrintUtilsTest {
 	@DisplayName("한장의 카드 출력 테스트")
 	@Test
 	void toStringOneCardTest() {
-		Player user = new User("a");
+		Player user = new User("a", 0);
 		List<Card> cards = new ArrayList<>();
 		cards.add(new Card(Symbol.ACE, Shape.DIAMOND));
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));

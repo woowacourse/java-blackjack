@@ -17,9 +17,9 @@ class BlackJackGameControllerTest {
 	void makeUsers() {
 		String names = "a,b,c";
 		List<User> result = new ArrayList<>();
-		result.add(new User("a"));
-		result.add(new User("b"));
-		result.add(new User("c"));
+		result.add(new User("a", 0));
+		result.add(new User("b", 0));
+		result.add(new User("c", 0));
 
 		assertThat(BlackJackGameController.makeUsers(names)).isEqualTo(result);
 	}

@@ -11,7 +11,7 @@ public class UserTest {
 	void inputBlankName() {
 		String blankName = "";
 		assertThatThrownBy(() ->
-				new User(blankName)
+				new User(blankName, 0)
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -19,7 +19,7 @@ public class UserTest {
 	@DisplayName("유저 이름 입력이 null일 때 예외를 잘 뱉어내는지")
 	void inputNullName() {
 		assertThatThrownBy(() ->
-				new User(null)
+				new User(null, 0)
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 }

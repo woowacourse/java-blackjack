@@ -36,7 +36,7 @@ public class BlackJackGameController {
 		List<User> users = new ArrayList<>();
 		String[] userNames = names.split(NAME_DELIMITER);
 		for (String name : userNames) {
-			users.add(new User(name, Integer.parseInt(InputView.inputMoney(name))));
+			users.add(new User(name, InputUtils.toInt(InputView.inputMoney(name))));
 		}
 		return users;
 	}
