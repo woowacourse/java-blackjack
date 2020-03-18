@@ -1,10 +1,10 @@
 package domain.user;
 
-import java.util.List;
-
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
+
+import java.util.List;
 
 public abstract class User implements Comparable<User> {
 
@@ -36,7 +36,7 @@ public abstract class User implements Comparable<User> {
     }
 
     public int calculatePoint() {
-        return cards.calculatePointAccordingToHasAce();
+        return cards.calculatePoint();
     }
 
     public String getName() {

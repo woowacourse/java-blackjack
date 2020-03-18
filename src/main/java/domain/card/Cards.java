@@ -19,21 +19,21 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculatePointAccordingToHasAce() {
-        if (hasAce() && calculatePoint() + TEN <= BLACK_JACK) {
-            return calculatePoint() + TEN;
+    public int calculatePoint() {
+        if (hasAce() && sumPoint() + TEN <= BLACK_JACK) {
+            return sumPoint() + TEN;
         }
-        return calculatePoint();
+        return sumPoint();
     }
 
-    private int calculatePoint() {
+    private int sumPoint() {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
     }
 
     public boolean areBust() {
-        return calculatePointAccordingToHasAce() > BLACK_JACK;
+        return calculatePoint() > BLACK_JACK;
     }
 
     public boolean areBlackJack() {
@@ -41,7 +41,7 @@ public class Cards {
     }
 
     public boolean areBlackJackPoint() {
-        return calculatePointAccordingToHasAce() == BLACK_JACK;
+        return calculatePoint() == BLACK_JACK;
     }
 
     private boolean hasAce() {

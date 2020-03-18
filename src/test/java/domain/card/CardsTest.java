@@ -1,15 +1,15 @@
 package domain.card;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CardsTest {
 
@@ -67,7 +67,7 @@ class CardsTest {
         cards.add(new Card(Symbol.DIAMOND, Type.ACE));
         cards.add(card);
 
-        assertThat(cards.calculatePointAccordingToHasAce()).isEqualTo(expected);
+        assertThat(cards.calculatePoint()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createCardAndPoint() {

@@ -1,9 +1,9 @@
 package domain.user;
 
-import java.util.function.Consumer;
-
 import domain.card.Deck;
 import view.dto.UserDto;
+
+import java.util.function.Consumer;
 
 public class Dealer extends User {
 
@@ -21,7 +21,7 @@ public class Dealer extends User {
     @Override
     protected boolean isAvailableToDraw() {
         return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint()
-                && cards.calculatePointAccordingToHasAce() < PIVOT;
+                && cards.calculatePoint() < PIVOT;
     }
 
     public void additionalDealOut(Deck deck, Consumer<UserDto> showResult) {
