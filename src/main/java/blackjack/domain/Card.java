@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-public class Card {
+public class Card implements Comparable<Card>{
+    private static final int ACE_UPPER_POINT = 11;
+
     private final Symbol symbol;
     private final Type type;
 
@@ -11,8 +13,15 @@ public class Card {
         this.type = type;
     }
 
-    public int getPoint() {
+    public int getPoint(int score) {
+        if (isAvailableAceUpperPoint(score)) {
+            return ACE_UPPER_POINT;
+        }
         return type.getPoint();
+    }
+
+    private boolean isAvailableAceUpperPoint(int score) {
+        return isAce() && score <= ACE_UPPER_POINT;
     }
 
     public boolean isAce() {
@@ -43,5 +52,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, type);
+    }
+
+    @Override
+    public int compareTo(Card targetCard) {
+        if (this.type.getPoint() < targetCard.type.getPoint()) {
+            return 1;
+        }
+        return -1;
     }
 }

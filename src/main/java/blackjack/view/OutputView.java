@@ -17,7 +17,7 @@ public class OutputView {
     private static final String ASK_ONE_MORE_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_PLAY_CONFIRM_MESSAGE_FORMAT = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String USER_FINAL_INFORMATION_FORMAT = "%s 카드: %s - 결과 : %d";
-    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 수익\n";
+    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 수익";
 
     public static void printInputPlayerNamesGuideMessage() {
         System.out.println(INPUT_PLAYER_NAMES_GUIDE_MESSAGE);

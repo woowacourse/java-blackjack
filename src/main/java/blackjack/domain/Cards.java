@@ -1,17 +1,15 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Cards {
     private static final int BLACKJACK_SCORE = 21;
     private static final int INITIAL_CARDS_SIZE = 2;
     private static final int START_INDEX = 0;
+    private static final int DEFAULT_SCORE = 0;
 
-    private Queue<Card> cards = new LinkedList<>();
+    private PriorityQueue<Card> cards = new PriorityQueue<>();
     private Status status;
 
     public Cards() {
@@ -42,22 +40,11 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int score = calculateRawScore();
-        if (hasAce()) {
-            score += Type.addExtraAcePointWhenUnderCriticalPoint(score, BLACKJACK_SCORE);
+        int score = DEFAULT_SCORE;
+        for (Card card : cards) {
+            score += card.getPoint(score);
         }
         return score;
-    }
-
-    private int calculateRawScore() {
-        return cards.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
     }
 
     public boolean isStatusNone() {
