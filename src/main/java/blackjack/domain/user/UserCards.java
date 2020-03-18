@@ -20,10 +20,15 @@ public class UserCards {
     }
 
     public int calculateTotalScore() {
-        int score = incrementAceScore(cards.stream()
-                .mapToInt(Card::getScore)
-                .sum());
+        int score = sumUpScore();
+        score = incrementAceScore(score);
         return resetScoreIfBusted(score);
+    }
+
+    private int sumUpScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private int incrementAceScore(int score) {
