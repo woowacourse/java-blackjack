@@ -6,6 +6,7 @@ import domain.card.Symbol;
 import domain.card.Type;
 import domain.gamer.Dealer;
 import domain.gamer.Players;
+import domain.gamer.dto.GamerDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,9 @@ public class GameResultsTest {
         cards.push(new Card(Symbol.NINE, Type.CLOVER));
         deck = new Deck(cards);
         dealer = new Dealer(deck.dealInitCards());
-        players = Players.valueOf(deck, Arrays.asList("a", "b", "c"));
+        players = Players.valueOf(deck, Arrays.asList(new GamerDto("a", 0),
+                new GamerDto("b", 0),
+                new GamerDto("c", 0)));
         gameResults = new GameResults(dealer, players);
     }
 

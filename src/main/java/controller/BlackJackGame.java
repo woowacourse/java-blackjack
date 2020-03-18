@@ -6,6 +6,7 @@ import domain.card.DeckFactory;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.gamer.dto.GamerDto;
 import domain.gamer.dto.GamerWithCardsDto;
 import domain.gamer.dto.GamerWithScoreDto;
 import domain.result.GameResults;
@@ -18,11 +19,10 @@ import java.util.List;
 public class BlackJackGame {
     public void play() {
         Deck deck = DeckFactory.create();
-        Players players = Players.valueOf(deck, InputView.inputPlayerNames());
+        Players players = Players.valueOf(deck, InputView.inputGamerDto());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        OutputView.printInitGamersState(GamerWithCardsDto.ofWithFirstCard(dealer),
-                createPlayerDtos(players), Deck.INIT_CARDS_SIZE);
+        OutputView.printInitGamersState(GamerWithCardsDto.ofWithFirstCard(dealer), createPlayerDtos(players));
         receiveGamerCards(deck, players, dealer);
         OutputView.printGamerCardsStateWithScores(createGamersWithScoreDtos(dealer, players));
 
