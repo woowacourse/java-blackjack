@@ -60,6 +60,10 @@ public class Hands {
 		return score() == BURST_SCORE;
 	}
 
+	Card from(int index) {
+		return hands.get(index);
+	}
+
 	@Override
 	public String toString() {
 		List<String> cards = new ArrayList<>();
