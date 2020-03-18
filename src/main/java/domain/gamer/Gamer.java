@@ -11,19 +11,12 @@ import domain.card.Hands;
  *    @author AnHyungJu, ParkDooWon
  */
 public abstract class Gamer {
-	private String name;
+	private Name name;
 	private Hands hands;
 
-	public Gamer(String name) {
-		validateNullAndEmpty(name);
+	public Gamer(Name name) {
 		this.name = name;
 		this.hands = new Hands();
-	}
-
-	private void validateNullAndEmpty(String name) {
-		if ((name == null) || name.isEmpty()) {
-			throw new IllegalArgumentException("null이나 빈 값이 들어올 수 없습니다.");
-		}
 	}
 
 	public abstract boolean canHit();
@@ -82,6 +75,6 @@ public abstract class Gamer {
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 }

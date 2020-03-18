@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import domain.card.Card;
 import domain.card.Hands;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.money.Money;
 
 /**
  *
@@ -27,7 +27,7 @@ public class GamerTest {
 
 	@BeforeEach
 	void setUp() {
-		gamer = new Player("a");
+		gamer = new Player(new Name("a"), Money.of("10000"));
 	}
 
 	private static Stream<Arguments> generateBustInput() {
@@ -79,14 +79,6 @@ public class GamerTest {
 			gamer.hit(card);
 		}
 		assertThat(gamer.scoreHands()).isEqualTo(expected);
-	}
-
-	@ParameterizedTest
-	@NullAndEmptySource
-	void Should_ThrownException_When_NameIsNull_Or_Empty(String name) {
-		assertThatThrownBy(() -> new Player(name))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("null이나 빈 값");
 	}
 
 	@Test

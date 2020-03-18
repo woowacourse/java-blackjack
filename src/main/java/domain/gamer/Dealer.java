@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
 	private static final int DRAW_CONDITION = 16;
 
 	public Dealer() {
-		super("딜러");
+		super(new Name("딜러"));
 	}
 
 	@Override

@@ -20,8 +20,8 @@ public class BlackjackGame {
 	private Dealer dealer;
 	private Deck deck;
 
-	public BlackjackGame(String[] playersName) {
-		this.players = new Players(playersName);
+	public BlackjackGame(Players players) {
+		this.players = players;
 		this.dealer = new Dealer();
 		this.deck = new Deck();
 	}

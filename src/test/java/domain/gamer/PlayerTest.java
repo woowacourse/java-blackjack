@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.money.Money;
 
 /**
  *
@@ -22,10 +23,11 @@ import domain.card.Type;
 public class PlayerTest {
 	@Test
 	void testConstructor() {
-		Player player = new Player("a");
+		Player player = new Player(new Name("a"), Money.of("10000"));
 
 		assertThat(player).isNotNull();
 		assertThat(player.getName()).isEqualTo("a");
+		assertThat(player.getBettingMoney().getValue()).isEqualTo(10000);
 		assertThat(player.getHands()).isNotNull();
 	}
 
@@ -40,7 +42,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("generateDrawInput")
 	void canHit_True_ScoreLessThan21(List<Card> cards, boolean expected) {
-		Player player = new Player("a");
+		Player player = new Player(new Name("a"), Money.of("10000"));
 		for (Card card : cards) {
 			player.hit(card);
 		}

@@ -2,22 +2,35 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.gamer.Name;
 import domain.gamer.Player;
+import domain.gamer.Players;
+import domain.money.Money;
 
 /**
  *
  *    @author AnHyungJu, ParkDooWon
  */
 public class BlackjackGameTest {
+	private BlackjackGame blackjackGame;
+
+	@BeforeEach
+	void setUp() {
+		blackjackGame = new BlackjackGame(new Players(
+			Arrays.asList(new Name("a"), new Name("c"), new Name("b")),
+			Arrays.asList(Money.of("10000"), Money.of("10000"), Money.of("10000"))));
+	}
+
 	@Test
 	void testIsAllPlayerBust() {
-		BlackjackGame blackjackGame = new BlackjackGame(new String[] {"a", "b"});
-
 		for (Player player : blackjackGame.getPlayers()) {
 			player.hit(new Card(Type.HEART, Symbol.KING));
 			player.hit(new Card(Type.SPADE, Symbol.KING));
@@ -29,8 +42,6 @@ public class BlackjackGameTest {
 
 	@Test
 	void testIsDealerBlackjack() {
-		BlackjackGame blackjackGame = new BlackjackGame(new String[] {"a"});
-
 		blackjackGame.getDealer().hit(new Card(Type.HEART, Symbol.KING));
 		blackjackGame.getDealer().hit(new Card(Type.HEART, Symbol.ACE));
 
@@ -39,8 +50,6 @@ public class BlackjackGameTest {
 
 	@Test
 	void Should_drawTwoCards_When_initialDraw() {
-		BlackjackGame blackjackGame = new BlackjackGame(new String[] {"a", "b"});
-
 		blackjackGame.initialDraw();
 
 		assertThat(blackjackGame.getDealer()
@@ -55,8 +64,6 @@ public class BlackjackGameTest {
 
 	@Test
 	void Should_drawOneCard_When_Draw() {
-		BlackjackGame blackjackGame = new BlackjackGame(new String[] {"a"});
-
 		blackjackGame.draw(blackjackGame.getPlayers().get(0));
 
 		assertThat(blackjackGame.getPlayers()
