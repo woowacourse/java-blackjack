@@ -14,7 +14,7 @@ import view.OutputView;
 
 public class BlackjackGame {
 	public void play() {
-		final List<Player> players = PlayerFactory.create(InputView.inputNames());
+		final List<Player> players = PlayerFactory.create(InputView.inputNames(), InputView::inputBettingMoney);
 		final Dealer dealer = new Dealer();
 		final CardDeck cardDeck = new CardDeck();
 		drawInitialUsersCard(players, dealer, cardDeck);
@@ -57,7 +57,7 @@ public class BlackjackGame {
 	}
 
 	private boolean isYes(Player player) {
-		return DrawResponse.isYes(InputView.inputYesOrNo(player.getName()));
+		return DrawResponse.isYes(InputView.inputAdditionalDraw(player.getName()));
 	}
 
 	private void drawAdditionalDealerCard(Dealer dealer, CardDeck cardDeck) {
