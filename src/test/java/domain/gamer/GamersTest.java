@@ -38,27 +38,4 @@ public class GamersTest {
 		assertThat(player.getCards()).hasSize(2);
 		assertThat(gamers.getDealer().getCards()).hasSize(2);
 	}
-
-	@Test
-	public void generateGameResultsTest() {
-		Gamers gamers = Stream.of("pobi", "json")
-			.map(name -> new Player(name, "50"))
-			.collect(collectingAndThen(toList(), players -> new Gamers(players, new Dealer())));
-
-		gamers.getPlayers().forEach(player -> {
-			player.addCard(Arrays.asList(
-				new Card(CardSuit.CLOVER, CardNumber.SIX),
-				new Card(CardSuit.CLOVER, CardNumber.TEN))
-			);
-		});
-
-		gamers.getDealer().addCard(Arrays.asList(
-			new Card(CardSuit.CLOVER, CardNumber.SEVEN),
-			new Card(CardSuit.CLOVER, CardNumber.TEN))
-		);
-
-		// assertThat(gamers.generateGameResults()
-		// 	.getGameResult().values())
-		// 	.contains(MatchResult.LOSE);
-	}
 }
