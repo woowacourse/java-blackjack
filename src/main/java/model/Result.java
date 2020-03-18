@@ -9,17 +9,12 @@ public enum Result {
     LOSE("패", 1),
     DRAW("무", 0);
 
-    String result;
-    int resultValue;
+    private final String result;
+    private final int resultValue;
 
     Result(String result, int resultValue) {
         this.result = result;
         this.resultValue = resultValue;
-    }
-
-    @Override
-    public String toString() {
-        return result;
     }
 
     public static Result compete(Dealer dealer, Player player) {
@@ -43,23 +38,8 @@ public enum Result {
         return this.resultValue == compareValue;
     }
 
-    public static Result oppositeResult(Result result) {
-        if (isWin(result)) {
-            return LOSE;
-        }
-        if (isLose(result)) {
-            return WIN;
-        }
-        return DRAW;
+    @Override
+    public String toString() {
+        return result;
     }
-
-    private static boolean isLose(final Result result) {
-        return result == LOSE;
-    }
-
-    private static boolean isWin(final Result result) {
-        return result == WIN;
-    }
-
-
 }

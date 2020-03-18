@@ -5,6 +5,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackGame {
+    public static final String COMMA = ",";
     public static final int ADDITIONAL_DRAW_COUNT = 1;
     public static final int INITIAL_DRAW_COUNT = 2;
     public static final int HIT_BOUNDARY = 16;
@@ -23,7 +24,6 @@ public class BlackJackGame {
         OutputView.printFinalCardHandResult(players, dealer);
 
         GameResult gameResult = new GameResult(players, dealer);
-        gameResult.calculateResults();
         OutputView.printResult(gameResult);
     }
 
@@ -36,7 +36,7 @@ public class BlackJackGame {
     private static void drawCardEachPlayer(Deck deck, Player player) {
         while (!player.isBust()) {
             Answer answer = Answer.getYesOrNoByValue(InputView.inputYesOrNo(player));
-            if (!answer.getTrueOrFalse()) {
+            if (!answer.isYes()) {
                 break;
             }
             player.drawCard(deck, ADDITIONAL_DRAW_COUNT);

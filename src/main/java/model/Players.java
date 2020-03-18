@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import static controller.BlackJackGame.COMMA;
+
 public class Players implements Iterable<Player> {
     private final List<Player> players = new ArrayList<>();
 
@@ -21,7 +23,7 @@ public class Players implements Iterable<Player> {
         for (Player player : players) {
             names.add(player.getName());
         }
-        return String.join(",", names);
+        return String.join(COMMA, names);
     }
 
     @Override

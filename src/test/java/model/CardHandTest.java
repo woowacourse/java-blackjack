@@ -12,7 +12,7 @@ public class CardHandTest {
     void isAce_Test() {
         CardHand cardHand = new CardHand();
         cardHand.addCard(new Card(Symbol.ACE, Type.CLUB));
-        assertThat(cardHand.isAce()).isTrue();
+        assertThat(cardHand.hasAce()).isTrue();
     }
 
     @Test

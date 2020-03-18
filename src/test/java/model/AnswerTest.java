@@ -21,13 +21,13 @@ public class AnswerTest {
     @DisplayName("입력값이 N, n 일 때 테스트")
     @ValueSource(strings = {"N", "n"})
     void input_No_Test(String input) {
-        assertThat(Answer.getYesOrNoByValue(input).getTrueOrFalse()).isFalse();
+        assertThat(Answer.getYesOrNoByValue(input).isYes()).isFalse();
     }
 
     @ParameterizedTest
     @DisplayName("입력값이 Y, y 일 때 테스트")
     @ValueSource(strings = {"Y", "y"})
     void input_Yes_Test(String input) {
-        assertThat(Answer.getYesOrNoByValue(input).getTrueOrFalse()).isTrue();
+        assertThat(Answer.getYesOrNoByValue(input).isYes()).isTrue();
     }
 }

@@ -6,8 +6,6 @@ import java.util.List;
 import static controller.BlackJackGame.*;
 
 public abstract class User {
-    public static final String DELIMITER = ", ";
-
     protected final String name;
     protected final CardHand cardHand;
 
@@ -26,7 +24,7 @@ public abstract class User {
         for (Card card : cardHand) {
             cardNames.add(card.toString());
         }
-        return String.join(DELIMITER, cardNames);
+        return String.join(COMMA, cardNames);
     }
 
     public void drawCard(Deck deck, int drawCount) {
