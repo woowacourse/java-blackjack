@@ -15,9 +15,9 @@ public enum Symbol {
     QUEEN(10, "Q", (sum) -> 10),
     KING(10, "K", (sum) -> 10);
 
-    private int value;
-    private String pattern;
-    private SymbolCalculator calculator;
+    private final int value;
+    private final String pattern;
+    private final SymbolCalculator calculator;
 
     Symbol(int value, String pattern, SymbolCalculator calculator) {
         this.value = value;
@@ -58,7 +58,5 @@ public enum Symbol {
         private boolean cabBeJoker(int sum) {
             return sum <= BLACKJACK - JOKER_VALUE;
         }
-
-
     }
 }
