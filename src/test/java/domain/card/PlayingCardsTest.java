@@ -3,11 +3,15 @@ package domain.card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,5 +58,31 @@ class PlayingCardsTest {
 
         //then
         assertThat(playingCards.size()).isEqualTo(defaultSizeOfPlayingCards + playingCardsToAdd.size());
+    }
+
+    @ParameterizedTest
+    @MethodSource({"getCasesForTestingCalculate"})
+    @DisplayName("#calculate : should return sum of card scores")
+    void calculate(List<Card> cards, int expected) {
+        PlayingCards playingCards = PlayingCards.of(cards);
+        int sum = playingCards.calculate();
+        assertThat(sum).isEqualTo(expected);
+
+    }
+
+    private static Stream<Arguments> getCasesForTestingCalculate() {
+        int jokerValue = 11;
+        return Stream.of(
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.NINE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + Symbol.NINE.getValue(), "without ace, not bust"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.NINE, Type.SPADE), new Card(Symbol.THREE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + Symbol.NINE.getValue() + Symbol.THREE.getValue(), "without ace, bust"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + jokerValue, "with ace, not bust, joker"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.TWO, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + Symbol.TWO.getValue() + Symbol.ACE.getValue(), "with ace, not bust, not joker"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE), new Card(Symbol.ACE, Type.DIAMOND)),
+                        Symbol.QUEEN.getValue() + jokerValue + Symbol.ACE.getValue(), "with ace, bust, joker and not joker")
+        );
     }
 }

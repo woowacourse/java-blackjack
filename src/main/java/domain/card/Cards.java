@@ -62,12 +62,15 @@ public class Cards {
         return cards.stream().anyMatch(Card::isAce);
     }
 
-    int calculateSumOfAces(int sum) {
-        Cards aces = getAces();
-        return calculateSumOfAces(sum, aces);
+    int calculateSumWithAces(int sum) {
+        if (hasAce()) {
+            Cards aces = getAces();
+            return calculateSumWithAces(sum, aces);
+        }
+        return sum;
     }
 
-    private int calculateSumOfAces(int sum, Cards aces) {
+    private int calculateSumWithAces(int sum, Cards aces) {
         if (aces.hasCardNotAce()) {
             throw new InvalidStateException("복수의 에이스 카드 내에 부적절한 카드가 존해합니다.");
         }
@@ -87,8 +90,12 @@ public class Cards {
         return Cards.of(cards);
     }
 
+    //todo: 테스트 추가
     private Cards getAces() {
         List<Card> aces = this.cards.stream().filter(Card::isAce).collect(Collectors.toList());
+        if (aces.isEmpty()) {
+            throw new InvalidStateException(String.format("%s가 존재하지 않습니다.", Symbol.ACE.getPattern()));
+        }
         return Cards.of(aces);
     }
 

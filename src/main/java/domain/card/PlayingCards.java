@@ -36,7 +36,7 @@ public class PlayingCards extends Cards {
 
     public int calculate() {
         int sumWithoutAce = cards.calculateSumExceptAce();
-        return calculateSumOfAces(sumWithoutAce);
+        return calculateSumWithAces(sumWithoutAce);
     }
 
     public boolean isBust() {

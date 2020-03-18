@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CardsTest {
 
@@ -71,10 +70,10 @@ class CardsTest {
 
     @ParameterizedTest
     @MethodSource({"getCasesForTestingCalculateSumOfAces"})
-    @DisplayName("#calculateSumOfAces : should return score of cards of aces")
+    @DisplayName("#calculateSumWithAces : should return score of cards of aces")
     void calculateSumOfAces(int sum, int expected) {
         Cards cards = Cards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
-        int actual = cards.calculateSumOfAces(sum);
+        int actual = cards.calculateSumWithAces(sum);
         assertThat(actual).isEqualTo(expected);
     }
 
