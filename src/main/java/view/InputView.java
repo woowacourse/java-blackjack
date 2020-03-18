@@ -13,7 +13,7 @@ public class InputView {
 
     public static List<GamerMoneyDto> inputGamerDto() {
         return inputPlayerNames().stream()
-                .map(name -> new GamerMoneyDto(name, inputBattingMoney(name)))
+                .map(name -> new GamerMoneyDto(name, inputbettingMoney(name)))
                 .collect(Collectors.toList());
     }
 
@@ -26,7 +26,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    private static int inputBattingMoney(String name) {
+    private static int inputbettingMoney(String name) {
         System.out.println(String.format("\n%s의 배팅 금액은?", name));
         return Integer.parseInt(scanner.nextLine());
     }

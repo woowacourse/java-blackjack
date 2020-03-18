@@ -48,8 +48,8 @@ class GamerMoneyDtoTest {
     }
 
     @Test
-    @DisplayName("getter - battingMoney")
-    void getBattingMoney() {
+    @DisplayName("getter - bettingMoney")
+    void getbettingMoney() {
         assertThat(gamerMoneyDto.getMoney()).isEqualTo(1500);
     }
 }

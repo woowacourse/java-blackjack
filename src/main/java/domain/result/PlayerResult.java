@@ -50,8 +50,8 @@ public enum PlayerResult {
                 .orElseThrow(() -> new NotFoundResultException("승무패 조건에 맞지 않습니다."));
     }
 
-    public int multiply(int battingMoney) {
-        return (int) (battingMoney * earningRate);
+    public int multiply(int bettingMoney) {
+        return (int) (bettingMoney * earningRate);
     }
 
     public String getName() {

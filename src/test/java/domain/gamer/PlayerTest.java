@@ -44,7 +44,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("배팅액 입력 - 플레이어가 생성된다")
-    void constructorWithBattingMoney() {
+    void constructorWithbettingMoney() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "player";
         Player player = new Player(playingCards, name, 1000);
