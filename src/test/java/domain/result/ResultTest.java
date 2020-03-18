@@ -30,12 +30,9 @@ class ResultTest {
 
 		Result result = new Result(values);
 
-		Map<ResultType, Long> expected = new HashMap<>();
-		expected.put(ResultType.LOSE, 1L);
-		expected.put(ResultType.DRAW, 2L);
-		expected.put(ResultType.WIN, 3L);
+		double expected = 20;
 
-		Map<ResultType, Long> actual = result.createDealerResult();
+		double actual = result.createDealerResult();
 
 		assertThat(actual).isEqualTo(expected);
 	}

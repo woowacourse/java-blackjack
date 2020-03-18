@@ -3,12 +3,9 @@ package view;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.result.Result;
-import domain.result.ResultType;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
-
-import java.util.Map;
 
 import static java.util.stream.Collectors.joining;
 
@@ -63,18 +60,15 @@ public class OutputView {
 	}
 
 	public static void printTotalResult(Result result, Players players) {
-		Map<ResultType, Long> dealerResult = result.createDealerResult();
+		double dealerMoney = result.createDealerResult();
 
 		emptyLine();
-		System.out.println("## 최종 승패");
-		System.out.println(String.format("딜러: %s승 %s무 %s패",
-				dealerResult.getOrDefault(ResultType.WIN, 0L),
-				dealerResult.getOrDefault(ResultType.DRAW, 0L),
-				dealerResult.getOrDefault(ResultType.LOSE, 0L)));
+		System.out.println("## 최종 수익");
+		System.out.println("딜러: " + (int) dealerMoney);
 		players.forEach(player ->
 				System.out.println(String.format("%s: %s",
 						player,
-						result.get(player).getOutputContent())));
+						result.get(player).getExchangedBettingMoney(player.getBettingMoney()).intValue())));
 	}
 
 	private static void emptyLine() {

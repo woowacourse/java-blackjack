@@ -9,6 +9,7 @@ import static domain.user.User.NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE;
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
 	private static final int INITIAL_CARDS_SIZE = 2;
+	private static final int BURST_SCORE = 0;
 
 	private List<Card> cards;
 
@@ -26,11 +27,7 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public boolean isNotBlackJack() {
-		return !(hasInitialSize() && calculateScore1() == BLACKJACK_SCORE);
-	}
-
-	public int calculateScore1() {
+	public int calculateScore() {
 		int rawScore = cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
@@ -45,6 +42,22 @@ public class Cards {
 			return 0;
 		}
 		return rawScore + specialScore;
+	}
+
+	public boolean isNotBurst() {
+		return !cards.isEmpty() && calculateScore() != BURST_SCORE;
+	}
+
+	public boolean isBurst() {
+		return !cards.isEmpty() && calculateScore() == BURST_SCORE;
+	}
+
+	public boolean isNotBlackJack() {
+		return !(hasInitialSize() && calculateScore() == BLACKJACK_SCORE);
+	}
+
+	public boolean isBlackJack() {
+		return hasInitialSize() && calculateScore() == BLACKJACK_SCORE;
 	}
 
 	public boolean hasInitialSize() {

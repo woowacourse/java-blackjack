@@ -29,12 +29,6 @@ class ResultTypeTest {
 		player2.addCard(card1);
 	}
 
-	@DisplayName("WIN에 대해 opposite() 동작시 LOSE 반환 확인")
-	@Test
-	void opposite_When_Win_Return_Lose() {
-		assertEquals(ResultType.LOSE, ResultType.opposite(ResultType.WIN));
-	}
-
 	@DisplayName("from()으로 ResultType 중 WIN이 생성되는지 확인")
 	@Test
 	void from_When_Player1_Win_Return_WIN() {

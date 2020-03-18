@@ -6,10 +6,10 @@ import domain.user.Players;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class Result {
+	private static final int OPPOSITE_SIGN = -1;
+
 	private final Map<Player, ResultType> results;
 
 	public Result(Map<Player, ResultType> results) {
@@ -22,10 +22,10 @@ public class Result {
 		return new Result(results);
 	}
 
-	public Map<ResultType, Long> createDealerResult() {
-		return results.values().stream()
-				.map(ResultType::opposite)
-				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+	public double createDealerResult() {
+		return results.entrySet().stream()
+				.mapToDouble(entry -> entry.getValue().getExchangedBettingMoney(entry.getKey().getBettingMoney()))
+				.sum() * OPPOSITE_SIGN;
 	}
 
 	public ResultType get(Player player) {

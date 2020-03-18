@@ -54,11 +54,23 @@ public class User implements Comparable<User> {
 	}
 
 	public int calculateScore() {
-		return cards.calculateScore1();
+		return cards.calculateScore();
+	}
+
+	public boolean isNotBurst() {
+		return cards.isNotBurst();
+	}
+
+	public boolean isBurst() {
+		return cards.isBurst();
 	}
 
 	public boolean isNotBlackjack() {
 		return cards.isNotBlackJack();
+	}
+
+	public boolean isBlackjack() {
+		return cards.isBlackJack();
 	}
 
 	@Override

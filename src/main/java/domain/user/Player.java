@@ -14,8 +14,12 @@ public class Player extends User {
 		super.drawStrategy = new PlayerDrawStrategy();
 	}
 
-	public Player(String name) {
-		this(new Name(name), new BettingMoney(1));
+	public Player(String name) { // TODO: 2020/03/18 열어둘까
+		this(new Name(name), new BettingMoney(10));
+	}
+
+	public double getBettingMoney() {
+		return bettingMoney.getBettingMoney();
 	}
 
 	@Override

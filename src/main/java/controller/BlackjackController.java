@@ -25,7 +25,6 @@ public class BlackjackController {
 
 	private Players enrollPlayers() {
 		Names names = Names.of(InputView.inputPlayerNames());
-
 		return Players.of(names.getNames().stream()
 				.map(name ->
 						new Player(name, new BettingMoney(InputView.inputPlayerBettingMoney(name))))
@@ -33,7 +32,6 @@ public class BlackjackController {
 	}
 
 	public void run() {
-
 		deck.shuffle();
 		dealer.addInitialCards(deck);
 		for (Player player : players) {
@@ -54,7 +52,7 @@ public class BlackjackController {
 
 	private void printResult(Dealer dealer, Players players) {
 		printResultStatus(dealer, players);
-		printTotalResult(Result.from(dealer, players), players); // todo 이걸 수정
+		printTotalResult(Result.from(dealer, players), players);
 	}
 
 	private void proceedExtraDraw(Player player, Deck deck) {
