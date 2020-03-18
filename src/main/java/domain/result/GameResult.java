@@ -7,6 +7,7 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayersInfo;
 import domain.user.User;
+import view.dto.UserDto;
 
 public class GameResult {
 
@@ -37,8 +38,13 @@ public class GameResult {
         return totalProfitOfPlayers * (-1);
     }
 
-    public Map<User, Integer> getUserToCardPoint() {
-        return userToCardPoint;
+    public Map<UserDto, Integer> getUserDtoToCardPoint() {
+        Map<UserDto, Integer> userDtoToCardPoint = new LinkedHashMap<>();
+        for (User user : userToCardPoint.keySet()) {
+            userDtoToCardPoint.put(UserDto.of(user.getName(), user.getCards()),
+                    userToCardPoint.get(user));
+        }
+        return userDtoToCardPoint;
     }
 
     public Map<Player, Integer> getProfitOfPlayers() {

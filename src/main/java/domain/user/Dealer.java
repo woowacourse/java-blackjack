@@ -27,7 +27,7 @@ public class Dealer extends User {
     public void additionalDealOut(Deck deck, Consumer<UserDto> showResult) {
         while (isAvailableToDraw()) {
             draw(deck);
-            showResult.accept(UserDto.of(this));
+            showResult.accept(UserDto.of(name.getName(), cards.getCards()));
         }
     }
 }

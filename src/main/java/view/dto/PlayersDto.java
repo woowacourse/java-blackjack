@@ -1,23 +1,17 @@
 package view.dto;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import domain.user.PlayersInfo;
 
 public class PlayersDto {
 
     private List<UserDto> players;
 
-    public static PlayersDto of(PlayersInfo playersInfo) {
-        return new PlayersDto(playersInfo);
+    public static PlayersDto of(List<UserDto> players) {
+        return new PlayersDto(players);
     }
 
-    private PlayersDto(PlayersInfo playersInfo) {
-        this.players = playersInfo.getPlayers()
-                .stream()
-                .map(UserDto::of)
-                .collect(Collectors.toList());
+    private PlayersDto(List<UserDto> players) {
+        this.players = players;
     }
 
     public List<UserDto> getPlayers() {

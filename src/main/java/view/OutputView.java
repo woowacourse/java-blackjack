@@ -34,7 +34,7 @@ public class OutputView {
     private static void printDealerFirstDealOutResult(UserDto dealerDto) {
         Card firstCard = dealerDto.getCards().get(FIRST_CARD);
         String dealerFirstDealOutResult = firstCard.getType() + firstCard.getSymbol();
-        System.out.printf("%s카드: %s"+ NEWLINE, Dealer.NAME, dealerFirstDealOutResult);
+        System.out.printf("%s카드: %s" + NEWLINE, Dealer.NAME, dealerFirstDealOutResult);
     }
 
     private static void printPlayersFirstDealOutResult(PlayersDto playersDto) {
@@ -52,9 +52,10 @@ public class OutputView {
     }
 
     public static void printTotalResult(GameResultDto gameResultDto) {
-        Map<UserDto, Integer> cardPoint = gameResultDto.getUserToCardPoint();
+        Map<UserDto, Integer> cardPoint = gameResultDto.getUserDtoToCardPoint();
         System.out.println();
-        cardPoint.forEach((user, point) -> System.out.printf("%s - 결과: %d" + NEWLINE, printUserDealOutResult(user), point));
+        cardPoint.forEach(
+                (user, point) -> System.out.printf("%s - 결과: %d" + NEWLINE, printUserDealOutResult(user), point));
 
         printTotalProfit(gameResultDto);
     }

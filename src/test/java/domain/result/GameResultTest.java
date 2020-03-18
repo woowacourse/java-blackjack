@@ -3,6 +3,7 @@ package domain.result;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -42,39 +43,29 @@ class GameResultTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         List<String> names = Arrays.asList("pobi", "jason", "woo", "lowoon");
-        Map<String, Integer> playerInfo = names.stream()
+        Map<String, Integer> players = names.stream()
                 .collect(Collectors.toMap(Function.identity(), name -> 1000,
-                        (e1, e2) -> {throw new AssertionError("중복된 키가 있습니다.");},
+                        (e1, e2) -> {
+                            throw new AssertionError("중복된 키가 있습니다.");
+                        },
                         LinkedHashMap::new));
-        playersInfo = PlayersInfo.of(playerInfo);
+        playersInfo = PlayersInfo.of(players);
         Queue<Card> cards = new LinkedList<>(Arrays.asList(
                 new Card(Symbol.SPADE, Type.SIX),
                 new Card(Symbol.SPADE, Type.SEVEN),
                 new Card(Symbol.HEART, Type.FIVE),
                 new Card(Symbol.CLOVER, Type.SIX),
-                new Card(Symbol.SPADE, Type.ACE),
-                new Card(Symbol.CLOVER, Type.KING)
+                new Card(Symbol.SPADE, Type.ACE)
         ));
         given(deck.dealOut()).will(invocation -> cards.poll());
 
         dealer = Dealer.appoint();
         dealer.draw(deck);
+        playersInfo.draw(deck);
 
-        playersInfo.getPlayers()
-                .get(0)
-                .draw(deck);
-        playersInfo.getPlayers()
-                .get(1)
-                .draw(deck);
-        playersInfo.getPlayers()
-                .get(2)
-                .draw(deck);
-        playersInfo.getPlayers()
-                .get(3)
-                .draw(deck);
-        playersInfo.getPlayers()
-                .get(3)
-                .draw(deck);
+        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.KING));
+        playersInfo.draw(deck);
+        dealer.draw(deck);
     }
 
     @ParameterizedTest
@@ -83,9 +74,9 @@ class GameResultTest {
     void getProfitOfPlayers(int index, int expected) {
         Map<Player, Integer> profitOfPlayers;
         profitOfPlayers = GameResult.of(dealer, playersInfo).getProfitOfPlayers();
-        Player player = playersInfo.getPlayers().get(index);
+        int actual = new ArrayList<>(profitOfPlayers.values()).get(index);
 
-        assertThat(profitOfPlayers.get(player)).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     private static Stream<Arguments> createIndexAndProfitOfPlayers() {

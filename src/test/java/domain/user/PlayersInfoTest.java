@@ -39,7 +39,9 @@ class PlayersInfoTest {
         List<String> names = Arrays.asList("pobi", "jason", "woo");
         Map<String, Integer> playerInfo = names.stream()
                 .collect(Collectors.toMap(Function.identity(), name -> 1000,
-                        (e1, e2) -> {throw new AssertionError("중복된 키가 있습니다.");},
+                        (e1, e2) -> {
+                            throw new AssertionError("중복된 키가 있습니다.");
+                        },
                         LinkedHashMap::new));
         playersInfo = PlayersInfo.of(playerInfo);
     }
@@ -49,14 +51,14 @@ class PlayersInfoTest {
     void draw() {
         List<Integer> expected = playersInfo.getPlayers()
                 .stream()
-                .map(player -> player.cards.getCards().size() + 1)
+                .map(player -> player.getCards().size() + 1)
                 .collect(Collectors.toList());
 
         playersInfo.draw(DeckFactory.createDeck());
 
         List<Integer> result = playersInfo.getPlayers()
                 .stream()
-                .map(player -> player.cards.getCards().size())
+                .map(player -> player.getCards().size())
                 .collect(Collectors.toList());
 
         assertThat(expected).isEqualTo(result);

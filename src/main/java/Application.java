@@ -17,20 +17,23 @@ public class Application {
 
     public static void main(String[] args) {
         List<String> playerNames = InputView.receiveNameInput();
-        Map<String, Integer> playersInfo = new LinkedHashMap<>();
-        playerNames.forEach(name -> playersInfo.put(name, InputView.receiveMoneyInput(name)));
+        Map<String, Integer> players = new LinkedHashMap<>();
+        playerNames.forEach(name -> players.put(name, InputView.receiveMoneyInput(name)));
 
-        PlayersInfo players = PlayersInfo.of(playersInfo);
+        PlayersInfo playersInfo = PlayersInfo.of(players);
         Dealer dealer = Dealer.appoint();
 
         BlackJackGame blackJackGame = BlackJackGame.set(DeckFactory.createDeck());
 
-        blackJackGame.firstDealOut(dealer, players);
-        OutputView.printFirstDealOutResult(UserDto.of(dealer), PlayersDto.of(players));
+        blackJackGame.firstDealOut(dealer, playersInfo);
+        UserDto dealerDto = UserDto.of(dealer.getName(), dealer.getCards());
+        OutputView.printFirstDealOutResult(dealerDto, PlayersDto.of(playersInfo.getPlayers()));
 
-        blackJackGame.additionalDealOut(dealer, players);
+        blackJackGame.additionalDealOut(dealer, playersInfo);
 
-        GameResult gameResult = GameResult.of(dealer, players);
-        OutputView.printTotalResult(GameResultDto.of(gameResult));
+        GameResult gameResult = GameResult.of(dealer, playersInfo);
+        GameResultDto gameResultDto = GameResultDto.of(gameResult.getUserDtoToCardPoint(),
+                gameResult.getProfitOfPlayers(), gameResult.getProfitOfDealer());
+        OutputView.printTotalResult(gameResultDto);
     }
 }

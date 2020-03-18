@@ -1,6 +1,5 @@
 package domain.user;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,8 @@ public class PlayersInfo {
     private PlayersInfo(Map<String, Integer> playersInfo) {
         this.playersInfo = new LinkedHashMap<>();
         playersInfo
-                .forEach((name, bettingMoney) -> this.playersInfo.put(new Player(name), new BettingMoney(bettingMoney)));
+                .forEach(
+                        (name, bettingMoney) -> this.playersInfo.put(new Player(name), new BettingMoney(bettingMoney)));
     }
 
     public void draw(Deck deck) {
@@ -33,9 +33,10 @@ public class PlayersInfo {
 
     public void additionalDealOut(Deck deck, Function<String, Boolean> isYes, Consumer<UserDto> showResult) {
         playersInfo.forEach((player, bettingMoney) -> {
-            while (player.isAvailableToDraw() && isYes.apply(UserDto.of(player).getName())) {
+            while (player.isAvailableToDraw() && isYes.apply(
+                    UserDto.of(player.getName(), player.getCards()).getName())) {
                 player.draw(deck);
-                showResult.accept(UserDto.of(player));
+                showResult.accept(UserDto.of(player.getName(), player.getCards()));
             }
         });
     }
@@ -44,7 +45,9 @@ public class PlayersInfo {
         return playersInfo.keySet()
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), Player::calculatePoint,
-                        (e1, e2) -> {throw new AssertionError();},
+                        (e1, e2) -> {
+                            throw new AssertionError();
+                        },
                         LinkedHashMap::new));
     }
 
@@ -52,12 +55,15 @@ public class PlayersInfo {
         Map<Player, Integer> profitOfPlayers = new LinkedHashMap<>();
 
         playersInfo.forEach((player, bettingMoney) ->
-                        profitOfPlayers.put(player, (int)(bettingMoney.getMoney() * player.decideRatio(dealer).getRatio())));
+                profitOfPlayers.put(player, (int)(bettingMoney.getMoney() * player.decideRatio(dealer).getRatio())));
 
         return profitOfPlayers;
     }
 
-    public List<Player> getPlayers() {
-        return new ArrayList<>(playersInfo.keySet());
+    public List<UserDto> getPlayers() {
+        return playersInfo.keySet()
+                .stream()
+                .map(player -> UserDto.of(player.getName(), player.getCards()))
+                .collect(Collectors.toList());
     }
 }
