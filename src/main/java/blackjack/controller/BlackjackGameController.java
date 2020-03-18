@@ -23,7 +23,7 @@ public class BlackjackGameController {
         InputHandler.hitMoreCard(users, deck);
         dealerHitsAdditionalCard(blackjackGame);
         OutputView.printFinalCardScore(users);
-        TotalResult totalResult = new TotalResult(blackjackGame.calculateAllResult(users));
+        TotalResult totalResult = blackjackGame.calculateAllResult(users);
         Map<Result, Integer> dealerResult = totalResult.calculatePlayerResultCount();
         OutputView.printFinalResult(totalResult, dealerResult);
     }
