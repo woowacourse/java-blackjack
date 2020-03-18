@@ -15,8 +15,4 @@ public class BattingMoney {
     public int calculateEarning(PlayerResult playerResult) {
         return playerResult.multiply(battingMoney);
     }
-
-    public int getBattingMoney() {
-        return battingMoney;
-    }
 }

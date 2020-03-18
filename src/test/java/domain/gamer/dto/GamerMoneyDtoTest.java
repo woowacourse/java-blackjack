@@ -25,7 +25,7 @@ class GamerMoneyDtoTest {
     @Test
     @DisplayName("생성 테스트")
     void of() {
-        assertThat(GamerMoneyDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"),1500)).isNotNull();
+        assertThat(GamerMoneyDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"), 1500)).isNotNull();
     }
 
     @Test

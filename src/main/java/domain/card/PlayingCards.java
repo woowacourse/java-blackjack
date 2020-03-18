@@ -8,7 +8,7 @@ import java.util.List;
 import static domain.card.Deck.INIT_CARDS_SIZE;
 
 public class PlayingCards {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public PlayingCards(List<Card> cards) {
         this.cards = cards;

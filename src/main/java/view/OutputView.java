@@ -1,8 +1,8 @@
 package view;
 
-import domain.gamer.dto.GamerMoneyDto;
 import domain.gamer.dto.GamerCardsDto;
 import domain.gamer.dto.GamerCardsWithScoreDto;
+import domain.gamer.dto.GamerMoneyDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
