@@ -48,6 +48,7 @@ public abstract class Player {
     public abstract boolean isWin(final Player player);
 
     public boolean isBlackJack() {
-        return cards.getScore() == BLACK_JACK_SCORE && cards.getSize() == BLACK_JACK_SIZE;
+        return cards.getScore() == BLACK_JACK_SCORE
+                && cards.getSize() == BLACK_JACK_SIZE;
     }
 }

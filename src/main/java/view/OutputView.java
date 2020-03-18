@@ -7,6 +7,7 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Users;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +65,7 @@ public class OutputView {
     }
 
     private static void printIndividualResult(final Result result) {
-        System.out.println(result.getName() + ": " + result.getBettingMoney());
+        System.out.println(result.getName() + ": " + result.getBettingMoney()
+                .setScale(0, RoundingMode.FLOOR));
     }
 }

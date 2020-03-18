@@ -1,5 +1,4 @@
 import domain.betting.BettingLogs;
-import domain.card.Card;
 import domain.card.CardDeck;
 import domain.game.UserIntention;
 import domain.player.Dealer;
