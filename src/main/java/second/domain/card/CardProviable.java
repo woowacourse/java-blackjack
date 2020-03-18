@@ -1,6 +1,6 @@
 package second.domain.card;
 
 @FunctionalInterface
-public interface ICardDeck {
+public interface CardProviable {
     Card pickCard();
 }

@@ -1,6 +1,6 @@
 package second.domain.player;
 
-import second.domain.card.ICardDeck;
+import second.domain.card.CardProviable;
 import second.domain.card.Card;
 import second.domain.card.HandCards;
 import second.domain.card.Score;
@@ -27,7 +27,7 @@ public abstract class Gamer {
 
     public abstract boolean canDrawMore();
 
-    public void drawCard(final ICardDeck cardDeck) {
+    public void drawCard(final CardProviable cardDeck) {
         final Card drawCard = cardDeck.pickCard();
         handCards.drawCard(drawCard);
 

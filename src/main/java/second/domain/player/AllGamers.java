@@ -1,6 +1,6 @@
 package second.domain.player;
 
-import second.domain.card.ICardDeck;
+import second.domain.card.CardProviable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,11 +21,11 @@ public class AllGamers {
         this.players = players;
     }
 
-    public void drawFirstPhase(final ICardDeck iCardDeck) {
+    public void drawFirstPhase(final CardProviable cardProviable) {
         final List<Gamer> gamers = joinGamers();
 
         for (Gamer gamer : gamers) {
-            drawInitialCardToEach(gamer, iCardDeck);
+            drawInitialCardToEach(gamer, cardProviable);
         }
     }
 
@@ -36,7 +36,7 @@ public class AllGamers {
         return gamers;
     }
 
-    private void drawInitialCardToEach(final Gamer gamer, final ICardDeck cardProvidable) {
+    private void drawInitialCardToEach(final Gamer gamer, final CardProviable cardProvidable) {
         for (int i = 0; i < INITIAL_CARD_AMOUNT; i++) {
             gamer.drawCard(cardProvidable);
         }
