@@ -12,11 +12,19 @@ public class Card {
     }
 
     boolean isAce() {
-        return symbol == Symbol.ACE;
+        return symbol.equals(Symbol.ACE);
     }
 
     int getValue() {
         return symbol.getValue();
+    }
+
+    public String getPattern() {
+        return type.getPattern();
+    }
+
+    public String getWord() {
+        return symbol.getWord();
     }
 
     @Override
@@ -31,13 +39,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, type);
-    }
-
-    public String getPattern() {
-        return type.getPattern();
-    }
-
-    public String getWord() {
-        return symbol.getWord();
     }
 }
