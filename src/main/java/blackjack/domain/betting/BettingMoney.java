@@ -1,22 +1,28 @@
-package blackjack.domain.user;
+package blackjack.domain.betting;
 
-import blackjack.domain.user.exceptions.MoneyException;
+import blackjack.domain.betting.exceptions.BettingMoneyException;
 
 import java.util.Objects;
 
-public class BettingMoney {
+public final class BettingMoney {
+	public static final int ZERO = 0;
 	public static final double BLACKJACK_BONUS_MULTIPLE = 1.5;
+
 	private final double amount;
 
 	private BettingMoney(double amount) {
-		validateMoneyIsPositive(amount);
+		validateMoneyIsPositiveOrZero(amount);
 		this.amount = amount;
 	}
 
-	private void validateMoneyIsPositive(double amount) {
-		if (amount <= 0) {
-			throw new MoneyException("배팅 금액은 0 이하일 수 없습니다.");
+	private void validateMoneyIsPositiveOrZero(double amount) {
+		if (amount < ZERO) {
+			throw new BettingMoneyException("배팅 금액은 0 이하일 수 없습니다.");
 		}
+	}
+
+	public static BettingMoney zero() {
+		return new BettingMoney(ZERO);
 	}
 
 	public static BettingMoney of(String amount) {
@@ -25,13 +31,13 @@ public class BettingMoney {
 		try {
 			return new BettingMoney(Double.parseDouble(amount));
 		} catch (NumberFormatException e) {
-			throw new MoneyException("올바른 값을 입력하세요.");
+			throw new BettingMoneyException("올바른 값을 입력하세요.");
 		}
 	}
 
 	private static void validateMoneyIsNotNull(String amount) {
 		if (amount == null) {
-			throw new MoneyException("Null 값이 입력되었습니다.");
+			throw new BettingMoneyException("Null 값이 입력되었습니다.");
 		}
 	}
 
@@ -41,6 +47,10 @@ public class BettingMoney {
 
 	public BettingMoney computeSimpleWinningAmount() {
 		return new BettingMoney(amount);
+	}
+
+	public BettingMoney add(BettingMoney other) {
+		return new BettingMoney(amount + other.amount);
 	}
 
 	@Override
