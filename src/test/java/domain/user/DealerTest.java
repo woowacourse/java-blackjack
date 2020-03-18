@@ -27,39 +27,21 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 카드를 추가한다.")
     void addCard() {
-        PlayingCards playingCards = PlayingCards.of(new ArrayList<>());
+        PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.CLOVER), new Card(Symbol.QUEEN, Type.SPADE))));
+        //todo : 왜 여기서 먼저 꺼내와야 하는 지 알아내기
+        int defaultCardsSize = playingCards.size();
         Dealer dealer = new Dealer(playingCards, deck);
         Card card = new Card(Symbol.ACE, Type.CLOVER);
         dealer.addCard(card);
 
-        assertThat(dealer.countCards()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("딜러가 카드를 더 받을 수 있다.")
-    void canGetExtraCard() {
-        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.TWO, Type.DIAMOND),
-                new Card(Symbol.TEN, Type.HEART)));
-        Dealer dealer = new Dealer(playingCards, deck);
-
-        assertThat(dealer.canGetExtraCard()).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러가 더 카드를 받을 수 없다.")
-    void canNotGetExtraCard() {
-        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
-                new Card(Symbol.TEN, Type.HEART)));
-        Dealer dealer = new Dealer(playingCards, deck);
-
-        assertThat(dealer.canGetExtraCard()).isFalse();
+        assertThat(dealer.countCards()).isEqualTo(defaultCardsSize + 1);
     }
 
     @Test
     @DisplayName("#hit() : should add card without return")
     void hit() {
         //given
-        PlayingCards playingCards = PlayingCards.of(new ArrayList<>());
+        PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.CLOVER))));
         Dealer dealer = new Dealer(playingCards, deck);
         int defaultSizeOfCards = dealer.countCards();
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
@@ -75,7 +57,7 @@ class DealerTest {
     @DisplayName("#confirmCards : should add cards for given times without return")
     void confirmCards() {
         //given
-        PlayingCards playingCards = PlayingCards.of(new ArrayList<>());
+        PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.KING, Type.SPADE))));
         Dealer dealer = new Dealer(playingCards, deck);
         List<Card> cards = setUpDeck();
         int hitSize = cards.size();

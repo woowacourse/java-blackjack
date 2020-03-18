@@ -21,11 +21,4 @@ public class CardTest {
     void card() {
         assertThat(new Card(Symbol.valueOf("ACE"), Type.valueOf("HEART"))).isNotNull();
     }
-
-    @Test
-    @DisplayName("카드가 Ace인지 확인한다.")
-    void isAce() {
-        assertThat(aceCard.isAce()).isTrue();
-        assertThat(kingCard.isAce()).isFalse();
-    }
 }

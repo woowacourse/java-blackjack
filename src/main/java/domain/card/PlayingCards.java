@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayingCards extends Cards {
-    private static final int ACE_BONUS = 10;
     private static final int BLACK_JACK = 21;
     private static final int MIN_SIZE = 2;
     private final List<Card> cards;
@@ -37,15 +36,8 @@ public class PlayingCards extends Cards {
     }
 
     public int calculateScore() {
-        int result = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        for (Card card : cards) {
-            if (canAddAceBonus(result, card)) {
-                result += ACE_BONUS;
-            }
-        }
-        return result;
+
+        return 1;
     }
 
     public boolean isBust() {
@@ -67,9 +59,5 @@ public class PlayingCards extends Cards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
-    }
-
-    private boolean canAddAceBonus(int result, Card card) {
-        return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
     }
 }

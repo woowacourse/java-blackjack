@@ -43,19 +43,6 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어가 버스트인지 확인")
-    void isBust() {
-        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
-        Card card2 = new Card(Symbol.KING, Type.CLOVER);
-        Card card3 = new Card(Symbol.JACK, Type.CLOVER);
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
-
-        assertThat(player.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("플레이어가 버스트인지 확인")
     void isNotBust() {
         assertThat(player.isBust()).isFalse();
     }

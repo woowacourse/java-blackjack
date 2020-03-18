@@ -11,12 +11,8 @@ public class Card {
         this.type = type;
     }
 
-    boolean isAce() {
-        return symbol.equals(Symbol.ACE);
-    }
-
-    int getValue() {
-        return symbol.getValue();
+    int calculateScore(int sum) {
+        return symbol.calculate(sum);
     }
 
     public String getPattern() {
