@@ -18,8 +18,8 @@ public class BlackJackGame {
     public static void play() {
         Deck deck = new Deck(CardFactory.createCardList());
         PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
-        Players players = new Players(playerNames, deck, INITIAL_DRAW_COUNT);
         PlayersData playersData = new PlayersData(makePlayersData(playerNames));
+        Players players = new Players(playersData, deck, INITIAL_DRAW_COUNT);
         Dealer dealer = new Dealer(deck, INITIAL_DRAW_COUNT);
 
         OutputView.printInitialCards(players, dealer);
