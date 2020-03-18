@@ -18,6 +18,14 @@ public abstract class User {
         this.money = money;
     }
 
+    public User(String name, int money) {
+        this(name, new Money(money));
+    }
+
+    public User(String name) {
+        this(name, 0);
+    }
+
     public void receiveInitialCards(List<Card> initialCards) {
         this.cards.addAll(Objects.requireNonNull(initialCards));
     }
@@ -34,12 +42,14 @@ public abstract class User {
         return this.name;
     }
 
-    public void changeMoneyByRate(double rate) {
-        this.money = this.money.multiply(rate);
+    public Money getProfitByRate(double rate) {
+        Money profit = this.money.multiply(rate);
+        updateMoney(profit);
+        return profit;
     }
 
-    public Money getMoney() {
-        return money;
+    private void updateMoney(Money profit) {
+        this.money = this.money.plus(profit);
     }
 
     public boolean isBusted() {

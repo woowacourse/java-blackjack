@@ -23,7 +23,7 @@ public class PlayerTest {
         card2 = new Card(Suit.HEART, Symbol.KING);
         card3 = new Card(Suit.DIAMOND, Symbol.ACE);
         initialCards = Arrays.asList(card1, card2);
-        player = new Player("pobi");
+        player = new Player("pobi", 10000);
         player.receiveInitialCards(initialCards);
     }
 
@@ -60,4 +60,9 @@ public class PlayerTest {
         assertThat(player.getCards()).isEqualTo(Arrays.asList(card1, card2, card3));
     }
 
+    @Test
+    @DisplayName("사용자의 최종 수익 확인")
+    void checkFinalProfit() {
+        assertThat(player.getProfitByRate(1.5)).isEqualTo(new Money(15000));
+    }
 }
