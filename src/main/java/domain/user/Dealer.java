@@ -17,4 +17,11 @@ public class Dealer extends User {
     public boolean canGetExtraCard() {
         return playingCards.calculateScore() < ADD_THRESHOLD;
     }
+
+    void confirmCards(int hitSize) {
+        for (int i = 0; i < hitSize; i++) {
+            Card card = deck.pop();
+            hit(card);
+        }
+    }
 }

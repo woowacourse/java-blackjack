@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -68,5 +69,30 @@ class DealerTest {
 
         //then
         assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + 1);
+    }
+
+    @Test
+    @DisplayName("#confirmCards : should add cards for given times without return")
+    void confirmCards() {
+        //given
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        Dealer dealer = new Dealer(playingCards, deck);
+        List<Card> cards = setUpDeck();
+        int hitSize = cards.size();
+        int defaultSizeOfCards = dealer.countCards();
+
+        //when
+        dealer.confirmCards(hitSize);
+
+        //then
+        assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + hitSize);
+    }
+
+    private List<Card> setUpDeck() {
+        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.DIAMOND), new Card(Symbol.QUEEN, Type.CLOVER));
+        for (Card card : cards) {
+            when(deck.pop()).thenReturn(card);
+        }
+        return cards;
     }
 }
