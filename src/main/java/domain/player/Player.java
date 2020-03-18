@@ -6,6 +6,9 @@ import domain.card.Cards;
 import java.util.List;
 
 public abstract class Player {
+    private static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACK_JACK_SIZE = 2;
+
     private final Name name;
     private final Cards cards;
 
@@ -43,4 +46,8 @@ public abstract class Player {
     }
 
     public abstract boolean isWin(final Player player);
+
+    public boolean isBlackJack() {
+        return cards.getScore() == BLACK_JACK_SCORE && cards.getSize() == BLACK_JACK_SIZE;
+    }
 }
