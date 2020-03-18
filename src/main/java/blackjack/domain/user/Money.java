@@ -49,4 +49,9 @@ public class Money {
     public int hashCode() {
         return Objects.hash(money);
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(money);
+    }
 }

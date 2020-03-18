@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.Result;
 import blackjack.domain.game.TotalResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
@@ -10,7 +9,6 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -77,14 +75,21 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static String showFinalResultPerUsers(User user) {
-        return showCurrentCardStatus(user) + RESULT + user.getTotalScore();
+    private static String showFinalResultPerUser(User user) {
+        return showCurrentCardStatus(user) + RESULT + parseFinalScorePerUser(user.getTotalScore());
+    }
+
+    private static String parseFinalScorePerUser(int totalScore) {
+        if(totalScore == 0) {
+            return "버스트";
+        }
+        return Integer.toString(totalScore);
     }
 
     private static String parseFinalScoreAnnouncement(BlackjackGame game) {
-        return showFinalResultPerUsers(game.getDealer()) + "\n" +
+        return showFinalResultPerUser(game.getDealer()) + "\n" +
                 game.getPlayers().stream()
-                        .map(OutputView::showFinalResultPerUsers)
+                        .map(OutputView::showFinalResultPerUser)
                         .collect(Collectors.joining(NEW_LINE));
     }
 
@@ -96,6 +101,6 @@ public class OutputView {
     }
 
     private static String parseDealerFinalResult(Money dealerProfit) {
-        return DEALER + COLON + dealerProfit.getMoney() + NEW_LINE;
+        return DEALER + COLON + dealerProfit + NEW_LINE;
     }
 }
