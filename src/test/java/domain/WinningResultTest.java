@@ -28,8 +28,8 @@ public class WinningResultTest {
         Card aceHeart = Card.of(CardNumber.ACE, CardSuitSymbol.HEART);
 
         User dealer = new Dealer(new ArrayList<>(Arrays.asList(aceClub, fiveClub)));
-        User user1 = new Player("lavine", new ArrayList<>(Arrays.asList(kingClub, kingHeart)),10_000);
-        User user2 = new Player("Subway", new ArrayList<>(Arrays.asList(twoHeart, aceHeart)),10_000);
+        User user1 = new Player("lavine", new ArrayList<>(Arrays.asList(kingClub, kingHeart)), 10_000);
+        User user2 = new Player("Subway", new ArrayList<>(Arrays.asList(twoHeart, aceHeart)), 10_000);
         List<User> userList = new ArrayList<>(Arrays.asList(dealer, user1, user2));
         Users users = new Users(userList);
 

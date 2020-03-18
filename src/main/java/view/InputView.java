@@ -1,8 +1,6 @@
 package view;
 
-import dto.RequestAnswerDTO;
-import dto.RequestPlayerInformationDTO;
-import dto.ResponsePlayerDTO;
+import dto.*;
 
 import java.util.*;
 
@@ -14,14 +12,22 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<RequestPlayerInformationDTO> inputPlayerInformation() {
+    public static Map<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> inputPlayerInfo() {
         List<String> playerNames = inputPlayerName();
-        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = new ArrayList<>();
+        List<Integer> playerBettingMoney = new ArrayList<>(playerNames.size());
         for (String name : playerNames) {
             int bettingMoney = validateInputMoney(name);
-            requestPlayerInformationDTOS.add(new RequestPlayerInformationDTO(name, bettingMoney));
+            playerBettingMoney.add(bettingMoney);
         }
-        return requestPlayerInformationDTOS;
+
+        Map<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> playerInformation = new LinkedHashMap<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            String targetPlayerName = playerNames.get(i);
+            int targetBettingMoney = playerBettingMoney.get(i);
+            playerInformation.put(new RequestPlayerNameDTO(targetPlayerName),
+                    new RequestPlayerBettingMoneyDTO(targetBettingMoney));
+        }
+        return playerInformation;
     }
 
     private static List<String> inputPlayerName() {

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Cards {
     private static final int BLACK_JACK_SIZE = 2;
-    private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
     private static final String NO_CARDS = "입력한 카드가 없습니다.";
 
     private List<Card> cards;

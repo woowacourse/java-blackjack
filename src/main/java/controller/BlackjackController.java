@@ -9,10 +9,7 @@ import domain.player.Dealer;
 import domain.player.User;
 import domain.player.Users;
 import domain.player.Player;
-import dto.RequestAnswerDTO;
-import dto.RequestPlayerInformationDTO;
-import dto.ResponsePlayerDTO;
-import dto.ResponseWinningResultDTO;
+import dto.*;
 import view.InputView;
 import view.OutputView;
 
@@ -46,9 +43,12 @@ public class BlackjackController {
 
     private static Map<String, Integer> getPlayerInformation() {
         Map<String, Integer> playerInformation = new LinkedHashMap<>();
-        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = InputView.inputPlayerInformation();
-        for (RequestPlayerInformationDTO requestPlayerInformationDTO : requestPlayerInformationDTOS) {
-            playerInformation.put(requestPlayerInformationDTO.getPlayerName(), requestPlayerInformationDTO.getMoney());
+        Map<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> playerInformationDTO = InputView.inputPlayerInfo();
+
+        for (Map.Entry<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> entry : playerInformationDTO.entrySet()) {
+            RequestPlayerNameDTO playerName = entry.getKey();
+            RequestPlayerBettingMoneyDTO playerBettingMoney = entry.getValue();
+            playerInformation.put(playerName.getName(), playerBettingMoney.getBettingMoney());
         }
         return playerInformation;
     }
