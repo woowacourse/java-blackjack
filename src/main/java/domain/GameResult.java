@@ -81,7 +81,7 @@ public class GameResult {
 
 	private int dealerDefeatCount(Dealer dealer, List<Player> players) {
 		return (int)players.stream()
-			.filter(player -> player.wins(dealer.scoreHands()) || player.isPush(dealer.scoreHands()))
+			.filter(player -> player.wins(dealer.scoreHands()))
 			.count();
 	}
 
