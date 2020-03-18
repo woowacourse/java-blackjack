@@ -89,4 +89,14 @@ public class PlayerTest {
 
         assertThat(dealer.getFirstCardInfo()).isEqualTo("10스페이드");
     }
+
+    @Test
+    @DisplayName("블랙잭 확인")
+    void isBlackJack_WhenPoint21AndSize2_IsTrue() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.of("스페이드", "10"));
+        dealer.addCard(Card.of("스페이드", "A"));
+
+        assertThat(dealer.isBlackJack()).isTrue();
+    }
 }

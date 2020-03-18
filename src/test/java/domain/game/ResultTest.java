@@ -39,11 +39,7 @@ public class ResultTest {
     void isPlayCountMoreThanOne_IfPlayedMoreThanOnce_IsTrue() {
         Result result = new Result("user");
 
-        assertThat(result.isPlayCountMoreThanOne()).isFalse();
-
         result.addLoseCount();
-        assertThat(result.isPlayCountMoreThanOne()).isFalse();
-
         result.addLoseCount();
         assertThat(result.isPlayCountMoreThanOne()).isTrue();
     }
@@ -53,11 +49,7 @@ public class ResultTest {
     void hasWin_IfWonMoreThanOnce_IsTrue() {
         Result result = new Result("user");
 
-        assertThat(result.hasWin()).isFalse();
-
         result.addLoseCount();
-        assertThat(result.hasWin()).isFalse();
-
         result.addWinCount();
         assertThat(result.hasWin()).isTrue();
     }
