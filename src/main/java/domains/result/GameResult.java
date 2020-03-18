@@ -11,17 +11,10 @@ public class GameResult {
     public static final int INITIAL_COUNT = 0;
     public static final int ADD_COUNT = 1;
 
-    private Map<Player, ResultType> playerResult = new HashMap<>();
+    private Map<Player, ResultType> playerResult;
 
     public GameResult(Players players, Dealer dealer) {
-        create(players, dealer);
-    }
-
-    private void create(Players players, Dealer dealer) {
-        for (Player player : players) {
-            ResultType resultType = player.checkResultType(dealer);
-            playerResult.put(player, resultType);
-        }
+        this.playerResult = GameResultFactory.create(players, dealer);
     }
 
     public ResultType getWinOrLose(Player player) {
