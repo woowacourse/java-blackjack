@@ -13,32 +13,32 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.gamer.Money;
+import domain.gamer.Name;
+import domain.gamer.Player;
 
 class ScoreTest {
 	@Test
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateScore() {
-		Hand hand = Hand.fromEmpty();
-		hand.add(new Card(Symbol.EIGHT, Type.CLUB));
-		hand.add(new Card(Symbol.SEVEN, Type.CLUB));
-		hand.add(new Card(Symbol.SIX, Type.CLUB));
-
-		assertThat(Score.from(hand)).isEqualTo(Score.of(21));
+		Player player = new Player(new Name("pobi"), Money.ZERO);
+		player.hit(new Card(Symbol.EIGHT, Type.CLUB));
+		player.hit(new Card(Symbol.SEVEN, Type.CLUB));
+		player.hit(new Card(Symbol.SIX, Type.CLUB));
+		assertThat(Score.from(player)).isEqualTo(Score.from(21));
 	}
 
 	@ParameterizedTest
 	@MethodSource("generateWithAce")
 	@DisplayName("카드 계산결과가 올바른지")
 	void calculateWithAce(int expected, List<Card> cards) {
-		Hand hand = Hand.fromEmpty();
+		Player player = new Player(new Name("pobi"), Money.ZERO);
 		for (Card card : cards) {
-			hand.add(card);
+			player.hit(card);
 		}
-
-		assertThat(Score.from(hand)).isEqualTo(Score.of(expected));
+		assertThat(Score.from(player)).isEqualTo(Score.from(expected));
 	}
 
 	static Stream<Arguments> generateWithAce() {
@@ -54,8 +54,8 @@ class ScoreTest {
 	@Test
 	@DisplayName("점수를 올바르게 비교하는지 테스트")
 	void compareTest() {
-		Score twentyOne = Score.of(21);
-		Score ten = Score.of(10);
+		Score twentyOne = Score.from(21);
+		Score ten = Score.from(10);
 
 		assertThat(twentyOne.isBiggerThan(ten)).isTrue();
 		assertThat(ten.isLowerThan(twentyOne)).isTrue();
@@ -65,7 +65,12 @@ class ScoreTest {
 	@Test
 	@DisplayName("Bust여부를 정상적으로 확인하는지 테스트")
 	void bustTest() {
-		assertThat(Score.of(22).isBust()).isTrue();
-		assertThat(Score.of(21).isBust()).isFalse();
+		Player player = new Player(new Name("pobi"), Money.ZERO);
+		player.hit(new Card(Symbol.TEN, Type.CLUB));
+		player.hit(new Card(Symbol.TEN, Type.DIAMOND));
+		player.hit(new Card(Symbol.ACE, Type.DIAMOND));
+		assertThat(player.isBust()).isFalse();
+		player.hit(new Card(Symbol.TEN, Type.DIAMOND));
+		assertThat(player.isBust()).isTrue();
 	}
 }

@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class ProfitTest {
-
 	@ParameterizedTest
 	@CsvSource(value = {"3000.0,5000.0,8000.0", "3000.0,2000.0, 5000.0"})
 	@DisplayName("더하기 연산을 올바르게 수행하는지 테스트")

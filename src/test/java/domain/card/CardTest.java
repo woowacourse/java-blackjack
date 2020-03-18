@@ -12,4 +12,11 @@ class CardTest {
 		assertThat(new Card(Symbol.EIGHT, Type.CLUB))
 			.isEqualTo(new Card(Symbol.EIGHT, Type.CLUB));
 	}
+
+	@Test
+	@DisplayName("isAce()연산을 제대로 수행하는지")
+	void isAce() {
+		Card card = new Card(Symbol.ACE, Type.CLUB);
+		assertThat(card.isAce()).isTrue();
+	}
 }

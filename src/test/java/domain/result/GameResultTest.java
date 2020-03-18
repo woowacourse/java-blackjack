@@ -41,7 +41,6 @@ class GameResultTest {
 	@DisplayName("게임 결과가 올바르게 생성되는지 확인")
 	void fromTest() {
 		GameResult gameResult = GameResult.of(players, dealer);
-
 		Map<Player, Profit> expected = new HashMap<>();
 		expected.put(players.get(0), new Profit(-10000));
 		expected.put(players.get(1), new Profit(5000));

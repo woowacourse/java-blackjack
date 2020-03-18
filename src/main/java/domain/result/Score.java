@@ -2,12 +2,12 @@ package domain.result;
 
 import java.util.Objects;
 
-import domain.card.Hand;
+import domain.gamer.Gamer;
 
 public class Score {
 	private static final int BLACKJACK_SCORE = 21;
-	public static final Score BLACKJACK = Score.of(BLACKJACK_SCORE);
 	private static final int TEN = 10;
+	public static final Score BLACKJACK = Score.from(BLACKJACK_SCORE);
 
 	private final int score;
 
@@ -15,16 +15,16 @@ public class Score {
 		this.score = score;
 	}
 
-	public static Score of(int score) {
+	public static Score from(int score) {
 		return new Score(score);
 	}
 
-	public static Score from(Hand hand) {
-		int rawScore = hand.calculate();
-		if (hand.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
-			return new Score(rawScore + TEN);
+	public static Score from(Gamer gamer) {
+		int rawScore = gamer.calculateCardSum();
+		if (gamer.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
+			return Score.from(rawScore + TEN);
 		}
-		return new Score(rawScore);
+		return Score.from(rawScore);
 	}
 
 	public boolean isBiggerThan(Score other) {
@@ -37,10 +37,6 @@ public class Score {
 
 	public boolean isLowerThan(Score other) {
 		return this.score < other.score;
-	}
-
-	public boolean isBust() {
-		return this.score > BLACKJACK_SCORE;
 	}
 
 	public int getScore() {

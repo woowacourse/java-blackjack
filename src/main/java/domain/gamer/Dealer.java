@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import domain.result.Score;
-
 public class Dealer extends Gamer {
 	private static final String DEALER_NAME = "딜러";
 	private static final int DEALER_HIT_CEILING = 17;
@@ -11,7 +9,7 @@ public class Dealer extends Gamer {
 	}
 
 	@Override
-	public Score getHitPoint() {
-		return Score.of(DEALER_HIT_CEILING);
+	public int getHitPoint() {
+		return DEALER_HIT_CEILING;
 	}
 }

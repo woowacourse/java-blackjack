@@ -4,39 +4,52 @@ import java.util.List;
 
 import domain.card.Card;
 import domain.card.Hand;
+import domain.result.Rule;
 import domain.result.Score;
 
 public abstract class Gamer {
-	private final Name name;
 	private final Hand hand;
+	private final Name name;
 
 	public Gamer(Name name) {
 		this.name = name;
 		this.hand = Hand.fromEmpty();
 	}
 
+	public boolean hasTwoCards() {
+		return hand.hasTwoCards();
+	}
+
 	public void hit(Card card) {
 		hand.add(card);
 	}
 
+	public int calculateCardSum() {
+		return hand.calculate();
+	}
+
+	public boolean hasAce() {
+		return hand.hasAce();
+	}
+
+	public boolean canHit() {
+		return Rule.canHit(this);
+	}
+
 	public boolean isBust() {
-		return getScore().isBiggerThan(Score.BLACKJACK);
+		return Rule.isBust(this);
 	}
 
-	private boolean hasTwoCards() {
-		return hand.hasTwoCards();
+	public boolean isNotBust() {
+		return Rule.isNotBust(this);
 	}
 
-	public boolean isBiggerThan(Gamer gamer) {
-		return getScore().isBiggerThan(gamer.getScore());
+	public boolean isBlackJack() {
+		return Rule.isBlackJack(this);
 	}
 
-	public boolean isEqualTo(Gamer gamer) {
-		return getScore().isEqualTo(gamer.getScore());
-	}
-
-	public boolean isLowerThan(Gamer gamer) {
-		return getScore().isLowerThan(gamer.getScore());
+	public boolean isNotBlackJack() {
+		return Rule.isNotBlackJack(this);
 	}
 
 	public List<Card> getCards() {
@@ -47,21 +60,9 @@ public abstract class Gamer {
 		return name.getName();
 	}
 
-	public Boolean isBlackJack() {
-		return hasTwoCards() && getScore().isEqualTo(Score.BLACKJACK);
-	}
-
-	public Boolean isNotBlackJack() {
-		return !isBlackJack();
-	}
-
 	public Score getScore() {
-		return Score.from(hand);
+		return Rule.calculateScore(this);
 	}
 
-	public boolean canHit() {
-		return Score.from(hand).isLowerThan(getHitPoint());
-	}
-
-	protected abstract Score getHitPoint();
+	public abstract int getHitPoint();
 }

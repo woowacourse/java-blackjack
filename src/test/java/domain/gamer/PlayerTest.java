@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.card.Card;
 import domain.card.Symbol;
@@ -53,5 +51,4 @@ class PlayerTest {
 
 		assertThat(player.getCards()).hasSize(3);
 	}
-
 }
