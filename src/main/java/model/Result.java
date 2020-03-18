@@ -18,16 +18,20 @@ public enum Result {
         this.ratio = ratio;
     }
 
+    public Profit calculateProfit(Player player) {
+        return new Profit(player.getMultiplyBet(ratio).getBet());
+    }
+
     public static Result compete(Dealer dealer, Player player) {
-        if(dealer.isBlackJack() && player.isBlackJack()){
+        if (dealer.isBlackJack() && player.isBlackJack()) {
             return DRAW;
         }
 
-        if(dealer.isBlackJack()){
+        if (dealer.isBlackJack()) {
             return LOSE;
         }
 
-        if(player.isBlackJack()){
+        if (player.isBlackJack()) {
             return BLACKJACK;
         }
 

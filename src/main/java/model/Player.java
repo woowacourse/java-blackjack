@@ -16,4 +16,8 @@ public class Player extends User {
         super(name, cards);
         this.bet = new Bet(Double.toString(LOWER_BET_BOUND));
     }
+
+    public Bet getMultiplyBet(double ratio){
+        return bet.multiplyRatio(ratio);
+    }
 }
