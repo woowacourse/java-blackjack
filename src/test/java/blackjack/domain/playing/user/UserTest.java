@@ -4,6 +4,8 @@ import blackjack.domain.playing.card.Score;
 import blackjack.domain.playing.deck.Deck;
 import blackjack.domain.playing.user.exception.UserException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,27 +23,28 @@ class UserTest {
         return new User("무늬", cards);
     }
 
-    @Test
-    void isBlackjack() {
-        user = userWithScore(21);
+    @ParameterizedTest
+    @CsvSource(value = {"21:true", "22:false"}, delimiter = ':')
+    void isBlackjack(int number, boolean result) {
+        user = userWithScore(number);
 
-        assertThat(user.isBlackjack()).isTrue();
+        assertThat(user.isBlackjack()).isEqualTo(result);
     }
 
-    @Test
-    void isBust() {
-        user = userWithScore(22);
+    @ParameterizedTest
+    @CsvSource(value = {"22:true", "21:false"}, delimiter = ':')
+    void isBust(int number, boolean result) {
+        user = userWithScore(number);
 
-        assertThat(user.isBust()).isTrue();
-        assertThat(user.isNotBust()).isFalse();
+        assertThat(user.isBust()).isEqualTo(result);
     }
 
-    @Test
-    void isNotBust() {
-        user = userWithScore(21);
+    @ParameterizedTest
+    @CsvSource(value = {"21:true", "22:false"}, delimiter = ':')
+    void isNotBust(int number, boolean result) {
+        user = userWithScore(number);
 
-        assertThat(user.isNotBust()).isTrue();
-        assertThat(user.isBust()).isFalse();
+        assertThat(user.isNotBust()).isEqualTo(result);
     }
 
     @Test
@@ -81,31 +84,30 @@ class UserTest {
         verify(cards).calculateScore();
     }
 
-    @Test
-    void isOverScore() {
+    @ParameterizedTest
+    @CsvSource(value = {"20:true", "22:false"}, delimiter = ':')
+    void isOverScore(int number, boolean result) {
         user = userWithScore(21);
-        User other = userWithScore(20);
+        User other = userWithScore(number);
 
-        assertThat(user.isOverScore(other)).isTrue();
-        assertThat(other.isOverScore(user)).isFalse();
+        assertThat(user.isOverScore(other)).isEqualTo(result);
     }
 
-    @Test
-    void isUnderScore() {
-        user = userWithScore(10);
-        User other = userWithScore(11);
+    @ParameterizedTest
+    @CsvSource(value = {"22:true", "20:false"}, delimiter = ':')
+    void isUnderScore(int number, boolean result) {
+        user = userWithScore(21);
+        User other = userWithScore(number);
 
-        assertThat(user.isUnderScore(other)).isTrue();
-        assertThat(other.isUnderScore(user)).isFalse();
+        assertThat(user.isUnderScore(other)).isEqualTo(result);
     }
 
-    @Test
-    void isSameScore() {
-        user = userWithScore(1);
-        User otherWithSameScore = userWithScore(1);
-        User otherWithDifferentScore = userWithScore(2);
+    @ParameterizedTest
+    @CsvSource(value = {"21:true", "22:false"}, delimiter = ':')
+    void isSameScore(int number, boolean result) {
+        user = userWithScore(21);
+        User other = userWithScore(number);
 
-        assertThat(user.isSameScore(otherWithSameScore)).isTrue();
-        assertThat(user.isSameScore(otherWithDifferentScore)).isFalse();
+        assertThat(user.isSameScore(other)).isEqualTo(result);
     }
 }

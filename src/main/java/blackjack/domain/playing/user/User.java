@@ -61,6 +61,10 @@ public class User {
         return calculateScore().isSame(BLACKJACK_SCORE_NUMBER);
     }
 
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
     public boolean isBust() {
         return calculateScore().isOver(BLACKJACK_SCORE_NUMBER);
     }

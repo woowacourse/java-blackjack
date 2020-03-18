@@ -2,6 +2,8 @@ package blackjack.domain.playing.card;
 
 import blackjack.domain.playing.card.exception.ScoreException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -29,31 +31,27 @@ class ScoreTest {
         assertThat(result.getScore()).isEqualTo(7);
     }
 
-    @Test
-    void isUnder_ShouldReturnTrue() {
+    @ParameterizedTest
+    @CsvSource(value = {"4:true", "2:false"}, delimiter = ':')
+    void isUnder(int number, boolean result) {
         Score score = new Score(3);
 
-        assertThat(score.isUnder(4)).isTrue();
+        assertThat(score.isUnder(number)).isEqualTo(result);
     }
 
-    @Test
-    void isUnder_ShouldReturnFalse() {
+    @ParameterizedTest
+    @CsvSource(value = {"3:true", "4:false"}, delimiter = ':')
+    void isSame(int number, boolean result) {
         Score score = new Score(3);
 
-        assertThat(score.isUnder(2)).isFalse();
+        assertThat(score.isSame(number)).isEqualTo(result);
     }
 
-    @Test
-    void isOver_ShouldReturnTrue() {
+    @ParameterizedTest
+    @CsvSource(value = {"2:true", "4:false"}, delimiter = ':')
+    void isOver(int number, boolean result) {
         Score score = new Score(3);
 
-        assertThat(score.isOver(2)).isTrue();
-    }
-
-    @Test
-    void isOver_ShouldReturnFalse() {
-        Score score = new Score(3);
-
-        assertThat(score.isOver(4)).isFalse();
+        assertThat(score.isOver(number)).isEqualTo(result);
     }
 }
