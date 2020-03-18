@@ -25,14 +25,6 @@ public class BattingMoneyTest {
     }
 
     @Test
-    @DisplayName("잘못된 값이 들어올 경우 예외 처리")
-    void constructWithWrongStringException() {
-        assertThatThrownBy(() -> new BattingMoney("a"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바른 값을 입력해주세요.");
-    }
-
-    @Test
     @DisplayName("블랙잭 승에 따른 배팅 수익 계산")
     void calculateEarningBlackJack() {
         battingMoney = new BattingMoney(10000);

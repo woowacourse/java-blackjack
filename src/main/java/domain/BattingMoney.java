@@ -12,15 +12,11 @@ public class BattingMoney {
         this.battingMoney = battingMoney;
     }
 
-    public BattingMoney(String battingMoney) {
-        try {
-            this.battingMoney = Integer.parseInt(battingMoney);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("올바른 값을 입력해주세요.");
-        }
-    }
-
     public int calculateEarning(PlayerResult playerResult) {
         return playerResult.multiply(battingMoney);
+    }
+
+    public int getBattingMoney() {
+        return battingMoney;
     }
 }
