@@ -20,13 +20,7 @@ public abstract class Player {
 
 	private void validate(CardBundle cardBundle, String name) {
 		checkCardBundle(cardBundle);
-		checkName(name);
-	}
 
-	private void checkName(String name) {
-		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("플레이어의 이름이 존재하지 않습니다.");
-		}
 	}
 
 	private void checkCardBundle(CardBundle cardBundle) {

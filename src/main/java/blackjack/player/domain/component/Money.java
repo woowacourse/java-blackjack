@@ -1,4 +1,4 @@
-package blackjack.player.domain;
+package blackjack.player.domain.component;
 
 import java.util.Objects;
 
