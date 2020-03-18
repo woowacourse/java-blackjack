@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import domain.card.Deck;
+import view.dto.UserDto;
 
 public class PlayersInfo {
 
@@ -30,11 +31,11 @@ public class PlayersInfo {
         );
     }
 
-    public void additionalDealOut(Deck deck, Function<String, Boolean> isYes, Consumer<Player> showResult) {
+    public void additionalDealOut(Deck deck, Function<String, Boolean> isYes, Consumer<UserDto> showResult) {
         playersInfo.forEach((player, bettingMoney) -> {
-            while (player.isAvailableToDraw() && isYes.apply(player.getName())) {
+            while (player.isAvailableToDraw() && isYes.apply(UserDto.of(player).getName())) {
                 player.draw(deck);
-                showResult.accept(player);
+                showResult.accept(UserDto.of(player));
             }
         });
     }

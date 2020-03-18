@@ -9,6 +9,9 @@ import domain.user.Dealer;
 import domain.user.PlayersInfo;
 import view.InputView;
 import view.OutputView;
+import view.dto.GameResultDto;
+import view.dto.PlayersDto;
+import view.dto.UserDto;
 
 public class Application {
 
@@ -23,13 +26,11 @@ public class Application {
         BlackJackGame blackJackGame = BlackJackGame.set(DeckFactory.createDeck());
 
         blackJackGame.firstDealOut(dealer, players);
-        OutputView.printFirstDealOutResult(dealer, players);
+        OutputView.printFirstDealOutResult(UserDto.of(dealer), PlayersDto.of(players));
 
         blackJackGame.additionalDealOut(dealer, players);
 
         GameResult gameResult = GameResult.of(dealer, players);
-        
-        OutputView.printTotalResult(gameResult);
-        OutputView.printWinningResult(gameResult);
+        OutputView.printTotalResult(GameResultDto.of(gameResult));
     }
 }
