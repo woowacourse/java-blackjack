@@ -11,8 +11,4 @@ public class Player extends User {
     public boolean wantToHit(String willForMoreCard) {
         return willForMoreCard.equals("y");
     }
-
-    void hit(Card card) {
-        this.playingCards.add(card);
-    }
 }

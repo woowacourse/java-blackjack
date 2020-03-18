@@ -37,6 +37,10 @@ public abstract class User {
         return playingCards.getCards();
     }
 
+    void hit(Card card) {
+        playingCards.add(card);
+    }
+
     int countCards() {
         return playingCards.size();
     }

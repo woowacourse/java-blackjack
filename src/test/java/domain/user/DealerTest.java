@@ -61,10 +61,10 @@ class DealerTest {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         Dealer dealer = new Dealer(playingCards, deck);
         int defaultSizeOfCards = dealer.countCards();
-        when(deck.pop()).thenReturn(new Card(Symbol.QUEEN, Type.SPADE));
+        Card card = new Card(Symbol.QUEEN, Type.SPADE);
 
         //when
-        dealer.hit();
+        dealer.hit(card);
 
         //then
         assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + 1);

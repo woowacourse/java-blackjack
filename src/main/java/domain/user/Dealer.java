@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.card.PlayingCards;
 
@@ -15,9 +16,5 @@ public class Dealer extends User {
 
     public boolean canGetExtraCard() {
         return playingCards.calculateScore() < ADD_THRESHOLD;
-    }
-
-    void hit() {
-        playingCards.add(deck.pop());
     }
 }
