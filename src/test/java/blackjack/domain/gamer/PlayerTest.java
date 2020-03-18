@@ -3,7 +3,6 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardType;
-import blackjack.domain.result.BlackJackResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,12 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerTest {
 
     private Player player;
-    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         player = new Player("엘리");
-        dealer = new Dealer();
     }
 
     @Test
@@ -45,19 +42,6 @@ class PlayerTest {
         assertThat(player.isBusted()).isEqualTo(isBusted);
     }
 
-    @ParameterizedTest
-    @MethodSource("matchCards")
-    @DisplayName("player에게 dealer를 가져와 승패 반환")
-    void playerBusted(List<Card> playerCards, List<Card> dealerCards, BlackJackResult result) {
-        for (Card card : playerCards) {
-            player.draw(card);
-        }
-        for (Card card : dealerCards) {
-            dealer.draw(card);
-        }
-        assertThat(player.match(dealer)).isEqualTo(result);
-    }
-
     private static Stream<Arguments> createCards() {
         Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
         Card queenClover = new Card(CardSymbol.QUEEN, CardType.CLOVER);
@@ -68,20 +52,4 @@ class PlayerTest {
                 Arguments.of(notBustedCards, false),
                 Arguments.of(bustedCards, true));
     }
-
-    private static Stream<Arguments> matchCards() {
-        Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
-        Card fiveHeart = new Card(CardSymbol.FIVE, CardType.HEART);
-        Card kingClover = new Card(CardSymbol.KING, CardType.CLOVER);
-        List<Card> bustedCards = Arrays.asList(kingClover, kingClover, kingClover);
-        List<Card> blackJackCards = Arrays.asList(aceSpade, kingClover);
-        List<Card> normalCards = Arrays.asList(aceSpade, fiveHeart);
-        return Stream.of(
-                Arguments.of(bustedCards, bustedCards, BlackJackResult.LOSE),
-                Arguments.of(normalCards, bustedCards, BlackJackResult.WIN),
-                Arguments.of(blackJackCards, normalCards, BlackJackResult.WIN),
-                Arguments.of(normalCards, normalCards, BlackJackResult.DRAW),
-                Arguments.of(normalCards, blackJackCards, BlackJackResult.LOSE));
-    }
-
 }

@@ -9,7 +9,10 @@ public class Players implements Iterable<Player> {
 
     private List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
+        if (Objects.isNull(players)) {
+            throw new IllegalArgumentException("플레이어가 없습니다.");
+        }
         this.players = players;
     }
 
@@ -26,5 +29,18 @@ public class Players implements Iterable<Player> {
     @Override
     public Iterator<Player> iterator() {
         return players.iterator();
+    }
+
+    public Player findPlayerBy(String name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 유저가 없습니다."));
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 }

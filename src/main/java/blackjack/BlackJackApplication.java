@@ -1,7 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.request.BettingDto;
+import blackjack.controller.dto.response.GamersResultResponseDto;
 import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.card.CardFactory;
@@ -9,6 +10,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.rule.BettingTable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.console.ConsoleInputView;
@@ -25,6 +27,9 @@ public class BlackJackApplication {
         Deck deck = new Deck(CardFactory.generate());
         Players players = blackjackController.createPlayers(consoleInputView.askPlayerNames());
 
+        BettingDto bettingDto = consoleInputView.askBettingMoney(players.getNames());
+        BettingTable bettingTable = blackjackController.createBettingTable(players, bettingDto);
+
         HandResponseDtos handResponseDtos = blackjackController.initializeHand(dealer, players, deck);
         consoleOutputView.printInitialHand(handResponseDtos);
 
@@ -34,8 +39,8 @@ public class BlackJackApplication {
         HandResponseDtos result = blackjackController.getFinalHand(dealer, players);
         consoleOutputView.printHandWithScore(result);
 
-        GamersResultResponse gamersResultResponse = blackjackController.getResultResponse(dealer, players);
-        consoleOutputView.printResult(gamersResultResponse);
+        GamersResultResponseDto gamersResultResponseDto = blackjackController.getResultResponse(dealer, players, bettingTable);
+        consoleOutputView.printResult(gamersResultResponseDto);
     }
 
     private static void runPlayersHitOrStay(Deck deck, Players players) {

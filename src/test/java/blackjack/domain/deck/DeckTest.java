@@ -29,7 +29,7 @@ public class DeckTest {
             deck.pick();
         }
         assertThatThrownBy(() -> deck.pick())
-                .isInstanceOf(NullPointerException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드를 모두 사용하셨습니다.");
     }
 }

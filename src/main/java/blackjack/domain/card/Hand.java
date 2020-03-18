@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.rule.HandCalculator;
 import blackjack.domain.rule.Score;
 
@@ -11,6 +10,7 @@ import java.util.Objects;
 
 public class Hand {
 
+    public static final int BLACKJACK_CARD_SIZE = 2;
     private final List<Card> hand = new ArrayList<>();
 
     public void add(Card card) {
@@ -29,8 +29,9 @@ public class Hand {
         return score.isBusted();
     }
 
-    public BlackJackResult match(Hand hand) {
-        return sumScore().match(hand.sumScore());
+    public boolean isBlackJack() {
+        Score score = sumScore();
+        return score.isMaxValue() && hand.size() == BLACKJACK_CARD_SIZE;
     }
 
     private Score sumScore() {

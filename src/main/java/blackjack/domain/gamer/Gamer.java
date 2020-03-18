@@ -17,6 +17,10 @@ public abstract class Gamer {
         return hand.isBusted();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public int calculateScore() {
         return hand.calculate();
     }

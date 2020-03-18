@@ -32,9 +32,19 @@ public class Score {
     }
 
     public BlackJackResult match(Score target) {
+        if (isBlackJack() && target.isBlackJack()) {
+            return BlackJackResult.DRAW;
+        }
+        if (isBlackJack()) {
+            return BlackJackResult.BLACKJACK;
+        }
         if (isBusted()) {
             return BlackJackResult.LOSE;
         }
+        return matchByScore(target);
+    }
+
+    private BlackJackResult matchByScore(Score target) {
         if (this.score < target.score)
             return BlackJackResult.LOSE;
         if (this.score > target.score)
@@ -42,8 +52,16 @@ public class Score {
         return BlackJackResult.DRAW;
     }
 
+    private boolean isBlackJack() {
+        return score == BLACKJACK;
+    }
+
     public boolean isBusted() {
         return score == BUSTED;
+    }
+
+    public boolean isMaxValue() {
+        return score == BLACKJACK;
     }
 
     public int getScore() {

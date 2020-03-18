@@ -1,21 +1,23 @@
 package blackjack.controller;
 
+import blackjack.controller.dto.request.BettingDto;
 import blackjack.controller.dto.request.NamesRequestDto;
-import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.response.GamersResultResponseDto;
 import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.BlackJackResult;
+import blackjack.domain.rule.BettingTable;
 import blackjack.domain.rule.HandInitializer;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -42,16 +44,25 @@ public class BlackjackController {
         return new HandResponseDtos(handResponseDtos);
     }
 
-    public GamersResultResponse getResultResponse(Dealer dealer, Players players) {
-        Map<Player, BlackJackResult> playersResult = new HashMap<>();
-        EnumMap<BlackJackResult, Integer> dealerResult = new EnumMap<>(BlackJackResult.class);
-        for (Player player : players) {
-            BlackJackResult result = player.match(dealer);
-            playersResult.put(player, result);
-            dealerResult.computeIfPresent(result.reverse(), (key, value) -> ++value);
-            dealerResult.putIfAbsent(result.reverse(), 1);
+    public BettingTable createBettingTable(Players players, BettingDto bettingDto) {
+        Map<Player, Integer> playerMoneyMap = new LinkedHashMap<>();
+        Map<String, String> bettingTableDto = bettingDto.getBettingTable();
+        for (Map.Entry<String, String> nameMoneyEntry : bettingTableDto.entrySet()) {
+            Player player = players.findPlayerBy(nameMoneyEntry.getKey());
+            playerMoneyMap.put(player, Integer.parseInt(nameMoneyEntry.getValue()));
         }
 
-        return new GamersResultResponse(dealerResult, playersResult);
+        return new BettingTable(playerMoneyMap);
+    }
+
+    public GamersResultResponseDto getResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
+        Map<Gamer, Integer> calculateBettingMoney = bettingTable.calculateBettingMoney(players, dealer);
+        Map<String, Integer> map = calculateBettingMoney.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().getName(),
+                        entry -> entry.getValue()
+                ));
+        return new GamersResultResponseDto(map);
     }
 }
