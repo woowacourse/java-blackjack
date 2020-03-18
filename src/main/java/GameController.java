@@ -10,35 +10,31 @@ import view.InputView;
 import view.OutputView;
 
 class GameController {
-	private Deck deck;
 	private Players players;
-	private Dealer dealer;
 
 	GameController() {
-		deck = new Deck();
-		players = new Players();
-
 		OutputView.printInputPlayerNames();
 		PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
 
-		bet(playerNames);
-
-		dealer = new Dealer(deck);
+		Deck deck = new Deck();
+		Dealer dealer = new Dealer(deck);
+		bet(playerNames, deck);
 
 		OutputView.printInitialHands(players, dealer);
 
-		run();
+		run(dealer, deck);
 	}
 
-	private void bet(PlayerNames playerNames) {
+	private void bet(PlayerNames playerNames, Deck deck) {
+		players = new Players();
 		for (PlayerName name : playerNames) {
 			OutputView.printInputBettingMoney(name);
 			players.add(new Player(name, InputView.inputBettingMoney(), deck));
 		}
 	}
 
-	private void run() {
-		hitOrStay();
+	private void run(Dealer dealer, Deck deck) {
+		hitOrStay(dealer, deck);
 
 		if (dealer.isHit()) {
 			OutputView.printDealerHitCard();
@@ -49,15 +45,15 @@ class GameController {
 		OutputView.printGameResult(new Profits(gameResult));
 	}
 
-	private void hitOrStay() {
+	private void hitOrStay(Dealer dealer, Deck deck) {
 		for (Player player : players) {
-			needMoreCard(player);
+			needMoreCard(player, deck);
 		}
 
 		dealer.hitOrStay(deck);
 	}
 
-	private void needMoreCard(Player player) {
+	private void needMoreCard(Player player, Deck deck) {
 		while (player.needMoreCard(getAnswerForNeedMoreCard(player), deck)) {
 			if (player.isBurst()) {
 				OutputView.printBurst(player);
