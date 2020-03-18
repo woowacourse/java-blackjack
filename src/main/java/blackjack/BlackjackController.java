@@ -2,6 +2,7 @@ package blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import blackjack.card.domain.CardBundle;
@@ -10,6 +11,8 @@ import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Gambler;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
+import blackjack.player.domain.component.Money;
+import blackjack.player.domain.component.PlayerInfo;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -18,20 +21,15 @@ public class BlackjackController {
 	private final InputView inputView;
 
 	public BlackjackController(CardDeck cardDeck, InputView inputView) {
-		checkCardDeck(cardDeck);
+		Objects.requireNonNull(cardDeck, "카드덱이 존재하지 않습니다.");
 		this.cardDeck = cardDeck;
 		this.inputView = inputView;
 	}
 
-	private void checkCardDeck(CardDeck cardDeck) {
-		if (cardDeck == null) {
-			throw new IllegalArgumentException("카드덱이 유효하지 않습니다.");
-		}
-	}
-
 	public void run() {
-		Player dealer = new Dealer(new CardBundle());
-		Players players = new Players(makePlayers(dealer));
+		List<String> names = receivePlayerNames();
+		Dealer dealer = new Dealer(new CardBundle());
+		Players players = createPlayers(names, dealer);
 
 		drawStartingCards(players);
 		turnGamblers(players);
@@ -40,12 +38,19 @@ public class BlackjackController {
 		OutputView.showReports(players);
 	}
 
-	private List<Player> makePlayers(Player dealer) {
+	private List<String> receivePlayerNames() {
+		return inputView.inputPlayNames();
+	}
+
+	private Players createPlayers(List<String> names, Dealer dealer) {
 		List<Player> players = new ArrayList<>();
-		List<Player> gamblers = inputView.inputPlayNames().toPlayers();
 		players.add(dealer);
-		players.addAll(gamblers);
-		return players;
+		for (String name : names) {
+			Money bettingMoney = Money.createMoney(inputView.inputBettingMoney(name));
+			Gambler gambler = new Gambler(new CardBundle(), new PlayerInfo(name, bettingMoney));
+			players.add(gambler);
+		}
+		return new Players(players);
 	}
 
 	private void drawStartingCards(Players players) {

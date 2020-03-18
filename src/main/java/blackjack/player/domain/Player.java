@@ -2,35 +2,18 @@ package blackjack.player.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
-import blackjack.player.domain.report.GameReport;
 
 public abstract class Player {
-	protected final String name;
 	protected final CardBundle cardBundle;
 
-	public Player(CardBundle cardBundle, String name) {
-		validate(cardBundle, name);
+	public Player(CardBundle cardBundle) {
+		Objects.requireNonNull(cardBundle, "카드번들이 존재하지 않습니다.");
 		this.cardBundle = cardBundle;
-		this.name = name;
-	}
-
-	private void validate(CardBundle cardBundle, String name) {
-		checkCardBundle(cardBundle);
-
-	}
-
-	private void checkCardBundle(CardBundle cardBundle) {
-		if (cardBundle == null) {
-			throw new IllegalArgumentException("카드번들이 존재하지 않습니다.");
-		}
-	}
-
-	public String getName() {
-		return this.name;
 	}
 
 	public void addCard(Card card) {
@@ -55,10 +38,6 @@ public abstract class Player {
 		return cardBundle.isBlackjack();
 	}
 
-	public boolean isNotBlackjack() {
-		return !isBlackjack();
-	}
-
 	public boolean isDealer() {
 		return this instanceof Dealer;
 	}
@@ -69,7 +48,7 @@ public abstract class Player {
 
 	public abstract boolean isHit();
 
-	public abstract GameReport createReport(Player player);
+	public abstract String getName();
 
 	public List<Card> getCardBundle() {
 		return Collections.unmodifiableList(this.cardBundle.getCards());
@@ -78,4 +57,5 @@ public abstract class Player {
 	public int getScore() {
 		return cardBundle.calculateScore();
 	}
+
 }

@@ -3,40 +3,26 @@ package blackjack.player.domain.report;
 import java.util.Objects;
 
 import blackjack.card.domain.GameResult;
+import blackjack.player.domain.component.PlayerInfo;
 
+// todo : 테스트 정리
 public class GameReport {
-	private final String name;
+	private final PlayerInfo playerInfo;
 	private final GameResult gameResult;
 
-	public GameReport(String name, GameResult gameResult) {
-		validate(name, gameResult);
-		this.name = name;
+	public GameReport(PlayerInfo playerInfo, GameResult gameResult) {
+		Objects.requireNonNull(playerInfo, "플레이어 정보가 없습니다.");
+		Objects.requireNonNull(gameResult, "결과 정보가 없습니다.");
+		this.playerInfo = playerInfo;
 		this.gameResult = gameResult;
 	}
 
-	private void validate(String name, GameResult gameResult) {
-		checkName(name);
-		checkGameResult(gameResult);
+	public PlayerInfo getPlayerInfo() {
+		return playerInfo;
 	}
 
-	private void checkGameResult(GameResult gameResult) {
-		if (gameResult == null) {
-			throw new IllegalArgumentException("GameResult가 존재하지 유효하지 않습니다.");
-		}
-	}
-
-	private void checkName(String name) {
-		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("비어있는 이름을 사용했습니다.");
-		}
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getMessage() {
-		return gameResult.getMessage();
+	public double getProfit() {
+		return gameResult.getRate();
 	}
 
 	public boolean isWin() {
@@ -58,12 +44,12 @@ public class GameReport {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		GameReport that = (GameReport)o;
-		return Objects.equals(name, that.name) &&
+		return Objects.equals(playerInfo, that.playerInfo) &&
 			gameResult == that.gameResult;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, gameResult);
+		return Objects.hash(playerInfo, gameResult);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import blackjack.BlackjackRule;
 import blackjack.card.domain.Card;
 import blackjack.player.domain.Dealer;
+import blackjack.player.domain.Gambler;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
 import blackjack.view.dto.GameStatisticsDTO;
@@ -21,13 +22,13 @@ public class OutputView {
 				, collectGamblersNames(gamblers)
 				, BlackjackRule.STARTING_CARD_COUNT)
 		);
-		System.out.println(String.format("%s: %s%s", dealer.getName(), dealerCard.getNumber(), dealerCard.getSymbol()));
+		System.out.println(String.format("딜러: %s%s", dealerCard.getNumber(), dealerCard.getSymbol()));
 		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));
 	}
 
 	private static String collectGamblersNames(List<Player> gamblers) {
 		return gamblers.stream()
-			.map(Player::getName)
+			.map(player -> ((Gambler)player).getName())
 			.collect(Collectors.joining(", "));
 	}
 
@@ -59,7 +60,7 @@ public class OutputView {
 	public static void showReports(Players players) {
 		showFinalPlayersCards(players);
 		GameStatisticsDTO gameStatisticsDTO = new GameStatisticsDTO(players.getReports());
-		System.out.println("\n## 최종 승패");
+		System.out.println("\n## 최종 수익");
 		System.out.println(gameStatisticsDTO.getDealerResult());
 		System.out.println(gameStatisticsDTO.getGamblerResult());
 	}

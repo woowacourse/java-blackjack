@@ -4,16 +4,17 @@ import java.util.Arrays;
 
 // todo: 테스트코드 수정
 public enum GameResult {
-	WIN(new GamblerWinStrategy(), "승"),
-	DRAW(new DrawStrategy(), "무"),
-	LOSE(new GamblerLoseStrategy(), "패");
+	BLACKJACK_WIN(new GamblerBlackJackWinStrategy(), 1.5d),
+	WIN(new GamblerWinStrategy(), 1.0d),
+	DRAW(new DrawStrategy(), 0d),
+	LOSE(new GamblerLoseStrategy(), -1d);
 
 	private final GameResultStrategy gameResultStrategy;
-	private final String message;
+	private final Double rate;
 
-	GameResult(GameResultStrategy gameResultStrategy, String message) {
+	GameResult(GameResultStrategy gameResultStrategy, Double rate) {
 		this.gameResultStrategy = gameResultStrategy;
-		this.message = message;
+		this.rate = rate;
 	}
 
 	public static GameResult createGameResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {
@@ -23,7 +24,9 @@ public enum GameResult {
 			.orElseThrow(() -> new IllegalArgumentException("승패가 지정되지 않았습니다."));
 	}
 
-	public String getMessage() {
-		return message;
+	public double getRate() {
+		return rate;
 	}
 }
+
+

@@ -4,9 +4,9 @@ package blackjack.card.domain;
 public class GamblerWinStrategy extends GameResultStrategy {
 	@Override
 	public boolean isResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {
-		if (gamblerCardBundle.isNotBurst()) {
-			return isGreatorThan(gamblerCardBundle, dealerCardBundle) ||
-				isBlackjackWin(gamblerCardBundle, dealerCardBundle);
+		if ((gamblerCardBundle.isNotBurst() && dealerCardBundle.isBurst())
+			|| isGreatorThan(gamblerCardBundle, dealerCardBundle)) {
+			return true;
 		}
 		return false;
 	}

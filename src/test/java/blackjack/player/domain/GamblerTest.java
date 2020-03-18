@@ -33,8 +33,8 @@ class GamblerTest {
 	@DisplayName("겜블러는 게임 결과를 만들어낼수 없습니다.")
 	@Test
 	void getReport() {
-		Player gambler1 = new Gambler(new CardBundle(), "bebop");
-		Player gambler2 = new Gambler(new CardBundle(), "allen");
+		Player gambler1 = new Gambler(new CardBundle(), "bebop", playerInfo);
+		Player gambler2 = new Gambler(new CardBundle(), "allen", playerInfo);
 
 		assertThatThrownBy(() -> gambler1.createReport(gambler2))
 			.isInstanceOf(UnsupportedOperationException.class);
@@ -44,7 +44,7 @@ class GamblerTest {
 	@ParameterizedTest
 	@MethodSource("bundleProvider")
 	void isDrawable(boolean expect, CardBundle cardBundle) {
-		Player gambler = new Gambler(cardBundle, "bebop");
+		Player gambler = new Gambler(cardBundle, "bebop", playerInfo);
 		assertThat(gambler.isHit()).isEqualTo(expect);
 	}
 }

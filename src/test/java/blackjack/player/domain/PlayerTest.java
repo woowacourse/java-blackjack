@@ -25,7 +25,7 @@ class PlayerTest {
 				new Dealer(new CardBundle()), false, true
 			),
 			Arguments.of(
-				new Gambler(new CardBundle(), "pobi"), true, false
+				new Gambler(new CardBundle(), "pobi", playerInfo), true, false
 			)
 		);
 	}
@@ -45,7 +45,7 @@ class PlayerTest {
 	@ParameterizedTest
 	@NullAndEmptySource
 	void name(String arongName) {
-		assertThatThrownBy(() -> new Gambler(new CardBundle(), arongName))
+		assertThatThrownBy(() -> new Gambler(new CardBundle(), arongName, playerInfo))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 

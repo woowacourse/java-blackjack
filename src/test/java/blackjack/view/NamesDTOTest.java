@@ -1,19 +1,19 @@
 package blackjack.view;
 
-import blackjack.card.domain.CardBundle;
-import blackjack.player.domain.Gambler;
-import blackjack.player.domain.Player;
-import blackjack.view.dto.NamesDTO;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import blackjack.card.domain.CardBundle;
+import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Player;
+import blackjack.view.dto.NamesDTO;
 
 class NamesDTOTest {
 
@@ -23,8 +23,8 @@ class NamesDTOTest {
 		//given
 		String inputNames = "allen,bebop";
 		List<Player> result = Arrays.asList(
-			new Gambler(new CardBundle(), "allen"),
-			new Gambler(new CardBundle(), "bebop")
+			new Gambler(new CardBundle(), "allen", playerInfo),
+			new Gambler(new CardBundle(), "bebop", playerInfo)
 		);
 
 		//when
