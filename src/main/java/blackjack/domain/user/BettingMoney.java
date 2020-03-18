@@ -2,6 +2,8 @@ package blackjack.domain.user;
 
 import blackjack.domain.user.exceptions.MoneyException;
 
+import java.util.Objects;
+
 public class BettingMoney {
 	public static final double BLACKJACK_BONUS_MULTIPLE = 1.5;
 	private final double amount;
@@ -33,7 +35,27 @@ public class BettingMoney {
 		}
 	}
 
-	public BettingMoney computeWinningAmountWtihBlackjack() {
+	public BettingMoney addWinningAmountWithBlackjack() {
 		return new BettingMoney(amount + amount * BLACKJACK_BONUS_MULTIPLE);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		BettingMoney that = (BettingMoney) o;
+		return Double.compare(that.amount, amount) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(amount);
+	}
+
+	@Override
+	public String toString() {
+		return "BettingMoney{" +
+				"amount=" + amount +
+				'}';
 	}
 }

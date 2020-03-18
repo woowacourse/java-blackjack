@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.user.exceptions.MoneyException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,5 +38,10 @@ class BettingMoneyTest {
 				.isInstanceOf(MoneyException.class);
 	}
 
-
+	@ParameterizedTest
+	@CsvSource(value = {"1000,2500", "500,1250", "1,2.5"})
+	void addWinningAmountWithBlackjack(String input, String expect) {
+		BettingMoney bettingMoney = BettingMoney.of(input);
+		assertThat(bettingMoney.addWinningAmountWithBlackjack()).isEqualTo(BettingMoney.of(expect));
+	}
 }
