@@ -7,9 +7,9 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Player extends User {
-	private final Money bettingMoney;
-
 	private static final int FIRST_SHOW_SIZE = 2;
+
+	private final Money bettingMoney;
 
 	private Player(Name name, Money bettingMoney) {
 		super(name);

@@ -28,8 +28,7 @@ public class ScoreBoards {
 			.map(PlayerScoreBoard::of)
 			.collect(toList());
 
-		DealerScoreBoard dealerBoard = DealerScoreBoard.of(dealer);
-		return new ScoreBoards(playerBoards, dealerBoard);
+		return new ScoreBoards(playerBoards, DealerScoreBoard.of(dealer));
 	}
 
 	public UserResults calculateUsersResult() {

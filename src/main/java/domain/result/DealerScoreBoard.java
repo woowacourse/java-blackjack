@@ -11,7 +11,7 @@ public class DealerScoreBoard implements ScoreBoard {
 	private final Dealer dealer;
 	private final int score;
 
-	private DealerScoreBoard(Dealer dealer, int score) {
+	public DealerScoreBoard(Dealer dealer, int score) {
 		this.dealer = Objects.requireNonNull(dealer);
 		this.score = score;
 	}
@@ -34,5 +34,23 @@ public class DealerScoreBoard implements ScoreBoard {
 
 	public User getUser() {
 		return dealer;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		DealerScoreBoard that = (DealerScoreBoard)object;
+		return this.score == that.score &&
+			Objects.equals(this.dealer, that.dealer);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dealer, score);
 	}
 }

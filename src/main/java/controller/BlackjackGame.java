@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import domain.card.CardDeck;
+import domain.card.ShuffleCardDeck;
 import domain.result.ScoreBoards;
 import domain.result.UserResults;
 import domain.user.Dealer;
@@ -28,7 +29,7 @@ public class BlackjackGame {
 	private Gamers initGamers() {
 		final List<Player> players = PlayerFactory.create(InputView.inputNames(), InputView::inputBettingMoney);
 		final Dealer dealer = new Dealer();
-		final CardDeck cardDeck = new CardDeck();
+		final CardDeck cardDeck = new ShuffleCardDeck();
 		return new Gamers(players, dealer, cardDeck);
 	}
 }

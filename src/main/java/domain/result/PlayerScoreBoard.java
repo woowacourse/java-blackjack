@@ -10,13 +10,25 @@ public class PlayerScoreBoard implements ScoreBoard {
 	private final Player player;
 	private final int score;
 
-	private PlayerScoreBoard(Player player, int score) {
+	public PlayerScoreBoard(Player player, int score) {
 		this.player = Objects.requireNonNull(player);
 		this.score = score;
 	}
 
 	public static PlayerScoreBoard of(Player player) {
 		return new PlayerScoreBoard(player, player.calculateScore());
+	}
+
+	public UserResult createPlayerResult(DealerScoreBoard other) {
+		return new UserResult(player, calculateMoney(other));
+	}
+
+	private int calculateMoney(DealerScoreBoard dealerBoard) {
+		return match(dealerBoard).calculatePrize(player.getBettingMoney());
+	}
+
+	private MatchResult match(DealerScoreBoard dealerBoard) {
+		return MatchResult.calculatePlayerMatchResult(player, Objects.requireNonNull(dealerBoard.getUser()));
 	}
 
 	public String getName() {
@@ -31,15 +43,21 @@ public class PlayerScoreBoard implements ScoreBoard {
 		return score;
 	}
 
-	public UserResult createPlayerResult(DealerScoreBoard other) {
-		return new UserResult(player, calculateMoney(other));
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		PlayerScoreBoard that = (PlayerScoreBoard)object;
+		return this.score == that.score &&
+			Objects.equals(this.player, that.player);
 	}
 
-	private int calculateMoney(DealerScoreBoard dealerBoard) {
-		return match(dealerBoard).calculatePrize(player.getBettingMoney());
-	}
-
-	private MatchResult match(DealerScoreBoard dealerBoard) {
-		return MatchResult.calculatePlayerMatchResult(player, Objects.requireNonNull(dealerBoard.getUser()));
+	@Override
+	public int hashCode() {
+		return Objects.hash(player, score);
 	}
 }

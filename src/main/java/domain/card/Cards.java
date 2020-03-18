@@ -66,4 +66,28 @@ public class Cards {
 			throw new IllegalArgumentException(OUT_OF_CARD_SIZE_EXCEPTION_MESSAGE);
 		}
 	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		Cards that = (Cards)object;
+		return Objects.equals(this.cards, that.cards);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cards);
+	}
+
+	@Override
+	public String toString() {
+		return "Cards{" +
+			"cards=" + cards +
+			'}';
+	}
 }

@@ -8,7 +8,6 @@ import domain.result.ScoreBoard;
 import domain.result.ScoreBoards;
 import domain.result.UserResults;
 import domain.user.Dealer;
-import domain.user.Player;
 import domain.user.User;
 
 public class OutputView {

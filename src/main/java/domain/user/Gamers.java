@@ -27,15 +27,26 @@ public class Gamers {
 	}
 
 	public void drawFirstTime(Consumer<User> firstDrawResultConsumer) {
+		Objects.requireNonNull(firstDrawResultConsumer);
+		drawFirstToAllUsers();
+		printFirstDrawResult(firstDrawResultConsumer);
+	}
+
+	private void drawFirstToAllUsers() {
 		for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
 			Stream.concat(players.stream(), Stream.of(dealer))
 				.forEach(user -> user.draw(deck));
 		}
+	}
+
+	private void printFirstDrawResult(Consumer<User> firstDrawResultConsumer) {
 		Stream.concat(players.stream(), Stream.of(dealer))
 			.forEach(firstDrawResultConsumer);
 	}
 
 	public void drawPlayersAdditional(Function<String, String> nameToResponseFunction, Consumer<Player> outputPrinter) {
+		Objects.requireNonNull(nameToResponseFunction);
+		Objects.requireNonNull(outputPrinter);
 		for (Player player : players) {
 			drawSinglePlayerAdditional(nameToResponseFunction, outputPrinter, player);
 		}
@@ -65,6 +76,19 @@ public class Gamers {
 	}
 
 	public UserResults calculatePrizeResults(ScoreBoards scoreBoards) {
+		Objects.requireNonNull(scoreBoards);
 		return scoreBoards.calculateUsersResult();
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public Dealer getDealer() {
+		return dealer;
+	}
+
+	public CardDeck getDeck() {
+		return deck;
 	}
 }
