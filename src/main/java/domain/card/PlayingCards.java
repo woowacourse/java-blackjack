@@ -6,10 +6,15 @@ import java.util.Objects;
 public class PlayingCards extends Cards {
     private static final int BLACK_JACK = 21;
     private static final int MIN_SIZE = 2;
-    private final List<Card> cards;
+    private final Cards cards;
 
     private PlayingCards(List<Card> cards) {
         super(cards);
+        this.cards = Cards.of(cards);
+    }
+
+    private PlayingCards(Cards cards) {
+        super(cards.getCards());
         this.cards = cards;
     }
 
@@ -22,22 +27,19 @@ public class PlayingCards extends Cards {
     }
 
     public PlayingCards add(Card card) {
-        cards.add(card);
-        return new PlayingCards(cards);
+        return new PlayingCards(cards.add(card));
     }
 
     public PlayingCards add(Cards cardsToAdd) {
-        cards.addAll(cardsToAdd.getCards());
-        return new PlayingCards(cards);
-    }
-
-    public List<Card> getCards() {
-        return cards;
+        return new PlayingCards(cards.add(cardsToAdd));
     }
 
     public int calculateScore() {
-
-        return 1;
+        int sum = 0;
+//        for (Card card : cards) {
+//            sum = card.calculateScore(sum);
+//        }
+        return sum;
     }
 
     public boolean isBust() {

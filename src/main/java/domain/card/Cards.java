@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     private final List<Card> cards;
@@ -18,11 +19,35 @@ public class Cards {
         return new Cards(cards);
     }
 
-    protected List<Card> getCards() {
+    //todo: 접근제한자 확인하기
+    public List<Card> getCards() {
         return cards;
     }
 
     public int size() {
         return cards.size();
+    }
+
+    protected Cards add(Card card) {
+        cards.add(card);
+        return of(cards);
+    }
+
+    protected Cards add(Cards cards) {
+        this.cards.addAll(cards.getCards());
+        return of(this.cards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cards cards1 = (Cards) o;
+        return Objects.equals(cards, cards1.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 }
