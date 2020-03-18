@@ -15,7 +15,7 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (Objects.isNull(name) || name.length() == 0) {
+        if (Objects.isNull(name) || name.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_OR_NULL_EXCEPTION_MESSAGE);
         }
         if (name.length() > MAX_NAME_LENGTH) {

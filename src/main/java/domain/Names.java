@@ -16,17 +16,17 @@ public class Names {
         this.names = names;
     }
 
-    private void validateNames(List<Name> names) {
-        if (Objects.isNull(names) || names.size() == 0) {
-            throw new IllegalArgumentException(EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE);
-        }
-    }
-
     public Names(String input) {
         this(Arrays.stream(input.trim().split(DELIMITER))
                 .map(String::trim)
                 .map(Name::new)
                 .collect(Collectors.toList()));
+    }
+
+    private void validateNames(List<Name> names) {
+        if (Objects.isNull(names) || names.isEmpty()) {
+            throw new IllegalArgumentException(EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE);
+        }
     }
 
     public List<Name> getNames() {
