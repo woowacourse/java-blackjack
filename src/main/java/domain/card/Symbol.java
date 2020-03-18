@@ -16,18 +16,18 @@ public enum Symbol {
     KING(10, "K");
 
     private int value;
-    private String word;
+    private String pattern;
 
-    Symbol(int value, String word) {
+    Symbol(int value, String pattern) {
         this.value = value;
-        this.word = word;
-    }
-
-    public String getWord() {
-        return word;
+        this.pattern = pattern;
     }
 
     public int getValue() {
         return value;
+    }
+
+    public String getPattern() {
+        return pattern;
     }
 }

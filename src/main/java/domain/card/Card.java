@@ -24,7 +24,7 @@ public class Card {
     }
 
     public String getWord() {
-        return symbol.getWord();
+        return symbol.getPattern();
     }
 
     @Override

@@ -15,7 +15,7 @@ public class SymbolTest {
     @Test
     @DisplayName("Symbol word 생성 확인")
     void getWord() {
-        assertThat(Symbol.ACE.getWord()).isEqualTo("A");
+        assertThat(Symbol.ACE.getPattern()).isEqualTo("A");
     }
 
     @Test
