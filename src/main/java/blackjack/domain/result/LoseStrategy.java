@@ -8,14 +8,14 @@ class LoseStrategy extends GameResultStrategy {
 
     @Override
     protected boolean enough(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return isGamblerBurst(gamblerCardBundle, dealerCardBundle) || isOnlyDealerBlackjack(gamblerCardBundle, dealerCardBundle);
+        return isOnlyGamblerBurst(gamblerCardBundle, dealerCardBundle) || isOnlyDealerBlackjack(gamblerCardBundle, dealerCardBundle);
     }
 
     private boolean isOnlyDealerBlackjack(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
         return dealerCardBundle.isBlackjack() && !gamblerCardBundle.isBlackjack();
     }
 
-    private boolean isGamblerBurst(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
+    private boolean isOnlyGamblerBurst(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
         return gamblerCardBundle.isBurst() && !dealerCardBundle.isBurst();
     }
 
