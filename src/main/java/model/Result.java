@@ -5,29 +5,44 @@ import exception.IllegalResultException;
 import java.util.Arrays;
 
 public enum Result {
-    WIN("승", -1),
-    LOSE("패", 1),
-    DRAW("무", 0);
+    BLACKJACK(-2, 1.5),
+    WIN(-1, 1.0),
+    LOSE(1, -1.0),
+    DRAW(0, 0.0);
 
-    private final String result;
-    private final int resultValue;
+    private final int compareValue;
+    private final double ratio;
 
-    Result(String result, int resultValue) {
-        this.result = result;
-        this.resultValue = resultValue;
+    Result(int compareValue, double ratio) {
+        this.compareValue = compareValue;
+        this.ratio = ratio;
     }
 
     public static Result compete(Dealer dealer, Player player) {
-        if (dealer.isBust() && player.isBust()) {
+        if(dealer.isBlackJack() && player.isBlackJack()){
             return DRAW;
         }
+
+        if(dealer.isBlackJack()){
+            return LOSE;
+        }
+
+        if(player.isBlackJack()){
+            return BLACKJACK;
+        }
+
+        if (dealer.isBust() && player.isBust()) {
+            return LOSE;
+        }
+
         if (dealer.isBust()) {
             return WIN;
         }
+
         if (player.isBust()) {
             return LOSE;
         }
-        int compareValue = User.compare(dealer, player);
+        int compareValue = dealer.compareTo(player);
         return Arrays.stream(Result.values())
                 .filter(result -> result.isSameResult(compareValue))
                 .findFirst()
@@ -35,11 +50,6 @@ public enum Result {
     }
 
     private boolean isSameResult(int compareValue) {
-        return this.resultValue == compareValue;
-    }
-
-    @Override
-    public String toString() {
-        return result;
+        return this.compareValue == compareValue;
     }
 }

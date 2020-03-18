@@ -34,7 +34,7 @@ public class BlackJackGame {
     }
 
     private static void drawCardEachPlayer(Deck deck, Player player) {
-        while (!player.isBust()) {
+        while (!player.isMoreThanBlackJack()) {
             Answer answer = Answer.getYesOrNoByValue(InputView.inputYesOrNo(player));
             if (!answer.isYes()) {
                 break;

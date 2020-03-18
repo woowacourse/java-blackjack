@@ -5,7 +5,7 @@ import java.util.List;
 
 import static controller.BlackJackGame.*;
 
-public abstract class User {
+public class User implements Comparable<User> {
     protected final String name;
     protected final CardHand cardHand;
 
@@ -14,8 +14,10 @@ public abstract class User {
         this.cardHand = deck.draw(initialDrawCount);
     }
 
-    public static int compare(final User dealer, final User player) {
-        return Integer.compare(dealer.getScore(), player.getScore());
+    public User(String name, List<Card> cards){
+        this.name = name;
+        this.cardHand = new CardHand();
+        cards.forEach(cardHand::addCard);
     }
 
     public String toStringCardHand() {
@@ -34,14 +36,28 @@ public abstract class User {
     }
 
     public boolean isBust() {
-        return getScore() > BLACK_JACK_COUNT;
+        return cardHand.isBust();
+    }
+
+    public boolean isBlackJack(){
+        return cardHand.isBlackJack();
+    }
+
+    public boolean isMoreThanBlackJack(){
+        return cardHand.isMoreThanBlackJack();
     }
 
     public int getScore() {
-        return cardHand.calculateScore();
+        return cardHand.getScore();
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        Integer score = getScore();
+        return score.compareTo(o.getScore());
     }
 }
