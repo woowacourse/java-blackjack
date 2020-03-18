@@ -71,10 +71,12 @@ public class BlackjackController {
     }
 
     private static void runDealerBlackJack(CardDeck cardDeck, Dealer dealer) {
+        int dealerHitCount = 0;
         while (blackJackRule.isHit(dealer)) {
+            dealerHitCount = dealerHitCount + 1;
             blackJackRule.hit(dealer, cardDeck.drawCard());
-            OutputView.printDealerAdditionalCard();
         }
+        OutputView.printDealerAdditionalCard(dealerHitCount);
     }
 
     private static Answer getAnswer(User user) {

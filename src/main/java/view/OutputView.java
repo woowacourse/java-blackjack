@@ -13,6 +13,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final int DEALER_INDEX = 0;
     private static final int START_USER_INDEX = 1;
+    private static final int DEALER_NOT_HIT = 0;
     private static final double DEALER_PROFIT_SUM_RATE = -1;
 
     private OutputView() {
@@ -53,8 +54,12 @@ public class OutputView {
         System.out.println(result.getName() + "카드: " + String.join(DELIMITER, result.getCardNumbers()));
     }
 
-    public static void printDealerAdditionalCard() {
-        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.");
+    public static void printDealerAdditionalCard(int dealerHitCount) {
+        if (dealerHitCount == DEALER_NOT_HIT) {
+            System.out.println("\n딜러는 17이상이라 카드를 더 받지 않았습니다.");
+            return;
+        }
+        System.out.printf("\n딜러는 16이하라 카드를 %d장 더 받았습니다.\n", dealerHitCount);
     }
 
     public static void printFinalResult(List<ResponsePlayerDTO> result) {
