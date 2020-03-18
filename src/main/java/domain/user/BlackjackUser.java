@@ -4,7 +4,9 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.HandCard;
 
-import java.util.Objects;
+import java.util.List;
+
+import static domain.util.NullValidator.validateNull;
 
 public abstract class BlackjackUser {
     private static final int FIRST_DRAW_CARD_COUNT = 2;
@@ -18,13 +20,14 @@ public abstract class BlackjackUser {
     }
 
     private void validate(String name) {
-        if (Objects.isNull(name) || name.isEmpty()) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        validateNull(name);
+        validateEmptyValue(name);
     }
 
-    public String getName() {
-        return name;
+    private void validateEmptyValue(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("빈 값이 입력되었습니다.");
+        }
     }
 
     public void firstDraw(CardDeck cardDeck) {

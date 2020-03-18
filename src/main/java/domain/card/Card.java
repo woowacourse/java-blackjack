@@ -1,6 +1,6 @@
 package domain.card;
 
-import java.util.Objects;
+import static domain.util.NullValidator.validateNull;
 
 public class Card {
     private final Type type;
@@ -11,12 +11,6 @@ public class Card {
         validateNull(type, symbol);
         this.type = type;
         this.symbol = symbol;
-    }
-
-    private void validateNull(Type type, Symbol symbol) {
-        if (Objects.isNull(type) || Objects.isNull(symbol)) {
-            throw new IllegalArgumentException("잘못된 값이 들어왔습니다.");
-        }
     }
 
     public boolean isSameWith(Type type, Symbol symbol) {

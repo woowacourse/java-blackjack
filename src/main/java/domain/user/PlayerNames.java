@@ -1,26 +1,32 @@
 package domain.user;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static domain.util.NullValidator.validateNull;
 
 public class PlayerNames {
     private final List<String> names;
 
     public PlayerNames(List<String> names) {
         validate(names);
-        this.names = names;
+        this.names = trimNames(names);
     }
 
     private void validate(List<String> names) {
         validateNull(names);
+        validateEmptyValue(names);
         names = trimNames(names);
         validateEmptyName(names);
         validateDuplication(names);
     }
 
-    private void validateNull(List<String> names) {
-        if (Objects.isNull(names) || names.isEmpty()) {
-            throw new IllegalArgumentException("null 혹은 빈 값이 입력되었습니다.");
+    private void validateEmptyValue(List<String> names) {
+        if (names.isEmpty()) {
+            throw new IllegalArgumentException("빈 값이 입력되었습니다.");
         }
     }
 
