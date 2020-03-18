@@ -43,7 +43,7 @@ public class Player extends User {
 	}
 
 	private void checkYesOrNo(String answer) {
-		if (answer.equals(YES) || answer.equals(NO)) {
+		if (YES.equals(answer) || NO.equals(answer)) {
 			return;
 		}
 		throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);

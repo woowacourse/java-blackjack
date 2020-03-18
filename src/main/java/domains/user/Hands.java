@@ -20,7 +20,6 @@ public class Hands {
 
 	Hands(Deck deck) {
 		this.hands = deck.initialDraw();
-
 	}
 
 	int size() {
