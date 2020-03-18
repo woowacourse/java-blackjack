@@ -64,9 +64,8 @@ public class ResultTest {
 
     @Test
     @DisplayName("블랙잭 우승 시 수익 계산")
-    void playerBlackJackRevenueTest(){
+    void playerBlackJackRevenueTest() {
         Result result = Result.compete(notBustDealer, blackJackPlayer);
         assertThat(result.calculateProfit(blackJackPlayer).getProfit()).isEqualTo(150);
     }
-
 }

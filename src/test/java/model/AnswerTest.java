@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
+
     @ParameterizedTest
     @DisplayName("입력값이 Y, y, N, n가 아닐 때 검증 테스트")
     @ValueSource(strings = {"q", ","})

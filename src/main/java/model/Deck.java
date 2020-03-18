@@ -13,10 +13,6 @@ public class Deck {
 
     public Deck(List<Card> cards) {
         this.cards.addAll(cards);
-        shuffle();
-    }
-
-    private void shuffle() {
         Collections.shuffle(cards);
     }
 
@@ -34,5 +30,4 @@ public class Deck {
             throw new EmptyDeckException("Deck에 카드가 존재하지 않습니다.");
         }
     }
-
 }

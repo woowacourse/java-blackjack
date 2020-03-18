@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class StringUtils {
 
-    public static void validateString(String input){
+    public static void validateString(String input) {
         validateNull(input);
         validateEmpty(input);
     }

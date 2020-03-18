@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-
     private Map<Player, Profit> playerResult = new LinkedHashMap<>();
 
     public GameResult(final Players players, final Dealer dealer) {
