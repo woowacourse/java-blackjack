@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import domain.GameResult;
 import domain.card.Card;
+import domain.gamer.Gamer;
 import view.dto.BlackjackGameDto;
 import view.dto.DealerDto;
 import view.dto.PlayerDto;
@@ -69,6 +70,10 @@ public class OutputView {
 	}
 
 	public static void printGameResult(GameResult gameResult) {
-		System.out.println(gameResult.getGameResult());
+		System.out.println("## 최종 수익");
+		for (Gamer gamer : gameResult.getGameResult().keySet()) {
+			System.out.println(
+				String.format("%s: %d원", gamer.getName(), gameResult.getGameResult().get(gamer).intValue()));
+		}
 	}
 }

@@ -1,12 +1,16 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
-import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
+import domain.money.BlackjackWinStrategy;
+import domain.money.DefeatStrategy;
+import domain.money.PushStrategy;
+import domain.money.WinStrategy;
 
 /**
  *    게임 결과 클래스입니다.
@@ -14,94 +18,47 @@ import domain.gamer.Player;
  *    @author AnHyungJu
  */
 public class GameResult {
-	private static final String NEW_LINE = "\n";
-	private static final String WIN = "승";
-	private static final String DRAW = "무";
-	private static final String DEFEAT = "패";
-	private static final String DASH = " - ";
-	private static final String COLON = ": ";
-	private static final String COMMA = ", ";
+	private static final double INITIAL_PROFIT = 0.0D;
+	private static final int TO_NEGATIVE = -1;
 
-	private String gameResult;
+	private Map<Gamer, Double> gameResult;
 
 	private GameResult(BlackjackGame blackjackGame) {
 		Dealer dealer = blackjackGame.getDealer();
 		List<Player> players = blackjackGame.getPlayers();
+		gameResult = new LinkedHashMap<>();
 
-		this.gameResult = gameScore(dealer, players) + matchResult(dealer, players);
+		players.forEach(player -> makeResult(dealer, player));
+		makeDealerResult(dealer);
 	}
 
 	public static GameResult of(BlackjackGame blackjackGame) {
 		return new GameResult(blackjackGame);
 	}
 
-	private String gameScore(Dealer dealer, List<Player> players) {
-		StringBuilder stringBuilder = new StringBuilder();
-
-		stringBuilder.append(cardsOf(dealer))
-			.append(DASH)
-			.append(scoreOf(dealer)).append(NEW_LINE);
-		for (Player player : players) {
-			stringBuilder.append(cardsOf(player)).append(DASH)
-				.append(scoreOf(player)).append(NEW_LINE);
-		}
-		return stringBuilder.toString();
-	}
-
-	private String cardsOf(Gamer gamer) {
-		return gamer.getName()
-			+ COLON
-			+ gamer.getHands().getCards().stream()
-			.map(Card::shape)
-			.collect(Collectors.joining(COMMA));
-	}
-
-	private int scoreOf(Gamer gamer) {
-		return gamer.scoreHands();
-	}
-
-	private String matchResult(Dealer dealer, List<Player> players) {
-		StringBuilder stringBuilder = new StringBuilder();
-
-		stringBuilder.append("## 최종 승패\n");
-		stringBuilder.append(recordOf(dealer, players));
-		for (Player player : players) {
-			stringBuilder.append(findMatchResult(dealer, player))
-				.append(NEW_LINE);
-		}
-		return stringBuilder.toString();
-	}
-
-	private String recordOf(Dealer dealer, List<Player> players) {
-		int defeatCount = dealerDefeatCount(dealer, players);
-		int drawCount = dealerDrawCount(dealer, players);
-		int winCount = players.size() - defeatCount - drawCount;
-		return "딜러: " + winCount + WIN + COMMA + drawCount + DRAW + COMMA + defeatCount + DEFEAT + NEW_LINE;
-	}
-
-	private int dealerDefeatCount(Dealer dealer, List<Player> players) {
-		return (int)players.stream()
-			.filter(player -> player.wins(dealer.scoreHands()))
-			.count();
-	}
-
-	private int dealerDrawCount(Dealer dealer, List<Player> players) {
-		return (int)players.stream()
-			.filter(player -> player.isPush(dealer.scoreHands()))
-			.count();
-	}
-
-	private String findMatchResult(Dealer dealer, Player player) {
-		if (player.wins(dealer.scoreHands())) {
-			return player.getName() + COLON + WIN;
-		}
+	private void makeResult(Dealer dealer, Player player) {
+		gameResult.put(player, new DefeatStrategy().calculate(player.getBettingMoney()));
 		if (player.isPush(dealer.scoreHands())) {
-			return player.getName() + COLON + DRAW;
+			gameResult.put(player, new PushStrategy().calculate(player.getBettingMoney()));
 		}
-		return player.getName() + COLON + DEFEAT;
+		if (player.wins(dealer.scoreHands())) {
+			gameResult.put(player, new WinStrategy().calculate(player.getBettingMoney()));
+		}
+		if (player.wins(dealer.scoreHands()) && player.isBlackjack() && !dealer.isBlackjack()) {
+			gameResult.put(player, new BlackjackWinStrategy().calculate(player.getBettingMoney()));
+		}
 	}
 
-	public String getGameResult() {
+	private void makeDealerResult(Dealer dealer) {
+		double dealerProfit = INITIAL_PROFIT;
+
+		for (Gamer player : gameResult.keySet()) {
+			dealerProfit += gameResult.get(player);
+		}
+		gameResult.put(dealer, dealerProfit * TO_NEGATIVE);
+	}
+
+	public Map<Gamer, Double> getGameResult() {
 		return gameResult;
 	}
 }
