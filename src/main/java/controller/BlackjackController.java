@@ -5,7 +5,6 @@ import domain.BlackJackRule;
 import domain.UserFactory;
 import domain.WinningResult;
 import domain.card.CardDeck;
-import domain.card.Cards;
 import domain.player.Dealer;
 import domain.player.User;
 import domain.player.Users;
@@ -72,8 +71,7 @@ public class BlackjackController {
     }
 
     private static void runDealerBlackJack(CardDeck cardDeck, Dealer dealer) {
-        Cards dealerCards = dealer.getCard();
-        if (dealerCards.isCardsSumUnderSixteen()) {
+        while (blackJackRule.isHit(dealer)) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
             OutputView.printDealerAdditionalCard();
         }

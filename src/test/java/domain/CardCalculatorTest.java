@@ -96,7 +96,7 @@ public class CardCalculatorTest {
 
     @DisplayName("딜러가 21을 넘는다면 무조건 유저의 승")
     @Test
-    void test() {
+    void dealerOverBlackJackTest() {
         Player player = new Player("pobi", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
                 Card.of(CardNumber.ACE, CardSuitSymbol.SPACE))),
@@ -108,5 +108,55 @@ public class CardCalculatorTest {
 
         Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
                 .isTrue();
+    }
+
+    @DisplayName("입력한 카드 묶음의 합이 21인지 판단하는 메서드 테스트")
+    @Test
+    void isCardsSumBlackJackTest() {
+        Cards blackJackCards = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND)
+        )));
+        Cards notBlackJackCards = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.DIAMOND)
+        )));
+
+        Assertions.assertThat(CardCalculator.isCardsSumBlackJack(blackJackCards)).isTrue();
+        Assertions.assertThat(CardCalculator.isCardsSumBlackJack(notBlackJackCards)).isFalse();
+    }
+
+    @DisplayName("입력한 카드의 합이 21 미만인지 판단하는 메서드 테스트")
+    @Test
+    void isPlayerCardSumUnderBlackJackTest() {
+        Cards underBlackJack = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.FOUR, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND)
+        )));
+        Cards overBlackJack = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.NINE, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.EIGHT, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB)
+        )));
+
+        Assertions.assertThat(CardCalculator.isPlayerCardSumUnderBlackJack(underBlackJack)).isTrue();
+        Assertions.assertThat(CardCalculator.isPlayerCardSumUnderBlackJack(overBlackJack)).isFalse();
+    }
+
+    @DisplayName("입력한 카드의 합이 16이하인지 판단하는 메서드 테스트")
+    @Test
+    void isDealerCardsSumUnderSixteenTest() {
+        Cards underSixteen = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.FOUR, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND)
+        )));
+        Cards overSixteen = Cards.of(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB)
+        )));
+
+        Assertions.assertThat(CardCalculator.isDealerCardsSumUnderSixteen(underSixteen)).isTrue();
+        Assertions.assertThat(CardCalculator.isDealerCardsSumUnderSixteen(overSixteen)).isFalse();
     }
 }

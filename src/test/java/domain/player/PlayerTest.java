@@ -1,12 +1,9 @@
 package domain.player;
 
-import domain.BlackJackRule;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuitSymbol;
-import domain.card.CardDeck;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,36 +11,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PlayerTest {
-    private CardDeck cardDeck;
-    private Player player;
-    private BlackJackRule blackJackRule;
-
-    @BeforeEach
-    private void setup() {
-        cardDeck = new CardDeck();
-        Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        player = new Player("pobi", new ArrayList<>(Arrays.asList(card1, card2)), 1_000);
-        blackJackRule = new BlackJackRule();
+    @DisplayName("생성자 테스트")
+    @Test
+    void constructorTest() {
+        Assertions.assertThat(new Player("lavine", new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND)
+        )), 10_000)).isInstanceOf(Player.class);
     }
 
-    @DisplayName("y를 입력 받을때 카드를 받는지 결정하는 메서드")
+    @DisplayName("플레이어가 21 미만의 카드 값을 갖고 있을 때 카드를 더 받겠다고 반환하는지 테스트")
     @Test
-    void yes_insertCard() {
-        if (blackJackRule.isHit(player)) {
-            blackJackRule.hit(player, cardDeck.drawCard());
-        }
+    void isHitUnderTwentyOneTest() {
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND)
+        )), 10_000);
 
-        Assertions.assertThat(player.getCard().getCards().size()).isEqualTo(3);
+        Assertions.assertThat(player.isHit()).isTrue();
     }
 
-    @DisplayName("n를 입력 받을때 카드를 받는지 결정하는 메서드")
+    @DisplayName("플레이어가 21 이상의 카드 값을 갖고 있을 때 카드를 더 받지 않겠다고 반환하는지 테스트")
     @Test
-    void no_insertCard() {
-        if (blackJackRule.isHit(player)) {
-            blackJackRule.hit(player, cardDeck.drawCard());
-        }
+    void isHitOverTwentyOneTest() {
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND)
+        )), 10_000);
 
-        Assertions.assertThat(player.getCard().getCards().size()).isEqualTo(3);
+        Assertions.assertThat(player.isHit()).isTrue();
     }
 }

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class User {
+public abstract class User {
     protected Cards cards;
     protected String name;
 
@@ -26,6 +26,7 @@ public class User {
         if (card == null) {
             throw new NullPointerException("입력한 카드가 없습니다.");
         }
+
         this.cards.addCard(card);
     }
 
@@ -37,6 +38,13 @@ public class User {
         return this.cards.getCardsSum();
     }
 
+    public List<String> getCardNumbers() {
+        List<String> cardNumbers = new ArrayList<>(this.cards.getCards().stream()
+                .map(Card::toString)
+                .collect(Collectors.toList()));
+        return Collections.unmodifiableList(cardNumbers);
+    }
+
     public Cards getCard() {
         return this.cards;
     }
@@ -45,10 +53,5 @@ public class User {
         return this.name;
     }
 
-    public List<String> getCardNumbers() {
-        List<String> cardNumbers = new ArrayList<>(this.cards.getCards().stream()
-                .map(Card::toString)
-                .collect(Collectors.toList()));
-        return Collections.unmodifiableList(cardNumbers);
-    }
+    public abstract boolean isHit();
 }

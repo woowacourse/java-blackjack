@@ -24,10 +24,6 @@ public class Cards {
         return new Cards(cards);
     }
 
-    public boolean isCardsSumUnderSixteen() {
-        return getCardsSum() <= DEALER_STANDARD_ADDITIONAL_CARD;
-    }
-
     public boolean containAce() {
         return this.cards.stream()
                 .anyMatch(Card::isAce);

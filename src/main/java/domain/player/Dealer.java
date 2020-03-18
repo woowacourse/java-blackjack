@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.CardCalculator;
 import domain.card.Card;
 
 import java.util.List;
@@ -9,5 +10,10 @@ public class Dealer extends User {
 
     public Dealer(List<Card> cards) {
         super(DEALER_NAME, cards);
+    }
+
+    @Override
+    public boolean isHit() {
+        return CardCalculator.isDealerCardsSumUnderSixteen(this.cards);
     }
 }

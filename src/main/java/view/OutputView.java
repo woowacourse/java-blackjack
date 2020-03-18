@@ -13,6 +13,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final int DEALER_INDEX = 0;
     private static final int START_USER_INDEX = 1;
+    private static final double DEALER_PROFIT_SUM_RATE = -1;
 
     private OutputView() {
     }
@@ -74,7 +75,7 @@ public class OutputView {
     }
 
     public static List<String> getWinningProfit(Map<String, Double> winningProfit) {
-        double dealerProfit = -1 * winningProfit.values().stream()
+        double dealerProfit = DEALER_PROFIT_SUM_RATE * winningProfit.values().stream()
                 .mapToDouble(Double::doubleValue)
                 .sum();
         List<String> result = new ArrayList<>(

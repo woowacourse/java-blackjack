@@ -8,6 +8,7 @@ import java.util.List;
 public class CardCalculator {
     private static final int BLACK_JACK = 21;
     private static final int SUM_CONTAIN_ACE = 10;
+    private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
 
     private CardCalculator() {
     }
@@ -53,5 +54,13 @@ public class CardCalculator {
 
     public static boolean isCardsSumBlackJack(Cards cards) {
         return calculateAceStrategy(cards) == BLACK_JACK;
+    }
+
+    public static boolean isPlayerCardSumUnderBlackJack(Cards playerCards) {
+        return calculateAceStrategy(playerCards) <= BLACK_JACK;
+    }
+
+    public static boolean isDealerCardsSumUnderSixteen(Cards dealerCards) {
+        return calculateAceStrategy(dealerCards) <= DEALER_STANDARD_ADDITIONAL_CARD;
     }
 }
