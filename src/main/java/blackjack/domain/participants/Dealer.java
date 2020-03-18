@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck;
 
 public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
-    public static final String SPACE = " ";
 
     private Cards cards;
 

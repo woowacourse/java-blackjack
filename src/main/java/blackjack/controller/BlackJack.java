@@ -8,12 +8,12 @@ import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.result.SimpleResult;
+import blackjack.domain.rule.BasicRule;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJack {
-    public static final int BLACK_JACK_SCORE = 21;
 
     private final Deck deck;
     private final Dealer dealer;
@@ -73,7 +73,7 @@ public class BlackJack {
             OutputView.moreCardInstruction(player);
             wantsMoreCard = wantsToDrawMore(player);
             OutputView.participantStatus(player);
-        } while (wantsMoreCard && player.score() < BLACK_JACK_SCORE);
+        } while (wantsMoreCard && !BasicRule.isBusted(player.score()));
     }
 
     private boolean wantsToDrawMore(final Player player) {

@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import blackjack.controller.BlackJack;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Status;
+import blackjack.domain.rule.BasicRule;
 
 public class SimpleResult {
     private static final String SPACE = " ";
@@ -32,11 +32,11 @@ public class SimpleResult {
     }
 
     private void decideWinner(final Participant player) {
-        if (isBusted(player)) {
+        if (BasicRule.isBusted(player.score())) {
             execute(player, Status.LOSE);
             return;
         }
-        if (isBusted(dealer)) {
+        if (BasicRule.isBusted(dealer.score())) {
             execute(player, Status.WIN);
             return;
         }
@@ -63,10 +63,6 @@ public class SimpleResult {
         dealerResult.put(dealerStatus,
             dealerResult.getOrDefault(dealerStatus, 0) + 1
         );
-    }
-
-    private boolean isBusted(Participant participant) {
-        return scoreBoard.get(participant) > BlackJack.BLACK_JACK_SCORE;
     }
 
     @Override
