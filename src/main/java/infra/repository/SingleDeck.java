@@ -11,6 +11,7 @@ import java.util.List;
 
 public class SingleDeck implements Deck {
     static final int SIZE = 52;
+    static final String EMPTY_DECK_MESSAGE = "싱글덱이 비어있습니다.";
 
     private final List<Card> cards;
     private static final int POP_INDEX = 0;
@@ -44,7 +45,7 @@ public class SingleDeck implements Deck {
     @Override
     public Card pop() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("싱글덱이 비어있습니다.");
+            throw new IllegalStateException(EMPTY_DECK_MESSAGE);
         }
         return cards.remove(POP_INDEX);
     }
