@@ -16,5 +16,4 @@ public enum CardType {
     public String getKoreanName() {
         return koreanName;
     }
-
 }
