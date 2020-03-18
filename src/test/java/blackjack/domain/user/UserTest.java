@@ -39,10 +39,10 @@ class UserTest {
 	}
 
 	@Test
-	void draw_DrawCard_AddDrawCardToHand() {
+	void hit_DrawCard_AddDrawCardToHand() {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
-		user.draw(deck);
+		user.hit(deck);
 
 		assertThat(user).extracting("hand").asList()
 			.hasOnlyElementsOfType(Card.class)
@@ -53,16 +53,16 @@ class UserTest {
 	void validate_Null_InvalidDeckExceptionThrown() {
 		User user = new Dealer("user");
 
-		assertThatThrownBy(() -> user.draw(null))
+		assertThatThrownBy(() -> user.hit(null))
 			.isInstanceOf(InvalidDeckException.class)
 			.hasMessage(InvalidDeckException.NULL);
 	}
 
 	@Test
-	void draw_DrawNumberOfCards_AddDrawCardsToHand() {
+	void hit_DrawNumberOfCards_AddDrawCardsToHand() {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
-		user.draw(deck, 2);
+		user.hit(deck, 2);
 
 		assertThat(user).extracting("hand").asList()
 			.hasOnlyElementsOfType(Card.class)
@@ -74,7 +74,7 @@ class UserTest {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
 
-		assertThatThrownBy(() -> user.draw(deck, 0))
+		assertThatThrownBy(() -> user.hit(deck, 0))
 			.isInstanceOf(InvalidUserException.class)
 			.hasMessage(InvalidUserException.INVALID_DRAW_NUMBER);
 	}

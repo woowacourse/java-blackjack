@@ -23,7 +23,7 @@ public class BlackjackTable {
 
 	public void dealInitialHand() {
 		for (User user : collectUsers()) {
-			user.draw(deck, INITIAL_DEAL_NUMBER);
+			user.hit(deck, INITIAL_DEAL_NUMBER);
 		}
 	}
 
@@ -43,14 +43,14 @@ public class BlackjackTable {
 
 	private void drawCardFrom(Player player, UserDecisions userDecisions) {
 		while (player.canDraw() && userDecisions.isHit(player)) {
-			player.draw(deck);
+			player.hit(deck);
 			userDecisions.showHandStatus(player);
 		}
 	}
 
 	private void drawCardFrom(Dealer dealer, UserDecisions userDecisions) {
 		while (dealer.canDraw()) {
-			dealer.draw(deck);
+			dealer.hit(deck);
 			userDecisions.showDealerHitStatus();
 		}
 	}

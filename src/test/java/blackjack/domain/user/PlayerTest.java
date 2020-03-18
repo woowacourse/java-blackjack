@@ -26,7 +26,7 @@ class PlayerTest {
 		Deck deck = new Deck(CardFactory.create());
 
 		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			player.draw(deck);
+			player.hit(deck);
 		}
 		return Stream.of(Arguments.of(player));
 	}
@@ -61,7 +61,7 @@ class PlayerTest {
 	void getInitialDealtHand_PlayerDealInitialTwoCards_HasTwoCards() {
 		Deck deck = new Deck(CardFactory.create());
 		Player player = new Player("player");
-		player.draw(deck, BlackjackTable.INITIAL_DEAL_NUMBER);
+		player.hit(deck, BlackjackTable.INITIAL_DEAL_NUMBER);
 
 		assertThat(player.getInitialDealtHand()).hasSize(BlackjackTable.INITIAL_DEAL_NUMBER);
 	}

@@ -11,7 +11,7 @@ import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
 
 // TODO: 2020-03-17 interface 분리
-public abstract class User implements Comparable<User> {
+public abstract class User implements Comparable<User>, BlackjackParticipant {
 	private static final int DRAW_LOWER_BOUND = 1;
 
 	protected final String name;
@@ -40,7 +40,8 @@ public abstract class User implements Comparable<User> {
 		}
 	}
 
-	public void draw(Deck deck) {
+	@Override
+	public void hit(Deck deck) {
 		validate(deck);
 		hand.add(deck.draw());
 	}
@@ -51,10 +52,11 @@ public abstract class User implements Comparable<User> {
 		}
 	}
 
-	public void draw(Deck deck, int drawNumber) {
+	@Override
+	public void hit(Deck deck, int drawNumber) {
 		validate(drawNumber);
 		IntStream.range(0, drawNumber)
-			.forEach(e -> draw(deck));
+			.forEach(e -> hit(deck));
 	}
 
 	protected void validate(int drawNumber) {
@@ -63,24 +65,30 @@ public abstract class User implements Comparable<User> {
 		}
 	}
 
+	@Override
 	public abstract boolean canDraw();
 
-	public String getName() {
-		return name;
-	}
-
+	@Override
 	public abstract List<Card> getInitialDealtHand();
 
-	public List<Card> getHand() {
-		return hand.getCards();
-	}
-
+	@Override
 	public int getScore() {
 		return hand.calculateScore().getScore();
 	}
 
-	private int getBustHandledScore() {
+	@Override
+	public int getBustHandledScore() {
 		return hand.calculateBustHandledScore().getScore();
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public List<Card> getHand() {
+		return hand.getCards();
 	}
 
 	@Override

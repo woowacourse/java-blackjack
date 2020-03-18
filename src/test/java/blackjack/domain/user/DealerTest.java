@@ -54,7 +54,7 @@ class DealerTest {
 		Deck deck = new Deck(CardFactory.create());
 
 		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			dealer.draw(deck);
+			dealer.hit(deck);
 		}
 		return Stream.of(Arguments.of(dealer));
 	}

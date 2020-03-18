@@ -59,7 +59,7 @@ class BlackjackTableTest {
 		assertThat(blackjackTable.collectUsers()).isEqualTo(expected);
 	}
 
-	// TODO: 2020-03-17 리뷰어에게 테스트 작성에 대해 물어보기
+	// NOTE : 2020-03-17 리뷰어에게 테스트 작성에 대해 물어보기
 	@Test
 	void playWith_UserDecisions_PlayGameWithUserDecisions() {
 		Dealer drownDealer = Dealer.valueOf("dealer", Arrays.asList(
