@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Result;
+import blackjack.domain.game.TotalResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -51,9 +52,9 @@ public class OutputView {
         System.out.println("\n## 결과 : \n" + parseFinalScoreAnnouncement(game) + "\n");
     }
 
-    public static void printFinalResult(Map<Player, Result> totalResult, Map<Result, Integer> resultCount) {
+    public static void printFinalResult(TotalResult totalResult) {
         System.out.println("## 최종 승패");
-        System.out.println(parseDealerFinalResult(resultCount));
+        System.out.println(parseDealerFinalResult(totalResult.calculateTotalResultCount()));
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
@@ -86,9 +87,9 @@ public class OutputView {
                         .collect(Collectors.joining(NEW_LINE));
     }
 
-    private static String parseAllPlayerResults(Map<Player, Result> totalResult) {
+    private static String parseAllPlayerResults(TotalResult totalResult) {
         StringBuilder sb = new StringBuilder();
-        totalResult.forEach((player, result) ->
+        totalResult.getResult().forEach((player, result) ->
                 sb.append(player.getName()).append(COLON).append(result.getName()).append(NEW_LINE));
         return sb.toString();
     }
