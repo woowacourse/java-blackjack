@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardBundle {
-    private static final int MAXIMUM_VALUE = 21;
-    private static final int STARTING_CARD_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -25,10 +23,6 @@ public class CardBundle {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
-    }
-
-    public boolean isEmpty() {
-        return cards.isEmpty();
     }
 
     public boolean isNotEmpty() {
