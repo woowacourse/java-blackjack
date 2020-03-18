@@ -44,9 +44,8 @@ class GameResultTest {
         List<String> names = Arrays.asList("pobi", "jason", "woo", "lowoon");
         Map<String, Integer> playerInfo = names.stream()
                 .collect(Collectors.toMap(Function.identity(), name -> 1000,
-                        (e1, e2) -> {
-                            throw new AssertionError("중복된 키가 있습니다.");
-                        }, LinkedHashMap::new));
+                        (e1, e2) -> {throw new AssertionError("중복된 키가 있습니다.");},
+                        LinkedHashMap::new));
         playersInfo = PlayersInfo.of(playerInfo);
         Queue<Card> cards = new LinkedList<>(Arrays.asList(
                 new Card(Symbol.SPADE, Type.SIX),
