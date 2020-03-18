@@ -2,12 +2,8 @@ package domains.user;
 
 import domains.card.Deck;
 import domains.result.ResultType;
-import domains.user.Dealer;
-import domains.user.Hands;
-import domains.user.User;
 import domains.user.money.BettingMoney;
 import domains.user.name.PlayerName;
-import domains.user.InvalidPlayerException;
 
 import java.util.Objects;
 
@@ -54,7 +50,7 @@ public class Player extends User {
     }
 
     public ResultType checkResultType(Dealer dealer) {
-        if (this.isBlackJack() && !dealer.isBlackJack()){
+        if (this.isBlackJack() && !dealer.isBlackJack()) {
             return ResultType.BLACKJACK;
         }
         if (this.isBurst() && !dealer.isBurst()) {
