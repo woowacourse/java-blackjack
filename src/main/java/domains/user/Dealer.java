@@ -1,5 +1,6 @@
 package domains.user;
 
+import domains.card.Card;
 import domains.card.Deck;
 
 public class Dealer extends User {
@@ -22,5 +23,9 @@ public class Dealer extends User {
         if (this.hands.score() <= DEALER_HIT_POINT) {
             hit(deck);
         }
+    }
+
+    public Card openFirstCard() {
+        return hands.from(0);
     }
 }

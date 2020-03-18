@@ -27,7 +27,7 @@ public class OutputView {
         }
         System.out.println("딜러와 " + String.join(",", names) + "에게 2장의 카드를 나누었습니다.");
 
-        System.out.println("딜러 카드: " + dealer.getHandsWords());
+        System.out.println("딜러 카드: " + dealer.openFirstCard());
         for (Player player : players) {
             printHands(player);
         }
