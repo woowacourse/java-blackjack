@@ -64,9 +64,6 @@
             - [x] 플레이어 > 딜러 (플레이어 승, 베팅 수익률 1.0배)
             - [x] 플레이어 < 딜러 (플레이어 패, 베팅 수익률 -1.0배)
             
-## 클래스 다이어그램
-<img width="1059" alt="Screen Shot 2020-03-15 at 2 41 34 PM" src="https://user-images.githubusercontent.com/42382027/76696137-75dc7d80-66cb-11ea-9789-741061a76091.png">
-
 ---
 # 상속, interface - 연료 주입
 ## 차량에 따른 연료 주입 실습
