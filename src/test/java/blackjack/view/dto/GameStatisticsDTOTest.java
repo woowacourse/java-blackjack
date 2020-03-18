@@ -1,9 +1,7 @@
 package blackjack.view.dto;
 
-import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.report.GameReport;
 import blackjack.domain.report.GameReports;
-import blackjack.domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,22 +17,22 @@ class GameStatisticsDTOTest {
     private static Stream<Arguments> dealerResultProvider() {
         return Stream.of(
                 Arguments.of(
-                        new GameReports(Arrays.asList(new GameReport("bebop", BettingMoney.of(1000D), GameResult.WIN))), String.format("딜러: %f원", -1000D)),
+                        new GameReports(Arrays.asList(new GameReport("bebop", 1000))), String.format("딜러: %f원", -1000D)),
                 Arguments.of(
-                        new GameReports(Arrays.asList(new GameReport("bebop", BettingMoney.of(0), GameResult.DRAW))), String.format("딜러: %f원", -0D)),
+                        new GameReports(Arrays.asList(new GameReport("bebop", 0))), String.format("딜러: %f원", -0D)),
                 Arguments.of(
-                        new GameReports(Arrays.asList(new GameReport("bebop", BettingMoney.of(1000D).multipleRate(-1), GameResult.LOSE))), String.format("딜러: %f원", 1000D))
+                        new GameReports(Arrays.asList(new GameReport("bebop", -1000))), String.format("딜러: %f원", 1000D))
         );
     }
 
     private static Stream<Arguments> gamblerResultProvider() {
         return Stream.of(
                 Arguments.of(
-                        new GameReports(Arrays.asList(new GameReport("bebop", BettingMoney.of(0), GameResult.WIN))), String.format("bebop: %f", 0D)),
+                        new GameReports(Arrays.asList(new GameReport("bebop", 0))), String.format("bebop: %f", 0D)),
                 Arguments.of(
-                        new GameReports(Arrays.asList(new GameReport("bebop", BettingMoney.of(0), GameResult.DRAW))), String.format("bebop: %f", 0D)),
+                        new GameReports(Arrays.asList(new GameReport("bebop", 0))), String.format("bebop: %f", 0D)),
                 Arguments.of(
-                        new GameReports(Arrays.asList(new GameReport("bebop", BettingMoney.of(0), GameResult.LOSE))), String.format("bebop: %f", 0D))
+                        new GameReports(Arrays.asList(new GameReport("bebop", 0))), String.format("bebop: %f", 0D))
         );
     }
 

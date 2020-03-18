@@ -19,7 +19,6 @@ public class GameReports {
 
     public double getTotalGamblerMoney() {
         return gameReports.stream()
-                .filter(GameReport::isNotDraw)
                 .mapToDouble(GameReport::getMoney)
                 .sum();
     }

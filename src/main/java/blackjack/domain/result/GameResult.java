@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.generic.BettingMoney;
 
 import java.util.Arrays;
 
@@ -38,8 +39,9 @@ public enum GameResult {
         return this.gameResultStrategy.fulfill(gamblerCardBundle, dealerCardBundle);
     }
 
-    public double getRate(CardBundle gamblerCardBundle) {
-        return this.moneyRate.getRate(gamblerCardBundle);
+    public double getApplyRateMoney(CardBundle cardBundle, BettingMoney bettingMoney) {
+        double rate = this.moneyRate.getRate(cardBundle);
+        return bettingMoney.multipleRate(rate)
+                .getMoney();
     }
-
 }

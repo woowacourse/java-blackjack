@@ -1,4 +1,4 @@
-package blackjack.domain.score;
+package blackjack.domain.calculator;
 
 import blackjack.domain.card.Card;
 
@@ -15,20 +15,12 @@ class AceScoreStrategy extends DefaultScoreStrategy {
                 .anyMatch(Card::isAce);
     }
 
-    private int getAceCount(List<Card> cards) {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-    }
-
     @Override
     public int calculate(List<Card> cards) {
-        int aceCount = getAceCount(cards);
         int sum = super.calculate(cards);
 
-        while (aceCount > 0 && sum + ACE_WEIGHT <= MAXIMUM_VALUE) {
-            sum += ACE_WEIGHT;
-            aceCount--;
+        if (sum + ACE_WEIGHT <= MAXIMUM_VALUE) {
+            return sum + ACE_WEIGHT;
         }
         return sum;
     }

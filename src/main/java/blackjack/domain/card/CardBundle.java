@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.score.ScoreCalculator;
+import blackjack.domain.calculator.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +9,7 @@ import java.util.List;
 public class CardBundle {
     private static final int MAXIMUM_VALUE = 21;
     private static final int STARTING_CARD_SIZE = 2;
+
     private final List<Card> cards = new ArrayList<>();
 
     private CardBundle() {
