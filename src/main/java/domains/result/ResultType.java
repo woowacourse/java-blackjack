@@ -5,8 +5,8 @@ import domains.user.money.ProfitMoney;
 
 public enum ResultType {
 	WIN(1),
-	LOSE(-1),
 	DRAW(0),
+	LOSE(-1),
 	BLACKJACK(1.5);
 
 	private double profitRate;

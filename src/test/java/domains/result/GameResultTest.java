@@ -25,48 +25,37 @@ import domains.user.name.PlayerName;
 
 class GameResultTest {
 
-    @DisplayName("참가자들과 딜러의 게임 결과를 계산하여 승패를 반환")
-    @ParameterizedTest
-    @MethodSource("gameData")
-    void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
-        GameResult gameResult = new GameResult(players, dealer);
+	@DisplayName("참가자들과 딜러의 게임 결과를 계산하여 승패를 반환")
+	@ParameterizedTest
+	@MethodSource("gameData")
+	void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
+		GameResult gameResult = new GameResult(players, dealer);
 
-        Iterator<Player> iterator = players.iterator();
-        Player ddoring = iterator.next();
-        Player smallBear = iterator.next();
+		Iterator<Player> iterator = players.iterator();
+		Player ddoring = iterator.next();
+		Player smallBear = iterator.next();
 
-        assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.BLACKJACK);
-        assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
-    }
+		assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.BLACKJACK);
+		assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
+	}
 
-    @DisplayName("플레이어들의 결과를 바탕으로 딜러의 결과를 생성 및 반환")
-    @ParameterizedTest
-    @MethodSource("gameData")
-    void calculateDealerResult_PlayersResult_ReturnDealerResult(Players players, Dealer dealer, Map<ResultType, Integer> dealerResult) {
-        GameResult gameResult = new GameResult(players, dealer);
+	static Stream<Arguments> gameData() {
+		Card ace = new Card(Symbol.ACE, Type.CLUB);
+		Card king = new Card(Symbol.KING, Type.HEART);
+		Card four = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        assertThat(gameResult.calculateDealerResult()).isEqualTo(dealerResult);
-    }
+		Player ddoring = new Player(new PlayerName("또링"), "4000", new Hands(Arrays.asList(ace, king)));
+		Player smallBear = new Player(new PlayerName("작은곰"), "4000", new Hands(Arrays.asList(ace, four)));
+		Players players = new Players(new ArrayList<>(Arrays.asList(ddoring, smallBear)));
 
-    static Stream<Arguments> gameData() {
-        Card ace = new Card(Symbol.ACE, Type.CLUB);
-        Card king = new Card(Symbol.KING, Type.HEART);
-        Card four = new Card(Symbol.FOUR, Type.DIAMOND);
+		Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));
 
-        Player ddoring = new Player(new PlayerName("또링"), "4000", new Hands(Arrays.asList(ace, king)));
-        Player smallBear = new Player(new PlayerName("작은곰"), "4000", new Hands(Arrays.asList(ace, four)));
-        Players players = new Players(new ArrayList<>(Arrays.asList(ddoring, smallBear)));
+		Map<ResultType, Integer> dealerResult = new HashMap<>();
+		dealerResult.put(ResultType.DRAW, 1);
+		dealerResult.put(ResultType.LOSE, 1);
 
-        Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));
-
-        Map<ResultType, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(ResultType.WIN, 0);
-        dealerResult.put(ResultType.DRAW, 1);
-        dealerResult.put(ResultType.LOSE, 1);
-        dealerResult.put(ResultType.BLACKJACK, 0);
-
-        return Stream.of(
-                Arguments.of(players, dealer, dealerResult)
-        );
-    }
+		return Stream.of(
+			Arguments.of(players, dealer, dealerResult)
+		);
+	}
 }
