@@ -19,6 +19,7 @@ public class Hands {
 
     public Hands(Deck deck) {
         this.hands = deck.initialDraw();
+
     }
 
     public int size() {
@@ -53,6 +54,10 @@ public class Hands {
 
     public boolean isBurst() {
         return score() > BURST_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return score() == BURST_SCORE;
     }
 
     @Override

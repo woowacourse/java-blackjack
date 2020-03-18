@@ -6,11 +6,12 @@ public class Dealer extends User {
     public static final int DEALER_HIT_POINT = 16;
 
     public Dealer(Deck deck) {
-        this.hands = new Hands(deck);
+        this(new Hands(deck));
     }
 
     public Dealer(Hands hands) {
         this.hands = hands;
+        this.blackJack = hands.isBlackJack();
     }
 
     public boolean isHit() {

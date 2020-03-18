@@ -2,6 +2,10 @@ package domains.user;
 
 import domains.card.Deck;
 import domains.result.ResultType;
+import domains.user.money.BettingMoney;
+import domains.user.money.Money;
+import domains.user.money.ProfitMoney;
+import domains.user.name.PlayerName;
 
 import java.util.Objects;
 
@@ -10,15 +14,17 @@ public class Player extends User {
     private static final String NO = "n";
 
     private PlayerName name;
+    private BettingMoney bettingMoney;
 
-    public Player(String name, Deck deck) {
-        this.name = new PlayerName(name);
-        this.hands = new Hands(deck);
+    public Player(PlayerName name, String bettingMoney, Hands hands) {
+        this.name = name;
+        this.bettingMoney = new BettingMoney(bettingMoney);
+        this.hands = hands;
+        this.blackJack = hands.isBlackJack();
     }
 
-    public Player(String name, Hands hands) {
-        this.name = new PlayerName(name);
-        this.hands = hands;
+    public Player(PlayerName name, String bettingMoney, Deck deck) {
+        this(name, bettingMoney, new Hands(deck));
     }
 
     public boolean needMoreCard(String answer, Deck deck) {
@@ -46,7 +52,10 @@ public class Player extends User {
     }
 
     public ResultType checkResultType(Dealer dealer) {
-        if (this.isBurst()) {
+        if (this.isBlackJack() && !dealer.isBlackJack()){
+            return ResultType.BLACKJACK;
+        }
+        if (this.isBurst() && !dealer.isBurst()) {
             return ResultType.LOSE;
         }
         if (dealer.isBurst() && !this.isBurst()) {
@@ -63,5 +72,9 @@ public class Player extends User {
 
     public String getName() {
         return name.toString();
+    }
+
+    public BettingMoney getBettingMoney() {
+        return this.bettingMoney;
     }
 }
