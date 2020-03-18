@@ -17,6 +17,10 @@ public class GameResult {
         this.playerResult = GameResultFactory.create(players, dealer);
     }
 
+    public GameResult(Map<Player, ResultType> playerResult) {
+        this.playerResult = playerResult;
+    }
+
     public ResultType getWinOrLose(Player player) {
         return playerResult.get(player);
     }
