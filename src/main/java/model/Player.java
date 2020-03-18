@@ -12,6 +12,11 @@ public class Player extends User {
         this.bet = bet;
     }
 
+    public Player(String name, Bet bet, Deck deck) {
+        super(name, deck);
+        this.bet = bet;
+    }
+
     public Player(String name, List<Card> cards) {
         super(name, cards);
         this.bet = new Bet(Double.toString(LOWER_BET_BOUND));

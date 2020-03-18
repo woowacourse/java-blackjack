@@ -19,17 +19,23 @@ public class BlackJackGame {
         Deck deck = new Deck(CardFactory.createCardList());
         PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
         PlayersData playersData = new PlayersData(makePlayersData(playerNames));
-        Players players = new Players(playersData, deck, INITIAL_DRAW_COUNT);
-        Dealer dealer = new Dealer(deck, INITIAL_DRAW_COUNT);
-
-        OutputView.printInitialCards(players, dealer);
-        OutputView.printUsersCard(players, dealer);
+        Players players = new Players(playersData, deck);
+        Dealer dealer = new Dealer(deck);
+        firstDrawAllUsers(deck, players, dealer);
+        OutputView.printInitialState(players, dealer);
         drawCardToPlayers(players, deck);
         hitOrStayForDealer(dealer, deck);
         OutputView.printFinalCardHandResult(players, dealer);
 
         GameResult gameResult = new GameResult(players, dealer);
         OutputView.printResult(gameResult);
+    }
+
+    private static void firstDrawAllUsers(Deck deck, Players players, Dealer dealer) {
+        for (Player player : players) {
+            player.firstDraw(deck);
+        }
+        dealer.firstDraw(deck);
     }
 
     private static Map<String, Bet> makePlayersData(PlayerNames playerNames) {
@@ -52,7 +58,7 @@ public class BlackJackGame {
             if (!answer.isYes()) {
                 break;
             }
-            player.drawCard(deck, ADDITIONAL_DRAW_COUNT);
+            player.additionalDraw(deck);
             OutputView.printPlayerCard(player);
         }
     }
@@ -60,7 +66,7 @@ public class BlackJackGame {
     private static void hitOrStayForDealer(Dealer dealer, Deck deck) {
         if (dealer.isHitBound()) {
             OutputView.printDealerDraw(dealer);
-            dealer.drawCard(deck, ADDITIONAL_DRAW_COUNT);
+            dealer.additionalDraw(deck);
         }
     }
 }

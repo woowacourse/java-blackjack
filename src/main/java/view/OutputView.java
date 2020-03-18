@@ -14,6 +14,11 @@ public class OutputView {
     public static final String RESULT_STRING = " - 결과: ";
     private static final String CARD = "카드";
 
+
+    public static void printInitialState(Players players, Dealer dealer){
+        printInitialCards(players, dealer);
+        printUsersCard(players, dealer);
+    }
     public static void printInitialCards(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
 

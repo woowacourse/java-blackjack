@@ -22,6 +22,11 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    public Card draw() {
+        validateSize(1);
+        return cards.pop();
+    }
+
     public CardHand draw(int count) {
         validateSize(count);
         CardHand cardHand = new CardHand();

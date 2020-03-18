@@ -14,10 +14,27 @@ public class User implements Comparable<User> {
         this.cardHand = deck.draw(initialDrawCount);
     }
 
+    public User(String name, Deck deck){
+        this.name = name;
+        this.cardHand = new CardHand();
+    }
+
     public User(String name, List<Card> cards){
         this.name = name;
         this.cardHand = new CardHand();
         cards.forEach(cardHand::addCard);
+    }
+
+    public void firstDraw(Deck deck){
+        for(int i=0;i<INITIAL_DRAW_COUNT;i++) {
+            cardHand.addCard(deck.draw());
+        }
+    }
+
+    public void additionalDraw(Deck deck){
+        for(int i=0;i<ADDITIONAL_DRAW_COUNT;i++){
+            cardHand.addCard(deck.draw());
+        }
     }
 
     public String toStringCardHand() {

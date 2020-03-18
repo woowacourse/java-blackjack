@@ -12,6 +12,10 @@ public class Dealer extends User {
         super(DEALER_NAME, deck, initialDrawCount);
     }
 
+    public Dealer(Deck deck) {
+        super(DEALER_NAME, deck);
+    }
+
     public Dealer(List<Card> cards){
         super(DEALER_NAME, cards);
     }

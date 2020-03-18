@@ -13,6 +13,13 @@ public class Players implements Iterable<Player> {
         }
     }
 
+    public Players(PlayersData data, Deck deck) {
+        for (String name : data.getNames()) {
+            players.add(new Player(name, data.getBet(name), deck));
+        }
+    }
+
+
     public Players(List<Player> players) {
         this.players.addAll(players);
     }
