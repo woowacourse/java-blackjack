@@ -39,12 +39,14 @@ public class CardCalculatorTest {
     void userBlackJackTest() {
         Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
-                Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+                .isTrue();
     }
 
     @DisplayName("딜러만 블랙잭일 때 딜러의 승")
@@ -52,12 +54,14 @@ public class CardCalculatorTest {
     void dealerBlackJackTest() {
         Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
-                Card.of(CardNumber.THREE, CardSuitSymbol.SPACE))));
+                Card.of(CardNumber.THREE, CardSuitSymbol.SPACE))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isFalse();
+        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+                .isFalse();
     }
 
     @DisplayName("유저와 딜러 둘 다 블랙잭이 아니고 유저의 수가 더 크면 유저의 승")
@@ -65,12 +69,14 @@ public class CardCalculatorTest {
     void userBiggerThenDealerTest() {
         Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND),
-                Card.of(CardNumber.THREE, CardSuitSymbol.SPACE))));
+                Card.of(CardNumber.THREE, CardSuitSymbol.SPACE))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+                .isTrue();
     }
 
     @DisplayName("유저와 딜러 둘 다 블랙잭이 아니고 딜러의 수가 더 크면 유저의 패")
@@ -78,12 +84,14 @@ public class CardCalculatorTest {
     void dealerBiggerThenUserTest() {
         Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND),
-                Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))));
+                Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isFalse();
+        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+                .isFalse();
     }
 
     @DisplayName("딜러가 21을 넘는다면 무조건 유저의 승")
@@ -91,14 +99,14 @@ public class CardCalculatorTest {
     void test() {
         Player player = new Player("pobi", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
-                Card.of(CardNumber.ACE, CardSuitSymbol.SPACE)
-        )));
+                Card.of(CardNumber.ACE, CardSuitSymbol.SPACE))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
                 Card.of(CardNumber.JACK, CardSuitSymbol.SPACE),
-                Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND)
-        )));
+                Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND))));
 
-        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard())).isTrue();
+        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+                .isTrue();
     }
 }

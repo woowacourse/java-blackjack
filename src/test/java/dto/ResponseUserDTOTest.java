@@ -20,7 +20,8 @@ public class ResponseUserDTOTest {
     @Test
     void createTest() {
         User user = new Player("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)),
+                10_000);
         ResponsePlayerDTO responsePlayerDTO = ResponsePlayerDTO.create(user);
 
         Assertions.assertThat(responsePlayerDTO.getName()).isEqualTo("subway");
@@ -34,9 +35,11 @@ public class ResponseUserDTOTest {
         Dealer dealer = new Dealer(Arrays.asList(Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
         Player subway = new Player("subway", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB)),
+                10_000);
         Player lavine = new Player("lavine", Arrays.asList(Card.of(CardNumber.FIVE, CardSuitSymbol.HEART),
-                Card.of(CardNumber.SIX, CardSuitSymbol.DIAMOND)));
+                Card.of(CardNumber.SIX, CardSuitSymbol.DIAMOND)),
+                10_000);
         List<User> userList = new ArrayList<>(Arrays.asList(dealer, subway, lavine));
         Users users = new Users(userList);
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(users);

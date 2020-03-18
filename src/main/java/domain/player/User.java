@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class User {
+public class User {
     protected Cards cards;
     protected String name;
 

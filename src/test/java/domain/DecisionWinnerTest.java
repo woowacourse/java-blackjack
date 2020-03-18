@@ -18,7 +18,8 @@ public class DecisionWinnerTest {
     void userAndDealerBothBlackjackTest() {
         Player player = new Player("subway", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
@@ -31,7 +32,8 @@ public class DecisionWinnerTest {
     void onlyUserBlackjackTest() {
         Player player = new Player("subway", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB))));
@@ -44,7 +46,8 @@ public class DecisionWinnerTest {
     void onlyDealerBlackjackTest() {
         Player player = new Player("subway", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
@@ -57,7 +60,8 @@ public class DecisionWinnerTest {
     void dealerWinWithoutBlackjackTest() {
         Player player = new Player("subway", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.SIX, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))),
+                10_000);
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));

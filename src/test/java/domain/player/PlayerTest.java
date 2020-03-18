@@ -23,7 +23,7 @@ public class PlayerTest {
         cardDeck = new CardDeck();
         Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
         Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        player = new Player("pobi", new ArrayList<>(Arrays.asList(card1, card2)));
+        player = new Player("pobi", new ArrayList<>(Arrays.asList(card1, card2)), 1_000);
         blackJackRule = new BlackJackRule();
     }
 

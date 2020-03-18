@@ -16,14 +16,14 @@ public class ProfitCalculator {
         }
 
         if (player.isBlackJack() && dealer.isBlackJack()) {
-            return (double) player.getMoney();
+            return (double) player.getBettingMoney();
         }
         if (player.isBlackJack()) {
-            return (WIN_BY_BLACK_JACK_RATE * (double) player.getMoney());
+            return (WIN_BY_BLACK_JACK_RATE * (double) player.getBettingMoney());
         }
-        if (CardCalculator.determineWinner(player.getCard(), dealer.getCard())) {
-            return (double) player.getMoney();
+        if (CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard())) {
+            return (double) player.getBettingMoney();
         }
-        return (LOOSE_RATE * (double) player.getMoney());
+        return (LOOSE_RATE * (double) player.getBettingMoney());
     }
 }

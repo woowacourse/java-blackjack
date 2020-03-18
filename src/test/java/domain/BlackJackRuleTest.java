@@ -17,15 +17,18 @@ public class BlackJackRuleTest {
     void isHitTest() {
         Player blackJackPlayer = new Player("pobi", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
+                Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))),
+                10_000);
         Player overBlackJackPlayer = new Player("json", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
-                Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND))));
+                Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND))),
+                10_000);
         Player hitPlayer = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
-                Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))));
+                Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))),
+                10_000);
         BlackJackRule blackJackRule = new BlackJackRule();
 
         Assertions.assertThat(blackJackRule.isHit(blackJackPlayer)).isFalse();

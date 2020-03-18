@@ -78,9 +78,9 @@ public class OutputView {
                 .mapToDouble(Double::doubleValue)
                 .sum();
         List<String> result = new ArrayList<>(
-                Collections.singletonList(String.format("딜러: %.1f", dealerProfit)));
+                Collections.singletonList(String.format("딜러: %.0f", dealerProfit)));
         result.addAll(winningProfit.entrySet().stream()
-                .map(entry -> String.format("%s: %.1f", entry.getKey(), entry.getValue()))
+                .map(entry -> String.format("%s: %.0f", entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList()));
         return result;
     }

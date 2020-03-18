@@ -18,10 +18,14 @@ public class CardCalculator {
         }
 
         int playerCardsSum = calculateCards(cards.getCards());
-        if (cards.containAce() && playerCardsSum + SUM_CONTAIN_ACE <= BLACK_JACK) {
+        if (cards.containAce() && isPlayerCardsSumWithAceStrategyUnderBlackJack(playerCardsSum)) {
             playerCardsSum += SUM_CONTAIN_ACE;
         }
         return playerCardsSum;
+    }
+
+    private static boolean isPlayerCardsSumWithAceStrategyUnderBlackJack(int playerCardsSum) {
+        return playerCardsSum + SUM_CONTAIN_ACE <= BLACK_JACK;
     }
 
     private static int calculateCards(List<Card> cards) {
@@ -30,24 +34,24 @@ public class CardCalculator {
                 .sum();
     }
 
-    public static boolean determineWinner(Cards userCards, Cards dealerCards) {
-        if (userCards == null || dealerCards == null) {
+    public static boolean isPlayerCardsSumOverDealerCardsSum(Cards playerCards, Cards dealerCards) {
+        if (playerCards == null || dealerCards == null) {
             throw new NullPointerException("유저 또는 딜러의 카드를 입력하지 않았습니다.");
         }
 
-        int userCardSum = calculateAceStrategy(userCards);
-        int dealerCardSum = calculateAceStrategy(dealerCards);
+        int playerCardsSum = calculateAceStrategy(playerCards);
+        int dealerCardsSum = calculateAceStrategy(dealerCards);
 
-        if (userCardSum <= BLACK_JACK && dealerCardSum > BLACK_JACK) {
+        if (playerCardsSum <= BLACK_JACK && dealerCardsSum > BLACK_JACK) {
             return true;
         }
-        if (userCardSum > BLACK_JACK) {
+        if (playerCardsSum > BLACK_JACK) {
             return false;
         }
-        return userCardSum >= dealerCardSum;
+        return playerCardsSum >= dealerCardsSum;
     }
 
-    public static boolean isCardSumBlackJack(Cards cards) {
+    public static boolean isCardsSumBlackJack(Cards cards) {
         return calculateAceStrategy(cards) == BLACK_JACK;
     }
 }

@@ -2,7 +2,7 @@ package controller;
 
 import domain.Answer;
 import domain.BlackJackRule;
-import domain.PlayerFactory;
+import domain.UserFactory;
 import domain.WinningResult;
 import domain.card.CardDeck;
 import domain.card.Cards;
@@ -30,33 +30,37 @@ public class BlackjackController {
     public static void run() {
         CardDeck cardDeck = new CardDeck();
 
-        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = InputView.inputPlayerInformation();
-        Map<String, Integer> playerInformations = new LinkedHashMap<>();
-        for (RequestPlayerInformationDTO requestPlayerInformationDTO : requestPlayerInformationDTOS) {
-            playerInformations.put(requestPlayerInformationDTO.getPlayerName(), requestPlayerInformationDTO.getMoney());
-        }
-        Users users = PlayerFactory.create(cardDeck, playerInformations);
+        Map<String, Integer> playerInformation = getPlayerInformation();
+        Users users = UserFactory.create(cardDeck, playerInformation);
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(users);
         OutputView.printInitialResult(responsePlayerDTOS);
 
-        runUserBlackJack(cardDeck, users.getPlayer());
+        runPlayerBlackJack(cardDeck, users.getPlayer());
         runDealerBlackJack(cardDeck, users.getDealer());
-
         OutputView.printFinalResult(ResponsePlayerDTO.createResponsePlayerDTOs(users));
 
-        WinningResult winningResult = new WinningResult(users);
+        WinningResult winningResult = WinningResult.create(users);
         ResponseWinningResultDTO responseWinningResultDTO = ResponseWinningResultDTO.create(
                 winningResult.getWinningResult());
         OutputView.printFinalProfit(responseWinningResultDTO);
     }
 
-    private static void runUserBlackJack(CardDeck cardDeck, List<Player> players) {
+    private static Map<String, Integer> getPlayerInformation() {
+        Map<String, Integer> playerInformation = new LinkedHashMap<>();
+        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = InputView.inputPlayerInformation();
+        for (RequestPlayerInformationDTO requestPlayerInformationDTO : requestPlayerInformationDTOS) {
+            playerInformation.put(requestPlayerInformationDTO.getPlayerName(), requestPlayerInformationDTO.getMoney());
+        }
+        return playerInformation;
+    }
+
+    private static void runPlayerBlackJack(CardDeck cardDeck, List<Player> players) {
         for (Player player : players) {
-            runBlackJackPerUser(cardDeck, player);
+            runBlackJackPerPlayer(cardDeck, player);
         }
     }
 
-    private static void runBlackJackPerUser(CardDeck cardDeck, Player player) {
+    private static void runBlackJackPerPlayer(CardDeck cardDeck, Player player) {
         if (player.isBlackJack()) {
             return;
         }

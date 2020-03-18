@@ -12,6 +12,6 @@ public class DecisionWinner {
             throw new NullPointerException("유저 또는 딜러를 입력하지 않았습니다.");
         }
 
-        return CardCalculator.determineWinner(player.getCard(), dealer.getCard());
+        return CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard());
     }
 }

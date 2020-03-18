@@ -9,8 +9,19 @@ import java.util.*;
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String DELIMITER = ",";
+    private static final int MIN_BETTING_MONEY = 1;
 
     private InputView() {
+    }
+
+    public static List<RequestPlayerInformationDTO> inputPlayerInformation() {
+        List<String> playerNames = inputPlayerName();
+        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = new ArrayList<>();
+        for (String name : playerNames) {
+            int bettingMoney = validateInputMoney(name);
+            requestPlayerInformationDTOS.add(new RequestPlayerInformationDTO(name, bettingMoney));
+        }
+        return requestPlayerInformationDTOS;
     }
 
     private static List<String> inputPlayerName() {
@@ -22,26 +33,6 @@ public class InputView {
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerName();
-        }
-    }
-
-    public static List<RequestPlayerInformationDTO> inputPlayerInformation() {
-        List<String> playerNames = inputPlayerName();
-        List<RequestPlayerInformationDTO> requestPlayerInformationDTOS = new ArrayList<>();
-        for (String name : playerNames) {
-            System.out.printf("\n%s의 배팅 금액은?\n", name);
-            int money = validateInputMoney();
-            requestPlayerInformationDTOS.add(new RequestPlayerInformationDTO(name, money));
-        }
-        return requestPlayerInformationDTOS;
-    }
-
-    private static int validateInputMoney() {
-        try {
-            return Integer.parseInt(SCANNER.nextLine());
-        } catch (NumberFormatException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return validateInputMoney();
         }
     }
 
@@ -59,6 +50,24 @@ public class InputView {
             throw new IllegalArgumentException("중복된 이름을 입력하였습니다.");
         }
         return playerNames;
+    }
+
+    private static int validateInputMoney(String name) {
+        try {
+            System.out.printf("\n%s의 배팅 금액은?\n", name);
+            int bettingMoney = Integer.parseInt(SCANNER.nextLine());
+            validateBettingMoneyRange(bettingMoney);
+            return bettingMoney;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return validateInputMoney(name);
+        }
+    }
+
+    private static void validateBettingMoneyRange(int bettingMoney) {
+        if (bettingMoney < MIN_BETTING_MONEY) {
+            throw new IllegalArgumentException("배팅 금액은 1원 이상이어야 합니다.");
+        }
     }
 
     public static RequestAnswerDTO inputAnswer(ResponsePlayerDTO responsePlayerDTO) {
