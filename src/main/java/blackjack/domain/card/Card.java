@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    public static final String BLANK = " ";
     private final Suit suit;
     private final Symbol symbol;
 
@@ -22,9 +21,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return suit.getName() +
-                BLANK +
-                symbol.getName();
+        return suit.getName() + symbol.getName();
     }
 
     @Override
