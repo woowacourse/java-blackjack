@@ -1,13 +1,10 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.stream.Stream;
-
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.result.PrizeRatio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,11 +14,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Symbol;
-import domain.card.Type;
-import domain.result.Ratio;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.mockito.BDDMockito.given;
 
 class PlayerTest {
 
@@ -71,7 +71,7 @@ class PlayerTest {
     @ParameterizedTest
     @DisplayName("포인트 비교로 승자 확인")
     @MethodSource("createCardSet")
-    void reflect(Card playerCard, Card dealerCard, Ratio expected) {
+    void reflect(Card playerCard, Card dealerCard, PrizeRatio expected) {
         Queue<Card> cards = new LinkedList<>(Arrays.asList(
                 new Card(Symbol.DIAMOND, Type.KING),
                 new Card(Symbol.DIAMOND, Type.SIX),
@@ -95,29 +95,29 @@ class PlayerTest {
     private static Stream<Arguments> createCardSet() {
         return Stream.of(
                 //플레이어가 21점인 경우
-                createCardsAndWinningResult(Type.FIVE, Type.FIVE, Ratio.DRAW),
-                createCardsAndWinningResult(Type.FIVE, Type.FOUR, Ratio.WIN),
-                createCardsAndWinningResult(Type.FIVE, Type.SIX, Ratio.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.FIVE, PrizeRatio.DRAW),
+                createCardsAndWinningResult(Type.FIVE, Type.FOUR, PrizeRatio.WIN),
+                createCardsAndWinningResult(Type.FIVE, Type.SIX, PrizeRatio.WIN),
 
                 //플레이어가 버스트인 경우
-                createCardsAndWinningResult(Type.SIX, Type.SIX, Ratio.LOSE),
-                createCardsAndWinningResult(Type.SIX, Type.FIVE, Ratio.LOSE),
-                createCardsAndWinningResult(Type.SIX, Type.FOUR, Ratio.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.SIX, PrizeRatio.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FIVE, PrizeRatio.LOSE),
+                createCardsAndWinningResult(Type.SIX, Type.FOUR, PrizeRatio.LOSE),
 
                 //플레이어가 21미만인 경우
-                createCardsAndWinningResult(Type.THREE, Type.TWO, Ratio.WIN),
-                createCardsAndWinningResult(Type.THREE, Type.THREE, Ratio.DRAW),
-                createCardsAndWinningResult(Type.THREE, Type.FOUR, Ratio.LOSE),
-                createCardsAndWinningResult(Type.THREE, Type.FIVE, Ratio.LOSE),
-                createCardsAndWinningResult(Type.THREE, Type.SIX, Ratio.WIN)
+                createCardsAndWinningResult(Type.THREE, Type.TWO, PrizeRatio.WIN),
+                createCardsAndWinningResult(Type.THREE, Type.THREE, PrizeRatio.DRAW),
+                createCardsAndWinningResult(Type.THREE, Type.FOUR, PrizeRatio.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.FIVE, PrizeRatio.LOSE),
+                createCardsAndWinningResult(Type.THREE, Type.SIX, PrizeRatio.WIN)
         );
     }
 
-    private static Arguments createCardsAndWinningResult(Type player, Type dealer, Ratio ratio) {
+    private static Arguments createCardsAndWinningResult(Type player, Type dealer, PrizeRatio prizeRatio) {
         return Arguments.of(
                 new Card(Symbol.HEART, player),
                 new Card(Symbol.SPADE, dealer),
-                ratio
+                prizeRatio
         );
     }
 
@@ -134,7 +134,7 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.ACE));
         dealer.draw(deck);
 
-        assertThat(player.decideRatio(dealer)).isEqualTo(Ratio.DRAW);
+        assertThat(player.decideRatio(dealer)).isEqualTo(PrizeRatio.DRAW);
     }
 
     @Test
@@ -152,7 +152,7 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.FIVE));
         dealer.draw(deck);
 
-        assertThat(player.decideRatio(dealer)).isEqualTo(Ratio.BLACKJACK);
+        assertThat(player.decideRatio(dealer)).isEqualTo(PrizeRatio.BLACKJACK);
     }
 
     @Test
@@ -170,6 +170,6 @@ class PlayerTest {
         given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.ACE));
         dealer.draw(deck);
 
-        assertThat(player.decideRatio(dealer)).isEqualTo(Ratio.LOSE);
+        assertThat(player.decideRatio(dealer)).isEqualTo(PrizeRatio.LOSE);
     }
 }

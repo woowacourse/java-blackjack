@@ -1,6 +1,6 @@
 package domain.result;
 
-public enum Ratio {
+public enum PrizeRatio {
 
     WIN(1),
     LOSE(-1),
@@ -9,7 +9,7 @@ public enum Ratio {
 
     private final double ratio;
 
-    Ratio(double ratio) {
+    PrizeRatio(double ratio) {
         this.ratio = ratio;
     }
 
