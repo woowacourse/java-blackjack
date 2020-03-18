@@ -4,23 +4,11 @@ import java.util.Objects;
 
 // todo :  money 생성 테스트 필요
 public class Money {
-	private static final int BLACKJACT_MINIMUM_VALUE = 0;
 	private final long money;
 
 	private Money(long money) {
-		validate(money);
-		this.money = money;
-	}
-
-	private static void validate(long money) {
 		Objects.requireNonNull(money, "돈의 입력이 필요합니다.");
-		if (money <= BLACKJACT_MINIMUM_VALUE) {
-			throw new IllegalArgumentException("돈은 자연수만 가질 수 있습니다.");
-		}
-	}
-
-	public static Money createMoney(long money) {
-		return new Money(money);
+		this.money = money;
 	}
 
 	public static Money createMoney(String inputMoney) {
@@ -36,5 +24,21 @@ public class Money {
 		if (input.trim().isEmpty()) {
 			throw new IllegalArgumentException("돈의 입력이 필요합니다");
 		}
+	}
+
+	public static Money createMoney(long money) {
+		return new Money(money);
+	}
+
+	public Money multiply(double profit) {
+		return createMoney((long)((double)money * profit));
+	}
+
+	public boolean isLessThan(int minimumBettingMoney) {
+		return money < minimumBettingMoney;
+	}
+
+	public long getMoney() {
+		return money;
 	}
 }

@@ -23,7 +23,7 @@ class PlayersTest {
 	@ParameterizedTest
 	@NullAndEmptySource
 	void test(List<Player> players) {
-		assertThatThrownBy(() -> new Players(players))
+		assertThatThrownBy(() -> new Players(players, dealer))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -32,10 +32,10 @@ class PlayersTest {
 	void getReports() {
 		//given
 		Player dealer = new Dealer(aCardBundle(CardNumber.KING, CardNumber.KING));
-		Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), "bebop");
-		Player gambler2 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING), "pobi");
-		Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE), "allen");
-		Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3));
+		Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), "bebop", playerInfo);
+		Player gambler2 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING), "pobi", playerInfo);
+		Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE), "allen", playerInfo);
+		Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3), dealer);
 
 		//when
 		GameReports reports = players.getReports();
@@ -53,7 +53,7 @@ class PlayersTest {
 	void findGamblers() {
 		//given
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), "bebop"), new Dealer(new CardBundle())));
+			Arrays.asList(new Gambler(new CardBundle(), "bebop", playerInfo), new Dealer(new CardBundle())), dealer);
 
 		//when
 		List<Player> gamblers = players.findGamblers();
@@ -68,7 +68,7 @@ class PlayersTest {
 	void findDealer() {
 		//given
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), "bebop"), new Dealer(new CardBundle())));
+			Arrays.asList(new Gambler(new CardBundle(), "bebop", playerInfo), new Dealer(new CardBundle())), dealer);
 
 		//when
 		Player dealer = players.findDealer();

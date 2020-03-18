@@ -7,9 +7,10 @@ import blackjack.player.domain.report.GameReport;
 public class Dealer extends Player {
 
 	public static final int HIT_VALUE = 16;
+	private static final String DEALER_NAME = "딜러";
 
 	public Dealer(CardBundle cardBundle) {
-		super(cardBundle, "딜러");
+		super(cardBundle);
 	}
 
 	@Override
@@ -18,8 +19,12 @@ public class Dealer extends Player {
 	}
 
 	@Override
-	public GameReport createReport(Player player) {
-		return new GameReport(player.name, this.cardBundle.calculateWinOrLose(player.cardBundle));
+	public String getName() {
+		return DEALER_NAME;
+	}
+
+	public GameReport createReport(Gambler gambler) {
+		return new GameReport(gambler.getPlayerInfo(), this.cardBundle.calculateWinOrLose(gambler.cardBundle));
 	}
 
 	public Card getFirstCard() {

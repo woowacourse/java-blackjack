@@ -23,7 +23,7 @@ class DealerTest {
 		Player dealer = new Dealer(new CardBundle());
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.FIVE));
 
-		Player gambler = new Gambler(new CardBundle(), "bebop");
+		Player gambler = new Gambler(new CardBundle(), "bebop", playerInfo);
 		gambler.addCard(Card.of(Symbol.DIAMOND, cardNumber));
 
 		//when
