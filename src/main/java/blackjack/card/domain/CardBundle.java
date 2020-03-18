@@ -18,22 +18,7 @@ public class CardBundle {
 
 	// todo : 블랙잭인 경우 승패여부가 로직에 안들어감 ex) 딜러 블랙잭, 플레이어 3장 블랙잭인경우 무승부임!
 	public GameResult calculateWinOrLose(CardBundle gamblerCardBundle) {
-		if (gamblerCardBundle.isBurst()) {
-			return GameResult.LOSE;
-		}
-		if (isBurst()) {
-			return GameResult.WIN;
-		}
-		GameResult gameResult = GameResult.createGameResult(gamblerCardBundle.calculateScore(), this.calculateScore());
-		if (gameResult == GameResult.DRAW) {
-			if (isBlackjack() && !gamblerCardBundle.isBlackjack()) { // 딜러가 블랙잭이면
-				return GameResult.LOSE;
-			}
-			if (!isBlackjack() && gamblerCardBundle.isBlackjack()) {
-				return GameResult.WIN;
-			}
-		}
-		return gameResult;
+		return GameResult.createGameResult(this, gamblerCardBundle);
 	}
 
 	public int calculateScore() {
@@ -65,7 +50,7 @@ public class CardBundle {
 			.anyMatch(Card::isAce);
 	}
 
-	private boolean isBurst() {
+	public boolean isBurst() {
 		return calculateScore() > BLACKJACK_MAXIMUM_VALUE;
 	}
 
@@ -75,6 +60,10 @@ public class CardBundle {
 
 	public boolean isNotBurst() {
 		return !isBurst();
+	}
+
+	public boolean isSameScore(CardBundle other) {
+		return this.calculateScore() == other.calculateScore();
 	}
 
 	@Override

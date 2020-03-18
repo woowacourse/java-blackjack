@@ -10,14 +10,12 @@ import blackjack.player.domain.report.GameReport;
 
 public abstract class Player {
 	protected final String name;
-	protected final Money bettingMoney;
 	protected final CardBundle cardBundle;
 
-	public Player(CardBundle cardBundle, String name, Money bettingMoney) {
+	public Player(CardBundle cardBundle, String name) {
 		validate(cardBundle, name);
 		this.cardBundle = cardBundle;
 		this.name = name;
-		this.bettingMoney = bettingMoney;
 	}
 
 	private void validate(CardBundle cardBundle, String name) {

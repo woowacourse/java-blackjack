@@ -2,29 +2,25 @@ package blackjack.card.domain;
 
 import java.util.Arrays;
 
+// todo: 테스트코드 수정
 public enum GameResult {
-	WIN(1, "승"),
-	DRAW(0, "무"),
-	LOSE(-1, "패");
+	WIN(new GamblerWinStrategy(), "승"),
+	DRAW(new DrawStrategy(), "무"),
+	LOSE(new GamblerLoseStrategy(), "패");
 
-	private final int result;
+	private final GameResultStrategy gameResultStrategy;
 	private final String message;
 
-	GameResult(int result, String message) {
-		this.result = result;
+	GameResult(GameResultStrategy gameResultStrategy, String message) {
+		this.gameResultStrategy = gameResultStrategy;
 		this.message = message;
 	}
 
-	private static GameResult findByResult(int result) {
+	public static GameResult createGameResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {
 		return Arrays.stream(values())
-			.filter(gameResult -> gameResult.result == result)
+			.filter(gameResult -> gameResult.gameResultStrategy.isResult(dealerCardBundle, gamblerCardBundle))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException(String.format("%d 는 존재하지 않는 결과 값 입니다.", result)));
-	}
-
-	public static GameResult createGameResult(int gamblerScore, int dealerScore) {
-		int compare = Integer.compare(gamblerScore, dealerScore);
-		return findByResult(compare);
+			.orElseThrow(() -> new IllegalArgumentException("승패가 지정되지 않았습니다."));
 	}
 
 	public String getMessage() {

@@ -9,7 +9,7 @@ public class Dealer extends Player {
 	public static final int HIT_VALUE = 16;
 
 	public Dealer(CardBundle cardBundle) {
-		super(cardBundle, "딜러", bettingMoney);
+		super(cardBundle, "딜러");
 	}
 
 	@Override
