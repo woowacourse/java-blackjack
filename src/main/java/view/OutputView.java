@@ -61,9 +61,9 @@ public class OutputView {
 
     private static void printTotalProfit(GameResultDto gameResultDto) {
         System.out.println(NEWLINE + "## 최종 수익");
-        System.out.printf("%s: %.0f" + NEWLINE, Dealer.NAME, gameResultDto.getProfitOfDealer());
+        System.out.printf("%s: %d" + NEWLINE, Dealer.NAME, gameResultDto.getProfitOfDealer());
         gameResultDto.getProfitOfPlayers()
-                .forEach((key, value) -> System.out.printf("%s: %.0f" + NEWLINE, key.getName(), value));
+                .forEach((key, value) -> System.out.printf("%s: %d" + NEWLINE, key.getName(), value));
     }
 
     private static String printUserDealOutResult(UserDto userDto) {

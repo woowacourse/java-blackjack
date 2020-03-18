@@ -11,29 +11,28 @@ import domain.user.User;
 public class GameResult {
 
     private Map<User, Integer> userToCardPoint;
-    private Map<Player, Double> profitOfPlayers;
+    private Map<Player, Integer> profitOfPlayers;
 
     public static GameResult of(Dealer dealer, PlayersInfo playersInfo) {
         return new GameResult(dealer, playersInfo);
     }
 
     private GameResult(Dealer dealer, PlayersInfo playersInfo) {
-        profitOfPlayers = playersInfo.calculateProfit(dealer);
         createUserToCardPoint(dealer, playersInfo);
+        profitOfPlayers = playersInfo.calculateProfit(dealer);
     }
 
     private void createUserToCardPoint(Dealer dealer, PlayersInfo playersInfo) {
         userToCardPoint = new LinkedHashMap<>();
 
         userToCardPoint.put(dealer, dealer.calculatePoint());
-        playersInfo.getPlayers()
-                .forEach(player -> userToCardPoint.put(player, player.calculatePoint()));
+        userToCardPoint.putAll(playersInfo.calculatePoint());
     }
 
-    public double getProfitOfDealer() {
-        double totalProfitOfPlayers = profitOfPlayers.values()
+    public int getProfitOfDealer() {
+        int totalProfitOfPlayers = profitOfPlayers.values()
                 .stream()
-                .reduce(0D, Double::sum);
+                .reduce(0, Integer::sum);
 
         return totalProfitOfPlayers * (-1);
     }
@@ -42,7 +41,7 @@ public class GameResult {
         return userToCardPoint;
     }
 
-    public Map<Player, Double> getProfitOfPlayers() {
+    public Map<Player, Integer> getProfitOfPlayers() {
         return profitOfPlayers;
     }
 }

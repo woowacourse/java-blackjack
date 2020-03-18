@@ -7,7 +7,6 @@ public class Cards {
 
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_SIZE = 2;
-    private static final int FIRST_INDEX = 0;
     private static final int TEN = 10;
 
     private final List<Card> cards;
@@ -48,10 +47,6 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    public Card getFirstCard() {
-        return cards.get(FIRST_INDEX);
     }
 
     public List<Card> getCards() {

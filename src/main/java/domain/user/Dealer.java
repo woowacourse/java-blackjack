@@ -2,7 +2,6 @@ package domain.user;
 
 import java.util.function.Consumer;
 
-import domain.card.Card;
 import domain.card.Deck;
 import view.dto.UserDto;
 
@@ -17,10 +16,6 @@ public class Dealer extends User {
 
     public static Dealer appoint() {
         return new Dealer();
-    }
-
-    public Card getFirstCard() {
-        return cards.getFirstCard();
     }
 
     @Override

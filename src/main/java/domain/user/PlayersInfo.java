@@ -1,12 +1,12 @@
 package domain.user;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import domain.card.Deck;
 import view.dto.UserDto;
@@ -40,20 +40,24 @@ public class PlayersInfo {
         });
     }
 
-    public Map<Player, Double> calculateProfit(Dealer dealer) {
-        Map<Player, Double> profitOfPlayers = new LinkedHashMap<>();
+    public Map<Player, Integer> calculatePoint() {
+        return playersInfo.keySet()
+                .stream()
+                .collect(Collectors.toMap(Function.identity(), Player::calculatePoint,
+                        (e1, e2) -> {throw new AssertionError();},
+                        LinkedHashMap::new));
+    }
+
+    public Map<Player, Integer> calculateProfit(Dealer dealer) {
+        Map<Player, Integer> profitOfPlayers = new LinkedHashMap<>();
 
         playersInfo.forEach((player, bettingMoney) ->
-                        profitOfPlayers.put(player, bettingMoney.getMoney() * player.decideRatio(dealer).getRatio()));
+                        profitOfPlayers.put(player, (int)(bettingMoney.getMoney() * player.decideRatio(dealer).getRatio())));
 
-        return Collections.unmodifiableMap(profitOfPlayers);
+        return profitOfPlayers;
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(new ArrayList<>(playersInfo.keySet()));
-    }
-
-    public Map<Player, BettingMoney> getPlayersInfo() {
-        return playersInfo;
+        return new ArrayList<>(playersInfo.keySet());
     }
 }

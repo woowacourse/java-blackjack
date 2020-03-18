@@ -10,7 +10,7 @@ import domain.user.User;
 public class GameResultDto {
 
     private Map<UserDto, Integer> userToCardPoint;
-    private Map<Player, Double> profitOfPlayers;
+    private Map<Player, Integer> profitOfPlayers;
     private double profitOfDealer;
 
     public static GameResultDto of(GameResult gameResult) {
@@ -31,7 +31,7 @@ public class GameResultDto {
         return userToCardPoint;
     }
 
-    public Map<Player, Double> getProfitOfPlayers() {
+    public Map<Player, Integer> getProfitOfPlayers() {
         return profitOfPlayers;
     }
 

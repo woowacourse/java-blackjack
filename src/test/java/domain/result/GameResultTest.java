@@ -81,8 +81,8 @@ class GameResultTest {
     @ParameterizedTest
     @DisplayName("플레이어들 수익")
     @MethodSource("createIndexAndProfitOfPlayers")
-    void getProfitOfPlayers(int index, double expected) {
-        Map<Player, Double> profitOfPlayers;
+    void getProfitOfPlayers(int index, int expected) {
+        Map<Player, Integer> profitOfPlayers;
         profitOfPlayers = GameResult.of(dealer, playersInfo).getProfitOfPlayers();
         Player player = playersInfo.getPlayers().get(index);
 
