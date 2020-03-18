@@ -5,17 +5,24 @@ import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.result.MatchResult;
 
 public class Player extends User {
+	private final BettingMoney bettingMoney;
+
 	private static final int FIRST_SHOW_SIZE = 2;
 
 	private Player(Name name) {
 		super(name);
+		this.bettingMoney = BettingMoney.of(1000);
 	}
 
 	private Player(Name name, Cards cards) {
+		this(name, BettingMoney.of(1000), cards);
+	}
+
+	private Player(Name name, BettingMoney bettingMoney, Cards cards) {
 		super(name, cards);
+		this.bettingMoney = bettingMoney;
 	}
 
 	public static Player valueOf(String name) {
@@ -26,13 +33,18 @@ public class Player extends User {
 		return new Player(new Name(name), new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
+	public static Player fromNameAndMoneyAndCards(String name, int bettingMoney, Card... cards) {
+		return new Player(new Name(name), BettingMoney.of(bettingMoney),
+			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
+	}
+
 	@Override
 	public boolean isDrawable() {
 		return !isBlackjack() && !isBust();
 	}
 
-	public MatchResult calculateMatchResult(Dealer dealer) {
-		return MatchResult.calculatePlayerMatchResult(this, Objects.requireNonNull(dealer));
+	public BettingMoney getBettingMoney() {
+		return bettingMoney;
 	}
 
 	@Override

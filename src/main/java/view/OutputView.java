@@ -1,15 +1,12 @@
 package view;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
-import domain.result.DealerResult;
-import domain.result.MatchResult;
-import domain.result.PlayerResults;
 import domain.result.ScoreBoard;
 import domain.result.ScoreBoards;
+import domain.result.UserResults;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -55,9 +52,10 @@ public class OutputView {
 		System.out.println(allUsersResult);
 	}
 
-	private static String parseOneUserScore(ScoreBoard scoreBoard) {
+	private static String parseOneUserScore(ScoreBoard playerScoreBoard) {
 		return String.format("%s %s %s",
-			scoreBoard.getName(), parseCardsString(scoreBoard.getCards()), parseScore(scoreBoard.getScore()));
+			playerScoreBoard.getName(), parseCardsString(playerScoreBoard.getCards()),
+			parseScore(playerScoreBoard.getScore()));
 	}
 
 	private static String parseCardsString(List<Card> cards) {
@@ -76,24 +74,13 @@ public class OutputView {
 		return String.format(RESULT_CARD_SCORE_FORMAT, score);
 	}
 
-	public static void printGameResult(PlayerResults playerResults, DealerResult dealerResult) {
-		System.out.println("## 최종 승패");
-		printDealerResult(dealerResult);
-		printPlayerResults(playerResults);
-	}
-
-	private static void printDealerResult(DealerResult dealerResult) {
-		String result = Arrays.stream(MatchResult.values())
-			.map(matchResult -> dealerResult.getResultCount(matchResult) + matchResult.getMatchResult())
-			.collect(Collectors.joining(SPACE));
-		System.out.printf("딜러 : %s%s", result, NEW_LINE);
-	}
-
-	private static void printPlayerResults(PlayerResults playerResults) {
-		String result = playerResults.getPlayerResults().stream()
-			.map(playerResult -> String.format("%s : %s", playerResult.getName(), playerResult.getMatchResult()))
+	public static void printGameResult(UserResults userResults) {
+		System.out.println("## 최종 수익");
+		String printData = userResults.getPlayerResults().stream()
+			.map(playerPrize -> String.format("%s : %d원", playerPrize.getName(), playerPrize.getPrize()))
 			.collect(Collectors.joining(NEW_LINE));
-		System.out.println(result);
+
+		System.out.println(printData);
 	}
 
 	public static void printExceptionMessage(String message) {

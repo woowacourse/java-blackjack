@@ -4,23 +4,22 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
+import domain.user.BettingMoney;
 import domain.user.User;
 
 public enum MatchResult {
-	BLACKJACK_WIN("블랙잭승", MatchResult::isPlayerBlackjackWin, 1.5),
-	WIN("승", MatchResult::isPlayerWin, 1.0),
-	DRAW("무", MatchResult::isPlayerDraw, 0),
-	LOSE("패", MatchResult::isPlayerLose, -1.0);
+	BLACKJACK_WIN(MatchResult::isPlayerBlackjackWin, 1.5),
+	WIN(MatchResult::isPlayerWin, 1.0),
+	DRAW(MatchResult::isPlayerDraw, 0),
+	LOSE(MatchResult::isPlayerLose, -1.0);
 
 	private static final String ILLEGAL_RESULT_MESSAGE = "예측 불가능한 결과입니다.";
 	private static final String PLAYER_AND_DEALER_NULL_EXCEPTION_MESSAGE = "객체에 NULL 값이 들어갈 수 없습니다..";
 
-	private final String matchResult;
 	private final BiPredicate<User, User> resultCondition;
 	private final double prizeFactor;
 
-	MatchResult(String matchResult, BiPredicate<User, User> resultCondition, double prizeFactor) {
-		this.matchResult = matchResult;
+	MatchResult(BiPredicate<User, User> resultCondition, double prizeFactor) {
 		this.resultCondition = resultCondition;
 		this.prizeFactor = prizeFactor;
 	}
@@ -39,14 +38,8 @@ public enum MatchResult {
 		}
 	}
 
-	public MatchResult switchWinAndLose() {
-		if (this == MatchResult.WIN) {
-			return MatchResult.LOSE;
-		}
-		if (this == MatchResult.LOSE) {
-			return MatchResult.WIN;
-		}
-		return this;
+	public int calculatePrize(BettingMoney playerBettingMoney) {
+		return playerBettingMoney.multiply(prizeFactor);
 	}
 
 	private static boolean isPlayerBlackjackWin(User player, User dealer) {
@@ -73,10 +66,4 @@ public enum MatchResult {
 
 		return isPlayerBust || isDealerOnlyBlackjack || isNotPlayerScoreHigherThanDealers;
 	}
-
-	public String getMatchResult() {
-		return matchResult;
-	}
-
-
 }

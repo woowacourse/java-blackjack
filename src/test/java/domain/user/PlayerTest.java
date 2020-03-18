@@ -4,16 +4,10 @@ import static domain.card.Symbol.*;
 import static domain.card.Type.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
-import domain.result.MatchResult;
 
 public class PlayerTest {
 	@DisplayName("플레이어의 카드가 2장이면서, 총 점수가 21점이면, 블랙잭이다.")
@@ -78,101 +72,5 @@ public class PlayerTest {
 	void isDrawableTest() {
 		Player player = Player.fromNameAndCards("test", new Card(HEART, EIGHT), new Card(SPADE, JACK));
 		assertThat(player.isDrawable()).isTrue();
-	}
-
-	@DisplayName("플레이어와 딜러의 점수 비교후, 플레이어의 패배 반환")
-	@ParameterizedTest
-	@MethodSource("playerAndDealerLoseSet")
-	void calculatePlayerMatchResultLoseTest(Player player, Dealer dealer) {
-		MatchResult actual = player.calculateMatchResult(dealer);
-		assertThat(actual).isEqualTo(MatchResult.LOSE);
-	}
-
-	private static Stream<Arguments> playerAndDealerLoseSet() {
-		return Stream.of(
-			Arguments.of(
-				Player.fromNameAndCards("test", new Card(HEART, EIGHT)),
-				Dealer.fromCards(new Card(HEART, EIGHT))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, EIGHT)),
-				Dealer.fromCards(new Card(HEART, NINE))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test3", new Card(HEART, EIGHT), new Card(HEART, KING), new Card(HEART, THREE)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test4", new Card(HEART, EIGHT), new Card(HEART, KING)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test5", new Card(HEART, EIGHT), new Card(HEART, KING), new Card(HEART, TEN)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test6", new Card(HEART, EIGHT), new Card(HEART, KING), new Card(HEART, TEN)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, TEN), new Card(DIAMOND, TEN))
-			)
-		);
-	}
-
-	@DisplayName("플레이어와 딜러 둘다 블랙잭인 경우, 플레이어 무승부 반환")
-	@ParameterizedTest
-	@MethodSource("playerAndDealerDrawSet")
-	void calculatePlayerMatchResultDrawTest(Player player, Dealer dealer) {
-		MatchResult actual = player.calculateMatchResult(dealer);
-		assertThat(actual).isEqualTo(MatchResult.DRAW);
-	}
-
-	private static Stream<Arguments> playerAndDealerDrawSet() {
-		return Stream.of(
-			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, ACE), new Card(DIAMOND, KING)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
-			)
-		);
-	}
-
-	@DisplayName("플레이어와 딜러의 점수 비교후, 플레이어의 승리 반환")
-	@ParameterizedTest
-	@MethodSource("playerAndDealerWinSet")
-	void calculatePlayerMatchResultWinTest(Player player, Dealer dealer) {
-		MatchResult actual = player.calculateMatchResult(dealer);
-		assertThat(actual).isEqualTo(MatchResult.WIN);
-	}
-
-	private static Stream<Arguments> playerAndDealerWinSet() {
-		return Stream.of(
-			Arguments.of(
-				Player.fromNameAndCards("test", new Card(HEART, NINE)),
-				Dealer.fromCards(new Card(HEART, EIGHT))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test3", new Card(HEART, EIGHT), new Card(HEART, KING)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, TEN), new Card(CLOVER, JACK))
-			)
-		);
-	}
-
-	@DisplayName("플레이어와 딜러의 점수 비교후, 플레이어의 승리 반환")
-	@ParameterizedTest
-	@MethodSource("playerAndDealerBlackjackWinSet")
-	void calculatePlayerMatchResultBlackjackWinTest(Player player, Dealer dealer) {
-		MatchResult actual = player.calculateMatchResult(dealer);
-		assertThat(actual).isEqualTo(MatchResult.BLACKJACK_WIN);
-	}
-
-	private static Stream<Arguments> playerAndDealerBlackjackWinSet() {
-		return Stream.of(
-			Arguments.of(
-				Player.fromNameAndCards("test", new Card(HEART, QUEEN), new Card(HEART, ACE)),
-				Dealer.fromCards(new Card(HEART, EIGHT))
-			),
-			Arguments.of(
-				Player.fromNameAndCards("test", new Card(HEART, QUEEN), new Card(HEART, ACE)),
-				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, FIVE), new Card(SPADE, FIVE))
-			)
-		);
 	}
 }

@@ -3,9 +3,8 @@ package controller;
 import java.util.List;
 
 import domain.card.CardDeck;
-import domain.result.DealerResult;
-import domain.result.PlayerResults;
 import domain.result.ScoreBoards;
+import domain.result.UserResults;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerFactory;
@@ -71,8 +70,7 @@ public class BlackjackGame {
 	private void printResult(List<Player> players, Dealer dealer) {
 		ScoreBoards scoreBoards = ScoreBoards.fromAllUsers(players, dealer);
 		OutputView.printUsersCardsAndScore(scoreBoards);
-		DealerResult dealerResult = scoreBoards.calculateDealerResults();
-		PlayerResults playerResults = scoreBoards.calculatePlayersResult();
-		OutputView.printGameResult(playerResults, dealerResult);
+		UserResults userResults = scoreBoards.calculatePlayersResult();
+		OutputView.printGameResult(userResults);
 	}
 }

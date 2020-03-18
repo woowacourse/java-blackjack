@@ -2,6 +2,7 @@ package domain.result;
 
 import static domain.card.Symbol.*;
 import static domain.card.Type.*;
+import static domain.result.MatchResult.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -9,20 +10,21 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
+import domain.user.BettingMoney;
 import domain.user.Dealer;
 import domain.user.Player;
 
+@SuppressWarnings("NonAsciiCharacters")
 class MatchResultTest {
 	@DisplayName("플레이어와 딜러의 점수 비교후, 플레이어의 패배 반환")
 	@ParameterizedTest
 	@MethodSource("playerAndDealerLoseSet")
 	void calculatePlayerMatchResultLoseTest(Player player, Dealer dealer) {
-		MatchResult actual = MatchResult.calculatePlayerMatchResult(player, dealer);
-		assertThat(actual).isEqualTo(MatchResult.LOSE);
+		MatchResult actual = calculatePlayerMatchResult(player, dealer);
+		assertThat(actual).isEqualTo(LOSE);
 	}
 
 	private static Stream<Arguments> playerAndDealerLoseSet() {
@@ -58,8 +60,8 @@ class MatchResultTest {
 	@ParameterizedTest
 	@MethodSource("playerAndDealerDrawSet")
 	void calculatePlayerMatchResultDrawTest(Player player, Dealer dealer) {
-		MatchResult actual = MatchResult.calculatePlayerMatchResult(player, dealer);
-		assertThat(actual).isEqualTo(MatchResult.DRAW);
+		MatchResult actual = calculatePlayerMatchResult(player, dealer);
+		assertThat(actual).isEqualTo(DRAW);
 	}
 
 	private static Stream<Arguments> playerAndDealerDrawSet() {
@@ -75,8 +77,8 @@ class MatchResultTest {
 	@ParameterizedTest
 	@MethodSource("playerAndDealerWinSet")
 	void calculatePlayerMatchResultWinTest(Player player, Dealer dealer) {
-		MatchResult actual = MatchResult.calculatePlayerMatchResult(player, dealer);
-		assertThat(actual).isEqualTo(MatchResult.WIN);
+		MatchResult actual = calculatePlayerMatchResult(player, dealer);
+		assertThat(actual).isEqualTo(WIN);
 	}
 
 	private static Stream<Arguments> playerAndDealerWinSet() {
@@ -100,8 +102,8 @@ class MatchResultTest {
 	@ParameterizedTest
 	@MethodSource("playerBlackjackWinSet")
 	void calculatePlayerMatchResultBlackjackWinTest(Player player, Dealer dealer) {
-		MatchResult actual = MatchResult.calculatePlayerMatchResult(player, dealer);
-		assertThat(actual).isEqualTo(MatchResult.BLACKJACK_WIN);
+		MatchResult actual = calculatePlayerMatchResult(player, dealer);
+		assertThat(actual).isEqualTo(BLACKJACK_WIN);
 	}
 
 	private static Stream<Arguments> playerBlackjackWinSet() {
@@ -117,10 +119,19 @@ class MatchResultTest {
 		);
 	}
 
-	@DisplayName("승,패 입력시 반대 결과 반환, 무승부 입력시 그대로 무승부 반환")
+	@DisplayName("게임 결과별 배당금 계산")
 	@ParameterizedTest
-	@CsvSource(value = {"WIN,LOSE", "DRAW,DRAW", "LOSE,WIN"})
-	void reverseWinAndLoseTest(MatchResult inputResult, MatchResult expected) {
-		assertThat(inputResult.switchWinAndLose()).isEqualTo(expected);
+	@MethodSource("게임결과별_배당금계산_테스트_세트")
+	void calculate_final_prize_test(MatchResult result, int bettingMoney, int expected) {
+		assertThat(result.calculatePrize(BettingMoney.of(bettingMoney))).isEqualTo(expected);
+	}
+
+	private static Stream<Arguments> 게임결과별_배당금계산_테스트_세트() {
+		return Stream.of(
+			Arguments.of(BLACKJACK_WIN, 1_000, 1_500),
+			Arguments.of(WIN, 1_000, 1_000),
+			Arguments.of(DRAW, 1_000, 0),
+			Arguments.of(LOSE, 1_000, -1_000)
+		);
 	}
 }

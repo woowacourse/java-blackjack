@@ -12,10 +12,10 @@ import domain.user.Dealer;
 import domain.user.Player;
 
 public class ScoreBoards {
-	private final List<ScoreBoard> playerBoards;
-	private final ScoreBoard dealerBoard;
+	private final List<PlayerScoreBoard> playerBoards;
+	private final DealerScoreBoard dealerBoard;
 
-	private ScoreBoards(List<ScoreBoard> playerBoards, ScoreBoard dealerBoard) {
+	private ScoreBoards(List<PlayerScoreBoard> playerBoards, DealerScoreBoard dealerBoard) {
 		this.playerBoards = Collections.unmodifiableList(new ArrayList<>(Objects.requireNonNull(playerBoards)));
 		this.dealerBoard = Objects.requireNonNull(dealerBoard);
 	}
@@ -24,24 +24,19 @@ public class ScoreBoards {
 		players = Collections.unmodifiableList(new ArrayList<>(Objects.requireNonNull(players)));
 		Objects.requireNonNull(dealer);
 
-		List<ScoreBoard> playerBoards = players.stream()
-			.map(ScoreBoard::of)
+		List<PlayerScoreBoard> playerBoards = players.stream()
+			.map(PlayerScoreBoard::of)
 			.collect(Collectors.toList());
 
-		ScoreBoard dealerBoard = ScoreBoard.of(dealer);
+		DealerScoreBoard dealerBoard = DealerScoreBoard.of(dealer);
 		return new ScoreBoards(playerBoards, dealerBoard);
 	}
 
-	public DealerResult calculateDealerResults() {
-		return playerBoards.stream()
-			.map(scoreBoard -> scoreBoard.match(dealerBoard))
-			.collect(collectingAndThen(toList(), DealerResult::new));
-	}
-
-	public PlayerResults calculatePlayersResult() {
+	public UserResults calculatePlayersResult() {
 		return playerBoards.stream()
 			.map(playerBoard -> playerBoard.createPlayerResult(dealerBoard))
-			.collect(collectingAndThen(toList(), PlayerResults::new));
+			.collect(collectingAndThen(toList(),
+				(result) -> UserResults.fromPlayerResultsAndDealer(result, dealerBoard.getUser())));
 	}
 
 	public List<ScoreBoard> getScoreBoards() {
