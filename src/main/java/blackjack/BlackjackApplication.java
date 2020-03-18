@@ -4,11 +4,14 @@ import blackjack.controller.BlackjackGameController;
 
 public class BlackjackApplication {
     public static void main(String[] args) {
-        try {
-            BlackjackGameController.run();
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            BlackjackGameController.run();
+        while (true) {
+            try {
+                BlackjackGameController.run();
+                break;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
+
     }
 }
