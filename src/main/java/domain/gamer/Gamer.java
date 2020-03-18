@@ -9,14 +9,14 @@ import domain.card.CardNumber;
 public abstract class Gamer {
 	private static final int BUST_NUMBER = 22;
 	private static final int ACE_HIDDEN_SCORE = 10;
+	public static final int BLACKJACK_NUMBER = 21;
+	public static final int BLACKJACK_CARD_SIZE = 2;
 
 	private String name;
 	private final List<Card> cards = new ArrayList<>();
-	private Money money;
 
-	public Gamer(String name, String money) {
+	public Gamer(String name) {
 		this.name = name;
-		this.money = new Money(money);
 	}
 
 	public abstract boolean isDrawable();
@@ -26,7 +26,7 @@ public abstract class Gamer {
 	}
 
 	public boolean isBlackJack() {
-		return calculateScore() == 21 && cards.size() == 2;
+		return calculateScore() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_SIZE;
 	}
 
 	public int calculateScore() {
@@ -57,9 +57,5 @@ public abstract class Gamer {
 
 	public List<Card> getCards() {
 		return cards;
-	}
-
-	public Money getMoney() {
-		return money;
 	}
 }

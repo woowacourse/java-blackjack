@@ -2,6 +2,7 @@ package domain.gamer;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
@@ -15,6 +16,8 @@ public class GameResult {
 		return gameResult.keySet()
 			.stream()
 			.collect(toMap(player -> player, player -> gameResult.get(player).
-				getEarnCalculator().apply(player.getMoney())));
+					getEarnCalculator().apply(player.getMoney()),
+				(a, b) -> a,
+				LinkedHashMap::new));
 	}
 }

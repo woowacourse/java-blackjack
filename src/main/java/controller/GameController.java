@@ -16,8 +16,8 @@ import view.OutputView;
 public class GameController {
 	public void run() {
 		Gamers gamers = generateGamers();
-
 		Deck deck = new Deck(CardsFactory.getCards());
+
 		gamers.initCard(deck);
 		OutputView.printInitCardGuide(gamers);
 		OutputView.printGamersCard(gamers);
