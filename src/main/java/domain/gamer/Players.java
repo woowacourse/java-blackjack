@@ -9,7 +9,7 @@ import domain.card.Deck;
 /**
  *    Player 리스트를 가진 일급 콜렉션
  *
- *    @author AnHyungJu, ParkDooWon
+ *    @author ParkDooWon
  */
 public class Players {
 	private static final int MAX_PLAYER = 5;
