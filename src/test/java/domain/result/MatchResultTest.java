@@ -30,10 +30,6 @@ class MatchResultTest {
 	private static Stream<Arguments> playerAndDealerLoseSet() {
 		return Stream.of(
 			Arguments.of(
-				Player.fromNameAndMoneyAndCards("test", 1_000, new Card(HEART, EIGHT)),
-				Dealer.fromCards(new Card(HEART, EIGHT))
-			),
-			Arguments.of(
 				Player.fromNameAndMoneyAndCards("test2", 1_000, new Card(HEART, EIGHT)),
 				Dealer.fromCards(new Card(HEART, NINE))
 			),
@@ -69,6 +65,10 @@ class MatchResultTest {
 
 	private static Stream<Arguments> playerAndDealerDrawSet() {
 		return Stream.of(
+			Arguments.of(
+				Player.fromNameAndMoneyAndCards("test", 1_000, new Card(HEART, EIGHT)),
+				Dealer.fromCards(new Card(HEART, EIGHT))
+			),
 			Arguments.of(
 				Player.fromNameAndMoneyAndCards("test2", 1_000, new Card(HEART, ACE), new Card(DIAMOND, KING)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))

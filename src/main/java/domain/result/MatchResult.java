@@ -20,7 +20,7 @@ public enum MatchResult {
 	private final double prizeFactor;
 
 	MatchResult(BiPredicate<User, User> resultCondition, double prizeFactor) {
-		this.resultCondition = resultCondition;
+		this.resultCondition = Objects.requireNonNull(resultCondition);
 		this.prizeFactor = prizeFactor;
 	}
 
@@ -48,21 +48,26 @@ public enum MatchResult {
 
 	private static boolean isPlayerWin(User player, User dealer) {
 		boolean isNotPlayerBust = !player.isBust();
-		boolean bothPlayerAndDealerIsNotBlackjack = !player.isBlackjack() && !dealer.isBlackjack();
+		boolean areBothNotBlackjack = !player.isBlackjack() && !dealer.isBlackjack();
 		boolean isPlayerScoreHigherThanDealers = player.hasHigherScoreThan(dealer);
 		boolean isDealerBust = dealer.isBust();
 
-		return isNotPlayerBust && bothPlayerAndDealerIsNotBlackjack && (isPlayerScoreHigherThanDealers || isDealerBust);
+		return isNotPlayerBust && areBothNotBlackjack && (isPlayerScoreHigherThanDealers || isDealerBust);
 	}
 
 	private static boolean isPlayerDraw(User player, User dealer) {
-		return dealer.isBlackjack() && player.isBlackjack();
+		boolean areBothBlackjack = dealer.isBlackjack() && player.isBlackjack();
+		boolean areBothNotBlackjack = !dealer.isBlackjack() && !player.isBlackjack();
+		boolean areBothNotBust = !dealer.isBust() && !player.isBust();
+		boolean hasSameScore = player.hasSameScoreWith(dealer);
+
+		return areBothBlackjack || (areBothNotBust && areBothNotBlackjack && hasSameScore);
 	}
 
 	private static boolean isPlayerLose(User player, User dealer) {
 		boolean isPlayerBust = player.isBust();
 		boolean isDealerOnlyBlackjack = !player.isBlackjack() && dealer.isBlackjack();
-		boolean isNotPlayerScoreHigherThanDealers = !player.hasHigherScoreThan(dealer);
+		boolean isNotPlayerScoreHigherThanDealers = player.hasLowerScoreThan(dealer);
 
 		return isPlayerBust || isDealerOnlyBlackjack || isNotPlayerScoreHigherThanDealers;
 	}

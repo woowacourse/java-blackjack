@@ -13,52 +13,42 @@ import domain.user.User;
 
 public class OutputView {
 	private static final String JOINING_DELIMITER = ", ";
-	private static final String SPACE = " ";
 	private static final String NEW_LINE = System.lineSeparator();
 	private static final String CARD_STRING_FORMAT = " 카드: %s  ";
-	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
+	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d점";
 
 	private OutputView() {
 	}
 
-	public static void printInitialResult(List<Player> players, Dealer dealer) {
-		printPlayersInitialDrawResult(players);
-		printInitialDrawResult(dealer);
-	}
-
-	private static void printPlayersInitialDrawResult(List<Player> players) {
-		for (Player player : players) {
-			printInitialDrawResult(player);
-		}
-	}
-
-	private static void printInitialDrawResult(User user) {
-		System.out.printf("%s %s %s", user.getName(), parseCardsString(user.getFirstShowCards()), NEW_LINE);
+	public static void printInitialDrawResult(User user) {
+		System.out.printf("%s %s %s", user.getName(), parseCards(user.getFirstOpenCards()), NEW_LINE);
 	}
 
 	public static void printPlayerCard(User user) {
-		System.out.printf("%s %s %s", user.getName(), parseCardsString(user.getCards()), NEW_LINE);
+		System.out.printf("%s %s %s", user.getName(), parseCards(user.getCards()), NEW_LINE);
 	}
 
-	public static void printDealerDraw() {
-		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+	public static void printDealerDraw(Dealer dealer) {
+		System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%s", dealer.getName(), NEW_LINE);
 	}
 
 	public static void printUsersCardsAndScore(ScoreBoards scoreBoards) {
-		String allUsersResult = scoreBoards.getScoreBoards().stream()
-			.map(OutputView::parseOneUserScore)
-			.collect(Collectors.joining(NEW_LINE));
-
-		System.out.println(allUsersResult);
+		System.out.println(parseAllUsersCardAndScoreData(scoreBoards));
 	}
 
-	private static String parseOneUserScore(ScoreBoard playerScoreBoard) {
+	private static String parseAllUsersCardAndScoreData(ScoreBoards scoreBoards) {
+		return scoreBoards.getScoreBoards().stream()
+			.map(OutputView::parseSingleUserCardAndScore)
+			.collect(Collectors.joining(NEW_LINE));
+	}
+
+	private static String parseSingleUserCardAndScore(ScoreBoard playerScoreBoard) {
 		return String.format("%s %s %s",
-			playerScoreBoard.getName(), parseCardsString(playerScoreBoard.getCards()),
+			playerScoreBoard.getName(), parseCards(playerScoreBoard.getCards()),
 			parseScore(playerScoreBoard.getScore()));
 	}
 
-	private static String parseCardsString(List<Card> cards) {
+	private static String parseCards(List<Card> cards) {
 		String cardsAsString = cards.stream()
 			.map(OutputView::parseCardString)
 			.collect(Collectors.joining(JOINING_DELIMITER));
@@ -76,11 +66,13 @@ public class OutputView {
 
 	public static void printGameResult(UserResults userResults) {
 		System.out.println("## 최종 수익");
-		String printData = userResults.getPlayerResults().stream()
+		System.out.println(parseAllUsersPrizeResult(userResults));
+	}
+
+	private static String parseAllUsersPrizeResult(UserResults userResults) {
+		return userResults.getPlayerResults().stream()
 			.map(playerPrize -> String.format("%s : %d원", playerPrize.getName(), playerPrize.getPrize()))
 			.collect(Collectors.joining(NEW_LINE));
-
-		System.out.println(printData);
 	}
 
 	public static void printExceptionMessage(String message) {

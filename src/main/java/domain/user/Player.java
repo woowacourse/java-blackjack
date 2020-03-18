@@ -7,22 +7,22 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Player extends User {
-	private final Money money;
+	private final Money bettingMoney;
 
 	private static final int FIRST_SHOW_SIZE = 2;
 
-	private Player(Name name, Money money) {
+	private Player(Name name, Money bettingMoney) {
 		super(name);
-		this.money = money;
+		this.bettingMoney = bettingMoney;
 	}
 
-	private Player(Name name, Money money, Cards cards) {
+	private Player(Name name, Money bettingMoney, Cards cards) {
 		super(name, cards);
-		this.money = money;
+		this.bettingMoney = bettingMoney;
 	}
 
-	public static Player fromNameAndMoney(String name, int money) {
-		return new Player(new Name(name), Money.of(money));
+	public static Player fromNameAndMoney(String name, int bettingMoney) {
+		return new Player(new Name(name), Money.of(bettingMoney));
 	}
 
 	public static Player fromNameAndMoneyAndCards(String name, int bettingMoney, Card... cards) {
@@ -30,17 +30,17 @@ public class Player extends User {
 			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
+	public Money getBettingMoney() {
+		return bettingMoney;
+	}
+
 	@Override
 	public boolean isDrawable() {
 		return !isBlackjack() && !isBust();
 	}
 
-	public Money getMoney() {
-		return money;
-	}
-
 	@Override
-	protected int getFirstShowCardSize() {
+	public int getFirstShowCardSize() {
 		return FIRST_SHOW_SIZE;
 	}
 

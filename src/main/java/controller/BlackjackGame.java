@@ -6,71 +6,29 @@ import domain.card.CardDeck;
 import domain.result.ScoreBoards;
 import domain.result.UserResults;
 import domain.user.Dealer;
+import domain.user.Gamers;
 import domain.user.Player;
 import domain.user.PlayerFactory;
-import util.DrawResponse;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackGame {
 	public void play() {
+		final Gamers gamers = initGamers();
+		gamers.drawFirstTime(OutputView::printInitialDrawResult);
+		gamers.drawPlayersAdditional(InputView::inputAdditionalDraw, OutputView::printPlayerCard);
+		gamers.drawDealerAdditional(OutputView::printDealerDraw);
+
+		ScoreBoards scoreBoards = gamers.calculateScoreBoards();
+		OutputView.printUsersCardsAndScore(scoreBoards);
+		UserResults totalPrizeResult = gamers.calculatePrizeResults(scoreBoards);
+		OutputView.printGameResult(totalPrizeResult);
+	}
+
+	private Gamers initGamers() {
 		final List<Player> players = PlayerFactory.create(InputView.inputNames(), InputView::inputBettingMoney);
 		final Dealer dealer = new Dealer();
 		final CardDeck cardDeck = new CardDeck();
-		drawInitialUsersCard(players, dealer, cardDeck);
-		drawAdditionalUsersCard(players, dealer, cardDeck);
-		printResult(players, dealer);
-	}
-
-	private void drawInitialUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-		drawInitialPlayersCard(players, cardDeck);
-		drawInitialDealerCard(dealer, cardDeck);
-		OutputView.printInitialResult(players, dealer);
-	}
-
-	private void drawInitialPlayersCard(List<Player> players, CardDeck cardDeck) {
-		for (Player player : players) {
-			player.drawFirst(cardDeck);
-		}
-	}
-
-	private void drawInitialDealerCard(Dealer dealer, CardDeck cardDeck) {
-		dealer.drawFirst(cardDeck);
-	}
-
-	private void drawAdditionalUsersCard(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-		drawAdditionalPlayersCard(players, cardDeck);
-		drawAdditionalDealerCard(dealer, cardDeck);
-	}
-
-	private void drawAdditionalPlayersCard(List<Player> players, CardDeck cardDeck) {
-		for (Player player : players) {
-			drawAdditionalPlayerCard(player, cardDeck);
-		}
-	}
-
-	private void drawAdditionalPlayerCard(Player player, CardDeck cardDeck) {
-		while (player.isDrawable() && isYes(player)) {
-			player.draw(cardDeck);
-			OutputView.printPlayerCard(player);
-		}
-	}
-
-	private boolean isYes(Player player) {
-		return DrawResponse.isYes(InputView.inputAdditionalDraw(player.getName()));
-	}
-
-	private void drawAdditionalDealerCard(Dealer dealer, CardDeck cardDeck) {
-		if (dealer.isDrawable()) {
-			dealer.draw(cardDeck);
-			OutputView.printDealerDraw();
-		}
-	}
-
-	private void printResult(List<Player> players, Dealer dealer) {
-		ScoreBoards scoreBoards = ScoreBoards.fromAllUsers(players, dealer);
-		OutputView.printUsersCardsAndScore(scoreBoards);
-		UserResults userResults = scoreBoards.calculateUsersResult();
-		OutputView.printGameResult(userResults);
+		return new Gamers(players, dealer, cardDeck);
 	}
 }

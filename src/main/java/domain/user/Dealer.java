@@ -28,7 +28,7 @@ public class Dealer extends User {
 	}
 
 	@Override
-	protected int getFirstShowCardSize() {
+	public int getFirstShowCardSize() {
 		return FIRST_SHOW_SIZE;
 	}
 }

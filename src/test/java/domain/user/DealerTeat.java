@@ -56,7 +56,7 @@ public class DealerTeat {
 	@Test
 	void getInitialCardTest() {
 		Dealer dealer = Dealer.fromCards(new Card(HEART, EIGHT), new Card(CLOVER, NINE));
-		assertThat(dealer.getFirstShowCards()).containsExactly(new Card(HEART, EIGHT));
+		assertThat(dealer.getFirstOpenCards()).containsExactly(new Card(HEART, EIGHT));
 	}
 
 	@DisplayName("딜러의 카드 점수 합계가 21점이 넘어가는 경우 버스트 상태가 된다.")

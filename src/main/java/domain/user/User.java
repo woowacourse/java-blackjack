@@ -9,8 +9,6 @@ import domain.card.CardDeck;
 import domain.card.Cards;
 
 public abstract class User {
-	private static final int FIRST_CARD_DRAW_SIZE = 2;
-
 	protected final Name name;
 	protected final Cards cards;
 
@@ -21,12 +19,6 @@ public abstract class User {
 	public User(Name name, Cards cards) {
 		this.name = Objects.requireNonNull(name);
 		this.cards = Objects.requireNonNull(cards);
-	}
-
-	public void drawFirst(CardDeck deck) {
-		for (int i = 0; i < FIRST_CARD_DRAW_SIZE; i++) {
-			draw(deck);
-		}
 	}
 
 	public void draw(CardDeck deck) {
@@ -45,8 +37,16 @@ public abstract class User {
 		return cards.calculateScore();
 	}
 
+	public boolean hasLowerScoreThan(User other) {
+		return this.calculateScore() < other.calculateScore();
+	}
+
 	public boolean hasHigherScoreThan(User other) {
 		return this.calculateScore() > other.calculateScore();
+	}
+
+	public boolean hasSameScoreWith(User other) {
+		return this.calculateScore() == other.calculateScore();
 	}
 
 	public List<Card> getCards() {
@@ -57,11 +57,11 @@ public abstract class User {
 		return name.getName();
 	}
 
-	public List<Card> getFirstShowCards() {
+	public List<Card> getFirstOpenCards() {
 		return cards.getSubList(getFirstShowCardSize());
 	}
 
-	protected abstract int getFirstShowCardSize();
+	public abstract int getFirstShowCardSize();
 
 	public abstract boolean isDrawable();
 }

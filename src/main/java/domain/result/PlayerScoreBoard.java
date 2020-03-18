@@ -36,7 +36,7 @@ public class PlayerScoreBoard implements ScoreBoard {
 	}
 
 	private int calculateMoney(DealerScoreBoard dealerBoard) {
-		return match(dealerBoard).calculatePrize(player.getMoney());
+		return match(dealerBoard).calculatePrize(player.getBettingMoney());
 	}
 
 	private MatchResult match(DealerScoreBoard dealerBoard) {
