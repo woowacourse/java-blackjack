@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Gamer {
-    final PlayingCards playingCards;
+    protected final PlayingCards playingCards;
     private final String name;
 
     public Gamer(PlayingCards playingCards, String name) {
