@@ -2,7 +2,7 @@ package util;
 
 import domain.betting.BettingLog;
 import domain.betting.BettingLogs;
-import domain.betting.BettingMoney;
+import domain.game.Money;
 import domain.player.User;
 import domain.player.Users;
 import view.InputView;
@@ -24,7 +24,7 @@ public class BettingLogGenerator {
     private static void addUserBettingLogs(Users users, List<BettingLog> bettingLogs) {
         for (User user : users) {
             String bettingMoney = InputView.inputBettingMoney(user);
-            bettingLogs.add(new BettingLog(user.getName(), new BettingMoney(bettingMoney)));
+            bettingLogs.add(new BettingLog(user.getName(), new Money(bettingMoney)));
         }
     }
 }

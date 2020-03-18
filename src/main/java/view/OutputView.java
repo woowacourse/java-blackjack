@@ -65,7 +65,7 @@ public class OutputView {
     }
 
     private static void printIndividualResult(final Result result) {
-        System.out.println(result.getName() + ": " + result.getBettingMoney()
+        System.out.println(result.getName() + ": " + result.getWinningMoney()
                 .setScale(0, RoundingMode.FLOOR));
     }
 }

@@ -1,21 +1,23 @@
 package domain.betting;
 
+import domain.game.Money;
+
 import java.math.BigDecimal;
 
 public class BettingLog {
     private final String name;
-    private final BettingMoney bettingMoney;
+    private final Money money;
 
-    public BettingLog(String name, BettingMoney bettingMoney) {
+    public BettingLog(String name, Money money) {
         this.name = name;
-        this.bettingMoney = bettingMoney;
+        this.money = money;
     }
 
     public String getName() {
         return name;
     }
 
-    public BigDecimal getBettingMoney() {
-        return bettingMoney.getBettingMoney();
+    public BigDecimal getMoney() {
+        return money.getMoney();
     }
 }

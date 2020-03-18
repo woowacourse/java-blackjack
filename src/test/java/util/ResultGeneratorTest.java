@@ -2,8 +2,8 @@ package util;
 
 import domain.betting.BettingLog;
 import domain.betting.BettingLogs;
-import domain.betting.BettingMoney;
 import domain.card.CardDeck;
+import domain.game.Money;
 import domain.game.Results;
 import domain.player.Dealer;
 import domain.player.User;
@@ -28,8 +28,8 @@ public class ResultGeneratorTest {
         CardDeck cardDeck = new CardDeck(CardFactory.create());
         List<BettingLog> bettingLogsList = new ArrayList<>();
 
-        bettingLogsList.add(new BettingLog("userA", new BettingMoney("1000")));
-        bettingLogsList.add(new BettingLog("userB", new BettingMoney("2000")));
+        bettingLogsList.add(new BettingLog("userA", new Money("1000")));
+        bettingLogsList.add(new BettingLog("userB", new Money("2000")));
 
         BettingLogs bettingLogs = new BettingLogs(bettingLogsList);
 

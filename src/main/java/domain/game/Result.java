@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.betting.BettingLog;
-import domain.betting.BettingMoney;
 import domain.player.Player;
 import domain.player.User;
 
@@ -12,13 +11,13 @@ public class Result {
     private final String name;
     private int winCount;
     private int loseCount;
-    private BettingMoney bettingMoney;
+    private Money winningMoney;
 
     public Result(final String name) {
         this.name = name;
         this.winCount = 0;
         this.loseCount = 0;
-        this.bettingMoney = new BettingMoney("0");
+        this.winningMoney = new Money("0");
     }
 
     public void addWinCount() {
@@ -50,10 +49,10 @@ public class Result {
     }
 
     public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer, BettingLog userBettingLog) {
-        BigDecimal bettingMoney = userBettingLog.getBettingMoney();
+        BigDecimal bettingMoney = userBettingLog.getMoney();
         if (isBlackJackWin(mainPlayer, opponentPlayer)) {
-            this.bettingMoney
-                    .addBettingMoney(bettingMoney.multiply(new BigDecimal("1.5")));
+            this.winningMoney
+                    .addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
         }
         if (isBlackJackDraw(mainPlayer, opponentPlayer)
@@ -61,17 +60,17 @@ public class Result {
             return;
         }
         if (isNormalWin(mainPlayer, opponentPlayer)) {
-            this.bettingMoney
-                    .addBettingMoney(bettingMoney);
+            this.winningMoney
+                    .addMoney(bettingMoney);
             return;
         }
         if (isBlackJackLose(opponentPlayer)) {
-            this.bettingMoney
-                    .subtractBettingMoney(bettingMoney.multiply(new BigDecimal("1.5")));
+            this.winningMoney
+                    .subtractMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
         }
-        this.bettingMoney
-                .subtractBettingMoney(bettingMoney);
+        this.winningMoney
+                .subtractMoney(bettingMoney);
     }
 
     private boolean isBlackJackWin(Player mainPlayer, Player opponentPlayer) {
@@ -100,7 +99,7 @@ public class Result {
                 && opponentPlayer.isBlackJack();
     }
 
-    public BigDecimal getBettingMoney() {
-        return bettingMoney.getBettingMoney();
+    public BigDecimal getWinningMoney() {
+        return winningMoney.getMoney();
     }
 }

@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.betting.BettingLog;
 import domain.betting.BettingLogs;
-import domain.betting.BettingMoney;
 import domain.player.Dealer;
 import domain.player.Users;
 import factory.UserFactory;
@@ -23,8 +22,8 @@ public class ResultsTest {
         Users users = new Users(UserFactory.create("userA,userB"));
         List<BettingLog> bettingLogsList = new ArrayList<>();
 
-        bettingLogsList.add(new BettingLog("userA", new BettingMoney("1000")));
-        bettingLogsList.add(new BettingLog("userB", new BettingMoney("2000")));
+        bettingLogsList.add(new BettingLog("userA", new Money("1000")));
+        bettingLogsList.add(new BettingLog("userB", new Money("2000")));
 
         BettingLogs bettingLogs = new BettingLogs(bettingLogsList);
 

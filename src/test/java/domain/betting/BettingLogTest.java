@@ -1,5 +1,6 @@
 package domain.betting;
 
+import domain.game.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,6 @@ public class BettingLogTest {
     @Test
     @DisplayName("BettingLog 생성")
     void create() {
-        assertThat(new BettingLog("name", new BettingMoney("1000"))).isInstanceOf(BettingLog.class);
+        assertThat(new BettingLog("name", new Money("1000"))).isInstanceOf(BettingLog.class);
     }
 }
