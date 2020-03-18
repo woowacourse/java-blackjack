@@ -28,6 +28,7 @@ public class Application {
         blackJackGame.additionalDealOut(dealer, players);
 
         GameResult gameResult = GameResult.of(dealer, players);
+        
         OutputView.printTotalResult(gameResult);
         OutputView.printWinningResult(gameResult);
     }

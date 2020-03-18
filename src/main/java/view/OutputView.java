@@ -18,7 +18,6 @@ public class OutputView {
     private static final String CARD = "카드: ";
     private static final String RESULT = " - 결과: ";
     private static final String COLON = ": ";
-    private static final String SPACE = " ";
 
     public static void printFirstDealOutResult(Dealer dealer, PlayersInfo playersInfo) {
         printFirstDealOut(playersInfo);
@@ -52,7 +51,7 @@ public class OutputView {
     }
 
     public static void printDealerDealOut(String name) {
-        System.out.println(NEWLINE + name + "는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf(NEWLINE + "%s는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE, name);
     }
 
     public static void printTotalResult(GameResult gameResult) {
