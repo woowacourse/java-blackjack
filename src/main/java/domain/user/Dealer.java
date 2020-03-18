@@ -8,10 +8,6 @@ public class Dealer extends BlackjackUser {
         super(DEALER_NAME);
     }
 
-    public String getFirstStatus() {
-        return getStatus().split(",")[0];
-    }
-
     @Override
     public boolean isDrawable() {
         return getScore() <= DRAW_MAX_SCORE;

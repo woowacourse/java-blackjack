@@ -1,6 +1,6 @@
 package domain.user;
 
-import static domain.user.HandCard.PERFECT_SCORE;
+import static domain.card.HandCard.PERFECT_SCORE;
 
 public class Player extends BlackjackUser {
 

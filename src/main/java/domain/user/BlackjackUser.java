@@ -2,13 +2,14 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.HandCard;
 
 import java.util.Objects;
 
 public abstract class BlackjackUser {
     private static final int FIRST_DRAW_CARD_COUNT = 2;
 
-    protected final HandCard handCard = new HandCard();
+    private final HandCard handCard = new HandCard();
     private final String name;
 
     public BlackjackUser(String name) {
@@ -39,14 +40,6 @@ public abstract class BlackjackUser {
     public void draw(CardDeck cardDeck) {
         Card card = cardDeck.pick();
         handCard.add(card);
-    }
-
-    public String getStatus() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name)
-                .append(": ")
-                .append(handCard.getNames());
-        return stringBuilder.toString();
     }
 
     public int getScore() {
