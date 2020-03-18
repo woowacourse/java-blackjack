@@ -20,8 +20,4 @@ public class Dealer extends User {
     void hit() {
         playingCards.add(deck.pop());
     }
-
-    int sizeOfCards() {
-        return playingCards.size();
-    }
 }

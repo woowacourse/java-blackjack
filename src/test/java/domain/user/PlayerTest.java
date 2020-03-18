@@ -79,12 +79,12 @@ class PlayerTest {
     void hit() {
         //given
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
-        int defaultSizeOfCards = player.sizeOfCards();
+        int defaultSizeOfCards = player.countCards();
 
         //when
         player.hit(card);
 
         //then
-        assertThat(player.sizeOfCards()).isEqualTo(defaultSizeOfCards + 1);
+        assertThat(player.countCards()).isEqualTo(defaultSizeOfCards + 1);
     }
 }

@@ -15,8 +15,4 @@ public class Player extends User {
     void hit(Card card) {
         this.playingCards.add(card);
     }
-
-    int sizeOfCards() {
-        return playingCards.size();
-    }
 }
