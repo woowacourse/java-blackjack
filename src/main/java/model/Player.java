@@ -7,11 +7,6 @@ import static model.Bet.LOWER_BET_BOUND;
 public class Player extends User {
     private final Bet bet;
 
-    public Player(String name, Bet bet, Deck deck, int initialDrawCount) {
-        super(name, deck, initialDrawCount);
-        this.bet = bet;
-    }
-
     public Player(String name, Bet bet, Deck deck) {
         super(name, deck);
         this.bet = bet;

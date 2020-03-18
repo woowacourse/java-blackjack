@@ -24,6 +24,10 @@ public class CardHand implements Iterable<Card> {
         return calculateScoreWithNoAce();
     }
 
+    public boolean isEmpty() {
+        return cards.size() == 0;
+    }
+
     public int calculateScoreWithAce() {
         int score = calculateScoreWithNoAce();
         if (score + ADDITIONAL_ACE_SCORE > BLACK_JACK_COUNT) {

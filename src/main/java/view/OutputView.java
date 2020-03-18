@@ -15,10 +15,11 @@ public class OutputView {
     private static final String CARD = "카드";
 
 
-    public static void printInitialState(Players players, Dealer dealer){
+    public static void printInitialState(Players players, Dealer dealer) {
         printInitialCards(players, dealer);
         printUsersCard(players, dealer);
     }
+
     public static void printInitialCards(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -63,6 +64,11 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
+    public static void printResult(GameResult gameResult, Players players, Dealer dealer) {
+        printFinalCardHandResult(players, dealer);
+        printGameResult(gameResult);
+    }
+
     public static void printFinalCardHandResult(final Players players, final Dealer dealer) {
         System.out.println();
         printPlayerCard(dealer);
@@ -73,7 +79,7 @@ public class OutputView {
         }
     }
 
-    public static void printResult(final GameResult gameResult) {
+    public static void printGameResult(final GameResult gameResult) {
         System.out.println(NEW_LINE + NEW_LINE + "## 최종 수익");
         printDealerResult(gameResult.getDealerResult());
         printPlayersResult(gameResult.getPlayerResult());
@@ -83,14 +89,14 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(DEALER_NAME)
                 .append(DELIMITER)
-                .append((int)result.getProfit());
+                .append((int) result.getProfit());
         System.out.println(stringBuilder.toString());
     }
 
     private static void printPlayersResult(final Map<Player, Profit> result) {
         for (Player player : result.keySet()) {
             System.out.print(player.getName() + DELIMITER);
-            System.out.println((int)result.get(player).getProfit());
+            System.out.println((int) result.get(player).getProfit());
         }
     }
 }

@@ -5,8 +5,8 @@ import exception.BetRangeException;
 import utils.StringUtils;
 
 public class Bet {
-
     public static final double LOWER_BET_BOUND = 100;
+
     private final double bet;
 
     public Bet(String input) {

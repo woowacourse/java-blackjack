@@ -21,21 +21,11 @@ public class BlackJackGame {
         PlayersData playersData = new PlayersData(makePlayersData(playerNames));
         Players players = new Players(playersData, deck);
         Dealer dealer = new Dealer(deck);
-        firstDrawAllUsers(deck, players, dealer);
         OutputView.printInitialState(players, dealer);
         drawCardToPlayers(players, deck);
         hitOrStayForDealer(dealer, deck);
-        OutputView.printFinalCardHandResult(players, dealer);
-
         GameResult gameResult = new GameResult(players, dealer);
-        OutputView.printResult(gameResult);
-    }
-
-    private static void firstDrawAllUsers(Deck deck, Players players, Dealer dealer) {
-        for (Player player : players) {
-            player.firstDraw(deck);
-        }
-        dealer.firstDraw(deck);
+        OutputView.printResult(gameResult, players, dealer);
     }
 
     private static Map<String, Bet> makePlayersData(PlayerNames playerNames) {

@@ -8,10 +8,6 @@ public class Dealer extends User {
     private static final int FIRST = 0;
     public static final String DEALER_NAME = "딜러";
 
-    public Dealer(Deck deck, int initialDrawCount) {
-        super(DEALER_NAME, deck, initialDrawCount);
-    }
-
     public Dealer(Deck deck) {
         super(DEALER_NAME, deck);
     }
