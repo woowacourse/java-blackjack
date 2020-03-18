@@ -4,15 +4,15 @@ import domain.card.Cards;
 import domain.card.PlayingCards;
 
 public class Player extends User {
-    public Player(PlayingCards playingCards, String name) {
+    Player(PlayingCards playingCards, String name) {
         super(playingCards, name);
     }
 
-    public boolean wantToHit(String willForMoreCard) {
+    boolean wantToHit(String willForMoreCard) {
         return willForMoreCard.equals("y");
     }
 
-    public void confirmCards(Cards cards) {
+    void confirmCards(Cards cards) {
         this.playingCards.add(cards);
     }
 }

@@ -10,12 +10,12 @@ public abstract class User {
     protected final PlayingCards playingCards;
     private final String name;
 
-    public User(PlayingCards playingCards, String name) {
+    User(PlayingCards playingCards, String name) {
         this.playingCards = playingCards;
         this.name = name;
     }
 
-    public void addCard(Card card) {
+    void addCard(Card card) {
         playingCards.add(card);
     }
 
