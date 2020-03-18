@@ -1,24 +1,29 @@
 package domain;
 
 public class Record {
+	private static final Record WIN = new Record(1, 0, 0);
+	private static final Record DRAW = new Record(0, 1, 0);
+	private static final Record LOSE = new Record(0, 0, 1);
 	private static final int MANY_TIMES = 2;
-	private static final int MIN_COUNT = 0;
 
 	private final int winCount;
 	private final int drawCount;
 	private final int loseCount;
 
-	public Record(int winCount, int drawCount, int loseCount) {
-		validate(winCount, drawCount, loseCount);
+	private Record(int winCount, int drawCount, int loseCount) {
 		this.winCount = winCount;
 		this.drawCount = drawCount;
 		this.loseCount = loseCount;
 	}
 
-	private void validate(int winCount, int drawCount, int loseCount) {
-		if (winCount < MIN_COUNT || drawCount < MIN_COUNT || loseCount < MIN_COUNT) {
-			throw new IllegalArgumentException("winCount, drawCount, loseCount는 0 이상이어야 합니다.");
+	public static Record of(User source, User target) {
+		if (source.isWin(target)) {
+			return WIN;
 		}
+		if (source.isDraw(target)) {
+			return DRAW;
+		}
+		return LOSE;
 	}
 
 	public Record add(Record record) {
