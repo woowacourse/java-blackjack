@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CardFactory {
     private final List<Card> cards;
-    private static CardFactory cardFactory = new CardFactory();
+    private static CardFactory instance = new CardFactory();
 
     private CardFactory() {
         this.cards = Collections.unmodifiableList(generateAllCards());
@@ -26,7 +26,7 @@ public class CardFactory {
     }
 
     public static CardFactory getInstance() {
-        return CardFactory.cardFactory;
+        return CardFactory.instance;
     }
 
     public List<Card> issueNewCards() {
