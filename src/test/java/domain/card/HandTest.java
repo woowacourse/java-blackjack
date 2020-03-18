@@ -13,14 +13,14 @@ class HandTest {
 	}
 
 	@Test
-	@DisplayName("2개의 카드를 갖는지를 올바르게 판단하는지 테스트")
+	@DisplayName("블랙잭인지 확인하는 테스트")
 	void hasTwoCardsTest() {
 		Hand hand = Hand.createEmpty();
-		hand.add(new Card(Symbol.EIGHT, Type.DIAMOND));
-		assertThat(hand.hasTwoCards()).isFalse();
+		hand.add(new Card(Symbol.TEN, Type.DIAMOND));
+		assertThat(hand.isBlackJack()).isFalse();
 
 		hand.add(new Card(Symbol.ACE, Type.HEART));
-		assertThat(hand.hasTwoCards()).isTrue();
+		assertThat(hand.isBlackJack()).isTrue();
 	}
 
 	@Test
