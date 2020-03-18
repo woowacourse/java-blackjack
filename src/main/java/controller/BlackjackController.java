@@ -88,7 +88,7 @@ public class BlackjackController {
                 .collect(Collectors.toMap(
                         playerName -> playerName,
                         InputView::inputBattingMoney,
-                        (u, v) -> { throw new IllegalStateException(String.format("Duplicate key %s", u));},
+                        (key, value) -> { throw new IllegalStateException(String.format("Duplicate key %s", key));},
                         LinkedHashMap::new));
     }
 }
