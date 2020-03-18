@@ -4,26 +4,25 @@ import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.Outcome;
-import blackjack.domain.result.ParticipantsResult;
-import blackjack.domain.gambler.Participants;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.gambler.Players;
 
 import java.util.Map;
 
 public class OutputView {
 
-    public static void printCardDistribution(Participants participants) {
+    public static void printCardDistribution(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다."
-            , participants.getDealerName()
-            , String.join(", ", participants.getPlayerNames()));
+                , dealer.getName()
+                , String.join(", ", players.getPlayerNames()));
         System.out.println();
     }
 
-    public static void printUsersCards(Participants participants) {
-        Dealer dealer = participants.getDealer();
+    public static void printUsersCards(Dealer dealer, Players players) {
         System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
         System.out.println();
-        for (Player player : participants.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
         System.out.println();
@@ -49,25 +48,25 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printUsersCardsAndScore(Participants participants) {
+    public static void printUsersCardsAndScore(Dealer dealer, Players players) {
         System.out.println();
-        CardsResult dealerCardsResult = participants.getDealer().getScore();
-        System.out.printf("%s - 결과: %s", getDealerCards(participants.getDealer()), dealerCardsResult.getResult());
+        CardsResult dealerCardsResult = dealer.getScore();
+        System.out.printf("%s - 결과: %s", getDealerCards(dealer), dealerCardsResult.getResult());
         System.out.println();
-        for (Player player : participants.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             CardsResult playerCardsResult = player.getScore();
             System.out.printf("%s - 결과: %s", getPlayerCards(player), playerCardsResult.getResult());
             System.out.println();
         }
     }
 
-    public static void printFinalResult(Participants participants,
-        ParticipantsResult participantsResult) {
+    public static void printFinalResult(Dealer dealer, Players players,
+                                        GameResult gameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        printDealerFinalResult(participants.getDealer(),
-            participantsResult.getDealerResultsNoZero());
-        printPlayerFinalResult(participantsResult.getPlayersResult());
+        printDealerFinalResult(dealer,
+                gameResult.getDealerResultsNoZero());
+        printPlayerFinalResult(gameResult.getPlayersResult());
     }
 
     private static void printDealerFinalResult(Dealer dealer, Map<Outcome, Integer> gameResult) {

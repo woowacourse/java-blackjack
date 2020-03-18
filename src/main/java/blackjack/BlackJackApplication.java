@@ -5,8 +5,8 @@ import blackjack.domain.YesOrNo;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
-import blackjack.domain.result.ParticipantsResult;
-import blackjack.domain.gambler.Participants;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.gambler.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -23,27 +23,28 @@ public class BlackJackApplication {
     }
 
     private static void startGame() {
-        Participants participants = new Participants(new Names(InputView.inputNames()));
+        Players players = new Players(new Names(InputView.inputNames()));
+        Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
-        distributeFirstCards(participants, cardDeck);
-        drawMoreCards(participants, cardDeck);
-        printCalculatedResult(participants);
+        distributeFirstCards(dealer, players, cardDeck);
+        drawMoreCards(dealer, players, cardDeck);
+        printCalculatedResult(dealer, players);
     }
 
-    private static void distributeFirstCards(Participants participants, CardDeck cardDeck) {
-        participants.getDealer().drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
-        for (Player player : participants.getPlayers()) {
+    private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
+        dealer.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
+        for (Player player : players.getPlayers()) {
             player.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         }
-        OutputView.printCardDistribution(participants);
-        OutputView.printUsersCards(participants);
+        OutputView.printCardDistribution(dealer, players);
+        OutputView.printUsersCards(dealer, players);
     }
 
-    private static void drawMoreCards(Participants participants, CardDeck cardDeck) {
-        for (Player player : participants.getPlayers()) {
+    private static void drawMoreCards(Dealer dealer, Players players, CardDeck cardDeck) {
+        for (Player player : players.getPlayers()) {
             drawMorePlayerCardManual(cardDeck, player);
         }
-        drawMoreDealerCardAuto(cardDeck, participants.getDealer());
+        drawMoreDealerCardAuto(cardDeck, dealer);
     }
 
     private static void drawMorePlayerCardManual(CardDeck cardDeck, Player player) {
@@ -60,9 +61,9 @@ public class BlackJackApplication {
         }
     }
 
-    private static void printCalculatedResult(Participants participants) {
-        ParticipantsResult participantsResult = new ParticipantsResult(participants);
-        OutputView.printUsersCardsAndScore(participants);
-        OutputView.printFinalResult(participants, participantsResult);
+    private static void printCalculatedResult(Dealer dealer, Players players) {
+        GameResult gameResult = new GameResult(dealer, players);
+        OutputView.printUsersCardsAndScore(dealer, players);
+        OutputView.printFinalResult(dealer, players, gameResult);
     }
 }

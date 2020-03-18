@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class Participants {
+public final class Players {
 
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private static final int MINIMUM_PLAYER_COUNT = 1;
@@ -17,13 +17,11 @@ public final class Participants {
     private static final String OUT_OF_RANGE_EXCEPTION_MESSAGE =
             String.format("참여 인원은 %d명 이상, %d명 이하이어야 합니다.", MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT);
 
-    private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(Names playerNames) {
+    public Players(Names playerNames) {
         validNotNull(playerNames);
         validCount(playerNames);
-        this.dealer = new Dealer();
         this.players = Collections.unmodifiableList(playerNames.getNames().stream()
                 .map(Player::new)
                 .collect(Collectors.toList()));
@@ -42,10 +40,6 @@ public final class Participants {
         throw new IllegalArgumentException(OUT_OF_RANGE_EXCEPTION_MESSAGE);
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -55,9 +49,5 @@ public final class Participants {
                 .map(Player::getName)
                 .map(Name::toString)
                 .collect(Collectors.toList()));
-    }
-
-    public Name getDealerName() {
-        return dealer.getName();
     }
 }

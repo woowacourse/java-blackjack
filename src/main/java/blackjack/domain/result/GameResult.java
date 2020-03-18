@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Participants;
+import blackjack.domain.gambler.Players;
 import blackjack.domain.gambler.Player;
 
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class ParticipantsResult {
+public final class GameResult {
 
     private static final int INITIAL_COUNT = 0;
     private static final Map<Outcome, Integer> initialDealerResults;
@@ -30,21 +30,20 @@ public final class ParticipantsResult {
     private final Map<Player, Outcome> playerResults;
     private final Map<Outcome, Integer> dealerResults;
 
-    public ParticipantsResult(Participants participants) {
-        validNotNull(participants);
-        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(participants));
+    public GameResult(Dealer dealer, Players players) {
+        validNotNull(players);
+        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, players));
         this.dealerResults = Collections.unmodifiableMap(calculateDealerResults());
     }
 
-    private void validNotNull(Participants participants) {
-        if (participants == null) {
+    private void validNotNull(Players players) {
+        if (players == null) {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
     }
 
-    private Map<Player, Outcome> calculatePlayerResults(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        return participants.getPlayers().stream()
+    private Map<Player, Outcome> calculatePlayerResults(Dealer dealer, Players players) {
+        return players.getPlayers().stream()
                 .collect(Collectors
                         .toMap(player -> player, player -> player.calculateOutcome(dealer), (a1, a2) -> a1,
                                 LinkedHashMap::new));

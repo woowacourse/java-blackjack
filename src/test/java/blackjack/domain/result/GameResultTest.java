@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Participants;
+import blackjack.domain.gambler.Players;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,26 +17,26 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ParticipantsResultTest {
+public class GameResultTest {
 
-    private static ParticipantsResult participantsResult;
+    private static GameResult gameResult;
 
     @BeforeAll
     static void resetVariable() {
-        Participants participants = new Participants(new Names("jamie,Ravie"));
+        Players players = new Players(new Names("jamie,Ravie"));
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = participants.getDealer();
+        Dealer dealer = new Dealer();
         dealer.drawCard(new CardDeck(), 2);
-        for (Player player : participants.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
-        participantsResult = new ParticipantsResult(participants);
+        gameResult = new GameResult(dealer, players);
     }
 
     @DisplayName("생성자 NULL일 경우 예외")
     @Test
     void validNotNull() {
-        assertThatThrownBy(() -> new ParticipantsResult(null))
+        assertThatThrownBy(() -> new GameResult(new Dealer(), null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("잘못");
     }
@@ -44,7 +44,7 @@ public class ParticipantsResultTest {
     @DisplayName("플레이어의 승무패를 가져옴")
     @Test
     void checkPlayersResult() {
-        Map<Player, Outcome> playerResult = participantsResult.getPlayersResult();
+        Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
         List<Outcome> outcomes = Arrays.asList(Outcome.values());
 
         for (Player player : playerResult.keySet()) {
@@ -55,7 +55,7 @@ public class ParticipantsResultTest {
     @DisplayName("딜러의 승무패를 가져옴")
     @Test
     void checkDealerResult() {
-        Map<Outcome, Integer> dealerResults = participantsResult.getDealerResultsNoZero();
+        Map<Outcome, Integer> dealerResults = gameResult.getDealerResultsNoZero();
         int total = 0;
         for (Outcome outcome : dealerResults.keySet()) {
             total += dealerResults.get(outcome);
