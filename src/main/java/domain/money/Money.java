@@ -1,4 +1,4 @@
-package domain;
+package domain.money;
 
 public class Money {
     protected double money;

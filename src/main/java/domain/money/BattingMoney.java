@@ -1,4 +1,4 @@
-package domain;
+package domain.money;
 
 public class BattingMoney extends Money {
     public BattingMoney(double battingMoney) {

@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.CardDeck;
 import domain.player.Dealer;
+import domain.player.PlayerInputInformation;
 import domain.player.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +18,10 @@ public class WinningResultTest {
     @Test
     void getterTest() {
         List<String> playerName = new ArrayList<>(Arrays.asList("pobi", "subway"));
+        PlayerInputInformation playerInformation = new PlayerInputInformation(playerName,Arrays.asList(1000d,2000d));
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck.giveTwoCardStartGame());
-        Players players = new Players(cardDeck,playerName);
+        Players players = new Players(cardDeck,playerInformation.getPlayerInformation());
 
         WinningResult winningResult = new WinningResult(players,dealer);
 

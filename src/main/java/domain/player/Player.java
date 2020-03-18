@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.BattingMoney;
+import domain.money.BattingMoney;
 import domain.card.Card;
 
 import java.util.List;

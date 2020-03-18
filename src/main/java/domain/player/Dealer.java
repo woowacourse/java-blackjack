@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.Money;
+import domain.money.Money;
 import domain.card.Card;
 import domain.card.CardCalculator;
 

@@ -12,7 +12,6 @@ public class PlayersName {
 
     public PlayersName(String playerName) {
         this.playerName = new ArrayList<>(Arrays.asList(playerName.split(DELIMITER)));
-        ;
     }
 
     public List<String> getPlayerName() {

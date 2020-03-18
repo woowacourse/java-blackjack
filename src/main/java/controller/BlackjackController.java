@@ -3,22 +3,26 @@ package controller;
 import domain.WinningResult;
 import domain.answer.AnswerType;
 import domain.card.CardDeck;
-import domain.player.Dealer;
-import domain.player.Player;
-import domain.player.Players;
-import domain.player.PlayersName;
+import domain.player.*;
 import view.InputView;
 import view.OutputView;
 
+import java.util.stream.Collectors;
+
 public class BlackjackController {
     private CardDeck cardDeck;
-    private PlayersName playersName;
+    private PlayerInputInformation playerInputInformation;
     private Dealer dealer;
     private Players players;
 
     public BlackjackController() {
         cardDeck = new CardDeck();
-        playersName = new PlayersName(InputView.inputPlayerName());
+        PlayersName playersName = new PlayersName(InputView.inputPlayerName());
+        playerInputInformation = new PlayerInputInformation(playersName.getPlayerName(), playersName.getPlayerName()
+                        .stream()
+                        .map(InputView::inputBattingMoney)
+                        .collect(Collectors.toList())
+        );
         OutputView.printInitial(playersName.getPlayerName());
         ready();
     }
@@ -30,7 +34,7 @@ public class BlackjackController {
 
     private void ready() {
         dealer = new Dealer(cardDeck.giveTwoCardStartGame());
-        players = new Players(cardDeck, playersName.getPlayerName());
+        players = new Players(cardDeck, playerInputInformation.getPlayerInformation());
 
         OutputView.printCardReport(dealer.getName(), dealer.cardToString());
         for (Player player : players.getPlayers()) {
