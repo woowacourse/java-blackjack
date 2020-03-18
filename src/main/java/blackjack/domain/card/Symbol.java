@@ -32,6 +32,6 @@ public enum Symbol {
     }
 
     public boolean isAce() {
-        return this.name().equals("ACE");
+        return this.equals(ACE);
     }
 }
