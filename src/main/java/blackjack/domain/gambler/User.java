@@ -1,28 +1,31 @@
 package blackjack.domain.gambler;
 
+import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserCards;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.Outcome;
+
 import java.util.List;
+import java.util.Objects;
 
 public abstract class User {
 
     private static final int DEFAULT_DRAW_COUNT = 1;
-    private static final String PLAYER_NAME_IS_BLANK_EXCEPTION_MESSAGE =
-        "참여인원의 이름은 공백이어선 안됩니다.";
+    private static final String PLAYER_NAME_IS_NULL_EXCEPTION_MESSAGE =
+            "참여인원의 이름은 null이어선 안됩니다.";
 
-    private final String name;
+    private final Name name;
     protected UserCards userCards = new UserCards();
 
-    public User(String name) {
+    public User(Name name) {
         validNotBlankOrNull(name);
-        this.name = name.trim();
+        this.name = name;
     }
 
-    private void validNotBlankOrNull(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException(PLAYER_NAME_IS_BLANK_EXCEPTION_MESSAGE);
+    private void validNotBlankOrNull(Name name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException(PLAYER_NAME_IS_NULL_EXCEPTION_MESSAGE);
         }
     }
 
@@ -44,7 +47,7 @@ public abstract class User {
         return Outcome.of(getScore(), user.getScore());
     }
 
-    public final String getName() {
+    public final Name getName() {
         return name;
     }
 

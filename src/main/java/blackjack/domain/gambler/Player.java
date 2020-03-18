@@ -1,12 +1,14 @@
 package blackjack.domain.gambler;
 
+import blackjack.domain.Name;
+
 import java.util.List;
 
 public final class Player extends User {
 
     private static final int BASES_SCORE_CAN_DRAW = 21;
 
-    public Player(String name) {
+    public Player(Name name) {
         super(name);
     }
 

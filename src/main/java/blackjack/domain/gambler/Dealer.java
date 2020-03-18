@@ -1,5 +1,7 @@
 package blackjack.domain.gambler;
 
+import blackjack.domain.Name;
+
 import java.util.List;
 
 public final class Dealer extends User {
@@ -10,7 +12,7 @@ public final class Dealer extends User {
     private static final int FIRST_TO_INDEX = 1;
 
     public Dealer() {
-        super(NAME);
+        super(new Name(NAME));
     }
 
     @Override

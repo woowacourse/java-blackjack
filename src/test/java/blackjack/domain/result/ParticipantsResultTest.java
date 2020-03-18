@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Participants;
 import blackjack.domain.gambler.User;
@@ -19,8 +20,7 @@ public class ParticipantsResultTest {
 
     @BeforeAll
     static void resetVariable() {
-        List<String> playerNames = Arrays.asList("Jamie,Ravie".split(","));
-        Participants participants = new Participants(playerNames);
+        Participants participants = new Participants(new Names("jamie,Ravie"));
         CardDeck cardDeck = new CardDeck();
         User dealer = participants.getDealer();
         dealer.drawCard(new CardDeck(), 2);
