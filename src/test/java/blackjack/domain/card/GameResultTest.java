@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.component.CardNumber;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +12,6 @@ import java.util.stream.Stream;
 
 import static blackjack.domain.card.CardBundleHelper.aCardBundle;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GameResultTest {
 
@@ -23,31 +23,15 @@ class GameResultTest {
         );
     }
 
-    private static Stream<Arguments> nullCardBundleProvider() {
-        return Stream.of(
-                Arguments.of(null, aCardBundle(CardNumber.TWO), "갬블러의 카드가 없습니다."),
-                Arguments.of(aCardBundle(), aCardBundle(CardNumber.TWO), "갬블러의 카드가 없습니다."),
-                Arguments.of(aCardBundle(CardNumber.ACE), null, "딜러의 카드가 없습니다."),
-                Arguments.of(aCardBundle(CardNumber.ACE), aCardBundle(), "딜러의 카드가 없습니다.")
-        );
-    }
-
     @DisplayName("GameResult에서 값(승,무,패) 찾기")
     @ParameterizedTest
     @MethodSource("cardBundleProvider")
     void findByResult(CardBundle gamblerCardBundle, CardBundle dealerCardBundle, GameResult expect) {
-        GameResult actual = GameResult.findByCardBundles(gamblerCardBundle, dealerCardBundle);
+        Score gamblerScore = new Score(gamblerCardBundle);
+        Score dealerScore = new Score(dealerCardBundle);
+        GameResult actual = GameResult.findByScores(dealerScore, gamblerScore);
 
         assertThat(actual).isEqualTo(expect);
-    }
-
-    @DisplayName("GameResult 인자에 null, empty 값 전달시")
-    @ParameterizedTest
-    @MethodSource("nullCardBundleProvider")
-    void findByResultException(CardBundle gamblerCardBundle, CardBundle dealerCardBundle, String message) {
-        assertThatThrownBy(() -> GameResult.findByCardBundles(gamblerCardBundle, dealerCardBundle))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
     }
 
 }

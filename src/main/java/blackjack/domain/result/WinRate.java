@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.score.Score;
 
 class WinRate implements MoneyRate {
 
@@ -8,8 +8,8 @@ class WinRate implements MoneyRate {
     private static final double BLACKJACK_RATE = 1.5;
 
     @Override
-    public double getRate(CardBundle cardBundle) {
-        if (cardBundle.isBlackjack()) {
+    public double getRate(Score score) {
+        if (score.isBlackjack()) {
             return BLACKJACK_RATE;
         }
         return DEFAULT_WIN_RATE;

@@ -1,9 +1,8 @@
 package blackjack.domain.calculator;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardBundle;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum ScoreCalculator {
 
@@ -16,18 +15,18 @@ public enum ScoreCalculator {
         this.scoreStrategy = scoreStrategy;
     }
 
-    public static ScoreCalculator findByCards(List<Card> cards) {
+    public static ScoreCalculator findByCardBundle(CardBundle cardBundle) {
         return Arrays.stream(values())
-                .filter(scoreCalculator -> scoreCalculator.support(cards))
+                .filter(scoreCalculator -> scoreCalculator.support(cardBundle))
                 .findFirst()
                 .orElse(DEFAULT);
     }
 
-    private boolean support(List<Card> card) {
-        return this.scoreStrategy.support(card);
+    private boolean support(CardBundle cardBundle) {
+        return this.scoreStrategy.support(cardBundle);
     }
 
-    public int calculate(List<Card> cards) {
-        return scoreStrategy.calculate(cards);
+    public int calculate(CardBundle cardBundle) {
+        return scoreStrategy.calculate(cardBundle);
     }
 }

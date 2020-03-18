@@ -1,18 +1,18 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.score.Score;
 
 class WinStrategy extends GameResultStrategy {
 
     private static final int WIN_VALUE = 1;
 
     @Override
-    protected boolean enough(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return dealerCardBundle.isBurst() || isOnlyGamblerBlackjack(gamblerCardBundle, dealerCardBundle);
+    protected boolean enough(Score dealerScore, Score gamblerScore) {
+        return dealerScore.isBurst() || isOnlyGamblerBlackjack(dealerScore, gamblerScore);
     }
 
-    private boolean isOnlyGamblerBlackjack(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return gamblerCardBundle.isBlackjack() && !dealerCardBundle.isBlackjack();
+    private boolean isOnlyGamblerBlackjack(Score dealerScore, Score gamblerScore) {
+        return gamblerScore.isBlackjack() && !dealerScore.isBlackjack();
     }
 
     @Override

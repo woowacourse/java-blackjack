@@ -5,6 +5,7 @@ import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.report.GameReport;
 import blackjack.domain.report.Reportable;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.score.Score;
 
 public class Dealer extends Player implements Reportable {
 
@@ -21,9 +22,10 @@ public class Dealer extends Player implements Reportable {
 
     @Override
     public GameReport createReport(Gambler gambler) {
-        GameResult gameResult = GameResult.findByCardBundles(gambler.cardBundle, this.cardBundle);
+        Score gamblerScore = gambler.getScore();
+        GameResult gameResult = GameResult.findByScores(getScore(), gamblerScore);
 
-        double money = gameResult.getApplyRateMoney(gambler.cardBundle, gambler.playerInfo.getBettingMoney());
+        double money = gameResult.getApplyRateMoney(gamblerScore, gambler.playerInfo.getBettingMoney());
 
         return new GameReport(gambler.getName(), money);
     }

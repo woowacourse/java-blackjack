@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,9 +39,11 @@ class LoseStrategyTest {
     void enough(String header, CardBundle dealerCardBundle, CardBundle gamblerCardBundle, boolean expect) {
         //given
         GameResultStrategy loseStrategy = new LoseStrategy();
+        Score gamblerScore = new Score(gamblerCardBundle);
+        Score dealerScore = new Score(dealerCardBundle);
 
         //when
-        boolean actual = loseStrategy.enough(gamblerCardBundle, dealerCardBundle);
+        boolean actual = loseStrategy.enough(dealerScore, gamblerScore);
 
         //then
         assertThat(actual).isEqualTo(expect);

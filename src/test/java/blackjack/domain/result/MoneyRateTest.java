@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.component.CardNumber;
 import blackjack.domain.card.component.Symbol;
+import blackjack.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,9 +23,11 @@ class MoneyRateTest {
         cardBundle.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
         cardBundle.addCard(Card.of(Symbol.DIAMOND, addingNumber));
 
+        Score score = new Score(cardBundle);
+
         //when
         MoneyRate moneyRate = new WinRate();
-        Double actualRate = moneyRate.getRate(cardBundle);
+        Double actualRate = moneyRate.getRate(score);
 
         //then
         assertThat(actualRate).isEqualTo(expectRate);
@@ -37,10 +40,11 @@ class MoneyRateTest {
         CardBundle cardBundle = CardBundle.emptyBundle();
         cardBundle.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
         cardBundle.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
+        Score score = new Score(cardBundle);
 
         //when
         MoneyRate moneyRate = new DrawRate();
-        Double actualRate = moneyRate.getRate(cardBundle);
+        Double actualRate = moneyRate.getRate(score);
 
         //then
         assertThat(actualRate).isEqualTo(0D);
@@ -53,10 +57,11 @@ class MoneyRateTest {
         CardBundle cardBundle = CardBundle.emptyBundle();
         cardBundle.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
         cardBundle.addCard(Card.of(Symbol.DIAMOND, CardNumber.ACE));
+        Score score = new Score(cardBundle);
 
         //when
         MoneyRate moneyRate = new LoseRate();
-        Double actualRate = moneyRate.getRate(cardBundle);
+        Double actualRate = moneyRate.getRate(score);
 
         //then
         assertThat(actualRate).isEqualTo(-1D);

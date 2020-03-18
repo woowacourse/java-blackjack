@@ -1,19 +1,17 @@
 package blackjack.domain.calculator;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
+import blackjack.domain.card.CardBundle;
 
 class DefaultScoreStrategy implements ScoreStrategy {
+
     @Override
-    public boolean support(List<Card> cards) {
+    public boolean support(CardBundle cards) {
         return true;
     }
 
     @Override
-    public int calculate(List<Card> cards) {
-        return cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
+    public int calculate(CardBundle cards) {
+        return cards.calculateScore();
     }
+
 }

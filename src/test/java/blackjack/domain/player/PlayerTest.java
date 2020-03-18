@@ -99,7 +99,7 @@ class PlayerTest {
         player.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.KING));
 
         //when
-        int score = player.getScore();
+        int score = player.getScoreValue();
 
         //then
         assertThat(score).isEqualTo(10);

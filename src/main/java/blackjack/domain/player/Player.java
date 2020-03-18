@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.Drawable;
+import blackjack.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,12 +35,17 @@ public abstract class Player {
         cardBundle.addCard(drawable.draw());
     }
 
-    public int getScore() {
-        return cardBundle.calculateScore();
+    public int getScoreValue() {
+        return new Score(cardBundle).getScore();
+    }
+
+    public Score getScore() {
+        return new Score(cardBundle);
     }
 
     public boolean isBurst() {
-        return cardBundle.isBurst();
+        Score score = new Score(cardBundle);
+        return score.isBurst();
     }
 
     public boolean isNotBurst() {
@@ -47,7 +53,8 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return cardBundle.isBlackjack();
+        Score score = new Score(cardBundle);
+        return score.isBlackjack();
     }
 
     public boolean isNotBlackjack() {

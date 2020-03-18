@@ -1,22 +1,22 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.score.Score;
 
 class LoseStrategy extends GameResultStrategy {
 
     private static final int LOSE_VALUE = -1;
 
     @Override
-    protected boolean enough(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return isOnlyGamblerBurst(gamblerCardBundle, dealerCardBundle) || isOnlyDealerBlackjack(gamblerCardBundle, dealerCardBundle);
+    protected boolean enough(Score dealerScore, Score gamblerScore) {
+        return isOnlyGamblerBurst(gamblerScore, dealerScore) || isOnlyDealerBlackjack(gamblerScore, dealerScore);
     }
 
-    private boolean isOnlyDealerBlackjack(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return dealerCardBundle.isBlackjack() && !gamblerCardBundle.isBlackjack();
+    private boolean isOnlyDealerBlackjack(Score gamblerScore, Score dealerScore) {
+        return dealerScore.isBlackjack() && !gamblerScore.isBlackjack();
     }
 
-    private boolean isOnlyGamblerBurst(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return gamblerCardBundle.isBurst() && !dealerCardBundle.isBurst();
+    private boolean isOnlyGamblerBurst(Score gamblerScore, Score dealerScore) {
+        return gamblerScore.isBurst() && !dealerScore.isBurst();
     }
 
     @Override

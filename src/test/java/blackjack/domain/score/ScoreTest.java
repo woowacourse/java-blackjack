@@ -1,5 +1,8 @@
-package blackjack.domain.card;
+package blackjack.domain.score;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.CardBundleHelper;
 import blackjack.domain.card.component.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +15,7 @@ import java.util.stream.Stream;
 import static blackjack.domain.card.component.Symbol.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CardBundleTest {
+class ScoreTest {
 
     private static Stream<Arguments> cardBundleProvider() {
         return Stream.of(
@@ -29,9 +32,9 @@ class CardBundleTest {
         );
     }
 
-    @DisplayName("카드의 점수 계산 로직, ACE가 있는 경우에 21을 넘지 않으면 10을 더한 점수를 반환한다.")
+    @DisplayName("카드의 점수 계산 로직 단순히 더하기만 한다.")
     @ParameterizedTest
-    @CsvSource(value = {"ACE, 20", "TWO,21"})
+    @CsvSource(value = {"ACE, 10", "TWO,11"})
     void calculateScore(CardNumber number, int expect) {
         //given
         CardBundle cardBundle = CardBundle.emptyBundle();
@@ -50,13 +53,16 @@ class CardBundleTest {
     @ParameterizedTest
     @MethodSource("cardBundleProvider")
     void isBlackjack(CardBundle cardBundle, boolean result) {
-        assertThat(cardBundle.isBlackjack()).isEqualTo(result);
+        Score score = new Score(cardBundle);
+        assertThat(score.isBlackjack()).isEqualTo(result);
     }
 
     @DisplayName("CardBundle 이 Burst(>21) 인지 확인")
     @ParameterizedTest
     @MethodSource("isBurstProvider")
     void isBurst(CardBundle cardBundle, boolean result) {
-        assertThat(cardBundle.isBurst()).isEqualTo(result);
+        Score score = new Score(cardBundle);
+        assertThat(score.isBurst()).isEqualTo(result);
     }
+
 }

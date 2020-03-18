@@ -1,6 +1,5 @@
 package blackjack.domain.calculator;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.component.CardNumber;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.CardBundleHelper.aCardBundle;
@@ -41,10 +39,7 @@ class ScoreCalculatorTest {
     @MethodSource("findByCardProvider")
     void findByCardBundle(CardBundle cardBundle, ScoreCalculator result) {
         //given
-        List<Card> cards = cardBundle.getCards();
-
-        //when
-        ScoreCalculator expect = ScoreCalculator.findByCards(cards);
+        ScoreCalculator expect = ScoreCalculator.findByCardBundle(cardBundle);
 
         //then
         assertThat(expect).isEqualTo(result);
@@ -55,11 +50,10 @@ class ScoreCalculatorTest {
     @MethodSource("calculateScoreProvider")
     void calculate(CardBundle cardBundle, int result) {
         //given
-        List<Card> cards = cardBundle.getCards();
+        ScoreCalculator scoreCalculator = ScoreCalculator.findByCardBundle(cardBundle);
 
         //when
-        ScoreCalculator scoreCalculator = ScoreCalculator.findByCards(cards);
-        int expect = scoreCalculator.calculate(cards);
+        int expect = scoreCalculator.calculate(cardBundle);
 
         //then
         assertThat(expect).isEqualTo(result);

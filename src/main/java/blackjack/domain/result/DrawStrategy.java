@@ -1,14 +1,14 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.score.Score;
 
 class DrawStrategy extends GameResultStrategy {
 
     private static final int DRAW_VALUE = 0;
 
     @Override
-    protected boolean enough(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return gamblerCardBundle.isBlackjack() && dealerCardBundle.isBlackjack();
+    protected boolean enough(Score gamblerScore, Score dealerScore) {
+        return gamblerScore.isBlackjack() && dealerScore.isBlackjack();
     }
 
     @Override

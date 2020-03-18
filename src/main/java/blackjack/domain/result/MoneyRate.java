@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.score.Score;
 
 interface MoneyRate {
-    double getRate(CardBundle cardBundle);
+    double getRate(Score score);
 }

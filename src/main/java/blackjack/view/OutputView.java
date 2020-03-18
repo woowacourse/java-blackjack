@@ -49,7 +49,7 @@ public class OutputView {
     private static String getCardList(Players players) {
         List<Player> gamePlayers = players.getPlayers();
         return gamePlayers.stream()
-                .map(player -> String.format("%s 결과 - %d", getCardInfo(player), player.getScore()))
+                .map(player -> String.format("%s 결과 - %d", getCardInfo(player), player.getScoreValue()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
@@ -60,7 +60,7 @@ public class OutputView {
     public static void showReports(Players players) {
         showFinalPlayersCards(players);
         GameStatisticsDTO gameStatisticsDTO = new GameStatisticsDTO(players.getReports());
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
         System.out.println(gameStatisticsDTO.getDealerResult());
         System.out.println(gameStatisticsDTO.getGamblerResult());
     }

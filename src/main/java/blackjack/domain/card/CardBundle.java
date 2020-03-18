@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.calculator.ScoreCalculator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,16 +22,9 @@ public class CardBundle {
     }
 
     public int calculateScore() {
-        return ScoreCalculator.findByCards(cards)
-                .calculate(cards);
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == STARTING_CARD_SIZE && calculateScore() == MAXIMUM_VALUE;
-    }
-
-    public boolean isBurst() {
-        return calculateScore() > MAXIMUM_VALUE;
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 
     public boolean isEmpty() {
@@ -46,5 +37,14 @@ public class CardBundle {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.CardBundle;
 import blackjack.domain.generic.BettingMoney;
+import blackjack.domain.score.Score;
 
 import java.util.Arrays;
 
@@ -18,29 +18,29 @@ public enum GameResult {
         this.moneyRate = moneyRate;
     }
 
-    public static GameResult findByCardBundles(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        validate(gamblerCardBundle, dealerCardBundle);
+    public static GameResult findByScores(Score dealerScore, Score gamblerScore) {
+        validateScore(dealerScore, gamblerScore);
         return Arrays.stream(values())
-                .filter(gameResult -> gameResult.fulfill(gamblerCardBundle, dealerCardBundle))
+                .filter(gameResult -> gameResult.fulfill(dealerScore, gamblerScore))
                 .findFirst()
                 .orElseThrow(AssertionError::new);
     }
 
-    private static void validate(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        if (gamblerCardBundle == null || gamblerCardBundle.isEmpty()) {
-            throw new IllegalArgumentException("갬블러의 카드가 없습니다.");
+    private static void validateScore(Score dealerScore, Score gamblerScore) {
+        if (dealerScore == null) {
+            throw new IllegalArgumentException("딜러의 점수가 비어있습니다.");
         }
-        if (dealerCardBundle == null || dealerCardBundle.isEmpty()) {
-            throw new IllegalArgumentException("딜러의 카드가 없습니다.");
+        if (gamblerScore == null) {
+            throw new IllegalArgumentException("갬블러의 점수가 비어있습니다.");
         }
     }
 
-    private boolean fulfill(CardBundle gamblerCardBundle, CardBundle dealerCardBundle) {
-        return this.gameResultStrategy.fulfill(gamblerCardBundle, dealerCardBundle);
+    private boolean fulfill(Score dealerScore, Score gamblerScore) {
+        return gameResultStrategy.fulfill1(dealerScore, gamblerScore);
     }
 
-    public double getApplyRateMoney(CardBundle cardBundle, BettingMoney bettingMoney) {
-        double rate = this.moneyRate.getRate(cardBundle);
+    public double getApplyRateMoney(Score score, BettingMoney bettingMoney) {
+        double rate = this.moneyRate.getRate(score);
         return bettingMoney.multipleRate(rate)
                 .getMoney();
     }
