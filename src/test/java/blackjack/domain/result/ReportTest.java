@@ -87,4 +87,25 @@ class ReportTest {
 		expected.put(ResultType.LOSE, 1L);
 		assertThat(report).extracting("dealerResult").isEqualTo(expected);
 	}
+
+	@Test
+	void getDealerResult_DealerResult_ToStringList() {
+		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+		Report report = Report.from(blackjackTable);
+
+		List<String> expected = Arrays.asList("1승", "1무", "1패");
+		assertThat(report.getDealerResult()).isEqualTo(expected);
+	}
+
+	@Test
+	void getPlayersResult_PlayersResult_ToStringMap() {
+		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+		Report report = Report.from(blackjackTable);
+
+		Map<Player, String> expected = new HashMap<>();
+		expected.put(players.get(0), ResultType.WIN.getAlias());
+		expected.put(players.get(1), ResultType.DRAW.getAlias());
+		expected.put(players.get(2), ResultType.LOSE.getAlias());
+		assertThat(report.getPlayersResult()).isEqualTo(expected);
+	}
 }

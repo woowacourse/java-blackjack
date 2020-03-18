@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -46,12 +47,23 @@ public class Report {
 				Collections::unmodifiableMap));
 	}
 
-	// TODO: 2020-03-17 일급컬렉션으로 감춘 값을 그대로 내보내지 마라 -> ResultType을 String으로!
-	public Map<ResultType, Long> getDealerResult() {
-		return dealerResult;
+	public List<String> getDealerResult() {
+		return dealerResult.entrySet().stream()
+			.map(entry -> {
+				long count = entry.getValue();
+				ResultType resultType = entry.getKey();
+				return count + resultType.getAlias();
+			})
+			.collect(collectingAndThen(toList(), Collections::unmodifiableList));
 	}
 
-	public Map<Player, ResultType> getPlayersResult() {
-		return playersResult;
+	public Map<Player, String> getPlayersResult() {
+		return playersResult.keySet().stream()
+			.collect(collectingAndThen(
+				toMap(Function.identity(),
+					player -> playersResult.get(player).getAlias(),
+					(x, y) -> x,
+					LinkedHashMap::new),
+				Collections::unmodifiableMap));
 	}
 }

@@ -4,11 +4,9 @@ import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
@@ -39,13 +37,7 @@ public class StringUtil {
 			.collect(joining(JOIN_DELIMITER));
 	}
 
-	public static String joinDealerResult(Map<ResultType, Long> dealerResult) {
-		return dealerResult.entrySet().stream()
-			.map(entry -> {
-				long count = entry.getValue();
-				ResultType resultType = entry.getKey();
-				return count + resultType.getAlias();
-			})
-			.collect(joining(SPACE));
+	public static String joinDealerResult(List<String> dealerResult) {
+		return String.join(SPACE, dealerResult);
 	}
 }

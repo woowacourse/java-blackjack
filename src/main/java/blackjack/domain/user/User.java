@@ -24,12 +24,6 @@ public abstract class User implements Comparable<User> {
 		this.hand = hand;
 	}
 
-	private void validate(Hand hand) {
-		if (Objects.isNull(hand)) {
-			throw new InvalidUserException(InvalidUserException.NULL_HAND);
-		}
-	}
-
 	User(String name) {
 		this(name, new Hand());
 	}
@@ -37,6 +31,12 @@ public abstract class User implements Comparable<User> {
 	private void validate(String name) {
 		if (Objects.isNull(name) || name.trim().isEmpty()) {
 			throw new InvalidUserException(InvalidUserException.NULL_OR_EMPTY);
+		}
+	}
+
+	private void validate(Hand hand) {
+		if (Objects.isNull(hand)) {
+			throw new InvalidUserException(InvalidUserException.NULL_HAND);
 		}
 	}
 

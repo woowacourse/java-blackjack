@@ -4,9 +4,7 @@ import static blackjack.util.StringUtil.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +13,6 @@ import org.junit.jupiter.params.provider.NullSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -65,9 +62,7 @@ class StringUtilTest {
 
 	@Test
 	void joinDealerResult_MapOfResultTypeAndCount_JoinDealerResultToString() {
-		Map<ResultType, Long> dealerResult = new EnumMap<>(ResultType.class);
-		dealerResult.put(ResultType.WIN, 2L);
-		dealerResult.put(ResultType.LOSE, 1L);
+		List<String> dealerResult = Arrays.asList("2승", "1패");
 
 		String expected = "2승 1패";
 		assertThat(StringUtil.joinDealerResult(dealerResult)).isEqualTo(expected);

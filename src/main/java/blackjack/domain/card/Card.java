@@ -2,6 +2,8 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
+import blackjack.domain.exceptions.InvalidCardException;
+
 public class Card {
 	private final Symbol symbol;
 	private final Type type;
@@ -16,10 +18,9 @@ public class Card {
 		return CardFactory.pickUp(symbol, type);
 	}
 
-	// TODO: 2020-03-17 exception custom 진행하기, test 작성
 	private static void validate(Symbol symbol, Type type) {
 		if (Objects.isNull(symbol) || Objects.isNull(type)) {
-			throw new IllegalArgumentException("symbol 또는 type이 존재하지 않습니다.");
+			throw new InvalidCardException(InvalidCardException.NULL);
 		}
 	}
 

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.result.Report;
-import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -54,11 +53,11 @@ public class OutputView {
 		printPlayersResult(blackJackReport.getPlayersResult());
 	}
 
-	private static void printPlayersResult(Map<Player, ResultType> playersResult) {
-		for (Map.Entry<Player, ResultType> entry : playersResult.entrySet()) {
+	private static void printPlayersResult(Map<Player, String> playersResult) {
+		for (Map.Entry<Player, String> entry : playersResult.entrySet()) {
 			Player player = entry.getKey();
-			ResultType resultType = entry.getValue();
-			printUserResult(player.getName(), resultType.getAlias());
+			String resultType = entry.getValue();
+			printUserResult(player.getName(), resultType);
 		}
 	}
 

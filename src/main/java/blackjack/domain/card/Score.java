@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 import blackjack.domain.exceptions.InvalidScoreException;
 
 public class Score {
-	static final int BUST_SCORE = 22;
 	static final Score ZERO = new Score(0);
+	static final int BUST_SCORE = 22;
 	static final Score ADDITIONAL_ACE_SCORE = new Score(10);
 	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
 

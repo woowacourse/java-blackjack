@@ -34,31 +34,7 @@ class HandTest {
 	}
 
 	@Test
-	void calculateScore_SumCards() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			Card.of(Symbol.TWO, Type.CLUB),
-			Card.of(Symbol.EIGHT, Type.DIAMOND));
-		hand.add(cards);
-
-		Score expected = Score.valueOf(10);
-		assertThat(hand.calculateScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculateScore_WithAceCard_SumCards() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			Card.of(Symbol.TWO, Type.CLUB),
-			Card.of(Symbol.EIGHT, Type.DIAMOND));
-		hand.add(cards);
-
-		Score expected = Score.valueOf(10);
-		assertThat(hand.calculateScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void aceHandled_InputScore_ReturnAceHandledScore() {
+	void calculateScore_CardsInHand_CalculatedScore() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.ACE, Type.CLUB),
@@ -70,27 +46,15 @@ class HandTest {
 	}
 
 	@Test
-	void calculateBustHandledScore_BustScore_ReturnZeroScore() {
+	void calculateBustHandledScore_CardsInHand_BustScoreToZero() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			Card.of(Symbol.JACK, Type.DIAMOND),
-			Card.of(Symbol.QUEEN, Type.HEART),
-			Card.of(Symbol.TWO, Type.SPADE));
+			Card.of(Symbol.QUEEN, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND),
+			Card.of(Symbol.FOUR, Type.HEART));
 		hand.add(cards);
 
 		Score expected = Score.ZERO;
-		assertThat(hand.calculateBustHandledScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculateBustHandledScore_NotBustScore_ReturnScore() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			Card.of(Symbol.JACK, Type.DIAMOND),
-			Card.of(Symbol.QUEEN, Type.HEART));
-		hand.add(cards);
-
-		Score expected = Score.valueOf(20);
 		assertThat(hand.calculateBustHandledScore()).isEqualTo(expected);
 	}
 }

@@ -18,28 +18,8 @@ public class Hand {
 		this.cards.addAll(cards);
 	}
 
-	// TODO: 2020-03-17 ScoreCalculator 클래스로 분리
 	public Score calculateScore() {
-		Score score = cards.stream()
-			.map(Score::valueOf)
-			.reduce(Score.ZERO, Score::add);
-		return aceHandled(score);
-	}
-
-	private Score aceHandled(Score score) {
-		if (hasAce() && isNotBustBy(score)) {
-			score = score.add(Score.ADDITIONAL_ACE_SCORE);
-		}
-		return score;
-	}
-
-	private boolean hasAce() {
-		return cards.stream()
-			.anyMatch(Card::isAce);
-	}
-
-	private boolean isNotBustBy(Score score) {
-		return score.add(Score.ADDITIONAL_ACE_SCORE).getScore() < Score.BUST_SCORE;
+		return ScoreCalculator.calculateScore(cards);
 	}
 
 	public Score calculateBustHandledScore() {

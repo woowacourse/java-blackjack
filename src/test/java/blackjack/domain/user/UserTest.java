@@ -5,10 +5,12 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
 
@@ -26,6 +28,14 @@ class UserTest {
 		assertThatThrownBy(() -> new Dealer(name))
 			.isInstanceOf(InvalidUserException.class)
 			.hasMessage(InvalidUserException.NULL_OR_EMPTY);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_NullHand_InvalidUserExceptionThrown(Hand hand) {
+		assertThatThrownBy(() -> new Dealer("dealer", hand))
+			.isInstanceOf(InvalidUserException.class)
+			.hasMessage(InvalidUserException.NULL_HAND);
 	}
 
 	@Test
