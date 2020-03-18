@@ -19,8 +19,8 @@ public class Card {
 		return symbol.getScore();
 	}
 
-	public int getScore(int userScore) {
-		return symbol.getConvertedScoreByJudge(userScore);
+	public Symbol getSymbol() {
+		return symbol;
 	}
 
 	@Override

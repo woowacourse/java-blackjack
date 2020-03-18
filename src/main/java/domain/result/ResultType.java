@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 public enum ResultType {
-	WIN(value -> value > 0, "승"),
+	WIN(value -> value > 0, "승"), // todo 여기에 돈계산 로직이 필요.
 	DRAW( value -> value == 0, "무"),
 	LOSE(value -> value < 0, "패" );
 

@@ -54,7 +54,7 @@ public class User implements Comparable<User> {
 	}
 
 	public int calculateScore() {
-		return cards.calculateScore();
+		return cards.calculateScore1();
 	}
 
 	public boolean isNotBlackjack() {

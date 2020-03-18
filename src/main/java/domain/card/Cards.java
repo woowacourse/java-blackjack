@@ -8,8 +8,6 @@ import static domain.user.User.NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE;
 
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
-	private static final int BURST_START_BOUNDARY = 22;
-	private static final int BURST_SCORE = 0;
 	private static final int INITIAL_CARDS_SIZE = 2;
 
 	private List<Card> cards;
@@ -29,24 +27,24 @@ public class Cards {
 	}
 
 	public boolean isNotBlackJack() {
-		return !(hasInitialSize() && calculateScore() == BLACKJACK_SCORE);
+		return !(hasInitialSize() && calculateScore1() == BLACKJACK_SCORE);
 	}
 
-	public int calculateScore() {
-		int score = cards.stream()
+	public int calculateScore1() {
+		int rawScore = cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
 
-		if (score >= BURST_START_BOUNDARY) {
-			return BURST_SCORE;
+		int specialScore = cards.stream()
+				.filter(card -> card.getSymbol().getSpecialScoreJudge(rawScore))
+				.mapToInt(card -> card.getSymbol().getSpecialScoreSupplier())
+				.findFirst()
+				.orElse(0);
+
+		if (rawScore + specialScore > 21) {
+			return 0;
 		}
-
-		int finalScore = score;
-		score = cards.stream()
-				.mapToInt(card -> card.getScore(finalScore))
-				.sum();
-
-		return score;
+		return rawScore + specialScore;
 	}
 
 	public boolean hasInitialSize() {

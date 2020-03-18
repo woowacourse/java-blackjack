@@ -24,6 +24,7 @@ public class BlackjackController {
 	}
 
 	public void run() {
+		// todo 플레이어 각각 배팅금액을 받자.
 		deck.shuffle();
 		dealer.addInitialCards(deck);
 		for (Player player : players) {
@@ -44,7 +45,7 @@ public class BlackjackController {
 
 	private void printResult(Dealer dealer, Players players) {
 		printResultStatus(dealer, players);
-		printTotalResult(Result.from(dealer, players), players);
+		printTotalResult(Result.from(dealer, players), players); // todo 이걸 수정
 	}
 
 	private void proceedExtraDraw(Player player, Deck deck) {
