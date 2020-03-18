@@ -20,16 +20,16 @@ public class WinningResultTest {
     @DisplayName("올바른 수익 결과가 담기는지 테스트")
     @Test
     void getWinningResultTest() {
-        Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Card card3 = Card.of(CardNumber.KING, CardSuitSymbol.CLUB);
-        Card card4 = Card.of(CardNumber.KING, CardSuitSymbol.HEART);
-        Card card5 = Card.of(CardNumber.TWO, CardSuitSymbol.HEART);
-        Card card6 = Card.of(CardNumber.ACE, CardSuitSymbol.HEART);
+        Card aceClub = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card fiveClub = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card kingClub = Card.of(CardNumber.KING, CardSuitSymbol.CLUB);
+        Card kingHeart = Card.of(CardNumber.KING, CardSuitSymbol.HEART);
+        Card twoHeart = Card.of(CardNumber.TWO, CardSuitSymbol.HEART);
+        Card aceHeart = Card.of(CardNumber.ACE, CardSuitSymbol.HEART);
 
-        User dealer = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
-        User user1 = new Player("lavine", new ArrayList<>(Arrays.asList(card3, card4)),10_000);
-        User user2 = new Player("Subway", new ArrayList<>(Arrays.asList(card5, card6)),10_000);
+        User dealer = new Dealer(new ArrayList<>(Arrays.asList(aceClub, fiveClub)));
+        User user1 = new Player("lavine", new ArrayList<>(Arrays.asList(kingClub, kingHeart)),10_000);
+        User user2 = new Player("Subway", new ArrayList<>(Arrays.asList(twoHeart, aceHeart)),10_000);
         List<User> userList = new ArrayList<>(Arrays.asList(dealer, user1, user2));
         Users users = new Users(userList);
 

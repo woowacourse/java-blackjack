@@ -26,24 +26,18 @@ public class DealerTest {
     @DisplayName("16을 기준으로 카드를 받는지 결정하는 메서드")
     @Test
     void insertCardTest() {
-        Card card1 = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
-        Card card2 = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Dealer dealerWithAceUnderSixteen = new Dealer(new ArrayList<>(Arrays.asList(card1, card2)));
-        if (dealerWithAceUnderSixteen.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealerWithAceUnderSixteen, cardDeck.drawCard());
-        }
+        Card aceClub = Card.of(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card fiveClub = Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Dealer dealerWithAceUnderSixteen = new Dealer(new ArrayList<>(Arrays.asList(aceClub, fiveClub)));
+        blackJackRule.hit(dealerWithAceUnderSixteen, cardDeck.drawCard());
 
-        Card card3 = Card.of(CardNumber.QUEEN, CardSuitSymbol.DIAMOND);
-        Dealer dealerWithoutAceUnderSixteen = new Dealer(new ArrayList<>(Arrays.asList(card2, card3)));
-        if (dealerWithoutAceUnderSixteen.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealerWithoutAceUnderSixteen, cardDeck.drawCard());
-        }
+        Card queenDiamond = Card.of(CardNumber.QUEEN, CardSuitSymbol.DIAMOND);
+        Dealer dealerWithoutAceUnderSixteen = new Dealer(new ArrayList<>(Arrays.asList(fiveClub, queenDiamond)));
+        blackJackRule.hit(dealerWithoutAceUnderSixteen, cardDeck.drawCard());
 
-        Card card4 = Card.of(CardNumber.NINE, CardSuitSymbol.CLUB);
-        Dealer dealerOverSixteen = new Dealer(new ArrayList<>(Arrays.asList(card3, card4)));
-        if (dealerOverSixteen.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealerOverSixteen, cardDeck.drawCard());
-        }
+        Card nineClub = Card.of(CardNumber.NINE, CardSuitSymbol.CLUB);
+        Dealer dealerOverSixteen = new Dealer(new ArrayList<>(Arrays.asList(queenDiamond, nineClub)));
+        blackJackRule.hit(dealerOverSixteen, cardDeck.drawCard());
 
         Assertions.assertThat(dealerWithAceUnderSixteen.getCard().getCards().size()).isEqualTo(3);
         Assertions.assertThat(dealerWithoutAceUnderSixteen.getCard().getCards().size()).isEqualTo(3);
@@ -56,9 +50,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB))));
-        if (dealer.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealer, cardDeck.drawCard());
-        }
+        blackJackRule.hit(dealer, cardDeck.drawCard());
 
         Assertions.assertThat(dealer.getCard().getCards().size()).isEqualTo(2);
     }
@@ -69,9 +61,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.FIVE, CardSuitSymbol.CLUB))));
-        if (dealer.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealer, cardDeck.drawCard());
-        }
+        blackJackRule.hit(dealer, cardDeck.drawCard());
 
         Assertions.assertThat(dealer.getCard().getCards().size()).isEqualTo(3);
     }
@@ -82,9 +72,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB))));
-        if (dealer.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealer, cardDeck.drawCard());
-        }
+        blackJackRule.hit(dealer, cardDeck.drawCard());
 
         Assertions.assertThat(dealer.getCard().getCards().size()).isEqualTo(2);
     }
@@ -95,9 +83,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.JACK, CardSuitSymbol.CLUB),
                 Card.of(CardNumber.SIX, CardSuitSymbol.CLUB))));
-        if (dealer.getCard().isCardsSumUnderSixteen()) {
-            blackJackRule.hit(dealer, cardDeck.drawCard());
-        }
+        blackJackRule.hit(dealer, cardDeck.drawCard());
 
         Assertions.assertThat(dealer.getCard().getCards().size()).isEqualTo(3);
     }
