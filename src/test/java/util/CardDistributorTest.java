@@ -1,8 +1,8 @@
 package util;
 
 import domain.card.CardDeck;
-import domain.user.Dealer;
-import domain.user.User;
+import domain.player.Dealer;
+import domain.player.User;
 import factory.CardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

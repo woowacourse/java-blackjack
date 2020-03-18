@@ -3,9 +3,9 @@ package view;
 import domain.card.Card;
 import domain.game.Result;
 import domain.game.Results;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Users;
 
 import java.util.ArrayList;
 import java.util.List;

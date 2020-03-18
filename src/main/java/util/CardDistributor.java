@@ -1,7 +1,7 @@
 package util;
 
 import domain.card.CardDeck;
-import domain.user.Player;
+import domain.player.Player;
 
 public class CardDistributor {
     private static final int DEFAULT_CARD_SIZE = 2;

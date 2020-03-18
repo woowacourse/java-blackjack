@@ -2,9 +2,9 @@ package util;
 
 import domain.card.CardDeck;
 import domain.game.Results;
-import domain.user.Dealer;
-import domain.user.User;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.User;
+import domain.player.Users;
 import factory.CardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

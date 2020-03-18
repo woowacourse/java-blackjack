@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;

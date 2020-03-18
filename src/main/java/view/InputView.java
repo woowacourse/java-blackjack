@@ -1,6 +1,6 @@
 package view;
 
-import domain.user.User;
+import domain.player.User;
 
 import java.util.Scanner;
 

@@ -2,10 +2,10 @@ package util;
 
 import domain.game.Result;
 import domain.game.Results;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.User;
+import domain.player.Users;
 
 import java.util.ArrayList;
 import java.util.List;

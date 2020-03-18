@@ -1,9 +1,9 @@
 import domain.card.CardDeck;
 import domain.game.UserIntention;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.User;
+import domain.player.Users;
 import factory.CardFactory;
 import factory.UserFactory;
 import util.CardDistributor;

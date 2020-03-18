@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 public class User extends Player {
     public User(final String name) {
