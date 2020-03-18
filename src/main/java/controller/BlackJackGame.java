@@ -4,6 +4,10 @@ import model.*;
 import view.InputView;
 import view.OutputView;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class BlackJackGame {
     public static final String COMMA = ",";
     public static final int ADDITIONAL_DRAW_COUNT = 1;
@@ -15,6 +19,7 @@ public class BlackJackGame {
         Deck deck = new Deck(CardFactory.createCardList());
         PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
         Players players = new Players(playerNames, deck, INITIAL_DRAW_COUNT);
+        PlayersData playersData = new PlayersData(makePlayersData(playerNames));
         Dealer dealer = new Dealer(deck, INITIAL_DRAW_COUNT);
 
         OutputView.printInitialCards(players, dealer);
@@ -25,6 +30,14 @@ public class BlackJackGame {
 
         GameResult gameResult = new GameResult(players, dealer);
         OutputView.printResult(gameResult);
+    }
+
+    private static Map<String, Bet> makePlayersData(PlayerNames playerNames) {
+        Map<String, Bet> playerData = new LinkedHashMap<>();
+        for (String name : playerNames) {
+            playerData.put(name, new Bet(InputView.inputBet(name)));
+        }
+        return Collections.unmodifiableMap(playerData);
     }
 
     private static void drawCardToPlayers(final Players players, final Deck deck) {

@@ -5,10 +5,10 @@ import exception.IllegalResultException;
 import java.util.Arrays;
 
 public enum Result {
-    BLACKJACK(-2, 1.5),
-    WIN(-1, 1.0),
-    LOSE(1, -1.0),
-    DRAW(0, 0.0);
+    BLACKJACK(-2, Constants.BLACK_JACK_RATIO),
+    WIN(-1, Constants.WIN_RATIO),
+    LOSE(1, Constants.LOSE_RATIO),
+    DRAW(0, Constants.DRAW_RATIO);
 
     private final int compareValue;
     private final double ratio;
@@ -51,5 +51,12 @@ public enum Result {
 
     private boolean isSameResult(int compareValue) {
         return this.compareValue == compareValue;
+    }
+
+    private static class Constants {
+        public static final double BLACK_JACK_RATIO = 1.5;
+        public static final double WIN_RATIO = 1.0;
+        public static final double LOSE_RATIO = -1.0;
+        public static final double DRAW_RATIO = 0.0;
     }
 }
