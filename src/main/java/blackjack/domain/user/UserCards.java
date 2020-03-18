@@ -60,4 +60,8 @@ public class UserCards {
     public List<Card> getCards() {
         return cards;
     }
+
+    public List<Card> getCards(int amount) {
+        return cards.subList(0, amount);
+    }
 }

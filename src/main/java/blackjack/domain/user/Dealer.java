@@ -24,6 +24,6 @@ public class Dealer extends User {
 
     @Override
     public List<Card> getInitialCards() {
-        return this.cards.getCards().subList(0, INITIAL_SHOW_CARD_AMOUNT);
+        return this.cards.getCards(INITIAL_SHOW_CARD_AMOUNT);
     }
 }
