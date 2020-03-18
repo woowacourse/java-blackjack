@@ -1,6 +1,6 @@
 package view;
 
-import domain.gamer.dto.GamerDto;
+import domain.gamer.dto.GamerWithMoneyDto;
 import domain.gamer.dto.GamerWithCardsDto;
 import domain.gamer.dto.GamerWithScoreDto;
 
@@ -51,11 +51,7 @@ public class OutputView {
         System.out.println("\n## 최종 수익");
     }
 
-    public static void printDealerResult(int totalEarning) {
-        System.out.println(String.format("딜러 : %d", totalEarning));
-    }
-
-    public static void printEachResult(GamerDto playerDto, int earning) {
-        System.out.println(playerDto.getName() + " : " + earning);
+    public static void printEachResult(GamerWithMoneyDto gamerWithMoneyDto) {
+        System.out.println(gamerWithMoneyDto.getName() + " : " + gamerWithMoneyDto.getMoney());
     }
 }
