@@ -13,30 +13,30 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GamerWithMoneyDtoTest {
-    private GamerWithMoneyDto gamerWithMoneyDto;
+class GamerMoneyDtoTest {
+    private GamerMoneyDto gamerMoneyDto;
 
     @BeforeEach
     void setUp() {
         PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
-        gamerWithMoneyDto = GamerWithMoneyDto.of(new Player(playingCards, "testName"), 1500);
+        gamerMoneyDto = GamerMoneyDto.of(new Player(playingCards, "testName"), 1500);
     }
 
     @Test
     @DisplayName("생성 테스트")
     void of() {
-        assertThat(GamerWithMoneyDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"),1500)).isNotNull();
+        assertThat(GamerMoneyDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"),1500)).isNotNull();
     }
 
     @Test
     @DisplayName("getter - name")
     void getName() {
-        assertThat(gamerWithMoneyDto.getName()).isEqualTo("testName");
+        assertThat(gamerMoneyDto.getName()).isEqualTo("testName");
     }
 
     @Test
     @DisplayName("getter - battingMoney")
     void getBattingMoney() {
-        assertThat(gamerWithMoneyDto.getMoney()).isEqualTo(1500);
+        assertThat(gamerMoneyDto.getMoney()).isEqualTo(1500);
     }
 }

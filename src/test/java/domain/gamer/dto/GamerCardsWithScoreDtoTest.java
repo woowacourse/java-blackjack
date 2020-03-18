@@ -14,37 +14,37 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GamerWithScoreDtoTest {
-    private GamerWithScoreDto gamerWithScoreDto;
+class GamerCardsWithScoreDtoTest {
+    private GamerCardsWithScoreDto gamerCardsWithScoreDto;
 
     @BeforeEach
     void setUp() {
         PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
-        gamerWithScoreDto = GamerWithScoreDto.of(new Player(playingCards, "testName"));
+        gamerCardsWithScoreDto = GamerCardsWithScoreDto.of(new Player(playingCards, "testName"));
     }
 
     @Test
     @DisplayName("생성 테스트")
     void of() {
-        assertThat(GamerWithCardsDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
+        assertThat(GamerCardsDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
     }
 
     @Test
     @DisplayName("getter - name")
     void getName() {
-        assertThat(gamerWithScoreDto.getName()).isEqualTo("testName");
+        assertThat(gamerCardsWithScoreDto.getName()).isEqualTo("testName");
     }
 
     @Test
     @DisplayName("getter - Cards")
     void getCards() {
         List<Card> cards = Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER));
-        assertThat(gamerWithScoreDto.getCards().get(0)).isEqualTo(cards.get(0));
+        assertThat(gamerCardsWithScoreDto.getCards().get(0)).isEqualTo(cards.get(0));
     }
 
     @Test
     @DisplayName("getter - Score")
     void getScore() {
-        assertThat(gamerWithScoreDto.getScore()).isEqualTo(10);
+        assertThat(gamerCardsWithScoreDto.getScore()).isEqualTo(10);
     }
 }

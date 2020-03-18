@@ -1,6 +1,6 @@
 package view;
 
-import domain.gamer.dto.GamerWithMoneyDto;
+import domain.gamer.dto.GamerMoneyDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +11,9 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = ",";
 
-    public static List<GamerWithMoneyDto> inputGamerDto() {
+    public static List<GamerMoneyDto> inputGamerDto() {
         return inputPlayerNames().stream()
-                .map(name -> new GamerWithMoneyDto(name, inputBattingMoney(name)))
+                .map(name -> new GamerMoneyDto(name, inputBattingMoney(name)))
                 .collect(Collectors.toList());
     }
 

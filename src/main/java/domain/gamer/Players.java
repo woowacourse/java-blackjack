@@ -1,7 +1,7 @@
 package domain.gamer;
 
 import domain.card.Deck;
-import domain.gamer.dto.GamerWithMoneyDto;
+import domain.gamer.dto.GamerMoneyDto;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,16 +15,16 @@ public class Players implements Iterable<Player> {
         this.players = players;
     }
 
-    public static Players valueOf(Deck deck, List<GamerWithMoneyDto> gamerWithMoneyDtos) {
-        validateDuplicateName(gamerWithMoneyDtos);
-        return gamerWithMoneyDtos.stream()
+    public static Players valueOf(Deck deck, List<GamerMoneyDto> gamerMoneyDtos) {
+        validateDuplicateName(gamerMoneyDtos);
+        return gamerMoneyDtos.stream()
                 .map(gamerDto -> new Player(deck.dealInitCards(), gamerDto.getName(), gamerDto.getMoney()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
-    private static void validateDuplicateName(List<GamerWithMoneyDto> gamerWithMoneyDtos) {
-        List<String> playerNames = gamerWithMoneyDtos.stream()
-                .map(GamerWithMoneyDto::getName)
+    private static void validateDuplicateName(List<GamerMoneyDto> gamerMoneyDtos) {
+        List<String> playerNames = gamerMoneyDtos.stream()
+                .map(GamerMoneyDto::getName)
                 .collect(Collectors.toList());
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
             throw new NameDuplicationException("중복되는 이름이 존재합니다.");
