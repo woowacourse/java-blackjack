@@ -28,6 +28,7 @@ class ResultsTest {
 		players.getPlayers().get(2).receiveCard(Card.of(Symbol.TWO, Type.DIAMOND));
 
 		results = Results.of(dealer, players);
+		System.out.println(results);
 	}
 
 	@Test
@@ -37,13 +38,13 @@ class ResultsTest {
 
 	@Test
 	void getResult_ResultOfIndexIsWin_IsReturnTrue() {
-		assertThat(results.getResult(players.getPlayers().get(1))).isTrue();
+		assertThat(results.getResult(players.getPlayers().get(1))).isEqualTo(Result.WIN);
 	}
 
 	@ParameterizedTest
 	@ValueSource(ints = {0, 2})
 	void getResult_ResultOfIndexIsLose_IsReturnFalse(int index) {
-		assertThat(results.getResult(players.getPlayers().get(index))).isFalse();
+		assertThat(results.getResult(players.getPlayers().get(index))).isEqualTo(Result.LOSE);
 	}
 
 	@Test

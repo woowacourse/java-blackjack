@@ -16,6 +16,8 @@ public interface Playable {
 
 	Score computeScore();
 
+	boolean isBlackjack();
+
 	boolean isBust();
 
 	List<Card> getStartHand();
@@ -29,4 +31,6 @@ public interface Playable {
 	Boolean isWinner(Score dealerScore);
 
 	boolean canReceiveCard();
+
+	boolean isLoser(Score computeScore);
 }

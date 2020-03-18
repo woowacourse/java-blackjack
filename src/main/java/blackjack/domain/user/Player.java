@@ -39,6 +39,17 @@ public final class Player extends AbstractPlayer {
 	}
 
 	@Override
+	public boolean isLoser(Score dealerScore) {
+		if (isBust()) {
+			return true;
+		}
+		if (dealerScore.isOver(MAX_SCORE)) {
+			return false;
+		}
+		return computeScore().isUnder(dealerScore);
+	}
+
+	@Override
 	public boolean canReceiveCard() {
 		return !isBust();
 	}

@@ -1,6 +1,6 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.betting.exceptions.BettingMoniesException;
+import blackjack.domain.betting.exceptions.MoniesException;
 import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,21 +15,21 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class BettingMoniesTest {
-	private static BettingMoney zero;
-	private static BettingMoney hundred;
-	private static BettingMoney thousand;
-	private static BettingMoney fiveThousand;
-	private static List<BettingMoney> threeBettingMoney;
+class MoniesTest {
+	private static Money zero;
+	private static Money hundred;
+	private static Money thousand;
+	private static Money fiveThousand;
+	private static List<Money> threeBettingMoney;
 
 	private Players players;
 
 	@BeforeAll
 	static void beforeAll() {
-		zero = BettingMoney.zero();
-		hundred = BettingMoney.of("100");
-		thousand = BettingMoney.of("1000");
-		fiveThousand = BettingMoney.of("5000");
+		zero = Money.zero();
+		hundred = Money.of("100");
+		thousand = Money.of("1000");
+		fiveThousand = Money.of("5000");
 		threeBettingMoney = Arrays.asList(hundred, thousand, fiveThousand);
 	}
 
@@ -40,11 +40,11 @@ class BettingMoniesTest {
 
 	@ParameterizedTest
 	@MethodSource("of_IsNotNull")
-	void of_IsNotNull(List<BettingMoney> inputs) {
-		assertThat(BettingMonies.of(players, inputs)).isNotNull();
+	void of_IsNotNull(List<Money> inputs) {
+		assertThat(Monies.of(players, inputs)).isNotNull();
 	}
 
-	static Stream<List<BettingMoney>> of_IsNotNull() {
+	static Stream<List<Money>> of_IsNotNull() {
 		return Stream.of(threeBettingMoney,
 				Arrays.asList(zero, zero, zero),
 				Arrays.asList(hundred, hundred, hundred));
@@ -52,12 +52,12 @@ class BettingMoniesTest {
 
 	@ParameterizedTest
 	@MethodSource("of_InvalidInput_ThrowBettingMoniesException")
-	void of_InvalidInput_ThrowBettingMoniesException(List<BettingMoney> inputs) {
-		assertThatThrownBy(() -> BettingMonies.of(players, inputs))
-				.isInstanceOf(BettingMoniesException.class);
+	void of_InvalidInput_ThrowBettingMoniesException(List<Money> inputs) {
+		assertThatThrownBy(() -> Monies.of(players, inputs))
+				.isInstanceOf(MoniesException.class);
 	}
 
-	static Stream<List<BettingMoney>> of_InvalidInput_ThrowBettingMoniesException() {
+	static Stream<List<Money>> of_InvalidInput_ThrowBettingMoniesException() {
 		return Stream.of(Collections.emptyList(),
 				Collections.singletonList(hundred),
 				Arrays.asList(hundred, thousand),

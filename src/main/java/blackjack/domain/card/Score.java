@@ -36,6 +36,10 @@ public final class Score {
 		return score < number;
 	}
 
+	public boolean isUnder(Score other) {
+		return isUnder(other.score);
+	}
+
 	public boolean isOver(int number) {
 		return score > number;
 	}

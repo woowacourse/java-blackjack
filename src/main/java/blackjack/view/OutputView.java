@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Playable;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.Result;
 import blackjack.domain.user.Results;
 
 import java.util.ArrayList;
@@ -105,10 +106,14 @@ public final class OutputView {
 		return String.format("%s : %s", player.getName(), resultWord);
 	}
 
-	private static String boolToResultWord(boolean bool) {
-		if (bool) {
+	private static String boolToResultWord(Result result) {
+		if (result.isWinOrBlackjackWin()) {
 			return "승";
 		}
+		if (result.isDraw()) {
+			return "무";
+		}
+
 		return "패";
 	}
 }

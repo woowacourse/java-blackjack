@@ -8,6 +8,7 @@ import java.util.Objects;
 public final class Hand {
 	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
 	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
+	private static final int TWO = 2;
 
 	private final List<Card> hand;
 
@@ -50,6 +51,10 @@ public final class Hand {
 
 	private boolean hasAce() {
 		return hand.stream().anyMatch(Card::isAce);
+	}
+
+	public boolean hasOnlyTwoCards() {
+		return hand.size() == TWO;
 	}
 
 	public List<Card> getHand() {
