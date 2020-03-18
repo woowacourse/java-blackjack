@@ -10,6 +10,7 @@ public class Hands {
 	private static final int ACE_SCORE_CHANGE_POINT = 11;
 	private static final int ACE_EXTRA_SCORE = 10;
 	private static final int BURST_SCORE = 21;
+	private static final String DELIMITER = ",";
 
 	private List<Card> hands;
 
@@ -66,6 +67,6 @@ public class Hands {
 		for (Card card : hands) {
 			cards.add(card.toString());
 		}
-		return String.join(",", cards);
+		return String.join(DELIMITER, cards);
 	}
 }

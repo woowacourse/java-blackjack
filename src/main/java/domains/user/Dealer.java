@@ -4,6 +4,7 @@ import domains.card.Deck;
 
 public class Dealer extends User {
 	private static final int DEALER_HIT_POINT = 16;
+	private static final int HAND_SIZE_WHEN_HIT = 3;
 
 	public Dealer(Deck deck) {
 		this(new Hands(deck));
@@ -15,7 +16,7 @@ public class Dealer extends User {
 	}
 
 	public boolean isHit() {
-		return this.hands.size() == 3;
+		return this.hands.size() == HAND_SIZE_WHEN_HIT;
 	}
 
 	public void hitOrStay(Deck deck) {

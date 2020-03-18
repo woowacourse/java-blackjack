@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class PlayerName {
 	private static final String DEALER = "딜러";
+
 	private String playerName;
 
 	public PlayerName(String playerName) {
