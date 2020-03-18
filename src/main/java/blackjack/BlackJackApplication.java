@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.domain.Names;
+import blackjack.domain.YesOrNo;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.ParticipantsResult;
 import blackjack.domain.gambler.Participants;
@@ -20,7 +22,7 @@ public class BlackJackApplication {
     }
 
     private static void startGame() {
-        Participants participants = new Participants(InputView.inputNames());
+        Participants participants = new Participants(new Names(InputView.inputNames()));
         CardDeck cardDeck = new CardDeck();
         distributeFirstCards(participants, cardDeck);
         drawMoreCards(participants, cardDeck);
@@ -43,7 +45,7 @@ public class BlackJackApplication {
     }
 
     private static void drawMorePlayerCardManual(CardDeck cardDeck, User player) {
-        while (player.canDrawCard() && InputView.inputMoreCard(player)) {
+        while (player.canDrawCard() && YesOrNo.of(InputView.inputMoreCard(player)) == YesOrNo.YES) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }

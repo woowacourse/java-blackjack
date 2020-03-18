@@ -14,4 +14,12 @@ public class YesOrNoTest {
         Assertions.assertThat(YesOrNo.of("n")).isEqualTo(YesOrNo.NO);
         Assertions.assertThat(YesOrNo.of("N")).isEqualTo(YesOrNo.NO);
     }
+
+    @Test
+    @DisplayName("생성자 예외 테스트")
+    void of() {
+        Assertions.assertThatThrownBy(() -> YesOrNo.of("yes"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("유효");
+    }
 }
