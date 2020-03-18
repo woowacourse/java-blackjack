@@ -1,10 +1,10 @@
 package domain.gamer;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.card.Card;
+import domain.card.CardNumber;
 
 public abstract class Gamer {
 	private static final int BUST_NUMBER = 22;
@@ -57,5 +57,9 @@ public abstract class Gamer {
 
 	public List<Card> getCards() {
 		return cards;
+	}
+
+	public Money getMoney() {
+		return money;
 	}
 }

@@ -2,15 +2,13 @@ package controller;
 
 import static java.util.stream.Collectors.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import domain.card.CardsFactory;
 import domain.card.Deck;
+import domain.gamer.Answer;
 import domain.gamer.Dealer;
+import domain.gamer.GameResult;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.gamer.Answer;
 import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
@@ -24,12 +22,15 @@ public class GameController {
 		OutputView.printInitCardGuide(gamers);
 		OutputView.printGamersCard(gamers);
 		addCardAtGamers(gamers, deck);
-		OutputView.printGameResults(gamers);
+		OutputView.printCardsResultAndScore(gamers);
+
+		GameResult gameResult = gamers.generateGameResults();
+		OutputView.printTotalEarningResult(gameResult.getTotalEarning());
 	}
 
 	private Gamers generateGamers() {
 		return InputUtils.splitAsDelimiter(InputView.inputAsPlayerName())
-            .stream()
+			.stream()
 			.map(name -> new Player(name, InputView.inputAsBettingMoney(name)))
 			.collect(collectingAndThen(toList(), players -> new Gamers(players, new Dealer())));
 	}
