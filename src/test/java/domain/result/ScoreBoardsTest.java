@@ -21,7 +21,7 @@ class ScoreBoardsTest {
 	void calculateDealerResultTest() {
 		Player player = Player.fromNameAndCards("player", new Card(CLOVER, ACE), new Card(CLOVER, EIGHT));
 		Player player2 = Player.fromNameAndCards("tester", new Card(CLOVER, ACE), new Card(CLOVER, NINE));
-		Player player3 = Player.fromNameAndCards("black", new Card(CLOVER, ACE), new Card(CLOVER, TEN));
+		Player player3 = Player.fromNameAndCards("black", new Card(CLOVER, ACE), new Card(CLOVER, NINE));
 
 		List<Player> players = Arrays.asList(player, player2, player3);
 		Dealer dealer = Dealer.fromCards(new Card(CLOVER, ACE), new Card(CLOVER, SEVEN));
@@ -44,6 +44,6 @@ class ScoreBoardsTest {
 		ScoreBoards resultCalculator = ScoreBoards.fromAllUsers(players, dealer);
 		PlayerResults playerResults = resultCalculator.calculatePlayersResult();
 		assertThat(playerResults.getPlayerResults()).containsExactlyInAnyOrder(new PlayerResult(player, WIN),
-			new PlayerResult(player2, WIN), new PlayerResult(player3, WIN));
+			new PlayerResult(player2, WIN), new PlayerResult(player3, BLACKJACK_WIN));
 	}
 }

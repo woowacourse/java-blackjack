@@ -149,12 +149,29 @@ public class PlayerTest {
 				Dealer.fromCards(new Card(HEART, EIGHT))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, ACE), new Card(HEART, QUEEN)),
-				Dealer.fromCards(new Card(DIAMOND, ACE), new Card(DIAMOND, FOUR), new Card(DIAMOND, SIX))
-			),
-			Arguments.of(
 				Player.fromNameAndCards("test3", new Card(HEART, EIGHT), new Card(HEART, KING)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, TEN), new Card(CLOVER, JACK))
+			)
+		);
+	}
+
+	@DisplayName("플레이어와 딜러의 점수 비교후, 플레이어의 승리 반환")
+	@ParameterizedTest
+	@MethodSource("playerAndDealerBlackjackWinSet")
+	void calculatePlayerMatchResultBlackjackWinTest(Player player, Dealer dealer) {
+		MatchResult actual = player.calculateMatchResult(dealer);
+		assertThat(actual).isEqualTo(MatchResult.BLACKJACK_WIN);
+	}
+
+	private static Stream<Arguments> playerAndDealerBlackjackWinSet() {
+		return Stream.of(
+			Arguments.of(
+				Player.fromNameAndCards("test", new Card(HEART, QUEEN), new Card(HEART, ACE)),
+				Dealer.fromCards(new Card(HEART, EIGHT))
+			),
+			Arguments.of(
+				Player.fromNameAndCards("test", new Card(HEART, QUEEN), new Card(HEART, ACE)),
+				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, FIVE), new Card(SPADE, FIVE))
 			)
 		);
 	}

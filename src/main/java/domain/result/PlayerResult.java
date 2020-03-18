@@ -17,9 +17,12 @@ public class PlayerResult {
 		return user.getName();
 	}
 
+	//이제 사용하지 않을 부분 - 삭제해야 한다.
 	public String getMatchResult() {
 		return matchResult.getMatchResult();
 	}
+
+	//이 친구의 상금을 계산해야 한다.
 
 	@Override
 	public boolean equals(Object object) {
