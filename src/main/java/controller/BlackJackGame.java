@@ -6,6 +6,7 @@ import domain.PlayerResult;
 import domain.card.DeckImpl;
 import domain.user.Dealer;
 import domain.user.Player;
+import infra.repository.SingleDeck;
 import view.InputView;
 import view.OutputView;
 
@@ -21,7 +22,7 @@ public class BlackJackGame {
         List<Player> players = playerNames.stream()
                 .map(name -> new Player(deck.getInitCards(), name))
                 .collect(Collectors.toList());
-        Dealer dealer = new Dealer(deck.getInitCards());
+        Dealer dealer = new Dealer(deck.getInitCards(), SingleDeck.shuffle());
         List<GamerDto> playerDtos = translateToDtos(players);
         OutputView.printInitGamersState(GamerDto.of(dealer), playerDtos);
         receivePlayerCards(deck, players);

@@ -1,9 +1,6 @@
 package domain.user;
 
-import domain.card.Card;
-import domain.card.PlayingCards;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,21 +8,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class DealerTest {
+
+    Deck deck = mock(Deck.class);
+
     @Test
     @DisplayName("첫턴에 딜러는 2장의 카드를 받는다.")
     void construct() {
         PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
-        assertThat(new Dealer(playingCards)).isNotNull();
+        assertThat(new Dealer(playingCards, deck)).isNotNull();
     }
 
     @Test
     @DisplayName("딜러의 카드를 추가한다.")
     void addCard() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
-        Dealer dealer = new Dealer(playingCards);
+        Dealer dealer = new Dealer(playingCards, deck);
         Card card = new Card(Symbol.ACE, Type.CLOVER);
         dealer.addCard(card);
 
@@ -37,7 +39,7 @@ class DealerTest {
     void canGetExtraCard() {
         PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.TWO, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
-        Dealer dealer = new Dealer(playingCards);
+        Dealer dealer = new Dealer(playingCards, deck);
 
         assertThat(dealer.canGetExtraCard()).isTrue();
     }
@@ -47,8 +49,24 @@ class DealerTest {
     void canNotGetExtraCard() {
         PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
-        Dealer dealer = new Dealer(playingCards);
+        Dealer dealer = new Dealer(playingCards, deck);
 
         assertThat(dealer.canGetExtraCard()).isFalse();
+    }
+
+    @Test
+    @DisplayName("#hit() : should add card without return")
+    void hit() {
+        //given
+        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        Dealer dealer = new Dealer(playingCards, deck);
+        int defaultSizeOfCards = dealer.sizeOfCards();
+        when(deck.pop()).thenReturn(new Card(Symbol.QUEEN, Type.SPADE));
+
+        //when
+        dealer.hit();
+
+        //then
+        assertThat(dealer.sizeOfCards()).isEqualTo(defaultSizeOfCards + 1);
     }
 }
