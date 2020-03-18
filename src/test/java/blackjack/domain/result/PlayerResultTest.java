@@ -1,11 +1,11 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Symbol;
-import blackjack.domain.card.Type;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.domain.playing.card.Card;
+import blackjack.domain.playing.card.Symbol;
+import blackjack.domain.playing.card.Type;
+import blackjack.domain.playing.deck.Deck;
+import blackjack.domain.playing.user.Dealer;
+import blackjack.domain.playing.user.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.Stack;

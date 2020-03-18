@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
+import blackjack.domain.playing.user.Dealer;
+import blackjack.domain.playing.user.Player;
 import blackjack.domain.result.Exception.PlayerResultException;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
