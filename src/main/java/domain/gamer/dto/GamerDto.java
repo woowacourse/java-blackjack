@@ -1,34 +1,25 @@
 package domain.gamer.dto;
 
-import domain.card.Card;
-import domain.gamer.Gamer;
-
-import java.util.List;
+import domain.gamer.Player;
 
 public class GamerDto {
     private String name;
-    private List<Card> cards;
+    private int battingMoney;
 
-    private GamerDto(String name, List<Card> cards) {
+    public GamerDto(String name, int battingMoney) {
         this.name = name;
-        this.cards = cards;
+        this.battingMoney = battingMoney;
     }
 
-    public static GamerDto of(Gamer gamer) {
-        List<Card> cards = gamer.getCards();
-        return new GamerDto(gamer.getName(), cards);
-    }
-
-    public static GamerDto ofWithFirstCard(Gamer gamer) {
-        List<Card> cards = gamer.getFirstCard();
-        return new GamerDto(gamer.getName(), cards);
+    public static GamerDto of(Player player) {
+        return new GamerDto(player.getName(), player.getBattingMoney());
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public int getBattingMoney() {
+        return battingMoney;
     }
 }
