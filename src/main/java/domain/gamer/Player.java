@@ -21,10 +21,6 @@ public class Player extends Gamer {
         return battingMoney.calculateEarning(playerResult);
     }
 
-    public int getBattingMoney() {
-        return battingMoney.getBattingMoney();
-    }
-
     @Override
     public boolean isHittable() {
         return isNotBust();

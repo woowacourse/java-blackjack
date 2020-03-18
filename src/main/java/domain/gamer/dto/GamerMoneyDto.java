@@ -1,7 +1,13 @@
 package domain.gamer.dto;
 
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Player;
+import domain.gamer.Players;
+import domain.result.GameResults;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamerMoneyDto {
     private String name;
@@ -12,12 +18,17 @@ public class GamerMoneyDto {
         this.money = money;
     }
 
-    public static GamerMoneyDto of(Player player, int earning) {
-        return new GamerMoneyDto(player.getName(), earning);
+    public static GamerMoneyDto of(Gamer gamer, int money) {
+        return new GamerMoneyDto(gamer.getName(), money);
     }
 
-    public static GamerMoneyDto of(Dealer dealer, int earning) {
-        return new GamerMoneyDto(dealer.getName(), earning);
+    public static List<GamerMoneyDto> createDtos(Dealer dealer, Players players, GameResults gameResults) {
+        List<GamerMoneyDto> gamerMoneyDtos = new ArrayList<>();
+        gamerMoneyDtos.add(of(dealer, gameResults.calculateEarning(dealer)));
+        for (Player player : players) {
+            gamerMoneyDtos.add(of(player, gameResults.calculateEarning(player)));
+        }
+        return gamerMoneyDtos;
     }
 
     public String getName() {

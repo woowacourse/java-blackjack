@@ -19,21 +19,11 @@ public class BlackJackGame {
         Players players = Players.valueOf(deck, InputView.inputGamerDto());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        OutputView.printInitGamersState(GamerCardsDto.of(dealer, players));
+        OutputView.printInitGamersState(GamerCardsDto.createDtos(dealer, players));
         receiveGamerCards(deck, players, dealer);
-        OutputView.printGamerCardsStateWithScores(GamerCardsWithScoreDto.of(dealer, players));
+        OutputView.printGamerCardsStateWithScores(GamerCardsWithScoreDto.createDtos(dealer, players));
 
-        printGameResult(dealer, players);
-    }
-
-    private void printGameResult(Dealer dealer, Players players) {
-        GameResults gameResults = new GameResults(dealer, players);
-
-        OutputView.printGameResultTitle();
-        OutputView.printEachResult(GamerMoneyDto.of(dealer, gameResults.calculateTotalDealerEarning()));
-        for (Player player : players) {
-            OutputView.printEachResult(GamerMoneyDto.of(player, gameResults.calculateEarning(player)));
-        }
+        OutputView.printResult(GamerMoneyDto.createDtos(dealer, players, new GameResults(dealer, players)));
     }
 
     private void receiveGamerCards(Deck deck, Players players, Dealer dealer) {

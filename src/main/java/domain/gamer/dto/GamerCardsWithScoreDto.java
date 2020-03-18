@@ -25,7 +25,7 @@ public class GamerCardsWithScoreDto {
         return new GamerCardsWithScoreDto(gamer.getName(), cards, gamer.calculateScore().getScore());
     }
 
-    public static List<GamerCardsWithScoreDto> of(Dealer dealer, Players players) {
+    public static List<GamerCardsWithScoreDto> createDtos(Dealer dealer, Players players) {
         List<GamerCardsWithScoreDto> gamerCardsWithScoreDtos = new ArrayList<>();
         gamerCardsWithScoreDtos.add(of(dealer));
         for (Player player : players) {

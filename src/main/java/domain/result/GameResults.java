@@ -20,7 +20,7 @@ public class GameResults {
         return player.calculateEarning(gameResults.get(player));
     }
 
-    public int calculateTotalDealerEarning() {
+    public int calculateEarning(Dealer dealer) {
         return gameResults.keySet().stream()
                 .mapToInt(player -> -calculateEarning(player))
                 .sum();

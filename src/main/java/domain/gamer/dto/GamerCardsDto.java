@@ -23,18 +23,18 @@ public class GamerCardsDto {
         return new GamerCardsDto(gamer.getName(), cards);
     }
 
-    public static List<GamerCardsDto> of(Dealer dealer, Players players) {
+    public static GamerCardsDto ofWithFirstCard(Gamer gamer) {
+        List<Card> cards = gamer.getFirstCard();
+        return new GamerCardsDto(gamer.getName(), cards);
+    }
+
+    public static List<GamerCardsDto> createDtos(Dealer dealer, Players players) {
         List<GamerCardsDto> playerDtos = new ArrayList<>();
         playerDtos.add(of(dealer));
         for (Player player : players) {
             playerDtos.add(of(player));
         }
         return playerDtos;
-    }
-
-    public static GamerCardsDto ofWithFirstCard(Gamer gamer) {
-        List<Card> cards = gamer.getFirstCard();
-        return new GamerCardsDto(gamer.getName(), cards);
     }
 
     public String getName() {
