@@ -3,6 +3,10 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackjack.domain.blackjack.BlackjackTable;
+import blackjack.domain.result.Score;
+import blackjack.domain.result.ScoreCalculator;
+
 public class Hand {
 	private final List<Card> cards;
 
@@ -23,12 +27,11 @@ public class Hand {
 	}
 
 	public Score calculateBustHandledScore() {
-		Score score = calculateScore();
+		return ScoreCalculator.calculateBustHandledScore(cards);
+	}
 
-		if (score.isMoreThan(Score.BUST_SCORE)) {
-			return Score.ZERO;
-		}
-		return score;
+	public boolean isInitialDealtSize() {
+		return cards.size() == BlackjackTable.INITIAL_DEAL_NUMBER;
 	}
 
 	public List<Card> getCards() {

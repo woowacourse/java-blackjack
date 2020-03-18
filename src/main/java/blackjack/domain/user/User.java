@@ -10,7 +10,6 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
 
-// TODO: 2020-03-17 interface 분리
 public abstract class User implements Comparable<User>, BlackjackParticipant {
 	private static final int DRAW_LOWER_BOUND = 1;
 

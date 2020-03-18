@@ -5,6 +5,7 @@ import java.util.function.BiPredicate;
 
 import blackjack.domain.user.User;
 
+// TODO: 2020-03-18 Player에 대해서, Player vs Dealer
 public enum ResultType {
 	WIN((targetUser, compareUser) -> targetUser.compareTo(compareUser) > 0, "승"),
 	DRAW((targetUser, compareUser) -> targetUser.compareTo(compareUser) == 0, "무"),

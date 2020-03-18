@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 
 class ScoreCalculatorTest {
 	@Test

@@ -1,7 +1,10 @@
-package blackjack.domain.card;
+package blackjack.domain.result;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
+
+// TODO: 2020-03-18 유틸리티성 클래스 사용 X!!!
 public class ScoreCalculator {
 	public static Score calculateScore(List<Card> cards) {
 		Score score = cards.stream()

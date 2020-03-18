@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,6 +9,9 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 import blackjack.domain.exceptions.InvalidScoreException;
 
 class ScoreTest {
@@ -64,5 +67,13 @@ class ScoreTest {
 		Score score = Score.valueOf(9);
 
 		assertThat(score.isMoreThan(value)).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"9,true", "10,false"})
+	void isEqual_InputIntegerScore_ReturnCompareResult(int value, boolean expected) {
+		Score score = Score.valueOf(9);
+
+		assertThat(score.isEqual(value)).isEqualTo(expected);
 	}
 }
