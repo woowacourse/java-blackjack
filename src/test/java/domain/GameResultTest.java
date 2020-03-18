@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.card.PlayingCards;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.user.Dealer;
+import domain.user.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameResultTest {
 

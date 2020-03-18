@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.PlayingCards;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.gamer.Gamer;
+import domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,18 +13,18 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GamerDtoTest {
+class UserDtoTest {
     private GamerDto gamerDto;
 
     @BeforeEach
     void setUp() {
         PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
-        gamerDto = GamerDto.of(new Gamer(playingCards, "testName"));
+        gamerDto = GamerDto.of(new User(playingCards, "testName"));
     }
 
     @Test
     void of() {
-        assertThat(GamerDto.of(new Gamer(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
+        assertThat(GamerDto.of(new User(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
     }
 
     @Test

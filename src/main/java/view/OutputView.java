@@ -4,7 +4,7 @@ import common.GamerDto;
 import domain.GameResult;
 import domain.PlayerResult;
 import domain.card.Card;
-import domain.gamer.Player;
+import domain.user.Player;
 
 import java.util.ArrayList;
 import java.util.List;

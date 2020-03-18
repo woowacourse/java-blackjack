@@ -1,4 +1,4 @@
-package domain.gamer;
+package domain.user;
 
 import domain.card.Card;
 import domain.card.PlayingCards;
@@ -6,11 +6,11 @@ import domain.card.PlayingCards;
 import java.util.List;
 import java.util.Objects;
 
-public class Gamer {
+public abstract class User {
     protected final PlayingCards playingCards;
     private final String name;
 
-    public Gamer(PlayingCards playingCards, String name) {
+    public User(PlayingCards playingCards, String name) {
         this.playingCards = playingCards;
         this.name = name;
     }
@@ -45,9 +45,9 @@ public class Gamer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Gamer gamer = (Gamer) o;
-        return Objects.equals(playingCards, gamer.playingCards) &&
-                Objects.equals(name, gamer.name);
+        User user = (User) o;
+        return Objects.equals(playingCards, user.playingCards) &&
+                Objects.equals(name, user.name);
     }
 
     @Override

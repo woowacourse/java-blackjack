@@ -1,7 +1,7 @@
 package common;
 
 import domain.card.Card;
-import domain.gamer.Gamer;
+import domain.user.User;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ public class GamerDto {
         this.cards = cards;
     }
 
-    public static GamerDto of(Gamer gamer) {
-        List<Card> cards = gamer.getPlayingCards();
-        return new GamerDto(gamer.getName(), cards);
+    public static GamerDto of(User user) {
+        List<Card> cards = user.getPlayingCards();
+        return new GamerDto(user.getName(), cards);
     }
 
     public String getName() {

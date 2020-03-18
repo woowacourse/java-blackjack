@@ -1,8 +1,8 @@
-package domain.gamer;
+package domain.user;
 
 import domain.card.PlayingCards;
 
-public class Dealer extends Gamer {
+public class Dealer extends User {
     private static final int ADD_THRESHOLD = 17;
     private static final String NAME = "딜러";
 

@@ -1,8 +1,8 @@
 package domain;
 
 import domain.card.*;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.user.Dealer;
+import domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

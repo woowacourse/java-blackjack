@@ -4,8 +4,8 @@ import common.GamerDto;
 import domain.GameResult;
 import domain.PlayerResult;
 import domain.card.DeckImpl;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.user.Dealer;
+import domain.user.Player;
 import view.InputView;
 import view.OutputView;
 

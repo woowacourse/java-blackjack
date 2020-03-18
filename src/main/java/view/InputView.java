@@ -1,8 +1,7 @@
 package view;
 
-import domain.gamer.PlayerNamesParser;
+import domain.user.PlayerNamesParser;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 

@@ -1,7 +1,7 @@
 package domain;
 
-import domain.gamer.Dealer;
-import domain.gamer.Player;
+import domain.user.Dealer;
+import domain.user.Player;
 
 import java.util.Arrays;
 
