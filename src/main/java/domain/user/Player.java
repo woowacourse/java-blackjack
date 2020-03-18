@@ -1,19 +1,21 @@
 package domain.user;
 
-import domain.Money;
 import domain.card.Cards;
 import domain.result.Result;
 
 public class Player extends User {
     private Name name;
-    private Money betAmount;
+    private int betAmount;
 
     public Player(String name, int betAmount) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("이름이 비어있습니다.");
         }
+        if (betAmount < 0) {
+            throw new IllegalArgumentException("배팅 금액이 음수일 수 없습니다.");
+        }
         this.name = new Name(name);
-        this.betAmount = new Money(betAmount);
+        this.betAmount = betAmount;
     }
 
     @Override
@@ -50,5 +52,9 @@ public class Player extends User {
 
     public String getName() {
         return name.getName();
+    }
+
+    public int getBetAmount() {
+        return this.betAmount;
     }
 }

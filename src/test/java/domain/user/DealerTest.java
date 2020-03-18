@@ -12,6 +12,7 @@ import domain.result.DealerResult;
 import domain.result.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,48 @@ public class DealerTest {
         assertThat(dealer.canReceiveCard()).isTrue();
     }
 
+    @Test
+    @DisplayName("딜러의 승패 결과 확인 테스트")
+    void calculateResult() {
+        Map<Result, Integer> expected = makeDealerResultMap(0, 1, 1);
+
+        Dealer dealer = new Dealer();
+        Players players = new Players(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
+
+        makePlayerScoreBlackJack(players.getPlayers().get(0));    // 딜러를 이김
+        makePlayerScoreEighteen(players.getPlayers().get(1));     // 딜러와 비김
+        makeDealerScoreEighteen(dealer);
+
+        assertThat(dealer.calculateResult(players)).isEqualTo(new DealerResult(expected));
+    }
+
+    @Test
+    @DisplayName("한 명의 플레이어에 대한 딜러의 수익 계산")
+    void calculateRevenueAboutOnePlayer() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("히히", 10_000);
+        Players players = new Players(Collections.singletonList("오렌지"),
+            Collections.singletonList(10_000));
+
+        makePlayerScoreBlackJack(player);
+        makeDealerScoreEighteen(dealer);
+
+        assertThat(dealer.calculateRevenueAbout(player)).isEqualTo(-10_000 * 1.5);
+    }
+
+    @Test
+    @DisplayName("모든 플레이어들에 대한 딜러의 수익 계산")
+    void calculateTotalRevenue() {
+        Dealer dealer = new Dealer();
+        Players players = new Players(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
+
+        makePlayerScoreBlackJack(players.getPlayers().get(0));
+        makePlayerScoreEighteen(players.getPlayers().get(1));
+        makeDealerScoreNineteen(dealer);
+
+        assertThat(dealer.calculateRevenueAbout(players)).isEqualTo(-5_000 * 1.5 + 8_000);
+    }
+
     private static Map<Result, Integer> makeDealerResultMap(int winCount, int drawCount,
         int loseCount) {
         Map<Result, Integer> dealerResult = new HashMap<>();
@@ -90,25 +133,16 @@ public class DealerTest {
         dealer.receiveFirstCards(new Deck(deckForTest));
     }
 
+    private static void makeDealerScoreNineteen(Dealer dealer) {
+        List<Card> deckForTest =
+            makeCardList(new Card(Symbol.NINE, Type.HEART), new Card(Symbol.QUEEN, Type.SPADE));
+        dealer.receiveFirstCards(new Deck(deckForTest));
+    }
+
     private static List<Card> makeCardList(Card card1, Card card2) {
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);
         return cards;
-    }
-
-    @Test
-    @DisplayName("딜러의 승패 결과 확인 테스트")
-    void calculateResult() {
-        Map<Result, Integer> expected = makeDealerResultMap(0, 1, 1);
-
-        Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
-
-        makePlayerScoreBlackJack(players.getPlayers().get(0));    // 딜러를 이김
-        makePlayerScoreEighteen(players.getPlayers().get(1));     // 딜러와 비김
-        makeDealerScoreEighteen(dealer);
-
-        assertThat(dealer.calculateResult(players)).isEqualTo(new DealerResult(expected));
     }
 }
