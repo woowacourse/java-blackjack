@@ -20,7 +20,7 @@ public class Deck {
     }
 
     public Card draw() {
-        if (deck.size() == 0) {
+        if (deck.isEmpty()) {
             throw new EmptyDeckException("덱이 비어있습니다");
         }
         return deck.pop();
