@@ -17,9 +17,6 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = "\n";
     private static final String COLON = ": ";
-    private static final String WINS = "승 ";
-    private static final String DRAWS = "무 ";
-    private static final String LOSES = "패";
     private static final String DEALER = "딜러";
 
     public static void printInitialCardDistribution(BlackjackGame game) {
@@ -101,6 +98,6 @@ public class OutputView {
     }
 
     private static String parseDealerFinalResult(Money dealerProfit) {
-        return DEALER + COLON + dealerProfit + NEW_LINE;
+        return DEALER + COLON + dealerProfit;
     }
 }

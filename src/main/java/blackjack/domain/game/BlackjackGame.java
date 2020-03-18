@@ -6,12 +6,6 @@ import blackjack.domain.user.Player;
 
 import java.util.*;
 
-/**
- * 블랙잭 게임을 진행하는 클래스
- *
- * @author hotheadfactory, chws
- */
-
 public class BlackjackGame {
     public static final int INITIAL_CARDS = 2;
 
@@ -58,5 +52,9 @@ public class BlackjackGame {
 
     public void hitCard(Player player) {
         player.receiveCard(deck.draw());
+    }
+
+    public boolean dealerIsBlackJack() {
+        return dealer.isBlackJack();
     }
 }

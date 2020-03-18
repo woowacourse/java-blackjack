@@ -14,21 +14,30 @@ public class BlackjackGameController {
     public static void run() {
         List<Player> players = enrollPlayers();
         players.forEach(player -> player.addMoney(InputView.inputBettingMoney(player.getName())));
-        BlackjackGame game = new BlackjackGame(
-                players,
-                new Deck(CardFactory.getInstance().issueNewDeck()));
+        BlackjackGame game = startBlackjackGame(players);
         game.distributeInitialCards();
         OutputView.printInitialCardDistribution(game);
-        hitMoreCard(game.getPlayers(), game);
-        dealerHitsAdditionalCard(game);
-        OutputView.printFinalCardScore(game);
-        OutputView.printFinalResult(game.calculateResultsPerPlayer());
+        drawMoreCard(game);
+        printFinalResults(game);
     }
 
     private static List<Player> enrollPlayers() {
         return PlayerFactory.generatePlayers(
                 InputHandler.parseName(InputView.inputPlayerName())
         );
+    }
+
+    private static BlackjackGame startBlackjackGame(List<Player> players) {
+        return new BlackjackGame(
+                    players,
+                    new Deck(CardFactory.getInstance().issueNewDeck()));
+    }
+
+    private static void drawMoreCard(BlackjackGame game) {
+        if(!game.dealerIsBlackJack()) {
+            hitMoreCard(game.getPlayers(), game);
+            dealerDrawsAdditionalCard(game);
+        }
     }
 
     private static void hitMoreCard(List<Player> players, BlackjackGame game) {
@@ -46,9 +55,14 @@ public class BlackjackGameController {
         }
     }
 
-    private static void dealerHitsAdditionalCard(BlackjackGame game) {
+    private static void dealerDrawsAdditionalCard(BlackjackGame game) {
         while(game.dealerHitsAdditionalCard()) {
             OutputView.printDealerHitMoreCard();
         }
+    }
+
+    private static void printFinalResults(BlackjackGame game) {
+        OutputView.printFinalCardScore(game);
+        OutputView.printFinalResult(game.calculateResultsPerPlayer());
     }
 }
