@@ -8,7 +8,6 @@ import blackjack.domain.playing.user.Players;
 import blackjack.domain.playing.user.exception.HitOrStayException;
 import blackjack.domain.result.BettingMoney;
 import blackjack.domain.result.Exception.BettingMoneyException;
-import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -33,8 +32,8 @@ public class Blackjack {
 
         OutputView.printFinalInfo(dealer, players);
 
-        GameResult gameResult = GameResult.of(dealer, players);
-        OutputView.printGameResult(gameResult);
+//        GameResult gameResult = GameResult.of(dealer, players);
+//        OutputView.printGameResult(gameResult);
     }
 
     private static Map<Player, BettingMoney> createBettingResult(Players players) {
@@ -56,15 +55,6 @@ public class Blackjack {
         }
     }
 
-    private static boolean inputToHit(Player player) {
-        try {
-            HitOrStay hitOrStay = HitOrStay.of(InputView.inputToHitOrStay(player));
-            return hitOrStay.isToHit();
-        } catch (HitOrStayException e) {
-            return inputToHit(player);
-        }
-    }
-
     private static void playAllPlayersTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             playPlayerTurn(deck, player);
@@ -72,9 +62,22 @@ public class Blackjack {
     }
 
     private static void playPlayerTurn(Deck deck, Player player) {
-        while (player.isNotBust() && inputToHit(player)) {
+        while (playerCanHit(player)) {
             player.drawCardsInTurn(deck);
             OutputView.printUserCard(player);
+        }
+    }
+
+    private static boolean playerCanHit(Player player) {
+        return player.isNotBlackjack() && player.isNotBust() && inputToHit(player);
+    }
+
+    private static boolean inputToHit(Player player) {
+        try {
+            HitOrStay hitOrStay = HitOrStay.of(InputView.inputToHitOrStay(player));
+            return hitOrStay.isToHit();
+        } catch (HitOrStayException e) {
+            return inputToHit(player);
         }
     }
 
