@@ -1,0 +1,22 @@
+package first.domain.gamer;
+
+import first.domain.card.Card;
+import first.domain.card.Rank;
+import first.domain.card.Suit;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class PlayerTest {
+    @Test
+    void 플레이어가_카드를_더뽑을수있는지_확인() {
+        Player player = new Player("pobi");
+
+        player.drawCard(() -> Card.of(Rank.K, Suit.CLOVER));
+        player.drawCard(() -> Card.of(Rank.Q, Suit.CLOVER));
+        assertThat(player.canDrawMore()).isTrue();
+
+        player.drawCard(() -> Card.of(Rank.FOUR, Suit.CLOVER));
+        assertThat(player.canDrawMore()).isFalse();
+    }
+}
