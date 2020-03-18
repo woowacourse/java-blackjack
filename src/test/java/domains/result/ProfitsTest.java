@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import domains.card.Card;
 import domains.card.Symbol;
@@ -22,8 +25,19 @@ import domains.user.name.PlayerName;
 
 class ProfitsTest {
 	@DisplayName("게임 결과를 받아 수익을 계산")
-	@Test
-	void construct_GivenGameResult_CreateProfits() {
+	@ParameterizedTest
+	@MethodSource("gameResultData")
+	void construct_GivenGameResult_CreateProfits(Player winner, Player loser, GameResult gameResult) {
+		Map<Player, ProfitMoney> playerProfits = new Profits(gameResult).getPlayerProfits();
+
+		Map<Player, ProfitMoney> expectedProfits = new HashMap<>();
+		expectedProfits.put(winner, new ProfitMoney(1500));
+		expectedProfits.put(loser, new ProfitMoney(-50000));
+
+		assertThat(playerProfits).isEqualTo(expectedProfits);
+	}
+
+	static Stream<Arguments> gameResultData() {
 		Card ace = new Card(Symbol.ACE, Type.CLUB);
 		Card six = new Card(Symbol.SIX, Type.DIAMOND);
 		Card eight = new Card(Symbol.EIGHT, Type.SPADE);
@@ -39,12 +53,8 @@ class ProfitsTest {
 		Dealer dealer = new Dealer(dealerHands);
 		GameResult gameResult = new GameResult(players, dealer);
 
-		Map<Player, ProfitMoney> playerProfits = new Profits(gameResult).getPlayerProfits();
-
-		Map<Player, ProfitMoney> expectedProfits = new HashMap<>();
-		expectedProfits.put(ddoring, new ProfitMoney(1500));
-		expectedProfits.put(smallbear, new ProfitMoney(-50000));
-
-		assertThat(playerProfits).isEqualTo(expectedProfits);
+		return Stream.of(
+			Arguments.of(ddoring, smallbear, gameResult)
+		);
 	}
 }
