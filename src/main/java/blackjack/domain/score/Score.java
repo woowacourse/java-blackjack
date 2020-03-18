@@ -4,6 +4,8 @@ import blackjack.domain.calculator.ScoreCalculator;
 import blackjack.domain.card.CardBundle;
 
 public class Score {
+    private static final int MAXIMUM_VALUE = 21;
+    private static final int INIT_SIZE = 2;
 
     private final int score;
     private final int size;
@@ -19,10 +21,10 @@ public class Score {
     }
 
     public boolean isBurst() {
-        return score > 21;
+        return score > MAXIMUM_VALUE;
     }
 
     public boolean isBlackjack() {
-        return (size == 2) && (score == 21);
+        return (size == INIT_SIZE) && (score == MAXIMUM_VALUE);
     }
 }
