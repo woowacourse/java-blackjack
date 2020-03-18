@@ -17,7 +17,7 @@ public class Deck {
 
     private void validateDuplicate(Stack<Card> cards) {
         if (cards.size() != new HashSet<>(cards).size()) {
-            throw new DeckDuplicationException("중복되는 카드가 존재합니다.");
+            throw new DeckDuplicationException();
         }
     }
 

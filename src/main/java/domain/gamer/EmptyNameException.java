@@ -1,7 +1,7 @@
 package domain.gamer;
 
 public class EmptyNameException extends IllegalArgumentException {
-    public EmptyNameException(String message) {
-        super(message);
+    public EmptyNameException() {
+        super("값을 올바르게 입력해주세요.");
     }
 }

@@ -7,7 +7,7 @@ public class BattingMoney {
 
     public BattingMoney(int battingMoney) {
         if (battingMoney < 0) {
-            throw new NegativeMoneyException("Money는 음수일 수 없습니다.");
+            throw new NegativeMoneyException();
         }
         this.battingMoney = battingMoney;
     }

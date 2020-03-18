@@ -27,7 +27,7 @@ public class Players implements Iterable<Player> {
                 .map(GamerMoneyDto::getName)
                 .collect(Collectors.toList());
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
-            throw new NameDuplicationException("중복되는 이름이 존재합니다.");
+            throw new NameDuplicationException();
         }
     }
 
