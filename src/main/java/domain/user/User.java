@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
+    public static final int INIT_CARDS_SIZE = 2;
+    public static final int BLACKJACK_VALUE = 21;
     protected final PlayingCards playingCards;
     private final String name;
 
@@ -21,6 +23,16 @@ public abstract class User {
 
     public int calculateScore() {
         return playingCards.calculate();
+    }
+
+    public boolean isBlackjack() {
+        int score = playingCards.calculate();
+        return playingCards.size() == INIT_CARDS_SIZE && score == BLACKJACK_VALUE;
+    }
+
+    public boolean isNotBlackjack() {
+        int score = playingCards.calculate();
+        return playingCards.size() != INIT_CARDS_SIZE || score != BLACKJACK_VALUE;
     }
 
     public boolean isBust() {

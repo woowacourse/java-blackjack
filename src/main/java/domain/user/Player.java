@@ -4,7 +4,7 @@ import domain.card.Cards;
 import domain.card.PlayingCards;
 
 public class Player extends User {
-    Player(PlayingCards playingCards, String name) {
+    public Player(PlayingCards playingCards, String name) {
         super(playingCards, name);
     }
 
