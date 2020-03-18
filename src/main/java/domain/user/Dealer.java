@@ -1,24 +1,33 @@
 package domain.user;
 
+import java.util.function.Consumer;
+
+import domain.card.Deck;
+import view.dto.UserDto;
+
 public class Dealer extends User {
 
-    private static final String DEALER = "딜러";
+    public static final String NAME = "딜러";
     private static final int PIVOT = 17;
 
     private Dealer() {
-        super(DEALER);
+        super(NAME);
     }
 
     public static Dealer appoint() {
         return new Dealer();
     }
 
-    public String getFirstCard() {
-        return cards.get(0).getName();
+    @Override
+    protected boolean isAvailableToDraw() {
+        return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint()
+                && cards.calculatePointAccordingToHasAce() < PIVOT;
     }
 
-    @Override
-    public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack() && !isBlackJackPoint() && calculatePoint() < PIVOT;
+    public void additionalDealOut(Deck deck, Consumer<UserDto> showResult) {
+        while (isAvailableToDraw()) {
+            draw(deck);
+            showResult.accept(UserDto.of(this));
+        }
     }
 }

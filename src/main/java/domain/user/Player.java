@@ -1,9 +1,9 @@
 package domain.user;
 
-import domain.result.Rule;
-import domain.result.WinningResult;
-
 import java.util.Arrays;
+
+import domain.result.PlayerResultRule;
+import domain.result.Ratio;
 
 public class Player extends User {
 
@@ -12,15 +12,15 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack() && !isBlackJackPoint();
+    protected boolean isAvailableToDraw() {
+        return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint();
     }
 
-    public WinningResult win(Dealer dealer) {
-        return Arrays.stream(Rule.values())
-                .filter(rule -> rule.compare(this, dealer))
+    public Ratio decideRatio(Dealer dealer) {
+        return Arrays.stream(PlayerResultRule.values())
+                .filter(rule -> rule.condition(this, dealer))
                 .findFirst()
-                .get()
-                .getWinningResult();
+                .orElseThrow(() -> new AssertionError("게임 규칙이 올바르지 않습니다."))
+                .getRatio();
     }
 }

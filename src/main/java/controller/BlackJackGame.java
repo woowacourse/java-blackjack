@@ -1,10 +1,8 @@
 package controller;
 
-import domain.deck.Deck;
-import domain.deck.DeckFactory;
+import domain.card.Deck;
 import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.Players;
+import domain.user.PlayersInfo;
 import util.YesOrNo;
 import view.InputView;
 import view.OutputView;
@@ -12,38 +10,31 @@ import view.OutputView;
 public class BlackJackGame {
 
     private static final int FIRST_CARD_COUNT = 2;
+
     private final Deck deck;
 
-    public BlackJackGame() {
-        deck = DeckFactory.getDeck();
+    public static BlackJackGame set(Deck deck) {
+        return new BlackJackGame(deck);
     }
 
-    public void firstDealOut(Dealer dealer, Players players) {
+    private BlackJackGame(Deck deck) {
+        this.deck = deck;
+    }
+
+    public void firstDealOut(Dealer dealer, PlayersInfo playersInfo) {
         for (int i = 0; i < FIRST_CARD_COUNT; i++) {
-            dealer.draw(deck.dealOut());
-            players.draw(deck);
+            dealer.draw(deck);
+            playersInfo.draw(deck);
         }
     }
 
-    public void additionalDealOut(Dealer dealer, Players players) {
-        players.getPlayers()
-                .forEach(this::playersAdditionalDraw);
-
-        while (dealer.isAvailableToDraw()) {
-            OutputView.printDealerDealOut();
-            dealer.draw(deck.dealOut());
-        }
+    public void additionalDealOut(Dealer dealer, PlayersInfo playersInfo) {
+        playersInfo.additionalDealOut(deck, this::isYes, OutputView::printPlayerDealOutResult);
+        dealer.additionalDealOut(deck, OutputView::printDealerDealOut);
     }
 
-    private void playersAdditionalDraw(Player player) {
-        while (player.isAvailableToDraw() && isYes(player)) {
-            player.draw(deck.dealOut());
-            OutputView.printDealOutResult(player);
-        }
-    }
-
-    private boolean isYes(Player player) {
-        String input = InputView.receiveYesOrNoInput(player.getName());
+    private boolean isYes(String name) {
+        String input = InputView.receiveYesOrNoInput(name);
         return YesOrNo.isYes(input);
     }
 }

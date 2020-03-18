@@ -1,33 +1,26 @@
 package util;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-public class YesOrNo {
+public enum YesOrNo {
 
-    private static final List<String> ANSWER = Collections.unmodifiableList(Arrays.asList("y", "Y", "n", "N"));
-    private static final String INPUT_ERROR_MESSAGE = "입력은 y(Y), n(N)만 가능합니다.";
+    y("y"),
+    Y("Y"),
+    n("n"),
+    N("N");
 
     private final String answer;
 
-    private YesOrNo(String answer) {
-        validate(answer);
-        this.answer = answer.toLowerCase();
+    YesOrNo(String answer) {
+        this.answer = answer;
     }
 
-    public static YesOrNo of(String answer) {
-        return new YesOrNo(answer);
-    }
+    public static boolean isYes(String input) {
+        YesOrNo answerInput = Arrays.stream(values())
+                .filter(yesOrNo -> yesOrNo.answer.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
 
-    private void validate(String answer) {
-        if (!ANSWER.contains(answer)) {
-            throw new IllegalArgumentException(INPUT_ERROR_MESSAGE);
-        }
-    }
-
-    public static boolean isYes(String answer) {
-        YesOrNo yesOrNo = YesOrNo.of(answer);
-        return "y".equals(yesOrNo.answer);
+        return answerInput == Y || answerInput == y;
     }
 }
