@@ -1,9 +1,9 @@
 package second.domain;
 
 import second.domain.card.provider.CardDeck;
-import second.domain.player.Dealer;
-import second.domain.player.Gamer;
-import second.domain.player.Player;
+import second.domain.gamer.Dealer;
+import second.domain.gamer.Gamer;
+import second.domain.gamer.Player;
 import second.domain.answer.PlayerDecisions;
 import second.domain.result.Results;
 

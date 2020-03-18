@@ -1,4 +1,4 @@
-package second.domain.card;
+package second.domain.score;
 
 import org.junit.jupiter.api.Test;
 import second.domain.score.Score;

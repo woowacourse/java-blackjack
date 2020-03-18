@@ -1,7 +1,10 @@
-package second.domain.card;
+package second.domain.gamer;
 
 import org.junit.jupiter.api.Test;
-import second.domain.player.Dealer;
+import second.domain.card.Card;
+import second.domain.card.Rank;
+import second.domain.card.Suit;
+import second.domain.gamer.Dealer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package second.domain.player;
+package second.domain.gamer;
 
 import second.domain.card.HandCards;
 

@@ -1,6 +1,6 @@
 package second.domain.answer;
 
-import second.domain.player.Gamer;
+import second.domain.gamer.Gamer;
 
 import java.util.Objects;
 import java.util.function.Consumer;

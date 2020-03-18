@@ -1,6 +1,6 @@
 package second.domain.result;
 
-import second.domain.player.Gamer;
+import second.domain.gamer.Gamer;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;

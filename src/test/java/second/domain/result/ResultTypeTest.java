@@ -1,10 +1,13 @@
-package second.domain.card;
+package second.domain.result;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import second.domain.player.Dealer;
-import second.domain.player.Player;
+import second.domain.card.Card;
+import second.domain.card.Rank;
+import second.domain.card.Suit;
+import second.domain.gamer.Dealer;
+import second.domain.gamer.Player;
 import second.domain.result.ResultType;
 
 import java.util.stream.Stream;

@@ -1,7 +1,7 @@
 package second.view;
 
 import second.domain.answer.Choice;
-import second.domain.player.Gamer;
+import second.domain.gamer.Gamer;
 
 import java.util.Arrays;
 import java.util.List;

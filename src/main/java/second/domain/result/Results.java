@@ -1,7 +1,7 @@
 package second.domain.result;
 
-import second.domain.player.Dealer;
-import second.domain.player.Player;
+import second.domain.gamer.Dealer;
+import second.domain.gamer.Player;
 
 import java.util.List;
 import java.util.Map;

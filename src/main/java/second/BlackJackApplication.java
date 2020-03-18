@@ -1,7 +1,7 @@
 package second;
 
 import second.domain.BlackJackGame;
-import second.domain.player.Player;
+import second.domain.gamer.Player;
 import second.domain.answer.PlayerDecisions;
 import second.view.InputView;
 import second.view.OutputView;

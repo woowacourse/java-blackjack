@@ -1,9 +1,9 @@
 package second.view;
 
 import second.domain.BlackJackGame;
-import second.domain.player.Dealer;
-import second.domain.player.Gamer;
-import second.domain.player.Player;
+import second.domain.gamer.Dealer;
+import second.domain.gamer.Gamer;
+import second.domain.gamer.Player;
 import second.domain.result.ResultType;
 import second.domain.result.Results;
 
@@ -78,7 +78,7 @@ public class OutputView {
         stringBuilder.append(parseDealerResultToString(results.getDealerResult()));
         stringBuilder.append(parsePlayerResultsToString(results.getPlayerResults()));
 
-        System.out.println(stringBuilder.toString());
+        System.out.println(stringBuilder);
     }
 
     private static String parseDealerResultToString(Map<ResultType, Integer> dealerWinLoses) {
