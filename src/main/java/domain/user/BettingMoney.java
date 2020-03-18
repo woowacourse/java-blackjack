@@ -7,9 +7,7 @@ public class BettingMoney {
 	private double bettingMoney;
 
 	public BettingMoney(String inputBettingMoney) {
-		double bettingMoney = Double.parseDouble(inputBettingMoney);
-		validate(bettingMoney);
-		this.bettingMoney = bettingMoney;
+		this(Double.parseDouble(inputBettingMoney));
 	}
 
 	public BettingMoney(double bettingMoney) {

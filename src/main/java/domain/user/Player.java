@@ -8,14 +8,14 @@ public class Player extends User {
 	private final Name name;
 	private final BettingMoney bettingMoney;
 
+	public Player(String name, int bettingMoney) {
+		this(new Name(name), new BettingMoney(bettingMoney));
+	}
+
 	public Player(Name name, BettingMoney bettingMoney) {
 		this.name = name;
 		this.bettingMoney = bettingMoney;
 		super.drawStrategy = new PlayerDrawStrategy();
-	}
-
-	public Player(String name) { // TODO: 2020/03/18 열어둘까
-		this(new Name(name), new BettingMoney(10));
 	}
 
 	public double getBettingMoney() {

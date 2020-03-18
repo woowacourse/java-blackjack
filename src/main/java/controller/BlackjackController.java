@@ -25,6 +25,7 @@ public class BlackjackController {
 
 	private Players enrollPlayers() {
 		Names names = Names.of(InputView.inputPlayerNames());
+
 		return Players.of(names.getNames().stream()
 				.map(name ->
 						new Player(name, new BettingMoney(InputView.inputPlayerBettingMoney(name))))
@@ -50,11 +51,6 @@ public class BlackjackController {
 		printResult(dealer, players);
 	}
 
-	private void printResult(Dealer dealer, Players players) {
-		printResultStatus(dealer, players);
-		printTotalResult(Result.from(dealer, players), players);
-	}
-
 	private void proceedExtraDraw(Player player, Deck deck) {
 		while (player.canDrawMore() && wantDraw(player)) {
 			player.addCard(deck);
@@ -64,5 +60,10 @@ public class BlackjackController {
 
 	private boolean wantDraw(Player player) {
 		return PlayerIntentionType.isYes(PlayerIntentionType.of(inputPlayerIntention(player)));
+	}
+
+	private void printResult(Dealer dealer, Players players) {
+		printResultStatus(dealer, players);
+		printTotalResult(Result.from(dealer, players), players);
 	}
 }

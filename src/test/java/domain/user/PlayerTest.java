@@ -10,6 +10,6 @@ public class PlayerTest {
 	@DisplayName("String으로 Palyer 생성 되는지 확인")
 	@Test
 	void create_with_name() {
-		assertThat(new Player("toney")).isInstanceOf(Player.class);
+		assertThat(new Player("toney", 10)).isInstanceOf(Player.class);
 	}
 }

@@ -21,18 +21,18 @@ class ResultTest {
 	@Test
 	void createDealerResult_When_One_Win_Two_Draw_Three_Lose_From_Players() {
 		Map<Player, ResultType> values = new HashMap<>();
-		values.put(new Player("1"), ResultType.WIN);
-		values.put(new Player("2"), ResultType.DRAW);
-		values.put(new Player("3"), ResultType.DRAW);
-		values.put(new Player("4"), ResultType.LOSE);
-		values.put(new Player("5"), ResultType.LOSE);
-		values.put(new Player("6"), ResultType.LOSE);
+		values.put(new Player("1", 10), ResultType.WIN);
+		values.put(new Player("2", 10), ResultType.DRAW);
+		values.put(new Player("3", 10), ResultType.DRAW);
+		values.put(new Player("4", 10), ResultType.LOSE);
+		values.put(new Player("5", 10), ResultType.LOSE);
+		values.put(new Player("6", 10), ResultType.LOSE);
 
 		Result result = new Result(values);
 
 		double expected = 20;
 
-		double actual = result.createDealerResult();
+		double actual = result.createDealerRevenueResult();
 
 		assertThat(actual).isEqualTo(expected);
 	}

@@ -22,7 +22,7 @@ public class Result {
 		return new Result(results);
 	}
 
-	public double createDealerResult() {
+	public double createDealerRevenueResult() {
 		return results.entrySet().stream()
 				.mapToDouble(entry -> entry.getValue().getExchangedBettingMoney(entry.getKey().getBettingMoney()))
 				.sum() * OPPOSITE_SIGN;

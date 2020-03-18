@@ -1,6 +1,7 @@
 package domain.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,15 @@ public class PlayersTest {
 	@Test
 	void create_Over_Max_Count_Of_Players() {
 		assertThatIllegalArgumentException().isThrownBy(() ->
-				Players.of("1,2,3,4,5,6,7,8"))
+				Players.of(Arrays.asList(
+						new Player("1", 10),
+						new Player("2", 10),
+						new Player("3", 10),
+						new Player("4", 10),
+						new Player("5", 10),
+						new Player("6", 10),
+						new Player("7", 10),
+						new Player("8", 10))))
 				.withMessage(OVER_MAX_PLAYERS_COUNT);
 	}
 
@@ -32,7 +41,11 @@ public class PlayersTest {
 	@Test
 	void getNames_From_Players() {
 		String expected = "kouz, toney";
-		String actual = Players.of("kouz,toney").getNames();
+		String actual = Players.of(
+				Arrays.asList(
+						new Player("kouz", 10),
+						new Player("toney", 10))
+		).getNames();
 		assertEquals(expected, actual);
 	}
 }

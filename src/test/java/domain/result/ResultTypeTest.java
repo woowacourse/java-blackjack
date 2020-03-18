@@ -23,8 +23,8 @@ class ResultTypeTest {
 	void setUp() {
 		card1 = new Card(Symbol.QUEEN, Type.HEART);
 		card2 = new Card(Symbol.SEVEN, Type.HEART);
-		player1 = new Player("toney");
-		player2 = new Player("kouz");
+		player1 = new Player("toney", 10);
+		player2 = new Player("kouz", 10);
 		player1.addCard(card1);
 		player2.addCard(card1);
 	}

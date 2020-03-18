@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 public class Names {
 	private static final String SPLIT_DELIMITER = ",";
 
-	private List<Name> names;
+	private final List<Name> names;
 
 	public Names(List<Name> names) {
 		this.names = names;
 	}
 
-	private static Names of(List<Name> names) {
+	public static Names of(List<Name> names) {
 		return new Names(names);
 	}
 
