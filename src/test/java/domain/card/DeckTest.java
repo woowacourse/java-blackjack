@@ -10,29 +10,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckTest {
     @Test
-    @DisplayName("Deck 생성")
+    @DisplayName("DeckImpl 생성")
     void create() {
-        assertThat(Deck.create()).isNotNull();
+        assertThat(DeckImpl.create()).isNotNull();
     }
 
     @Test
     @DisplayName("한 장의 카드를 반환")
     void handoutSingle() {
-        Deck deck = Deck.create();
+        DeckImpl deck = DeckImpl.create();
         assertThat(deck.handOutCard()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("두 장의 PlayingCards 반환")
     void name() {
-        Deck deck = Deck.create();
+        DeckImpl deck = DeckImpl.create();
         assertThat(deck.getInitCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("중복되지 않는 여러 장의 카드를 반환하고 덱은 모두 소비된다.")
     void handoutMultiple() {
-        Deck deck = Deck.create();
+        DeckImpl deck = DeckImpl.create();
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
             cards.add(deck.handOutCard());

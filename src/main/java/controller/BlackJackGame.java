@@ -3,7 +3,7 @@ package controller;
 import common.GamerDto;
 import domain.GameResult;
 import domain.PlayerResult;
-import domain.card.Deck;
+import domain.card.DeckImpl;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import view.InputView;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
     public void play() {
-        Deck deck = Deck.create();
+        DeckImpl deck = DeckImpl.create();
         List<String> playerNames = InputView.inputPlayerNames();
         List<Player> players = playerNames.stream()
                 .map(name -> new Player(deck.getInitCards(), name))
@@ -48,14 +48,14 @@ public class BlackJackGame {
         return gameResults;
     }
 
-    private void receiveDealerCard(Deck deck, Dealer dealer) {
+    private void receiveDealerCard(DeckImpl deck, Dealer dealer) {
         if (dealer.canGetExtraCard()) {
             dealer.addCard(deck.handOutCard());
             OutputView.printDealerHit();
         }
     }
 
-    private void receivePlayerCards(Deck deck, List<Player> players) {
+    private void receivePlayerCards(DeckImpl deck, List<Player> players) {
         for (Player player : players) {
             String willForMoreCard = InputView.inputGetMoreCard(player.getName());
             while (player.isNotBust() && player.wantToHit(willForMoreCard)) {
