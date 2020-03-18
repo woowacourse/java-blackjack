@@ -5,6 +5,7 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Result;
 import blackjack.domain.game.TotalResult;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
@@ -53,8 +54,8 @@ public class OutputView {
     }
 
     public static void printFinalResult(TotalResult totalResult) {
-        System.out.println("## 최종 승패");
-        System.out.println(parseDealerFinalResult(totalResult.calculateTotalResultCount()));
+        System.out.println("## 최종 수익");
+        System.out.println(parseDealerFinalResult(totalResult.calculateDealerProfit()));
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
@@ -90,15 +91,11 @@ public class OutputView {
     private static String parseAllPlayerResults(TotalResult totalResult) {
         StringBuilder sb = new StringBuilder();
         totalResult.getResult().forEach((player, result) ->
-                sb.append(player.getName()).append(COLON).append(result.getName()).append(NEW_LINE));
+                sb.append(player.getName()).append(COLON).append(player.getProfitByResult(result)).append(NEW_LINE));
         return sb.toString();
     }
 
-    private static String parseDealerFinalResult(Map<Result, Integer> playerResult) {
-        return DEALER + COLON +
-                playerResult.get(Result.LOSE) + WINS +
-                playerResult.get(Result.DRAW) + DRAWS +
-                playerResult.get(Result.WIN) + LOSES +
-                NEW_LINE;
+    private static String parseDealerFinalResult(Money dealerProfit) {
+        return DEALER + COLON + dealerProfit.getMoney() + NEW_LINE;
     }
 }

@@ -7,16 +7,19 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
-    WIN("승", (dealer, player) -> dealer.compareScore(player) < 0),
-    LOSE("패", (dealer, player) -> dealer.compareScore(player) > 0),
-    DRAW("무", (dealer, player) -> dealer.compareScore(player) == 0);
+    WIN("승", (dealer, player) -> dealer.compareScore(player) < 0 && !player.isBlackJack(), 1.0),
+    BLACKJACK("블랙잭", (dealer, player) -> !dealer.isBlackJack() && player.isBlackJack(), 1.5),
+    LOSE("패", (dealer, player) -> dealer.compareScore(player) > 0, -1.0),
+    DRAW("무", (dealer, player) -> dealer.compareScore(player) == 0, 0);
 
     private final String name;
     private BiPredicate<Dealer, Player> condition;
+    private double rate;
 
-    Result(String name, BiPredicate<Dealer, Player> condition) {
+    Result(String name, BiPredicate<Dealer, Player> condition, double rate) {
         this.name = name;
         this.condition = condition;
+        this.rate = rate;
     }
 
     public static Result of(Dealer dealer, Player player) {
@@ -28,5 +31,9 @@ public enum Result {
 
     public String getName() {
         return name;
+    }
+
+    public double getRate() {
+        return rate;
     }
 }

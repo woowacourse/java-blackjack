@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Money {
     private final int money;
+
     public Money(int money) {
         this.money = money;
     }
@@ -16,12 +17,20 @@ public class Money {
         return new Money((int) (this.money * rate));
     }
 
-    public Money plus(int money) {
+    public Money add(int money) {
         return new Money(this.money + money);
     }
 
-    public Money plus(Money money) {
-        return plus(money.money);
+    public Money add(Money money) {
+        return add(money.money);
+    }
+
+    public Money subtract(int money) {
+        return new Money(this.money - money);
+    }
+
+    public Money subtract(Money money) {
+        return subtract(money.money);
     }
 
     public int getMoney() {

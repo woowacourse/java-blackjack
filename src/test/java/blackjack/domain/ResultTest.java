@@ -20,7 +20,7 @@ public class ResultTest {
     private Player player1;
     private Player player2;
     private Player player3;
-
+    private Player player4;
 
     @BeforeEach
     void setup() {
@@ -28,9 +28,10 @@ public class ResultTest {
         player1 = new Player("pobi");
         player2 = new Player("hiro");
         player3 = new Player("rebecca");
+        player4 = new Player("Jay");
         dealer.receiveInitialCards(
                 Arrays.asList(
-                        new Card(Suit.SPADE, Symbol.JACK),
+                        new Card(Suit.SPADE, Symbol.EIGHT),
                         new Card(Suit.HEART, Symbol.TEN)
                 ));
         player1.receiveInitialCards(
@@ -40,29 +41,37 @@ public class ResultTest {
                 ));
         player2.receiveInitialCards(
                 Arrays.asList(
-                        new Card(Suit.DIAMOND, Symbol.FOUR),
+                        new Card(Suit.CLUB, Symbol.TEN),
                         new Card(Suit.CLUB, Symbol.KING)
                 ));
         player3.receiveInitialCards(
                 Arrays.asList(
-                        new Card(Suit.CLUB, Symbol.TEN),
+                        new Card(Suit.DIAMOND, Symbol.FOUR),
                         new Card(Suit.CLUB, Symbol.KING)
                 ));
+        player4.receiveInitialCards(
+                Arrays.asList(
+                        new Card(Suit.CLUB, Symbol.EIGHT),
+                        new Card(Suit.CLUB, Symbol.KING)
+                ));
+
     }
 
     @Test
     @DisplayName("승, 무, 패 결과가 잘 나오는지 확인")
     void checkResult() {
-        assertThat(Result.of(dealer, player1)).isEqualTo(Result.WIN);
-        assertThat(Result.of(dealer, player2)).isEqualTo(Result.LOSE);
-        assertThat(Result.of(dealer, player3)).isEqualTo(Result.DRAW);
+        assertThat(Result.of(dealer, player1)).isEqualTo(Result.BLACKJACK);
+        assertThat(Result.of(dealer, player2)).isEqualTo(Result.WIN);
+        assertThat(Result.of(dealer, player3)).isEqualTo(Result.LOSE);
+        assertThat(Result.of(dealer, player4)).isEqualTo(Result.DRAW);
     }
 
     @Test
     @DisplayName("명칭을 잘 불러오는지 확인")
     void checkgetName() {
+        assertThat(Result.BLACKJACK.getName()).isEqualTo("블랙잭");
         assertThat(Result.WIN.getName()).isEqualTo("승");
-        assertThat(Result.DRAW.getName()).isEqualTo("무");
         assertThat(Result.LOSE.getName()).isEqualTo("패");
+        assertThat(Result.DRAW.getName()).isEqualTo("무");
     }
 }

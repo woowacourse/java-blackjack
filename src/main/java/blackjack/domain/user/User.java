@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Result;
 import blackjack.domain.game.ScoreRule;
 
 import java.util.LinkedList;
@@ -42,14 +43,12 @@ public abstract class User {
         return this.name;
     }
 
-    public Money getProfitByRate(double rate) {
-        Money profit = this.money.multiply(rate);
-        addMoney(profit);
-        return profit;
+    public Money getProfitByResult(Result result) {
+        return this.money.multiply(result.getRate());
     }
 
     public void addMoney(Money profit) {
-        this.money = this.money.plus(profit);
+        this.money = this.money.add(profit);
     }
 
     public boolean isBusted() {

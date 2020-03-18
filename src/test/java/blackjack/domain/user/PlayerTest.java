@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.Symbol;
+import blackjack.domain.game.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,6 +64,6 @@ public class PlayerTest {
     @Test
     @DisplayName("사용자의 최종 수익 확인")
     void checkFinalProfit() {
-        assertThat(player.getProfitByRate(1.5)).isEqualTo(new Money(15000));
+        assertThat(player.getProfitByResult(Result.BLACKJACK)).isEqualTo(new Money(15000));
     }
 }
