@@ -12,10 +12,10 @@ import static java.util.stream.Collectors.joining;
 public class Players implements Iterable<Player> {
 	public static final String OVER_MAX_PLAYERS_COUNT = "블랙잭의 최대 인원은 8명입니다.";
 	public static final String UNDER_MIN_PLAYERS_COUNT = "블랙잭의 최소 인원은 1명입니다.";
-	private static final String SPLIT_DELIMITER = ",";
 	private static final int MAX_PLAYERS_COUNT = 8;
 	private static final int MIN_PLAYERS_COUNT = 0;
 	private static final String NAME_DELIMITER = ", ";
+	private static final String SPLIT_DELIMITER = ",";
 
 	private final List<Player> players;
 
@@ -44,7 +44,6 @@ public class Players implements Iterable<Player> {
 				.map(Player::new)
 				.collect(Collectors.toList()));
 	}
-
 	public String getNames() {
 		return players.stream()
 				.map(Player::toString)

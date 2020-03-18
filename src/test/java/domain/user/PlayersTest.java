@@ -1,8 +1,6 @@
 package domain.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,17 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayersTest {
-
-	@DisplayName("Players 생성 확인")
-	@Test
-	void create_With_Names() {
-		List<Player> values = Arrays.asList(
-				new Player("kouz"),
-				new Player("toney")
-		);
-
-		assertEquals(Players.of(values), Players.of("kouz,toney"));
-	}
 
 	@DisplayName("Players 생성시 최대인원 초과하면 예외처리")
 	@Test

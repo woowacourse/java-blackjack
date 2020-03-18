@@ -4,10 +4,10 @@ import domain.PlayerIntentionType;
 import domain.card.CardRepository;
 import domain.card.Deck;
 import domain.result.Result;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.Players;
+import domain.user.*;
 import view.InputView;
+
+import java.util.stream.Collectors;
 
 import static view.InputView.*;
 import static view.OutputView.*;
@@ -20,11 +20,20 @@ public class BlackjackController {
 	public BlackjackController() {
 		deck = new Deck(CardRepository.toList());
 		dealer = new Dealer();
-		players = Players.of(InputView.inputPlayerNames());
+		players = enrollPlayers();
+	}
+
+	private Players enrollPlayers() {
+		Names names = Names.of(InputView.inputPlayerNames());
+
+		return Players.of(names.getNames().stream()
+				.map(name ->
+						new Player(name, new BettingMoney(InputView.inputPlayerBettingMoney(name))))
+				.collect(Collectors.toList()));
 	}
 
 	public void run() {
-		// todo 플레이어 각각 배팅금액을 받자.
+
 		deck.shuffle();
 		dealer.addInitialCards(deck);
 		for (Player player : players) {
