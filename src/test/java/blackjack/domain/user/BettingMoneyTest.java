@@ -39,9 +39,16 @@ class BettingMoneyTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"1000,2500", "500,1250", "1,2.5"})
+	@CsvSource(value = {"1000,1500", "500,750", "1,1.5"})
 	void addWinningAmountWithBlackjack(String input, String expect) {
 		BettingMoney bettingMoney = BettingMoney.of(input);
-		assertThat(bettingMoney.addWinningAmountWithBlackjack()).isEqualTo(BettingMoney.of(expect));
+		assertThat(bettingMoney.computeWinningAmountWithBlackjack()).isEqualTo(BettingMoney.of(expect));
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"1000", "1500", "1500.5", "1.5", "1"})
+	void addSimpleWinningAmount() {
+		BettingMoney bettingMoney = BettingMoney.of("1000");
+		assertThat(bettingMoney.computeSimpleWinningAmount()).isEqualTo(BettingMoney.of("1000"));
 	}
 }

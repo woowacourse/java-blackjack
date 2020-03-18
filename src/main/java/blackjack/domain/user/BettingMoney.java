@@ -35,8 +35,12 @@ public class BettingMoney {
 		}
 	}
 
-	public BettingMoney addWinningAmountWithBlackjack() {
-		return new BettingMoney(amount + amount * BLACKJACK_BONUS_MULTIPLE);
+	public BettingMoney computeWinningAmountWithBlackjack() {
+		return new BettingMoney(amount * BLACKJACK_BONUS_MULTIPLE);
+	}
+
+	public BettingMoney computeSimpleWinningAmount() {
+		return new BettingMoney(amount);
 	}
 
 	@Override
