@@ -22,6 +22,13 @@ class UserTest {
     }
 
     @Test
+    void isBlackjack() {
+        user = userWithScore(21);
+
+        assertThat(user.isBlackjack()).isTrue();
+    }
+
+    @Test
     void isBust() {
         user = userWithScore(22);
 

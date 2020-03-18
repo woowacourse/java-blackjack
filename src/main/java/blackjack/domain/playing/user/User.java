@@ -10,7 +10,7 @@ import java.util.List;
 public class User {
     public static final int DRAWING_NUMBER_INITIALLY = 2;
     private static final int DRAWING_NUMBER_IN_TURN = 1;
-    private static final int MAX_SCORE_NUMBER_NOT_BUST = 21;
+    private static final int BLACKJACK_SCORE_NUMBER = 21;
 
     private final String name;
     private final Cards cards;
@@ -57,15 +57,19 @@ public class User {
         return calculateScore().equals(other.calculateScore());
     }
 
+    public boolean isBlackjack() {
+        return calculateScore().isSame(BLACKJACK_SCORE_NUMBER);
+    }
+
     public boolean isBust() {
-        return calculateScore().isOver(MAX_SCORE_NUMBER_NOT_BUST);
+        return calculateScore().isOver(BLACKJACK_SCORE_NUMBER);
     }
 
     public boolean isNotBust() {
         return !isBust();
     }
 
-    public boolean hasName(String name) {
+    protected boolean hasName(String name) {
         return this.name.equals(name);
     }
 
