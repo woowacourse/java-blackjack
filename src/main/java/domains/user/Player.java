@@ -2,10 +2,12 @@ package domains.user;
 
 import domains.card.Deck;
 import domains.result.ResultType;
+import domains.user.Dealer;
+import domains.user.Hands;
+import domains.user.User;
 import domains.user.money.BettingMoney;
-import domains.user.money.Money;
-import domains.user.money.ProfitMoney;
 import domains.user.name.PlayerName;
+import domains.user.InvalidPlayerException;
 
 import java.util.Objects;
 

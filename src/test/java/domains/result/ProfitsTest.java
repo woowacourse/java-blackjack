@@ -1,14 +1,11 @@
 package domains.result;
 
-import domains.card.Deck;
-import domains.user.money.Money;
 import domains.user.Player;
 import domains.user.name.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

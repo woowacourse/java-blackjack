@@ -1,4 +1,4 @@
-package domains.user;
+package domains.user.name;
 
 public class InvalidPlayerNamesException extends IllegalArgumentException {
     public static final String DUPLICATION = "플레어이간에 중복된 이름이 존재합니다.";

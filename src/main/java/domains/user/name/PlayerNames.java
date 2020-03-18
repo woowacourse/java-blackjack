@@ -1,7 +1,5 @@
 package domains.user.name;
 
-import domains.user.InvalidPlayerNamesException;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
