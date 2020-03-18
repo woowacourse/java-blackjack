@@ -6,16 +6,13 @@ import domain.user.Player;
 
 public enum Result {
 
-    PLAYER_WIN_WITHOUT_BLACKJACk(1, (money -> money.multiply(1))),
-    PLAYER_WIN_WITH_BLACKJACK(1.5, money -> money.multiply(1.5)),
-    DRAW(0, money -> money.multiply(0)),
-    DEALER_WIN(1, money -> money.multiply(1));
-
-    private final double profitRate;
+    PLAYER_WIN_WITHOUT_BLACKJACk(money -> money.multiply(1)),
+    PLAYER_WIN_WITH_BLACKJACK(money -> money.multiply(1.5)),
+    DRAW(money -> money.multiply(0)),
+    DEALER_WIN(money -> money.multiply(1));
     private final ProfitCalculator calculator;
 
-    Result(double profitRate, ProfitCalculator calculator) {
-        this.profitRate = profitRate;
+    Result(ProfitCalculator calculator) {
         this.calculator = calculator;
     }
 
@@ -47,12 +44,8 @@ public enum Result {
         return matchScore(player, dealer);
     }
 
-//    Money calculateProfit(Money money) {
-//        return calculator.calculate(money);
-//    }
-
-    private static boolean bustExists(Player player, Dealer dealer) {
-        return player.isBlackjack() || dealer.isBust();
+    Money calculateProfit(Money money) {
+        return calculator.calculate(money);
     }
 
     private static Result matchScore(Player player, Dealer dealer) {

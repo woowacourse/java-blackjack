@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.money.Money;
 import domain.user.Dealer;
 import domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class ResultTest {
@@ -25,11 +31,21 @@ class ResultTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @ParameterizedTest
+    @MethodSource({"getCasesForTesingCalculateProfit"})
+    @DisplayName("#calculateProfit() : should return profit")
+    void calculateProfit(Result result) {
+        Money money = mock(Money.class);
+
+        //when
+        result.calculateProfit(money);
+        verify(money).multiply(anyDouble());
+    }
+
     private static Stream<Arguments> getCasesForTestingJudge() {
         int scoreOfPlayer = 15;
         Player mockPlayer = stubPlayer(scoreOfPlayer);
         Dealer mockDealer = stubDealer(scoreOfPlayer);
-
 
         return Stream.of(
                 Arguments.of(mockPlayer, mockDealer, Result.DEALER_WIN),
@@ -62,6 +78,7 @@ class ResultTest {
         return mockPlayer;
     }
 
+    //todo: 가독성 올리기
     private static Dealer stubDealer(int scoreOfPlayer) {
         Dealer mockDealer = mock(Dealer.class);
         when(mockDealer.isBust())
@@ -77,5 +94,14 @@ class ResultTest {
                 .thenReturn(scoreOfPlayer)
                 .thenReturn(scoreOfPlayer - 1);
         return mockDealer;
+    }
+
+    private static Stream<Arguments> getCasesForTesingCalculateProfit() {
+        return Stream.of(
+                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk),
+                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK),
+                Arguments.of(Result.DRAW),
+                Arguments.of(Result.DEALER_WIN)
+        );
     }
 }
