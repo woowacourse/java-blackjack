@@ -1,8 +1,9 @@
-package domain.result;
+package domain.rule;
 
 import java.util.function.Function;
 
 import domain.gamer.Gamer;
+import domain.result.Score;
 
 public enum Rule {
 	BLACK_JACK("블랙잭", gamer -> gamer.hasTwoCards() && calculateScore(gamer).isEqualTo(Score.BLACKJACK)),

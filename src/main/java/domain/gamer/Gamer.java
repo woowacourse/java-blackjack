@@ -4,8 +4,8 @@ import java.util.List;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.result.Rule;
 import domain.result.Score;
+import domain.rule.Rule;
 
 public abstract class Gamer {
 	private final Hand hand;
