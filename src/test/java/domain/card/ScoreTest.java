@@ -29,14 +29,14 @@ public class ScoreTest {
 
     @Test
     @DisplayName("Ace를 1,11로 판별")
-    void addAceBonusIfNotBust() {
+    void addAceBonusIfNotBust_IfPointNotOver21_AddPoint10() {
         assertThat(new Score(11).addAceBonusIfNotBust()).isEqualTo(new Score(21));
     }
 
     @ParameterizedTest
     @DisplayName("해당 스코어가 버스트가 아닌지 확인")
     @CsvSource(value = {"21:True", "22:False"}, delimiter = ':')
-    void isNotBust(int input, Boolean expected) {
+    void isNotBust_IfPointOver21_IsTrue(int input, Boolean expected) {
         assertThat(new Score(input).isNotBust()).isEqualTo(expected);
     }
 }

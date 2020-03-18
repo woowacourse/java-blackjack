@@ -15,7 +15,7 @@ public class NameTest {
 
     @Test
     @DisplayName("이름이 공백인 경우")
-    void create_name_is_blank() {
+    void create_IfNameIsBlank_ThrowException() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Name(""));
     }
 

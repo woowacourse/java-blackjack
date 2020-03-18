@@ -36,7 +36,7 @@ public class ResultTest {
 
     @Test
     @DisplayName("플레이 횟수 1초과 확인")
-    void isPlayCountMoreThanOne() {
+    void isPlayCountMoreThanOne_IfPlayedMoreThanOnce_IsTrue() {
         Result result = new Result("user");
 
         assertThat(result.isPlayCountMoreThanOne()).isFalse();
@@ -50,7 +50,7 @@ public class ResultTest {
 
     @Test
     @DisplayName("1회 이상 승리 확인")
-    void hasWin() {
+    void hasWin_IfWonMoreThanOnce_IsTrue() {
         Result result = new Result("user");
 
         assertThat(result.hasWin()).isFalse();

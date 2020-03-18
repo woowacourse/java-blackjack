@@ -29,7 +29,7 @@ public class SymbolTest {
 
     @Test
     @DisplayName("존재하지 않는 심볼")
-    void of_not_exist_symbol() {
+    void of_NotExistSymbol_ThrowException() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Symbol.of("1"));
     }
 

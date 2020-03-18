@@ -20,7 +20,7 @@ public class TypeTest {
 
     @Test
     @DisplayName("존재하지 않는 타입")
-    void of_not_exist_type() {
+    void of_NotExistType_ThrowException() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Type.of("세모"));
     }
 

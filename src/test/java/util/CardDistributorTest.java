@@ -1,7 +1,6 @@
 package util;
 
 import domain.card.CardDeck;
-import domain.player.Dealer;
 import domain.player.User;
 import factory.CardFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -24,13 +23,10 @@ public class CardDistributorTest {
     @DisplayName("카드 낱장 주기 확인")
     void giveOneCard() {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
-        final Dealer dealer = new Dealer();
         final User user = new User("user");
 
-        CardDistributor.giveOneCard(cardDeck, dealer);
         CardDistributor.giveOneCard(cardDeck, user);
         CardDistributor.giveOneCard(cardDeck, user);
-        assertThat(dealer.getCardSize()).isEqualTo(1);
         assertThat(user.getCardSize()).isEqualTo(2);
     }
 }

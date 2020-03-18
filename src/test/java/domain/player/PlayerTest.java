@@ -56,22 +56,18 @@ public class PlayerTest {
 
     @Test
     @DisplayName("버스트 확인")
-    void isBust() {
+    void isBust_IfPointMoreThan21_IsTrue() {
         Player player = new User("user");
         player.addCard(Card.of("스페이드", "10"));
         player.addCard(Card.of("스페이드", "A"));
-        assertThat(player.isBust()).isFalse();
-
         player.addCard(Card.of("하트", "10"));
-        assertThat(player.isBust()).isFalse();
-
         player.addCard(Card.of("하트", "A"));
         assertThat(player.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("버스트 아님 확인")
-    void isNotBust() {
+    void isNotBust_IfPointLessThan22_IsTrue() {
         Player player = new User("user");
         player.addCard(Card.of("스페이드", "10"));
         player.addCard(Card.of("스페이드", "A"));
