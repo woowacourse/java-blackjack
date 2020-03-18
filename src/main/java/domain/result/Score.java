@@ -44,10 +44,6 @@ public class Score {
 		return this.score < other.score;
 	}
 
-	public boolean isBust() {
-		return this.score > BLACKJACK_SCORE;
-	}
-
 	public int getScore() {
 		return score;
 	}

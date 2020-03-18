@@ -24,14 +24,14 @@ public class Hand {
 		cards.add(card);
 	}
 
+	public Score getScore() {
+		return Score.from(this);
+	}
+
 	public int sumOfCards() {
 		return cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
-	}
-
-	public Score getScore() {
-		return Score.from(this);
 	}
 
 	public boolean hasAce() {
@@ -39,32 +39,8 @@ public class Hand {
 				.anyMatch(Card::isAce);
 	}
 
-	public boolean isBlackJack() {
-		return hasTwoCards() && getScore().isEqualTo(Score.BLACKJACK);
-	}
-
-	public boolean isNotBlackJack() {
-		return !isBlackJack();
-	}
-
-	private boolean hasTwoCards() {
+	public boolean hasTwoCards() {
 		return cards.size() == BLACKJACK_CARD_SIZE;
-	}
-
-	public boolean isBust() {
-		return getScore().isBiggerThan(Score.BLACKJACK);
-	}
-
-	public boolean isBiggerThan(Hand hand) {
-		return getScore().isBiggerThan(hand.getScore());
-	}
-
-	public boolean isEqualTo(Hand hand) {
-		return getScore().isEqualTo(hand.getScore());
-	}
-
-	public boolean isLowerThan(Hand hand) {
-		return getScore().isLowerThan(hand.getScore());
 	}
 
 	public List<Card> getCards() {

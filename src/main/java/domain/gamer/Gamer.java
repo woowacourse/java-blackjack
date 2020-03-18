@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.card.Card;
 import domain.card.Hand;
 import domain.result.Score;
+import domain.rule.Rule;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +24,7 @@ public abstract class Gamer {
 	protected abstract int firstOpenedCardsCount();
 
 	public Score getScore() {
-		return hand.getScore();
+		return Score.from(hand);
 	}
 
 	public void hit(Card card) {
@@ -31,31 +32,23 @@ public abstract class Gamer {
 	}
 
 	public boolean canHit() {
-		return getScore().isLowerThan(Score.from(getHitPoint()));
+		return Rule.canHit(hand, getHitPoint());
 	}
 
 	public boolean isBust() {
-		return hand.isBust();
+		return Rule.isBust(hand);
+	}
+
+	public boolean isNotBust() {
+		return Rule.isNotBust(hand);
 	}
 
 	public boolean isBlackJack() {
-		return hand.isBlackJack();
+		return Rule.isBlackJack(hand);
 	}
 
 	public boolean isNotBlackJack() {
-		return hand.isNotBlackJack();
-	}
-
-	public boolean isBiggerThan(Gamer gamer) {
-		return hand.isBiggerThan(gamer.hand);
-	}
-
-	public boolean isEqualTo(Gamer gamer) {
-		return hand.isEqualTo(gamer.hand);
-	}
-
-	public boolean isLowerThan(Gamer gamer) {
-		return hand.isLowerThan(gamer.hand);
+		return Rule.isNotBlackJack(hand);
 	}
 
 	public List<Card> firstOpenedCards() {

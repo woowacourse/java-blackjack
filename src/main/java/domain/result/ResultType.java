@@ -11,14 +11,15 @@ public enum ResultType {
 		return gamer.isBlackJack() && otherGamer.isNotBlackJack();
 	}),
 	WIN("승", 1, (gamer, otherGamer) -> {
-		return gamer.isNotBlackJack() && !gamer.isBust() && (otherGamer.isBust() || gamer.isBiggerThan(otherGamer));
+		return gamer.isNotBlackJack() && gamer.isNotBust() &&
+				(otherGamer.isBust() || gamer.getScore().isBiggerThan(otherGamer.getScore()));
 	}),
 	DRAW("무", 0, (gamer, otherGamer) -> {
 		return (gamer.isBlackJack() && otherGamer.isBlackJack()) ||
-				(!gamer.isBust() && !otherGamer.isBust() && gamer.isEqualTo(otherGamer));
+				(gamer.isNotBust() && otherGamer.isNotBust() && gamer.getScore().isEqualTo(otherGamer.getScore()));
 	}),
 	LOSE("패", -1, (gamer, otherGamer) -> {
-		return gamer.isBust() || gamer.isLowerThan(otherGamer);
+		return gamer.isBust() || gamer.getScore().isLowerThan(otherGamer.getScore());
 	});
 
 	private final String result;
