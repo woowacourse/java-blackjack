@@ -6,14 +6,15 @@ import java.util.Objects;
 public class PlayingCards {
     private static final int ACE_BONUS = 10;
     private static final int BLACK_JACK = 21;
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public PlayingCards(List<Card> cards) {
         this.cards = cards;
     }
 
-    public void add(Card card) {
+    public PlayingCards add(Card card) {
         cards.add(card);
+        return new PlayingCards(cards);
     }
 
     public List<Card> getCards() {
@@ -30,10 +31,6 @@ public class PlayingCards {
             }
         }
         return result;
-    }
-
-    private boolean canAddAceBonus(int result, Card card) {
-        return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
     }
 
     public int size() {
@@ -59,5 +56,9 @@ public class PlayingCards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    private boolean canAddAceBonus(int result, Card card) {
+        return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
     }
 }
