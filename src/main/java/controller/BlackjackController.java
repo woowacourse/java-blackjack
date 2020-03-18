@@ -24,6 +24,11 @@ public class BlackjackController {
         ready();
     }
 
+    public void run() {
+        startGame();
+        result();
+    }
+
     private void ready() {
         dealer = new Dealer(cardDeck.giveTwoCardStartGame());
         players = new Players(cardDeck, playerInputInformation.getPlayerInformation());
@@ -32,11 +37,6 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             OutputView.printCardReport(player.getName(), player.cardToString());
         }
-    }
-
-    public void run() {
-        startGame();
-        result();
     }
 
     private void startGame() {
@@ -88,7 +88,9 @@ public class BlackjackController {
                 .collect(Collectors.toMap(
                         playerName -> playerName,
                         InputView::inputBattingMoney,
-                        (key, value) -> { throw new IllegalStateException(String.format("Duplicate key %s", key));},
+                        (key, value) -> {
+                            throw new IllegalStateException(String.format("Duplicate key %s", key));
+                        },
                         LinkedHashMap::new));
     }
 }

@@ -1,10 +1,13 @@
 package domain.player;
 
-import domain.money.Money;
 import domain.card.Card;
 import domain.card.CardCalculator;
+import domain.money.Money;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class User {
@@ -18,7 +21,7 @@ public abstract class User {
     protected Money money;
 
     public User(List<Card> userCardDeck) {
-        if(userCardDeck == null || userCardDeck.size() < START_CARD_DECK_SIZE){
+        if (userCardDeck == null || userCardDeck.size() < START_CARD_DECK_SIZE) {
             throw new IllegalArgumentException("2장의 카드를 정상적으로 받지 않았습니다.");
         }
         this.cards = userCardDeck;
@@ -46,7 +49,7 @@ public abstract class User {
         }
     }
 
-    public int sumCardDeck(){
+    public int sumCardDeck() {
         return CardCalculator.sumCardDeck(this.cards);
     }
 

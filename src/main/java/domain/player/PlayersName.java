@@ -23,7 +23,7 @@ public class PlayersName {
         List<String> playersName = new ArrayList<>(Arrays.asList(inputPlayersName.split(",")));
         Set<String> deleteDuplicateNames = new HashSet<>(playersName);
 
-        if(deleteDuplicateNames.size() != playersName.size()){
+        if (deleteDuplicateNames.size() != playersName.size()) {
             throw new IllegalArgumentException("중복된 이름입력이 불가합니다.");
         }
     }

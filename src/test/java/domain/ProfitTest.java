@@ -27,7 +27,7 @@ public class ProfitTest {
         ))
         );
 
-        Assertions.assertThat(Profit.calculateProfit(player, dealer)).isEqualTo(10_000);
+        Assertions.assertThat(Profit.calculateProfit(player, dealer)).isEqualTo(0);
     }
 
     @DisplayName("플레이어만 블랙잭일 때 갖고있는 돈의 1.5배 반환 테스트")

@@ -29,9 +29,9 @@ public class playerTest {
     @DisplayName("중복된 카드가 주어지면 에러")
     @Test
     void validateDuplicateCard() {
-        Card card1 = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Card card2 = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        List<Card> cards = new ArrayList<>(Arrays.asList(card1,card2));
+        Card firstCard = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        List<Card> cards = new ArrayList<>(Arrays.asList(firstCard,secondCard));
 
         Assertions.assertThatThrownBy(() -> new Player("pobi", cards))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -40,13 +40,13 @@ public class playerTest {
     @DisplayName("중복된 카드가 주어지면 에러")
     @Test
     void insertValidateDuplicateCard() {
-        Card card1 = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
-        Card card2 = new Card(CardNumber.FOUR, CardSuitSymbol.CLUB);
-        Card card3 = new Card(CardNumber.FOUR, CardSuitSymbol.CLUB);
-        List<Card> cards = new ArrayList<>(Arrays.asList(card1,card2));
+        Card firstCard = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.FOUR, CardSuitSymbol.CLUB);
+        Card drawCard = new Card(CardNumber.FOUR, CardSuitSymbol.CLUB);
+        List<Card> cards = new ArrayList<>(Arrays.asList(firstCard,secondCard));
         User user = new Player("pobi", cards);
 
-        Assertions.assertThatThrownBy(() -> user.drawCard(card3))
+        Assertions.assertThatThrownBy(() -> user.drawCard(drawCard))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
