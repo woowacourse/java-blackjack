@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum MatchResult {
-	BLACKJACK("블랙잭", (playerScore, dealerScore) -> playerScore == 21),
 	BUST("버스트", (playerScore, dealerScore) -> playerScore > 21),
 	WIN("승", (playerScore, dealerScore) -> playerScore > dealerScore || dealerScore > 21),
 	DRAW("무", Integer::equals),
-	LOSE("패", (playerScore, dealerScore) -> playerScore < dealerScore || playerScore > 21);
+	LOSE("패", (playerScore, dealerScore) -> playerScore < dealerScore || playerScore > 21),
+	BLACKJACK("블랙잭", (playerScore, dealerScore) -> playerScore == 21);
 
 	private final String initial;
 	private final BiPredicate<Integer, Integer> matchResultPredicate;
@@ -18,7 +18,7 @@ public enum MatchResult {
 		this.matchResultPredicate = matchResultPredicate;
 	}
 
-	public static MatchResult of(int playerScore, int dealerScore, int cardSize) {
+	public static MatchResult of(int playerScore, int dealerScore) {
 		return Arrays.stream(MatchResult.values())
 			.filter(x -> x.matchResultPredicate.test(playerScore, dealerScore))
 			.findFirst()

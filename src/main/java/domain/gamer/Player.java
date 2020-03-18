@@ -17,12 +17,20 @@ public class Player extends Gamer {
 		return !name.matches(PATTERN);
 	}
 
-	public MatchResult findMatchResult(int dealerScore) {
+	public MatchResult findMatchResult(Dealer dealer) {
+		if (isBlackJack() && dealer.isBlackJack()) {
+			return MatchResult.DRAW;
+		}
+
 		if (isBlackJack()) {
 			return MatchResult.BLACKJACK;
 		}
 
-		return MatchResult.of(calculateScore(), dealerScore, getCards().size());
+		if (dealer.isBlackJack()) {
+			return MatchResult.LOSE;
+		}
+
+		return MatchResult.of(calculateScore(), dealer.calculateScore());
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class Gamers {
 	public GameResult generateGameResults() {
 		return players.stream()
 			.collect(collectingAndThen(toMap(player -> player,
-				player -> player.findMatchResult(dealer.calculateScore()),
+				player -> player.findMatchResult(dealer),
 				(a, b) -> a,
 				LinkedHashMap::new), GameResult::new));
 	}
