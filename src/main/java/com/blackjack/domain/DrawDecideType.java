@@ -14,12 +14,16 @@ public enum DrawDecideType {
 
 	public static DrawDecideType of(String symbol) {
 		return Stream.of(values())
-			.filter(drawDecideType -> drawDecideType.isSameSymbol(symbol))
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
+				.filter(drawDecideType -> drawDecideType.isSameSymbol(symbol))
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
 	}
 
 	private boolean isSameSymbol(String symbol) {
 		return this.symbol.equals(symbol);
+	}
+
+	public boolean isDraw() {
+		return DRAW.equals(this);
 	}
 }

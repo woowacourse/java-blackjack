@@ -11,7 +11,7 @@ public class Player extends User {
 
 	@Override
 	public boolean canDraw() {
-		Score score = hands.calculateScore();
+		Score score = hand.calculate();
 		return !score.isBust() && score.isLowerThan(DRAW_CONDITION);
 	}
 }

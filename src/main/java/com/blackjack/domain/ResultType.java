@@ -16,7 +16,8 @@ public enum ResultType {
 		this.match = match;
 	}
 
-	public static ResultType of(int compareResult) {
+	public static ResultType of(Score playerScore, Score dealerScore) {
+		int compareResult = playerScore.compareTo(dealerScore);
 		return Stream.of(values())
 				.filter(resultType -> resultType.isMatch(compareResult))
 				.findAny()

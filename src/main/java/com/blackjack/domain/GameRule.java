@@ -2,11 +2,13 @@ package com.blackjack.domain;
 
 import static java.util.stream.Collectors.toMap;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.blackjack.domain.user.Dealer;
+import com.blackjack.domain.user.Player;
 import com.blackjack.domain.user.User;
 
 public class GameRule {
@@ -29,7 +31,18 @@ public class GameRule {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> player.compareScoreWith(dealer)
+						player -> compareScore((Player)player, dealer),
+						(r1, r2) -> r1,
+						LinkedHashMap::new
 				), PlayerRecords::new));
+	}
+
+	public ResultType compareScore(Player player, Dealer dealer) {
+		Score playerScore = player.calculateHand();
+		Score dealerScore = dealer.calculateHand();
+		if (playerScore.isBust()) {
+			return ResultType.LOSE;
+		}
+		return ResultType.of(playerScore, dealerScore);
 	}
 }
