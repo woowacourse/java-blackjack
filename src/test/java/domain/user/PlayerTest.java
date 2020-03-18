@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -71,5 +72,19 @@ class PlayerTest {
     @DisplayName("플레이어가 스테이를 원함")
     void wantToStay() {
         assertThat(player.wantToHit("n")).isFalse();
+    }
+
+    @Test
+    @DisplayName("#hit() : should add card without return")
+    void hit() {
+        //given
+        Card card = new Card(Symbol.QUEEN, Type.SPADE);
+        int defaultSizeOfCards = player.sizeOfCards();
+
+        //when
+        player.hit(card);
+
+        //then
+        assertThat(player.sizeOfCards()).isEqualTo(defaultSizeOfCards + 1);
     }
 }
