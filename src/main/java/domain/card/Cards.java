@@ -1,7 +1,10 @@
 package domain.card;
 
+import sun.plugin.dom.exception.InvalidStateException;
+
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Cards {
     private final List<Card> cards;
@@ -36,6 +39,57 @@ public class Cards {
     protected Cards add(Cards cards) {
         this.cards.addAll(cards.getCards());
         return of(this.cards);
+    }
+
+    int calculateSumExceptAce() {
+        Cards cards = getCardsExceptAce();
+        return calculateSumExceptAce(cards);
+    }
+
+    private int calculateSumExceptAce(Cards cards) {
+        if (cards.hasAce()) {
+            throw new InvalidStateException(String.format("복수의 카드 내에 부적절한 %s가 존해합니다.", Symbol.ACE.getPattern()));
+        }
+
+        int sum = 0;
+        for (Card card : cards.getCards()) {
+            sum += card.calculate();
+        }
+        return sum;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+    int calculateSumOfAces(int sum) {
+        Cards aces = getAces();
+        return calculateSumOfAces(sum, aces);
+    }
+
+    private int calculateSumOfAces(int sum, Cards aces) {
+        if (aces.hasCardNotAce()) {
+            throw new InvalidStateException("복수의 에이스 카드 내에 부적절한 카드가 존해합니다.");
+        }
+        for (Card card : aces.getCards()) {
+            int score = card.calculate(sum);
+            sum += score;
+        }
+        return sum;
+    }
+
+    private boolean hasCardNotAce() {
+        return cards.stream().anyMatch(Card::isNotAce);
+    }
+
+    private Cards getCardsExceptAce() {
+        List<Card> cards = this.cards.stream().filter(Card::isNotAce).collect(Collectors.toList());
+        return Cards.of(cards);
+    }
+
+    private Cards getAces() {
+        List<Card> aces = this.cards.stream().filter(Card::isAce).collect(Collectors.toList());
+        return Cards.of(aces);
     }
 
     @Override

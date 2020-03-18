@@ -2,11 +2,15 @@ package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -55,5 +59,29 @@ class CardsTest {
         //when
         Cards actual = cards.add(cardsToAdd);
         assertThat(actual).isEqualTo(Cards.of(Arrays.asList(card1, card2, card3)));
+    }
+
+    @Test
+    @DisplayName("#calculateSumExceptAce : should return score of cards without ace")
+    void calculateSumExceptAce() {
+        Cards cards = Cards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
+        int sum = cards.calculateSumExceptAce();
+        assertThat(sum).isEqualTo(Symbol.QUEEN.getValue());
+    }
+
+    @ParameterizedTest
+    @MethodSource({"getCasesForTestingCalculateSumOfAces"})
+    @DisplayName("#calculateSumOfAces : should return score of cards of aces")
+    void calculateSumOfAces(int sum, int expected) {
+        Cards cards = Cards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
+        int actual = cards.calculateSumOfAces(sum);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForTestingCalculateSumOfAces() {
+        return Stream.of(
+                Arguments.of(10, 21),
+                Arguments.of(11, 12)
+        );
     }
 }

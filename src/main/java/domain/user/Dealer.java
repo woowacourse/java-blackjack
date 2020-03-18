@@ -15,7 +15,7 @@ public class Dealer extends User {
     }
 
     public boolean canGetExtraCard() {
-        return playingCards.calculateScore() < ADD_THRESHOLD;
+        return playingCards.calculate() < ADD_THRESHOLD;
     }
 
     void confirmCards(int hitSize) {

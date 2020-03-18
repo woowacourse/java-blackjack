@@ -20,7 +20,7 @@ public abstract class User {
     }
 
     public int calculateScore() {
-        return playingCards.calculateScore();
+        return playingCards.calculate();
     }
 
     public boolean isBust() {

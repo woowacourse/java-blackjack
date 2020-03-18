@@ -11,16 +11,32 @@ public class Card {
         this.type = type;
     }
 
-    int calculateScore(int sum) {
-        return symbol.calculate(sum);
-    }
-
     public String getPattern() {
         return type.getPattern();
     }
 
     public String getWord() {
         return symbol.getPattern();
+    }
+
+    int calculate(int sum) {
+        return symbol.calculate(sum);
+    }
+
+    int calculate() {
+        if (symbol.equals(Symbol.ACE)) {
+            throw new IllegalStateException(String.format("%s는 당 함수를 활용할 수 없습니다.", Symbol.ACE.getPattern()));
+        }
+
+        return symbol.getValue();
+    }
+
+    boolean isAce() {
+        return symbol.equals(Symbol.ACE);
+    }
+
+    boolean isNotAce() {
+        return !symbol.equals(Symbol.ACE);
     }
 
     @Override

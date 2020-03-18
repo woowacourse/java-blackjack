@@ -34,20 +34,17 @@ public class PlayingCards extends Cards {
         return new PlayingCards(cards.add(cardsToAdd));
     }
 
-    public int calculateScore() {
-        int sum = 0;
-//        for (Card card : cards) {
-//            sum = card.calculateScore(sum);
-//        }
-        return sum;
+    public int calculate() {
+        int sumWithoutAce = cards.calculateSumExceptAce();
+        return calculateSumOfAces(sumWithoutAce);
     }
 
     public boolean isBust() {
-        return BLACK_JACK < calculateScore();
+        return BLACK_JACK < calculate();
     }
 
     public boolean isNotBust() {
-        return calculateScore() <= BLACK_JACK;
+        return calculate() <= BLACK_JACK;
     }
 
     @Override
