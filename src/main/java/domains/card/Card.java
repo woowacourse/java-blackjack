@@ -3,6 +3,7 @@ package domains.card;
 import java.util.Objects;
 
 public class Card {
+	private static final String DELIMITER = "-";
 	private final Symbol symbol;
 	private final Type type;
 
@@ -37,6 +38,6 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return symbol + "-" + type;
+		return symbol + DELIMITER + type;
 	}
 }
