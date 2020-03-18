@@ -8,30 +8,34 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class WinningResult {
-    private Map<String, Boolean> winningPlayerResult;
+    private List<String> winningUserResult;
 
     public WinningResult(Players players, Dealer dealer) {
-        winningPlayerResult = new HashMap<>();
+        Map<String, Boolean> winningPlayerResult = new HashMap<>();
 
         for (Player player : players.getPlayers()) {
             winningPlayerResult.put(player.getName(), DecisionWinner.compareWinner(player, dealer));
         }
+
+        this.winningUserResult = generateWinningUserResult(winningPlayerResult);
     }
 
-    public List<String> generateWinningUserResult(Players players) {
+    private List<String> generateWinningUserResult(Map<String, Boolean> winningPlayerResult) {
+
         int allUserWinCount = (int) winningPlayerResult.values().stream().filter(win -> win).count();
         int allUserLoseCount = winningPlayerResult.values().size() - allUserWinCount;
 
         List<String> result = new ArrayList<>(Collections.singletonList(String.format(
                 "딜러: %d승 %d패", allUserLoseCount, allUserWinCount))
         );
-        result.addAll(players.getPlayers()
+
+        result.addAll(winningPlayerResult.keySet()
                 .stream()
-                .map(player -> determineWin(player.getName(), winningPlayerResult.get(player.getName())))
+                .map(player-> determineWin(player,winningPlayerResult.get(player)))
                 .collect(Collectors.toList())
         );
 
-        return Collections.unmodifiableList(result);
+        return result;
     }
 
     private String determineWin(String name, boolean isWin) {
@@ -44,5 +48,9 @@ public class WinningResult {
         }
         stringBuilder.append(": 패");
         return stringBuilder.toString();
+    }
+
+    public List<String> getWinningUserResult() {
+        return Collections.unmodifiableList(winningUserResult);
     }
 }

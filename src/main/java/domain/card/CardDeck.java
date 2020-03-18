@@ -2,12 +2,12 @@ package domain.card;
 
 import java.util.*;
 
-public class Cards {
+public class CardDeck {
     private static final int FIRST = 0;
 
     private final List<Card> cardsDeck;
 
-    public Cards() {
+    public CardDeck() {
         cardsDeck = new ArrayList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             addCard(cardNumber);

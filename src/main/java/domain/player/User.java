@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class User {
+    private static final int WINNING_COUNT = 21;
+    private static final int BLACK_JACK = 21;
+    private static final int DEALER_STANDARD_ADDITIONAL_CARD = 16;
     private static final int START_CARD_DECK_SIZE = 2;
 
     protected String name;
@@ -45,6 +48,33 @@ public abstract class User {
         if (name == null || name.isEmpty()) {
             throw new NullPointerException("플레이어 이름이 null 입니다.");
         }
+    }
+
+    public int sumCardDeck(){
+        return CardCalculator.sumCardDeck(this.cards);
+    }
+
+    public boolean isUnderSixteen() {
+        return CardCalculator.sumCardDeck(this.cards) <= DEALER_STANDARD_ADDITIONAL_CARD;
+    }
+
+
+    public boolean isBlackJack() {
+        return this.cards.stream().anyMatch(Card::isAce)
+                && this.cards.size() == 2
+                && CardCalculator.sumCardDeck(this.cards) == BLACK_JACK;
+    }
+
+    public boolean isUnderWinningCount() {
+        int sum = CardCalculator.sumCardDeck(this.cards);
+
+        return sum < WINNING_COUNT;
+    }
+
+    public boolean isMoreThanWinningCount() {
+        int sum = CardCalculator.sumCardDeck(this.cards);
+
+        return sum >= WINNING_COUNT;
     }
 
     public abstract void drawCard(Card cards);

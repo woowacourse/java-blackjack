@@ -14,13 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CardCalculatorTest {
-    private Cards cards;
+    private CardDeck cardDeck;
     private Card card1;
     private Card card2;
 
     @BeforeEach
     private void setUp() {
-        cards = new Cards();
+        cardDeck = new CardDeck();
     }
 
     @DisplayName("딜러가 ace 와 10 을 갖고 있을 때 더 카드를 받지 않도록 하는지 테스트")
@@ -84,6 +84,6 @@ public class CardCalculatorTest {
 
         User user = new Player("subway", startDeck);
 
-        Assertions.assertThat(CardCalculator.isBlackJack(user.getCard())).isTrue();
+        Assertions.assertThat(user.isBlackJack()).isTrue();
     }
 }

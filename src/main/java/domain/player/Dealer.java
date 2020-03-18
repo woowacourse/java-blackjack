@@ -14,7 +14,7 @@ public class Dealer extends User {
     }
 
     public boolean isAdditionalCard(Card card) {
-        if (CardCalculator.isUnderSixteen(this.cards)) {
+        if (isUnderSixteen()) {
             drawCard(card);
             return true;
         }

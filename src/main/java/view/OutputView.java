@@ -41,7 +41,11 @@ public class OutputView {
         }
     }
 
-    public static void printUserCardsOverBlackJack(String name) {
+    public static void printUserCardsOverWinningNumber(String name) {
         System.out.printf("%s는 카트합이 21 이상입니다. 턴 종료.\n", name);
+    }
+
+    public static void printBlackJack(String name) {
+        System.out.printf("\n%s는 블랙잭입니다.\n", name);
     }
 }

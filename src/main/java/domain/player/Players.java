@@ -1,24 +1,22 @@
 package domain.player;
 
-import domain.card.Cards;
+import domain.card.CardDeck;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<User> users;
+    private final List<Player> users;
 
-    public Players(Cards cards, List<String> playerNames) {
+    public Players(CardDeck cardDeck, List<String> playerNames) {
         this.users = playerNames.stream()
-                .map(name -> new Player(name, cards.giveTwoCardStartGame()))
+                .map(name -> new Player(name, cardDeck.giveTwoCardStartGame()))
                 .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(users.stream()
-                .map(player -> (Player) player)
-                .collect(Collectors.toList()));
+        return Collections.unmodifiableList(users);
     }
 
 }

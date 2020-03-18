@@ -1,30 +1,30 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.CardDeck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
-    private Cards cards;
+public class CardDeckTest {
+    private CardDeck cardDeck;
 
     @BeforeEach
     private void setUp() {
-        cards = new Cards();
+        cardDeck = new CardDeck();
     }
 
-    @DisplayName("Cards 객체 생성 테스트")
+    @DisplayName("CardDeck 객체 생성 테스트")
     @Test
     void cardsConstructTest() {
-        Assertions.assertThat(cards).isInstanceOf(Cards.class);
+        Assertions.assertThat(cardDeck).isInstanceOf(CardDeck.class);
     }
 
     @DisplayName("pop 기능 테스트")
     @Test
     void popTest() {
-        Card popCard = cards.giveCard();
+        Card popCard = cardDeck.giveCard();
 
         Assertions.assertThat(popCard).isInstanceOf(Card.class);
     }
@@ -34,15 +34,15 @@ public class CardsTest {
     void popWhenEmptyDeckTest() {
         Assertions.assertThatThrownBy(() -> {
             for (int i = 0; i < 49; i++) {
-                Card card = cards.giveCard();
+                Card card = cardDeck.giveCard();
             }
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void giveTwoCardStartGameTest() {
-        Cards cards = new Cards();
+        CardDeck cardDeck = new CardDeck();
 
-        Assertions.assertThat(cards.giveTwoCardStartGame().size()).isEqualTo(2);
+        Assertions.assertThat(cardDeck.giveTwoCardStartGame().size()).isEqualTo(2);
     }
 }
