@@ -5,7 +5,7 @@ import domain.player.User;
 
 public class DecisionWinner {
 
-    private static final int BLACK_JACK = 21;
+    private static final int WINNING_COUNT = 21;
 
     private DecisionWinner() {
     }
@@ -17,13 +17,13 @@ public class DecisionWinner {
         return determineWin(playerCardSum, dealerCardSum);
     }
 
-    private static boolean determineWin(int TargetPlayerCardSum, int playerCardSum) {
-        if (TargetPlayerCardSum < BLACK_JACK && playerCardSum > BLACK_JACK) {
+    private static boolean determineWin(int targetUserCardSum, int userCardSum) {
+        if (targetUserCardSum < WINNING_COUNT && userCardSum > WINNING_COUNT) {
             return true;
         }
-        if (TargetPlayerCardSum > BLACK_JACK) {
+        if (targetUserCardSum > WINNING_COUNT) {
             return false;
         }
-        return TargetPlayerCardSum >= playerCardSum;
+        return targetUserCardSum >= userCardSum;
     }
 }

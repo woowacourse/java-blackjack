@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.Money;
 import domain.card.Card;
 import domain.card.CardCalculator;
 
@@ -14,6 +15,7 @@ public abstract class User {
 
     protected String name;
     protected final List<Card> cards;
+    protected Money money;
 
     public User(List<Card> userCardDeck) {
         if(userCardDeck == null || userCardDeck.size() < START_CARD_DECK_SIZE){
@@ -78,4 +80,8 @@ public abstract class User {
     }
 
     public abstract void drawCard(Card cards);
+
+    public double getMoney() {
+        return money.getMoney();
+    }
 }

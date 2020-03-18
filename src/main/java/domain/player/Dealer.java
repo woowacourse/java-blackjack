@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.Money;
 import domain.card.Card;
 import domain.card.CardCalculator;
 
@@ -11,6 +12,7 @@ public class Dealer extends User {
     public Dealer(List<Card> userCardDeck) {
         super(userCardDeck);
         this.name = "딜러";
+        this.money = new Money(0);
     }
 
     public boolean isAdditionalCard(Card card) {
