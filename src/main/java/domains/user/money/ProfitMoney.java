@@ -14,12 +14,10 @@ public class ProfitMoney extends Money {
 		this(String.valueOf(money));
 	}
 
-
-	public static ProfitMoney calculateDealerProfit(Collection<ProfitMoney> profits) {
-		int playerProfitAmount = profits.stream()
+	public static ProfitMoney calculateDealerProfit(Collection<ProfitMoney> playerProfits) {
+		int totalPlayerProfit = playerProfits.stream()
 			.mapToInt(profit -> profit.money)
 			.sum();
-		int dealerProfit = REVERSE_SIGN * playerProfitAmount;
-		return new ProfitMoney(dealerProfit);
+		return new ProfitMoney(REVERSE_SIGN * totalPlayerProfit);
 	}
 }

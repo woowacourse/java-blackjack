@@ -15,14 +15,19 @@ class GameController {
 	GameController() {
 		OutputView.printInputPlayerNames();
 		PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
-
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(deck);
 		bet(playerNames, deck);
-
 		OutputView.printInitialHands(players, dealer);
 
-		run(dealer, deck);
+		hitOrStay(dealer, deck);
+		if (dealer.isHit()) {
+			OutputView.printDealerHitCard();
+		}
+		OutputView.printAllHands(players, dealer);
+
+		GameResult gameResult = new GameResult(players, dealer);
+		OutputView.printGameResult(new Profits(gameResult));
 	}
 
 	private void bet(PlayerNames playerNames, Deck deck) {
@@ -33,23 +38,10 @@ class GameController {
 		}
 	}
 
-	private void run(Dealer dealer, Deck deck) {
-		hitOrStay(dealer, deck);
-
-		if (dealer.isHit()) {
-			OutputView.printDealerHitCard();
-		}
-		OutputView.printAllHands(players, dealer);
-
-		GameResult gameResult = new GameResult(players, dealer);
-		OutputView.printGameResult(new Profits(gameResult));
-	}
-
 	private void hitOrStay(Dealer dealer, Deck deck) {
 		for (Player player : players) {
 			needMoreCard(player, deck);
 		}
-
 		dealer.hitOrStay(deck);
 	}
 
