@@ -35,7 +35,7 @@ public final class Player extends AbstractPlayer {
 		if (dealerScore.isOver(MAX_SCORE)) {
 			return true;
 		}
-		return getScore().isOver(dealerScore);
+		return computeScore().isOver(dealerScore);
 	}
 
 	@Override

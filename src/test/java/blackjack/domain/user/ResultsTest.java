@@ -19,13 +19,13 @@ class ResultsTest {
 	@BeforeEach
 	void setUp() {
 		Playable dealer = Dealer.dealer();
-		dealer.giveCard(Card.of(Symbol.ACE, Type.SPADE));
+		dealer.receiveCard(Card.of(Symbol.ACE, Type.SPADE));
 
 		players = Players.of("그니, 무늬, 포비");
-		players.getPlayers().get(0).giveCard(Card.of(Symbol.TEN, Type.DIAMOND));
-		players.getPlayers().get(1).giveCards(Arrays.asList(Card.of(Symbol.FIVE, Type.CLUB),
+		players.getPlayers().get(0).receiveCard(Card.of(Symbol.TEN, Type.DIAMOND));
+		players.getPlayers().get(1).receiveCards(Arrays.asList(Card.of(Symbol.FIVE, Type.CLUB),
 				Card.of(Symbol.SEVEN, Type.HEART)));
-		players.getPlayers().get(2).giveCard(Card.of(Symbol.TWO, Type.DIAMOND));
+		players.getPlayers().get(2).receiveCard(Card.of(Symbol.TWO, Type.DIAMOND));
 
 		results = Results.of(dealer, players);
 	}

@@ -51,7 +51,7 @@ public class Blackjack {
 	private static void start(Players players, Playable dealer, Drawable deck) {
 		players.giveTwoCardsEachPlayer(deck);
 
-		dealer.giveCards(deck.drawTwoCards());
+		dealer.receiveCards(deck.drawTwoCards());
 
 		OutputView.printStartInfo(dealer, players);
 	}
@@ -64,7 +64,7 @@ public class Blackjack {
 
 	private static void progressPlayer(Playable player, Drawable deck) {
 		while (willProgress(player)) {
-			player.giveCard(deck.draw());
+			player.receiveCard(deck.draw());
 			OutputView.printPlayerCard(player);
 		}
 	}
@@ -96,7 +96,7 @@ public class Blackjack {
 
 	private static void progressDealer(Playable dealer, Drawable deck) {
 		while (dealer.canReceiveCard()) {
-			dealer.giveCard(deck.draw());
+			dealer.receiveCard(deck.draw());
 			OutputView.printDealerTurn(dealer);
 		}
 	}

@@ -35,18 +35,18 @@ public abstract class AbstractPlayer implements Playable {
 	}
 
 	@Override
-	public void giveCard(Card card) {
+	public void receiveCard(Card card) {
 		hand.add(card);
 	}
 
 	@Override
-	public void giveCards(List<Card> cards) {
+	public void receiveCards(List<Card> cards) {
 		hand.addAll(cards);
 	}
 
 	@Override
 	public boolean isBust() {
-		return getScore().isOver(MAX_SCORE);
+		return computeScore().isOver(MAX_SCORE);
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public abstract class AbstractPlayer implements Playable {
 	}
 
 	@Override
-	public Score getScore() {
-		return hand.getScore();
+	public Score computeScore() {
+		return hand.computeScore();
 	}
 
 	@Override

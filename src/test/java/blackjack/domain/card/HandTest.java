@@ -100,7 +100,7 @@ class HandTest {
 	@MethodSource("getScore")
 	void getScore(List<Card> cards, int score) {
 		hand.addAll(cards);
-		assertThat(hand.getScore()).isEqualTo(Score.of(score));
+		assertThat(hand.computeScore()).isEqualTo(Score.of(score));
 	}
 
 	static Stream<Arguments> getScore() {

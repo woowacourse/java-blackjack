@@ -51,7 +51,7 @@ class DealerTest {
 	void giveCard_Cards_GiveCardsHandOfDealer(List<Card> cards) {
 		// given
 		for (Card card : cards) {
-			dealer.giveCard(card);
+			dealer.receiveCard(card);
 		}
 
 		// then
@@ -69,7 +69,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("giveCards_Cards_GiveCardsHandOfDealer")
 	void giveCards_Cards_GiveCardsHandOfDealer(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.getHand()).isEqualTo(cards);
 	}
 
@@ -84,7 +84,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("getStartHand_Cards_IsEqualToFirstCardList")
 	void getStartHand_Cards_IsEqualToFirstCardList(List<Card> cards, List<Card> firstCardList) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.getStartHand()).isEqualTo(firstCardList);
 	}
 
@@ -103,7 +103,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("isWinner_NotBusted_ReturnTrue")
 	void isWinner_NotBusted_ReturnTrue(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.isWinner(Score.of(21))).isTrue();
 	}
 
@@ -118,7 +118,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("isWinner_Busted_ReturnFalse")
 	void isWinner_Busted_ReturnFalse(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.isWinner(Score.of(0))).isFalse();
 	}
 
@@ -131,8 +131,8 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("getScore_ReturnItsScore")
 	void getScore_ReturnItsScore(List<Card> cards, int score) {
-		dealer.giveCards(cards);
-		assertThat(dealer.getScore()).isEqualTo(Score.of(score));
+		dealer.receiveCards(cards);
+		assertThat(dealer.computeScore()).isEqualTo(Score.of(score));
 	}
 
 	static Stream<Arguments> getScore_ReturnItsScore() {
@@ -146,7 +146,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("isBust_MoreThanTwentyOne_ReturnTrue")
 	void isBust_MoreThanTwentyOne_ReturnTrue(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.isBust()).isTrue();
 	}
 
@@ -159,7 +159,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("isBust_SameOrLessThanTwelve_ReturnFalse")
 	void isBust_SameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.isBust()).isFalse();
 	}
 
@@ -173,7 +173,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("getCards_ReturnHand")
 	void getCards_ReturnHand(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.getHand()).isEqualTo(cards);
 	}
 
@@ -187,7 +187,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("countCards_ReturnCount")
 	void countCards_ReturnCount(List<Card> cards, int count) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.countCards()).isEqualTo(count);
 	}
 
@@ -206,7 +206,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_LessThanSeventeen_ReturnTrue")
 	void canReceiveCard_LessThanSeventeen_ReturnTrue(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.canReceiveCard()).isTrue();
 	}
 
@@ -219,7 +219,7 @@ class DealerTest {
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_MoreThanSixteen_ReturnFalse")
 	void canReceiveCard_MoreThanSixteen_ReturnFalse(List<Card> cards) {
-		dealer.giveCards(cards);
+		dealer.receiveCards(cards);
 		assertThat(dealer.canReceiveCard()).isFalse();
 	}
 

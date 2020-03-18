@@ -77,7 +77,7 @@ public class PlayerTest {
 	void giveCard_Cards_GiveTopCardPlayer(List<Card> cards) {
 		// given
 		for (Card card : cards) {
-			player.giveCard(card);
+			player.receiveCard(card);
 		}
 
 		// then
@@ -95,7 +95,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("giveCards_Cards_GiveCardsPlayer")
 	void giveCards_Cards_GiveCardsPlayer(List<Card> cards) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.getHand()).isEqualTo(cards);
 	}
 
@@ -110,7 +110,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("isWinner_HasScoreBiggerThanInputScore_ReturnTrue")
 	void isWinner_HasScoreBiggerThanInputScore_ReturnTrue(List<Card> cards, int score) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.isWinner(Score.of(score))).isTrue();
 	}
 
@@ -126,7 +126,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse")
 	void isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse(List<Card> cards, int score) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.isWinner(Score.of(score))).isFalse();
 	}
 
@@ -141,8 +141,8 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("getScore_HasCards_ReturnScore")
 	void getScore_HasCards_ReturnScore(List<Card> cards, int score) {
-		player.giveCards(cards);
-		assertThat(player.getScore()).isEqualTo(Score.of(score));
+		player.receiveCards(cards);
+		assertThat(player.computeScore()).isEqualTo(Score.of(score));
 	}
 
 	static Stream<Arguments> getScore_HasCards_ReturnScore() {
@@ -156,7 +156,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("isBust_ScoreMoreThanTwelve_ReturnTrue")
 	void isBust_ScoreMoreThanTwelve_ReturnTrue(List<Card> cards) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.isBust()).isTrue();
 	}
 
@@ -169,7 +169,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("isBust_ScoreSameOrLessThanTwelve_ReturnFalse")
 	void isBust_ScoreSameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.isBust()).isFalse();
 	}
 
@@ -183,7 +183,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("getCards_HasCards_ReturnCards")
 	void getCards_HasCards_ReturnCards(List<Card> cards) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.getHand()).isEqualTo(cards);
 	}
 
@@ -197,7 +197,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("countCards_HasCards_ReturnCount")
 	void countCards_HasCards_ReturnCount(List<Card> cards, int count) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.countCards()).isEqualTo(count);
 	}
 
@@ -216,7 +216,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_NotBusted_ReturnTrue")
 	void canReceiveCard_NotBusted_ReturnTrue(List<Card> cards) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.canReceiveCard()).isTrue();
 	}
 
@@ -230,7 +230,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_Busted_ReturnFalse")
 	void canReceiveCard_Busted_ReturnFalse(List<Card> cards) {
-		player.giveCards(cards);
+		player.receiveCards(cards);
 		assertThat(player.canReceiveCard()).isFalse();
 	}
 

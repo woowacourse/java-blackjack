@@ -84,7 +84,7 @@ public final class OutputView {
 		if (player.isBust()) {
 			return "bust";
 		}
-		return String.valueOf(player.getScore().getScore());
+		return String.valueOf(player.computeScore().getScore());
 	}
 
 	public static void printResult(Results results) {

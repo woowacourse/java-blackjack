@@ -10,11 +10,11 @@ public interface Playable {
 	String DEALER_NAME = "딜러";
 	int MINIMUM_NUMBER_TO_DEALER_STAY = 17;
 
-	void giveCard(Card card);
+	void receiveCard(Card card);
 
-	void giveCards(List<Card> cards);
+	void receiveCards(List<Card> cards);
 
-	Score getScore();
+	Score computeScore();
 
 	boolean isBust();
 

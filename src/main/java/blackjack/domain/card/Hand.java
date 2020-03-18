@@ -27,12 +27,12 @@ public final class Hand {
 		return hand.size();
 	}
 
-	public Score getScore() {
-		Score score = simpleSum();
-		return maximizeIfHasAce(score);
+	public Score computeScore() {
+		Score simpleSum = simplySumScores();
+		return maximizeSimpleSumIfHasAce(simpleSum);
 	}
 
-	private Score simpleSum() {
+	private Score simplySumScores() {
 		Score score = Score.zero();
 
 		for (Card card : hand) {
@@ -41,11 +41,11 @@ public final class Hand {
 		return score;
 	}
 
-	private Score maximizeIfHasAce(Score score) {
-		if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
-			return score.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
+	private Score maximizeSimpleSumIfHasAce(Score simpleSum) {
+		if (simpleSum.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
+			return simpleSum.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
 		}
-		return score;
+		return simpleSum;
 	}
 
 	private boolean hasAce() {

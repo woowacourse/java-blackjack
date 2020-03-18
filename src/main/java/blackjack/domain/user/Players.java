@@ -55,7 +55,7 @@ public final class Players {
 
 	public void giveTwoCardsEachPlayer(Drawable deck) {
 		for (Playable player : players ) {
-			player.giveCards(deck.drawTwoCards());
+			player.receiveCards(deck.drawTwoCards());
 		}
 	}
 
