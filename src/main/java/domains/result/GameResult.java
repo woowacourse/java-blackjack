@@ -8,14 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, ResultType> playerResult = new HashMap<>();
-
-    public GameResult(Map<Player, ResultType> playerResult) {
-        this.playerResult = playerResult;
-    }
+    private Map<Player, ResultType> playerResult;
+    private Profits profits;
 
     public GameResult(Players players, Dealer dealer) {
+        this.playerResult = new HashMap<>();
         create(players, dealer);
+        this.profits = new Profits(playerResult);
     }
 
     private void create(Players players, Dealer dealer) {
@@ -44,5 +43,9 @@ public class GameResult {
 
     public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
+    }
+
+    public Profits getProfits() {
+        return profits;
     }
 }

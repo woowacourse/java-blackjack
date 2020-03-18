@@ -10,7 +10,6 @@ public class Money {
         checkNullAndEmpty(input);
         checkNumberFormat(input);
         int money = Integer.parseInt(input);
-        checkNumberBound(money);
         this.money = money;
     }
 
@@ -42,6 +41,10 @@ public class Money {
         return new Money((int)(this.money * profitRate));
     }
 
+    public Money minus(Money money) {
+        return new Money(this.money - money.money);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,5 +56,10 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(money);
+    }
+
+    @Override
+    public String toString() {
+        return money + "";
     }
 }

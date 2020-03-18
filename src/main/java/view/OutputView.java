@@ -1,8 +1,9 @@
 package view;
 
 import domains.result.GameResult;
-import domains.result.ResultType;
+import domains.result.Profits;
 import domains.user.Dealer;
+import domains.user.Money;
 import domains.user.Player;
 import domains.user.Players;
 import domains.user.name.PlayerName;
@@ -10,7 +11,6 @@ import domains.user.name.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
     private static final CharSequence BLANK = " ";
@@ -60,22 +60,13 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResult gameResult) {
-        Map<ResultType, Integer> dealerResult = gameResult.calculateDealerResult();
+        Profits profits = gameResult.getProfits();
 
-        System.out.println("딜러: " + convertToString(dealerResult));
+        System.out.println("딜러: " + profits.getDealerProfit());
 
-        Map<Player, ResultType> result = gameResult.getPlayerResult();
-        for (Player player : result.keySet()) {
-            System.out.println(player.getName() + ": " + result.get(player).getResultType());
+        Map<Player, Money> playerProfits = profits.getPlayerProfits();
+        for (Player player : playerProfits.keySet()) {
+            System.out.println(player.getName() + " : " + playerProfits.get(player));
         }
-    }
-
-    private static String convertToString(Map<ResultType, Integer> dealerGameResult) {
-        return dealerGameResult.entrySet().stream().map(
-                result -> {
-                    long count = result.getValue();
-                    String resultName = result.getKey().getResultType();
-                    return count + resultName;
-                }).collect(Collectors.joining(BLANK));
     }
 }
