@@ -39,7 +39,5 @@ class GameResultTest {
     @Test
     void gameResultTest() {
         GameResult gameResult = new GameResult(new Players(players), dealer);
-        gameResult.calculateResults();
-        assertThat(gameResult.getDealerResult().get(Result.LOSE)).isEqualTo(2);
     }
 }

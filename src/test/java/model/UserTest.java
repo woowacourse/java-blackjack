@@ -1,50 +1,75 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static controller.BlackJackGame.ADDITIONAL_DRAW_COUNT;
-import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
+import java.util.Arrays;
+
+import static model.Dealer.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTest {
     public static final String PLAYER_NAME = "DD";
-    CardHand bustHand = new CardHand();
-    CardHand notBustHand = new CardHand();
-    Deck bustDeck;
-    Deck notBustDeck;
 
-    @BeforeEach
-    void init_field() {
-        bustHand.addCard(new Card(Symbol.KING, Type.DIAMOND));
-        bustHand.addCard(new Card(Symbol.QUEEN, Type.DIAMOND));
-        bustHand.addCard(new Card(Symbol.JACK, Type.DIAMOND));
-        notBustHand.addCard(new Card(Symbol.KING, Type.DIAMOND));
-        notBustHand.addCard(new Card(Symbol.JACK, Type.DIAMOND));
-        bustDeck = new Deck(bustHand);
-        notBustDeck = new Deck(notBustHand);
-    }
+    private Player bustPlayer = new Player(PLAYER_NAME, Arrays.asList(
+            new Card(Symbol.KING, Type.DIAMOND),
+            new Card(Symbol.QUEEN, Type.DIAMOND),
+            new Card(Symbol.TWO, Type.DIAMOND)
+    ));
+    private Player notBustPlayer = new Player(PLAYER_NAME, Arrays.asList(
+            new Card(Symbol.KING, Type.DIAMOND),
+            new Card(Symbol.QUEEN, Type.DIAMOND)
+    ));
+    private Player blackJackPlayer = new Player(PLAYER_NAME, Arrays.asList(
+            new Card(Symbol.QUEEN, Type.CLUB),
+            new Card(Symbol.ACE, Type.HEART)
+    ));
+    private Dealer bustDealer = new Dealer(Arrays.asList(
+            new Card(Symbol.KING, Type.DIAMOND),
+            new Card(Symbol.QUEEN, Type.DIAMOND),
+            new Card(Symbol.TWO, Type.DIAMOND)
+    ));
+    private Dealer notBustDealer = new Dealer(Arrays.asList(
+            new Card(Symbol.KING, Type.DIAMOND),
+            new Card(Symbol.QUEEN, Type.DIAMOND),
+            new Card(Symbol.ACE, Type.DIAMOND)
+    ));
 
     @Test
     @DisplayName("딜러 이름 테스트")
     void dealer_Name() {
-        User dealer = new Dealer(notBustDeck, INITIAL_DRAW_COUNT);
-        assertThat(dealer.getName()).isEqualTo("딜러");
+        assertThat(notBustDealer.getName()).isEqualTo(DEALER_NAME);
     }
 
     @Test
     @DisplayName("이름을 불러오는 지 테스트")
     void name_Test() {
-        Player player = new Player(PLAYER_NAME, notBustDeck, INITIAL_DRAW_COUNT);
-        assertThat(player.getName()).isEqualTo(PLAYER_NAME);
+        assertThat(notBustPlayer.getName()).isEqualTo(PLAYER_NAME);
     }
 
     @Test
-    @DisplayName("21을 넘는 지")
-    void isBust_Player_Test() {
-        Player player = new Player(PLAYER_NAME, bustDeck, INITIAL_DRAW_COUNT);
-        player.drawCard(bustDeck, ADDITIONAL_DRAW_COUNT);
-        assertThat(player.isBust()).isTrue();
+    @DisplayName("bust 테스트")
+    void isBustTest() {
+        assertThat(bustDealer.isBust()).isTrue();
+        assertThat(bustPlayer.isBust()).isTrue();
+        assertThat(blackJackPlayer.isBust()).isFalse();
+        assertThat(notBustPlayer.isBust()).isFalse();
+        assertThat(notBustDealer.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("blackjack 테스트")
+    void isBlackJackTest() {
+        assertThat(notBustPlayer.isBlackJack()).isFalse();
+        assertThat(blackJackPlayer.isBlackJack()).isTrue();
+        assertThat(bustPlayer.isBlackJack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("moreThanBlackjack 테스트")
+    void isMoreThanBlackJackTest() {
+        assertThat(notBustPlayer.isMoreThanBlackJack()).isFalse();
+        assertThat(blackJackPlayer.isMoreThanBlackJack()).isTrue();
+        assertThat(bustPlayer.isMoreThanBlackJack()).isTrue();
     }
 }

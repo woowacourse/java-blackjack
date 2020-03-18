@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import static controller.BlackJackGame.HIT_BOUNDARY;
 
 public class Dealer extends User {
@@ -8,6 +10,10 @@ public class Dealer extends User {
 
     public Dealer(Deck deck, int initialDrawCount) {
         super(DEALER_NAME, deck, initialDrawCount);
+    }
+
+    public Dealer(List<Card> cards){
+        super(DEALER_NAME, cards);
     }
 
     public String toStringCardHandFirst() {

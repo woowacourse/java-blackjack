@@ -69,7 +69,6 @@ public class OutputView {
 
     public static void printResult(final GameResult gameResult) {
         System.out.println(NEW_LINE + NEW_LINE + "## 최종 승패");
-        printDealerResult(gameResult.getDealerResult());
         printPlayersResult(gameResult.getPlayerResult());
     }
 
