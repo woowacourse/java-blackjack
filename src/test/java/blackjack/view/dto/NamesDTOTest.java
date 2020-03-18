@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NamesDTOTest {
@@ -43,5 +46,19 @@ class NamesDTOTest {
         assertThatThrownBy(() -> new NamesDTO(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력한 이름이 없습니다.");
+    }
+
+    @DisplayName(", 기준으로 쪼갠 이름 리스트 가져오기")
+    @Test
+    void getNames() {
+        //given
+        String nameInput = "bebop,allen";
+        NamesDTO namesDTO = new NamesDTO(nameInput);
+
+        //when
+        List<String> names = namesDTO.getNames();
+
+        //then
+        assertThat(names).containsExactly("bebop", "allen");
     }
 }

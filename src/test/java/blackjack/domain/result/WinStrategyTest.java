@@ -32,7 +32,7 @@ class WinStrategyTest {
         );
     }
 
-    @DisplayName("무조건 우승 조건, 갬블러만 블랙잭이거나, 딜러가 버스트거나")
+    @DisplayName("무조건 우승 조건, 갬블러만 블랙잭 or 딜러가 버스트거나")
     @ParameterizedTest(name = "[{0}] : {3}")
     @MethodSource("winEnoughProvider")
     void enough(String header, CardBundle dealerCardBundle, CardBundle gamblerCardBundle, boolean expect) {

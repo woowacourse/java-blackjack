@@ -12,14 +12,6 @@ public class NameMoneyDTO {
         this.bettingMoney = BettingMoney.of(money);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
-    }
-
     public PlayerInfo toEntity() {
         return new PlayerInfo(name, bettingMoney);
     }

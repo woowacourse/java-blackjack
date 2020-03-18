@@ -32,7 +32,7 @@ class LoseStrategyTest {
         );
     }
 
-    @DisplayName("무조건 패배 조건, 갬블러만 버스트 혹은 딜러만 블랙잭인 경우")
+    @DisplayName("무조건 패배 조건, 갬블러만 버스트 or 딜러만 블랙잭인 경우")
     @ParameterizedTest(name = "[{0}] : {3}")
     @MethodSource("loseEnoughProvider")
     void enough(String header, CardBundle dealerCardBundle, CardBundle gamblerCardBundle, boolean expect) {

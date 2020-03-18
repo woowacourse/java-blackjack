@@ -5,6 +5,7 @@ import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.PlayerInfo;
 import blackjack.view.dto.DrawRequestDTO;
+import blackjack.view.dto.NameMoneyDTO;
 import blackjack.view.dto.NamesDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,5 +63,23 @@ class InputViewTest {
 
 		//then
 		assertThat(inputView.inputDrawRequest(new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0))))).isInstanceOf(DrawRequestDTO.class);
+	}
+
+	@DisplayName("사용자에게 베팅금액을 입력하여 NameMoneyDTO 객체 생성")
+	@Test
+	void inputBettingMoney() {
+		//given
+		List<String> names = Arrays.asList("bebop");
+		String input = "1000";
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		Scanner scanner = new Scanner(inputStream);
+
+		InputView inputView = new InputView(scanner);
+
+		//when
+		List<NameMoneyDTO> nameMoneyDTOS = inputView.inputBettingMoney(names);
+
+		//then
+		assertThat(nameMoneyDTOS).hasSize(1);
 	}
 }

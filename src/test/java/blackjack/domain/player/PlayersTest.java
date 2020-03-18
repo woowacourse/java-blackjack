@@ -7,9 +7,7 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.component.CardNumber;
 import blackjack.domain.card.component.Symbol;
 import blackjack.domain.generic.BettingMoney;
-import blackjack.domain.report.GameReport;
 import blackjack.domain.report.GameReports;
-import blackjack.domain.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -43,20 +41,14 @@ class PlayersTest {
     void getReports() {
         //given
         Player dealer = new Dealer(aCardBundle(CardNumber.KING, CardNumber.KING));
-        Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), new PlayerInfo("bebop", BettingMoney.of(0)));
-        Player gambler2 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING), new PlayerInfo("pobi", BettingMoney.of(0)));
-        Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE), new PlayerInfo("allen", BettingMoney.of(0)));
-        Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3));
+        Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), new PlayerInfo("bebop", BettingMoney.of(1000)));
+        Players players = new Players(Arrays.asList(dealer, gambler1));
 
         //when
         GameReports reports = players.getReports();
 
         //then
-        assertThat(reports).isEqualTo(new GameReports(Arrays.asList(
-                new GameReport("bebop", BettingMoney.of(0), GameResult.WIN),
-                new GameReport("pobi", BettingMoney.of(0), GameResult.DRAW),
-                new GameReport("allen", BettingMoney.of(0), GameResult.LOSE)))
-        );
+        assertThat(reports.getReports()).hasSize(1);
     }
 
     @DisplayName("찾아온 플레이어가 갬블러이다.")
@@ -95,5 +87,36 @@ class PlayersTest {
 
         assertThatThrownBy(() -> players.drawStartingCard(CardDeck.getInstance(new CardFactory())))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("게임 시작하고 첫 두장 뽑기")
+    @Test
+    void testDrawStartingCard() {
+        //given
+        Player player = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0)));
+        Players players = new Players(Arrays.asList(player));
+
+        //when
+        players.drawStartingCard(() -> Card.of(Symbol.DIAMOND, CardNumber.ACE));
+        List<Gambler> gamblers = players.findGamblers();
+
+        //then
+        assertThat(gamblers).hasSize(1);
+        assertThat(gamblers.get(0).getCardBundle()).hasSize(2);
+    }
+
+    @DisplayName("플레이어 전체 리스트 가져오기")
+    @Test
+    void getPlayers() {
+        //given
+        Gambler gambler1 = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(0)));
+        Gambler gambler2 = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("allen", BettingMoney.of(0)));
+        Players players = new Players(Arrays.asList(gambler1, gambler2));
+
+        //when
+        List<Player> actual = players.getPlayers();
+
+        //then
+        assertThat(actual).hasSize(2);
     }
 }

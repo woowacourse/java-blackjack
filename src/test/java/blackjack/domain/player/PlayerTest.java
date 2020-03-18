@@ -6,11 +6,13 @@ import blackjack.domain.card.component.CardNumber;
 import blackjack.domain.card.component.Symbol;
 import blackjack.domain.generic.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.CardBundleHelper.aCardBundle;
@@ -87,5 +89,34 @@ class PlayerTest {
         assertThatThrownBy(() -> new Gambler(cardBundle, playerInfo))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(message);
+    }
+
+    @DisplayName("현재 카드패의 점수 가져오기")
+    @Test
+    void getScore() {
+        //given
+        Player player = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(1000)));
+        player.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.KING));
+
+        //when
+        int score = player.getScore();
+
+        //then
+        assertThat(score).isEqualTo(10);
+    }
+
+    @DisplayName("현재 카드패 가져오기")
+    @Test
+    void getCardBundle() {
+        //given
+        Player player = new Gambler(CardBundle.emptyBundle(), new PlayerInfo("bebop", BettingMoney.of(1000)));
+        player.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.KING));
+        player.drawCard(() -> Card.of(Symbol.DIAMOND, CardNumber.KING));
+
+        //when
+        List<Card> actual = player.getCardBundle();
+
+        //then
+        assertThat(actual).containsExactly(Card.of(Symbol.DIAMOND, CardNumber.KING), Card.of(Symbol.DIAMOND, CardNumber.KING));
     }
 }

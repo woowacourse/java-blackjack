@@ -3,8 +3,6 @@ package blackjack.domain.report;
 import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.result.GameResult;
 
-import java.util.Objects;
-
 public class GameReport {
     private final String name;
     private final double money;
@@ -38,19 +36,4 @@ public class GameReport {
         return this.gameResult != GameResult.DRAW;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        GameReport that = (GameReport) o;
-        return Objects.equals(name, that.name) &&
-                gameResult == that.gameResult;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, gameResult);
-    }
 }

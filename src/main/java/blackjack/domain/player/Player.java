@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.Drawable;
-import blackjack.domain.generic.BettingMoney;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,8 +63,4 @@ public abstract class Player {
     }
 
     public abstract boolean isDrawable();
-
-    protected BettingMoney getBettingMoney() {
-        return playerInfo.getBettingMoney();
-    }
 }

@@ -5,7 +5,6 @@ import blackjack.domain.score.ScoreCalculator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class CardBundle {
     private static final int MAXIMUM_VALUE = 21;
@@ -42,21 +41,6 @@ public class CardBundle {
 
     public boolean isNotEmpty() {
         return !cards.isEmpty();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        CardBundle that = (CardBundle) o;
-        return Objects.equals(cards, that.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards);
     }
 
     public List<Card> getCards() {
