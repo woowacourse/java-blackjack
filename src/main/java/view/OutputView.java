@@ -7,6 +7,7 @@ import domain.card.Card;
 import domain.gamer.Gamer;
 import view.dto.BlackjackGameDto;
 import view.dto.DealerDto;
+import view.dto.GamerDto;
 import view.dto.PlayerDto;
 
 /**
@@ -15,6 +16,8 @@ import view.dto.PlayerDto;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class OutputView {
+	private static final String NEW_LINE = System.lineSeparator();
+
 	public static void printErrorMessage(IllegalArgumentException e) {
 		System.out.println(e.getMessage());
 	}
@@ -49,10 +52,10 @@ public class OutputView {
 			.shape();
 	}
 
-	private static String showCards(PlayerDto player) {
-		return player.getName()
+	private static String showCards(GamerDto gamerDto) {
+		return gamerDto.getName()
 			+ ": "
-			+ player.getHands().getCards().stream()
+			+ gamerDto.getHands().getCards().stream()
 			.map(Card::shape)
 			.collect(Collectors.joining(", "));
 	}
@@ -70,10 +73,19 @@ public class OutputView {
 	}
 
 	public static void printGameResult(GameResult gameResult) {
-		System.out.println("## 최종 수익");
+		System.out.println(NEW_LINE + "## 최종 수익");
 		for (Gamer gamer : gameResult.getGameResult().keySet()) {
 			System.out.println(
 				String.format("%s: %d원", gamer.getName(), gameResult.getGameResult().get(gamer).intValue()));
+		}
+	}
+
+	public static void printCardsResult(BlackjackGameDto blackjackGameDto) {
+		DealerDto dealer = blackjackGameDto.getDealer();
+
+		System.out.println(String.format(NEW_LINE + "%s - 결과: %d", showCards(dealer), dealer.getScore()));
+		for (PlayerDto playerDto : blackjackGameDto.getPlayers()) {
+			System.out.println(String.format("%s - 결과: %d", showCards(playerDto), playerDto.getScore()));
 		}
 	}
 }

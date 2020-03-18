@@ -125,6 +125,7 @@ public class Controller {
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
+		OutputView.printCardsResult(BlackjackGameDto.from(blackjackGame));
 		OutputView.printGameResult(GameResult.of(blackjackGame));
 	}
 }
