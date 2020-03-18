@@ -10,10 +10,12 @@ import java.util.Objects;
 public abstract class User {
     protected final String name;
     protected final List<Card> cards;
+    protected final Money money;
 
     public User(String name) {
         this.name = name;
         this.cards = new LinkedList<>();
+        this.money = new Money();
     }
 
     public void receiveInitialCards(List<Card> initialCards) {
