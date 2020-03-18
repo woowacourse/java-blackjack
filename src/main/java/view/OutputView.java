@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public static void printWinning(List<String> winningPlayerResult) {
-        System.out.println("## 최종 수익");
+        System.out.println("\n## 최종 수익");
         for (String result : winningPlayerResult) {
             System.out.println(result);
         }
@@ -46,6 +46,6 @@ public class OutputView {
     }
 
     public static void printBlackJack(String name) {
-        System.out.printf("\n%s는 블랙잭입니다.\n", name);
+        System.out.printf("%s는 블랙잭입니다.\n", name);
     }
 }

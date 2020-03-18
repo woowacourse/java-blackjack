@@ -4,7 +4,7 @@ public class Answer {
     private final String answer;
 
     public Answer(String answer) {
-//        validateAnswer(answer);
+        validateAnswer(answer);
         this.answer = answer;
     }
 

@@ -22,9 +22,9 @@ public class CardDeck {
         }
     }
 
-    public List<Card> giveTwoCardStartGame(){
+    public List<Card> giveTwoCardStartGame() {
 
-        return new ArrayList<>(Arrays.asList(giveCard(),giveCard()));
+        return new ArrayList<>(Arrays.asList(giveCard(), giveCard()));
     }
 
     public Card giveCard() {
@@ -38,9 +38,9 @@ public class CardDeck {
         }
     }
 
-    private void validateDuplicatedCard(){
+    private void validateDuplicatedCard() {
         Set<Card> cardsDeck = new HashSet<>(this.cardsDeck);
-        if(cardsDeck.size() != this.cardsDeck.size()){
+        if (cardsDeck.size() != this.cardsDeck.size()) {
             throw new IllegalArgumentException("카드가 중복되게 만들어졌습니다.");
         }
     }

@@ -8,7 +8,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProfitResult {
-    public static final double DEALER_PROFIT = -1d;
+    private static final double DEALER_PROFIT = -1d;
+
     private List<String> winningUserResult;
 
     public ProfitResult(Players players, Dealer dealer) {
@@ -17,13 +18,12 @@ public class ProfitResult {
         for (Player player : players.getPlayers()) {
             winningPlayerResult.put(player.getName(), Profit.calculateProfit(player, dealer));
         }
-
         this.winningUserResult = generateWinningUserResult(winningPlayerResult);
     }
 
     private List<String> generateWinningUserResult(Map<String, Double> winningPlayerResult) {
         List<String> result = new ArrayList<>(Collections.singletonList(String.format(
-                "딜러: %.1f", DEALER_PROFIT * winningPlayerResult.values()
+                "딜러: %+.1f원", DEALER_PROFIT * winningPlayerResult.values()
                         .stream()
                         .mapToDouble(Double::doubleValue)
                         .sum()))
@@ -31,7 +31,7 @@ public class ProfitResult {
 
         result.addAll(winningPlayerResult.keySet()
                 .stream()
-                .map(player-> String.format("%s: %.1f",player,winningPlayerResult.get(player)))
+                .map(player -> String.format("%s: %+.1f원", player, winningPlayerResult.get(player)))
                 .collect(Collectors.toList())
         );
 

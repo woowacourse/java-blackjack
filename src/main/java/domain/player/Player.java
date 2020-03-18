@@ -12,8 +12,14 @@ public class Player extends User {
         this.name = name;
     }
 
+    private void validatePlayerName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new NullPointerException("플레이어 이름이 null 입니다.");
+        }
+    }
+
     public Player(String name, List<Card> userCardDeck, double money) {
-        this(name,userCardDeck);
+        this(name, userCardDeck);
         this.money = new BattingMoney(money);
     }
 

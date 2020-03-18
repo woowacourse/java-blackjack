@@ -8,17 +8,18 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ProfitResultTest {
 
     @DisplayName("객체 생성 테스트")
     @Test
     void getterTest() {
-        List<String> playerName = new ArrayList<>(Arrays.asList("pobi", "subway"));
-        PlayerInputInformation playerInformation = new PlayerInputInformation(playerName,Arrays.asList(1000d,2000d));
+        Map<String,Double> playerName = new LinkedHashMap<>();
+        playerName.put("pobi",1000d);
+        playerName.put("subway",2000d);
+        PlayerInputInformation playerInformation = new PlayerInputInformation(playerName);
+
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck.giveTwoCardStartGame());
         Players players = new Players(cardDeck,playerInformation.getPlayerInformation());

@@ -16,7 +16,7 @@ public class Dealer extends User {
     }
 
     public boolean isAdditionalCard(Card card) {
-        if (isUnderSixteen()) {
+        if (CardCalculator.sumCardDeck(this.cards) <= ADDITIONAL_INSERT_CARD_STANDARD) {
             drawCard(card);
             return true;
         }

@@ -7,6 +7,7 @@ import domain.player.*;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -18,18 +19,9 @@ public class BlackjackController {
     public BlackjackController() {
         cardDeck = new CardDeck();
         PlayersName playersName = new PlayersName(InputView.inputPlayerName());
-        playerInputInformation = new PlayerInputInformation(playersName.getPlayerName(), playersName.getPlayerName()
-                        .stream()
-                        .map(InputView::inputBattingMoney)
-                        .collect(Collectors.toList())
-        );
+        playerInputInformation = new PlayerInputInformation(battingMoneyByName(playersName));
         OutputView.printInitial(playersName.getPlayerName());
         ready();
-    }
-
-    public void run() {
-        startGame();
-        result();
     }
 
     private void ready() {
@@ -40,6 +32,11 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             OutputView.printCardReport(player.getName(), player.cardToString());
         }
+    }
+
+    public void run() {
+        startGame();
+        result();
     }
 
     private void startGame() {
@@ -56,17 +53,16 @@ public class BlackjackController {
     }
 
     private void playerTurn(Player player) {
-        if(player.isBlackJack()){
+        if (player.isBlackJack()) {
             OutputView.printBlackJack(player.getName());
             return;
         }
-
         OutputView.printNewLine();
-        while (player.isUnderWinningCount() && isYesGetAnswer(player)) {
+        while (player.isUnderWinningCount() && isYesAnswer(player)) {
             player.drawCard(cardDeck.giveCard());
             OutputView.printCardReport(player.getName(), player.cardToString());
         }
-        if (player.isMoreThanWinningCount() ) {
+        if (player.isMoreThanWinningCount()) {
             OutputView.printUserCardsOverWinningNumber(player.getName());
         }
     }
@@ -81,8 +77,18 @@ public class BlackjackController {
         OutputView.printWinning(profitResult.getWinningUserResult());
     }
 
-    private static boolean isYesGetAnswer(Player player) {
-         AnswerType answerType = AnswerType.answerValueOf(InputView.inputAnswer(player.getName()));
-         return answerType.isYes();
+    private static boolean isYesAnswer(Player player) {
+        AnswerType answerType = AnswerType.answerValueOf(InputView.inputAnswer(player.getName()));
+        return answerType.isYes();
+    }
+
+    private LinkedHashMap<String, Double> battingMoneyByName(PlayersName playersName) {
+        return playersName.getPlayerName()
+                .stream()
+                .collect(Collectors.toMap(
+                        playerName -> playerName,
+                        InputView::inputBattingMoney,
+                        (u, v) -> { throw new IllegalStateException(String.format("Duplicate key %s", u));},
+                        LinkedHashMap::new));
     }
 }

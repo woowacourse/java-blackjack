@@ -4,7 +4,8 @@ import domain.player.User;
 
 public class Profit {
     private static final double WIN_BY_BLACK_JACK_RATE = 1.5d;
-    private static final double LOOSE_RATE = -1d;
+    private static final double LOOSE_RATE = -1.0d;
+    public static final double DRAW_BLACK_JACK_PROFIT = 0.0d;
 
     private Profit() {
     }
@@ -15,7 +16,7 @@ public class Profit {
         }
 
         if (targetUser.isBlackJack() && User.isBlackJack()) {
-            return targetUser.getMoney();
+            return DRAW_BLACK_JACK_PROFIT;
         }
         if (targetUser.isBlackJack()) {
             return (WIN_BY_BLACK_JACK_RATE * targetUser.getMoney());
