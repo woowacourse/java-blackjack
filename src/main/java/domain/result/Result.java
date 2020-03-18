@@ -24,7 +24,12 @@ public class Result {
 
 	public double createDealerRevenueResult() {
 		return results.entrySet().stream()
-				.mapToDouble(entry -> entry.getValue().getExchangedBettingMoney(entry.getKey().getBettingMoney()))
+				.mapToDouble(entry -> {
+					ResultType resultType = entry.getValue();
+					Player player = entry.getKey();
+
+					return resultType.getExchangedBettingMoney(player.getBettingMoney());
+				})
 				.sum() * OPPOSITE_SIGN;
 	}
 
