@@ -3,17 +3,32 @@ package domain.card;
 import java.util.List;
 import java.util.Objects;
 
-public class PlayingCards {
+public class PlayingCards extends Cards {
     private static final int ACE_BONUS = 10;
     private static final int BLACK_JACK = 21;
+    private static final int MIN_SIZE = 2;
     private final List<Card> cards;
 
-    public PlayingCards(List<Card> cards) {
+    private PlayingCards(List<Card> cards) {
+        super(cards);
         this.cards = cards;
+    }
+
+    public static PlayingCards of(List<Card> cards) {
+        if (cards.size() < MIN_SIZE) {
+            throw new IllegalArgumentException(String.format("카드의 개수가 최소 갯수인 %s보다 작습니다.", MIN_SIZE));
+        }
+
+        return new PlayingCards(cards);
     }
 
     public PlayingCards add(Card card) {
         cards.add(card);
+        return new PlayingCards(cards);
+    }
+
+    public PlayingCards add(Cards cardsToAdd) {
+        cards.addAll(cardsToAdd.getCards());
         return new PlayingCards(cards);
     }
 
@@ -31,10 +46,6 @@ public class PlayingCards {
             }
         }
         return result;
-    }
-
-    public int size() {
-        return cards.size();
     }
 
     public boolean isBust() {

@@ -5,7 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,13 +16,18 @@ class PlayingCardsTest {
 
     @BeforeEach
     void setUp() {
-        playingCards = new PlayingCards(new ArrayList<>());
+        playingCards = PlayingCards.of(new ArrayList<>());
+    }
+
+    @Test
+    void of() {
+
     }
 
     @Test
     @DisplayName("PlayingCards 생성")
     void cards() {
-        PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.TWO, Type.HEART)));
+        PlayingCards playingCards = PlayingCards.of(Collections.singletonList(new Card(Symbol.TWO, Type.HEART)));
         assertThat(playingCards).isNotNull();
     }
 
@@ -91,5 +98,22 @@ class PlayingCardsTest {
         playingCards.add(new Card(Symbol.TEN, Type.SPADE));
 
         assertThat(playingCards.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("#add() : should return playingCards with added cards")
+    void addPlayingCards() {
+        //given
+        int defaultSizeOfPlayingCards = playingCards.size();
+        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLOVER), new Card(Symbol.QUEEN, Type.DIAMOND));
+        PlayingCards playingCardsToAdd = PlayingCards.of(cards);
+
+        //when
+        PlayingCards playingCards = this.playingCards.add(playingCardsToAdd);
+
+        //then
+        assertThat(playingCards).isEqualTo(playingCardsToAdd);
+        assertThat(playingCards.size()).isEqualTo(defaultSizeOfPlayingCards + playingCardsToAdd.size());
+
     }
 }

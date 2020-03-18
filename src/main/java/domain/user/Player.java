@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.card.Card;
+import domain.card.Cards;
 import domain.card.PlayingCards;
 
 public class Player extends User {
@@ -10,5 +10,9 @@ public class Player extends User {
 
     public boolean wantToHit(String willForMoreCard) {
         return willForMoreCard.equals("y");
+    }
+
+    public void confirmCards(Cards cards) {
+        this.playingCards.add(cards);
     }
 }

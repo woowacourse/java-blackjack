@@ -15,7 +15,7 @@ public class GamerDto {
     }
 
     public static GamerDto of(User user) {
-        List<Card> cards = user.getPlayingCards();
+        List<Card> cards = user.getCards();
         return new GamerDto(user.getName(), cards);
     }
 

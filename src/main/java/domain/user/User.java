@@ -33,7 +33,7 @@ public abstract class User {
         return name;
     }
 
-    public List<Card> getPlayingCards() {
+    public List<Card> getCards() {
         return playingCards.getCards();
     }
 

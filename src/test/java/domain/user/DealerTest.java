@@ -19,7 +19,7 @@ class DealerTest {
     @Test
     @DisplayName("첫턴에 딜러는 2장의 카드를 받는다.")
     void construct() {
-        PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
+        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
         assertThat(new Dealer(playingCards, deck)).isNotNull();
     }
@@ -27,7 +27,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 카드를 추가한다.")
     void addCard() {
-        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        PlayingCards playingCards = PlayingCards.of(new ArrayList<>());
         Dealer dealer = new Dealer(playingCards, deck);
         Card card = new Card(Symbol.ACE, Type.CLOVER);
         dealer.addCard(card);
@@ -38,7 +38,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있다.")
     void canGetExtraCard() {
-        PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.TWO, Type.DIAMOND),
+        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.TWO, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
         Dealer dealer = new Dealer(playingCards, deck);
 
@@ -48,7 +48,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 더 카드를 받을 수 없다.")
     void canNotGetExtraCard() {
-        PlayingCards playingCards = new PlayingCards(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
+        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
         Dealer dealer = new Dealer(playingCards, deck);
 
@@ -59,7 +59,7 @@ class DealerTest {
     @DisplayName("#hit() : should add card without return")
     void hit() {
         //given
-        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        PlayingCards playingCards = PlayingCards.of(new ArrayList<>());
         Dealer dealer = new Dealer(playingCards, deck);
         int defaultSizeOfCards = dealer.countCards();
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
@@ -75,7 +75,7 @@ class DealerTest {
     @DisplayName("#confirmCards : should add cards for given times without return")
     void confirmCards() {
         //given
-        PlayingCards playingCards = new PlayingCards(new ArrayList<>());
+        PlayingCards playingCards = PlayingCards.of(new ArrayList<>());
         Dealer dealer = new Dealer(playingCards, deck);
         List<Card> cards = setUpDeck();
         int hitSize = cards.size();
