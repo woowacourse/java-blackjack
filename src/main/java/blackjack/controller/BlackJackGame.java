@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
-import blackjack.exception.ResponseNotMatchException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -14,18 +13,18 @@ public class BlackJackGame {
     private Players players;
 
     public BlackJackGame() {
-        dealer = Dealer.getDealer();
+        dealer = new Dealer();
         cardDeck = new CardDeck(CardFactory.createCardDeck());
     }
 
     public void run() {
-        enrollPlayers();
+        registerPlayers();
         distributeCards();
         play();
         calculateResult();
     }
 
-    private void enrollPlayers() {
+    private void registerPlayers() {
         List<String> playerNames = InputView.inputPlayerNames();
         players = new Players(playerNames.stream()
                 .map(this::createEachPlayer)
@@ -42,11 +41,10 @@ public class BlackJackGame {
     }
 
     private void distributeCards() {
+        dealer.receiveInitialCards(cardDeck);
+        players.receiveInitialCards(cardDeck);
+
         OutputView.printDistributeConfirmMessage(dealer, players);
-
-        dealer.receiveDistributedCards(cardDeck);
-
-        players.receiveDistributedCardsAllPlayers(cardDeck);
         OutputView.printInitialUserCards(dealer, players);
     }
 
@@ -66,7 +64,7 @@ public class BlackJackGame {
     private boolean isResponseYesWithValidation(User player) {
         try {
             return Response.isYes(InputView.askOneMoreCard(player));
-        } catch (ResponseNotMatchException e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return isResponseYesWithValidation(player);
         }

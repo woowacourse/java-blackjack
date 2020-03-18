@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 public enum Type {
-    ACE(1, "A"),
+    ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -15,29 +15,32 @@ public enum Type {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private static final int ACE_UPPER_POINT = 11;
     private static final int ACE_LOWER_POINT = 1;
 
     private final int point;
-    private final String simpleName;
+    private final String name;
 
-    Type(int point, String simpleName) {
+    Type(int point, String name) {
         this.point = point;
-        this.simpleName = simpleName;
+        this.name = name;
     }
 
-    public static int addExtraAcePointWhenUnderCriticalPoint(int score, final int BLACKJACK_SCORE) {
-        if (score <= BLACKJACK_SCORE - ACE_UPPER_POINT + ACE_LOWER_POINT) {
-            return ACE_UPPER_POINT - ACE_LOWER_POINT;
+    public int getPointUsingPreviousScore(int previousScore) {
+        if (this == ACE && isOverBlackJackScoreIfAdd(previousScore)) {
+            return ACE_LOWER_POINT;
         }
-        return ACE_LOWER_POINT;
+        return this.point;
+    }
+
+    private boolean isOverBlackJackScoreIfAdd(int previousScore) {
+        return previousScore + this.point > Cards.BLACKJACK_SCORE;
     }
 
     public int getPoint() {
         return point;
     }
 
-    public String getSimpleName() {
-        return simpleName;
+    public String getName() {
+        return name;
     }
 }

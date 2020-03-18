@@ -5,12 +5,11 @@ import java.util.List;
 
 public abstract class User {
     protected static final int START_INDEX = 0;
-
     protected Cards cards = new Cards();
     protected String name;
 
-    public void receiveDistributedCards(CardDeck cardDeck) {
-        cards.receiveDistributedCards(cardDeck);
+    public void receiveInitialCards(CardDeck cardDeck) {
+        cards.receiveInitialCards(cardDeck);
     }
 
     public void receiveOneMoreCard(CardDeck cardDeck) {

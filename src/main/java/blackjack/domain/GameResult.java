@@ -41,7 +41,7 @@ public class GameResult {
         return Collections.unmodifiableMap(gameResult);
     }
 
-    public int getProfit(User user) {
+    public int get(User user) {
         return gameResult.get(user);
     }
 }

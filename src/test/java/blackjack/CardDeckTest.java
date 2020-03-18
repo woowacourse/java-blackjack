@@ -4,7 +4,6 @@ import blackjack.domain.Card;
 import blackjack.domain.CardDeck;
 import blackjack.domain.Symbol;
 import blackjack.domain.Type;
-import blackjack.exception.CardDeckEmptyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,12 +23,12 @@ public class CardDeckTest {
     void setUp() {
         cards = new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
-                        new Card(Symbol.SPADE, Type.QUEEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.SPADE, Type.QUEEN),
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         );
         cardDeck = new CardDeck(cards);
@@ -38,7 +37,7 @@ public class CardDeckTest {
     @DisplayName("카드 덱에서 카드 한 장 추출 확인")
     @Test
     void getOneCardFromCardDeck() {
-        Card card = cardDeck.getOneCard();
+        Card card = cardDeck.pop();
         assertThat(card).isEqualTo(new Card(Symbol.CLOVER, Type.EIGHT));
     }
 
@@ -46,8 +45,8 @@ public class CardDeckTest {
     @Test
     void isEmptyTest() {
         CardDeck emptyCardDeck = new CardDeck(new ArrayList<>());
-        assertThatThrownBy(emptyCardDeck::getOneCard)
-                .isInstanceOf(CardDeckEmptyException.class)
+        assertThatThrownBy(emptyCardDeck::pop)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 덱이 비었습니다.");
     }
 }

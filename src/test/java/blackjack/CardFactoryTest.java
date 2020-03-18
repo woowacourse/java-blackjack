@@ -18,6 +18,6 @@ public class CardFactoryTest {
         List<Card> cards = CardFactory.createCardDeck();
         Set<Card> deduplicatedCards = new HashSet<>(cards);
         assertThat(cards.size()).isEqualTo(52);
-        assertThat(cards.size() == deduplicatedCards.size()).isTrue();
+        assertThat(cards.size()).isEqualTo(deduplicatedCards.size());
     }
 }

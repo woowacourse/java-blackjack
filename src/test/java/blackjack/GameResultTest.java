@@ -22,16 +22,15 @@ public class GameResultTest {
     void setUp() {
         cardDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.QUEEN),
-                        new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.SIX),
-                        new Card(Symbol.HEART, Type.SEVEN),
-                        new Card(Symbol.SPADE, Type.FIVE),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
-                )
+                        new Card(Symbol.SPADE, Type.FIVE),
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.SIX),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.QUEEN))
         ));
-        dealer = Dealer.getDealer();
+        dealer = new Dealer();
         players = new Players(new ArrayList<>(
                 Arrays.asList(
                         new Player("bossdog", 10000),
@@ -40,7 +39,7 @@ public class GameResultTest {
                 )
         ));
         players.getPlayers()
-                .forEach(player -> player.receiveDistributedCards(cardDeck));
+                .forEach(player -> player.receiveInitialCards(cardDeck));
         players.getPlayers()
                 .get(2).receiveOneMoreCard(cardDeck);
     }
@@ -50,11 +49,11 @@ public class GameResultTest {
     void calculateResultWhenDealerBlackJack() {
         CardDeck dealerDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.TEN),
-                        new Card(Symbol.HEART, Type.ACE)
+                        new Card(Symbol.HEART, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.TEN)
                 )
         ));
-        dealer.receiveDistributedCards(dealerDeck);
+        dealer.receiveInitialCards(dealerDeck);
         Map<User, Integer> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
         assertThat(result.get(players.getPlayers().get(0))).isEqualTo(0);
@@ -67,12 +66,12 @@ public class GameResultTest {
     void calculateResultWhenDealerBust() {
         CardDeck dealerDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.FIVE),
+                        new Card(Symbol.SPADE, Type.JACK),
                         new Card(Symbol.HEART, Type.NINE),
-                        new Card(Symbol.SPADE, Type.JACK)
+                        new Card(Symbol.CLOVER, Type.FIVE)
                 )
         ));
-        dealer.receiveDistributedCards(dealerDeck);
+        dealer.receiveInitialCards(dealerDeck);
         dealer.receiveOneMoreCard(dealerDeck);
         Map<User, Integer> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
@@ -86,22 +85,15 @@ public class GameResultTest {
     void calculateResultWhenDealerStatusNone() {
         CardDeck dealerDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.SEVEN),
-                        new Card(Symbol.HEART, Type.ACE)
+                        new Card(Symbol.HEART, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.SEVEN)
                 )
         ));
-        dealer.receiveDistributedCards(dealerDeck);
+        dealer.receiveInitialCards(dealerDeck);
         Map<User, Integer> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
         assertThat(result.get(players.getPlayers().get(0))).isEqualTo(15000);
         assertThat(result.get(players.getPlayers().get(1))).isEqualTo(-10000);
         assertThat(result.get(players.getPlayers().get(2))).isEqualTo(-10000);
-    }
-
-    @AfterEach
-    void tearDown() throws NoSuchFieldException, IllegalAccessException {
-        Field dealer_instance = Dealer.class.getDeclaredField("dealerInstance");
-        dealer_instance.setAccessible(true);
-        dealer_instance.set(null, null);
     }
 }

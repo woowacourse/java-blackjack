@@ -10,14 +10,13 @@ public class OutputView {
     private static final String NEW_LINE = System.getProperty("line.separator");
     private static final String INPUT_PLAYER_NAMES_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_BETTING_MONEY_GUIDE_MESSAGE_FORMAT = "%s의 배팅 금액은?";
-    private static final String COMMA = ",";
     private static final String DISTRIBUTE_CONFIRM_MESSAGE_FORMAT = "%s와 %s에게 %d장의 카드를 나누었습니다.";
     private static final String USER_INFORMATION_FORMAT = "%s 카드: %s";
     private static final String COMMA_WITH_SPACE = ", ";
     private static final String ASK_ONE_MORE_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_PLAY_CONFIRM_MESSAGE_FORMAT = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String USER_FINAL_INFORMATION_FORMAT = "%s 카드: %s - 결과 : %d";
-    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 수익\n";
+    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 수익";
 
     public static void printInputPlayerNamesGuideMessage() {
         System.out.println(INPUT_PLAYER_NAMES_GUIDE_MESSAGE);
@@ -28,12 +27,10 @@ public class OutputView {
     }
 
     public static void printDistributeConfirmMessage(Dealer dealer, Players players) {
-        String userNames = players.getPlayers()
-                .stream()
-                .map(User::getName)
-                .collect(Collectors.joining(COMMA));
+        String userNames = String.join(COMMA_WITH_SPACE, players.getNames());
         System.out.print(NEW_LINE);
-        System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Cards.getInitialSize()));
+        System.out.println(
+                String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Cards.getInitialSize()));
     }
 
     public static void printInitialUserCards(Dealer dealer, Players players) {
@@ -42,8 +39,8 @@ public class OutputView {
         users.addAll(players.getPlayers());
 
         for (User user : users) {
-            System.out.println(String.format(
-                    USER_INFORMATION_FORMAT, user.getName(), combineCards(user.getInitialCards())));
+            System.out.println(
+                    String.format(USER_INFORMATION_FORMAT, user.getName(), combineCards(user.getInitialCards())));
         }
     }
 
@@ -54,8 +51,12 @@ public class OutputView {
 
     private static String combineCards(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getType().getSimpleName() + card.getSymbol().getKoreanName())
+                .map(OutputView::informationOf)
                 .collect(Collectors.joining(COMMA_WITH_SPACE));
+    }
+
+    private static String informationOf(Card card) {
+        return card.getType().getName() + card.getSymbol().getKoreanName();
     }
 
     public static void printAskOneMoreCardMessage(User player) {
@@ -89,7 +90,6 @@ public class OutputView {
         gameResult.getGameResult()
                 .keySet()
                 .forEach(user -> System.out.println(String.format("%s : %d",
-                        user.getName(), gameResult.getProfit(user))));
+                        user.getName(), gameResult.get(user))));
     }
-
 }

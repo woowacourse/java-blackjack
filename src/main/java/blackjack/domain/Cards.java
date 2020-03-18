@@ -1,31 +1,29 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Cards {
-    private static final int BLACKJACK_SCORE = 21;
-    private static final int INITIAL_CARDS_SIZE = 2;
+    public static final int BLACKJACK_SCORE = 21;
     private static final int START_INDEX = 0;
+    private static final int COUNT_OF_INITIAL_DISTRIBUTE_CARDS = 2;
 
-    private Queue<Card> cards = new LinkedList<>();
+    private List<Card> cards = new ArrayList<>();
     private Status status;
 
     public Cards() {
-        status = Status.NONE;
+        this.status = Status.NONE;
     }
 
-    public void receiveDistributedCards(CardDeck cardDeck) {
-        IntStream.range(START_INDEX, INITIAL_CARDS_SIZE)
-                .forEach(i -> cards.offer(cardDeck.getOneCard()));
+    public void receiveInitialCards(CardDeck cardDeck) {
+        IntStream.range(START_INDEX, COUNT_OF_INITIAL_DISTRIBUTE_CARDS)
+                .forEach(i -> cards.add(cardDeck.pop()));
         changeStatusIfBlackJack();
     }
 
     public void receiveOneMoreCard(CardDeck cardDeck) {
-        this.cards.offer(cardDeck.getOneCard());
+        this.cards.add(cardDeck.pop());
         changeStatusIfBust();
     }
 
@@ -42,22 +40,16 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int score = calculateRawScore();
-        if (hasAce()) {
-            score += Type.addExtraAcePointWhenUnderCriticalPoint(score, BLACKJACK_SCORE);
+        List<Type> types = this.cards.stream()
+                .map(Card::getType)
+                .sorted((Comparator.comparingInt(Type::getPoint)))
+                .collect(Collectors.toList());
+
+        int score = 0;
+        for (Type type : types) {
+            score += type.getPointUsingPreviousScore(score);
         }
         return score;
-    }
-
-    private int calculateRawScore() {
-        return cards.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
     }
 
     public boolean isStatusNone() {
@@ -69,14 +61,14 @@ public class Cards {
     }
 
     public static int getInitialSize() {
-        return INITIAL_CARDS_SIZE;
-    }
-
-    public Status getStatus() {
-        return status;
+        return COUNT_OF_INITIAL_DISTRIBUTE_CARDS;
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return Collections.unmodifiableList(this.cards);
+    }
+
+    public Status getStatus() {
+        return this.status;
     }
 }

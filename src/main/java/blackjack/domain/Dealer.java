@@ -4,20 +4,11 @@ import java.util.List;
 
 public class Dealer extends User {
     private static final int DEALER_CRITICAL_SCORE = 16;
-    private static final int DEALER_INITIAL_CARDS_SIZE = 1;
+    private static final int COUNT_OF_INITIAL_OPEN_CARDS = 1;
     private static final String KOREAN_NAME = "딜러";
 
-    private static Dealer dealerInstance;
-
-    private Dealer() {
+    public Dealer() {
         this.name = KOREAN_NAME;
-    }
-
-    public static Dealer getDealer() {
-        if (dealerInstance == null) {
-            dealerInstance = new Dealer();
-        }
-        return dealerInstance;
     }
 
     public static int getCriticalScore() {
@@ -27,7 +18,7 @@ public class Dealer extends User {
     @Override
     public List<Card> getInitialCards() {
         return cards.getCards()
-                .subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
+                .subList(START_INDEX, COUNT_OF_INITIAL_OPEN_CARDS);
     }
 
     @Override

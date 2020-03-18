@@ -1,8 +1,6 @@
 package blackjack;
 
 import blackjack.domain.*;
-import blackjack.exception.BettingMoneyNegativeException;
-import blackjack.exception.UserNameEmptyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,12 +21,12 @@ public class PlayerTest {
     void setUp() {
         cardDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         ));
         player = new Player("pobi", 1);
@@ -39,7 +37,7 @@ public class PlayerTest {
     void emptyStringTest() {
         assertThatThrownBy(() -> {
             new Player("", 1);
-        }).isInstanceOf(UserNameEmptyException.class)
+        }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 공백일 수 없습니다.");
     }
 
@@ -53,7 +51,7 @@ public class PlayerTest {
     @DisplayName("유저의 초기 카드 오픈상태 확인")
     @Test
     void getInitialCardsTest() {
-        player.receiveDistributedCards(cardDeck);
+        player.receiveInitialCards(cardDeck);
         assertThat(player.getInitialCards()).containsExactly(
                 new Card(Symbol.CLOVER, Type.EIGHT), new Card(Symbol.CLOVER, Type.ACE));
     }
@@ -63,7 +61,7 @@ public class PlayerTest {
     @ValueSource(ints = {-1000, 0})
     void negativeBettingMoneyTest(int bettingMoney) {
         assertThatThrownBy(() -> new Player("bossdog", bettingMoney))
-                .isInstanceOf(BettingMoneyNegativeException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액으로는 양수만 가능합니다.");
     }
 }

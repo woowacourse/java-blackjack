@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.exception.ResponseNotMatchException;
-
 import java.util.Arrays;
 
 public enum Response {
@@ -24,6 +22,6 @@ public enum Response {
         return Arrays.stream(values())
                 .filter(response -> response.lowerCase.equals(lowerCase))
                 .findFirst()
-                .orElseThrow(() -> new ResponseNotMatchException(RESPONSE_NOT_MATCH_EXCEPTION_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(RESPONSE_NOT_MATCH_EXCEPTION_MESSAGE));
     }
 }

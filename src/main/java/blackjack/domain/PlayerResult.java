@@ -17,8 +17,4 @@ public enum PlayerResult {
     public int calculateProfit(int bettingMoney) {
         return (int) (this.bettingRatio * bettingMoney);
     }
-
-    public String getKoreanName() {
-        return koreanName;
-    }
 }

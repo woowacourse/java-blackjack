@@ -10,7 +10,6 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class CardsTest {
     private Cards cards;
     private CardDeck cardDeck;
@@ -19,16 +18,16 @@ public class CardsTest {
     void setUp() {
         cardDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.CLOVER, Type.EIGHT),
-                        new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.HEART, Type.TEN),
                         new Card(Symbol.SPADE, Type.QUEEN),
-                        new Card(Symbol.HEART, Type.TEN)
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.DIAMOND, Type.JACK),
+                        new Card(Symbol.CLOVER, Type.ACE),
+                        new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         ));
         cards = new Cards();
-        cards.receiveDistributedCards(cardDeck);
+        cards.receiveInitialCards(cardDeck);
     }
 
     @DisplayName("현재 보유 중인 카드의 총 점수 확인")

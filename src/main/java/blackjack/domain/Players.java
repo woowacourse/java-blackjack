@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
     private List<Player> players;
@@ -10,11 +11,18 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void receiveDistributedCardsAllPlayers(CardDeck cardDeck) {
-        players.forEach(player -> player.receiveDistributedCards(cardDeck));
+    public void receiveInitialCards(CardDeck cardDeck) {
+        players.forEach(player -> player.receiveInitialCards(cardDeck));
     }
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<String> getNames() {
+        return this.players
+                .stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
     }
 }
