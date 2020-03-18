@@ -3,8 +3,8 @@ package blackjack.view;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.Outcome;
 import blackjack.domain.result.ParticipantsResult;
-import blackjack.domain.user.Participants;
-import blackjack.domain.user.User;
+import blackjack.domain.gambler.Participants;
+import blackjack.domain.gambler.User;
 import java.util.Map;
 
 public class OutputView {

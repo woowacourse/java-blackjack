@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Participants;
-import blackjack.domain.user.User;
+import blackjack.domain.gambler.Participants;
+import blackjack.domain.gambler.User;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;

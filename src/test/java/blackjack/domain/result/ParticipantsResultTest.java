@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Participants;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.User;
+import blackjack.domain.gambler.Participants;
+import blackjack.domain.gambler.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
