@@ -8,13 +8,22 @@ import domain.card.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 public class SingleDeck implements Deck {
     static final int SIZE = 52;
 
     private final List<Card> cards;
     private static final int POP_INDEX = 0;
+    private static final List<Card> CARDS_BOX;
+
+    static {
+        CARDS_BOX = new ArrayList<>();
+        for (Symbol symbol : Symbol.values()) {
+            for (Type type : Type.values()) {
+                CARDS_BOX.add(new Card(symbol, type));
+            }
+        }
+    }
 
     private SingleDeck(List<Card> cards) {
         if (cards.size() != SIZE) {
@@ -24,16 +33,8 @@ public class SingleDeck implements Deck {
     }
 
     public static SingleDeck shuffle() {
-        Stack<Card> cards = new Stack<>();
-        for (Symbol symbol : Symbol.values()) {
-            for (Type type : Type.values()) {
-                cards.add(new Card(symbol, type));
-            }
-        }
-
-        Collections.shuffle(cards);
-
-        return new SingleDeck(new ArrayList<>(Collections.unmodifiableCollection(cards)));
+        List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
+        return new SingleDeck(cards);
     }
 
     int size() {
