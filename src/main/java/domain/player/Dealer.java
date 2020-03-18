@@ -22,9 +22,9 @@ public class Dealer extends User {
     }
 
     @Override
-    public void drawCard(Card cards) {
-        if (sumCardNumber() <= ADDITIONAL_INSERT_CARD_STANDARD) {
-            this.cards.add(cards);
+    public void drawCard(Card card) {
+        if (CardCalculator.sumCardDeck(this.cards) <= ADDITIONAL_INSERT_CARD_STANDARD) {
+            this.cards.add(card);
         }
         validateDuplicateCard();
     }

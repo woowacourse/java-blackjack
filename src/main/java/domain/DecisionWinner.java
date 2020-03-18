@@ -11,8 +11,8 @@ public class DecisionWinner {
     }
 
     public static boolean compareWinner(User targetUser, User user) {
-        int playerCardSum = CardCalculator.calculateDeterminedAce(targetUser.getCard());
-        int dealerCardSum = CardCalculator.calculateDeterminedAce(user.getCard());
+        int playerCardSum = CardCalculator.sumCardDeck(targetUser.getCard());
+        int dealerCardSum = CardCalculator.sumCardDeck(user.getCard());
 
         return determineWin(playerCardSum, dealerCardSum);
     }

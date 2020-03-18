@@ -31,7 +31,7 @@ public class CardCalculatorTest {
         List<Card> startDeck = new ArrayList<>(Arrays.asList(card1, card2));
 
         Dealer dealer = new Dealer(startDeck);
-        dealer.isAdditionalCard(cards.giveCard());
+        dealer.isAdditionalCard(new Card(CardNumber.THREE, CardSuitSymbol.HEART));
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
     }
@@ -44,7 +44,7 @@ public class CardCalculatorTest {
         List<Card> startDeck = new ArrayList<>(Arrays.asList(card1, card2));
 
         Dealer dealer = new Dealer(startDeck);
-        dealer.isAdditionalCard(cards.giveCard());
+        dealer.isAdditionalCard(new Card(CardNumber.THREE, CardSuitSymbol.HEART));
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
     }
@@ -57,7 +57,7 @@ public class CardCalculatorTest {
         List<Card> startDeck = new ArrayList<>(Arrays.asList(card1, card2));
 
         Dealer dealer = new Dealer(startDeck);
-        dealer.isAdditionalCard(cards.giveCard());
+        dealer.isAdditionalCard(new Card(CardNumber.THREE, CardSuitSymbol.HEART));
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(2);
     }
@@ -70,7 +70,7 @@ public class CardCalculatorTest {
         List<Card> startDeck = new ArrayList<>(Arrays.asList(card1, card2));
 
         Dealer dealer = new Dealer(startDeck);
-        dealer.isAdditionalCard(cards.giveCard());
+        dealer.isAdditionalCard(new Card(CardNumber.THREE, CardSuitSymbol.HEART));
 
         Assertions.assertThat(dealer.getCard().size()).isEqualTo(3);
     }

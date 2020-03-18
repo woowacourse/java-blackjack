@@ -11,18 +11,18 @@ public class CardCalculator {
     }
 
     public static boolean isUnderSixteen(List<Card> cards) {
-        return calculateDeterminedAce(cards) <= DEALER_STANDARD_ADDITIONAL_CARD;
+        return sumCardDeck(cards) <= DEALER_STANDARD_ADDITIONAL_CARD;
     }
 
 
     public static boolean isBlackJack(List<Card> cards) {
-        int sum = calculateDeterminedAce(cards);
+        int sum = sumCardDeck(cards);
 
         return sum == BLACK_JACK;
     }
 
     public static boolean isUnderBlackJack(List<Card> cards) {
-        int sum = calculateDeterminedAce(cards);
+        int sum = sumCardDeck(cards);
 
         return sum < BLACK_JACK;
     }
@@ -31,8 +31,8 @@ public class CardCalculator {
         return !isUnderBlackJack(cards);
     }
 
-    public static int calculateDeterminedAce(List<Card> cards) {
-        int playerCardSum = calculateCards(cards);
+    public static int sumCardDeck(List<Card> cards) {
+        int playerCardSum = sumCardDeckNotDeterminedAce(cards);
 
         if (cards.stream()
                 .anyMatch(Card::isAce)
@@ -43,7 +43,7 @@ public class CardCalculator {
         return playerCardSum;
     }
 
-    private static int calculateCards(List<Card> cards) {
+    private static int sumCardDeckNotDeterminedAce(List<Card> cards) {
         return (int) cards.stream()
                 .mapToLong(Card::getCardNumber)
                 .sum();

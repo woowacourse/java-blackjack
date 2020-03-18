@@ -20,10 +20,6 @@ public abstract class User {
         validateDuplicateCard();
     }
 
-    public int sumCardNumber() {
-        return CardCalculator.calculateDeterminedAce(this.cards);
-    }
-
     public String cardToString() {
         List<String> cardString = cards.stream().map(Card::toString).collect(Collectors.toList());
 

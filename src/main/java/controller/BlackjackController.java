@@ -34,9 +34,9 @@ public class BlackjackController {
         dealer = new Dealer(cards.giveTwoCardStartGame());
         players = new Players(cards, playersName.getPlayerName());
 
-        OutputView.printUserCard(dealer.getName(), dealer.cardToString());
+        OutputView.printCardReport(dealer.getName(), dealer.cardToString());
         for (Player player : players.getPlayers()) {
-            OutputView.printUserCard(player.getName(), player.cardToString());
+            OutputView.printCardReport(player.getName(), player.cardToString());
         }
     }
 
@@ -47,31 +47,32 @@ public class BlackjackController {
         dealerTurn();
     }
 
-    private void playerTurn(Player player) {
-        OutputView.printNewLine();
-        while (CardCalculator.isUnderBlackJack(player.getCard()) && getAnswer(player).isEqualsAnswer(AnswerType.YES)) {
-            player.drawCard(cards.giveCard());
-            OutputView.printUserCard(player.getName(), player.cardToString());
-        }
-        if (CardCalculator.isMoreThanBlackJack(player.getCard())) {
-            OutputView.printUserCardsOverBlackJack(player.getName());
-        }
-    }
-
     private void dealerTurn() {
         if (dealer.isAdditionalCard(cards.giveCard())) {
             OutputView.printDealerAdditionalCard();
         }
     }
 
+    private void playerTurn(Player player) {
+        OutputView.printNewLine();
+        while (CardCalculator.isUnderBlackJack(player.getCard()) && getAnswer(player).isEqualsAnswer(AnswerType.YES)) {
+            player.drawCard(cards.giveCard());
+            OutputView.printCardReport(player.getName(), player.cardToString());
+        }
+        if (CardCalculator.isMoreThanBlackJack(player.getCard())) {
+            OutputView.printUserCardsOverBlackJack(player.getName());
+        }
+    }
+
     private void result() {
-        OutputView.printFinalResult(dealer.getName(), dealer.cardToString(), dealer.sumCardNumber());
+        OutputView.printResult(dealer.getName(), dealer.cardToString(), CardCalculator.sumCardDeck(dealer.getCard()));
         for (Player player : players.getPlayers()) {
-            OutputView.printFinalResult(player.getName(), player.cardToString(), player.sumCardNumber());
+            OutputView.printResult(
+                    player.getName(), player.cardToString(), CardCalculator.sumCardDeck(dealer.getCard()));
         }
 
         WinningResult winningResult = new WinningResult(players, dealer);
-        OutputView.printWinningResult(winningResult.generateWinningUserResult(players));
+        OutputView.printWinning(winningResult.generateWinningUserResult(players));
     }
 
     private static AnswerType getAnswer(Player player) {
