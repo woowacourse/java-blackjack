@@ -31,15 +31,15 @@ public class PlayerScoreBoard implements ScoreBoard {
 		return score;
 	}
 
-	private MatchResult match(DealerScoreBoard dealerBoard) {
-		return MatchResult.calculatePlayerMatchResult(player, Objects.requireNonNull(dealerBoard.getUser()));
+	public UserResult createPlayerResult(DealerScoreBoard other) {
+		return new UserResult(player, calculateMoney(other));
 	}
 
 	private int calculateMoney(DealerScoreBoard dealerBoard) {
-		return match(dealerBoard).calculatePrize(player.getBettingMoney());
+		return match(dealerBoard).calculatePrize(player.getMoney());
 	}
 
-	public UserResult createPlayerResult(DealerScoreBoard other) {
-		return new UserResult(player, calculateMoney(other));
+	private MatchResult match(DealerScoreBoard dealerBoard) {
+		return MatchResult.calculatePlayerMatchResult(player, Objects.requireNonNull(dealerBoard.getUser()));
 	}
 }

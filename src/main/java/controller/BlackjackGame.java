@@ -70,7 +70,7 @@ public class BlackjackGame {
 	private void printResult(List<Player> players, Dealer dealer) {
 		ScoreBoards scoreBoards = ScoreBoards.fromAllUsers(players, dealer);
 		OutputView.printUsersCardsAndScore(scoreBoards);
-		UserResults userResults = scoreBoards.calculatePlayersResult();
+		UserResults userResults = scoreBoards.calculateUsersResult();
 		OutputView.printGameResult(userResults);
 	}
 }

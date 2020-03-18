@@ -7,22 +7,22 @@ import domain.card.Card;
 import domain.card.Cards;
 
 public class Player extends User {
-	private final BettingMoney bettingMoney;
+	private final Money money;
 
 	private static final int FIRST_SHOW_SIZE = 2;
 
 	private Player(Name name) {
 		super(name);
-		this.bettingMoney = BettingMoney.of(1000);
+		this.money = Money.of(1000);
 	}
 
 	private Player(Name name, Cards cards) {
-		this(name, BettingMoney.of(1000), cards);
+		this(name, Money.of(1000), cards);
 	}
 
-	private Player(Name name, BettingMoney bettingMoney, Cards cards) {
+	private Player(Name name, Money money, Cards cards) {
 		super(name, cards);
-		this.bettingMoney = bettingMoney;
+		this.money = money;
 	}
 
 	public static Player valueOf(String name) {
@@ -34,7 +34,7 @@ public class Player extends User {
 	}
 
 	public static Player fromNameAndMoneyAndCards(String name, int bettingMoney, Card... cards) {
-		return new Player(new Name(name), BettingMoney.of(bettingMoney),
+		return new Player(new Name(name), Money.of(bettingMoney),
 			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
@@ -43,8 +43,8 @@ public class Player extends User {
 		return !isBlackjack() && !isBust();
 	}
 
-	public BettingMoney getBettingMoney() {
-		return bettingMoney;
+	public Money getMoney() {
+		return money;
 	}
 
 	@Override

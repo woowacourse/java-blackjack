@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
-import domain.user.BettingMoney;
+import domain.user.Money;
 import domain.user.Dealer;
 import domain.user.Player;
 
@@ -123,7 +123,7 @@ class MatchResultTest {
 	@ParameterizedTest
 	@MethodSource("게임결과별_배당금계산_테스트_세트")
 	void calculate_final_prize_test(MatchResult result, int bettingMoney, int expected) {
-		assertThat(result.calculatePrize(BettingMoney.of(bettingMoney))).isEqualTo(expected);
+		assertThat(result.calculatePrize(Money.of(bettingMoney))).isEqualTo(expected);
 	}
 
 	private static Stream<Arguments> 게임결과별_배당금계산_테스트_세트() {

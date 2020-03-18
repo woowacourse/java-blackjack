@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import domain.user.Dealer;
 import domain.user.Player;
@@ -26,13 +26,13 @@ public class ScoreBoards {
 
 		List<PlayerScoreBoard> playerBoards = players.stream()
 			.map(PlayerScoreBoard::of)
-			.collect(Collectors.toList());
+			.collect(toList());
 
 		DealerScoreBoard dealerBoard = DealerScoreBoard.of(dealer);
 		return new ScoreBoards(playerBoards, dealerBoard);
 	}
 
-	public UserResults calculatePlayersResult() {
+	public UserResults calculateUsersResult() {
 		return playerBoards.stream()
 			.map(playerBoard -> playerBoard.createPlayerResult(dealerBoard))
 			.collect(collectingAndThen(toList(),
@@ -40,8 +40,7 @@ public class ScoreBoards {
 	}
 
 	public List<ScoreBoard> getScoreBoards() {
-		List<ScoreBoard> result = new ArrayList<>(playerBoards);
-		result.add(dealerBoard);
-		return Collections.unmodifiableList(result);
+		return Stream.concat(playerBoards.stream(), Stream.of(dealerBoard))
+			.collect(collectingAndThen(toList(), Collections::unmodifiableList));
 	}
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
-import domain.user.BettingMoney;
+import domain.user.Money;
 import domain.user.User;
 
 public enum MatchResult {
@@ -38,8 +38,8 @@ public enum MatchResult {
 		}
 	}
 
-	public int calculatePrize(BettingMoney playerBettingMoney) {
-		return playerBettingMoney.multiply(prizeFactor);
+	public int calculatePrize(Money playerMoney) {
+		return playerMoney.multiply(prizeFactor);
 	}
 
 	private static boolean isPlayerBlackjackWin(User player, User dealer) {
