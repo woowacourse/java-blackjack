@@ -12,8 +12,10 @@ import java.util.List;
 
 public class BlackjackGameController {
     public static void run() {
+        List<Player> players = enrollPlayers();
+        players.forEach(player -> player.addMoney(InputView.inputBettingMoney(player.getName())));
         BlackjackGame game = new BlackjackGame(
-                enrollPlayers(),
+                players,
                 new Deck(CardFactory.getInstance().issueNewDeck()));
         game.distributeInitialCards();
         OutputView.printInitialCardDistribution(game);

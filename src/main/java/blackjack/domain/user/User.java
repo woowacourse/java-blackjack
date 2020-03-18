@@ -44,11 +44,11 @@ public abstract class User {
 
     public Money getProfitByRate(double rate) {
         Money profit = this.money.multiply(rate);
-        updateMoney(profit);
+        addMoney(profit);
         return profit;
     }
 
-    private void updateMoney(Money profit) {
+    public void addMoney(Money profit) {
         this.money = this.money.plus(profit);
     }
 

@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.user.Decision;
+import blackjack.domain.user.Money;
 
 import java.util.Scanner;
 
@@ -36,6 +37,24 @@ public class InputView {
     private static void validateNullAndEmptyInput(String input, String message) {
         if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException(message);
+        }
+    }
+
+    public static Money inputBettingMoney(String name) {
+        System.out.println(name+"의 배팅 금액은?");
+        try {
+            int money = Integer.parseInt(sc.nextLine());
+            validateNoMoney(money);
+            return new Money(money);
+        } catch (IllegalArgumentException e) {
+            System.out.println("다시 입력해 주세요.");
+            return inputBettingMoney(name);
+        }
+    }
+
+    private static void validateNoMoney(int money) {
+        if(money <= 0) {
+            throw new IllegalArgumentException();
         }
     }
 }
