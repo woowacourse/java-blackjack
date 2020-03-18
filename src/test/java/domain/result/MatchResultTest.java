@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
-import domain.user.Money;
 import domain.user.Dealer;
+import domain.user.Money;
 import domain.user.Player;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -30,27 +30,30 @@ class MatchResultTest {
 	private static Stream<Arguments> playerAndDealerLoseSet() {
 		return Stream.of(
 			Arguments.of(
-				Player.fromNameAndCards("test", new Card(HEART, EIGHT)),
+				Player.fromNameAndMoneyAndCards("test", 1_000, new Card(HEART, EIGHT)),
 				Dealer.fromCards(new Card(HEART, EIGHT))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, EIGHT)),
+				Player.fromNameAndMoneyAndCards("test2", 1_000, new Card(HEART, EIGHT)),
 				Dealer.fromCards(new Card(HEART, NINE))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test3", new Card(HEART, EIGHT), new Card(HEART, KING), new Card(HEART, THREE)),
+				Player.fromNameAndMoneyAndCards("test3", 1_000, new Card(HEART, EIGHT), new Card(HEART, KING),
+					new Card(HEART, THREE)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test4", new Card(HEART, EIGHT), new Card(HEART, KING)),
+				Player.fromNameAndMoneyAndCards("test4", 1_000, new Card(HEART, EIGHT), new Card(HEART, KING)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test5", new Card(HEART, EIGHT), new Card(HEART, KING), new Card(HEART, TEN)),
+				Player.fromNameAndMoneyAndCards("test5", 1_000, new Card(HEART, EIGHT), new Card(HEART, KING),
+					new Card(HEART, TEN)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test6", new Card(HEART, EIGHT), new Card(HEART, KING), new Card(HEART, TEN)),
+				Player.fromNameAndMoneyAndCards("test6", 1_000, new Card(HEART, EIGHT), new Card(HEART, KING),
+					new Card(HEART, TEN)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, TEN), new Card(DIAMOND, TEN))
 			)
 		);
@@ -67,7 +70,7 @@ class MatchResultTest {
 	private static Stream<Arguments> playerAndDealerDrawSet() {
 		return Stream.of(
 			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, ACE), new Card(DIAMOND, KING)),
+				Player.fromNameAndMoneyAndCards("test2", 1_000, new Card(HEART, ACE), new Card(DIAMOND, KING)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, ACE))
 			)
 		);
@@ -84,15 +87,15 @@ class MatchResultTest {
 	private static Stream<Arguments> playerAndDealerWinSet() {
 		return Stream.of(
 			Arguments.of(
-				Player.fromNameAndCards("test", new Card(HEART, NINE)),
+				Player.fromNameAndMoneyAndCards("test", 1_000, new Card(HEART, NINE)),
 				Dealer.fromCards(new Card(HEART, EIGHT))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, ACE), new Card(HEART, NINE)),
+				Player.fromNameAndMoneyAndCards("test2", 1_000, new Card(HEART, ACE), new Card(HEART, NINE)),
 				Dealer.fromCards(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, SIX))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test3", new Card(HEART, EIGHT), new Card(HEART, KING)),
+				Player.fromNameAndMoneyAndCards("test3", 1_000, new Card(HEART, EIGHT), new Card(HEART, KING)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, TEN), new Card(CLOVER, JACK))
 			)
 		);
@@ -109,11 +112,11 @@ class MatchResultTest {
 	private static Stream<Arguments> playerBlackjackWinSet() {
 		return Stream.of(
 			Arguments.of(
-				Player.fromNameAndCards("test2", new Card(HEART, ACE), new Card(HEART, TEN)),
+				Player.fromNameAndMoneyAndCards("test2", 1_000, new Card(HEART, ACE), new Card(HEART, TEN)),
 				Dealer.fromCards(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, SIX))
 			),
 			Arguments.of(
-				Player.fromNameAndCards("test3", new Card(HEART, ACE), new Card(HEART, KING)),
+				Player.fromNameAndMoneyAndCards("test3", 1_000, new Card(HEART, ACE), new Card(HEART, KING)),
 				Dealer.fromCards(new Card(HEART, QUEEN), new Card(CLOVER, TEN), new Card(CLOVER, ACE))
 			)
 		);

@@ -2,7 +2,6 @@ package domain.user;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;

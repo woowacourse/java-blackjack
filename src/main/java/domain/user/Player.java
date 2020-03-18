@@ -11,10 +11,6 @@ public class Player extends User {
 
 	private static final int FIRST_SHOW_SIZE = 2;
 
-	private Player(Name name, Cards cards) {
-		this(name, Money.of(1000), cards);
-	}
-
 	private Player(Name name, Money money) {
 		super(name);
 		this.money = money;
@@ -27,10 +23,6 @@ public class Player extends User {
 
 	public static Player fromNameAndMoney(String name, int money) {
 		return new Player(new Name(name), Money.of(money));
-	}
-
-	public static Player fromNameAndCards(String name, Card... cards) {
-		return new Player(new Name(name), new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
 	public static Player fromNameAndMoneyAndCards(String name, int bettingMoney, Card... cards) {
