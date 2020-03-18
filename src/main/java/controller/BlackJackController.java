@@ -67,11 +67,11 @@ public class BlackJackController {
     private static void conclude(Players players, Dealer dealer) {
         OutputView.printFinalCardStatus(dealer, players);
         OutputView.printResultMessage();
-        OutputView.printDealerResult(dealer.calculateResult(players));
+        OutputView.printDealerResult(dealer.calculateRevenueAbout(players));
         for (Player player : players.getPlayers()) {
             OutputView.printPlayerResult(
                 player.getName(),
-                dealer.calculateResult(player).getOpponentResult()
+                -dealer.calculateRevenueAbout(player)
             );
         }
     }

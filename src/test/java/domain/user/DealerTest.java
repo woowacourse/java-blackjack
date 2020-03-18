@@ -90,7 +90,7 @@ public class DealerTest {
         makePlayerScoreBlackJack(player);
         makeDealerScoreEighteen(dealer);
 
-        assertThat(dealer.calculateRevenueAbout(player)).isEqualTo(-10_000 * 1.5);
+        assertThat(dealer.calculateRevenueAbout(player)).isEqualTo((int) (-10_000 * 1.5));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class DealerTest {
         makePlayerScoreEighteen(players.getPlayers().get(1));
         makeDealerScoreNineteen(dealer);
 
-        assertThat(dealer.calculateRevenueAbout(players)).isEqualTo(-5_000 * 1.5 + 8_000);
+        assertThat(dealer.calculateRevenueAbout(players)).isEqualTo((int) (-5_000 * 1.5 + 8_000));
     }
 
     private static Map<Result, Integer> makeDealerResultMap(int winCount, int drawCount,

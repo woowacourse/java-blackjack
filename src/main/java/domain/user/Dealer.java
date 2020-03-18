@@ -23,8 +23,8 @@ public class Dealer extends User {
         return !this.isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
     }
 
-    public double calculateRevenueAbout(Players players) {
-        double totalRevenue = 0;
+    public int calculateRevenueAbout(Players players) {
+        int totalRevenue = 0;
 
         for (Player player : players.getPlayers()) {
             totalRevenue += this.calculateRevenueAbout(player);
@@ -32,7 +32,7 @@ public class Dealer extends User {
         return totalRevenue;
     }
 
-    public double calculateRevenueAbout(Player player) {
+    public int calculateRevenueAbout(Player player) {
         Result result = this.calculateResult(player);
 
         if (result.equals(Result.WIN)) {
@@ -44,9 +44,9 @@ public class Dealer extends User {
         return calculateRevenueWhenPlayerWin(player);
     }
 
-    private double calculateRevenueWhenPlayerWin(Player player) {
+    private int calculateRevenueWhenPlayerWin(Player player) {
         if (player.isBlackJack()) {
-            return (-player.getBetAmount() * 1.5);
+            return (int) (-player.getBetAmount() * 1.5);
         }
         return -player.getBetAmount();
     }
