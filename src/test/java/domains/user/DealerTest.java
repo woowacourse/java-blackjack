@@ -107,4 +107,17 @@ class DealerTest {
 			Arguments.of(new ArrayList<>(Arrays.asList(five, seven, ten)))
 		);
 	}
+
+	@DisplayName("딜러 Hands의 한 장의 카드만 가져오는 함수")
+	@Test
+	void openFirstCard_GivenFiveAndKing_ReturnFive() {
+		Card five = new Card(Symbol.FIVE, Type.SPADE);
+		Card king = new Card(Symbol.KING, Type.HEART);
+		Hands hands = new Hands(Arrays.asList(five, king));
+		Dealer dealer = new Dealer(hands);
+
+		Card actualCard = dealer.openFirstCard();
+
+		assertThat(actualCard).isEqualTo(five);
+	}
 }

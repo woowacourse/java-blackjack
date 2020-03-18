@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import domains.user.name.InvalidPlayerNameException;
+import domains.user.name.PlayerName;
+
 class PlayerNameTest {
 	@DisplayName("생성자에 null이나 빈 문자열이 입력되었을 경우 예외처리")
 	@ParameterizedTest
