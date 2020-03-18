@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.generic.BettingMoney;
+import blackjack.domain.generic.BettingMoney;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

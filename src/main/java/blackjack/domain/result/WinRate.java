@@ -8,7 +8,7 @@ class WinRate implements MoneyRate {
     private static final double BLACKJACK_RATE = 1.5;
 
     @Override
-    public Double apply(CardBundle cardBundle) {
+    public double getRate(CardBundle cardBundle) {
         if (cardBundle.isBlackjack()) {
             return BLACKJACK_RATE;
         }

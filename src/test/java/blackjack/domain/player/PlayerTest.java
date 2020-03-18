@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.component.CardNumber;
 import blackjack.domain.card.component.Symbol;
-import blackjack.generic.BettingMoney;
+import blackjack.domain.generic.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

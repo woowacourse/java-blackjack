@@ -1,7 +1,7 @@
 package blackjack.domain.report;
 
+import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.result.GameResult;
-import blackjack.generic.BettingMoney;
 
 import java.util.Objects;
 

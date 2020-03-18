@@ -7,7 +7,7 @@ class LoseRate implements MoneyRate {
     private static final double LOSE_RATE = -1D;
 
     @Override
-    public Double apply(CardBundle cardBundle) {
+    public double getRate(CardBundle cardBundle) {
         return LOSE_RATE;
     }
 }

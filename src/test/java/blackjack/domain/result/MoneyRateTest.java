@@ -24,7 +24,7 @@ class MoneyRateTest {
 
         //when
         MoneyRate moneyRate = new WinRate();
-        Double actualRate = moneyRate.apply(cardBundle);
+        Double actualRate = moneyRate.getRate(cardBundle);
 
         //then
         assertThat(actualRate).isEqualTo(expectRate);
@@ -40,7 +40,7 @@ class MoneyRateTest {
 
         //when
         MoneyRate moneyRate = new DrawRate();
-        Double actualRate = moneyRate.apply(cardBundle);
+        Double actualRate = moneyRate.getRate(cardBundle);
 
         //then
         assertThat(actualRate).isEqualTo(0D);
@@ -56,7 +56,7 @@ class MoneyRateTest {
 
         //when
         MoneyRate moneyRate = new LoseRate();
-        Double actualRate = moneyRate.apply(cardBundle);
+        Double actualRate = moneyRate.getRate(cardBundle);
 
         //then
         assertThat(actualRate).isEqualTo(-1D);

@@ -5,17 +5,15 @@ import blackjack.domain.card.CardBundle;
 import java.util.Arrays;
 
 public enum GameResult {
-    WIN(new WinStrategy(), "승", new WinRate()),
-    DRAW(new DrawStrategy(), "무", new DrawRate()),
-    LOSE(new LoseStrategy(), "패", new LoseRate());
+    WIN(new WinStrategy(), new WinRate()),
+    DRAW(new DrawStrategy(), new DrawRate()),
+    LOSE(new LoseStrategy(), new LoseRate());
 
     private final GameResultStrategy gameResultStrategy;
-    private final String message;
     private final MoneyRate moneyRate;
 
-    GameResult(GameResultStrategy gameResultStrategy, String message, MoneyRate moneyRate) {
+    GameResult(GameResultStrategy gameResultStrategy, MoneyRate moneyRate) {
         this.gameResultStrategy = gameResultStrategy;
-        this.message = message;
         this.moneyRate = moneyRate;
     }
 
@@ -40,11 +38,8 @@ public enum GameResult {
         return this.gameResultStrategy.fulfill(gamblerCardBundle, dealerCardBundle);
     }
 
-    public double getRate(CardBundle gamblerRate) {
-        return this.moneyRate.apply(gamblerRate);
+    public double getRate(CardBundle gamblerCardBundle) {
+        return this.moneyRate.getRate(gamblerCardBundle);
     }
 
-    public String getMessage() {
-        return message;
-    }
 }

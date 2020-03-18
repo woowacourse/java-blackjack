@@ -1,10 +1,10 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.report.GameReport;
 import blackjack.domain.report.Reportable;
 import blackjack.domain.result.GameResult;
-import blackjack.generic.BettingMoney;
 
 public class Dealer extends Player implements Reportable {
 

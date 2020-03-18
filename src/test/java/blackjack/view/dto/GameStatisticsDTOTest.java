@@ -1,9 +1,9 @@
 package blackjack.view.dto;
 
+import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.report.GameReport;
 import blackjack.domain.report.GameReports;
 import blackjack.domain.result.GameResult;
-import blackjack.generic.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

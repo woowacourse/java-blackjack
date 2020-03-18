@@ -6,10 +6,10 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.component.CardNumber;
 import blackjack.domain.card.component.Symbol;
+import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.report.GameReport;
 import blackjack.domain.report.GameReports;
 import blackjack.domain.result.GameResult;
-import blackjack.generic.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

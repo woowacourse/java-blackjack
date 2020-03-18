@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.generic.BettingMoney;
+import blackjack.domain.generic.BettingMoney;
 
 import java.util.Objects;
 

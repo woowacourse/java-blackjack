@@ -1,7 +1,7 @@
 package blackjack.view.dto;
 
+import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.player.PlayerInfo;
-import blackjack.generic.BettingMoney;
 
 public class NameMoneyDTO {
     private final String name;
