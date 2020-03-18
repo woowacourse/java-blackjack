@@ -16,25 +16,13 @@ public class GameResults {
         }
     }
 
-    public PlayerResult getPlayerResult(Player player) {
-        return gameResults.get(player);
+    public int calculateEarning(Player player) {
+        return player.calculateEarning(gameResults.get(player));
     }
 
-    public int countWin() {
-        return (int) gameResults.values().stream()
-                .filter(result -> result.equals(PlayerResult.WIN))
-                .count();
-    }
-
-    public int countDraw() {
-        return (int) gameResults.values().stream()
-                .filter(result -> result.equals(PlayerResult.DRAW))
-                .count();
-    }
-
-    public int countLose() {
-        return (int) gameResults.values().stream()
-                .filter(result -> result.equals(PlayerResult.LOSE))
-                .count();
+    public int calculateTotalDealerEarning() {
+        return gameResults.keySet().stream()
+                .mapToInt(player -> -calculateEarning(player))
+                .sum();
     }
 }

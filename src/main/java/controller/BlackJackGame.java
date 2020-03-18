@@ -9,7 +9,6 @@ import domain.gamer.Players;
 import domain.gamer.dto.GamerWithCardsDto;
 import domain.gamer.dto.GamerWithScoreDto;
 import domain.result.GameResults;
-import domain.result.dto.DealerResultDto;
 import view.InputView;
 import view.OutputView;
 
@@ -51,9 +50,9 @@ public class BlackJackGame {
         GameResults gameResults = new GameResults(dealer, players);
 
         OutputView.printGameResultTitle();
-        OutputView.printDealerResult(DealerResultDto.of(gameResults));
+        OutputView.printDealerResult(gameResults.calculateTotalDealerEarning());
         for (Player player : players) {
-            OutputView.printEachResult(GamerWithCardsDto.of(player), gameResults.getPlayerResult(player));
+            OutputView.printEachResult(GamerDto.of(player), gameResults.calculateEarning(player));
         }
     }
 

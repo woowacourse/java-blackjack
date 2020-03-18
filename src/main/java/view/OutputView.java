@@ -1,9 +1,8 @@
 package view;
 
+import domain.gamer.dto.GamerDto;
 import domain.gamer.dto.GamerWithCardsDto;
 import domain.gamer.dto.GamerWithScoreDto;
-import domain.result.PlayerResult;
-import domain.result.dto.DealerResultDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,12 +10,12 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DELIMITER = ", ";
 
-    public static void printInitGamersState(GamerWithCardsDto dealerDto, List<GamerWithCardsDto> playerDtos, int initCardsSize) {
+    public static void printInitGamersState(GamerWithCardsDto dealerDto, List<GamerWithCardsDto> playerDtos) {
         String dealerName = dealerDto.getName();
         String playerNames = playerDtos.stream()
                 .map(GamerWithCardsDto::getName)
                 .collect(Collectors.joining(DELIMITER));
-        System.out.printf("%s와 %s에게 %d장의 카드를 나누었습니다.\n", dealerName, playerNames, initCardsSize);
+        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.\n", dealerName, playerNames);
         printGamerCardsState(dealerDto);
         for (GamerWithCardsDto playerDto : playerDtos) {
             printGamerCardsState(playerDto);
@@ -49,16 +48,14 @@ public class OutputView {
     }
 
     public static void printGameResultTitle() {
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
     }
 
-    public static void printDealerResult(DealerResultDto dealerResultDto) {
-        System.out.printf("딜러 : %d승, %d무, %d패 \n", dealerResultDto.getWinCount(),
-                dealerResultDto.getDrawCount(),
-                dealerResultDto.getLoseCount());
+    public static void printDealerResult(int totalEarning) {
+        System.out.println(String.format("딜러 : %d", totalEarning));
     }
 
-    public static void printEachResult(GamerWithCardsDto playerDto, PlayerResult playerResult) {
-        System.out.println(playerDto.getName() + " : " + playerResult.getName());
+    public static void printEachResult(GamerDto playerDto, int earning) {
+        System.out.println(playerDto.getName() + " : " + earning);
     }
 }
