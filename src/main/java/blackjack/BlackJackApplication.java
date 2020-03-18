@@ -3,9 +3,10 @@ package blackjack;
 import blackjack.domain.Names;
 import blackjack.domain.YesOrNo;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Player;
 import blackjack.domain.result.ParticipantsResult;
 import blackjack.domain.gambler.Participants;
-import blackjack.domain.gambler.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -30,28 +31,29 @@ public class BlackJackApplication {
     }
 
     private static void distributeFirstCards(Participants participants, CardDeck cardDeck) {
-        for (User participant : participants.getParticipants()) {
-            participant.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
+        participants.getDealer().drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
+        for (Player player : participants.getPlayers()) {
+            player.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         }
         OutputView.printCardDistribution(participants);
         OutputView.printUsersCards(participants);
     }
 
     private static void drawMoreCards(Participants participants, CardDeck cardDeck) {
-        for (User player : participants.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             drawMorePlayerCardManual(cardDeck, player);
         }
         drawMoreDealerCardAuto(cardDeck, participants.getDealer());
     }
 
-    private static void drawMorePlayerCardManual(CardDeck cardDeck, User player) {
+    private static void drawMorePlayerCardManual(CardDeck cardDeck, Player player) {
         while (player.canDrawCard() && YesOrNo.of(InputView.inputMoreCard(player)) == YesOrNo.YES) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }
     }
 
-    private static void drawMoreDealerCardAuto(CardDeck cardDeck, User dealer) {
+    private static void drawMoreDealerCardAuto(CardDeck cardDeck, Dealer dealer) {
         while (dealer.canDrawCard()) {
             OutputView.printDealerOneMoreCard(dealer);
             dealer.drawCard(cardDeck);

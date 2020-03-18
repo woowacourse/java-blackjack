@@ -17,8 +17,8 @@ public final class Participants {
     private static final String OUT_OF_RANGE_EXCEPTION_MESSAGE =
             String.format("참여 인원은 %d명 이상, %d명 이하이어야 합니다.", MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT);
 
-    private final User dealer;
-    private final List<User> players;
+    private final Dealer dealer;
+    private final List<Player> players;
 
     public Participants(Names playerNames) {
         validNotNull(playerNames);
@@ -42,24 +42,17 @@ public final class Participants {
         throw new IllegalArgumentException(OUT_OF_RANGE_EXCEPTION_MESSAGE);
     }
 
-    public User getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<User> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
-    }
-
-    public List<User> getParticipants() {
-        List<User> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
-        return Collections.unmodifiableList(participants);
     }
 
     public List<String> getPlayerNames() {
         return Collections.unmodifiableList(players.stream()
-                .map(User::getName)
+                .map(Player::getName)
                 .map(Name::toString)
                 .collect(Collectors.toList()));
     }

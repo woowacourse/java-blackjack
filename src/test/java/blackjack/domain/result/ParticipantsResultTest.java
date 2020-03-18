@@ -5,11 +5,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Participants;
-import blackjack.domain.gambler.User;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import blackjack.domain.gambler.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,9 +25,9 @@ public class ParticipantsResultTest {
     static void resetVariable() {
         Participants participants = new Participants(new Names("jamie,Ravie"));
         CardDeck cardDeck = new CardDeck();
-        User dealer = participants.getDealer();
+        Dealer dealer = participants.getDealer();
         dealer.drawCard(new CardDeck(), 2);
-        for (User player : participants.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             player.drawCard(cardDeck, 2);
         }
         participantsResult = new ParticipantsResult(participants);
@@ -41,10 +44,10 @@ public class ParticipantsResultTest {
     @DisplayName("플레이어의 승무패를 가져옴")
     @Test
     void checkPlayersResult() {
-        Map<User, Outcome> playerResult = participantsResult.getPlayersResult();
+        Map<Player, Outcome> playerResult = participantsResult.getPlayersResult();
         List<Outcome> outcomes = Arrays.asList(Outcome.values());
 
-        for (User player : playerResult.keySet()) {
+        for (Player player : playerResult.keySet()) {
             assertThat(outcomes.contains(playerResult.get(player))).isTrue();
         }
     }

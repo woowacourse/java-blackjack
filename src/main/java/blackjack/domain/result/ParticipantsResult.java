@@ -1,7 +1,9 @@
 package blackjack.domain.result;
 
+import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Participants;
-import blackjack.domain.gambler.User;
+import blackjack.domain.gambler.Player;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -25,7 +27,7 @@ public final class ParticipantsResult {
         initialDealerResults = dealerResults;
     }
 
-    private final Map<User, Outcome> playerResults;
+    private final Map<Player, Outcome> playerResults;
     private final Map<Outcome, Integer> dealerResults;
 
     public ParticipantsResult(Participants participants) {
@@ -40,12 +42,12 @@ public final class ParticipantsResult {
         }
     }
 
-    private Map<User, Outcome> calculatePlayerResults(Participants participants) {
-        User dealer = participants.getDealer();
+    private Map<Player, Outcome> calculatePlayerResults(Participants participants) {
+        Dealer dealer = participants.getDealer();
         return participants.getPlayers().stream()
-            .collect(Collectors
-                .toMap(player -> player, player -> player.calculateOutcome(dealer), (a1, a2) -> a1,
-                    LinkedHashMap::new));
+                .collect(Collectors
+                        .toMap(player -> player, player -> player.calculateOutcome(dealer), (a1, a2) -> a1,
+                                LinkedHashMap::new));
     }
 
     private Map<Outcome, Integer> calculateDealerResults() {
@@ -56,7 +58,7 @@ public final class ParticipantsResult {
         return dealerResults;
     }
 
-    public Map<User, Outcome> getPlayersResult() {
+    public Map<Player, Outcome> getPlayersResult() {
         return playerResults;
     }
 

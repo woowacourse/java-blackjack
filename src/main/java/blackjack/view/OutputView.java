@@ -1,10 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Player;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.Outcome;
 import blackjack.domain.result.ParticipantsResult;
 import blackjack.domain.gambler.Participants;
-import blackjack.domain.gambler.User;
+
 import java.util.Map;
 
 public class OutputView {
@@ -18,25 +20,30 @@ public class OutputView {
     }
 
     public static void printUsersCards(Participants participants) {
-        User dealer = participants.getDealer();
+        Dealer dealer = participants.getDealer();
         System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
         System.out.println();
-        for (User player : participants.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             printPlayerCards(player);
         }
         System.out.println();
     }
 
-    public static void printPlayerCards(User player) {
-        System.out.println(getUserCards(player));
+    public static void printPlayerCards(Player player) {
+        System.out.println(getPlayerCards(player));
     }
 
-    private static String getUserCards(User user) {
-        return String.format("%s: %s", user.getName()
-            , String.join(", ", user.getCardsInfos()));
+    private static String getPlayerCards(Player player) {
+        return String.format("%s: %s", player.getName()
+                , String.join(", ", player.getCardsInfos()));
     }
 
-    public static void printDealerOneMoreCard(User dealer) {
+    private static String getDealerCards(Dealer dealer) {
+        return String.format("%s: %s", dealer.getName()
+                , String.join(", ", dealer.getCardsInfos()));
+    }
+
+    public static void printDealerOneMoreCard(Dealer dealer) {
         System.out.println();
         System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
         System.out.println();
@@ -44,15 +51,14 @@ public class OutputView {
 
     public static void printUsersCardsAndScore(Participants participants) {
         System.out.println();
-        for (User user : participants.getParticipants()) {
-            printUserCardsAndScore(user);
-        }
-    }
-
-    public static void printUserCardsAndScore(User user) {
-        CardsResult userCardsResult = user.getScore();
-        System.out.printf("%s - 결과: %s", getUserCards(user), userCardsResult.getResult());
+        CardsResult dealerCardsResult = participants.getDealer().getScore();
+        System.out.printf("%s - 결과: %s", getDealerCards(participants.getDealer()), dealerCardsResult.getResult());
         System.out.println();
+        for (Player player : participants.getPlayers()) {
+            CardsResult playerCardsResult = player.getScore();
+            System.out.printf("%s - 결과: %s", getPlayerCards(player), playerCardsResult.getResult());
+            System.out.println();
+        }
     }
 
     public static void printFinalResult(Participants participants,
@@ -64,7 +70,7 @@ public class OutputView {
         printPlayerFinalResult(participantsResult.getPlayersResult());
     }
 
-    private static void printDealerFinalResult(User dealer, Map<Outcome, Integer> gameResult) {
+    private static void printDealerFinalResult(Dealer dealer, Map<Outcome, Integer> gameResult) {
         System.out.printf("%s: ", dealer.getName());
         for (Outcome outcome : gameResult.keySet()) {
             System.out.print(gameResult.get(outcome) + outcome.getConverseName() + " ");
@@ -72,8 +78,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printPlayerFinalResult(Map<User, Outcome> playersResult) {
-        for (User player : playersResult.keySet()) {
+    private static void printPlayerFinalResult(Map<Player, Outcome> playersResult) {
+        for (Player player : playersResult.keySet()) {
             Outcome outcome = playersResult.get(player);
             System.out.printf("%s: %s", player.getName(), outcome.getName());
             System.out.println();
