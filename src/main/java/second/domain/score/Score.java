@@ -1,4 +1,4 @@
-package second.domain.card;
+package second.domain.score;
 
 import java.util.Objects;
 

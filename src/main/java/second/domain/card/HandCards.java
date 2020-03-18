@@ -34,7 +34,7 @@ public class HandCards {
                 .sum();
     }
 
-    List<Card> getCards() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 

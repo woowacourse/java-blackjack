@@ -13,9 +13,13 @@ public class Results {
     private final Map<ResultType, List<Player>> playerResults;
     private final Map<ResultType, Integer> dealerResults;
 
-    public Results(final List<Player> players, final Dealer dealer) {
+    private Results(final List<Player> players, final Dealer dealer) {
         this.playerResults = generatePlayerResults(players, dealer);
         this.dealerResults = generateDealerResult(players, dealer);
+    }
+
+    public static Results generate(final List<Player> players, final Dealer dealer) {
+        return new Results(players, dealer);
     }
 
     private Map<ResultType, List<Player>> generatePlayerResults(final List<Player> players, final Dealer dealer) {

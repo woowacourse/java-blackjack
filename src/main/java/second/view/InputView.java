@@ -1,10 +1,11 @@
 package second.view;
 
-import second.domain.card.SelectAnswerType;
+import second.domain.answer.Choice;
 import second.domain.player.Gamer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -22,8 +23,15 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean askDrawMore(Gamer gamer) {
-        System.out.println(gamer.getName() + " 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return SelectAnswerType.of(SCANNER.nextLine()).getYes();
+    public static Choice choose(final Gamer player) {
+        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
+        try {
+            final String choice = SCANNER.nextLine();
+            return Choice.of(choice);
+        } catch (NoSuchElementException | IllegalStateException e) {
+            throw new RuntimeException("입력 값을 다시 확인해주세요");
+        }
     }
+
+    private InputView() { }
 }

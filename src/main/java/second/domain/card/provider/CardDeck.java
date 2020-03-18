@@ -1,4 +1,6 @@
-package second.domain.card;
+package second.domain.card.provider;
+
+import second.domain.card.Card;
 
 import java.util.Collections;
 import java.util.Stack;

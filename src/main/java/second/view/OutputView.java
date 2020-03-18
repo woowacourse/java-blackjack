@@ -1,6 +1,6 @@
 package second.view;
 
-import second.domain.player.AllGamers;
+import second.domain.BlackJackGame;
 import second.domain.player.Dealer;
 import second.domain.player.Gamer;
 import second.domain.player.Player;
@@ -13,18 +13,17 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printEmptyLine() {
-        System.out.println();
-    }
 
-    public static void printInitialCards(AllGamers allGamers) {
+    private static final String NAME_DELIMITER = ", ";
+
+    public static void printInitialCards(List<Player> players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("딜러와 ");
-        stringBuilder.append(parsePlayersName(allGamers.getPlayers()));
+        stringBuilder.append(parsePlayersName(players));
         stringBuilder.append("에게 2장의 카드를 나누었습니다.\n");
-        stringBuilder.append(parseDealerInitialState(allGamers.getDealer()));
-        stringBuilder.append(parseGamersState(allGamers.getPlayers()));
+        stringBuilder.append(parseDealerInitialState(dealer));
+        stringBuilder.append(parseGamersState(players));
 
         System.out.println(stringBuilder.toString());
     }
@@ -32,7 +31,7 @@ public class OutputView {
     private static String parsePlayersName(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(NAME_DELIMITER));
     }
 
     private static String parseDealerInitialState(Dealer dealer) {
@@ -50,10 +49,6 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public static void printGamerState(Gamer gamer) {
-        System.out.println(parseGamerState(gamer));
-    }
-
     private static String parseGamersState(List<Player> players) {
         return players
                 .stream()
@@ -61,16 +56,19 @@ public class OutputView {
                 .collect(Collectors.joining("\n"));
     }
 
+    public static void printScore(BlackJackGame blackJackGame) {
+        printScore(blackJackGame.getDealer());
+
+        blackJackGame.getPlayers()
+                .forEach(OutputView::printScore);
+    }
+
     private static String parseGamerState(Gamer gamer) {
         return gamer.getName() + ": " + gamer.getHandCards().toString();
     }
 
-    public static void printCanNotDrawMessage(Player player) {
-        System.out.println(player.getName() + "는 더이상 뽑을 수 없습니다.");
-    }
-
-    public static void printDealerCanDrawMore() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public static void printScore(Gamer gamer) {
+        System.out.printf("%s - 결과: %s\n", parseGamerState(gamer), gamer.getScore().getValue());
     }
 
     public static void printResults(Results results) {
@@ -79,17 +77,6 @@ public class OutputView {
         stringBuilder.append("##최종승패\n");
         stringBuilder.append(parseDealerResultToString(results.getDealerResult()));
         stringBuilder.append(parsePlayerResultsToString(results.getPlayerResults()));
-
-        System.out.println(stringBuilder.toString());
-    }
-
-    public static void printScore(Gamer gamer) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append(parseGamerState(gamer));
-        stringBuilder.append(" - 결과: ");
-        stringBuilder.append(gamer.getScore().getValue());
-        stringBuilder.append("\n");
 
         System.out.println(stringBuilder.toString());
     }
@@ -135,4 +122,11 @@ public class OutputView {
             }
         }
     }
+
+    public static void printGamerCards(final Gamer gamer) {
+        final String gamerCardNames = parseGamerState(gamer);
+        System.out.println(String.format("%s: %s", gamer.getName(), gamerCardNames));
+    }
+
+    private OutputView() { }
 }

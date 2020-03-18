@@ -1,7 +1,7 @@
 package second.domain.player;
 
 import second.domain.card.HandCards;
-import second.domain.card.Score;
+import second.domain.score.Score;
 
 public class Dealer extends Gamer {
     private static final Score DEALER_DRAW_THRESHOLD = new Score(16);

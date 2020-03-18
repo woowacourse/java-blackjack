@@ -1,6 +1,7 @@
 package second.domain.card;
 
 import org.junit.jupiter.api.Test;
+import second.domain.score.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

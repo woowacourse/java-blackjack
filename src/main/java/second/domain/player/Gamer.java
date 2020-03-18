@@ -1,9 +1,8 @@
 package second.domain.player;
 
-import second.domain.card.CardProviable;
 import second.domain.card.Card;
 import second.domain.card.HandCards;
-import second.domain.card.Score;
+import second.domain.score.Score;
 import second.domain.score.ScoreCalculator;
 
 public abstract class Gamer {
@@ -17,6 +16,8 @@ public abstract class Gamer {
         this.score = ScoreCalculator.calculate(handCards);
     }
 
+    public abstract boolean canDrawMore();
+
     boolean isLargerScoreThan(final Score score) {
         return this.score.isLargerThan(score);
     }
@@ -25,10 +26,8 @@ public abstract class Gamer {
         return isLargerScoreThan(gamer.score);
     }
 
-    public abstract boolean canDrawMore();
-
-    public void drawCard(final CardProviable cardDeck) {
-        final Card drawCard = cardDeck.pickCard();
+    public void draw(final Card card) {
+        final Card drawCard = card;
         handCards.drawCard(drawCard);
 
         score = score.plus(drawCard.extractScore());

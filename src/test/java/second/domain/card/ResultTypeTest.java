@@ -17,12 +17,12 @@ public class ResultTypeTest {
     void from_테스트(Rank[] ranks, Rank[] anotherRanks, ResultType expected) {
         Player player = new Player("pobi");
         for (Rank rank : ranks) {
-            player.drawCard(() -> Card.of(rank, Suit.CLOVER));
+            player.draw(Card.of(rank, Suit.CLOVER));
         }
 
         Dealer dealer= new Dealer();
         for (Rank rank : anotherRanks) {
-            dealer.drawCard(() -> Card.of(rank, Suit.CLOVER));
+            dealer.draw(Card.of(rank, Suit.CLOVER));
         }
 
         assertThat(ResultType.from(player, dealer)).isEqualTo(expected);

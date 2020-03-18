@@ -15,7 +15,7 @@ public class Card {
         this.suit = suit;
     }
 
-    public static Card of(Rank rank, Suit suit) {
+    public static Card of(final Rank rank, final Suit suit) {
         return CardCache.cards
                 .stream()
                 .filter(card -> card.is(rank, suit))
@@ -23,7 +23,7 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXSIST_MESSAGE));
     }
 
-    private boolean is(Rank rank, Suit suit) {
+    private boolean is(final Rank rank,final Suit suit) {
         return this.rank.is(rank) && this.suit.is(suit);
     }
 
@@ -35,7 +35,7 @@ public class Card {
         return rank.getValue();
     }
 
-    static List<Card> makeAllCards() {
+    public static List<Card> makeAllCards() {
         return Collections.unmodifiableList(CardCache.cards);
     }
 
@@ -53,7 +53,7 @@ public class Card {
             }
         }
 
-        private static List<Card> generateAllSymbolCard(Rank rank) {
+        private static List<Card> generateAllSymbolCard(final Rank rank) {
             List<Card> allSymbolCards = new ArrayList<>();
             for (Suit suit : Suit.values()) {
                 allSymbolCards.add(new Card(rank, suit));

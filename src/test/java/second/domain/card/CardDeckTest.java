@@ -1,6 +1,7 @@
 package second.domain.card;
 
 import org.junit.jupiter.api.Test;
+import second.domain.card.provider.CardDeck;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

@@ -10,11 +10,11 @@ public class DealerTest {
     void 딜러가_카드를_더뽑을수있는지_확인() {
         Dealer dealer = new Dealer();
 
-        dealer.drawCard(() -> Card.of(Rank.SIX, Suit.CLOVER));
-        dealer.drawCard(() -> Card.of(Rank.Q, Suit.CLOVER));
+        dealer.draw(Card.of(Rank.SIX, Suit.CLOVER));
+        dealer.draw(Card.of(Rank.Q, Suit.CLOVER));
         assertThat(dealer.canDrawMore()).isTrue();
 
-        dealer.drawCard(() -> Card.of(Rank.FOUR, Suit.CLOVER));
+        dealer.draw(Card.of(Rank.FOUR, Suit.CLOVER));
         assertThat(dealer.canDrawMore()).isFalse();
     }
 }

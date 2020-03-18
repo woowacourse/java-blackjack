@@ -1,14 +1,12 @@
 package second.domain.score;
 
 import second.domain.card.HandCards;
-import second.domain.card.Score;
 
 public class ScoreCalculator {
     public static final Score BLACK_JACK_SCORE = new Score(21);
     private static final Score ACE_ADDITIONAL_SCORE = new Score(10);
 
-    private ScoreCalculator() {
-    }
+    private ScoreCalculator() { }
 
     public static Score calculate(final HandCards handCards) {
         Score defaultSum = new Score(handCards.calculateDefaultSum());
