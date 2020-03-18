@@ -65,7 +65,7 @@
             - [x] 플레이어 < 딜러 (플레이어 패, 베팅 수익률 -1.0배)
             
 ## 클래스 다이어그램
-<img width="1059" alt="Screen Shot 2020-03-15 at 2 41 34 PM" src="https://user-images.githubusercontent.com/42382027/76696137-75dc7d80-66cb-11ea-9789-741061a76091.png">
+<img width="1054" alt="Screen Shot 2020-03-18 at 9 59 07 AM" src="https://user-images.githubusercontent.com/42382027/76915144-bae8f580-68ff-11ea-899f-c22a0b7eb215.png">
 
 ---
 # 상속, interface - 연료 주입
