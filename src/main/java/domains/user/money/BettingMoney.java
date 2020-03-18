@@ -10,10 +10,6 @@ public class BettingMoney extends Money {
 		this.money = bettingMoney;
 	}
 
-	public BettingMoney(int money) {
-		this(String.valueOf(money));
-	}
-
 	private void checkNumberBound(int money) {
 		if (money < MINIMUM_MONEY) {
 			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.ZERO_OR_NEGATIVE);

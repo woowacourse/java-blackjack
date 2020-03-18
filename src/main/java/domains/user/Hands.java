@@ -7,9 +7,9 @@ import domains.card.Card;
 import domains.card.Deck;
 
 public class Hands {
-	public static final int ACE_SCORE_CHANGE_POINT = 11;
-	public static final int ACE_EXTRA_SCORE = 10;
-	public static final int BURST_SCORE = 21;
+	private static final int ACE_SCORE_CHANGE_POINT = 11;
+	private static final int ACE_EXTRA_SCORE = 10;
+	private static final int BURST_SCORE = 21;
 
 	private List<Card> hands;
 
@@ -17,16 +17,16 @@ public class Hands {
 		this.hands = hands;
 	}
 
-	public Hands(Deck deck) {
+	Hands(Deck deck) {
 		this.hands = deck.initialDraw();
 
 	}
 
-	public int size() {
+	int size() {
 		return hands.size();
 	}
 
-	public void draw(Deck deck) {
+	void draw(Deck deck) {
 		hands.add(deck.draw());
 	}
 
