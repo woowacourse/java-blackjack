@@ -1,6 +1,6 @@
 package controller;
 
-import domain.WinningResult;
+import domain.ProfitResult;
 import domain.answer.AnswerType;
 import domain.card.CardDeck;
 import domain.player.*;
@@ -77,8 +77,8 @@ public class BlackjackController {
             OutputView.printResult(player.getName(), player.cardToString(), player.sumCardDeck());
         }
 
-        WinningResult winningResult = new WinningResult(players, dealer);
-        OutputView.printWinning(winningResult.getWinningUserResult());
+        ProfitResult profitResult = new ProfitResult(players, dealer);
+        OutputView.printWinning(profitResult.getWinningUserResult());
     }
 
     private static boolean isYesGetAnswer(Player player) {

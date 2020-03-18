@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WinningResultTest {
+public class ProfitResultTest {
 
     @DisplayName("객체 생성 테스트")
     @Test
@@ -23,8 +23,8 @@ public class WinningResultTest {
         Dealer dealer = new Dealer(cardDeck.giveTwoCardStartGame());
         Players players = new Players(cardDeck,playerInformation.getPlayerInformation());
 
-        WinningResult winningResult = new WinningResult(players,dealer);
+        ProfitResult profitResult = new ProfitResult(players,dealer);
 
-        Assertions.assertThat(winningResult.getWinningUserResult()).size().isEqualTo(3);
+        Assertions.assertThat(profitResult.getWinningUserResult()).size().isEqualTo(3);
     }
 }
