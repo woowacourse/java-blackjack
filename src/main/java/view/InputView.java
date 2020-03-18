@@ -9,11 +9,11 @@ public class InputView {
     }
 
     public static double inputBattingMoney(String playerName){
-        System.out.printf("%s의 배팅금액을 입력하세요\n",playerName);
+        System.out.printf("\n%s의 배팅금액을 입력하세요\n",playerName);
         try{
             String battingMoney = SCANNER.nextLine();
             validateNumberFormat(battingMoney);
-            return Double.parseDouble(SCANNER.nextLine());
+            return Double.parseDouble(battingMoney);
         }catch (RuntimeException e){
             OutputView.printErrorMessage(e.getMessage());
             return inputBattingMoney(playerName);

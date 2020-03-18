@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProfitResult {
+    public static final double DEALER_PROFIT = -1d;
     private List<String> winningUserResult;
 
     public ProfitResult(Players players, Dealer dealer) {
@@ -21,16 +22,16 @@ public class ProfitResult {
     }
 
     private List<String> generateWinningUserResult(Map<String, Double> winningPlayerResult) {
-
-        double dealerProfit =  winningPlayerResult.values().stream().mapToDouble(Double::doubleValue).count();
-
         List<String> result = new ArrayList<>(Collections.singletonList(String.format(
-                "딜러: %1f", dealerProfit))
+                "딜러: %.1f", DEALER_PROFIT * winningPlayerResult.values()
+                        .stream()
+                        .mapToDouble(Double::doubleValue)
+                        .sum()))
         );
 
         result.addAll(winningPlayerResult.keySet()
                 .stream()
-                .map(player-> String.format("%s: %1f",player,winningPlayerResult.get(player)))
+                .map(player-> String.format("%s: %.1f",player,winningPlayerResult.get(player)))
                 .collect(Collectors.toList())
         );
 
