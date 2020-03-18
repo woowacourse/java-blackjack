@@ -10,12 +10,12 @@ import java.util.Objects;
 public abstract class User {
     protected final String name;
     protected final List<Card> cards;
-    protected final Money money;
+    protected Money money;
 
-    public User(String name) {
+    public User(String name, Money money) {
         this.name = name;
         this.cards = new LinkedList<>();
-        this.money = new Money();
+        this.money = money;
     }
 
     public void receiveInitialCards(List<Card> initialCards) {
@@ -32,6 +32,14 @@ public abstract class User {
 
     public String getName() {
         return this.name;
+    }
+
+    public void changeMoneyByRate(double rate) {
+        this.money = this.money.multiply(rate);
+    }
+
+    public Money getMoney() {
+        return money;
     }
 
     public boolean isBusted() {
