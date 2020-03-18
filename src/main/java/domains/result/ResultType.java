@@ -1,25 +1,18 @@
 package domains.result;
 
-public enum ResultType {
-    WIN("승", 1),
-    LOSE("패", -1),
-    DRAW("무", 0),
-    BLACKJACK("블랙잭", 1.5);
+import domains.user.Player;
+import domains.user.money.ProfitMoney;
 
-    private String resultType;
+public enum ResultType {
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
+    BLACKJACK(1.5);
+
     private double profitRate;
 
-    ResultType(String resultType, double profitRate) {
-        this.resultType = resultType;
+    ResultType(double profitRate) {
         this.profitRate = profitRate;
-    }
-
-    public String getResultType() {
-        return resultType;
-    }
-
-    public double getProfitRate() {
-        return profitRate;
     }
 
     public ResultType oppose() {
@@ -30,5 +23,9 @@ public enum ResultType {
             return WIN;
         }
         return DRAW;
+    }
+
+    public ProfitMoney calculateProfitMoney(Player player) {
+        return player.getBettingMoney().multiply(this.profitRate);
     }
 }

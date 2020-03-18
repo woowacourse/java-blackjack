@@ -8,18 +8,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, ResultType> playerResult;
-    private Profits profits;
+    public static final int INITIAL_COUNT = 0;
+    public static final int ADD_COUNT = 1;
+
+    private Map<Player, ResultType> playerResult = new HashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
-        this.playerResult = new HashMap<>();
         create(players, dealer);
-        this.profits = new Profits(playerResult);
     }
 
     private void create(Players players, Dealer dealer) {
         for (Player player : players) {
-            playerResult.put(player, player.checkResultType(dealer));
+            ResultType resultType = player.checkResultType(dealer);
+            playerResult.put(player, resultType);
         }
     }
 
@@ -31,11 +32,11 @@ public class GameResult {
         Map<ResultType, Integer> dealerResult = new HashMap<>();
 
         for (ResultType resultType : ResultType.values()) {
-            dealerResult.put(resultType, 0);
+            dealerResult.put(resultType, INITIAL_COUNT);
         }
 
         for (ResultType result : playerResult.values()) {
-            dealerResult.put(result.oppose(), dealerResult.get(result) + 1);
+            dealerResult.put(result.oppose(), dealerResult.get(result) + ADD_COUNT);
         }
 
         return dealerResult;
@@ -43,9 +44,5 @@ public class GameResult {
 
     public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
-    }
-
-    public Profits getProfits() {
-        return profits;
     }
 }

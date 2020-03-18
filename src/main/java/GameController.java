@@ -1,5 +1,6 @@
 import domains.card.Deck;
 import domains.result.GameResult;
+import domains.result.Profits;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
@@ -45,8 +46,7 @@ public class GameController {
         OutputView.printAllHands(players, dealer);
 
         GameResult gameResult = new GameResult(players, dealer);
-
-        OutputView.printGameResult(gameResult);
+        OutputView.printGameResult(new Profits(gameResult));
     }
 
     private void hitOrStay() {

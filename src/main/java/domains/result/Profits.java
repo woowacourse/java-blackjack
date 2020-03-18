@@ -1,38 +1,31 @@
 package domains.result;
 
-import domains.user.Money;
 import domains.user.Player;
+import domains.user.money.ProfitMoney;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Profits {
-    private Map<Player, Money> playerProfits;
-    private Money dealerProfit;
+    private Map<Player, ProfitMoney> playerProfits;
 
-    public Profits(Map<Player, ResultType> playerResult) {
+    public Profits(GameResult gameResult) {
         playerProfits = new HashMap<>();
-        for (Player player : playerResult.keySet()) {
-            ResultType resultType = playerResult.get(player);
-            Money profit = player.getBettingMoney().multiply(resultType.getProfitRate());
-            playerProfits.put(player, profit);
-        }
-        dealerProfit = calculateDealerProfit();
+        create(gameResult.getPlayerResult());
     }
 
-    private Money calculateDealerProfit() {
-        Money amount = new Money(0);
-        for (Money money : playerProfits.values()) {
-            amount = amount.minus(money);
+    private void create(Map<Player, ResultType> gameResult) {
+        for (Player player : gameResult.keySet()) {
+            ResultType resultType = gameResult.get(player);
+            playerProfits.put(player, resultType.calculateProfitMoney(player));
         }
-        return amount;
     }
 
-    public Map<Player, Money> getPlayerProfits() {
+    public ProfitMoney createDealerProfit() {
+        return ProfitMoney.calculateDealerProfit(playerProfits.values());
+    }
+
+    public Map<Player, ProfitMoney> getPlayerProfits() {
         return playerProfits;
-    }
-
-    public Money getDealerProfit() {
-        return dealerProfit;
     }
 }

@@ -1,11 +1,10 @@
 package view;
 
-import domains.result.GameResult;
 import domains.result.Profits;
 import domains.user.Dealer;
-import domains.user.Money;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.money.ProfitMoney;
 import domains.user.name.PlayerName;
 
 import java.util.ArrayList;
@@ -13,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final CharSequence BLANK = " ";
-
     public static void printInputPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
@@ -59,12 +56,10 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(GameResult gameResult) {
-        Profits profits = gameResult.getProfits();
+    public static void printGameResult(Profits profits) {
+        System.out.println("딜러: " + profits.createDealerProfit());
 
-        System.out.println("딜러: " + profits.getDealerProfit());
-
-        Map<Player, Money> playerProfits = profits.getPlayerProfits();
+        Map<Player, ProfitMoney> playerProfits = profits.getPlayerProfits();
         for (Player player : playerProfits.keySet()) {
             System.out.println(player.getName() + " : " + playerProfits.get(player));
         }

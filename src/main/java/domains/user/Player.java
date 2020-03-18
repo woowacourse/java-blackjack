@@ -2,6 +2,9 @@ package domains.user;
 
 import domains.card.Deck;
 import domains.result.ResultType;
+import domains.user.money.BettingMoney;
+import domains.user.money.Money;
+import domains.user.money.ProfitMoney;
 import domains.user.name.PlayerName;
 
 import java.util.Objects;
@@ -11,11 +14,11 @@ public class Player extends User {
     private static final String NO = "n";
 
     private PlayerName name;
-    private Money bettingMoney;
+    private BettingMoney bettingMoney;
 
     public Player(PlayerName name, String bettingMoney, Hands hands) {
         this.name = name;
-        this.bettingMoney = new Money(bettingMoney);
+        this.bettingMoney = new BettingMoney(bettingMoney);
         this.hands = hands;
         this.blackJack = hands.isBlackJack();
     }
@@ -71,7 +74,7 @@ public class Player extends User {
         return name.toString();
     }
 
-    public Money getBettingMoney() {
+    public BettingMoney getBettingMoney() {
         return this.bettingMoney;
     }
 }
