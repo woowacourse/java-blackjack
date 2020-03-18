@@ -1,21 +1,21 @@
 package domains.result;
 
-import domains.user.Player;
-import domains.user.money.ProfitMoney;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfitsFactory {
-    public static Map<Player, ProfitMoney> create(GameResult gameResult) {
-        Map<Player, ResultType> playerResult = gameResult.getPlayerResult();
-        Map<Player, ProfitMoney> playerProfits = new HashMap<>();
+import domains.user.Player;
+import domains.user.money.ProfitMoney;
 
-        for (Player player : playerResult.keySet()) {
-            ResultType resultType = playerResult.get(player);
-            playerProfits.put(player, resultType.calculateProfitMoney(player));
-        }
+class ProfitsFactory {
+	static Map<Player, ProfitMoney> create(GameResult gameResult) {
+		Map<Player, ResultType> playerResult = gameResult.getPlayerResult();
+		Map<Player, ProfitMoney> playerProfits = new HashMap<>();
 
-        return playerProfits;
-    }
+		for (Player player : playerResult.keySet()) {
+			ResultType resultType = playerResult.get(player);
+			playerProfits.put(player, resultType.calculateProfitMoney(player));
+		}
+
+		return playerProfits;
+	}
 }

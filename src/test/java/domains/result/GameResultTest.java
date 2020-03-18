@@ -1,5 +1,19 @@
 package domains.result;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import domains.card.Card;
 import domains.card.Symbol;
 import domains.card.Type;
@@ -8,17 +22,8 @@ import domains.user.Hands;
 import domains.user.Player;
 import domains.user.Players;
 import domains.user.name.PlayerName;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.*;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class GameResultTest {
+class GameResultTest {
 
     @DisplayName("참가자들과 딜러의 게임 결과를 계산하여 승패를 반환")
     @ParameterizedTest
