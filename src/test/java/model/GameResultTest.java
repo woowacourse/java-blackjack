@@ -1,43 +1,44 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
 import static model.UserTest.PLAYER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTest {
-    CardHand cardHandWin1 = new CardHand();
-    CardHand cardHandWin2 = new CardHand();
-    CardHand cardHandLose = new CardHand();
-    Deck deckWin1;
-    Deck deckWin2;
-    Deck deckLose;
-    List<Player> players = new ArrayList<>();
-    Dealer dealer;
+    Player playerWin1 = new Player(PLAYER_NAME, Arrays.asList(
+            new Card(Symbol.KING, Type.CLUB),
+            new Card(Symbol.KING, Type.DIAMOND)
+    ));
+    Player playerWin2 = new Player(PLAYER_NAME, Arrays.asList(
+            new Card(Symbol.QUEEN, Type.CLUB),
+            new Card(Symbol.KING, Type.HEART)
+    ));
+    Player playerBlackJack = new Player(PLAYER_NAME, Arrays.asList(
+            new Card(Symbol.QUEEN, Type.CLUB),
+            new Card(Symbol.ACE, Type.HEART)
+    ));
+    Dealer dealerLose = new Dealer(Arrays.asList(
+            new Card(Symbol.TWO, Type.CLUB),
+            new Card(Symbol.TWO, Type.DIAMOND)
+    ));
+    Dealer dealerBlackJack = new Dealer(Arrays.asList(
+            new Card(Symbol.ACE, Type.CLUB),
+            new Card(Symbol.JACK, Type.DIAMOND)
+    ));
+    Players players = new Players(Arrays.asList(playerWin1, playerWin2, playerBlackJack));
 
-    @BeforeEach
-    void init_field() {
-        cardHandWin1.addCard(new Card(Symbol.KING, Type.CLUB));
-        cardHandWin1.addCard(new Card(Symbol.KING, Type.DIAMOND));
-        cardHandWin2.addCard(new Card(Symbol.KING, Type.CLUB));
-        cardHandWin2.addCard(new Card(Symbol.KING, Type.DIAMOND));
-        cardHandLose.addCard(new Card(Symbol.TWO, Type.DIAMOND));
-        cardHandLose.addCard(new Card(Symbol.TWO, Type.CLUB));
-        deckWin1 = new Deck(cardHandWin1);
-        deckWin2 = new Deck(cardHandWin2);
-        deckLose = new Deck(cardHandLose);
-        players.add(new Player(PLAYER_NAME, deckWin1, INITIAL_DRAW_COUNT));
-        players.add(new Player(PLAYER_NAME, deckWin2, INITIAL_DRAW_COUNT));
-        dealer = new Dealer(deckLose, INITIAL_DRAW_COUNT);
+    @Test
+    void calculateDealerResultTest1() {
+        GameResult gameResult = new GameResult(players, dealerLose);
+        assertThat(gameResult.getDealerResult().getProfit()).isEqualTo(-350);
     }
 
     @Test
-    void gameResultTest() {
-        GameResult gameResult = new GameResult(new Players(players), dealer);
+    void calculateDealerResultTest2() {
+        GameResult gameResult = new GameResult(players, dealerBlackJack);
+        assertThat(gameResult.getDealerResult().getProfit()).isEqualTo(200);
     }
 }

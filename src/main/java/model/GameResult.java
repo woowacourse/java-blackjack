@@ -15,6 +15,13 @@ public class GameResult {
         }
     }
 
+    public Profit getDealerResult() {
+        return new Profit(playerResult.values()
+                .stream()
+                .mapToDouble(Profit::getProfit)
+                .sum() * -1);
+    }
+
     public Map<Player, Profit> getPlayerResult() {
         return Collections.unmodifiableMap(playerResult);
     }

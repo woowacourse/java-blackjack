@@ -7,7 +7,6 @@ import utils.StringUtils;
 public class Bet {
 
     public static final double LOWER_BET_BOUND = 100;
-
     private final double bet;
 
     public Bet(String input) {
@@ -15,7 +14,7 @@ public class Bet {
         this.bet = Double.parseDouble(input);
     }
 
-    public Bet(double input){
+    public Bet(double input) {
         this.bet = input;
     }
 
@@ -39,11 +38,11 @@ public class Bet {
         }
     }
 
-    public Bet multiplyRatio(double ratio) {
+    public Bet MultiplyBet(double ratio) {
         return new Bet(bet * ratio);
     }
 
-    public double getBet(){
+    public double getBet() {
         return bet;
     }
 }

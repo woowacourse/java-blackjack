@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static model.UserTest.PLAYER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultTest {
-    public static final String PLAYER_NAME = "DD";
     Player bustPlayer = new Player(PLAYER_NAME, Arrays.asList(
             new Card(Symbol.KING, Type.DIAMOND),
             new Card(Symbol.QUEEN, Type.DIAMOND),
@@ -62,11 +62,11 @@ public class ResultTest {
         assertThat(Result.compete(blackJackDealer, notBustPlayer)).isEqualTo(Result.LOSE);
     }
 
-//    @Test
-//    @DisplayName("블랙잭 우승 시 수익 계산")
-//    void playerBlackJackRevenueTest(){
-//        Result result = Result.compete(notBustDealer, blackJackPlayer);
-//        assertThat(result.calculateRevenue(blackJackPlayer)).isEqualTo(150);
-//    }
+    @Test
+    @DisplayName("블랙잭 우승 시 수익 계산")
+    void playerBlackJackRevenueTest(){
+        Result result = Result.compete(notBustDealer, blackJackPlayer);
+        assertThat(result.calculateProfit(blackJackPlayer).getProfit()).isEqualTo(150);
+    }
 
 }
