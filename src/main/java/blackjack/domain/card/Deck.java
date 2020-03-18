@@ -31,7 +31,8 @@ public class Deck {
     }
 
     private List<Card> generateInitialCards() {
-        return IntStream.of(0, NUM_OF_INITIAL_CARDS).mapToObj(t -> this.draw())
+        return IntStream.of(0, NUM_OF_INITIAL_CARDS)
+                .mapToObj(t -> this.draw())
                 .collect(Collectors.toList());
     }
 }
