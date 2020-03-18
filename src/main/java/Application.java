@@ -40,11 +40,11 @@ public class Application {
     }
 
     private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Users users) {
-        userMoreCard(cardDeck, users);
-        dealerMoreCard(cardDeck, dealer);
+        giveUserMoreCard(cardDeck, users);
+        giveDealerMoreCard(cardDeck, dealer);
     }
 
-    private static void userMoreCard(final CardDeck cardDeck, final Users users) {
+    private static void giveUserMoreCard(final CardDeck cardDeck, final Users users) {
         for (User user : users) {
             giveCardsIfUserWant(cardDeck, user);
         }
@@ -57,7 +57,7 @@ public class Application {
         }
     }
 
-    private static void dealerMoreCard(final CardDeck cardDeck, final Dealer dealer) {
+    private static void giveDealerMoreCard(final CardDeck cardDeck, final Dealer dealer) {
         while (dealer.shouldAddCard()) {
             CardDistributor.giveOneCard(cardDeck, dealer);
             OutputView.printDealerAddCard();
