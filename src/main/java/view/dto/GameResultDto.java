@@ -1,17 +1,17 @@
 package view.dto;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import domain.result.GameResult;
 import domain.user.Player;
 import domain.user.User;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResultDto {
 
     private Map<UserDto, Integer> userToCardPoint;
     private Map<Player, Integer> profitOfPlayers;
-    private double profitOfDealer;
+    private int profitOfDealer;
 
     public static GameResultDto of(GameResult gameResult) {
         return new GameResultDto(gameResult);
@@ -35,7 +35,7 @@ public class GameResultDto {
         return profitOfPlayers;
     }
 
-    public double getProfitOfDealer() {
+    public int getProfitOfDealer() {
         return profitOfDealer;
     }
 }
