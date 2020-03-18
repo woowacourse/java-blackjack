@@ -1,18 +1,12 @@
 package domain.result;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Symbol;
+import domain.card.Type;
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.PlayersInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +16,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Symbol;
-import domain.card.Type;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.PlayersInfo;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
 class GameResultTest {
 
@@ -44,7 +38,9 @@ class GameResultTest {
         List<String> names = Arrays.asList("pobi", "jason", "woo", "lowoon");
         Map<String, Integer> playerInfo = names.stream()
                 .collect(Collectors.toMap(Function.identity(), name -> 1000,
-                        (e1, e2) -> {throw new AssertionError("중복된 키가 있습니다.");},
+                        (e1, e2) -> {
+                            throw new AssertionError("중복된 키가 있습니다.");
+                        },
                         LinkedHashMap::new));
         playersInfo = PlayersInfo.of(playerInfo);
         Queue<Card> cards = new LinkedList<>(Arrays.asList(

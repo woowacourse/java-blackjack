@@ -1,9 +1,9 @@
 package view.dto;
 
-import java.util.List;
-
 import domain.card.Card;
 import domain.user.User;
+
+import java.util.List;
 
 public class UserDto {
 

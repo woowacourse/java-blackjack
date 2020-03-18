@@ -1,14 +1,14 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import domain.card.Card;
 import domain.user.Dealer;
 import view.dto.GameResultDto;
 import view.dto.PlayersDto;
 import view.dto.UserDto;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -34,7 +34,7 @@ public class OutputView {
     private static void printDealerFirstDealOutResult(UserDto dealerDto) {
         Card firstCard = dealerDto.getCards().get(FIRST_CARD);
         String dealerFirstDealOutResult = firstCard.getType() + firstCard.getSymbol();
-        System.out.printf("%s카드: %s"+ NEWLINE, Dealer.NAME, dealerFirstDealOutResult);
+        System.out.printf("%s카드: %s" + NEWLINE, Dealer.NAME, dealerFirstDealOutResult);
     }
 
     private static void printPlayersFirstDealOutResult(PlayersDto playersDto) {

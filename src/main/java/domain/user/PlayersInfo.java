@@ -1,5 +1,8 @@
 package domain.user;
 
+import domain.card.Deck;
+import view.dto.UserDto;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,9 +10,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import domain.card.Deck;
-import view.dto.UserDto;
 
 public class PlayersInfo {
 
@@ -44,7 +44,9 @@ public class PlayersInfo {
         return playersInfo.keySet()
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), Player::calculatePoint,
-                        (e1, e2) -> {throw new AssertionError();},
+                        (e1, e2) -> {
+                            throw new AssertionError();
+                        },
                         LinkedHashMap::new));
     }
 
@@ -52,7 +54,7 @@ public class PlayersInfo {
         Map<Player, Integer> profitOfPlayers = new LinkedHashMap<>();
 
         playersInfo.forEach((player, bettingMoney) ->
-                        profitOfPlayers.put(player, (int)(bettingMoney.getMoney() * player.decideRatio(dealer).getRatio())));
+                profitOfPlayers.put(player, (int) (bettingMoney.getMoney() * player.decideRatio(dealer).getRatio())));
 
         return profitOfPlayers;
     }

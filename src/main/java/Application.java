@@ -1,7 +1,3 @@
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import controller.BlackJackGame;
 import domain.card.DeckFactory;
 import domain.result.GameResult;
@@ -12,6 +8,10 @@ import view.OutputView;
 import view.dto.GameResultDto;
 import view.dto.PlayersDto;
 import view.dto.UserDto;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Application {
 

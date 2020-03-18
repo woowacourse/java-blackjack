@@ -1,12 +1,12 @@
 package domain.result;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayersInfo;
 import domain.user.User;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResult {
 

@@ -1,9 +1,9 @@
 package view.dto;
 
+import domain.user.PlayersInfo;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import domain.user.PlayersInfo;
 
 public class PlayersDto {
 
