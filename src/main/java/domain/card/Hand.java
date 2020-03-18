@@ -1,7 +1,5 @@
 package domain.card;
 
-import domain.result.Score;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +20,6 @@ public class Hand {
 
 	public void add(Card card) {
 		cards.add(card);
-	}
-
-	public Score getScore() {
-		return Score.from(this);
 	}
 
 	public int sumOfCards() {

@@ -35,4 +35,15 @@ class HandTest {
 		hand.add(new Card(Symbol.ACE, Type.CLUB));
 		assertThat(hand.hasAce()).isTrue();
 	}
+
+	@Test
+	@DisplayName("두개의 카드를 갖는지 여부를 테스트")
+	void hasTwoCardsTest() {
+		Hand hand = Hand.createEmpty();
+		hand.add(new Card(Symbol.EIGHT, Type.DIAMOND));
+		assertThat(hand.hasTwoCards()).isFalse();
+
+		hand.add(new Card(Symbol.ACE, Type.CLUB));
+		assertThat(hand.hasTwoCards()).isTrue();
+	}
 }

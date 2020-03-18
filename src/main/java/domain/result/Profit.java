@@ -14,6 +14,10 @@ public class Profit {
 		return new Profit(this.profit + other.profit);
 	}
 
+	public Profit negative() {
+		return new Profit(this.profit * -1);
+	}
+
 	public double getProfit() {
 		return profit;
 	}
@@ -31,9 +35,5 @@ public class Profit {
 	@Override
 	public int hashCode() {
 		return Objects.hash(profit);
-	}
-
-	public Profit negative() {
-		return new Profit(this.profit * -1);
 	}
 }
