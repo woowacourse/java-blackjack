@@ -42,6 +42,11 @@ public class Player implements Participant {
     }
 
     @Override
+    public int cardCount() {
+        return cards.size();
+    }
+
+    @Override
     public String cards() {
         return cards.toString();
     }

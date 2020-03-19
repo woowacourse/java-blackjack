@@ -37,6 +37,10 @@ public class Cards {
         return reduceIfAceExists(total);
     }
 
+    public int count() {
+        return cards.size();
+    }
+
     private int reduceIfAceExists(int total) {
         int aceCount = countAce();
         while (total > BasicRule.BLACK_JACK_SCORE && aceCount > 0) {
@@ -59,5 +63,9 @@ public class Cards {
         return cards.stream()
             .map(Card::toString)
             .collect(Collectors.joining(DELIMITER));
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

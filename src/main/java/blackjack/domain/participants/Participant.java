@@ -11,6 +11,8 @@ public interface Participant {
 
     boolean isDealer();
 
+    int cardCount();
+
     String cards();
 
     String getName();
