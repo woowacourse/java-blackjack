@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResultTypeTest {
     @ParameterizedTest
     @MethodSource("generate")
-    void from_테스트(Rank[] ranks, Rank[] anotherRanks, ResultType expected) {
+    void of(Rank[] ranks, Rank[] anotherRanks, ResultType expected) {
         Player player = new Player("pobi");
         for (Rank rank : ranks) {
             player.draw(Card.of(rank, Suit.CLOVER));

@@ -1,5 +1,6 @@
 package second.domain.card;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -10,7 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
     @Test
-    void 정적팩토리테스트() {
+    @DisplayName("생성 테스트")
+    void initialize() {
         assertThat(Card.of(Rank.ACE, Suit.HEART)).isInstanceOf(Card.class);
     }
 

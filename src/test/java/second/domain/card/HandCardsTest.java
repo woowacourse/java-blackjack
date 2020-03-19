@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandCardsTest {
     @Test
-    void 생성자_테스트() {
+    void initialize() {
         HandCards handCards = new HandCards(Collections.emptyList());
         assertThat(handCards).isInstanceOf(HandCards.class);
     }
@@ -35,14 +35,16 @@ public class HandCardsTest {
 
     @ParameterizedTest
     @MethodSource("generateCards")
-    void 순수한합구하기테스트(Rank[] ranks, int expectedScore) {
+    @DisplayName("순수한 합 구하기 테스트")
+    void calculateDefaultSum(Rank[] ranks, int expectedScore) {
         HandCards handCards = new HandCards(parseNumbersToCards(ranks));
 
         assertThat(handCards.calculateDefaultSum()).isEqualTo(expectedScore);
     }
 
     @Test
-    void 에이스가지는지테스트() {
+    @DisplayName("에이스 가지는지 테스트")
+    void hasAce() {
         HandCards handCardsWithAce = new HandCards(parseNumbersToCards(Rank.ACE, Rank.TWO, Rank.THREE));
         HandCards handCardsWithoutAce = new HandCards(parseNumbersToCards(Rank.TWO, Rank.THREE, Rank.FOUR));
 

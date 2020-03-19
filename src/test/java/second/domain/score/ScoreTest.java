@@ -7,14 +7,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreTest {
     @Test
-    void 생성자테스트() {
+    void initialize() {
         final Score score = new Score(30);
 
         assertThat(score).isInstanceOf(Score.class);
     }
 
     @Test
-    void 점수_더하기() {
+    void plus() {
         final Score score = new Score(0);
 
         final Score ten = new Score(10);
