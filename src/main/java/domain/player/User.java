@@ -42,7 +42,7 @@ public class User extends Player {
 		return money.toLoseMoney();
 	}
 
-	public void initCardBlackJackCheck() {
+	public void checkInitCardBlackJack() {
 		this.isInitCardBlackJack = this.isBlackJack();
 	}
 }
