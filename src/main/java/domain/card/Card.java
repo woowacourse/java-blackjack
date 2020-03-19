@@ -26,7 +26,6 @@ public class Card {
         return getCardNumber() + this.cardSuitSymbol.getSuitSymbol();
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

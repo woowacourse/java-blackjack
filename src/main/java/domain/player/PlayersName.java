@@ -14,7 +14,7 @@ public class PlayersName {
     }
 
     private void validateEmptyName(String playersName) {
-        if (Arrays.stream(playersName.split(DELIMITER,-1)).anyMatch(String::isEmpty)) {
+        if (Arrays.stream(playersName.split(DELIMITER, -1)).anyMatch(String::isEmpty)) {
             throw new IllegalArgumentException("플레이어 이름을 잘못 입력하였습니다.");
         }
     }

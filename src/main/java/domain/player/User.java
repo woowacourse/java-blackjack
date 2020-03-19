@@ -28,10 +28,18 @@ public abstract class User {
         validateDuplicateCard();
     }
 
-    public String cardToString() {
+    protected String cardToString() {
         List<String> cardString = cards.stream().map(Card::toString).collect(Collectors.toList());
 
         return String.join(",", cardString);
+    }
+
+    public String userResult() {
+        return String.format("%s - 결과: %s", cardReport(), CardCalculator.sumCardDeck(this.cards));
+    }
+
+    public String cardReport() {
+        return String.format("%s카드: %s", this.name, cardToString());
     }
 
     public List<Card> getCard() {
@@ -42,15 +50,8 @@ public abstract class User {
         return this.name;
     }
 
-    protected void validateDuplicateCard() {
-        Set<Card> cards = new HashSet<>(this.cards);
-        if (cards.size() != this.cards.size()) {
-            throw new IllegalArgumentException("카드를 중복으로 받았습니다.");
-        }
-    }
-
-    public int sumCardDeck() {
-        return CardCalculator.sumCardDeck(this.cards);
+    public double getMoney() {
+        return money.getMoney();
     }
 
 
@@ -64,13 +65,17 @@ public abstract class User {
         return CardCalculator.sumCardDeck(this.cards) < MAX_WINNING_COUNT;
     }
 
-    public boolean isMoreThanWinningCount() {
-        return CardCalculator.sumCardDeck(this.cards) >= MAX_WINNING_COUNT;
+    public void drawCard(Card card) {
+        this.cards.add(card);
+        validateDuplicateCard();
     }
 
-    public double getMoney() {
-        return money.getMoney();
+    protected void validateDuplicateCard() {
+        Set<Card> cards = new HashSet<>(this.cards);
+        if (cards.size() != this.cards.size()) {
+            throw new IllegalArgumentException("카드를 중복으로 받았습니다.");
+        }
     }
 
-    public abstract void drawCard(Card cards);
+    public abstract boolean isDrawCard();
 }

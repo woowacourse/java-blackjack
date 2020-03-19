@@ -21,4 +21,16 @@ public class Players {
         return Collections.unmodifiableList(users);
     }
 
+    public List<String> cardReport() {
+        return users.stream()
+                .map(User::cardReport)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> playersResult() {
+        return users.stream()
+                .map(User::userResult)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -23,7 +23,6 @@ public class CardDeck {
     }
 
     public List<Card> giveTwoCardStartGame() {
-
         return new ArrayList<>(Arrays.asList(giveCard(), giveCard()));
     }
 

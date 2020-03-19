@@ -15,19 +15,12 @@ public class Dealer extends User {
         this.money = new Money(0);
     }
 
-    public boolean isAdditionalCard(Card card) {
-        if (CardCalculator.sumCardDeck(this.cards) <= ADDITIONAL_INSERT_CARD_STANDARD) {
-            drawCard(card);
-            return true;
-        }
-        return false;
+    public String startCardReport() {
+        return String.format("%s: %s", this.name, cardToString().substring(0, cardToString().indexOf(",")));
     }
 
     @Override
-    public void drawCard(Card card) {
-        if (CardCalculator.sumCardDeck(this.cards) <= ADDITIONAL_INSERT_CARD_STANDARD) {
-            this.cards.add(card);
-        }
-        validateDuplicateCard();
+    public boolean isDrawCard() {
+        return CardCalculator.sumCardDeck(this.cards) <= ADDITIONAL_INSERT_CARD_STANDARD;
     }
 }

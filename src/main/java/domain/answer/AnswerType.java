@@ -13,10 +13,8 @@ public enum AnswerType {
     }
 
     public static AnswerType answerValueOf(String answer) {
-        Answer inputAnswer = new Answer(answer);
-
         return Arrays.stream(values())
-                .filter(answerType -> answerType.answer.equals(inputAnswer.getAnswer()))
+                .filter(answerType -> answerType.answer.equals(answer))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

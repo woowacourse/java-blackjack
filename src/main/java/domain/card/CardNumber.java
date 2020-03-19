@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Arrays;
-
 public enum CardNumber {
     ACE(1),
     TWO(2),
@@ -20,13 +18,6 @@ public enum CardNumber {
 
     CardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
-    }
-
-    public static void findCardNumber(int cardNumber) {
-        Arrays.stream(values())
-                .filter(card -> card.cardNumber == cardNumber)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
     }
 
     public int getCardNumber() {

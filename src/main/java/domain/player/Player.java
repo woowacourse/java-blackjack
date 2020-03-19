@@ -16,7 +16,7 @@ public class Player extends User {
         if (name == null) {
             throw new NullPointerException("플레이어 이름이 null 입니다.");
         }
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("플레이어 이름이 비었습니다.");
         }
     }
@@ -27,9 +27,11 @@ public class Player extends User {
     }
 
     @Override
-    public void drawCard(Card card) {
-        this.cards.add(card);
-        validateDuplicateCard();
+    public boolean isDrawCard() {
+        if (isBlackJack()) {
+            return false;
+        }
+        return isUnderWinningCount();
     }
 
     public String getName() {
