@@ -1,8 +1,5 @@
 package domains.result;
 
-import domains.user.Player;
-import domains.user.money.ProfitMoney;
-
 public enum ResultType {
     WIN(1),
     LOSE(-1),

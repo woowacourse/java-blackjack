@@ -75,8 +75,4 @@ public class Player extends User {
     public String getName() {
         return name.toString();
     }
-
-    public BettingMoney getBettingMoney() {
-        return this.bettingMoney;
-    }
 }

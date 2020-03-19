@@ -1,8 +1,6 @@
 package domains.result;
 
-import domains.user.Dealer;
 import domains.user.Player;
-import domains.user.Players;
 
 import java.util.HashMap;
 import java.util.Map;
