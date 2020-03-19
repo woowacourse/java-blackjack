@@ -18,14 +18,14 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 
 public class BasicRuleTest {
-    static Stream<Arguments> players() {
+    static Stream<Arguments> playerCards() {
         return Stream.of(
             Arguments.of(CARDS_21_ACE_AS_ONE, false),
             Arguments.of(CARDS_21_ACE_AS_ELEVEN, true)
         );
     }
 
-    static Stream<Arguments> dealerAndPlayerCards() {
+    static Stream<Arguments> participantCards() {
         return Stream.of(
             Arguments.of(CARDS_8, CARDS_21_ACE_AS_ELEVEN, WIN_BLACK_JACK),
             Arguments.of(CARDS_8, CARDS_21_ACE_AS_ONE, WIN),
@@ -52,7 +52,7 @@ public class BasicRuleTest {
 
     @DisplayName("플레이어의 블랙잭 승, 승, 무, 패 테스")
     @ParameterizedTest
-    @MethodSource("dealerAndPlayerCards")
+    @MethodSource("participantCards")
     void getResultOfPlayerTest(List<Card> dealerCards, List<Card> playerCards, BasicRule expected) {
         Dealer dealer = new Dealer();
         Player player = new Player("bingbong");

@@ -1,14 +1,11 @@
 package blackjack.view;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.Result;
 
 public class OutputView {
     public static final String JOIN_DELIMITER = ", ";
@@ -72,26 +69,26 @@ public class OutputView {
         return participant.getName() + ": " + participant.handStatus();
     }
 
-    public static void statistics(Participants participants) {
-        System.out.println("## 최종 승패");
-        System.out.println(dealerResult(participants.getDealer()));
-        System.out.println(playerResult(participants.getPlayers()));
-    }
+    // public static void statistics(Participants participants) {
+    //     System.out.println("## 최종 승패");
+    //     System.out.println(dealerResult(participants.getDealer()));
+    //     System.out.println(playerResult(participants.getPlayers()));
+    // }
 
-    public static String dealerResult(Dealer dealer) {
-        return dealer.getName()
-            + " : "
-            + Arrays.stream(Result.values())
-            .filter(result -> dealer.getResult(result) != 0)
-            .map(result -> dealer.getResult(result) + result.getValue())
-            .collect(Collectors.joining(" "));
-    }
-
-    public static String playerResult(List<Player> players) {
-        return players.stream()
-            .map(player -> player.getName() + " : " + player.getResult().getValue())
-            .collect(Collectors.joining("\n"));
-    }
+    // public static String dealerResult(Dealer dealer) {
+    //     return dealer.getName()
+    //         + " : "
+    //         + Arrays.stream(Result.values())
+    //         .filter(result -> dealer.getResult(result) != 0)
+    //         .map(result -> dealer.getResult(result) + result.getValue())
+    //         .collect(Collectors.joining(" "));
+    // }
+    //
+    // public static String playerResult(List<Player> players) {
+    //     return players.stream()
+    //         .map(player -> player.getName() + " : " + player.getResult().getValue())
+    //         .collect(Collectors.joining("\n"));
+    // }
 
     public static void printError(String message) {
         System.out.println(message);

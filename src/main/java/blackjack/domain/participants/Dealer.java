@@ -1,8 +1,5 @@
 package blackjack.domain.participants;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
@@ -10,20 +7,13 @@ public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
 
     private Hand hand;
-    private Map<Result, Integer> result;
 
     public Dealer() {
         this.hand = new Hand();
-        this.result = new HashMap<>();
     }
 
     public int countAddedCard() {
         return hand.countAddedCard();
-    }
-
-    @Override
-    public void set(final Result result) {
-        this.result.put(result, this.result.getOrDefault(result, 0) + 1);
     }
 
     @Override
@@ -55,10 +45,6 @@ public class Dealer implements Participant {
     @Override
     public String handStatus() {
         return hand.toString();
-    }
-
-    public int getResult(final Result result) {
-        return this.result.getOrDefault(result, 0);
     }
 
     @Override

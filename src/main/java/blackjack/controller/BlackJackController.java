@@ -8,6 +8,7 @@ import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.result.BasicResult;
 import blackjack.domain.rule.BasicRule;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
@@ -79,9 +80,10 @@ public class BlackJackController {
     }
 
     private static void endPhase(final Participants participants) {
-        // Rule rule = new RuleImpl();
-        // rule.judgeBasic(participants);
+        BasicResult basicResult = new BasicResult();
+        basicResult.judge(participants);
+
         OutputView.result(participants);
-        OutputView.statistics(participants);
+        // OutputView.statistics(participants);
     }
 }

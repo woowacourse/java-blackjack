@@ -12,8 +12,6 @@ public interface Participant {
 
     boolean isDealer();
 
-    void set(Result result);
-
     String handStatus();
 
     String getName();

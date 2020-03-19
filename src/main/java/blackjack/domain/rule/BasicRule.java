@@ -6,29 +6,36 @@ import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Player;
 
 public enum BasicRule {
-    WIN_BLACK_JACK("승", (Participant dealer, Participant player) ->
+    WIN_BLACK_JACK("승", "패", (Participant dealer, Participant player) ->
         isBlackjack((Player)player) && (isBusted(dealer.score()) || (dealer.score() < player.score()) && !isBusted(
             player.score()))
     ),
-    WIN("승", (Participant dealer, Participant player) ->
+    WIN("승", "패", (Participant dealer, Participant player) ->
         isBusted(dealer.score()) || (dealer.score() < player.score()) && !isBusted(player.score())
     ),
-    DRAW("무", (Participant dealer, Participant player) ->
+    DRAW("무", "무", (Participant dealer, Participant player) ->
         (!isBusted(dealer.score()) && !isBusted(player.score()) && (dealer.score()
             == player.score()))
     ),
-    LOSE("패", (Participant dealer, Participant player) ->
+    LOSE("패", "승", (Participant dealer, Participant player) ->
         isBusted(player.score()) || dealer.score() > player.score() && !isBusted(dealer.score())
     );
+
+    static {
+
+    }
 
     public static final int BUST_LIMIT = 21;
     public static final int BLACK_JACK_CARD_SIZE = 2;
 
     private final String value;
+    private final String dealerValue;
     private final BiPredicate<Participant, Participant> condition;
 
-    BasicRule(final String value, final BiPredicate<Participant, Participant> condition) {
+    BasicRule(final String value, final String dealerValue,
+        final BiPredicate<Participant, Participant> condition) {
         this.value = value;
+        this.dealerValue = dealerValue;
         this.condition = condition;
     }
 
@@ -51,6 +58,10 @@ public enum BasicRule {
 
     public String getValue() {
         return value;
+    }
+
+    public String getDealerValue() {
+        return dealerValue;
     }
 
     // public static void set(Participant participant, BasicRule rule) {
