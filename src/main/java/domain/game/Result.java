@@ -84,7 +84,7 @@ public class Result {
     }
 
     private boolean isNormalDraw(Player mainPlayer, Player opponentPlayer) {
-        return mainPlayer.getScore() == opponentPlayer.getScore();
+        return mainPlayer.isDraw(opponentPlayer);
     }
 
     private boolean isNormalWin(Player mainPlayer, Player opponentPlayer) {
