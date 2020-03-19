@@ -1,28 +1,61 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
-
-import java.util.Objects;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public abstract class BlackJackController {
-    private static final String DEFAULT_GAME = "1";
-    private static final String BETTING_GAME = "2";
-    private static final String NULL_ERR_MSG = "게임이 선택되지 않았습니다.";
-    private static final String INVALID_GAME_SELECTED_ERR_MSG = "게임 선택이 잘못되었습니다.";
     protected CardDeck deck = new CardDeck();
 
-    public static BlackJackController of(String game) {
-        Objects.requireNonNull(game, NULL_ERR_MSG);
+    public void play() {
+        Players players = createPlayers();
+        Dealer dealer = new Dealer();
 
-        if (DEFAULT_GAME.equals(game)) {
-            return new DefaultGame();
-        }
-        if (BETTING_GAME.equals(game)) {
-            return new BettingGame();
-        }
+        dealFirstCards(dealer);
+        dealFirstCards(players);
+        OutputView.printInitialStatus(players, dealer);
 
-        throw new IllegalArgumentException(INVALID_GAME_SELECTED_ERR_MSG);
+        dealAdditionalCards(players);
+        dealAdditionalCards(dealer);
+        OutputView.printFinalStatus(players, dealer);
+
+        showResult(players, dealer);
     }
 
-    public abstract void run();
+    protected abstract Players createPlayers();
+
+    protected abstract void showResult(Players players, Dealer dealer);
+
+    protected void dealFirstCards(Dealer dealer) {
+        deck.dealFirstCards(dealer);
+    }
+
+    protected void dealFirstCards(Players players) {
+        for (Player player : players.getPlayers()) {
+            deck.dealFirstCards(player);
+        }
+    }
+
+    protected void dealAdditionalCards(Players players) {
+        for (Player player : players.getPlayers()) {
+            while (player.canGetMoreCard() && player.wantMoreCard(readYesOrNo(player))) {
+                deck.dealAdditionalCard(player);
+                OutputView.printCardsStatus(player.name(), player.showCards());
+            }
+        }
+    }
+
+    protected void dealAdditionalCards(Dealer dealer) {
+        while (dealer.canGetMoreCard()) {
+            deck.dealAdditionalCard(dealer);
+            OutputView.printDealerGetMoreCard();
+        }
+    }
+
+    protected String readYesOrNo(Player player) {
+        return InputView.readYesOrNo(player.name());
+    }
 }
