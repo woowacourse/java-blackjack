@@ -9,7 +9,7 @@ public class BlackJackRule {
             throw new NullPointerException("플레이어를 입력하지 않았습니다.");
         }
 
-        return user.isHit();
+        return !user.isBlackJack() && user.isHit();
     }
 
     public void hit(User user, Card card) {

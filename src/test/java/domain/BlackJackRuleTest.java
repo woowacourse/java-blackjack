@@ -39,7 +39,7 @@ public class BlackJackRuleTest {
                 Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))),
                 10_000);
 
-        Assertions.assertThat(blackJackRule.isHit(blackJackPlayer)).isTrue();
+        Assertions.assertThat(blackJackRule.isHit(blackJackPlayer)).isFalse();
         Assertions.assertThat(blackJackRule.isHit(overBlackJackPlayer)).isFalse();
         Assertions.assertThat(blackJackRule.isHit(hitPlayer)).isTrue();
     }

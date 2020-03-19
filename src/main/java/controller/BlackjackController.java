@@ -57,10 +57,6 @@ public class BlackjackController {
     }
 
     private static void runBlackJackPerPlayer(CardDeck cardDeck, Player player) {
-        if (player.isBlackJack()) {
-            return;
-        }
-
         while (blackJackRule.isHit(player) && getAnswer(player).isYes()) {
             blackJackRule.hit(player, cardDeck.drawCard());
             OutputView.printUserCard(ResponsePlayerDTO.create(player));
