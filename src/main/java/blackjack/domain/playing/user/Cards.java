@@ -58,7 +58,12 @@ public class Cards {
         return !cards.isEmpty();
     }
 
+    public int count() {
+        return cards.size();
+    }
+
     public List<Card> getCardS() {
         return Collections.unmodifiableList(cards);
     }
+
 }

@@ -1,7 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.playing.card.Card;
-import blackjack.domain.playing.user.*;
+import blackjack.domain.playing.user.AbstractUser;
+import blackjack.domain.playing.user.Dealer;
+import blackjack.domain.playing.user.Player;
+import blackjack.domain.playing.user.Players;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +87,8 @@ public class OutputView {
         }
     }
 
-    private static String createUserScore(User user) {
-        return String.valueOf(user.calculateScore().getScore());
+    private static String createUserScore(AbstractUser abstractUser) {
+        return String.valueOf(abstractUser.calculateScore().getScore());
     }
 
 //    public static void printGameResult(GameResult gameResult) {

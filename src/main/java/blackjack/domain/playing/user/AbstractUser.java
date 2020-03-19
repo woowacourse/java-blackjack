@@ -10,7 +10,8 @@ import java.util.List;
 public class AbstractUser implements User {
     public static final int DRAWING_NUMBER_INITIALLY = 2;
     private static final int DRAWING_NUMBER_IN_TURN = 1;
-    private static final int BLACKJACK_SCORE_NUMBER = 21;
+    public static final int BLACKJACK_SCORE_NUMBER = 21;
+    private static final int BLACKJACK_CARDS_COUNT = 2;
 
     private final String name;
     private final Cards cards;
@@ -41,24 +42,14 @@ public class AbstractUser implements User {
         }
     }
 
+    @Override
     public Score calculateScore() {
         return cards.calculateScore();
     }
 
-    public boolean isOverScore(AbstractUser other) {
-        return calculateScore().isOver(other.calculateScore());
-    }
-
-    public boolean isUnderScore(AbstractUser other) {
-        return !isOverScore(other);
-    }
-
-    public boolean isSameScore(AbstractUser other) {
-        return calculateScore().equals(other.calculateScore());
-    }
-
+    @Override
     public boolean isBlackjack() {
-        return calculateScore().isSame(BLACKJACK_SCORE_NUMBER);
+        return cards.count() == BLACKJACK_CARDS_COUNT && calculateScore().isSame(BLACKJACK_SCORE_NUMBER);
     }
 
     public boolean isNotBlackjack() {
@@ -71,6 +62,18 @@ public class AbstractUser implements User {
 
     public boolean isNotBust() {
         return !isBust();
+    }
+
+    public boolean isOverScore(User other) {
+        return calculateScore().isOver(other.calculateScore());
+    }
+
+    public boolean isUnderScore(User other) {
+        return !isOverScore(other);
+    }
+
+    public boolean isSameScore(User other) {
+        return calculateScore().equals(other.calculateScore());
     }
 
     protected boolean hasName(String name) {
