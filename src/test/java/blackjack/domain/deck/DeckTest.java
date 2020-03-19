@@ -14,6 +14,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class DeckTest {
 
     @Test
+    @DisplayName("덱 생성")
+    void createDeck() {
+        assertThatThrownBy(() -> new Deck(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드 덱을 생성할 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("카드 꺼내기")
     void pick() {
         List<Card> cards = CardFactory.generate();

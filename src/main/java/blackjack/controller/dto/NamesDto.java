@@ -1,8 +1,5 @@
 package blackjack.controller.dto;
 
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Player;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

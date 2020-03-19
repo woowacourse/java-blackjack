@@ -16,7 +16,6 @@ public class BlackJackApplication {
         Deck deck = new Deck(CardFactory.generate());
         Dealer dealer = new Dealer();
         Players players = Players.of(InputView.askPlayerNames().get());
-
         BettingTable bettingTable = BettingTable.of(players, InputView.askPlayerBettingMoney(players.getNames()).get());
 
         BlackJackController.initializeCard(dealer, players, deck);
@@ -25,7 +24,8 @@ public class BlackJackApplication {
         BlackJackController.drawMoreCard(dealer, players, deck);
         OutputView.printGamerScore(dealer, players);
 
-        GamersResultDto gamersResultDto = bettingTable.calculateProfit(dealer, players);
+
+        GamersResultDto gamersResultDto = BlackJackController.calculateProfit(dealer, players, bettingTable);
         OutputView.printGamersProfit(gamersResultDto);
     }
 }

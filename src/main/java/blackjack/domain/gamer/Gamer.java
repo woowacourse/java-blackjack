@@ -10,10 +10,11 @@ import java.util.Objects;
 public abstract class Gamer {
 
     private String name;
-    protected Hand hand = new Hand();
+    Hand hand;
 
     public Gamer(String name) {
         this.name = Objects.requireNonNull(name);
+        this.hand = new Hand();
     }
 
     public void draw(Card card) {

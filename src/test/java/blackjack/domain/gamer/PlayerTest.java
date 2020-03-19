@@ -31,6 +31,14 @@ class PlayerTest {
         assertThat(player.getName()).isEqualTo("엘리");
     }
 
+    @Test
+    @DisplayName("카드를 더 추가할 수 있는지 확인")
+    void canDrawCard() {
+        player.draw(new Card(CardSymbol.KING, CardType.SPADE));
+        player.draw(new Card(CardSymbol.KING, CardType.SPADE));
+        assertThat(player.canDrawCard()).isTrue();
+    }
+
     @ParameterizedTest
     @MethodSource("createCards")
     @DisplayName("bust되었는지 확인")

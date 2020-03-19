@@ -32,8 +32,8 @@ public class BettingTable {
 
     public GamersResultDto calculateProfit(Dealer dealer, Players players) {
         Map<Gamer, Integer> gamersProfit = new LinkedHashMap<>();
-
         int dealerProfit = 0;
+
         for (Player player : players) {
             BlackJackResult result = PlayerResultMatcher.match(dealer, player);
             int playerProfit = (int) (result.getProfitRate() * bettingMoneyTable.get(player));

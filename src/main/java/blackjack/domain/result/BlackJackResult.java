@@ -15,7 +15,7 @@ public enum BlackJackResult {
         this.profitRate = profitRate;
     }
 
-    public BlackJackResult reversed() {
+    public BlackJackResult opposite() {
         if (this == WIN) {
             return LOSE;
         }

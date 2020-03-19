@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.gamer.Player;
 import blackjack.controller.dto.NamesDto;
-import blackjack.dto.PlayersBettingMoneyDto;
+import blackjack.controller.dto.PlayersBettingMoneyDto;
+import blackjack.domain.gamer.Player;
 
 import java.util.LinkedHashMap;
 import java.util.List;

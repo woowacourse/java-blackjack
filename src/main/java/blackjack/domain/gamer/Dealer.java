@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+
 import static blackjack.domain.rule.Score.SCORES;
 
 public class Dealer extends Gamer {

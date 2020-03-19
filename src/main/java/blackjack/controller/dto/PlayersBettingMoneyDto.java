@@ -1,6 +1,4 @@
-package blackjack.dto;
-
-import blackjack.domain.gamer.Player;
+package blackjack.controller.dto;
 
 import java.util.Map;
 

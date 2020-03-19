@@ -1,11 +1,11 @@
 package blackjack.view;
 
+import blackjack.controller.dto.GamersResultDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.controller.dto.GamersResultDto;
 
 import java.util.List;
 import java.util.Map;

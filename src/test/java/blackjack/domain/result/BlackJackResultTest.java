@@ -10,8 +10,8 @@ class BlackJackResultTest {
     @Test
     @DisplayName("승/무/패의 반대를 반환하는 메소드")
     void reversed() {
-        assertThat(BlackJackResult.LOSE.reversed()).isEqualTo(BlackJackResult.WIN);
-        assertThat(BlackJackResult.WIN.reversed()).isEqualTo(BlackJackResult.LOSE);
-        assertThat(BlackJackResult.DRAW.reversed()).isEqualTo(BlackJackResult.DRAW);
+        assertThat(BlackJackResult.LOSE.opposite()).isEqualTo(BlackJackResult.WIN);
+        assertThat(BlackJackResult.WIN.opposite()).isEqualTo(BlackJackResult.LOSE);
+        assertThat(BlackJackResult.DRAW.opposite()).isEqualTo(BlackJackResult.DRAW);
     }
 }

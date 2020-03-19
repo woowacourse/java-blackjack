@@ -1,8 +1,6 @@
 package blackjack.controller.dto;
 
 import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BlackJackResult;
 
 import java.util.Map;
 
