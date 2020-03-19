@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.PlayingCards;
+import domain.result.Result;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +49,8 @@ public abstract class User {
     public List<Card> getCards() {
         return playingCards.getCards();
     }
+
+//    public abstract int calculateProfit(Result result);
 
     void hit(Card card) {
         playingCards.add(card);

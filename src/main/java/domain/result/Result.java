@@ -1,6 +1,6 @@
 package domain.result;
 
-import domain.money.Money;
+import domain.user.Money;
 import domain.user.Dealer;
 import domain.user.Player;
 
@@ -19,7 +19,7 @@ public enum Result {
         return matchService.match(player, dealer);
     }
 
-    Money calculateProfit(Money money) {
+    public Money calculateProfit(Money money) {
         return calculator.calculate(money);
     }
 
