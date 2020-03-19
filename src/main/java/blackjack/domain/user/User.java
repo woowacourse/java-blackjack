@@ -17,6 +17,12 @@ public abstract class User implements GameRule {
     private Name name;
     protected List<Card> cards;
 
+    public User(Name name) {
+        Objects.requireNonNull(name);
+        this.name = name;
+        this.cards = new ArrayList<>();
+    }
+
     public User(String name) {
         this.name = new Name(name);
         this.cards = new ArrayList<>();
