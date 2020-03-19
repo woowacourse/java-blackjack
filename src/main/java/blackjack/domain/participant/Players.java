@@ -6,34 +6,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.participant.Name.EMPTY_NAME_ERR_MSG;
-import static blackjack.domain.participant.Name.NULL_NAME_ERR_MSG;
+import static blackjack.domain.participant.PlayersFactory.NULL_ARGUMENT_ERR_MSG;
 
 public class Players {
-    private static final int MAX_PLAYER = 5;
-    static final String MAX_PLAYER_ERR_MSG = String.format("플레이어는 최대 %d명입니다.", MAX_PLAYER);
-
     private final List<Player> players;
 
-    public Players(List<String> names) {
-        validateNames(names);
-
-        this.players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+    public Players(List<Name> names) {
+        Objects.requireNonNull(names, NULL_ARGUMENT_ERR_MSG);
+        this.players = PlayersFactory.of(names);
     }
 
-    private void validateNames(List<String> names) {
-        Objects.requireNonNull(names, NULL_NAME_ERR_MSG);
-
-        if (names.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_NAME_ERR_MSG);
-        }
-
-        if (names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException(MAX_PLAYER_ERR_MSG);
-        }
+    public Players(List<Name> names, List<Money> moneys) {
+        Objects.requireNonNull(names, NULL_ARGUMENT_ERR_MSG);
+        Objects.requireNonNull(moneys, NULL_ARGUMENT_ERR_MSG);
+        this.players = PlayersFactory.of(names, moneys);
     }
+
 
     public List<PlayerResult> createPlayerResults(Dealer dealer) {
         return players.stream()

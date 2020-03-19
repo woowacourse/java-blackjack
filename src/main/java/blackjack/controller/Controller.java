@@ -1,21 +1,23 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
     private final CardDeck deck = new CardDeck();
 
     public void run() {
-        Players players = new Players(InputView.enterNames());
+        List<Name> names = createNames();
+        List<Money> bettingMoneys = createMoneys(names);
+
+        Players players = new Players(names, bettingMoneys);
         Dealer dealer = new Dealer();
 
         dealFirstCards(dealer, players);
@@ -23,6 +25,18 @@ public class Controller {
         dealAdditionalCards(players, dealer);
 
         showResult(players, dealer);
+    }
+
+    private List<Money> createMoneys(List<Name> names) {
+        return InputView.enterBettingMoney(names).stream()
+                .map(Money::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<Name> createNames() {
+        return InputView.enterNames().stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 
     private void dealFirstCards(Dealer dealer, Players players) {

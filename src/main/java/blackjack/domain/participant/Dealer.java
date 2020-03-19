@@ -14,7 +14,7 @@ public class Dealer extends Participant {
     private static final int FIRST_CARD = 1;
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(new Name(DEALER_NAME));
     }
 
     @Override

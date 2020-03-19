@@ -20,7 +20,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"FIVE, true", "SIX, false", "ACE, true"})
     void test1(Type type, boolean expected) {
-        Player player = new Player("포비");
+        Player player = new Player(new Name("포비"));
         player.addCard(Card.of(Type.TEN, Figure.CLOVER));
         player.addCard(Card.of(Type.FIVE, Figure.CLOVER));
         player.addCard(Card.of(type, Figure.CLOVER));
@@ -38,7 +38,7 @@ class PlayerTest {
         dealer.addCard(Card.of(Type.TEN, Figure.HEART));
         dealer.addCard(Card.of(Type.FIVE, Figure.HEART));
 
-        Player player = new Player("포비");
+        Player player = new Player(new Name("포비"));
         player.addCard(Card.of(Type.TEN, Figure.CLOVER));
         player.addCard(Card.of(type, Figure.CLOVER));
 
@@ -52,7 +52,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"y, true", "n, false"})
     void test3(String reply, boolean expected) {
-        Player player = new Player("포비");
+        Player player = new Player(new Name("포비"));
         boolean actual = player.wantMoreCard(reply);
 
         assertThat(actual).isEqualTo(expected);
@@ -63,7 +63,7 @@ class PlayerTest {
     @NullAndEmptySource
     @CsvSource(value = "x")
     void test4(String reply) {
-        Player player = new Player("포비");
+        Player player = new Player(new Name("포비"));
 
         assertThatThrownBy(() -> player.wantMoreCard(reply))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -10,8 +10,9 @@ public abstract class Participant {
     protected Name name;
     protected Cards cards = new Cards();
 
-    public Participant(String name) {
-        this.name = new Name(name);
+    public Participant(Name name) {
+        Objects.requireNonNull(name);
+        this.name = name;
     }
 
     public abstract boolean canGetMoreCard();

@@ -10,7 +10,7 @@ public class Player extends Participant {
     private static final String NO = "n";
     static final String NOT_SUPPORTED_REPLY_ERR_MSG = "응답은 y 혹은 n만 가능합니다.";
 
-    public Player(String name) {
+    public Player(Name name) {
         super(name);
     }
 

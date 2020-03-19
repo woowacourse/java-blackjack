@@ -11,22 +11,22 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static blackjack.domain.participant.Name.EMPTY_NAME_ERR_MSG;
-import static blackjack.domain.participant.Name.NULL_NAME_ERR_MSG;
-import static blackjack.domain.participant.Players.MAX_PLAYER_ERR_MSG;
+import static blackjack.domain.participant.PlayersFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayersTest {
+    private static final List<Name> names = Arrays.asList("포비", "쪼밀리", "타미").stream()
+            .map(Name::new)
+            .collect(Collectors.toList());
 
     @DisplayName("플레이어 이름 리스트로 Players 생성 확인")
     @Test
     void test1() {
-        List<String> names = Arrays.asList("포비", "쪼밀리", "타미");
-
-        List<Player> expectedList = Arrays.asList(new Player("포비"), new Player("쪼밀리"),
-                new Player("타미"));
+        List<Player> expectedList = Arrays.asList(new Player(new Name("포비")), new Player(new Name("쪼밀리")),
+                new Player(new Name("타미")));
 
         Players players = new Players(names);
         List<Player> actualList = players.getPlayers();
@@ -39,13 +39,15 @@ public class PlayersTest {
     void test2() {
         assertThatThrownBy(() -> new Players(null))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining(NULL_NAME_ERR_MSG);
+                .hasMessageContaining(NULL_ARGUMENT_ERR_MSG);
 
         assertThatThrownBy(() -> new Players(Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(EMPTY_NAME_ERR_MSG);
+                .hasMessageContaining(EMPTY_ARGUMENT_ERR_MSG);
 
-        List<String> names = Arrays.asList("포비", "쪼밀리", "타미", "제이슨", "CU", "워니", "준", "브라운");
+        List<Name> names = Arrays.asList("포비", "쪼밀리", "타미", "제이슨", "CU", "워니", "준", "브라운").stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(MAX_PLAYER_ERR_MSG);
@@ -54,12 +56,15 @@ public class PlayersTest {
     @DisplayName("플레이어들의 이름 확인")
     @Test
     void test3() {
-        List<String> names = Arrays.asList("포비", "쪼밀리", "타미");
+        List<String> expectedNames = Arrays.asList("포비", "쪼밀리", "타미");
+        List<Name> names = expectedNames.stream().map(Name::new).collect(Collectors.toList());
+
         Players players = new Players(names);
+
 
         List<String> actualNames = players.names();
 
-        assertThat(actualNames).isEqualTo(names);
+        assertThat(actualNames).isEqualTo(expectedNames);
     }
 
     @DisplayName("플레이어들의 결과 생성 확인")
@@ -68,7 +73,7 @@ public class PlayersTest {
         Dealer dealer = new Dealer();
         dealer.addCard(Card.of(Type.FIVE, Figure.HEART));
 
-        Players players = new Players(Arrays.asList("포비", "쪼밀리", "타미"));
+        Players players = new Players(names);
         List<Player> playersList = players.getPlayers();
         playersList.get(0).addCard(Card.of(Type.FOUR, Figure.SPADE));
         playersList.get(1).addCard(Card.of(Type.FIVE, Figure.SPADE));
