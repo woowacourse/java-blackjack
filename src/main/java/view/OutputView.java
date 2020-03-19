@@ -1,10 +1,14 @@
 package view;
 
-import domain.card.Card;
-import domain.gamer.*;
-
-import java.util.Map;
 import java.util.stream.Collectors;
+
+import domain.card.Card;
+import domain.gamer.CardsResult;
+import domain.gamer.Dealer;
+import domain.gamer.GameResult;
+import domain.gamer.Gamer;
+import domain.gamer.Gamers;
+import domain.gamer.Player;
 
 public class OutputView {
 	private static final String DELIMITER = ",";
@@ -74,25 +78,18 @@ public class OutputView {
 		System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%s", player.getName(), NEWLINE);
 	}
 
-	public static void printCardsResultAndScore(Gamers gamers) {
+	public static void printCardsResultAndScore(CardsResult cardsResult) {
 		System.out.println();
-		System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(gamers.getDealer()),
-			gamers.getDealer().calculateScore());
-		gamers.getPlayers()
-			.forEach(player -> System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(player),
-				player.calculateScore()));
+		cardsResult.getGamersCardResult()
+			.forEach((gamer, score) -> System.out.println(printCards(gamer) + " - 결과 : " + score));
 	}
 
-	public static void printTotalEarningResult(Map<Player, Money> totalEarning) {
+	public static void printTotalEarningResult(GameResult gameResult) {
 		System.out.println();
 		System.out.println("### 최종 수익");
-		System.out.println("딜러 : " + totalEarning.values()
-			.stream()
-			.map(Money::reversion)
-			.mapToInt(Money::getMoney)
-			.sum());
-		totalEarning.keySet()
-			.forEach(a -> System.out.println(a.getName() + " : " + totalEarning.get(a).getMoney()));
-	}
+		System.out.println("딜러 : " + gameResult.getDealerEarning().getMoney());
 
+		gameResult.getPlayersTotalEarning()
+			.forEach((player, money) -> System.out.println(player.getName() + " : " + money.getMoney()));
+	}
 }

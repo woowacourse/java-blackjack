@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import domain.card.CardsFactory;
 import domain.card.Deck;
 import domain.gamer.Answer;
+import domain.gamer.CardsResult;
 import domain.gamer.Dealer;
 import domain.gamer.GameResult;
 import domain.gamer.Gamers;
@@ -22,10 +23,10 @@ public class GameController {
 		OutputView.printInitCardGuide(gamers);
 		OutputView.printGamersCard(gamers);
 		addCardAtGamers(gamers, deck);
-		OutputView.printCardsResultAndScore(gamers);
+		OutputView.printCardsResultAndScore(new CardsResult(gamers));
 
 		GameResult gameResult = gamers.generateGameResults();
-		OutputView.printTotalEarningResult(gameResult.getTotalEarning());
+		OutputView.printTotalEarningResult(gameResult);
 	}
 
 	private Gamers generateGamers() {

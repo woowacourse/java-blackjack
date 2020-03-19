@@ -35,6 +35,10 @@ public class Money {
 		return new Money(0);
 	}
 
+	public Money sum(Money other) {
+		return new Money(money + other.money);
+	}
+
 	public Money multiply(double operand) {
 		return new Money((int)(money * operand));
 	}

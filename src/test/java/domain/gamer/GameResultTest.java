@@ -36,7 +36,7 @@ public class GameResultTest {
 
 		GameResult gameResult = gamers.generateGameResults();
 
-		Map<Player, Money> totalEarning = gameResult.getTotalEarning();
+		Map<Player, Money> totalEarning = gameResult.getPlayersTotalEarning();
 		List<Player> players = new ArrayList<>(totalEarning.keySet());
 
 		assertThat(totalEarning.get(players.get(0)))
