@@ -1,20 +1,20 @@
 package model.card;
 
+
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardFactory {
 
     public static List<Card> createCardList() {
-        List<Card> cards = new ArrayList<>();
-        for (Symbol symbol : Symbol.values()) {
-            createByType(cards, symbol);
-        }
+        List<Card> cards = Arrays.stream(Type.values())
+            .flatMap(CardFactory::mapToCardBySymbol)
+            .collect(Collectors.toList());
         return Collections.unmodifiableList(cards);
     }
 
-    private static void createByType(List<Card> cards, Symbol symbol) {
-        for (Type type : Type.values()) {
-            cards.add(new Card(symbol, type));
-        }
+    private static Stream<Card> mapToCardBySymbol(Type type) {
+        return Arrays.stream(Symbol.values()).map(symbol -> new Card(symbol, type));
     }
 }

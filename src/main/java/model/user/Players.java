@@ -1,43 +1,21 @@
 package model.user;
 
-import exception.OverlapPlayerNameException;
 import java.util.*;
-import model.card.Deck;
-import utils.StringUtils;
+import model.user.data.PlayersData;
 
-import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
+import static controller.BlackJackGame.COMMA;
 
 public class Players implements Iterable<Player> {
+    private final List<Player> players = new ArrayList<>();
 
-    private static final String COMMA = ",";
-    private final Set<Player> players = new HashSet<>();
-
-    public Players(String input, Deck deck) {
-        validate(input);
-        List<String> names = Arrays.asList(StringUtils.trimString(input).split(COMMA));
-        for (String name : names) {
-            players.add(new Player(name, deck.draw(INITIAL_DRAW_COUNT)));
+    public Players(PlayersData data) {
+        for (String name : data.getNames()) {
+            players.add(new Player(name, data.getBettingMoney(name)));
         }
     }
 
-    private void validate(String input) {
-        StringUtils.validateNull(input);
-        validateSplit(input);
-        validateOverlap(input);
-    }
-
-    private void validateSplit(String input) {
-        for (String name : input.split(COMMA)) {
-            StringUtils.validateEmpty(name);
-        }
-    }
-
-    private void validateOverlap(String input) {
-        List<String> names = Arrays.asList(StringUtils.trimString(input).split(COMMA));
-        Set<String> overlapNameFilter = new HashSet<>(names);
-        if (names.size() != overlapNameFilter.size()) {
-            throw new OverlapPlayerNameException("중복된 이름이 있습니다.");
-        }
+    public Players(List<Player> players) {
+        this.players.addAll(players);
     }
 
     public String getNames() {

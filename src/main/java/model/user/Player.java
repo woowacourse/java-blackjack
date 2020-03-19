@@ -1,20 +1,23 @@
 package model.user;
 
-import model.card.CardHand;
-import model.Result;
+import java.util.List;
+import model.user.money.BettingMoney;
+import model.card.Card;
 
-public class Player extends BlackJackPerson {
-    private Result result;
+public class Player extends BlackJackGameUser {
+    private final BettingMoney bettingMoney;
 
-    public Player(String name, CardHand cardHand) {
-        super(name, cardHand);
+    public Player(String name, BettingMoney bettingMoney) {
+        super(name);
+        this.bettingMoney = bettingMoney;
     }
 
-    public void setResult(Result result) {
-        this.result = Result.oppositeResult(result);
+    public Player(String name, List<Card> cards) {
+        super(name, cards);
+        this.bettingMoney = new BettingMoney("100");
     }
 
-    public Result getResult() {
-        return result;
+    public double multiplyBettingMoney(double factor) {
+        return bettingMoney.multiplyBettingMoney(factor);
     }
 }
