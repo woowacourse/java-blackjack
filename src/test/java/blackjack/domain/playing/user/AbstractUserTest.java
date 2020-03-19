@@ -19,6 +19,7 @@ class AbstractUserTest {
         cards = mock(Cards.class);
 
         when(cards.calculateScore()).thenReturn(new Score(scoreValue));
+        when(cards.count()).thenReturn(2);
 
         return new AbstractUser("무늬", cards);
     }
