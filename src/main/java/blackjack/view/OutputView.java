@@ -111,4 +111,8 @@ public class OutputView {
             System.out.printf("%s : %s" + NEW_LINE, player.getName(), profit.getProfit());
         }
     }
+
+    public static void printExceptionMessage(Exception e) {
+        System.err.println(e.getMessage());
+    }
 }

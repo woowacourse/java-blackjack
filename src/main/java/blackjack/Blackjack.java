@@ -46,6 +46,7 @@ public class Blackjack {
         try {
             return BettingMoney.from(InputView.inputBettingMoney(player));
         } catch (BettingMoneyException e) {
+            OutputView.printExceptionMessage(e);
             return inputBettingMoney(player);
         }
     }
@@ -72,6 +73,7 @@ public class Blackjack {
             HitOrStay hitOrStay = HitOrStay.of(InputView.inputToHitOrStay(player));
             return hitOrStay.isToHit();
         } catch (HitOrStayException e) {
+            OutputView.printExceptionMessage(e);
             return inputToHit(player);
         }
     }
