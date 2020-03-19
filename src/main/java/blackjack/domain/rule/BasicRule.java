@@ -25,8 +25,8 @@ public enum BasicRule {
 
     }
 
-    public static final int BUST_LIMIT = 21;
-    public static final int BLACK_JACK_CARD_SIZE = 2;
+    private static final int BUST_LIMIT = 21;
+    private static final int BLACK_JACK_CARD_SIZE = 2;
 
     private final String value;
     private final String dealerValue;

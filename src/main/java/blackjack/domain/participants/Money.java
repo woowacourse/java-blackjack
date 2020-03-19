@@ -33,20 +33,20 @@ public class Money {
         return parsed;
     }
 
-    public long getAmount() {
-        return amount;
-    }
-
-    public Money add(final Money other) {
-        return new Money(this.amount + other.amount);
+    public Money add(final Money bettingMoney) {
+        return new Money(this.amount + bettingMoney.amount);
     }
 
     public Money multiply(final double number) {
         return new Money((long)(this.amount * number));
     }
 
-    public Money subtract(final Money other) {
-        return new Money(this.amount - other.amount);
+    public Money subtract(final Money bettingMoney) {
+        return new Money(this.amount - bettingMoney.amount);
+    }
+
+    public long getAmount() {
+        return amount;
     }
 
     @Override

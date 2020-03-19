@@ -50,14 +50,14 @@ public class Hand {
         );
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     @Override
     public String toString() {
         return cards.stream()
             .map(Card::toString)
             .collect(Collectors.joining(DELIMITER));
-    }
-
-    public int size() {
-        return cards.size();
     }
 }

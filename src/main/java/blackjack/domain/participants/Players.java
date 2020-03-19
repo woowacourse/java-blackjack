@@ -15,7 +15,7 @@ public class Players {
         this.players = splitNames(names);
     }
 
-    public void initPlayersMoney(List<String> moneys, MoneyResult moneyResult) {
+    public void initMoney(List<String> moneys, MoneyResult moneyResult) {
         for (int i = 0; i < players.size(); i++) {
             moneyResult.initPlayerMoney(players.get(i), moneys.get(i));
         }

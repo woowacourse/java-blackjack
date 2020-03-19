@@ -11,8 +11,13 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.rule.BasicRule;
 
 public class BasicResult implements Result {
-    private Map<BasicRule, Integer> dealerResult = new HashMap<>();
-    private Map<Participant, BasicRule> playerResults = new HashMap<>();
+    private Map<BasicRule, Integer> dealerResult;
+    private Map<Participant, BasicRule> playerResults;
+
+    public BasicResult() {
+        dealerResult = new HashMap<>();
+        playerResults = new HashMap<>();
+    }
 
     private void set(Player player, BasicRule basicRule) {
         dealerResult.put(basicRule, dealerResult.getOrDefault(basicRule, 0) + 1);

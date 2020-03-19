@@ -22,6 +22,10 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉽표 기준으로 분리)");
     }
 
+    public static void inputMoney(Player player) {
+        System.out.println(player.getName() + "님의 돈을 입력해주세요");
+    }
+
     public static void shareFirstPair(Participants participants) {
         String names = readParticipantsName(participants);
         System.out.println(

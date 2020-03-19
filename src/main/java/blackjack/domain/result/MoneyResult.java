@@ -13,8 +13,13 @@ import blackjack.domain.rule.BasicRule;
 import blackjack.domain.rule.MoneyRule;
 
 public class MoneyResult implements Result {
-    private Money dealerMoney = new Money(0);
-    private Map<Participant, Money> playersMoney = new HashMap<>();
+    private Money dealerMoney;
+    private Map<Participant, Money> playersMoney;
+
+    public MoneyResult() {
+        this.dealerMoney = new Money(0);
+        this.playersMoney = new HashMap<>();
+    }
 
     public void initPlayerMoney(Player player, String money) {
         playersMoney.put(player, new Money(money));
@@ -33,7 +38,6 @@ public class MoneyResult implements Result {
             Money playerBettingMoney = playersMoney.getOrDefault(player, new Money(0));
             Money playerMoney = applyMoney(playerBettingMoney, playerBasicRule);
             playersMoney.put(player, playerMoney);
-
             dealerMoney = dealerMoney.subtract(playerMoney);
         }
     }
