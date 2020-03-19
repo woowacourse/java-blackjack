@@ -1,15 +1,14 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import domain.GameResult;
 import domain.YesOrNo;
 import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
+import domain.gamer.Names;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.money.Money;
@@ -39,18 +38,21 @@ public class Controller {
 
 	private static Players createPlayers() {
 		try {
-			List<Name> playersName = inputPlayersName();
-			return new Players(playersName, inputBettingMoneys(playersName));
+			Names names = inputPlayersName();
+			return new Players(names, inputBettingMoneys(names.getNames()));
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
 			return createPlayers();
 		}
 	}
 
-	private static List<Name> inputPlayersName() {
-		return Arrays.stream(InputView.inputPlayersName())
-			.map(Name::new)
-			.collect(Collectors.toList());
+	private static Names inputPlayersName() {
+		try {
+			return new Names(InputView.inputPlayersName());
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return inputPlayersName();
+		}
 	}
 
 	private static List<Money> inputBettingMoneys(List<Name> playersName) {
