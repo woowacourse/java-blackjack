@@ -5,7 +5,7 @@ import domain.Rule;
 
 public class User extends Player {
 	private final Money money;
-	private boolean isTwoCardBlackJack = false;
+	private boolean isInitCardBlackJack = false;
 
 	public User(String name, Money money) {
 		super(name);
@@ -17,7 +17,7 @@ public class User extends Player {
 	}
 
 	public double compareScore(Gamer gamerToCompare) {
-		if (isTwoCardBlackJack) {
+		if (isInitCardBlackJack) {
 			return blackJackCompare(gamerToCompare);
 		}
 		return normalCompare(gamerToCompare);
@@ -42,7 +42,7 @@ public class User extends Player {
 		return money.toLoseMoney();
 	}
 
-	public void twoCardBlackJackCheck() {
-		this.isTwoCardBlackJack = this.isBlackJack();
+	public void initCardBlackJackCheck() {
+		this.isInitCardBlackJack = this.isBlackJack();
 	}
 }

@@ -44,7 +44,7 @@ public class UserTest {
 	void compareScore() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
-		user.twoCardBlackJackCheck();
+		user.initCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FOUR, Shape.CLOVER)));
 
@@ -56,7 +56,7 @@ public class UserTest {
 	void compareScore2() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
-		user.twoCardBlackJackCheck();
+		user.initCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.SIX, Shape.CLOVER)));
 
@@ -68,7 +68,7 @@ public class UserTest {
 	void compareScore3() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
-		user.twoCardBlackJackCheck();
+		user.initCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
 
@@ -80,7 +80,7 @@ public class UserTest {
 	void compareScoreWhenBlackJack() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
-		user.twoCardBlackJackCheck();
+		user.initCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
 
@@ -92,7 +92,7 @@ public class UserTest {
 	void compareScoreWhenBlackJack2() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.EIGHT, Shape.CLOVER)));
-		user.twoCardBlackJackCheck();
+		user.initCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
 
@@ -104,7 +104,7 @@ public class UserTest {
 	void compareScoreWhenBlackJack3() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
-		user.twoCardBlackJackCheck();
+		user.initCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
 

@@ -37,7 +37,7 @@ public class BlackJackGameController {
 
 	private static void userBlackJackCheck(List<User> users) {
 		for (User user : users) {
-			user.twoCardBlackJackCheck();
+			user.initCardBlackJackCheck();
 		}
 	}
 
