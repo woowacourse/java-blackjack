@@ -1,5 +1,6 @@
 package blackjack.view.console;
 
+import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardType;
@@ -21,6 +22,7 @@ class StringParserTest {
     }
 
     @Test
+    @DisplayName("hand를 받아 String으로 변환")
     void handString() {
         List<Card> hand = Arrays.asList(new Card(CardSymbol.ACE, CardType.SPADE), new Card(CardSymbol.KING, CardType.CLOVER));
         String result = StringParser.parseHandToString(hand);

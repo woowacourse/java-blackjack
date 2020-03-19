@@ -13,7 +13,7 @@ class StringParser {
 
     static String parseHandToString(List<Card> hand) {
         return hand.stream()
-                .map(Card::toString)
+                .map(card -> card.getSymbol() + card.getType())
                 .collect(Collectors.joining(COMMA));
     }
 
@@ -24,7 +24,7 @@ class StringParser {
     static String parseNamesToString(List<HandResponseDto> handResponseDtos) {
         return handResponseDtos.stream()
                 .map(HandResponseDto::getOwnerName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(COMMA));
     }
 
 }

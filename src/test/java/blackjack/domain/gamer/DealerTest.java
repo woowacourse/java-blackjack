@@ -26,8 +26,22 @@ public class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러의 getName은 딜러를 반환")
     void getDealerName() {
         assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+    @Test
+    @DisplayName("dealer는 첫번째 카드만 내보내는 메서드를 가짐")
+    void getDealerFirstHand() {
+        Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
+        Card twoHeart = new Card(CardSymbol.TWO, CardType.HEART);
+        dealer.draw(aceSpade);
+        dealer.draw(twoHeart);
+
+        assertThat(dealer.getInitialHand())
+                .contains(aceSpade)
+                .doesNotContain(twoHeart);
     }
 
     @ParameterizedTest

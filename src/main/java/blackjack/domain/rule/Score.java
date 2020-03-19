@@ -1,7 +1,5 @@
 package blackjack.domain.rule;
 
-import blackjack.domain.result.BlackJackResult;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,31 +27,6 @@ public class Score {
             return SCORE_MATCHER.get(BUSTED);
         }
         return SCORE_MATCHER.get(score);
-    }
-
-    public BlackJackResult match(Score target) {
-        if (isBlackJack() && target.isBlackJack()) {
-            return BlackJackResult.DRAW;
-        }
-        if (isBlackJack()) {
-            return BlackJackResult.BLACKJACK;
-        }
-        if (isBusted()) {
-            return BlackJackResult.LOSE;
-        }
-        return matchByScore(target);
-    }
-
-    private BlackJackResult matchByScore(Score target) {
-        if (this.score < target.score)
-            return BlackJackResult.LOSE;
-        if (this.score > target.score)
-            return BlackJackResult.WIN;
-        return BlackJackResult.DRAW;
-    }
-
-    private boolean isBlackJack() {
-        return score == BLACKJACK;
     }
 
     public boolean isBusted() {

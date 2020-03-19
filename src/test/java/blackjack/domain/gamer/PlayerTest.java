@@ -31,6 +31,20 @@ class PlayerTest {
         assertThat(player.getName()).isEqualTo("엘리");
     }
 
+    @Test
+    @DisplayName("getHand는 가지고 있는 카드를 반환")
+    void getHand() {
+        Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
+        Card kingHeart = new Card(CardSymbol.KING, CardType.HEART);
+        player.draw(aceSpade);
+        player.draw(kingHeart);
+        assertThat(player.getHand())
+                .contains(aceSpade)
+                .contains(kingHeart)
+                .size()
+                .isEqualTo(2);
+    }
+
     @ParameterizedTest
     @MethodSource("createCards")
     @DisplayName("bust되었는지 확인")

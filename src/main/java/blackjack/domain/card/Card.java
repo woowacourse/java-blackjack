@@ -24,6 +24,14 @@ public class Card {
         return cardSymbol.getCardNumber();
     }
 
+    public String getSymbol() {
+        return cardSymbol.getCardSymbol();
+    }
+
+    public String getType() {
+        return cardType.getKoreanName();
+    }
+
     public boolean isAce() {
         return cardSymbol.isAce();
     }

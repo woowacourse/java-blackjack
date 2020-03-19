@@ -2,16 +2,14 @@ package blackjack.domain.result;
 
 public enum BlackJackResult {
 
-    BLACKJACK("블랙잭", 1.5d),
-    WIN("승", 1d),
-    DRAW("무", 0d),
-    LOSE("패", -1d);
+    BLACKJACK(1.5d),
+    WIN(1d),
+    DRAW(0d),
+    LOSE(-1d);
 
-    private final String koreanName;
     private final double profitRate;
 
-    BlackJackResult(String koreanName, double profitRate) {
-        this.koreanName = koreanName;
+    BlackJackResult(double profitRate) {
         this.profitRate = profitRate;
     }
 
@@ -21,10 +19,6 @@ public enum BlackJackResult {
         if (this == LOSE)
             return WIN;
         return DRAW;
-    }
-
-    public String getKoreanName() {
-        return koreanName;
     }
 
     public double getProfitRate() {

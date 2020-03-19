@@ -51,9 +51,10 @@ class ResultMatcherTest {
         List<Card> blackJackCards = Arrays.asList(aceSpade, kingClover);
         List<Card> normalCards = Arrays.asList(jackHeart, kingClover);
         return Stream.of(
+                Arguments.of(blackJackCards, blackJackCards, BlackJackResult.DRAW),
+                Arguments.of(blackJackCards, normalCards, BlackJackResult.BLACKJACK),
                 Arguments.of(bustedCards, bustedCards, BlackJackResult.LOSE),
                 Arguments.of(normalCards, bustedCards, BlackJackResult.WIN),
-                Arguments.of(blackJackCards, normalCards, BlackJackResult.BLACKJACK),
                 Arguments.of(normalCards, normalCards, BlackJackResult.DRAW),
                 Arguments.of(normalCards, blackJackCards, BlackJackResult.LOSE));
     }

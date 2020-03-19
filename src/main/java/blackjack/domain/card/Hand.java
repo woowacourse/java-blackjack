@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Hand {
 
-    public static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private final List<Card> hand = new ArrayList<>();
 
     public void add(Card card) {
@@ -21,7 +21,8 @@ public class Hand {
     }
 
     public int calculate() {
-        return sumScore().getScore();
+        Score score = sumScore();
+        return score.getScore();
     }
 
     public boolean isBusted() {

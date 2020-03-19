@@ -64,12 +64,4 @@ public class ConsoleOutputView implements OutputView {
     public void printDealerDrawCard() {
         System.out.println(DEALER_DRAW_ONE_MORE_CARD);
     }
-
-    private static String makeDealerResult(Map<BlackJackResult, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<BlackJackResult, Integer> entry : dealerResult.entrySet()) {
-            stringBuilder.append(entry.getValue() + entry.getKey().getKoreanName());
-        }
-        return stringBuilder.toString();
-    }
 }
