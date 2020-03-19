@@ -1,3 +1,5 @@
+package domain;
+
 import domain.card.Card;
 import domain.card.CardFactory;
 import domain.card.Symbol;
