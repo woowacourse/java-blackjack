@@ -1,52 +1,53 @@
 package blackjack.domain.user;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class Results {
-	private final Map<Playable, Result> playerResults;
+	private final Map<Name, Result> results;
 
-	private Results(Map<Playable, Result> playerResults) {
-		this.playerResults = playerResults;
+	private Results(Map<Name, Result> results) {
+		this.results = results;
 	}
 
 	public static Results of(Playable dealer, Players players) {
-		Map<Playable, Result> playerResults = createPlayersResult(dealer, players);
+		Map<Name, Result> playerResults = createPlayersResult(dealer, players);
 
 		return new Results(playerResults);
 	}
 
-	private static Map<Playable, Result> createPlayersResult(Playable dealer, Players players) {
-		Map<Playable, Result> playerResults = new LinkedHashMap<>();
+	private static Map<Name, Result> createPlayersResult(Playable dealer, Players players) {
+		Map<Name, Result> results = new LinkedHashMap<>();
 		for (Playable player : players.getPlayers()) {
-			playerResults.put(player, Result.getPlayerResultByDealer(player, dealer));
+			results.put(player.getName(), Result.getPlayerResultByDealer(player, dealer));
 		}
 
-		return playerResults;
+		return results;
 	}
 
-	public Result getResult(Playable player) {
-		return playerResults.get(player);
+	public Result getResult(Name name) {
+		return results.get(name);
 	}
 
-	public Map<Playable, Result> getPlayerResults() {
-		return playerResults;
+	public Map<Name, Result> getResults() {
+		return Collections.unmodifiableMap(results);
 	}
 
 	public int getDealerWin() {
-		return (int) playerResults.values().stream()
+		return (int) results.values().stream()
 				.filter(Result::isLose)
 				.count();
 	}
 
 	public int getDealerDraw() {
-		return (int) playerResults.values().stream()
+		return (int) results.values().stream()
 				.filter(Result::isDraw)
 				.count();
 	}
 
 	public int getDealerLose() {
-		return (int) playerResults.values().stream()
+		return (int) results.values().stream()
 				.filter(Result::isWinOrBlackjackWin)
 				.count();
 	}

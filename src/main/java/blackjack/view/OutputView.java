@@ -1,10 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.Playable;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.Result;
-import blackjack.domain.user.Results;
+import blackjack.domain.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,19 +88,14 @@ public final class OutputView {
 	public static void printResult(Results results) {
 		System.out.println("## 최종 승패");
 		System.out.println("딜러" + " : " + createDealerResult(results));
-		for (Playable player : results.getPlayerResults().keySet()) {
-			System.out.println(createPlayerResult(player, results));
+		for (Name name : results.getResults().keySet()) {
+			System.out.printf("%s : %s\n", name.getString(), boolToResultWord(results.getResult(name)));
 		}
 	}
 
 	private static String createDealerResult(Results results) {
 		return String.format("%d승 %d패",
 				results.getDealerWin(), results.getDealerLose());
-	}
-
-	private static String createPlayerResult(Playable player, Results results) {
-		String resultWord = boolToResultWord(results.getResult(player));
-		return String.format("%s : %s", player.getName().getString(), resultWord);
 	}
 
 	private static String boolToResultWord(Result result) {

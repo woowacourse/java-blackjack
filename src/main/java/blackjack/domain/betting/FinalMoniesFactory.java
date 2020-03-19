@@ -18,7 +18,7 @@ public class FinalMoniesFactory implements MoniesFactory {
 		Map<Playable, Money> finalMonies = new LinkedHashMap<>();
 		for (Playable player : monies.ketSet()) {
 			Money previous = monies.getMoney(player);
-			Result result = results.getResult(player);
+			Result result = results.getResult(player.getName());
 			finalMonies.put(
 					player,
 					previous.computeResultingAmount(result));
