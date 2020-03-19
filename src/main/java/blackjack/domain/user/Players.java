@@ -8,7 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public final class Players {
 	private final List<Playable> players;
@@ -54,7 +55,7 @@ public final class Players {
 	}
 
 	public void giveTwoCardsEachPlayer(Drawable deck) {
-		for (Playable player : players ) {
+		for (Playable player : players) {
 			player.receiveCards(deck.drawTwoCards());
 		}
 	}

@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.user.exceptions.AbstractPlayerException;
 import blackjack.domain.user.exceptions.PlayerException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

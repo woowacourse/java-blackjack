@@ -1,7 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.betting.Money;
-
 public enum Result {
 	BLACKJACK_WIN(1.5, "승"),
 	WIN(1, "승"),
@@ -37,10 +35,6 @@ public enum Result {
 
 	public double computeResultAmount(double amount) {
 		return amount * multiple;
-	}
-
-	public String getResult() {
-		return result;
 	}
 
 	public boolean isWinOrBlackjackWin() {
