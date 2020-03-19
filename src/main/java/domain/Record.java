@@ -1,6 +1,7 @@
 package domain;
 
 public class Record {
+	public static final Record NONE = new Record(0, 0, 0);
 	private static final Record WIN = new Record(1, 0, 0);
 	private static final Record DRAW = new Record(0, 1, 0);
 	private static final Record LOSE = new Record(0, 0, 1);

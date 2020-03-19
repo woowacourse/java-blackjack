@@ -28,7 +28,6 @@ public class Results {
 		List<Record> records = new ArrayList<>();
 		players.forEach(player -> records.add(Record.of(dealer, player)));
 		return records.stream()
-				.reduce(Record::add)
-				.get();
+				.reduce(Record.NONE, Record::add);
 	}
 }
