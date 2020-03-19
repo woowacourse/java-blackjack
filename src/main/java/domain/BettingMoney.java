@@ -7,7 +7,7 @@ public class BettingMoney {
 
     public BettingMoney(int bettingMoney) {
         if (bettingMoney < 0) {
-            throw new NegativeMoneyException();
+            throw new NegativeMoneyException(bettingMoney);
         }
         this.bettingMoney = bettingMoney;
     }

@@ -35,7 +35,7 @@ public class Score implements Comparable<Score> {
 
     private static void validatePositive(int score) {
         if (score < INIT_SCORE) {
-            throw new NegativeScoreException();
+            throw new NegativeScoreException(score);
         }
     }
 

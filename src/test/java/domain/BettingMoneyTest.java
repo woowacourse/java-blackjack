@@ -21,7 +21,7 @@ public class BettingMoneyTest {
     void constructWithNegativeException() {
         assertThatThrownBy(() -> new BettingMoney(-1))
                 .isInstanceOf(NegativeMoneyException.class)
-                .hasMessage("Money는 음수일 수 없습니다.");
+                .hasMessage("Money는 음수일 수 없습니다. (입력 : -1)");
     }
 
     @Test
