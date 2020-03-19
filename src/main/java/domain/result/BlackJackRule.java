@@ -5,6 +5,8 @@ import domain.result.score.Score;
 
 import java.util.List;
 
+import static domain.gamer.Dealer.DEALER_NAME;
+
 public class BlackJackRule extends GameRule {
     private static final Score BLACKJACK_SCORE = Score.of(21);
     private static final Score DEALER_THRESHOLD_SCORE = Score.of(16);
@@ -109,6 +111,6 @@ public class BlackJackRule extends GameRule {
                 .map(Result::getProfit)
                 .reduce(new Money(0), (a, b) -> a.plus(b));
 
-        return new Result(new Name("딜러"), totalSum.reverse());
+        return new Result(DEALER_NAME, totalSum.reverse());
     }
 }

@@ -7,7 +7,6 @@ import domain.result.ResultDerivable;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class Dealer extends AbstractGamer {
     public static final Name DEALER_NAME = new Name("딜러");
 

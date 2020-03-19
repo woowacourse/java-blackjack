@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
-    private static final String CARD_NO_EXIST_MESSAGE = "적절한 number 또는 symbol의 카드가 존재하지 않습니다.";
     private final Rank rank;
     private final Suit suit;
 
@@ -20,7 +19,7 @@ public class Card {
                 .stream()
                 .filter(card -> card.isCardOf(rank, suit))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXIST_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("적절한 number 또는 symbol의 카드가 존재하지 않습니다."));
     }
 
     private boolean isCardOf(Rank rank, Suit suit) {

@@ -18,8 +18,6 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final String NO_EXIST_MESSAGE = "해당하는 랭크가 존재하지 않습니다.";
-
     private final String name;
     private final Score score;
 
@@ -32,7 +30,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.name == name)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NO_EXIST_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 랭크가 존재하지 않습니다."));
     }
 
     public boolean isAce() {

@@ -12,9 +12,9 @@ import java.util.List;
 public interface Gamer {
     void drawInitialCards(CardProvidable cardProvidable);
 
-    void playTurn(CardProvidable cardProvidable, GameRule gameRule, TurnActions turnActions);
-
     List<Card> openInitialCards();
+
+    void playTurn(CardProvidable cardProvidable, GameRule gameRule, TurnActions turnActions);
 
     List<Card> openAllCards();
 

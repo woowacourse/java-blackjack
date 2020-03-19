@@ -72,6 +72,7 @@ public class BlackJackApplication {
     private static void showAllScores(AllGamers allGamers, BlackJackRule blackJackRule) {
         allGamers.joinAllGamers()
                 .forEach(gamer -> OutputView.printScore(gamer, gamer.calculateScore(blackJackRule)));
+
         OutputView.printEmptyLine();
     }
 

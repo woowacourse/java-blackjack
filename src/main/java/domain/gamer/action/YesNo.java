@@ -22,8 +22,4 @@ public enum YesNo {
     public boolean isYes() {
         return this == YES;
     }
-
-    public boolean isNo() {
-        return this == NO;
-    }
 }
