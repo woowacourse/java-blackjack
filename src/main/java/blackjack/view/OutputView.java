@@ -19,7 +19,7 @@ public class OutputView {
 		System.out.println(
 			String.format("딜러와 %s에게 %d장을 나누었습니다."
 				, collectGamblersNames(gamblers)
-				, BlackjackRule.STARTING_CARD_COUNT)
+				, Players.STARTING_CARD_COUNT)
 		);
 		System.out.println(String.format("딜러: %s%s", dealerCard.getNumber(), dealerCard.getSymbol()));
 		gamblers.forEach(gambler -> System.out.println(getCardInfo(gambler)));

@@ -20,15 +20,6 @@ public class Gambler extends Player {
 	}
 
 	@Override
-	public String getName() {
-		return playerInfo.getName();
-	}
-
-	public PlayerInfo getPlayerInfo() {
-		return playerInfo;
-	}
-
-	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -41,5 +32,14 @@ public class Gambler extends Player {
 	@Override
 	public int hashCode() {
 		return Objects.hash(playerInfo);
+	}
+
+	@Override
+	public String getName() {
+		return playerInfo.getName();
+	}
+
+	public PlayerInfo getPlayerInfo() {
+		return playerInfo;
 	}
 }

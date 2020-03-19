@@ -12,9 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
+import blackjack.card.domain.CardDeck;
 import blackjack.card.domain.GameResult;
 import blackjack.card.domain.component.CardNumber;
+import blackjack.exception.InvalidFlowException;
 import blackjack.player.domain.report.GameReport;
 import blackjack.player.domain.report.GameReports;
 
@@ -84,5 +87,21 @@ class PlayersTest {
 
 		//then
 		assertThat(dealer.getClass()).isEqualTo(Dealer.class);
+	}
+
+	@DisplayName("스타팅 카드가 2번이상 호출되면 Exception")
+	@Test
+	void drawStartingCard() {
+		Players players = new Players(
+			Arrays.asList(new Gambler(new CardBundle(), aPlayerInfo("allen")),
+				new Dealer(new CardBundle())));
+
+		CardDeck cardDeck = CardDeck.getInstance(Card.getAllCards());
+		players.drawStartingCard(cardDeck);
+
+		assertThatThrownBy(() -> {
+			players.drawStartingCard(cardDeck);
+		}).isInstanceOf(InvalidFlowException.class);
+
 	}
 }

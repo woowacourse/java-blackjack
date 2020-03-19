@@ -11,7 +11,7 @@ import blackjack.exception.InvalidFlowException;
 import blackjack.player.domain.report.GameReports;
 
 public class Players {
-	private static final int STARTING_CARD_COUNT = 2;
+	public static final int STARTING_CARD_COUNT = 2;
 	private final List<Player> players;
 
 	public Players(List<Player> players) {
