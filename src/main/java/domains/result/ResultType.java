@@ -25,7 +25,7 @@ public enum ResultType {
         return DRAW;
     }
 
-    public ProfitMoney calculateProfitMoney(Player player) {
-        return player.getBettingMoney().multiply(this.profitRate);
+    public double getProfitRate() {
+        return profitRate;
     }
 }

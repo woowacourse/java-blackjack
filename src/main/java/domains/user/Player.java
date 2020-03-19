@@ -3,6 +3,7 @@ package domains.user;
 import domains.card.Deck;
 import domains.result.ResultType;
 import domains.user.money.BettingMoney;
+import domains.user.money.ProfitMoney;
 import domains.user.name.PlayerName;
 
 import java.util.Objects;
@@ -65,6 +66,10 @@ public class Player extends User {
             return ResultType.LOSE;
         }
         return ResultType.DRAW;
+    }
+
+    public ProfitMoney calculateProfitMoney(ResultType resultType) {
+        return this.bettingMoney.multiply(resultType.getProfitRate());
     }
 
     public String getName() {

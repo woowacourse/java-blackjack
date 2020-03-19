@@ -13,7 +13,7 @@ public class ProfitsFactory {
 
         for (Player player : playerResult.keySet()) {
             ResultType resultType = playerResult.get(player);
-            playerProfits.put(player, resultType.calculateProfitMoney(player));
+            playerProfits.put(player, player.calculateProfitMoney(resultType));
         }
 
         return playerProfits;
