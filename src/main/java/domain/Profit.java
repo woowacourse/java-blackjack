@@ -1,6 +1,7 @@
 package domain;
 
 public class Profit {
+	public static final Profit ZERO = new Profit(0);
 	private static final double BLACKJACK_WIN_RATE = 1.5;
 	private static final double WIN_RATE = 1;
 	private static final double DRAW_RATE = 0;
@@ -23,6 +24,10 @@ public class Profit {
 			return new Profit(bettingMoney.getValue() * DRAW_RATE);
 		}
 		return new Profit(bettingMoney.getValue() * LOSE_RATE);
+	}
+
+	public Profit minus(Profit that) {
+		return new Profit(profit - that.profit);
 	}
 
 	public double getValue() {

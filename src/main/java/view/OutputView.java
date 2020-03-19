@@ -8,6 +8,8 @@ import domain.Card;
 import domain.Dealer;
 import domain.Name;
 import domain.Players;
+import domain.Profit;
+import domain.Profits;
 import domain.Record;
 import domain.Results;
 import domain.User;
@@ -68,5 +70,14 @@ public class OutputView {
 			return;
 		}
 		System.out.println(name.getValue() + ": 패");
+	}
+
+	public static void printProfits(Profits profits) {
+		System.out.println("## 최종 수익");
+		profits.getValue().forEach(OutputView::printProfit);
+	}
+
+	private static void printProfit(Name name, Profit profit) {
+		System.out.printf("%s: %.0f\n", name.getValue(), profit.getValue());
 	}
 }
