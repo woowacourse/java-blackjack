@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.card.domain.CardDeck;
+import blackjack.exception.InvalidFlowException;
 import blackjack.player.domain.report.GameReports;
 
 public class Players {
+	private static final int STARTING_CARD_COUNT = 2;
 	private final List<Player> players;
 
 	public Players(List<Player> players) {
@@ -23,8 +25,18 @@ public class Players {
 		}
 	}
 
-	public void drawCard(CardDeck cardDeck) {
-		players.forEach(player -> player.addCard(cardDeck.draw()));
+	public void drawStartingCard(CardDeck cardDeck) {
+		validateCards();
+		for (int i = 0; i < STARTING_CARD_COUNT; i++) {
+			players.forEach(player -> player.addCard(cardDeck.draw()));
+		}
+	}
+
+	private void validateCards() {
+		if (players.stream()
+			.anyMatch(Player::hasStatingCards)) {
+			throw new InvalidFlowException();
+		}
 	}
 
 	public GameReports getReports() {

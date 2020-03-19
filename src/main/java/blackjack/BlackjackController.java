@@ -54,7 +54,7 @@ public class BlackjackController {
 	}
 
 	private void drawStartingCards(Players players) {
-		BlackjackRule.drawStartingCard(players, cardDeck);
+		players.drawStartingCard(cardDeck);
 		OutputView.showCards(players);
 	}
 

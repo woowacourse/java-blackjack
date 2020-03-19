@@ -9,6 +9,7 @@ import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
 
 public abstract class Player {
+	private static final int STARTING_CARDS = 2;
 	protected final CardBundle cardBundle;
 
 	public Player(CardBundle cardBundle) {
@@ -44,6 +45,10 @@ public abstract class Player {
 
 	public boolean isGambler() {
 		return this instanceof Gambler;
+	}
+
+	public boolean hasStatingCards() {
+		return cardBundle.isSameCount(STARTING_CARDS);
 	}
 
 	public abstract boolean isHit();

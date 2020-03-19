@@ -46,8 +46,6 @@ class PlayersTest {
 		//when
 		GameReports reports = players.getReports();
 
-		List<GameReport> reports1 = reports.getReports();
-
 		//then
 		assertThat(reports).isEqualTo(new GameReports(Arrays.asList(
 			new GameReport(aPlayerInfo("bebop"), GameResult.BLACKJACK_WIN),

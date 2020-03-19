@@ -5,9 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import blackjack.BlackjackRule;
-
 public class CardBundle {
+	private static final int STARTING_CARD_COUNT = 2;
 	private static final int ACE_WEIGHT = 10;
 	private static final int BLACKJACK_MAXIMUM_VALUE = 21;
 	private final List<Card> cards = new ArrayList<>();
@@ -41,7 +40,7 @@ public class CardBundle {
 	}
 
 	public boolean isBlackjack() {
-		return cards.size() == BlackjackRule.STARTING_CARD_COUNT
+		return cards.size() == STARTING_CARD_COUNT
 			&& calculateScore() == BLACKJACK_MAXIMUM_VALUE;
 	}
 
@@ -83,5 +82,9 @@ public class CardBundle {
 
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
+	}
+
+	public boolean isSameCount(int startingCards) {
+		return startingCards == cards.size();
 	}
 }
