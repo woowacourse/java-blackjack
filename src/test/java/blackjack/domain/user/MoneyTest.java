@@ -20,6 +20,22 @@ public class MoneyTest {
     @DisplayName("Money 곱하기 테스트")
     void moneyMultiplyTest(int moneyAmount, double rate, int expected) {
         Money money = new Money(moneyAmount);
-        assertThat(money.multiply(rate).getMoney()).isEqualTo(expected);
+        assertThat(money.multiply(rate)).isEqualTo(new Money(expected));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value= {"0,5000,5000", "100000,-100000,0", "30000,45000,75000"})
+    @DisplayName("Money 더하기 테스트")
+    void moneyAddTest(int moneyAmount, int addedMoney, int expected) {
+        Money money = new Money(moneyAmount);
+        assertThat(money.add(new Money(addedMoney))).isEqualTo(new Money(expected));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value= {"0,5000,-5000", "100000,-100000,200000", "30000,30000,0"})
+    @DisplayName("Money 빼기 테스트")
+    void moneySubtractTest(int moneyAmount, int subtractedMoney, int expected) {
+        Money money = new Money(moneyAmount);
+        assertThat(money.subtract(new Money(subtractedMoney))).isEqualTo(new Money(expected));
     }
 }
