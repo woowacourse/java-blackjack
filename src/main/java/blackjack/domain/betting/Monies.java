@@ -11,7 +11,7 @@ import java.util.Map;
 import static java.util.stream.LongStream.range;
 
 
-public class Monies {
+public final class Monies {
 	private final Map<Playable, Money> bettingMonies;
 
 	private Monies(Map<Playable, Money> bettingMonies) {

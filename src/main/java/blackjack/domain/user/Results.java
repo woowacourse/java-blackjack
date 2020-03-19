@@ -5,24 +5,15 @@ import java.util.Map;
 
 public final class Results {
 	private final Map<Playable, Result> playerResults;
-	private final int dealerWin;
-	private final int dealerDraw;
-	private final int dealerLose;
 
-	private Results(Map<Playable, Result> playerResults, int dealerWin, int dealerDraw, int dealerLose) {
+	private Results(Map<Playable, Result> playerResults) {
 		this.playerResults = playerResults;
-		this.dealerWin = dealerWin;
-		this.dealerDraw = dealerDraw;
-		this.dealerLose = dealerLose;
 	}
 
 	public static Results of(Playable dealer, Players players) {
 		Map<Playable, Result> playerResults = createPlayersResult(dealer, players);
-		int dealerWin = calculateDealerWin(playerResults);
-		int dealerDraw = calculateDealerDraw(playerResults);
-		int dealerLose = calculateDealerLose(playerResults);
 
-		return new Results(playerResults, dealerWin, dealerDraw, dealerLose);
+		return new Results(playerResults);
 	}
 
 	private static Map<Playable, Result> createPlayersResult(Playable dealer, Players players) {
@@ -34,24 +25,6 @@ public final class Results {
 		return playerResults;
 	}
 
-	private static int calculateDealerWin(Map<Playable, Result> playerResults) {
-		return (int) playerResults.values().stream()
-				.filter(Result::isLose)
-				.count();
-	}
-
-	private static int calculateDealerDraw(Map<Playable, Result> playerResults) {
-		return (int) playerResults.values().stream()
-				.filter(Result::isDraw)
-				.count();
-	}
-
-	private static int calculateDealerLose(Map<Playable, Result> playerResults) {
-		return (int) playerResults.values().stream()
-				.filter(Result::isWinOrBlackjackWin)
-				.count();
-	}
-
 	public Result getResult(Playable player) {
 		return playerResults.get(player);
 	}
@@ -61,16 +34,20 @@ public final class Results {
 	}
 
 	public int getDealerWin() {
-		return dealerWin;
+		return (int) playerResults.values().stream()
+				.filter(Result::isLose)
+				.count();
 	}
 
 	public int getDealerDraw() {
-		return dealerDraw;
+		return (int) playerResults.values().stream()
+				.filter(Result::isDraw)
+				.count();
 	}
 
 	public int getDealerLose() {
-		return dealerLose;
+		return (int) playerResults.values().stream()
+				.filter(Result::isWinOrBlackjackWin)
+				.count();
 	}
-
-
 }
