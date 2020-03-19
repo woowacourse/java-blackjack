@@ -21,7 +21,7 @@ public class GameResult {
         this.playerResult = playerResult;
     }
 
-    public ResultType getWinOrLose(Player player) {
+    public ResultType getPlayerGameResult(Player player) {
         return playerResult.get(player);
     }
 
