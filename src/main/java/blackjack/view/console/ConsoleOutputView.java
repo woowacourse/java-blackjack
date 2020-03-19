@@ -4,7 +4,6 @@ import blackjack.controller.dto.response.GamersResultResponseDto;
 import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.card.Card;
-import blackjack.domain.result.BlackJackResult;
 import blackjack.view.OutputView;
 
 import java.util.List;

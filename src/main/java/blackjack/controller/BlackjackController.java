@@ -6,10 +6,12 @@ import blackjack.controller.dto.response.GamersResultResponseDto;
 import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.Profit;
 import blackjack.domain.rule.BettingTable;
 import blackjack.domain.rule.HandInitializer;
 
@@ -45,23 +47,24 @@ public class BlackjackController {
     }
 
     public BettingTable createBettingTable(Players players, BettingDto bettingDto) {
-        Map<Player, Integer> playerMoneyMap = new LinkedHashMap<>();
+        Map<Player, BettingMoney> playerMoneyMap = new LinkedHashMap<>();
         Map<String, String> bettingTableDto = bettingDto.getBettingTable();
         for (Map.Entry<String, String> nameMoneyEntry : bettingTableDto.entrySet()) {
             Player player = players.findPlayerBy(nameMoneyEntry.getKey());
-            playerMoneyMap.put(player, Integer.parseInt(nameMoneyEntry.getValue()));
+            BettingMoney bettingMoney = BettingMoney.from(nameMoneyEntry.getValue());
+            playerMoneyMap.put(player, bettingMoney);
         }
 
         return new BettingTable(playerMoneyMap);
     }
 
     public GamersResultResponseDto getResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
-        Map<Gamer, Integer> calculateBettingMoney = bettingTable.calculateBettingMoney(players, dealer);
+        Map<Gamer, Profit> calculateBettingMoney = bettingTable.calculateBettingResult(players, dealer);
         Map<String, Integer> map = calculateBettingMoney.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
-                        entry -> entry.getValue()
+                        entry -> entry.getValue().getProfit()
                 ));
         return new GamersResultResponseDto(map);
     }

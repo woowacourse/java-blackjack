@@ -1,6 +1,5 @@
 package blackjack.view.console;
 
-import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardType;

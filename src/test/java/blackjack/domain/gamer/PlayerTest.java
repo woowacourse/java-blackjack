@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -29,6 +30,20 @@ class PlayerTest {
     @DisplayName("플레이어는 이름을 입력받아 생성")
     void player() {
         assertThat(player.getName()).isEqualTo("엘리");
+    }
+
+    @Test
+    @DisplayName("입력받은 플레이어 이름이 null이면 예외 발생")
+    void playerNameNullException() {
+        assertThatThrownBy(() -> new Player(null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("입력받은 플레이어 이름이 null이면 예외 발생")
+    void playerNameEmptyException() {
+        assertThatThrownBy(() -> new Player(""))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

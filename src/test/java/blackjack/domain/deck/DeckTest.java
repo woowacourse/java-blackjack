@@ -21,7 +21,7 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("Deck 생성시 null이 입력되면 예외 발생")
+    @DisplayName("Deck 생성시 비어있는 카드가 입력되면 예외 발생")
     void deckEmptyException() {
         assertThatThrownBy(() -> new Deck(new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -36,7 +36,7 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("카드 꺼내기")
+    @DisplayName("모든 카드를 소진시에 예외 발생")
     void pickThrowException() {
         List<Card> cards = CardFactory.generate();
         Deck deck = new Deck(cards);
@@ -47,5 +47,4 @@ public class DeckTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드를 모두 사용하셨습니다.");
     }
-
 }
