@@ -29,12 +29,12 @@ public enum PlayerGameResult {
 	}
 
 	private static boolean isDrawGame(int dealerScore, int playerScore) {
-		return (dealerScore == playerScore) && (dealerScore <= Hands.BLACKJACK);
+		return (dealerScore == playerScore) && (dealerScore <= Hands.BLACKJACK_SCORE);
 	}
 
 	private static boolean isDefeatGame(int dealerScore, int playerScore) {
-		return ((playerScore > Hands.BLACKJACK) ||
-			((dealerScore > playerScore) && (dealerScore <= Hands.BLACKJACK)));
+		return ((playerScore > Hands.BLACKJACK_SCORE) ||
+			((dealerScore > playerScore) && (dealerScore <= Hands.BLACKJACK_SCORE)));
 	}
 
 	public String getResult() {

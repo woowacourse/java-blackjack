@@ -1,22 +1,27 @@
 package domain.gamer;
 
+import domain.card.Hands;
+import domain.money.Money;
+
 /**
  *    게임 플레이어 나타내는 클래스입니다.
  *
  *    @author AnHyungJu, ParkDooWon
  */
 public class Player extends Gamer {
-	private PlayerGameResult playerGameResult;
+	private Money bettingMoney;
 
-	public Player(String name) {
+	public Player(Name name, Money money) {
 		super(name);
+		bettingMoney = money;
 	}
 
-	public void findResult(int dealerScore) {
-		playerGameResult = PlayerGameResult.matchResult(dealerScore, this.scoreHands());
+	@Override
+	public boolean canHit() {
+		return scoreHands() < Hands.BLACKJACK_SCORE;
 	}
 
-	public PlayerGameResult getPlayerGameResult() {
-		return playerGameResult;
+	public Money getBettingMoney() {
+		return bettingMoney;
 	}
 }
