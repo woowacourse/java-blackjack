@@ -28,7 +28,8 @@ public abstract class User {
     }
 
     public void receiveInitialCards(List<Card> initialCards) {
-        this.cards.addAll(Objects.requireNonNull(initialCards));
+        Objects.requireNonNull(initialCards);
+        this.cards.addAll(initialCards);
     }
 
     public void receiveCard(Card card) {
