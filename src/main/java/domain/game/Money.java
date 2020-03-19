@@ -14,14 +14,14 @@ public class Money {
     private void validate(String inputString) {
         char[] inputCharacters = inputString.toCharArray();
 
-        validateDigit(inputCharacters);
+        for (char inputCharacter : inputCharacters) {
+            validateDigit(inputCharacter);
+        }
     }
 
-    private void validateDigit(char[] inputCharacters) {
-        for (char inputCharacter : inputCharacters) {
-            if (!Character.isDigit(inputCharacter)) {
-                throw new IllegalArgumentException();
-            }
+    private void validateDigit(char inputCharacter) {
+        if (!Character.isDigit(inputCharacter)) {
+            throw new IllegalArgumentException();
         }
     }
 

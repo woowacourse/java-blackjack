@@ -50,9 +50,9 @@ public class Result {
 
     public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer, BettingLog userBettingLog) {
         BigDecimal bettingMoney = userBettingLog.getMoney();
+
         if (isBlackJackWin(mainPlayer, opponentPlayer)) {
-            this.winningMoney
-                    .addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
+            winningMoney.addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
         }
         if (isBlackJackDraw(mainPlayer, opponentPlayer)
@@ -60,17 +60,14 @@ public class Result {
             return;
         }
         if (isNormalWin(mainPlayer, opponentPlayer)) {
-            this.winningMoney
-                    .addMoney(bettingMoney);
+            winningMoney.addMoney(bettingMoney);
             return;
         }
         if (isBlackJackLose(opponentPlayer)) {
-            this.winningMoney
-                    .subtractMoney(bettingMoney.multiply(new BigDecimal("1.5")));
+            winningMoney.subtractMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
         }
-        this.winningMoney
-                .subtractMoney(bettingMoney);
+        winningMoney.subtractMoney(bettingMoney);
     }
 
     private boolean isBlackJackWin(Player mainPlayer, Player opponentPlayer) {
