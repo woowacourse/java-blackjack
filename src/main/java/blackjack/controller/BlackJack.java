@@ -7,8 +7,10 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.result.SimpleResult;
+import blackjack.domain.result.MoneyChanger;
+import blackjack.domain.result.MoneyResult;
 import blackjack.domain.rule.BasicRule;
+import blackjack.exceptions.InvalidMoneyException;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -18,6 +20,7 @@ public class BlackJack {
     private final Deck deck;
     private final Dealer dealer;
     private Participants participants;
+    private MoneyChanger moneyChanger;
 
     private BlackJack() {
         this.deck = Deck.create();
@@ -31,6 +34,8 @@ public class BlackJack {
     private void play() {
         OutputView.nameInstruction();
         this.participants = getParticipants();
+        this.moneyChanger = new MoneyChanger(participants);
+        bettingPhase();
         initialPhase();
         userGamePhase();
         dealerGamePhase();
@@ -43,6 +48,22 @@ public class BlackJack {
         } catch (InvalidPlayerException e) {
             OutputView.printError(e.getMessage());
             return getParticipants();
+        }
+    }
+
+    private void bettingPhase() {
+        for (Participant participant : participants.getPlayers()) {
+            betMoney(participant);
+        }
+    }
+
+    private void betMoney(final Participant participant) {
+        try {
+            OutputView.moneyInstruction(participant);
+            moneyChanger.receive(participant, InputView.getInput());
+        } catch (InvalidMoneyException e) {
+            OutputView.printError(e.getMessage());
+            betMoney(participant);
         }
     }
 
@@ -91,6 +112,6 @@ public class BlackJack {
 
     private void endPhase() {
         OutputView.result(participants);
-        OutputView.statistics(new SimpleResult(participants));
+        OutputView.statistics(new MoneyResult(participants, moneyChanger));
     }
 }

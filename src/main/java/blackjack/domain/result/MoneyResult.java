@@ -12,28 +12,20 @@ import blackjack.domain.rule.BasicRule;
 
 public class MoneyResult {
     private static final String LINE_BREAK = System.lineSeparator();
+
     private ScoreBoard scoreBoard;
     private Participant dealer;
     private List<Participant> players;
     private MoneyChanger moneyChanger;
     private Map<Participant, Money> moneyResult;
 
-    public MoneyResult(final Participants participants) {
-        scoreBoard = new ScoreBoard(participants);
-        moneyChanger = new MoneyChanger(participants);
-        dealer = participants.getDealer();
-        players = participants.getPlayers();
-        moneyResult = new HashMap<>();
-        for (Participant player : players) {
-            decideWinner(player);
-        }
-
-    }
-
-    // 테스트용
-    MoneyResult(final Participants participants, MoneyChanger moneyChanger) {
-        this(participants);
+    public MoneyResult(final Participants participants, MoneyChanger moneyChanger) {
+        this.scoreBoard = new ScoreBoard(participants);
+        this.dealer = participants.getDealer();
+        this.players = participants.getPlayers();
         this.moneyChanger = moneyChanger;
+        this.moneyResult = new HashMap<>();
+        this.moneyResult.put(dealer, Money.zero());
         for (Participant player : players) {
             decideWinner(player);
         }
