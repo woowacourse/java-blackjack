@@ -27,29 +27,21 @@ public abstract class User {
         this(name, 0);
     }
 
+    public void receiveCard(Card card) {
+        cards.add(card);
+    }
+
     public void receiveInitialCards(List<Card> initialCards) {
         Objects.requireNonNull(initialCards);
         this.cards.addAll(initialCards);
     }
 
-    public void receiveCard(Card card) {
-        cards.add(card);
-    }
-
-    public int getTotalScore() {
-        return ScoreRule.calculateTotalScore(cards);
-    }
-
-    public String getName() {
-        return this.name;
+    public void addMoney(Money profit) {
+        this.money = this.money.add(profit);
     }
 
     public Money getProfitByResult(Result result) {
         return this.money.multiply(result.getRate());
-    }
-
-    public void addMoney(Money profit) {
-        this.money = this.money.add(profit);
     }
 
     public boolean isBusted() {
@@ -60,13 +52,21 @@ public abstract class User {
         return ScoreRule.isBlackjack(cards);
     }
 
-    public abstract List<Card> getInitialCards();
-
     public int compareScore(User user) {
         return this.getTotalScore() - user.getTotalScore();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public String getName() {
+        return this.name;
     }
+
+    public int getTotalScore() {
+        return ScoreRule.calculateTotalScore(cards);
+    }
+
+    public List<Card> getCards() {
+        return this.cards;
+    }
+
+    public abstract List<Card> getInitialCards();
 }
