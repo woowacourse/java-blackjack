@@ -4,18 +4,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class TypeTest {
-    @Test
+    @ParameterizedTest
     @DisplayName("타입 of")
-    void of() {
-        assertThat(Type.of("스페이드") == Type.SPADE).isTrue();
-        assertThat(Type.of("하트") == Type.HEART).isTrue();
-        assertThat(Type.of("클로버") == Type.CLOVER).isTrue();
-        assertThat(Type.of("다이아몬드") == Type.DIAMOND).isTrue();
+    @ValueSource(strings = {"스페이드", "하트", "클로버", "다이아몬드"})
+    void of(String type) {
+        assertThat(Type.of(type)).isInstanceOf(Type.class);
     }
 
     @Test

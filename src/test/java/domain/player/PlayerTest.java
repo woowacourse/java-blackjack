@@ -71,11 +71,7 @@ public class PlayerTest {
         Player player = new User("user");
         player.addCard(Card.of("스페이드", "10"));
         player.addCard(Card.of("스페이드", "A"));
-        assertThat(player.isNotBust()).isTrue();
-
         player.addCard(Card.of("하트", "10"));
-        assertThat(player.isNotBust()).isTrue();
-
         player.addCard(Card.of("하트", "A"));
         assertThat(player.isNotBust()).isFalse();
     }
