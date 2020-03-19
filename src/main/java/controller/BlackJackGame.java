@@ -79,6 +79,13 @@ public class BlackJackGame {
             player.drawCard(deck, ADDITIONAL_DRAW_COUNT);
             OutputView.printPlayerCard(player);
         }
+        showWhenFirstAnswerIsNo(player);
+    }
+
+    private static void showWhenFirstAnswerIsNo(Player player) {
+        if (!player.isOverBlackJack()) {
+            OutputView.printPlayerCard(player);
+        }
     }
 
     private static void hitOrStayForDealer(Dealer dealer, Deck deck) {
