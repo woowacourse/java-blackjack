@@ -27,24 +27,20 @@ public class ResultCalculator {
 
     public double calculateResult(Dealer dealer, Player player) {
         if (isDraw(dealer, player)) {
-            double drawMoney = Result.DRAW.calculateResultMoney(
-                    player.getBettingMoney(), player.getCards().isBlackJack()
-            );
-            dealerResult.resultContributor(drawMoney);
-            return drawMoney;
+            return calculateMoney(player, Result.DRAW);
         }
         if (isPlayerLose(dealer, player)) {
-            double loseMoney = Result.LOSE.calculateResultMoney(
-                    player.getBettingMoney(), player.getCards().isBlackJack()
-            );
-            dealerResult.resultContributor(loseMoney);
-            return loseMoney;
+            return calculateMoney(player, Result.LOSE);
         }
-        double winMoney = Result.WIN.calculateResultMoney(
+        return calculateMoney(player, Result.WIN);
+    }
+
+    private double calculateMoney(Player player, Result result) {
+        double resultMoney = result.calculateResultMoney(
                 player.getBettingMoney(), player.getCards().isBlackJack()
         );
-        dealerResult.resultContributor(winMoney);
-        return winMoney;
+        dealerResult.resultContributor(resultMoney);
+        return resultMoney;
     }
 
     private boolean isDraw(Dealer dealer, Player player) {
@@ -59,12 +55,12 @@ public class ResultCalculator {
 
     private boolean isPlayerLose(Dealer dealer, Player player) {
         /*
-         * 플레이어의 점수가 무조건 21 초과면 패
-         * 21 이하인 경우 더 작은 경우 패
+         * 플레이어의 점수가 21 초과면 무조건 패
+         * 플레어와 딜러 모두 21 이하인 경우에 더 작은 경우 패
          * */
         return player.isLargerThan(Cards.BLACKJACK_SCORE)
                 || (!(player.isLargerThan(Cards.BLACKJACK_SCORE) || dealer.isLargerThan(Cards.BLACKJACK_SCORE))
-                        && player.isSmallerThan(dealer.getTotalScore()));
+                && player.isSmallerThan(dealer.getTotalScore()));
     }
 
     public double getDealerResult() {
