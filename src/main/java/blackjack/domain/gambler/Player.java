@@ -69,8 +69,11 @@ public final class Player implements Gambler {
         return userCards.getInfos();
     }
 
+    public Money getProfitByComparing(Dealer dealer) {
+        return money.multiply(calculateOutcome(dealer).getProfitRatio());
+    }
+
     public PlayerOutcome calculateOutcome(Dealer dealer) {
         return PlayerOutcome.of(getScore(), dealer.getScore());
     }
-
 }
