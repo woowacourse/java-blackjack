@@ -28,4 +28,8 @@ public class BettingMoney {
             throw new BettingMoneyException("배팅 금액은 양수만 가능합니다.");
         }
     }
+
+    public int multiplyAndGetValue(double profitRate) {
+        return (int) (bettingMoney * profitRate);
+    }
 }
