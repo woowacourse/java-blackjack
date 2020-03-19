@@ -55,23 +55,6 @@ public class PlayerTest {
 				.isInstanceOf(PlayerException.class);
 	}
 
-	@Test
-	void of_Null_ThrowAbstractException() {
-		assertThatThrownBy(() -> Player.of(null))
-				.isInstanceOf(AbstractPlayerException.class);
-	}
-
-	@ParameterizedTest
-	@MethodSource("of_HasBlank_ThrowAbstractException")
-	void of_HasBlank_ThrowAbstractException(String invalidName) {
-		assertThatThrownBy(() -> Player.of(invalidName))
-				.isInstanceOf(AbstractPlayerException.class);
-	}
-
-	static Stream<String> of_HasBlank_ThrowAbstractException() {
-		return Stream.of(null, "", " ", "  ", "   ");
-	}
-
 	@ParameterizedTest
 	@MethodSource("giveCard_Cards_GiveTopCardPlayer")
 	void giveCard_Cards_GiveTopCardPlayer(List<Card> cards) {

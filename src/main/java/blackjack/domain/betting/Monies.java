@@ -1,7 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.betting.exceptions.MoniesException;
-import blackjack.domain.user.Playable;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.Players;
 
 import java.util.LinkedHashMap;
@@ -13,19 +13,19 @@ import static java.util.stream.IntStream.range;
 
 
 public final class Monies {
-	private final Map<Playable, Money> bettingMonies;
+	private final Map<Name, Money> monies;
 
-	public Monies(Map<Playable, Money> bettingMonies) {
-		this.bettingMonies = bettingMonies;
+	public Monies(Map<Name, Money> monies) {
+		this.monies = monies;
 	}
 
 	public static Monies of(Players players, List<Money> bettingMonies) {
 		validateParamsAreNotNull(players, bettingMonies);
 		validateParamSizesAreSame(players, bettingMonies);
 
-		Map<Playable, Money> map = new LinkedHashMap<>();
+		Map<Name, Money> map = new LinkedHashMap<>();
 		range(0, players.memberSize())
-				.forEach((i) -> map.put(players.getPlayers().get(i), bettingMonies.get(i)));
+				.forEach((i) -> map.put(players.getPlayers().get(i).getName(), bettingMonies.get(i)));
 
 		return new Monies(map);
 	}
@@ -46,11 +46,11 @@ public final class Monies {
 		}
 	}
 
-	public Set<Playable> ketSet() {
-		return bettingMonies.keySet();
+	public Set<Name> keySet() {
+		return monies.keySet();
 	}
 
-	public Money getMoney(Playable player) {
-		return bettingMonies.get(player);
+	public Money getMoney(Name name) {
+		return monies.get(name);
 	}
 }

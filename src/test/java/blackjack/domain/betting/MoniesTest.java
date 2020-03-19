@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.betting.exceptions.MoniesException;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.Playable;
 import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeAll;
@@ -71,18 +72,18 @@ class MoniesTest {
 
 	@Test
 	void ketSet() {
-		Playable[] expect = new Playable[players.memberSize()];
+		Name[] expect = new Name[players.memberSize()];
 		for (int i = 0; i < players.memberSize(); i++) {
-			expect[i] = players.getPlayers().get(i);
+			expect[i] = players.getPlayers().get(i).getName();
 		}
 
-		assertThat(monies.ketSet()).containsExactly(expect);
+		assertThat(monies.keySet()).containsExactly(expect);
 	}
 
 	@ParameterizedTest
 	@MethodSource("get")
 	void get(Playable player, Money expect) {
-		assertThat(monies.getMoney(player)).isEqualTo(expect);
+		assertThat(monies.getMoney(player.getName())).isEqualTo(expect);
 	}
 
 	static Stream<Arguments> get() {
