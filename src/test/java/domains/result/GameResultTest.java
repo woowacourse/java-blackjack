@@ -24,7 +24,7 @@ public class GameResultTest {
     @ParameterizedTest
     @MethodSource("gameData")
     void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = GameResultFactory.create(players, dealer);
 
         Iterator<Player> iterator = players.iterator();
         Player ddoring = iterator.next();
@@ -38,7 +38,7 @@ public class GameResultTest {
     @ParameterizedTest
     @MethodSource("gameData")
     void calculateDealerResult_PlayersResult_ReturnDealerResult(Players players, Dealer dealer, Map<ResultType, Integer> dealerResult) {
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = GameResultFactory.create(players, dealer);
 
         assertThat(gameResult.calculateDealerResult()).isEqualTo(dealerResult);
     }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResultFactory {
-    public static Map<Player, ResultType> create(Players players, Dealer dealer) {
+    public static GameResult create(Players players, Dealer dealer) {
         Map<Player, ResultType> playerResult = new HashMap<>();
 
         for (Player player : players) {
@@ -16,6 +16,6 @@ public class GameResultFactory {
             playerResult.put(player, resultType);
         }
 
-        return playerResult;
+        return new GameResult(playerResult);
     }
 }

@@ -13,10 +13,6 @@ public class GameResult {
 
     private Map<Player, ResultType> playerResult;
 
-    public GameResult(Players players, Dealer dealer) {
-        this.playerResult = GameResultFactory.create(players, dealer);
-    }
-
     public GameResult(Map<Player, ResultType> playerResult) {
         this.playerResult = playerResult;
     }

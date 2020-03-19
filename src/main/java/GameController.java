@@ -1,5 +1,6 @@
 import domains.card.Deck;
 import domains.result.GameResult;
+import domains.result.GameResultFactory;
 import domains.result.Profits;
 import domains.user.Dealer;
 import domains.user.Player;
@@ -45,7 +46,7 @@ public class GameController {
         }
         OutputView.printAllHands(players, dealer);
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = GameResultFactory.create(players, dealer);
         OutputView.printGameResult(new Profits(gameResult));
     }
 
