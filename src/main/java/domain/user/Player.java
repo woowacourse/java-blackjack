@@ -1,9 +1,17 @@
 package domain.user;
 
-public class Player extends User {
+import domain.Money;
 
-    public Player(String name) {
+public class Player extends User {
+    private Money money;
+
+    public Player(String name, Money money) {
         super(name);
+        this.money = money;
+    }
+
+    public Money getMoney() {
+        return money;
     }
 
     public boolean isDrawable() {
