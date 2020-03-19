@@ -4,12 +4,7 @@ import static java.util.stream.Collectors.*;
 
 import domain.card.CardsFactory;
 import domain.card.Deck;
-import domain.gamer.Answer;
-import domain.gamer.CardsResult;
-import domain.gamer.Dealer;
-import domain.gamer.GameResult;
-import domain.gamer.Gamers;
-import domain.gamer.Player;
+import domain.gamer.*;
 import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
@@ -22,7 +17,7 @@ public class GameController {
 		gamers.initCard(deck);
 		OutputView.printInitCardGuide(gamers);
 		OutputView.printGamersCard(gamers);
-		addCardAtGamers(gamers, deck);
+		gamers.addCardAtGamers(gamers, deck);
 		OutputView.printCardsResultAndScore(new CardsResult(gamers));
 
 		GameResult gameResult = gamers.generateGameResults();
@@ -34,24 +29,5 @@ public class GameController {
 			.stream()
 			.map(name -> new Player(name, InputView.inputAsBettingMoney(name)))
 			.collect(collectingAndThen(toList(), players -> new Gamers(players, new Dealer())));
-	}
-
-	private void addCardAtGamers(Gamers gamers, Deck deck) {
-		addCardAtPlayers(gamers, deck);
-		gamers.getDealer().addCardAtDealer(deck);
-		OutputView.printAddCardAtDealer();
-	}
-
-	private void addCardAtPlayers(Gamers gamers, Deck deck) {
-		gamers.getPlayers()
-			.forEach(player -> drawCardOfPlayer(deck, player));
-	}
-
-	private void drawCardOfPlayer(Deck deck, Player player) {
-		while (player.isDrawable()
-			&& Answer.findAnswer(InputView.inputAsDrawable(player)).isYes()) {
-			player.addCard(deck.popCard());
-			OutputView.printGamerCard(player);
-		}
 	}
 }
