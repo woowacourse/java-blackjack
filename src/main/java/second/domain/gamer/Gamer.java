@@ -1,5 +1,6 @@
 package second.domain.gamer;
 
+import second.domain.BlackJackRule;
 import second.domain.card.Card;
 import second.domain.card.HandCards;
 import second.domain.score.Score;
@@ -26,11 +27,14 @@ public abstract class Gamer {
         return isLargerScoreThan(gamer.score);
     }
 
-    public void draw(final Card card) {
-        final Card drawCard = card;
-        handCards.drawCard(drawCard);
+    public boolean isBlackJack() {
+        return BlackJackRule.isBlackJack(handCards, score);
+    }
 
-        score = score.plus(drawCard.extractScore());
+    public void draw(final Card card) {
+        handCards.drawCard(card);
+
+        score = ScoreCalculator.calculate(handCards);
     }
 
     public boolean isBust() {

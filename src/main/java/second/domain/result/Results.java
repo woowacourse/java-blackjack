@@ -28,8 +28,9 @@ public class Results {
     }
 
     private Map<ResultType, Integer> generateDealerResult(final List<Player> players, final Dealer dealer) {
+        // TODO : 이부분 문제 존재 원래는 dealer, player의 매개변수순
         return players.stream()
-                .collect(groupingBy(player -> ResultType.from(dealer, player), summingInt(x -> 1)));
+                .collect(groupingBy(player -> ResultType.from(player, dealer), summingInt(x -> 1)));
     }
 
     public Map<ResultType, List<Player>> getPlayerResults() {

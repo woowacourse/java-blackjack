@@ -1,9 +1,11 @@
 package second.domain.card;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import second.domain.BlackJackGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,5 +63,15 @@ public class HandCardsTest {
         return Arrays.stream(input)
                 .map(i -> Card.of(i, Suit.CLOVER))
                 .collect(toList());
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 확인")
+    void isBlackJack() {
+        HandCards blackJackCard = new HandCards(parseNumbersToCards(Rank.ACE, Rank.K));
+        HandCards outOfSizeBlackJackCards = new HandCards(parseNumbersToCards(Rank.ACE, Rank.SIX, Rank.FIVE));
+
+        assertThat(blackJackCard.isRightSize(BlackJackGame.INITIAL_CARD_AMOUNT)).isTrue();
+        assertThat(outOfSizeBlackJackCards.isRightSize(BlackJackGame.INITIAL_CARD_AMOUNT)).isFalse();
     }
 }

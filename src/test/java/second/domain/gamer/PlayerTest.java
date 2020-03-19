@@ -20,4 +20,16 @@ public class PlayerTest {
         player.draw(Card.of(Rank.FOUR, Suit.CLOVER));
         assertThat(player.canDrawMore()).isFalse();
     }
+
+    @Test
+    void isBlackJack() {
+        Player player = new Player("pobi");
+
+        player.draw(Card.of(Rank.ACE, Suit.CLOVER));
+        player.draw(Card.of(Rank.Q, Suit.CLOVER));
+        assertThat(player.isBlackJack()).isTrue();
+
+        player.draw(Card.of(Rank.FOUR, Suit.CLOVER));
+        assertThat(player.isBlackJack()).isFalse();
+    }
 }
