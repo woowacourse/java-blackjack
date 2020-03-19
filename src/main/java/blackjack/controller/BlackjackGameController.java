@@ -22,7 +22,10 @@ public class BlackjackGameController {
     }
 
     private static void askBettingMoney(List<Player> players) {
-        players.forEach(player -> player.addMoney(InputView.inputBettingMoney(player.getName())));
+        players.forEach(player -> {
+            String playerName = player.getName();
+            player.addMoney(InputView.inputBettingMoney(playerName));
+        });
     }
 
     private static List<Player> enrollPlayers() {

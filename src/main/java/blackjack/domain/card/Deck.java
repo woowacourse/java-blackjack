@@ -15,8 +15,9 @@ public class Deck {
     private final Stack<Card> deck;
 
     public Deck(List<Card> cards) {
+        Objects.requireNonNull(cards);
         this.deck = new Stack<>();
-        deck.addAll(Objects.requireNonNull(cards));
+        deck.addAll(cards);
         Collections.shuffle(deck);
     }
 
