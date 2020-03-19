@@ -2,17 +2,14 @@ package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
 
-import java.util.Collections;
-import java.util.EmptyStackException;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Deck {
 
     private final Stack<Card> cards = new Stack<>();
 
     public Deck(List<Card> cards) {
-        if (cards.isEmpty() || cards == null) {
+        if (Objects.isNull(cards) || cards.isEmpty()) {
             throw new IllegalArgumentException("카드 덱을 생성할 수 없습니다.");
         }
         Collections.shuffle(cards);

@@ -6,6 +6,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.money.Profit;
 
 import java.util.List;
 import java.util.Map;
@@ -63,13 +64,13 @@ public class OutputView {
 
     private static String makeHandResult(List<Card> cards) {
         return cards.stream()
-                .map(card -> String.format(CARD_FORMAT, card.getCardNumber(), card.getCardType().getKoreanName()))
+                .map(card -> String.format(CARD_FORMAT, card.getCardSymbol(), card.getCardType().getKoreanName()))
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private static String makeGamersResult(Map<Gamer, Integer> gamersResult) {
+    private static String makeGamersResult(Map<Gamer, Profit> gamersResult) {
         return gamersResult.entrySet().stream()
-                .map(entry -> String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue()))
+                .map(entry -> String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue().getProfit()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 }

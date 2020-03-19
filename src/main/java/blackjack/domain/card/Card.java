@@ -18,6 +18,10 @@ public class Card {
         return cardSymbol.getCardNumber();
     }
 
+    public String getCardSymbol() {
+        return cardSymbol.getCardSymbol();
+    }
+
     public CardType getCardType() {
         return cardType;
     }

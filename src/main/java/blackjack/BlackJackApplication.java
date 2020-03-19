@@ -24,7 +24,6 @@ public class BlackJackApplication {
         BlackJackController.drawMoreCard(dealer, players, deck);
         OutputView.printGamerScore(dealer, players);
 
-
         GamersResultDto gamersResultDto = BlackJackController.calculateProfit(dealer, players, bettingTable);
         OutputView.printGamersProfit(gamersResultDto);
     }
