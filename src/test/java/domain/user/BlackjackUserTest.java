@@ -1,20 +1,21 @@
 package domain.user;
 
+import domain.BettingMoney;
 import domain.card.CardDeck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.EmptySource;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class BlackjackUserTest {
 
     @ParameterizedTest
-    @NullAndEmptySource
-    void 이름으로_Null혹은빈값이_들어왔을때_예외처리_테스트(String input) {
-        Assertions.assertThatThrownBy(() -> new Player(input))
+    @EmptySource
+    void 이름으로_빈값이_들어왔을때_예외처리_테스트(String input) {
+        Assertions.assertThatThrownBy(() -> new Player(input, new BettingMoney("1000")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 입력입니다.");
+                .hasMessage("빈 값이 입력되었습니다.");
     }
 
     @Test
