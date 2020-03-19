@@ -21,6 +21,6 @@ public class BlackJackApplication {
 
     private static void printResults(BlackJackGame blackJackGame) {
         OutputView.printScore(blackJackGame);
-        OutputView.printResults(blackJackGame.calculateResults());
+        OutputView.printProfit(blackJackGame.calculateResults());
     }
 }

@@ -47,6 +47,10 @@ public abstract class Gamer {
         return score.isSameAs(counterGamer.score);
     }
 
+    public Money calculateProfit(double value) {
+        return this.money.times(value);
+    }
+
     public String getName() {
         return name;
     }
@@ -58,5 +62,4 @@ public abstract class Gamer {
     public Score getScore() {
         return score;
     }
-
 }

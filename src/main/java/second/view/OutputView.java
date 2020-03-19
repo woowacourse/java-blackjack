@@ -1,10 +1,10 @@
 package second.view;
 
-import first.domain.gamer.AllGamers;
 import second.domain.BlackJackGame;
 import second.domain.gamer.Dealer;
 import second.domain.gamer.Gamer;
 import second.domain.gamer.Player;
+import second.domain.result.Result;
 import second.domain.result.ResultType;
 import second.domain.result.Results;
 
@@ -62,50 +62,14 @@ public class OutputView {
         System.out.printf("%s - 결과: %s\n", parseGamerState(gamer), gamer.getScore().getValue());
     }
 
-    public static void printResults(Results results) {
+    public static void printProfit(Results results) {
         System.out.printf(
-                "## 최종 승패 \n%s \n%s"
-                , parseDealerResultToString(results.getDealerResult())
-                , parsePlayerResultsToString(results.getPlayerResults())
-        );
-    }
+                "## 최종 수익 \n%s \n"
+                , results.getDealerResult().toString());
 
-    private static String parseDealerResultToString(Map<ResultType, Integer> dealerWinLoses) {
-        return String.format(
-                "딜러: %s %s %s %s \n"
-                , parseNullToZero(dealerWinLoses.get(ResultType.WIN))
-                , ResultType.WIN.getName()
-                , parseNullToZero(dealerWinLoses.get(ResultType.LOSE))
-                , ResultType.LOSE.getName()
-        );
-    }
-
-    private static int parseNullToZero(Integer input) {
-        if (input == null) {
-            return 0;
-        }
-
-        return input;
-    }
-
-    private static String parsePlayerResultsToString(Map<ResultType, List<Player>> playerResults) {
-        StringBuilder stringBuilder = new StringBuilder();
-        List<Player> winners = playerResults.get(ResultType.WIN);
-        List<Player> losers = playerResults.get(ResultType.LOSE);
-
-        appendPlayerResult(stringBuilder, winners, ": 승\n");
-
-        appendPlayerResult(stringBuilder, losers, ": 패\n");
-
-        return stringBuilder.toString();
-    }
-
-    private static void appendPlayerResult(StringBuilder stringBuilder, List<Player> players, String resultTail) {
-        if (Objects.nonNull(players)) {
-            for (Player winner : players) {
-                stringBuilder.append(winner.getName());
-                stringBuilder.append(resultTail);
-            }
+        List<Result> playerResults = results.getPlayerResults();
+        for (Result result: playerResults) {
+            System.out.println(result.toString());
         }
     }
 
