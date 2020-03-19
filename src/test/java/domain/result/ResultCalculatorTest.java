@@ -27,7 +27,7 @@ public class ResultCalculatorTest {
     @DisplayName("두명의 점수가 같은 경우 무승부")
     void isSame() {
         Dealer dealer = new Dealer();
-        Player player = new Player("오렌지");
+        Player player = new Player("오렌지",1000);
         List<Card> deckForTest = new ArrayList<>();
         ResultCalculator resultCalculator = new ResultCalculator();
 
@@ -83,7 +83,7 @@ public class ResultCalculatorTest {
     void testWhenBothOverBlackJack() {
         ResultCalculator resultCalculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Player player = new Player("오렌지");
+        Player player = new Player("오렌지",1000);
 
         List<Card> deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
                 new Card(Symbol.JACK, Type.HEART), new Card(Symbol.KING, Type.HEART));
@@ -103,7 +103,7 @@ public class ResultCalculatorTest {
     void testWhenOnlyPlayerOverBlackJack() {
         ResultCalculator resultCalculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Player player = new Player("오렌지");
+        Player player = new Player("오렌지",1000);
 
         List<Card> deckForTest
                 = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.JACK, Type.HEART));
@@ -122,7 +122,7 @@ public class ResultCalculatorTest {
     void testWhenOnlyDealerOverBlackJack() {
         ResultCalculator resultCalculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Player player = new Player("오렌지");
+        Player player = new Player("오렌지",1000);
         List<Card> deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
                 new Card(Symbol.JACK, Type.HEART), new Card(Symbol.NINE, Type.HEART));
 
@@ -141,7 +141,7 @@ public class ResultCalculatorTest {
     void testWhenBothLowerThanBlackJack() {
         ResultCalculator resultCalculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Player player = new Player("오렌지");
+        Player player = new Player("오렌지",1000);
         List<Card> deckForTest
                 = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.NINE, Type.HEART));
         dealer.receiveFirstCards(new Deck(deckForTest));

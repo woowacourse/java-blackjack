@@ -24,12 +24,13 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = createShuffledDeck();
 
+
         doFirstDeal(players, dealer, deck);
         dealToPlayers(players, deck);
         dealToDealer(dealer, deck);
 
         OutputView.printFinalCardStatus(dealer, players);
-        conclude(players, dealer);
+//        conclude(players, dealer);
     }
 
     private static Deck createShuffledDeck() {
@@ -69,14 +70,14 @@ public class BlackJackController {
         }
     }
 
-    private static void conclude(Players players, Dealer dealer) {
-        ResultCalculator resultCalculator = new ResultCalculator();
-        OutputView.printResultMessage();
-        OutputView.printDealerResult(resultCalculator.calculateDealerAndPlayersResult(dealer, players));
-        for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(
-                player.getName(), player.getResult()
-            );
-        }
-    }
+//    private static void conclude(Players players, Dealer dealer) {
+//        ResultCalculator resultCalculator = new ResultCalculator();
+//        OutputView.printResultMessage();
+//        OutputView.printDealerResult(resultCalculator.calculateDealerAndPlayersResult(dealer, players));
+//        for (Player player : players.getPlayers()) {
+//            OutputView.printPlayerResult(
+//                player.getName(), player.getResult()
+//            );
+//        }
+//    }
 }
