@@ -32,6 +32,13 @@ public class GameParticipant {
         }
     }
 
+    public void checkBlackJack() {
+        dealer.setBlackJack(dealer.calculateScore());
+        for (Player player : players.getPlayers()) {
+            player.setBlackJack(player.calculateScore());
+        }
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

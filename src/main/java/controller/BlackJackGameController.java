@@ -21,6 +21,7 @@ public class BlackJackGameController {
         GameParticipant participant = new GameParticipant(players);
         participant.initialDraw();
         OutputView.printInitialDraw(participant);
+        participant.checkBlackJack();
 
         Dealer dealer = participant.getDealer();
         CardDeck cardDeck = participant.getCardDeck();
@@ -51,13 +52,10 @@ public class BlackJackGameController {
 
     private static void performPlayersHit(CardDeck cardDeck, Player player) {
         try {
-            while (InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
+            while (player.under21() && InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
                 player.receive(cardDeck.draw());
                 OutputView.printCardStatus(player);
             }
-        } catch (OverScoreException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            OutputView.printCardStatus(player);
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             performPlayersHit(cardDeck, player);

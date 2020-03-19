@@ -22,14 +22,17 @@ public class ParticipantCards {
         int score = 0;
         boolean containsAce = false;
         for (Card card : cards) {
-            containsAce = checkIfAce(card);
+            containsAce = checkIfAce(card, containsAce);
             score += card.getScore();
         }
         return calculateFinalScore(score, containsAce);
     }
 
-    private boolean checkIfAce(Card card) {
-        return card.getScore() == ACE_SCORE;
+    private boolean checkIfAce(Card card, boolean containsAce) {
+        if (card.getScore() == ACE_SCORE) {
+            return true;
+        }
+        return containsAce;
     }
 
     private int calculateFinalScore(int score, boolean containAce) {

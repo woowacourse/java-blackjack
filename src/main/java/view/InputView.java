@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public static String inputBettingMoney(Player player) {
-        System.out.println(player.getName() + "의 베팅 금액은?");
+        System.out.println("\n" + player.getName() + "의 베팅 금액은?");
         return scanner.next();
     }
 }

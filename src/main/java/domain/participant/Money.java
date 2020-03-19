@@ -1,7 +1,7 @@
 package domain.participant;
 
 public class Money {
-    private int money;
+    private double money;
 
     private Money(String money) {
         this.money = validateMoney(money);
@@ -29,5 +29,9 @@ public class Money {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("올바른 형식의 입력이 아닙니다.");
         }
+    }
+
+    double getAmount() {
+        return money;
     }
 }

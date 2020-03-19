@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.result.Result;
-
 public class Player extends Participant {
     private Money bettingMoney;
 
@@ -20,14 +18,20 @@ public class Player extends Participant {
         }
     }
 
-    public Result beatDealer(Dealer dealer) {
+    public double beatDealer(Dealer dealer) {
+        if (this.isBlackJack() && dealer.isBlackJack()) {
+            return 0;
+        }
+        if (this.isBlackJack()) {
+            return bettingMoney.getAmount() * (1.5);
+        }
         if (this.isBust() || isLowerThanDealerScore(dealer)) {
-            return Result.LOSE;
+            return bettingMoney.getAmount() * (-1);
         }
         if (dealer.isBust() || isHigherThanDealerScore(dealer)) {
-            return Result.WIN;
+            return bettingMoney.getAmount();
         }
-        return Result.DRAW;
+        return 0;
     }
 
     private boolean isLowerThanDealerScore(Dealer dealer) {
@@ -37,7 +41,5 @@ public class Player extends Participant {
     private boolean isHigherThanDealerScore(Dealer dealer) {
         return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() > dealer.calculateScore());
     }
-
-
 
 }

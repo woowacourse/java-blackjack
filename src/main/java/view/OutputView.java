@@ -8,7 +8,6 @@ import domain.Players;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import domain.result.Result;
 
 public class OutputView {
 
@@ -64,33 +63,23 @@ public class OutputView {
     }
 
     public static void printFinalResult(PlayerResult playerResult) {
-        System.out.println("\n## 최종 승패");
-        Map<String, Result> result = playerResult.getResult();
+        System.out.println("\n## 최종 수익");
+        Map<String, Double> result = playerResult.getResult();
         printDealerResult(result);
         printPlayersResult(result);
     }
 
-    private static void printDealerResult(Map<String, Result> userResultMap) {
+    private static void printDealerResult(Map<String, Double> userResultMap) {
         StringBuilder sb = new StringBuilder("딜러: ");
-        int dealerWin = 0;
-        int dealerDraw = 0;
-        int dealerLose = 0;
-        for (Result value : userResultMap.values()) {
-            if (value == Result.WIN) {
-                dealerLose++;
-            }
-            if (value == Result.DRAW) {
-                dealerDraw++;
-            }
-            if (value == Result.LOSE) {
-                dealerWin++;
-            }
+        int dealerProfit = 0;
+        for (double value : userResultMap.values()) {
+            dealerProfit += value;
         }
-        sb.append(dealerWin).append("승 ").append(dealerDraw).append("무 ").append(dealerLose).append("패");
+        sb.append(dealerProfit*(-1));
         System.out.println(sb);
     }
 
-    private static void printPlayersResult(Map<String, Result> userResultMap) {
+    private static void printPlayersResult(Map<String, Double> userResultMap) {
         for (String playerName : userResultMap.keySet()) {
             System.out.println(playerName + ": " + userResultMap.get(playerName));
         }

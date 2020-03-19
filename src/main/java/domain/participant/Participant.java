@@ -7,12 +7,11 @@ import domain.card.Card;
 import domain.exception.OverScoreException;
 
 public class Participant implements ParticipantInterface {
-    private static final int INITIAL_CARD_NUMBER = 2;
     private static final int MAX_SCORE = 21;
-    private static final int CRITERION = 21;
 
     private String name;
     private ParticipantCards cards;
+    private boolean isBlackJack = false;
 
     Participant(String name) {
         this.name = name;
@@ -20,10 +19,20 @@ public class Participant implements ParticipantInterface {
     }
 
     public void receive(Card card) {
-        if (calculateScore() >= CRITERION) {
+        if (calculateScore() >= MAX_SCORE) {
             throw new OverScoreException("카드의 총 점수가 21을 넘으므로 카드를 뽑으실 수 없습니다.");
         }
         cards.add(card);
+    }
+
+    public boolean under21() {
+        return (this.calculateScore() < MAX_SCORE);
+    }
+
+    public void setBlackJack(int score) {
+        if (score == 21) {
+            this.isBlackJack = true;
+        }
     }
 
     public int calculateScore() {
@@ -32,6 +41,10 @@ public class Participant implements ParticipantInterface {
 
     boolean isBust() {
         return (this.calculateScore() > MAX_SCORE);
+    }
+
+    boolean isBlackJack() {
+        return isBlackJack;
     }
 
     public String getName() {

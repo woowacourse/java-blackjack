@@ -8,7 +8,7 @@ import domain.participant.Player;
 import domain.result.Result;
 
 public class PlayerResult {
-    private Map<String, Result> playerResult;
+    private Map<String, Double> playerResult;
 
     public PlayerResult() {
         playerResult = new HashMap<>();
@@ -22,7 +22,7 @@ public class PlayerResult {
         }
     }
 
-    public Map<String, Result> getResult() {
+    public Map<String, Double> getResult() {
         return playerResult;
     }
 }
