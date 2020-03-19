@@ -10,7 +10,7 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.rule.BasicRule;
 
-public class BasicResult {
+public class BasicResult implements Result {
     private Map<BasicRule, Integer> dealerResult = new HashMap<>();
     private Map<Participant, BasicRule> playerResults = new HashMap<>();
 
@@ -19,6 +19,7 @@ public class BasicResult {
         playerResults.put(player, basicRule);
     }
 
+    @Override
     public void judge(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();

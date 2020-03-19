@@ -12,7 +12,7 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.rule.BasicRule;
 import blackjack.domain.rule.MoneyRule;
 
-public class MoneyResult {
+public class MoneyResult implements Result {
     private Money dealerMoney = new Money(0);
     private Map<Participant, Money> playersMoney = new HashMap<>();
 
@@ -24,6 +24,7 @@ public class MoneyResult {
         return bettingMoney.multiply(MoneyRule.getMoneyRule(basicRule).getMultiplyValue());
     }
 
+    @Override
     public void judge(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();

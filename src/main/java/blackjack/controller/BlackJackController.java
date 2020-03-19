@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.Deck;
@@ -9,6 +10,7 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.result.BasicResult;
+import blackjack.domain.result.MoneyResult;
 import blackjack.domain.rule.BasicRule;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
@@ -20,11 +22,20 @@ public class BlackJackController {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.getInput());
+        MoneyResult moneyResult = new MoneyResult();
+
+        List<String> inputMoneys = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + "님의 돈을 입력해주세요");
+            inputMoneys.add(InputView.getInput());
+        }
+        players.initPlayersMoney(inputMoneys, moneyResult);
+
         Participants participants = getParticipants(dealer, players);
         initialPhase(deck, participants);
         userGamePhase(deck, participants);
         dealerGamePhase(dealer);
-        endPhase(participants);
+        endPhase(participants, moneyResult);
     }
 
     private static Participants getParticipants(final Dealer dealer, Players players) {
@@ -79,11 +90,11 @@ public class BlackJackController {
         OutputView.moreCardInstruction(dealer);
     }
 
-    private static void endPhase(final Participants participants) {
+    private static void endPhase(final Participants participants, MoneyResult moneyResult) {
         BasicResult basicResult = new BasicResult();
         basicResult.judge(participants);
 
         OutputView.result(participants);
-        // OutputView.statistics(participants);
+        OutputView.moneyStatistics(moneyResult, participants);
     }
 }
