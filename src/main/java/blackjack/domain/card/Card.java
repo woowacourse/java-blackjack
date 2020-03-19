@@ -7,6 +7,8 @@ public class Card {
     private final Symbol symbol;
 
     public Card(Suit suit, Symbol symbol) {
+        Objects.requireNonNull(suit, "suit은 필수입니다");
+        Objects.requireNonNull(symbol, "symbol은 필수입니다");
         this.suit = suit;
         this.symbol = symbol;
     }
