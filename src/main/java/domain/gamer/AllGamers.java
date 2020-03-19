@@ -2,9 +2,9 @@ package domain.gamer;
 
 import domain.card.providable.CardProvidable;
 import domain.gamer.action.TurnActions;
+import domain.result.GameRule;
 import domain.result.Result;
 import domain.result.ResultDerivable;
-import domain.result.score.ScoreCalculable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +25,12 @@ public class AllGamers {
         players.forEach(player -> player.drawInitialCards(cardProvidable));
     }
 
-    public void playPlayersTurn(CardProvidable cardProvidable, ScoreCalculable scoreCalculable, TurnActions turnActions) {
-        players.forEach(player -> player.playTurn(cardProvidable, scoreCalculable, turnActions));
+    public void playPlayersTurn(CardProvidable cardProvidable, GameRule gameRule, TurnActions turnActions) {
+        players.forEach(player -> player.playTurn(cardProvidable, gameRule, turnActions));
     }
 
-    public void playDealerTurn(CardProvidable cardProvidable, ScoreCalculable scoreCalculable, TurnActions turnActions) {
-        dealer.playTurn(cardProvidable, scoreCalculable, turnActions);
+    public void playDealerTurn(CardProvidable cardProvidable, GameRule gameRule, TurnActions turnActions) {
+        dealer.playTurn(cardProvidable, gameRule, turnActions);
     }
 
     public List<Result> gainAllResults(ResultDerivable resultDerivable) {

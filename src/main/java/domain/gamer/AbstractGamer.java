@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.card.Card;
 import domain.card.providable.CardProvidable;
 import domain.gamer.action.TurnActions;
+import domain.result.GameRule;
 import domain.result.score.Score;
 import domain.result.score.ScoreCalculable;
 
@@ -36,10 +37,10 @@ public abstract class AbstractGamer implements Gamer {
     }
 
     @Override
-    public void playTurn(CardProvidable cardProvidable, ScoreCalculable scoreCalculable, TurnActions turnActions) {
+    public void playTurn(CardProvidable cardProvidable, GameRule rule, TurnActions turnActions) {
         while (turnActions.isHit(this)) {
             hand.drawCard(cardProvidable);
-            if (!scoreCalculable.checkCanDrawMore(this)) {
+            if (!rule.canDrawMore(this)) {
                 break;
             }
             turnActions.showHand(this);

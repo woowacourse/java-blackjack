@@ -85,7 +85,7 @@ public class OutputView {
 
         stringBuilder.append(result.getGamerName().getValue());
         stringBuilder.append(": ");
-        stringBuilder.append((int) result.getBettingMoney().getValue());
+        stringBuilder.append((int) result.getProfit().getValue());
         stringBuilder.append("\n");
 
         return stringBuilder.toString();

@@ -5,18 +5,18 @@ import domain.gamer.Name;
 
 public class Result {
     Name gamerName;
-    Money bettingMoney;
+    Money profit;
 
-    public Result(Name gamerName, Money bettingMoney) {
+    public Result(Name gamerName, Money profit) {
         this.gamerName = gamerName;
-        this.bettingMoney = bettingMoney;
+        this.profit = profit;
     }
 
     public Name getGamerName() {
         return gamerName;
     }
 
-    public Money getBettingMoney() {
-        return bettingMoney;
+    public Money getProfit() {
+        return profit;
     }
 }

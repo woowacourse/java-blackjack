@@ -16,7 +16,7 @@ public class AbstractGamerTest {
 
         player.drawInitialCards(cardDeck);
 
-        assertThat(player.getHand().getCards().size()).isEqualTo(2);
+        assertThat(player.getHand().size()).isEqualTo(2);
     }
 
     @Test
@@ -27,11 +27,11 @@ public class AbstractGamerTest {
 
         player.playTurn(cardDeck, blackJackRule, new TurnActions(gamer -> YesNo.NO, gamer -> {
         }));
-        assertThat(player.getHand().getCards().size()).isEqualTo(0);
+        assertThat(player.getHand().size()).isEqualTo(0);
 
         player.playTurn(cardDeck, blackJackRule, new TurnActions(gamer -> YesNo.YES, gamer -> {
         }));
-        assertThat(player.getHand().getCards().size()).isGreaterThan(1);
+        assertThat(player.getHand().size()).isGreaterThan(1);
     }
 
 //    @Test
