@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.user.Name;
 import blackjack.domain.user.Playable;
 
 import java.util.Scanner;
@@ -19,4 +20,8 @@ public final class InputView {
 		return scanner.nextLine();
 	}
 
+	public static String inputBettingMoney(Name name) {
+		System.out.println(name.getString() + "의 배팅금액은?");
+		return scanner.nextLine();
+	}
 }
