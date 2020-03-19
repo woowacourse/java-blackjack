@@ -81,7 +81,7 @@ public class OutputView {
 	}
 
 	public static void printDealerResult(Profit dealerProfit) {
-		System.out.println("## 최종승패");
+		System.out.println("## 최종수");
 		StringBuilder sb = new StringBuilder();
 		sb.append("딜러: ");
 		sb.append(dealerProfit.getProfit());

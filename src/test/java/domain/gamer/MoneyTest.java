@@ -44,7 +44,7 @@ class MoneyTest {
 
 	@ParameterizedTest
 	@CsvSource(value = {"3000.0,1 ,3000.0", "3000.0, 1.5, 4500.0", "1000,-1,-1000"})
-	@DisplayName("더하기 연산을 올바르게 수행하는지 테스트")
+	@DisplayName("곱하 연산을 올바르게 수행하는지 테스트")
 	void multiplyTest(double first, double second, double expected) {
 		assertThat(Money.of(first).multiply(second)).isEqualTo(expected);
 	}

@@ -1,8 +1,7 @@
 package domain.gamer;
 
 public class Money {
-	private static final int MIN = 0;
-	public static final Money ZERO = new Money(MIN);
+	public static final Money ZERO = new Money(0);
 
 	private final double money;
 
@@ -12,7 +11,7 @@ public class Money {
 	}
 
 	private void validate(double money) {
-		if (money < MIN) {
+		if (money < 0) {
 			throw new IllegalArgumentException("Money는 음수가 될 수 없습니다.");
 		}
 	}

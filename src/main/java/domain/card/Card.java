@@ -15,6 +15,14 @@ public class Card {
 		return symbol.isAce();
 	}
 
+	public String getCardInfo() {
+		return symbol.name() + " " + type.name();
+	}
+
+	public int getScore() {
+		return this.symbol.getScore();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -30,13 +38,4 @@ public class Card {
 	public int hashCode() {
 		return Objects.hash(symbol, type);
 	}
-
-	public String getCardInfo() {
-		return symbol.toString() + " " + type.toString();
-	}
-
-	public int getScore() {
-		return this.symbol.getScore();
-	}
-
 }
