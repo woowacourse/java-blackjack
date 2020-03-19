@@ -16,7 +16,7 @@ public class PlayerTest {
     @NullAndEmptySource
     @DisplayName("Player 생성 시 이름 인자의 null, empty 체크")
     void nullAndEmptyTest(String input) {
-        assertThatThrownBy(() -> new Player(input)).
+        assertThatThrownBy(() -> new Player(input,1)).
             isInstanceOf(NullPointerException.class);
     }
 
@@ -24,7 +24,7 @@ public class PlayerTest {
     @DisplayName("초기 2장의 카드 받기 테스트")
     void receiveFirstCards() {
         Deck deck = CardFactory.create();
-        Player player = new Player("pobi");
+        Player player = new Player("pobi",1);
         player.receiveFirstCards(deck);
         assertThat(player.getCards().size()).isEqualTo(2);
     }
@@ -33,7 +33,7 @@ public class PlayerTest {
     @DisplayName("한 장의 카드를 더 받기")
     void receiveCard() {
         Deck deck = CardFactory.create();
-        Player player = new Player("pobi");
+        Player player = new Player("pobi",1);
         player.receiveFirstCards(deck);
         int sizeBeforeReceiveCard = player.getCards().size();
         player.receiveCard(deck);

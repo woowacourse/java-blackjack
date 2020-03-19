@@ -6,11 +6,13 @@ import utils.StringUtils;
 
 public class Player extends User {
     private Name name;
+    private BettingMoney bettingMoney;
     private Result result;
 
-    public Player(String name) {
+    public Player(String name,int bettingMoney) {
         StringUtils.checkNameNullAndEmpty(name);
         this.name = new Name(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     public boolean isReceiveAble(){

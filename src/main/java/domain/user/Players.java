@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.Deck;
 import utils.StringUtils;
+import view.InputView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,7 @@ public class Players {
     public Players(List<String> playerNames) {
         StringUtils.checkNameNullAndEmpty(playerNames);
         for (String playerName : playerNames) {
-            players.add(new Player(playerName));
+            players.add(new Player(playerName, InputView.inputBettingMoney(playerName)));
         }
     }
 
