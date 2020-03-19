@@ -4,7 +4,6 @@ import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserCards;
 import blackjack.domain.result.CardsResult;
-
 import java.util.List;
 
 public final class Dealer implements Gambler {

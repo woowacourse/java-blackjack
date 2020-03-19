@@ -7,11 +7,10 @@ import blackjack.domain.YesOrNo;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.gambler.Players;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

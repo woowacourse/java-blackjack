@@ -2,9 +2,8 @@ package blackjack.domain.result;
 
 import blackjack.domain.Money;
 import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Players;
 import blackjack.domain.gambler.Player;
-
+import blackjack.domain.gambler.Players;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,9 +38,9 @@ public final class GameResult {
 
     private Map<Player, Money> calculatePlayerResults(Dealer dealer, Players players) {
         return players.getPlayers().stream()
-                .collect(Collectors
-                        .toMap(player -> player, player -> player.getProfitByComparing(dealer), (a1, a2) -> a1,
-                                LinkedHashMap::new));
+            .collect(Collectors
+                .toMap(player -> player, player -> player.getProfitByComparing(dealer),
+                    (a1, a2) -> a1, LinkedHashMap::new));
     }
 
     private Money calculateDealerResults() {

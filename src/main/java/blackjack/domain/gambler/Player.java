@@ -6,7 +6,6 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserCards;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.PlayerOutcome;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +14,7 @@ public final class Player implements Gambler {
     private static final int BASES_SCORE_CAN_DRAW = 21;
     private static final int DEFAULT_DRAW_COUNT = 1;
     private static final String PLAYER_NAME_IS_NULL_EXCEPTION_MESSAGE =
-            "참여인원의 이름은 null이어선 안됩니다.";
+        "참여인원의 이름은 null이어선 안됩니다.";
     private static final String MONEY_IS_NULL_EXCEPTION_MESSAGE = "배팅금액은 null이어선 안됩니다.";
 
     private final Name name;
@@ -29,7 +28,6 @@ public final class Player implements Gambler {
         this.money = money;
     }
 
-    // 검증로직 제외
     private void validateName(Name name) {
         if (Objects.isNull(name)) {
             throw new IllegalArgumentException(PLAYER_NAME_IS_NULL_EXCEPTION_MESSAGE);

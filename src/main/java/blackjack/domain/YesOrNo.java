@@ -20,8 +20,8 @@ public enum YesOrNo {
             throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
         }
         return Arrays.stream(YesOrNo.values())
-                .filter(yesOrNo -> yesOrNo.value == input.toLowerCase().charAt(0))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
+            .filter(yesOrNo -> yesOrNo.value == input.toLowerCase().charAt(0))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
     }
 }

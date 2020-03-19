@@ -8,13 +8,13 @@ public final class Card {
     private final Symbol symbol;
 
     public Card(Type type, Symbol symbol) {
-        validNotNull(type, symbol);
+        validateNotNull(type, symbol);
         this.type = type;
         this.symbol = symbol;
     }
 
-    private void validNotNull(Type type, Symbol symbol) {
-        if(type == null || symbol == null) {
+    private void validateNotNull(Type type, Symbol symbol) {
+        if (type == null || symbol == null) {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
     }

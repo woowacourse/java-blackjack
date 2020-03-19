@@ -1,9 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Money;
 import blackjack.domain.Name;
 import blackjack.domain.gambler.Player;
-
 import java.util.Scanner;
 
 public class InputView {

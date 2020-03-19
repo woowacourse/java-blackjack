@@ -1,12 +1,10 @@
 package blackjack.domain.gambler;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Money;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,6 +39,6 @@ public class PlayerTest {
         dealer.drawCard(cardDeck, 10);
         player.drawCard(cardDeck);
         assertThat(player.getProfitByComparing(dealer).getMoney())
-                .isEqualTo(10000);
+            .isEqualTo(10000);
     }
 }

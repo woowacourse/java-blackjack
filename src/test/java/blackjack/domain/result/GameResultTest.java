@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.Money;
@@ -8,14 +7,10 @@ import blackjack.domain.Name;
 import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Players;
-
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import blackjack.domain.gambler.Player;
+import blackjack.domain.gambler.Players;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

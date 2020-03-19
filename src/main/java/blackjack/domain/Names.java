@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Names {
+
     private static final String EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE = "Empty or null names exception.";
     private static final String DELIMITER = ",";
 
@@ -18,8 +19,8 @@ public class Names {
 
     public Names(String input) {
         this(Arrays.stream(input.split(DELIMITER))
-                .map(Name::new)
-                .collect(Collectors.toList()));
+            .map(Name::new)
+            .collect(Collectors.toList()));
     }
 
     private void validateNames(List<Name> names) {

@@ -3,11 +3,9 @@ package blackjack.view;
 import blackjack.domain.Money;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
-import blackjack.domain.result.CardsResult;
-import blackjack.domain.result.PlayerOutcome;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.gambler.Players;
-
+import blackjack.domain.result.CardsResult;
+import blackjack.domain.result.GameResult;
 import java.util.Map;
 
 public class OutputView {
@@ -15,8 +13,8 @@ public class OutputView {
     public static void printCardDistribution(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다."
-                , dealer.getName()
-                , String.join(", ", players.getPlayerNames()));
+            , dealer.getName()
+            , String.join(", ", players.getPlayerNames()));
         System.out.println();
     }
 
@@ -35,12 +33,12 @@ public class OutputView {
 
     private static String getPlayerCards(Player player) {
         return String.format("%s: %s", player.getName()
-                , String.join(", ", player.getCardsInfos()));
+            , String.join(", ", player.getCardsInfos()));
     }
 
     private static String getDealerCards(Dealer dealer) {
         return String.format("%s: %s", dealer.getName()
-                , String.join(", ", dealer.getCardsInfos()));
+            , String.join(", ", dealer.getCardsInfos()));
     }
 
     public static void printDealerOneMoreCard(Dealer dealer) {
@@ -65,19 +63,19 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealer,
-                gameResult.getDealerResults());
+            gameResult.getDealerResults());
         printPlayerFinalResult(gameResult.getPlayerResults());
     }
 
     private static void printDealerFinalResult(Dealer dealer, Money dealerMoney) {
         System.out.printf("%s: ", dealer.getName());
-        System.out.println(dealerMoney.getMoney());
+        System.out.println(dealerMoney);
     }
 
     private static void printPlayerFinalResult(Map<Player, Money> playersResult) {
         for (Player player : playersResult.keySet()) {
             Money playerMoney = playersResult.get(player);
-            System.out.printf("%s: %s", player.getName(), playerMoney.getMoney());
+            System.out.printf("%s: %s", player.getName(), playerMoney);
             System.out.println();
         }
     }
