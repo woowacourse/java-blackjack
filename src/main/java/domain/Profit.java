@@ -26,7 +26,7 @@ public class Profit {
 		return new Profit(bettingMoney.getValue() * LOSE_RATE);
 	}
 
-	public Profit minus(Profit that) {
+	public Profit subtract(Profit that) {
 		return new Profit(profit - that.profit);
 	}
 

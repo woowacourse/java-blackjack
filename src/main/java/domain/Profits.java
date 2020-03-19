@@ -18,7 +18,7 @@ public class Profits {
 		Map<Name, Profit> profits = new LinkedHashMap<>();
 		Profit dealerProfit = playersProfit.values()
 				.stream()
-				.reduce(Profit.ZERO, Profit::minus);
+				.reduce(Profit.ZERO, Profit::subtract);
 		profits.put(new Name(dealer.getName()), dealerProfit);
 		profits.putAll(playersProfit);
 		return new Profits(profits);
