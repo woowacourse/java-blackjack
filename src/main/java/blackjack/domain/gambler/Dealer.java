@@ -16,7 +16,7 @@ public final class Dealer implements Gambler {
     private static final int DEFAULT_DRAW_COUNT = 1;
 
     private final Name name;
-    protected UserCards userCards = new UserCards();
+    private UserCards userCards = new UserCards();
 
     public Dealer() {
         this.name = DEALER_NAME;

@@ -3,12 +3,15 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Money;
+import blackjack.domain.Name;
 import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Players;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +26,11 @@ public class GameResultTest {
 
     @BeforeAll
     static void resetVariable() {
-        Players players = new Players(new Names("jamie,Ravie"));
+        Map<Name, Money> playerInfo = new LinkedHashMap<>();
+        for (Name name : new Names("jamie1,jamie2").getNames()) {
+            playerInfo.put(name, Money.of("500"));
+        }
+        Players players = new Players(playerInfo);
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         dealer.drawCard(new CardDeck(), 2);
@@ -44,22 +51,22 @@ public class GameResultTest {
     @DisplayName("플레이어의 승무패를 가져옴")
     @Test
     void checkPlayersResult() {
-        Map<Player, Outcome> playerResult = gameResult.getPlayersResult();
-        List<Outcome> outcomes = Arrays.asList(Outcome.values());
+        Map<Player, PlayerOutcome> playerResult = gameResult.getPlayersResult();
+        List<PlayerOutcome> playerOutcomes = Arrays.asList(PlayerOutcome.values());
 
         for (Player player : playerResult.keySet()) {
-            assertThat(outcomes.contains(playerResult.get(player))).isTrue();
+            assertThat(playerOutcomes.contains(playerResult.get(player))).isTrue();
         }
     }
 
     @DisplayName("딜러의 승무패를 가져옴")
     @Test
     void checkDealerResult() {
-        Map<Outcome, Integer> dealerResults = gameResult.getDealerResultsNoZero();
+        Map<PlayerOutcome, Integer> dealerResults = gameResult.getDealerResultsNoZero();
         int total = 0;
-        for (Outcome outcome : dealerResults.keySet()) {
-            total += dealerResults.get(outcome);
-            assertThat(dealerResults.get(outcome) != 0).isTrue();
+        for (PlayerOutcome playerOutcome : dealerResults.keySet()) {
+            total += dealerResults.get(playerOutcome);
+            assertThat(dealerResults.get(playerOutcome) != 0).isTrue();
         }
         assertThat(total).isEqualTo(2);
     }

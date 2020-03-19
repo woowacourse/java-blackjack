@@ -1,12 +1,9 @@
 package blackjack.domain.gambler;
 
+import blackjack.domain.Money;
 import blackjack.domain.Name;
-import blackjack.domain.Names;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -19,25 +16,21 @@ public final class Players {
 
     private final List<Player> players;
 
-    public Players(Names playerNames) {
-        validNotNull(playerNames);
-        validCount(playerNames);
-        this.players = Collections.unmodifiableList(playerNames.getNames().stream()
-                .map(Player::new)
+    public Players(Map<Name, Money> playerInfo) {
+        validatePlayerInfo(playerInfo);
+        this.players = Collections.unmodifiableList(playerInfo.keySet().stream()
+                .map(playerName -> new Player(playerName, playerInfo.get(playerName)))
                 .collect(Collectors.toList()));
     }
 
-    private void validNotNull(Names playerNames) {
-        if (Objects.isNull(playerNames)) {
+    private void validatePlayerInfo(Map<Name, Money> playerInfo) {
+        if (Objects.isNull(playerInfo)) {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
-    }
-
-    private void validCount(Names playerNames) {
-        if (playerNames.isSizeInRange(MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT)) {
-            return;
+        if (playerInfo.size() < MINIMUM_PLAYER_COUNT || playerInfo.size() > MAXIMUM_PLAYER_COUNT) {
+            throw new IllegalArgumentException(OUT_OF_RANGE_EXCEPTION_MESSAGE);
         }
-        throw new IllegalArgumentException(OUT_OF_RANGE_EXCEPTION_MESSAGE);
+        return;
     }
 
     public List<Player> getPlayers() {

@@ -3,6 +3,7 @@ package blackjack.domain.gambler;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Money;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ public class PlayerTest {
     @BeforeEach
     void resetVariable() {
         cardDeck = new CardDeck();
-        player = new Player(new Name("Jamie&Ravie"));
+        player = new Player(new Name("Jamie&Ravie"), Money.of("10000"));
     }
 
     @DisplayName("드로우 가능여부 - 가능")
@@ -31,4 +32,5 @@ public class PlayerTest {
         }
         assertThat(player.canDrawCard()).isFalse();
     }
+
 }
