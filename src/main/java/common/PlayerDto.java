@@ -14,8 +14,39 @@ public class PlayerDto {
         this.bettingMoney = bettingMoney;
     }
 
-    public static PlayerDto of(String name, int bettingMoney) {
+    private PlayerDto(String name, int bettingMoney, List<String> cards) {
+        this.name = name;
+        this.bettingMoney = bettingMoney;
+        this.cards = cards;
+    }
+
+    private PlayerDto(String name, int bettingMoney, List<String> cards, int score, int profit) {
+        this.name = name;
+        this.bettingMoney = bettingMoney;
+        this.cards = cards;
+        this.score = score;
+        this.profit = profit;
+    }
+
+    public void setCards(List<String> cards) {
+        this.cards = cards;
+    }
+
+    public static PlayerDto input(String name, int bettingMoney) {
         return new PlayerDto(name, bettingMoney);
+    }
+
+    public static PlayerDto complete(String name, int bettingMoney, List<String> cards, int score, int profit) {
+        return new PlayerDto(name, bettingMoney, cards, score, profit);
+    }
+
+    public static PlayerDto update(String name, int bettingMoney, List<String> cards) {
+        return new PlayerDto(name, bettingMoney, cards);
+    }
+
+
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 
     public int getProfit() {

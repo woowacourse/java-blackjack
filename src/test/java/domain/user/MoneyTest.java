@@ -14,7 +14,7 @@ class MoneyTest {
 
     @Test
     void ofFail() {
-        assertThatThrownBy(() -> Money.of(0))
+        assertThatThrownBy(() -> Money.of(-1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Money.OUT_OF_RANGE_MESSGAE);
     }

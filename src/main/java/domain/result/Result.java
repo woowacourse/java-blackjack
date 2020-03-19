@@ -3,6 +3,7 @@ package domain.result;
 import domain.user.Money;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.User;
 
 public enum Result {
     PLAYER_WIN_WITHOUT_BLACKJACk(money -> money.multiply(1)),
@@ -15,8 +16,8 @@ public enum Result {
         this.calculator = calculator;
     }
 
-    static Result judge(MatchService matchService, Player player, Dealer dealer) {
-        return matchService.match(player, dealer);
+    public static Result judge(MatchRule matchRule, User player, User dealer) {
+        return matchRule.match(player, dealer);
     }
 
     public Money calculateProfit(Money money) {

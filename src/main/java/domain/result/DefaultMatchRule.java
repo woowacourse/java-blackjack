@@ -1,11 +1,10 @@
 package domain.result;
 
-import domain.user.Dealer;
-import domain.user.Player;
+import domain.user.User;
 
-public class DefaultMatchRule implements MatchService {
+public class DefaultMatchRule implements MatchRule {
     @Override
-    public Result match(Player player, Dealer dealer) {
+    public Result match(User player, User dealer) {
         if (player.isBust()) {
             return Result.DEALER_WIN;
         }
@@ -29,7 +28,7 @@ public class DefaultMatchRule implements MatchService {
         return matchScore(player, dealer);
     }
 
-    private Result matchScore(Player player, Dealer dealer) {
+    private Result matchScore(User player, User dealer) {
         int scoreOfPlayer = player.calculateScore();
         int scoreOfDealer = dealer.calculateScore();
         if (scoreOfPlayer < scoreOfDealer) {

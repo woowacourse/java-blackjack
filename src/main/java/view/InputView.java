@@ -13,7 +13,7 @@ public class InputView {
     private static final String DELIMITER = ",";
 
     public static String inputWantToHit(String playerName) {
-        System.out.println(String.format("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n", playerName));
+        System.out.println(String.format("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
         return scanner.nextLine();
     }
 
@@ -22,7 +22,7 @@ public class InputView {
         List<String> playerNames = inputPlayerNames();
         for (String playerName : playerNames) {
             int bettingMoney = inputBettingMoney(playerName);
-            PlayerDto playerDto = PlayerDto.of(playerName, bettingMoney);
+            PlayerDto playerDto = PlayerDto.input(playerName, bettingMoney);
             playerDtos.add(playerDto);
         }
 

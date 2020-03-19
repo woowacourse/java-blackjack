@@ -18,20 +18,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CardsTest {
 
     @Test
-    @DisplayName("#of() : should return cards with cards which size is bigger than MIN_SIZE")
+    @DisplayName("#input() : should return cards with cards which size is bigger than MIN_SIZE")
     void ofValidSize() {
         List<Card> validCards = Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER));
         assertThat(Cards.of(validCards)).isNotNull();
     }
 
-    @Test
-    @DisplayName("#of() : should throw IllegalArguemntException with cards which size is smaller than MIN_SIZE")
-    void ofInvalidSize() {
-        List<Card> invalidCards = Collections.emptyList();
-        assertThatThrownBy(() -> Cards.of(invalidCards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Cards.INVALID_SIZE_MESSAGE);
-    }
+    //todo: refactor
+//    @Test
+//    @DisplayName("#input() : should throw IllegalArguemntException with cards which size is smaller than MIN_SIZE")
+//    void ofInvalidSize() {
+//        List<Card> invalidCards = Collections.emptyList();
+//        assertThatThrownBy(() -> Cards.of(invalidCards))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessage(Cards.INVALID_SIZE_MESSAGE);
+//    }
 
     @Test
     @DisplayName("#add() : should add Card")
@@ -61,7 +62,7 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("#calculateSumExceptAce : should return score of cards without ace")
+    @DisplayName("#calculateSumExceptAce : should return score input cards without ace")
     void calculateSumExceptAce() {
         Cards cards = Cards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
         int sum = cards.calculateSumExceptAce();
@@ -70,7 +71,7 @@ class CardsTest {
 
     @ParameterizedTest
     @MethodSource({"getCasesForTestingCalculateSumOfAces"})
-    @DisplayName("#calculateSumWithAces : should return score of cards of aces")
+    @DisplayName("#calculateSumWithAces : should return score input cards input aces")
     void calculateSumOfAces(int sum, int expected) {
         Cards cards = Cards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
         int actual = cards.calculateSumWithAces(sum);

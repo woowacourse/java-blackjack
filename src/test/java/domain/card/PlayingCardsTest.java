@@ -62,7 +62,7 @@ class PlayingCardsTest {
 
     @ParameterizedTest
     @MethodSource({"getCasesForTestingCalculate"})
-    @DisplayName("#calculate : should return sum of card scores")
+    @DisplayName("#calculate : should return sum input card scores")
     void calculate(List<Card> cards, int expected) {
         PlayingCards playingCards = PlayingCards.of(cards);
         int sum = playingCards.calculate();

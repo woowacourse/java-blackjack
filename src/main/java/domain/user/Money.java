@@ -3,7 +3,7 @@ package domain.user;
 import java.util.Objects;
 
 public class Money {
-    private static final int MIN = 1;
+    private static final int MIN = 0;
     static final String OUT_OF_RANGE_MESSGAE = String.format("돈은 최소 %d원 이상이어야 합니다.", MIN);
     private final double value;
 
@@ -11,7 +11,7 @@ public class Money {
         this.value = value;
     }
 
-    static Money of(double value) {
+    public static Money of(double value) {
         if (value < MIN) {
             throw new IllegalArgumentException(OUT_OF_RANGE_MESSGAE);
         }
@@ -20,6 +20,10 @@ public class Money {
 
     public Money multiply(double rate) {
         return new Money(value * rate);
+    }
+
+    public static Money deserialize(int money) {
+        return of(money);
     }
 
     @Override
@@ -33,5 +37,19 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        //todo refac
+        return String.valueOf(value);
+    }
+
+    int serialize() {
+        return (int) value;
+    }
+
+    public Money add(Money other) {
+        return new Money(value + other.value);
     }
 }

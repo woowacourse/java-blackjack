@@ -23,22 +23,8 @@ class DealerTest {
     @Test
     @DisplayName("첫턴에 딜러는 2장의 카드를 받는다.")
     void construct() {
-        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
-                new Card(Symbol.TEN, Type.HEART)));
-        assertThat(new Dealer(playingCards, deck, mock(Money.class))).isNotNull();
-    }
-
-    @Test
-    @DisplayName("딜러의 카드를 추가한다.")
-    void addCard() {
-        PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.CLOVER), new Card(Symbol.QUEEN, Type.SPADE))));
-        //todo : 왜 여기서 먼저 꺼내와야 하는 지 알아내기
-        int defaultCardsSize = playingCards.size();
-        Dealer dealer = new Dealer(playingCards, deck, mock(Money.class));
-        Card card = new Card(Symbol.ACE, Type.CLOVER);
-        dealer.addCard(card);
-
-        assertThat(dealer.countCards()).isEqualTo(defaultCardsSize + 1);
+                new Card(Symbol.TEN, Type.HEART);
+        assertThat(new Dealer(deck)).isNotNull();
     }
 
     @Test
@@ -46,23 +32,25 @@ class DealerTest {
     void hit() {
         //given
         PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.CLOVER))));
-        Dealer dealer = new Dealer(playingCards, deck, mock(Money.class));
-        int defaultSizeOfCards = dealer.countCards();
+        when(deck.popInitCards()).thenReturn(playingCards);
+        Dealer dealer = Dealer.start(deck);
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
 
         //when
         dealer.hit(card);
 
         //then
-        assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + 1);
+        assertThat(dealer.countCards()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("#confirmCards : should add cards for given times without return")
     void confirmCards() {
         //given
+
         PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.KING, Type.SPADE))));
-        Dealer dealer = new Dealer(playingCards, deck, mock(Money.class));
+        when(deck.popInitCards()).thenReturn(playingCards);
+        Dealer dealer = Dealer.start(deck);
         List<Card> cards = setUpDeck();
         int hitSize = cards.size();
         int defaultSizeOfCards = dealer.countCards();
@@ -80,9 +68,9 @@ class DealerTest {
         Money bettingMoney = mock(Money.class);
         //todo: refac multiply mocking logic
         when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        Dealer dealer = new Dealer(mock(PlayingCards.class), mock(Deck.class), bettingMoney);
+        Dealer dealer = new Dealer(mock(Deck.class));
         //when
-        Money profit = dealer.calculateProfit(result);
+        Money profit = dealer.calculateProfit(result, bettingMoney);
         assertThat(profit).isEqualTo(bettingMoney);
         verifyCalculateProfit(result, bettingMoney);
 

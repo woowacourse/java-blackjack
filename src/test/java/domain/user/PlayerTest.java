@@ -96,7 +96,7 @@ class PlayerTest {
 
 
         //then
-        assertThat(player.getCards()).isEqualTo(expectedCards);
+        assertThat(player.getCards()).isEqualTo(PlayingCards.of(expectedCards));
         assertThat(player.countCards()).isEqualTo(defaultSizeOfCards + cards.size());
     }
 

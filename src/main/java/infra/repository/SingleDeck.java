@@ -31,7 +31,9 @@ public class SingleDeck implements Deck {
     }
 
     public static SingleDeck shuffle() {
+        //todo : test, check if works good
         List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
+        Collections.shuffle(cards);
         return new SingleDeck(cards);
     }
 

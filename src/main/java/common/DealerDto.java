@@ -3,9 +3,26 @@ package common;
 import java.util.List;
 
 public class DealerDto {
-    private String name = "딜러";
+    private String name;
     private List<String> cards;
     private int score;
+    private int profit;
+
+    public DealerDto(String name, List<String> cards) {
+        this.name = name;
+        this.cards = cards;
+    }
+
+    private DealerDto(String name, List<String> cards, int profit, int score) {
+        this.name = name;
+        this.cards = cards;
+        this.profit = profit;
+        this.score = score;
+    }
+
+    public static DealerDto complete(String name, List<String> cards, int profit, int score) {
+        return new DealerDto(name, cards, profit, score);
+    }
 
     public int getProfit() {
         return profit;
@@ -15,7 +32,7 @@ public class DealerDto {
         this.profit = profit;
     }
 
-    private int profit;
+
 
 
     public int getScore() {

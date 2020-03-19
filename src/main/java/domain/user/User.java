@@ -1,26 +1,26 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.PlayingCards;
+import domain.result.MatchRule;
 import domain.result.Result;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
+    protected final String name;
     public static final int INIT_CARDS_SIZE = 2;
     public static final int BLACKJACK_VALUE = 21;
     protected final PlayingCards playingCards;
-    protected final Money money;
     protected static final double LOSE_PENALTY_RATE = -1;
-    private final String name;
 
 
 
-    User(PlayingCards playingCards, String name, Money money) {
+    User(PlayingCards playingCards, String name) {
         this.playingCards = playingCards;
         this.name = name;
-        this.money = money;
     }
 
     void addCard(Card card) {
@@ -41,6 +41,8 @@ public abstract class User {
         return playingCards.size() != INIT_CARDS_SIZE || score != BLACKJACK_VALUE;
     }
 
+    public abstract Result match(User user, MatchRule matchRule);
+
     public boolean isBust() {
         return playingCards.isBust();
     }
@@ -51,13 +53,11 @@ public abstract class User {
         return name;
     }
 
-    public List<Card> getCards() {
-        return playingCards.getCards();
+    public PlayingCards getCards() {
+        return playingCards;
     }
 
-    public abstract Money calculateProfit(Result result);
-
-    void hit(Card card) {
+    public void hit(Card card) {
         playingCards.add(card);
     }
 

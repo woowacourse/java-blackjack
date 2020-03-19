@@ -20,14 +20,14 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource({"getCasesForJudge"})
     void judge(Result expected) {
-        MatchService mockMatchService = mock(MatchService.class);
+        MatchRule mockMatchRule = mock(MatchRule.class);
         Player mockPlayer = mock(Player.class);
         Dealer mockDealer = mock(Dealer.class);
-        when(mockMatchService.match(mockPlayer, mockDealer)).thenReturn(expected);
+        when(mockMatchRule.match(mockPlayer, mockDealer)).thenReturn(expected);
 
-        Result actual = Result.judge(mockMatchService, mockPlayer, mockDealer);
+        Result actual = Result.judge(mockMatchRule, mockPlayer, mockDealer);
         assertThat(actual).isEqualTo(expected);
-        verify(mockMatchService).match(mockPlayer, mockDealer);
+        verify(mockMatchRule).match(mockPlayer, mockDealer);
     }
 
     private static Stream<Arguments> getCasesForJudge() {

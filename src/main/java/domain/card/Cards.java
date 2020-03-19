@@ -16,9 +16,10 @@ public class Cards {
     }
 
     public static Cards of(List<Card> cards) {
-        if (cards.size() < MIN_SIZE) {
-            throw new IllegalArgumentException(INVALID_SIZE_MESSAGE);
-        }
+        //todo refac
+//        if (cards.size() < MIN_SIZE) {
+//            throw new IllegalArgumentException(INVALID_SIZE_MESSAGE);
+//        }
         return new Cards(cards);
     }
 
