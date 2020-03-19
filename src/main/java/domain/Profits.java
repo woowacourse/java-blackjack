@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Profits {
-	private Map<Name, Profit> profits;
+	private final Map<Name, Profit> profits;
 
 	private Profits(Map<Name, Profit> profits) {
 		this.profits = Collections.unmodifiableMap(profits);
