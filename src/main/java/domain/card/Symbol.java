@@ -20,26 +20,26 @@ public enum Symbol {
 
 	private final int score;
 	private final String name;
-	private Predicate<Integer> specialScoreJudge;
-	private Supplier<Integer> specialScoreSupplier;
+	private Predicate<Integer> promotableJudge;
+	private Supplier<Integer> promotionScore;
 
 	Symbol(int score, String name) {
 		this(score, name, userScore -> false, () -> 0);
 	}
 
-	Symbol(int score, String name, Predicate<Integer> specialScoreJudge, Supplier<Integer> specialScoreSupplier) {
+	Symbol(int score, String name, Predicate<Integer> promotableJudge, Supplier<Integer> promotionScore) {
 		this.score = score;
 		this.name = name;
-		this.specialScoreJudge = specialScoreJudge;
-		this.specialScoreSupplier = specialScoreSupplier;
+		this.promotableJudge = promotableJudge;
+		this.promotionScore = promotionScore;
 	}
 
-	public boolean getSpecialScoreJudge(int userScore) {
-		return specialScoreJudge.test(userScore);
+	public boolean getPromotableJudge(int userScore) {
+		return promotableJudge.test(userScore);
 	}
 
-	public int getSpecialScoreSupplier() {
-		return specialScoreSupplier.get();
+	public int getPromotionScore() {
+		return promotionScore.get();
 	}
 
 	public int getScore() {

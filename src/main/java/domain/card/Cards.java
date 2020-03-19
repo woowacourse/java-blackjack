@@ -33,8 +33,8 @@ public class Cards {
 				.sum();
 
 		int specialScore = cards.stream()
-				.filter(card -> card.getSymbol().getSpecialScoreJudge(rawScore))
-				.mapToInt(card -> card.getSymbol().getSpecialScoreSupplier())
+				.filter(card -> card.getSymbol().getPromotableJudge(rawScore))
+				.mapToInt(card -> card.getSymbol().getPromotionScore())
 				.findFirst()
 				.orElse(BURST_SCORE);
 
