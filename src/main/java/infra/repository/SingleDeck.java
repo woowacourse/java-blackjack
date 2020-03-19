@@ -1,9 +1,6 @@
 package infra.repository;
 
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Symbol;
-import domain.card.Type;
+import domain.card.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,5 +45,17 @@ public class SingleDeck implements Deck {
             throw new IllegalStateException(EMPTY_DECK_MESSAGE);
         }
         return cards.remove(POP_INDEX);
+    }
+
+    @Override
+    public PlayingCards popInitCards() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(EMPTY_DECK_MESSAGE);
+        }
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            cards.add(this.cards.remove(POP_INDEX));
+        }
+        return PlayingCards.of(cards);
     }
 }
