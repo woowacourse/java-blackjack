@@ -1,7 +1,6 @@
 package blackjack.domain.result;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -10,19 +9,13 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.money.Money;
 import blackjack.domain.rule.BasicRule;
 
-public class MoneyResult {
-    private static final String LINE_BREAK = System.lineSeparator();
+public class MoneyResult extends Result {
 
-    private ScoreBoard scoreBoard;
-    private Participant dealer;
-    private List<Participant> players;
     private MoneyChanger moneyChanger;
     private Map<Participant, Money> moneyResult;
 
     public MoneyResult(final Participants participants, MoneyChanger moneyChanger) {
-        this.scoreBoard = new ScoreBoard(participants);
-        this.dealer = participants.getDealer();
-        this.players = participants.getPlayers();
+        super(participants);
         this.moneyChanger = moneyChanger;
         this.moneyResult = new HashMap<>();
         this.moneyResult.put(dealer, Money.zero());
@@ -31,33 +24,8 @@ public class MoneyResult {
         }
     }
 
-    private void decideWinner(final Participant player) {
-        if (BasicRule.isBusted(player.score())) {
-            execute(player, Status.LOSE);
-            return;
-        }
-        if (BasicRule.isBusted(dealer.score())) {
-            execute(player, Status.WIN);
-            return;
-        }
-        compareToDealer(player);
-    }
-
-    private void compareToDealer(final Participant player) {
-        int dealerScore = scoreBoard.get(dealer);
-        int playerScore = scoreBoard.get(player);
-        if (dealerScore > playerScore) {
-            execute(player, Status.LOSE);
-        }
-        if (dealerScore == playerScore) {
-            execute(player, Status.DRAW);
-        }
-        if (dealerScore < playerScore) {
-            execute(player, Status.WIN);
-        }
-    }
-
-    private void execute(final Participant player, final Status playerStatus) {
+    @Override
+    protected void execute(final Participant player, final Status playerStatus) {
         Money playerMoney = moneyChanger.get(player);
         Money dealerMoney = moneyResult.getOrDefault(dealer, Money.zero());
         if (playerStatus == Status.LOSE) {

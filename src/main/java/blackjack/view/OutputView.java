@@ -4,8 +4,7 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.result.MoneyResult;
-import blackjack.domain.result.SimpleResult;
+import blackjack.domain.result.Result;
 
 public class OutputView {
     public static void nameInstruction() {
@@ -62,13 +61,8 @@ public class OutputView {
         return participant.getName() + ": " + participant.cards();
     }
 
-    public static void statistics(SimpleResult result) {
+    public static void statistics(final Result result) {
         System.out.println("## 최종 승패");
-        System.out.println(result);
-    }
-
-    public static void statistics(final MoneyResult result) {
-        System.out.println("## 최종 수익");
         System.out.println(result);
     }
 
