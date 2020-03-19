@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
+import domain.score.Score;
 
 public class PlayerTest {
 	@DisplayName("플레이어의 카드가 2장이면서, 총 점수가 21점이면, 블랙잭이다.")
@@ -71,19 +72,19 @@ public class PlayerTest {
 	@DisplayName("가지고 있는 카드의 점수를 합산한 결과를 반환한다.")
 	@ParameterizedTest
 	@MethodSource("calculateScoreCardSet")
-	void calculate_score_test(int expected, Card[] cards) {
+	void calculate_score_test(Score expected, Card[] cards) {
 		Player dongle = Player.fromNameAndMoneyAndCards("dongle", 1_000, cards);
-		assertThat(dongle.calculateScore()).isEqualTo(expected);
+		assertThat(dongle.calculateScore2()).isEqualTo(expected);
 	}
 
 	private static Stream<Arguments> calculateScoreCardSet() {
 		return Stream.of(
-			Arguments.of(19, new Card[] {Card.of(HEART, ACE), Card.of(HEART, EIGHT)}),
-			Arguments.of(21, new Card[] {Card.of(HEART, ACE), Card.of(HEART, JACK)}),
-			Arguments.of(21, new Card[] {Card.of(HEART, ACE), Card.of(HEART, FIVE), Card.of(DIAMOND, FIVE)}),
-			Arguments.of(14, new Card[] {Card.of(HEART, ACE), Card.of(DIAMOND, ACE), Card.of(HEART, QUEEN),
+			Arguments.of(Score.ofValue(19), new Card[] {Card.of(HEART, ACE), Card.of(HEART, EIGHT)}),
+			Arguments.of(Score.ofValue(21), new Card[] {Card.of(HEART, ACE), Card.of(HEART, JACK)}),
+			Arguments.of(Score.ofValue(21), new Card[] {Card.of(HEART, ACE), Card.of(HEART, FIVE), Card.of(DIAMOND, FIVE)}),
+			Arguments.of(Score.ofValue(14), new Card[] {Card.of(HEART, ACE), Card.of(DIAMOND, ACE), Card.of(HEART, QUEEN),
 				Card.of(SPADE, ACE), Card.of(CLOVER, ACE)}),
-			Arguments.of(24, new Card[] {Card.of(HEART, TEN), Card.of(DIAMOND, FOUR), Card.of(CLOVER, TEN)})
+			Arguments.of(Score.ofValue(24), new Card[] {Card.of(HEART, TEN), Card.of(DIAMOND, FOUR), Card.of(CLOVER, TEN)})
 		);
 	}
 

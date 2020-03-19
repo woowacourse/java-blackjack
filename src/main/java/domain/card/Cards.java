@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import domain.score.Score;
+
 public class Cards {
 	private static final int MAXIMUM_SCORE = 21;
 	private static final int BLACKJACK_CARD_SIZE = 2;
@@ -23,11 +25,19 @@ public class Cards {
 	}
 
 	public boolean isBlackjack() {
-		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == MAXIMUM_SCORE;
+		return cards.size() == BLACKJACK_CARD_SIZE && calculateScore2().isMaximum();
 	}
 
 	public boolean isBust() {
-		return calculateScore() > MAXIMUM_SCORE;
+		return calculateScore2().isBust();
+	}
+
+	public boolean isMaximumScore() {
+		return calculateScore2().isMaximum();
+	}
+
+	public Score calculateScore2() {
+		return Score.calculateTotal(cards);
 	}
 
 	public int calculateScore() {

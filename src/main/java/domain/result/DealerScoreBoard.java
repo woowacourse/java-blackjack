@@ -4,20 +4,21 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.User;
 
 public class DealerScoreBoard implements ScoreBoard {
 	private final Dealer dealer;
-	private final int score;
+	private final Score score;
 
-	public DealerScoreBoard(Dealer dealer, int score) {
+	public DealerScoreBoard(Dealer dealer, Score score) {
 		this.dealer = Objects.requireNonNull(dealer);
-		this.score = score;
+		this.score = Objects.requireNonNull(score);
 	}
 
 	public static DealerScoreBoard of(Dealer dealer) {
-		return new DealerScoreBoard(dealer, dealer.calculateScore());
+		return new DealerScoreBoard(dealer, dealer.calculateScore2());
 	}
 
 	public String getName() {
@@ -28,7 +29,7 @@ public class DealerScoreBoard implements ScoreBoard {
 		return dealer.getCards();
 	}
 
-	public int getScore() {
+	public Score getScore() {
 		return score;
 	}
 

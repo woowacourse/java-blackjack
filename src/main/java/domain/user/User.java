@@ -7,6 +7,7 @@ import java.util.Objects;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Cards;
+import domain.score.Score;
 
 public abstract class User {
 	protected final Name name;
@@ -33,20 +34,20 @@ public abstract class User {
 		return this.cards.isBust();
 	}
 
-	public int calculateScore() {
-		return cards.calculateScore();
+	public Score calculateScore2() {
+		return cards.calculateScore2();
 	}
 
 	public boolean hasLowerScoreThan(User other) {
-		return this.calculateScore() < other.calculateScore();
+		return this.calculateScore2().isSmallerThan(other.calculateScore2());
 	}
 
 	public boolean hasHigherScoreThan(User other) {
-		return this.calculateScore() > other.calculateScore();
+		return this.calculateScore2().isBiggerThan(other.calculateScore2());
 	}
 
 	public boolean hasSameScoreWith(User other) {
-		return this.calculateScore() == other.calculateScore();
+		return this.calculateScore2().isSameWith(other.calculateScore2());
 	}
 
 	public List<Card> getCards() {

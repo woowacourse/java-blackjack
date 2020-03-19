@@ -4,19 +4,20 @@ import java.util.List;
 import java.util.Objects;
 
 import domain.card.Card;
+import domain.score.Score;
 import domain.user.Player;
 
 public class PlayerScoreBoard implements ScoreBoard {
 	private final Player player;
-	private final int score;
+	private final Score score;
 
-	public PlayerScoreBoard(Player player, int score) {
+	public PlayerScoreBoard(Player player, Score score) {
 		this.player = Objects.requireNonNull(player);
-		this.score = score;
+		this.score = Objects.requireNonNull(score);
 	}
 
 	public static PlayerScoreBoard of(Player player) {
-		return new PlayerScoreBoard(player, player.calculateScore());
+		return new PlayerScoreBoard(player, player.calculateScore2());
 	}
 
 	public UserResult createPlayerResult(DealerScoreBoard other) {
@@ -39,7 +40,7 @@ public class PlayerScoreBoard implements ScoreBoard {
 		return player.getCards();
 	}
 
-	public int getScore() {
+	public Score getScore() {
 		return score;
 	}
 

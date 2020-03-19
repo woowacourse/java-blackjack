@@ -7,6 +7,7 @@ import domain.card.Card;
 import domain.result.ScoreBoard;
 import domain.result.ScoreBoards;
 import domain.result.UserResults;
+import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.User;
 
@@ -14,7 +15,7 @@ public class OutputView {
 	private static final String JOINING_DELIMITER = ", ";
 	private static final String NEW_LINE = System.lineSeparator();
 	private static final String CARD_STRING_FORMAT = " 카드: %s  ";
-	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d점";
+	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %s점";
 
 	private OutputView() {
 	}
@@ -59,7 +60,7 @@ public class OutputView {
 		return card.getSymbolName() + card.getType();
 	}
 
-	private static String parseScore(int score) {
+	private static String parseScore(Score score) {
 		return String.format(RESULT_CARD_SCORE_FORMAT, score);
 	}
 

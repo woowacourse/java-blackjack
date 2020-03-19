@@ -3,11 +3,12 @@ package domain.result;
 import java.util.List;
 
 import domain.card.Card;
+import domain.score.Score;
 
 public interface ScoreBoard {
 	String getName();
 
-	int getScore();
+	Score getScore();
 
 	List<Card> getCards();
 }

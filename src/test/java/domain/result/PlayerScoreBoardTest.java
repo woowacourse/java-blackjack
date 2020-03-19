@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.card.Card;
+import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.Player;
 
@@ -28,7 +29,7 @@ class PlayerScoreBoardTest {
 	void construct_score_board_build_right_score_test() {
 		Player player = Player.fromNameAndMoneyAndCards("test", 1_000, Card.of(HEART, TEN), Card.of(HEART, ACE));
 		PlayerScoreBoard scoreBoard = PlayerScoreBoard.of(player);
-		assertThat(scoreBoard.getScore()).isEqualTo(21);
+		assertThat(scoreBoard.getScore()).isEqualTo(Score.ofValue(21));
 	}
 
 	@DisplayName("딜러의 점수와 비교후, 결과에 따른 배당 배수가 곱해진 상금이 계산된다.")

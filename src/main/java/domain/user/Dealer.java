@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.score.Score;
 
 public class Dealer extends User {
 	private static final int MAXIMUM_DRAWABLE_SCORE = 16;
@@ -24,7 +25,7 @@ public class Dealer extends User {
 
 	@Override
 	public boolean isDrawable() {
-		return cards.calculateScore() <= MAXIMUM_DRAWABLE_SCORE;
+		return !cards.calculateScore2().isBiggerThan(Score.ofValue(MAXIMUM_DRAWABLE_SCORE));
 	}
 
 	@Override

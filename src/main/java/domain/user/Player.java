@@ -36,7 +36,7 @@ public class Player extends User {
 
 	@Override
 	public boolean isDrawable() {
-		return !isBlackjack() && !isBust();
+		return !isBlackjack() && !isBust() && !cards.isMaximumScore();
 	}
 
 	@Override

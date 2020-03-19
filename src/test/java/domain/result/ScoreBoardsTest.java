@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.Player;
 
@@ -37,8 +38,8 @@ class ScoreBoardsTest {
 	@Test
 	void getScoreBoardsTest() {
 		assertThat(scoreBoards.getScoreBoards()).extracting("name", "score")
-			.containsExactly(Tuple.tuple("test", 12), Tuple.tuple("test2", 20), Tuple.tuple("test3", 21),
-				Tuple.tuple("test4", 21), Tuple.tuple("딜러", 20));
+			.containsExactly(Tuple.tuple("test", Score.ofValue(12)), Tuple.tuple("test2", Score.ofValue(20)), Tuple.tuple("test3", Score.ofValue(21)),
+				Tuple.tuple("test4", Score.ofValue(21)), Tuple.tuple("딜러", Score.ofValue(20)));
 	}
 
 	@DisplayName("모든 참여자별 최종 상금을 제대로 계산해오는지 테스트, (블랙잭 승 1.5배, 일반 승 1배, 무승부 0배, 패배 -1배)")

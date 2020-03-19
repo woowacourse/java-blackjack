@@ -17,6 +17,7 @@ import domain.card.CardDeck;
 import domain.card.TestCardDeck;
 import domain.result.ScoreBoards;
 import domain.result.UserResults;
+import domain.score.Score;
 
 class GamersTest {
 	private static final String NON_ADDITIONAL_DRAW_RESPONSE = "n";
@@ -132,7 +133,7 @@ class GamersTest {
 		});
 		ScoreBoards scoreBoards = gamers.calculateScoreBoards();
 		assertThat(scoreBoards.getScoreBoards()).extracting("score")
-			.containsExactly(21, 9, 19, 17, 17);
+			.containsExactly(Score.ofValue(21), Score.ofValue(9), Score.ofValue(19), Score.ofValue(17), Score.ofValue(17));
 	}
 
 	@DisplayName("모든 참여자들은 카드 점수를 기준으로 승패 결정후, 결과별 최종 상금을 계산한다. 결과는 딜러, 플레이어순으로 나타난다.")
