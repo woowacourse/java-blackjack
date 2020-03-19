@@ -14,6 +14,9 @@ public class BlackjackGame {
     private final Deck deck;
 
     public BlackjackGame(Dealer dealer, List<Player> players, Deck deck) {
+        Objects.requireNonNull(dealer, "dealer가 null일 수 없습니다");
+        Objects.requireNonNull(players, "players가 null일 수 없습니다");
+        Objects.requireNonNull(deck, "deck이 null일 수 없습니다");
         this.dealer = dealer;
         this.players = Collections.unmodifiableList(players);
         this.deck = deck;
