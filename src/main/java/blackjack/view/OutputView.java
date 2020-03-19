@@ -48,9 +48,9 @@ public class OutputView {
         System.out.println("\n## 결과 : \n" + parseFinalScoreAnnouncement(game) + "\n");
     }
 
-    public static void printFinalResult(TotalResult totalResult) {
+    public static void printFinalResult(TotalResult totalResult, Money dealerProfit) {
         System.out.println("## 최종 수익");
-        System.out.println(parseDealerFinalResult(totalResult.calculateDealerProfit()));
+        System.out.println(parseDealerFinalResult(dealerProfit));
         System.out.println(parseAllPlayerResults(totalResult));
     }
 

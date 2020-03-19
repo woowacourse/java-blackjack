@@ -42,6 +42,12 @@ public class BlackjackGame {
         return new TotalResult(totalResult);
     }
 
+    public void updateUserMoney() {
+        TotalResult totalResult = calculateResultsPerPlayer();
+        totalResult.getResult().forEach((player, result) -> player.addMoney(player.getProfitByResult(result)));
+        dealer.addMoney(totalResult.calculateDealerProfit());
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.TotalResult;
 import blackjack.domain.user.*;
 import blackjack.utils.InputHandler;
 import blackjack.view.InputView;
@@ -18,7 +19,8 @@ public class BlackjackGameController {
         game.distributeInitialCards();
         OutputView.printInitialCardDistribution(game);
         drawMoreCard(game);
-        printFinalResults(game);
+        generateFinalResults(game);
+        game.updateUserMoney();
     }
 
     private static void askBettingMoney(List<Player> players) {
@@ -68,8 +70,10 @@ public class BlackjackGameController {
         }
     }
 
-    private static void printFinalResults(BlackjackGame game) {
+    private static void generateFinalResults(BlackjackGame game) {
         OutputView.printFinalCardScore(game);
-        OutputView.printFinalResult(game.calculateResultsPerPlayer());
+        TotalResult totalResult = game.calculateResultsPerPlayer();
+        Money dealerProfit = totalResult.calculateDealerProfit();
+        OutputView.printFinalResult(totalResult, dealerProfit);
     }
 }
