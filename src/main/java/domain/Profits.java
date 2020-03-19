@@ -1,9 +1,7 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Profits {
@@ -14,18 +12,16 @@ public class Profits {
 	}
 
 	public static Profits calculate(Dealer dealer, Players players, BettingMoneys bettingMoneys) {
-		Map<Name, Profit> profits = new LinkedHashMap<>();
-		profits.put(new Name(dealer.getName()), calculateByDealer(dealer, players, bettingMoneys));
-		players.forEach(player -> profits.put(new Name(player.getName()),
+		Map<Name, Profit> playersProfit = new LinkedHashMap<>();
+		players.forEach(player -> playersProfit.put(new Name(player.getName()),
 				Profit.of(player, dealer, bettingMoneys.get(player))));
-		return new Profits(profits);
-	}
-
-	private static Profit calculateByDealer(Dealer dealer, Players players, BettingMoneys bettingMoneys) {
-		List<Profit> profits = new ArrayList<>();
-		players.forEach(player -> profits.add(Profit.of(player, dealer, bettingMoneys.get(player))));
-		return profits.stream()
+		Map<Name, Profit> profits = new LinkedHashMap<>();
+		Profit dealerProfit = playersProfit.values()
+				.stream()
 				.reduce(Profit.ZERO, Profit::minus);
+		profits.put(new Name(dealer.getName()), dealerProfit);
+		profits.putAll(playersProfit);
+		return new Profits(profits);
 	}
 
 	public Map<Name, Profit> getValue() {
