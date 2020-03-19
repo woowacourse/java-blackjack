@@ -2,7 +2,6 @@ package blackjack.player.domain.component;
 
 import java.util.Objects;
 
-// todo :  money 생성 테스트 필요
 public class Money {
 	private final long money;
 
@@ -36,6 +35,21 @@ public class Money {
 
 	public boolean isLessThan(int minimumBettingMoney) {
 		return money < minimumBettingMoney;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Money money1 = (Money)o;
+		return money == money1.money;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(money);
 	}
 
 	public long getMoney() {

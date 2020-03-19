@@ -48,6 +48,21 @@ public abstract class Player {
 
 	public abstract boolean isHit();
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Player player = (Player)o;
+		return Objects.equals(cardBundle, player.cardBundle);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cardBundle);
+	}
+
 	public abstract String getName();
 
 	public List<Card> getCardBundle() {
@@ -57,5 +72,4 @@ public abstract class Player {
 	public int getScore() {
 		return cardBundle.calculateScore();
 	}
-
 }

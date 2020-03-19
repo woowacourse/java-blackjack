@@ -13,19 +13,19 @@ class GameResultTest {
 
 	@DisplayName("GameResult에서 값(승,무,패) 찾기")
 	@ParameterizedTest
-	@CsvSource(value = {"TEN,WIN", "NINE,DRAW", "EIGHT,LOSE"})
+	@CsvSource(value = {"ACE,BLACKJACK_WIN", "FOUR,WIN", "THREE,DRAW", "TWO,LOSE"})
 	void findByResult(CardNumber cardNumber, GameResult expect) {
 		//given
 		CardBundle dealerBundle = new CardBundle();
-		dealerBundle.addCard(Card.of(HEART, CardNumber.NINE));
+		dealerBundle.addCard(Card.of(HEART, CardNumber.TEN));
+		dealerBundle.addCard(Card.of(HEART, CardNumber.THREE));
 
 		CardBundle gamblerBundle = new CardBundle();
+		gamblerBundle.addCard(Card.of(HEART, CardNumber.TEN));
 		gamblerBundle.addCard(Card.of(HEART, cardNumber));
 
 		//when
-		int dealerScore = dealerBundle.calculateScore();
-		int gamblerScore = gamblerBundle.calculateScore();
-		GameResult result = GameResult.createGameResult(gamblerScore, dealerScore);
+		GameResult result = GameResult.createGameResult(dealerBundle, gamblerBundle);
 
 		//then
 		assertThat(result).isEqualTo(expect);

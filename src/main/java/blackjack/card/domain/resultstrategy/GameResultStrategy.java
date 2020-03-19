@@ -1,4 +1,6 @@
-package blackjack.card.domain;
+package blackjack.card.domain.resultstrategy;
+
+import blackjack.card.domain.CardBundle;
 
 public abstract class GameResultStrategy {
 	public abstract boolean isResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle);

@@ -1,6 +1,7 @@
-package blackjack.card.domain;
+package blackjack.card.domain.resultstrategy;
 
-// todo: 테스트 코드 작성필요
+import blackjack.card.domain.CardBundle;
+
 public class GamblerLoseStrategy extends GameResultStrategy {
 	@Override
 	public boolean isResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {

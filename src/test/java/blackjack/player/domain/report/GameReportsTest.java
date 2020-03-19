@@ -1,5 +1,6 @@
 package blackjack.player.domain.report;
 
+import static blackjack.player.domain.component.PlayerInfoHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -13,13 +14,12 @@ class GameReportsTest {
 
 	private static GameReports gameReports = new GameReports(
 		Arrays.asList(
-			new GameReport("allen", GameResult.WIN),
-			new GameReport("allen", GameResult.WIN),
-			new GameReport("allen", GameResult.WIN),
-			new GameReport("allen", GameResult.DRAW),
-			new GameReport("allen", GameResult.DRAW),
-			new GameReport("allen", GameResult.LOSE
-			)
+			new GameReport(aPlayerInfo("allen"), GameResult.WIN),
+			new GameReport(aPlayerInfo("allen"), GameResult.WIN),
+			new GameReport(aPlayerInfo("allen"), GameResult.WIN),
+			new GameReport(aPlayerInfo("allen"), GameResult.DRAW),
+			new GameReport(aPlayerInfo("allen"), GameResult.DRAW),
+			new GameReport(aPlayerInfo("allen"), GameResult.LOSE)
 		)
 	);
 

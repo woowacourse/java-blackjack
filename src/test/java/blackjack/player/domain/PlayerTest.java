@@ -1,6 +1,7 @@
 package blackjack.player.domain;
 
 import static blackjack.card.domain.CardBundleHelper.*;
+import static blackjack.player.domain.component.PlayerInfoHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -10,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
@@ -25,7 +25,7 @@ class PlayerTest {
 				new Dealer(new CardBundle()), false, true
 			),
 			Arguments.of(
-				new Gambler(new CardBundle(), "pobi", playerInfo), true, false
+				new Gambler(new CardBundle(), aPlayerInfo("pobi")), true, false
 			)
 		);
 	}
@@ -39,14 +39,6 @@ class PlayerTest {
 				aCardBundle(CardNumber.KING, CardNumber.ACE), true
 			)
 		);
-	}
-
-	@DisplayName("플레이어의 이름이 없으면 Exception")
-	@ParameterizedTest
-	@NullAndEmptySource
-	void name(String arongName) {
-		assertThatThrownBy(() -> new Gambler(new CardBundle(), arongName, playerInfo))
-			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("플레이어가 겜블러인지, 딜러인지 확인")

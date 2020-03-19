@@ -1,19 +1,22 @@
-package blackjack.card.domain;
+package blackjack.card.domain.resultstrategy;
 
-// todo: 테스트 코드 작성필요
+import blackjack.card.domain.CardBundle;
+
 public class DrawStrategy extends GameResultStrategy {
 	@Override
 	public boolean isResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {
 		if (dealerCardBundle.isBlackjack() && gamblerCardBundle.isBlackjack()) {
 			return true;
 		}
-		if (dealerCardBundle.isSameScore(gamblerCardBundle) && checkNotBlackjack(dealerCardBundle, gamblerCardBundle)) {
+		if (dealerCardBundle.isNotBurst() && gamblerCardBundle.isNotBurst()
+			&& dealerCardBundle.isSameScore(gamblerCardBundle)
+			&& checkNotBlackjack(dealerCardBundle, gamblerCardBundle)) {
 			return true;
 		}
 		return false;
 	}
 
 	private boolean checkNotBlackjack(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {
-		return !(dealerCardBundle.isBlackjack() || gamblerCardBundle.isBlackjack());
+		return !dealerCardBundle.isBlackjack() && !gamblerCardBundle.isBlackjack();
 	}
 }

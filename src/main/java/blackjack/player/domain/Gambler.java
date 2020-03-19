@@ -1,5 +1,7 @@
 package blackjack.player.domain;
 
+import java.util.Objects;
+
 import blackjack.card.domain.CardBundle;
 import blackjack.player.domain.component.PlayerInfo;
 
@@ -24,5 +26,20 @@ public class Gambler extends Player {
 
 	public PlayerInfo getPlayerInfo() {
 		return playerInfo;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Gambler gambler = (Gambler)o;
+		return Objects.equals(playerInfo, gambler.playerInfo);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(playerInfo);
 	}
 }

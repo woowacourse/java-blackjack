@@ -2,7 +2,6 @@ package blackjack.player.domain.component;
 
 import java.util.Objects;
 
-// todo: 테스트코드 추가 필요
 public class PlayerInfo {
 	private static final int MINIMUM_BETTING_MONEY = 1;
 	private final String name;
@@ -20,7 +19,7 @@ public class PlayerInfo {
 	}
 
 	private void checkBettingMoney(Money bettingMoney) {
-		Objects.requireNonNull(bettingMoney, "배텅머니가 존재하지 않습니다");
+		Objects.requireNonNull(bettingMoney, "배팅머니가 존재하지 않습니다");
 		if (bettingMoney.isLessThan(MINIMUM_BETTING_MONEY)) {
 			throw new IllegalArgumentException("배팅금액이 모자랍니다.");
 		}
@@ -32,11 +31,27 @@ public class PlayerInfo {
 		}
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public Money calculateResultMoney(double profit) {
 		return bettingMoney.multiply(profit);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		PlayerInfo that = (PlayerInfo)o;
+		return Objects.equals(name, that.name) &&
+			Objects.equals(bettingMoney, that.bettingMoney);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, bettingMoney);
+	}
+
+	public String getName() {
+		return name;
 	}
 }

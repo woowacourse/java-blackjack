@@ -1,6 +1,7 @@
 package blackjack.player.domain;
 
 import static blackjack.card.domain.CardBundleHelper.*;
+import static blackjack.player.domain.component.PlayerInfoHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ class PlayersTest {
 	@ParameterizedTest
 	@NullAndEmptySource
 	void test(List<Player> players) {
-		assertThatThrownBy(() -> new Players(players, dealer))
+		assertThatThrownBy(() -> new Players(players))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -32,19 +33,27 @@ class PlayersTest {
 	void getReports() {
 		//given
 		Player dealer = new Dealer(aCardBundle(CardNumber.KING, CardNumber.KING));
-		Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING), "bebop", playerInfo);
-		Player gambler2 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING), "pobi", playerInfo);
-		Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE), "allen", playerInfo);
-		Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3), dealer);
+		Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING),
+			aPlayerInfo("bebop"));
+		Player gambler2 = new Gambler(aCardBundle(CardNumber.TWO, CardNumber.KING, CardNumber.NINE),
+			aPlayerInfo("muni"));
+		Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING),
+			aPlayerInfo("pobi"));
+		Player gambler4 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE),
+			aPlayerInfo("allen"));
+		Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3, gambler4));
 
 		//when
 		GameReports reports = players.getReports();
 
+		List<GameReport> reports1 = reports.getReports();
+
 		//then
 		assertThat(reports).isEqualTo(new GameReports(Arrays.asList(
-			new GameReport("bebop", GameResult.WIN),
-			new GameReport("pobi", GameResult.DRAW),
-			new GameReport("allen", GameResult.LOSE)))
+			new GameReport(aPlayerInfo("bebop"), GameResult.BLACKJACK_WIN),
+			new GameReport(aPlayerInfo("muni"), GameResult.WIN),
+			new GameReport(aPlayerInfo("pobi"), GameResult.DRAW),
+			new GameReport(aPlayerInfo("allen"), GameResult.LOSE)))
 		);
 	}
 
@@ -53,7 +62,8 @@ class PlayersTest {
 	void findGamblers() {
 		//given
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), "bebop", playerInfo), new Dealer(new CardBundle())), dealer);
+			Arrays.asList(new Gambler(new CardBundle(), aPlayerInfo("allen")),
+				new Dealer(new CardBundle())));
 
 		//when
 		List<Player> gamblers = players.findGamblers();
@@ -68,7 +78,8 @@ class PlayersTest {
 	void findDealer() {
 		//given
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), "bebop", playerInfo), new Dealer(new CardBundle())), dealer);
+			Arrays.asList(new Gambler(new CardBundle(), aPlayerInfo("allen")),
+				new Dealer(new CardBundle())));
 
 		//when
 		Player dealer = players.findDealer();
