@@ -8,6 +8,7 @@ import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.ResultType;
 import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
+import com.blackjack.domain.user.Player;
 import com.blackjack.domain.user.User;
 
 public class OutputView {
@@ -20,7 +21,7 @@ public class OutputView {
 		System.out.println(message);
 	}
 
-	public static void printCardsAtFirst(User dealer, List<User> players, int firstDrawCount) {
+	public static void printCardsAtFirst(User dealer, List<Player> players, int firstDrawCount) {
 		printDrawTitle(players, firstDrawCount);
 		System.out.println(dealer.getName() + ": " + makeDealerFirstCardInfo(dealer));
 		printPlayersCardInfo(players);
@@ -54,11 +55,12 @@ public class OutputView {
 		System.out.printf("딜러: %s\n", result);
 	}
 
-	private static void printPlayersCardInfo(List<User> players) {
+	private static void printPlayersCardInfo(List<Player> players) {
 		for (User player : players) {
 			System.out.println(makeUserCardInfo(player));
 		}
 	}
+
 	private static String makeDealerFirstCardInfo(User dealer) {
 		return dealer.getHand()
 				.getCards()
@@ -78,7 +80,7 @@ public class OutputView {
 				.collect(Collectors.joining(DELIMITER));
 	}
 
-	private static void printDrawTitle(List<User> players, int firstDrawCount) {
+	private static void printDrawTitle(List<Player> players, int firstDrawCount) {
 		String playerNames = players.stream()
 				.map(User::getName)
 				.collect(Collectors.joining(DELIMITER));

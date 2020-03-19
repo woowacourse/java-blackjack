@@ -5,16 +5,17 @@ import java.util.List;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.card.CardDeck;
 import com.blackjack.domain.user.Dealer;
+import com.blackjack.domain.user.Player;
 import com.blackjack.domain.user.User;
 
 public class GameTable {
 	public static final int FIRST_DRAW_COUNT = 2;
 
 	private final Dealer dealer;
-	private final List<User> players;
+	private final List<Player> players;
 	private final CardDeck cardDeck;
 
-	public GameTable(Dealer dealer, List<User> players) {
+	public GameTable(Dealer dealer, List<Player> players) {
 		this.dealer = dealer;
 		this.players = players;
 		this.cardDeck = CardDeck.create();
@@ -33,7 +34,7 @@ public class GameTable {
 	}
 
 	private void drawToPlayers() {
-		for (User player : players) {
+		for (Player player : players) {
 			draw(player);
 		}
 	}
