@@ -9,12 +9,14 @@ import second.domain.score.ScoreCalculator;
 public abstract class Gamer {
     private final String name;
     private final HandCards handCards;
+    private final Money money;
     private Score score;
 
-    public Gamer(final String name, final HandCards handCards) {
+    public Gamer(final String name, final HandCards handCards, final Money money) {
         this.name = name;
         this.handCards = handCards;
         this.score = ScoreCalculator.calculate(handCards);
+        this.money = money;
     }
 
     public abstract boolean canDrawMore();
