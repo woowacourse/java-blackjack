@@ -20,10 +20,10 @@ public class PlayersName {
     }
 
     private void validateDuplicatedName(String inputPlayersName) {
-        List<String> playersName = new ArrayList<>(Arrays.asList(inputPlayersName.split(",")));
-        Set<String> deleteDuplicateNames = new HashSet<>(playersName);
-
-        if (deleteDuplicateNames.size() != playersName.size()) {
+        String[] playersName = inputPlayersName.split(",");
+        Set<String> deleteDuplicateNames = new HashSet<>(Arrays.asList(playersName));
+        
+        if (deleteDuplicateNames.size() != playersName.length) {
             throw new IllegalArgumentException("중복된 이름입력이 불가합니다.");
         }
     }
