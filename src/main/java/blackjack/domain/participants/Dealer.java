@@ -53,11 +53,6 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean isBusted() {
-        return hand.isBusted();
-    }
-
-    @Override
     public String handStatus() {
         return hand.toString();
     }
@@ -69,5 +64,10 @@ public class Dealer implements Participant {
     @Override
     public String getName() {
         return "딜러";
+    }
+
+    @Override
+    public int countHand() {
+        return hand.size();
     }
 }

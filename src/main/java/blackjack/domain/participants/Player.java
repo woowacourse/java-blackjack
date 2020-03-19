@@ -1,10 +1,10 @@
 package blackjack.domain.participants;
 
+import java.util.Objects;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.exceptions.InvalidPlayerException;
-
-import java.util.Objects;
 
 public class Player implements Participant {
     private final Hand hand;
@@ -43,11 +43,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean isBusted() {
-        return hand.isBusted();
-    }
-
-    @Override
     public String handStatus() {
         return hand.toString();
     }
@@ -55,6 +50,11 @@ public class Player implements Participant {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int countHand() {
+        return hand.size();
     }
 
     public Result getResult() {

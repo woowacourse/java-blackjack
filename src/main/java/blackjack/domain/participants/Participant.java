@@ -12,11 +12,11 @@ public interface Participant {
 
     boolean isDealer();
 
-    boolean isBusted();
-
     void set(Result result);
 
     String handStatus();
 
     String getName();
+
+    int countHand();
 }
