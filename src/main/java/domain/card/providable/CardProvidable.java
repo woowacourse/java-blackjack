@@ -1,5 +1,6 @@
 package domain.card.providable;
 
+
 import domain.card.Card;
 
 @FunctionalInterface

@@ -1,20 +1,20 @@
 package domain.card;
 
-import domain.result.Score;
+import domain.result.score.Score;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RankTest {
+public class RankTest {
     @Test
-    void of테스트() {
+    void 정적_팩토리_테스트() {
         assertThat(Rank.of("Ace")).isEqualTo(Rank.ACE);
     }
 
 
     @Test
-    void getScoreTest() {
-        assertThat(Rank.KING.getScore()).isEqualTo(new Score(10));
-        assertThat(Rank.SEVEN.getScore()).isEqualTo(new Score(7));
+    void 랭크별_점수_확인() {
+        assertThat(Rank.KING.getScore()).isEqualTo(Score.of(10));
+        assertThat(Rank.SEVEN.getScore()).isEqualTo(Score.of(7));
     }
 }

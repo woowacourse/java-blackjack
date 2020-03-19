@@ -1,9 +1,8 @@
 package domain.card;
 
-import domain.result.Score;
+import domain.result.score.Score;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Card {
@@ -33,7 +32,7 @@ public class Card {
     }
 
     public static List<Card> getAllCards() {
-        return Collections.unmodifiableList(CardCache.cards);
+        return CardCache.cards;
     }
 
     public Score extractScore() {

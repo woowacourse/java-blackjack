@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.result.Score;
+import domain.result.score.Score;
 
 import java.util.Arrays;
 
@@ -25,7 +25,7 @@ public enum Rank {
 
     Rank(String name, int score) {
         this.name = name;
-        this.score = new Score(score);
+        this.score = Score.of(score);
     }
 
     public static Rank of(String name) {
