@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 import blackjack.domain.card.Card;
 import blackjack.domain.exceptions.InvalidScoreException;
 
-public class Score {
+public class Score implements Comparable<Score> {
 	public static final Score ZERO = new Score(0);
 	static final int BLACKJACK_JUDGEMENT_SCORE = 21;
 	static final int BUST_SCORE = 22;
@@ -64,5 +64,10 @@ public class Score {
 
 	public int getScore() {
 		return score;
+	}
+
+	@Override
+	public int compareTo(Score that) {
+		return Integer.compare(this.score, that.score);
 	}
 }

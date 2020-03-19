@@ -10,6 +10,7 @@ public enum ScoreType {
 	BUST(ScoreType::isBust),
 	NORMAL(ScoreType::isNormal);
 
+	// TODO: 2020-03-19 이름 바꾸기
 	private final BiPredicate<Score, Boolean> measure;
 
 	ScoreType(BiPredicate<Score, Boolean> measure) {
