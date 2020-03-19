@@ -13,7 +13,7 @@ public class ProfitResult {
     private Profit dealerProfit;
     private Map<Player, Profit> playerProfit;
 
-    public ProfitResult(Profit dealerProfit, Map<Player, Profit> playerProfit) {
+    private ProfitResult(Profit dealerProfit, Map<Player, Profit> playerProfit) {
         this.dealerProfit = dealerProfit;
         this.playerProfit = playerProfit;
     }
