@@ -1,31 +1,25 @@
 package domain;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-public class PlayerAnswer {
-    private static final String INPUT_TRUE = "y";
-    private static final String INPUT_FALSE = "n";
-    private final boolean answer;
+public enum PlayerAnswer {
+    ANSWER_YES("y"),
+    ANSWER_NO("n");
 
-    public PlayerAnswer(String userAnswer) {
-        validateValue(userAnswer);
-        answer = INPUT_TRUE.equals(userAnswer);
+    private final String answer;
+
+    PlayerAnswer(String answer) {
+        this.answer = answer;
     }
 
-    private void validateValue(String userAnswer) {
-        validateNull(userAnswer);
-        if (!INPUT_TRUE.equals(userAnswer) && !INPUT_FALSE.equals(userAnswer)) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
-    }
-
-    private void validateNull(String userAnswer) {
-        if (Objects.isNull(userAnswer)) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+    public static PlayerAnswer of(String answer) {
+        return Arrays.stream(values())
+                .filter(value -> value.answer.equals(answer))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
     }
 
     public boolean isAgree() {
-        return answer;
+        return this == ANSWER_YES;
     }
 }

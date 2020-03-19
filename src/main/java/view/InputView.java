@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public static PlayerAnswer requestDraw() {
-        return new PlayerAnswer(scanner.nextLine());
+        return PlayerAnswer.of(scanner.nextLine());
     }
 
     public static Money requestMoney() {
