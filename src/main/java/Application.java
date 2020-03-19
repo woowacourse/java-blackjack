@@ -1,27 +1,28 @@
 import static view.InputView.*;
 import static view.OutputView.*;
 
-import controller.BlackjackController;
 import domain.card.CardRepository;
 import domain.card.Deck;
+import domain.PlayerMoneys;
+import domain.controller.BlackjackController;
 import domain.user.Dealer;
-import domain.user.Players;
+import domain.user.User;
+import domain.user.Users;
 
 public class Application {
 	public static void main(String[] args) {
-		Dealer dealer = new Dealer();
-		Players players = Players.of(inputPlayerNames());
+		User dealer = new Dealer();
 		Deck deck = Deck.of(CardRepository.toList());
+		Users users = Users.of(inputPlayerNames(), dealer);
+		PlayerMoneys playerMoneys = BlackjackController.getBettingMoney(users.getPlayers());
 
-		dealer.proceedInitialPhase(deck);
-		players.forEach(player -> player.proceedInitialPhase(deck));
-		printInitialStatus(dealer.openOneCard(), players);
+		BlackjackController.proceedInitialPhase(users, deck);
 
 		if (dealer.isNotBlackJack()) {
-			BlackjackController.proceedGame(players, dealer, deck);
+			BlackjackController.proceedGame(users.getPlayers(), dealer, deck);
 		}
 
-		printResultStatus(dealer.openAllCards(), players);
-		printResult(dealer, players);
+		printResultStatus(users);
+		printResultProfit(playerMoneys, dealer);
 	}
 }
