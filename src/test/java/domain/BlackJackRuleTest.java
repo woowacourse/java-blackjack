@@ -38,10 +38,16 @@ public class BlackJackRuleTest {
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
                 Card.of(CardNumber.TWO, CardSuitSymbol.SPACE))),
                 10_000);
+        Player maxCardsSumPlayer = new Player("lavine", new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.NINE, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.SEVEN, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.FIVE, CardSuitSymbol.SPACE)
+        )), 10_000);
 
         Assertions.assertThat(blackJackRule.isHit(blackJackPlayer)).isFalse();
         Assertions.assertThat(blackJackRule.isHit(overBlackJackPlayer)).isFalse();
         Assertions.assertThat(blackJackRule.isHit(hitPlayer)).isTrue();
+        Assertions.assertThat(blackJackRule.isHit(maxCardsSumPlayer)).isFalse();
     }
 
     @DisplayName("딜러가 16을 기준으로 카드를 받는지 결정하는 메서드")

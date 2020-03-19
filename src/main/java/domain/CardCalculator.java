@@ -57,7 +57,7 @@ public class CardCalculator {
     }
 
     public static boolean isUnderMaxCardsSum(Cards playerCards) {
-        return calculateAceStrategy(playerCards) <= MAX_CARDS_SUM;
+        return calculateAceStrategy(playerCards) < MAX_CARDS_SUM;
     }
 
     public static boolean isUnderDealerStandard(Cards dealerCards) {

@@ -22,7 +22,7 @@ public class PlayerTest {
 
     @DisplayName("플레이어가 21 미만의 카드 값을 갖고 있을 때 카드를 더 받겠다고 반환하는지 테스트")
     @Test
-    void isHitUnderTwentyOneTest() {
+    void isHitUnderMaxCardsSumTest() {
         Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND)
@@ -31,14 +31,26 @@ public class PlayerTest {
         Assertions.assertThat(player.isHit()).isTrue();
     }
 
-    @DisplayName("플레이어가 21 이상의 카드 값을 갖고 있을 때 카드를 더 받지 않겠다고 반환하는지 테스트")
+    @DisplayName("플레이어가 블랙잭 일때 카드를 더 받지 않겠다고 반환하는지 테스트")
     @Test
-    void isHitOverTwentyOneTest() {
+    void isHitBlackJackTest() {
         Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND)
         )), 10_000);
 
-        Assertions.assertThat(player.isHit()).isTrue();
+        Assertions.assertThat(player.isHit()).isFalse();
+    }
+
+    @DisplayName("플레이어가 21 이상의 카드 합을 갖고 있을 때 카드를 더 받지 않겠다고 반환하는지 테스트")
+    @Test
+    void isHitOverTwentyOneTest() {
+        Player player = new Player("lavine", new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.KING, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.JACK, CardSuitSymbol.DIAMOND),
+                Card.of(CardNumber.FOUR, CardSuitSymbol.DIAMOND)
+        )), 10_000);
+
+        Assertions.assertThat(player.isHit()).isFalse();
     }
 }
