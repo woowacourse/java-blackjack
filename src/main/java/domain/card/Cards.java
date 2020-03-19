@@ -36,10 +36,10 @@ public class Cards {
 				.filter(card -> card.getSymbol().getSpecialScoreJudge(rawScore))
 				.mapToInt(card -> card.getSymbol().getSpecialScoreSupplier())
 				.findFirst()
-				.orElse(0);
+				.orElse(BURST_SCORE);
 
-		if (rawScore + specialScore > 21) {
-			return 0;
+		if (rawScore + specialScore > BLACKJACK_SCORE) {
+			return BURST_SCORE;
 		}
 		return rawScore + specialScore;
 	}
