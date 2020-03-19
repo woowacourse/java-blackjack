@@ -33,6 +33,17 @@ public class BlackJackRuleTest {
         assertThat(blackJackRule.calculateScore(new Player(name, hand))).isEqualTo(Score.of(14));
     }
 
+    @ParameterizedTest
+    @MethodSource("generateHandsAndMoney")
+    void 플레이어_결과_계산_테스트(Hand playerHand, Hand dealerHand, Money bettingMoney, Money Profit) {
+        BlackJackRule blackJackRule = new BlackJackRule();
+
+        Player player = new Player(new Name("phobi"), playerHand, bettingMoney);
+        Dealer dealer = new Dealer(dealerHand);
+
+        assertThat(blackJackRule.derivePlayerResult(player, dealer).getProfit()).isEqualTo(Profit);
+    }
+
     private static Stream<Arguments> generateHandsAndMoney() {
         Money bettingMoney = new Money(1000);
         Money blackJackProfit = new Money(1500);
@@ -58,16 +69,5 @@ public class BlackJackRuleTest {
                 .forEach(card -> resultHand.drawCard(() -> card));
 
         return resultHand;
-    }
-
-    @ParameterizedTest
-    @MethodSource("generateHandsAndMoney")
-    void 플레이어_결과_계산_테스트(Hand playerHand, Hand dealerHand, Money bettingMoney, Money Profit) {
-        BlackJackRule blackJackRule = new BlackJackRule();
-
-        Player player = new Player(new Name("phobi"), playerHand, bettingMoney);
-        Dealer dealer = new Dealer(dealerHand);
-
-        assertThat(blackJackRule.derivePlayerResult(player, dealer).getProfit()).isEqualTo(Profit);
     }
 }

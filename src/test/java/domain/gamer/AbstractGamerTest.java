@@ -33,19 +33,4 @@ public class AbstractGamerTest {
         }));
         assertThat(player.getHand().size()).isGreaterThan(1);
     }
-
-//    @Test
-//    void 버스트_테스트() {
-//        BlackJackRule blackJackRule = new BlackJackRule();
-//        Hand hand = new Hand();
-//
-//        hand.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
-//        hand.drawCard(() -> Card.of(Rank.KING, Suit.CLOVER));
-//        Player player = new Player(new Name("phobi"), hand);
-//        assertThat(player.isBurst(blackJackRule)).isFalse();
-//
-//        hand.drawCard(() -> Card.of(Rank.JACK, Suit.CLOVER));
-//        Player player2 = new Player(new Name("phobi"), hand);
-//        assertThat(player2.isBurst(blackJackRule)).isTrue();
-//    }
 }
