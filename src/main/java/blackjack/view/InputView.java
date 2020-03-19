@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.playing.user.Player;
-import blackjack.domain.playing.user.User;
 
 import java.util.Scanner;
 
@@ -14,7 +13,7 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String inputToHitOrStay(User player) {
+    public static String inputToHitOrStay(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getName());
         return SCANNER.nextLine();
     }
