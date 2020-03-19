@@ -89,19 +89,24 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public static void printDealerResult(DealerResult result) {
-        System.out.print("딜러 : ");
-        for (Entry<Result, Integer> entry : result.getDealerResult().entrySet()) {
-            System.out.printf("%d%s ", entry.getValue(), entry.getKey());
-        }
-        System.out.println();
-    }
-
-    public static void printPlayerResult(String name, Result result) {
-        System.out.println(name + ": " + result);
-    }
-
     public static void printExceptionMessage(Exception e) {
         System.out.println(e.getMessage());
     }
+
+    public static void printEnterBettingMoney(String name) {
+        System.out.println(name +"의 배팅금액은?");
+    }
+
+
+//    public static void printDealerResult(DealerResult result) {
+//        System.out.print("딜러 : ");
+//        for (Entry<Result, Integer> entry : result.getDealerResult().entrySet()) {
+//            System.out.printf("%d%s ", entry.getValue(), entry.getKey());
+//        }
+//        System.out.println();
+//    }
+//
+//    public static void printPlayerResult(String name, Result result) {
+//        System.out.println(name + ": " + result);
+//    }
 }

@@ -13,6 +13,11 @@ public class InputView {
         return StringUtils.splitIntoList(SCANNER.nextLine());
     }
 
+    public static int inputBettingMoney(String name){
+        OutputView.printEnterBettingMoney(name);
+        return StringUtils.toInteger(SCANNER.nextLine());
+    }
+
     public static boolean askWantMoreCard(String name) {
         OutputView.printAskWantMoreCard(name);
         String input = SCANNER.nextLine();
