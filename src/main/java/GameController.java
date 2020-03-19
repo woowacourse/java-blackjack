@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import domains.card.Deck;
 import domains.result.GameResult;
 import domains.result.Profits;
@@ -31,11 +34,12 @@ class GameController {
 	}
 
 	private void bet(PlayerNames playerNames, Deck deck) {
-		players = new Players();
+		List<Player> inputPlayers = new ArrayList<>();
 		for (PlayerName name : playerNames) {
 			OutputView.printInputBettingMoney(name);
-			players.add(new Player(name, InputView.inputBettingMoney(), deck));
+			inputPlayers.add(new Player(name, InputView.inputBettingMoney(), deck));
 		}
+		players = new Players(inputPlayers);
 	}
 
 	private void hitOrStay(Dealer dealer, Deck deck) {
