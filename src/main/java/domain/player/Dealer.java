@@ -14,6 +14,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isHit() {
-        return CardCalculator.isDealerCardsSumUnderSixteen(this.cards);
+        return CardCalculator.isUnderDealerStandard(this.cards);
     }
 }

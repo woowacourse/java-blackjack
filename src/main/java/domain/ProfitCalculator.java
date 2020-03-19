@@ -21,7 +21,7 @@ public class ProfitCalculator {
         if (player.isBlackJack()) {
             return (WIN_BY_BLACK_JACK_RATE * (double) player.getBettingMoney());
         }
-        if (CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard())) {
+        if (CardCalculator.determineWinner(player.getCard(), dealer.getCard())) {
             return (double) player.getBettingMoney();
         }
         return (LOOSE_RATE * (double) player.getBettingMoney());

@@ -20,6 +20,6 @@ public class Player extends User {
 
     @Override
     public boolean isHit() {
-        return CardCalculator.isPlayerCardSumUnderBlackJack(this.cards);
+        return CardCalculator.isUnderMaxCardsSum(this.cards);
     }
 }

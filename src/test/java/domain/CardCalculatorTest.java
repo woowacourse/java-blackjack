@@ -45,7 +45,7 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard()))
                 .isTrue();
     }
 
@@ -60,7 +60,7 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.ACE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard()))
                 .isFalse();
     }
 
@@ -75,7 +75,7 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.TWO, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard()))
                 .isTrue();
     }
 
@@ -90,7 +90,7 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND),
                 Card.of(CardNumber.KING, CardSuitSymbol.SPACE))));
 
-        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard()))
                 .isFalse();
     }
 
@@ -106,7 +106,7 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.JACK, CardSuitSymbol.SPACE),
                 Card.of(CardNumber.THREE, CardSuitSymbol.DIAMOND))));
 
-        Assertions.assertThat(CardCalculator.isPlayerCardsSumOverDealerCardsSum(player.getCard(), dealer.getCard()))
+        Assertions.assertThat(CardCalculator.determineWinner(player.getCard(), dealer.getCard()))
                 .isTrue();
     }
 
@@ -122,8 +122,8 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.DIAMOND)
         )));
 
-        Assertions.assertThat(CardCalculator.isCardsSumBlackJack(blackJackCards)).isTrue();
-        Assertions.assertThat(CardCalculator.isCardsSumBlackJack(notBlackJackCards)).isFalse();
+        Assertions.assertThat(CardCalculator.isMaxCardsSum(blackJackCards)).isTrue();
+        Assertions.assertThat(CardCalculator.isMaxCardsSum(notBlackJackCards)).isFalse();
     }
 
     @DisplayName("입력한 카드의 합이 21 미만인지 판단하는 메서드 테스트")
@@ -140,8 +140,8 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB)
         )));
 
-        Assertions.assertThat(CardCalculator.isPlayerCardSumUnderBlackJack(underBlackJack)).isTrue();
-        Assertions.assertThat(CardCalculator.isPlayerCardSumUnderBlackJack(overBlackJack)).isFalse();
+        Assertions.assertThat(CardCalculator.isUnderMaxCardsSum(underBlackJack)).isTrue();
+        Assertions.assertThat(CardCalculator.isUnderMaxCardsSum(overBlackJack)).isFalse();
     }
 
     @DisplayName("입력한 카드의 합이 16이하인지 판단하는 메서드 테스트")
@@ -156,7 +156,7 @@ public class CardCalculatorTest {
                 Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB)
         )));
 
-        Assertions.assertThat(CardCalculator.isDealerCardsSumUnderSixteen(underSixteen)).isTrue();
-        Assertions.assertThat(CardCalculator.isDealerCardsSumUnderSixteen(overSixteen)).isFalse();
+        Assertions.assertThat(CardCalculator.isUnderDealerStandard(underSixteen)).isTrue();
+        Assertions.assertThat(CardCalculator.isUnderDealerStandard(overSixteen)).isFalse();
     }
 }

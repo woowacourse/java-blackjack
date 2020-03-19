@@ -39,7 +39,7 @@ public class Cards {
     public boolean isBlackJack() {
         return containAce()
                 && this.cards.size() == BLACK_JACK_SIZE
-                && CardCalculator.isCardsSumBlackJack(this);
+                && CardCalculator.isMaxCardsSum(this);
     }
 
     public int getCardsSum() {
