@@ -4,8 +4,8 @@ import domain.card.Cards;
 import domain.card.PlayingCards;
 
 public class Player extends User {
-    public Player(PlayingCards playingCards, String name) {
-        super(playingCards, name);
+    public Player(PlayingCards playingCards, String name, Money money) {
+        super(playingCards, name, money);
     }
 
     boolean wantToHit(String willForMoreCard) {

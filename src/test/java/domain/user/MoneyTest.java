@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyTest {
-
     @Test
     void ofSucceed() {
         assertThat(Money.of(10)).isNotNull();
@@ -15,9 +14,9 @@ class MoneyTest {
 
     @Test
     void ofFail() {
-       assertThatThrownBy(() -> Money.of(0))
-               .isInstanceOf(IllegalArgumentException.class)
-               .hasMessage(Money.OUT_OF_RANGE_MESSGAE);
+        assertThatThrownBy(() -> Money.of(0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Money.OUT_OF_RANGE_MESSGAE);
     }
 
     @Test

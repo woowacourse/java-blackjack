@@ -12,10 +12,12 @@ public abstract class User {
     public static final int BLACKJACK_VALUE = 21;
     protected final PlayingCards playingCards;
     private final String name;
+    protected final Money money;
 
-    User(PlayingCards playingCards, String name) {
+    User(PlayingCards playingCards, String name, Money money) {
         this.playingCards = playingCards;
         this.name = name;
+        this.money = money;
     }
 
     void addCard(Card card) {

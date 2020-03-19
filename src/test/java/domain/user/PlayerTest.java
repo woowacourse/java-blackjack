@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 
 class PlayerTest {
 
@@ -23,7 +24,7 @@ class PlayerTest {
         initCards = new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.DIAMOND), new Card(Symbol.QUEEN, Type.CLOVER)));
         PlayingCards playingCards = PlayingCards.of(initCards);
         String name = "player";
-        player = new Player(playingCards, name);
+        player = new Player(playingCards, name, mock(Money.class));
     }
 
     @Test

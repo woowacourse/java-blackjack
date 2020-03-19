@@ -21,7 +21,7 @@ class DealerTest {
     void construct() {
         PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.ACE, Type.DIAMOND),
                 new Card(Symbol.TEN, Type.HEART)));
-        assertThat(new Dealer(playingCards, deck)).isNotNull();
+        assertThat(new Dealer(playingCards, deck, mock(Money.class))).isNotNull();
     }
 
     @Test
@@ -30,7 +30,7 @@ class DealerTest {
         PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.CLOVER), new Card(Symbol.QUEEN, Type.SPADE))));
         //todo : 왜 여기서 먼저 꺼내와야 하는 지 알아내기
         int defaultCardsSize = playingCards.size();
-        Dealer dealer = new Dealer(playingCards, deck);
+        Dealer dealer = new Dealer(playingCards, deck, mock(Money.class));
         Card card = new Card(Symbol.ACE, Type.CLOVER);
         dealer.addCard(card);
 
@@ -42,7 +42,7 @@ class DealerTest {
     void hit() {
         //given
         PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.CLOVER))));
-        Dealer dealer = new Dealer(playingCards, deck);
+        Dealer dealer = new Dealer(playingCards, deck, mock(Money.class));
         int defaultSizeOfCards = dealer.countCards();
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
 
@@ -58,7 +58,7 @@ class DealerTest {
     void confirmCards() {
         //given
         PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.KING, Type.SPADE))));
-        Dealer dealer = new Dealer(playingCards, deck);
+        Dealer dealer = new Dealer(playingCards, deck, mock(Money.class));
         List<Card> cards = setUpDeck();
         int hitSize = cards.size();
         int defaultSizeOfCards = dealer.countCards();
