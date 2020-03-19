@@ -27,8 +27,11 @@ public class BlackjackController {
         return Players.from(namesRequestDto.getNames());
     }
 
-    public HandResponseDtos initializeHand(Dealer dealer, Players players, Deck deck) {
+    public void initializeHand(Dealer dealer, Players players, Deck deck) {
         HandInitializer.initialize(dealer, players, deck);
+    }
+
+    public HandResponseDtos getInitialHand(Dealer dealer, Players players) {
         List<HandResponseDto> handResponseDtoList = new ArrayList<>();
         handResponseDtoList.add(HandResponseDto.ofInitialDealer(dealer));
         for (Player player : players) {
@@ -58,7 +61,7 @@ public class BlackjackController {
         return new BettingTable(playerMoneyMap);
     }
 
-    public GamersResultResponseDto getResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
+    public GamersResultResponseDto getGamersResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
         Map<Gamer, Profit> calculateBettingMoney = bettingTable.calculateBettingResult(players, dealer);
         Map<String, Integer> map = calculateBettingMoney.entrySet()
                 .stream()

@@ -30,7 +30,8 @@ public class BlackJackApplication {
         BettingDto bettingDto = consoleInputView.askBettingMoney(players.getNames());
         BettingTable bettingTable = blackjackController.createBettingTable(players, bettingDto);
 
-        HandResponseDtos handResponseDtos = blackjackController.initializeHand(dealer, players, deck);
+        blackjackController.initializeHand(dealer, players, deck);
+        HandResponseDtos handResponseDtos = blackjackController.getInitialHand(dealer, players);
         consoleOutputView.printInitialHand(handResponseDtos);
 
         runPlayersHitOrStay(deck, players);
@@ -39,7 +40,7 @@ public class BlackJackApplication {
         HandResponseDtos result = blackjackController.getFinalHand(dealer, players);
         consoleOutputView.printHandWithScore(result);
 
-        GamersResultResponseDto gamersResultResponseDto = blackjackController.getResultResponse(dealer, players, bettingTable);
+        GamersResultResponseDto gamersResultResponseDto = blackjackController.getGamersResultResponse(dealer, players, bettingTable);
         consoleOutputView.printResult(gamersResultResponseDto);
     }
 
