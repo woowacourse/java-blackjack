@@ -3,21 +3,27 @@ package domain.result;
 import domain.card.Cards;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ResultCalculator {
 
     private DealerResult dealerResult;
+    private PlayersResult playersResult;
 
     public ResultCalculator() {
         dealerResult = new DealerResult();
     }
 
-//    public void calculateDealerAndPlayersResult(Dealer dealer, Players players) {
-//        for(Player player : players.getPlayers()) {
-//            player.setResult(calculateResult(dealer, player));
-//        }
-//        return new DealerResult(this.dealerResult);
-//    }
+    public void calculateDealerAndPlayersResult(Dealer dealer, Players players) {
+        Map<String, Double> result = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            result.put(player.getName(), calculateResult(dealer, player));
+        }
+        this.playersResult = new PlayersResult(result);
+    }
 
     public double calculateResult(Dealer dealer, Player player) {
         if (isDraw(dealer, player)) {
