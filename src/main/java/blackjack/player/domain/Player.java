@@ -77,4 +77,5 @@ public abstract class Player {
 	public int getScore() {
 		return cardBundle.calculateScore();
 	}
+
 }

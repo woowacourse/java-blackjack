@@ -2,6 +2,7 @@ package blackjack.player.domain.component;
 
 import java.util.Objects;
 
+// todo: 테스트코드 추가 필요
 public class PlayerInfo {
 	private static final int MINIMUM_BETTING_MONEY = 1;
 	private final String name;
