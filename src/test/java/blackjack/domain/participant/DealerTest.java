@@ -61,9 +61,9 @@ public class DealerTest {
     @Test
     void test4() {
         Dealer dealer = new Dealer();
-        List<PlayerResult> playerResults = Arrays.asList(new PlayerResult(new Name("타미"), ResultType.WIN),
-                new PlayerResult(new Name("포비"), ResultType.DRAW),
-                new PlayerResult(new Name("쪼밀리"), ResultType.LOSE));
+        List<PlayerResult> playerResults = Arrays.asList(new PlayerResult(new Player(new Name("타미")), ResultType.WIN),
+                new PlayerResult(new Player(new Name("포비")), ResultType.DRAW),
+                new PlayerResult(new Player(new Name("쪼밀리")), ResultType.LOSE));
 
         HashMap<ResultType, Integer> dealerResult = new HashMap<>();
         dealerResult.put(ResultType.LOSE, 1);

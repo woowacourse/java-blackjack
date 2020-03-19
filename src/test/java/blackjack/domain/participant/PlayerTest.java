@@ -43,7 +43,7 @@ class PlayerTest {
         player.addCard(Card.of(type, Figure.CLOVER));
 
         PlayerResult actualResult = player.createPlayerResult(dealer);
-        PlayerResult expectedResult = new PlayerResult(new Name("포비"), resultType);
+        PlayerResult expectedResult = new PlayerResult(player, resultType);
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }

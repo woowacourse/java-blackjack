@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Figure;
 import blackjack.domain.card.Type;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -161,11 +162,11 @@ class ResultTypeTest {
     @CsvSource(value = {"WIN, 2", "DRAW, 2", "LOSE, 1"})
     void test3(ResultType resultType, int expectedCount) {
         List<PlayerResult> playersResult = Arrays.asList(
-                new PlayerResult(new Name("포비"), WIN),
-                new PlayerResult(new Name("쪼밀리"), DRAW),
-                new PlayerResult(new Name("타미"), LOSE),
-                new PlayerResult(new Name("워니"), WIN),
-                new PlayerResult(new Name("CU"), DRAW)
+                new PlayerResult(new Player(new Name("포비")), WIN),
+                new PlayerResult(new Player(new Name("쪼밀리")), DRAW),
+                new PlayerResult(new Player(new Name("타미")), LOSE),
+                new PlayerResult(new Player(new Name("워니")), WIN),
+                new PlayerResult(new Player(new Name("CU")), DRAW)
         );
 
         int actualCount = resultType.countSameResultType(playersResult);
