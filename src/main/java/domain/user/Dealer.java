@@ -15,6 +15,7 @@ public class Dealer extends User {
         return user.isOver() || handCard.getScore() >= user.getScore();
     }
 
+    @Override
     public boolean isDrawable() {
         return handCard.getScore() <= DRAW_MAX_SCORE;
     }

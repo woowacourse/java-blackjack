@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     public static void printFirstDrawFormat(Dealer dealer, Players players) {
-        String playerNames = String.join(",", players.getName());
+        String playerNames = String.join(",", players.getNames());
         StringBuilder stringBuilder = new StringBuilder()
                 .append(dealer.getName())
                 .append("와 ")
@@ -69,7 +69,7 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + gameResult.getDealerMoney());
 
         Map<String, Money> playerResult = gameResult.getPlayerResult();
-        players.getName().forEach(name -> {
+        players.getNames().forEach(name -> {
             System.out.print(name + ": ");
             System.out.println(playerResult.get(name).getValue());
         });

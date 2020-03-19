@@ -35,7 +35,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getName() {
+    public List<String> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());

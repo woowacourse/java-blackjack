@@ -14,6 +14,7 @@ public class Player extends User {
         return money;
     }
 
+    @Override
     public boolean isDrawable() {
         return !handCard.isOver();
     }

@@ -1,6 +1,8 @@
 package controller;
 
-import domain.*;
+import domain.GameResult;
+import domain.Names;
+import domain.PlayerAnswer;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
 import domain.user.Dealer;
@@ -21,7 +23,7 @@ public class Controller {
             drawMoreCards(player);
         }
         drawMoreCards(dealer);
-        passResult(dealer, players);
+        passResult(dealer, players, new GameResult(players, dealer));
     }
 
     private Players createPlayers() {
@@ -62,9 +64,9 @@ public class Controller {
         return playerAnswer.isAgree();
     }
 
-    private void passResult(Dealer dealer, Players players) {
+    private void passResult(Dealer dealer, Players players, GameResult gameResult) {
         OutputView.printStatusWithScore(dealer);
         OutputView.printStatusWithScore(players);
-        OutputView.printGameResult(new GameResult(players, dealer), players, dealer);
+        OutputView.printGameResult(gameResult, players, dealer);
     }
 }
