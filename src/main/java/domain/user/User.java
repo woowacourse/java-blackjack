@@ -39,15 +39,15 @@ public abstract class User {
 	}
 
 	public boolean hasLowerScoreThan(User other) {
-		return this.calculateScore().isSmallerThan(other.calculateScore());
+		return calculateScore().isSmallerThan(other.calculateScore());
 	}
 
 	public boolean hasHigherScoreThan(User other) {
-		return this.calculateScore().isBiggerThan(other.calculateScore());
+		return calculateScore().isBiggerThan(other.calculateScore());
 	}
 
 	public boolean hasSameScoreWith(User other) {
-		return this.calculateScore().isSameWith(other.calculateScore());
+		return calculateScore().isSameWith(other.calculateScore());
 	}
 
 	public List<Card> getCards() {

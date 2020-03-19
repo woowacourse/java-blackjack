@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.result.MatchResult;
+import domain.result.Prize;
 
 public class Player extends User {
 	private static final int FIRST_SHOW_SIZE = 2;
@@ -30,8 +32,9 @@ public class Player extends User {
 			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
-	public Money getBettingMoney() {
-		return bettingMoney;
+	public Prize calculatePlayerPrize(User other) {
+		MatchResult matchResult = MatchResult.calculatePlayerMatchResult(this, other);
+		return matchResult.calculatePrize(bettingMoney);
 	}
 
 	@Override

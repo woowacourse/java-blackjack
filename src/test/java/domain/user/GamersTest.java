@@ -16,9 +16,9 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.TestCardDeck;
 import domain.result.Prize;
-import domain.result.ScoreBoards;
-import domain.result.UserResults;
 import domain.score.Score;
+import view.dto.UserPrizeDto;
+import view.dto.UserScoreDto;
 
 class GamersTest {
 	private static final String NON_ADDITIONAL_DRAW_RESPONSE = "n";
@@ -132,8 +132,8 @@ class GamersTest {
 	void calculateScoreBoards() {
 		gamers.drawFirstTime(user -> {
 		});
-		ScoreBoards scoreBoards = gamers.calculateScoreBoards();
-		assertThat(scoreBoards.getScoreBoards()).extracting("score")
+		List<UserScoreDto> userScoreDtos = gamers.calculateUserScoresDto();
+		assertThat(userScoreDtos).extracting("score")
 			.containsExactly(Score.ofValue(21), Score.ofValue(9), Score.ofValue(19), Score.ofValue(17),
 				Score.ofValue(17));
 	}
@@ -143,12 +143,10 @@ class GamersTest {
 	void calculatePrizeResults() {
 		gamers.drawFirstTime(user -> {
 		});
-		ScoreBoards scoreBoards = gamers.calculateScoreBoards();
-		UserResults userResults = gamers.calculatePrizeResults(scoreBoards);
+		List<UserPrizeDto> userPrizeDtos = gamers.calculateUserPrizesDto();
 
-		assertThat(userResults.getPlayerResults()).extracting("prize")
+		assertThat(userPrizeDtos).extracting("prize")
 			.containsExactly(Prize.valueOf(-97_500), Prize.valueOf(7_500), Prize.valueOf(-10_000),
-				Prize.valueOf(100_000), Prize
-					.valueOf(0));
+				Prize.valueOf(100_000), Prize.valueOf(0));
 	}
 }

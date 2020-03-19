@@ -4,8 +4,6 @@ import java.util.List;
 
 import domain.card.CardDeck;
 import domain.card.ShuffleCardDeck;
-import domain.result.ScoreBoards;
-import domain.result.UserResults;
 import domain.user.Dealer;
 import domain.user.Gamers;
 import domain.user.Player;
@@ -19,11 +17,8 @@ public class BlackjackGame {
 		gamers.drawFirstTime(OutputView::printInitialDrawResult);
 		gamers.drawPlayersAdditional(InputView::inputAdditionalDraw, OutputView::printPlayerCard);
 		gamers.drawDealerAdditional(OutputView::printDealerDraw);
-
-		ScoreBoards scoreBoards = gamers.calculateScoreBoards();
-		OutputView.printUsersCardsAndScore(scoreBoards);
-		UserResults totalPrizeResult = gamers.calculatePrizeResults(scoreBoards);
-		OutputView.printGameResult(totalPrizeResult);
+		OutputView.printUsersCardsAndScore(gamers.calculateUserScoresDto());
+		OutputView.printGameResult(gamers.calculateUserPrizesDto());
 	}
 
 	private Gamers initGamers() {

@@ -3,6 +3,7 @@ package domain.result;
 import java.util.Objects;
 
 public class Prize {
+	public static final Prize ZERO = Prize.valueOf(0);
 	private static final double DEALER_PRIZE_FACTOR = -1.0;
 
 	private final int prize;

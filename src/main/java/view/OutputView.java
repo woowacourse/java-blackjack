@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
-import domain.result.ScoreBoard;
-import domain.result.ScoreBoards;
-import domain.result.UserResults;
 import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.User;
+import view.dto.UserPrizeDto;
+import view.dto.UserScoreDto;
 
 public class OutputView {
 	private static final String JOINING_DELIMITER = ", ";
@@ -32,20 +31,20 @@ public class OutputView {
 		System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%s", dealer.getName(), NEW_LINE);
 	}
 
-	public static void printUsersCardsAndScore(ScoreBoards scoreBoards) {
+	public static void printUsersCardsAndScore(List<UserScoreDto> scoreBoards) {
 		System.out.println(parseAllUsersCardAndScoreData(scoreBoards));
 	}
 
-	private static String parseAllUsersCardAndScoreData(ScoreBoards scoreBoards) {
-		return scoreBoards.getScoreBoards().stream()
+	private static String parseAllUsersCardAndScoreData(List<UserScoreDto> scoreBoards) {
+		return scoreBoards.stream()
 			.map(OutputView::parseSingleUserCardAndScore)
 			.collect(Collectors.joining(NEW_LINE));
 	}
 
-	private static String parseSingleUserCardAndScore(ScoreBoard playerScoreBoard) {
+	private static String parseSingleUserCardAndScore(UserScoreDto singleUserScore) {
 		return String.format("%s %s %s",
-			playerScoreBoard.getName(), parseCards(playerScoreBoard.getCards()),
-			parseScore(playerScoreBoard.getScore()));
+			singleUserScore.getName(), parseCards(singleUserScore.getCards()),
+			parseScore(singleUserScore.getScore()));
 	}
 
 	private static String parseCards(List<Card> cards) {
@@ -64,13 +63,13 @@ public class OutputView {
 		return String.format(RESULT_CARD_SCORE_FORMAT, score);
 	}
 
-	public static void printGameResult(UserResults userResults) {
+	public static void printGameResult(List<UserPrizeDto> userResults) {
 		System.out.println("## 최종 수익");
 		System.out.println(parseAllUsersPrizeResult(userResults));
 	}
 
-	private static String parseAllUsersPrizeResult(UserResults userResults) {
-		return userResults.getPlayerResults().stream()
+	private static String parseAllUsersPrizeResult(List<UserPrizeDto> userResults) {
+		return userResults.stream()
 			.map(playerPrize -> String.format("%s : %s원", playerPrize.getName(), playerPrize.getPrize()))
 			.collect(Collectors.joining(NEW_LINE));
 	}
