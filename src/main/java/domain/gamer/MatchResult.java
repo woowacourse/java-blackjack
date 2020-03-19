@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import java.util.Arrays;
+
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 

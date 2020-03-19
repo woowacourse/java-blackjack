@@ -10,6 +10,8 @@ import domain.card.Deck;
 
 public class Gamers {
 	private static final int INIT_CARD_SIZE = 2;
+      private static final int ADD_CARD_SIZE = 1;
+
 
 	private List<Player> players;
 	private Dealer dealer;

@@ -14,16 +14,20 @@ public abstract class Gamer {
 
 	private String name;
 	private final List<Card> cards;
+    protected Result result;
 
-	public Gamer(String name) {
-		this.name = name;
-		cards = new ArrayList<>();
-	}
+    public Gamer(String name) {
+        this.name = name;
+        this.result = new Result();
+      		cards = new ArrayList<>();
 
+    }
+  
 	public abstract boolean isDrawable();
 
 	public void addCard(List<Card> cards) {
 		this.cards.addAll(cards);
+    result.calculateScore(this.cards, isContainAce());
 	}
 
 	public boolean isBlackJack() {
@@ -40,13 +44,6 @@ public abstract class Gamer {
 		return score;
 	}
 
-	private int calculateScoreWithoutAce() {
-		return cards.stream()
-			.map(Card::getCardNumber)
-			.mapToInt(CardNumber::getScore)
-			.sum();
-	}
-
 	public boolean isContainAce() {
 		return cards.stream()
 			.anyMatch(x -> x.getCardNumber() == CardNumber.ACE);
@@ -59,4 +56,8 @@ public abstract class Gamer {
 	public List<Card> getCards() {
 		return cards;
 	}
+  
+    public Result getResult() {
+        return result;
+    }
 }
