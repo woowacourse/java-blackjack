@@ -17,6 +17,10 @@ public class Hand {
         hand.add(card);
     }
 
+    public boolean isBlackJack() {
+        return hand.size() == 2 && getScore().isBlackJack();
+    }
+
     public Score getScore() {
         return Score.calculateScore(hand);
     }

@@ -31,7 +31,7 @@ public class BettingTable {
     }
 
     public GamersResultDto calculateProfit(Dealer dealer, Players players) {
-        Map<Gamer, Integer> gamersProfit = new LinkedHashMap<>(); //게이머들 수익
+        Map<Gamer, Integer> gamersProfit = new LinkedHashMap<>();
 
         int dealerProfit = 0;
         for (Player player : players) {

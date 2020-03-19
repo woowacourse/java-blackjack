@@ -5,7 +5,6 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.BlackJackResult;
 import blackjack.controller.dto.GamersResultDto;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class OutputView {
 
     public static void printGamersProfit(GamersResultDto gamersResultDto) {
         System.out.println(System.lineSeparator() + PROFIT_MESSAGE);
-        System.out.println(makeGamersProfit(gamersResultDto.getPlayersResult()));
+        System.out.println(makeGamersResult(gamersResultDto.getPlayersResult()));
     }
 
     private static void printInitialHand(Dealer dealer, Players players) {
@@ -68,15 +67,7 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private static String makeDealerResult(Map<BlackJackResult, Integer> dealerResult) {
-        StringBuilder result = new StringBuilder();
-        for (Map.Entry<BlackJackResult, Integer> entry : dealerResult.entrySet()) {
-            result.append(entry.getValue() + entry.getKey().getKoreanName());
-        }
-        return result.toString();
-    }
-
-    private static String makeGamersProfit(Map<Gamer, Integer> gamersResult) {
+    private static String makeGamersResult(Map<Gamer, Integer> gamersResult) {
         return gamersResult.entrySet().stream()
                 .map(entry -> String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue()))
                 .collect(Collectors.joining(System.lineSeparator()));

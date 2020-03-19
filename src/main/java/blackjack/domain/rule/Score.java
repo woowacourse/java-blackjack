@@ -9,7 +9,7 @@ import java.util.Map;
 public class Score implements Comparable<Score> {
 
     private static final int BUSTED = 0;
-    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_THRESHOLD = 21;
 
     public static final Map<Integer, Score> SCORES;
 
@@ -18,7 +18,7 @@ public class Score implements Comparable<Score> {
     static {
         SCORES = new HashMap<>();
 
-        for (int i = 0; i <= BUST_THRESHOLD; i++) {
+        for (int i = 0; i <= BLACKJACK_THRESHOLD; i++) {
             SCORES.put(i, new Score(i));
         }
     }
@@ -30,7 +30,7 @@ public class Score implements Comparable<Score> {
     public static Score calculateScore(List<Card> cards) {
         int score = HandCalculator.calculate(cards);
 
-        if (score > BUST_THRESHOLD) {
+        if (score > BLACKJACK_THRESHOLD) {
             return SCORES.get(BUSTED);
         }
         return SCORES.get(score);
@@ -38,6 +38,10 @@ public class Score implements Comparable<Score> {
 
     public boolean isBusted() {
         return score == BUSTED;
+    }
+
+    public boolean isBlackJack() {
+        return score == BLACKJACK_THRESHOLD;
     }
 
     public int getNumber() {

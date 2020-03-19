@@ -20,6 +20,10 @@ public abstract class Gamer {
         hand.add(card);
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public boolean isBusted() {
         return handScore().isBusted();
     }

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public final class GamersResultDto {
 
-    private final Map<Gamer, Integer> playersResult; //플레이어, 수익
+    private final Map<Gamer, Integer> playersResult;
 
     public GamersResultDto(Map<Gamer, Integer> playersResult) {
         this.playersResult = playersResult;
