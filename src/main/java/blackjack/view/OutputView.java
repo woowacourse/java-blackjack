@@ -22,11 +22,11 @@ public final class OutputView {
 
 	private static void printStartInfoHead(Playable dealer, Players players) {
 		String playerNames = players.getPlayers().stream()
-				.map(Playable::getName)
+				.map((player) -> player.getName().getString())
 				.collect(Collectors.joining(", "));
 
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
-				dealer.getName(), playerNames, dealer.countCards());
+				dealer.getName().getString(), playerNames, dealer.countCards());
 	}
 
 	private static void printAllPlayerCards(Players players) {
@@ -37,7 +37,7 @@ public final class OutputView {
 
 	public static void printPlayerCard(Playable player) {
 		String userCards = createPlayerStartCardInfo(player);
-		System.out.printf("%s : %s" + NEW_LINE, player.getName(), userCards);
+		System.out.printf("%s : %s" + NEW_LINE, player.getName().getString(), userCards);
 
 		printIfBust(player);
 	}
@@ -71,7 +71,7 @@ public final class OutputView {
 			String score = createResultScore(player);
 
 			System.out.printf("%s : %s - 결과: %s" + NEW_LINE,
-					player.getName(), userCards, score);
+					player.getName().getString(), userCards, score);
 		}
 	}
 
@@ -103,7 +103,7 @@ public final class OutputView {
 
 	private static String createPlayerResult(Playable player, Results results) {
 		String resultWord = boolToResultWord(results.getResult(player));
-		return String.format("%s : %s", player.getName(), resultWord);
+		return String.format("%s : %s", player.getName().getString(), resultWord);
 	}
 
 	private static String boolToResultWord(Result result) {

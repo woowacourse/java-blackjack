@@ -26,7 +26,7 @@ public interface Playable {
 
 	int countCards();
 
-	String getName();
+	Name getName();
 
 	Boolean isWinner(Score dealerScore);
 

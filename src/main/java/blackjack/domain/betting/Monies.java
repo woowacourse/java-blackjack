@@ -7,14 +7,15 @@ import blackjack.domain.user.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import static java.util.stream.LongStream.range;
+import static java.util.stream.IntStream.range;
 
 
 public final class Monies {
 	private final Map<Playable, Money> bettingMonies;
 
-	private Monies(Map<Playable, Money> bettingMonies) {
+	public Monies(Map<Playable, Money> bettingMonies) {
 		this.bettingMonies = bettingMonies;
 	}
 
@@ -24,8 +25,13 @@ public final class Monies {
 
 		Map<Playable, Money> map = new LinkedHashMap<>();
 		range(0, players.memberSize())
-				.forEach((i) -> map.put(players.getPlayers().get((int) i), bettingMonies.get((int) i)));
+				.forEach((i) -> map.put(players.getPlayers().get(i), bettingMonies.get(i)));
+
 		return new Monies(map);
+	}
+
+	public static Monies of(MoniesFactory moniesFactory) {
+		return moniesFactory.create();
 	}
 
 	private static void validateParamsAreNotNull(Players players, List<Money> bettingMonies) {
@@ -38,5 +44,13 @@ public final class Monies {
 		if (players.memberSize() != bettingMonies.size()) {
 			throw new MoniesException("플레이어의 수와 배팅 금액의 수가 다릅니다.");
 		}
+	}
+
+	public Set<Playable> ketSet() {
+		return bettingMonies.keySet();
+	}
+
+	public Money getMoney(Playable player) {
+		return bettingMonies.get(player);
 	}
 }

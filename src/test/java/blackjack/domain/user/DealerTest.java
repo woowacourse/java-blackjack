@@ -200,7 +200,7 @@ class DealerTest {
 
 	@Test
 	void getName_Dealer_ReturnDealerName() {
-		assertThat(dealer.getName()).isEqualTo("딜러");
+		assertThat(dealer.getName()).isEqualTo(new Name("딜러"));
 	}
 
 	@ParameterizedTest

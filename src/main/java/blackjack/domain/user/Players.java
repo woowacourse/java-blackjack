@@ -21,7 +21,7 @@ public final class Players {
 
 	private void validateDistinctNames(List<Playable> Players) {
 		int distinctCount = (int) Players.stream()
-				.map(Playable::getName)
+				.map((player -> player.getName().getString()))
 				.distinct()
 				.count();
 

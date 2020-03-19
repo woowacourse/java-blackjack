@@ -210,7 +210,7 @@ public class PlayerTest {
 
 	@Test
 	void getName_HasName_ReturnName() {
-		assertThat(player.getName()).isEqualTo("그니");
+		assertThat(player.getName()).isEqualTo(new Name("그니"));
 	}
 
 	@ParameterizedTest
