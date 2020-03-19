@@ -18,18 +18,27 @@ public class OutputView {
     private static final String NEW_LINE = "\n";
     private static final String COLON = ": ";
     private static final String DEALER = "딜러";
+    private static final String AND = "와 ";
 
     public static void printInitialCardDistribution(BlackjackGame game) {
         List<Player> players = game.getPlayers();
-        System.out.println(players.stream()
-                .map(User::getName)
-                .collect(Collectors.joining(DELIMITER)) +
+        System.out.println(DEALER + AND + parsePlayerNames(players) +
                 "에게 " + BlackjackGame.INITIAL_CARDS + "장의 카드를 나누었습니다.\n\n" +
-                showInitialCardStatus(game.getDealer()) + "\n" +
+                parseUserInitialCardStatus(game, players)
+        );
+    }
+
+    private static String parsePlayerNames(List<Player> players) {
+        return players.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private static String parseUserInitialCardStatus(BlackjackGame game, List<Player> players) {
+        return showInitialCardStatus(game.getDealer()) + "\n" +
                 players.stream()
                         .map(OutputView::showInitialCardStatus)
-                        .collect(Collectors.joining(NEW_LINE))
-        );
+                        .collect(Collectors.joining(NEW_LINE));
     }
 
     public static void printUserStatus(User user) {
@@ -77,7 +86,7 @@ public class OutputView {
     }
 
     private static String parseFinalScorePerUser(int totalScore) {
-        if(totalScore == 0) {
+        if (totalScore == 0) {
             return "버스트";
         }
         return Integer.toString(totalScore);
