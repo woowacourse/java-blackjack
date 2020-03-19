@@ -9,7 +9,6 @@ import second.domain.card.Suit;
 import second.domain.gamer.Dealer;
 import second.domain.gamer.Player;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +27,7 @@ public class ResultTypeTest {
             dealer.draw(Card.of(rank, Suit.CLOVER));
         }
 
-        assertThat(ResultType.from(player, dealer)).isEqualTo(expected);
+        assertThat(ResultType.of(player, dealer)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> generate() {
