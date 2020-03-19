@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class ProfitResultTest {
+public class ProfitRuleResultTest {
 
     @DisplayName("객체 생성 테스트")
     @Test
