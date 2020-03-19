@@ -36,6 +36,14 @@ public class BlackjackGame {
         return false;
     }
 
+    public void hitCard(Player player) {
+        player.receiveCard(deck.draw());
+    }
+
+    public boolean dealerIsBlackJack() {
+        return dealer.isBlackJack();
+    }
+
     public TotalResult calculateResultsPerPlayer() {
         Map<Player, Result> totalResult = new LinkedHashMap<>();
         players.forEach(player -> totalResult.put(player, Result.of(dealer, player)));
@@ -54,13 +62,5 @@ public class BlackjackGame {
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public void hitCard(Player player) {
-        player.receiveCard(deck.draw());
-    }
-
-    public boolean dealerIsBlackJack() {
-        return dealer.isBlackJack();
     }
 }
