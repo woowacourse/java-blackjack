@@ -29,7 +29,7 @@ public class Player extends User {
 		checkNullOrEmpty(answer);
 		checkYesOrNo(answer);
 
-		if (answer.equals(YES)) {
+		if (YES.equals(answer)) {
 			hit(deck);
 			return true;
 		}
