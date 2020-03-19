@@ -1,31 +1,59 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class Money {
 
-    private static final String NOT_POSITIVE_EXCEPTION_MESSAGE = "금액은 양수여야합니다.";
+    private static final String NEGATIVE_EXCEPTION_MESSAGE = "금액은 음수가 아니어야 합니다";
     private static final String MINIMUM_UNIT_EXCEPTION_MESSAGE = "금액의 최소 단위는 10입니다.";
 
     private final int money;
 
     private Money(int money) {
-        validateMoney(money);
         this.money = money;
     }
 
-    public static Money of(String money) {
+    public static Money fromPositive(String input) {
         try {
-            return new Money(Integer.parseInt(money));
+            int money = Integer.parseInt(input);
+            validateMoney(money);
+            return new Money(money);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    private void validateMoney(int money) {
-        if (money < 1) {
-            throw new IllegalArgumentException(NOT_POSITIVE_EXCEPTION_MESSAGE);
+    private static void validateMoney(int money) {
+        if (money < 0) {
+            throw new IllegalArgumentException(NEGATIVE_EXCEPTION_MESSAGE);
         }
         if (money % 10 != 0) {
             throw new IllegalArgumentException(MINIMUM_UNIT_EXCEPTION_MESSAGE);
         }
+    }
+
+    public Money multiply(double ratio) {
+        return new Money((int) (money * ratio));
+    }
+
+    public Money add(Money money) {
+        return new Money(this.money + money.getMoney());
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Money money1 = (Money) o;
+        return money == money1.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }
