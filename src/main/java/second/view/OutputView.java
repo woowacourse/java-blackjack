@@ -63,8 +63,11 @@ public class OutputView {
     }
 
     public static void printResults(Results results) {
-        System.out.printf("## 최종 승패 \n %s \n %s", parseDealerResultToString(results.getDealerResult()));
-        System.out.printf("## 최종 승패 \n %s \n %s", parsePlayerResultsToString(results.getPlayerResults()));
+        System.out.printf(
+                "## 최종 승패 \n%s \n%s"
+                , parseDealerResultToString(results.getDealerResult())
+                , parsePlayerResultsToString(results.getPlayerResults())
+        );
     }
 
     private static String parseDealerResultToString(Map<ResultType, Integer> dealerWinLoses) {

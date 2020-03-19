@@ -1,18 +1,14 @@
 package second;
 
 import second.domain.BlackJackGame;
-import second.domain.gamer.Player;
 import second.domain.answer.PlayerDecisions;
 import second.view.InputView;
 import second.view.OutputView;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackApplication {
     public static void main(String[] args) {
-        List<Player> players = inputPlayerNames();
-        BlackJackGame blackJackGame = new BlackJackGame(players);
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.inputPlayer());
 
         blackJackGame.drawFirstPhase();
         OutputView.printInitialCards(blackJackGame.getPlayers(), blackJackGame.getDealer());
@@ -21,13 +17,6 @@ public class BlackJackApplication {
         blackJackGame.doDrawMorePhase(playerDecisions);
 
         printResults(blackJackGame);
-    }
-
-    private static List<Player> inputPlayerNames() {
-        return InputView.inputPlayerNames()
-                .stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
     }
 
     private static void printResults(BlackJackGame blackJackGame) {
