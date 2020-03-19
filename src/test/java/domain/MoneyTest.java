@@ -14,24 +14,16 @@ public class MoneyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0,-10,-1000})
-    void 생성자_예외_테스트(int input) {
-        Assertions.assertThatThrownBy(() -> new Money(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 입력입니다.");
-    }
-
-    @ParameterizedTest
     @ValueSource(ints = {10,400,21000})
     void 금액_반환_테스트(int input) {
         Money money = new Money(input);
-        Assertions.assertThat(money.get()).isEqualTo(input);
+        Assertions.assertThat(money.getValue()).isEqualTo(input);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"10,2,20","1000,0.5,500","3,0.5,1"})
     void 곱하기_연산_테스트(int number, double mul, int expected) {
         Money money = new Money(number);
-        Assertions.assertThat(money.multiply(mul).get()).isEqualTo(expected);
+        Assertions.assertThat(money.multiply(mul).getValue()).isEqualTo(expected);
     }
 }

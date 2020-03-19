@@ -17,4 +17,8 @@ public class Player extends User {
     public boolean isDrawable() {
         return !handCard.isOver();
     }
+
+    public boolean isBlackJackByFirstCards(){
+        return isBlackJack() && handCard.getSize() == FIRST_DRAW_NUMBER;
+    }
 }

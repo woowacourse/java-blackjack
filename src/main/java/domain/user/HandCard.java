@@ -52,4 +52,12 @@ public class HandCard {
     public boolean isEmpty() {
         return cards.isEmpty();
     }
+
+    public boolean isBlackJack() {
+        return BLACKJACK_FULL_SCORE == getScore();
+    }
+
+    public int getSize() {
+        return cards.size();
+    }
 }

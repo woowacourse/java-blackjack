@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.Money;
 import domain.card.CardDeckGeneratorForTest;
 import domain.card.CardFactory;
 import domain.card.Symbol;
@@ -12,7 +13,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 @SuppressWarnings("NonAsciiCharacters")
 public class PlayerTest {
     private Player createPlayer() {
-        Player player = new Player("KIM");
+        Player player = new Player("KIM", new Money(0));
 
         Type type = Type.valueOf("SPADE");
         Symbol symbol = Symbol.valueOf("ACE");
@@ -29,7 +30,7 @@ public class PlayerTest {
 
     @Test
     void 플레이어_생성_테스트() {
-        Player player = new Player("KIM");
+        Player player = new Player("KIM", new Money(0));
 
         Assertions.assertThat(player).hasFieldOrPropertyWithValue("name", "KIM");
     }
@@ -37,7 +38,7 @@ public class PlayerTest {
     @ParameterizedTest
     @NullAndEmptySource
     void 생성_예외처리_테스트(String input) {
-        Assertions.assertThatThrownBy(() -> new Player(input))
+        Assertions.assertThatThrownBy(() -> new Player(input, new Money(0)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 입력입니다.");
     }

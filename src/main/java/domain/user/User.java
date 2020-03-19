@@ -5,7 +5,7 @@ import domain.card.CardDeck;
 import java.util.Objects;
 
 public abstract class User {
-    private static final int FIRST_DRAW_NUMBER = 2;
+    protected static final int FIRST_DRAW_NUMBER = 2;
 
     protected final HandCard handCard = new HandCard();
     private final String name;
@@ -46,6 +46,10 @@ public abstract class User {
                 .append(": ")
                 .append(handCard.getNames());
         return stringBuilder.toString();
+    }
+
+    public boolean isBlackJack(){
+        return handCard.isBlackJack();
     }
 
     public int getScore() {
