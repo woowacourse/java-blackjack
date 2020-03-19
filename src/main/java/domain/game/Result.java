@@ -52,7 +52,7 @@ public class Result {
         BigDecimal bettingMoney = userBettingLog.getMoney();
 
         if (isBlackJackWin(mainPlayer, opponentPlayer)) {
-            winningMoney.addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
+            winningMoney = winningMoney.addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
         }
         if (isBlackJackDraw(mainPlayer, opponentPlayer)
@@ -60,14 +60,14 @@ public class Result {
             return;
         }
         if (isNormalWin(mainPlayer, opponentPlayer)) {
-            winningMoney.addMoney(bettingMoney);
+            winningMoney = winningMoney.addMoney(bettingMoney);
             return;
         }
         if (isBlackJackLose(opponentPlayer)) {
-            winningMoney.subtractMoney(bettingMoney.multiply(new BigDecimal("1.5")));
+            winningMoney = winningMoney.subtractMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
         }
-        winningMoney.subtractMoney(bettingMoney);
+        winningMoney = winningMoney.subtractMoney(bettingMoney);
     }
 
     private boolean isBlackJackWin(Player mainPlayer, Player opponentPlayer) {
