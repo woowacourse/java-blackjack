@@ -14,21 +14,21 @@ import java.util.stream.Collectors;
 public final class GameResult {
 
     private static final int INITIAL_COUNT = 0;
-    private static final Map<Outcome, Integer> initialDealerResults;
+    private static final Map<PlayerOutcome, Integer> initialDealerResults;
     private static final String NULL_USE_EXCEPTION_MESSAGE = "잘못된 인자 - Null 사용";
 
     static {
-        Map<Outcome, Integer> dealerResults = new LinkedHashMap<>();
-        List<Outcome> dealerOutcomes = Arrays.asList(Outcome.values());
-        Collections.reverse(dealerOutcomes);
-        for (Outcome outcome : dealerOutcomes) {
-            dealerResults.put(outcome, INITIAL_COUNT);
+        Map<PlayerOutcome, Integer> dealerResults = new LinkedHashMap<>();
+        List<PlayerOutcome> dealerPlayerOutcomes = Arrays.asList(PlayerOutcome.values());
+        Collections.reverse(dealerPlayerOutcomes);
+        for (PlayerOutcome playerOutcome : dealerPlayerOutcomes) {
+            dealerResults.put(playerOutcome, INITIAL_COUNT);
         }
         initialDealerResults = dealerResults;
     }
 
-    private final Map<Player, Outcome> playerResults;
-    private final Map<Outcome, Integer> dealerResults;
+    private final Map<Player, PlayerOutcome> playerResults;
+    private final Map<PlayerOutcome, Integer> dealerResults;
 
     public GameResult(Dealer dealer, Players players) {
         validNotNull(players);
@@ -42,28 +42,28 @@ public final class GameResult {
         }
     }
 
-    private Map<Player, Outcome> calculatePlayerResults(Dealer dealer, Players players) {
+    private Map<Player, PlayerOutcome> calculatePlayerResults(Dealer dealer, Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors
                         .toMap(player -> player, player -> player.calculateOutcome(dealer), (a1, a2) -> a1,
                                 LinkedHashMap::new));
     }
 
-    private Map<Outcome, Integer> calculateDealerResults() {
-        Map<Outcome, Integer> dealerResults = initialDealerResults;
-        for (Outcome outcome : this.playerResults.values()) {
-            dealerResults.put(outcome, dealerResults.get(outcome) + 1);
+    private Map<PlayerOutcome, Integer> calculateDealerResults() {
+        Map<PlayerOutcome, Integer> dealerResults = initialDealerResults;
+        for (PlayerOutcome playerOutcome : this.playerResults.values()) {
+            dealerResults.put(playerOutcome, dealerResults.get(playerOutcome) + 1);
         }
         return dealerResults;
     }
 
-    public Map<Player, Outcome> getPlayersResult() {
+    public Map<Player, PlayerOutcome> getPlayersResult() {
         return playerResults;
     }
 
-    public Map<Outcome, Integer> getDealerResultsNoZero() {
+    public Map<PlayerOutcome, Integer> getDealerResultsNoZero() {
         return Collections.unmodifiableMap(dealerResults.keySet().stream()
-            .filter(outcome -> dealerResults.get(outcome) != 0)
-            .collect(Collectors.toMap(outcome -> outcome, dealerResults::get)));
+                .filter(outcome -> dealerResults.get(outcome) != 0)
+                .collect(Collectors.toMap(outcome -> outcome, dealerResults::get)));
     }
 }
