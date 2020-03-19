@@ -59,4 +59,8 @@ public enum PlayerOutcome {
     public String getConverseName() {
         return converseName;
     }
+
+    public double getProfitRatio() {
+        return profitRatio;
+    }
 }

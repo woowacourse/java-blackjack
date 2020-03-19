@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Money;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
 import blackjack.domain.result.CardsResult;
@@ -60,27 +61,23 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(Dealer dealer, Players players,
-                                        GameResult gameResult) {
+    public static void printFinalResult(Dealer dealer, GameResult gameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealer,
-                gameResult.getDealerResultsNoZero());
-        printPlayerFinalResult(gameResult.getPlayersResult());
+                gameResult.getDealerResults());
+        printPlayerFinalResult(gameResult.getPlayerResults());
     }
 
-    private static void printDealerFinalResult(Dealer dealer, Map<PlayerOutcome, Integer> gameResult) {
+    private static void printDealerFinalResult(Dealer dealer, Money dealerMoney) {
         System.out.printf("%s: ", dealer.getName());
-        for (PlayerOutcome playerOutcome : gameResult.keySet()) {
-            System.out.print(gameResult.get(playerOutcome) + playerOutcome.getConverseName() + " ");
-        }
-        System.out.println();
+        System.out.println(dealerMoney.getMoney());
     }
 
-    private static void printPlayerFinalResult(Map<Player, PlayerOutcome> playersResult) {
+    private static void printPlayerFinalResult(Map<Player, Money> playersResult) {
         for (Player player : playersResult.keySet()) {
-            PlayerOutcome playerOutcome = playersResult.get(player);
-            System.out.printf("%s: %s", player.getName(), playerOutcome.getName());
+            Money playerMoney = playersResult.get(player);
+            System.out.printf("%s: %s", player.getName(), playerMoney.getMoney());
             System.out.println();
         }
     }

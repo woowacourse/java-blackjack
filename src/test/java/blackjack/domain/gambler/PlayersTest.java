@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.Money;
 import blackjack.domain.Name;
 import blackjack.domain.Names;
-import blackjack.view.InputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ public class PlayersTest {
     void validMaximumPlayerCount() {
         Map<Name, Money> playerInfo = new LinkedHashMap<>();
         for (Name name : new Names("jamie1,jamie2,jamie3,jamie4,jamie5,jamie6,jamie7,jamie8").getNames()) {
-            playerInfo.put(name, Money.of("500"));
+            playerInfo.put(name, Money.fromPositive("500"));
         }
         assertThatThrownBy(() -> new Players(playerInfo))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -40,7 +39,7 @@ public class PlayersTest {
     void getPlayerNames() {
         Map<Name, Money> playerInfo = new LinkedHashMap<>();
         for (Name name : new Names("jamie1,jamie2").getNames()) {
-            playerInfo.put(name, Money.of("500"));
+            playerInfo.put(name, Money.fromPositive("500"));
         }
         Players players = new Players(playerInfo);
         assertThat(players.getPlayerNames().get(0)).isEqualTo("jamie1");

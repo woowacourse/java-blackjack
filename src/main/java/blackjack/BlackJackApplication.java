@@ -12,7 +12,6 @@ import blackjack.domain.gambler.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -32,7 +31,7 @@ public class BlackJackApplication {
         Names names = new Names(InputView.inputNames());
         Map<Name, Money> playerInfo = new LinkedHashMap<>();
         for (Name name : names.getNames()) {
-            playerInfo.put(name, Money.of(InputView.inputMoney(name)));
+            playerInfo.put(name, Money.fromPositive(InputView.inputMoney(name)));
         }
         Players players = new Players(playerInfo);
         Dealer dealer = new Dealer();
@@ -75,6 +74,6 @@ public class BlackJackApplication {
     private static void printCalculatedResult(Dealer dealer, Players players) {
         GameResult gameResult = new GameResult(dealer, players);
         OutputView.printUsersCardsAndScore(dealer, players);
-        OutputView.printFinalResult(dealer, players, gameResult);
+        OutputView.printFinalResult(dealer, gameResult);
     }
 }
