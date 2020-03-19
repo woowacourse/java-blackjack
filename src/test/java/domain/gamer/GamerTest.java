@@ -4,14 +4,22 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuit;
 
+import exception.NameFormatException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GamerTest {
+	@Test
+	@DisplayName("제대로된 이름이 아닐 경우 테스트")
+	public void incorrectName(){
+		assertThatThrownBy(() -> new Player("po1bi", "30")).isInstanceOf(NameFormatException.class);
+	}
+
 	@Test
 	@DisplayName("점수가 제대로 들어가는지 확인하는 테스트")
 	public void calculateTest() {

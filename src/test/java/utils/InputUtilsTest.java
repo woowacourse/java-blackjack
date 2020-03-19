@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class InputUtilsTest {
 	@Test
-	@DisplayName("이름이 제대로 들어가있는지 확인하는 테스트")
+	@DisplayName("이름이 제대로 분리되는지 테스트")
 	public void splitAsCommaTest() {
 		List<String> names = InputUtils.splitAsDelimiter("pobi,json,java");
 		assertThat(names).contains("pobi").contains("java");
