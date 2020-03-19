@@ -11,7 +11,14 @@ public class Player extends User {
 
     @Override
     public Money calculateProfit(Result result) {
-        return null;
+        if (playerLose(result)) {
+            return result.calculateProfit(money).multiply(LOSE_PENALTY_RATE);
+        }
+        return result.calculateProfit(money);
+    }
+
+    private boolean playerLose(Result result) {
+        return result.equals(Result.DEALER_WIN);
     }
 
     boolean wantToHit(String willForMoreCard) {
