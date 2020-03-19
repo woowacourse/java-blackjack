@@ -41,4 +41,8 @@ public class Deck {
     public Card dealOut() {
         return deck.poll();
     }
+
+    public Queue<Card> getDeck() {
+        return deck;
+    }
 }

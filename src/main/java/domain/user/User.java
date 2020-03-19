@@ -1,41 +1,23 @@
 package domain.user;
 
+import java.util.List;
+
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Deck;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
-    protected static final String CARD = "카드: ";
-    private static final String EMPTY = "";
-    private static final String RESULT = " - 결과: ";
-
-    protected Cards cards;
-    protected final String name;
+    protected final Cards cards;
+    protected final Name name;
 
     protected User(String name) {
-        validate(name);
         cards = new Cards();
-        this.name = name;
+        this.name = new Name(name);
     }
 
-    private void validate(String name) {
-        if (EMPTY.equals(name)) {
-            throw new IllegalArgumentException("빈 이름이 있습니다.");
-        }
-    }
-
-    public void draw(Card card) {
-        cards.add(card);
-    }
-
-    public String getDrawResult() {
-        return name + CARD + cards.getCardsDrawResult();
-    }
-
-    public abstract boolean isAvailableToDraw();
-
-    public int calculatePoint() {
-        return cards.calculatePointAccordingToHasAce();
+    public void draw(Deck deck) {
+        cards.add(deck.dealOut());
     }
 
     public boolean isBust() {
@@ -46,11 +28,22 @@ public abstract class User {
         return cards.areBlackJack();
     }
 
-    public String getTotalDrawResult() {
-        return getDrawResult() + RESULT + calculatePoint();
+    @Override
+    public int compareTo(User user) {
+        return calculatePoint() - user.calculatePoint();
+    }
+
+    public int calculatePoint() {
+        return cards.calculatePointAccordingToHasAce();
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
+    protected abstract boolean isAvailableToDraw();
 }
