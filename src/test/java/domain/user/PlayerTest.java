@@ -26,7 +26,7 @@ public class PlayerTest {
         Deck deck = CardFactory.create();
         Player player = new Player("pobi",1);
         player.receiveFirstCards(deck);
-        assertThat(player.getCards().size()).isEqualTo(2);
+        assertThat(player.getCards().getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -35,8 +35,8 @@ public class PlayerTest {
         Deck deck = CardFactory.create();
         Player player = new Player("pobi",1);
         player.receiveFirstCards(deck);
-        int sizeBeforeReceiveCard = player.getCards().size();
+        int sizeBeforeReceiveCard = player.getCards().getCards().size();
         player.receiveCard(deck);
-        assertThat(player.getCards().size()).isEqualTo(sizeBeforeReceiveCard + 1);
+        assertThat(player.getCards().getCards().size()).isEqualTo(sizeBeforeReceiveCard + 1);
     }
 }

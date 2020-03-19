@@ -27,8 +27,8 @@ public abstract class User{
         cards.put(deck.deal());
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return this.cards;
     }
 
     public int getTotalScore() {

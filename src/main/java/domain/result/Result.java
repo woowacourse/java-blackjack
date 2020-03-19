@@ -15,8 +15,8 @@ public enum Result {
         this.additionalMoneyRate = moneyResult;
     }
 
-    public double calculateResultMoney(int money, boolean isBlackJack) {
-        int resultMoney = money * this.additionalMoneyRate;
+    public double calculateResultMoney(double money, boolean isBlackJack) {
+        double resultMoney = money * this.additionalMoneyRate;
         if (resultMoney > NOT_WIN_BOUNDARY && isBlackJack) {
             resultMoney *= BLACKJACK_WIN_MONEY_RATE;
         }

@@ -42,7 +42,7 @@ public class OutputView {
 
     private static void printUserCards(String name, User user) {
         System.out.print(name + "카드 : "
-            + formatCardStatus(user.getCards())
+            + formatCardStatus(user.getCards().getCards())
         );
     }
 

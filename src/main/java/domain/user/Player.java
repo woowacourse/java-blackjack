@@ -30,4 +30,8 @@ public class Player extends User {
     public Result getResult() {
         return result;
     }
+
+    public double getBettingMoney() {
+        return bettingMoney.getBettingMoney();
+    }
 }

@@ -23,8 +23,16 @@ public class ResultCalculatorTest {
         return cards;
     }
 
+    private static List<Card> makeCardList(Card card1, Card card2, Card card3) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        return cards;
+    }
+
     @Test
-    @DisplayName("두명의 점수가 같은 경우 무승부")
+    @DisplayName("두명의 점수가 같은 경우 무승부 : 수익이 0으로 같음")
     void isSame() {
         Dealer dealer = new Dealer();
         Player player = new Player("오렌지",1000);
@@ -37,53 +45,17 @@ public class ResultCalculatorTest {
         deckForTest.add(new Card(Symbol.ACE, Type.HEART));
         player.receiveCard(new Deck(deckForTest));
 
-        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(Result.DRAW);
-    }
-
-    private static List<Card> makeCardList(Card card1, Card card2, Card card3) {
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        return cards;
+        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(0);
+        assertThat(resultCalculator.getDealerResult()).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("딜러의 승패 결과 확인 테스트")
-    void calculateDealerResult() {
-        ResultCalculator resultCalculator = new ResultCalculator();
-        Map<Result, Integer> expected = new HashMap<>();
-        expected.put(Result.WIN, 0);
-        expected.put(Result.DRAW, 1);
-        expected.put(Result.LOSE, 1);
-
-        Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("오렌지", "히히"));
-        Player winPlayer = players.getPlayers().get(0);
-        Player drawPlayer = players.getPlayers().get(1);
-        List<Card> deckForTest =
-                makeCardList(new Card(Symbol.ACE, Type.HEART), new Card(Symbol.QUEEN, Type.HEART));
-        winPlayer.receiveFirstCards(new Deck(deckForTest));
-
-        deckForTest =
-                makeCardList(new Card(Symbol.EIGHT, Type.SPADE), new Card(Symbol.QUEEN, Type.SPADE));
-        drawPlayer.receiveFirstCards(new Deck(deckForTest));
-
-        deckForTest =
-                makeCardList(new Card(Symbol.EIGHT, Type.SPADE), new Card(Symbol.QUEEN, Type.SPADE));
-        dealer.receiveFirstCards(new Deck(deckForTest));
-
-        assertThat(
-                resultCalculator.calculateDealerAndPlayersResult(dealer, players)
-        ).isEqualTo(new DealerResult(expected));
-    }
-
-    @Test
-    @DisplayName("두명의 점수가 모두 21을 넘기는 경우")
+    @DisplayName("두명의 점수가 모두 21을 넘기는 경우 :  카드합이 21이 넘은 플레이어는 패,  21 이하인 플레이어는 승")
     void testWhenBothOverBlackJack() {
         ResultCalculator resultCalculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Player player = new Player("오렌지",1000);
+        Player playerLose = new Player("오렌지",1000);
+        Player playerWin = new Player("렌지",1000);
 
         List<Card> deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
                 new Card(Symbol.JACK, Type.HEART), new Card(Symbol.KING, Type.HEART));
@@ -92,10 +64,15 @@ public class ResultCalculatorTest {
 
         deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
                 new Card(Symbol.JACK, Type.HEART), new Card(Symbol.NINE, Type.HEART));
-        player.receiveFirstCards(new Deck(deckForTest));
-        player.receiveCard(new Deck(deckForTest));
+        playerLose.receiveFirstCards(new Deck(deckForTest));
+        playerLose.receiveCard(new Deck(deckForTest));
 
-        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(Result.DRAW);
+        deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.NINE, Type.HEART));
+        playerWin.receiveFirstCards(new Deck(deckForTest));
+
+        assertThat(resultCalculator.calculateResult(dealer, playerLose)).isEqualTo(-1000);
+        assertThat(resultCalculator.calculateResult(dealer, playerWin)).isEqualTo(1000);
+        assertThat(resultCalculator.getDealerResult()).isEqualTo(0);
     }
 
     @Test
@@ -114,7 +91,8 @@ public class ResultCalculatorTest {
         player.receiveFirstCards(new Deck(deckForTest));
         player.receiveCard(new Deck(deckForTest));
 
-        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(Result.LOSE);
+        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(-1000);
+        assertThat(resultCalculator.getDealerResult()).isEqualTo(1000);
     }
 
     @Test
@@ -133,7 +111,8 @@ public class ResultCalculatorTest {
                 = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.JACK, Type.HEART));
         player.receiveFirstCards(new Deck(deckForTest));
 
-        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(Result.WIN);
+        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(1000);
+        assertThat(resultCalculator.getDealerResult()).isEqualTo(-1000);
     }
 
     @Test
@@ -150,7 +129,8 @@ public class ResultCalculatorTest {
                 = makeCardList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.JACK, Type.HEART));
         player.receiveFirstCards(new Deck(deckForTest));
 
-        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(Result.WIN);
+        assertThat(resultCalculator.calculateResult(dealer, player)).isEqualTo(1000);
+        assertThat(resultCalculator.getDealerResult()).isEqualTo(-1000);
     }
 }
 
