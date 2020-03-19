@@ -13,12 +13,16 @@ import java.util.List;
 public class BlackjackGameController {
     public static void run() {
         List<Player> players = enrollPlayers();
-        players.forEach(player -> player.addMoney(InputView.inputBettingMoney(player.getName())));
+        askBettingMoney(players);
         BlackjackGame game = startBlackjackGame(players);
         game.distributeInitialCards();
         OutputView.printInitialCardDistribution(game);
         drawMoreCard(game);
         printFinalResults(game);
+    }
+
+    private static void askBettingMoney(List<Player> players) {
+        players.forEach(player -> player.addMoney(InputView.inputBettingMoney(player.getName())));
     }
 
     private static List<Player> enrollPlayers() {
