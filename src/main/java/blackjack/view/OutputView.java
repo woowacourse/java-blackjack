@@ -6,7 +6,7 @@ import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.BlackJackResult;
-import blackjack.dto.GamersResultDto;
+import blackjack.controller.dto.GamersResultDto;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class OutputView {
     private static final String CARD_STATUS_FORMAT = "%s 카드 : %s";
     private static final String DEALER_DREW_A_CARD_MESSAGE = "딜러는 16이하라 1장의 카드를 더 받았습니다.";
     private static final String CARD_STATUS_AND_RESULT_FORMAT = "%s 카드 : %s - 결과 : %d";
-    private static final String RESULT_MESSAGE = "## 최종 승패";
+    private static final String PROFIT_MESSAGE = "## 최종 수익";
     private static final String GAMERS_RESULT_FORMAT = "%s : %s";
     private static final String CARD_FORMAT = "%s%s";
     private static final String DELIMITER = ", ";
@@ -46,10 +46,9 @@ public class OutputView {
         }
     }
 
-    public static void printGamersResult(GamersResultDto gamersResultDto) {
-        System.out.println(System.lineSeparator() + RESULT_MESSAGE);
-        System.out.println(String.format(GAMERS_RESULT_FORMAT, "딜러", makeDealerResult(gamersResultDto.getDealerResult())));
-        System.out.println(makePlayersResult(gamersResultDto.getPlayersResult()));
+    public static void printGamersProfit(GamersResultDto gamersResultDto) {
+        System.out.println(System.lineSeparator() + PROFIT_MESSAGE);
+        System.out.println(makeGamersProfit(gamersResultDto.getPlayersResult()));
     }
 
     private static void printInitialHand(Dealer dealer, Players players) {
@@ -77,9 +76,9 @@ public class OutputView {
         return result.toString();
     }
 
-    private static String makePlayersResult(Map<Player, BlackJackResult> playersResult) {
-        return playersResult.entrySet().stream()
-                .map(entry -> String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue().getKoreanName()))
+    private static String makeGamersProfit(Map<Gamer, Integer> gamersResult) {
+        return gamersResult.entrySet().stream()
+                .map(entry -> String.format(GAMERS_RESULT_FORMAT, entry.getKey().getName(), entry.getValue()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 }

@@ -5,10 +5,16 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.rule.Score;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Gamer {
 
+    private String name;
     protected Hand hand = new Hand();
+
+    public Gamer(String name) {
+        this.name = Objects.requireNonNull(name);
+    }
 
     public void draw(Card card) {
         hand.add(card);
@@ -24,7 +30,9 @@ public abstract class Gamer {
 
     public abstract boolean canDrawCard();
 
-    public abstract String getName();
+    public String getName() {
+        return name;
+    }
 
     public List<Card> getHand() {
         return hand.getCardStatus();

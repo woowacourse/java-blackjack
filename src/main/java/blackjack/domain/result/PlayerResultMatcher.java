@@ -8,15 +8,18 @@ public class PlayerResultMatcher {
 
     public static BlackJackResult match(Dealer dealer, Player player) {
         if (player.isBusted()) {
+            System.out.println("PLAYERBUSTDE");
             return BlackJackResult.LOSE;
         }
         if (dealer.isBusted()) {
+            System.out.println("DEALERBUSTED");
             return BlackJackResult.WIN;
         }
         return findWinner(dealer, player);
     }
 
     private static BlackJackResult findWinner(Dealer dealer, Player player) {
+        System.out.println("FINDWINNER");
         Score dealerScore = dealer.handScore();
         Score playerScore = player.handScore();
 

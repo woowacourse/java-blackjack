@@ -8,10 +8,8 @@ import java.util.Objects;
 
 public class Player extends Gamer {
 
-    private final String name;
-
     public Player(String name) {
-        this.name = Objects.requireNonNull(name);
+        super(name);
     }
 
     @Override
@@ -20,7 +18,12 @@ public class Player extends Gamer {
     }
 
     @Override
-    public String getName() {
-        return name;
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

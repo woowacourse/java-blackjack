@@ -5,6 +5,7 @@ import blackjack.domain.card.CardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.EmptyStackException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,6 @@ public class DeckTest {
             deck.pick();
         }
         assertThatThrownBy(() -> deck.pick())
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("카드를 모두 사용하셨습니다.");
+                .isInstanceOf(EmptyStackException.class);
     }
 }

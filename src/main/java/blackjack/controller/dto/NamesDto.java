@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.controller.dto;
 
 import java.util.Arrays;
 import java.util.List;

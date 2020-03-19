@@ -24,9 +24,18 @@ class PlayerResultMatcherTest {
     }
 
     @Test
-    @DisplayName("player가 버스트 되면 무조건 패배")
+    @DisplayName("player가 버스트 되면 무조건 패배 (dealer 버스트 x)")
     void playerBusted() {
         makeGamerBusted(player);
+        makeGamerNotBusted(dealer);
+        assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("player가 버스트 되면 무조건 패배 (dealer 버스트 o)")
+    void playerBusted2() {
+        makeGamerBusted(player);
+        makeGamerBusted(dealer);
         assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.LOSE);
     }
 
@@ -34,6 +43,7 @@ class PlayerResultMatcherTest {
     @DisplayName("player 버스트 x, dealer 버스트 o")
     void dealerBusted() {
         makeGamerBusted(dealer);
+        makeGamerNotBusted(player);
         assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.WIN);
     }
 
@@ -65,6 +75,11 @@ class PlayerResultMatcherTest {
         gamer.draw(new Card(CardSymbol.KING, CardType.SPADE));
         gamer.draw(new Card(CardSymbol.KING, CardType.CLOVER));
         gamer.draw(new Card(CardSymbol.KING, CardType.DIAMOND));
+    }
+
+    private void makeGamerNotBusted(Gamer gamer) {
+        gamer.draw(new Card(CardSymbol.FIVE, CardType.DIAMOND));
+        gamer.draw(new Card(CardSymbol.THREE, CardType.SPADE));
     }
 
 }

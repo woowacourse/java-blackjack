@@ -6,6 +6,11 @@ import static blackjack.domain.rule.Score.SCORES;
 public class Dealer extends Gamer {
 
     private static final int DRAW_THRESHOLD = 16;
+    public static final String DEALER_NAME = "딜러";
+
+    public Dealer() {
+        super(DEALER_NAME);
+    }
 
     @Override
     public boolean canDrawCard() {
@@ -15,9 +20,8 @@ public class Dealer extends Gamer {
         return true;
     }
 
-    @Override
     public String getName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 
     public Card getOpenCard() {
