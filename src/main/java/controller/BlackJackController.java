@@ -1,5 +1,7 @@
 package controller;
 
+import domain.BettingMoney;
+import domain.BettingMoneys;
 import domain.CardDeck;
 import domain.Dealer;
 import domain.Player;
@@ -13,17 +15,22 @@ import view.OutputView;
 public class BlackJackController {
 	private static final int DISTRIBUTE_CARD_SIZE = 2;
 
+	private BettingMoneys bettingMoneys;
 	private CardDeck cardDeck;
 	private Dealer dealer;
 	private Players players;
 
 	public BlackJackController(String inputNames) {
+		this.bettingMoneys = new BettingMoneys();
 		this.cardDeck = new CardDeck();
 		this.dealer = new Dealer();
 		this.players = PlayersFactory.create(inputNames);
 	}
 
 	public void run() {
+		players.forEach(player -> {
+			bettingMoneys.betting(player, BettingMoney.from(InputView.inputBettingMoney(player.getName())));
+		});
 		cardDeck.shuffle();
 		distributeTwoCard();
 		if (dealer.isNotBlackJack()) {
