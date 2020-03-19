@@ -13,8 +13,8 @@ public enum Result {
     DRAW("무", (dealer, player) -> dealer.compareScore(player) == 0, 0);
 
     private final String name;
-    private BiPredicate<Dealer, Player> condition;
-    private double rate;
+    private final BiPredicate<Dealer, Player> condition;
+    private final double rate;
 
     Result(String name, BiPredicate<Dealer, Player> condition, double rate) {
         this.name = name;

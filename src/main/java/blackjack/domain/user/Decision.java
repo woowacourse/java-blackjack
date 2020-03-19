@@ -6,7 +6,8 @@ public enum Decision {
     Y("Y", "y", true),
     N("N", "n", false);
 
-    public static final String INVALID_INPUT= "올바르지 않은 입력입니다.";
+    private static final String INVALID_INPUT= "올바르지 않은 입력입니다.";
+
     private String uppercase;
     private String lowercase;
     private boolean intended;
