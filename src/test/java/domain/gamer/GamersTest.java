@@ -1,15 +1,15 @@
 package domain.gamer;
 
-import static java.util.stream.Collectors.*;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import domain.card.CardsFactory;
+import domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.card.CardsFactory;
-import domain.card.Deck;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GamersTest {
 	@Test
@@ -35,25 +35,5 @@ public class GamersTest {
 
 		assertThat(player.getCards()).hasSize(2);
 		assertThat(gamers.getDealer().getCards()).hasSize(2);
-	}
-
-	@Test
-	@DisplayName("게임 결과들을 가져오는 테스트")
-	public void generateGameResultsTest() {
-		Gamers gamers = new Gamers("pobi, json", new Dealer());
-
-		gamers.getPlayers().forEach(player -> {
-			player.addCard(Arrays.asList(
-					new Card(CardSuit.CLOVER, CardNumber.SIX),
-					new Card(CardSuit.CLOVER, CardNumber.TEN))
-			);
-		});
-
-		gamers.getDealer().addCard(Arrays.asList(
-				new Card(CardSuit.CLOVER, CardNumber.SEVEN),
-				new Card(CardSuit.CLOVER, CardNumber.TEN))
-		);
-
-		assertThat(gamers.generateGameResults().get(gamers.getPlayers().get(0))).isEqualTo(MatchResult.LOSE);
 	}
 }

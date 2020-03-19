@@ -33,12 +33,12 @@ public class Player extends Gamer {
 			return MatchResult.LOSE;
 		}
 
-		return MatchResult.of(calculateScore(), dealer.calculateScore());
+		return MatchResult.of(score.getScore(), dealer.score.getScore());
 	}
   
     @Override
     public boolean isDrawable() {
-        return result.getScore() < DRAW_CARD_PIVOT;
+        return score.getScore() < DRAW_CARD_PIVOT;
     }
 
 	public Money getMoney() {

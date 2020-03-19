@@ -15,7 +15,7 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuit;
 
-public class GameResultTest {
+public class GameScoreTest {
 	@Test
 	public void generateGameResultsTest() {
 		Gamers gamers = Stream.of("pobi", "json")
