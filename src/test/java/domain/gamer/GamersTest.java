@@ -1,17 +1,15 @@
 package domain.gamer;
 
-import domain.card.*;
-import utils.InputUtils;
-import view.InputView;
+import static java.util.stream.Collectors.*;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import domain.card.CardsFactory;
+import domain.card.Deck;
 
 public class GamersTest {
 	@Test

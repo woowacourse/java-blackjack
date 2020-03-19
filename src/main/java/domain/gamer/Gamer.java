@@ -13,10 +13,11 @@ public abstract class Gamer {
 	public static final int BLACKJACK_CARD_SIZE = 2;
 
 	private String name;
-	private final List<Card> cards = new ArrayList<>();
+	private final List<Card> cards;
 
 	public Gamer(String name) {
 		this.name = name;
+		cards = new ArrayList<>();
 	}
 
 	public abstract boolean isDrawable();

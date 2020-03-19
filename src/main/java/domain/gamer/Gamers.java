@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import domain.card.Deck;
-import utils.InputUtils;
 
 public class Gamers {
 	private static final int INIT_CARD_SIZE = 2;
