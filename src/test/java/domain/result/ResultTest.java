@@ -22,13 +22,26 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class ResultTest {
-
     @ParameterizedTest
-    @MethodSource({"getCasesForTestingJudge"})
-    @DisplayName("#judge() : should return Result")
-    void judge(Player player, Dealer dealer, Result expected) {
-        Result actual = Result.judge(player, dealer);
+    @MethodSource({"getCasesForJudge"})
+    void judge(Result expected) {
+        MatchService mockMatchService = mock(MatchService.class);
+        Player mockPlayer = mock(Player.class);
+        Dealer mockDealer = mock(Dealer.class);
+        when(mockMatchService.match(mockPlayer, mockDealer)).thenReturn(expected);
+
+        Result actual = Result.judge(mockMatchService, mockPlayer, mockDealer);
         assertThat(actual).isEqualTo(expected);
+        verify(mockMatchService).match(mockPlayer, mockDealer);
+    }
+
+    private static Stream<Arguments> getCasesForJudge() {
+        return Stream.of(
+                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK),
+                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk),
+                Arguments.of(Result.DEALER_WIN),
+                Arguments.of(Result.DRAW)
+        );
     }
 
     @ParameterizedTest
@@ -36,64 +49,8 @@ class ResultTest {
     @DisplayName("#calculateProfit() : should return profit")
     void calculateProfit(Result result) {
         Money money = mock(Money.class);
-
-        //when
         result.calculateProfit(money);
         verify(money).multiply(anyDouble());
-    }
-
-    private static Stream<Arguments> getCasesForTestingJudge() {
-        int scoreOfPlayer = 15;
-        Player mockPlayer = stubPlayer(scoreOfPlayer);
-        Dealer mockDealer = stubDealer(scoreOfPlayer);
-
-        return Stream.of(
-                Arguments.of(mockPlayer, mockDealer, Result.DEALER_WIN),
-                Arguments.of(mockPlayer, mockDealer, Result.PLAYER_WIN_WITH_BLACKJACK),
-                Arguments.of(mockPlayer, mockDealer, Result.PLAYER_WIN_WITHOUT_BLACKJACk),
-                Arguments.of(mockPlayer, mockDealer, Result.DRAW),
-                Arguments.of(mockPlayer, mockDealer, Result.PLAYER_WIN_WITH_BLACKJACK),
-                Arguments.of(mockPlayer, mockDealer, Result.DEALER_WIN),
-                Arguments.of(mockPlayer, mockDealer, Result.DRAW),
-                Arguments.of(mockPlayer, mockDealer, Result.PLAYER_WIN_WITHOUT_BLACKJACk)
-        );
-    }
-
-    //todo: 가독성 올리기
-    private static Player stubPlayer(int scoreOfPlayer) {
-        Player mockPlayer = mock(Player.class);
-        when(mockPlayer.isBust())
-                .thenReturn(true)
-                .thenReturn(false);
-
-        when(mockPlayer.isBlackjack())
-                .thenReturn(true)
-                .thenReturn(false)
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(false);
-
-        when(mockPlayer.calculateScore()).thenReturn(scoreOfPlayer);
-        return mockPlayer;
-    }
-
-    //todo: 가독성 올리기
-    private static Dealer stubDealer(int scoreOfPlayer) {
-        Dealer mockDealer = mock(Dealer.class);
-        when(mockDealer.isBust())
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(false);
-        when(mockDealer.isBlackjack())
-                .thenReturn(true)
-                .thenReturn(false);
-        when(mockDealer.isNotBlackjack()).thenReturn(true);
-        when(mockDealer.calculateScore())
-                .thenReturn(scoreOfPlayer + 1)
-                .thenReturn(scoreOfPlayer)
-                .thenReturn(scoreOfPlayer - 1);
-        return mockDealer;
     }
 
     private static Stream<Arguments> getCasesForTesingCalculateProfit() {
