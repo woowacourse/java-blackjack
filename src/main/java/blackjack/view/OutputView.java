@@ -3,9 +3,8 @@ package blackjack.view;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.ResponseDTO.ProfitDTO;
+import blackjack.domain.result.ResponseDTO.WinningDTO;
 
 import java.util.List;
 
@@ -56,14 +55,12 @@ public class OutputView {
         System.out.println(String.format(CARD_FINAL_INFO_MSG, name, cardInfo, score));
     }
 
-    public static void printFinalResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
+    public static void printFinalResult(List<WinningDTO> winningDTOS) {
         System.out.println();
         System.out.println(FINAL_RESULT_ANNOUNCE_MSG);
 
-        System.out.println(String.format(FINAL_RESULT_MSG, dealerResult.name(), dealerResult.showDealerRecord()));
-
-        for (PlayerResult playerResult : playerResults) {
-            System.out.println(String.format(FINAL_RESULT_MSG, playerResult.name(), playerResult.resultType()));
+        for (WinningDTO dto : winningDTOS) {
+            System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), dto.getRecord()));
         }
     }
 
@@ -75,4 +72,5 @@ public class OutputView {
             System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), dto.getProfit()));
         }
     }
+
 }

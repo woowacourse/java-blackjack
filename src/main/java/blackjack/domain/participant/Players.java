@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayersResults;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,10 +24,11 @@ public class Players {
     }
 
 
-    public List<PlayerResult> createPlayerResults(Dealer dealer) {
-        return players.stream()
+    public PlayersResults createPlayerResults(Dealer dealer) {
+        List<PlayerResult> playerResults = players.stream()
                 .map(player -> player.createPlayerResult(dealer))
                 .collect(Collectors.toList());
+        return new PlayersResults(playerResults);
     }
 
     public List<String> names() {

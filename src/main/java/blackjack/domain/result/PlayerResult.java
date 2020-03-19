@@ -41,6 +41,10 @@ public class PlayerResult {
         return player;
     }
 
+    public ResultType getResultType() {
+        return resultType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

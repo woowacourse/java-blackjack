@@ -4,7 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayersResults;
 import blackjack.domain.result.ResponseDTO.ProfitDTO;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -36,13 +36,13 @@ public class BettingGame extends BlackJackController {
 
     @Override
     protected void showResult(Players players, Dealer dealer) {
-        List<PlayerResult> playerResults = players.createPlayerResults(dealer);
+        PlayersResults playersResults = players.createPlayerResults(dealer);
 
-        List<ProfitDTO> playerDTOS = playerResults.stream()
+        ProfitDTO dealerDTO = new ProfitDTO(dealer.name(), playersResults.computeDealerProfit());
+
+        List<ProfitDTO> playerDTOS = playersResults.getPlayersResults().stream()
                 .map(result -> new ProfitDTO(result.name(), result.computeProfit()))
                 .collect(Collectors.toList());
-
-        ProfitDTO dealerDTO = new ProfitDTO(dealer.name(), dealer.computeDealerProfit(playerResults));
 
         List<ProfitDTO> profitDTOS = new ArrayList<>();
         profitDTOS.add(dealerDTO);
