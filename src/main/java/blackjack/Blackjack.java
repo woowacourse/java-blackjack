@@ -7,17 +7,16 @@ import blackjack.domain.playing.user.Player;
 import blackjack.domain.playing.user.Players;
 import blackjack.domain.playing.user.exception.HitOrStayException;
 import blackjack.domain.result.BettingMoney;
+import blackjack.domain.result.BettingMoneyRepository;
 import blackjack.domain.result.Exception.BettingMoneyException;
+import blackjack.domain.result.ProfitResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Blackjack {
     public static void main(String[] args) {
         Players players = Players.of(InputView.inputPlayerNames());
-        Map<Player, BettingMoney> bettingResult = createBettingResult(players);
+        createBettingResult(players);
 
         Dealer dealer = Dealer.create();
         Deck deck = Deck.createWithShuffle();
@@ -32,19 +31,15 @@ public class Blackjack {
 
         OutputView.printFinalInfo(dealer, players);
 
-//        GameResult gameResult = GameResult.of(dealer, players);
-//        OutputView.printGameResult(gameResult);
+        ProfitResult profitResult = ProfitResult.of(players, dealer);
+        OutputView.printProfitResult(profitResult);
     }
 
-    private static Map<Player, BettingMoney> createBettingResult(Players players) {
-        Map<Player, BettingMoney> bettingResult = new LinkedHashMap<>();
-
+    private static void createBettingResult(Players players) {
         for (Player player : players.getPlayers()) {
             BettingMoney bettingMoney = inputBettingMoney(player);
-            bettingResult.put(player, bettingMoney);
+            BettingMoneyRepository.save(player, bettingMoney);
         }
-
-        return bettingResult;
     }
 
     private static BettingMoney inputBettingMoney(Player player) {

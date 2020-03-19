@@ -5,9 +5,12 @@ import blackjack.domain.playing.user.AbstractUser;
 import blackjack.domain.playing.user.Dealer;
 import blackjack.domain.playing.user.Player;
 import blackjack.domain.playing.user.Players;
+import blackjack.domain.result.Profit;
+import blackjack.domain.result.ProfitResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -91,27 +94,21 @@ public class OutputView {
         return String.valueOf(abstractUser.calculateScore().getScore());
     }
 
-//    public static void printGameResult(GameResult gameResult) {
-//        printDealerResults(gameResult);
-//        printPlayerResults(gameResult);
-//    }
-//
-//    private static void printPlayerResults(GameResult gameResult) {
-//        Map<Player, ResultType> playerResults = gameResult.getPlayerResults();
-//        Set<Player> players = playerResults.keySet();
-//        for (Player player : players) {
-//            ResultType resultType = playerResults.get(player);
-//            System.out.printf("%s : %s" + NEW_LINE, player.getName(), resultType.getName());
-//        }
-//    }
-//
-//    private static void printDealerResults(GameResult gameResult) {
-//        Map<ResultType, Integer> dealerResults = gameResult.getDealerResults();
-//
-//        int dealerWinCount = dealerResults.get(ResultType.WIN);
-//        int dealerDrawCount = dealerResults.get(ResultType.DRAW);
-//        int dealerLoseCount = dealerResults.get(ResultType.LOSE);
-//
-//        System.out.printf("%s : %d승 %d무 %d패" + NEW_LINE, Dealer.NAME, dealerWinCount, dealerDrawCount, dealerLoseCount);
-//    }
+    public static void printProfitResult(ProfitResult profitResult) {
+        printDealerProfit(profitResult);
+        printPlayersProfit(profitResult);
+    }
+
+    private static void printDealerProfit(ProfitResult profitResult) {
+        Profit dealerProfit = profitResult.getDealerProfit();
+        System.out.printf("%s : %s", NEW_LINE, Dealer.NAME, dealerProfit.getProfit());
+    }
+
+    private static void printPlayersProfit(ProfitResult profitResult) {
+        Map<Player, Profit> playersProfit = profitResult.getPlayerProfit();
+        for (Player player : playersProfit.keySet()) {
+            Profit profit = playersProfit.get(player);
+            System.out.printf("%s : %s", NEW_LINE, player.getName(), profit.getProfit());
+        }
+    }
 }
