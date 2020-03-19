@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
@@ -56,30 +56,22 @@ public class PlayerTest {
 
     @Test
     @DisplayName("버스트 확인")
-    void isBust() {
+    void isBust_IfPointMoreThan21_IsTrue() {
         Player player = new User("user");
         player.addCard(Card.of("스페이드", "10"));
         player.addCard(Card.of("스페이드", "A"));
-        assertThat(player.isBust()).isFalse();
-
         player.addCard(Card.of("하트", "10"));
-        assertThat(player.isBust()).isFalse();
-
         player.addCard(Card.of("하트", "A"));
         assertThat(player.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("버스트 아님 확인")
-    void isNotBust() {
+    void isNotBust_IfPointLessThan22_IsTrue() {
         Player player = new User("user");
         player.addCard(Card.of("스페이드", "10"));
         player.addCard(Card.of("스페이드", "A"));
-        assertThat(player.isNotBust()).isTrue();
-
         player.addCard(Card.of("하트", "10"));
-        assertThat(player.isNotBust()).isTrue();
-
         player.addCard(Card.of("하트", "A"));
         assertThat(player.isNotBust()).isFalse();
     }
@@ -92,5 +84,15 @@ public class PlayerTest {
         dealer.addCard(Card.of("스페이드", "A"));
 
         assertThat(dealer.getFirstCardInfo()).isEqualTo("10스페이드");
+    }
+
+    @Test
+    @DisplayName("블랙잭 확인")
+    void isBlackJack_WhenPoint21AndSize2_IsTrue() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.of("스페이드", "10"));
+        dealer.addCard(Card.of("스페이드", "A"));
+
+        assertThat(dealer.isBlackJack()).isTrue();
     }
 }

@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import factory.UserFactory;
 import org.junit.jupiter.api.DisplayName;

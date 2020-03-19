@@ -3,10 +3,11 @@ package view;
 import domain.card.Card;
 import domain.game.Result;
 import domain.game.Results;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Users;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,21 +58,14 @@ public class OutputView {
     }
 
     public static void printLastResult(Results results) {
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
         for (Result result : results) {
             printIndividualResult(result);
         }
     }
 
     private static void printIndividualResult(final Result result) {
-        if (result.isPlayCountMoreThanOne()) {
-            System.out.printf("%s: %d승 %s패\n", result.getName(), result.getWinCount(), result.getLoseCount());
-            return;
-        }
-        if (result.hasWin()) {
-            System.out.println(result.getName() + ": 승");
-            return;
-        }
-        System.out.println(result.getName() + ": 패");
+        System.out.println(result.getName() + ": " + result.getWinningMoney()
+                .setScale(0, RoundingMode.FLOOR));
     }
 }

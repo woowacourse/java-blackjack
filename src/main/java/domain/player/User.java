@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 public class User extends Player {
     public User(final String name) {
@@ -7,8 +7,8 @@ public class User extends Player {
 
     public boolean isWin(final Player opponentPlayer) {
         boolean dealerBust = opponentPlayer.isBust();
-        boolean hasMoreOrEqualScore = (getScore() >= opponentPlayer.getScore());
+        boolean hasMoreScore = (getScore() > opponentPlayer.getScore());
 
-        return isNotBust() && (dealerBust || hasMoreOrEqualScore);
+        return isNotBust() && (dealerBust || hasMoreScore);
     }
 }

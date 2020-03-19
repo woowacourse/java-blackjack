@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -27,25 +27,19 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러 점수가 16이하인지 확인")
-    void shouldAddCard() {
+    void shouldAddCard_DealerPointUnder16_IsTrue() {
         Dealer dealer = new Dealer();
         assertThat(dealer.shouldAddCard()).isTrue();
     }
 
     @Test
     @DisplayName("딜러 승리 여부 확인 - 유저와 동점일 경우 패배")
-    void isWin() {
+    void isWin_DealerHasMorePoint_IsTrue() {
         Dealer dealer = new Dealer();
         User user = new User("user");
 
         dealer.addCard(Card.of("스페이드", "K"));
         user.addCard(Card.of("스페이드", "9"));
         assertThat(dealer.isWin(user)).isTrue();
-
-        user.addCard(Card.of("스페이드", "10"));
-        assertThat(dealer.isWin(user)).isFalse();
-
-        dealer.addCard(Card.of("스페이드", "9"));
-        assertThat(dealer.isWin(user)).isFalse();
     }
 }
