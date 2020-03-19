@@ -1,5 +1,6 @@
 package second.view;
 
+import first.domain.gamer.AllGamers;
 import second.domain.BlackJackGame;
 import second.domain.gamer.Dealer;
 import second.domain.gamer.Gamer;
@@ -17,15 +18,12 @@ public class OutputView {
     private static final String NAME_DELIMITER = ", ";
 
     public static void printInitialCards(List<Player> players, Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("딜러와 ");
-        stringBuilder.append(parsePlayersName(players));
-        stringBuilder.append("에게 2장의 카드를 나누었습니다.\n");
-        stringBuilder.append(parseDealerInitialState(dealer));
-        stringBuilder.append(parseGamersState(players));
-
-        System.out.println(stringBuilder.toString());
+        System.out.printf(
+                "딜러와 %s에게 2장의 카드를 나누었습니다. \n"
+                , parsePlayersName(players)
+                , parseDealerInitialState(dealer)
+                , parseGamersState(players)
+        );
     }
 
     private static String parsePlayersName(List<Player> players) {
@@ -35,18 +33,11 @@ public class OutputView {
     }
 
     private static String parseDealerInitialState(Dealer dealer) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append(dealer.getName());
-        stringBuilder.append(": ");
-
         String dealerInitialCard = dealer.getHandCards()
                 .getOneCard()
                 .toString();
-        stringBuilder.append(dealerInitialCard);
-        stringBuilder.append("\n");
 
-        return stringBuilder.toString();
+        return String.format("%s: %s \n", dealer.getName(), dealerInitialCard);
     }
 
     private static String parseGamersState(List<Player> players) {
@@ -64,7 +55,7 @@ public class OutputView {
     }
 
     private static String parseGamerState(Gamer gamer) {
-        return gamer.getName() + ": " + gamer.getHandCards().toString();
+        return String.format("%s: %s", gamer.getName(), gamer.getHandCards().toString());
     }
 
     public static void printScore(Gamer gamer) {
@@ -72,26 +63,18 @@ public class OutputView {
     }
 
     public static void printResults(Results results) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("##최종승패\n");
-        stringBuilder.append(parseDealerResultToString(results.getDealerResult()));
-        stringBuilder.append(parsePlayerResultsToString(results.getPlayerResults()));
-
-        System.out.println(stringBuilder);
+        System.out.printf("## 최종 승패 \n %s \n %s", parseDealerResultToString(results.getDealerResult()));
+        System.out.printf("## 최종 승패 \n %s \n %s", parsePlayerResultsToString(results.getPlayerResults()));
     }
 
     private static String parseDealerResultToString(Map<ResultType, Integer> dealerWinLoses) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("딜러: ");
-        stringBuilder.append(parseNullToZero(dealerWinLoses.get(ResultType.WIN)));
-        stringBuilder.append(ResultType.WIN.getName());
-        stringBuilder.append(parseNullToZero(dealerWinLoses.get(ResultType.LOSE)));
-        stringBuilder.append(ResultType.LOSE.getName());
-        stringBuilder.append("\n");
-
-        return stringBuilder.toString();
+        return String.format(
+                "딜러: %s %s %s %s \n"
+                , parseNullToZero(dealerWinLoses.get(ResultType.WIN))
+                , ResultType.WIN.getName()
+                , parseNullToZero(dealerWinLoses.get(ResultType.LOSE))
+                , ResultType.LOSE.getName()
+        );
     }
 
     private static int parseNullToZero(Integer input) {
@@ -125,8 +108,9 @@ public class OutputView {
 
     public static void printGamerCards(final Gamer gamer) {
         final String gamerCardNames = parseGamerState(gamer);
-        System.out.println(String.format("%s: %s", gamer.getName(), gamerCardNames));
+        System.out.printf("%s: %s \n", gamer.getName(), gamerCardNames);
     }
 
-    private OutputView() { }
+    private OutputView() {
+    }
 }

@@ -21,6 +21,7 @@ public enum ResultType {
         this.resultJudge = resultJudge;
     }
 
+    // TODO :  이기거나 진사람이 없을경우 Exception 발생
     public static ResultType from(final Player result, final Dealer compared) {
         return Arrays.stream(ResultType.values())
                 .filter(type -> type.resultJudge.test(result, compared))
