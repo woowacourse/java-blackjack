@@ -11,6 +11,6 @@ class MoneyTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, -1})
 	void throw_exception_if_not_enough_betting_money(int value) {
-		assertThatThrownBy(() -> Money.of(value)).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> Money.valueOf(value)).isInstanceOf(IllegalArgumentException.class);
 	}
 }

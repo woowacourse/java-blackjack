@@ -125,16 +125,16 @@ class MatchResultTest {
 	@DisplayName("게임 결과별 배당금 계산")
 	@ParameterizedTest
 	@MethodSource("게임결과별_배당금계산_테스트_세트")
-	void calculate_final_prize_test(MatchResult result, int bettingMoney, int expected) {
-		assertThat(result.calculatePrize(Money.of(bettingMoney))).isEqualTo(expected);
+	void calculate_final_prize_test(MatchResult result, Money bettingMoney, Prize expected) {
+		assertThat(result.calculatePrize(bettingMoney)).isEqualTo(expected);
 	}
 
 	private static Stream<Arguments> 게임결과별_배당금계산_테스트_세트() {
 		return Stream.of(
-			Arguments.of(BLACKJACK_WIN, 1_000, 1_500),
-			Arguments.of(WIN, 1_000, 1_000),
-			Arguments.of(DRAW, 1_000, 0),
-			Arguments.of(LOSE, 1_000, -1_000)
+			Arguments.of(BLACKJACK_WIN, Money.valueOf(1_000), Prize.valueOf(1_500)),
+			Arguments.of(WIN, Money.valueOf(1_000), Prize.valueOf(1_000)),
+			Arguments.of(DRAW, Money.valueOf(1_000), Prize.valueOf(0)),
+			Arguments.of(LOSE, Money.valueOf(1_000), Prize.valueOf(-1_000))
 		);
 	}
 }

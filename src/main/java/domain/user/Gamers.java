@@ -87,8 +87,4 @@ public class Gamers {
 	public Dealer getDealer() {
 		return dealer;
 	}
-
-	public CardDeck getDeck() {
-		return deck;
-	}
 }

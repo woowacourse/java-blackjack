@@ -74,17 +74,20 @@ public class PlayerTest {
 	@MethodSource("calculateScoreCardSet")
 	void calculate_score_test(Score expected, Card[] cards) {
 		Player dongle = Player.fromNameAndMoneyAndCards("dongle", 1_000, cards);
-		assertThat(dongle.calculateScore2()).isEqualTo(expected);
+		assertThat(dongle.calculateScore()).isEqualTo(expected);
 	}
 
 	private static Stream<Arguments> calculateScoreCardSet() {
 		return Stream.of(
 			Arguments.of(Score.ofValue(19), new Card[] {Card.of(HEART, ACE), Card.of(HEART, EIGHT)}),
 			Arguments.of(Score.ofValue(21), new Card[] {Card.of(HEART, ACE), Card.of(HEART, JACK)}),
-			Arguments.of(Score.ofValue(21), new Card[] {Card.of(HEART, ACE), Card.of(HEART, FIVE), Card.of(DIAMOND, FIVE)}),
-			Arguments.of(Score.ofValue(14), new Card[] {Card.of(HEART, ACE), Card.of(DIAMOND, ACE), Card.of(HEART, QUEEN),
-				Card.of(SPADE, ACE), Card.of(CLOVER, ACE)}),
-			Arguments.of(Score.ofValue(24), new Card[] {Card.of(HEART, TEN), Card.of(DIAMOND, FOUR), Card.of(CLOVER, TEN)})
+			Arguments.of(Score.ofValue(21),
+				new Card[] {Card.of(HEART, ACE), Card.of(HEART, FIVE), Card.of(DIAMOND, FIVE)}),
+			Arguments.of(Score.ofValue(14),
+				new Card[] {Card.of(HEART, ACE), Card.of(DIAMOND, ACE), Card.of(HEART, QUEEN),
+					Card.of(SPADE, ACE), Card.of(CLOVER, ACE)}),
+			Arguments.of(Score.ofValue(24),
+				new Card[] {Card.of(HEART, TEN), Card.of(DIAMOND, FOUR), Card.of(CLOVER, TEN)})
 		);
 	}
 

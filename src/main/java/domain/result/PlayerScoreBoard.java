@@ -17,14 +17,14 @@ public class PlayerScoreBoard implements ScoreBoard {
 	}
 
 	public static PlayerScoreBoard of(Player player) {
-		return new PlayerScoreBoard(player, player.calculateScore2());
+		return new PlayerScoreBoard(player, player.calculateScore());
 	}
 
 	public UserResult createPlayerResult(DealerScoreBoard other) {
-		return new UserResult(player, calculateMoney(other));
+		return new UserResult(player, calculatePrize(other));
 	}
 
-	private int calculateMoney(DealerScoreBoard dealerBoard) {
+	private Prize calculatePrize(DealerScoreBoard dealerBoard) {
 		return match(dealerBoard).calculatePrize(player.getBettingMoney());
 	}
 

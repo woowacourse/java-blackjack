@@ -34,20 +34,20 @@ public abstract class User {
 		return this.cards.isBust();
 	}
 
-	public Score calculateScore2() {
-		return cards.calculateScore2();
+	public Score calculateScore() {
+		return cards.calculateScore();
 	}
 
 	public boolean hasLowerScoreThan(User other) {
-		return this.calculateScore2().isSmallerThan(other.calculateScore2());
+		return this.calculateScore().isSmallerThan(other.calculateScore());
 	}
 
 	public boolean hasHigherScoreThan(User other) {
-		return this.calculateScore2().isBiggerThan(other.calculateScore2());
+		return this.calculateScore().isBiggerThan(other.calculateScore());
 	}
 
 	public boolean hasSameScoreWith(User other) {
-		return this.calculateScore2().isSameWith(other.calculateScore2());
+		return this.calculateScore().isSameWith(other.calculateScore());
 	}
 
 	public List<Card> getCards() {

@@ -22,11 +22,11 @@ public class Player extends User {
 	}
 
 	public static Player fromNameAndMoney(String name, int bettingMoney) {
-		return new Player(new Name(name), Money.of(bettingMoney));
+		return new Player(new Name(name), Money.valueOf(bettingMoney));
 	}
 
 	public static Player fromNameAndMoneyAndCards(String name, int bettingMoney, Card... cards) {
-		return new Player(new Name(name), Money.of(bettingMoney),
+		return new Player(new Name(name), Money.valueOf(bettingMoney),
 			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 

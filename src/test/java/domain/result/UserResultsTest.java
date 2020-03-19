@@ -23,14 +23,15 @@ class UserResultsTest {
 	@Test
 	void getPlayerResults() {
 		List<UserResult> playerResults = Arrays.asList(
-			new UserResult(Player.fromNameAndMoney("test1", 1_000), 0),
-			new UserResult(Player.fromNameAndMoney("test2", 10_000), 10_000),
-			new UserResult(Player.fromNameAndMoney("test3", 50_000), 75_000),
-			new UserResult(Player.fromNameAndMoney("test4", 100_000), -100_000)
+			new UserResult(Player.fromNameAndMoney("test1", 1_000), Prize.valueOf(0)),
+			new UserResult(Player.fromNameAndMoney("test2", 10_000), Prize.valueOf(10_000)),
+			new UserResult(Player.fromNameAndMoney("test3", 50_000), Prize.valueOf(75_000)),
+			new UserResult(Player.fromNameAndMoney("test4", 100_000), Prize.valueOf(-100_000))
 		);
 		UserResults userResults = UserResults.fromPlayerResultsAndDealer(playerResults, new Dealer());
 
 		assertThat(userResults.getPlayerResults()).extracting("prize")
-			.containsExactly(15_000, 0, 10_000, 75_000, -100_000);
+			.containsExactly(Prize.valueOf(15_000), Prize.valueOf(0),
+				Prize.valueOf(10_000), Prize.valueOf(75_000), Prize.valueOf(-100_000));
 	}
 }

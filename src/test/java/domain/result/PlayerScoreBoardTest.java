@@ -35,7 +35,7 @@ class PlayerScoreBoardTest {
 	@DisplayName("딜러의 점수와 비교후, 결과에 따른 배당 배수가 곱해진 상금이 계산된다.")
 	@ParameterizedTest
 	@MethodSource("dealerSet_comparing_with_player")
-	void createPlayerResult(int playerBettingMoney, Card[] dealerCards, int expected) {
+	void createPlayerResult(int playerBettingMoney, Card[] dealerCards, Prize expected) {
 		Player player = Player.fromNameAndMoneyAndCards("test", playerBettingMoney, Card.of(HEART, TEN),
 			Card.of(DIAMOND, TEN));
 		Dealer dealer = Dealer.fromCards(dealerCards);
@@ -46,9 +46,9 @@ class PlayerScoreBoardTest {
 
 	private static Stream<Arguments> dealerSet_comparing_with_player() {
 		return Stream.of(
-			Arguments.of(1_000, new Card[] {Card.of(CLOVER, TEN), Card.of(CLOVER, NINE)}, 1_000),
-			Arguments.of(1_000, new Card[] {Card.of(CLOVER, TEN), Card.of(SPADE, TEN)}, 0),
-			Arguments.of(1_000, new Card[] {Card.of(CLOVER, TEN), Card.of(CLOVER, ACE)}, -1_000)
+			Arguments.of(1_000, new Card[] {Card.of(CLOVER, TEN), Card.of(CLOVER, NINE)}, Prize.valueOf(1_000)),
+			Arguments.of(1_000, new Card[] {Card.of(CLOVER, TEN), Card.of(SPADE, TEN)}, Prize.valueOf(0)),
+			Arguments.of(1_000, new Card[] {Card.of(CLOVER, TEN), Card.of(CLOVER, ACE)}, Prize.valueOf(-1_000))
 		);
 	}
 }

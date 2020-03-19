@@ -38,8 +38,9 @@ public enum MatchResult {
 		}
 	}
 
-	public int calculatePrize(Money playerMoney) {
-		return playerMoney.multiply(prizeFactor);
+	public Prize calculatePrize(Money playerMoney) {
+		Prize prize = Prize.valueOf(playerMoney.getMoney());
+		return prize.multiply(prizeFactor);
 	}
 
 	private static boolean isPlayerBlackjackWin(User player, User dealer) {

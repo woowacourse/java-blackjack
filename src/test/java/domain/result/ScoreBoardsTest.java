@@ -38,7 +38,8 @@ class ScoreBoardsTest {
 	@Test
 	void getScoreBoardsTest() {
 		assertThat(scoreBoards.getScoreBoards()).extracting("name", "score")
-			.containsExactly(Tuple.tuple("test", Score.ofValue(12)), Tuple.tuple("test2", Score.ofValue(20)), Tuple.tuple("test3", Score.ofValue(21)),
+			.containsExactly(Tuple.tuple("test", Score.ofValue(12)), Tuple.tuple("test2", Score.ofValue(20)),
+				Tuple.tuple("test3", Score.ofValue(21)),
 				Tuple.tuple("test4", Score.ofValue(21)), Tuple.tuple("딜러", Score.ofValue(20)));
 	}
 
@@ -47,9 +48,10 @@ class ScoreBoardsTest {
 	void findFinalPrizeTest() {
 		UserResults actual = scoreBoards.calculateUsersResult();
 		assertThat(actual.getPlayerResults()).extracting("user", "prize")
-			.containsExactly(Tuple.tuple(dealer, -1_500), Tuple.tuple(getFirstPlayer(), -1_000),
-				Tuple.tuple(getSecondPlayer(), 0), Tuple.tuple(getThirdPlayer(), 1_500),
-				Tuple.tuple(getFourthPlayer(), 1_000));
+			.containsExactly(Tuple.tuple(dealer, Prize.valueOf(-1_500)),
+				Tuple.tuple(getFirstPlayer(), Prize.valueOf(-1_000)),
+				Tuple.tuple(getSecondPlayer(), Prize.valueOf(0)), Tuple.tuple(getThirdPlayer(), Prize.valueOf(1_500)),
+				Tuple.tuple(getFourthPlayer(), Prize.valueOf(1_000)));
 	}
 
 	private Player getFirstPlayer() {

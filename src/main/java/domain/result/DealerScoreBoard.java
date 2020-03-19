@@ -18,7 +18,7 @@ public class DealerScoreBoard implements ScoreBoard {
 	}
 
 	public static DealerScoreBoard of(Dealer dealer) {
-		return new DealerScoreBoard(dealer, dealer.calculateScore2());
+		return new DealerScoreBoard(dealer, dealer.calculateScore());
 	}
 
 	public String getName() {

@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Money {
 	private static final int MINIMUM_BETTING_MONEY = 1;
-	private static final int DEALER_PRIZE_FACTOR = -1;
 	private static final String NOT_ENOUGH_BETTING_MONEY_EXCEPTION_MESSAGE = "해당 금액으로는 배팅하실 수 없습니다.";
 
 	private final int money;
@@ -14,7 +13,7 @@ public class Money {
 		this.money = money;
 	}
 
-	public static Money of(int money) {
+	public static Money valueOf(int money) {
 		return new Money(money);
 	}
 
@@ -24,12 +23,8 @@ public class Money {
 		}
 	}
 
-	public int multiply(double prizeFactor) {
-		return (int)(money * prizeFactor);
-	}
-
-	public static int calculateDealerPrize(int playerPrize) {
-		return playerPrize * DEALER_PRIZE_FACTOR;
+	public int getMoney() {
+		return money;
 	}
 
 	@Override

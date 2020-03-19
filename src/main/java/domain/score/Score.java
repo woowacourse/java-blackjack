@@ -9,10 +9,10 @@ import domain.card.Card;
 import domain.card.Symbol;
 
 public class Score {
-	private static final int MINIMUM_SCORE_VALUE = 0;
-	private static final int MAXIMUM_SCORE_VALUE = 21;
+	private static final int VALID_MINIMUM_SCORE_VALUE = 0;
+	private static final int VALID_MAXIMUM_SCORE_VALUE = 21;
 	private static final String OUT_OF_SCORE_VALUE_BOUNDARY_EXCEPTION_MESSAGE = String.format("점수는 %d보다 작을 수 없습니다.%s",
-		MINIMUM_SCORE_VALUE, System.lineSeparator());
+		VALID_MINIMUM_SCORE_VALUE, System.lineSeparator());
 
 	private final int score;
 
@@ -22,7 +22,7 @@ public class Score {
 	}
 
 	private void validate(int score) {
-		if (score < MINIMUM_SCORE_VALUE) {
+		if (score < VALID_MINIMUM_SCORE_VALUE) {
 			throw new IllegalArgumentException(OUT_OF_SCORE_VALUE_BOUNDARY_EXCEPTION_MESSAGE);
 		}
 	}
@@ -51,7 +51,7 @@ public class Score {
 	}
 
 	private static int appendBonusScore(int score, Symbol symbol) {
-		return score + symbol.calculateBonusScore(score, MAXIMUM_SCORE_VALUE);
+		return score + symbol.calculateBonusScore(score, VALID_MAXIMUM_SCORE_VALUE);
 	}
 
 	public boolean isBiggerThan(Score other) {
@@ -67,11 +67,11 @@ public class Score {
 	}
 
 	public boolean isMaximum() {
-		return score == MAXIMUM_SCORE_VALUE;
+		return score == VALID_MAXIMUM_SCORE_VALUE;
 	}
 
 	public boolean isBust() {
-		return score > MAXIMUM_SCORE_VALUE;
+		return score > VALID_MAXIMUM_SCORE_VALUE;
 	}
 
 	@Override

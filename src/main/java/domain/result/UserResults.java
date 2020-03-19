@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import domain.user.Money;
 import domain.user.User;
 
 public class UserResults {
+	private static final String EMPTY_USER_RESULT_EXCEPTION_MESSAGE = "인자 값이 비어있으면 안됩니다.";
 	private final List<UserResult> playerResults;
 	private final UserResult dealerResult;
 
@@ -29,11 +29,12 @@ public class UserResults {
 		return new UserResult(dealer, calculateDealerTotalPrize(userResults));
 	}
 
-	private static int calculateDealerTotalPrize(List<UserResult> userResults) {
+	private static Prize calculateDealerTotalPrize(List<UserResult> userResults) {
 		return userResults.stream()
 			.map(UserResult::getPrize)
-			.mapToInt(Money::calculateDealerPrize)
-			.sum();
+			.map(Prize::calculateDealerPrize)
+			.reduce(Prize::sum)
+			.orElseThrow(() -> new IllegalArgumentException(EMPTY_USER_RESULT_EXCEPTION_MESSAGE));
 	}
 
 	public List<UserResult> getPlayerResults() {

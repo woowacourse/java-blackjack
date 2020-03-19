@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.TestCardDeck;
+import domain.result.Prize;
 import domain.result.ScoreBoards;
 import domain.result.UserResults;
 import domain.score.Score;
@@ -133,7 +134,8 @@ class GamersTest {
 		});
 		ScoreBoards scoreBoards = gamers.calculateScoreBoards();
 		assertThat(scoreBoards.getScoreBoards()).extracting("score")
-			.containsExactly(Score.ofValue(21), Score.ofValue(9), Score.ofValue(19), Score.ofValue(17), Score.ofValue(17));
+			.containsExactly(Score.ofValue(21), Score.ofValue(9), Score.ofValue(19), Score.ofValue(17),
+				Score.ofValue(17));
 	}
 
 	@DisplayName("모든 참여자들은 카드 점수를 기준으로 승패 결정후, 결과별 최종 상금을 계산한다. 결과는 딜러, 플레이어순으로 나타난다.")
@@ -145,6 +147,8 @@ class GamersTest {
 		UserResults userResults = gamers.calculatePrizeResults(scoreBoards);
 
 		assertThat(userResults.getPlayerResults()).extracting("prize")
-			.containsExactly(-97_500, 7_500, -10_000, 100_000, 0);
+			.containsExactly(Prize.valueOf(-97_500), Prize.valueOf(7_500), Prize.valueOf(-10_000),
+				Prize.valueOf(100_000), Prize
+					.valueOf(0));
 	}
 }

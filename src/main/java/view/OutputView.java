@@ -71,7 +71,7 @@ public class OutputView {
 
 	private static String parseAllUsersPrizeResult(UserResults userResults) {
 		return userResults.getPlayerResults().stream()
-			.map(playerPrize -> String.format("%s : %d원", playerPrize.getName(), playerPrize.getPrize()))
+			.map(playerPrize -> String.format("%s : %s원", playerPrize.getName(), playerPrize.getPrize()))
 			.collect(Collectors.joining(NEW_LINE));
 	}
 

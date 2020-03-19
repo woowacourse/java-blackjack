@@ -25,7 +25,7 @@ public class Dealer extends User {
 
 	@Override
 	public boolean isDrawable() {
-		return !cards.calculateScore2().isBiggerThan(Score.ofValue(MAXIMUM_DRAWABLE_SCORE));
+		return !cards.calculateScore().isBiggerThan(Score.ofValue(MAXIMUM_DRAWABLE_SCORE));
 	}
 
 	@Override

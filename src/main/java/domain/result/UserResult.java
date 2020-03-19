@@ -6,9 +6,9 @@ import domain.user.User;
 
 public class UserResult {
 	private final User user;
-	private final int prize;
+	private final Prize prize;
 
-	public UserResult(User user, int prize) {
+	public UserResult(User user, Prize prize) {
 		this.user = Objects.requireNonNull(user);
 		this.prize = prize;
 	}
@@ -17,7 +17,7 @@ public class UserResult {
 		return user.getName();
 	}
 
-	public int getPrize() {
+	public Prize getPrize() {
 		return prize;
 	}
 
