@@ -5,7 +5,6 @@ import domain.user.Dealer;
 import domain.user.Player;
 
 public enum Result {
-
     PLAYER_WIN_WITHOUT_BLACKJACk(money -> money.multiply(1)),
     PLAYER_WIN_WITH_BLACKJACK(money -> money.multiply(1.5)),
     DRAW(money -> money.multiply(0)),
