@@ -3,65 +3,92 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
+import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.exceptions.InvalidReportException;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.PlayerFactory;
 
 class ReportTest {
+	private Deck deck;
 	private Dealer dealer;
 	private List<Player> players;
+	private Map<Player, BettingMoney> playersBettingMoney;
 
 	@BeforeEach
 	void setUp() {
-		List<Card> dealerCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> pobiCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> sonyCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> stitchCards = Arrays.asList(new Card(Symbol.SEVEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
+		deck = new Deck(CardFactory.create());
 
-		Player pobi = Player.valueOf("pobi", pobiCards);
-		Player sony = Player.valueOf("sony", sonyCards);
-		Player stitch = Player.valueOf("stitch", stitchCards);
+		dealer = Dealer.valueOf("dealer", Arrays.asList(
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 
-		dealer = Dealer.valueOf("dealer", dealerCards);
+		Player pobi = Player.valueOf("pobi", Arrays.asList(
+			Card.of(Symbol.QUEEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		Player sony = Player.valueOf("sony", Arrays.asList(
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		Player stitch = Player.valueOf("stitch", Arrays.asList(
+			Card.of(Symbol.SEVEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
 		players = Arrays.asList(pobi, sony, stitch);
+
+		playersBettingMoney = new LinkedHashMap<>();
+		playersBettingMoney.put(pobi, BettingMoney.valueOf("10000"));
+		playersBettingMoney.put(sony, BettingMoney.valueOf("5000"));
+		playersBettingMoney.put(stitch, BettingMoney.valueOf("1000"));
 	}
 
 	@Test
 	void from_DealerAndPlayers_GenerateInstance() {
-		assertThat(Report.from(new Dealer("dealer"), PlayerFactory.create("pobi, sony, stitch")))
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+
+		assertThat(Report.from(blackjackTable))
 			.isInstanceOf(Report.class);
 	}
 
-	@Test
-	void generatePlayersResult_dealerAndPlayers_MapOfPlayerAndResultType() {
-		Report report = Report.from(dealer, players);
-
-		Map<Player, ResultType> expected = new HashMap<>();
-		expected.put(players.get(0), ResultType.WIN);
-		expected.put(players.get(1), ResultType.DRAW);
-		expected.put(players.get(2), ResultType.LOSE);
-		assertThat(report).extracting("playersResult").isEqualTo(expected);
+	@ParameterizedTest
+	@NullSource
+	void validate_DealerOrPlayersHaveNullValue_InvalidReportExceptionThrown(BlackjackTable blackjackTable) {
+		assertThatThrownBy(() -> Report.from(blackjackTable))
+			.isInstanceOf(InvalidReportException.class)
+			.hasMessage(InvalidReportException.EMPTY);
 	}
 
 	@Test
-	void generateDealerResult_dealerAndPlayers_MapOfResultTypeAndCount() {
-		Report report = Report.from(dealer, players);
+	void calculateDealerProfit_PlayersProfit_ReturnDealerProfit() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+		Report report = Report.from(blackjackTable);
 
-		Map<ResultType, Long> expected = new EnumMap<>(ResultType.class);
-		expected.put(ResultType.WIN, 1L);
-		expected.put(ResultType.DRAW, 1L);
-		expected.put(ResultType.LOSE, 1L);
-		assertThat(report).extracting("dealerResult").isEqualTo(expected);
+		int expected = -9000;
+		assertThat(report.calculateDealerProfit()).isEqualTo(expected);
 	}
+
+	@Test
+	void getPlayersProfit_PlayersResult_ReturnPlayersProfitToInt() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+		Report report = Report.from(blackjackTable);
+
+		Map<Player, Integer> expected = new HashMap<>();
+		expected.put(players.get(0), 10000);
+		expected.put(players.get(1), 0);
+		expected.put(players.get(2), -1000);
+		assertThat(report.getPlayersProfit()).isEqualTo(expected);
+	}
+
 }

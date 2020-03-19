@@ -1,30 +1,31 @@
 package blackjack.domain.user;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.hand.Hand;
+import blackjack.domain.card.Hand;
+import blackjack.domain.exceptions.InvalidDeckException;
+import blackjack.domain.exceptions.InvalidUserException;
+import blackjack.domain.result.ResultScore;
 
-public abstract class User {
+public abstract class User implements BlackjackParticipant {
 	private static final int DRAW_LOWER_BOUND = 1;
 
 	protected final String name;
 	protected final Hand hand;
 
-	public User(String name) {
+	User(String name, Hand hand) {
 		validate(name);
+		validate(hand);
 		this.name = name.trim();
-		this.hand = new Hand();
+		this.hand = hand;
 	}
 
-	User(String name, List<Card> cards) {
-		this(name);
-		this.hand.add(cards);
+	User(String name) {
+		this(name, new Hand());
 	}
 
 	private void validate(String name) {
@@ -33,38 +34,61 @@ public abstract class User {
 		}
 	}
 
-	public void draw(Deck deck) {
+	private void validate(Hand hand) {
+		if (Objects.isNull(hand)) {
+			throw new InvalidUserException(InvalidUserException.NULL_HAND);
+		}
+	}
+
+	@Override
+	public void hit(Deck deck) {
+		validate(deck);
 		hand.add(deck.draw());
 	}
 
-	public void draw(Deck deck, int drawNumber) {
-		validateDrawNumber(drawNumber);
-		List<Card> drawCards = IntStream.range(0, drawNumber)
-			.mapToObj(e -> deck.draw())
-			.collect(toList());
-		hand.add(drawCards);
+	private void validate(Deck deck) {
+		if (Objects.isNull(deck)) {
+			throw new InvalidDeckException(InvalidDeckException.NULL);
+		}
 	}
 
-	protected void validateDrawNumber(int drawNumber) {
+	@Override
+	public void hit(Deck deck, int drawNumber) {
+		validate(drawNumber);
+		IntStream.range(0, drawNumber)
+			.forEach(e -> hit(deck));
+	}
+
+	protected void validate(int drawNumber) {
 		if (drawNumber < DRAW_LOWER_BOUND) {
 			throw new InvalidUserException(InvalidUserException.INVALID_DRAW_NUMBER);
 		}
 	}
 
+	@Override
 	public abstract boolean canDraw();
 
-	public abstract List<Card> getInitialHand();
+	@Override
+	public ResultScore calculateResultScore() {
+		return ResultScore.of(hand);
+	}
 
+	@Override
+	public abstract List<Card> getInitialDealtHand();
+
+	@Override
+	public int getScore() {
+		return calculateResultScore().getScore();
+	}
+
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public List<Card> getHand() {
 		return hand.getCards();
-	}
-
-	public int getScore() {
-		return hand.calculateScore().getScore();
 	}
 
 	@Override
@@ -75,12 +99,12 @@ public abstract class User {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		User that = (User)o;
-		return name.equals(that.name);
+		User user = (User)o;
+		return Objects.equals(name, user.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(name, hand);
 	}
 }

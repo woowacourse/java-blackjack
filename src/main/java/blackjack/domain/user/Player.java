@@ -3,31 +3,33 @@ package blackjack.domain.user;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.hand.Score;
+import blackjack.domain.card.Hand;
 
 public class Player extends User {
 	private static final int PLAYER_DRAWABLE_MAX_SCORE = 21;
+
+	Player(String name, Hand hand) {
+		super(name, hand);
+	}
 
 	public Player(String name) {
 		super(name);
 	}
 
-	Player(String name, List<Card> cards) {
-		super(name, cards);
-	}
-
 	public static Player valueOf(String name, List<Card> cards) {
-		return new Player(name, cards);
+		Hand hand = new Hand();
+		hand.add(cards);
+
+		return new Player(name, hand);
 	}
 
 	@Override
 	public boolean canDraw() {
-		// NOTE : 의인화?!
-		return hand.calculateScore().getScore() > Score.BUST.getScore();
+		return hand.calculateScore().isLowerThan(PLAYER_DRAWABLE_MAX_SCORE);
 	}
 
 	@Override
-	public List<Card> getInitialHand() {
-		return super.getHand();
+	public List<Card> getInitialDealtHand() {
+		return getHand();
 	}
 }
