@@ -5,11 +5,14 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import domain.YesOrNo;
+
 /**
  *   class description
  *
  *   @author ParkDooWon
  */
+@SuppressWarnings("NonAsciiCharacters")
 public class YesOrNoTest {
 	@ParameterizedTest
 	@CsvSource({"Y, YES", "N, NO"})

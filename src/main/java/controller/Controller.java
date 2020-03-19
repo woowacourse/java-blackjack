@@ -1,12 +1,12 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.card.YesOrNo;
+import domain.YesOrNo;
 import domain.gamer.Player;
-import dto.BlackjackGameDto;
-import dto.PlayerDto;
 import view.InputView;
 import view.OutputView;
+import view.dto.BlackjackGameDto;
+import view.dto.PlayerDto;
 
 /**
  *   class controller 클래스입니다.

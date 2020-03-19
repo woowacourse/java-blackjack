@@ -1,4 +1,4 @@
-package domain.card;
+package domain;
 
 import java.util.Arrays;
 
@@ -25,6 +25,6 @@ public enum YesOrNo {
 	}
 
 	public boolean isYes() {
-		return this == YesOrNo.YES;
+		return this == YES;
 	}
 }

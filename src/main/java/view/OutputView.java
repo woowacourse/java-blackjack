@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 import domain.card.Hands;
 import domain.gamer.PlayerGameResult;
-import dto.BlackjackGameDto;
-import dto.DealerDto;
-import dto.GamerDto;
-import dto.PlayerDto;
+import view.dto.BlackjackGameDto;
+import view.dto.DealerDto;
+import view.dto.GamerDto;
+import view.dto.PlayerDto;
 
 /**
  *   class outputView입니다.

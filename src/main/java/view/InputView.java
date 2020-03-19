@@ -3,7 +3,7 @@ package view;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import dto.PlayerDto;
+import view.dto.PlayerDto;
 
 /**
  *   class inputView입니다.

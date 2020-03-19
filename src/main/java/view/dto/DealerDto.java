@@ -1,4 +1,4 @@
-package dto;
+package view.dto;
 
 import domain.card.Hands;
 import domain.gamer.Dealer;
