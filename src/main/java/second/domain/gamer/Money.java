@@ -8,6 +8,13 @@ public class Money {
     }
 
     public Money(final int value) {
+        valid(value);
         this.value = value;
+    }
+
+    private void valid(int money) {
+        if (money < 0) {
+            throw new InvalidMoneyException();
+        }
     }
 }
