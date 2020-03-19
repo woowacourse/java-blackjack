@@ -11,8 +11,7 @@ public class Dealer extends User {
     }
 
     public Dealer(Hands hands) {
-        this.hands = hands;
-        this.blackJack = hands.isBlackJack();
+        super(hands);
     }
 
     public boolean isHit() {

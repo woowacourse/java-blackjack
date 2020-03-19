@@ -15,10 +15,9 @@ public class Player extends User {
     private BettingMoney bettingMoney;
 
     public Player(PlayerName name, String bettingMoney, Hands hands) {
+        super(hands);
         this.name = name;
         this.bettingMoney = new BettingMoney(bettingMoney);
-        this.hands = hands;
-        this.blackJack = hands.isBlackJack();
     }
 
     public Player(PlayerName name, String bettingMoney, Deck deck) {
