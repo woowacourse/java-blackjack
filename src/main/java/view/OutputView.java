@@ -1,6 +1,7 @@
 package view;
 
 import domain.GameResult;
+import domain.Money;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -63,21 +64,14 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(GameResult gameResult, Dealer dealer) {
-        System.out.println("## 최종 승패\n");
-        System.out.println(dealer.getName() + ": " + gameResult.calculateDealerWins() + "승 " + gameResult.calculateDealerLoses() + "패");
+    public static void printGameResult(GameResult gameResult, Players players, Dealer dealer) {
+        System.out.println("## 최종 수익\n");
+        System.out.println(dealer.getName() + ": " + gameResult.getDealerMoney());
 
-        Map<String, Boolean> playerResult = gameResult.getPlayerResult();
-        playerResult.keySet().forEach(name -> {
+        Map<String, Money> playerResult = gameResult.getPlayerResult();
+        players.getName().forEach(name -> {
             System.out.print(name + ": ");
-            System.out.println(makeResultWord(playerResult.get(name)));
+            System.out.println(playerResult.get(name).getValue());
         });
-    }
-
-    private static String makeResultWord(Boolean result) {
-        if (result) {
-            return "승";
-        }
-        return "패";
     }
 }

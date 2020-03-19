@@ -65,6 +65,6 @@ public class Controller {
     private void passResult(Dealer dealer, Players players) {
         OutputView.printStatusWithScore(dealer);
         OutputView.printStatusWithScore(players);
-        OutputView.printGameResult(new GameResult(players, dealer), dealer);
+        OutputView.printGameResult(new GameResult(players, dealer), players, dealer);
     }
 }
