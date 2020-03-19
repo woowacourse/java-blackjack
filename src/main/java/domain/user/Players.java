@@ -1,6 +1,5 @@
 package domain.user;
 
-import domain.Names;
 import domain.card.CardDeck;
 
 import java.util.ArrayList;
@@ -9,13 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
+    private final List<Player> players = new ArrayList<>();
 
-    public Players(){
-        players = new ArrayList<>();
-    }
-
-    public void add(Player player) {
+    public void add(final Player player) {
         players.add(player);
     }
 
@@ -23,7 +18,7 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public void firstDraw(CardDeck cardDeck) {
+    public void firstDraw(final CardDeck cardDeck) {
         for (Player player : players) {
             player.firstDraw(cardDeck);
         }

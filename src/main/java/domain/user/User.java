@@ -48,7 +48,7 @@ public abstract class User {
         return stringBuilder.toString();
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return handCard.isBlackJack();
     }
 

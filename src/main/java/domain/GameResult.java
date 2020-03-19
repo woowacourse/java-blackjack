@@ -13,6 +13,7 @@ public class GameResult {
     private static final double PLAYER_WIN_RATIO = 2.0;
     private static final double PLAYER_LOSE_RATIO = -1.0;
     private static final int DEALER_RESULT_RATIO = -1;
+
     private final Map<String, Money> playerResult = new HashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
