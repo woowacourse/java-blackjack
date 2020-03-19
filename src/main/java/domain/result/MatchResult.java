@@ -3,22 +3,25 @@ package domain.result;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
+import domain.betting.FinalMoney;
+import domain.betting.Money;
 import domain.result.score.DealerFinalScore;
 import domain.result.score.PlayerFinalScore;
 
 public enum MatchResult {
-	WIN("승", Referee::isPlayerWin),
-	DRAW("무", Referee::isPlayerDraw),
-	LOSE("패", Referee::isPlayerLose);
+	BLACKJACK_WIN(Referee::isPlayerBlackjackWin, 2.5),
+	WIN(Referee::isPlayerWin, 2),
+	DRAW(Referee::isPlayerDraw, 1),
+	LOSE(Referee::isPlayerLose, 0);
 
 	private static final String NO_SUCH_MESSAGE = "찾을 수 없는 경우입니다.";
 
-	private final String matchResult;
 	private final BiPredicate<PlayerFinalScore, DealerFinalScore> resultCondition;
+	private final double profitRate;
 
-	MatchResult(String matchResult, BiPredicate<PlayerFinalScore, DealerFinalScore> resultCondition) {
-		this.matchResult = matchResult;
+	MatchResult(BiPredicate<PlayerFinalScore, DealerFinalScore> resultCondition, double profitRate) {
 		this.resultCondition = resultCondition;
+		this.profitRate = profitRate;
 	}
 
 	public static MatchResult findMatchResult(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {
@@ -28,17 +31,8 @@ public enum MatchResult {
 			.orElseThrow(() -> new IllegalArgumentException(NO_SUCH_MESSAGE));
 	}
 
-	public MatchResult reverseWinAndLose() {
-		if (this == MatchResult.WIN) {
-			return MatchResult.LOSE;
-		}
-		if (this == MatchResult.LOSE) {
-			return MatchResult.WIN;
-		}
-		return this;
+	public FinalMoney makeMoneyResult(Money money) {
+		return new FinalMoney(money.calculateProfit(this.profitRate));
 	}
 
-	public String getMatchResult() {
-		return matchResult;
-	}
 }
