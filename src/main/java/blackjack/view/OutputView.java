@@ -101,14 +101,14 @@ public class OutputView {
 
     private static void printDealerProfit(ProfitResult profitResult) {
         Profit dealerProfit = profitResult.getDealerProfit();
-        System.out.printf("%s : %s", NEW_LINE, Dealer.NAME, dealerProfit.getProfit());
+        System.out.printf("%s : %s" + NEW_LINE, Dealer.NAME, dealerProfit.getProfit());
     }
 
     private static void printPlayersProfit(ProfitResult profitResult) {
         Map<Player, Profit> playersProfit = profitResult.getPlayerProfit();
         for (Player player : playersProfit.keySet()) {
             Profit profit = playersProfit.get(player);
-            System.out.printf("%s : %s", NEW_LINE, player.getName(), profit.getProfit());
+            System.out.printf("%s : %s" + NEW_LINE, player.getName(), profit.getProfit());
         }
     }
 }
