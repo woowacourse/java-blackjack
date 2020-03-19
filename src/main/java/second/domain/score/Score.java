@@ -36,6 +36,10 @@ public class Score {
         return this.value == BURST_SCORE;
     }
 
+    public boolean isSameAs(Score score) {
+        return this.value == score.value;
+    }
+
     public int getValue() {
         return value;
     }

@@ -43,6 +43,10 @@ public abstract class Gamer {
         return score.isBust();
     }
 
+    public boolean isSameScoreAs(Gamer counterGamer) {
+        return score.isSameAs(counterGamer.score);
+    }
+
     public String getName() {
         return name;
     }
@@ -54,4 +58,5 @@ public abstract class Gamer {
     public Score getScore() {
         return score;
     }
+
 }

@@ -33,7 +33,7 @@ public class ResultTypeTest {
     private static Stream<Arguments> generate() {
         return Stream.of(
                 Arguments.of(new Rank[]{Rank.ACE, Rank.K}, new Rank[]{Rank.FIVE, Rank.SIX}, ResultType.ONLY_PLAYER_BLACK_JACK),
-                Arguments.of(new Rank[]{Rank.ACE, Rank.K}, new Rank[]{Rank.ACE, Rank.K}, ResultType.BOTH_BLACK_JACK),
+                Arguments.of(new Rank[]{Rank.ACE, Rank.K}, new Rank[]{Rank.ACE, Rank.K}, ResultType.DRAW),
                 Arguments.of(new Rank[]{Rank.TWO, Rank.THREE}, new Rank[]{Rank.K, Rank.J, Rank.NINE}, ResultType.WIN),
                 Arguments.of(new Rank[]{Rank.TWO, Rank.THREE}, new Rank[]{Rank.TWO, Rank.TWO}, ResultType.WIN),
                 Arguments.of(new Rank[]{Rank.K, Rank.J, Rank.NINE}, new Rank[]{Rank.FIVE, Rank.SIX}, ResultType.LOSE),

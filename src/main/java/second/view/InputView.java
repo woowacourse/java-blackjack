@@ -2,6 +2,7 @@ package second.view;
 
 import second.domain.answer.Choice;
 import second.domain.gamer.Gamer;
+import second.domain.gamer.InvalidMoneyException;
 import second.domain.gamer.Money;
 import second.domain.gamer.Player;
 
@@ -43,8 +44,17 @@ public class InputView {
     private static Player inputPlayerMoney(String name) {
         System.out.printf("%s 의 배팅 금액은?", name);
         String input = SCANNER.nextLine();
-        Money money = new Money(Integer.parseInt(input));
+        int moneyValue = Integer.parseInt(input);
+        validMoney(moneyValue);
+        Money money = new Money(moneyValue);
         return new Player(name, money);
+    }
+
+    // View에서 처리 ? DTO가 있다면 DTO에서 처리해야할 로직 같다.
+    private static void validMoney(int money) {
+        if (money < 0) {
+            throw new InvalidMoneyException();
+        }
     }
 
     private InputView() {
