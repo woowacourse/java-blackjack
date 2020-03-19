@@ -5,6 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.ResponseDTO.ProfitDTO;
 
 import java.util.List;
 
@@ -63,6 +64,15 @@ public class OutputView {
 
         for (PlayerResult playerResult : playerResults) {
             System.out.println(String.format(FINAL_RESULT_MSG, playerResult.name(), playerResult.resultType()));
+        }
+    }
+
+    public static void printFinalProfit(List<ProfitDTO> profitDTOS) {
+        System.out.println();
+        System.out.println(FINAL_RESULT_ANNOUNCE_MSG);
+
+        for (ProfitDTO dto : profitDTOS) {
+            System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), dto.getProfit()));
         }
     }
 }

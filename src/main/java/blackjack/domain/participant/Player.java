@@ -21,7 +21,7 @@ public class Player extends Participant {
 
     public PlayerResult createPlayerResult(Dealer dealer) {
         ResultType resultType = ResultType.findResult(getCards(), dealer.getCards());
-        return new PlayerResult(name, resultType);
+        return new PlayerResult(this, resultType);
     }
 
     public boolean wantMoreCard(String reply) {

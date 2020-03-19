@@ -17,6 +17,11 @@ public class InputView {
     private static final String ENTER_BETTING_MONEY_MSG = "%s의 배팅 금액은?";
     private static final String INVALID_MONEY_INPUT_TYPE_ERR_MSG = "배팅 금액에는 정수만 들어올 수 있습니다.";
 
+    public static String enterGame() {
+        System.out.println("실행할 게임을 선택해주세요. 기본 블랙잭 : 1, 배팅 블랙잭: 2");
+        return scanner.nextLine().trim();
+    }
+
     public static List<String> enterNames() {
         System.out.println(ENTER_NAMES_MSG);
         String input = scanner.nextLine();

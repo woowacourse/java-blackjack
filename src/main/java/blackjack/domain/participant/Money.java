@@ -21,5 +21,9 @@ public class Money {
         Objects.requireNonNull(type, NULL_RESULT_TYPE_ERR_MSG);
         return type.getProfitRate() * this.bettingMoney;
     }
+
+    public double getBettingMoney() {
+        return bettingMoney;
+    }
 }
 

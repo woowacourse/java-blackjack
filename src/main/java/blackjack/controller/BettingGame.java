@@ -1,18 +1,18 @@
 package blackjack.controller;
 
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.*;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.ResponseDTO.ProfitDTO;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Controller {
-    private final CardDeck deck = new CardDeck();
+public class BettingGame extends BlackJackController {
 
+    @Override
     public void run() {
         List<Name> names = createNames();
         List<Money> bettingMoneys = createMoneys(names);
@@ -24,7 +24,13 @@ public class Controller {
 
         dealAdditionalCards(players, dealer);
 
-        showResult(players, dealer);
+        showProfit(players, dealer);
+    }
+
+    private List<Name> createNames() {
+        return InputView.enterNames().stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 
     private List<Money> createMoneys(List<Name> names) {
@@ -33,11 +39,6 @@ public class Controller {
                 .collect(Collectors.toList());
     }
 
-    private List<Name> createNames() {
-        return InputView.enterNames().stream()
-                .map(Name::new)
-                .collect(Collectors.toList());
-    }
 
     private void dealFirstCards(Dealer dealer, Players players) {
         deck.dealFirstCards(dealer);
@@ -77,10 +78,19 @@ public class Controller {
         return InputView.readYesOrNo(player.name());
     }
 
-    private void showResult(Players players, Dealer dealer) {
+    private void showProfit(Players players, Dealer dealer) {
         List<PlayerResult> playerResults = players.createPlayerResults(dealer);
-        DealerResult dealerResult = dealer.createDealerResult(playerResults);
 
-        OutputView.printFinalResult(dealerResult, playerResults);
+        List<ProfitDTO> playerDTOS = playerResults.stream()
+                .map(result -> new ProfitDTO(result.name(), result.computeProfit()))
+                .collect(Collectors.toList());
+
+        ProfitDTO dealerDTO = new ProfitDTO(dealer.name(), dealer.computeDealerProfit(playerResults));
+
+        List<ProfitDTO> profitDTOS = new ArrayList<>();
+        profitDTOS.add(dealerDTO);
+        profitDTOS.addAll(playerDTOS);
+
+        OutputView.printFinalProfit(profitDTOS);
     }
 }

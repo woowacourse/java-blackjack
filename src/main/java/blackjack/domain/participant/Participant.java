@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-    protected Name name;
-    protected Cards cards = new Cards();
+    protected final Name name;
+    protected final Cards cards = new Cards();
 
     public Participant(Name name) {
         Objects.requireNonNull(name);

@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Money;
 
 import java.util.Arrays;
 import java.util.List;
@@ -89,6 +90,10 @@ public enum ResultType {
         return (int) playerResults.stream()
                 .filter(playerResult -> playerResult.hasSameResult(this))
                 .count();
+    }
+
+    public double computeProfit(Money money) {
+        return money.getBettingMoney() * profitRate;
     }
 
     public String getWord() {

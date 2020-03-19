@@ -44,4 +44,10 @@ public class Dealer extends Participant {
 
         return new DealerResult(name, dealerResult);
     }
+
+    public double computeDealerProfit(List<PlayerResult> playerResults) {
+        return -playerResults.stream()
+                .mapToDouble(PlayerResult::computeProfit)
+                .sum();
+    }
 }
