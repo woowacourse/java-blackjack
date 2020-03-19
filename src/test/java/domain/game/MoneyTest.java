@@ -25,7 +25,7 @@ public class MoneyTest {
     @DisplayName("배팅 금액 증가")
     void addBettingMoney() {
         Money money = new Money("1000");
-        money.addMoney(new BigDecimal("5000"));
+        money = money.addMoney(new BigDecimal("5000"));
 
         assertThat(money.getMoney().toString()).isEqualTo("6000");
     }
@@ -34,7 +34,7 @@ public class MoneyTest {
     @DisplayName("배팅 금액 감소")
     void subtractBettingMoney() {
         Money money = new Money("1000");
-        money.subtractMoney(new BigDecimal("5000"));
+        money = money.subtractMoney(new BigDecimal("5000"));
 
         assertThat(money.getMoney().toString()).isEqualTo("-4000");
     }

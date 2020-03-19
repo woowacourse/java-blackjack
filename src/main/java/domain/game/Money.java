@@ -3,12 +3,15 @@ package domain.game;
 import java.math.BigDecimal;
 
 public class Money {
-    private BigDecimal money;
+    private final BigDecimal money;
 
     public Money(String money) {
         validate(money);
-
         this.money = new BigDecimal(money);
+    }
+
+    public Money(BigDecimal money) {
+        this.money = money;
     }
 
     private void validate(String inputString) {
@@ -25,12 +28,12 @@ public class Money {
         }
     }
 
-    public void addMoney(BigDecimal money) {
-        this.money = this.money.add(money);
+    public Money addMoney(BigDecimal money) {
+        return new Money(this.money.add(money));
     }
 
-    public void subtractMoney(BigDecimal money) {
-        this.money = this.money.subtract(money);
+    public Money subtractMoney(BigDecimal money) {
+        return new Money(this.money.subtract(money));
     }
 
     public BigDecimal getMoney() {
