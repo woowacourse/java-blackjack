@@ -15,15 +15,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CardCalculatorTest {
-    private Card firstCard;
-    private Card secondCard;
 
 
     @DisplayName("딜러가 ace 와 10 을 갖고 있을 때 더 카드를 받지 않도록 하는지 테스트")
     @Test
     void isUnderSixteenWithAceTest() {
-        firstCard = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
-        secondCard = new Card(CardNumber.KING, CardSuitSymbol.CLUB);
+        Card firstCard = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.KING, CardSuitSymbol.CLUB);
         List<Card> startDeck = new ArrayList<>(Arrays.asList(firstCard, secondCard));
 
         Dealer dealer = new Dealer(startDeck);
@@ -35,8 +33,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 를 갖고 10 을 갖지 않을 때 더 카드를 받도록 하는지 테스트")
     @Test
     void isUnderSixteenWithAceWithoutTenTest() {
-        firstCard = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
-        secondCard = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
+        Card firstCard = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.FIVE, CardSuitSymbol.CLUB);
         List<Card> startDeck = new ArrayList<>(Arrays.asList(firstCard, secondCard));
 
         Dealer dealer = new Dealer(startDeck);
@@ -48,8 +46,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 가 없고 카드의 합이 17이상일 때 더 카드를 받지 않도록 하는지 테스트")
     @Test
     void isUnderSixteenWithoutAceGetCardTest() {
-        firstCard = new Card(CardNumber.JACK, CardSuitSymbol.CLUB);
-        secondCard = new Card(CardNumber.SEVEN, CardSuitSymbol.CLUB);
+        Card firstCard = new Card(CardNumber.JACK, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.SEVEN, CardSuitSymbol.CLUB);
         List<Card> startDeck = new ArrayList<>(Arrays.asList(firstCard, secondCard));
 
         Dealer dealer = new Dealer(startDeck);
@@ -61,8 +59,8 @@ public class CardCalculatorTest {
     @DisplayName("딜러가 ace 가 없고 카드의 합이 16이하일 때 카드를 받도록 하는지 테스트")
     @Test
     void isUnderSixteenWithoutAceTest() {
-        firstCard = new Card(CardNumber.JACK, CardSuitSymbol.CLUB);
-        secondCard = new Card(CardNumber.SIX, CardSuitSymbol.CLUB);
+        Card firstCard = new Card(CardNumber.JACK, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.SIX, CardSuitSymbol.CLUB);
         List<Card> startDeck = new ArrayList<>(Arrays.asList(firstCard, secondCard));
 
         Dealer dealer = new Dealer(startDeck);
@@ -74,8 +72,8 @@ public class CardCalculatorTest {
     @DisplayName("블랙잭(총 합이 21) 인지 판단하는 메서드 테스트")
     @Test
     void isBlackjackTest() {
-        firstCard = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
-        secondCard = new Card(CardNumber.KING, CardSuitSymbol.CLUB);
+        Card firstCard = new Card(CardNumber.ACE, CardSuitSymbol.CLUB);
+        Card secondCard = new Card(CardNumber.KING, CardSuitSymbol.CLUB);
         List<Card> startDeck = new ArrayList<>(Arrays.asList(firstCard, secondCard));
 
         User user = new Player("subway", startDeck);
