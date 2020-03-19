@@ -25,7 +25,7 @@ public class ResultCalculator {
         this.playersResult = new PlayersResult(result);
     }
 
-    public double calculateResult(Dealer dealer, Player player) {
+    double calculateResult(Dealer dealer, Player player) {
         if (isDraw(dealer, player)) {
             return calculateMoney(player, Result.DRAW);
         }
@@ -67,4 +67,7 @@ public class ResultCalculator {
         return dealerResult.getDealerResult();
     }
 
+    public Map<String, Double> getPlayersResult() {
+        return playersResult.getPlayerResult();
+    }
 }

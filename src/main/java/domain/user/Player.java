@@ -15,6 +15,7 @@ public class Player extends User {
         this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
+    @Override
     public boolean isReceiveAble(){
         return isSmallerThan(Cards.BLACKJACK_SCORE);
     }

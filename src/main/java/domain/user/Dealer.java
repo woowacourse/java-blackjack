@@ -16,6 +16,7 @@ public class Dealer extends User {
                 .get(0);
     }
 
+    @Override
     public boolean isReceiveAble(){
         return !isLargerThan(Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
     }

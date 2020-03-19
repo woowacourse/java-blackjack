@@ -1,7 +1,6 @@
 package controller;
 
 import domain.card.CardFactory;
-import domain.card.Cards;
 import domain.card.Deck;
 import domain.result.ResultCalculator;
 import domain.user.Dealer;
@@ -9,6 +8,8 @@ import domain.user.Player;
 import domain.user.Players;
 import view.InputView;
 import view.OutputView;
+
+import java.util.Map;
 
 public class BlackJackController {
     public static void run() {
@@ -24,13 +25,12 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = createShuffledDeck();
 
-
         doFirstDeal(players, dealer, deck);
         dealToPlayers(players, deck);
         dealToDealer(dealer, deck);
 
         OutputView.printFinalCardStatus(dealer, players);
-//        conclude(players, dealer);
+        conclude(dealer, players);
     }
 
     private static Deck createShuffledDeck() {
@@ -60,7 +60,7 @@ public class BlackJackController {
 
     private static boolean willPlayerGetMoreCard(Player player) {
         return player.isReceiveAble()
-            && InputView.askWantMoreCard(player.getName());
+                && InputView.askWantMoreCard(player.getName());
     }
 
     private static void dealToDealer(Dealer dealer, Deck deck) {
@@ -70,14 +70,13 @@ public class BlackJackController {
         }
     }
 
-//    private static void conclude(Players players, Dealer dealer) {
-//        ResultCalculator resultCalculator = new ResultCalculator();
-//        OutputView.printResultMessage();
-//        OutputView.printDealerResult(resultCalculator.calculateDealerAndPlayersResult(dealer, players));
-//        for (Player player : players.getPlayers()) {
-//            OutputView.printPlayerResult(
-//                player.getName(), player.getResult()
-//            );
-//        }
-//    }
+    private static void conclude(Dealer dealer, Players players) {
+        ResultCalculator resultCalculator = new ResultCalculator();
+        resultCalculator.calculateDealerAndPlayersResult(dealer, players);
+        OutputView.printResultMessage();
+        OutputView.printDealerResult(resultCalculator.getDealerResult());
+        for (Map.Entry<String, Double> playerResult : resultCalculator.getPlayersResult().entrySet()) {
+            OutputView.printPlayerResult(playerResult);
+        }
+    }
 }

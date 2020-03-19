@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class PlayersResult {
 
-    public static final String NULL_PLAYER_RESULT_ERROR_MESSAGE = "플레이어가 존재하지 않습니다. 잘못된 결과입니다.";
+    private static final String NULL_PLAYER_RESULT_ERROR_MESSAGE = "플레이어가 존재하지 않습니다. 잘못된 결과입니다.";
     private Map<String, Double> playerResult;
 
     PlayersResult(Map<String, Double> playerResult) {
