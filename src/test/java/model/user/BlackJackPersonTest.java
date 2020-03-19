@@ -40,25 +40,4 @@ public class BlackJackPersonTest {
         Player player = new Player(PLAYER_NAME, notBustHand1);
         assertThat(player.getName()).isEqualTo(PLAYER_NAME);
     }
-
-    @Test
-    void both_isBust_Test() {
-        Player player = new Player(PLAYER_NAME, bustHand1);
-        Dealer dealer = new Dealer(bustHand2);
-        assertThat(dealer.compareScore(player) == Result.DRAW).isTrue();
-    }
-
-    @Test
-    void Dealer_isBust_Test() {
-        Player player = new Player(PLAYER_NAME, notBustHand1);
-        Dealer dealer = new Dealer(bustHand1);
-        assertThat(dealer.compareScore(player) == Result.LOSE).isTrue();
-    }
-
-    @Test
-    void isBust_Player_Test() {
-        Player player = new Player(PLAYER_NAME, bustHand1);
-        Dealer dealer = new Dealer(notBustHand1);
-        assertThat(dealer.compareScore(player) == Result.WIN).isTrue();
-    }
 }
