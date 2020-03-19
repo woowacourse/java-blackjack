@@ -45,12 +45,12 @@ public abstract class BlackjackUser {
         handCard.add(card);
     }
 
-    public int getScore() {
-        return handCard.getScore();
-    }
-
     public boolean isBust() {
         return handCard.isBust();
+    }
+
+    public boolean isNotBust() {
+        return !handCard.isBust();
     }
 
     public boolean isBlackjack() {
@@ -58,4 +58,32 @@ public abstract class BlackjackUser {
     }
 
     public abstract boolean isDrawable();
+
+    public boolean isWinner(BlackjackUser blackjackUser) {
+        return isBustWin(blackjackUser) || isBlackjackWin(blackjackUser) || isScoreWin(blackjackUser);
+    }
+
+    private boolean isBustWin(BlackjackUser blackjackUser) {
+        return isNotBust() && blackjackUser.isBust();
+    }
+
+    private boolean isBlackjackWin(BlackjackUser blackjackUser) {
+        return isBlackjack() && !blackjackUser.isBlackjack();
+    }
+
+    private boolean isScoreWin(BlackjackUser blackjackUser) {
+        return blackjackUser.getScore() <= getScore() && isNotBust();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return handCard.getScore();
+    }
+
+    public List<Card> getCards() {
+        return handCard.get();
+    }
 }

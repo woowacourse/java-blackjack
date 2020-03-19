@@ -12,20 +12,4 @@ public class Dealer extends BlackjackUser {
     public boolean isDrawable() {
         return getScore() <= DRAW_MAX_SCORE;
     }
-
-    public boolean isWinner(BlackjackUser blackjackUser) {
-        return isBustWin(blackjackUser) || isBlackjackWin(blackjackUser) || isScoreWin(blackjackUser);
-    }
-
-    private boolean isBustWin(BlackjackUser blackjackUser) {
-        return !isBust() && blackjackUser.isBust();
-    }
-
-    private boolean isBlackjackWin(BlackjackUser blackjackUser) {
-        return isBlackjack() && !blackjackUser.isBlackjack();
-    }
-
-    private boolean isScoreWin(BlackjackUser blackjackUser) {
-        return blackjackUser.getScore() <= getScore() && !isBust();
-    }
 }
