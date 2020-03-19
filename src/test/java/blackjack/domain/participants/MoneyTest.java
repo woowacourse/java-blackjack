@@ -56,8 +56,8 @@ public class MoneyTest {
     @Test
     void multiplyTest() {
         Money money = new Money(10L);
-        Money other = new Money(30L);
-        long expected = 300L;
-        assertThat(money.multiply(other).getAmount()).isEqualTo(expected);
+        double multiplyValue = 1.5;
+        long expected = 15L;
+        assertThat(money.multiply(multiplyValue).getAmount()).isEqualTo(expected);
     }
 }
