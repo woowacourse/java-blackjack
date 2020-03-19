@@ -1,16 +1,20 @@
 package domain.user;
 
 import domain.card.*;
+import domain.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class DealerTest {
 
@@ -68,6 +72,37 @@ class DealerTest {
 
         //then
         assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + hitSize);
+    }
+
+    @ParameterizedTest
+    @MethodSource({"getResultsForCalculateProfit"})
+    void calculateProfit(Result result) {
+        Money bettingMoney = mock(Money.class);
+        //todo: refac multiply mocking logic
+        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
+        Dealer dealer = new Dealer(mock(PlayingCards.class), mock(Deck.class), bettingMoney);
+        //when
+        Money profit = dealer.calculateProfit(result);
+        assertThat(profit).isEqualTo(bettingMoney);
+        verifyCalculateProfit(result, bettingMoney);
+
+    }
+
+    private void verifyCalculateProfit(Result result, Money bettingMoney) {
+        if (result.equals(Result.PLAYER_WIN_WITH_BLACKJACK) || result.equals(Result.PLAYER_WIN_WITHOUT_BLACKJACk)) {
+            verify(bettingMoney, times(2)).multiply(anyDouble());
+        } else {
+            verify(bettingMoney, times(1)).multiply(anyDouble());
+        }
+    }
+
+    private static Stream<Arguments> getResultsForCalculateProfit() {
+        return Stream.of(
+                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK),
+                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk),
+                Arguments.of(Result.DRAW),
+                Arguments.of(Result.DEALER_WIN)
+        );
     }
 
     private List<Card> setUpDeck() {

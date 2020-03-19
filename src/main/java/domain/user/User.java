@@ -11,8 +11,11 @@ public abstract class User {
     public static final int INIT_CARDS_SIZE = 2;
     public static final int BLACKJACK_VALUE = 21;
     protected final PlayingCards playingCards;
-    private final String name;
     protected final Money money;
+    protected static final double LOSE_PENALTY_RATE = -1;
+    private final String name;
+
+
 
     User(PlayingCards playingCards, String name, Money money) {
         this.playingCards = playingCards;
@@ -52,7 +55,7 @@ public abstract class User {
         return playingCards.getCards();
     }
 
-//    public abstract int calculateProfit(Result result);
+    public abstract Money calculateProfit(Result result);
 
     void hit(Card card) {
         playingCards.add(card);
