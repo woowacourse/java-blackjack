@@ -63,10 +63,4 @@ public enum BasicRule {
     public String getDealerValue() {
         return dealerValue;
     }
-
-    // public static void set(Participant participant, BasicRule rule) {
-    //     dealerResult.put(rule, dealerResult.getOrDefault(rule, 0) + 1);
-    //     playerResults.put(participant, rule);
-    // }
-
 }
