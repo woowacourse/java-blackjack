@@ -3,6 +3,8 @@ package domain;
 import domain.player.Dealer;
 import domain.player.Users;
 import domain.player.Player;
+import domain.profit.ProfitFactory;
+import domain.profit.ProfitStrategy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,7 +21,8 @@ public class WinningResult {
 
         Dealer dealer = users.getDealer();
         for (Player player : users.getPlayer()) {
-            winningResult.put(player.getName(), ProfitCalculator.getProfit(player, dealer));
+            ProfitStrategy profitStrategy = ProfitFactory.create(player, dealer);
+            winningResult.put(player.getName(), profitStrategy.getProfit(player.getBettingMoney()));
         }
     }
 
