@@ -1,8 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultType;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.component.Name;
 
 import java.util.List;
 import java.util.Map;
@@ -23,23 +24,11 @@ public class ViewFormatter {
         return String.join(",", formattedCards);
     }
 
-    public static String formatDealerResult(Map<ResultType, Integer> result) {
+    public static String formatResult(Result result) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("딜러");
+        stringBuffer.append(result.getUserName());
         stringBuffer.append(": ");
-        for (ResultType resultType : ResultType.values()) {
-            stringBuffer.append(result.get(resultType));
-            stringBuffer.append(resultType.getMessage());
-            stringBuffer.append(" ");
-        }
-        return stringBuffer.toString();
-    }
-
-    public static String formatPlayerResult(Name name, String resultType) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(name);
-        stringBuffer.append(": ");
-        stringBuffer.append(resultType);
+        stringBuffer.append(result.getProfit());
         return stringBuffer.toString();
     }
 }

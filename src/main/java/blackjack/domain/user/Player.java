@@ -1,6 +1,9 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.BettingAmount;
+import blackjack.domain.user.component.BettingAmount;
+import blackjack.domain.result.ResultType;
+import blackjack.domain.user.component.Name;
+import blackjack.domain.user.component.Point;
 
 import java.util.Objects;
 
@@ -15,11 +18,17 @@ public class Player extends User {
         super(name);
 
         Objects.requireNonNull(bettingAmount);
-        bettingAmount = bettingAmount;
+        this.bettingAmount = bettingAmount;
     }
+
     @Override
     public boolean receivable() {
         return !(new Point(getCards()).isBust());
     }
 
+    public double computeProfit(ResultType resultType) {
+        System.out.print("betting money: "+bettingAmount.getBettingMoney());
+        System.out.println(" profit rate: "+resultType.getProfitRate());
+        return bettingAmount.getBettingMoney() * resultType.getProfitRate();
+    }
 }

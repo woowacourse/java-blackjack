@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.user.component;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.component.CardNumber;

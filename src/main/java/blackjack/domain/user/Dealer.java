@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.component.Point;
 
 public class Dealer extends User {
     private static final String name = "딜러";

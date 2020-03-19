@@ -4,6 +4,7 @@ package blackjack.domain.user;
 import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.user.component.Name;
 
 import java.util.ArrayList;
 import java.util.List;

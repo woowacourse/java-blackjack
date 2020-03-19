@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.YesOrNo;
-import blackjack.domain.card.BettingAmount;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.component.BettingAmount;
+import blackjack.domain.user.component.Name;
 
 import java.util.ArrayList;
 import java.util.Arrays;

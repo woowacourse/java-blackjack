@@ -1,10 +1,10 @@
 package blackjack;
 
 import blackjack.controller.Controller;
-import blackjack.domain.card.BettingAmount;
+import blackjack.domain.user.component.BettingAmount;
 import blackjack.domain.card.CardDeckFactory;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.component.Name;
 import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 

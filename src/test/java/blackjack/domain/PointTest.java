@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.component.CardFigure;
 import blackjack.domain.card.component.CardNumber;
-import blackjack.domain.user.Point;
+import blackjack.domain.user.component.Point;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

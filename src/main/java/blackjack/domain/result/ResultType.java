@@ -1,15 +1,15 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Point;
+import blackjack.domain.user.component.Point;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum ResultType {
-    BLACK_JACK("블랙잭", (playerPoint, dealerPoint) -> {
+    BLACK_JACK("블랙잭", 1.5, (playerPoint, dealerPoint) -> {
         return playerPoint.isBalckJack() && !dealerPoint.isBalckJack();
     }),
-    WIN("승", (playerPoint, dealerPoint)
+    WIN("승", 1, (playerPoint, dealerPoint)
             -> {
         if (playerPoint.isBalckJack()) {
             return false;
@@ -25,10 +25,10 @@ public enum ResultType {
         }
         return false;
     }),
-    DRAW("무", (playerPoint, dealerPoint)
+    DRAW("무", 0, (playerPoint, dealerPoint)
             -> {
         if ((playerPoint.isBalckJack() && !dealerPoint.isBalckJack())
-        || (!playerPoint.isBalckJack() && dealerPoint.isBalckJack())) {
+                || (!playerPoint.isBalckJack() && dealerPoint.isBalckJack())) {
             return false;
         }
         if (playerPoint.isNotBust()
@@ -38,7 +38,7 @@ public enum ResultType {
         }
         return false;
     }),
-    LOSE("패", (playerPoint, dealerPoint)
+    LOSE("패", -1, (playerPoint, dealerPoint)
             -> {
         if (playerPoint.isBust()) {
             return true;
@@ -56,10 +56,12 @@ public enum ResultType {
     });
 
     private final String message;
+    private final double profitRate;
     private final BiFunction<Point, Point, Boolean> judge;
 
-    ResultType(String message, BiFunction<Point, Point, Boolean> judge) {
+    ResultType(String message, double profitRate, BiFunction<Point, Point, Boolean> judge) {
         this.message = message;
+        this.profitRate = profitRate;
         this.judge = judge;
     }
 
@@ -86,5 +88,9 @@ public enum ResultType {
 
     public String getMessage() {
         return message;
+    }
+
+    public double getProfitRate() {
+        return profitRate;
     }
 }

@@ -3,6 +3,8 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.Results;
 import blackjack.domain.user.*;
+import blackjack.domain.user.component.Point;
+import org.w3c.dom.ls.LSOutput;
 
 
 public class OutputView {
@@ -60,10 +62,11 @@ public class OutputView {
     public static void printFinalResult(Results results) {
         System.out.println();
         System.out.println("## 최종 승패");
-        String dealer = ViewFormatter.formatDealerResult(results.getDealerResult());
+
+        String dealer = ViewFormatter.formatResult(results.getDealerResult());
         System.out.println(dealer);
-        results.getPlayerResult()
-                .forEach((k, v) ->
-                            System.out.println(ViewFormatter.formatPlayerResult(k, v.getMessage())));
+
+        results.getPlayerResults()
+                .forEach(x -> System.out.println(ViewFormatter.formatResult(x)));
     }
 }

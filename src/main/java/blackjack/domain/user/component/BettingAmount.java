@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.user.component;
 
 import java.util.Objects;
 
@@ -10,14 +10,14 @@ public class BettingAmount {
     private double bettingMoney;
 
     public BettingAmount(double input) {
-        if (input < MINIMUM_BETTING_MONEY) {
+        if (input <= MINIMUM_BETTING_MONEY) {
             throw new IllegalArgumentException(String.format(MINIMUM_BETTING_MONEY_ERR_MSG, MINIMUM_BETTING_MONEY));
         }
         this.bettingMoney = input;
     }
 
     public BettingAmount(String input) {
-        Objects.requireNonNull(validateStringInput(input));
+        this(validateStringInput(input));
     }
 
     private static double validateStringInput(String input) {
@@ -27,5 +27,9 @@ public class BettingAmount {
         } catch (NumberFormatException e) {
             throw new NumberFormatException(FORMAT_ERR_MSG);
         }
+    }
+
+    public double getBettingMoney() {
+        return bettingMoney;
     }
 }

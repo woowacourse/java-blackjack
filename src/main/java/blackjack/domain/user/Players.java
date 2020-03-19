@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.BettingAmount;
+import blackjack.domain.user.component.BettingAmount;
+import blackjack.domain.user.component.Name;
 
 import java.util.ArrayList;
 import java.util.List;

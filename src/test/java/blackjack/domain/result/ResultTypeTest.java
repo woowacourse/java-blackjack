@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Point;
+import blackjack.domain.user.component.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
