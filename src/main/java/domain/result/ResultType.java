@@ -18,7 +18,7 @@ public enum ResultType {
 			bettingMoney -> 0),
 	LOSE((user, other) ->
 			user.isBurst() || user.compareTo(other) < 0,
-			bettingMoney -> bettingMoney * -1 );
+			bettingMoney -> bettingMoney * -1);
 
 	private static final String CAN_NOT_FIND_DESIRABLE_RESULT_EXCEPTION_MESSAGE = "원하는 결과를 찾을 수 없습니다.";
 

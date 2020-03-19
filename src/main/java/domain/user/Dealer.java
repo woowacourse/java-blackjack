@@ -6,7 +6,6 @@ import domain.user.strategy.draw.DealerDrawStrategy;
 import java.util.List;
 
 public class Dealer extends User {
-
 	private static final String EMPTY_CARDS_EXCEPTION_MESSAGE = "카드가 한장도 없는데 오픈할 수 없습니다.";
 
 	public Dealer() {
