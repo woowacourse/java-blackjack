@@ -2,6 +2,9 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -11,8 +14,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
+import blackjack.domain.result.ResultScore;
+import blackjack.domain.result.Score;
+import blackjack.domain.result.ScoreType;
 
 class UserTest {
 	@Test
@@ -77,5 +85,16 @@ class UserTest {
 		assertThatThrownBy(() -> user.hit(deck, 0))
 			.isInstanceOf(InvalidUserException.class)
 			.hasMessage(InvalidUserException.INVALID_DRAW_NUMBER);
+	}
+
+	@Test
+	void calculateResultScore_UserHand_ReturnResultScore() {
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.TEN, Type.DIAMOND),
+			Card.of(Symbol.ACE, Type.SPADE));
+		User user = Dealer.valueOf(Dealer.NAME, cards);
+
+		ResultScore expected = new ResultScore(Score.valueOf(21), ScoreType.BLACKJACK);
+		assertThat(user.calculateResultScore()).isEqualTo(expected);
 	}
 }

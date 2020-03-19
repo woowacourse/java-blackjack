@@ -9,6 +9,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
+import blackjack.domain.result.ResultScore;
 
 public abstract class User implements Comparable<User>, BlackjackParticipant {
 	private static final int DRAW_LOWER_BOUND = 1;
@@ -66,6 +67,11 @@ public abstract class User implements Comparable<User>, BlackjackParticipant {
 
 	@Override
 	public abstract boolean canDraw();
+
+	@Override
+	public ResultScore calculateResultScore() {
+		return ResultScore.of(hand);
+	}
 
 	@Override
 	public abstract List<Card> getInitialDealtHand();

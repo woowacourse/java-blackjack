@@ -59,6 +59,16 @@ class BlackjackTableTest {
 		assertThat(blackjackTable.collectUsers()).isEqualTo(expected);
 	}
 
+	@Test
+	void isDealerBlackjack_DealerIsBlackjack_ReturnTrue() {
+		Dealer blackjackDealer = Dealer.valueOf(Dealer.NAME, Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.ACE, Type.SPADE)));
+		BlackjackTable blackjackTable = new BlackjackTable(deck, blackjackDealer, players);
+
+		assertThat(blackjackTable.isDealerBlackjack()).isTrue();
+	}
+
 	// NOTE : 2020-03-17 리뷰어에게 테스트 작성에 대해 물어보기
 	@Test
 	void playWith_UserDecisions_PlayGameWithUserDecisions() {

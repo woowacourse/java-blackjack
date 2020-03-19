@@ -4,6 +4,7 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.ResultScore;
 
 public interface BlackjackParticipant {
 	void hit(Deck deck, int hitNumber);
@@ -11,6 +12,8 @@ public interface BlackjackParticipant {
 	void hit(Deck deck);
 
 	boolean canDraw();
+
+	ResultScore calculateResultScore();
 
 	String getName();
 

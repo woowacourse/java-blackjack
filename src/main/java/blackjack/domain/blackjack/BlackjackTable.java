@@ -34,6 +34,10 @@ public class BlackjackTable {
 		return users;
 	}
 
+	public boolean isDealerBlackjack() {
+		return dealer.calculateResultScore().isBlackjack();
+	}
+
 	public void playWith(UserDecisions userDecisions) {
 		for (Player player : players) {
 			drawCardFrom(player, userDecisions);
