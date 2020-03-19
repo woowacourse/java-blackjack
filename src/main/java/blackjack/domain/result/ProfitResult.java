@@ -4,7 +4,9 @@ import blackjack.domain.playing.user.Player;
 import blackjack.domain.playing.user.Players;
 import blackjack.domain.playing.user.User;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProfitResult {
@@ -23,7 +25,8 @@ public class ProfitResult {
             playerProfit.put(player, Profit.of(player, dealer));
         }
 
-        Profit dealerProfit = new Profit(0);
+        List<Profit> profits = new ArrayList<>(playerProfit.values());
+        Profit dealerProfit = Profit.sum(profits).opposite();
 
         return new ProfitResult(dealerProfit, playerProfit);
     }
