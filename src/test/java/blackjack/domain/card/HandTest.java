@@ -46,17 +46,4 @@ class HandTest {
 		Score expected = Score.valueOf(19);
 		assertThat(hand.calculateScore()).isEqualTo(expected);
 	}
-
-	@Test
-	void calculateBustHandledScore_CardsInHand_BustScoreToZero() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			Card.of(Symbol.QUEEN, Type.CLUB),
-			Card.of(Symbol.EIGHT, Type.DIAMOND),
-			Card.of(Symbol.FOUR, Type.HEART));
-		hand.add(cards);
-
-		Score expected = Score.ZERO;
-		assertThat(hand.calculateBustHandledScore()).isEqualTo(expected);
-	}
 }

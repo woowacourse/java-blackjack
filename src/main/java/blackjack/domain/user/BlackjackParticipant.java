@@ -22,6 +22,4 @@ public interface BlackjackParticipant {
 	List<Card> getInitialDealtHand();
 
 	int getScore();
-
-	int getBustHandledScore();
 }

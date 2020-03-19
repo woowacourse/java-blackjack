@@ -40,6 +40,10 @@ public class ResultScore implements Comparable<ResultScore> {
 		return !isBlackjack() && !isBust();
 	}
 
+	public int getScore() {
+		return score.getScore();
+	}
+
 	@Override
 	public int compareTo(ResultScore that) {
 		return this.score.compareTo(that.score);

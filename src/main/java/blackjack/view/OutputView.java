@@ -11,7 +11,7 @@ import blackjack.domain.user.User;
 import blackjack.util.StringUtil;
 
 public class OutputView {
-	private static final String NEWLINE = System.getProperty("line.separator");
+	static final String NEWLINE = System.getProperty("line.separator");
 	private static final String INITIAL_DRAW_FORMAT = "%s와 %s에게 %d장의 나누었습니다.";
 	private static final String DEALER_DRAW_FORMAT = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
 	private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
@@ -49,20 +49,20 @@ public class OutputView {
 
 	public static void printBlackjackReport(Report blackJackReport) {
 		System.out.println(NEWLINE + FINAL_RESULT_MESSAGE);
-		printUserResult(Dealer.NAME, StringUtil.joinDealerResult(blackJackReport.getDealerResult()));
-		printPlayersResult(blackJackReport.getPlayersResult());
+		printUserResult(Dealer.NAME, blackJackReport.calculateDealerProfit());
+		printPlayersResult(blackJackReport.getPlayersProfit());
 	}
 
-	private static void printPlayersResult(Map<Player, String> playersResult) {
-		for (Map.Entry<Player, String> entry : playersResult.entrySet()) {
+	private static void printPlayersResult(Map<Player, Integer> playersResult) {
+		for (Map.Entry<Player, Integer> entry : playersResult.entrySet()) {
 			Player player = entry.getKey();
-			String resultType = entry.getValue();
-			printUserResult(player.getName(), resultType);
+			int profit = entry.getValue();
+			printUserResult(player.getName(), profit);
 		}
 	}
 
-	private static void printUserResult(String name, String result) {
-		System.out.println(name + SEPARATOR + result);
+	private static void printUserResult(String name, int profit) {
+		System.out.println(name + SEPARATOR + profit);
 	}
 
 	private static void printNewLine() {

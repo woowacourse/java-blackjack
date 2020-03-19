@@ -14,13 +14,6 @@ class BettingMoneyTest {
 	}
 
 	@Test
-	void validate_InputNegativeBettingMoney_InvalidBettingMoneyException() {
-		assertThatThrownBy(() -> new BettingMoney(-1))
-			.isInstanceOf(InvalidBettingMoneyException.class)
-			.hasMessage(InvalidBettingMoneyException.INVALID);
-	}
-
-	@Test
 	void valueOf_InputStringBettingMoney_GenerateInstance() {
 		assertThat(BettingMoney.valueOf("1000")).isInstanceOf(BettingMoney.class);
 	}
@@ -30,6 +23,13 @@ class BettingMoneyTest {
 		assertThatThrownBy(() -> BettingMoney.valueOf("abc"))
 			.isInstanceOf(InvalidBettingMoneyException.class)
 			.hasMessage(InvalidBettingMoneyException.NOT_INTEGER);
+	}
+
+	@Test
+	void validate_InputNegativeBettingMoney_InvalidBettingMoneyException() {
+		assertThatThrownBy(() -> BettingMoney.valueOf("-1"))
+			.isInstanceOf(InvalidBettingMoneyException.class)
+			.hasMessage(InvalidBettingMoneyException.INVALID);
 	}
 
 	@Test

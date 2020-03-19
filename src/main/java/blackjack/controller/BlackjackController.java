@@ -21,8 +21,8 @@ public class BlackjackController {
 		blackjackTable.dealInitialHand();
 		OutputView.printUsersInitialDealtHand(BlackjackTable.INITIAL_DEAL_NUMBER, users);
 
-		if (blackjackTable.isDealerBlackjack()) {
-			UserDecisions userDecisions = new UserDecisions(InputView::inputChoiceFromPlayer, OutputView::printUserHand,
+		if (!blackjackTable.isDealerBlackjack()) {
+			UserDecisions userDecisions = new UserDecisions(InputView::inputChoiceFrom, OutputView::printUserHand,
 				OutputView::printDealerDraw);
 			blackjackTable.playWith(userDecisions);
 		}

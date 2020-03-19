@@ -3,8 +3,8 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +27,7 @@ class ReportTest {
 	private Deck deck;
 	private Dealer dealer;
 	private List<Player> players;
+	private Map<Player, BettingMoney> playersBettingMoney;
 
 	@BeforeEach
 	void setUp() {
@@ -46,11 +47,16 @@ class ReportTest {
 			Card.of(Symbol.SEVEN, Type.HEART),
 			Card.of(Symbol.KING, Type.DIAMOND)));
 		players = Arrays.asList(pobi, sony, stitch);
+
+		playersBettingMoney = new LinkedHashMap<>();
+		playersBettingMoney.put(pobi, BettingMoney.valueOf("10000"));
+		playersBettingMoney.put(sony, BettingMoney.valueOf("5000"));
+		playersBettingMoney.put(stitch, BettingMoney.valueOf("1000"));
 	}
 
 	@Test
 	void from_DealerAndPlayers_GenerateInstance() {
-		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
 
 		assertThat(Report.from(blackjackTable))
 			.isInstanceOf(Report.class);
@@ -65,47 +71,24 @@ class ReportTest {
 	}
 
 	@Test
-	void generatePlayersResult_dealerAndPlayers_MapOfPlayerAndResultType() {
-		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+	void calculateDealerProfit_PlayersProfit_ReturnDealerProfit() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
 		Report report = Report.from(blackjackTable);
 
-		Map<Player, ResultType> expected = new HashMap<>();
-		expected.put(players.get(0), ResultType.WIN);
-		expected.put(players.get(1), ResultType.DRAW);
-		expected.put(players.get(2), ResultType.LOSE);
-		assertThat(report).extracting("playersResult").isEqualTo(expected);
+		int expected = -9000;
+		assertThat(report.calculateDealerProfit()).isEqualTo(expected);
 	}
 
 	@Test
-	void generateDealerResult_dealerAndPlayers_MapOfResultTypeAndCount() {
-		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
+	void getPlayersProfit_PlayersResult_ReturnPlayersProfitToInt() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
 		Report report = Report.from(blackjackTable);
 
-		Map<ResultType, Long> expected = new EnumMap<>(ResultType.class);
-		expected.put(ResultType.WIN, 1L);
-		expected.put(ResultType.DRAW, 1L);
-		expected.put(ResultType.LOSE, 1L);
-		assertThat(report).extracting("dealerResult").isEqualTo(expected);
+		Map<Player, Integer> expected = new HashMap<>();
+		expected.put(players.get(0), 10000);
+		expected.put(players.get(1), 0);
+		expected.put(players.get(2), -1000);
+		assertThat(report.getPlayersProfit()).isEqualTo(expected);
 	}
 
-	@Test
-	void getDealerResult_DealerResult_ToStringList() {
-		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
-		Report report = Report.from(blackjackTable);
-
-		List<String> expected = Arrays.asList("1승", "1무", "1패");
-		assertThat(report.getDealerResult()).isEqualTo(expected);
-	}
-
-	@Test
-	void getPlayersResult_PlayersResult_ToStringMap() {
-		BlackjackTable blackjackTable = new BlackjackTable(new Deck(CardFactory.create()), dealer, players);
-		Report report = Report.from(blackjackTable);
-
-		Map<Player, String> expected = new HashMap<>();
-		expected.put(players.get(0), ResultType.WIN.getAlias());
-		expected.put(players.get(1), ResultType.DRAW.getAlias());
-		expected.put(players.get(2), ResultType.LOSE.getAlias());
-		assertThat(report.getPlayersResult()).isEqualTo(expected);
-	}
 }

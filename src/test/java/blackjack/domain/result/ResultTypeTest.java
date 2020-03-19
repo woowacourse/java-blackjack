@@ -18,7 +18,7 @@ import blackjack.domain.exceptions.InvalidResultTypeException;
 
 class ResultTypeTest {
 	@Test
-	void from_NullPlayerResultScoreOrNullDealerResultScore_InvalidResultTypeExceptionThrown() {
+	void validate_NullPlayerResultScoreOrNullDealerResultScore_InvalidResultTypeExceptionThrown() {
 		Hand playerHand = new Hand();
 		playerHand.add(Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
@@ -139,5 +139,13 @@ class ResultTypeTest {
 			Arguments.of(winPlayerResultScore, dealerResultScore, ResultType.WIN),
 			Arguments.of(drawPlayerResultScore, dealerResultScore, ResultType.DRAW),
 			Arguments.of(losePlayerResultScore, dealerResultScore, ResultType.LOSE));
+	}
+
+	@Test
+	void calculateProfitFrom_BettingMoney_ReturnMultipliedBettingMoney() {
+		BettingMoney value = BettingMoney.valueOf("1000");
+
+		BettingMoney expected = new BettingMoney(-1000);
+		assertThat(ResultType.LOSE.calculateProfitFrom(value)).isEqualTo(expected);
 	}
 }

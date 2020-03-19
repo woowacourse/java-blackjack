@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -23,25 +26,33 @@ class BlackjackTableTest {
 	private Deck deck;
 	private Dealer dealer;
 	private List<Player> players;
+	private Map<Player, BettingMoney> playersBettingMoney;
 
 	@BeforeEach
 	void setUp() {
 		deck = new Deck(CardFactory.create());
+
 		dealer = new Dealer(Dealer.NAME);
-		players = Arrays.asList(
-			new Player("pobi"),
-			new Player("sony"),
-			new Player("stitch"));
+
+		Player pobi = new Player("pobi");
+		Player sony = new Player("sony");
+		Player stitch = new Player("stitch");
+		players = Arrays.asList(pobi, sony, stitch);
+
+		playersBettingMoney = new LinkedHashMap<>();
+		playersBettingMoney.put(pobi, new BettingMoney(1000));
+		playersBettingMoney.put(sony, new BettingMoney(5000));
+		playersBettingMoney.put(stitch, new BettingMoney(10000));
 	}
 
 	@Test
 	void BlackjackTable_InputDeck_GenerateInstance() {
-		assertThat(new BlackjackTable(deck, dealer, players)).isInstanceOf(BlackjackTable.class);
+		assertThat(new BlackjackTable(deck, dealer, players, playersBettingMoney)).isInstanceOf(BlackjackTable.class);
 	}
 
 	@Test
 	void dealInitialHand_DealerAndPlayer_DrawInitialCardsForEachUsers() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
 		blackjackTable.dealInitialHand();
 
 		for (User user : blackjackTable.collectUsers()) {
@@ -51,7 +62,7 @@ class BlackjackTableTest {
 
 	@Test
 	void collectUsers_DealerAndPlayers_ReturnUserList() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
 
 		List<User> expected = new ArrayList<>();
 		expected.add(dealer);
@@ -64,7 +75,7 @@ class BlackjackTableTest {
 		Dealer blackjackDealer = Dealer.valueOf(Dealer.NAME, Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.ACE, Type.SPADE)));
-		BlackjackTable blackjackTable = new BlackjackTable(deck, blackjackDealer, players);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, blackjackDealer, players, playersBettingMoney);
 
 		assertThat(blackjackTable.isDealerBlackjack()).isTrue();
 	}
@@ -89,7 +100,7 @@ class BlackjackTableTest {
 				Card.of(Symbol.TEN, Type.CLUB),
 				Card.of(Symbol.ACE, Type.SPADE),
 				Card.of(Symbol.KING, Type.DIAMOND))));
-		BlackjackTable blackjackTable = new BlackjackTable(deck, drownDealer, drownPlayers);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, drownDealer, drownPlayers, playersBettingMoney);
 		UserDecisions userDecisions = new UserDecisions(
 			(Player player) -> "y",
 			(User user, List<Card> cards) -> System.out.println(),

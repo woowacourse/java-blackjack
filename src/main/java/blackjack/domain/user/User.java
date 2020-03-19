@@ -11,7 +11,7 @@ import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
 import blackjack.domain.result.ResultScore;
 
-public abstract class User implements Comparable<User>, BlackjackParticipant {
+public abstract class User implements BlackjackParticipant {
 	private static final int DRAW_LOWER_BOUND = 1;
 
 	protected final String name;
@@ -78,12 +78,7 @@ public abstract class User implements Comparable<User>, BlackjackParticipant {
 
 	@Override
 	public int getScore() {
-		return hand.calculateScore().getScore();
-	}
-
-	@Override
-	public int getBustHandledScore() {
-		return hand.calculateBustHandledScore().getScore();
+		return calculateResultScore().getScore();
 	}
 
 	@Override
@@ -94,11 +89,6 @@ public abstract class User implements Comparable<User>, BlackjackParticipant {
 	@Override
 	public List<Card> getHand() {
 		return hand.getCards();
-	}
-
-	@Override
-	public int compareTo(User that) {
-		return Integer.compare(this.getBustHandledScore(), that.getBustHandledScore());
 	}
 
 	@Override

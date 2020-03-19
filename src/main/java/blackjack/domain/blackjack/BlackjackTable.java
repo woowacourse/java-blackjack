@@ -2,8 +2,11 @@ package blackjack.domain.blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.BettingMoney;
+import blackjack.domain.result.ResultScore;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -14,11 +17,14 @@ public class BlackjackTable {
 	private final Deck deck;
 	private final Dealer dealer;
 	private final List<Player> players;
+	private final Map<Player, BettingMoney> playersBettingMoney;
 
-	public BlackjackTable(Deck deck, Dealer dealer, List<Player> players) {
+	public BlackjackTable(Deck deck, Dealer dealer, List<Player> players,
+		Map<Player, BettingMoney> playersBettingMoney) {
 		this.deck = deck;
 		this.dealer = dealer;
 		this.players = players;
+		this.playersBettingMoney = playersBettingMoney;
 	}
 
 	public void dealInitialHand() {
@@ -59,11 +65,15 @@ public class BlackjackTable {
 		}
 	}
 
-	public Dealer getDealer() {
-		return dealer;
+	public ResultScore getDealerResultScore() {
+		return dealer.calculateResultScore();
 	}
 
 	public List<Player> getPlayers() {
 		return players;
+	}
+
+	public Map<Player, BettingMoney> getPlayersBettingMoney() {
+		return playersBettingMoney;
 	}
 }

@@ -3,11 +3,9 @@ package blackjack.domain.result;
 import static java.util.stream.Collectors.*;
 
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.function.Function;
 
 import blackjack.domain.blackjack.BlackjackTable;
@@ -15,53 +13,50 @@ import blackjack.domain.exceptions.InvalidReportException;
 import blackjack.domain.user.Player;
 
 public class Report {
-	private final Map<ResultType, Long> dealerResult;
-	private final Map<Player, ResultType> playersResult;
+	private static final int BETTING_PROFIT_MULTIPLIER_FOR_DEALER = -1;
+	private final Map<Player, BettingMoney> playersProfit;
 
-	private Report(Map<ResultType, Long> dealerResult, Map<Player, ResultType> playersResult) {
-		this.dealerResult = dealerResult;
-		this.playersResult = playersResult;
+	private Report(Map<Player, BettingMoney> playersProfit) {
+		this.playersProfit = playersProfit;
 	}
 
 	public static Report from(BlackjackTable blackjackTable) {
-		return Optional.ofNullable(blackjackTable)
-			.map(value -> new Report(generateDealerResult(value), generatePlayersResult(value)))
-			.orElseThrow(() -> new InvalidReportException(InvalidReportException.EMPTY));
+		validate(blackjackTable);
+		return new Report(generatePlayersProfit(blackjackTable));
 	}
 
-	private static Map<ResultType, Long> generateDealerResult(BlackjackTable blackjackTable) {
-		return blackjackTable.getPlayers().stream()
-			.map(player -> ResultType.of(blackjackTable.getDealer(), player))
-			.collect(collectingAndThen(
-				groupingBy(Function.identity(), counting()),
-				groupingMap -> Collections.unmodifiableMap(new EnumMap<>(groupingMap))));
+	private static void validate(BlackjackTable blackjackTable) {
+		if (Objects.isNull(blackjackTable)) {
+			throw new InvalidReportException(InvalidReportException.EMPTY);
+		}
 	}
 
-	private static Map<Player, ResultType> generatePlayersResult(BlackjackTable blackjackTable) {
+	private static Map<Player, BettingMoney> generatePlayersProfit(BlackjackTable blackjackTable) {
+		ResultScore dealerResultScore = blackjackTable.getDealerResultScore();
+		Map<Player, BettingMoney> playersBettingMoney = blackjackTable.getPlayersBettingMoney();
+
 		return blackjackTable.getPlayers().stream()
 			.collect(collectingAndThen(
 				toMap(Function.identity(),
-					player -> ResultType.of(player, blackjackTable.getDealer()),
+					player -> ResultType.from(player.calculateResultScore(), dealerResultScore)
+						.calculateProfitFrom(playersBettingMoney.get(player)),
 					(x, y) -> x,
 					LinkedHashMap::new),
 				Collections::unmodifiableMap));
 	}
 
-	public List<String> getDealerResult() {
-		return dealerResult.entrySet().stream()
-			.map(entry -> {
-				long count = entry.getValue();
-				ResultType resultType = entry.getKey();
-				return count + resultType.getAlias();
-			})
-			.collect(collectingAndThen(toList(), Collections::unmodifiableList));
+	public int calculateDealerProfit() {
+		int playersTotalProfit = playersProfit.values().stream()
+			.map(BettingMoney::getBettingMoney)
+			.reduce(0, Integer::sum);
+		return playersTotalProfit * BETTING_PROFIT_MULTIPLIER_FOR_DEALER;
 	}
 
-	public Map<Player, String> getPlayersResult() {
-		return playersResult.keySet().stream()
+	public Map<Player, Integer> getPlayersProfit() {
+		return playersProfit.keySet().stream()
 			.collect(collectingAndThen(
 				toMap(Function.identity(),
-					player -> playersResult.get(player).getAlias(),
+					player -> playersProfit.get(player).getBettingMoney(),
 					(x, y) -> x,
 					LinkedHashMap::new),
 				Collections::unmodifiableMap));
