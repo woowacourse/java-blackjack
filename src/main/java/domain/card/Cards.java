@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import domain.ScoreType;
+
 public class Cards {
 	private static final int INITIAL_CARDS_SIZE = 2;
 
@@ -17,23 +19,33 @@ public class Cards {
 		cards.add(card);
 	}
 
-	public List<Card> toList() {
-		return Collections.unmodifiableList(cards);
+	public boolean isInitialSize() {
+		return cards.size() == INITIAL_CARDS_SIZE;
 	}
 
 	public boolean isNotInitialSize() {
 		return cards.size() != INITIAL_CARDS_SIZE;
 	}
 
-	public boolean hasAce() {
-		return cards.stream()
-				.anyMatch(Card::isAce);
+	public int getPoint() {
+		int point = cards.stream()
+			.map(Card::getSymbol)
+			.mapToInt(Symbol::getPoint)
+			.sum();
+
+		int bonusPoint = cards.stream()
+			.map(Card::getSymbol)
+			.filter(symbol -> symbol.isPromotable(point))
+			.mapToInt(Symbol::getBonusPoint)
+			.findFirst()
+			.orElse(0);
+
+		int resultPoint = point + bonusPoint;
+		return ScoreType.of(resultPoint).getScore(resultPoint);
 	}
 
-	public int getPoint() {
-		return cards.stream()
-				.mapToInt(Card::getPoint)
-				.sum();
+	public List<Card> toList() {
+		return Collections.unmodifiableList(cards);
 	}
 
 	@Override
