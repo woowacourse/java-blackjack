@@ -60,4 +60,20 @@ public class Player implements Participant {
     public void draw(final Card card) {
         hand.add(card);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Player player = (Player)o;
+        return Objects.equals(hand, player.hand) &&
+            Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hand, name);
+    }
 }

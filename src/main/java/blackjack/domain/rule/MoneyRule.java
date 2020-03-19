@@ -27,8 +27,4 @@ public enum MoneyRule {
     public double getMultiplyValue() {
         return multiplyValue;
     }
-
-    // public static Money applyMoney(Money bettingMoney, BasicRule basicRule) {
-    //     return bettingMoney.multiply(getMoneyRule(basicRule).getMultiplyValue());
-    // }
 }

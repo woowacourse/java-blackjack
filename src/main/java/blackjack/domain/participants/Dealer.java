@@ -1,5 +1,7 @@
 package blackjack.domain.participants;
 
+import java.util.Objects;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
@@ -55,5 +57,21 @@ public class Dealer implements Participant {
     @Override
     public int countHand() {
         return hand.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Dealer dealer = (Dealer)o;
+        return Objects.equals(hand, dealer.hand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hand);
     }
 }
