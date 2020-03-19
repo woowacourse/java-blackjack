@@ -55,8 +55,8 @@ class MoneyTest {
         Money money = Money.create(amount);
         Money other = Money.create(amount);
         // when
-        Money actual = money.multiply(other);
+        Money actual = money.multiply(1.5);
         // then
-        assertThat(actual.getAmount()).isEqualTo(1000000);
+        assertThat(actual.getAmount()).isEqualTo(1500);
     }
 }

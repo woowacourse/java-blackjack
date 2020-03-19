@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
-import blackjack.domain.participants.Status;
 import blackjack.domain.rule.BasicRule;
 
 public class SimpleResult {

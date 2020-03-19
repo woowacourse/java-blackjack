@@ -11,6 +11,10 @@ public class Money {
         this.amount = amount;
     }
 
+    public static Money zero() {
+        return new Money(0);
+    }
+
     public static Money create(final String input) {
         return new Money(validAmount(input));
     }
@@ -38,15 +42,24 @@ public class Money {
         return new Money(amount + other.amount);
     }
 
-    public double getAmount() {
-        return amount;
-    }
-
     public Money subtract(final Money other) {
         return new Money(amount - other.amount);
     }
 
-    public Money multiply(final Money other) {
-        return new Money(amount * other.amount);
+    public Money multiply(double times) {
+        return new Money(amount * times);
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public Money getOpposite() {
+        return new Money(-amount);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%.0f", amount);
     }
 }
