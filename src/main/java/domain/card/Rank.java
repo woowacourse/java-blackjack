@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.result.Score;
+import domain.result.score.Score;
 
 import java.util.Arrays;
 
@@ -18,21 +18,19 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final String NO_EXIST_MESSAGE = "해당하는 랭크가 존재하지 않습니다.";
-
     private final String name;
     private final Score score;
 
     Rank(String name, int score) {
         this.name = name;
-        this.score = new Score(score);
+        this.score = Score.of(score);
     }
 
     public static Rank of(String name) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.name == name)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NO_EXIST_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 랭크가 존재하지 않습니다."));
     }
 
     public boolean isAce() {

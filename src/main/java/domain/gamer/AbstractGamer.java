@@ -1,10 +1,11 @@
 package domain.gamer;
 
 import domain.card.Card;
-import domain.card.cardDrawable.Hand;
 import domain.card.providable.CardProvidable;
-import domain.result.Score;
-import domain.result.WinLose;
+import domain.gamer.action.TurnActions;
+import domain.result.GameRule;
+import domain.result.score.Score;
+import domain.result.score.ScoreCalculable;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,9 +14,9 @@ public abstract class AbstractGamer implements Gamer {
     private static final int INITIAL_CARDS_AMOUNT = 2;
 
     protected final Hand hand;
-    private final String name;
+    private final Name name;
 
-    AbstractGamer(String name, Hand hand) {
+    AbstractGamer(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
@@ -25,7 +26,7 @@ public abstract class AbstractGamer implements Gamer {
         validateEmptyHand();
 
         for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
-            this.drawCard(cardProvidable);
+            hand.drawCard(cardProvidable);
         }
     }
 
@@ -36,8 +37,16 @@ public abstract class AbstractGamer implements Gamer {
     }
 
     @Override
-    public void drawCard(CardProvidable cardProvidable) {
-        hand.drawCard(cardProvidable);
+    public void playTurn(CardProvidable cardProvidable, GameRule rule, TurnActions turnActions) {
+        while (turnActions.isHit(this)) {
+            hand.drawCard(cardProvidable);
+            if (!rule.canDrawMore(this)) {
+                break;
+            }
+            turnActions.showHand(this);
+        }
+
+        turnActions.showHand(this);
     }
 
     @Override
@@ -46,30 +55,16 @@ public abstract class AbstractGamer implements Gamer {
     }
 
     @Override
-    public Score calculateScore() {
-        return hand.calculateScore();
+    public Score calculateScore(ScoreCalculable scoreCalculable) {
+        return scoreCalculable.calculateScore(this);
     }
 
-    @Override
-    public boolean isBurst() {
-        return hand.isBurst();
-    }
-
-    @Override
-    public WinLose determineWinLose(Gamer counterPart) {
-        if (this.isBurst()) {
-            return WinLose.LOSE;
-        }
-
-        if (counterPart.isBurst()) {
-            return WinLose.WIN;
-        }
-
-        return WinLose.determineWinLose(this, counterPart);
-    }
-
-    public String getName() {
+    public Name getName() {
         return name;
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 
     @Override

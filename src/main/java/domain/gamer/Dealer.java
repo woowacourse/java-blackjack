@@ -1,28 +1,29 @@
 package domain.gamer;
 
 import domain.card.Card;
-import domain.card.cardDrawable.Hand;
-import domain.result.Score;
+import domain.result.Result;
+import domain.result.ResultDerivable;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static domain.result.ScoreCalculable.DEALER_DRAW_THRESHOLD;
-
 public class Dealer extends AbstractGamer {
-    public static final String DEALER_NAME = "딜러";
+    public static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer() {
         super(DEALER_NAME, new Hand());
     }
 
-    @Override
-    public boolean canDrawMore() {
-        return calculateScore().isLowOrEqualThan(new Score(DEALER_DRAW_THRESHOLD));
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     @Override
     public List<Card> openInitialCards() {
         return Arrays.asList(hand.getOneCard());
+    }
+
+    public Result determineResult(List<Result> playerResults, ResultDerivable resultDerivable) {
+        return resultDerivable.deriveDealerResult(playerResults);
     }
 }
