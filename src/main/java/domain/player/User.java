@@ -5,6 +5,7 @@ import domain.Rule;
 
 public class User extends Player {
 	private final Money money;
+	private boolean isTwoCardBlackJack = false;
 
 	public User(String name, Money money) {
 		super(name);
@@ -15,17 +16,14 @@ public class User extends Player {
 		return playerCards.calculateScore() < Rule.MAX_SCORE;
 	}
 
-	public double compareScore(Gamer gamerToCompare, boolean firstDrawBlackJack) {
-		if (firstDrawBlackJack) {
+	public double compareScore(Gamer gamerToCompare) {
+		if (isTwoCardBlackJack) {
 			return blackJackCompare(gamerToCompare);
 		}
 		return normalCompare(gamerToCompare);
 	}
 
 	private double blackJackCompare(Gamer gamerToCompare) {
-		if (!this.isBlackJack()) {
-			return money.toLoseMoney();
-		}
 		if (gamerToCompare.isBlackJack()) {
 			return Money.ZERO_MONEY;
 		}
@@ -42,5 +40,9 @@ public class User extends Player {
 			return Money.ZERO_MONEY;
 		}
 		return money.toLoseMoney();
+	}
+
+	public void twoCardBlackJackCheck() {
+		this.isTwoCardBlackJack = (calculateScore() == Rule.MAX_SCORE);
 	}
 }

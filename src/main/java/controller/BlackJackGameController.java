@@ -25,14 +25,20 @@ public class BlackJackGameController {
 		firstDraw(users, dealer, cardDeck);
 		printFirstDrawCards(userName, users, dealer);
 
-		boolean isFirstDrawBlackJack = isFirstDrawBlackJack(users, dealer);
-		if (!isFirstDrawBlackJack) {
+		userBlackJackCheck(users);
+		if (!dealer.isBlackJack()) {
 			hit(users, dealer, cardDeck);
 		}
 
-		GameResult gameResult = new GameResult(users, dealer, isFirstDrawBlackJack);
+		GameResult gameResult = new GameResult(users, dealer);
 		printScore(users, dealer);
 		printResult(gameResult);
+	}
+
+	private static void userBlackJackCheck(List<User> users) {
+		for (User user : users) {
+			user.twoCardBlackJackCheck();
+		}
 	}
 
 	public static List<User> makeUsers(String names) {
@@ -58,13 +64,6 @@ public class BlackJackGameController {
 		for (User user : users) {
 			OutputView.printAllCard(user);
 		}
-	}
-
-	private static boolean isFirstDrawBlackJack(List<User> users, Dealer dealer) {
-		if (dealer.isBlackJack()) {
-			return true;
-		}
-		return users.stream().anyMatch(User::isBlackJack);
 	}
 
 	private static void hit(List<User> users, Dealer dealer, CardDeck cardDeck) {

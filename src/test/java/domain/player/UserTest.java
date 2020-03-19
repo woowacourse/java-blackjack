@@ -44,10 +44,11 @@ public class UserTest {
 	void compareScore() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
+		user.twoCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FOUR, Shape.CLOVER)));
 
-		assertThat(user.compareScore(dealer, false)).isEqualTo(1000);
+		assertThat(user.compareScore(dealer)).isEqualTo(1000);
 	}
 
 	@DisplayName("블랙잭 아닐 경우 수익계산 - 패")
@@ -55,10 +56,11 @@ public class UserTest {
 	void compareScore2() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
+		user.twoCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.SIX, Shape.CLOVER)));
 
-		assertThat(user.compareScore(dealer, false)).isEqualTo(-1000);
+		assertThat(user.compareScore(dealer)).isEqualTo(-1000);
 	}
 
 	@DisplayName("블랙잭 아닐 경우 수익계산 - 무")
@@ -66,10 +68,11 @@ public class UserTest {
 	void compareScore3() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
+		user.twoCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
 
-		assertThat(user.compareScore(dealer, false)).isEqualTo(0);
+		assertThat(user.compareScore(dealer)).isEqualTo(0);
 	}
 
 	@DisplayName("블랙잭일 경우 수익계산 - 승")
@@ -77,10 +80,11 @@ public class UserTest {
 	void compareScoreWhenBlackJack() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
+		user.twoCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.FIVE, Shape.CLOVER)));
 
-		assertThat(user.compareScore(dealer, true)).isEqualTo(1500);
+		assertThat(user.compareScore(dealer)).isEqualTo(1500);
 	}
 
 	@DisplayName("블랙잭일 경우 수익계산 - 패")
@@ -88,10 +92,11 @@ public class UserTest {
 	void compareScoreWhenBlackJack2() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.EIGHT, Shape.CLOVER)));
+		user.twoCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
 
-		assertThat(user.compareScore(dealer, true)).isEqualTo(-1000);
+		assertThat(user.compareScore(dealer)).isEqualTo(-1000);
 	}
 
 	@DisplayName("블랙잭일 경우 수익계산 - 무")
@@ -99,9 +104,10 @@ public class UserTest {
 	void compareScoreWhenBlackJack3() {
 		user.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
+		user.twoCardBlackJackCheck();
 		dealer.cardDraw(Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND),
 				new Card(Symbol.KING, Shape.CLOVER)));
 
-		assertThat(user.compareScore(dealer, true)).isEqualTo(0);
+		assertThat(user.compareScore(dealer)).isEqualTo(0);
 	}
 }

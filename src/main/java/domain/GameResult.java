@@ -10,10 +10,10 @@ import java.util.Map;
 public class GameResult {
 	private final Map<String, Double> userResult;
 
-	public GameResult(List<User> users, Dealer dealer, boolean firstDrawBlackJack) {
+	public GameResult(List<User> users, Dealer dealer) {
 		Map<String, Double> userResult = new HashMap<>();
 		for (User user : users) {
-			double income = user.compareScore(dealer, firstDrawBlackJack);
+			double income = user.compareScore(dealer);
 			userResult.put(user.getName(), income);
 		}
 		this.userResult = userResult;
