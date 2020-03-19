@@ -3,6 +3,8 @@ package view;
 import dto.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -12,22 +14,17 @@ public class InputView {
     private InputView() {
     }
 
-    public static Map<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> inputPlayerInfo() {
+    public static List<RequestPlayerDTO> inputPlayer() {
         List<String> playerNames = inputPlayerName();
         List<Integer> playerBettingMoney = new ArrayList<>(playerNames.size());
         for (String name : playerNames) {
-            int bettingMoney = validateInputMoney(name);
+            int bettingMoney = inputBettingMoney(name);
             playerBettingMoney.add(bettingMoney);
         }
 
-        Map<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> playerInformation = new LinkedHashMap<>();
-        for (int i = 0; i < playerNames.size(); i++) {
-            String targetPlayerName = playerNames.get(i);
-            int targetBettingMoney = playerBettingMoney.get(i);
-            playerInformation.put(new RequestPlayerNameDTO(targetPlayerName),
-                    new RequestPlayerBettingMoneyDTO(targetBettingMoney));
-        }
-        return playerInformation;
+        return Collections.unmodifiableList(IntStream.range(0, playerNames.size())
+                .mapToObj(index -> new RequestPlayerDTO(playerNames.get(index), playerBettingMoney.get(index)))
+                .collect(Collectors.toList()));
     }
 
     private static List<String> inputPlayerName() {
@@ -58,7 +55,7 @@ public class InputView {
         return playerNames;
     }
 
-    private static int validateInputMoney(String name) {
+    private static int inputBettingMoney(String name) {
         try {
             System.out.printf("\n%s의 배팅 금액은?\n", name);
             int bettingMoney = Integer.parseInt(SCANNER.nextLine());
@@ -66,7 +63,7 @@ public class InputView {
             return bettingMoney;
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return validateInputMoney(name);
+            return inputBettingMoney(name);
         }
     }
 

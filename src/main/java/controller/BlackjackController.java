@@ -16,6 +16,7 @@ import view.OutputView;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static BlackJackRule blackJackRule = new BlackJackRule();
@@ -26,8 +27,8 @@ public class BlackjackController {
     public static void run() {
         CardDeck cardDeck = new CardDeck();
 
-        Map<String, Integer> playerInformation = getPlayerInformation();
-        Users users = UserFactory.create(cardDeck, playerInformation);
+        Map<String, Integer> bettingMoneyToName = getBettingMoneyToName();
+        Users users = UserFactory.create(cardDeck, bettingMoneyToName);
         List<ResponsePlayerDTO> responsePlayerDTOS = ResponsePlayerDTO.createResponsePlayerDTOs(users);
         OutputView.printInitialResult(responsePlayerDTOS);
 
@@ -41,16 +42,12 @@ public class BlackjackController {
         OutputView.printFinalProfit(responseWinningResultDTO);
     }
 
-    private static Map<String, Integer> getPlayerInformation() {
-        Map<String, Integer> playerInformation = new LinkedHashMap<>();
-        Map<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> playerInformationDTO = InputView.inputPlayerInfo();
+    private static Map<String, Integer> getBettingMoneyToName() {
+        List<RequestPlayerDTO> requestPlayerDTOS = InputView.inputPlayer();
 
-        for (Map.Entry<RequestPlayerNameDTO, RequestPlayerBettingMoneyDTO> entry : playerInformationDTO.entrySet()) {
-            RequestPlayerNameDTO playerName = entry.getKey();
-            RequestPlayerBettingMoneyDTO playerBettingMoney = entry.getValue();
-            playerInformation.put(playerName.getName(), playerBettingMoney.getBettingMoney());
-        }
-        return playerInformation;
+        return requestPlayerDTOS.stream()
+                .collect(Collectors.toMap(RequestPlayerDTO::getName, RequestPlayerDTO::getBettingMoney,
+                        (x, y) -> y, LinkedHashMap::new));
     }
 
     private static void runPlayerBlackJack(CardDeck cardDeck, List<Player> players) {
