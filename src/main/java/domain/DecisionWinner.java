@@ -4,26 +4,25 @@ import domain.card.CardCalculator;
 import domain.player.User;
 
 public class DecisionWinner {
-
-    private static final int BLACK_JACK = 21;
+    private static final int MAX_WINNING_COUNT = 21;
 
     private DecisionWinner() {
     }
 
     public static boolean compareWinner(User targetUser, User user) {
-        int playerCardSum = CardCalculator.calculateDeterminedAce(targetUser.getCard());
-        int dealerCardSum = CardCalculator.calculateDeterminedAce(user.getCard());
+        int targetUserCardSum = CardCalculator.sumCardDeck(targetUser.getCard());
+        int userCardSum = CardCalculator.sumCardDeck(user.getCard());
 
-        return determineWin(playerCardSum, dealerCardSum);
+        return determineWin(targetUserCardSum, userCardSum);
     }
 
-    private static boolean determineWin(int TargetPlayerCardSum, int playerCardSum) {
-        if (TargetPlayerCardSum < BLACK_JACK && playerCardSum > BLACK_JACK) {
+    private static boolean determineWin(int targetUserCardSum, int userCardSum) {
+        if (targetUserCardSum < MAX_WINNING_COUNT && userCardSum > MAX_WINNING_COUNT) {
             return true;
         }
-        if (TargetPlayerCardSum > BLACK_JACK) {
+        if (targetUserCardSum > MAX_WINNING_COUNT) {
             return false;
         }
-        return TargetPlayerCardSum >= playerCardSum;
+        return targetUserCardSum >= userCardSum;
     }
 }

@@ -1,43 +1,34 @@
 package controller;
 
-import domain.WinningResult;
+import domain.ProfitResult;
+import domain.SettingGame;
 import domain.answer.Answer;
-import domain.answer.AnswerType;
-import domain.card.CardCalculator;
-import domain.card.Cards;
+import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
-import domain.player.PlayersName;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-    private Cards cards;
-    private PlayersName playersName;
     private Dealer dealer;
     private Players players;
-
-    public BlackjackController() {
-        cards = new Cards();
-        playersName = new PlayersName(InputView.inputPlayerName());
-        OutputView.printInitial(playersName.getPlayerName());
-        ready();
-    }
+    private CardDeck cardDeck;
 
     public void run() {
+        ready();
         startGame();
         result();
     }
 
     private void ready() {
-        dealer = new Dealer(cards.giveCard(), cards.giveCard());
-        players = new Players(cards, playersName.getPlayerName());
+        SettingGame settingGame = new SettingGame(InputView.inputPlayerName());
+        cardDeck = settingGame.getCardDeck();
+        OutputView.printSetDrawCard(settingGame.getPlayersName());
 
-        OutputView.printUserCard(dealer.getName(), dealer.cardToString());
-        for (Player player : players.getPlayers()) {
-            OutputView.printUserCard(player.getName(), player.cardToString());
-        }
+        dealer = settingGame.generateDealer();
+        players = settingGame.generatePlayers();
+        OutputView.userReport(dealer.startCardReport(), players.cardReport());
     }
 
     private void startGame() {
@@ -48,35 +39,23 @@ public class BlackjackController {
     }
 
     private void playerTurn(Player player) {
-        OutputView.printNewLine();
-        while (CardCalculator.isUnderBlackJack(player.getCard()) && getAnswer(player).isEqualsAnswer(AnswerType.YES)) {
-            player.drawCard(cards.giveCard());
-            OutputView.printUserCard(player.getName(), player.cardToString());
-        }
-        if (CardCalculator.isMoreThanBlackJack(player.getCard())) {
-            OutputView.printUserCardsOverBlackJack(player.getName());
+        while (player.isDrawCard() && new Answer(InputView.inputAnswer(player.getName())).isYes()) {
+            player.drawCard(cardDeck.giveCard());
+            OutputView.userReport(player.cardReport());
         }
     }
 
     private void dealerTurn() {
-        if (dealer.isAdditionalCard(cards.giveCard())) {
+        if (dealer.isDrawCard()) {
+            dealer.drawCard(cardDeck.giveCard());
             OutputView.printDealerAdditionalCard();
         }
     }
 
     private void result() {
-        OutputView.printFinalResult(dealer.getName(), dealer.cardToString(), dealer.sumCardNumber());
-        for (Player player : players.getPlayers()) {
-            OutputView.printFinalResult(player.getName(), player.cardToString(), player.sumCardNumber());
-        }
+        OutputView.userReport(dealer.userResult(), players.playersResult());
 
-        WinningResult winningResult = new WinningResult(players, dealer);
-        OutputView.printWinningResult(winningResult.generateWinningUserResult(players));
-    }
-
-    private static AnswerType getAnswer(Player player) {
-        Answer answer = new Answer(InputView.inputAnswer(player.getName()));
-
-        return AnswerType.AnswerValueOf(answer.getAnswer());
+        ProfitResult profitResult = new ProfitResult(players, dealer);
+        OutputView.printWinning(profitResult.getWinningUserResult());
     }
 }

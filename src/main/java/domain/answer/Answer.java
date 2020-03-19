@@ -14,8 +14,9 @@ public class Answer {
         }
     }
 
+    public boolean isYes() {
+        AnswerType answerType = AnswerType.answerValueOf(this.answer);
 
-    public String getAnswer() {
-        return answer;
+        return answerType.isYes();
     }
 }

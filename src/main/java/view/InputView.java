@@ -8,6 +8,26 @@ public class InputView {
     private InputView() {
     }
 
+    public static double inputBattingMoney(String playerName) {
+        System.out.printf("\n%s의 배팅금액을 입력하세요\n", playerName);
+        try {
+            String battingMoney = SCANNER.nextLine();
+            validateNumberFormat(battingMoney);
+            return Double.parseDouble(battingMoney);
+        } catch (RuntimeException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return inputBattingMoney(playerName);
+        }
+    }
+
+    private static void validateNumberFormat(String battingMoney) {
+        try {
+            Double.parseDouble(battingMoney);
+        } catch (NumberFormatException e) {
+            throw new NullPointerException("숫자만 입력 가능합니다.");
+        }
+    }
+
     public static String inputPlayerName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         try {
@@ -22,7 +42,7 @@ public class InputView {
 
     private static void validateNullOrEmpty(String input) {
         if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("null 또는 empty 가 입력되었습니다.");
         }
     }
 

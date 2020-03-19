@@ -12,15 +12,15 @@ public enum AnswerType {
         this.answer = answer;
     }
 
-    public static AnswerType AnswerValueOf(String answer) {
+    public static AnswerType answerValueOf(String answer) {
         return Arrays.stream(values())
                 .filter(answerType -> answerType.answer.equals(answer))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public boolean isEqualsAnswer(AnswerType answerType) {
-        return equals(answerType);
+    public boolean isYes() {
+        return equals(AnswerType.YES);
     }
 
 }
