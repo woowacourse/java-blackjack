@@ -1,10 +1,14 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.YesOrNo;
 import domain.card.Deck;
 import domain.gamer.Dealer;
+import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.money.Money;
@@ -23,14 +27,48 @@ public class Controller {
 	private static final int INITIAL_DRAW_NUMBER = 2;
 
 	public static void run() {
-		Players players = new Players(InputView.inputPlayersName(),
-			Arrays.asList(Money.of("10000"), Money.of("10000")));
+		Players players = createPlayers();
 		Dealer dealer = new Dealer();
 		Deck deck = new Deck();
 
 		initialize(players, dealer, deck);
 		progress(players, dealer, deck);
 		end(players, dealer);
+	}
+
+	private static Players createPlayers() {
+		try {
+			List<Name> playersName = inputPlayersName();
+			return new Players(playersName, inputBettingMoneys(playersName));
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return createPlayers();
+		}
+	}
+
+	private static List<Name> inputPlayersName() {
+		return Arrays.stream(InputView.inputPlayersName())
+			.map(Name::new)
+			.collect(Collectors.toList());
+	}
+
+	private static List<Money> inputBettingMoneys(List<Name> playersName) {
+		List<Money> moneys = new ArrayList<>();
+
+		for (Name name : playersName) {
+			moneys.add(askBettingMoney(name));
+		}
+		return moneys;
+	}
+
+	private static Money askBettingMoney(Name name) {
+		try {
+			OutputView.printInputBettingMoney(name);
+			return Money.of(InputView.inputBettingMoney());
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return askBettingMoney(name);
+		}
 	}
 
 	private static void initialize(Players players, Dealer dealer, Deck deck) {

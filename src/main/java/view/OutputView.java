@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Card;
 import domain.card.Hands;
+import domain.gamer.Name;
 import view.dto.DealerDto;
 import view.dto.GamerDto;
 import view.dto.PlayerDto;
@@ -80,5 +81,9 @@ public class OutputView {
 
 	public static void printMatchResult(PlayersDto playersDto, DealerDto dealerDto) {
 		System.out.println("## 최종 승패");
+	}
+
+	public static void printInputBettingMoney(Name name) {
+		System.out.println(String.format("%s의 베팅 금액은?", name.getName()));
 	}
 }
