@@ -2,8 +2,10 @@ package view;
 
 import java.util.stream.Collectors;
 
+import domain.GameResult;
 import domain.card.Card;
 import domain.card.Hands;
+import domain.gamer.Gamer;
 import domain.gamer.Name;
 import view.dto.DealerDto;
 import view.dto.GamerDto;
@@ -16,8 +18,14 @@ import view.dto.PlayersDto;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class OutputView {
+	private static final String NEW_LINE = System.lineSeparator();
+
 	public static void printErrorMessage(IllegalArgumentException e) {
 		System.out.println(e.getMessage());
+	}
+
+	public static void printInputBettingMoney(Name name) {
+		System.out.println(String.format("%s의 베팅 금액은?", name.getName()));
 	}
 
 	public static void printInitial(PlayersDto playersDto, DealerDto dealerDto) {
@@ -64,6 +72,7 @@ public class OutputView {
 	}
 
 	public static void printResult(PlayersDto playersDto, DealerDto dealerDto) {
+		System.out.println(NEW_LINE + "##최종 점수");
 		System.out.println(showCards(dealerDto) + " - " + dealerDto.getTotalScore());
 		for (PlayerDto playerDto : playersDto.getPlayers()) {
 			System.out.println(showCards(playerDto) + " - " + playerDto.getTotalScore());
@@ -79,11 +88,12 @@ public class OutputView {
 			.collect(Collectors.joining(", "));
 	}
 
-	public static void printMatchResult(PlayersDto playersDto, DealerDto dealerDto) {
-		System.out.println("## 최종 승패");
-	}
-
-	public static void printInputBettingMoney(Name name) {
-		System.out.println(String.format("%s의 베팅 금액은?", name.getName()));
+	public static void printMatchResult(GameResult gameResult) {
+		System.out.println(NEW_LINE + "## 최종 수익");
+		for (Gamer gamer : gameResult.getGameResult().keySet()) {
+			System.out.println(String.format("%s: %d", gamer.getName(), gameResult.getGameResult()
+				.get(gamer)
+				.intValue()));
+		}
 	}
 }

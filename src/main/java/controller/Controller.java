@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.GameResult;
 import domain.YesOrNo;
 import domain.card.Deck;
 import domain.gamer.Dealer;
@@ -135,10 +136,11 @@ public class Controller {
 	}
 
 	private static void end(Players players, Dealer dealer) {
+		GameResult gameResult = GameResult.of(players, dealer);
 		PlayersDto playersDto = PlayersDto.from(players);
 		DealerDto dealerDto = DealerDto.from(dealer);
 
 		OutputView.printResult(playersDto, dealerDto);
-		OutputView.printMatchResult(playersDto, dealerDto);
+		OutputView.printMatchResult(gameResult);
 	}
 }
