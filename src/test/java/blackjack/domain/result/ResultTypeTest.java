@@ -9,47 +9,76 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTypeTest {
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 계산 : 플레이어 승")
+    @DisplayName("플레이어 BlackJack 확인: 플레이어가 BlackJack이고, 딜러가 BlackJack이 아닌 경우")
+    @Test
+    void test1() {
+        ResultType resultType = ResultType.computeResult(new Point(21, true), new Point(12, false));
+        assertThat(resultType).isEqualTo(ResultType.BLACK_JACK);
+    }
+
+    @DisplayName("플레이어 승 - 플레이어/딜러 모두 21미만")
     @Test
     void computeResult_playerWin() {
-        ResultType resultType = ResultType.computeResult(new Point(20), new Point(12));
+        ResultType resultType = ResultType.computeResult(new Point(20, false), new Point(12, false));
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 계산 : 플레이어 패")
+    @DisplayName("플레이어 승 - 플레이어 21초과X, 딜러 21초과")
+    @Test
+    void computeResult_playerWin_dealerExceed_21() {
+        ResultType resultType = ResultType.computeResult(new Point(20, false), new Point(22, false));
+        assertThat(resultType).isEqualTo(ResultType.WIN);
+    }
+
+    @DisplayName("플레이어 승 - 플레이어 BlackJack이 아닌 21, 딜러 21미만")
+    @Test
+    void computeResult_playerWin_notBlackJack() {
+        ResultType resultType = ResultType.computeResult(new Point(21, false), new Point(20, false));
+        assertThat(resultType).isEqualTo(ResultType.WIN);
+    }
+
+    @DisplayName("플레이어 패 - 플레이어/딜러 모두 21미만")
     @Test
     void computeResult_playerLose() {
-        ResultType resultType = ResultType.computeResult(new Point(10), new Point(12));
+        ResultType resultType = ResultType.computeResult(new Point(10, false), new Point(12, false));
         assertThat(resultType).isEqualTo(ResultType.LOSE);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 계산 : 플레이어 무승부")
+    @DisplayName("플레이어 무승부 - 같은 점수")
     @Test
     void computeResult_playerDraw() {
-        ResultType resultType = ResultType.computeResult(new Point(20), new Point(20));
+        ResultType resultType = ResultType.computeResult(new Point(20, false), new Point(20, false));
         assertThat(resultType).isEqualTo(ResultType.DRAW);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 계산 : 플레이어 패 - 플레이어 21초과, 딜러 21초과X")
+    @DisplayName("플레이어 무승부 - 둘 다 블랙잭")
+    @Test
+    void computeResult_playerBlackJackDraw() {
+        ResultType resultType = ResultType.computeResult(new Point(21, true), new Point(21, true));
+        assertThat(resultType).isEqualTo(ResultType.DRAW);
+    }
+
+    @DisplayName("플레이어 패 - 플레이어 21초과, 딜러 21초과X")
     @Test
     void computeResult_playerLose_playerExceed_21() {
-        ResultType resultType = ResultType.computeResult(new Point(22), new Point(20));
+        ResultType resultType = ResultType.computeResult(new Point(22, false), new Point(20, false));
         assertThat(resultType).isEqualTo(ResultType.LOSE);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 계산 : 플레이어 패 - 플레이어 21초과, 딜러 21초과")
+    @DisplayName("플레이어 패 - 플레이어 21초과, 딜러 21초과")
     @Test
     void computeResult_playerLose_playerAndDealerExceed_21() {
-        ResultType resultType = ResultType.computeResult(new Point(22), new Point(22));
+        ResultType resultType = ResultType.computeResult(new Point(22, false), new Point(22, false));
         assertThat(resultType).isEqualTo(ResultType.LOSE);
     }
 
-    @DisplayName("플레이어와 딜러의 카드 합으로 결과 계산 : 플레이어 승 - 플레이어 21초과X, 딜러 21초과")
+    @DisplayName("플레이어 패 - 플레이어 BlackJack이 아닌 21, 딜러 BlackJack")
     @Test
-    void computeResult_playerWin_dealerExceed_21() {
-        ResultType resultType = ResultType.computeResult(new Point(20), new Point(22));
-        assertThat(resultType).isEqualTo(ResultType.WIN);
+    void computeResult_playerLose_dealerBlackJack() {
+        ResultType resultType = ResultType.computeResult(new Point(21, false), new Point(21, true));
+        assertThat(resultType).isEqualTo(ResultType.LOSE);
     }
+
 
     @DisplayName("승/패/무승부의 적절한 반대 값을 찾는지 확인")
     @ParameterizedTest

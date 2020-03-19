@@ -6,8 +6,14 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum ResultType {
+    BLACK_JACK("블랙잭", (playerPoint, dealerPoint) -> {
+        return playerPoint.isBalckJack() && !dealerPoint.isBalckJack();
+    }),
     WIN("승", (playerPoint, dealerPoint)
             -> {
+        if (playerPoint.isBalckJack()) {
+            return false;
+        }
         if (playerPoint.isBust()) {
             return false;
         }
@@ -21,6 +27,10 @@ public enum ResultType {
     }),
     DRAW("무", (playerPoint, dealerPoint)
             -> {
+        if ((playerPoint.isBalckJack() && !dealerPoint.isBalckJack())
+        || (!playerPoint.isBalckJack() && dealerPoint.isBalckJack())) {
+            return false;
+        }
         if (playerPoint.isNotBust()
                 && dealerPoint.isNotBust()
                 && playerPoint.compareTo(dealerPoint) == 0) {
@@ -35,6 +45,9 @@ public enum ResultType {
         }
         if (dealerPoint.isBust()) {
             return false;
+        }
+        if (!playerPoint.isBalckJack() && dealerPoint.isBalckJack()) {
+            return true;
         }
         if (playerPoint.diffWithBlackJack() > dealerPoint.diffWithBlackJack()) {
             return true;

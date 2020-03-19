@@ -6,18 +6,21 @@ import blackjack.domain.card.component.CardNumber;
 import java.util.List;
 
 public class Point implements Comparable<Point> {
-    private static int BALCK_JACK = 21;
+    private static int BLACK_JACK = 21;
+    private final boolean isBalckJack;
     private int point;
 
-    public Point(int point) {
+    public Point(int point, boolean isBalckJack) {
         this.point = point;
+        this.isBalckJack = isBalckJack;
     }
 
     public Point (List<Card> cards) {
-        this.point = cards.stream()
+        point = cards.stream()
                 .mapToInt(x -> x.getCardPoint())
                 .sum();
         handleAce(cards);
+        isBalckJack = (cards.size() == 2 && point == BLACK_JACK);
     }
 
     private static int getAceCount(List<Card> cards) {
@@ -29,21 +32,25 @@ public class Point implements Comparable<Point> {
 
     private void handleAce(List<Card> cards) {
         int aceCount = getAceCount(cards);
-        if ((point < BALCK_JACK) && (aceCount > 0)) {
+        if ((point < BLACK_JACK) && (aceCount > 0)) {
             point += CardNumber.ACE_DIFF;
         }
     }
 
     public int diffWithBlackJack() {
-        return BALCK_JACK - this.point;
+        return BLACK_JACK - this.point;
     }
 
     public boolean isBust() {
-        return this.point > BALCK_JACK;
+        return this.point > BLACK_JACK;
     }
 
     public boolean isNotBust() {
         return !isBust();
+    }
+
+    public boolean isBalckJack() {
+        return this.isBalckJack;
     }
 
     public int getPoint() {
