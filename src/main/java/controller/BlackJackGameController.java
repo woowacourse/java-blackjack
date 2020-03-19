@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameResult;
+import domain.Money;
 import domain.Rule;
 import domain.card.CardDeck;
 import domain.player.Dealer;
@@ -38,8 +39,8 @@ public class BlackJackGameController {
 		List<User> users = new ArrayList<>();
 		String[] userNames = names.split(NAME_DELIMITER);
 		for (String name : userNames) {
-			int bettingMoney = InputUtils.toInt(InputView.inputMoney(name));
-			users.add(new User(name, bettingMoney));
+			Money money = new Money(InputUtils.toInt(InputView.inputMoney(name)));
+			users.add(new User(name, money));
 		}
 		return users;
 	}

@@ -1,16 +1,14 @@
 package domain.player;
 
+import domain.Money;
 import domain.Rule;
 
 public class User extends Player {
-	private static final int MINUS_CONVERTER = -1;
-	private static final int ZERO_MONEY = 0;
+	private final Money money;
 
-	private final double bettingMoney;
-
-	public User(String name, int bettingMoney) {
+	public User(String name, Money money) {
 		super(name);
-		this.bettingMoney = bettingMoney;
+		this.money = money;
 	}
 
 	public boolean isPossibleAddCard() {
@@ -26,23 +24,23 @@ public class User extends Player {
 
 	private double blackJackCompare(Gamer gamerToCompare) {
 		if (!this.isBlackJack()) {
-			return bettingMoney * MINUS_CONVERTER;
+			return money.toLoseMoney();
 		}
 		if (gamerToCompare.isBlackJack()) {
-			return ZERO_MONEY;
+			return Money.ZERO_MONEY;
 		}
-		return bettingMoney * Rule.BLACK_JACK_BONUS;
+		return money.toBlackJackWinMoney();
 	}
 
 	private double normalCompare(Gamer gamerToCompare) {
 		int toCompareScore = gamerToCompare.calculateBurstIsZeroScore();
 		int userScore = calculateBurstIsZeroScore();
 		if (userScore > toCompareScore) {
-			return bettingMoney;
+			return money.getMoney();
 		}
 		if (userScore == toCompareScore) {
-			return ZERO_MONEY;
+			return Money.ZERO_MONEY;
 		}
-		return bettingMoney * MINUS_CONVERTER;
+		return money.toLoseMoney();
 	}
 }

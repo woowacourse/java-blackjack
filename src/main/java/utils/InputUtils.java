@@ -3,7 +3,6 @@ package utils;
 public class InputUtils {
 	private static final String ERROR_MESSAGE_IS_HIT_ANSWER = "y,n 중 하나만 입력하세요.";
 	private static final String ERROR_MESSAGE_NOT_INT = "숫자가 아닌 문자를 입력하였습니다.";
-	private static final String ERROR_MESSAGE_UNDER_ZERO = "0이하의 숫자를 입력하였습니다.";
 	private static final String ANSWER_Y = "y";
 	private static final String ANSWER_N = "n";
 
@@ -28,10 +27,6 @@ public class InputUtils {
 			Integer.parseInt(input);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_NOT_INT);
-		}
-
-		if (Integer.parseInt(input) <= 0) {
-			throw new IllegalArgumentException(ERROR_MESSAGE_UNDER_ZERO);
 		}
 	}
 }
