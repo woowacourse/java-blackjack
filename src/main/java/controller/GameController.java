@@ -1,13 +1,14 @@
 package controller;
 
-import static java.util.stream.Collectors.*;
-
 import domain.card.CardsFactory;
 import domain.card.Deck;
 import domain.gamer.*;
 import utils.InputUtils;
 import view.InputView;
 import view.OutputView;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class GameController {
 	public void run() {
@@ -18,6 +19,7 @@ public class GameController {
 		OutputView.printInitCardGuide(gamers);
 		OutputView.printGamersCard(gamers);
 		gamers.addCardAtGamers(gamers, deck);
+		OutputView.printAddCardAtDealer();
 		OutputView.printCardsResultAndScore(new CardsResult(gamers));
 
 		GameResult gameResult = gamers.generateGameResults();

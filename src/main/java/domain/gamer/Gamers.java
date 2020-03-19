@@ -27,15 +27,9 @@ public class Gamers {
 		dealer.addCard(deck.popCard(INIT_CARD_SIZE));
 	}
 
-	public void addCardAtGamers(Gamers gamers, Deck deck) {
-		addCardAtPlayers(gamers, deck);
-		gamers.getDealer().addCardAtDealer(deck);
-		OutputView.printAddCardAtDealer();
-	}
-
-	private void addCardAtPlayers(Gamers gamers, Deck deck) {
-		gamers.getPlayers()
-				.forEach(player -> drawCardOfPlayer(deck, player));
+	public void addCardAtGamers(Deck deck) {
+		players.forEach(player -> drawCardOfPlayer(deck, player));
+		dealer.addCardAtDealer(deck);
 	}
 
 	private void drawCardOfPlayer(Deck deck, Player player) {

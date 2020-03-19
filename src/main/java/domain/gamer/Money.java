@@ -1,8 +1,8 @@
 package domain.gamer;
 
-import java.util.Objects;
-
 import exception.InvalidMoneyException;
+
+import java.util.Objects;
 
 public class Money {
 	private int money;
@@ -40,7 +40,7 @@ public class Money {
 	}
 
 	public Money multiply(double operand) {
-		return new Money((int)(money * operand));
+		return new Money((int) (money * operand));
 	}
 
 	public int getMoney() {
@@ -55,7 +55,7 @@ public class Money {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Money money1 = (Money)o;
+		Money money1 = (Money) o;
 		return money == money1.money;
 	}
 
