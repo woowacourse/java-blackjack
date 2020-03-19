@@ -5,14 +5,16 @@ import domain.result.score.PlayerFinalScore;
 
 public class Referee {
 
-	public static boolean isPlayerWin(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {
-		return isPlayerOnlyBlackjack(playerScore, dealerScore)
-			|| isDealerOnlyBust(playerScore, dealerScore)
-			|| isPlayerScoreWin(playerScore, dealerScore);
+	public static boolean isPlayerBlackjackWin(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {
+		return isPlayerOnlyBlackjack(playerScore, dealerScore);
 	}
 
 	private static boolean isPlayerOnlyBlackjack(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {
 		return playerScore.isBlackjack() && !dealerScore.isBlackjack();
+	}
+
+	public static boolean isPlayerWin(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {
+		return isDealerOnlyBust(playerScore, dealerScore) || isPlayerScoreWin(playerScore, dealerScore);
 	}
 
 	private static boolean isDealerOnlyBust(PlayerFinalScore playerScore, DealerFinalScore dealerScore) {

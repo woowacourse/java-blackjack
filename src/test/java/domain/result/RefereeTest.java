@@ -26,6 +26,17 @@ public class RefereeTest {
 
 	@DisplayName("플레이어가 이기는 경우")
 	@Test
+	void isPlayerBlackjackWinTest() {
+		player.addCards(Arrays.asList(new Card("하트", "1"),
+			new Card("하트", "K")));
+		dealer.addCards(Arrays.asList(new Card("하트", "2")));
+
+		assertThat(Referee.isPlayerBlackjackWin(
+			new PlayerFinalScore(player), new DealerFinalScore(dealer))).isTrue();
+	}
+
+	@DisplayName("플레이어가 이기는 경우")
+	@Test
 	void isPlayerWinTest() {
 		player.addCards(Arrays.asList(new Card("하트", "3")));
 		dealer.addCards(Arrays.asList(new Card("하트", "2")));
