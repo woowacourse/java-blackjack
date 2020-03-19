@@ -1,7 +1,10 @@
 package domain.user;
 
+import domain.card.Card;
+import domain.card.Cards;
 import domain.user.strategy.draw.PlayerDrawStrategy;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends User {
@@ -12,12 +15,17 @@ public class Player extends User {
 			throw new IllegalArgumentException("이름이 빈 문자열입니다.");
 		}
 		this.name = name;
-		super.drawStrategy = new PlayerDrawStrategy();
+		drawStrategy = new PlayerDrawStrategy();
+	}
+
+	public Player(String name, List<Card> cards) {
+		this(name);
+		hands = new Cards(cards);
 	}
 
 	@Override
-	public String toString() {
-		return name;
+	public Cards openInitialCards() {
+		return hands;
 	}
 
 	@Override
@@ -31,5 +39,10 @@ public class Player extends User {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }

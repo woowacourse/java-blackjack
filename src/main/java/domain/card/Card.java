@@ -11,12 +11,8 @@ public class Card {
 		this.type = type;
 	}
 
-	public boolean isAce() {
-		return symbol.equals(Symbol.ACE);
-	}
-
-	public int getPoint() {
-		return symbol.getPoint();
+	public Symbol getSymbol() {
+		return symbol;
 	}
 
 	@Override

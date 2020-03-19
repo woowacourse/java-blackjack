@@ -4,38 +4,26 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import domain.card.Cards;
-
 public enum ScoreType {
-	BURST(
-		cards -> cards.getPoint() > 21,
-		cardsPoint -> 0
-	),
-	BIG_ACE(
-		cards -> cards.hasAce() && cards.getPoint() <= 11,
-		cardsPoint -> cardsPoint + 10
-	),
-	NORMAL(
-		cards -> !BURST.scoreJudge.test(cards) && !BIG_ACE.scoreJudge.test(cards),
-		cardsPoint -> cardsPoint
-	);
+	BURST(point -> point > 21, point -> 0),
+	NORMAL(point -> point <= 21, point -> point);
 
-	private final Predicate<Cards> scoreJudge;
+	private final Predicate<Integer> scoreJudge;
 	private final Function<Integer, Integer> getScore;
 
-	ScoreType(Predicate<Cards> scoreJudge, Function<Integer, Integer> getScore) {
+	ScoreType(Predicate<Integer> scoreJudge, Function<Integer, Integer> getScore) {
 		this.scoreJudge = scoreJudge;
 		this.getScore = getScore;
 	}
 
-	public static ScoreType of(Cards cards) {
+	public static ScoreType of(int point) {
 		return Arrays.stream(ScoreType.values())
-			.filter(scoreType -> scoreType.scoreJudge.test(cards))
+			.filter(scoreType -> scoreType.scoreJudge.test(point))
 			.findFirst()
 			.orElseThrow(NullPointerException::new);
 	}
 
-	public int getScore(int cardsPoint) {
-		return getScore.apply(cardsPoint);
+	public int getScore(int point) {
+		return getScore.apply(point);
 	}
 }

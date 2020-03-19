@@ -1,8 +1,10 @@
-package domain.user;
+package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import domain.PlayerIntentionType;
 
 class PlayerIntentionTypeTest {
 
