@@ -2,14 +2,14 @@ package blackjack.domain.result.user;
 
 import blackjack.domain.playing.card.Score;
 
-public class BlackjackDealer extends AbstractUserForTest {
+public class ScoreEighteenDealer extends AbstractUserForTest {
     @Override
     public Score calculateScore() {
-        return new Score(21);
+        return new Score(18);
     }
 
     @Override
     public boolean isBlackjack() {
-        return true;
+        return false;
     }
 }

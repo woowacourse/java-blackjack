@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 
 public enum ProfitRate {
     PLAYER_IS_BLACKJACK(((player, dealer) -> player.isBlackjack() && dealer.isNotBlackjack()), 1.5),
-    DEALER_IS_BLACKJACK(((player, dealer) -> player.isBlackjack() && dealer.isBlackjack()), 1.0),
+    DEALER_IS_BLACKJACK(((player, dealer) -> player.isBlackjack() && dealer.isBlackjack()), 0.0),
     PLAYER_IS_BUST((player, dealer) -> player.isBust(), -1.0),
     DEALER_IS_BUST((player, dealer) -> player.isNotBust() && dealer.isBust(), 1.0),
     PLAYER_SCORE_IS_GREATER(((player, dealer) -> player.isNotBust() && dealer.isNotBust() && player.isOverScore(dealer)), 1.0),
