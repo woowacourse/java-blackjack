@@ -43,6 +43,6 @@ public class User extends Player {
 	}
 
 	public void twoCardBlackJackCheck() {
-		this.isTwoCardBlackJack = (calculateScore() == Rule.MAX_SCORE);
+		this.isTwoCardBlackJack = this.isBlackJack();
 	}
 }
