@@ -11,25 +11,25 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class GameController {
-	public void run() {
-		Gamers gamers = generateGamers();
-		Deck deck = new Deck(CardsFactory.getCards());
+    public void run() {
+        Gamers gamers = generateGamers();
+        Deck deck = new Deck(CardsFactory.getCards());
 
-		gamers.initCard(deck);
-		OutputView.printInitCardGuide(gamers);
-		OutputView.printGamersCard(gamers);
-		gamers.addCardAtGamers(gamers, deck);
-		OutputView.printAddCardAtDealer();
-		OutputView.printCardsResultAndScore(new CardsResult(gamers));
+        gamers.initCard(deck);
+        OutputView.printInitCardGuide(gamers);
+        OutputView.printGamersCard(gamers);
+        gamers.addCardAtGamers(deck);
+        OutputView.printAddCardAtDealer();
+        OutputView.printCardsResultAndScore(new CardsResult(gamers));
 
-		GameResult gameResult = gamers.generateGameResults();
-		OutputView.printTotalEarningResult(gameResult);
-	}
+        GameResult gameResult = gamers.generateGameResults();
+        OutputView.printTotalEarningResult(gameResult);
+    }
 
-	private Gamers generateGamers() {
-		return InputUtils.splitAsDelimiter(InputView.inputAsPlayerName())
-			.stream()
-			.map(name -> new Player(name, InputView.inputAsBettingMoney(name)))
-			.collect(collectingAndThen(toList(), players -> new Gamers(players, new Dealer())));
-	}
+    private Gamers generateGamers() {
+        return InputUtils.splitAsDelimiter(InputView.inputAsPlayerName())
+                .stream()
+                .map(name -> new Player(name, InputView.inputAsBettingMoney(name)))
+                .collect(collectingAndThen(toList(), players -> new Gamers(players, new Dealer())));
+    }
 }

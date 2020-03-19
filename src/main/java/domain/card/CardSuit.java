@@ -1,18 +1,18 @@
 package domain.card;
 
 public enum CardSuit {
-	SPADE("스페이드"),
-	CLOVER("클로버"),
-	DIAMOND("다이아몬드"),
-	HEART("하트");
+    SPADE("스페이드"),
+    CLOVER("클로버"),
+    DIAMOND("다이아몬드"),
+    HEART("하트");
 
-	private final String suit;
+    private final String suit;
 
-	CardSuit(String suit) {
-		this.suit = suit;
-	}
+    CardSuit(String suit) {
+        this.suit = suit;
+    }
 
-	public String getSuit() {
-		return suit;
-	}
+    public String getSuit() {
+        return suit;
+    }
 }
