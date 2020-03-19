@@ -27,12 +27,13 @@ class ProfitsTest {
 	@DisplayName("게임 결과를 받아 수익을 계산")
 	@ParameterizedTest
 	@MethodSource("gameResultData")
-	void construct_GivenGameResult_CreateProfits(Player winner, Player loser, GameResult gameResult) {
+	void construct_GivenGameResult_CreateProfits(Player winner, Player loser, Player drawer, GameResult gameResult) {
 		Map<Player, ProfitMoney> playerProfits = new Profits(gameResult).getPlayerProfits();
 
 		Map<Player, ProfitMoney> expectedProfits = new HashMap<>();
 		expectedProfits.put(winner, new ProfitMoney(1500));
 		expectedProfits.put(loser, new ProfitMoney(-50000));
+		expectedProfits.put(drawer, new ProfitMoney(0));
 
 		assertThat(playerProfits).isEqualTo(expectedProfits);
 	}
@@ -45,16 +46,19 @@ class ProfitsTest {
 
 		Hands winHands = new Hands(new ArrayList<>(Arrays.asList(ace, king)));
 		Hands loseHands = new Hands(new ArrayList<>(Arrays.asList(six, ace)));
+		Hands drawHands = new Hands(new ArrayList<>(Arrays.asList(eight, king)));
 		Hands dealerHands = new Hands(new ArrayList<>(Arrays.asList(eight, king)));
 
 		Player ddoring = new Player(new PlayerName("또링"), "1000", winHands);
 		Player smallbear = new Player(new PlayerName("작은곰"), "50000", loseHands);
-		Players players = new Players(Arrays.asList(ddoring, smallbear));
+		Player havi = new Player(new PlayerName("하비"), "50000", drawHands);
+
+		Players players = new Players(Arrays.asList(ddoring, smallbear, havi));
 		Dealer dealer = new Dealer(dealerHands);
 		GameResult gameResult = new GameResult(players, dealer);
 
 		return Stream.of(
-			Arguments.of(ddoring, smallbear, gameResult)
+			Arguments.of(ddoring, smallbear, havi, gameResult)
 		);
 	}
 }
