@@ -3,10 +3,15 @@ package domain.participant;
 import domain.result.Result;
 
 public class Player extends Participant {
+    private Money bettingMoney;
 
     public Player(String name) {
         super(name);
         validateName(name);
+    }
+
+    public void setBettingMoney(Money bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
     private void validateName(String name) {
