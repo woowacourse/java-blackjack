@@ -16,7 +16,8 @@ public class Profits {
 	public static Profits calculate(Dealer dealer, Players players, BettingMoneys bettingMoneys) {
 		Map<Name, Profit> profits = new LinkedHashMap<>();
 		profits.put(new Name(dealer.getName()), calculateByDealer(dealer, players, bettingMoneys));
-		players.forEach(player -> profits.put(new Name(player.getName()), Profit.of(player, dealer, bettingMoneys.get(player))));
+		players.forEach(player -> profits.put(new Name(player.getName()),
+				Profit.of(player, dealer, bettingMoneys.get(player))));
 		return new Profits(profits);
 	}
 

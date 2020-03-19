@@ -10,8 +10,6 @@ import domain.Name;
 import domain.Players;
 import domain.Profit;
 import domain.Profits;
-import domain.Record;
-import domain.Results;
 import domain.User;
 
 public class OutputView {
@@ -46,30 +44,6 @@ public class OutputView {
 		return cards.stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
-	}
-
-	public static void printGameResult(Results results) {
-		System.out.println("## 최종 승패");
-		results.getValue()
-				.forEach(OutputView::printIndividualResult);
-	}
-
-	private static void printIndividualResult(Name name, Record record) {
-		if (record.hasMany()) {
-			System.out.printf(
-					"%s: %d승 %d무 %s패\n", name.getValue(), record.getWinCount(), record.getDrawCount(),
-					record.getLoseCount());
-			return;
-		}
-		if (record.hasWin()) {
-			System.out.println(name.getValue() + ": 승");
-			return;
-		}
-		if (record.hasDraw()) {
-			System.out.println(name.getValue() + ": 무");
-			return;
-		}
-		System.out.println(name.getValue() + ": 패");
 	}
 
 	public static void printProfits(Profits profits) {
