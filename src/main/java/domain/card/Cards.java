@@ -46,6 +46,10 @@ public class Cards {
         return CardCalculator.calculateAceStrategy(this);
     }
 
+    public int getCardsSize() {
+        return this.cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
     }

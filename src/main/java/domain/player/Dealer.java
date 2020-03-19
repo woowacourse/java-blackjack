@@ -12,6 +12,10 @@ public class Dealer extends User {
         super(DEALER_NAME, cards);
     }
 
+    public int getCardsSize() {
+        return this.cards.getCardsSize();
+    }
+
     @Override
     public boolean isHit() {
         return CardCalculator.isUnderDealerStandard(this.cards);
