@@ -14,6 +14,9 @@ public abstract class User {
     protected Money money;
 
     public User(String name, Money money) {
+        Objects.requireNonNull(name, "name이 null일 수 없습니다");
+        Objects.requireNonNull(money, "money가 null일 수 없습니다");
+
         this.name = name;
         this.cards = new LinkedList<>();
         this.money = money;
