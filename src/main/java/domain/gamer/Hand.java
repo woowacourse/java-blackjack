@@ -7,10 +7,10 @@ import domain.result.score.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GamerHand {
+public class Hand {
     private List<Card> cards;
 
-    public GamerHand() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
@@ -35,6 +35,10 @@ public class GamerHand {
         }
 
         return cards.get(0);
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 
     public List<Card> getCards() {

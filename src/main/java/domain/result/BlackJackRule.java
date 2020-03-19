@@ -14,10 +14,10 @@ public class BlackJackRule implements ScoreCalculable, ResultDerivable {
 
     @Override
     public Score calculateScore(AbstractGamer gamer) {
-        GamerHand gamerHand = gamer.getHand();
-        Score defaultSum = gamerHand.calculateDefaultSum();
+        Hand hand = gamer.getHand();
+        Score defaultSum = hand.calculateDefaultSum();
 
-        if (gamerHand.hasAce()) {
+        if (hand.hasAce()) {
             return updateAceScore(defaultSum);
         }
 

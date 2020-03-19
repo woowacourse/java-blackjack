@@ -12,19 +12,19 @@ public class Player extends AbstractGamer {
     private Money bettingMoney;
 
     public Player(Name name) {
-        this(name, new GamerHand(), DEFAULT_MONEY);
+        this(name, new Hand(), DEFAULT_MONEY);
     }
 
     public Player(Name name, Money bettingMoney) {
-        this(name, new GamerHand(), bettingMoney);
+        this(name, new Hand(), bettingMoney);
     }
 
-    public Player(Name name, GamerHand gamerHand) {
-        this(name, gamerHand, DEFAULT_MONEY);
+    public Player(Name name, Hand hand) {
+        this(name, hand, DEFAULT_MONEY);
     }
 
-    public Player(Name name, GamerHand gamerHand, Money bettingMoney) {
-        super(name, gamerHand);
+    public Player(Name name, Hand hand, Money bettingMoney) {
+        super(name, hand);
         this.bettingMoney = bettingMoney;
     }
 

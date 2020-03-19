@@ -55,6 +55,7 @@ public class BlackJackApplication {
     private static void playInitialDrawPhase(AllGamers allGamers, CardDeck cardDeck) {
         allGamers.drawInitialCards(cardDeck);
 
+        OutputView.printEmptyLine();
         OutputView.printInitialCards(allGamers.getDealer(), allGamers.getPlayers());
     }
 

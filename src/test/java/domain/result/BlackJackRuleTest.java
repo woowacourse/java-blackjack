@@ -15,27 +15,27 @@ public class BlackJackRuleTest {
         BlackJackRule blackJackRule = new BlackJackRule();
 
         Name name = new Name("phobi");
-        GamerHand gamerHand = new GamerHand();
+        Hand hand = new Hand();
 
-        gamerHand.drawCard(() -> Card.of(Rank.ACE, Suit.CLOVER));
-        assertThat(blackJackRule.calculateScore(new Player(name, gamerHand))).isEqualTo(Score.of(11));
+        hand.drawCard(() -> Card.of(Rank.ACE, Suit.CLOVER));
+        assertThat(blackJackRule.calculateScore(new Player(name, hand))).isEqualTo(Score.of(11));
 
-        gamerHand.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
-        assertThat(blackJackRule.calculateScore(new Player(name, gamerHand))).isEqualTo(Score.of(21));
+        hand.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
+        assertThat(blackJackRule.calculateScore(new Player(name, hand))).isEqualTo(Score.of(21));
 
-        gamerHand.drawCard(() -> Card.of(Rank.THREE, Suit.CLOVER));
-        assertThat(blackJackRule.calculateScore(new Player(name, gamerHand))).isEqualTo(Score.of(14));
+        hand.drawCard(() -> Card.of(Rank.THREE, Suit.CLOVER));
+        assertThat(blackJackRule.calculateScore(new Player(name, hand))).isEqualTo(Score.of(14));
     }
 
     @Test
     void 플레이어_결과_계산_테스트() {
         BlackJackRule blackJackRule = new BlackJackRule();
 
-        GamerHand playerHand = new GamerHand();
+        Hand playerHand = new Hand();
         playerHand.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
         playerHand.drawCard(() -> Card.of(Rank.ACE, Suit.CLOVER));
 
-        GamerHand dealerHand = new GamerHand();
+        Hand dealerHand = new Hand();
         dealerHand.drawCard(() -> Card.of(Rank.QUEEN, Suit.CLOVER));
         dealerHand.drawCard(() -> Card.of(Rank.KING, Suit.CLOVER));
 
