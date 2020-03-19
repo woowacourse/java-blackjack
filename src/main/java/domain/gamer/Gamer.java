@@ -21,7 +21,7 @@ public abstract class Gamer {
 
 	public abstract boolean canHit();
 
-	public void hit(Card card) {
+	public void draw(Card card) {
 		hands.add(card);
 	}
 

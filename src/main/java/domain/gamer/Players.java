@@ -1,10 +1,10 @@
 package domain.gamer;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import domain.card.Deck;
+import domain.money.Money;
 
 /**
  *   Player 리스트를 가진 일급 콜렉션
@@ -17,36 +17,37 @@ public class Players {
 
 	private List<Player> players;
 
-	public Players(String[] playersName) {
+	public Players(List<Name> playersName, List<Money> moneys) {
 		validate(playersName);
-		players = Arrays.stream(playersName)
-			.map(Player::new)
-			.collect(Collectors.toList());
+		players = new ArrayList<>();
+		for (int i = 0; i < playersName.size(); i++) {
+			players.add(new Player(playersName.get(i), moneys.get(i)));
+		}
 	}
 
-	private void validate(String[] playersName) {
+	private void validate(List<Name> playersName) {
 		validateNullAndEmpty(playersName);
 		validateDuplicatedName(playersName);
 		validateHeadcount(playersName);
 	}
 
-	private void validateNullAndEmpty(String[] playerNames) {
-		if ((playerNames == null) || (playerNames.length == EMPTY)) {
+	private void validateNullAndEmpty(List<Name> playerNames) {
+		if ((playerNames == null) || (playerNames.size() == EMPTY)) {
 			throw new IllegalArgumentException("null이나 빈 값이 들어올 수 없습니다.");
 		}
 	}
 
-	private void validateDuplicatedName(String[] playersName) {
-		int distinctSize = (int)Arrays.stream(playersName)
+	private void validateDuplicatedName(List<Name> playersName) {
+		int distinctSize = (int)playersName.stream()
 			.distinct().count();
 
-		if (distinctSize != playersName.length) {
+		if (distinctSize != playersName.size()) {
 			throw new IllegalArgumentException("중복된 이름이 있습니다.");
 		}
 	}
 
-	private void validateHeadcount(String[] playersName) {
-		if (playersName.length > MAX_PLAYER) {
+	private void validateHeadcount(List<Name> playersName) {
+		if (playersName.size() > MAX_PLAYER) {
 			throw new IllegalArgumentException("인원수 초과입니다.");
 		}
 	}
@@ -55,30 +56,7 @@ public class Players {
 		players.forEach(player -> player.draw(deck.deal()));
 	}
 
-	public void findResult(int dealerScore) {
-		players.forEach(player -> player.findResult(dealerScore));
-	}
-
 	public List<Player> getPlayers() {
 		return players;
 	}
-
-	public int countPlayerLose() {
-		return (int)players.stream()
-			.filter(player -> player.getPlayerGameResult().isLose())
-			.count();
-	}
-
-	public int countPlayerWin() {
-		return (int)players.stream()
-			.filter(player -> player.getPlayerGameResult().isWin())
-			.count();
-	}
-
-	public int countPlayerDraw() {
-		return (int)players.stream()
-			.filter(player -> player.getPlayerGameResult().isDraw())
-			.count();
-	}
-
 }

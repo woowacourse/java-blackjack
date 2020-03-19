@@ -1,12 +1,12 @@
 package domain;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
+import domain.gamer.Players;
 import domain.money.BlackjackWinStrategy;
 import domain.money.DefeatStrategy;
 import domain.money.PushStrategy;
@@ -20,18 +20,18 @@ import domain.money.WinStrategy;
 public class GameResult {
 	private static final double INITIAL_PROFIT = 0.0D;
 	private static final int TO_NEGATIVE = -1;
+
 	private Map<Gamer, Double> gameResult;
 
-	private GameResult(BlackjackGame blackjackGame) {
-		Dealer dealer = blackjackGame.getDealer();
-		List<Player> players = blackjackGame.getPlayers();
+	private GameResult(Players players, Dealer dealer) {
 		gameResult = new LinkedHashMap<>();
-		players.forEach(player -> makeResult(dealer, player));
+
+		players.getPlayers().forEach(player -> makeResult(dealer, player));
 		makeDealerResult(dealer);
 	}
 
-	public static GameResult of(BlackjackGame blackjackGame) {
-		return new GameResult(blackjackGame);
+	public static GameResult of(Players players, Dealer dealer) {
+		return new GameResult(players, dealer);
 	}
 
 	private void makeResult(Dealer dealer, Player player) {
