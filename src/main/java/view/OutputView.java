@@ -1,7 +1,6 @@
 package view;
 
 import common.PlayerDto;
-import domain.PlayerResult;
 import domain.PlayersResult;
 import domain.card.Card;
 import domain.gamer.Dealer;
@@ -66,11 +65,10 @@ public class OutputView {
     }
 
     public static void printGameResult(PlayersResult playersResult, Players players) {
-        System.out.println("최종 승패");
-        System.out.println(String.format("딜러 : %d승, %d무, %d패",playersResult.dealerWinCount()
-                ,playersResult.dealerDrawCount(),playersResult.dealerLoseCount()));
+        System.out.println("최종 수익");
+        System.out.println(String.format("딜러 : %d",playersResult.dealerProfit()));
         for (Player player : players.getPlayers()) {
-            System.out.println(player.getName() + " : " + playersResult.getPlayerResults().get(player).getResultState());
+            System.out.println(player.getName() + " : " + player.getPlayerBettingMoney());
         }
     }
 }

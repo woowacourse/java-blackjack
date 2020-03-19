@@ -8,16 +8,11 @@ import domain.gamer.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class BlackJackGame {
     public void play() {
         Deck deck = Deck.create();
-        List<String> playerNames = InputView.inputPlayerNames();
-        List<Integer> playerMoneys = InputView.inputPlayerMoney(playerNames);
-        Players players = new Players(playerNames, playerMoneys, deck);
+        Players players = new Players(InputView.inputParticipantPlayer(deck));
         Dealer dealer = new Dealer(deck.getInitCards());
-        PlayersResult playersResult = new PlayersResult(players, dealer);
 
         OutputView.printInitGamersState(PlayerDto.of(dealer),players);
 
@@ -26,6 +21,8 @@ public class BlackJackGame {
 
         OutputView.printDealerHit();
         OutputView.printAllPlayerCardsStateWithScore(players,dealer);
-        OutputView.printGameResult(playersResult,players);
+
+        PlayersResult playersResult = new PlayersResult(players, dealer);
+        OutputView.printGameResult(playersResult,playersResult.getPlayersResult());
     }
 }

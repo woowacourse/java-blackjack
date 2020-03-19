@@ -4,6 +4,8 @@ import java.util.List;
 
 public class PlayingCards {
     private static final int BLACK_JACK = 21;
+    private static final int BLACKJACK = 21;
+    private static final int INIT_CARD_SIZE = 2;
     private List<Card> cards;
 
     public PlayingCards(List<Card> cards) {
@@ -35,6 +37,10 @@ public class PlayingCards {
             result += card.getValue();
         }
         return result;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == INIT_CARD_SIZE && calculateScore() == BLACKJACK;
     }
 
     public int size() {

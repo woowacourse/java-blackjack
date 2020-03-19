@@ -20,7 +20,7 @@ class PlayerTest {
     void addCard() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "player";
-        Player player = new Player(playingCards, name);
+        Player player = new Player(name,10000,playingCards);
         player.addCard(deck);
         assertThat(player.countCards()).isEqualTo(1);
     }
@@ -30,7 +30,7 @@ class PlayerTest {
     void constructor() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "player";
-        Player player = new Player(playingCards, name);
+        Player player = new Player(name,10000,playingCards);
         assertThat(player).isNotNull();
     }
 
@@ -39,10 +39,16 @@ class PlayerTest {
     void isBust() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "player";
-        Player player = new Player(playingCards, name);
-        Card card1 = new Card(Symbol.QUEEN, Type.CLOVER);
-        Card card2 = new Card(Symbol.KING, Type.CLOVER);
-        Card card3 = new Card(Symbol.JACK, Type.CLOVER);
+        Player player = new Player(name,10000,playingCards);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
+        player.addCard(deck);
         player.addCard(deck);
         player.addCard(deck);
         player.addCard(deck);
@@ -55,7 +61,7 @@ class PlayerTest {
     void isNotBust() {
         PlayingCards playingCards = new PlayingCards(new ArrayList<>());
         String name = "player";
-        Player player = new Player(playingCards, name);
+        Player player = new Player(name,10000,playingCards);
         Deck deck = Deck.create();
 
         player.addCard(deck);

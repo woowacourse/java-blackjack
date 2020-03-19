@@ -5,6 +5,7 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayersResult {
     Map<Player, PlayerResult> playerResults;
@@ -13,38 +14,42 @@ public class PlayersResult {
         this.playerResults = calculateGameResults(players, dealer);
     }
 
-    public int dealerWinCount() {
-        return resultCount(playerResults, PlayerResult.LOSE);
-    }
-
-    public int dealerDrawCount() {
-        return resultCount(playerResults, PlayerResult.DRAW);
-    }
-
-    public int dealerLoseCount() {
-        return resultCount(playerResults, PlayerResult.WIN);
-    }
-
-    private int resultCount(Map<Player, PlayerResult> playerResults, PlayerResult result) {
-        int resultCount = 0;
-        for (Player player : playerResults.keySet()) {
-            if (playerResults.get(player) == result){
-                resultCount++;
-            }
+    public int dealerProfit() {
+        int dealerEarnMoney = 0;
+        Players players = getPlayersResult();
+        for (Player player : players.getPlayers()) {
+            dealerEarnMoney += player.getPlayerBettingMoney();
         }
-        return resultCount;
+        return -dealerEarnMoney;
     }
 
-    public Map<Player, PlayerResult> getPlayerResults() {
-        return Collections.unmodifiableMap(playerResults);
+    public Players getPlayersResult() {
+        return playersProfit(playerResults);
+    }
+
+    private Players playersProfit(Map<Player, PlayerResult> playerResult) {
+        List<Player> playerList = new ArrayList<>();
+
+        for (Player player : playerResult.keySet()) {
+            Player afterBettingPlayer = player.money(calculatePlayerProfit(playerResult, player));
+            playerList.add(afterBettingPlayer);
+        }
+
+        return new Players(playerList);
+    }
+
+    private int calculatePlayerProfit(Map<Player, PlayerResult> playerResult, Player player) {
+        return (int) (player.getPlayerBettingMoney() * playerResult.get(player).getResultState());
     }
 
     private Map<Player, PlayerResult> calculateGameResults(Players players, Dealer dealer) {
-        List<Player> playerExceptDealer = players.getPlayers();
+        List<Player> playerList = players.getPlayers();
         Map<Player, PlayerResult> playersResultWithOutDealer= new HashMap<>();
-        for(Player player : playerExceptDealer) {
+
+        for(Player player : playerList) {
             playersResultWithOutDealer.put(player,PlayerResult.match(dealer, player));
         }
+
         return playersResultWithOutDealer;
     }
 }

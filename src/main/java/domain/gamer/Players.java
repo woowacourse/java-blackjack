@@ -13,12 +13,7 @@ import java.util.stream.Collectors;
 public class Players {
     List<Player> players;
 
-    public Players (List<String> playersName, List<Integer> playerMoneys, Deck deck) {
-        List<Player> players = new ArrayList<>();
-
-        for (int playerIndex = 0; playerIndex < playersName.size(); playerIndex++) {
-            players.add(new Player(playersName.get(playerIndex), playerMoneys.get(playerIndex), deck.getInitCards()));
-        }
+    public Players (List<Player> players) {
         this.players = players;
     }
 
