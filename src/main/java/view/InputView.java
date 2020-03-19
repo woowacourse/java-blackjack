@@ -1,33 +1,43 @@
 package view;
 
-import domain.user.PlayerNamesParser;
+import common.PlayerDto;
+import common.PlayersDto;
+import utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String YES = "y";
-    private static final String NO = "n";
+    private static final String DELIMITER = ",";
 
-    public static List<String> inputPlayerNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        String playerNamesValue = scanner.nextLine();
-        return PlayerNamesParser.parse(playerNamesValue);
+    public static String inputWantToHit(String playerName) {
+        System.out.println(String.format("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n", playerName));
+        return scanner.nextLine();
     }
 
-    public static String inputGetMoreCard(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n",name);
-        String input = scanner.nextLine();
-
-        if(!isYesOrNo(input)) {
-            throw new IllegalArgumentException();
+    public static PlayersDto inputPlayers() {
+        List<PlayerDto> playerDtos = new ArrayList<>();
+        List<String> playerNames = inputPlayerNames();
+        for (String playerName : playerNames) {
+            int bettingMoney = inputBettingMoney(playerName);
+            PlayerDto playerDto = PlayerDto.of(playerName, bettingMoney);
+            playerDtos.add(playerDto);
         }
 
-        return input;
+        return PlayersDto.of(playerDtos);
     }
 
-    private static boolean isYesOrNo(String input) {
-        return YES.equals(input) || NO.equals(input);
+    private static List<String> inputPlayerNames() {
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        String input = scanner.nextLine();
+        return StringUtils.parseWithDelimeter(input, DELIMITER);
+    }
+
+    private static int inputBettingMoney(String playerName) {
+        System.out.println(String.format("%s의 베팅 금액은?", playerName));
+        String input = scanner.nextLine();
+        return Integer.parseInt(input);
     }
 }
