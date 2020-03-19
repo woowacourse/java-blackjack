@@ -1,4 +1,4 @@
-package domain.result;
+package service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -19,22 +19,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.DeckFactory;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayersInfo;
+import domain.user.User;
 
-class GameResultTest {
+class BlackJackGameTest {
 
-    private PlayersInfo playersInfo;
     private Dealer dealer;
+    private PlayersInfo playersInfo;
 
     @Mock
     private Deck deck;
@@ -68,12 +72,32 @@ class GameResultTest {
         dealer.draw(deck);
     }
 
+    @Test
+    @DisplayName("게임 시작시 카드 분배")
+    void firstDealOut() {
+        Deck deck = DeckFactory.createDeck();
+        int initSize = deck.getDeck().size();
+        BlackJackGame.firstDealOut(deck, dealer, playersInfo);
+
+        assertThat(deck.getDeck().size()).isEqualTo(initSize - 10);
+    }
+
+    @ParameterizedTest
+    @DisplayName("모든 유저 카드 점수 결과")
+    @CsvSource(value = {"0,16", "1,17", "2,15", "3,16", "4,21"})
+    void getUserToCardPoint(int index, int expected) {
+        List<Integer> usersCardPoint = new ArrayList<>(BlackJackGame.getUserToCardPoint(dealer, playersInfo)
+                .values());
+
+        assertThat(usersCardPoint.get(index)).isEqualTo(expected);
+    }
+
     @ParameterizedTest
     @DisplayName("플레이어들 수익")
     @MethodSource("createIndexAndProfitOfPlayers")
     void getProfitOfPlayers(int index, int expected) {
         Map<Player, Integer> profitOfPlayers;
-        profitOfPlayers = GameResult.of(dealer, playersInfo).getProfitOfPlayers();
+        profitOfPlayers = BlackJackGame.getProfitOfPlayers(dealer, playersInfo);
         int actual = new ArrayList<>(profitOfPlayers.values()).get(index);
 
         assertThat(actual).isEqualTo(expected);
@@ -91,8 +115,6 @@ class GameResultTest {
     @Test
     @DisplayName("딜러 최종 수익")
     void getProfitOfDealer() {
-        GameResult gameResult = GameResult.of(dealer, playersInfo);
-
-        assertThat(gameResult.getProfitOfDealer()).isEqualTo(-1500);
+        assertThat(BlackJackGame.getProfitOfDealer(dealer, playersInfo)).isEqualTo(-1500);
     }
 }

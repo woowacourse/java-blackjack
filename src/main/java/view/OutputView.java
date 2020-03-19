@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 
 import domain.card.Card;
 import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.PlayersInfo;
+import domain.user.User;
 import view.dto.GameResultDto;
-import view.dto.PlayersDto;
-import view.dto.UserDto;
 
 public class OutputView {
 
@@ -16,46 +17,45 @@ public class OutputView {
     public static final String DELIMITER = ", ";
     private static final int FIRST_CARD = 0;
 
-    public static void printFirstDealOutResult(UserDto dealerDto, PlayersDto playersDto) {
-        printFirstDealOut(playersDto);
-        printDealerFirstDealOutResult(dealerDto);
-        printPlayersFirstDealOutResult(playersDto);
+    public static void printFirstDealOutResult(Dealer dealer, PlayersInfo playersInfo) {
+        printFirstDealOut(playersInfo);
+        printDealerFirstDealOutResult(dealer);
+        printPlayersFirstDealOutResult(playersInfo);
     }
 
-    private static void printFirstDealOut(PlayersDto playersDto) {
-        String allNames = playersDto.getPlayers()
+    private static void printFirstDealOut(PlayersInfo playersInfo) {
+        String allNames = playersInfo.getPlayers()
                 .stream()
-                .map(UserDto::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.printf(NEWLINE + "%s와 %s에게 2장을 나누었습니다." + NEWLINE, Dealer.NAME, allNames);
     }
 
-    private static void printDealerFirstDealOutResult(UserDto dealerDto) {
-        Card firstCard = dealerDto.getCards().get(FIRST_CARD);
+    private static void printDealerFirstDealOutResult(Dealer dealer) {
+        Card firstCard = dealer.getCards().get(FIRST_CARD);
         String dealerFirstDealOutResult = firstCard.getType() + firstCard.getSymbol();
-        System.out.printf("%s카드: %s" + NEWLINE, Dealer.NAME, dealerFirstDealOutResult);
+        System.out.printf("%s카드: %s"+ NEWLINE, Dealer.NAME, dealerFirstDealOutResult);
     }
 
-    private static void printPlayersFirstDealOutResult(PlayersDto playersDto) {
-        playersDto.getPlayers()
-                .forEach(playerDto -> System.out.println(printUserDealOutResult(playerDto)));
+    private static void printPlayersFirstDealOutResult(PlayersInfo playersInfo) {
+        playersInfo.getPlayers()
+                .forEach(player -> System.out.println(printUserDealOutResult(player)));
         System.out.println();
     }
 
-    public static void printPlayerDealOutResult(UserDto playerDto) {
-        System.out.println(printUserDealOutResult(playerDto));
+    public static void printPlayerDealOutResult(Player player) {
+        System.out.println(printUserDealOutResult(player));
     }
 
-    public static void printDealerDealOut(UserDto dealerDto) {
-        System.out.printf(NEWLINE + "%s는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE, dealerDto.getName());
+    public static void printDealerDealOut(Dealer dealer) {
+        System.out.printf(NEWLINE + "%s는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE, dealer.getName());
     }
 
     public static void printTotalResult(GameResultDto gameResultDto) {
-        Map<UserDto, Integer> cardPoint = gameResultDto.getUserDtoToCardPoint();
+        Map<User, Integer> cardPoint = gameResultDto.getUserToCardPoint();
         System.out.println();
-        cardPoint.forEach(
-                (user, point) -> System.out.printf("%s - 결과: %d" + NEWLINE, printUserDealOutResult(user), point));
+        cardPoint.forEach((user, point) -> System.out.printf("%s - 결과: %d" + NEWLINE, printUserDealOutResult(user), point));
 
         printTotalProfit(gameResultDto);
     }
@@ -67,12 +67,12 @@ public class OutputView {
                 .forEach((key, value) -> System.out.printf("%s: %d" + NEWLINE, key.getName(), value));
     }
 
-    private static String printUserDealOutResult(UserDto userDto) {
-        return String.format("%s카드: %s", userDto.getName(), cardsJoin(userDto));
+    private static String printUserDealOutResult(User user) {
+        return String.format("%s카드: %s", user.getName(), cardsJoin(user));
     }
 
-    private static String cardsJoin(UserDto userDto) {
-        return String.join(DELIMITER, printCard(userDto.getCards()));
+    private static String cardsJoin(User user) {
+        return String.join(DELIMITER, printCard(user.getCards()));
     }
 
     private static String printCard(List<Card> cards) {

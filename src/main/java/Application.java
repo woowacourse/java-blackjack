@@ -2,16 +2,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import controller.BlackJackGame;
+import domain.card.Deck;
+import service.BlackJackGame;
 import domain.card.DeckFactory;
-import domain.result.GameResult;
 import domain.user.Dealer;
 import domain.user.PlayersInfo;
 import view.InputView;
 import view.OutputView;
 import view.dto.GameResultDto;
-import view.dto.PlayersDto;
-import view.dto.UserDto;
 
 public class Application {
 
@@ -22,18 +20,16 @@ public class Application {
 
         PlayersInfo playersInfo = PlayersInfo.of(players);
         Dealer dealer = Dealer.appoint();
+        Deck deck = DeckFactory.createDeck();
 
-        BlackJackGame blackJackGame = BlackJackGame.set(DeckFactory.createDeck());
+        BlackJackGame.firstDealOut(deck, dealer, playersInfo);
+        OutputView.printFirstDealOutResult(dealer, playersInfo);
 
-        blackJackGame.firstDealOut(dealer, playersInfo);
-        UserDto dealerDto = UserDto.of(dealer.getName(), dealer.getCards());
-        OutputView.printFirstDealOutResult(dealerDto, PlayersDto.of(playersInfo.getPlayers()));
+        BlackJackGame.additionalDealOut(deck, dealer, playersInfo);
 
-        blackJackGame.additionalDealOut(dealer, playersInfo);
-
-        GameResult gameResult = GameResult.of(dealer, playersInfo);
-        GameResultDto gameResultDto = GameResultDto.of(gameResult.getUserDtoToCardPoint(),
-                gameResult.getProfitOfPlayers(), gameResult.getProfitOfDealer());
+        GameResultDto gameResultDto = GameResultDto.of(BlackJackGame.getUserToCardPoint(dealer, playersInfo),
+                BlackJackGame.getProfitOfPlayers(dealer, playersInfo),
+                BlackJackGame.getProfitOfDealer(dealer, playersInfo));
         OutputView.printTotalResult(gameResultDto);
     }
 }

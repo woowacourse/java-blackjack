@@ -1,5 +1,6 @@
 package domain.user;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
-import view.dto.UserDto;
 
 public class PlayersInfo {
 
@@ -31,20 +31,20 @@ public class PlayersInfo {
         );
     }
 
-    public void additionalDealOut(Deck deck, Function<String, Boolean> isYes, Consumer<UserDto> showResult) {
+    public void additionalDealOut(Deck deck, Function<String, Boolean> isYes, Consumer<Player> showResult) {
         playersInfo.forEach((player, bettingMoney) -> {
-            while (player.isAvailableToDraw() && isYes.apply(
-                    UserDto.of(player.getName(), player.getCards()).getName())) {
+            while (player.isAvailableToDraw() && isYes.apply(player.name.getName())) {
                 player.draw(deck);
-                showResult.accept(UserDto.of(player.getName(), player.getCards()));
+                showResult.accept(player);
             }
         });
     }
 
-    public Map<Player, Integer> calculatePoint() {
+    public Map<User, Integer> calculatePoint() {
         return playersInfo.keySet()
                 .stream()
-                .collect(Collectors.toMap(Function.identity(), Player::calculatePoint,
+                .collect(Collectors.toMap(Function.identity(),
+                        Player::calculatePoint,
                         (e1, e2) -> {
                             throw new AssertionError();
                         },
@@ -60,10 +60,14 @@ public class PlayersInfo {
         return profitOfPlayers;
     }
 
-    public List<UserDto> getPlayers() {
+    public int calculateTotalProfit(Dealer dealer) {
         return playersInfo.keySet()
                 .stream()
-                .map(player -> UserDto.of(player.getName(), player.getCards()))
-                .collect(Collectors.toList());
+                .mapToInt(player -> (int)(playersInfo.get(player).getMoney() * player.decideRatio(dealer).getRatio()))
+                .sum();
+    }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(playersInfo.keySet());
     }
 }

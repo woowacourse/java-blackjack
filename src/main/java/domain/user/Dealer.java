@@ -3,7 +3,6 @@ package domain.user;
 import java.util.function.Consumer;
 
 import domain.card.Deck;
-import view.dto.UserDto;
 
 public class Dealer extends User {
 
@@ -24,10 +23,10 @@ public class Dealer extends User {
                 && cards.calculatePointAccordingToHasAce() < PIVOT;
     }
 
-    public void additionalDealOut(Deck deck, Consumer<UserDto> showResult) {
+    public void additionalDealOut(Deck deck, Consumer<Dealer> showResult) {
         while (isAvailableToDraw()) {
             draw(deck);
-            showResult.accept(UserDto.of(name.getName(), cards.getCards()));
+            showResult.accept(this);
         }
     }
 }
