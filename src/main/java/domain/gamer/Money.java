@@ -9,12 +9,12 @@ public class Money {
 
 	public Money(String inputMoney) {
 		try {
-			int money = Integer.parseInt(inputMoney);
-			validBettingMoney(money);
-			this.money = money;
-		} catch (InvalidMoneyException | NumberFormatException e) {
+			this.money = Integer.parseInt(inputMoney);
+		} catch (NumberFormatException e) {
 			throw new InvalidMoneyException();
 		}
+
+		validBettingMoney(money);
 	}
 
 	private Money(int money) {
