@@ -6,9 +6,9 @@ import blackjack.domain.user.exceptions.PlayersException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public final class Players {
 	private final List<Playable> players;
@@ -65,5 +65,11 @@ public final class Players {
 
 	public List<Playable> getPlayers() {
 		return Collections.unmodifiableList(players);
+	}
+
+	public List<Name> getNames() {
+		return players.stream()
+				.map(Playable::getName)
+				.collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
 	}
 }

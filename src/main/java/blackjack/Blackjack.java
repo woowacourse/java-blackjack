@@ -1,21 +1,25 @@
 package blackjack;
 
+import blackjack.domain.betting.Money;
+import blackjack.domain.betting.Monies;
+import blackjack.domain.betting.exceptions.MoneyException;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.user.*;
-import blackjack.domain.user.exceptions.AbstractPlayerException;
-import blackjack.domain.user.exceptions.PlayerException;
-import blackjack.domain.user.exceptions.PlayersException;
-import blackjack.domain.user.exceptions.YesOrNoException;
+import blackjack.domain.user.exceptions.*;
 import blackjack.view.ErrorView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Blackjack {
 
 	public static void main(String[] args) {
 		Players players = preparePlayers();
+		Monies bettingMonies = prepareMonies(players);
 		Playable dealer = Dealer.dealer();
 		Drawable deck = prepareDeck();
 
@@ -24,7 +28,8 @@ public class Blackjack {
 		progressPlayers(players, deck);
 		progressDealer(dealer, deck);
 
-		finish(players, dealer);
+		Results results = finish(players, dealer);
+		showGameResultMonies(results, bettingMonies);
 	}
 
 	private static Players preparePlayers() {
@@ -38,8 +43,32 @@ public class Blackjack {
 	private static Players preparePlayersIfValid() {
 		try {
 			return Players.of(InputView.inputPlayerNames());
-		} catch (PlayersException | PlayerException |AbstractPlayerException e) {
+		} catch (PlayersException | PlayerException | AbstractPlayerException | NameException e) {
 			ErrorView.printMessage(e);
+			return null;
+		}
+	}
+
+	private static Monies prepareMonies(Players players) {
+		List<Money> monies = new ArrayList<>();
+		for (Name name : players.getNames()) {
+			monies.add(prepareMoney(name));
+		}
+		return Monies.of(players, monies);
+	}
+
+	private static Money prepareMoney(Name name) {
+		Money money;
+		do {
+			money = prepareMoneyIfValid(name);
+		} while (money == null);
+		return money;
+	}
+
+	private static Money prepareMoneyIfValid(Name name) {
+		try {
+			return Money.of(InputView.inputBettingMoney(name));
+		} catch (MoneyException e) {
 			return null;
 		}
 	}
@@ -101,9 +130,15 @@ public class Blackjack {
 		}
 	}
 
-	private static void finish(Players players, Playable dealer) {
+	private static Results finish(Players players, Playable dealer) {
 		OutputView.printFinalInfo(dealer, players);
 		Results results = Results.of(dealer, players);
 		OutputView.printResult(results);
+
+		return results;
+	}
+
+	private static void showGameResultMonies(Results results, Monies bettingMonies) {
+		OutputView.printGameResultMonies(bettingMonies.computeGameResultMonies(results));
 	}
 }

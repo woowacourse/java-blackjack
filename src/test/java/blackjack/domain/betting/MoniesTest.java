@@ -1,9 +1,10 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.betting.exceptions.MoniesException;
-import blackjack.domain.user.Name;
-import blackjack.domain.user.Playable;
-import blackjack.domain.user.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.user.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ class MoniesTest {
 	private static Money fiveThousand;
 	private static List<Money> threeBettingMonies;
 	private static Players players;
+	private static Playable dealer;
+	private static Results results;
 
 	private Monies monies;
 
@@ -35,7 +38,16 @@ class MoniesTest {
 		thousand = Money.of("1000");
 		fiveThousand = Money.of("5000");
 		threeBettingMonies = Arrays.asList(hundred, thousand, fiveThousand);
+
 		players = Players.of("그니,포비,씨유");
+		players.getPlayers().get(0).receiveCard(Card.of(Symbol.TEN, Type.DIAMOND));
+		players.getPlayers().get(1).receiveCards(Arrays.asList(Card.of(Symbol.ACE, Type.CLUB),
+				Card.of(Symbol.KING, Type.HEART)));
+		players.getPlayers().get(2).receiveCard(Card.of(Symbol.TWO, Type.DIAMOND));
+		dealer = Dealer.dealer();
+		dealer.receiveCard(Card.of(Symbol.ACE, Type.SPADE));
+
+		results = Results.of(dealer, players);
 	}
 
 	@BeforeEach
@@ -71,6 +83,15 @@ class MoniesTest {
 	}
 
 	@Test
+	void computeGameResultMonies() {
+		assertThat(monies.computeGameResultMonies(results))
+				.isEqualTo(Monies.of(players,
+						Arrays.asList(Money.of("-100"),
+								Money.of("1500"),
+								Money.of("-5000"))));
+	}
+
+	@Test
 	void ketSet() {
 		Name[] expect = new Name[players.memberSize()];
 		for (int i = 0; i < players.memberSize(); i++) {
@@ -91,4 +112,5 @@ class MoniesTest {
 				Arguments.of(players.getPlayers().get(1), thousand),
 				Arguments.of(players.getPlayers().get(2), fiveThousand));
 	}
+
 }

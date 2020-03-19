@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.betting.Money;
+
 public enum Result {
 	BLACKJACK_WIN(1.5, "승"),
 	WIN(1, "승"),

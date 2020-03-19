@@ -7,10 +7,14 @@ import java.util.Objects;
 
 public final class Money {
 	public static final int ZERO = 0;
+	public static final int MINUS_ZERO = -0;
 
 	private final double amount;
 
 	private Money(double amount) {
+		if (amount == MINUS_ZERO) {
+			amount = ZERO;
+		}
 		this.amount = amount;
 	}
 
@@ -40,6 +44,14 @@ public final class Money {
 
 	public Money add(Money other) {
 		return new Money(amount + other.amount);
+	}
+
+	public Money minus() {
+		return new Money(-amount);
+	}
+
+	public double getAmount() {
+		return amount;
 	}
 
 	@Override
