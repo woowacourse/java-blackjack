@@ -24,7 +24,7 @@ class DealerTest {
     @DisplayName("첫턴에 딜러는 2장의 카드를 받는다.")
     void construct() {
                 new Card(Symbol.TEN, Type.HEART);
-        assertThat(new Dealer(deck)).isNotNull();
+        assertThat(Dealer.start(deck)).isNotNull();
     }
 
     @Test
@@ -68,7 +68,7 @@ class DealerTest {
         Money bettingMoney = mock(Money.class);
         //todo: refac multiply mocking logic
         when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        Dealer dealer = new Dealer(mock(Deck.class));
+        Dealer dealer = Dealer.start(mock(Deck.class));
         //when
         Money profit = dealer.calculateProfit(result, bettingMoney);
         assertThat(profit).isEqualTo(bettingMoney);

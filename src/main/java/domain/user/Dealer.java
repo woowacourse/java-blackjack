@@ -1,6 +1,8 @@
 package domain.user;
 
 import common.DealerDto;
+import common.PlayerDto;
+import common.PlayersDto;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.result.MatchRule;
@@ -15,7 +17,7 @@ public class Dealer extends User {
     private Deck deck;
 
     private Dealer(Deck deck) {
-        super(deck.popInitCards(), NAME);
+        super(NAME, deck.popInitCards());
         this.deck = deck;
     }
 
@@ -40,15 +42,11 @@ public class Dealer extends User {
         return count;
     }
 
-    //todo: refac parameters
-    public List<Player> passInitCards(List<String> names, List<Money> bettingMoneys) {
+    //todo: refac to service
+    public List<Player> passInitCards(PlayersDto playersDto) {
         List<Player> players = new ArrayList<>();
-        if (names.size() != bettingMoneys.size()) {
-            throw new IllegalArgumentException("갯수가 맞지 않습니다.");
-        }
-        int playersSize = names.size();
-        for (int i = 0; i < playersSize; i++) {
-            players.add(new Player(deck.popInitCards(), names.get(i), bettingMoneys.get(i)));
+        for (PlayerDto playerDto : playersDto.getPlayerDtos()) {
+            players.add(Player.join(playerDto));
         }
         return players;
     }

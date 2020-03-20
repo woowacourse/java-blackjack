@@ -32,7 +32,7 @@ class PlayerTest {
         initCards = new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.DIAMOND), new Card(Symbol.QUEEN, Type.CLOVER)));
         PlayingCards playingCards = PlayingCards.of(initCards);
         String name = "player";
-        player = new Player(playingCards, name, mock(Money.class));
+        player = Player.of(name, playingCards, mock(Money.class));
     }
 
     @Test
@@ -95,7 +95,7 @@ class PlayerTest {
         Money bettingMoney = mock(Money.class);
         //todo: refac multiply mocking logic
         when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        player = new Player(mock(PlayingCards.class), "testName", bettingMoney);
+        player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
         //when
         Money profit = player.calculateProfit(result);
         assertThat(profit).isEqualTo(bettingMoney);

@@ -1,8 +1,6 @@
 package domain.user;
 
-import common.DealerDto;
 import common.PlayerDto;
-import domain.card.Cards;
 import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
@@ -12,12 +10,34 @@ import java.util.List;
 public class Player extends User {
     private final Money bettingMoney;
 
-    public Player(PlayingCards playingCards, String name, Money bettingMoney) {
-        super(playingCards, name);
+    private Player(String name, Money bettingMoney) {
+        super(name);
         this.bettingMoney = bettingMoney;
     }
 
-    public Money calculateProfit(Result result) {
+    private Player(String name, PlayingCards playingCards, Money bettingMoney) {
+        super(name, playingCards);
+        this.bettingMoney = bettingMoney;
+    }
+
+    private Player(Player player, PlayingCards playingCards) {
+        this(player.getName(), playingCards, player.bettingMoney);
+    }
+
+    public static Player join(PlayerDto playerDto) {
+        int bettingMoney = playerDto.getBettingMoney();
+        return new Player(playerDto.getName(), Money.of(bettingMoney));
+    }
+
+    public static Player receiveInitCards(Player player, PlayingCards playingCards) {
+        return new Player(player, playingCards);
+    }
+
+    static Player of(String name, PlayingCards playingCards, Money bettingMoney) {
+        return new Player(name, playingCards, bettingMoney);
+    }
+
+    Money calculateProfit(Result result) {
         if (playerLose(result)) {
             return result.calculateProfit(bettingMoney).multiply(LOSE_PENALTY_RATE);
         }
@@ -43,10 +63,6 @@ public class Player extends User {
         int score = calculateScore();
         Money profit = calculateProfit(result);
         return PlayerDto.complete(name, bettingMoney.serialize(), cards, score, profit.serialize());
-    }
-
-    public Money getBettingMoney() {
-        return bettingMoney;
     }
 
     @Override

@@ -9,16 +9,19 @@ import java.util.Objects;
 
 public abstract class User {
     protected final String name;
+    protected PlayingCards playingCards;
     public static final int INIT_CARDS_SIZE = 2;
     public static final int BLACKJACK_VALUE = 21;
-    protected final PlayingCards playingCards;
     protected static final double LOSE_PENALTY_RATE = -1;
 
 
-
-    User(PlayingCards playingCards, String name) {
-        this.playingCards = playingCards;
+    User(String name) {
         this.name = name;
+    }
+
+    User(String name, PlayingCards playingCards) {
+        this.name = name;
+        this.playingCards = playingCards;
     }
 
     void addCard(Card card) {
@@ -49,6 +52,7 @@ public abstract class User {
         return name;
     }
 
+    //todo: refac
     public PlayingCards getCards() {
         return playingCards;
     }
