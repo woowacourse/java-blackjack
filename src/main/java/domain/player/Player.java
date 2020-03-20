@@ -49,6 +49,11 @@ public class Player implements Gamer {
 		return playerCards.calculateScore() == Rule.MAX_SCORE;
 	}
 
+	@Override
+	public boolean isNotBlackJack() {
+		return playerCards.calculateScore() != Rule.MAX_SCORE;
+	}
+
 	public PlayerCards getPlayerCards() {
 		return this.playerCards;
 	}

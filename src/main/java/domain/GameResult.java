@@ -25,7 +25,6 @@ public class GameResult {
 
 	public double calculateDealerMoney() {
 		return userResult.values().stream()
-				.reduce(Double::sum)
-				.orElse((double) Money.ZERO_MONEY) * Money.MINUS_CONVERTER;
+				.reduce(Money.ZERO, Double::sum) * Money.MINUS_CONVERTER;
 	}
 }

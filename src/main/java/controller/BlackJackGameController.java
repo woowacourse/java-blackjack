@@ -26,7 +26,7 @@ public class BlackJackGameController {
 		printFirstDrawCards(userName, users, dealer);
 
 		userBlackJackCheck(users);
-		if (!dealer.isBlackJack()) {
+		if (dealer.isNotBlackJack()) {
 			hit(users, dealer, cardDeck);
 		}
 

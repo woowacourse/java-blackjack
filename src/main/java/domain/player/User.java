@@ -25,7 +25,7 @@ public class User extends Player {
 
 	private double blackJackCompare(Gamer gamerToCompare) {
 		if (gamerToCompare.isBlackJack()) {
-			return Money.ZERO_MONEY;
+			return Money.ZERO;
 		}
 		return money.toBlackJackWinMoney();
 	}
@@ -37,7 +37,7 @@ public class User extends Player {
 			return money.getMoney();
 		}
 		if (userScore == toCompareScore) {
-			return Money.ZERO_MONEY;
+			return Money.ZERO;
 		}
 		return money.toLoseMoney();
 	}
