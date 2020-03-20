@@ -1,5 +1,7 @@
-package domain;
+package domain.gambler;
 
+import domain.gambler.Name;
+import domain.gambler.Names;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

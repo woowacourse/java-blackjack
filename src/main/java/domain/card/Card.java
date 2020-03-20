@@ -1,14 +1,23 @@
-package domain;
+package domain.card;
 
 import java.util.Objects;
 
 public class Card {
+    private static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+
     private Type type;
     private Symbol symbol;
 
     public Card(Type type, Symbol symbol) {
+        validateNotNull(type, symbol);
         this.type = type;
         this.symbol = symbol;
+    }
+
+    private void validateNotNull(Type type, Symbol symbol) {
+        if (Objects.isNull(type) || Objects.isNull(symbol)) {
+            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+        }
     }
 
     public boolean isAce() {
