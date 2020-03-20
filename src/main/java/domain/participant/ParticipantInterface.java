@@ -2,9 +2,11 @@ package domain.participant;
 
 public interface ParticipantInterface {
 
-    // void receiveCardDeckCard(CardDeck cardDeck);
+	Name getName();
 
-    String getName();
+	String toString();
 
-    String toString();
+	boolean isBust();
+
+	boolean isBlackJack();
 }

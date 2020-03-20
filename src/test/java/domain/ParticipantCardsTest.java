@@ -17,7 +17,7 @@ class ParticipantCardsTest {
     void setUp() {
         cards = new ParticipantCards();
         cards.add(new Card(Symbol.EIGHT, Shape.다이아몬드));
-        cards.add(new Card(Symbol.ACE, Shape.스페이드));
+        cards.add(new Card(Symbol.TWO, Shape.스페이드));
     }
 
     @Test
@@ -29,11 +29,9 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("카드 점수 계산하는 기능 테스트 - Ace 포함")
     void calculateScoreWithAce() {
-        cards.add((new Card(Symbol.TWO, Shape.하트)));
+        cards.add((new Card(Symbol.ACE, Shape.하트)));
         assertThat(cards.calculateScore()).isEqualTo(21);
 
-        cards.add(new Card(Symbol.FOUR, Shape.클로버));
-        assertThat(cards.calculateScore()).isEqualTo(15);
     }
 
 }
