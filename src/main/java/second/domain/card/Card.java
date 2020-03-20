@@ -41,7 +41,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return rank.toString() + suit.toString();
+        return rank.getValue() + suit.toString();
     }
 
     private static class CardCache {

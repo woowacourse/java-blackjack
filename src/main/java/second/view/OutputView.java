@@ -5,12 +5,9 @@ import second.domain.gamer.Dealer;
 import second.domain.gamer.Gamer;
 import second.domain.gamer.Player;
 import second.domain.result.Result;
-import second.domain.result.ResultType;
 import second.domain.result.Results;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -19,11 +16,13 @@ public class OutputView {
 
     public static void printInitialCards(List<Player> players, Dealer dealer) {
         System.out.printf(
-                "딜러와 %s에게 2장의 카드를 나누었습니다. \n"
+                "딜러와 %s에게 2장의 카드를 나누었습니다. \n%s%s"
                 , parsePlayersName(players)
                 , parseDealerInitialState(dealer)
                 , parseGamersState(players)
         );
+        printEmptyLine();
+        printEmptyLine();
     }
 
     private static String parsePlayersName(List<Player> players) {
@@ -48,6 +47,7 @@ public class OutputView {
     }
 
     public static void printScore(BlackJackGame blackJackGame) {
+        printEmptyLine();
         printScore(blackJackGame.getDealer());
 
         blackJackGame.getPlayers()
@@ -63,6 +63,7 @@ public class OutputView {
     }
 
     public static void printProfit(Results results) {
+        printEmptyLine();
         System.out.printf(
                 "## 최종 수익 \n%s \n"
                 , results.getDealerResult().toString());
@@ -74,10 +75,14 @@ public class OutputView {
     }
 
     public static void printGamerCards(final Gamer gamer) {
-        final String gamerCardNames = parseGamerState(gamer);
-        System.out.printf("%s: %s \n", gamer.getName(), gamerCardNames);
+        System.out.println(parseGamerState(gamer) + "\n");
+    }
+
+    private static void printEmptyLine() {
+        System.out.println();
     }
 
     private OutputView() {
     }
 }
+

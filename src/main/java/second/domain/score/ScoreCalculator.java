@@ -12,6 +12,10 @@ public class ScoreCalculator {
     public static Score calculate(final HandCards handCards) {
         Score defaultSum = new Score(handCards.calculateDefaultSum());
 
+        if(defaultSum.isBust()) {
+            return new Score(0);
+        }
+
         if (handCards.hasAce()) {
             return updateAceScore(defaultSum);
         }

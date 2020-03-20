@@ -42,19 +42,19 @@ public class BlackJackGame {
             turn(playerDecisions, player);
             playerDecisions.hands(player);
         }
-        turn(dealer);
+        draw(dealer);
     }
 
-    private void turn(final PlayerDecisions playerDecisions, final Player player) {
-        while (playerDecisions.isHit(player) && player.canDrawMore()) {
-            turn(player);
+    private void turn(final PlayerDecisions playerDecisions, final Gamer gamer) {
+        while (gamer.canDrawMore()) {
+            if (!playerDecisions.isHit(gamer))
+                break;
+            draw(gamer);
+            playerDecisions.hands(gamer);
         }
     }
 
-    private void turn(final Gamer gamer) {
-        if (!gamer.canDrawMore()) {
-            return;
-        }
+    private void draw(Gamer gamer) {
         gamer.draw(cardDeck.pickCard());
     }
 

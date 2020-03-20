@@ -35,7 +35,6 @@ public abstract class Gamer {
 
     public void draw(final Card card) {
         handCards.drawCard(card);
-
         score = ScoreCalculator.calculate(handCards);
     }
 
