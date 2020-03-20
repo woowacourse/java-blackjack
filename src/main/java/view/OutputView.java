@@ -66,11 +66,15 @@ public class OutputView {
 		System.out.println("## 최종 수익");
 		System.out.println("딜러: " + (int) dealerRevenueResult);
 		players.forEach(player ->
-				System.out.println(String.format("%s: %s",
-						player,
-						result.get(player)
-								.getExchangedBettingMoney(player.getBettingMoney())
-								.intValue())));
+				printPlayerResult(result, player));
+	}
+
+	private static void printPlayerResult(Result result, Player player) {
+		System.out.println(String.format("%s: %s",
+				player,
+				result.get(player)
+						.getExchangedBettingMoney(player.getBettingMoney())
+						.intValue()));
 	}
 
 	private static void emptyLine() {
