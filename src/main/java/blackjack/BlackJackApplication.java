@@ -1,9 +1,9 @@
 package blackjack;
 
 import blackjack.domain.BettingMoney;
+import blackjack.domain.CardDraw;
 import blackjack.domain.Name;
 import blackjack.domain.Names;
-import blackjack.domain.YesOrNo;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
@@ -28,16 +28,20 @@ public class BlackJackApplication {
 
     private static void startGame() {
         Names names = Names.of(InputView.inputNames());
-        Map<Name, BettingMoney> playerInfo = new LinkedHashMap<>();
-        for (Name name : names.getNames()) {
-            playerInfo.put(name, BettingMoney.of(InputView.inputMoney(name)));
-        }
-        Players players = new Players(playerInfo);
+        Players players = new Players(getPlayerInfo(names));
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         distributeFirstCards(dealer, players, cardDeck);
         drawMoreCards(dealer, players, cardDeck);
         printCalculatedResult(dealer, players);
+    }
+
+    private static Map<Name, BettingMoney> getPlayerInfo(Names names) {
+        Map<Name, BettingMoney> playerInfo = new LinkedHashMap<>();
+        for (Name name : names.getNames()) {
+            playerInfo.put(name, BettingMoney.of(InputView.inputMoney(name)));
+        }
+        return playerInfo;
     }
 
     private static void distributeFirstCards(Dealer dealer, Players players, CardDeck cardDeck) {
@@ -57,7 +61,7 @@ public class BlackJackApplication {
     }
 
     private static void drawMorePlayerCardManual(CardDeck cardDeck, Player player) {
-        while (player.canDrawCard() && YesOrNo.of(InputView.inputMoreCard(player)).isYes()) {
+        while (player.canDrawCard() && CardDraw.of(InputView.inputMoreCard(player)).isYes()) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }

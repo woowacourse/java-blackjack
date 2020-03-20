@@ -30,7 +30,7 @@ public class PlayerTest {
         assertThatThrownBy(() -> new Player(new Name("jamie"), null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Null");
-        assertThatThrownBy(() -> new Player(null, null))
+        assertThatThrownBy(() -> new Player(new Name("jamie"), BettingMoney.of("10000"), null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Null");
     }
@@ -50,10 +50,6 @@ public class PlayerTest {
     @DisplayName("딜러와 비교 후 수익금액 가져옴")
     @Test
     void getProfitByComparing() {
-        Dealer dealer = new Dealer();
-        dealer.drawCard(cardDeck, 10);
-        player.drawCard(cardDeck);
-        assertThat(player.getProfitByComparing(dealer))
-            .isEqualTo(10000);
+        assertThat(player.getBettingMoneyMultiply(1.0)).isEqualTo(10000);
     }
 }

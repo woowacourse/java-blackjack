@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.Arrays;
 import java.util.Objects;
 
-public enum YesOrNo {
+public enum CardDraw {
     YES('y'),
     NO('n');
 
@@ -12,14 +12,14 @@ public enum YesOrNo {
 
     private final char value;
 
-    YesOrNo(char value) {
+    CardDraw(char value) {
         this.value = value;
     }
 
-    public static YesOrNo of(String input) {
+    public static CardDraw of(String input) {
         validationInput(input);
-        return Arrays.stream(YesOrNo.values())
-            .filter(yesOrNo -> yesOrNo.value == input.toLowerCase().charAt(0))
+        return Arrays.stream(CardDraw.values())
+            .filter(cardDraw -> cardDraw.value == input.toLowerCase().charAt(0))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
     }

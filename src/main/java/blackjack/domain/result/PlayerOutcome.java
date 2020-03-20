@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -18,9 +20,10 @@ public enum PlayerOutcome {
         this.profitRatio = profitRatio;
     }
 
-    public static PlayerOutcome of(CardsResult playerCardsResult, CardsResult dealerCardsResult) {
+    public static PlayerOutcome of(Player player, Dealer dealer) {
         return Arrays.stream(values())
-            .filter(outcome -> outcome.compare.test(playerCardsResult, dealerCardsResult))
+            .filter(
+                outcome -> outcome.compare.test(player.getCardsResult(), dealer.getCardsResult()))
             .findAny()
             .orElseThrow(IllegalArgumentException::new);
     }
@@ -50,7 +53,7 @@ public enum PlayerOutcome {
         return playerCardsResult.isBlackJack() && !dealerCardsResult.isBlackJack();
     }
 
-    public double getProfitRatio() {
-        return profitRatio;
+    public Integer getProfit(Player player) {
+        return player.getBettingMoneyMultiply(profitRatio);
     }
 }

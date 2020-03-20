@@ -5,7 +5,6 @@ import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.GamblerCards;
 import blackjack.domain.result.CardsResult;
-import blackjack.domain.result.PlayerOutcome;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,16 +16,21 @@ public final class Player {
 
     private final Name name;
     private final BettingMoney bettingMoney;
-    private GamblerCards gamblerCards = new GamblerCards();
+    private final GamblerCards gamblerCards;
 
     public Player(Name name, BettingMoney bettingMoney) {
-        validateNotNull(name, bettingMoney);
-        this.name = name;
-        this.bettingMoney = bettingMoney;
+        this(name, bettingMoney, new GamblerCards());
     }
 
-    private void validateNotNull(Name name, BettingMoney bettingMoney) {
-        if (Objects.isNull(name) || Objects.isNull(bettingMoney)) {
+    public Player(Name name, BettingMoney bettingMoney, GamblerCards gamblerCards) {
+        validateNotNull(name, bettingMoney, gamblerCards);
+        this.name = name;
+        this.bettingMoney = bettingMoney;
+        this.gamblerCards = gamblerCards;
+    }
+
+    private void validateNotNull(Name name, BettingMoney bettingMoney, GamblerCards gamblerCards) {
+        if (Objects.isNull(name) || Objects.isNull(bettingMoney) || Objects.isNull(gamblerCards)) {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
     }
@@ -42,14 +46,14 @@ public final class Player {
     }
 
     public boolean canDrawCard() {
-        return getScore().isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);
+        return getCardsResult().isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);
     }
 
     public Name getName() {
         return name;
     }
 
-    public CardsResult getScore() {
+    public CardsResult getCardsResult() {
         return gamblerCards.getResult();
     }
 
@@ -57,11 +61,7 @@ public final class Player {
         return gamblerCards.getInfos();
     }
 
-    public Integer getProfitByComparing(Dealer dealer) {
-        return bettingMoney.multiply(calculateOutcome(dealer).getProfitRatio());
-    }
-
-    public PlayerOutcome calculateOutcome(Dealer dealer) {
-        return PlayerOutcome.of(getScore(), dealer.getScore());
+    public Integer getBettingMoneyMultiply(double profitRatio) {
+        return bettingMoney.multiply(profitRatio);
     }
 }

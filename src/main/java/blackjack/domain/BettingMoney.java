@@ -32,7 +32,7 @@ public class BettingMoney {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
         try {
-            java.lang.Integer.parseInt(input);
+            Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(NOT_NUMBER_EXCEPTION_MESSAGE);
         }

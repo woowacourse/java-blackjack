@@ -38,7 +38,8 @@ public final class GameResult {
     private Map<Player, Integer> calculatePlayerResults(Dealer dealer, Players players) {
         return players.getPlayers().stream()
             .collect(Collectors
-                .toMap(player -> player, player -> player.getProfitByComparing(dealer),
+                .toMap(player -> player,
+                    player -> PlayerOutcome.of(player, dealer).getProfit(player),
                     (a1, a2) -> a1, LinkedHashMap::new));
     }
 
