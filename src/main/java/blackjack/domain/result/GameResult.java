@@ -26,7 +26,7 @@ public final class GameResult {
         return gamblers.getGamblers().stream()
             .collect(Collectors
                 .toMap(player -> player,
-                    player -> PlayerOutcome.of(player, dealer).getProfit(player),
+                    player -> player.getProfit(PlayerOutcome.of(player, dealer)),
                     (a1, a2) -> a1, LinkedHashMap::new));
     }
 

@@ -53,7 +53,7 @@ public enum PlayerOutcome {
         return playerCardsResult.isBlackJack() && !dealerCardsResult.isBlackJack();
     }
 
-    public Integer getProfit(Gambler gambler) {
-        return gambler.getBettingMoneyMultiply(profitRatio);
+    public double getProfitRatio() {
+        return profitRatio;
     }
 }

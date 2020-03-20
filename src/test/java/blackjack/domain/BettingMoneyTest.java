@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.result.PlayerOutcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,9 +37,9 @@ public class BettingMoneyTest {
     @DisplayName("금액 곱하기")
     void multiply() {
         BettingMoney bettingMoney = BettingMoney.of("1000");
-        assertThat(bettingMoney.multiply(1)).isEqualTo(1000);
-        assertThat(bettingMoney.multiply(0)).isEqualTo(0);
-        assertThat(bettingMoney.multiply(-1)).isEqualTo(-1000);
-        assertThat(bettingMoney.multiply(1.5)).isEqualTo(1500);
+        assertThat(bettingMoney.profit(PlayerOutcome.WIN)).isEqualTo(1000);
+        assertThat(bettingMoney.profit(PlayerOutcome.DRAW)).isEqualTo(0);
+        assertThat(bettingMoney.profit(PlayerOutcome.LOSE)).isEqualTo(-1000);
+        assertThat(bettingMoney.profit(PlayerOutcome.BLACKJACK)).isEqualTo(1500);
     }
 }

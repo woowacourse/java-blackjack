@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.result.PlayerOutcome;
 import blackjack.util.NullChecker;
 import java.util.Objects;
 
@@ -36,8 +37,8 @@ public class BettingMoney {
         }
     }
 
-    public int multiply(double ratio) {
-        return (int) (bettingMoney * ratio);
+    public int profit(PlayerOutcome outcome) {
+        return (int) (bettingMoney * outcome.getProfitRatio());
     }
 
     @Override

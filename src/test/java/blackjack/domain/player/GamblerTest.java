@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.result.PlayerOutcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,6 @@ public class GamblerTest {
     @DisplayName("딜러와 비교 후 수익금액 가져옴")
     @Test
     void getProfitByComparing() {
-        assertThat(gambler.getBettingMoneyMultiply(1.0)).isEqualTo(10000);
+        assertThat(gambler.getProfit(PlayerOutcome.WIN)).isEqualTo(10000);
     }
 }

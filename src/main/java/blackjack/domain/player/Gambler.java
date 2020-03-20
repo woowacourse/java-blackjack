@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.GamblerCards;
+import blackjack.domain.result.PlayerOutcome;
 import blackjack.util.NullChecker;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public final class Gambler extends Player implements Drawable {
         return isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);
     }
 
-    public Integer getBettingMoneyMultiply(double profitRatio) {
-        return bettingMoney.multiply(profitRatio);
+    public Integer getProfit(PlayerOutcome outcome) {
+        return bettingMoney.profit(outcome);
     }
 
     @Override
