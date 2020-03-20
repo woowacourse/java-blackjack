@@ -25,7 +25,7 @@ public class Dealer extends User {
         return new Dealer(deck);
     }
 
-    public Money calculateProfit(Result result, Money bettingMoneyOfPlayer) {
+    public Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
         if (dealerLose(result)) {
             return result.calculateProfit(bettingMoneyOfPlayer).multiply(LOSE_PENALTY_RATE);
         }
@@ -59,10 +59,10 @@ public class Dealer extends User {
         return new DealerDto(NAME, cards);
     }
 
-    public DealerDto serialize(Money sumOfProfit) {
+    public DealerDto serialize(Profit profit) {
         List<String> cards = playingCards.serialize();
         int score = calculateScore();
-        return DealerDto.complete(NAME, cards, sumOfProfit.serialize(), score);
+        return DealerDto.complete(NAME, cards, profit.getValue(), score);
     }
 
     private boolean dealerLose(Result result) {

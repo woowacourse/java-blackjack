@@ -1,10 +1,11 @@
 package domain.blackjack;
 
-import domain.card.Deck;
 import domain.result.MatchRule;
 import domain.result.Results;
 import domain.user.Dealer;
+import domain.user.Money;
 import domain.user.Players;
+import domain.user.Profit;
 
 public class BlackjackService {
     private Dealer dealer;
@@ -31,7 +32,7 @@ public class BlackjackService {
         return dealer.confirmCards();
     }
 
-    public Results match(Players players) {
+    public Profit match(Players players) {
         return players.match(dealer, matchRule);
     }
 }

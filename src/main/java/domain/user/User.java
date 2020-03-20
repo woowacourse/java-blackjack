@@ -12,7 +12,8 @@ public abstract class User {
     protected PlayingCards playingCards;
     public static final int INIT_CARDS_SIZE = 2;
     public static final int BLACKJACK_VALUE = 21;
-    protected static final double LOSE_PENALTY_RATE = -1;
+    protected static final int LOSE_PENALTY_RATE = -1;
+    protected Profit profit;
 
 
     User(String name) {
@@ -77,5 +78,9 @@ public abstract class User {
     @Override
     public int hashCode() {
         return Objects.hash(playingCards, name);
+    }
+
+    protected Profit getProfit() {
+        return profit;
     }
 }

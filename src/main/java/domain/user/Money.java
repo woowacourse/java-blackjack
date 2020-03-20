@@ -52,4 +52,8 @@ public class Money {
     public Money add(Money other) {
         return new Money(value + other.value);
     }
+
+    public double getValue() {
+        return value;
+    }
 }

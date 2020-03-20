@@ -89,18 +89,18 @@ class PlayerTest {
         return expectedCards;
     }
 
-    @ParameterizedTest
-    @MethodSource({"getResultsForCalculateProfit"})
-    void calculateProfit(Result result) {
-        Money bettingMoney = mock(Money.class);
-        //todo: refac multiply mocking logic
-        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
-        //when
-        Money profit = player.calculateProfit(result);
-        assertThat(profit).isEqualTo(bettingMoney);
-        verifyCalculateProfit(result, bettingMoney);
-    }
+//    @ParameterizedTest
+//    @MethodSource({"getResultsForCalculateProfit"})
+//    void calculateProfit(Result result) {
+//        Money bettingMoney = mock(Money.class);
+//        //todo: refac multiply mocking logic
+//        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
+//        player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
+//        //when
+//        Money profit = player.calculateProfit(result);
+//        assertThat(profit).isEqualTo(bettingMoney);
+//        verifyCalculateProfit(result, bettingMoney);
+//    }
 
     private void verifyCalculateProfit(Result result, Money bettingMoney) {
         if (result.equals(Result.DEALER_WIN)) {

@@ -14,6 +14,7 @@ import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Players {
     private static final int DEAFAULT_DEALER_PROFIT = 0;
@@ -59,26 +60,20 @@ public class Players {
         return update(players, userInterface);
     }
 
-    public Results match(Dealer dealer, MatchRule matchRule) {
-        Money dealerProfit = Money.of(DEAFAULT_DEALER_PROFIT);
-        List<Result> results = new ArrayList<>();
+    public Profit match(Dealer dealer, MatchRule matchRule) {
+        Profit dealerProfit = new Profit(DEAFAULT_DEALER_PROFIT);
         for (Player player : players) {
-            Result result = match(dealer, matchRule, results, player);
+            Result result = player.match(dealer, matchRule);
+            player.calculateProfit(result);
             dealerProfit = calculateDealerProfit(dealer, dealerProfit, player, result);
         }
 
-        return Results.of(results, dealerProfit);
+        return dealerProfit;
     }
 
-    private Result match(Dealer dealer, MatchRule matchRule, List<Result> results, Player player) {
-        Result result = player.match(dealer, matchRule);
-        results.add(result);
-        return result;
-    }
-
-    private Money calculateDealerProfit(Dealer dealer, Money sumOfDealerProfit, Player player, Result result) {
+    private Profit calculateDealerProfit(Dealer dealer, Profit sumOfDealerProfit, Player player, Result result) {
         Money bettingMoney = player.getBettingMoney();
-        Money profitOfDealer = dealer.calculateProfit(result, bettingMoney);
+        Profit profitOfDealer = dealer.calculateProfit(result, bettingMoney);
         sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
         return sumOfDealerProfit;
     }
@@ -86,7 +81,12 @@ public class Players {
     public PlayersDto serialize() {
         List<PlayerDto> playerDtos = new ArrayList<>();
         for (Player player : players) {
-            playerDtos.add(player.serialize(PlayerDto.init()));
+            PlayerDto playerDto = player.serialize(PlayerDto.init());
+            Profit profit = player.getProfit();
+            if (Objects.nonNull(profit)) {
+                playerDto.setProfit(profit.getValue());
+            }
+            playerDtos.add(playerDto);
         }
         return PlayersDto.of(playerDtos);
     }

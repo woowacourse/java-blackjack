@@ -63,19 +63,19 @@ class DealerTest {
         assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + hitSize);
     }
 
-    @ParameterizedTest
-    @MethodSource({"getResultsForCalculateProfit"})
-    void calculateProfit(Result result) {
-        Money bettingMoney = mock(Money.class);
-        //todo: refac multiply mocking logic
-        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        Dealer dealer = Dealer.shuffle(mock(Deck.class));
-        //when
-        Money profit = dealer.calculateProfit(result, bettingMoney);
-        assertThat(profit).isEqualTo(bettingMoney);
-        verifyCalculateProfit(result, bettingMoney);
-
-    }
+//    @ParameterizedTest
+//    @MethodSource({"getResultsForCalculateProfit"})
+//    void calculateProfit(Result result) {
+//        Money bettingMoney = mock(Money.class);
+//        //todo: refac multiply mocking logic
+//        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
+//        Dealer dealer = Dealer.shuffle(mock(Deck.class));
+//        //when
+//        Money profit = dealer.calculateProfit(result, bettingMoney);
+//        assertThat(profit).isEqualTo(bettingMoney);
+//        verifyCalculateProfit(result, bettingMoney);
+//
+//    }
 
     private void verifyCalculateProfit(Result result, Money bettingMoney) {
         if (result.equals(Result.PLAYER_WIN_WITH_BLACKJACK) || result.equals(Result.PLAYER_WIN_WITHOUT_BLACKJACk)) {

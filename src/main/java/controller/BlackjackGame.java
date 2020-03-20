@@ -12,10 +12,7 @@ import domain.result.DefaultMatchRule;
 import domain.result.MatchRule;
 import domain.result.Result;
 import domain.result.Results;
-import domain.user.Dealer;
-import domain.user.Money;
-import domain.user.Player;
-import domain.user.Players;
+import domain.user.*;
 import infra.repository.SingleDeck;
 import view.InputView;
 import view.OutputView;
@@ -48,8 +45,10 @@ public class BlackjackGame {
         players = blackjackService.confirmCardsOfPlayers(players);
 
         int countOfHit = blackjackService.confirmCardsOfDealer();
+        OutputView.printDealerHit(dealer.serialize(), countOfHit);
 
-        Results results = blackjackService.match(players);
+        Profit dealerProfit = blackjackService.match(players);
+        OutputView.printResult(dealer.serialize(dealerProfit), players.serialize());
 
 //        //summarize
 //        PlayersDto playersDtoToShow = PlayersDto.of(playerDtos);

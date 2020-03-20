@@ -41,11 +41,11 @@ public class Player extends User {
         return new Player(name, playingCards, bettingMoney);
     }
 
-    Money calculateProfit(Result result) {
+    void calculateProfit(Result result) {
         if (playerLose(result)) {
-            return result.calculateProfit(bettingMoney).multiply(LOSE_PENALTY_RATE);
+            profit = result.calculateProfit(bettingMoney).multiply(LOSE_PENALTY_RATE);
         }
-        return result.calculateProfit(bettingMoney);
+        profit = result.calculateProfit(bettingMoney);
     }
 
     private boolean playerLose(Result result) {
@@ -61,14 +61,8 @@ public class Player extends User {
         playerDto.setName(name);
         playerDto.setBettingMoney(bettingMoney.serialize());
         playerDto.setCards(playingCards.serialize());
+        playerDto.setScore(calculateScore());
         return playerDto;
-    }
-
-    public PlayerDto serialize(Result result) {
-        List<String> cards = playingCards.serialize();
-        int score = calculateScore();
-        Money profit = calculateProfit(result);
-        return PlayerDto.complete(name, bettingMoney.serialize(), cards, score, profit.serialize());
     }
 
     @Override
