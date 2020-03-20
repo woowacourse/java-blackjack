@@ -1,10 +1,9 @@
 package domain.user;
 
 import common.DealerDto;
-import common.PlayerDto;
-import common.PlayersDto;
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
 
@@ -43,12 +42,12 @@ public class Dealer extends User {
     }
 
     //todo: refac to service
-    public List<Player> passInitCards(PlayersDto playersDto) {
-        List<Player> players = new ArrayList<>();
-        for (PlayerDto playerDto : playersDto.getPlayerDtos()) {
-            players.add(Player.join(playerDto));
+    public List<Player> passInitCards(List<Player> players, PlayingCards playingCards) {
+        List<Player> participants = new ArrayList<>();
+        for (Player player : players) {
+            participants.add(Player.receiveInitCards(player, playingCards));
         }
-        return players;
+        return participants;
     }
 
     public DealerDto serialize() {

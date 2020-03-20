@@ -27,14 +27,11 @@ public class BlackJackGame {
     public void play() {
         PlayersDto inputPlayersDto = InputView.inputPlayers();
         Dealer dealer = Dealer.start(deck);
-        List<String> playerNames = new ArrayList<>();
-        List<Money> bettingMoneys = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
         for (PlayerDto playerDto : inputPlayersDto.getPlayerDtos()) {
-            playerNames.add(playerDto.getName());
-            bettingMoneys.add(Money.deserialize(playerDto.getBettingMoney()));
+            Player player = Player.join(playerDto);
+            players.add(player);
         }
-
-        List<Player> players = dealer.passInitCards(playerNames, bettingMoneys);
         List<PlayerDto> inputPlayerDtos = inputPlayersDto.getPlayerDtos();
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
@@ -61,7 +58,9 @@ public class BlackJackGame {
         Money sumOfDealerProfit = Money.of(0);
         for (Player player : players) {
             Result result = player.match(dealer, matchRule);
-            Money bettingMoney = player.getBettingMoney();
+            //todo: refac
+            Money bettingMoney = Money.of(10);
+//            Money bettingMoney = player.getBettingMoney();
             Money profitOfDealer = dealer.calculateProfit(result, bettingMoney);
             sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
             PlayerDto playerDtoToShow = player.serialize(result);
