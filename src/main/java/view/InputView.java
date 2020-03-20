@@ -1,9 +1,8 @@
 package view;
 
-import domain.Player;
+import domain.gambler.Name;
+import domain.gambler.Player;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -14,15 +13,14 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static boolean inputMoreCard(Player player) {
+    public static String inputMoreCard(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("y")) {
-            return true;
-        }
-        if (input.equalsIgnoreCase("n")) {
-            return false;
-        }
-        throw new IllegalArgumentException("Not valid input (only y/n)");
+        return scanner.nextLine();
+    }
+
+    public static String inputMoney(Name playerName) {
+        System.out.printf("%s의 배팅 금액은?", playerName);
+        System.out.println();
+        return scanner.nextLine();
     }
 }
