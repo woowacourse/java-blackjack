@@ -4,15 +4,18 @@ import common.DealerDto;
 import common.PlayerDto;
 import common.PlayersDto;
 import domain.UserInterface;
+import domain.blackjack.BlackjackService;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.PlayingCards;
 import domain.result.DefaultMatchRule;
 import domain.result.MatchRule;
 import domain.result.Result;
+import domain.result.Results;
 import domain.user.Dealer;
 import domain.user.Money;
 import domain.user.Player;
+import domain.user.Players;
 import infra.repository.SingleDeck;
 import view.InputView;
 import view.OutputView;
@@ -25,50 +28,35 @@ public class BlackjackGame {
     private MatchRule matchRule;
     private UserInterface userInterface;
 
+    public BlackjackGame(Deck deck, MatchRule matchRule, UserInterface userInterface) {
+        this.deck = deck;
+        this.matchRule = matchRule;
+        this.userInterface = userInterface;
+    }
+
     //todo: refac
     public void play() {
-        PlayersDto inputPlayersDto = userInterface.inputPlayers();
-
-        //setUp
+        //shuffle
         Dealer dealer = Dealer.shuffle(deck);
+
         //join
-        List<Player> players = new ArrayList<>();
-        for (PlayerDto playerDto : inputPlayersDto.getPlayerDtos()) {
-            Player player = Player.join(playerDto);
-            players.add(player);
-        }
-        List<PlayerDto> inputPlayerDtos = inputPlayersDto.getPlayerDtos();
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
-            PlayingCards cards = player.getCards();
-            inputPlayerDtos.get(i).setCards(cards.serialize());
-        }
-        OutputView.printInitGame(dealer.serialize(), inputPlayersDto);
+        PlayersDto inputPlayersDto = userInterface.inputPlayers();
+        Players players = Players.join(inputPlayersDto, userInterface);
+        BlackjackService blackjackService = BlackjackService.start(dealer, matchRule);
 
-        int countOfHit = dealer.confirmCards();
+        OutputView.printInitGame(dealer.serialize(), players.serialize());
 
+        players = blackjackService.confirmCardsOfPlayers(players);
+        int countOfHit = blackjackService.confirmCardsOfDealer();
 
+        Results results = blackjackService.match(players);
 
-        //match
-        List<PlayerDto> playerDtos = new ArrayList<>();
-        Money sumOfDealerProfit = Money.of(0);
-        for (Player player : players) {
-            Result result = player.match(dealer, matchRule);
-            //todo: refac
-            Money bettingMoney = Money.of(10);
-//            Money bettingMoney = player.getBettingMoney();
-            Money profitOfDealer = dealer.calculateProfit(result, bettingMoney);
-            sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
-            PlayerDto playerDtoToShow = player.serialize(result);
-            playerDtos.add(playerDtoToShow);
-        }
-
-        //summarize
-        PlayersDto playersDtoToShow = PlayersDto.of(playerDtos);
-        DealerDto dealerDto = dealer.serialize(sumOfDealerProfit);
-
-        OutputView.printDealerHit(dealerDto, countOfHit);
-        OutputView.printResult(dealerDto, playersDtoToShow);
+//        //summarize
+//        PlayersDto playersDtoToShow = PlayersDto.of(playerDtos);
+//        DealerDto dealerDto = dealer.serialize(sumOfDealerProfit);
+//
+//        OutputView.printDealerHit(dealerDto, countOfHit);
+//        OutputView.printResult(dealerDto, playersDtoToShow);
 
     }
 }

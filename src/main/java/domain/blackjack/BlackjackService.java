@@ -15,9 +15,12 @@ public class BlackjackService {
         this.matchRule = matchRule;
     }
 
-    public static BlackjackService start(Deck deck, MatchRule matchRule) {
-        Dealer dealer = Dealer.shuffle(deck);
+    public static BlackjackService start(Dealer dealer, MatchRule matchRule) {
         return new BlackjackService(dealer, matchRule);
+    }
+
+    public Players distributeInitCards(Players players) {
+        return players.receiveInitCards(dealer);
     }
 
     public Players confirmCardsOfPlayers(Players players) {

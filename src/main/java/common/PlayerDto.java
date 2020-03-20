@@ -9,6 +9,16 @@ public class PlayerDto {
     private int score;
     private int profit;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBettingMoney(int bettingMoney) {
+        this.bettingMoney = bettingMoney;
+    }
+
+    private PlayerDto() {}
+
     private PlayerDto(String name, int bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
@@ -26,6 +36,10 @@ public class PlayerDto {
         this.cards = cards;
         this.score = score;
         this.profit = profit;
+    }
+
+    public static PlayerDto init() {
+        return new PlayerDto();
     }
 
     public void setCards(List<String> cards) {

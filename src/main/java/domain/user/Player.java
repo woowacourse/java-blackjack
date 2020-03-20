@@ -33,8 +33,8 @@ public class Player extends User {
         return new Player(playerDto.getName(), Money.of(bettingMoney));
     }
 
-    public static Player receiveInitCards(Player player, PlayingCards playingCards) {
-        return new Player(player, playingCards);
+    public Player receiveInitCards(PlayingCards playingCards) {
+        return new Player(this, playingCards);
     }
 
     static Player of(String name, PlayingCards playingCards, Money bettingMoney) {
@@ -57,9 +57,10 @@ public class Player extends User {
         return wantToHit.equals(WantToHit.YES);
     }
 
-    public PlayerDto serialize() {
-        List<String> cards = playingCards.serialize();
-        return PlayerDto.update(name, bettingMoney.serialize(), cards);
+    public PlayerDto serialize(PlayerDto playerDto) {
+        playerDto.setName(name);
+        playerDto.setBettingMoney(bettingMoney.serialize());
+        return playerDto;
     }
 
     public PlayerDto serialize(Result result) {

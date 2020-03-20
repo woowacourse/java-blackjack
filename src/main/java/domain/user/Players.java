@@ -1,10 +1,12 @@
 package domain.user;
 
+import common.DealerDto;
 import common.PlayerDto;
 import common.PlayersDto;
 import domain.UserInterface;
 import domain.card.Card;
 //todo: fix
+import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
 import domain.result.Results;
@@ -49,7 +51,7 @@ public class Players {
                 Card card = dealer.passCard();
                 player.hit(card);
                 //todo: important fix
-                OutputView.printCurrentStateOfPlayer(player.serialize());
+                OutputView.printCurrentStateOfPlayer(player.serialize(PlayerDto.init()));
                 wantToHit = userInterface.inputWantToHit(player.getName());
             }
         }
@@ -79,5 +81,21 @@ public class Players {
         Money profitOfDealer = dealer.calculateProfit(result, bettingMoney);
         sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
         return sumOfDealerProfit;
+    }
+
+    public PlayersDto serialize() {
+        List<PlayerDto> playerDtos = new ArrayList<>();
+        for (Player player : players) {
+            playerDtos.add(player.serialize(PlayerDto.init()));
+        }
+        return PlayersDto.of(playerDtos);
+    }
+
+    public Players receiveInitCards(Dealer dealer) {
+        for (Player player : players) {
+            PlayingCards initCards = dealer.passInitCards();
+            player.receiveInitCards(initCards);
+        }
+        return Players.update(players);
     }
 }

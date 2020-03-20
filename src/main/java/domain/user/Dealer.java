@@ -50,13 +50,8 @@ public class Dealer extends User {
         return PlayingCards.of(cards);
     }
 
-    //todo: refac to service
-    public List<Player> passInitCards(List<Player> players, PlayingCards playingCards) {
-        List<Player> participants = new ArrayList<>();
-        for (Player player : players) {
-            participants.add(Player.receiveInitCards(player, playingCards));
-        }
-        return participants;
+    PlayingCards passInitCards() {
+        return passInitCards(deck);
     }
 
     public DealerDto serialize() {
