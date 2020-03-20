@@ -82,24 +82,6 @@ class PlayerTest {
         assertThat(player.countCards()).isEqualTo(defaultSizeOfCards + 1);
     }
 
-    @Test
-    @DisplayName("#confirmCards : should add cards for given cards without return")
-    void confirmCardsWithValidCards() {
-        //given
-        List<Card> cardsToAdd = Collections.singletonList(new Card(Symbol.QUEEN, Type.DIAMOND));
-        Cards cards = Cards.of(cardsToAdd);
-        int defaultSizeOfCards = player.countCards();
-        List<Card> expectedCards = setupExpectedCards(cardsToAdd);
-
-        //when
-        player.confirmCards(cards);
-
-
-        //then
-        assertThat(player.getCards()).isEqualTo(PlayingCards.of(expectedCards));
-        assertThat(player.countCards()).isEqualTo(defaultSizeOfCards + cards.size());
-    }
-
     private List<Card> setupExpectedCards(List<Card> cardsToAdd) {
         List<Card> expectedCards = new ArrayList<>();
         expectedCards.addAll(initCards);

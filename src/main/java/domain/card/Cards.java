@@ -15,7 +15,11 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards of(List<Card> cards) {
+    Cards(Cards cards) {
+        this.cards = cards.getCards();
+    }
+
+    static Cards of(List<Card> cards) {
         //todo refac
 //        if (cards.size() < MIN_SIZE) {
 //            throw new IllegalArgumentException(INVALID_SIZE_MESSAGE);
@@ -23,8 +27,11 @@ public class Cards {
         return new Cards(cards);
     }
 
-    //todo: 접근제한자 확인하기
-    public List<Card> getCards() {
+    static Cards of(Cards cards) {
+        return of(cards.getCards());
+    }
+
+    private List<Card> getCards() {
         return cards;
     }
 
@@ -111,5 +118,9 @@ public class Cards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    protected List<String> serialize() {
+        return cards.stream().map(Card::toString).collect(Collectors.toList());
     }
 }

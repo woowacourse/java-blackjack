@@ -33,10 +33,6 @@ public class Player extends User {
         return wantToHit.equals(WantToHit.YES);
     }
 
-    void confirmCards(Cards cards) {
-        this.playingCards.add(cards);
-    }
-
     public PlayerDto serialize() {
         List<String> cards = playingCards.serialize();
         return PlayerDto.update(name, bettingMoney.serialize(), cards);

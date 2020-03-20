@@ -11,14 +11,6 @@ public class Card {
         this.type = type;
     }
 
-    public String getPattern() {
-        return type.getPattern();
-    }
-
-    public String getWord() {
-        return symbol.getPattern();
-    }
-
     int calculate(int sum) {
         return symbol.calculate(sum);
     }

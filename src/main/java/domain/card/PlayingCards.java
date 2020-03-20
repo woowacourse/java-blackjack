@@ -1,9 +1,7 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class PlayingCards extends Cards {
     private static final int BLACK_JACK = 21;
@@ -16,7 +14,7 @@ public class PlayingCards extends Cards {
     }
 
     private PlayingCards(Cards cards) {
-        super(cards.getCards());
+        super(cards);
         this.cards = cards;
     }
 
@@ -64,6 +62,6 @@ public class PlayingCards extends Cards {
     }
 
     public List<String> serialize() {
-        return this.cards.getCards().stream().map(Card::toString).collect(Collectors.toList());
+        return cards.serialize();
     }
 }
