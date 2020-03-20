@@ -1,6 +1,5 @@
-package blackjack.domain.gambler;
+package blackjack.domain.player;
 
-import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.GamblerCards;
@@ -8,23 +7,24 @@ import blackjack.domain.result.CardsResult;
 import blackjack.util.NullChecker;
 import java.util.List;
 
-public final class Player {
+public final class Dealer {
 
-    private static final int BASES_SCORE_CAN_DRAW = 21;
+    private static final Name DEALER_NAME = new Name("딜러");
+    private static final int BASES_SCORE_CAN_DRAW = 16;
+    private static final int FIRST_FROM_INDEX = 0;
+    private static final int FIRST_TO_INDEX = 1;
     private static final int DEFAULT_DRAW_COUNT = 1;
 
     private final Name name;
-    private final BettingMoney bettingMoney;
     private final GamblerCards gamblerCards;
 
-    public Player(Name name, BettingMoney bettingMoney) {
-        this(name, bettingMoney, new GamblerCards());
+    public Dealer() {
+        this(new GamblerCards());
     }
 
-    public Player(Name name, BettingMoney bettingMoney, GamblerCards gamblerCards) {
-        NullChecker.validateNotNull(name, bettingMoney, gamblerCards);
-        this.name = name;
-        this.bettingMoney = bettingMoney;
+    public Dealer(GamblerCards gamblerCards) {
+        NullChecker.validateNotNull(gamblerCards);
+        this.name = DEALER_NAME;
         this.gamblerCards = gamblerCards;
     }
 
@@ -36,6 +36,10 @@ public final class Player {
         for (int i = 0; i < cardCount; i++) {
             gamblerCards.add(cardDeck.draw());
         }
+    }
+
+    public List<String> getFirstCardInfo() {
+        return gamblerCards.getInfos().subList(FIRST_FROM_INDEX, FIRST_TO_INDEX);
     }
 
     public boolean canDrawCard() {
@@ -52,9 +56,5 @@ public final class Player {
 
     public List<String> getCardsInfos() {
         return gamblerCards.getInfos();
-    }
-
-    public Integer getBettingMoneyMultiply(double profitRatio) {
-        return bettingMoney.multiply(profitRatio);
     }
 }

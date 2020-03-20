@@ -6,9 +6,9 @@ import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Player;
-import blackjack.domain.gambler.Players;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 public class GameResultTest {
 
     private static GameResult gameResult;
-    private static Players players;
+    private static Gamblers gamblers;
 
     @BeforeAll
     static void resetVariable() {
@@ -26,14 +26,14 @@ public class GameResultTest {
         for (Name name : Names.of("jamie1,jamie2").getNames()) {
             playerInfo.put(name, BettingMoney.of("500"));
         }
-        players = new Players(playerInfo);
+        gamblers = new Gamblers(playerInfo);
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         dealer.drawCard(new CardDeck(), 2);
-        for (Player player : players.getPlayers()) {
-            player.drawCard(cardDeck, 2);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            gambler.drawCard(cardDeck, 2);
         }
-        gameResult = new GameResult(dealer, players);
+        gameResult = new GameResult(dealer, gamblers);
     }
 
     @DisplayName("생성자 NULL일 경우 예외")
@@ -43,7 +43,7 @@ public class GameResultTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Null");
 
-        assertThatThrownBy(() -> new GameResult(null, players))
+        assertThatThrownBy(() -> new GameResult(null, gamblers))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Null");
 

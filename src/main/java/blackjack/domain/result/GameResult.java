@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
-import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Player;
-import blackjack.domain.gambler.Players;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
 import blackjack.util.NullChecker;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 
 public final class GameResult {
 
-    private final Map<Player, Integer> playerResults;
+    private final Map<Gambler, Integer> playerResults;
     private final int dealerResult;
 
-    public GameResult(Dealer dealer, Players players) {
-        NullChecker.validateNotNull(dealer, players);
-        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, players));
+    public GameResult(Dealer dealer, Gamblers gamblers) {
+        NullChecker.validateNotNull(dealer, gamblers);
+        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, gamblers));
         this.dealerResult = calculateDealerResults();
     }
 
-    private Map<Player, Integer> calculatePlayerResults(Dealer dealer, Players players) {
-        return players.getPlayers().stream()
+    private Map<Gambler, Integer> calculatePlayerResults(Dealer dealer, Gamblers gamblers) {
+        return gamblers.getGamblers().stream()
             .collect(Collectors
                 .toMap(player -> player,
                     player -> PlayerOutcome.of(player, dealer).getProfit(player),
@@ -36,7 +36,7 @@ public final class GameResult {
         return dealerResult * -1;
     }
 
-    public Map<Player, Integer> getPlayerResults() {
+    public Map<Gambler, Integer> getPlayerResults() {
         return playerResults;
     }
 

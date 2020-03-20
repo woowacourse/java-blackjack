@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Name;
-import blackjack.domain.gambler.Player;
+import blackjack.domain.player.Gambler;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,8 +13,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String inputMoreCard(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
+    public static String inputMoreCard(Gambler gambler) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", gambler.getName());
         return scanner.nextLine();
     }
 

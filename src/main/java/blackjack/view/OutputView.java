@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.Name;
-import blackjack.domain.gambler.Dealer;
-import blackjack.domain.gambler.Player;
-import blackjack.domain.gambler.Players;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.GameResult;
 import java.util.List;
@@ -11,24 +11,24 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static void printCardDistribution(Dealer dealer, Players players) {
+    public static void printCardDistribution(Dealer dealer, Gamblers gamblers) {
         System.out.println();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(),
-            String.join(", ", players.getPlayerNames()));
+            String.join(", ", gamblers.getPlayerNames()));
         System.out.println();
     }
 
-    public static void printUsersCards(Dealer dealer, Players players) {
+    public static void printUsersCards(Dealer dealer, Gamblers gamblers) {
         System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
         System.out.println();
-        for (Player player : players.getPlayers()) {
-            printPlayerCards(player);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            printPlayerCards(gambler);
         }
         System.out.println();
     }
 
-    public static void printPlayerCards(Player player) {
-        System.out.println(getNameAndCardsInfos(player.getName(), player.getCardsInfos()));
+    public static void printPlayerCards(Gambler gambler) {
+        System.out.println(getNameAndCardsInfos(gambler.getName(), gambler.getCardsInfos()));
     }
 
     private static String getNameAndCardsInfos(Name name, List<String> cardsInfos) {
@@ -41,13 +41,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printUsersCardsAndScore(Dealer dealer, Players players) {
+    public static void printUsersCardsAndScore(Dealer dealer, Gamblers gamblers) {
         System.out.println();
         CardsResult dealerCardsResult = dealer.getCardsResult();
         printNameCardsAndScore(dealer.getName(), dealer.getCardsInfos(), dealerCardsResult);
-        for (Player player : players.getPlayers()) {
-            CardsResult playerCardsResult = player.getCardsResult();
-            printNameCardsAndScore(player.getName(), player.getCardsInfos(), playerCardsResult);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            CardsResult playerCardsResult = gambler.getCardsResult();
+            printNameCardsAndScore(gambler.getName(), gambler.getCardsInfos(), playerCardsResult);
         }
     }
 
@@ -62,9 +62,9 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         printFinalResultByNameAndResult(dealer.getName(), gameResult.getDealerResult());
-        Map<Player, Integer> playersResult = gameResult.getPlayerResults();
-        for (Player player : playersResult.keySet()) {
-            printFinalResultByNameAndResult(player.getName(), playersResult.get(player));
+        Map<Gambler, Integer> playersResult = gameResult.getPlayerResults();
+        for (Gambler gambler : playersResult.keySet()) {
+            printFinalResultByNameAndResult(gambler.getName(), playersResult.get(gambler));
         }
     }
 

@@ -1,4 +1,4 @@
-package blackjack.domain.gambler;
+package blackjack.domain.player;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class Players {
+public final class Gamblers {
 
     private static final int MAXIMUM_PLAYER_COUNT = 7;
     private static final int MINIMUM_PLAYER_COUNT = 1;
     private static final String OUT_OF_RANGE_EXCEPTION_MESSAGE =
         String.format("참여 인원은 %d명 이상, %d명 이하이어야 합니다.", MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT);
 
-    private final List<Player> players;
+    private final List<Gambler> gamblers;
 
-    public Players(Map<Name, BettingMoney> playerInfo) {
+    public Gamblers(Map<Name, BettingMoney> playerInfo) {
         validatePlayerInfo(playerInfo);
-        this.players = Collections.unmodifiableList(playerInfo.keySet().stream()
-            .map(playerName -> new Player(playerName, playerInfo.get(playerName)))
+        this.gamblers = Collections.unmodifiableList(playerInfo.keySet().stream()
+            .map(playerName -> new Gambler(playerName, playerInfo.get(playerName)))
             .collect(Collectors.toList()));
     }
 
@@ -31,13 +31,13 @@ public final class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<Gambler> getGamblers() {
+        return gamblers;
     }
 
     public List<String> getPlayerNames() {
-        return Collections.unmodifiableList(players.stream()
-            .map(Player::getName)
+        return Collections.unmodifiableList(gamblers.stream()
+            .map(Gambler::getName)
             .map(Name::toString)
             .collect(Collectors.toList()));
     }

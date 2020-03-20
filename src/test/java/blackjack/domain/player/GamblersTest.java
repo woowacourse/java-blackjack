@@ -1,4 +1,4 @@
-package blackjack.domain.gambler;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,12 +11,12 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class GamblersTest {
 
     @DisplayName("생성자 NULL일 경우 예외")
     @Test
     void create() {
-        assertThatThrownBy(() -> new Players(null))
+        assertThatThrownBy(() -> new Gamblers(null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("잘못");
     }
@@ -29,7 +29,7 @@ public class PlayersTest {
             .getNames()) {
             playerInfo.put(name, BettingMoney.of("500"));
         }
-        assertThatThrownBy(() -> new Players(playerInfo))
+        assertThatThrownBy(() -> new Gamblers(playerInfo))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("참여 인원");
     }
@@ -41,8 +41,8 @@ public class PlayersTest {
         for (Name name : Names.of("jamie1,jamie2").getNames()) {
             playerInfo.put(name, BettingMoney.of("500"));
         }
-        Players players = new Players(playerInfo);
-        assertThat(players.getPlayerNames().get(0)).isEqualTo("jamie1");
-        assertThat(players.getPlayerNames().get(1)).isEqualTo("jamie2");
+        Gamblers gamblers = new Gamblers(playerInfo);
+        assertThat(gamblers.getPlayerNames().get(0)).isEqualTo("jamie1");
+        assertThat(gamblers.getPlayerNames().get(1)).isEqualTo("jamie2");
     }
 }
