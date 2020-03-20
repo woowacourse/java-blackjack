@@ -1,9 +1,5 @@
 package com.blackjack.domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class BettingMoney {
 	private static final int MIN_MONEY = 1_000;
 	private static final int MAX_MONEY = 200_000_000;
@@ -14,12 +10,6 @@ public class BettingMoney {
 	public BettingMoney(int money) {
 		validateMoney(money);
 		this.money = money;
-	}
-
-	public static List<BettingMoney> of(int... monies) {
-		return IntStream.of(monies)
-				.mapToObj(BettingMoney::new)
-				.collect(Collectors.toList());
 	}
 
 	private void validateMoney(int money) {
@@ -37,5 +27,9 @@ public class BettingMoney {
 		if (money < MIN_MONEY || money > MAX_MONEY) {
 			throw new IllegalArgumentException("베팅액의 범위를 벗어났습니다.");
 		}
+	}
+
+	public int calculateProfit(double profitRate) {
+		return (int)(money * profitRate);
 	}
 }

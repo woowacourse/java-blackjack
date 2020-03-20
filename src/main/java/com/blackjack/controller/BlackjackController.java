@@ -1,17 +1,9 @@
 package com.blackjack.controller;
 
-import static com.blackjack.domain.GameTable.FIRST_DRAW_COUNT;
-import static com.blackjack.domain.user.Dealer.DRAW_CONDITION;
-import static com.blackjack.view.InputView.inputBettingMoney;
-import static com.blackjack.view.InputView.inputDrawDecideType;
-import static com.blackjack.view.InputView.inputPlayerNames;
-import static com.blackjack.view.OutputView.printCardsAtFirst;
-import static com.blackjack.view.OutputView.printDealerDrawMessage;
-import static com.blackjack.view.OutputView.printDealerRecord;
-import static com.blackjack.view.OutputView.printResultMessage;
-import static com.blackjack.view.OutputView.printUserCardInfo;
-import static com.blackjack.view.OutputView.printUserRecords;
-import static com.blackjack.view.OutputView.printUserScore;
+import static com.blackjack.domain.GameTable.*;
+import static com.blackjack.domain.user.Dealer.*;
+import static com.blackjack.view.InputView.*;
+import static com.blackjack.view.OutputView.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +22,7 @@ public class BlackjackController {
 	public void run() {
 		Dealer dealer = new Dealer();
 		List<Player> players = createPlayers();
+
 		proceedGame(dealer, players);
 		printResult(dealer, players);
 	}
@@ -38,8 +31,10 @@ public class BlackjackController {
 		GameTable gameTable = new GameTable(dealer, players);
 		gameTable.drawAtFirst();
 		printCardsAtFirst(dealer, players, FIRST_DRAW_COUNT);
+
 		drawAllPlayers(gameTable, players);
 		drawDealerUntilEndTurn(gameTable, dealer);
+
 		printUserCards(dealer, players);
 	}
 
@@ -55,8 +50,10 @@ public class BlackjackController {
 
 	private void printResult(Dealer dealer, List<Player> players) {
 		GameRule gameRule = new GameRule(dealer, players);
+
 		PlayerRecords playerRecords = gameRule.calculateResult();
 		printResultMessage();
+
 		printDealerRecord(playerRecords.calculateDealerResult());
 		printUserRecords(playerRecords);
 	}
@@ -88,6 +85,7 @@ public class BlackjackController {
 		while (canDraw(player) && wantDraw(player)) {
 			gameTable.draw(player);
 			printUserCardInfo(player);
+			System.out.println();
 		}
 	}
 
@@ -96,7 +94,6 @@ public class BlackjackController {
 	}
 
 	private boolean wantDraw(Player player) {
-		DrawDecideType drawDecideType = DrawDecideType.of(inputDrawDecideType(player));
-		return drawDecideType.isDraw();
+		return DrawDecideType.isDraw(inputDrawDecideType(player));
 	}
 }

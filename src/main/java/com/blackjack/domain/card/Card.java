@@ -8,56 +8,56 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Card {
-	private final Denomination denomination;
-	private final Suit suit;
+	private final CardNumber cardNumber;
+	private final CardSymbol cardSymbol;
 
-	private Card(Denomination denomination, Suit suit) {
-		validateNull(denomination, suit);
-		this.denomination = denomination;
-		this.suit = suit;
+	private Card(CardNumber cardNumber, CardSymbol cardSymbol) {
+		validateNull(cardNumber, cardSymbol);
+		this.cardNumber = cardNumber;
+		this.cardSymbol = cardSymbol;
 	}
 
-	public static Card valueOf(Denomination denomination, Suit suit) {
+	public static Card valueOf(CardNumber cardNumber, CardSymbol cardSymbol) {
 		return CardCache.CARD_CACHE
 				.stream()
-				.filter(card -> card.isSameCard(denomination, suit))
+				.filter(card -> card.isSameCard(cardNumber, cardSymbol))
 				.findAny()
-				.orElse(new Card(denomination, suit));
+				.orElse(new Card(cardNumber, cardSymbol));
 	}
 
 	public static List<Card> values() {
 		return Collections.unmodifiableList(CardCache.CARD_CACHE);
 	}
 
-	private void validateNull(Denomination denomination, Suit suit) {
-		if (Objects.isNull(denomination) || Objects.isNull(suit)) {
+	private void validateNull(CardNumber cardNumber, CardSymbol cardSymbol) {
+		if (Objects.isNull(cardNumber) || Objects.isNull(cardSymbol)) {
 			throw new IllegalArgumentException("denomination 또는 suit는 null을 가질 수 없습니다.");
 		}
 	}
 
 	public boolean isAce() {
-		return denomination.isAce();
+		return cardNumber.isAce();
 	}
 
-	private boolean isSameCard(Denomination denomination, Suit suit) {
-		return isSameSymbol(denomination) && isSameType(suit);
+	private boolean isSameCard(CardNumber cardNumber, CardSymbol cardSymbol) {
+		return isSameSymbol(cardNumber) && isSameType(cardSymbol);
 	}
 
-	private boolean isSameSymbol(Denomination denomination) {
-		return this.denomination.equals(denomination);
+	private boolean isSameSymbol(CardNumber cardNumber) {
+		return this.cardNumber.equals(cardNumber);
 	}
 
-	private boolean isSameType(Suit suit) {
-		return this.suit.equals(suit);
+	private boolean isSameType(CardSymbol cardSymbol) {
+		return this.cardSymbol.equals(cardSymbol);
 	}
 
 	public int getScore() {
-		return denomination.getScore();
+		return cardNumber.getScore();
 	}
 
 	@Override
 	public String toString() {
-		return denomination.toString() + suit.toString();
+		return cardNumber.toString() + cardSymbol.toString();
 	}
 
 	private static class CardCache {
@@ -68,14 +68,14 @@ public class Card {
 		}
 
 		private static List<Card> generateCards() {
-			return Stream.of(Denomination.values())
+			return Stream.of(CardNumber.values())
 					.flatMap(CardCache::generateCardsBySymbol)
 					.collect(Collectors.toList());
 		}
 
-		private static Stream<Card> generateCardsBySymbol(Denomination denomination) {
-			return Stream.of(Suit.values())
-					.map(suit -> new Card(denomination, suit));
+		private static Stream<Card> generateCardsBySymbol(CardNumber cardNumber) {
+			return Stream.of(CardSymbol.values())
+					.map(suit -> new Card(cardNumber, suit));
 		}
 	}
 }

@@ -15,20 +15,20 @@ public enum CardNumber {
 	QUEEN(10, "Q"),
 	KING(10, "K");
 
-	private int number;
+	private int score;
 	private String alias;
 
-	CardNumber(int number) {
-		this(number, String.valueOf(number));
+	CardNumber(int score) {
+		this(score, String.valueOf(score));
 	}
 
-	CardNumber(int number, String alias) {
-		this.number = number;
+	CardNumber(int score, String alias) {
+		this.score = score;
 		this.alias = alias;
 	}
 
-	public int getNumber() {
-		return number;
+	public int getScore() {
+		return score;
 	}
 
 	public boolean isAce() {
