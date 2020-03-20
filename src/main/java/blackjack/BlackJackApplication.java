@@ -61,14 +61,14 @@ public class BlackJackApplication {
     }
 
     private static void drawMorePlayerCardManual(CardDeck cardDeck, Gambler gambler) {
-        while (gambler.canDrawCard() && CardDraw.of(InputView.inputMoreCard(gambler)).isYes()) {
+        while (gambler.canDraw() && CardDraw.of(InputView.inputMoreCard(gambler)).isYes()) {
             gambler.drawCard(cardDeck);
             OutputView.printPlayerCards(gambler);
         }
     }
 
     private static void drawMoreDealerCardAuto(CardDeck cardDeck, Dealer dealer) {
-        while (dealer.canDrawCard()) {
+        while (dealer.canDraw()) {
             OutputView.printDealerOneMoreCard(dealer);
             dealer.drawCard(cardDeck);
         }

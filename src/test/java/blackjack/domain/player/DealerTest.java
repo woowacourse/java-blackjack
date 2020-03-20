@@ -23,12 +23,12 @@ public class DealerTest {
     @Test
     void canDrawCard() {
         dealer.drawCard(cardDeck);
-        assertThat(dealer.canDrawCard()).isTrue();
+        assertThat(dealer.canDraw()).isTrue();
 
         for (int i = 0; i < 10; i++) {
             dealer.drawCard(cardDeck);
         }
-        assertThat(dealer.canDrawCard()).isFalse();
+        assertThat(dealer.canDraw()).isFalse();
     }
 
     @DisplayName("Null 인자 - 예외발생")

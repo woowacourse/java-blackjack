@@ -19,7 +19,7 @@ public class OutputView {
     }
 
     public static void printUsersCards(Dealer dealer, Gamblers gamblers) {
-        System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
+        System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getCardsInfos().subList(0, 1)));
         System.out.println();
         for (Gambler gambler : gamblers.getGamblers()) {
             printPlayerCards(gambler);

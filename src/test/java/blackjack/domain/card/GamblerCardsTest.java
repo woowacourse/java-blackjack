@@ -55,8 +55,6 @@ public class GamblerCardsTest {
     @Test
     void validNoCard() {
         Dealer dealer = new Dealer();
-        assertThatThrownBy(dealer::getFirstCardInfo).isInstanceOf(NullPointerException.class)
-            .hasMessageContaining("없");
         assertThatThrownBy(dealer::getCardsInfos).isInstanceOf(NullPointerException.class)
             .hasMessageContaining("없");
     }

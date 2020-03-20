@@ -39,12 +39,12 @@ public class GamblerTest {
     @Test
     void canDrawCard() {
         gambler.drawCard(cardDeck);
-        assertThat(gambler.canDrawCard()).isTrue();
+        assertThat(gambler.canDraw()).isTrue();
 
         for (int i = 0; i < 12; i++) {
             gambler.drawCard(cardDeck);
         }
-        assertThat(gambler.canDrawCard()).isFalse();
+        assertThat(gambler.canDraw()).isFalse();
     }
 
     @DisplayName("딜러와 비교 후 수익금액 가져옴")
