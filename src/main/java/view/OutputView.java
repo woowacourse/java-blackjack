@@ -54,7 +54,8 @@ public class OutputView {
             Money playerMoney = playersResult.get(player);
             System.out.printf("%s: %s", player.getName(), playerMoney);
             System.out.println();
-        } }
+        }
+    }
 
     public static void printDealerHitMessage() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
