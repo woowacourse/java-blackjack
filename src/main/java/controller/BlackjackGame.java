@@ -28,16 +28,16 @@ public class BlackjackGame {
         OutputView.printResult(dealer.serialize(dealerProfit), players.serialize());
     }
 
+    private Players distributeInitCards(Dealer dealer, Players players, BlackjackService blackjackService) {
+        players = blackjackService.distributeInitCards(players);
+        OutputView.printInitGame(dealer.serialize(), players.serialize());
+        return players;
+    }
+
     private Players confirmCards(Dealer dealer, Players players, BlackjackService blackjackService) {
         players = blackjackService.confirmCardsOfPlayers(players);
         int countOfHit = blackjackService.confirmCardsOfDealer();
         OutputView.printDealerHit(dealer.serialize(), countOfHit);
-        return players;
-    }
-
-    private Players distributeInitCards(Dealer dealer, Players players, BlackjackService blackjackService) {
-        players = blackjackService.distributeInitCards(players);
-        OutputView.printInitGame(dealer.serialize(), players.serialize());
         return players;
     }
 }
