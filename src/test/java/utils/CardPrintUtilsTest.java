@@ -19,7 +19,7 @@ class CardPrintUtilsTest {
 
 	@BeforeEach
 	void setUp() {
-		user = new User("a", new Money(1000));
+		user = new User("a", Money.valueOf(1000));
 	}
 
 	@DisplayName("모든 카드 출력 테스트")

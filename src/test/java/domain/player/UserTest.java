@@ -18,7 +18,7 @@ public class UserTest {
 
 	@BeforeEach
 	void setUp() {
-		user = new User("a", new Money(1000));
+		user = new User("a", Money.valueOf(1000));
 		dealer = new Dealer();
 	}
 
@@ -27,7 +27,7 @@ public class UserTest {
 	void inputBlankName() {
 		String blankName = "";
 		assertThatThrownBy(() ->
-				new User(blankName, new Money(0))
+				new User(blankName, Money.valueOf(1000))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -35,7 +35,7 @@ public class UserTest {
 	@DisplayName("유저 이름 입력이 null일 때 예외를 잘 뱉어내는지")
 	void inputNullName() {
 		assertThatThrownBy(() ->
-				new User(null, new Money(0))
+				new User(null, Money.valueOf(1000))
 		).isInstanceOf(IllegalArgumentException.class);
 	}
 

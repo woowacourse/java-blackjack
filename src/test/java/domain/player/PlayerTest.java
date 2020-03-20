@@ -16,7 +16,7 @@ class PlayerTest {
 	@DisplayName("버스터시 점수가 0으로 반환되는지 확인")
 	@Test
 	void calculateBurstIsZeroScore() {
-		Player user = new User("a", new Money(1000));
+		Player user = new User("a", Money.valueOf(1000));
 		List<Card> cards = new ArrayList<>();
 		cards.add(new Card(Symbol.KING, Shape.DIAMOND));
 		cards.add(new Card(Symbol.QUEEN, Shape.SPADE));
