@@ -26,8 +26,7 @@ public class Dealer extends User {
 
     @Override
     public List<Card> getInitialCards() {
-        return cards.getCards()
-                .subList(START_INDEX, DEALER_INITIAL_CARDS_SIZE);
+        return cards.getInitialCards(DEALER_INITIAL_CARDS_SIZE);
     }
 
     @Override

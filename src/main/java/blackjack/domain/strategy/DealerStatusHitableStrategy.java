@@ -2,7 +2,7 @@ package blackjack.domain.strategy;
 
 import blackjack.domain.*;
 
-public class DealerStatusNoneStrategy implements DealerStatusStrategy {
+public class DealerStatusHitableStrategy implements DealerStatusStrategy {
     @Override
     public PlayerResult calculateResultByPlayerStatus(Dealer dealer, Player player) {
         if (player.getStatus() == Status.BLACKJACK) {

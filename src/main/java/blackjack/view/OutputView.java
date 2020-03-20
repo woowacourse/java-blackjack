@@ -33,7 +33,7 @@ public class OutputView {
                 .map(User::getName)
                 .collect(Collectors.joining(COMMA));
         System.out.print(NEW_LINE);
-        System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Cards.getInitialSize()));
+        System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Cards.INITIAL_CARDS_SIZE));
     }
 
     public static void printInitialUserCards(Dealer dealer, Players players) {

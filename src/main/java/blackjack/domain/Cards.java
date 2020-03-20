@@ -5,15 +5,15 @@ import java.util.stream.IntStream;
 
 public class Cards {
     private static final int BLACKJACK_SCORE = 21;
-    private static final int INITIAL_CARDS_SIZE = 2;
     private static final int START_INDEX = 0;
     private static final int DEFAULT_SCORE = 0;
+    public static final int INITIAL_CARDS_SIZE = 2;
 
     private PriorityQueue<Card> cards = new PriorityQueue<>();
     private Status status;
 
     public Cards() {
-        status = Status.NONE;
+        status = Status.HIT_ABLE;
     }
 
     public void receiveDistributedCards(CardDeck cardDeck) {
@@ -48,19 +48,20 @@ public class Cards {
     }
 
     public boolean isStatusNone() {
-        return status == Status.NONE;
+        return status == Status.HIT_ABLE;
     }
 
     public boolean isScoreUnder(int targetScore) {
         return calculateScore() <= targetScore;
     }
 
-    public static int getInitialSize() {
-        return INITIAL_CARDS_SIZE;
-    }
-
     public Status getStatus() {
         return status;
+    }
+
+    public List<Card> getInitialCards(int initialCardsSize) {
+        return new ArrayList<>(cards)
+                .subList(START_INDEX, initialCardsSize);
     }
 
     public List<Card> getCards() {

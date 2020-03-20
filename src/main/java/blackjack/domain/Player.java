@@ -38,8 +38,7 @@ public class Player extends User {
 
     @Override
     public List<Card> getInitialCards() {
-        return cards.getCards()
-                .subList(START_INDEX, USER_INITIAL_CARDS_SIZE);
+        return cards.getInitialCards(USER_INITIAL_CARDS_SIZE);
     }
 
     @Override

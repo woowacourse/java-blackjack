@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
-    protected static final int START_INDEX = 0;
-
     protected Cards cards = new Cards();
     protected String name;
 
