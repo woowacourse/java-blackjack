@@ -5,7 +5,6 @@ import java.util.Objects;
 import blackjack.domain.exceptions.InvalidBettingMoneyException;
 
 public class BettingMoney {
-	public static final BettingMoney ZERO = new BettingMoney(0);
 	private final int bettingMoney;
 
 	public BettingMoney(int bettingMoney) {
@@ -17,16 +16,23 @@ public class BettingMoney {
 	}
 
 	private static int parseToInt(String bettingMoney) {
+		validate(bettingMoney);
 		try {
 			int parsedInt = Integer.parseInt(bettingMoney);
-			validate(parsedInt);
+			validateNegative(parsedInt);
 			return parsedInt;
 		} catch (NumberFormatException e) {
 			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.NOT_INTEGER);
 		}
 	}
 
-	private static void validate(int bettingMoney) {
+	private static void validate(String bettingMoney) {
+		if (Objects.isNull(bettingMoney)) {
+			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.NULL);
+		}
+	}
+
+	private static void validateNegative(int bettingMoney) {
 		if (bettingMoney < 0) {
 			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.INVALID);
 		}

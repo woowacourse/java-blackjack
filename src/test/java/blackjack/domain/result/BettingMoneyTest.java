@@ -3,6 +3,8 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.exceptions.InvalidBettingMoneyException;
 
@@ -25,8 +27,16 @@ class BettingMoneyTest {
 			.hasMessage(InvalidBettingMoneyException.NOT_INTEGER);
 	}
 
+	@ParameterizedTest
+	@NullSource
+	void validate_NullBettingMoney_InvalidBettingMoneyExceptionThrown(String value) {
+		assertThatThrownBy(() -> BettingMoney.valueOf(value))
+			.isInstanceOf(InvalidBettingMoneyException.class)
+			.hasMessage(InvalidBettingMoneyException.NULL);
+	}
+
 	@Test
-	void validate_InputNegativeBettingMoney_InvalidBettingMoneyException() {
+	void validateNegative_InputNegativeBettingMoney_InvalidBettingMoneyExceptionThrown() {
 		assertThatThrownBy(() -> BettingMoney.valueOf("-1"))
 			.isInstanceOf(InvalidBettingMoneyException.class)
 			.hasMessage(InvalidBettingMoneyException.INVALID);

@@ -7,7 +7,6 @@ import java.util.function.Function;
 
 import blackjack.domain.exceptions.InvalidResultTypeException;
 
-// TODO: 2020-03-18 Player에 대해서, Player vs Dealer
 public enum ResultType {
 	BLACKJACK_WIN(ResultType::isBlackjackWin,
 		bettingMoney -> bettingMoney.multiply(1.5)),
@@ -40,6 +39,7 @@ public enum ResultType {
 
 	public static ResultType from(ResultScore playerResultScore, ResultScore dealerResultScore) {
 		validate(playerResultScore, dealerResultScore);
+
 		return Arrays.stream(values())
 			.filter(value -> value.judgeByScoreType.test(playerResultScore, dealerResultScore))
 			.findFirst()

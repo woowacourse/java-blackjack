@@ -11,17 +11,16 @@ public enum ScoreType {
 	BUST(ScoreType::isBust),
 	NORMAL(ScoreType::isNormal);
 
-	// TODO: 2020-03-19 이름 바꾸기
-	private final BiPredicate<Score, Boolean> measure;
+	private final BiPredicate<Score, Boolean> judgeScoreType;
 
-	ScoreType(BiPredicate<Score, Boolean> measure) {
-		this.measure = measure;
+	ScoreType(BiPredicate<Score, Boolean> judgeScoreType) {
+		this.judgeScoreType = judgeScoreType;
 	}
 
 	public static ScoreType of(Score score, boolean isInitialDealtSize) {
 		validate(score);
 		return Arrays.stream(values())
-			.filter(scoreType -> scoreType.measure.test(score, isInitialDealtSize))
+			.filter(scoreType -> scoreType.judgeScoreType.test(score, isInitialDealtSize))
 			.findFirst()
 			.orElseThrow(() -> new InvalidScoreTypeException(InvalidScoreTypeException.NULL));
 	}

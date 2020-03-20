@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.blackjack.BlackjackTable;
@@ -56,39 +57,59 @@ class ReportTest {
 
 	@Test
 	void from_DealerAndPlayers_GenerateInstance() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
-		assertThat(Report.from(blackjackTable))
-			.isInstanceOf(Report.class);
+		assertThat(Report.from(blackjackTable, playersBettingMoney)).isInstanceOf(Report.class);
 	}
 
 	@ParameterizedTest
 	@NullSource
-	void validate_DealerOrPlayersHaveNullValue_InvalidReportExceptionThrown(BlackjackTable blackjackTable) {
-		assertThatThrownBy(() -> Report.from(blackjackTable))
+	void validate_NullBlackjackTable_InvalidReportExceptionThrown(BlackjackTable blackjackTable) {
+		assertThatThrownBy(() -> Report.from(blackjackTable, playersBettingMoney))
+			.isInstanceOf(InvalidReportException.class)
+			.hasMessage(InvalidReportException.EMPTY);
+	}
+
+	@ParameterizedTest
+	@NullAndEmptySource
+	void validate_EmptyPlayersBettingMoney_InvalidReportExceptionThrown(Map<Player, BettingMoney> playersBettingMoney) {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+
+		assertThatThrownBy(() -> Report.from(blackjackTable, playersBettingMoney))
 			.isInstanceOf(InvalidReportException.class)
 			.hasMessage(InvalidReportException.EMPTY);
 	}
 
 	@Test
-	void calculateDealerProfit_PlayersProfit_ReturnDealerProfit() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
-		Report report = Report.from(blackjackTable);
+	void generatePlayersResult_PlayersBettingMoney_ReturnPlayersResult() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+
+		Map<Player, BettingMoney> expected = new LinkedHashMap<>();
+		expected.put(players.get(0), new BettingMoney(10000));
+		expected.put(players.get(1), new BettingMoney(0));
+		expected.put(players.get(2), new BettingMoney(-1000));
+		assertThat(Report.from(blackjackTable, playersBettingMoney)).extracting("playersResult")
+			.isEqualTo(expected);
+	}
+
+	@Test
+	void calculateDealerProfit_PlayersResult_ReturnDealerProfit() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+		Report report = Report.from(blackjackTable, playersBettingMoney);
 
 		int expected = -9000;
 		assertThat(report.calculateDealerProfit()).isEqualTo(expected);
 	}
 
 	@Test
-	void getPlayersProfit_PlayersResult_ReturnPlayersProfitToInt() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
-		Report report = Report.from(blackjackTable);
+	void calculatePlayersProfit_PlayersResult_ReturnPlayersResultToInt() {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+		Report report = Report.from(blackjackTable, playersBettingMoney);
 
 		Map<Player, Integer> expected = new HashMap<>();
 		expected.put(players.get(0), 10000);
 		expected.put(players.get(1), 0);
 		expected.put(players.get(2), -1000);
-		assertThat(report.getPlayersProfit()).isEqualTo(expected);
+		assertThat(report.calculatePlayersProfit()).isEqualTo(expected);
 	}
-
 }

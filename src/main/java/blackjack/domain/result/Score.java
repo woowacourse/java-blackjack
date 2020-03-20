@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
@@ -34,20 +34,23 @@ public class Score implements Comparable<Score> {
 	}
 
 	public static Score valueOf(int number) {
-		return Optional.ofNullable(SCORE_CACHE.get(number))
-			.orElse(new Score(number));
+		return SCORE_CACHE.getOrDefault(number, new Score(number));
 	}
 
 	public static Score valueOf(Card card) {
-		return Optional.ofNullable(card)
-			.map(value -> Score.valueOf(value.getScore()))
-			.orElseThrow(() -> new InvalidScoreException(InvalidScoreException.NULL));
+		if (Objects.isNull(card)) {
+			throw new InvalidScoreException(InvalidScoreException.CARD_NULL);
+		}
+
+		return valueOf(card.getScore());
 	}
 
 	public Score add(Score score) {
-		return Optional.ofNullable(score)
-			.map(value -> Score.valueOf(this.score + value.score))
-			.orElseThrow(() -> new InvalidScoreException(InvalidScoreException.NULL));
+		if (Objects.isNull(score)) {
+			throw new InvalidScoreException(InvalidScoreException.SCORE_NULL);
+		}
+
+		return valueOf(this.score + score.score);
 	}
 
 	public boolean isLowerThan(int score) {

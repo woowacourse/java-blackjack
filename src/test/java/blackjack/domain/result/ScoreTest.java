@@ -42,7 +42,7 @@ class ScoreTest {
 	void valueOf_InputNull_NullPointerExceptionThrown(Card card) {
 		assertThatThrownBy(() -> Score.valueOf(card))
 			.isInstanceOf(InvalidScoreException.class)
-			.hasMessage(InvalidScoreException.NULL);
+			.hasMessage(InvalidScoreException.CARD_NULL);
 	}
 
 	@ParameterizedTest
@@ -51,6 +51,14 @@ class ScoreTest {
 		Score score = Score.valueOf(value);
 
 		assertThat(Score.ZERO.add(score)).extracting("score").isEqualTo(value);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void add_InputScore_addScore(Score score) {
+		assertThatThrownBy(() -> Score.valueOf(10).add(score))
+			.isInstanceOf(InvalidScoreException.class)
+			.hasMessage(InvalidScoreException.SCORE_NULL);
 	}
 
 	@ParameterizedTest
@@ -75,5 +83,13 @@ class ScoreTest {
 		Score score = Score.valueOf(9);
 
 		assertThat(score.isEqual(value)).isEqualTo(expected);
+	}
+
+	@Test
+	void compareTo_CompareScore_ReturnCompareByIntScore() {
+		Score score1 = Score.valueOf(17);
+		Score score2 = Score.valueOf(16);
+
+		assertThat(score1.compareTo(score2)).isEqualTo(Integer.compare(17, 16));
 	}
 }

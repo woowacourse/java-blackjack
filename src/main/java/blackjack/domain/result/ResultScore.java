@@ -1,8 +1,10 @@
 package blackjack.domain.result;
 
+import java.util.List;
 import java.util.Objects;
 
-import blackjack.domain.card.Hand;
+import blackjack.domain.blackjack.BlackjackTable;
+import blackjack.domain.card.Card;
 import blackjack.domain.exceptions.InvalidResultScoreException;
 
 public class ResultScore implements Comparable<ResultScore> {
@@ -17,15 +19,48 @@ public class ResultScore implements Comparable<ResultScore> {
 
 	private void validate(Score score, ScoreType scoreType) {
 		if (Objects.isNull(score) || Objects.isNull(scoreType)) {
-			throw new InvalidResultScoreException(InvalidResultScoreException.NULL);
+			throw new InvalidResultScoreException(InvalidResultScoreException.SCORE_OR_SCORE_TYPE_NULL);
 		}
 	}
 
-	public static ResultScore of(Hand hand) {
-		Score score = hand.calculateScore();
-		ScoreType scoreType = ScoreType.of(score, hand.isInitialDealtSize());
+	public static ResultScore of(List<Card> cards) {
+		validate(cards);
+		Score score = calculateScore(cards);
+		ScoreType scoreType = ScoreType.of(score, isInitialDealtSize(cards));
+		return new ResultScore(score, scoreType);
+	}
 
-		return new ResultScore(hand.calculateScore(), scoreType);
+	private static void validate(List<Card> cards) {
+		if (Objects.isNull(cards) || cards.isEmpty()) {
+			throw new InvalidResultScoreException(InvalidResultScoreException.CARDS_EMPTY);
+		}
+	}
+
+	private static Score calculateScore(List<Card> cards) {
+		Score score = cards.stream()
+			.map(Score::valueOf)
+			.reduce(Score.ZERO, Score::add);
+		return aceHandled(score, hasAce(cards));
+	}
+
+	private static Score aceHandled(Score score, boolean hasAce) {
+		if (hasAce && isNotBustBy(score)) {
+			score = score.add(Score.ADDITIONAL_ACE_SCORE);
+		}
+		return score;
+	}
+
+	private static boolean hasAce(List<Card> cards) {
+		return cards.stream()
+			.anyMatch(Card::isAce);
+	}
+
+	private static boolean isNotBustBy(Score score) {
+		return score.add(Score.ADDITIONAL_ACE_SCORE).getScore() < Score.BUST_SCORE;
+	}
+
+	private static boolean isInitialDealtSize(List<Card> cards) {
+		return BlackjackTable.INITIAL_DEAL_NUMBER == cards.size();
 	}
 
 	public boolean isBlackjack() {
@@ -40,7 +75,11 @@ public class ResultScore implements Comparable<ResultScore> {
 		return !isBlackjack() && !isBust();
 	}
 
-	public int getScore() {
+	public Score getScore() {
+		return score;
+	}
+
+	public int getIntScore() {
 		return score.getScore();
 	}
 

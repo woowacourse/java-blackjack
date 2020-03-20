@@ -14,26 +14,26 @@ import blackjack.domain.user.Player;
 
 public class Report {
 	private static final int BETTING_PROFIT_MULTIPLIER_FOR_DEALER = -1;
-	private final Map<Player, BettingMoney> playersProfit;
+	private final Map<Player, BettingMoney> playersResult;
 
-	private Report(Map<Player, BettingMoney> playersProfit) {
-		this.playersProfit = playersProfit;
+	private Report(Map<Player, BettingMoney> playersResult) {
+		this.playersResult = playersResult;
 	}
 
-	public static Report from(BlackjackTable blackjackTable) {
-		validate(blackjackTable);
-		return new Report(generatePlayersProfit(blackjackTable));
+	public static Report from(BlackjackTable blackjackTable, Map<Player, BettingMoney> playersBettingMoney) {
+		validate(blackjackTable, playersBettingMoney);
+		return new Report(generatePlayersResult(blackjackTable, playersBettingMoney));
 	}
 
-	private static void validate(BlackjackTable blackjackTable) {
-		if (Objects.isNull(blackjackTable)) {
+	private static void validate(BlackjackTable blackjackTable, Map<Player, BettingMoney> playersBettingMoney) {
+		if (Objects.isNull(blackjackTable) || Objects.isNull(playersBettingMoney) || playersBettingMoney.isEmpty()) {
 			throw new InvalidReportException(InvalidReportException.EMPTY);
 		}
 	}
 
-	private static Map<Player, BettingMoney> generatePlayersProfit(BlackjackTable blackjackTable) {
+	private static Map<Player, BettingMoney> generatePlayersResult(BlackjackTable blackjackTable,
+		Map<Player, BettingMoney> playersBettingMoney) {
 		ResultScore dealerResultScore = blackjackTable.getDealerResultScore();
-		Map<Player, BettingMoney> playersBettingMoney = blackjackTable.getPlayersBettingMoney();
 
 		return blackjackTable.getPlayers().stream()
 			.collect(collectingAndThen(
@@ -46,17 +46,17 @@ public class Report {
 	}
 
 	public int calculateDealerProfit() {
-		int playersTotalProfit = playersProfit.values().stream()
+		int playersTotalProfit = playersResult.values().stream()
 			.map(BettingMoney::getBettingMoney)
 			.reduce(0, Integer::sum);
 		return playersTotalProfit * BETTING_PROFIT_MULTIPLIER_FOR_DEALER;
 	}
 
-	public Map<Player, Integer> getPlayersProfit() {
-		return playersProfit.keySet().stream()
+	public Map<Player, Integer> calculatePlayersProfit() {
+		return playersResult.keySet().stream()
 			.collect(collectingAndThen(
 				toMap(Function.identity(),
-					player -> playersProfit.get(player).getBettingMoney(),
+					player -> playersResult.get(player).getBettingMoney(),
 					(x, y) -> x,
 					LinkedHashMap::new),
 				Collections::unmodifiableMap));
