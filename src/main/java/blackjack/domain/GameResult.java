@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import blackjack.domain.strategy.DealerStatusStrategy;
-
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResult {
     private static final int DEALER_PROFIT_FACTOR = -1;
@@ -33,8 +33,7 @@ public class GameResult {
     }
 
     private static PlayerResult calculateResultByDealerStatusStrategy(Dealer dealer, Player player) {
-        DealerStatusStrategy dealerStatusStrategy = dealer.getStatus().getDealerStatusStrategy();
-        return dealerStatusStrategy.calculateResultByPlayerStatus(dealer, player);
+        return dealer.getResultOf(player);
     }
 
     public Map<User, Integer> getGameResult() {

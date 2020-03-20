@@ -27,10 +27,6 @@ public abstract class User {
         return name;
     }
 
-    public Status getStatus() {
-        return cards.getStatus();
-    }
-
     public Cards getCards() {
         return cards;
     }

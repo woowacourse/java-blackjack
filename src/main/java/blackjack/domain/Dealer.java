@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.strategy.DealerStatusStrategy;
+
 import java.util.List;
 
 public class Dealer extends User {
@@ -22,6 +24,11 @@ public class Dealer extends User {
 
     public static int getCriticalScore() {
         return DEALER_CRITICAL_SCORE;
+    }
+
+    public PlayerResult getResultOf(Player player) {
+        DealerStatusStrategy dealerStatusStrategy = cards.getStatus().getDealerStatusStrategy();
+        return dealerStatusStrategy.calculateResultByPlayerStatus(this, player);
     }
 
     @Override
