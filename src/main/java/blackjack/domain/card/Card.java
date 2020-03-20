@@ -11,10 +11,6 @@ public class Card {
         this.type = type;
     }
 
-    public boolean isAce() {
-        return type == Type.ACE;
-    }
-
     public Symbol getSymbol() {
         return symbol;
     }

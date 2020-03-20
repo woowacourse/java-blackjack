@@ -24,17 +24,17 @@ public class CardDeckTest {
         cards = new ArrayList<>(
                 Arrays.asList(
                         new Card(Symbol.HEART, Type.TEN),
+                        new Card(Symbol.CLOVER, Type.ACE),
                         new Card(Symbol.SPADE, Type.QUEEN),
                         new Card(Symbol.HEART, Type.SEVEN),
                         new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.CLOVER, Type.ACE),
                         new Card(Symbol.CLOVER, Type.EIGHT)
                 )
         );
         cardDeck = new CardDeck(cards);
     }
 
-    @DisplayName("카드 덱에서 랜덤으로 카드 한 장 추출 확인")
+    @DisplayName("카드 덱에서 카드 한 장 추출 확인")
     @Test
     void getOneCardFromCardDeck() {
         Card card = cardDeck.pop();

@@ -1,24 +1,41 @@
 package blackjack.domain.card;
 
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class CardDeck {
-    private Stack<Card> cardDeck;
+    private static final String CARD_DECK_NULL_EXCEPTION_MESSAGE = "생성할 수 있는 카드가 없습니다.";
+    private static final String CARD_DECK_DUPLICATED_EXCEPTION_MESSAGE = "카드 덱 안에 중복된 카드가 있습니다.";
+    private static final String CARD_DECK_EMPTY_EXCEPTION_MESSAGE = "카드 덱이 비었습니다.";
+
+    private final Stack<Card> cardDeck = new Stack<>();
 
     public CardDeck(List<Card> cards) {
-        cardDeck = new Stack<>();
+        checkCardDeckNull(cards);
+        checkCardDeckDuplication(cards);
         cardDeck.addAll(cards);
     }
 
-    public Card pop() {
-        if (cardDeck.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱이 비었습니다.");
+    private void checkCardDeckNull(List<Card> cards) {
+        if (cards == null) {
+            throw new NullPointerException(CARD_DECK_NULL_EXCEPTION_MESSAGE);
         }
+    }
+
+    private void checkCardDeckDuplication(List<Card> cards) {
+        Set<Card> deDuplicatedCards = new HashSet<>(cards);
+        if (deDuplicatedCards.size() != cards.size()) {
+            throw new IllegalArgumentException(CARD_DECK_DUPLICATED_EXCEPTION_MESSAGE);
+        }
+    }
+
+    public Card pop() {
+        checkCardDeckEmpty();
         return cardDeck.pop();
     }
 
-    public int size() {
-        return this.cardDeck.size();
+    private void checkCardDeckEmpty() {
+        if (cardDeck.isEmpty()) {
+            throw new IllegalArgumentException(CARD_DECK_EMPTY_EXCEPTION_MESSAGE);
+        }
     }
 }

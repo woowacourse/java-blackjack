@@ -2,10 +2,10 @@ package blackjack.view;
 
 import blackjack.domain.*;
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.User;
-import blackjack.domain.player.Users;
+import blackjack.domain.card.Cards;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,40 +13,45 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEW_LINE = System.getProperty("line.separator");
-    private static final String INPUT_USER_NAMES_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String INPUT_PLAYER_NAMES_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String INPUT_BETTING_MONEY_GUIDE_MESSAGE_FORMAT = "%s의 배팅 금액은?";
     private static final String DISTRIBUTE_CONFIRM_MESSAGE_FORMAT = "%s와 %s에게 %d장의 카드를 나누었습니다.";
-    private static final String PLAYER_INFORMATION_FORMAT = "%s 카드: %s";
+    private static final String USER_INFORMATION_FORMAT = "%s 카드: %s";
     private static final String COMMA_WITH_SPACE = ", ";
     private static final String ASK_ONE_MORE_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private static final String ASK_CORRECT_RESPONSE_MESSAGE = "y 또는 n을 입력해주세요.";
-    private static final String DEALER_PLAY_CONFIRM_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String PLAYER_FINAL_INFORMATION_FORMAT = "%s 카드: %s - 결과 : %d";
-    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 승패";
+    private static final String DEALER_PLAY_CONFIRM_MESSAGE_FORMAT = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String USER_FINAL_INFORMATION_FORMAT = "%s 카드: %s - 결과 : %d";
+    private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 수익";
 
-    public static void printInputUserNamesGuideMessage() {
-        System.out.println(INPUT_USER_NAMES_GUIDE_MESSAGE);
+    public static void printInputPlayerNamesGuideMessage() {
+        System.out.println(INPUT_PLAYER_NAMES_GUIDE_MESSAGE);
     }
 
-    public static void printDistributeConfirmMessage(Dealer dealer, Users users) {
-        String userNames = String.join(COMMA_WITH_SPACE, users.getNames());
-        System.out.println(NEW_LINE);
-        System.out.println(String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Player.INITIAL_CARDS_SIZE));
+    public static void printInputBettingMoneyGuideMessage(String name) {
+        System.out.println(String.format(INPUT_BETTING_MONEY_GUIDE_MESSAGE_FORMAT, name));
     }
 
-    public static void printInitialPlayerCards(Dealer dealer, Users users) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users.getUsers());
+    public static void printDistributeConfirmMessage(Dealer dealer, Players players) {
+        String userNames = String.join(COMMA_WITH_SPACE, players.getNames());
+        System.out.print(NEW_LINE);
+        System.out.println(
+                String.format(DISTRIBUTE_CONFIRM_MESSAGE_FORMAT, dealer.getName(), userNames, Cards.getInitialSize()));
+    }
 
-        for (Player player : players) {
-            System.out.println(String.format(
-                    PLAYER_INFORMATION_FORMAT, player.getName(), combineCards(player.getInitialCards())));
+    public static void printInitialUserCards(Dealer dealer, Players players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players.getPlayers());
+
+        for (User user : users) {
+            System.out.println(
+                    String.format(USER_INFORMATION_FORMAT, user.getName(), combineCards(user.getInitialCards())));
         }
     }
 
-    public static void printUserCards(User user) {
+    public static void printUserCards(User player) {
         System.out.println(String.format(
-                PLAYER_INFORMATION_FORMAT, user.getName(), combineCards(user.getCards())));
+                USER_INFORMATION_FORMAT, player.getName(), combineCards(player.getRawCards())));
     }
 
     private static String combineCards(List<Card> cards) {
@@ -59,57 +64,37 @@ public class OutputView {
         return card.getType().getName() + card.getSymbol().getKoreanName();
     }
 
-    public static void printAskOneMoreCardMessage(User user) {
-        System.out.println(String.format(ASK_ONE_MORE_CARD_MESSAGE_FORMAT, user.getName()));
+    public static void printAskOneMoreCardMessage(User player) {
+        System.out.println(String.format(ASK_ONE_MORE_CARD_MESSAGE_FORMAT, player.getName()));
     }
 
-    public static void printCorrectResponseMessage() {
-        System.out.println(ASK_CORRECT_RESPONSE_MESSAGE);
+    public static void printExceptionMessage(String message) {
+        System.out.println(message);
     }
 
-    public static void printDealerPlayConfirmMessage() {
-        System.out.println(DEALER_PLAY_CONFIRM_MESSAGE);
+    public static void printDealerPlayConfirmMessage(int dealerCriticalScore) {
+        System.out.println(String.format(DEALER_PLAY_CONFIRM_MESSAGE_FORMAT, dealerCriticalScore));
     }
 
-    public static void printPlayerFinalScore(Dealer dealer, Users users) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users.getUsers());
+    public static void printUserFinalScore(Dealer dealer, Players players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players.getPlayers());
 
-        for (Player player : players) {
+        for (User user : users) {
             System.out.println(String.format(
-                    PLAYER_FINAL_INFORMATION_FORMAT,
-                    player.getName(), combineCards(player.getCards()), player.calculateScore()));
+                    USER_FINAL_INFORMATION_FORMAT,
+                    user.getName(), combineCards(user.getRawCards()), user.getCards().getScore()));
         }
     }
 
     public static void printGameResult(GameResult gameResult) {
-        printDealerResult(gameResult);
-        printUsersResult(gameResult);
-    }
-
-    private static void printDealerResult(GameResult gameResult) {
         System.out.println(NEW_LINE);
         System.out.println(FINAL_RESULT_HEADER_MESSAGE);
-        System.out.println(String.format("딜러 : %d승 %d무 %d패",
-                countDealerResult(gameResult, UserResult.LOSE),
-                countDealerResult(gameResult, UserResult.DRAW),
-                countDealerResult(gameResult, UserResult.WIN)
-        ));
-    }
 
-    private static int countDealerResult(GameResult gameResult, UserResult userResult) {
-        return (int) gameResult.getGameResult()
-                .values()
-                .stream()
-                .filter(result -> result.equals(userResult))
-                .count();
-    }
-
-    private static void printUsersResult(GameResult gameResult) {
-        for (User user : gameResult.getGameResult().keySet()) {
-            System.out.println(
-                    String.format("%s : %s", user.getName(), gameResult.getKoreanName(user)));
-        }
+        gameResult.getGameResult()
+                .keySet()
+                .forEach(user -> System.out.println(String.format("%s : %d",
+                        user.getName(), gameResult.get(user))));
     }
 }

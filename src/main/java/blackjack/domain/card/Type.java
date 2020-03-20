@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.player.Player;
-
 public enum Type {
     ACE(11, "A"),
     TWO(2, "2"),
@@ -27,10 +25,6 @@ public enum Type {
         this.name = name;
     }
 
-    public int getPoint() {
-        return point;
-    }
-
     public int getPointUsingPreviousScore(int previousScore) {
         if (this == ACE && isOverBlackJackScoreIfAdd(previousScore)) {
             return ACE_LOWER_POINT;
@@ -39,7 +33,11 @@ public enum Type {
     }
 
     private boolean isOverBlackJackScoreIfAdd(int previousScore) {
-        return previousScore + this.point > Player.BLACKJACK_SCORE;
+        return previousScore + this.point > Cards.BLACKJACK_SCORE;
+    }
+
+    public int getPoint() {
+        return point;
     }
 
     public String getName() {

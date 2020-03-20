@@ -6,28 +6,22 @@ public enum Response {
     YES("y"),
     NO("n");
 
+    private static final String RESPONSE_NOT_MATCH_EXCEPTION_MESSAGE = "y 또는 n을 입력해주세요.";
     private String lowerCase;
 
     Response(String lowerCase) {
         this.lowerCase = lowerCase;
     }
 
-    public static Response of(String inputValue) {
+    public static boolean isYes(String inputValue) {
+        return of(inputValue) == YES;
+    }
+
+    private static Response of(String inputValue) {
         String lowerCase = inputValue.toLowerCase();
         return Arrays.stream(values())
                 .filter(response -> response.lowerCase.equals(lowerCase))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
-    }
-
-    public static boolean isYes(String inputResponse) {
-        String lowerCase = inputResponse.trim().toLowerCase();
-        return lowerCase.equals(YES.lowerCase);
-    }
-
-    public static boolean isCorrect(String inputResponse) {
-        String lowerCase = inputResponse.trim().toLowerCase();
-        return Arrays.stream(values())
-                .anyMatch(response -> response.lowerCase.equals(lowerCase));
+                .orElseThrow(() -> new IllegalArgumentException(RESPONSE_NOT_MATCH_EXCEPTION_MESSAGE));
     }
 }

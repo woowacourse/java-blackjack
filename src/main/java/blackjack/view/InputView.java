@@ -1,7 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Response;
-import blackjack.domain.player.User;
+import blackjack.domain.user.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,22 +9,35 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String USER_NAME_SPLIT_DELIMITER = ",";
+    private static final String COMMA = ",";
 
-    public static List<String> inputUserNames() {
-        OutputView.printInputUserNamesGuideMessage();
-        return Arrays.stream(SCANNER.nextLine().split(USER_NAME_SPLIT_DELIMITER))
+    public static List<String> inputPlayerNames() {
+        OutputView.printInputPlayerNamesGuideMessage();
+        return Arrays.stream(SCANNER.nextLine().split(COMMA))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
 
-    public static String askOneMoreCard(User user) {
-        OutputView.printAskOneMoreCardMessage(user);
-        String response = SCANNER.nextLine();
-        if (Response.isCorrect(response)) {
-            return response;
+    public static int inputBettingMoney(String name) {
+        OutputView.printInputBettingMoneyGuideMessage(name);
+        try {
+            return inputIntegerValue();
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return inputBettingMoney(name);
         }
-        OutputView.printCorrectResponseMessage();
-        return askOneMoreCard(user);
+    }
+
+    private static int inputIntegerValue() {
+        try {
+            return Integer.parseInt(SCANNER.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액으로는 문자를 입력할 수 없습니다.");
+        }
+    }
+
+    public static String askOneMoreCard(User player) {
+        OutputView.printAskOneMoreCardMessage(player);
+        return SCANNER.nextLine();
     }
 }
