@@ -3,6 +3,7 @@ package controller;
 import common.DealerDto;
 import common.PlayerDto;
 import common.PlayersDto;
+import domain.UserInterface;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.PlayingCards;
@@ -20,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
-    private final Deck deck = SingleDeck.setUp();
-    private final MatchRule matchRule = new DefaultMatchRule();
+    private Deck deck;
+    private MatchRule matchRule;
+    private UserInterface userInterface;
 
     //todo: refac
     public void play() {
-        PlayersDto inputPlayersDto = InputView.inputPlayers();
+        PlayersDto inputPlayersDto = userInterface.inputPlayers();
 
         //setUp
         Dealer dealer = Dealer.shuffle(deck);
@@ -43,16 +45,6 @@ public class BlackjackGame {
         }
         OutputView.printInitGame(dealer.serialize(), inputPlayersDto);
 
-        //confirmCards
-        for (Player player : players) {
-            String wantToHit = InputView.inputWantToHit(player.getName());
-            while (player.wantToHit(wantToHit)) {
-                Card card = dealer.passCard();
-                player.hit(card);
-                OutputView.printCurrentStateOfPlayer(player.serialize());
-                wantToHit = InputView.inputWantToHit(player.getName());
-            }
-        }
         int countOfHit = dealer.confirmCards();
 
 
