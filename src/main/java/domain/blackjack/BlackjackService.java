@@ -21,7 +21,7 @@ public class BlackjackService {
     }
 
     public Players confirmCardsOfPlayers(Players players) {
-        return players;
+        return players.confirmCards(dealer);
     }
 
     public int confirmCardsOfDealer() {
@@ -29,14 +29,6 @@ public class BlackjackService {
     }
 
     public Results match(Players players) {
-        return new Results();
+        return players.match(dealer, matchRule);
     }
-
-
-
-
-
-
-
-
 }
