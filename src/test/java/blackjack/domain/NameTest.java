@@ -18,5 +18,8 @@ public class NameTest {
         assertThatThrownBy(() -> new Name(""))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Empty");
+        assertThatThrownBy(() -> new Name("12345678910"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("long");
     }
 }

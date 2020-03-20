@@ -50,6 +50,5 @@ public class GameResultTest {
         assertThatThrownBy(() -> new GameResult(null, null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Null");
-
     }
 }

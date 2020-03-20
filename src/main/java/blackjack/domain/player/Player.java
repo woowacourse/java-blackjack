@@ -45,4 +45,6 @@ public abstract class Player {
     public List<String> getCardsInfos() {
         return gamblerCards.getInfos();
     }
+
+    public abstract List<String> getFirstTimeCardsInfo();
 }

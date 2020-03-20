@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
+import blackjack.domain.card.CardDeck;
 import blackjack.util.NullChecker;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +29,12 @@ public final class Gamblers {
         NullChecker.validateNotNull(playerInfo);
         if (playerInfo.size() < MINIMUM_PLAYER_COUNT || playerInfo.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException(OUT_OF_RANGE_EXCEPTION_MESSAGE);
+        }
+    }
+
+    public void drawCard(CardDeck cardDeck, int cardCount) {
+        for (Gambler gambler : gamblers) {
+            gambler.drawCard(cardDeck, cardCount);
         }
     }
 

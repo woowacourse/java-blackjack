@@ -5,22 +5,24 @@ import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
 import blackjack.util.NullChecker;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class GameResult {
 
-    private final Map<Gambler, Integer> playerResults;
-    private final int dealerResult;
+    private final Map<Gambler, Integer> GamblerResults;
+    private final Map<Dealer, Integer> dealerResult;
 
     public GameResult(Dealer dealer, Gamblers gamblers) {
         NullChecker.validateNotNull(dealer, gamblers);
-        this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, gamblers));
-        this.dealerResult = calculateDealerResults();
+        this.GamblerResults = Collections
+            .unmodifiableMap(calculateGamblerResults(dealer, gamblers));
+        this.dealerResult = Collections.unmodifiableMap(calculateDealerResult(dealer));
     }
 
-    private Map<Gambler, Integer> calculatePlayerResults(Dealer dealer, Gamblers gamblers) {
+    private Map<Gambler, Integer> calculateGamblerResults(Dealer dealer, Gamblers gamblers) {
         return gamblers.getGamblers().stream()
             .collect(Collectors
                 .toMap(player -> player,
@@ -28,19 +30,21 @@ public final class GameResult {
                     (a1, a2) -> a1, LinkedHashMap::new));
     }
 
-    private int calculateDealerResults() {
-        int dealerResult = 0;
-        for (Integer playerResult : this.playerResults.values()) {
-            dealerResult += playerResult;
+    private Map<Dealer, Integer> calculateDealerResult(Dealer dealer) {
+        int GamblerTotalResult = 0;
+        for (Integer playerResult : this.GamblerResults.values()) {
+            GamblerTotalResult += playerResult;
         }
-        return dealerResult * -1;
+        Map<Dealer, Integer> result = new HashMap<>();
+        result.put(dealer, GamblerTotalResult * -1);
+        return result;
     }
 
-    public Map<Gambler, Integer> getPlayerResults() {
-        return playerResults;
+    public Map<Gambler, Integer> getGamblerResults() {
+        return GamblerResults;
     }
 
-    public int getDealerResult() {
+    public Map<Dealer, Integer> getDealerResult() {
         return dealerResult;
     }
 }

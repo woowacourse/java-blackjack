@@ -4,6 +4,7 @@ import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.GamblerCards;
 import blackjack.util.NullChecker;
+import java.util.List;
 
 public final class Gambler extends Player implements Drawable {
 
@@ -28,5 +29,10 @@ public final class Gambler extends Player implements Drawable {
 
     public Integer getBettingMoneyMultiply(double profitRatio) {
         return bettingMoney.multiply(profitRatio);
+    }
+
+    @Override
+    public List<String> getFirstTimeCardsInfo() {
+        return getCardsInfos();
     }
 }

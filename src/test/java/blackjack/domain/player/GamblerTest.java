@@ -18,7 +18,7 @@ public class GamblerTest {
     @BeforeEach
     void resetVariable() {
         cardDeck = new CardDeck();
-        gambler = new Gambler(new Name("Jamie&Ravie"), BettingMoney.of("10000"));
+        gambler = new Gambler(new Name("Jamie"), BettingMoney.of("10000"));
     }
 
     @DisplayName("생성시 Null일 경우 예외 발생")

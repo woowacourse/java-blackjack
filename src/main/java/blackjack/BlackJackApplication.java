@@ -46,9 +46,7 @@ public class BlackJackApplication {
 
     private static void distributeFirstCards(Dealer dealer, Gamblers gamblers, CardDeck cardDeck) {
         dealer.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
-        for (Gambler gambler : gamblers.getGamblers()) {
-            gambler.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
-        }
+        gamblers.drawCard(cardDeck, FIRST_TIME_DRAW_COUNT);
         OutputView.printCardDistribution(dealer, gamblers);
         OutputView.printUsersCards(dealer, gamblers);
     }
@@ -77,6 +75,6 @@ public class BlackJackApplication {
     private static void printCalculatedResult(Dealer dealer, Gamblers gamblers) {
         GameResult gameResult = new GameResult(dealer, gamblers);
         OutputView.printUsersCardsAndScore(dealer, gamblers);
-        OutputView.printFinalResult(dealer, gameResult);
+        OutputView.printFinalResult(gameResult);
     }
 }
