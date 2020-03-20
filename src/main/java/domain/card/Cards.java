@@ -61,7 +61,7 @@ public class Cards {
 
         int sum = 0;
         for (Card card : cards.getCards()) {
-            sum += card.calculate();
+            sum += card.calculateExceptAce();
         }
         return sum;
     }
