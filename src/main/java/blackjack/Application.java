@@ -23,11 +23,10 @@ public class Application {
 		Deck deck = new Deck(CardFactory.create());
 		Dealer dealer = new Dealer(Dealer.NAME);
 		List<Player> players = PlayerFactory.create(parsingPlayerNames(InputView.inputPlayerNames()));
-		Map<Player, BettingMoney> playersBettingMoney = generatePlayersBettingMoney(players);
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		BlackjackController blackjackController = new BlackjackController(blackjackTable);
-		blackjackController.run();
+		blackjackController.play(generatePlayersBettingMoney(players));
 	}
 
 	private static Map<Player, BettingMoney> generatePlayersBettingMoney(List<Player> players) {
