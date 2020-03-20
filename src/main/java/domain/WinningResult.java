@@ -1,17 +1,55 @@
 package domain;
 
+import domain.card.Cards;
+import domain.card.Score;
+
+import java.util.Arrays;
+import java.util.function.BiPredicate;
+
 public enum WinningResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN(WinningResult::isWin, 1),
+    DRAW(WinningResult::isDraw, 0),
+    LOSE(WinningResult::isLose, -1),
+    BLACKJACK(WinningResult::isBlackjack, 1.5);
 
-    private final String korean;
+    private final BiPredicate<Cards, Cards> compare;
+    private final double profitRatio;
 
-    WinningResult(String korean) {
-        this.korean = korean;
+    WinningResult(BiPredicate<Cards, Cards> compare,
+                  double profitRatio) {
+        this.compare = compare;
+        this.profitRatio = profitRatio;
     }
 
-    public String getKorean() {
-        return korean;
+    public static WinningResult of(Cards playerCards, Cards dealerCards) {
+        return Arrays.stream(values())
+                .filter(outcome -> outcome.compare.test(playerCards, dealerCards))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static boolean isWin(Cards playerCards, Cards dealerCards) {
+        if (playerCards.isBust() || playerCards.isBlackJack()) {
+            return false;
+        }
+        return dealerCards.isBust() || playerCards.getScore().isMoreThan(dealerCards.getScore());
+    }
+
+    private static boolean isDraw(Cards playerCards, Cards dealerCards) {
+        return playerCards.getScore().equals(dealerCards.getScore()) && !playerCards.isBust();
+    }
+
+    private static boolean isBlackjack(Cards playerCards, Cards dealerCards) {
+        return playerCards.isBlackJack() && !dealerCards.isBlackJack();
+    }
+
+    private static boolean isLose(Cards playerCards, Cards dealerCards) {
+        return !(isWin(playerCards, dealerCards) ||
+                isDraw(playerCards, dealerCards) ||
+                isBlackjack(playerCards, dealerCards));
+    }
+
+    public double getProfitRatio() {
+        return profitRatio;
     }
 }
