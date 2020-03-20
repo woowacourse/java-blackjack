@@ -24,6 +24,6 @@ class HandTest {
         hand.add(new Card(CardSymbol.ACE, CardType.SPADE));
         hand.add(new Card(CardSymbol.FIVE, CardType.HEART));
 
-        assertThat(hand.getCardStatus().size()).isEqualTo(2);
+        assertThat(hand.getCards().size()).isEqualTo(2);
     }
 }

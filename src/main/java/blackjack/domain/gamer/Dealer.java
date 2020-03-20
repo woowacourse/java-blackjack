@@ -2,8 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 
-import static blackjack.domain.rule.Score.SCORES;
-
 public class Dealer extends Gamer {
 
     private static final int DRAW_THRESHOLD = 16;
@@ -15,17 +13,10 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDrawCard() {
-        if (handScore().compareTo(SCORES.get(DRAW_THRESHOLD)) > 0) {
-            return false;
-        }
-        return true;
-    }
-
-    public String getName() {
-        return DEALER_NAME;
+        return handScore().getNumber() <= DRAW_THRESHOLD;
     }
 
     public Card getOpenCard() {
-        return hand.getCardStatus().get(0);
+        return hand.getCards().get(0);
     }
 }

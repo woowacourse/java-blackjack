@@ -12,7 +12,7 @@ public abstract class Gamer {
     private String name;
     Hand hand;
 
-    public Gamer(String name) {
+    Gamer(String name) {
         this.name = Objects.requireNonNull(name);
         this.hand = new Hand();
     }
@@ -40,10 +40,6 @@ public abstract class Gamer {
     }
 
     public List<Card> getHand() {
-        return hand.getCardStatus();
-    }
-
-    public int getHandScore() {
-        return handScore().getNumber();
+        return hand.getCards();
     }
 }

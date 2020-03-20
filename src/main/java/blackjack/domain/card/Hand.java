@@ -25,7 +25,7 @@ public class Hand {
         return Score.calculateScore(hand);
     }
 
-    public List<Card> getCardStatus() {
+    public List<Card> getCards() {
         return hand;
     }
 }

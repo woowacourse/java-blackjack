@@ -38,7 +38,7 @@ class BettingTableTest {
 
         BettingTable bettingTable = BettingTable.of(players, playerBettingMoney);
 
-        assertThat(bettingTable.calculateProfit(dealer, players).getPlayersResult()).containsEntry(blackJackWinner, 15000)
+        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(blackJackWinner, 15000)
                 .containsEntry(dealer, -15000);
     }
 
@@ -55,7 +55,7 @@ class BettingTableTest {
 
         BettingTable bettingTable = BettingTable.of(players, playerBettingMoney);
 
-        assertThat(bettingTable.calculateProfit(dealer, players).getPlayersResult()).containsEntry(winner, 10000)
+        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(winner, 10000)
                 .containsEntry(dealer, -10000);
     }
 
@@ -72,7 +72,7 @@ class BettingTableTest {
 
         BettingTable bettingTable = BettingTable.of(players, playerBettingMoney);
 
-        assertThat(bettingTable.calculateProfit(dealer, players).getPlayersResult()).containsEntry(drawer, 0)
+        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(drawer, 0)
                 .containsEntry(dealer, 0);
     }
 
@@ -89,7 +89,7 @@ class BettingTableTest {
 
         BettingTable bettingTable = BettingTable.of(players, playerBettingMoney);
 
-        assertThat(bettingTable.calculateProfit(dealer, players).getPlayersResult()).containsEntry(loser, -10000)
+        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(loser, -10000)
                 .containsEntry(dealer, 10000);
     }
 

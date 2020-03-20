@@ -48,7 +48,7 @@ public class OutputView {
 
     public static void printGamersProfit(GamersResultDto gamersResultDto) {
         System.out.println(System.lineSeparator() + PROFIT_MESSAGE);
-        System.out.println(makeGamersResult(gamersResultDto.getPlayersResult()));
+        System.out.println(makeGamersResult(gamersResultDto.getGamersResult()));
     }
 
     private static void printInitialHand(Dealer dealer, Players players) {
@@ -59,7 +59,7 @@ public class OutputView {
     }
 
     private static void printCardStatusAndResult(Gamer gamer) {
-        System.out.println(String.format(CARD_STATUS_AND_RESULT_FORMAT, gamer.getName(), makeHandResult(gamer.getHand()), gamer.getHandScore()));
+        System.out.println(String.format(CARD_STATUS_AND_RESULT_FORMAT, gamer.getName(), makeHandResult(gamer.getHand()), gamer.handScore().getNumber()));
     }
 
     private static String makeHandResult(List<Card> cards) {

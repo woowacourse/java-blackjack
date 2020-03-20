@@ -25,10 +25,6 @@ public enum BlackJackResult {
         return DRAW;
     }
 
-    public String getKoreanName() {
-        return koreanName;
-    }
-
     public double getProfitRate() {
         return profitRate;
     }

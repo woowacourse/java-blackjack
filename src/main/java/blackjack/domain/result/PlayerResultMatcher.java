@@ -7,7 +7,6 @@ import blackjack.domain.rule.Score;
 public class PlayerResultMatcher {
 
     public static BlackJackResult match(Dealer dealer, Player player) {
-
         if (player.isBlackJack()) {
             return BlackJackResult.BLACKJACK_WIN;
         }
