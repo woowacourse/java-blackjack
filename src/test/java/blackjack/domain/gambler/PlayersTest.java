@@ -3,7 +3,7 @@ package blackjack.domain.gambler;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.Names;
 import java.util.LinkedHashMap;
@@ -24,10 +24,10 @@ public class PlayersTest {
     @DisplayName("플레이어 최대인원 초과시 예외 발생")
     @Test
     void validMaximumPlayerCount() {
-        Map<Name, Money> playerInfo = new LinkedHashMap<>();
-        for (Name name : new Names("jamie1,jamie2,jamie3,jamie4,jamie5,jamie6,jamie7,jamie8")
+        Map<Name, BettingMoney> playerInfo = new LinkedHashMap<>();
+        for (Name name : Names.of("jamie1,jamie2,jamie3,jamie4,jamie5,jamie6,jamie7,jamie8")
             .getNames()) {
-            playerInfo.put(name, Money.fromPositive("500"));
+            playerInfo.put(name, BettingMoney.of("500"));
         }
         assertThatThrownBy(() -> new Players(playerInfo))
             .isInstanceOf(IllegalArgumentException.class)
@@ -37,9 +37,9 @@ public class PlayersTest {
     @DisplayName("플레이어들의 이름들을 받아오는 테스트")
     @Test
     void getPlayerNames() {
-        Map<Name, Money> playerInfo = new LinkedHashMap<>();
-        for (Name name : new Names("jamie1,jamie2").getNames()) {
-            playerInfo.put(name, Money.fromPositive("500"));
+        Map<Name, BettingMoney> playerInfo = new LinkedHashMap<>();
+        for (Name name : Names.of("jamie1,jamie2").getNames()) {
+            playerInfo.put(name, BettingMoney.of("500"));
         }
         Players players = new Players(playerInfo);
         assertThat(players.getPlayerNames().get(0)).isEqualTo("jamie1");

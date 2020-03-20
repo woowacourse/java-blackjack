@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Money;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
 import blackjack.domain.gambler.Players;
@@ -63,19 +62,19 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealer,
-            gameResult.getDealerResults());
+            gameResult.getDealerResult());
         printPlayerFinalResult(gameResult.getPlayerResults());
     }
 
-    private static void printDealerFinalResult(Dealer dealer, Money dealerMoney) {
+    private static void printDealerFinalResult(Dealer dealer, Integer dealerInteger) {
         System.out.printf("%s: ", dealer.getName());
-        System.out.println(dealerMoney);
+        System.out.println(dealerInteger);
     }
 
-    private static void printPlayerFinalResult(Map<Player, Money> playersResult) {
+    private static void printPlayerFinalResult(Map<Player, Integer> playersResult) {
         for (Player player : playersResult.keySet()) {
-            Money playerMoney = playersResult.get(player);
-            System.out.printf("%s: %s", player.getName(), playerMoney);
+            Integer playerInteger = playersResult.get(player);
+            System.out.printf("%s: %s", player.getName(), playerInteger);
             System.out.println();
         }
     }

@@ -1,6 +1,6 @@
 package blackjack.domain.gambler;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserCards;
@@ -9,34 +9,25 @@ import blackjack.domain.result.PlayerOutcome;
 import java.util.List;
 import java.util.Objects;
 
-public final class Player implements Gambler {
+public final class Player {
 
     private static final int BASES_SCORE_CAN_DRAW = 21;
     private static final int DEFAULT_DRAW_COUNT = 1;
-    private static final String PLAYER_NAME_IS_NULL_EXCEPTION_MESSAGE =
-        "참여인원의 이름은 null이어선 안됩니다.";
-    private static final String MONEY_IS_NULL_EXCEPTION_MESSAGE = "배팅금액은 null이어선 안됩니다.";
+    private static final String NULL_USE_EXCEPTION_MESSAGE = "잘못된 인자 - Null 사용";
 
     private final Name name;
-    private final Money money;
+    private final BettingMoney bettingMoney;
     private UserCards userCards = new UserCards();
 
-    public Player(Name name, Money money) {
-        validateName(name);
-        validateMoney(money);
+    public Player(Name name, BettingMoney bettingMoney) {
+        validateNotNull(name, bettingMoney);
         this.name = name;
-        this.money = money;
+        this.bettingMoney = bettingMoney;
     }
 
-    private void validateName(Name name) {
-        if (Objects.isNull(name)) {
-            throw new IllegalArgumentException(PLAYER_NAME_IS_NULL_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateMoney(Money money) {
-        if (Objects.isNull(money)) {
-            throw new IllegalArgumentException(MONEY_IS_NULL_EXCEPTION_MESSAGE);
+    private void validateNotNull(Name name, BettingMoney bettingMoney) {
+        if (Objects.isNull(name) || Objects.isNull(bettingMoney)) {
+            throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }
     }
 
@@ -50,7 +41,6 @@ public final class Player implements Gambler {
         }
     }
 
-    @Override
     public boolean canDrawCard() {
         return getScore().isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);
     }
@@ -60,15 +50,15 @@ public final class Player implements Gambler {
     }
 
     public CardsResult getScore() {
-        return userCards.getScore();
+        return userCards.getResult();
     }
 
     public List<String> getCardsInfos() {
         return userCards.getInfos();
     }
 
-    public Money getProfitByComparing(Dealer dealer) {
-        return money.multiply(calculateOutcome(dealer).getProfitRatio());
+    public Integer getProfitByComparing(Dealer dealer) {
+        return bettingMoney.multiply(calculateOutcome(dealer).getProfitRatio());
     }
 
     public PlayerOutcome calculateOutcome(Dealer dealer) {

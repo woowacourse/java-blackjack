@@ -1,6 +1,6 @@
 package blackjack.domain.gambler;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import java.util.Collections;
 import java.util.List;
@@ -18,14 +18,14 @@ public final class Players {
 
     private final List<Player> players;
 
-    public Players(Map<Name, Money> playerInfo) {
+    public Players(Map<Name, BettingMoney> playerInfo) {
         validatePlayerInfo(playerInfo);
         this.players = Collections.unmodifiableList(playerInfo.keySet().stream()
             .map(playerName -> new Player(playerName, playerInfo.get(playerName)))
             .collect(Collectors.toList()));
     }
 
-    private void validatePlayerInfo(Map<Name, Money> playerInfo) {
+    private void validatePlayerInfo(Map<Name, BettingMoney> playerInfo) {
         if (Objects.isNull(playerInfo)) {
             throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
         }

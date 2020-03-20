@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.Names;
 import blackjack.domain.YesOrNo;
@@ -27,10 +27,10 @@ public class BlackJackApplication {
     }
 
     private static void startGame() {
-        Names names = new Names(InputView.inputNames());
-        Map<Name, Money> playerInfo = new LinkedHashMap<>();
+        Names names = Names.of(InputView.inputNames());
+        Map<Name, BettingMoney> playerInfo = new LinkedHashMap<>();
         for (Name name : names.getNames()) {
-            playerInfo.put(name, Money.fromPositive(InputView.inputMoney(name)));
+            playerInfo.put(name, BettingMoney.of(InputView.inputMoney(name)));
         }
         Players players = new Players(playerInfo);
         Dealer dealer = new Dealer();

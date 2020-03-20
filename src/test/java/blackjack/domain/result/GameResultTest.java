@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.Names;
 import blackjack.domain.card.CardDeck;
@@ -18,14 +18,15 @@ import org.junit.jupiter.api.Test;
 public class GameResultTest {
 
     private static GameResult gameResult;
+    private static Players players;
 
     @BeforeAll
     static void resetVariable() {
-        Map<Name, Money> playerInfo = new LinkedHashMap<>();
-        for (Name name : new Names("jamie1,jamie2").getNames()) {
-            playerInfo.put(name, Money.fromPositive("500"));
+        Map<Name, BettingMoney> playerInfo = new LinkedHashMap<>();
+        for (Name name : Names.of("jamie1,jamie2").getNames()) {
+            playerInfo.put(name, BettingMoney.of("500"));
         }
-        Players players = new Players(playerInfo);
+        players = new Players(playerInfo);
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         dealer.drawCard(new CardDeck(), 2);
@@ -40,6 +41,15 @@ public class GameResultTest {
     void validNotNull() {
         assertThatThrownBy(() -> new GameResult(new Dealer(), null))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("잘못");
+            .hasMessageContaining("Null");
+
+        assertThatThrownBy(() -> new GameResult(null, players))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Null");
+
+        assertThatThrownBy(() -> new GameResult(null, null))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Null");
+
     }
 }

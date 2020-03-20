@@ -7,33 +7,30 @@ import java.util.stream.Collectors;
 
 public class Names {
 
-    private static final String EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE = "Empty or null names exception.";
     private static final String DELIMITER = ",";
+    private static final String NULL_EXCEPTION_MESSAGE = "인자로 Null이 들어왔습니다.";
 
     private List<Name> names;
 
-    public Names(List<Name> names) {
-        validateNames(names);
+    private Names(List<Name> names) {
+        validateNotNull(names);
         this.names = names;
     }
 
-    public Names(String input) {
-        this(Arrays.stream(input.split(DELIMITER))
+    public static Names of(String names) {
+        validateNotNull(names);
+        return new Names(Arrays.stream(names.split(DELIMITER))
             .map(Name::new)
             .collect(Collectors.toList()));
     }
 
-    private void validateNames(List<Name> names) {
-        if (Objects.isNull(names) || names.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_OR_NULL_NAMES_EXCEPTION_MESSAGE);
+    private static <T> void validateNotNull(T names) {
+        if (Objects.isNull(names)) {
+            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
         }
     }
 
     public List<Name> getNames() {
         return names;
-    }
-
-    public boolean isSizeInRange(int minimumPlayerCount, int maximumPlayerCount) {
-        return names.size() >= minimumPlayerCount && names.size() <= maximumPlayerCount;
     }
 }

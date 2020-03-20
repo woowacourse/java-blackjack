@@ -1,8 +1,9 @@
 package blackjack.domain.gambler;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.Money;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,21 @@ public class PlayerTest {
     @BeforeEach
     void resetVariable() {
         cardDeck = new CardDeck();
-        player = new Player(new Name("Jamie&Ravie"), Money.fromPositive("10000"));
+        player = new Player(new Name("Jamie&Ravie"), BettingMoney.of("10000"));
+    }
+
+    @DisplayName("생성시 Null일 경우 예외 발생")
+    @Test
+    void Player_Null_ThrownException() {
+        assertThatThrownBy(() -> new Player(null, BettingMoney.of("10000")))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Null");
+        assertThatThrownBy(() -> new Player(new Name("jamie"), null))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Null");
+        assertThatThrownBy(() -> new Player(null, null))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Null");
     }
 
     @DisplayName("드로우 가능여부 - 가능")
@@ -38,7 +53,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         dealer.drawCard(cardDeck, 10);
         player.drawCard(cardDeck);
-        assertThat(player.getProfitByComparing(dealer).getMoney())
+        assertThat(player.getProfitByComparing(dealer))
             .isEqualTo(10000);
     }
 }

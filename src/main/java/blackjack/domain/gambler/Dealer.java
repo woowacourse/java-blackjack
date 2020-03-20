@@ -6,7 +6,7 @@ import blackjack.domain.card.UserCards;
 import blackjack.domain.result.CardsResult;
 import java.util.List;
 
-public final class Dealer implements Gambler {
+public final class Dealer {
 
     private static final Name DEALER_NAME = new Name("딜러");
     private static final int BASES_SCORE_CAN_DRAW = 16;
@@ -35,7 +35,6 @@ public final class Dealer implements Gambler {
         return userCards.getInfos().subList(FIRST_FROM_INDEX, FIRST_TO_INDEX);
     }
 
-    @Override
     public boolean canDrawCard() {
         return getScore().isEqualOrUnderScore(BASES_SCORE_CAN_DRAW);
     }
@@ -45,7 +44,7 @@ public final class Dealer implements Gambler {
     }
 
     public CardsResult getScore() {
-        return userCards.getScore();
+        return userCards.getResult();
     }
 
     public List<String> getCardsInfos() {
