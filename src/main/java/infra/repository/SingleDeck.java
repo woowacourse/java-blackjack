@@ -31,9 +31,7 @@ public class SingleDeck implements Deck {
     }
 
     public static SingleDeck setUp() {
-        //todo : test, check if works good
         List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
-        Collections.shuffle(cards);
         return new SingleDeck(cards);
     }
 
@@ -51,6 +49,7 @@ public class SingleDeck implements Deck {
 
     @Override
     public Deck shuffle() {
-        return null;
+        Collections.shuffle(cards);
+        return new SingleDeck(cards);
     }
 }
