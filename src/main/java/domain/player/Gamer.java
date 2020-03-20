@@ -13,5 +13,5 @@ public interface Gamer {
 
 	boolean isBlackJack();
 
-	boolean isNotBlackJack();
+	boolean nonBlackJack();
 }

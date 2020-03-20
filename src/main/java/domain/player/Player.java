@@ -50,7 +50,7 @@ public class Player implements Gamer {
 	}
 
 	@Override
-	public boolean isNotBlackJack() {
+	public boolean nonBlackJack() {
 		return playerCards.calculateScore() != Rule.MAX_SCORE;
 	}
 
