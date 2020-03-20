@@ -55,6 +55,14 @@ public class Cards {
         return calculateScore() <= targetScore;
     }
 
+    public boolean isBlackJackStatus() {
+        return status == Status.BLACKJACK;
+    }
+
+    public boolean isBustStatus() {
+        return status == Status.BUST;
+    }
+
     public Status getStatus() {
         return status;
     }

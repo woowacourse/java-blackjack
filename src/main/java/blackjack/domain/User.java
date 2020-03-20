@@ -15,6 +15,14 @@ public abstract class User {
         cards.receiveOneMoreCard(cardDeck);
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJackStatus();
+    }
+
+    public boolean isBust() {
+        return cards.isBustStatus();
+    }
+
     public String getName() {
         return name;
     }

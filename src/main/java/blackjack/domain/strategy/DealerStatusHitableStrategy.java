@@ -5,10 +5,10 @@ import blackjack.domain.*;
 public class DealerStatusHitableStrategy implements DealerStatusStrategy {
     @Override
     public PlayerResult calculateResultByPlayerStatus(Dealer dealer, Player player) {
-        if (player.getStatus() == Status.BLACKJACK) {
+        if (player.isBlackJack()) {
             return PlayerResult.BLACKJACK_WIN;
         }
-        if (player.getStatus() == Status.BUST) {
+        if (player.isBust()) {
             return PlayerResult.LOSE;
         }
         return compareScore(dealer.getCards(), player.getCards());
