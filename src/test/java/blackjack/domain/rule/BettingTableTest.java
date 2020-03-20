@@ -8,7 +8,6 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.gamer.Profit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,7 +61,7 @@ public class BettingTableTest {
         playerBettingMoney.put(jun, BettingMoney.from(20000)); // 승
 
         BettingTable bettingTable = new BettingTable(playerBettingMoney);
-        Map<Gamer, Profit> gamerProfitMap = bettingTable.calculateBettingResult(players, dealer);
+        Map<Gamer, Integer> gamerProfitMap = bettingTable.calculateBettingResult(players, dealer);
         assertThat(gamerProfitMap.entrySet()).size().isEqualTo(5);
     }
 }

@@ -5,7 +5,6 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.gamer.Profit;
 import blackjack.domain.result.BlackJackResult;
 
 import java.util.LinkedHashMap;
@@ -19,17 +18,17 @@ public class BettingTable {
         this.bettingMoneyTable = bettingMoneyTable;
     }
 
-    public Map<Gamer, Profit> calculateBettingResult(Players players, Dealer dealer) {
-        Map<Gamer, Profit> gamerProfitTable = new LinkedHashMap<>();
-        double dealerProfit = 0;
+    public Map<Gamer, Integer> calculateBettingResult(Players players, Dealer dealer) {
+        Map<Gamer, Integer> gamerProfitTable = new LinkedHashMap<>();
+        int dealerProfit = 0;
         for (Player player : players) {
             BlackJackResult result = ResultMatcher.match(player, dealer);
             BettingMoney bettingMoney = bettingMoneyTable.get(player);
-            Profit playerProfit = Profit.of(bettingMoney.getBettingMoney(), result.getProfitRate());
-            gamerProfitTable.put(player, playerProfit);
-            dealerProfit -= playerProfit.getProfit();
+            int profit = result.profit(bettingMoney);
+            gamerProfitTable.put(player, profit);
+            dealerProfit -= profit;
         }
-        gamerProfitTable.put(dealer, Profit.from(dealerProfit));
+        gamerProfitTable.put(dealer, dealerProfit);
         return gamerProfitTable;
     }
 }

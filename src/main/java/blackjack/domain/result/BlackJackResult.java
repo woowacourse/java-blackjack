@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.gamer.BettingMoney;
+
 public enum BlackJackResult {
 
     BLACKJACK(1.5d),
@@ -19,6 +21,10 @@ public enum BlackJackResult {
         if (this == LOSE)
             return WIN;
         return DRAW;
+    }
+
+    public int profit(BettingMoney bettingMoney) {
+        return (int) (bettingMoney.getBettingMoney() * profitRate);
     }
 
     public double getProfitRate() {

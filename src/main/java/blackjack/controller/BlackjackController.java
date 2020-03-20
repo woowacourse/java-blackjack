@@ -11,7 +11,6 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.gamer.Profit;
 import blackjack.domain.rule.BettingTable;
 import blackjack.domain.rule.HandInitializer;
 
@@ -62,12 +61,12 @@ public class BlackjackController {
     }
 
     public GamersResultResponseDto getGamersResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
-        Map<Gamer, Profit> calculateBettingMoney = bettingTable.calculateBettingResult(players, dealer);
+        Map<Gamer, Integer> calculateBettingMoney = bettingTable.calculateBettingResult(players, dealer);
         Map<String, Integer> map = calculateBettingMoney.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
-                        entry -> entry.getValue().getProfit()
+                        entry -> entry.getValue()
                 ));
         return new GamersResultResponseDto(map);
     }

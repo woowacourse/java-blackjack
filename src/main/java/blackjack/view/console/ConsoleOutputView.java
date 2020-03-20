@@ -8,6 +8,7 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ConsoleOutputView implements OutputView {
 
@@ -17,11 +18,12 @@ public class ConsoleOutputView implements OutputView {
     private static final String RESULT_MESSAGE = "## 최종 수익";
     private static final String GAMERS_RESULT_FORMAT = "%s : %d";
     private static final String DEALER_DRAW_ONE_MORE_CARD = "딜러는 16이하라 한 장의 카드를 더 뽑았습니다.";
+    private static final String COMMA = ",";
 
     @Override
     public void printInitialHand(HandResponseDtos handResponseDtos) {
         System.out.println();
-        String names = StringParser.parseNamesToString(handResponseDtos.getHandResponseDtos());
+        String names = parseNamesToString(handResponseDtos.getHandResponseDtos());
         String handStatement = String.format(INITIAL_CARD_FORMAT, names);
         System.out.println(handStatement);
         System.out.println();
@@ -33,7 +35,7 @@ public class ConsoleOutputView implements OutputView {
     @Override
     public void printHand(HandResponseDto handResponseDto) {
         List<Card> hand = handResponseDto.getHand();
-        String handString = StringParser.parseHandToString(hand);
+        String handString = parseHandToString(hand);
         String result = String.format(HAND_FORMAT, handResponseDto.getOwnerName(), handString);
         System.out.println(result);
     }
@@ -43,7 +45,7 @@ public class ConsoleOutputView implements OutputView {
         System.out.println();
         for (HandResponseDto handResponseDto : handResponseDtos.getHandResponseDtos()) {
             List<Card> hand = handResponseDto.getHand();
-            String handString = StringParser.parseHandToString(hand);
+            String handString = parseHandToString(hand);
             String result = String.format(HAND_WITH_SCORE_FORMAT, handResponseDto.getOwnerName(), handString, handResponseDto.getScore());
             System.out.println(result);
         }
@@ -62,5 +64,17 @@ public class ConsoleOutputView implements OutputView {
     @Override
     public void printDealerDrawCard() {
         System.out.println(DEALER_DRAW_ONE_MORE_CARD);
+    }
+
+    private static String parseHandToString(List<Card> hand) {
+        return hand.stream()
+                .map(card -> card.getSymbol() + card.getType())
+                .collect(Collectors.joining(COMMA));
+    }
+
+    private static String parseNamesToString(List<HandResponseDto> handResponseDtos) {
+        return handResponseDtos.stream()
+                .map(HandResponseDto::getOwnerName)
+                .collect(Collectors.joining(COMMA));
     }
 }
