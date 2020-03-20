@@ -11,12 +11,12 @@ public class Card {
         this.type = type;
     }
 
-    public Type getType() {
-        return type;
-    }
-
     public Symbol getSymbol() {
         return symbol;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override

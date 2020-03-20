@@ -26,6 +26,13 @@ public enum PlayerResult {
         return getResultWhenDealerIsNeitherBlackJackNorBust(dealerCards, playerCards);
     }
 
+    private static PlayerResult getResultWhenDealerIsBlackJack(Cards playerCards) {
+        if (playerCards.isBlackJack()) {
+            return PlayerResult.DRAW;
+        }
+        return PlayerResult.LOSE;
+    }
+
     private static PlayerResult getResultWhenDealerIsBust(Cards playerCards) {
         if (playerCards.isBlackJack()) {
             return PlayerResult.BLACKJACK_WIN;
@@ -34,13 +41,6 @@ public enum PlayerResult {
             return PlayerResult.LOSE;
         }
         return PlayerResult.WIN;
-    }
-
-    private static PlayerResult getResultWhenDealerIsBlackJack(Cards playerCards) {
-        if (playerCards.isBlackJack()) {
-            return PlayerResult.DRAW;
-        }
-        return PlayerResult.LOSE;
     }
 
     private static PlayerResult getResultWhenDealerIsNeitherBlackJackNorBust(Cards dealerCards, Cards playerCards) {

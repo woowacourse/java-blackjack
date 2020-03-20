@@ -11,7 +11,7 @@ public class CardDeck {
 
     public CardDeck(List<Card> cards) {
         checkCardDeckNull(cards);
-        checkCardDeckDuplicated(cards);
+        checkCardDeckDuplication(cards);
         cardDeck.addAll(cards);
     }
 
@@ -21,7 +21,7 @@ public class CardDeck {
         }
     }
 
-    private void checkCardDeckDuplicated(List<Card> cards) {
+    private void checkCardDeckDuplication(List<Card> cards) {
         Set<Card> deDuplicatedCards = new HashSet<>(cards);
         if (deDuplicatedCards.size() != cards.size()) {
             throw new IllegalArgumentException(CARD_DECK_DUPLICATED_EXCEPTION_MESSAGE);

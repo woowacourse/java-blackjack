@@ -14,13 +14,13 @@ public class Dealer extends User {
         this.name = KOREAN_NAME;
     }
 
-    public static int getCriticalScore() {
-        return DEALER_CRITICAL_SCORE;
-    }
-
     public Integer calculatePlayerProfit(Player player) {
         PlayerResult playerResult = PlayerResult.of(this.cards, player.getCards());
         return playerResult.calculateProfit(player.getBettingMoney());
+    }
+
+    public static int getCriticalScore() {
+        return DEALER_CRITICAL_SCORE;
     }
 
     @Override
