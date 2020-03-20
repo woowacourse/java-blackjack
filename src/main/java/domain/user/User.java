@@ -1,12 +1,10 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
@@ -33,12 +31,12 @@ public abstract class User {
 
     public boolean isBlackjack() {
         int score = playingCards.calculate();
-        return playingCards.size() == INIT_CARDS_SIZE && score == BLACKJACK_VALUE;
+        return playingCards.isSameSize(INIT_CARDS_SIZE) && score == BLACKJACK_VALUE;
     }
 
     public boolean isNotBlackjack() {
         int score = playingCards.calculate();
-        return playingCards.size() != INIT_CARDS_SIZE || score != BLACKJACK_VALUE;
+        return playingCards.isSameSize(INIT_CARDS_SIZE) || score != BLACKJACK_VALUE;
     }
 
     public abstract Result match(User user, MatchRule matchRule);
@@ -46,8 +44,6 @@ public abstract class User {
     public boolean isBust() {
         return playingCards.isBust();
     }
-
-    public boolean isNotBust() {return playingCards.isNotBust();}
 
     public String getName() {
         return name;

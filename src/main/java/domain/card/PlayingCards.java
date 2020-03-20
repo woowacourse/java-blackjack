@@ -64,4 +64,8 @@ public class PlayingCards extends Cards {
     public List<String> serialize() {
         return cards.serialize();
     }
+
+    public boolean isSameSize(int size) {
+        return cards.size() == size;
+    }
 }

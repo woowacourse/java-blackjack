@@ -10,7 +10,6 @@ import java.util.List;
 public class OutputView {
 
     private static final String DEALIMETER_FOR_CARDS = ", ";
-    private static final int FIRST_CARD_INDEX = 0;
     private static final int INIT_CARDS_SIZE = 2;
     private static final int STANDARD_FOR_DEALER_HIT = 16;
 
