@@ -1,4 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,19 +13,15 @@ public abstract class User {
     protected String name;
 
     public void receiveInitialCards(CardDeck cardDeck) {
-        cards.receiveInitialCards(cardDeck);
+        cards.addInitialCards(cardDeck);
     }
 
     public void receiveOneMoreCard(CardDeck cardDeck) {
-        cards.receiveOneMoreCard(cardDeck);
+        cards.addOneMoreCard(cardDeck);
     }
 
     public String getName() {
         return name;
-    }
-
-    public Status getStatus() {
-        return cards.getStatus();
     }
 
     public Cards getCards() {

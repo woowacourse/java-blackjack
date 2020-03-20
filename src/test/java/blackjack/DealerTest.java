@@ -1,12 +1,15 @@
 package blackjack;
 
-import blackjack.domain.*;
-import org.junit.jupiter.api.AfterEach;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,7 +28,7 @@ public class DealerTest {
                         new Card(Symbol.HEART, Type.SEVEN),
                         new Card(Symbol.DIAMOND, Type.JACK),
                         new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.CLOVER, Type.EIGHT)                )
+                        new Card(Symbol.CLOVER, Type.EIGHT))
         ));
         dealer = new Dealer();
     }

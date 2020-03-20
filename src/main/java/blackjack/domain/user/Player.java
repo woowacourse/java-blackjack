@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.user.User;
 
 import java.util.List;
 
@@ -35,12 +38,11 @@ public class Player extends User {
 
     @Override
     public List<Card> getInitialCards() {
-        return cards.getCards()
-                .subList(START_INDEX, COUNT_OF_INITIAL_OPEN_CARDS);
+        return cards.subList(START_INDEX, COUNT_OF_INITIAL_OPEN_CARDS);
     }
 
     @Override
     public boolean isReceivableOneMoreCard() {
-        return cards.isStatusNone();
+        return this.cards.isNotBlackJack() && this.cards.isNotBust();
     }
 }

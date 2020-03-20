@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.*;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,13 +27,13 @@ public class CardsTest {
                 )
         ));
         cards = new Cards();
-        cards.receiveInitialCards(cardDeck);
+        cards.addInitialCards(cardDeck);
     }
 
     @DisplayName("현재 보유 중인 카드의 총 점수 확인")
     @Test
     void currentScoreTest() {
-        int score = cards.calculateScore();
+        int score = cards.getScore();
         assertThat(score).isEqualTo(19);
     }
 }

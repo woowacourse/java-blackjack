@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.PlayerResult;
+import blackjack.domain.card.Card;
 
 import java.util.List;
 
@@ -15,10 +18,14 @@ public class Dealer extends User {
         return DEALER_CRITICAL_SCORE;
     }
 
+    public Integer calculatePlayerProfit(Player player) {
+        PlayerResult playerResult = PlayerResult.of(this.cards, player.getCards());
+        return playerResult.calculateProfit(player.getBettingMoney());
+    }
+
     @Override
     public List<Card> getInitialCards() {
-        return cards.getCards()
-                .subList(START_INDEX, COUNT_OF_INITIAL_OPEN_CARDS);
+        return cards.subList(START_INDEX, COUNT_OF_INITIAL_OPEN_CARDS);
     }
 
     @Override

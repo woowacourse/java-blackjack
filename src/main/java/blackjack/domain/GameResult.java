@@ -1,6 +1,10 @@
 package blackjack.domain;
 
-import blackjack.domain.strategy.DealerStatusStrategy;
+
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 
 import java.util.*;
 
@@ -16,11 +20,9 @@ public class GameResult {
     public static GameResult calculateGameResult(Dealer dealer, Players players) {
         Map<User, Integer> result = new LinkedHashMap<>();
         result.put(dealer, DEFAULT_DEALER_PROFIT);
-        players.getPlayers()
-                .forEach(player ->
-                        result.put(player, calculateResultByDealerStatusStrategy(dealer, player)
-                                .calculateProfit(player.getBettingMoney()))
-                );
+        for (Player player : players.getPlayers()) {
+            result.put(player, dealer.calculatePlayerProfit(player));
+        }
         result.put(dealer, calculateDealerProfit(result));
         return new GameResult(result);
     }
@@ -30,11 +32,6 @@ public class GameResult {
                 .stream()
                 .mapToInt(result::get)
                 .sum();
-    }
-
-    private static PlayerResult calculateResultByDealerStatusStrategy(Dealer dealer, Player player) {
-        DealerStatusStrategy dealerStatusStrategy = dealer.getStatus().getDealerStatusStrategy();
-        return dealerStatusStrategy.calculateResultByPlayerStatus(dealer, player);
     }
 
     public Map<User, Integer> getGameResult() {

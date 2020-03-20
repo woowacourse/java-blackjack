@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Symbol;
-import blackjack.domain.Type;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
