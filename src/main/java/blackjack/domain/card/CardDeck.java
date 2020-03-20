@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class CardDeck {
-    static final int NUMBER_OF_FIRST_CARDS = 2;
+    public static final int NUMBER_OF_FIRST_CARDS = 2;
     private final Queue<Card> cards;
 
     public CardDeck() {

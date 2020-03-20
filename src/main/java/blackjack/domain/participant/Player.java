@@ -1,9 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.ResultRule;
 import blackjack.domain.result.ResultType;
-
-import static blackjack.domain.result.ResultType.BUST;
 
 public class Player extends Participant {
     private static final String YES = "y";
@@ -16,11 +15,11 @@ public class Player extends Participant {
 
     @Override
     public boolean canGetMoreCard() {
-        return cards.computeScore() < BUST;
+        return !ResultRule.isBust(cards);
     }
 
     public PlayerResult createPlayerResult(Dealer dealer) {
-        ResultType resultType = ResultType.findResult(getCards(), dealer.getCards());
+        ResultType resultType = ResultRule.findResult(getCards(), dealer.getCards());
         return new PlayerResult(this, resultType);
     }
 

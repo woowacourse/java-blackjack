@@ -18,7 +18,7 @@ class PlayerTest {
 
     @DisplayName("카드를 더 받을 수 있는지 확인")
     @ParameterizedTest
-    @CsvSource(value = {"FIVE, true", "SIX, false", "ACE, true"})
+    @CsvSource(value = {"SIX, true", "SEVEN, false", "ACE, true"})
     void test1(Type type, boolean expected) {
         Player player = new Player(new Name("포비"));
         player.addCard(Card.of(Type.TEN, Figure.CLOVER));
