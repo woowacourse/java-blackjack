@@ -27,8 +27,9 @@ public class Dealer extends User {
     public Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
         if (dealerLose(result)) {
             return result.calculateProfit(bettingMoneyOfPlayer).multiply(LOSE_PENALTY_RATE);
+        } else {
+            return result.calculateProfit(bettingMoneyOfPlayer);
         }
-        return result.calculateProfit(bettingMoneyOfPlayer);
     }
 
     public int confirmCards() {

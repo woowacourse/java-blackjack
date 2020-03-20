@@ -24,15 +24,14 @@ class CardsTest {
         assertThat(Cards.of(validCards)).isNotNull();
     }
 
-    //todo: refactor
-//    @Test
-//    @DisplayName("#input() : should throw IllegalArguemntException with cards which size is smaller than MIN_SIZE")
-//    void ofInvalidSize() {
-//        List<Card> invalidCards = Collections.emptyList();
-//        assertThatThrownBy(() -> Cards.of(invalidCards))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage(Cards.INVALID_SIZE_MESSAGE);
-//    }
+    @Test
+    @DisplayName("#input() : should throw IllegalArguemntException with cards which size is smaller than MIN_SIZE")
+    void ofInvalidSize() {
+        List<Card> invalidCards = Collections.emptyList();
+        assertThatThrownBy(() -> Cards.of(invalidCards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Cards.INVALID_SIZE_MESSAGE);
+    }
 
     @Test
     @DisplayName("#add() : should add Card")

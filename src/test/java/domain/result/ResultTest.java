@@ -3,6 +3,7 @@ package domain.result;
 import domain.user.Money;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Profit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -44,8 +45,11 @@ class ResultTest {
     @DisplayName("#calculateProfit() : should return profit")
     void calculateProfit(Result result) {
         Money money = mock(Money.class);
-        result.calculateProfit(money);
-        verify(money).multiply(anyDouble());
+        when(money.multiply(anyDouble())).thenReturn(money);
+
+        Profit profit = result.calculateProfit(money);
+        assertThat(profit).isEqualTo(new Profit(money));
+
     }
 
     private static Stream<Arguments> getCasesForTesingCalculateProfit() {

@@ -21,9 +21,10 @@ class DealerTest {
     Deck deck = mock(Deck.class);
 
     @Test
-    @DisplayName("첫턴에 딜러는 2장의 카드를 받는다.")
+    @DisplayName("#shuffle() : should return Dealer")
     void construct() {
-                new Card(Symbol.TEN, Type.HEART);
+        when(deck.shuffle()).thenReturn(deck);
+        new Card(Symbol.TEN, Type.HEART);
         assertThat(Dealer.shuffle(deck)).isNotNull();
     }
 
@@ -31,6 +32,7 @@ class DealerTest {
     @DisplayName("#hit() : should add card without return")
     void hit() {
         //given
+        when(deck.shuffle()).thenReturn(deck);
         when(deck.pop())
                 .thenReturn(new Card(Symbol.QUEEN, Type.SPADE))
                 .thenReturn(new Card(Symbol.QUEEN, Type.CLOVER));
@@ -48,6 +50,7 @@ class DealerTest {
     @DisplayName("#confirmCards : should add cards for given times without return")
     void confirmCards() {
         //given
+        when(deck.shuffle()).thenReturn(deck);
         when(deck.pop())
                 .thenReturn(new Card(Symbol.QUEEN, Type.SPADE))
                 .thenReturn(new Card(Symbol.KING, Type.SPADE));
@@ -63,34 +66,33 @@ class DealerTest {
         assertThat(dealer.countCards()).isEqualTo(defaultSizeOfCards + hitSize);
     }
 
-//    @ParameterizedTest
-//    @MethodSource({"getResultsForCalculateProfit"})
-//    void calculateProfit(Result result) {
-//        Money bettingMoney = mock(Money.class);
-//        //todo: refac multiply mocking logic
-//        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-//        Dealer dealer = Dealer.shuffle(mock(Deck.class));
-//        //when
-//        Money profit = dealer.calculateProfit(result, bettingMoney);
-//        assertThat(profit).isEqualTo(bettingMoney);
-//        verifyCalculateProfit(result, bettingMoney);
-//
-//    }
+    @ParameterizedTest
+    @MethodSource({"getResultsForCalculateProfit"})
+    void calculateProfit(Result result, int rate) {
+        //given
+        Money bettingMoney = mock(Money.class);
+        double valueOfBettingMoney = 10;
+        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
+        when(bettingMoney.getValue()).thenReturn(valueOfBettingMoney);
+        Profit expectedProfit = mock(Profit.class);
+        when(expectedProfit.multiply((int) valueOfBettingMoney)).thenReturn(expectedProfit);
+        Deck deck = mock(Deck.class);
+        when(deck.shuffle()).thenReturn(deck);
+        Dealer dealer = Dealer.shuffle(deck);
+        //when
+        Profit actualProfit = dealer.calculateProfit(result, bettingMoney);
+        //then
+        assertThat(actualProfit).isEqualTo(new Profit(((int) valueOfBettingMoney) * rate));
+        verify(bettingMoney).multiply(anyDouble());
 
-    private void verifyCalculateProfit(Result result, Money bettingMoney) {
-        if (result.equals(Result.PLAYER_WIN_WITH_BLACKJACK) || result.equals(Result.PLAYER_WIN_WITHOUT_BLACKJACk)) {
-            verify(bettingMoney, times(2)).multiply(anyDouble());
-        } else {
-            verify(bettingMoney, times(1)).multiply(anyDouble());
-        }
     }
 
     private static Stream<Arguments> getResultsForCalculateProfit() {
         return Stream.of(
-                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK),
-                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk),
-                Arguments.of(Result.DRAW),
-                Arguments.of(Result.DEALER_WIN)
+                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK, -1),
+                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk, -1),
+                Arguments.of(Result.DRAW, 1),
+                Arguments.of(Result.DEALER_WIN, 1)
         );
     }
 
