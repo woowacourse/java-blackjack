@@ -16,7 +16,7 @@ public class Cards {
     }
 
     Cards(Cards cards) {
-        this(cards.getCards());
+        this(cards.cards);
     }
 
     static Cards of(List<Card> cards) {
@@ -25,10 +25,6 @@ public class Cards {
 //            throw new IllegalArgumentException(INVALID_SIZE_MESSAGE);
 //        }
         return new Cards(cards);
-    }
-
-    private List<Card> getCards() {
-        return cards;
     }
 
     public int size() {
@@ -41,7 +37,7 @@ public class Cards {
     }
 
     protected Cards add(Cards cards) {
-        this.cards.addAll(cards.getCards());
+        this.cards.addAll(cards.cards);
         return of(this.cards);
     }
 
@@ -56,7 +52,7 @@ public class Cards {
         }
 
         int sum = 0;
-        for (Card card : cards.getCards()) {
+        for (Card card : cards.cards) {
             sum += card.calculateExceptAce();
         }
         return sum;
@@ -78,7 +74,7 @@ public class Cards {
         if (aces.hasCardNotAce()) {
             throw new InvalidStateException("복수의 에이스 카드 내에 부적절한 카드가 존해합니다.");
         }
-        for (Card card : aces.getCards()) {
+        for (Card card : aces.cards) {
             int score = card.calculate(sum);
             sum += score;
         }
