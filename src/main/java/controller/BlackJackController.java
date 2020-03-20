@@ -6,6 +6,7 @@ import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import domain.user.PlayersFactory;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -34,7 +35,7 @@ public class BlackJackController {
     private static Players readPlayers() {
         List<String> playerNames = InputView.readPlayerNames();
         List<Integer> betAmounts = InputView.readBetAmounts(playerNames);
-        return new Players(playerNames, betAmounts);
+        return PlayersFactory.create(playerNames, betAmounts);
     }
 
     private static void doFirstDeal(Players players, Dealer dealer, Deck deck) {

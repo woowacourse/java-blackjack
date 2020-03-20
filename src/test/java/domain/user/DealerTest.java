@@ -70,7 +70,8 @@ public class DealerTest {
         Map<Result, Integer> expected = makeDealerResultMap(0, 1, 1);
 
         Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
+        Players players = PlayersFactory
+            .create(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
 
         makePlayerScoreBlackJack(players.getPlayers().get(0));    // 딜러를 이김
         makePlayerScoreEighteen(players.getPlayers().get(1));     // 딜러와 비김
@@ -84,7 +85,7 @@ public class DealerTest {
     void calculateRevenueAboutOnePlayer() {
         Dealer dealer = new Dealer();
         Player player = new Player("히히", 10_000);
-        Players players = new Players(Collections.singletonList("오렌지"),
+        Players players = PlayersFactory.create(Collections.singletonList("오렌지"),
             Collections.singletonList(10_000));
 
         makePlayerScoreBlackJack(player);
@@ -97,7 +98,8 @@ public class DealerTest {
     @DisplayName("모든 플레이어들에 대한 딜러의 수익 계산")
     void calculateTotalRevenue() {
         Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
+        Players players = PlayersFactory
+            .create(Arrays.asList("오렌지", "히히"), Arrays.asList(5_000, 8_000));
 
         makePlayerScoreBlackJack(players.getPlayers().get(0));
         makePlayerScoreEighteen(players.getPlayers().get(1));
