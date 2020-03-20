@@ -57,7 +57,7 @@ public class BlackJackApplication {
     }
 
     private static void drawMorePlayerCardManual(CardDeck cardDeck, Player player) {
-        while (player.canDrawCard() && YesOrNo.of(InputView.inputMoreCard(player)) == YesOrNo.YES) {
+        while (player.canDrawCard() && YesOrNo.of(InputView.inputMoreCard(player)).isYes()) {
             player.drawCard(cardDeck);
             OutputView.printPlayerCards(player);
         }

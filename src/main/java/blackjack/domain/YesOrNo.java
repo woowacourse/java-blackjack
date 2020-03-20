@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public enum YesOrNo {
     YES('y'),
@@ -16,12 +17,20 @@ public enum YesOrNo {
     }
 
     public static YesOrNo of(String input) {
-        if (input == null || input.length() != VALUE_LENGTH) {
-            throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
-        }
+        validationInput(input);
         return Arrays.stream(YesOrNo.values())
             .filter(yesOrNo -> yesOrNo.value == input.toLowerCase().charAt(0))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
+    }
+
+    private static void validationInput(String input) {
+        if (Objects.isNull(input) || input.length() != VALUE_LENGTH) {
+            throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
+        }
+    }
+
+    public boolean isYes() {
+        return this == YES;
     }
 }

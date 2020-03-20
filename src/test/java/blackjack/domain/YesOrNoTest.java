@@ -5,23 +5,34 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class YesOrNoTest {
 
-    @Test
-    @DisplayName("y면 true, n면 false 리턴 테스트")
-    void isYes() {
-        assertThat(YesOrNo.of("y")).isEqualTo(YesOrNo.YES);
-        assertThat(YesOrNo.of("Y")).isEqualTo(YesOrNo.YES);
-        assertThat(YesOrNo.of("n")).isEqualTo(YesOrNo.NO);
-        assertThat(YesOrNo.of("N")).isEqualTo(YesOrNo.NO);
+    @DisplayName("생성자 대소문자 치환 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"y, Y", "n, N"})
+    void of_LowerAndUpperCase_Equals(String lower, String upper) {
+        assertThat(YesOrNo.of(lower)).isEqualTo(YesOrNo.of(upper));
     }
 
-    @Test
     @DisplayName("생성자 예외 테스트")
-    void of() {
-        assertThatThrownBy(() -> YesOrNo.of("yes"))
+    @ParameterizedTest
+    @ValueSource(strings = {"", "yes", "y "})
+    @NullSource
+    void of_NotYN_ExceptionThrown(String input) {
+        assertThatThrownBy(() -> YesOrNo.of(input))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("유효");
+    }
+
+    @DisplayName("Yes는 isYes True, No는 isYes False 리턴")
+    @Test
+    void isYes_YesOrNo_YesTrueNoFalse() {
+        assertThat(YesOrNo.of("y").isYes()).isTrue();
+        assertThat(YesOrNo.of("n").isYes()).isFalse();
     }
 }
