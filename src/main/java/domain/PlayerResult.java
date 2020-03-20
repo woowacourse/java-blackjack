@@ -8,13 +8,9 @@ import domain.participant.Name;
 import domain.participant.Player;
 
 public class PlayerResult {
-	private Map<Name, Double> playerResult;
+	private Map<Name, Double> playerResult = new HashMap<>();
 
-	public PlayerResult() {
-		playerResult = new HashMap<>();
-	}
-
-	public void deduceResult(GameParticipant participant) {
+	public PlayerResult(GameParticipant participant) {
 		Dealer dealer = participant.getDealer();
 		Players players = participant.getPlayers();
 		for (Player player : players.getPlayers()) {
