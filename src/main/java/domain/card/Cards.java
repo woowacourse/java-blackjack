@@ -16,7 +16,7 @@ public class Cards {
     }
 
     Cards(Cards cards) {
-        this.cards = cards.getCards();
+        this(cards.getCards());
     }
 
     static Cards of(List<Card> cards) {
@@ -25,10 +25,6 @@ public class Cards {
 //            throw new IllegalArgumentException(INVALID_SIZE_MESSAGE);
 //        }
         return new Cards(cards);
-    }
-
-    static Cards of(Cards cards) {
-        return of(cards.getCards());
     }
 
     private List<Card> getCards() {
@@ -98,7 +94,6 @@ public class Cards {
         return Cards.of(cards);
     }
 
-    //todo: 테스트 추가
     private Cards getAces() {
         List<Card> aces = this.cards.stream().filter(Card::isAce).collect(Collectors.toList());
         if (aces.isEmpty()) {

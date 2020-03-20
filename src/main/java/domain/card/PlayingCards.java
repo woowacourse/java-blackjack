@@ -43,10 +43,6 @@ public class PlayingCards extends Cards {
         return BLACK_JACK < calculate();
     }
 
-    public boolean isNotBust() {
-        return calculate() <= BLACK_JACK;
-    }
-
 
     @Override
     public boolean equals(Object o) {

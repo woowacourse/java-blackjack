@@ -1,8 +1,6 @@
 package domain.result;
 
 import domain.user.Money;
-import domain.user.Dealer;
-import domain.user.Player;
 import domain.user.User;
 
 public enum Result {

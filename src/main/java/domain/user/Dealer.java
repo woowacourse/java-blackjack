@@ -14,12 +14,13 @@ public class Dealer extends User {
     private static final int STANDARD_TO_HIT = 17;
     private Deck deck;
 
-    public Dealer(Deck deck) {
+    private Dealer(Deck deck) {
         super(deck.popInitCards(), NAME);
         this.deck = deck;
     }
 
     public static Dealer start(Deck deck) {
+        //todo check if should deck shuffle
         return new Dealer(deck);
     }
 
@@ -30,7 +31,6 @@ public class Dealer extends User {
         return result.calculateProfit(bettingMoneyOfPlayer);
     }
 
-    //todo: refac function name
     public int confirmCards() {
         int count = 0;
         while (canHit()) {

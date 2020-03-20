@@ -25,11 +25,11 @@ public enum Symbol {
         this.calculator = calculator;
     }
 
-    public int getValue() {
+    int getValue() {
         return value;
     }
 
-    public String getPattern() {
+    String getPattern() {
         return pattern;
     }
 
@@ -37,7 +37,7 @@ public enum Symbol {
         return calculator.calculate(sum);
     }
 
-    interface SymbolCalculator {
+    private interface SymbolCalculator {
         int calculate(int sum);
     }
 

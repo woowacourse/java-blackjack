@@ -12,7 +12,7 @@ public enum Type {
         this.pattern = pattern;
     }
 
-    public String getPattern() {
+    String getPattern() {
         return pattern;
     }
 }
