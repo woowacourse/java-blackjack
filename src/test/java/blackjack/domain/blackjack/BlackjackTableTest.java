@@ -5,19 +5,19 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.result.BettingMoney;
+import blackjack.domain.exceptions.InvalidBlackjackTableException;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -26,7 +26,6 @@ class BlackjackTableTest {
 	private Deck deck;
 	private Dealer dealer;
 	private List<Player> players;
-	private Map<Player, BettingMoney> playersBettingMoney;
 
 	@BeforeEach
 	void setUp() {
@@ -38,21 +37,29 @@ class BlackjackTableTest {
 		Player sony = new Player("sony");
 		Player stitch = new Player("stitch");
 		players = Arrays.asList(pobi, sony, stitch);
-
-		playersBettingMoney = new LinkedHashMap<>();
-		playersBettingMoney.put(pobi, new BettingMoney(1000));
-		playersBettingMoney.put(sony, new BettingMoney(5000));
-		playersBettingMoney.put(stitch, new BettingMoney(10000));
 	}
 
 	@Test
 	void BlackjackTable_InputDeck_GenerateInstance() {
-		assertThat(new BlackjackTable(deck, dealer, players, playersBettingMoney)).isInstanceOf(BlackjackTable.class);
+		assertThat(new BlackjackTable(deck, dealer, players)).isInstanceOf(BlackjackTable.class);
+	}
+
+	@Test
+	void validate_NullSource_InvalidBlackjackTableExceptionThrown() {
+		assertThatThrownBy(() -> new BlackjackTable(null, dealer, players))
+			.isInstanceOf(InvalidBlackjackTableException.class)
+			.hasMessageEndingWith(InvalidBlackjackTableException.DECK_OR_DEALER_NULL);
+		assertThatThrownBy(() -> new BlackjackTable(deck, null, players))
+			.isInstanceOf(InvalidBlackjackTableException.class)
+			.hasMessageEndingWith(InvalidBlackjackTableException.DECK_OR_DEALER_NULL);
+		assertThatThrownBy(() -> new BlackjackTable(deck, dealer, null))
+			.isInstanceOf(InvalidBlackjackTableException.class)
+			.hasMessageEndingWith(InvalidBlackjackTableException.PLAYERS_EMPTY);
 	}
 
 	@Test
 	void dealInitialHand_DealerAndPlayer_DrawInitialCardsForEachUsers() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 		blackjackTable.dealInitialHand();
 
 		for (User user : blackjackTable.collectUsers()) {
@@ -62,7 +69,7 @@ class BlackjackTableTest {
 
 	@Test
 	void collectUsers_DealerAndPlayers_ReturnUserList() {
-		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players, playersBettingMoney);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		List<User> expected = new ArrayList<>();
 		expected.add(dealer);
@@ -75,12 +82,12 @@ class BlackjackTableTest {
 		Dealer blackjackDealer = Dealer.valueOf(Dealer.NAME, Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.ACE, Type.SPADE)));
-		BlackjackTable blackjackTable = new BlackjackTable(deck, blackjackDealer, players, playersBettingMoney);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, blackjackDealer, players);
 
 		assertThat(blackjackTable.isDealerBlackjack()).isTrue();
 	}
 
-	// NOTE : 2020-03-17 리뷰어에게 테스트 작성에 대해 물어보기
+	// TODO: 2020-03-20 canDraw 수정 후, 다시 테스트 돌리기
 	@Test
 	void playWith_UserDecisions_PlayGameWithUserDecisions() {
 		Dealer drownDealer = Dealer.valueOf("dealer", Arrays.asList(
@@ -100,7 +107,7 @@ class BlackjackTableTest {
 				Card.of(Symbol.TEN, Type.CLUB),
 				Card.of(Symbol.ACE, Type.SPADE),
 				Card.of(Symbol.KING, Type.DIAMOND))));
-		BlackjackTable blackjackTable = new BlackjackTable(deck, drownDealer, drownPlayers, playersBettingMoney);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, drownDealer, drownPlayers);
 		UserDecisions userDecisions = new UserDecisions(
 			(Player player) -> "y",
 			(User user, List<Card> cards) -> System.out.println(),
@@ -110,5 +117,15 @@ class BlackjackTableTest {
 		for (User user : blackjackTable.collectUsers()) {
 			assertThat(user).extracting("hand").asList().hasSize(4);
 		}
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_NullUserDecisions_NullPointerExceptionThrown(UserDecisions value) {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+
+		assertThatThrownBy(() -> blackjackTable.playWith(value))
+			.isInstanceOf(InvalidBlackjackTableException.class)
+			.hasMessage(InvalidBlackjackTableException.USER_DECISIONS_NULL);
 	}
 }

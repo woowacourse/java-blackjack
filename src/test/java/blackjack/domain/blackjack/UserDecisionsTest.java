@@ -24,20 +24,35 @@ class UserDecisionsTest {
 	}
 
 	@Test
-	void validate_NullSource_InvalidUserDecisionsExceptionThrown() {
+	void validate_NullConstructorArguments_InvalidUserDecisionsExceptionThrown() {
 		Function<Player, String> choice = (Player player) -> "y";
 		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
 		Runnable showDealerHitStatus = () -> System.out.println("test");
 
 		assertThatThrownBy(() -> new UserDecisions(null, showHandStatus, showDealerHitStatus))
 			.isInstanceOf(InvalidUserDecisionsException.class)
-			.hasMessage(InvalidUserDecisionsException.NULL);
+			.hasMessage(InvalidUserDecisionsException.USER_DECISIONS_NULL);
 		assertThatThrownBy(() -> new UserDecisions(choice, null, showDealerHitStatus))
 			.isInstanceOf(InvalidUserDecisionsException.class)
-			.hasMessage(InvalidUserDecisionsException.NULL);
+			.hasMessage(InvalidUserDecisionsException.USER_DECISIONS_NULL);
 		assertThatThrownBy(() -> new UserDecisions(choice, showHandStatus, null))
 			.isInstanceOf(InvalidUserDecisionsException.class)
-			.hasMessage(InvalidUserDecisionsException.NULL);
+			.hasMessage(InvalidUserDecisionsException.USER_DECISIONS_NULL);
+	}
+
+	@Test
+	void validate_NullPlayer_InvalidUserDecisionsExceptionThrown() {
+		Function<Player, String> choice = (Player player) -> "y";
+		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
+		Runnable showDealerHitStatus = () -> System.out.println("test");
+		UserDecisions userDecisions = new UserDecisions(choice, showHandStatus, showDealerHitStatus);
+
+		assertThatThrownBy(() -> userDecisions.isHit(null))
+			.isInstanceOf(InvalidUserDecisionsException.class)
+			.hasMessage(InvalidUserDecisionsException.PLAYER_NULL);
+		assertThatThrownBy(() -> userDecisions.showHandStatus(null))
+			.isInstanceOf(InvalidUserDecisionsException.class)
+			.hasMessage(InvalidUserDecisionsException.PLAYER_NULL);
 	}
 
 	@Test

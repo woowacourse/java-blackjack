@@ -15,8 +15,8 @@ public class UserDecisions {
 	private final BiConsumer<User, List<Card>> handStatus;
 	private final Runnable dealerChoice;
 
-	public UserDecisions(
-		Function<Player, String> choice, BiConsumer<User, List<Card>> handStatus, Runnable dealerChoice) {
+	public UserDecisions(Function<Player, String> choice, BiConsumer<User, List<Card>> handStatus,
+		Runnable dealerChoice) {
 		validate(choice, handStatus, dealerChoice);
 		this.choice = choice;
 		this.handStatus = handStatus;
@@ -26,17 +26,25 @@ public class UserDecisions {
 	private void validate(Function<Player, String> choice, BiConsumer<User, List<Card>> handStatus,
 		Runnable dealerChoice) {
 		if (Objects.isNull(choice) || Objects.isNull(handStatus) || Objects.isNull(dealerChoice)) {
-			throw new InvalidUserDecisionsException(InvalidUserDecisionsException.NULL);
+			throw new InvalidUserDecisionsException(InvalidUserDecisionsException.USER_DECISIONS_NULL);
 		}
 	}
 
 	public boolean isHit(Player player) {
+		validate(player);
 		return Choice.of(choice.apply(player))
 			.isHit();
 	}
 
 	public void showHandStatus(Player player) {
+		validate(player);
 		handStatus.accept(player, player.getHand());
+	}
+
+	private void validate(Player player) {
+		if (Objects.isNull(player)) {
+			throw new InvalidUserDecisionsException(InvalidUserDecisionsException.PLAYER_NULL);
+		}
 	}
 
 	public void showDealerHitStatus() {
