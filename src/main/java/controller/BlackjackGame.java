@@ -31,31 +31,26 @@ public class BlackjackGame {
         this.userInterface = userInterface;
     }
 
-    //todo: refac
     public void play() {
-        //shuffle
         Dealer dealer = Dealer.shuffle(deck);
-
-        //join
-        PlayersDto inputPlayersDto = userInterface.inputPlayers();
-        Players players = Players.join(inputPlayersDto, userInterface);
+        Players players = Players.join(userInterface);
         BlackjackService blackjackService = BlackjackService.start(dealer, matchRule);
-        players = blackjackService.distributeInitCards(players);
-        OutputView.printInitGame(dealer.serialize(), players.serialize());
-        players = blackjackService.confirmCardsOfPlayers(players);
-
-        int countOfHit = blackjackService.confirmCardsOfDealer();
-        OutputView.printDealerHit(dealer.serialize(), countOfHit);
-
+        players = distributeInitCards(dealer, players, blackjackService);
+        players = confirmCards(dealer, players, blackjackService);
         Profit dealerProfit = blackjackService.match(players);
         OutputView.printResult(dealer.serialize(dealerProfit), players.serialize());
+    }
 
-//        //summarize
-//        PlayersDto playersDtoToShow = PlayersDto.of(playerDtos);
-//        DealerDto dealerDto = dealer.serialize(sumOfDealerProfit);
-//
-//        OutputView.printDealerHit(dealerDto, countOfHit);
-//        OutputView.printResult(dealerDto, playersDtoToShow);
+    private Players confirmCards(Dealer dealer, Players players, BlackjackService blackjackService) {
+        players = blackjackService.confirmCardsOfPlayers(players);
+        int countOfHit = blackjackService.confirmCardsOfDealer();
+        OutputView.printDealerHit(dealer.serialize(), countOfHit);
+        return players;
+    }
 
+    private Players distributeInitCards(Dealer dealer, Players players, BlackjackService blackjackService) {
+        players = blackjackService.distributeInitCards(players);
+        OutputView.printInitGame(dealer.serialize(), players.serialize());
+        return players;
     }
 }

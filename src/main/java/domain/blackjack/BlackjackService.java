@@ -1,9 +1,7 @@
 package domain.blackjack;
 
 import domain.result.MatchRule;
-import domain.result.Results;
 import domain.user.Dealer;
-import domain.user.Money;
 import domain.user.Players;
 import domain.user.Profit;
 

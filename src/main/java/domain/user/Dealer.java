@@ -24,7 +24,7 @@ public class Dealer extends User {
         return new Dealer(deck.shuffle());
     }
 
-    public Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
+    Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
         if (dealerLose(result)) {
             return result.calculateProfit(bettingMoneyOfPlayer).multiply(LOSE_PENALTY_RATE);
         } else {

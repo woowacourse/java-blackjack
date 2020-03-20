@@ -27,7 +27,8 @@ public class Players {
     }
 
 
-    public static Players join(PlayersDto playersDto, UserInterface userInterface) {
+    public static Players join(UserInterface userInterface) {
+        PlayersDto playersDto = userInterface.inputPlayers();
         List<Player> players = new ArrayList<>();
         for (PlayerDto playerDto : playersDto.getPlayerDtos()) {
             Player player = Player.join(playerDto);
