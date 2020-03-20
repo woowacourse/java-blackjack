@@ -39,8 +39,8 @@ public class Players {
         return new Players(players, userInterface);
     }
 
-    private static Players update(List<Player> players) {
-        return new Players(players);
+    private static Players update(List<Player> players, UserInterface userInterface) {
+        return new Players(players, userInterface);
 
     }
 
@@ -56,7 +56,7 @@ public class Players {
             }
         }
 
-        return update(players);
+        return update(players, userInterface);
     }
 
     public Results match(Dealer dealer, MatchRule matchRule) {
@@ -92,10 +92,11 @@ public class Players {
     }
 
     public Players receiveInitCards(Dealer dealer) {
-        for (Player player : players) {
+        List<Player> players = new ArrayList<>();
+        for (Player player : this.players) {
             PlayingCards initCards = dealer.passInitCards();
-            player.receiveInitCards(initCards);
+            players.add(player.receiveInitCards(initCards));
         }
-        return Players.update(players);
+        return Players.update(players, userInterface);
     }
 }

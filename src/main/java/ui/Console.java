@@ -16,6 +16,7 @@ public class Console implements UserInterface {
 
     @Override
     public String inputWantToHit(String playerName) {
+        InputView.printRequestWantToHit(playerName);
         return scanner.nextLine();
     }
 

@@ -43,10 +43,10 @@ public class BlackjackGame {
         PlayersDto inputPlayersDto = userInterface.inputPlayers();
         Players players = Players.join(inputPlayersDto, userInterface);
         BlackjackService blackjackService = BlackjackService.start(dealer, matchRule);
-
+        players = blackjackService.distributeInitCards(players);
         OutputView.printInitGame(dealer.serialize(), players.serialize());
-
         players = blackjackService.confirmCardsOfPlayers(players);
+
         int countOfHit = blackjackService.confirmCardsOfDealer();
 
         Results results = blackjackService.match(players);

@@ -60,6 +60,7 @@ public class Player extends User {
     public PlayerDto serialize(PlayerDto playerDto) {
         playerDto.setName(name);
         playerDto.setBettingMoney(bettingMoney.serialize());
+        playerDto.setCards(playingCards.serialize());
         return playerDto;
     }
 
