@@ -50,8 +50,8 @@ public class GamblersTest {
     @DisplayName("플레이어들의 이름들을 받아오는 테스트")
     @Test
     void getPlayerNames() {
-        assertThat(gamblers.getPlayerNames().get(0)).isEqualTo("jamie1");
-        assertThat(gamblers.getPlayerNames().get(1)).isEqualTo("jamie2");
+        assertThat(gamblers.getGamblesNames().get(0)).isEqualTo("jamie1");
+        assertThat(gamblers.getGamblesNames().get(1)).isEqualTo("jamie2");
     }
 
     @DisplayName("플레이어 카드가 없다면 가져올 때 예외 발생")

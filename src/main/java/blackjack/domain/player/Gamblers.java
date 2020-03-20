@@ -42,7 +42,7 @@ public final class Gamblers {
         return gamblers;
     }
 
-    public List<String> getPlayerNames() {
+    public List<String> getGamblesNames() {
         return Collections.unmodifiableList(gamblers.stream()
             .map(Gambler::getName)
             .map(Name::toString)

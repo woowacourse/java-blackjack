@@ -14,7 +14,7 @@ public class OutputView {
     public static void printCardDistribution(Dealer dealer, Gamblers gamblers) {
         System.out.println();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(),
-            String.join(", ", gamblers.getPlayerNames()));
+            String.join(", ", gamblers.getGamblesNames()));
         System.out.println();
     }
 
@@ -28,13 +28,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerCards(Gambler gambler) {
-        System.out.println(getPlayerCardsInfos(gambler, gambler.getCardsInfos()));
-    }
-
     private static <T extends Player> String getPlayerCardsInfos(T player,
         List<String> cardsInfos) {
         return String.format("%s: %s", player.getName(), String.join(", ", cardsInfos));
+    }
+
+    public static void printGamblerCards(Gambler gambler) {
+        System.out.println(getPlayerCardsInfos(gambler, gambler.getCardsInfos()));
     }
 
     public static void printDealerOneMoreCard(Dealer dealer) {
@@ -43,15 +43,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printUsersCardsAndScore(Dealer dealer, Gamblers gamblers) {
+    public static void printCardsInfosAndResult(Dealer dealer, Gamblers gamblers) {
         System.out.println();
-        printUserCardsAndScore(dealer);
+        printPlayerCardsInfosAndResult(dealer);
         for (Gambler gambler : gamblers.getGamblers()) {
-            printUserCardsAndScore(gambler);
+            printPlayerCardsInfosAndResult(gambler);
         }
     }
 
-    private static <T extends Player> void printUserCardsAndScore(T player) {
+    private static <T extends Player> void printPlayerCardsInfosAndResult(T player) {
         CardsResult playerResult = player.getCardsResult();
         System.out.printf("%s - 결과: %s", getPlayerCardsInfos(player, player.getCardsInfos()),
             playerResult.getResult());

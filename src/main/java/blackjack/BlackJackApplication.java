@@ -61,7 +61,7 @@ public class BlackJackApplication {
     private static void drawMorePlayerCardManual(CardDeck cardDeck, Gambler gambler) {
         while (gambler.canDraw() && CardDraw.of(InputView.inputMoreCard(gambler)).isYes()) {
             gambler.drawCard(cardDeck);
-            OutputView.printPlayerCards(gambler);
+            OutputView.printGamblerCards(gambler);
         }
     }
 
@@ -74,7 +74,7 @@ public class BlackJackApplication {
 
     private static void printCalculatedResult(Dealer dealer, Gamblers gamblers) {
         GameResult gameResult = new GameResult(dealer, gamblers);
-        OutputView.printUsersCardsAndScore(dealer, gamblers);
+        OutputView.printCardsInfosAndResult(dealer, gamblers);
         OutputView.printFinalResult(gameResult);
     }
 }
