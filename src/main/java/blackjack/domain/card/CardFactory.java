@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -26,8 +25,7 @@ public class CardFactory {
 	}
 
 	static Card pickUp(Symbol symbol, Type type) {
-		return Optional.ofNullable(CARD_CACHE.get(Card.name(symbol, type)))
-			.orElse(new Card(symbol, type));
+		return CARD_CACHE.getOrDefault(Card.name(symbol, type), new Card(symbol, type));
 	}
 
 	public static List<Card> create() {

@@ -9,6 +9,7 @@ public class Card {
 	private final Type type;
 
 	Card(Symbol symbol, Type type) {
+		validate(symbol, type);
 		this.symbol = symbol;
 		this.type = type;
 	}
@@ -16,6 +17,11 @@ public class Card {
 	public static Card of(Symbol symbol, Type type) {
 		validate(symbol, type);
 		return CardFactory.pickUp(symbol, type);
+	}
+
+	static String name(Symbol symbol, Type type) {
+		validate(symbol, type);
+		return symbol.toString() + type.toString();
 	}
 
 	private static void validate(Symbol symbol, Type type) {
@@ -26,11 +32,6 @@ public class Card {
 
 	public boolean isAce() {
 		return symbol.isAce();
-	}
-
-	static String name(Symbol symbol, Type type) {
-		validate(symbol, type);
-		return symbol.toString() + type.toString();
 	}
 
 	public int getScore() {

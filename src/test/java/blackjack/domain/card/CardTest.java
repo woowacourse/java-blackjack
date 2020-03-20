@@ -17,6 +17,9 @@ class CardTest {
 	@ParameterizedTest
 	@NullSource
 	void validate_NullSymbol_InvalidCardExceptionThrown(Symbol nullSymbol) {
+		assertThatThrownBy(() -> new Card(nullSymbol, Type.DIAMOND))
+			.isInstanceOf(InvalidCardException.class)
+			.hasMessage(InvalidCardException.NULL);
 		assertThatThrownBy(() -> Card.of(nullSymbol, Type.DIAMOND))
 			.isInstanceOf(InvalidCardException.class)
 			.hasMessage(InvalidCardException.NULL);
@@ -25,9 +28,17 @@ class CardTest {
 	@ParameterizedTest
 	@NullSource
 	void validate_NullType_InvalidCardExceptionThrown(Type nullType) {
+		assertThatThrownBy(() -> new Card(Symbol.TEN, nullType))
+			.isInstanceOf(InvalidCardException.class)
+			.hasMessage(InvalidCardException.NULL);
 		assertThatThrownBy(() -> Card.of(Symbol.TEN, nullType))
 			.isInstanceOf(InvalidCardException.class)
 			.hasMessage(InvalidCardException.NULL);
+	}
+
+	@Test
+	void isAce_CardSymbolIsAce_ReturnTrue() {
+		assertThat(Card.of(Symbol.ACE, Type.DIAMOND).isAce()).isTrue();
 	}
 
 	@Test
