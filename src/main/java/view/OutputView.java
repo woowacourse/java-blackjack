@@ -3,14 +3,9 @@ package view;
 import common.DealerDto;
 import common.PlayerDto;
 import common.PlayersDto;
-import domain.GameResult;
-import domain.PlayerResult;
-import domain.card.Card;
-import domain.user.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -97,13 +92,5 @@ public class OutputView {
     private static String getFirstCard(DealerDto dealer) {
         int firstIndex = 0;
         return dealer.getCards().get(firstIndex);
-    }
-
-    private static void printResultOfPlayer(List<Player> players, PlayerResult playerResult) {
-        for (Player player : players) {
-            String name = player.getName();
-            String resultState = playerResult.getResultState();
-            System.out.println(name + " : " + resultState);
-        }
     }
 }
