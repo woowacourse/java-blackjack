@@ -3,7 +3,7 @@ package blackjack.domain.gambler;
 import blackjack.domain.BettingMoney;
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.UserCards;
+import blackjack.domain.card.GamblerCards;
 import blackjack.domain.result.CardsResult;
 import blackjack.domain.result.PlayerOutcome;
 import java.util.List;
@@ -17,7 +17,7 @@ public final class Player {
 
     private final Name name;
     private final BettingMoney bettingMoney;
-    private UserCards userCards = new UserCards();
+    private GamblerCards gamblerCards = new GamblerCards();
 
     public Player(Name name, BettingMoney bettingMoney) {
         validateNotNull(name, bettingMoney);
@@ -37,7 +37,7 @@ public final class Player {
 
     public void drawCard(CardDeck cardDeck, int cardCount) {
         for (int i = 0; i < cardCount; i++) {
-            userCards.add(cardDeck.draw());
+            gamblerCards.add(cardDeck.draw());
         }
     }
 
@@ -50,11 +50,11 @@ public final class Player {
     }
 
     public CardsResult getScore() {
-        return userCards.getResult();
+        return gamblerCards.getResult();
     }
 
     public List<String> getCardsInfos() {
-        return userCards.getInfos();
+        return gamblerCards.getInfos();
     }
 
     public Integer getProfitByComparing(Dealer dealer) {

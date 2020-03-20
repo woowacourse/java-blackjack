@@ -2,7 +2,7 @@ package blackjack.domain.gambler;
 
 import blackjack.domain.Name;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.UserCards;
+import blackjack.domain.card.GamblerCards;
 import blackjack.domain.result.CardsResult;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public final class Dealer {
     private static final int DEFAULT_DRAW_COUNT = 1;
 
     private final Name name;
-    private UserCards userCards = new UserCards();
+    private GamblerCards gamblerCards = new GamblerCards();
 
     public Dealer() {
         this.name = DEALER_NAME;
@@ -27,12 +27,12 @@ public final class Dealer {
 
     public void drawCard(CardDeck cardDeck, int cardCount) {
         for (int i = 0; i < cardCount; i++) {
-            userCards.add(cardDeck.draw());
+            gamblerCards.add(cardDeck.draw());
         }
     }
 
     public List<String> getFirstCardInfo() {
-        return userCards.getInfos().subList(FIRST_FROM_INDEX, FIRST_TO_INDEX);
+        return gamblerCards.getInfos().subList(FIRST_FROM_INDEX, FIRST_TO_INDEX);
     }
 
     public boolean canDrawCard() {
@@ -44,10 +44,10 @@ public final class Dealer {
     }
 
     public CardsResult getScore() {
-        return userCards.getResult();
+        return gamblerCards.getResult();
     }
 
     public List<String> getCardsInfos() {
-        return userCards.getInfos();
+        return gamblerCards.getInfos();
     }
 }

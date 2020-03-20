@@ -9,19 +9,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class UserCardsTest {
+public class GamblerCardsTest {
 
-    private UserCards userCards;
+    private GamblerCards gamblerCards;
 
     @BeforeEach
     void resetVariable() {
-        userCards = new UserCards();
+        gamblerCards = new GamblerCards();
     }
 
     @DisplayName("Null 추가시 예외 발생")
     @Test
     void add_AddNull_ThrowException() {
-        assertThatThrownBy(() -> userCards.add(null)).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> gamblerCards.add(null)).isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Null");
     }
 
@@ -29,26 +29,26 @@ public class UserCardsTest {
     @Test
     void add() {
         Card card = new Card(Type.DIAMOND, Symbol.ACE);
-        userCards.add(card);
-        assertThatThrownBy(() -> userCards.add(card)).isInstanceOf(IllegalArgumentException.class)
+        gamblerCards.add(card);
+        assertThatThrownBy(() -> gamblerCards.add(card)).isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("중복");
     }
 
     @DisplayName("카드 숫자 합계")
     @Test
     void getTotalSum() {
-        userCards.add(new Card(Type.DIAMOND, Symbol.ACE));
-        userCards.add(new Card(Type.SPADE, Symbol.ACE));
-        userCards.add(new Card(Type.HEART, Symbol.ACE));
-        userCards.add(new Card(Type.CLUB, Symbol.ACE));
-        userCards.add(new Card(Type.CLUB, Symbol.JACK));
-        assertThat(userCards.getResult()).isEqualTo(new CardsResult(14, true, 1));
+        gamblerCards.add(new Card(Type.DIAMOND, Symbol.ACE));
+        gamblerCards.add(new Card(Type.SPADE, Symbol.ACE));
+        gamblerCards.add(new Card(Type.HEART, Symbol.ACE));
+        gamblerCards.add(new Card(Type.CLUB, Symbol.ACE));
+        gamblerCards.add(new Card(Type.CLUB, Symbol.JACK));
+        assertThat(gamblerCards.getResult()).isEqualTo(new CardsResult(14, true, 1));
 
-        userCards = new UserCards();
-        userCards.add(new Card(Type.DIAMOND, Symbol.ACE));
-        userCards.add(new Card(Type.CLUB, Symbol.ACE));
-        userCards.add(new Card(Type.CLUB, Symbol.TWO));
-        assertThat(userCards.getResult()).isEqualTo(new CardsResult(4, true, 1));
+        gamblerCards = new GamblerCards();
+        gamblerCards.add(new Card(Type.DIAMOND, Symbol.ACE));
+        gamblerCards.add(new Card(Type.CLUB, Symbol.ACE));
+        gamblerCards.add(new Card(Type.CLUB, Symbol.TWO));
+        assertThat(gamblerCards.getResult()).isEqualTo(new CardsResult(4, true, 1));
     }
 
     @DisplayName("카드 없을경우 예외")

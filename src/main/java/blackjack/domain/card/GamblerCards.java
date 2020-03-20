@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class UserCards {
+public final class GamblerCards {
 
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "카드가 중복되었습니다.";
     private static final String NO_CARD_EXCEPTION_MESSAGE = "카드가 없습니다.";
