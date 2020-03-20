@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.component.Figure;
+import blackjack.domain.card.component.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

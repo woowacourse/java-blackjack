@@ -1,11 +1,14 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.participant.attribute.Money;
+import blackjack.domain.participant.attribute.Name;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// TODO: 2020-03-19 정적팩토리 메서드 이름 알아보기, 베팅 플레이어 리스트 생성 테스트
+// TODO: 베팅 플레이어 리스트 생성 테스트
 public class PlayersFactory {
     static final String NULL_ARGUMENT_ERR_MSG = "Null 인자로 플레이어를 생성할 수 없습니다.";
     static final String EMPTY_ARGUMENT_ERR_MSG = "Empty 리스트 인자로 플레이어 인자를 생성할 수 없습니다.";

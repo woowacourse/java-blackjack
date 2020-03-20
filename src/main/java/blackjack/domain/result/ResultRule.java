@@ -20,6 +20,7 @@ public enum ResultRule {
     DRAW_IN_GENERAL((playerCards, dealerCards) -> playerCards.computeScore() == dealerCards.computeScore(), DRAW);
 
     public static final int BLACKJACK_SCORE = 21;
+    private static final String CAN_NOT_FIND_RESULT_ERR_MSG = "결과를 찾을 수 없습니다.";
 
     private final BiPredicate<Cards, Cards> condition;
     private final ResultType type;
@@ -33,7 +34,7 @@ public enum ResultRule {
         return Arrays.stream(ResultRule.values())
                 .filter(rule -> rule.condition.test(playerCards, dealerCards))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."))
+                .orElseThrow(() -> new IllegalArgumentException(CAN_NOT_FIND_RESULT_ERR_MSG))
                 .type;
     }
 

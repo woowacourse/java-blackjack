@@ -1,8 +1,11 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.participant.attribute.Money;
+import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayersResults;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,7 +41,7 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 
     @Override

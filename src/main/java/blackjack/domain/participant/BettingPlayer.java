@@ -1,5 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.participant.attribute.Money;
+import blackjack.domain.participant.attribute.Name;
+import blackjack.domain.result.ResultType;
+
 import java.util.Objects;
 
 public class BettingPlayer extends Player {
@@ -9,6 +13,10 @@ public class BettingPlayer extends Player {
         super(name);
         Objects.requireNonNull(money);
         this.money = money;
+    }
+
+    public double computeProfit(ResultType type) {
+        return money.computeProfit(type);
     }
 
     public Money getMoney() {

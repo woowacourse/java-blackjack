@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.participant.attribute.Money;
 import blackjack.domain.result.ResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

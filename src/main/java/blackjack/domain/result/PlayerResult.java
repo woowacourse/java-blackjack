@@ -8,6 +8,7 @@ import java.util.Objects;
 import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
 public class PlayerResult {
+    private static final String INVALID_METHOD_FOR_NON_BETTING_GAME_ERR_MSG = "배팅 게임에서만 사용할 수 있습니다.";
     private Player player;
     private ResultType resultType;
 
@@ -22,19 +23,20 @@ public class PlayerResult {
         return resultType.getWord();
     }
 
-    public String name() {
-        return player.name();
-    }
-
     public boolean hasSameResult(ResultType type) {
         return this.resultType == type;
     }
 
     public double computeProfit() {
         if (player instanceof BettingPlayer) {
-            return resultType.computeProfit(((BettingPlayer) player).getMoney());
+            BettingPlayer bettingPlayer = (BettingPlayer) player;
+            return bettingPlayer.computeProfit(resultType);
         }
-        return 0;
+        throw new IllegalStateException(INVALID_METHOD_FOR_NON_BETTING_GAME_ERR_MSG);
+    }
+
+    public String name() {
+        return player.name();
     }
 
     public Player getPlayer() {

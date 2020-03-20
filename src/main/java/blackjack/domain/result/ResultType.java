@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Money;
-
 public enum ResultType {
     BLACKJACK("블랙잭", 1.5),
     WIN("승", 1),
@@ -27,10 +25,6 @@ public enum ResultType {
             return WIN;
         }
         return this;
-    }
-
-    public double computeProfit(Money money) {
-        return money.getBettingMoney() * profitRate;
     }
 
     public String getWord() {

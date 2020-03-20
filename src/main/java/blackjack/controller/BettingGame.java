@@ -1,9 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Money;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.attribute.Money;
+import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.PlayersResults;
 import blackjack.domain.result.ResponseDTO.ProfitDTO;
 import blackjack.view.InputView;

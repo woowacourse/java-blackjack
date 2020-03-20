@@ -8,7 +8,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public abstract class BlackJackController {
-    protected CardDeck deck = new CardDeck();
+    protected final CardDeck deck = new CardDeck();
 
     public void play() {
         Players players = createPlayers();

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.ResultRule;
 import blackjack.domain.result.ResultType;

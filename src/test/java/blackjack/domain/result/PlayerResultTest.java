@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.attribute.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

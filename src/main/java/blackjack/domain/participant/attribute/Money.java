@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.participant.attribute;
 
 import blackjack.domain.result.ResultType;
 
@@ -20,10 +20,6 @@ public class Money {
     public double computeProfit(ResultType type) {
         Objects.requireNonNull(type, NULL_RESULT_TYPE_ERR_MSG);
         return type.getProfitRate() * this.bettingMoney;
-    }
-
-    public double getBettingMoney() {
-        return bettingMoney;
     }
 }
 

@@ -2,8 +2,8 @@ package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Figure;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.component.Figure;
+import blackjack.domain.card.component.Type;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -93,6 +93,7 @@ public class ResultRuleTest {
     }
 
     @DisplayName("플레이어 LOSE 확인 3: 둘 다 Bust가 아니고, 딜러 카드합이 21에 더 가까울 때")
+
     @Test
     void name5() {
         Cards playerCards = scoreCards_10;

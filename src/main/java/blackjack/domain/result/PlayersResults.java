@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
-// TODO: 2020-03-19 Betting게임인 경우만 computeDealerScore 동작할 수 있는 방법으로 변경
 public class PlayersResults {
     private static final String DELIMITER = " ";
 

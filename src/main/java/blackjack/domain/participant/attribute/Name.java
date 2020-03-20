@@ -1,12 +1,12 @@
-package blackjack.domain.participant;
+package blackjack.domain.participant.attribute;
 
 import java.util.Objects;
 
 public class Name {
     private static final int MAX_NAME_LENGTH = 5;
-    static final String MAX_NAME_LENGTH_ERR_MSG = String.format("플레이어 이름 길이는 최대 %d자 입니다.", MAX_NAME_LENGTH);
-    static final String NULL_NAME_ERR_MSG = "플레이어의 이름이 없습니다.";
-    static final String EMPTY_NAME_ERR_MSG = "플레이어 이름에 빈 값이 올 수 없습니다.";
+    public static final String MAX_NAME_LENGTH_ERR_MSG = String.format("플레이어 이름 길이는 최대 %d자 입니다.", MAX_NAME_LENGTH);
+    public static final String NULL_NAME_ERR_MSG = "플레이어의 이름이 없습니다.";
+    public static final String EMPTY_NAME_ERR_MSG = "플레이어 이름에 빈 값이 올 수 없습니다.";
 
     private final String name;
 

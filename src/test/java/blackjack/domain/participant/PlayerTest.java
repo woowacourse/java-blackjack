@@ -1,8 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Figure;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.component.Figure;
+import blackjack.domain.card.component.Type;
+import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.ResultType;
 import org.junit.jupiter.api.DisplayName;

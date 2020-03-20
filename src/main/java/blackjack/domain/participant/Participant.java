@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.attribute.Name;
 
 import java.util.List;
 import java.util.Objects;
@@ -50,4 +51,6 @@ public abstract class Participant {
     public int hashCode() {
         return Objects.hash(name, cards);
     }
+
+
 }
