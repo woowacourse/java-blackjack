@@ -13,8 +13,7 @@ public class DealerResult {
 		this.profit = playerResults.stream()
 			.map(UserResult::getProfit)
 			.reduce(Integer::sum)
-			.get() * PROFIT_FORMULA;
-
+			.orElseThrow(IllegalArgumentException::new) * PROFIT_FORMULA;
 	}
 
 	public int getProfit() {
