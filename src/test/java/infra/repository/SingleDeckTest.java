@@ -9,9 +9,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SingleDeckTest {
     @Test
-    @DisplayName("#shuffle() : should return SingleDeck with 52 cards")
+    @DisplayName("#setUp() : should return SingleDeck with 52 cards")
     void shuffle() {
-        SingleDeck singleDeck = SingleDeck.shuffle();
+        SingleDeck singleDeck = SingleDeck.setUp();
         assertThat(singleDeck).isNotNull();
         assertThat(singleDeck.size()).isEqualTo(SingleDeck.SIZE);
     }
@@ -19,7 +19,7 @@ class SingleDeckTest {
     @Test
     @DisplayName("#pop() : should return Card and size should be reduced")
     void popSucceed() {
-        SingleDeck singleDeck = SingleDeck.shuffle();
+        SingleDeck singleDeck = SingleDeck.setUp();
         assertThat(singleDeck.pop()).isInstanceOf(Card.class);
         assertThat(singleDeck.size()).isEqualTo(SingleDeck.SIZE - 1);
     }
@@ -28,7 +28,7 @@ class SingleDeckTest {
     @DisplayName("#pop() : should throw IllegalStateException with empty cards")
     void popFailWithEmptyCards() {
         //given
-        SingleDeck singleDeck = SingleDeck.shuffle();
+        SingleDeck singleDeck = SingleDeck.setUp();
         emptySingleDeck(singleDeck);
 
         //when & then

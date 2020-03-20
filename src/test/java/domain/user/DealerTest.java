@@ -24,16 +24,17 @@ class DealerTest {
     @DisplayName("첫턴에 딜러는 2장의 카드를 받는다.")
     void construct() {
                 new Card(Symbol.TEN, Type.HEART);
-        assertThat(Dealer.start(deck)).isNotNull();
+        assertThat(Dealer.shuffle(deck)).isNotNull();
     }
 
     @Test
     @DisplayName("#hit() : should add card without return")
     void hit() {
         //given
-        PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.CLOVER))));
-        when(deck.popInitCards()).thenReturn(playingCards);
-        Dealer dealer = Dealer.start(deck);
+        when(deck.pop())
+                .thenReturn(new Card(Symbol.QUEEN, Type.SPADE))
+                .thenReturn(new Card(Symbol.QUEEN, Type.CLOVER));
+        Dealer dealer = Dealer.shuffle(deck);
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
 
         //when
@@ -47,10 +48,10 @@ class DealerTest {
     @DisplayName("#confirmCards : should add cards for given times without return")
     void confirmCards() {
         //given
-
-        PlayingCards playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.KING, Type.SPADE))));
-        when(deck.popInitCards()).thenReturn(playingCards);
-        Dealer dealer = Dealer.start(deck);
+        when(deck.pop())
+                .thenReturn(new Card(Symbol.QUEEN, Type.SPADE))
+                .thenReturn(new Card(Symbol.KING, Type.SPADE));
+        Dealer dealer = Dealer.shuffle(deck);
         List<Card> cards = setUpDeck();
         int hitSize = cards.size();
         int defaultSizeOfCards = dealer.countCards();
@@ -68,7 +69,7 @@ class DealerTest {
         Money bettingMoney = mock(Money.class);
         //todo: refac multiply mocking logic
         when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        Dealer dealer = Dealer.start(mock(Deck.class));
+        Dealer dealer = Dealer.shuffle(mock(Deck.class));
         //when
         Money profit = dealer.calculateProfit(result, bettingMoney);
         assertThat(profit).isEqualTo(bettingMoney);

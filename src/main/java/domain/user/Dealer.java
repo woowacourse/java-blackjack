@@ -13,15 +13,15 @@ import java.util.List;
 public class Dealer extends User {
     private static final String NAME = "딜러";
     private static final int STANDARD_TO_HIT = 17;
-    private Deck deck;
+    private final Deck deck;
 
     private Dealer(Deck deck) {
-        super(NAME, deck.popInitCards());
+        super(NAME, passInitCards(deck));
         this.deck = deck;
     }
 
-    public static Dealer start(Deck deck) {
-        //todo check if should deck shuffle
+    public static Dealer shuffle(Deck deck) {
+        deck.shuffle();
         return new Dealer(deck);
     }
 
@@ -39,6 +39,15 @@ public class Dealer extends User {
             count += 1;
         }
         return count;
+    }
+
+    private static PlayingCards passInitCards(Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            Card card = deck.pop();
+            cards.add(card);
+        }
+        return PlayingCards.of(cards);
     }
 
     //todo: refac to service

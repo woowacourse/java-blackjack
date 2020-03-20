@@ -19,14 +19,17 @@ import view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackGame {
-    private final Deck deck = SingleDeck.shuffle();
+public class BlackjackGame {
+    private final Deck deck = SingleDeck.setUp();
     private final MatchRule matchRule = new DefaultMatchRule();
 
     //todo: refac
     public void play() {
         PlayersDto inputPlayersDto = InputView.inputPlayers();
-        Dealer dealer = Dealer.start(deck);
+
+        //setUp
+        Dealer dealer = Dealer.shuffle(deck);
+        //join
         List<Player> players = new ArrayList<>();
         for (PlayerDto playerDto : inputPlayersDto.getPlayerDtos()) {
             Player player = Player.join(playerDto);
@@ -38,9 +41,9 @@ public class BlackJackGame {
             PlayingCards cards = player.getCards();
             inputPlayerDtos.get(i).setCards(cards.serialize());
         }
-
         OutputView.printInitGame(dealer.serialize(), inputPlayersDto);
 
+        //confirmCards
         for (Player player : players) {
             String wantToHit = InputView.inputWantToHit(player.getName());
             while (player.wantToHit(wantToHit)) {
@@ -50,10 +53,11 @@ public class BlackJackGame {
                 wantToHit = InputView.inputWantToHit(player.getName());
             }
         }
-
         int countOfHit = dealer.confirmCards();
 
 
+
+        //match
         List<PlayerDto> playerDtos = new ArrayList<>();
         Money sumOfDealerProfit = Money.of(0);
         for (Player player : players) {
@@ -67,6 +71,7 @@ public class BlackJackGame {
             playerDtos.add(playerDtoToShow);
         }
 
+        //summarize
         PlayersDto playersDtoToShow = PlayersDto.of(playerDtos);
         DealerDto dealerDto = dealer.serialize(sumOfDealerProfit);
 

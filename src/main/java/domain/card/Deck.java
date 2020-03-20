@@ -2,5 +2,7 @@ package domain.card;
 
 public interface Deck {
     Card pop();
-    PlayingCards popInitCards();
+    //todo: refac
+    //todo: impl
+    Deck shuffle();
 }

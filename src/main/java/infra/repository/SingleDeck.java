@@ -30,7 +30,7 @@ public class SingleDeck implements Deck {
         this.cards = cards;
     }
 
-    public static SingleDeck shuffle() {
+    public static SingleDeck setUp() {
         //todo : test, check if works good
         List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
         Collections.shuffle(cards);
@@ -50,14 +50,7 @@ public class SingleDeck implements Deck {
     }
 
     @Override
-    public PlayingCards popInitCards() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException(EMPTY_DECK_MESSAGE);
-        }
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            cards.add(this.cards.remove(POP_INDEX));
-        }
-        return PlayingCards.of(cards);
+    public Deck shuffle() {
+        return null;
     }
 }

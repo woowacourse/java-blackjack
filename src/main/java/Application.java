@@ -1,8 +1,8 @@
-import controller.BlackJackGame;
+import controller.BlackjackGame;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = new BlackJackGame();
+        BlackjackGame blackJackGame = new BlackjackGame();
         try {
             blackJackGame.play();
         } catch (RuntimeException e) {
