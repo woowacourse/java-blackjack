@@ -18,12 +18,8 @@ public class Players {
     private final List<Player> players;
     private UserInterface userInterface;
 
-    private Players(List<Player> players) {
-        this.players = players;
-    }
-
     private Players(List<Player> players, UserInterface userInterface) {
-        this(players);
+        this.players = players;
         this.userInterface = userInterface;
     }
 

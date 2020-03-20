@@ -3,7 +3,7 @@ package domain.user;
 import java.util.Objects;
 
 public class Profit {
-    private int value;
+    private final int value;
 
     Profit(int value) {
         this.value = value;

@@ -31,17 +31,17 @@ public class SingleDeck implements Deck {
     }
 
     @Override
+    public Deck shuffle() {
+        Collections.shuffle(cards);
+        return new SingleDeck(cards);
+    }
+
+    @Override
     public Card pop() {
         if (cards.isEmpty()) {
             throw new IllegalStateException(EMPTY_DECK_MESSAGE);
         }
         return cards.remove(POP_INDEX);
-    }
-
-    @Override
-    public Deck shuffle() {
-        Collections.shuffle(cards);
-        return new SingleDeck(cards);
     }
 
     public static SingleDeck setUp() {
