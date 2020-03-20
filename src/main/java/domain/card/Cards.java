@@ -1,6 +1,4 @@
-package domain;
-
-import util.BlackJackRule;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +7,7 @@ import java.util.Objects;
 public class Cards {
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
     private static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+    private static final int BLACK_JACK_CARDS_AMOUNT = 2;
 
     private List<Card> cards = new ArrayList<>();
 
@@ -18,40 +17,37 @@ public class Cards {
     }
 
     private void validateCard(Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException(DUPLICATE_CARD_EXCEPTION_MESSAGE);
-        }
         if (Objects.isNull(card)) {
             throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
         }
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException(DUPLICATE_CARD_EXCEPTION_MESSAGE);
+        }
     }
 
-    public int getScore() {
-        int score = 0;
-        for (Card card : cards) {
-            score += card.getValue();
-        }
-        return addAceWeight(score);
+    public Score getScore() {
+        int score = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+        return new Score(score, countAce());
     }
 
-    private int addAceWeight(int score) {
-        for (Card card : cards) {
-            if (BlackJackRule.isBust(score + Symbol.getAceWeight())) {
-                break;
-            }
-            if (card.isAce()) {
-                score += Symbol.getAceWeight();
-            }
-        }
-        return score;
+    public int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public boolean isBust() {
-        return BlackJackRule.isBust(getScore());
+        return getScore().isBust();
     }
 
     public boolean isBlackJack() {
-        return BlackJackRule.isBlackJack(getScore());
+        return getScore().isBlackJackScore() && cards.size() == BLACK_JACK_CARDS_AMOUNT;
+    }
+
+    public boolean canHit(int maxHitScore) {
+        return getScore().canHit(maxHitScore);
     }
 
     public List<Card> getCards() {
