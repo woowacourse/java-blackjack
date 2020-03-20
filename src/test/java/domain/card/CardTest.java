@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CardTest {
 
+    private Symbol ace = Symbol.ACE;
+    private Symbol notAce = Symbol.KING;
+
     @Test
     @DisplayName("Symbol과 Type을 인자로 갖는 Card가 생성된다.")
     void card() {
@@ -19,11 +22,10 @@ public class CardTest {
     @Test
     @DisplayName("#calculateExceptAce() : should return value of symbol")
     void calculateExceptAceSucceed() {
-        Symbol symbol = Symbol.QUEEN;
-        Card card = new Card(symbol, Type.SPADE);
+        Card card = new Card(notAce, Type.SPADE);
 
         int score = card.calculateExceptAce();
-        assertThat(score).isEqualTo(symbol.getValue());
+        assertThat(score).isEqualTo(notAce.getValue());
     }
 
     @Test
@@ -48,5 +50,19 @@ public class CardTest {
     void isAceFalse() {
         Card card = new Card(Symbol.KING, Type.SPADE);
         assertFalse(card.isAce());
+    }
+
+    @Test
+    @DisplayName("#isNotAce() : should return true")
+    void isNotAceTrue() {
+        Card card = new Card(Symbol.ACE, Type.SPADE);
+        assertFalse(card.isNotAce());
+    }
+
+    @Test
+    @DisplayName("#isNotAce() : should return false")
+    void isNotAceFalse() {
+        Card card = new Card(Symbol.ACE, Type.SPADE);
+        assertFalse(card.isNotAce());
     }
 }
