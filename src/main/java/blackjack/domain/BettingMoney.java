@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import java.util.Objects;
+import blackjack.util.NullChecker;
 
 public class BettingMoney {
 
@@ -28,9 +28,7 @@ public class BettingMoney {
     }
 
     private static void validateInput(String input) {
-        if (Objects.isNull(input)) {
-            throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
-        }
+        NullChecker.validateNotNull(input);
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {

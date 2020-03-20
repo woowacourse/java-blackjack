@@ -3,36 +3,21 @@ package blackjack.domain.result;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
 import blackjack.domain.gambler.Players;
+import blackjack.util.NullChecker;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class GameResult {
-
-    private static final String NULL_USE_EXCEPTION_MESSAGE = "잘못된 인자 - Null 사용";
 
     private final Map<Player, Integer> playerResults;
     private final int dealerResult;
 
     public GameResult(Dealer dealer, Players players) {
-        validateDealer(dealer);
-        validatePlayers(players);
+        NullChecker.validateNotNull(dealer, players);
         this.playerResults = Collections.unmodifiableMap(calculatePlayerResults(dealer, players));
         this.dealerResult = calculateDealerResults();
-    }
-
-    private void validatePlayers(Players players) {
-        if (Objects.isNull(players)) {
-            throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateDealer(Dealer dealer) {
-        if (Objects.isNull(dealer)) {
-            throw new IllegalArgumentException(NULL_USE_EXCEPTION_MESSAGE);
-        }
     }
 
     private Map<Player, Integer> calculatePlayerResults(Dealer dealer, Players players) {

@@ -22,7 +22,6 @@ public class CardDrawTest {
     @DisplayName("생성자 예외 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"", "yes", "y "})
-    @NullSource
     void of_NotYN_ExceptionThrown(String input) {
         assertThatThrownBy(() -> CardDraw.of(input))
             .isInstanceOf(IllegalArgumentException.class)

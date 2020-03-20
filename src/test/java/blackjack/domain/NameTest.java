@@ -14,9 +14,9 @@ public class NameTest {
         assertThat(new Name("jamie")).isInstanceOf(Name.class);
         assertThatThrownBy(() -> new Name(null))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Empty or null names exception.");
+            .hasMessageContaining("Null");
         assertThatThrownBy(() -> new Name(""))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Empty or null names exception.");
+            .hasMessageContaining("Empty");
     }
 }

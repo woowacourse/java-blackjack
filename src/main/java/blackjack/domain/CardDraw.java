@@ -1,7 +1,7 @@
 package blackjack.domain;
 
+import blackjack.util.NullChecker;
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum CardDraw {
     YES('y'),
@@ -25,7 +25,8 @@ public enum CardDraw {
     }
 
     private static void validationInput(String input) {
-        if (Objects.isNull(input) || input.length() != VALUE_LENGTH) {
+        NullChecker.validateNotNull(input);
+        if (input.length() != VALUE_LENGTH) {
             throw new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE);
         }
     }
