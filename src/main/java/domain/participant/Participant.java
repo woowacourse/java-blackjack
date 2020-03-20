@@ -21,7 +21,7 @@ public class Participant implements ParticipantInterface {
 		cards.add(card);
 	}
 
-	public boolean under21() {
+	public boolean canHit() {
 		return (this.calculateScore() < MAX_SCORE);
 	}
 

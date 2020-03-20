@@ -71,7 +71,7 @@ public class BlackJackGameController {
 
 	private static void performPlayersHit(CardDeck cardDeck, Player player) {
 		try {
-			while (player.under21() && InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
+			while (player.canHit() && InputUtils.isAnswerHit(InputView.inputHitOrNot(player))) {
 				player.receive(cardDeck.draw());
 				OutputView.printCardStatus(player);
 			}
