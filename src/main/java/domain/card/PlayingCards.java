@@ -6,6 +6,7 @@ import java.util.Objects;
 public class PlayingCards extends Cards {
     private static final int BLACK_JACK = 21;
     private static final int MIN_SIZE = 2;
+
     private final Cards cards;
 
     private PlayingCards(List<Card> cards) {
@@ -43,6 +44,13 @@ public class PlayingCards extends Cards {
         return BLACK_JACK < calculate();
     }
 
+    public boolean isSameSize(int size) {
+        return cards.size() == size;
+    }
+
+    public List<String> serialize() {
+        return cards.serialize();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -55,13 +63,5 @@ public class PlayingCards extends Cards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
-    }
-
-    public List<String> serialize() {
-        return cards.serialize();
-    }
-
-    public boolean isSameSize(int size) {
-        return cards.size() == size;
     }
 }

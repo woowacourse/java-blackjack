@@ -12,16 +12,16 @@ public class Card {
         this.type = type;
     }
 
-    int calculate(int sum) {
-        return symbol.calculate(sum);
-    }
-
     int calculateExceptAce() {
         if (symbol.equals(Symbol.ACE)) {
             throw new IllegalStateException(String.format(INVALID_ACE_MEESAGE, Symbol.ACE.getPattern()));
         }
 
         return symbol.getValue();
+    }
+
+    int calculate(int sum) {
+        return symbol.calculate(sum);
     }
 
     boolean isAce() {

@@ -9,6 +9,7 @@ public enum Result {
     PLAYER_WIN_WITH_BLACKJACK(money -> new Profit(money.multiply(1.5))),
     DRAW(money -> new Profit(money.multiply(0))),
     DEALER_WIN(money -> new Profit(money.multiply(1)));
+
     private final ProfitCalculator calculator;
 
     Result(ProfitCalculator calculator) {

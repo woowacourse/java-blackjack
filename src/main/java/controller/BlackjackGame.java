@@ -1,24 +1,11 @@
 package controller;
 
-import common.DealerDto;
-import common.PlayerDto;
-import common.PlayersDto;
 import domain.UserInterface;
 import domain.blackjack.BlackjackService;
-import domain.card.Card;
 import domain.card.Deck;
-import domain.card.PlayingCards;
-import domain.result.DefaultMatchRule;
 import domain.result.MatchRule;
-import domain.result.Result;
-import domain.result.Results;
 import domain.user.*;
-import infra.repository.SingleDeck;
-import view.InputView;
 import view.OutputView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlackjackGame {
     private Deck deck;

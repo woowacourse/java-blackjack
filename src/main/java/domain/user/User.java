@@ -8,13 +8,13 @@ import domain.result.Result;
 import java.util.Objects;
 
 public abstract class User {
+    protected static final int LOSE_PENALTY_RATE = -1;
+    private static final int INIT_CARDS_SIZE = 2;
+    private static final int BLACKJACK_VALUE = 21;
+
     protected final String name;
     protected PlayingCards playingCards;
-    public static final int INIT_CARDS_SIZE = 2;
-    public static final int BLACKJACK_VALUE = 21;
-    protected static final int LOSE_PENALTY_RATE = -1;
     protected Profit profit;
-
 
     User(String name) {
         this.name = name;
@@ -25,9 +25,7 @@ public abstract class User {
         this.playingCards = playingCards;
     }
 
-    void addCard(Card card) {
-        playingCards.add(card);
-    }
+    public abstract Result match(User user, MatchRule matchRule);
 
     public int calculateScore() {
         return playingCards.calculate();
@@ -43,22 +41,28 @@ public abstract class User {
         return playingCards.isSameSize(INIT_CARDS_SIZE) || score != BLACKJACK_VALUE;
     }
 
-    public abstract Result match(User user, MatchRule matchRule);
-
     public boolean isBust() {
         return playingCards.isBust();
     }
 
-    public String getName() {
-        return name;
+    protected void hit(Card card) {
+        playingCards.add(card);
     }
 
-    public void hit(Card card) {
+    protected Profit getProfit() {
+        return profit;
+    }
+
+    void addCard(Card card) {
         playingCards.add(card);
     }
 
     int countCards() {
         return playingCards.size();
+    }
+
+    String getName() {
+        return name;
     }
 
     @Override
@@ -73,9 +77,5 @@ public abstract class User {
     @Override
     public int hashCode() {
         return Objects.hash(playingCards, name);
-    }
-
-    protected Profit getProfit() {
-        return profit;
     }
 }

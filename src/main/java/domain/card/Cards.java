@@ -7,9 +7,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private final List<Card> cards;
     private final static int MIN_SIZE = 1;
     static final String INVALID_SIZE_MESSAGE = String.format("카드 갯수가 최소 갯수인 %d보다 작습니다", MIN_SIZE);
+
+    private final List<Card> cards;
 
     Cards(List<Card> cards) {
         this.cards = cards;
@@ -40,9 +41,21 @@ public class Cards {
         return of(this.cards);
     }
 
+    protected List<String> serialize() {
+        return cards.stream().map(Card::toString).collect(Collectors.toList());
+    }
+
     int calculateSumExceptAce() {
         Cards cards = getCardsExceptAce();
         return calculateSumExceptAce(cards);
+    }
+
+    int calculateSumWithAces(int sum) {
+        if (hasAce()) {
+            Cards aces = getAces();
+            return calculateSumWithAces(sum, aces);
+        }
+        return sum;
     }
 
     private int calculateSumExceptAce(Cards cards) {
@@ -59,14 +72,6 @@ public class Cards {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
-    }
-
-    int calculateSumWithAces(int sum) {
-        if (hasAce()) {
-            Cards aces = getAces();
-            return calculateSumWithAces(sum, aces);
-        }
-        return sum;
     }
 
     private int calculateSumWithAces(int sum, Cards aces) {
@@ -108,9 +113,5 @@ public class Cards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
-    }
-
-    protected List<String> serialize() {
-        return cards.stream().map(Card::toString).collect(Collectors.toList());
     }
 }

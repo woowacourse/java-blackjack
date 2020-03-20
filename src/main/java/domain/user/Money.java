@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Money {
     private static final int MIN = 0;
     static final String OUT_OF_RANGE_MESSGAE = String.format("돈은 최소 %d원 이상이어야 합니다.", MIN);
+
     private final double value;
 
     private Money(double value) {
@@ -22,8 +23,16 @@ public class Money {
         return new Money(value * rate);
     }
 
-    public static Money deserialize(int money) {
-        return of(money);
+    public Money add(Money other) {
+        return new Money(value + other.value);
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    int serialize() {
+        return (int) value;
     }
 
     @Override
@@ -37,17 +46,5 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    int serialize() {
-        return (int) value;
-    }
-
-    public Money add(Money other) {
-        return new Money(value + other.value);
-    }
-
-    public double getValue() {
-        return value;
     }
 }

@@ -24,31 +24,24 @@ public class DealerDto {
         return new DealerDto(name, cards, profit, score);
     }
 
-    public int getProfit() {
-        return profit;
+    public void setCards(List<String> cards) {
+        this.cards = cards;
     }
 
     public void setProfit(int profit) {
         this.profit = profit;
     }
 
-
-
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setCards(List<String> cards) {
-        this.cards = cards;
+    public int getProfit() {
+        return profit;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public List<String> getCards() {

@@ -25,16 +25,16 @@ public enum Symbol {
         this.calculator = calculator;
     }
 
+    int calculate(int sum) {
+        return calculator.calculate(sum);
+    }
+
     int getValue() {
         return value;
     }
 
     String getPattern() {
         return pattern;
-    }
-
-    int calculate(int sum) {
-        return calculator.calculate(sum);
     }
 
     private interface SymbolCalculator {

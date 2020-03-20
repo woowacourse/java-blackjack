@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class Players {
     private static final int DEAFAULT_DEALER_PROFIT = 0;
+
     private final List<Player> players;
     private UserInterface userInterface;
 
@@ -25,7 +26,6 @@ public class Players {
         this(players);
         this.userInterface = userInterface;
     }
-
 
     public static Players join(UserInterface userInterface) {
         PlayersDto playersDto = userInterface.inputPlayers();
@@ -40,6 +40,15 @@ public class Players {
     private static Players update(List<Player> players, UserInterface userInterface) {
         return new Players(players, userInterface);
 
+    }
+
+    public Players receiveInitCards(Dealer dealer) {
+        List<Player> players = new ArrayList<>();
+        for (Player player : this.players) {
+            PlayingCards initCards = dealer.passInitCards();
+            players.add(player.receiveInitCards(initCards));
+        }
+        return Players.update(players, userInterface);
     }
 
     public Players confirmCards(Dealer dealer) {
@@ -67,13 +76,6 @@ public class Players {
         return dealerProfit;
     }
 
-    private Profit calculateDealerProfit(Dealer dealer, Profit sumOfDealerProfit, Player player, Result result) {
-        Money bettingMoney = player.getBettingMoney();
-        Profit profitOfDealer = dealer.calculateProfit(result, bettingMoney);
-        sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
-        return sumOfDealerProfit;
-    }
-
     public PlayersDto serialize() {
         List<PlayerDto> playerDtos = new ArrayList<>();
         for (Player player : players) {
@@ -87,12 +89,10 @@ public class Players {
         return PlayersDto.of(playerDtos);
     }
 
-    public Players receiveInitCards(Dealer dealer) {
-        List<Player> players = new ArrayList<>();
-        for (Player player : this.players) {
-            PlayingCards initCards = dealer.passInitCards();
-            players.add(player.receiveInitCards(initCards));
-        }
-        return Players.update(players, userInterface);
+    private Profit calculateDealerProfit(Dealer dealer, Profit sumOfDealerProfit, Player player, Result result) {
+        Money bettingMoney = player.getBettingMoney();
+        Profit profitOfDealer = dealer.calculateProfit(result, bettingMoney);
+        sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
+        return sumOfDealerProfit;
     }
 }

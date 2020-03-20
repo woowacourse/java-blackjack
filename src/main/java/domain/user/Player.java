@@ -5,18 +5,12 @@ import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
 
-import java.util.List;
-
 public class Player extends User {
     private final Money bettingMoney;
 
     private Player(String name, Money bettingMoney) {
         super(name);
         this.bettingMoney = bettingMoney;
-    }
-
-    Money getBettingMoney() {
-        return bettingMoney;
     }
 
     private Player(String name, PlayingCards playingCards, Money bettingMoney) {
@@ -28,17 +22,35 @@ public class Player extends User {
         this(player.getName(), playingCards, player.bettingMoney);
     }
 
-    public static Player join(PlayerDto playerDto) {
+    static Player of(String name, PlayingCards playingCards, Money bettingMoney) {
+        return new Player(name, playingCards, bettingMoney);
+    }
+
+    static Player join(PlayerDto playerDto) {
         int bettingMoney = playerDto.getBettingMoney();
         return new Player(playerDto.getName(), Money.of(bettingMoney));
     }
 
-    public Player receiveInitCards(PlayingCards playingCards) {
+    @Override
+    public Result match(User user, MatchRule matchRule) {
+        return Result.judge(matchRule, this, user);
+    }
+
+    public PlayerDto serialize(PlayerDto playerDto) {
+        playerDto.setName(name);
+        playerDto.setBettingMoney(bettingMoney.serialize());
+        playerDto.setCards(playingCards.serialize());
+        playerDto.setScore(calculateScore());
+        return playerDto;
+    }
+
+    Player receiveInitCards(PlayingCards playingCards) {
         return new Player(this, playingCards);
     }
 
-    static Player of(String name, PlayingCards playingCards, Money bettingMoney) {
-        return new Player(name, playingCards, bettingMoney);
+    boolean wantToHit(String value) {
+        WantToHit wantToHit = WantToHit.findByValue(value);
+        return wantToHit.equals(WantToHit.YES);
     }
 
     void calculateProfit(Result result) {
@@ -50,25 +62,11 @@ public class Player extends User {
 
     }
 
+    Money getBettingMoney() {
+        return bettingMoney;
+    }
+
     private boolean playerLose(Result result) {
         return result.equals(Result.DEALER_WIN);
-    }
-
-    public boolean wantToHit(String value) {
-        WantToHit wantToHit = WantToHit.findByValue(value);
-        return wantToHit.equals(WantToHit.YES);
-    }
-
-    public PlayerDto serialize(PlayerDto playerDto) {
-        playerDto.setName(name);
-        playerDto.setBettingMoney(bettingMoney.serialize());
-        playerDto.setCards(playingCards.serialize());
-        playerDto.setScore(calculateScore());
-        return playerDto;
-    }
-
-    @Override
-    public Result match(User user, MatchRule matchRule) {
-        return Result.judge(matchRule, this, user);
     }
 }

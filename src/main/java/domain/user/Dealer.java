@@ -13,6 +13,7 @@ import java.util.List;
 public class Dealer extends User {
     private static final String NAME = "딜러";
     private static final int STANDARD_TO_HIT = 17;
+
     private final Deck deck;
 
     private Dealer(Deck deck) {
@@ -24,12 +25,9 @@ public class Dealer extends User {
         return new Dealer(deck.shuffle());
     }
 
-    Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
-        if (dealerLose(result)) {
-            return result.calculateProfit(bettingMoneyOfPlayer).multiply(LOSE_PENALTY_RATE);
-        } else {
-            return result.calculateProfit(bettingMoneyOfPlayer);
-        }
+    @Override
+    public Result match(User user, MatchRule matchRule) {
+        return Result.judge(matchRule, user, this);
     }
 
     public int confirmCards() {
@@ -39,19 +37,6 @@ public class Dealer extends User {
             count += 1;
         }
         return count;
-    }
-
-    private static PlayingCards passInitCards(Deck deck) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            Card card = deck.pop();
-            cards.add(card);
-        }
-        return PlayingCards.of(cards);
-    }
-
-    PlayingCards passInitCards() {
-        return passInitCards(deck);
     }
 
     public DealerDto serialize() {
@@ -65,8 +50,12 @@ public class Dealer extends User {
         return DealerDto.complete(NAME, cards, profit.getValue(), score);
     }
 
-    private boolean dealerLose(Result result) {
-        return result.equals(Result.PLAYER_WIN_WITH_BLACKJACK) || result.equals(Result.PLAYER_WIN_WITHOUT_BLACKJACk);
+    PlayingCards passInitCards() {
+        return passInitCards(deck);
+    }
+
+    Card passCard() {
+        return deck.pop();
     }
 
     void confirmCards(int hitSize) {
@@ -76,17 +65,29 @@ public class Dealer extends User {
         }
     }
 
+    Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
+        if (dealerLose(result)) {
+            return result.calculateProfit(bettingMoneyOfPlayer).multiply(LOSE_PENALTY_RATE);
+        } else {
+            return result.calculateProfit(bettingMoneyOfPlayer);
+        }
+    }
+
+    private static PlayingCards passInitCards(Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            Card card = deck.pop();
+            cards.add(card);
+        }
+        return PlayingCards.of(cards);
+    }
+
+    private boolean dealerLose(Result result) {
+        return result.equals(Result.PLAYER_WIN_WITH_BLACKJACK) || result.equals(Result.PLAYER_WIN_WITHOUT_BLACKJACk);
+    }
+
     private boolean canHit() {
         int score = calculateScore();
         return score < STANDARD_TO_HIT;
-    }
-
-    public Card passCard() {
-        return deck.pop();
-    }
-
-    @Override
-    public Result match(User user, MatchRule matchRule) {
-        return Result.judge(matchRule, user, this);
     }
 }

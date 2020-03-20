@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Profit {
     private int value;
+
     Profit(int value) {
         this.value = value;
     }
@@ -12,16 +13,16 @@ public class Profit {
         value = (int) money.getValue();
     }
 
-    int getValue() {
-        return value;
-    }
-
     Profit multiply(int value) {
         return new Profit(this.value * value);
     }
 
     Profit add(Profit other) {
         return new Profit(this.value + other.value);
+    }
+
+    int getValue() {
+        return value;
     }
 
     @Override
