@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -20,5 +21,11 @@ class DrawDecideTypeTest {
 	@ValueSource(strings = {"a", ""})
 	void of_GivenInvalidInput_ExceptionThrown(String input) {
 		assertThatThrownBy(() -> DrawDecideType.of(input)).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@DisplayName("of에서 y 또는 n을 받아 열거형 반환")
+	@Test
+	void isDraw() {
+		assertThat(DrawDecideType.DRAW.isDraw()).isTrue();
 	}
 }

@@ -30,13 +30,18 @@ public class GameRule {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> compareScore(player, dealer),
+						player -> calculateProfit(player, dealer),
 						(r1, r2) -> r1,
 						LinkedHashMap::new
 				), PlayerRecords::new));
 	}
 
-	public ResultType compareScore(Player player, Dealer dealer) {
+	private Integer calculateProfit(Player player, Dealer dealer) {
+		ResultType result = compareScore(player, dealer);
+		return player.calculateProfit(result);
+	}
+
+	private ResultType compareScore(Player player, Dealer dealer) {
 		Score playerScore = player.calculateHand();
 		Score dealerScore = dealer.calculateHand();
 		if (playerScore.isBust()) {

@@ -1,5 +1,6 @@
 package com.blackjack.domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
@@ -11,6 +12,17 @@ import org.junit.jupiter.api.Test;
 import com.blackjack.util.StringUtil;
 
 class PlayerFactoryTest {
+	@DisplayName("플레이어와 베팅액을 입력받아 플레이어 리스트 생성")
+	@Test
+	void createPlayers() {
+		List<String> names = StringUtil.splitByDelimiter("pobi, turtle, stitch, ttoring");
+		List<Integer> bettingMonies = Arrays.asList(1_000, 1_000, 1_000, 1_000);
+
+		List<Player> players = PlayerFactory.createPlayers(names, bettingMonies);
+
+		assertThat(players.size()).isEqualTo(4);
+	}
+
 	@DisplayName("인자로 중복되는 이름을 넣었을 때 예외 발생")
 	@Test
 	void createPlayers_DuplicatedName_ExceptionThrown() {
