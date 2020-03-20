@@ -15,6 +15,10 @@ public class Player extends User {
         this.bettingMoney = bettingMoney;
     }
 
+    Money getBettingMoney() {
+        return bettingMoney;
+    }
+
     private Player(String name, PlayingCards playingCards, Money bettingMoney) {
         super(name, playingCards);
         this.bettingMoney = bettingMoney;

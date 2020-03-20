@@ -5,12 +5,16 @@ import common.PlayersDto;
 import domain.UserInterface;
 import domain.card.Card;
 //todo: fix
+import domain.result.MatchRule;
+import domain.result.Result;
+import domain.result.Results;
 import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
+    private static final int DEAFAULT_DEALER_PROFIT = 0;
     private final List<Player> players;
     private UserInterface userInterface;
 
@@ -51,5 +55,29 @@ public class Players {
         }
 
         return update(players);
+    }
+
+    public Results match(Dealer dealer, MatchRule matchRule) {
+        Money dealerProfit = Money.of(DEAFAULT_DEALER_PROFIT);
+        List<Result> results = new ArrayList<>();
+        for (Player player : players) {
+            Result result = match(dealer, matchRule, results, player);
+            dealerProfit = calculateDealerProfit(dealer, dealerProfit, player, result);
+        }
+
+        return Results.of(results, dealerProfit);
+    }
+
+    private Result match(Dealer dealer, MatchRule matchRule, List<Result> results, Player player) {
+        Result result = player.match(dealer, matchRule);
+        results.add(result);
+        return result;
+    }
+
+    private Money calculateDealerProfit(Dealer dealer, Money sumOfDealerProfit, Player player, Result result) {
+        Money bettingMoney = player.getBettingMoney();
+        Money profitOfDealer = dealer.calculateProfit(result, bettingMoney);
+        sumOfDealerProfit = sumOfDealerProfit.add(profitOfDealer);
+        return sumOfDealerProfit;
     }
 }
