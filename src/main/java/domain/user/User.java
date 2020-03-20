@@ -53,11 +53,6 @@ public abstract class User {
         return name;
     }
 
-    //todo: refac
-    public PlayingCards getCards() {
-        return playingCards;
-    }
-
     public void hit(Card card) {
         playingCards.add(card);
     }

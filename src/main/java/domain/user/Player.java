@@ -44,8 +44,10 @@ public class Player extends User {
     void calculateProfit(Result result) {
         if (playerLose(result)) {
             profit = result.calculateProfit(bettingMoney).multiply(LOSE_PENALTY_RATE);
+        } else {
+            profit = result.calculateProfit(bettingMoney);
         }
-        profit = result.calculateProfit(bettingMoney);
+
     }
 
     private boolean playerLose(Result result) {

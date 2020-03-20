@@ -39,12 +39,6 @@ public class Money {
         return Objects.hash(value);
     }
 
-    @Override
-    public String toString() {
-        //todo refac
-        return String.valueOf(value);
-    }
-
     int serialize() {
         return (int) value;
     }

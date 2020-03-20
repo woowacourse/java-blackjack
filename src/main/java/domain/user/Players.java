@@ -1,16 +1,12 @@
 package domain.user;
 
-import common.DealerDto;
 import common.PlayerDto;
 import common.PlayersDto;
 import domain.UserInterface;
 import domain.card.Card;
-//todo: fix
 import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
-import domain.result.Results;
-import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +47,7 @@ public class Players {
             while (player.wantToHit(wantToHit)) {
                 Card card = dealer.passCard();
                 player.hit(card);
-                //todo: important fix
-                OutputView.printCurrentStateOfPlayer(player.serialize(PlayerDto.init()));
+                userInterface.showCurrentStateOfPlayer(player);
                 wantToHit = userInterface.inputWantToHit(player.getName());
             }
         }

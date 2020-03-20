@@ -3,8 +3,10 @@ package ui;
 import common.PlayerDto;
 import common.PlayersDto;
 import domain.UserInterface;
+import domain.user.Player;
 import utils.StringUtils;
 import view.InputView;
+import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +47,10 @@ public class Console implements UserInterface {
     public int inputBettingMoney(String playerName) {
         String input = scanner.nextLine();
         return Integer.parseInt(input);
+    }
+
+    @Override
+    public void showCurrentStateOfPlayer(Player player) {
+        OutputView.printCurrentStateOfPlayer(player.serialize(PlayerDto.init()));
     }
 }

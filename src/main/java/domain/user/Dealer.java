@@ -21,8 +21,7 @@ public class Dealer extends User {
     }
 
     public static Dealer shuffle(Deck deck) {
-        deck.shuffle();
-        return new Dealer(deck);
+        return new Dealer(deck.shuffle());
     }
 
     public Profit calculateProfit(Result result, Money bettingMoneyOfPlayer) {
