@@ -42,7 +42,7 @@ public class GameResult {
 		Map<Gamer, Profit> playersResult = new HashMap<>();
 
 		for (Player player : findPlayers()) {
-			ResultType result = ResultType.of(player, dealer);
+			PlayerResult result = PlayerResult.of(player, dealer);
 			playersResult.put(player, new Profit(result.calculateProfit(player.getMoney())));
 		}
 		return playersResult;
