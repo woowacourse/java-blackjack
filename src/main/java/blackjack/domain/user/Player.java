@@ -26,6 +26,10 @@ public final class Player extends AbstractPlayer {
 		return new Player(new Name(name), Money.of(money));
 	}
 
+	public Money computeResultMoney(Result result) {
+		return money.computeResultingAmount(result);
+	}
+
 	@Override
 	public List<Card> getStartHand() {
 		return getHand();
@@ -58,4 +62,7 @@ public final class Player extends AbstractPlayer {
 		return !isBust();
 	}
 
+	public Money getMoney() {
+		return money;
+	}
 }

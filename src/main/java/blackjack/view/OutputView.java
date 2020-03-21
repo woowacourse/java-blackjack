@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.betting.Monies;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.*;
 
@@ -110,11 +109,18 @@ public final class OutputView {
 		return "패";
 	}
 
-	public static void printGameResultMonies(Monies gameResultMonies) {
+	public static void printGameResultMonies(Results results, Players players) {
 		System.out.println("## 최종수익");
-		System.out.printf("%s: %f\n", Playable.DEALER_NAME, gameResultMonies.sumWithMinus().getAmount());
-		for (Name name : gameResultMonies.keySet()) {
-			System.out.printf("%s: %f\n", name.getString(), gameResultMonies.getMoney(name).getAmount());
+		List<Double> monies = new ArrayList<>();
+		for (Playable player : players.getPlayers()) {
+			monies.add(results.getResultMoney(player.getName(),
+					((Player) player).getMoney()));
+		}
+		System.out.printf("%s: %f\n", Playable.DEALER_NAME, -monies.stream().reduce(Double::sum)
+				.orElse(0d));
+		for (Playable player : players.getPlayers()) {
+			System.out.printf("%s: %f\n", player.getName().getString(), results.getResultMoney(player.getName(),
+					((Player) player).getMoney()));
 		}
 	}
 }

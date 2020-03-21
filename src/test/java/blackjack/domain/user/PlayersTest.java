@@ -42,51 +42,10 @@ class PlayersTest {
 		sixHeart = Card.of(Symbol.SIX, Type.HEART);
 	}
 
-	@ParameterizedTest
-	@ValueSource(strings = {KUENI, KUENI_POBI, KUENI_POBI_SUMMER, ENGLISH_SIX})
-	void of_ValidNames_IsNotNull(String playerNames) {
-		assertThat(Players.of(playerNames)).isNotNull();
-	}
-
-	@Test
-	void of_Null_ThrowPlayersException() {
-		assertThatThrownBy(() -> Players.of(NULL))
-				.isInstanceOf(PlayersException.class);
-	}
-
-	@Test
-	void of_HasDuplication_ThrowPlayersException() {
-		assertThatThrownBy(() -> Players.of(HAS_DUPLICATION))
-				.isInstanceOf(PlayersException.class);
-	}
-
-	@ParameterizedTest
-	@MethodSource("giveTwoCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCards")
-	void giveTwoCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCards(int index, List<Card> expect) {
-		// given
-		Players players = Players.of(KUENI_POBI_SUMMER);
-		List<Card> cards = Arrays.asList(aceClub, twoHeart, threeDiamond, fourSpade, fiveClub, sixHeart);
-		Drawable deck = Deck.of(cards);
-
-		// when
-		players.giveTwoCardsEachPlayer(deck);
-
-		// then
-		assertThat(players.getPlayers().get(index).getHand())
-				.isEqualTo(expect);
-	}
-
 	static Stream<Arguments> giveTwoCardsEachPlayer_ReceiveThreeCard_EachPlayerHasItselfsCards() {
 		return Stream.of(Arguments.of(0, Arrays.asList(sixHeart, fiveClub)),
 				Arguments.of(1, Arrays.asList(fourSpade, threeDiamond)),
 				Arguments.of(2, Arrays.asList(twoHeart, aceClub)));
 	}
 
-	@ParameterizedTest
-	@CsvSource(value = {KUENI + ":1", KUENI_POBI + ":2", KUENI_POBI_SUMMER + ":3", ENGLISH_SIX + ":6"},
-			delimiter = ':')
-	void memberSize_PlayerNames_HasMemberSize(String PlayerNames, int memberSize) {
-		Players players = Players.of(PlayerNames);
-		assertThat(players.memberSize()).isEqualTo(memberSize);
-	}
 }

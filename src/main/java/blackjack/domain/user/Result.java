@@ -16,20 +16,25 @@ public enum Result {
 
 	public static Result getPlayerResultByDealer(Playable player, Playable dealer) {
 		if (player.isBlackjack()) {
-			if (dealer.isBlackjack()) {
-				return DRAW;
-			}
-			return BLACKJACK_WIN;
+			return getPlayerResultByDealerIfPlayerIsBlackJack(dealer);
 		}
+		return getPlayerResultByDealerIfPlayerIsNotBlackJack(player, dealer);
+	}
 
+	private static Result getPlayerResultByDealerIfPlayerIsBlackJack(Playable dealer) {
+		if (dealer.isBlackjack()) {
+			return DRAW;
+		}
+		return BLACKJACK_WIN;
+	}
+
+	private static Result getPlayerResultByDealerIfPlayerIsNotBlackJack(Playable player, Playable dealer) {
 		if (player.isWinner(dealer.computeScore())) {
 			return WIN;
 		}
-
 		if (player.isLoser(dealer.computeScore())) {
 			return LOSE;
 		}
-
 		return DRAW;
 	}
 

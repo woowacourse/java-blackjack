@@ -21,7 +21,7 @@ class ResultsTest {
 		Playable dealer = Dealer.dealer();
 		dealer.receiveCard(Card.of(Symbol.ACE, Type.SPADE));
 
-		players = Players.of("그니, 무늬, 포비");
+		players = Players.of(Arrays.asList("그니", "무늬", "포비"), Arrays.asList("1000", "1000", "1000"));
 		players.getPlayers().get(0).receiveCard(Card.of(Symbol.TEN, Type.DIAMOND));
 		players.getPlayers().get(1).receiveCards(Arrays.asList(Card.of(Symbol.FIVE, Type.CLUB),
 				Card.of(Symbol.SEVEN, Type.HEART)));

@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.betting.Money;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,6 +30,10 @@ public final class Results {
 
 	public Result getResult(Name name) {
 		return results.get(name);
+	}
+
+	public double getResultMoney(Name name, Money money) {
+		return results.get(name).computeResultAmount(money.getAmount());
 	}
 
 	public Map<Name, Result> getResults() {

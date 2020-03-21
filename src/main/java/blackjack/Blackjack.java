@@ -1,20 +1,16 @@
 package blackjack;
 
-import blackjack.domain.betting.Money;
-import blackjack.domain.betting.Monies;
-import blackjack.domain.betting.exceptions.MoneyException;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.user.*;
-import blackjack.domain.user.exceptions.*;
-import blackjack.view.ErrorView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Blackjack {
 
@@ -29,6 +25,7 @@ public class Blackjack {
 		progressDealer(dealer, deck);
 
 		Results results = finish(players, dealer);
+		showGameResultMonies(results, players);
 	}
 
 	private static Players preparePlayers() {
@@ -37,9 +34,10 @@ public class Blackjack {
 	}
 
 	private static List<String> prepareNames() {
-		return Arrays.asList(InputView.inputPlayerNames()
-				.trim()
-				.split(","));
+		return Arrays.stream(InputView.inputPlayerNames()
+				.split(","))
+				.map(String::trim)
+				.collect(Collectors.toList());
 	}
 
 	private static List<String> prepareMonies(List<String> names) {
@@ -102,4 +100,7 @@ public class Blackjack {
 		return results;
 	}
 
+	private static void showGameResultMonies(Results results, Players players) {
+		OutputView.printGameResultMonies(results, players);
+	}
 }

@@ -1,15 +1,12 @@
 package blackjack.domain.user;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.user.exceptions.PlayersException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public final class Players {
@@ -65,5 +62,11 @@ public final class Players {
 		return players.stream()
 				.map(Playable::getName)
 				.collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
+	}
+
+	public List<Money> getMonies() {
+		return players.stream()
+				.map(player -> ((Player)player).getMoney())
+				.collect(Collectors.toList());
 	}
 }
