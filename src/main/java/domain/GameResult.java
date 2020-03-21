@@ -22,9 +22,4 @@ public class GameResult {
 	public Map<String, Double> getUserResult() {
 		return userResult;
 	}
-
-	public double calculateDealerMoney() {
-		return userResult.values().stream()
-				.reduce(Money.ZERO, Double::sum) * Money.MINUS_CONVERTER;
-	}
 }
