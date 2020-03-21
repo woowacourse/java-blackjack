@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class Dealer extends AbstractPlayer {
 	private Dealer() {
-		super(DEALER_NAME);
+		super(new Name(DEALER_NAME));
 	}
 
 	public static Dealer dealer() {

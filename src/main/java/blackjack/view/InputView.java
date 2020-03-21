@@ -20,8 +20,8 @@ public final class InputView {
 		return scanner.nextLine();
 	}
 
-	public static String inputBettingMoney(Name name) {
-		System.out.println(name.getString() + "의 배팅금액은?");
+	public static String inputBettingMoney(String name) {
+		System.out.println(name + "의 배팅금액은?");
 		return scanner.nextLine();
 	}
 }

@@ -13,8 +13,8 @@ public abstract class AbstractPlayer implements Playable {
 	private final Name name;
 	private final Hand hand;
 
-	protected AbstractPlayer(String name) {
-		this.name = new Name(name);
+	protected AbstractPlayer(Name name) {
+		this.name = name;
 		this.hand = new Hand();
 	}
 

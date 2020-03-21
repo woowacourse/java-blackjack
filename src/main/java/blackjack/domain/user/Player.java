@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.exceptions.PlayerException;
@@ -7,19 +8,22 @@ import blackjack.domain.user.exceptions.PlayerException;
 import java.util.List;
 
 public final class Player extends AbstractPlayer {
-	private Player(String name) {
+	private final Money money;
+
+	private Player(Name name, Money money) {
 		super(name);
+		this.money = money;
 		validateNameIsDifferentFromDealer(name);
 	}
 
-	private void validateNameIsDifferentFromDealer(String name) {
-		if (name.equals(DEALER_NAME)) {
+	private void validateNameIsDifferentFromDealer(Name name) {
+		if (name.equals(new Name(DEALER_NAME))) {
 			throw new PlayerException("플레이어의 이름은 " + DEALER_NAME + "일 수 없습니다.");
 		}
 	}
 
-	public static Player of(String name) {
-		return new Player(name);
+	public static Player of(String name, String money) {
+		return new Player(new Name(name), Money.of(money));
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class PlayerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = Player.of("그니");
+		player = Player.of("그니", "1000");
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class PlayerTest {
 
 	@Test
 	void of_HasDealerName_ThrowPlayerException() {
-		assertThatThrownBy(() -> Player.of("딜러"))
+		assertThatThrownBy(() -> Player.of("딜러", "1000"))
 				.isInstanceOf(PlayerException.class);
 	}
 

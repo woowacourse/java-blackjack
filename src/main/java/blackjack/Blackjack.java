@@ -13,13 +13,13 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Blackjack {
 
 	public static void main(String[] args) {
 		Players players = preparePlayers();
-		Monies bettingMonies = prepareMonies(players);
 		Playable dealer = Dealer.dealer();
 		Drawable deck = prepareDeck();
 
@@ -29,23 +29,25 @@ public class Blackjack {
 		progressDealer(dealer, deck);
 
 		Results results = finish(players, dealer);
-		showGameResultMonies(results, bettingMonies);
 	}
 
 	private static Players preparePlayers() {
-		return Players.of(InputView.inputPlayerNames());
+		List<String> names = prepareNames();
+		return Players.of(names, prepareMonies(names));
 	}
 
-	private static Monies prepareMonies(Players players) {
-		List<Money> monies = new ArrayList<>();
-		for (Name name : players.getNames()) {
-			monies.add(prepareMoney(name));
+	private static List<String> prepareNames() {
+		return Arrays.asList(InputView.inputPlayerNames()
+				.trim()
+				.split(","));
+	}
+
+	private static List<String> prepareMonies(List<String> names) {
+		List<String> monies = new ArrayList<>();
+		for (String name : names) {
+			monies.add(InputView.inputBettingMoney(name));
 		}
-		return Monies.of(players, monies);
-	}
-
-	private static Money prepareMoney(Name name) {
-		return Money.of(InputView.inputBettingMoney(name));
+		return monies;
 	}
 
 	private static Deck prepareDeck() {
@@ -100,7 +102,4 @@ public class Blackjack {
 		return results;
 	}
 
-	private static void showGameResultMonies(Results results, Monies bettingMonies) {
-		OutputView.printGameResultMonies(bettingMonies.computeGameResultMonies(results));
-	}
 }
