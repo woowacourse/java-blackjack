@@ -11,7 +11,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.blackjack.BlackjackTable;
@@ -28,13 +27,13 @@ class ReportTest {
 	private Deck deck;
 	private Dealer dealer;
 	private List<Player> players;
-	private Map<Player, BettingMoney> playersBettingMoney;
+	private PlayersBettingMoney playersBettingMoney;
 
 	@BeforeEach
 	void setUp() {
 		deck = new Deck(CardFactory.create());
 
-		dealer = Dealer.valueOf("dealer", Arrays.asList(
+		dealer = Dealer.from(Arrays.asList(
 			Card.of(Symbol.EIGHT, Type.HEART),
 			Card.of(Symbol.KING, Type.DIAMOND)));
 
@@ -49,10 +48,11 @@ class ReportTest {
 			Card.of(Symbol.KING, Type.DIAMOND)));
 		players = Arrays.asList(pobi, sony, stitch);
 
-		playersBettingMoney = new LinkedHashMap<>();
-		playersBettingMoney.put(pobi, BettingMoney.valueOf("10000"));
-		playersBettingMoney.put(sony, BettingMoney.valueOf("5000"));
-		playersBettingMoney.put(stitch, BettingMoney.valueOf("1000"));
+		Map<Player, BettingMoney> bettingMoney = new LinkedHashMap<>();
+		bettingMoney.put(pobi, BettingMoney.valueOf("10000"));
+		bettingMoney.put(sony, BettingMoney.valueOf("5000"));
+		bettingMoney.put(stitch, BettingMoney.valueOf("1000"));
+		playersBettingMoney = new PlayersBettingMoney(bettingMoney);
 	}
 
 	@Test
@@ -71,8 +71,8 @@ class ReportTest {
 	}
 
 	@ParameterizedTest
-	@NullAndEmptySource
-	void validate_EmptyPlayersBettingMoney_InvalidReportExceptionThrown(Map<Player, BettingMoney> playersBettingMoney) {
+	@NullSource
+	void validate_EmptyPlayersBettingMoney_InvalidReportExceptionThrown(PlayersBettingMoney playersBettingMoney) {
 		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		assertThatThrownBy(() -> Report.from(blackjackTable, playersBettingMoney))
@@ -85,11 +85,11 @@ class ReportTest {
 		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		Map<Player, BettingMoney> expected = new LinkedHashMap<>();
-		expected.put(players.get(0), new BettingMoney(10000));
-		expected.put(players.get(1), new BettingMoney(0));
-		expected.put(players.get(2), new BettingMoney(-1000));
-		assertThat(Report.from(blackjackTable, playersBettingMoney)).extracting("playersResult")
-			.isEqualTo(expected);
+		expected.put(players.get(0), BettingMoney.valueOf(10000));
+		expected.put(players.get(1), BettingMoney.valueOf(0));
+		expected.put(players.get(2), BettingMoney.valueOf(-1000));
+		assertThat(Report.from(blackjackTable, playersBettingMoney)).extracting("playersResultBettingMoney")
+			.extracting("playersBettingMoney").isEqualTo(expected);
 	}
 
 	@Test

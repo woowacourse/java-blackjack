@@ -59,12 +59,4 @@ class StringUtilTest {
 		String expected = "A♣, 2♥, 8♦";
 		assertThat(StringUtil.joinCards(cards)).isEqualTo(expected);
 	}
-
-	@Test
-	void joinDealerResult_MapOfResultTypeAndCount_JoinDealerResultToString() {
-		List<String> dealerResult = Arrays.asList("2승", "1패");
-
-		String expected = "2승 1패";
-		assertThat(StringUtil.joinDealerResult(dealerResult)).isEqualTo(expected);
-	}
 }

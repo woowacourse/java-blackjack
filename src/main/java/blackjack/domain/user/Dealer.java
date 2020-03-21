@@ -1,9 +1,11 @@
 package blackjack.domain.user;
 
 import java.util.List;
+import java.util.Objects;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.exceptions.InvalidDealerException;
 
 public class Dealer extends User {
 	public static final String NAME = "Dealer";
@@ -17,16 +19,23 @@ public class Dealer extends User {
 		super(name);
 	}
 
-	public static Dealer valueOf(String name, List<Card> cards) {
+	public static Dealer from(List<Card> cards) {
+		validate(cards);
 		Hand hand = new Hand();
 		hand.add(cards);
 
-		return new Dealer(name, hand);
+		return new Dealer(NAME, hand);
+	}
+
+	private static void validate(List<Card> cards) {
+		if (Objects.isNull(cards) || cards.isEmpty()) {
+			throw new InvalidDealerException(InvalidDealerException.EMPTY);
+		}
 	}
 
 	@Override
 	public boolean canDraw() {
-		return hand.calculateScore().isLowerThan(DEALER_DRAWABLE_MAX_SCORE);
+		return calculateResultScore().isLowerThan(DEALER_DRAWABLE_MAX_SCORE);
 	}
 
 	@Override

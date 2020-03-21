@@ -63,6 +63,10 @@ public class ResultScore implements Comparable<ResultScore> {
 		return BlackjackTable.INITIAL_DEAL_NUMBER == cards.size();
 	}
 
+	public boolean isLowerThan(int compareScore) {
+		return score.isLowerThan(compareScore);
+	}
+
 	public boolean isBlackjack() {
 		return scoreType.isBlackjack();
 	}

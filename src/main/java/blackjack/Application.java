@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import blackjack.controller.BlackjackController;
@@ -13,6 +12,7 @@ import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.BettingMoney;
+import blackjack.domain.result.PlayersBettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerFactory;
@@ -29,11 +29,14 @@ public class Application {
 		blackjackController.play(generatePlayersBettingMoney(players));
 	}
 
-	private static Map<Player, BettingMoney> generatePlayersBettingMoney(List<Player> players) {
+	private static PlayersBettingMoney generatePlayersBettingMoney(List<Player> players) {
 		return players.stream()
-			.collect(toMap(Function.identity(),
-				player -> BettingMoney.valueOf(InputView.inputBettingMoneyFrom(player)),
-				(x, y) -> x,
-				LinkedHashMap::new));
+			.collect(collectingAndThen(
+				toMap(
+					Function.identity(),
+					player -> BettingMoney.valueOf(InputView.inputBettingMoneyFrom(player)),
+					(x, y) -> x,
+					LinkedHashMap::new),
+				PlayersBettingMoney::new));
 	}
 }

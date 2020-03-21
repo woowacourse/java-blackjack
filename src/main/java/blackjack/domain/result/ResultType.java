@@ -9,16 +9,16 @@ import blackjack.domain.exceptions.InvalidResultTypeException;
 
 public enum ResultType {
 	BLACKJACK_WIN(ResultType::isBlackjackWin,
-		bettingMoney -> bettingMoney.multiply(1.5)),
+		bettingMoney -> bettingMoney.multiplyBy(1.5)),
 	WIN(ResultType::isWin,
 		(playerResultScore, dealerResultScore) -> playerResultScore.compareTo(dealerResultScore) > 0,
-		bettingMoney -> bettingMoney.multiply(1.0)),
+		bettingMoney -> bettingMoney.multiplyBy(1.0)),
 	DRAW(ResultType::isDraw,
 		(playerResultScore, dealerResultScore) -> playerResultScore.compareTo(dealerResultScore) == 0,
-		bettingMoney -> bettingMoney.multiply(0.0)),
+		bettingMoney -> bettingMoney.multiplyBy(0.0)),
 	LOSE(ResultType::isLose,
 		(playerResultScore, dealerResultScore) -> playerResultScore.compareTo(dealerResultScore) < 0,
-		bettingMoney -> bettingMoney.multiply(-1.0));
+		bettingMoney -> bettingMoney.multiplyBy(-1.0));
 
 	private final BiPredicate<ResultScore, ResultScore> judgeByScoreType;
 	private final BiPredicate<ResultScore, ResultScore> judgeByCompare;

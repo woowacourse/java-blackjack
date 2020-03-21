@@ -48,7 +48,9 @@ class PlayerTest {
 
 	@Test
 	void canDraw_CurrentScoreLowerThanDrawableMaxScore_ReturnTrue() {
-		assertThat(new Player("player").canDraw()).isTrue();
+		Player player = Player.valueOf("player", Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
+
+		assertThat(player.canDraw()).isTrue();
 	}
 
 	@ParameterizedTest

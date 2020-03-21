@@ -7,9 +7,9 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.result.ResultScore;
 
 public interface BlackjackParticipant {
-	void hit(Deck deck, int hitNumber);
-
 	void hit(Deck deck);
+
+	void hit(Deck deck, int hitNumber);
 
 	boolean canDraw();
 

@@ -12,7 +12,7 @@ class BettingMoneyTest {
 
 	@Test
 	void BettingMoney_InputIntBettingMoney_GenerateInstance() {
-		assertThat(new BettingMoney(1000)).isInstanceOf(BettingMoney.class);
+		assertThat(BettingMoney.valueOf(1000)).isInstanceOf(BettingMoney.class);
 	}
 
 	@Test
@@ -43,9 +43,9 @@ class BettingMoneyTest {
 	}
 
 	@Test
-	void multiply_InputBettingRate_ReturnBettingMoneyOfMultiplied() {
-		BettingMoney expected = new BettingMoney(20000);
+	void multiplyBy_InputBettingRate_ReturnBettingMoneyOfMultiplied() {
+		BettingMoney expected = BettingMoney.valueOf(20000);
 
-		assertThat(new BettingMoney(10000).multiply(2.0)).isEqualTo(expected);
+		assertThat(BettingMoney.valueOf(10000).multiplyBy(2.0)).isEqualTo(expected);
 	}
 }

@@ -18,8 +18,7 @@ public abstract class User implements BlackjackParticipant {
 	protected final Hand hand;
 
 	User(String name, Hand hand) {
-		validate(name);
-		validate(hand);
+		validate(name, hand);
 		this.name = name.trim();
 		this.hand = hand;
 	}
@@ -28,13 +27,10 @@ public abstract class User implements BlackjackParticipant {
 		this(name, new Hand());
 	}
 
-	private void validate(String name) {
+	private void validate(String name, Hand hand) {
 		if (Objects.isNull(name) || name.trim().isEmpty()) {
-			throw new InvalidUserException(InvalidUserException.NULL_OR_EMPTY);
+			throw new InvalidUserException(InvalidUserException.NULL_NAME);
 		}
-	}
-
-	private void validate(Hand hand) {
 		if (Objects.isNull(hand)) {
 			throw new InvalidUserException(InvalidUserException.NULL_HAND);
 		}
@@ -48,7 +44,7 @@ public abstract class User implements BlackjackParticipant {
 
 	private void validate(Deck deck) {
 		if (Objects.isNull(deck)) {
-			throw new InvalidDeckException(InvalidDeckException.NULL);
+			throw new InvalidDeckException(InvalidDeckException.EMPTY);
 		}
 	}
 
@@ -70,7 +66,7 @@ public abstract class User implements BlackjackParticipant {
 
 	@Override
 	public ResultScore calculateResultScore() {
-		return ResultScore.of(hand);
+		return hand.calculateResultScore();
 	}
 
 	@Override
@@ -78,7 +74,7 @@ public abstract class User implements BlackjackParticipant {
 
 	@Override
 	public int getScore() {
-		return calculateResultScore().getScore();
+		return calculateResultScore().getIntScore();
 	}
 
 	@Override
@@ -92,14 +88,14 @@ public abstract class User implements BlackjackParticipant {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (object == null || getClass() != object.getClass()) {
 			return false;
 		}
-		User user = (User)o;
+		User user = (User)object;
 		return Objects.equals(name, user.name);
 	}
 

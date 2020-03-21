@@ -16,7 +16,11 @@ public class CardFactory {
 	static {
 		CARD_CACHE = Arrays.stream(Symbol.values())
 			.flatMap(CardFactory::createBy)
-			.collect(collectingAndThen(toMap(Card::toString, Function.identity()), Collections::unmodifiableMap));
+			.collect(collectingAndThen(
+				toMap(
+					Card::toString,
+					Function.identity()),
+				Collections::unmodifiableMap));
 	}
 
 	private static Stream<Card> createBy(Symbol symbol) {

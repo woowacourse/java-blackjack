@@ -79,7 +79,7 @@ class BlackjackTableTest {
 
 	@Test
 	void isDealerBlackjack_DealerIsBlackjack_ReturnTrue() {
-		Dealer blackjackDealer = Dealer.valueOf(Dealer.NAME, Arrays.asList(
+		Dealer blackjackDealer = Dealer.from(Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.ACE, Type.SPADE)));
 		BlackjackTable blackjackTable = new BlackjackTable(deck, blackjackDealer, players);
@@ -87,10 +87,9 @@ class BlackjackTableTest {
 		assertThat(blackjackTable.isDealerBlackjack()).isTrue();
 	}
 
-	// TODO: 2020-03-20 canDraw 수정 후, 다시 테스트 돌리기
 	@Test
 	void playWith_UserDecisions_PlayGameWithUserDecisions() {
-		Dealer drownDealer = Dealer.valueOf("dealer", Arrays.asList(
+		Dealer drownDealer = Dealer.from(Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.TWO, Type.SPADE),
 			Card.of(Symbol.FOUR, Type.DIAMOND)));

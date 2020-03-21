@@ -35,7 +35,7 @@ class UserTest {
 	void validate_InvalidUserName_InvalidUserExceptionThrown(String name) {
 		assertThatThrownBy(() -> new Dealer(name))
 			.isInstanceOf(InvalidUserException.class)
-			.hasMessage(InvalidUserException.NULL_OR_EMPTY);
+			.hasMessage(InvalidUserException.NULL_NAME);
 	}
 
 	@ParameterizedTest
@@ -63,7 +63,7 @@ class UserTest {
 
 		assertThatThrownBy(() -> user.hit(null))
 			.isInstanceOf(InvalidDeckException.class)
-			.hasMessage(InvalidDeckException.NULL);
+			.hasMessage(InvalidDeckException.EMPTY);
 	}
 
 	@Test
@@ -92,9 +92,20 @@ class UserTest {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.TEN, Type.DIAMOND),
 			Card.of(Symbol.ACE, Type.SPADE));
-		User user = Dealer.valueOf(Dealer.NAME, cards);
+		User user = Dealer.from(cards);
 
 		ResultScore expected = new ResultScore(Score.valueOf(21), ScoreType.BLACKJACK);
 		assertThat(user.calculateResultScore()).isEqualTo(expected);
+	}
+
+	@Test
+	void getScore_UserHand_ReturnIntScore() {
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.TEN, Type.DIAMOND),
+			Card.of(Symbol.ACE, Type.SPADE));
+		User user = Dealer.from(cards);
+
+		int expected = 21;
+		assertThat(user.getScore()).isEqualTo(expected);
 	}
 }

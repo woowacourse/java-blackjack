@@ -7,12 +7,16 @@ import blackjack.domain.exceptions.InvalidBettingMoneyException;
 public class BettingMoney {
 	private final int bettingMoney;
 
-	public BettingMoney(int bettingMoney) {
+	private BettingMoney(int bettingMoney) {
 		this.bettingMoney = bettingMoney;
 	}
 
+	public static BettingMoney valueOf(int bettingMoney) {
+		return new BettingMoney(bettingMoney);
+	}
+
 	public static BettingMoney valueOf(String bettingMoney) {
-		return new BettingMoney(parseToInt(bettingMoney));
+		return BettingMoney.valueOf(parseToInt(bettingMoney));
 	}
 
 	private static int parseToInt(String bettingMoney) {
@@ -38,8 +42,8 @@ public class BettingMoney {
 		}
 	}
 
-	public BettingMoney multiply(Double bettingRate) {
-		return new BettingMoney((int)(this.bettingMoney * bettingRate));
+	public BettingMoney multiplyBy(Double bettingRate) {
+		return BettingMoney.valueOf((int)(this.bettingMoney * bettingRate));
 	}
 
 	public int getBettingMoney() {

@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.exceptions.InvalidDealerException;
 
 class DealerTest {
 	@Test
@@ -27,18 +29,27 @@ class DealerTest {
 	}
 
 	@Test
-	void valueOf_InputDealerNameAndCards_GenerateInstance() {
+	void from_InputDealerNameAndCards_GenerateInstance() {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.SEVEN, Type.CLUB),
 			Card.of(Symbol.TWO, Type.DIAMOND));
 
-		assertThat(Dealer.valueOf("dealer", cards)).isInstanceOf(Dealer.class)
+		assertThat(Dealer.from(cards)).isInstanceOf(Dealer.class)
 			.extracting("hand").isEqualTo(cards);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_EmptyCards_InvalidDealerExceptionThrown(List<Card> cards) {
+		assertThatThrownBy(() -> Dealer.from(cards))
+			.isInstanceOf(InvalidDealerException.class)
+			.hasMessage(InvalidDealerException.EMPTY);
 	}
 
 	@Test
 	void canDraw_CurrentScoreLowerThanDrawableMaxScore_ReturnTrue() {
-		assertThat(new Dealer("dealer").canDraw()).isTrue();
+		Dealer dealer = Dealer.from(Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
+		assertThat(dealer.canDraw()).isTrue();
 	}
 
 	@ParameterizedTest
@@ -64,7 +75,7 @@ class DealerTest {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.SEVEN, Type.CLUB),
 			Card.of(Symbol.TWO, Type.DIAMOND));
-		Dealer dealer = Dealer.valueOf("dealer", cards);
+		Dealer dealer = Dealer.from(cards);
 
 		assertThat(dealer.getInitialDealtHand()).hasSize(1)
 			.isEqualTo(Arrays.asList(Card.of(Symbol.SEVEN, Type.CLUB)));
