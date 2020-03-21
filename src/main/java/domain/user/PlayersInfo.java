@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 
 public class PlayersInfo {
 
-    private Map<Player, BettingMoney> playersInfo;
+    private final Map<Player, BettingMoney> playersInfo;
 
     private PlayersInfo(Map<String, Integer> playersInfo) {
-        this.playersInfo = new LinkedHashMap<>();
-        playersInfo
-                .forEach((name, bettingMoney) -> this.playersInfo.put(new Player(name), new BettingMoney(bettingMoney)));
+        this.playersInfo = playersInfo.entrySet()
+            .stream()
+            .collect(Collectors.toMap(entry -> new Player(entry.getKey()),
+                    entry -> new BettingMoney(entry.getValue()),
+                    (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public static PlayersInfo of(Map<String, Integer> playerNames) {
@@ -44,19 +46,19 @@ public class PlayersInfo {
         return playersInfo.keySet()
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), Player::calculatePoint,
-                        (e1, e2) -> {
-                            throw new AssertionError();
-                        },
-                        LinkedHashMap::new));
+                        (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public Map<Player, Integer> calculateProfit(Dealer dealer) {
-        Map<Player, Integer> profitOfPlayers = new LinkedHashMap<>();
+        return playersInfo.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        entry -> calculate(dealer, entry),
+                        (e1, e2) -> e1, LinkedHashMap::new));
+    }
 
-        playersInfo.forEach((player, bettingMoney) ->
-                profitOfPlayers.put(player, (int) (bettingMoney.getMoney() * player.decideRatio(dealer).getRatio())));
-
-        return profitOfPlayers;
+    private int calculate(Dealer dealer, Map.Entry<Player, BettingMoney> entry) {
+        return (int)(entry.getValue().getMoney() * entry.getKey().decideRatio(dealer).getRatio());
     }
 
     public List<Player> getPlayers() {
