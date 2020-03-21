@@ -29,9 +29,14 @@ class AnswerTest {
 	}
 
 	@Test
-	@DisplayName("isYes 테스트")
-	void isYesTest() {
+	@DisplayName("Yes의 isYes 테스트")
+	void yesIsYesTest() {
 		assertThat(Answer.YES.isYes()).isTrue();
+	}
+
+	@Test
+	@DisplayName("No의 isYes 테스트")
+	void noIsNotYesTest() {
 		assertThat(Answer.NO.isYes()).isFalse();
 	}
 }

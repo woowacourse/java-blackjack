@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import util.StringUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -31,14 +32,15 @@ class NameTest {
 
 	@ParameterizedTest
 	@ValueSource(strings = {"allen,kyle,bee", "pobi,jason,cu,woni,brown,jun"})
-	@DisplayName("Player의 list가 제대로 생성되는지 검사")
+	@DisplayName("Name의 list가 제대로 생성되는지 검사")
 	void createTest(String input) {
 		List<Name> names = Name.list(input);
-		List<String> expectedNames = StringUtil.parseByComma(input);
+		List<Name> expectedNames = StringUtil.parseByComma(input)
+				.stream()
+				.map(Name::new)
+				.collect(Collectors.toList());
 
-		for (Name name : names) {
-			assertThat(expectedNames).contains(name.getName());
-		}
+		assertThat(names).isEqualTo(expectedNames);
 	}
 
 	@Test

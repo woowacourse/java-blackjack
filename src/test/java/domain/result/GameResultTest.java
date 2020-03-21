@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultTypeTest {
+class GameResultTest {
 	private List<Player> players;
 	private Dealer dealer;
 	private Gamers gamers;
@@ -23,13 +23,16 @@ class GameResultTypeTest {
 	@BeforeEach
 	void setUp() {
 		players = Arrays.asList(new Player(new Name("pobi"), new Money(10000)),
-				new Player(new Name("jason"), new Money(5000)));
+				new Player(new Name("jason"), new Money(5000)),
+				new Player(new Name("brwon"), new Money(3000)));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));
 		players.get(0).hit(new Card(Symbol.ACE, Type.CLUB));
 		players.get(1).hit(new Card(Symbol.NINE, Type.CLUB));
 		players.get(1).hit(new Card(Symbol.TEN, Type.CLUB));
+		players.get(2).hit(new Card(Symbol.TEN, Type.CLUB));
+		players.get(2).hit(new Card(Symbol.ACE, Type.CLUB));
 		dealer.hit(new Card(Symbol.EIGHT, Type.CLUB));
 		dealer.hit(new Card(Symbol.SEVEN, Type.CLUB));
 
@@ -37,23 +40,24 @@ class GameResultTypeTest {
 	}
 
 	@Test
-	@DisplayName("플레이어의 결과가 올바르게 생성되는지 확인")
-	void fromTest() {
+	@DisplayName("플레이어의 수익이 올바르게 계산되는 확인")
+	void playersProfitTest() {
 		GameResult gameResult = new GameResult(gamers);
 
 		Map<Player, Profit> expected = new HashMap<>();
 		expected.put(players.get(0), new Profit(-10000));
 		expected.put(players.get(1), new Profit(5000));
+		expected.put(players.get(2), new Profit(1500));
 
 		assertThat(gameResult.getPlayersToProfit()).isEqualTo(expected);
 	}
 
 	@Test
-	@DisplayName("딜러의 결과가 올바르게 생성되는지 확인")
-	void dealerResultTest() {
+	@DisplayName("딜러의 수익 올바르게 생성되는지 확인")
+	void dealerProfitTest() {
 		GameResult gameResult = new GameResult(gamers);
 
-		assertThat(gameResult.getDealerResult()).isEqualTo(new Profit(5000));
+		assertThat(gameResult.getDealerResult()).isEqualTo(new Profit(3500));
 	}
 
 	@Test
@@ -64,6 +68,7 @@ class GameResultTypeTest {
 		Map<Gamer, Score> expected = new HashMap<>();
 		expected.put(players.get(0), players.get(0).getScore());
 		expected.put(players.get(1), players.get(1).getScore());
+		expected.put(players.get(2), players.get(2).getScore());
 		expected.put(dealer, dealer.getScore());
 
 		assertThat(gameResult.getGamersScore()).isEqualTo(expected);

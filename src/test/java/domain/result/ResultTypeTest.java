@@ -8,7 +8,6 @@ import domain.gamer.Money;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -52,14 +51,19 @@ class ResultTypeTest {
 				Arguments.of(Arrays.asList(ten, ten, ten), Arrays.asList(ten, ten, six), ResultType.LOSE));
 	}
 
-	@Test
+	@ParameterizedTest
+	@MethodSource("calculateInput")
 	@DisplayName("게임결과에 따라 정확한 수익금을 계산하는지 테스트")
-	void calculateTest() {
-		Money money = new Money(10000);
+	void calculateTest(ResultType result, int moneyInput, int expected) {
+		Money money = new Money(moneyInput);
 
-		assertThat(ResultType.BLACK_JACK.calculateProfit(money)).isEqualTo(5000);
-		assertThat(ResultType.WIN.calculateProfit(money)).isEqualTo(10000);
-		assertThat(ResultType.DRAW.calculateProfit(money)).isEqualTo(0);
-		assertThat(ResultType.LOSE.calculateProfit(money)).isEqualTo(-10000);
+		assertThat(result.calculateProfit(money)).isEqualTo(expected);
+	}
+
+	static Stream<Arguments> calculateInput() {
+		return Stream.of(Arguments.of(ResultType.BLACK_JACK, 10000, 5000),
+				Arguments.of(ResultType.WIN, 10000, 10000),
+				Arguments.of(ResultType.DRAW, 10000, 0),
+				Arguments.of(ResultType.LOSE, 10000, -10000));
 	}
 }
