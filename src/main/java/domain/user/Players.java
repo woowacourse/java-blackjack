@@ -21,6 +21,14 @@ public class Players {
         }
     }
 
+    public int calculateDealerRevenue(Dealer dealer) {
+        return -1 * (
+            players.stream()
+                .mapToInt(player -> player.calculateRevenue(dealer))
+                .sum()
+        );
+    }
+
     public List<String> getNames() {
         return players.stream().
             map(Player::getName)

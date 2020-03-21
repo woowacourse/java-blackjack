@@ -23,12 +23,19 @@ public class Player extends User {
         return this.isSmallerThan(Cards.BLACKJACK_SCORE);
     }
 
+    public int calculateRevenue(Dealer dealer) {
+        return this.calculateResult(dealer).revenueOf(this.betAmount);
+    }
+
     public Result calculateResult(Dealer dealer) {
         if (isDraw(dealer)) {
             return Result.DRAW;
         }
         if (isPlayerLose(dealer)) {
             return Result.LOSE;
+        }
+        if (isBlackJack()) {
+            return Result.BLACKJACK_WIN;
         }
         return Result.WIN;
     }
@@ -52,9 +59,5 @@ public class Player extends User {
 
     public String getName() {
         return name.getName();
-    }
-
-    public int getBetAmount() {
-        return this.betAmount;
     }
 }
