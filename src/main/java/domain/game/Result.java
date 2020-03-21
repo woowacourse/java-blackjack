@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.betting.BettingLog;
 import domain.player.Player;
 import domain.player.User;
 
@@ -8,13 +7,12 @@ import java.math.BigDecimal;
 
 public class Result {
     private static final int ONE = 1;
-    private final String name;
+
     private int winCount;
     private int loseCount;
     private Money winningMoney;
 
-    public Result(final String name) {
-        this.name = name;
+    public Result() {
         this.winCount = 0;
         this.loseCount = 0;
         this.winningMoney = new Money("0");
@@ -26,10 +24,6 @@ public class Result {
 
     public void addLoseCount() {
         loseCount++;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getWinCount() {

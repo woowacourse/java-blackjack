@@ -1,7 +1,5 @@
 package util;
 
-import domain.betting.BettingLog;
-import domain.betting.BettingLogs;
 import domain.game.Money;
 import domain.player.User;
 import domain.player.Users;

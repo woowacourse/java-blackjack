@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.game.Money;
 
 import java.util.List;
 
@@ -11,10 +12,12 @@ public abstract class Player {
 
     private final Name name;
     private final Cards cards;
+    private final Money money;
 
     public Player(final String name) {
         this.name = new Name(name);
         this.cards = new Cards();
+        this.money = new Money("0");
     }
 
     public void addCard(final Card card) {

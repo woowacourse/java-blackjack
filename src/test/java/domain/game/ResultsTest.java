@@ -1,7 +1,5 @@
 package domain.game;
 
-import domain.betting.BettingLog;
-import domain.betting.BettingLogs;
 import domain.player.Dealer;
 import domain.player.Users;
 import factory.UserFactory;

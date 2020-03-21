@@ -4,12 +4,14 @@ import domain.card.Card;
 import domain.game.Result;
 import domain.game.Results;
 import domain.player.Dealer;
+import domain.player.Name;
 import domain.player.Player;
 import domain.player.Users;
 
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -59,13 +61,18 @@ public class OutputView {
 
     public static void printLastResult(Results results) {
         System.out.println("\n## 최종 수익");
-        for (Result result : results) {
-            printIndividualResult(result);
+        Set<Map.Entry<Name, Result>> entries = results.getResults()
+                .entrySet();
+
+        for (Map.Entry<Name, Result> entry : entries) {
+            printIndividualResult(entry);
         }
     }
 
-    private static void printIndividualResult(final Result result) {
-        System.out.println(result.getName() + ": " + result.getWinningMoney()
-                .setScale(0, RoundingMode.FLOOR));
+    private static void printIndividualResult(final Map.Entry<Name, Result> entry) {
+        Name name = entry.getKey();
+        Result result = entry.getValue();
+
+        System.out.println(name.getValue() + ": " + result.getWinningMoney());
     }
 }

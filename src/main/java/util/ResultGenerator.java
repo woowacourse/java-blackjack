@@ -1,46 +1,45 @@
 package util;
 
-import domain.betting.BettingLog;
-import domain.betting.BettingLogs;
 import domain.game.Result;
 import domain.game.Results;
 import domain.player.Dealer;
+import domain.player.Name;
 import domain.player.User;
 import domain.player.Users;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ResultGenerator {
     private ResultGenerator() {
     }
 
     public static Results create(final Dealer dealer, final Users users, BettingLogs bettingLogs) {
-        List<Result> results = new ArrayList<>();
+        Map<Name, Result> results = new LinkedHashMap<>();
 
         addDealerResults(dealer, users, results, bettingLogs);
         addUserResults(dealer, users, results, bettingLogs);
         return new Results(results);
     }
 
-    private static void addDealerResults(final Dealer dealer, final Users users, final List<Result> results, BettingLogs bettingLogs) {
-        Result result = new Result(dealer.getName());
+    private static void addDealerResults(final Dealer dealer, final Users users, final Map<Name, Result> results, BettingLogs bettingLogs) {
+        Result result = new Result();
 
         for (User user : users) {
             BettingLog userBettingLog = bettingLogs.getUserLog(user.getName());
 
             result.calculateWinningMoney(dealer, user, userBettingLog);
         }
-        results.add(result);
+        results.put(new Name(dealer.getName()), result);
     }
 
-    private static void addUserResults(final Dealer dealer, final Users users, final List<Result> results, BettingLogs bettingLogs) {
+    private static void addUserResults(final Dealer dealer, final Users users, final Map<Name, Result> results, BettingLogs bettingLogs) {
         for (User user : users) {
             BettingLog userBettingLog = bettingLogs.getUserLog(user.getName());
-            Result result = new Result(user.getName());
+            Result result = new Result();
 
             result.calculateWinningMoney(user, dealer, userBettingLog);
-            results.add(result);
+            results.put(new Name(user.getName()), result);
         }
     }
 }
