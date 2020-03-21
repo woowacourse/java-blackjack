@@ -13,11 +13,10 @@ import view.OutputView;
 
 class GameController {
 	GameController() {
-		OutputView.printInputPlayerNames();
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(deck);
 		Players players = new Players(InputView.inputPlayerNames(), deck);
-		Map<Player, BettingMoney> playersBettingMoney = players.bet(OutputView::printInputBettingMoney, InputView::inputBettingMoney);
+		Map<Player, BettingMoney> playersBettingMoney = players.bet(InputView::inputBettingMoney);
 		OutputView.printInitialHands(players, dealer);
 
 		hitOrStay(players, dealer, deck);
@@ -38,17 +37,12 @@ class GameController {
 	}
 
 	private void needMoreCard(Player player, Deck deck) {
-		while (player.needMoreCard(getAnswerForNeedMoreCard(player), deck)) {
+		while (player.needMoreCard(InputView.inputYesOrNo(player), deck)) {
 			if (player.isBurst()) {
 				OutputView.printBurst(player);
 				break;
 			}
 			OutputView.printHands(player);
 		}
-	}
-
-	private String getAnswerForNeedMoreCard(Player player) {
-		OutputView.printNeedMoreCard(player);
-		return InputView.inputYesOrNo();
 	}
 }

@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import domains.card.Deck;
 import domains.user.money.BettingMoney;
@@ -28,11 +27,10 @@ public class Players implements Iterable<Player> {
 		}
 	}
 
-	public Map<Player, BettingMoney> bet(Consumer<Player> printInputBettingMoney, Supplier<String> inputBettingMoney) {
+	public Map<Player, BettingMoney> bet(Function<Player, String> inputBettingMoney) {
 		Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
 		for (Player player : players) {
-			printInputBettingMoney.accept(player);
-			playerBettingMoney.put(player, new BettingMoney(inputBettingMoney.get()));
+			playerBettingMoney.put(player, new BettingMoney(inputBettingMoney.apply(player)));
 		}
 		return playerBettingMoney;
 	}
