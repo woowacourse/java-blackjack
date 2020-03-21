@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,16 +32,19 @@ class ResultsTest {
 		System.out.println(results);
 	}
 
+	@DisplayName("of()가 인스턴스를 반환하는지 테스트")
 	@Test
 	void of_HasThreeMember_IsNotNull() {
 		assertThat(results).isNotNull();
 	}
 
+	@DisplayName("getDealerWin()이 딜러의 승 수를 반환하는지 테스트")
 	@Test
 	void getDealerWin_DealerWonTwice_IsEqualToTwo() {
 		assertThat(results.getDealerWin()).isEqualTo(2);
 	}
 
+	@DisplayName("getDealerLose()가 딜러의 패 수를 반환하는지 테스트")
 	@Test
 	void getDealerLose_DealerLoseOnce_IsEqualToOne() {
 		assertThat(results.getDealerLose()).isEqualTo(1);
