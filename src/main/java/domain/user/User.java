@@ -66,7 +66,7 @@ public class User implements Comparable<User> {
 		if (cards.isNotBlackjack() && this.compareTo(other) > ZERO) {
 			return ResultType.WIN;
 		}
-		if (isBothBlackjack(other.cards) || cards.isNotBurst() && this.isSameScore(other)) {
+		if (isBothBlackjack(other.cards) || cards.isNotBurst() && isSameScore(other)) {
 			return ResultType.DRAW;
 		}
 		return ResultType.LOSE;
@@ -81,7 +81,7 @@ public class User implements Comparable<User> {
 	}
 
 	public boolean isSameScore(User other) {
-		return this.compareTo(other) == 0;
+		return this.compareTo(other) == ZERO;
 	}
 
 	@Override
