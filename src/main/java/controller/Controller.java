@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import domain.BlackjackGame;
 import domain.GameResult;
-import domain.YesOrNo;
+import domain.HitAnswer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -108,15 +108,15 @@ public class Controller {
 	}
 
 	private static boolean isContinue(Player player) {
-		return player.canHit() && inputYesOrNo(player).isYes();
+		return player.canHit() && inputHitAnswer(player).isYes();
 	}
 
-	private static YesOrNo inputYesOrNo(Player player) {
+	private static HitAnswer inputHitAnswer(Player player) {
 		try {
-			return YesOrNo.of(InputView.inputMoreCard(PlayerDto.from(player)));
+			return HitAnswer.of(InputView.inputMoreCard(PlayerDto.from(player)));
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
-			return inputYesOrNo(player);
+			return inputHitAnswer(player);
 		}
 	}
 

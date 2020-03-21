@@ -3,22 +3,22 @@ package domain;
 import java.util.Arrays;
 
 /**
- *    YesOrNo를 의미하는 enum입니다.
+ *    Hit answer를 의미하는 enum입니다.
  *
  *    @author AnHyungJu, ParkDooWon
  */
-public enum YesOrNo {
+public enum HitAnswer {
 	YES("y"),
 	NO("n");
 
 	private String decision;
 
-	YesOrNo(String input) {
+	HitAnswer(String input) {
 		this.decision = input;
 	}
 
-	public static YesOrNo of(String input) {
-		return Arrays.stream(YesOrNo.values())
+	public static HitAnswer of(String input) {
+		return Arrays.stream(HitAnswer.values())
 			.filter(value -> value.decision.equalsIgnoreCase(input))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("y또는 n을 입력해주세요."));
