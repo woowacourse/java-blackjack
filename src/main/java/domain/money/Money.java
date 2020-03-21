@@ -6,8 +6,8 @@ package domain.money;
  *   @author ParkDooWon, AnHyungJu
  */
 public class Money {
-	private static final int MINIMUM = 10000;
-	private static final int UNIT = 10000;
+	private static final int MINIMUM = 10_000;
+	private static final int UNIT = 10_000;
 	private static final int ZERO = 0;
 
 	private int value;
