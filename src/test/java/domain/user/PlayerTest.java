@@ -124,7 +124,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러만 21을 넘기는 경우")
+    @DisplayName("결과계산: 딜러만 21을 넘기는 경우")
     void testWhenOnlyDealerOverBlackJack() {
         Dealer dealer = new Dealer();
         List<Card> deckForTest = makeCardList(new Card(Symbol.QUEEN, Type.HEART),
@@ -141,7 +141,7 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 둘 다 21이하인 경우")
+    @DisplayName("결과계산: 딜러와 플레이어 둘 다 21이하인 경우")
     void testWhenBothLowerThanBlackJack() {
         Dealer dealer = new Dealer();
         List<Card> deckForTest
