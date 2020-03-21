@@ -14,4 +14,3 @@ public class BettingMoneys {
 		return bettingMoneys.getOrDefault(player, BettingMoney.ZERO);
 	}
 }
-;
