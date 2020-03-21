@@ -23,7 +23,7 @@ public final class OutputView {
 				.collect(Collectors.joining(", "));
 
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
-				dealer.getName().getString(), playerNames, dealer.countCards());
+				dealer.getName().getString(), playerNames, dealer.getHand().getHand().size());
 	}
 
 	private static void printAllPlayerCards(Players players) {
@@ -73,7 +73,7 @@ public final class OutputView {
 	}
 
 	private static String createPlayerCardInfo(Playable player) {
-		return player.getHand().stream()
+		return player.getHand().getHand().stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
 	}

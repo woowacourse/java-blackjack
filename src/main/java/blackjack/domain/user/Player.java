@@ -30,9 +30,13 @@ public final class Player extends AbstractPlayer {
 		return money.computeResultingAmount(resultType);
 	}
 
+	public Money getMoney() {
+		return money;
+	}
+
 	@Override
 	public List<Card> getStartHand() {
-		return getHand();
+		return getHand().getHand();
 	}
 
 	@Override
@@ -60,9 +64,5 @@ public final class Player extends AbstractPlayer {
 	@Override
 	public boolean canReceiveCard() {
 		return !isBust();
-	}
-
-	public Money getMoney() {
-		return money;
 	}
 }

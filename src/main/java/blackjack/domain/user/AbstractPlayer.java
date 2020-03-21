@@ -34,11 +34,6 @@ public abstract class AbstractPlayer implements Playable {
 	}
 
 	@Override
-	public int countCards() {
-		return hand.size();
-	}
-
-	@Override
 	public Score computeScore() {
 		return hand.computeScore();
 	}
@@ -49,13 +44,13 @@ public abstract class AbstractPlayer implements Playable {
 	}
 
 	@Override
-	public List<Card> getHand() {
-		return hand.getHand();
+	public Name getName() {
+		return name;
 	}
 
 	@Override
-	public Name getName() {
-		return name;
+	public Hand getHand() {
+		return hand;
 	}
 
 	@Override

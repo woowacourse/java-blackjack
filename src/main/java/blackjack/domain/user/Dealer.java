@@ -17,7 +17,7 @@ public final class Dealer extends AbstractPlayer {
 
 	@Override
 	public List<Card> getStartHand() {
-		return Collections.singletonList(getHand().get(0));
+		return Collections.singletonList(getHand().getHand().get(0));
 	}
 
 	@Override

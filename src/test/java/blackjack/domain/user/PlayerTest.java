@@ -63,7 +63,7 @@ public class PlayerTest {
 		}
 
 		// then
-		assertThat(player.getHand()).isEqualTo(cards);
+		assertThat(player.getHand().getHand()).isEqualTo(cards);
 	}
 
 	static Stream<Arguments> giveCard_Cards_GiveTopCardPlayer() {
@@ -78,7 +78,7 @@ public class PlayerTest {
 	@MethodSource("giveCards_Cards_GiveCardsPlayer")
 	void giveCards_Cards_GiveCardsPlayer(List<Card> cards) {
 		player.receiveCards(cards);
-		assertThat(player.getHand()).isEqualTo(cards);
+		assertThat(player.getHand().getHand()).isEqualTo(cards);
 	}
 
 	static Stream<List<Card>> giveCards_Cards_GiveCardsPlayer() {
@@ -160,34 +160,6 @@ public class PlayerTest {
 				Collections.singletonList(aceSpade),
 				Arrays.asList(tenClub, aceSpade),
 				Arrays.asList(tenClub, jackHeart, aceSpade));
-	}
-
-	@ParameterizedTest
-	@MethodSource("getCards_HasCards_ReturnCards")
-	void getCards_HasCards_ReturnCards(List<Card> cards) {
-		player.receiveCards(cards);
-		assertThat(player.getHand()).isEqualTo(cards);
-	}
-
-	static Stream<List<Card>> getCards_HasCards_ReturnCards() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(aceSpade, tenClub),
-				Arrays.asList(jackHeart, tenClub, jackHeart));
-	}
-
-	@ParameterizedTest
-	@MethodSource("countCards_HasCards_ReturnCount")
-	void countCards_HasCards_ReturnCount(List<Card> cards, int count) {
-		player.receiveCards(cards);
-		assertThat(player.countCards()).isEqualTo(count);
-	}
-
-	static Stream<Arguments> countCards_HasCards_ReturnCount() {
-		return Stream.of(Arguments.of(Collections.emptyList(), 0),
-				Arguments.of(Collections.singletonList(aceSpade), 1),
-				Arguments.of(Arrays.asList(twoClub, twoClub), 2),
-				Arguments.of(Arrays.asList(aceSpade, twoClub, sixDiamond, tenClub, jackHeart), 5));
 	}
 
 	@Test

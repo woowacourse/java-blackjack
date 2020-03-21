@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 
 import java.util.List;
@@ -22,9 +23,7 @@ public interface Playable {
 
 	List<Card> getStartHand();
 
-	List<Card> getHand();
-
-	int countCards();
+	Hand getHand();
 
 	Name getName();
 

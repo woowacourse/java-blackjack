@@ -24,10 +24,6 @@ public final class Hand {
 		hand.addAll(cards);
 	}
 
-	public int size() {
-		return hand.size();
-	}
-
 	public Score computeScore() {
 		Score simpleSum = simplySumScores();
 		return maximizeSimpleSumIfHasAce(simpleSum);

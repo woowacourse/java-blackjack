@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -37,11 +38,13 @@ class HandTest {
 		hand = new Hand();
 	}
 
+	@DisplayName("Hand()가 인스턴스를 반환하는지 테스트")
 	@Test
 	void Hand_IsNotNull() {
 		assertThat(hand).isNotNull();
 	}
 
+	@DisplayName("add()가 hand에 카드를 추가하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("add_Card_AddCardToHand")
 	void add_Card_AddCardToHand(Card card) {
@@ -53,6 +56,7 @@ class HandTest {
 		return Stream.of(aceSpade, twoClub, sixDiamond, tenClub, jackHeart);
 	}
 
+	@DisplayName("add()를 두 번 호출했을때 적절한 카드가 두 장 들어가는지 테스트")
 	@ParameterizedTest
 	@MethodSource("add_TwoCards_AddTwoCardsToHand")
 	void add_TwoCards_AddTwoCardsToHand(List<Card> cards) {
@@ -68,6 +72,7 @@ class HandTest {
 				Arrays.asList(jackHeart, jackHeart));
 	}
 
+	@DisplayName("addAll()가 카드를 추가하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("addAll_Cards_AddAllToHand")
 	void addAll_Cards_AddAllToHand(List<Card> cards) {
@@ -82,20 +87,7 @@ class HandTest {
 				Arrays.asList(aceSpade, sixDiamond, tenClub, twoClub, jackHeart, jackHeart));
 	}
 
-	@ParameterizedTest
-	@MethodSource("size_HasCards_ReturnCardsSize")
-	void size_HasCards_ReturnCardsSize(List<Card> cards) {
-		hand.addAll(cards);
-		assertThat(cards.size()).isEqualTo(cards.size());
-	}
-
-	static Stream<List<Card>> size_HasCards_ReturnCardsSize() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(sixDiamond, tenClub),
-				Arrays.asList(aceSpade, sixDiamond, tenClub, twoClub, jackHeart, jackHeart));
-	}
-
+	@DisplayName("computeScore()가 점수를 계산하여 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("getScore")
 	void getScore(List<Card> cards, int score) {
@@ -109,19 +101,5 @@ class HandTest {
 				Arguments.of(Arrays.asList(aceSpade, tenClub), 21),
 				Arguments.of(Arrays.asList(tenClub, jackHeart, aceSpade), 21),
 				Arguments.of(Arrays.asList(jackHeart, aceSpade, twoClub), 13));
-	}
-
-	@ParameterizedTest
-	@MethodSource("get_HasCards_ReturnCards")
-	void get_HasCards_ReturnCards(List<Card> cards) {
-		hand.addAll(cards);
-		assertThat(hand.getHand()).isEqualTo(cards);
-	}
-
-	static Stream<List<Card>> get_HasCards_ReturnCards() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(sixDiamond, tenClub),
-				Arrays.asList(aceSpade, sixDiamond, tenClub, twoClub, jackHeart, jackHeart));
 	}
 }
