@@ -17,8 +17,7 @@ public class Prize {
 	}
 
 	public Prize multiply(double prizeFactor) {
-		int prizeValue = (int)(this.prize * prizeFactor);
-		return Prize.valueOf(prizeValue);
+		return new Prize((int)(this.prize * prizeFactor));
 	}
 
 	public Prize calculateDealerPrize() {

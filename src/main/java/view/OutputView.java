@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 import domain.score.Score;
 import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.Players;
 import domain.user.User;
 import view.dto.UserPrizeDto;
 import view.dto.UserScoreDto;
@@ -19,8 +21,11 @@ public class OutputView {
 	private OutputView() {
 	}
 
-	public static void printInitialDrawResult(User user) {
-		System.out.printf("%s %s %s", user.getName(), parseCards(user.getFirstOpenCards()), NEW_LINE);
+	public static void printInitialDrawResult(Players players, Dealer dealer) {
+		for (Player player : players) {
+			System.out.printf("%s %s %s", player.getName(), parseCards(player.getFirstOpenCards()), NEW_LINE);
+		}
+		System.out.printf("%s %s %s", dealer.getName(), parseCards(dealer.getFirstOpenCards()), NEW_LINE);
 	}
 
 	public static void printPlayerCard(User user) {
@@ -32,13 +37,11 @@ public class OutputView {
 	}
 
 	public static void printUsersCardsAndScore(List<UserScoreDto> scoreBoards) {
-		System.out.println(parseAllUsersCardAndScoreData(scoreBoards));
-	}
-
-	private static String parseAllUsersCardAndScoreData(List<UserScoreDto> scoreBoards) {
-		return scoreBoards.stream()
+		String parsedData = scoreBoards.stream()
 			.map(OutputView::parseSingleUserCardAndScore)
 			.collect(Collectors.joining(NEW_LINE));
+
+		System.out.println(parsedData);
 	}
 
 	private static String parseSingleUserCardAndScore(UserScoreDto singleUserScore) {
@@ -65,13 +68,11 @@ public class OutputView {
 
 	public static void printGameResult(List<UserPrizeDto> userResults) {
 		System.out.println("## 최종 수익");
-		System.out.println(parseAllUsersPrizeResult(userResults));
-	}
-
-	private static String parseAllUsersPrizeResult(List<UserPrizeDto> userResults) {
-		return userResults.stream()
+		String parsedData = userResults.stream()
 			.map(playerPrize -> String.format("%s : %s원", playerPrize.getName(), playerPrize.getPrize()))
 			.collect(Collectors.joining(NEW_LINE));
+
+		System.out.println(parsedData);
 	}
 
 	public static void printExceptionMessage(String message) {
