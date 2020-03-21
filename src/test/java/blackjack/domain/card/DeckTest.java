@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import blackjack.domain.card.exceptions.DeckException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,16 +19,11 @@ class DeckTest {
 	private static Card fourDiamond;
 	private static Card fiveClub;
 
-	@Test
-	void of_SimpleDeck_IsNotNull() {
-		assertThat(simpleDeck).isNotNull();
-	}
-
 	private static Card sixSpade;
 
 	private Drawable simpleDeck;
-	private List<Card> fourCards;
 
+	private List<Card> fourCards;
 	@BeforeAll
 	static void beforeAll() {
 		threeHeart = Card.of(Symbol.THREE, Type.HEART);
@@ -46,16 +42,19 @@ class DeckTest {
 		simpleDeck = Deck.of(fourCards);
 	}
 
+	@DisplayName("of()가 인스턴스를 반환하는지 테스트")
 	@Test
-	void of_FourCards_IsNotNull() {
+	void of_SimpleDeck_IsNotNull() {
 		assertThat(simpleDeck).isNotNull();
 	}
 
+	@DisplayName("of()가 빈 리스트를 받았을때 인스턴스를 반환하는지 테스트")
 	@Test
 	void of_EmptyList_IsNotNull() {
 		assertThat(Deck.of(Collections.emptyList())).isNotNull();
 	}
 
+	@DisplayName("ofDeckFactory()가 중복되지 않고 적절한 크기인지 테스트")
 	@Test
 	void ofDeckFactory_ShuffledDeckFactory_IsSizeFifteenAndNotDuplicated() {
 		// when
@@ -70,6 +69,7 @@ class DeckTest {
 		assertThat(cards.size()).isEqualTo(52);
 	}
 
+	@DisplayName("draw()가 덱의 맨 윗 카드를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("draw_Deck_ReturnTopCard")
 	void draw_Deck_ReturnTopCard(List<Card> cards) {
@@ -84,6 +84,7 @@ class DeckTest {
 				Arrays.asList(threeHeart, threeHeart, fourDiamond, threeHeart));
 	}
 
+	@DisplayName("draw()를 두 번째 호출할 시 맨 위에서 두 번째 카드가 반환되는지 테스트")
 	@ParameterizedTest
 	@MethodSource("draw_OnceDrawnDeck_ReturnSecondTopCard")
 	void draw_OnceDrawnDeck_ReturnSecondTopCard(List<Card> cards) {
@@ -98,6 +99,7 @@ class DeckTest {
 				Arrays.asList(threeHeart, threeHeart, fourDiamond, threeHeart));
 	}
 
+	@DisplayName("draw()가 덱이 비었을시 예외를 던지는지 테스트")
 	@Test
 	void draw_ThereAreNoCard_ThrowDeckException() {
 		//given
@@ -108,6 +110,7 @@ class DeckTest {
 				.isInstanceOf(DeckException.class);
 	}
 
+	@DisplayName("drawTwoCards()가 위에서 두 장 꺼내는지 테스트")
 	@ParameterizedTest
 	@MethodSource("drawTwoCards_MoreThanTwoCards_ReturnTwoCards")
 	void drawTwoCards_MoreThanTwoCards_ReturnTwoCards(List<Card> cards) {
@@ -122,6 +125,7 @@ class DeckTest {
 				Arrays.asList(threeHeart, threeHeart, fourDiamond, threeHeart));
 	}
 
+	@DisplayName("drawTwoCards()가 덱에 카드가 2장보다 적을 시 예외를 던지는지 테스트")
 	@ParameterizedTest
 	@MethodSource("drawTwoCards_LessThanTwoCards_ThrowDeckException")
 	void drawTwoCards_LessThanTwoCards_ThrowDeckException(List<Card> cards) {
@@ -135,33 +139,5 @@ class DeckTest {
 		return Stream.of(Collections.emptyList(),
 				Collections.singletonList(threeHeart),
 				Collections.singletonList(fourDiamond));
-	}
-
-	@Test
-	void equals_SimpleDeck_IsEqualToDeckHavingSameCards() {
-		// given
-		Drawable expected = Deck.of(fourCards);
-
-		// then
-		assertThat(simpleDeck).isEqualTo(expected);
-	}
-
-	@Test
-	void equals_EmptyDeck_IsEqualToOtherEmptyDeck() {
-		// given
-		Drawable emptyDeck = Deck.of(Collections.emptyList());
-		Drawable otherEmptyDeck = Deck.of(Collections.emptyList());
-
-		// then
-		assertThat(emptyDeck).isEqualTo(otherEmptyDeck);
-	}
-
-	@Test
-	void equals_SimpleDeck_IsNotEqualToDeckHavingDifferentCards() {
-		// given
-		Drawable notExpected = Deck.of(Collections.singletonList(Card.of(Symbol.THREE, Type.HEART)));
-
-		// then
-		assertThat(simpleDeck).isNotEqualTo(notExpected);
 	}
 }
