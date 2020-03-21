@@ -1,7 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.betting.exceptions.MoneyException;
-import blackjack.domain.user.Result;
+import blackjack.domain.user.ResultType;
 
 import java.util.Objects;
 
@@ -38,8 +38,8 @@ public final class Money {
 		}
 	}
 
-	public Money computeResultingAmount(Result result) {
-		return new Money(result.computeResultAmount(amount));
+	public Money computeResultingAmount(ResultType resultType) {
+		return new Money(resultType.computeResultAmount(amount));
 	}
 
 	public Money add(Money other) {

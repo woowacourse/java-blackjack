@@ -37,17 +37,6 @@ class ResultsTest {
 	}
 
 	@Test
-	void getResult_ResultOfIndexIsWin_IsReturnTrue() {
-		assertThat(results.getResult(players.getPlayers().get(1).getName())).isEqualTo(Result.WIN);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, 2})
-	void getResult_ResultOfIndexIsLose_IsReturnFalse(int index) {
-		assertThat(results.getResult(players.getPlayers().get(index).getName())).isEqualTo(Result.LOSE);
-	}
-
-	@Test
 	void getDealerWin_DealerWonTwice_IsEqualToTwo() {
 		assertThat(results.getDealerWin()).isEqualTo(2);
 	}

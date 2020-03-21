@@ -1,7 +1,8 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.betting.exceptions.MoneyException;
-import blackjack.domain.user.Result;
+import blackjack.domain.user.ResultType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MoneyTest {
 
+	@DisplayName("zero()가 인스턴스를 반환하는지 테스트")
 	@Test
 	void zero_IsNotNull() {
 		assertThat(Money.zero()).isNotNull();
@@ -48,16 +50,16 @@ class MoneyTest {
 
 	@ParameterizedTest
 	@MethodSource("computeResultAmount")
-	void computeResultAmount(Result result, String expect) {
+	void computeResultAmount(ResultType resultType, String expect) {
 		Money money = Money.of("1000");
-		assertThat(money.computeResultingAmount(result)).isEqualTo(Money.of(expect));
+		assertThat(money.computeResultingAmount(resultType)).isEqualTo(Money.of(expect));
 	}
 
 	static Stream<Arguments> computeResultAmount() {
-		return Stream.of(Arguments.of(Result.BLACKJACK_WIN, "1500"),
-				Arguments.of(Result.WIN, "1000"),
-				Arguments.of(Result.DRAW, "0"),
-				Arguments.of(Result.LOSE, "-1000"));
+		return Stream.of(Arguments.of(ResultType.BLACKJACK_WIN, "1500"),
+				Arguments.of(ResultType.WIN, "1000"),
+				Arguments.of(ResultType.DRAW, "0"),
+				Arguments.of(ResultType.LOSE, "-1000"));
 	}
 
 	@ParameterizedTest

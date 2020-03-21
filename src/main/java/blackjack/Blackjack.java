@@ -25,7 +25,7 @@ public class Blackjack {
 		progressDealer(dealer, deck);
 
 		Results results = finish(players, dealer);
-		showGameResultMonies(results, players);
+		showGameResultMonies(results);
 	}
 
 	private static Players preparePlayers() {
@@ -100,7 +100,7 @@ public class Blackjack {
 		return results;
 	}
 
-	private static void showGameResultMonies(Results results, Players players) {
-		OutputView.printGameResultMonies(results, players);
+	private static void showGameResultMonies(Results results) {
+		OutputView.printGameResultMonies(results);
 	}
 }

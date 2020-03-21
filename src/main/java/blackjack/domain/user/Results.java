@@ -1,60 +1,61 @@
 package blackjack.domain.user;
 
-import blackjack.domain.betting.Money;
-
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 public final class Results {
-	private final Map<Name, Result> results;
+	private final List<Result> results;
 
-	private Results(Map<Name, Result> results) {
+	private Results(List<Result> results) {
 		this.results = results;
 	}
 
 	public static Results of(Playable dealer, Players players) {
-		Map<Name, Result> playerResults = createPlayersResult(dealer, players);
+		List<Result> playerResults = createPlayersResult(dealer, players);
 
 		return new Results(playerResults);
 	}
 
-	private static Map<Name, Result> createPlayersResult(Playable dealer, Players players) {
-		Map<Name, Result> results = new LinkedHashMap<>();
+	private static List<Result> createPlayersResult(Playable dealer, Players players) {
+		List<Result> results = new ArrayList<>();
 		for (Playable player : players.getPlayers()) {
-			results.put(player.getName(), Result.getPlayerResultByDealer(player, dealer));
+			results.add(new Result(player, ResultType.getPlayerResultByDealer(player, dealer)));
 		}
 
 		return results;
 	}
 
-	public Result getResult(Name name) {
-		return results.get(name);
-	}
-
-	public double getResultMoney(Name name, Money money) {
-		return results.get(name).computeResultAmount(money.getAmount());
-	}
-
-	public Map<Name, Result> getResults() {
-		return Collections.unmodifiableMap(results);
+	public List<Result> getResults() {
+		return Collections.unmodifiableList(results);
 	}
 
 	public int getDealerWin() {
-		return (int) results.values().stream()
-				.filter(Result::isLose)
+		return (int) results.stream()
+				.map(Result::getResultType)
+				.filter(ResultType::isLose)
 				.count();
 	}
 
 	public int getDealerDraw() {
-		return (int) results.values().stream()
-				.filter(Result::isDraw)
+		return (int) results.stream()
+				.map(Result::getResultType)
+				.filter(ResultType::isDraw)
 				.count();
 	}
 
 	public int getDealerLose() {
-		return (int) results.values().stream()
-				.filter(Result::isWinOrBlackjackWin)
+		return (int) results.stream()
+				.map(Result::getResultType)
+				.filter(ResultType::isWinOrBlackjackWin)
 				.count();
+	}
+
+	public double getDealerMoney() {
+		return -results.stream()
+				.map(result -> result.getResultType().computeResultAmount(
+						((Player) result.getPlayable()).getMoney().getAmount()))
+				.reduce(Double::sum)
+				.orElse(0d);
 	}
 }

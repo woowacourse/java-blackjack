@@ -88,39 +88,35 @@ public final class OutputView {
 	public static void printResult(Results results) {
 		System.out.println("## 최종 승패");
 		System.out.println("딜러" + " : " + createDealerResult(results));
-		for (Name name : results.getResults().keySet()) {
-			System.out.printf("%s : %s\n", name.getString(), boolToResultWord(results.getResult(name)));
+		for (Result result : results.getResults()) {
+			System.out.printf("%s : %s\n", result.getPlayable().getName().getString(),
+					boolToResultWord(result.getResultType()));
 		}
 	}
 
 	private static String createDealerResult(Results results) {
-		return String.format("%d승 %d패",
-				results.getDealerWin(), results.getDealerLose());
+		return String.format("%d승 %d무 %d패",
+				results.getDealerWin(), results.getDealerDraw(), results.getDealerLose());
 	}
 
-	private static String boolToResultWord(Result result) {
-		if (result.isWinOrBlackjackWin()) {
+	private static String boolToResultWord(ResultType resultType) {
+		if (resultType.isWinOrBlackjackWin()) {
 			return "승";
 		}
-		if (result.isDraw()) {
+		if (resultType.isDraw()) {
 			return "무";
 		}
 
 		return "패";
 	}
 
-	public static void printGameResultMonies(Results results, Players players) {
+	public static void printGameResultMonies(Results results) {
 		System.out.println("## 최종수익");
-		List<Double> monies = new ArrayList<>();
-		for (Playable player : players.getPlayers()) {
-			monies.add(results.getResultMoney(player.getName(),
-					((Player) player).getMoney()));
-		}
-		System.out.printf("%s: %f\n", Playable.DEALER_NAME, -monies.stream().reduce(Double::sum)
-				.orElse(0d));
-		for (Playable player : players.getPlayers()) {
-			System.out.printf("%s: %f\n", player.getName().getString(), results.getResultMoney(player.getName(),
-					((Player) player).getMoney()));
+		System.out.printf("%s: %f\n", Playable.DEALER_NAME, results.getDealerMoney());
+		for (Result result : results.getResults()) {
+			System.out.printf("%s: %f\n", result.getPlayable().getName().getString(),
+					result.getResultType().computeResultAmount(
+							((Player)result.getPlayable()).getMoney().getAmount()));
 		}
 	}
 }

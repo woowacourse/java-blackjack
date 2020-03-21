@@ -26,8 +26,8 @@ public final class Player extends AbstractPlayer {
 		return new Player(new Name(name), Money.of(money));
 	}
 
-	public Money computeResultMoney(Result result) {
-		return money.computeResultingAmount(result);
+	public Money computeResultMoney(ResultType resultType) {
+		return money.computeResultingAmount(resultType);
 	}
 
 	@Override
