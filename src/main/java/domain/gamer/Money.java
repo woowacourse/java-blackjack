@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 
 public class Money {
 	public static final Money ZERO = new Money(0);
+	private static final int MONEY_THRESHOLD = 0;
 
 	private final double money;
 
 	public Money(double money) {
-		if (money < 0) {
+		if (money < MONEY_THRESHOLD) {
 			throw new IllegalArgumentException("Money는 음수가 될 수 없습니다.");
 		}
 		this.money = money;
