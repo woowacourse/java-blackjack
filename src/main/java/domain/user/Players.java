@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.Moneys;
+import domain.Names;
 import domain.card.CardDeck;
 
 import java.util.ArrayList;
@@ -8,10 +10,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
 
-    public void add(final Player player) {
-        players.add(player);
+    public Players(Names names, Moneys moneys) {
+        players = new ArrayList<>();
+        for (String name : names.get()) {
+            Player player = new Player(name, moneys.getValue(name));
+            players.add(player);
+        }
     }
 
     public List<Player> get() {

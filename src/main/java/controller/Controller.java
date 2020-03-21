@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameResult;
+import domain.Moneys;
 import domain.Names;
 import domain.PlayerAnswer;
 import domain.card.CardDeck;
@@ -28,12 +29,12 @@ public class Controller {
 
     private Players createPlayers() {
         Names names = new Names(InputView.requestName());
-        Players players = new Players();
+        Moneys moneys = new Moneys();
         for (String name : names.get()) {
             OutputView.printMoneyFormat(name);
-            players.add(new Player(name, InputView.requestMoney()));
+            moneys.add(name, InputView.requestMoney());
         }
-        return players;
+        return new Players(names, moneys);
     }
 
     private void drawFirstCards(Dealer dealer, Players players) {

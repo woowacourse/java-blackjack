@@ -7,12 +7,13 @@ import java.util.Objects;
 public abstract class User {
     protected static final int FIRST_DRAW_NUMBER = 2;
 
-    protected final HandCard handCard = new HandCard();
+    protected final HandCard handCard;
     private final String name;
 
     public User(String name) {
         validate(name);
         this.name = name;
+        handCard = new HandCard();
     }
 
     private void validate(String name) {
@@ -34,7 +35,7 @@ public abstract class User {
             throw new IllegalStateException("잘못된 메서드 호출입니다.");
         }
         for (int i = 0; i < FIRST_DRAW_NUMBER; i++) {
-            handCard.add(cardDeck.draw());
+            draw(cardDeck);
         }
     }
 
