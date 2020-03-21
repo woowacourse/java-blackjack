@@ -19,8 +19,8 @@ public class DealerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SIX,TEN,true","ACE,TWO,true","KING,QUEEN,false"})
-    void 카드_추가_드로우_로직_테스트(String first, String second, boolean expected){
+    @CsvSource(value = {"SIX,TEN,true", "ACE,TWO,true", "KING,QUEEN,false"})
+    void 카드_추가_드로우_로직_테스트(String first, String second, boolean expected) {
         Dealer dealer = new Dealer();
         List<Card> testDeck = new ArrayList<>();
         testDeck.add(CardFactory.of(Type.valueOf("SPADE"), Symbol.valueOf(first)));

@@ -1,10 +1,9 @@
-package domain;
+package domain.user;
 
 import domain.card.Card;
 import domain.card.CardFactory;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.user.HandCard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

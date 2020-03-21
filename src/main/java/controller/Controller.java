@@ -1,11 +1,11 @@
 package controller;
 
-import domain.GameResult;
-import domain.Moneys;
-import domain.Names;
-import domain.PlayerAnswer;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
+import domain.game.GameResult;
+import domain.game.Moneys;
+import domain.game.Names;
+import domain.game.PlayerAnswer;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;

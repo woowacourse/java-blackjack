@@ -1,10 +1,10 @@
 package domain.user;
 
-import domain.Money;
 import domain.card.CardDeckGeneratorForTest;
 import domain.card.CardFactory;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.game.Money;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

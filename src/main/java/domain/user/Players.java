@@ -1,8 +1,8 @@
 package domain.user;
 
-import domain.Moneys;
-import domain.Names;
 import domain.card.CardDeck;
+import domain.game.Moneys;
+import domain.game.Names;
 
 import java.util.ArrayList;
 import java.util.Collections;

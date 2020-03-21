@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.user.Dealer;
 import domain.user.Player;

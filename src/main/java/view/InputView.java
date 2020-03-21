@@ -1,7 +1,7 @@
 package view;
 
-import domain.Money;
-import domain.PlayerAnswer;
+import domain.game.Money;
+import domain.game.PlayerAnswer;
 
 import java.util.Arrays;
 import java.util.List;

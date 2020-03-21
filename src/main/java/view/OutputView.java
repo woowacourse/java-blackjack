@@ -1,7 +1,7 @@
 package view;
 
-import domain.GameResult;
-import domain.Money;
+import domain.game.GameResult;
+import domain.game.Money;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
