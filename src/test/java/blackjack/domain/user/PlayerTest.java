@@ -7,6 +7,7 @@ import blackjack.domain.card.Type;
 import blackjack.domain.user.exceptions.PlayerException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -43,20 +44,23 @@ public class PlayerTest {
 		player = Player.of("그니", "1000");
 	}
 
+	@DisplayName("of()가 인스턴스를 반환하는지 테스트")
 	@Test
 	void of_ValidPlayer_IsNotNull() {
 		assertThat(player).isNotNull();
 	}
 
+	@DisplayName("of()가 딜러 이름일 경우 예외를 던지는지 테스트")
 	@Test
 	void of_HasDealerName_ThrowPlayerException() {
 		assertThatThrownBy(() -> Player.of("딜러", "1000"))
 				.isInstanceOf(PlayerException.class);
 	}
 
+	@DisplayName("receiveCard()가 카드를 받는지 테스트")
 	@ParameterizedTest
-	@MethodSource("giveCard_Cards_GiveTopCardPlayer")
-	void giveCard_Cards_GiveTopCardPlayer(List<Card> cards) {
+	@MethodSource("receiveCard_Cards_GiveTopCardPlayer")
+	void receiveCard_Cards_GiveTopCardPlayer(List<Card> cards) {
 		// given
 		for (Card card : cards) {
 			player.receiveCard(card);
@@ -66,7 +70,7 @@ public class PlayerTest {
 		assertThat(player.getHand().getHand()).isEqualTo(cards);
 	}
 
-	static Stream<Arguments> giveCard_Cards_GiveTopCardPlayer() {
+	static Stream<Arguments> receiveCard_Cards_GiveTopCardPlayer() {
 		return Stream.of(Arguments.of(Collections.singletonList(aceSpade)),
 				Arguments.of(Collections.singletonList(sixDiamond)),
 				Arguments.of(Arrays.asList(tenClub, jackHeart)),
@@ -74,14 +78,15 @@ public class PlayerTest {
 				Arguments.of(Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart)));
 	}
 
+	@DisplayName("receiveCards()가 여러 장의 카드를 주는지 테스트")
 	@ParameterizedTest
-	@MethodSource("giveCards_Cards_GiveCardsPlayer")
-	void giveCards_Cards_GiveCardsPlayer(List<Card> cards) {
+	@MethodSource("receiveCards_Cards_GiveCardsPlayer")
+	void receiveCards_Cards_GiveCardsPlayer(List<Card> cards) {
 		player.receiveCards(cards);
 		assertThat(player.getHand().getHand()).isEqualTo(cards);
 	}
 
-	static Stream<List<Card>> giveCards_Cards_GiveCardsPlayer() {
+	static Stream<List<Card>> receiveCards_Cards_GiveCardsPlayer() {
 		return Stream.of(Collections.singletonList(aceSpade),
 				Collections.singletonList(sixDiamond),
 				Arrays.asList(tenClub, jackHeart),
@@ -89,6 +94,7 @@ public class PlayerTest {
 				Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart));
 	}
 
+	@DisplayName("isWinner()가 player가 비교 score 값보다 클 시 true를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("isWinner_HasScoreBiggerThanInputScore_ReturnTrue")
 	void isWinner_HasScoreBiggerThanInputScore_ReturnTrue(List<Card> cards, int score) {
@@ -105,6 +111,7 @@ public class PlayerTest {
 				Arguments.of(Arrays.asList(tenClub, jackHeart), 0));
 	}
 
+	@DisplayName("isWinner()가 player가 비교 score 값보다 같거나 작을 시 false를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse")
 	void isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse(List<Card> cards, int score) {
@@ -120,14 +127,15 @@ public class PlayerTest {
 				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21));
 	}
 
+	@DisplayName("computeScore()가 적절한 값을 반환하는지 테스트")
 	@ParameterizedTest
-	@MethodSource("getScore_HasCards_ReturnScore")
-	void getScore_HasCards_ReturnScore(List<Card> cards, int score) {
+	@MethodSource("computeScore_HasCards_ReturnScore")
+	void computeScore_HasCards_ReturnScore(List<Card> cards, int score) {
 		player.receiveCards(cards);
 		assertThat(player.computeScore()).isEqualTo(Score.of(score));
 	}
 
-	static Stream<Arguments> getScore_HasCards_ReturnScore() {
+	static Stream<Arguments> computeScore_HasCards_ReturnScore() {
 		return Stream.of(Arguments.of(Collections.singletonList(aceSpade), 11),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
@@ -135,6 +143,7 @@ public class PlayerTest {
 				Arguments.of(Collections.emptyList(), 0));
 	}
 
+	@DisplayName("isBust()가 점수가 21보다 클 시 true를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("isBust_ScoreMoreThanTwelve_ReturnTrue")
 	void isBust_ScoreMoreThanTwelve_ReturnTrue(List<Card> cards) {
@@ -148,6 +157,7 @@ public class PlayerTest {
 				Arrays.asList(jackHeart, jackHeart, aceSpade, aceSpade));
 	}
 
+	@DisplayName("isBust()가 점수가 21이하일 시 false를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("isBust_ScoreSameOrLessThanTwelve_ReturnFalse")
 	void isBust_ScoreSameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
@@ -162,11 +172,7 @@ public class PlayerTest {
 				Arrays.asList(tenClub, jackHeart, aceSpade));
 	}
 
-	@Test
-	void getName_HasName_ReturnName() {
-		assertThat(player.getName()).isEqualTo(new Name("그니"));
-	}
-
+	@DisplayName("canReceiveCard()가 버스트되지 않았을 시 true를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_NotBusted_ReturnTrue")
 	void canReceiveCard_NotBusted_ReturnTrue(List<Card> cards) {
@@ -181,6 +187,7 @@ public class PlayerTest {
 				Arrays.asList(tenClub, sixDiamond, aceSpade));
 	}
 
+	@DisplayName("canReceiveCard()가 버스트된 경우 false를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_Busted_ReturnFalse")
 	void canReceiveCard_Busted_ReturnFalse(List<Card> cards) {
