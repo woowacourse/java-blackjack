@@ -1,7 +1,10 @@
 package domain;
 
+import java.util.Objects;
+
 public class BettingMoney {
 	private static final int MIN = 0;
+	public static final BettingMoney ZERO = new BettingMoney(MIN);
 
 	private final int bettingMoney;
 
@@ -22,5 +25,22 @@ public class BettingMoney {
 
 	public int getValue() {
 		return bettingMoney;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		BettingMoney that = (BettingMoney)o;
+		return bettingMoney == that.bettingMoney;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(bettingMoney);
 	}
 }

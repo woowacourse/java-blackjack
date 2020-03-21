@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import domain.BettingMoney;
 import domain.BettingMoneys;
 import domain.CardDeck;
@@ -24,12 +27,11 @@ public class BlackJackController {
 		this.cardDeck = new CardDeck();
 		this.dealer = new Dealer();
 		this.players = PlayersFactory.create(inputNames);
-		this.bettingMoneys = new BettingMoneys();
+		this.bettingMoneys = createBettingMoneys();
 	}
 
 	public void run() {
 		cardDeck.shuffle();
-		betting();
 		distributeTwoCard();
 		if (dealer.isNotBlackJack()) {
 			askMoreCard();
@@ -39,9 +41,11 @@ public class BlackJackController {
 		OutputView.printProfits(Profits.calculate(dealer, players, bettingMoneys));
 	}
 
-	private void betting() {
-		players.forEach(player -> bettingMoneys.betting(player,
-				BettingMoney.from(InputView.inputBettingMoney(player.getName()))));
+	private BettingMoneys createBettingMoneys() {
+		Map<Player, BettingMoney> bettingMoneys = new HashMap<>();
+		players.forEach(
+				player -> bettingMoneys.put(player, BettingMoney.from(InputView.inputBettingMoney(player.getName()))));
+		return new BettingMoneys(bettingMoneys);
 	}
 
 	private void distributeTwoCard() {

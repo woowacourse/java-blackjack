@@ -1,25 +1,17 @@
 package domain;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BettingMoneys {
-	private Map<Player, BettingMoney> bettingMoneys;
-
-	public BettingMoneys() {
-		this(Collections.EMPTY_MAP);
-	}
+	private final Map<Player, BettingMoney> bettingMoneys;
 
 	public BettingMoneys(Map<Player, BettingMoney> bettingMoneys) {
 		this.bettingMoneys = new HashMap<>(bettingMoneys);
 	}
 
-	public void betting(Player player, BettingMoney bettingMoney) {
-		bettingMoneys.put(player, bettingMoney);
-	}
-
 	public BettingMoney get(Player player) {
-		return bettingMoneys.get(player);
+		return bettingMoneys.getOrDefault(player, BettingMoney.ZERO);
 	}
 }
+;
