@@ -10,23 +10,22 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GamerCardsWithScoreDtoTest {
-    private GamerCardsWithScoreDto gamerCardsWithScoreDto;
+class GamerCardsAssemblerTest {
+    private GamerCardsDto gamerCardsDto;
 
     @BeforeEach
     void setUp() {
         PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
-        gamerCardsWithScoreDto = GamerCardsWithScoreDto.of(new Player(playingCards, "testName"));
+        gamerCardsDto = GamerCardsAssembler.create(new Player(playingCards, "testName"));
     }
 
     @Test
     @DisplayName("생성 테스트")
     void of() {
-        assertThat(GamerCardsDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
+        assertThat(GamerCardsAssembler.create(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
     }
 
     @Test
@@ -37,25 +36,15 @@ class GamerCardsWithScoreDtoTest {
         Players players = Players.valueOf(deck, Arrays.asList(new GamerMoneyDto("a", 0),
                 new GamerMoneyDto("b", 0),
                 new GamerMoneyDto("c", 0)));
-        assertThat(GamerCardsWithScoreDto.createDtos(dealer, players)).isNotNull();
+        assertThat(GamerCardsAssembler.createDtos(dealer, players)).isNotNull();
     }
 
     @Test
-    @DisplayName("getter - name")
-    void getName() {
-        assertThat(gamerCardsWithScoreDto.getName()).isEqualTo("testName");
-    }
-
-    @Test
-    @DisplayName("getter - Cards")
-    void getCards() {
-        List<Card> cards = Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER));
-        assertThat(gamerCardsWithScoreDto.getCards().get(0)).isEqualTo(cards.get(0));
-    }
-
-    @Test
-    @DisplayName("getter - Score")
-    void getScore() {
-        assertThat(gamerCardsWithScoreDto.getScore()).isEqualTo(10);
+    @DisplayName("한 장의 카드 리스트만 가진 Dto 생성")
+    void ofWithFirstCard() {
+        GamerCardsDto gamerCardsDto = GamerCardsAssembler.createWithFirstCard(new Player(new PlayingCards(Arrays.asList(
+                new Card(Symbol.KING, Type.CLOVER),
+                new Card(Symbol.QUEEN, Type.CLOVER))), "testName"));
+        assertThat(gamerCardsDto.getCards()).hasSize(1);
     }
 }

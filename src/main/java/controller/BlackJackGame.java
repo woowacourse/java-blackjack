@@ -6,9 +6,9 @@ import domain.card.DeckFactory;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.gamer.dto.GamerCardsDto;
-import domain.gamer.dto.GamerCardsWithScoreDto;
-import domain.gamer.dto.GamerMoneyDto;
+import domain.gamer.dto.GamerCardsAssembler;
+import domain.gamer.dto.GamerCardsWithScoreAssembler;
+import domain.gamer.dto.GamerMoneyAssembler;
 import domain.result.GameResults;
 import view.InputView;
 import view.OutputView;
@@ -19,11 +19,11 @@ public class BlackJackGame {
         Players players = Players.valueOf(deck, InputView.inputGamerDto());
         Dealer dealer = new Dealer(deck.dealInitCards());
 
-        OutputView.printInitGamersState(GamerCardsDto.createDtos(dealer, players));
+        OutputView.printInitGamersState(GamerCardsAssembler.createDtos(dealer, players));
         receiveGamerCards(deck, players, dealer);
-        OutputView.printGamerCardsStateWithScores(GamerCardsWithScoreDto.createDtos(dealer, players));
+        OutputView.printGamerCardsStateWithScores(GamerCardsWithScoreAssembler.createDtos(dealer, players));
 
-        OutputView.printResult(GamerMoneyDto.createDtos(dealer, players, new GameResults(dealer, players)));
+        OutputView.printResult(GamerMoneyAssembler.createDtos(dealer, players, new GameResults(dealer, players)));
     }
 
     private void receiveGamerCards(Deck deck, Players players, Dealer dealer) {
@@ -43,7 +43,7 @@ public class BlackJackGame {
     private void receivePlayerCards(Deck deck, Player player) {
         while (player.isHittable() && askResponse(player)) {
             player.hit(deck);
-            OutputView.printGamerCardsState(GamerCardsDto.of(player));
+            OutputView.printGamerCardsState(GamerCardsAssembler.create(player));
         }
     }
 
