@@ -65,24 +65,24 @@ public class OutputView {
 
 	public static void printFinalResult(PlayerResult playerResult) {
 		System.out.println("\n## 최종 수익");
-		Map<Name, Double> result = playerResult.getResult();
+		Map<Player, Double> result = playerResult.getResult();
 		printDealerResult(result);
 		printPlayersResult(result);
 	}
 
-	private static void printDealerResult(Map<Name, Double> userResultMap) {
+	private static void printDealerResult(Map<Player, Double> userResultMap) {
 		StringBuilder sb = new StringBuilder("딜러: ");
 		double dealerProfit = 0;
 		for (double value : userResultMap.values()) {
-			dealerProfit += value;
+			dealerProfit -= value;
 		}
-		sb.append(dealerProfit * (-1));
+		sb.append(dealerProfit);
 		System.out.println(sb);
 	}
 
-	private static void printPlayersResult(Map<Name, Double> userResultMap) {
-		for (Name playerName : userResultMap.keySet()) {
-			System.out.println(playerName.getName() + ": " + userResultMap.get(playerName));
+	private static void printPlayersResult(Map<Player, Double> userResultMap) {
+		for (Player player : userResultMap.keySet()) {
+			System.out.println(player.getName() + ": " + userResultMap.get(player));
 		}
 	}
 

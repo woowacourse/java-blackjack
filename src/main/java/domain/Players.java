@@ -19,7 +19,7 @@ public class Players {
 	}
 
 	public List<String> getUserNames() {
-		return players.stream().map(Participant::getName).map(Name::getName).collect(Collectors.toList());
+		return players.stream().map(Participant::getName).collect(Collectors.toList());
 	}
 
 	public Player getPlayer(int index) {

@@ -8,17 +8,17 @@ import domain.participant.Name;
 import domain.participant.Player;
 
 public class PlayerResult {
-	private Map<Name, Double> playerResult = new HashMap<>();
+	private Map<Player, Double> playerResult = new HashMap<>();
 
 	public PlayerResult(GameParticipant participant) {
 		Dealer dealer = participant.getDealer();
 		Players players = participant.getPlayers();
 		for (Player player : players.getPlayers()) {
-			playerResult.put(player.getName(), player.beatDealer(dealer));
+			playerResult.put(player, player.beatDealer(dealer));
 		}
 	}
 
-	public Map<Name, Double> getResult() {
+	public Map<Player, Double> getResult() {
 		return playerResult;
 	}
 }

@@ -2,7 +2,7 @@ package domain.participant;
 
 public interface ParticipantInterface {
 
-	Name getName();
+	String getName();
 
 	String toString();
 

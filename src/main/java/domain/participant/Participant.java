@@ -43,8 +43,8 @@ public class Participant implements ParticipantInterface {
 		return isBlackJack;
 	}
 
-	public Name getName() {
-		return this.name;
+	public String getName() {
+		return this.name.getName();
 	}
 
 	ParticipantCards getCards() {
@@ -55,20 +55,4 @@ public class Participant implements ParticipantInterface {
 	public String toString() {
 		return name.getName() + "카드: " + cards.toString();
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Player player = (Player)o;
-		return Objects.equals(name, player.getName());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(name);
-	}
-
 }
