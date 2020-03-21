@@ -19,7 +19,7 @@ public class GameStatisticsDTO {
 	private String collectGamblerResult(List<GameReport> gameReports) {
 		return gameReports.stream()
 			.map(gameReport ->
-				String.format("%s: %d", getName(gameReport), calculateMoney(gameReport)))
+				String.format("%s: %d", getName(gameReport), gameReport.calculateGamblerProfit().getAmount()))
 			.collect(Collectors.joining(System.lineSeparator()));
 	}
 
@@ -37,10 +37,7 @@ public class GameStatisticsDTO {
 	}
 
 	private String collectRecord(GameReports gameReports) {
-		long playerTotalProfit = gameReports.getReports().stream()
-			.mapToLong(this::calculateMoney)
-			.sum();
-		return String.format("딜러 : %d", playerTotalProfit * REVERSE_VALUE);
+		return String.format("딜러 : %d", gameReports.calculateDealerProfit().getAmount());
 	}
 
 	public String getDealerResult() {

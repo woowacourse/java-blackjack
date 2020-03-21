@@ -3,6 +3,7 @@ package blackjack.player.domain.component;
 import java.util.Objects;
 
 public class Money {
+	private static final int NEGATIVE_NUMBER = -1;
 	private final long amount;
 
 	private Money(long amount) {
@@ -26,6 +27,10 @@ public class Money {
 
 	public static Money create(long money) {
 		return new Money(money);
+	}
+
+	public static Money sum(Money money, Money other) {
+		return create(money.amount + other.amount);
 	}
 
 	public Money multiply(double profit) {
@@ -53,5 +58,9 @@ public class Money {
 
 	public long getAmount() {
 		return amount;
+	}
+
+	public Money calculateNegative() {
+		return create(this.amount * NEGATIVE_NUMBER);
 	}
 }

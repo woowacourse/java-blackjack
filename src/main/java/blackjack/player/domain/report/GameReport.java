@@ -3,6 +3,7 @@ package blackjack.player.domain.report;
 import java.util.Objects;
 
 import blackjack.card.domain.GameResult;
+import blackjack.player.domain.component.Money;
 import blackjack.player.domain.component.PlayerInfo;
 
 public class GameReport {
@@ -16,24 +17,16 @@ public class GameReport {
 		this.gameResult = gameResult;
 	}
 
+	public Money calculateGamblerProfit() {
+		return playerInfo.calculateResultMoney(gameResult.getRate());
+	}
+
 	public PlayerInfo getPlayerInfo() {
 		return playerInfo;
 	}
 
 	public double getProfit() {
 		return gameResult.getRate();
-	}
-
-	public boolean isWin() {
-		return this.gameResult == GameResult.WIN;
-	}
-
-	public boolean isDraw() {
-		return this.gameResult == GameResult.DRAW;
-	}
-
-	public boolean isLose() {
-		return this.gameResult == GameResult.LOSE;
 	}
 
 	@Override
