@@ -10,13 +10,13 @@ public class UserDto {
     private String name;
     private List<Card> cards;
 
-    public static UserDto of(User user) {
-        return new UserDto(user);
-    }
-
     private UserDto(User user) {
         this.name = user.getName();
         this.cards = user.getCards();
+    }
+
+    public static UserDto of(User user) {
+        return new UserDto(user);
     }
 
     public String getName() {

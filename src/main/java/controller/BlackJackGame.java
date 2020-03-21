@@ -13,12 +13,12 @@ public class BlackJackGame {
 
     private final Deck deck;
 
-    public static BlackJackGame setDeck(Deck deck) {
-        return new BlackJackGame(deck);
-    }
-
     private BlackJackGame(Deck deck) {
         this.deck = deck;
+    }
+
+    public static BlackJackGame setDeck(Deck deck) {
+        return new BlackJackGame(deck);
     }
 
     public void firstDealOut(Dealer dealer, PlayersInfo playersInfo) {

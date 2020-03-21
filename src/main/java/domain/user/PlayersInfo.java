@@ -15,14 +15,14 @@ public class PlayersInfo {
 
     private Map<Player, BettingMoney> playersInfo;
 
-    public static PlayersInfo of(Map<String, Integer> playerNames) {
-        return new PlayersInfo(playerNames);
-    }
-
     private PlayersInfo(Map<String, Integer> playersInfo) {
         this.playersInfo = new LinkedHashMap<>();
         playersInfo
                 .forEach((name, bettingMoney) -> this.playersInfo.put(new Player(name), new BettingMoney(bettingMoney)));
+    }
+
+    public static PlayersInfo of(Map<String, Integer> playerNames) {
+        return new PlayersInfo(playerNames);
     }
 
     public void draw(Deck deck) {

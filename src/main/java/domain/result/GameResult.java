@@ -13,13 +13,13 @@ public class GameResult {
     private Map<User, Integer> userToCardPoint;
     private Map<Player, Integer> profitOfPlayers;
 
-    public static GameResult of(Dealer dealer, PlayersInfo playersInfo) {
-        return new GameResult(dealer, playersInfo);
-    }
-
     private GameResult(Dealer dealer, PlayersInfo playersInfo) {
         createUserToCardPoint(dealer, playersInfo);
         profitOfPlayers = playersInfo.calculateProfit(dealer);
+    }
+
+    public static GameResult of(Dealer dealer, PlayersInfo playersInfo) {
+        return new GameResult(dealer, playersInfo);
     }
 
     private void createUserToCardPoint(Dealer dealer, PlayersInfo playersInfo) {

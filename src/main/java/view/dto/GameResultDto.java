@@ -13,10 +13,6 @@ public class GameResultDto {
     private Map<Player, Integer> profitOfPlayers;
     private int profitOfDealer;
 
-    public static GameResultDto of(GameResult gameResult) {
-        return new GameResultDto(gameResult);
-    }
-
     public GameResultDto(GameResult gameResult) {
         userToCardPoint = new LinkedHashMap<>();
         Map<User, Integer> userPoints = gameResult.getUserToCardPoint();
@@ -25,6 +21,10 @@ public class GameResultDto {
         }
         this.profitOfPlayers = gameResult.getProfitOfPlayers();
         this.profitOfDealer = gameResult.getProfitOfDealer();
+    }
+
+    public static GameResultDto of(GameResult gameResult) {
+        return new GameResultDto(gameResult);
     }
 
     public Map<UserDto, Integer> getUserToCardPoint() {
