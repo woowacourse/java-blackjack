@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -26,6 +27,7 @@ public class CardTest {
 		kingSpade = Card.of(KING, SPADE);
 	}
 
+	@DisplayName("of()가 인스턴스를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("of_ValidInput_IsNotNull")
 	void of_ValidInput_IsNotNull(Card card) {
@@ -36,11 +38,13 @@ public class CardTest {
 		return Stream.of(aceClub, twoHeart, threeDiamond, kingSpade);
 	}
 
+	@DisplayName("isAce()가 ace일 경우 true인지 테스트")
 	@Test
 	void isAce_AceClub_IsTrue() {
 		assertThat(aceClub.isAce()).isTrue();
 	}
 
+	@DisplayName("isAce()가 ace가 아닐 경우 false인지 테스트")
 	@ParameterizedTest
 	@MethodSource("isAce_NotAce_IsFalse")
 	void isAce_NotAce_IsFalse(Card card) {
@@ -51,32 +55,7 @@ public class CardTest {
 		return Stream.of(twoHeart, threeDiamond, kingSpade);
 	}
 
-	@ParameterizedTest
-	@MethodSource("getScore_Card_ReturnScore")
-	void getScore_Card_ReturnScore(Card card, int score) {
-		assertThat(card.getScore()).isEqualTo(Score.of(score));
-	}
-
-	static Stream<Arguments> getScore_Card_ReturnScore() {
-		return Stream.of(Arguments.of(aceClub, 1),
-				Arguments.of(twoHeart, 2),
-				Arguments.of(threeDiamond, 3),
-				Arguments.of(kingSpade, 10));
-	}
-
-	@ParameterizedTest
-	@MethodSource("equals_Card_isEqualToCardHavingSameValues")
-	void equals_Card_isEqualToCardHavingSameValues(Card card, Card expect) {
-		assertThat(card).isEqualTo(expect);
-	}
-
-	static Stream<Arguments> equals_Card_isEqualToCardHavingSameValues() {
-		return Stream.of(Arguments.of(aceClub, Card.of(ACE, CLUB)),
-				Arguments.of(twoHeart, Card.of(TWO, HEART)),
-				Arguments.of(threeDiamond, Card.of(THREE, DIAMOND)),
-				Arguments.of(kingSpade, Card.of(KING, SPADE)));
-	}
-
+	@DisplayName("getName()이 적절한 이름을 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("getName_Card_ReturnCardName")
 	void getName_Card_ReturnCardName(Card card, String cardName) {
