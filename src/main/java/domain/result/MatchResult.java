@@ -1,34 +1,37 @@
 package domain.result;
 
-import java.util.Arrays;
+import static domain.gamer.Gamer.*;
 
-import domain.result.resultStrategy.BustStrategy;
-import domain.result.resultStrategy.DrawStrategy;
-import domain.result.resultStrategy.LoseStrategy;
-import domain.result.resultStrategy.MatchResultStrategy;
-import domain.result.resultStrategy.WinStrategy;
+import java.util.Arrays;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+
+import domain.gamer.Money;
 
 public enum MatchResult {
-	BUST(new BustStrategy()),
-	WIN(new WinStrategy()),
-	DRAW(new DrawStrategy()),
-	LOSE(new LoseStrategy()),
-	BLACKJACK(new BustStrategy());
+	BUST((playerScore, dealerScore) -> playerScore >= BUST_NUMBER, money -> money.multiply(-1)),
+	WIN((playerScore, dealerScore) -> playerScore > dealerScore, money -> money.multiply(1)),
+	DRAW((playerScore, dealerScore) -> playerScore == dealerScore, money -> money.multiply(0)),
+	LOSE((playerScore, dealerScore) -> playerScore < dealerScore, money -> money.multiply(-1)),
+	BLACKJACK((playerScore, dealerScore) -> playerScore == BLACKJACK_NUMBER, money -> money.multiply(1.5));
 
-	private final MatchResultStrategy matchResultStrategy;
+	private final BiPredicate<Integer, Integer> matchResultStrategy;
+	private final Function<Money, Money> calculateEarn;
 
-	MatchResult(MatchResultStrategy matchResultStrategy) {
+	MatchResult(BiPredicate<Integer, Integer> matchResultStrategy,
+		Function<Money, Money> calculateEarn) {
 		this.matchResultStrategy = matchResultStrategy;
+		this.calculateEarn = calculateEarn;
 	}
 
 	public static MatchResult of(int playerScore, int dealerScore) {
 		return Arrays.stream(MatchResult.values())
-			.filter(x -> x.matchResultStrategy.matchResultPredicate(playerScore, dealerScore))
+			.filter(x -> x.matchResultStrategy.test(playerScore, dealerScore))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("잘못된 값입니다."));
 	}
 
-	public MatchResultStrategy getMatchResultStrategy() {
-		return matchResultStrategy;
+	public Function<Money, Money> getCalculateEarn() {
+		return calculateEarn;
 	}
 }
