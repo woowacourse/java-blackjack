@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import view.dto.GamerDto;
 import view.dto.NameDto;
-import view.dto.PlayerDto;
 
 /**
  *   class inputView입니다.
@@ -26,13 +26,13 @@ public class InputView {
 			.collect(Collectors.toList());
 	}
 
-	public static String inputMoreCard(PlayerDto playerDto) {
-		System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerDto.getName()));
+	public static String inputMoreCard(GamerDto player) {
+		System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
 		return scanner.nextLine();
 	}
 
-	public static String inputBettingMoney(NameDto nameDto) {
-		System.out.println(String.format("%s의 베팅 금액은?", nameDto.getName()));
+	public static String inputBettingMoney(NameDto name) {
+		System.out.println(String.format("%s의 베팅 금액은?", name.getName()));
 		return scanner.nextLine();
 	}
 }

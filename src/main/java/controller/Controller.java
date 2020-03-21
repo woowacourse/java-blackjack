@@ -13,8 +13,8 @@ import domain.money.Money;
 import view.InputView;
 import view.OutputView;
 import view.dto.BlackjackGameDto;
+import view.dto.GamerDto;
 import view.dto.NameDto;
-import view.dto.PlayerDto;
 
 /**
  *   class controller 클래스입니다.
@@ -103,7 +103,7 @@ public class Controller {
 		}
 		while (isContinue(player)) {
 			blackjackGame.draw(player);
-			OutputView.printCards(PlayerDto.from(player));
+			OutputView.printCards(GamerDto.from(player));
 		}
 	}
 
@@ -113,7 +113,7 @@ public class Controller {
 
 	private static HitAnswer inputHitAnswer(Player player) {
 		try {
-			return HitAnswer.of(InputView.inputMoreCard(PlayerDto.from(player)));
+			return HitAnswer.of(InputView.inputMoreCard(GamerDto.from(player)));
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
 			return inputHitAnswer(player);

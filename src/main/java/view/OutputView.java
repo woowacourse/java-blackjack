@@ -6,9 +6,7 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.gamer.Gamer;
 import view.dto.BlackjackGameDto;
-import view.dto.DealerDto;
 import view.dto.GamerDto;
-import view.dto.PlayerDto;
 
 /**
  *   class outputView입니다.
@@ -22,40 +20,40 @@ public class OutputView {
 		System.out.println(e.getMessage());
 	}
 
-	public static void printInitial(BlackjackGameDto blackjackGameDto) {
-		printInitialDraw(blackjackGameDto);
-		printInitialCards(blackjackGameDto);
+	public static void printInitial(BlackjackGameDto blackjackGame) {
+		printInitialDraw(blackjackGame);
+		printInitialCards(blackjackGame);
 	}
 
-	public static void printInitialDraw(BlackjackGameDto blackjackGameDto) {
+	public static void printInitialDraw(BlackjackGameDto blackjackGame) {
 		String string = "딜러와 "
-			+ blackjackGameDto.getPlayers().stream()
-			.map(PlayerDto::getName)
+			+ blackjackGame.getPlayers().stream()
+			.map(GamerDto::getName)
 			.collect(Collectors.joining(", "))
 			+ "에게 2장을 나누었습니다.";
 		System.out.println(string);
 	}
 
-	public static void printInitialCards(BlackjackGameDto blackjackGameDto) {
-		System.out.println(showDealerInitialCard(blackjackGameDto.getDealer()));
-		for (PlayerDto player : blackjackGameDto.getPlayers()) {
+	public static void printInitialCards(BlackjackGameDto blackjackGame) {
+		System.out.println(showDealerInitialCard(blackjackGame.getDealer()));
+		for (GamerDto player : blackjackGame.getPlayers()) {
 			System.out.println(showCards(player));
 		}
 	}
 
-	private static String showDealerInitialCard(DealerDto dealerDto) {
-		return dealerDto.getName()
+	private static String showDealerInitialCard(GamerDto dealer) {
+		return dealer.getName()
 			+ ": "
 			+ "HIDDEN, "
-			+ dealerDto.getHands().getCards()
+			+ dealer.getHands().getCards()
 			.get(1)
 			.shape();
 	}
 
-	private static String showCards(GamerDto gamerDto) {
-		return gamerDto.getName()
+	private static String showCards(GamerDto gamer) {
+		return gamer.getName()
 			+ ": "
-			+ gamerDto.getHands().getCards().stream()
+			+ gamer.getHands().getCards().stream()
 			.map(Card::shape)
 			.collect(Collectors.joining(", "));
 	}
@@ -64,8 +62,8 @@ public class OutputView {
 		System.out.println("딜러가 블랙잭입니다.");
 	}
 
-	public static void printCards(PlayerDto playerDto) {
-		System.out.println(showCards(playerDto));
+	public static void printCards(GamerDto gamer) {
+		System.out.println(showCards(gamer));
 	}
 
 	public static void printDealerDraw() {
@@ -80,11 +78,11 @@ public class OutputView {
 		}
 	}
 
-	public static void printCardsResult(BlackjackGameDto blackjackGameDto) {
-		DealerDto dealer = blackjackGameDto.getDealer();
+	public static void printCardsResult(BlackjackGameDto blackjackGame) {
+		GamerDto dealer = blackjackGame.getDealer();
 
 		System.out.println(String.format(NEW_LINE + "%s - 결과: %d", showCards(dealer), dealer.getScore()));
-		for (PlayerDto playerDto : blackjackGameDto.getPlayers()) {
+		for (GamerDto playerDto : blackjackGame.getPlayers()) {
 			System.out.println(String.format("%s - 결과: %d", showCards(playerDto), playerDto.getScore()));
 		}
 	}

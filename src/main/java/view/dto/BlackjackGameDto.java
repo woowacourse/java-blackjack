@@ -13,25 +13,25 @@ import domain.gamer.Player;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class BlackjackGameDto {
-	private List<PlayerDto> players;
-	private DealerDto dealer;
+	private List<GamerDto> players;
+	private GamerDto dealer;
 
 	private BlackjackGameDto(List<Player> players, Dealer dealer) {
 		this.players = players.stream()
-			.map(PlayerDto::from)
+			.map(GamerDto::from)
 			.collect(Collectors.toList());
-		this.dealer = DealerDto.from(dealer);
+		this.dealer = GamerDto.from(dealer);
 	}
 
 	public static BlackjackGameDto from(BlackjackGame blackjackGame) {
 		return new BlackjackGameDto(blackjackGame.getPlayers(), blackjackGame.getDealer());
 	}
 
-	public List<PlayerDto> getPlayers() {
+	public List<GamerDto> getPlayers() {
 		return players;
 	}
 
-	public DealerDto getDealer() {
+	public GamerDto getDealer() {
 		return dealer;
 	}
 }
