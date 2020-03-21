@@ -2,14 +2,13 @@ package view;
 
 import domain.game.GameResult;
 import domain.game.Money;
+import domain.game.Rule;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import domain.user.User;
 
 import java.util.Map;
-
-import static domain.user.Dealer.DRAW_MAX_SCORE;
 
 public class OutputView {
     public static void printNameFormat() {
@@ -51,7 +50,7 @@ public class OutputView {
     }
 
     public static void printDealerDraw(Dealer dealer) {
-        System.out.println(dealer.getName() + " 는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() + " 는" + Rule.getDrawMaxScore() + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printStatusWithScore(User user) {

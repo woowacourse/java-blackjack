@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.game.Money;
+import domain.game.Rule;
 
 public class Player extends User {
     private Money money;
@@ -20,6 +21,6 @@ public class Player extends User {
     }
 
     public boolean isBlackJackByFirstCards() {
-        return isBlackJack() && handCard.getSize() == FIRST_DRAW_NUMBER;
+        return isBlackJack() && handCard.getSize() == Rule.getFirstDrawNumber();
     }
 }

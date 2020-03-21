@@ -9,38 +9,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private static final double PLAYER_FIRST_WIN_RATIO = 1.5;
-    private static final double PLAYER_WIN_RATIO = 2.0;
-    private static final double PLAYER_LOSE_RATIO = -1.0;
-    private static final int DEALER_RESULT_RATIO = -1;
+    private final Map<String, Money> playerResult;
 
-    private final Map<String, Money> playerResult = new HashMap<>();
-
-    public GameResult(Players players, Dealer dealer) {
-        makeResult(players, dealer);
+    public GameResult(final Players players, final Dealer dealer) {
+        playerResult = makeResult(players, dealer);
     }
 
-    private void makeResult(Players players, Dealer dealer) {
+    private Map<String, Money> makeResult(Players players, Dealer dealer) {
+        Map<String, Money> result = new HashMap<>();
         for (Player player : players.get()) {
-            playerResult.put(player.getName(), makeResultMoney(dealer, player));
+            result.put(player.getName(), makeResultMoney(dealer, player));
         }
+        return result;
     }
 
     private Money makeResultMoney(Dealer dealer, Player player) {
         if (player.isBlackJackByFirstCards()) {
-            return player.getMoney().multiply(PLAYER_FIRST_WIN_RATIO);
+            return player.getMoney().multiply(Rule.getPlayerFirstWinRatio());
         }
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return player.getMoney();
         }
         if (dealer.isWinner(player)) {
-            return player.getMoney().multiply(PLAYER_LOSE_RATIO);
+            return player.getMoney().multiply(Rule.getPlayerLoseRatio());
         }
-        return player.getMoney().multiply(PLAYER_WIN_RATIO);
+        return player.getMoney().multiply(Rule.getPlayerWinRatio());
     }
 
     public int getDealerMoney() {
-        return DEALER_RESULT_RATIO * playerResult.keySet()
+        return Rule.getDealerResultRatio() * playerResult.keySet()
                 .stream()
                 .map(playerResult::get)
                 .mapToInt(Money::getValue)
