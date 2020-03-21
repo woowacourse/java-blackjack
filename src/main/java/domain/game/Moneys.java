@@ -20,18 +20,26 @@ public class Moneys {
     }
 
     private void validateName(String name) {
-        if(Objects.isNull(name) || name.isEmpty()) {
+        if (Objects.isNull(name) || name.isEmpty()) {
             throw new IllegalArgumentException(ERROR_PARAM_MESSAGE);
         }
     }
 
     private void validateMoney(Money money) {
-        if(Objects.isNull(money) || money.getValue() <= 0) {
+        if (Objects.isNull(money) || money.getValue() <= 0) {
             throw new IllegalArgumentException(ERROR_PARAM_MESSAGE);
         }
     }
 
     public Money getValue(String name) {
+        validateFindName(name);
         return moneys.get(name);
+    }
+
+    private void validateFindName(String name) {
+        validateName(name);
+        if (!moneys.containsKey(name)) {
+            throw new IllegalArgumentException(ERROR_PARAM_MESSAGE);
+        }
     }
 }
