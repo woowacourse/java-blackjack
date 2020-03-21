@@ -1,46 +1,46 @@
 package view.dto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import domain.result.GameResult;
 import domain.result.Prize;
-import domain.user.Dealer;
-import domain.user.Players;
-import domain.user.User;
+import domain.user.Player;
 
 public class UserPrizeDto {
-	private final User user;
+	private final String userName;
 	private final Prize prize;
 
-	public UserPrizeDto(User user, Prize prize) {
-		this.user = Objects.requireNonNull(user);
+	public UserPrizeDto(String userName, Prize prize) {
+		this.userName = Objects.requireNonNull(userName);
 		this.prize = Objects.requireNonNull(prize);
 	}
 
-	public static List<UserPrizeDto> createAllUsersDto(Players players, Dealer dealer) {
+	public static List<UserPrizeDto> createAllUsersDto(GameResult gameResult) {
+		Objects.requireNonNull(gameResult);
 		return Stream.concat(
-			Stream.of(calculateDealerPrize(players, dealer)), calculatePlayerPrizes(players, dealer).stream())
+			Stream.of(calculateDealerPrize(gameResult)), calculatePlayerPrizes(gameResult).stream())
 			.collect(Collectors.toList());
 	}
 
-	private static UserPrizeDto calculateDealerPrize(Players players, Dealer dealer) {
-		return players.getPlayers().stream()
-			.map(player -> player.calculatePlayerPrize(dealer))
-			.map(Prize::calculateDealerPrize)
-			.collect(Collectors.collectingAndThen(Collectors.reducing(Prize.ZERO, Prize::sum),
-				prize -> new UserPrizeDto(dealer, prize)));
+	private static UserPrizeDto calculateDealerPrize(GameResult gameResult) {
+		String dealerName = gameResult.getDealerName();
+		Prize dealerPrize = gameResult.calculateDealerPrize();
+		return new UserPrizeDto(dealerName, dealerPrize);
 	}
 
-	private static List<UserPrizeDto> calculatePlayerPrizes(Players players, Dealer dealer) {
-		return players.getPlayers().stream()
-			.map(player -> new UserPrizeDto(player, player.calculatePlayerPrize(dealer)))
+	private static List<UserPrizeDto> calculatePlayerPrizes(GameResult gameResult) {
+		Map<Player, Prize> playerPrizeResult = gameResult.getPlayerPrizeResult();
+		return playerPrizeResult.entrySet().stream()
+			.map(entry -> new UserPrizeDto(entry.getKey().getName(), entry.getValue()))
 			.collect(Collectors.toList());
 	}
 
 	public String getName() {
-		return user.getName();
+		return userName;
 	}
 
 	public Prize getPrize() {

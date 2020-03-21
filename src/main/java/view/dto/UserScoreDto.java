@@ -14,6 +14,7 @@ import domain.user.User;
 
 public class UserScoreDto {
 	private static final String PLAYERS_DEALER_NULL_EXCEPTION_MESSAGE = "플레이어들, 딜러는 null이 될 수 없습니다.";
+
 	private final User user;
 	private final Score score;
 

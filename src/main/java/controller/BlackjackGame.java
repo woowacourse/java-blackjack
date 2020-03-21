@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.CardDeck;
 import domain.card.ShuffleCardDeck;
+import domain.result.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.PlayerFactory;
@@ -25,7 +26,7 @@ public class BlackjackGame {
 		drawDealerCardAdditional(dealer, cardDeck);
 
 		OutputView.printUsersCardsAndScore(UserScoreDto.createAllUsersDto(players, dealer));
-		OutputView.printGameResult(UserPrizeDto.createAllUsersDto(players, dealer));
+		OutputView.printGameResult(UserPrizeDto.createAllUsersDto(new GameResult(players, dealer)));
 	}
 
 	private void drawFirstTime(Players players, Dealer dealer, CardDeck cardDeck) {
