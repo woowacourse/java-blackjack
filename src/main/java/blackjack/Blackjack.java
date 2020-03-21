@@ -33,20 +33,7 @@ public class Blackjack {
 	}
 
 	private static Players preparePlayers() {
-		Players players;
-		do {
-			players = preparePlayersIfValid();
-		} while (players == null);
-		return players;
-	}
-
-	private static Players preparePlayersIfValid() {
-		try {
-			return Players.of(InputView.inputPlayerNames());
-		} catch (PlayersException | PlayerException | AbstractPlayerException | NameException e) {
-			ErrorView.printMessage(e);
-			return null;
-		}
+		return Players.of(InputView.inputPlayerNames());
 	}
 
 	private static Monies prepareMonies(Players players) {
@@ -58,19 +45,7 @@ public class Blackjack {
 	}
 
 	private static Money prepareMoney(Name name) {
-		Money money;
-		do {
-			money = prepareMoneyIfValid(name);
-		} while (money == null);
-		return money;
-	}
-
-	private static Money prepareMoneyIfValid(Name name) {
-		try {
-			return Money.of(InputView.inputBettingMoney(name));
-		} catch (MoneyException e) {
-			return null;
-		}
+		return Money.of(InputView.inputBettingMoney(name));
 	}
 
 	private static Deck prepareDeck() {
@@ -107,20 +82,7 @@ public class Blackjack {
 	}
 
 	private static YesOrNo prepareYesOrNo(Playable player) {
-		YesOrNo yesOrNo;
-		do {
-			yesOrNo = prepareYesOrNoIfValid(player);
-		} while (yesOrNo == null);
-		return yesOrNo;
-	}
-
-	private static YesOrNo prepareYesOrNoIfValid(Playable player) {
-		try {
-			return YesOrNo.of(InputView.inputYesOrNo(player));
-		} catch (YesOrNoException e) {
-			ErrorView.printMessage(e);
-			return null;
-		}
+		return YesOrNo.of(InputView.inputYesOrNo(player));
 	}
 
 	private static void progressDealer(Playable dealer, Drawable deck) {
