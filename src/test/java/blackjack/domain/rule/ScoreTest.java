@@ -14,13 +14,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HandCalculatorTest {
+class ScoreTest {
 
     @ParameterizedTest
     @MethodSource("createCards")
     @DisplayName("카드의 합을 구하는 테스트")
     void calculateSum(List<Card> cards, int result) {
-        assertThat(HandCalculator.calculate(cards).getScore()).isEqualTo(result);
+        assertThat(Score.from(cards).getScore()).isEqualTo(result);
     }
 
     private static Stream<Arguments> createCards() {

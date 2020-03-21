@@ -8,9 +8,9 @@ import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.result.GamerProfitTable;
 import blackjack.domain.rule.BettingTable;
 import blackjack.domain.rule.HandInitializer;
 
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -61,13 +60,7 @@ public class BlackjackController {
     }
 
     public GamersResultResponseDto getGamersResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
-        Map<Gamer, Integer> calculateBettingMoney = bettingTable.calculateBettingResult(players, dealer);
-        Map<String, Integer> map = calculateBettingMoney.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getName(),
-                        entry -> entry.getValue()
-                ));
-        return new GamersResultResponseDto(map);
+        GamerProfitTable gamerProfitTable = bettingTable.calculateProfitResult(players, dealer);
+        return GamersResultResponseDto.from(gamerProfitTable);
     }
 }

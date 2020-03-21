@@ -16,6 +16,9 @@ public enum BlackJackResult {
     }
 
     public BlackJackResult reverse() {
+        if (this == BLACKJACK) {
+            return LOSE;
+        }
         if (this == WIN)
             return LOSE;
         if (this == LOSE)
@@ -23,8 +26,8 @@ public enum BlackJackResult {
         return DRAW;
     }
 
-    public int profit(BettingMoney bettingMoney) {
-        return (int) (bettingMoney.getBettingMoney() * profitRate);
+    public Profit profit(BettingMoney bettingMoney) {
+        return Profit.from(bettingMoney.getBettingMoney() * profitRate);
     }
 
     public double getProfitRate() {

@@ -25,4 +25,18 @@ class CardTest {
         assertThatThrownBy(() -> new Card(null, null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("카드 심볼을 반환")
+    void getCardSymbol() {
+        Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
+        assertThat(aceSpade.getSymbol()).isEqualTo("A");
+    }
+
+    @Test
+    @DisplayName("카드 타입을 반환")
+    void getCardType() {
+        Card aceSpade = new Card(CardSymbol.ACE, CardType.SPADE);
+        assertThat(aceSpade.getType()).isEqualTo("스페이드");
+    }
 }

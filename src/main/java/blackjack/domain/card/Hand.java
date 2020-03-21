@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.rule.HandCalculator;
 import blackjack.domain.rule.Score;
 
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.Objects;
 public class Hand {
 
     private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final List<Card> hand = new ArrayList<>();
 
     public void add(Card card) {
@@ -36,7 +36,7 @@ public class Hand {
     }
 
     private Score sumScore() {
-        return HandCalculator.calculate(hand);
+        return Score.from(hand);
     }
 
     public List<Card> getHand() {
