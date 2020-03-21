@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Player;
 
 public class PlayerResult {
@@ -14,7 +13,7 @@ public class PlayerResult {
 		Dealer dealer = participant.getDealer();
 		Players players = participant.getPlayers();
 		for (Player player : players.getPlayers()) {
-			playerResult.put(player, player.beatDealer(dealer));
+			playerResult.put(player, player.computeProfit(dealer));
 		}
 	}
 

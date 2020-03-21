@@ -22,23 +22,6 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("유저 이름 입력이 공란일 때 예외를 잘 뱉어내는지")
-    void inputBlankName() {
-        String blankName = "";
-        assertThatThrownBy(() ->
-            new Player(Name.create(blankName), Money.create("0"))
-        ).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("유저 이름 입력이 null일 때 예외를 잘 뱉어내는지")
-    void inputNullName() {
-        assertThatThrownBy(() ->
-            new Player(Name.create(null), Money.create("0"))
-        ).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("플레이어 혼자 블랙잭일 때 수익으로 (베팅금액*1.5)를 뱉어내는지")
     void isPlayerBlackJack() {
         player.receive(new Card(Symbol.ACE, Shape.클로버));
@@ -46,7 +29,7 @@ class PlayerTest {
         dealer.receive(new Card(Symbol.FOUR, Shape.다이아몬드));
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
-        assertThat(player.beatDealer(dealer)).isEqualTo(150);
+        assertThat(player.computeProfit(dealer)).isEqualTo(150);
     }
 
     @Test
@@ -60,7 +43,7 @@ class PlayerTest {
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
 
-        assertThat(player.beatDealer(dealer)).isEqualTo(0);
+        assertThat(player.computeProfit(dealer)).isEqualTo(0);
     }
 
     @Test
@@ -74,7 +57,7 @@ class PlayerTest {
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
 
-        assertThat(player.beatDealer(dealer)).isEqualTo(-100);
+        assertThat(player.computeProfit(dealer)).isEqualTo(-100);
     }
 
     @Test
@@ -90,7 +73,7 @@ class PlayerTest {
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
 
-        assertThat(player.beatDealer(dealer)).isEqualTo(-100);
+        assertThat(player.computeProfit(dealer)).isEqualTo(-100);
     }
 
     @Test
@@ -99,7 +82,7 @@ class PlayerTest {
         player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
         player.receive(new Card(Symbol.EIGHT, Shape.하트));
         dealer.receive(new Card(Symbol.FOUR, Shape.스페이드));
-        assertThat(player.beatDealer(dealer)).isEqualTo(100);
+        assertThat(player.computeProfit(dealer)).isEqualTo(100);
     }
 
     @Test
@@ -107,7 +90,7 @@ class PlayerTest {
     void isPlayerDraw() {
         player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
         dealer.receive(new Card(Symbol.SEVEN, Shape.스페이드));
-        assertThat(player.beatDealer(dealer)).isEqualTo(0);
+        assertThat(player.computeProfit(dealer)).isEqualTo(0);
     }
 
 }

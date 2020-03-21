@@ -1,6 +1,8 @@
 package domain.participant;
 
 public class Player extends Participant {
+	public static final double BLACKJACK_PROFIT_RATE = 1.5;
+	public static final int MINUS_PROFIT = -1;
 	private Money bettingMoney;
 
 	public Player(Name name, Money bettingMoney) {
@@ -12,15 +14,12 @@ public class Player extends Participant {
 		this.bettingMoney = bettingMoney;
 	}
 
-	public double beatDealer(Dealer dealer) {
-		if (this.isBlackJack() && dealer.isBlackJack()) {
-			return 0;
-		}
-		if (this.isBlackJack()) {
-			return bettingMoney.getAmount() * (1.5);
+	public double computeProfit(Dealer dealer) {
+		if (this.isBlackJack() && !dealer.isBlackJack()) {
+			return bettingMoney.getAmount() * BLACKJACK_PROFIT_RATE;
 		}
 		if (this.isBust() || isLowerThanDealerScore(dealer)) {
-			return bettingMoney.getAmount() * (-1);
+			return bettingMoney.getAmount() * MINUS_PROFIT;
 		}
 		if (dealer.isBust() || isHigherThanDealerScore(dealer)) {
 			return bettingMoney.getAmount();
