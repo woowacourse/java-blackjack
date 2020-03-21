@@ -59,8 +59,7 @@ public class OutputView {
 
 	public static void printResult(GameResult gameResult) {
 		printCardsAndScore(gameResult.getGamersScore());
-		printDealerResult(gameResult.getDealerResult());
-		printPlayersResult(gameResult.getPlayersToProfit());
+		printResult(gameResult.getGamersProfit());
 	}
 
 	private static void printCardsAndScore(Map<Gamer, Score> gamerToScore) {
@@ -80,20 +79,13 @@ public class OutputView {
 		return sb.toString();
 	}
 
-	private static void printDealerResult(Profit dealerProfit) {
+	private static void printResult(Map<Gamer, Profit> gamersProfit) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
-		sb.append("딜러: ");
-		sb.append(dealerProfit.getProfit());
-		System.out.println(sb);
-	}
-
-	private static void printPlayersResult(Map<Player, Profit> playersResult) {
-		StringBuilder sb = new StringBuilder();
-		for (Map.Entry<Player, Profit> playerResultEntry : playersResult.entrySet()) {
-			sb.append(playerResultEntry.getKey().getName())
+		for (Map.Entry<Gamer, Profit> gamerProfitEntry : gamersProfit.entrySet()) {
+			sb.append(gamerProfitEntry.getKey().getName())
 					.append(": ")
-					.append(playerResultEntry.getValue().getProfit())
+					.append(gamerProfitEntry.getValue().getProfit())
 					.append(NEW_LINE);
 		}
 		System.out.println(sb);

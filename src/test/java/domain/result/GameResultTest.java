@@ -41,23 +41,16 @@ class GameResultTest {
 
 	@Test
 	@DisplayName("플레이어의 수익이 올바르게 계산되는 확인")
-	void playersProfitTest() {
+	void gamerProfitTest() {
 		GameResult gameResult = new GameResult(gamers);
 
-		Map<Player, Profit> expected = new HashMap<>();
+		Map<Gamer, Profit> expected = new HashMap<>();
 		expected.put(players.get(0), new Profit(-10000));
 		expected.put(players.get(1), new Profit(5000));
 		expected.put(players.get(2), new Profit(1500));
+		expected.put(dealer, new Profit(3500));
 
-		assertThat(gameResult.getPlayersToProfit()).isEqualTo(expected);
-	}
-
-	@Test
-	@DisplayName("딜러의 수익 올바르게 생성되는지 확인")
-	void dealerProfitTest() {
-		GameResult gameResult = new GameResult(gamers);
-
-		assertThat(gameResult.getDealerResult()).isEqualTo(new Profit(3500));
+		assertThat(gameResult.getGamersProfit()).isEqualTo(expected);
 	}
 
 	@Test

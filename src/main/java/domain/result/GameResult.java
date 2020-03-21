@@ -14,13 +14,11 @@ import java.util.stream.Collectors;
 
 public class GameResult {
 	private final Map<Gamer, Score> gamersScore;
-	private final Map<Player, Profit> playersToProfit;
-	private final Profit dealerResult;
+	private final Map<Gamer, Profit> gamersProfit;
 
 	public GameResult(Gamers gamers) {
 		this.gamersScore = findScoreBy(gamers);
-		this.playersToProfit = findPlayersResult();
-		this.dealerResult = findDealerResult();
+		this.gamersProfit = calculateGamersProfit();
 	}
 
 	private Map<Gamer, Score> findScoreBy(Gamers gamers) {
@@ -29,21 +27,31 @@ public class GameResult {
 				.collect(Collectors.toMap(Function.identity(), Gamer::getScore));
 	}
 
-	private Map<Player, Profit> findPlayersResult() {
-		Map<Player, Profit> playerToResult = new HashMap<>();
+	private Map<Gamer, Profit> calculateGamersProfit() {
 		Dealer dealer = findDealer();
+
+		Map<Gamer, Profit> gamersProfit = new HashMap<>(calculatePlayersProfit(dealer));
+
+		List<Profit> playersProfit = new ArrayList<>(gamersProfit.values());
+		gamersProfit.put(dealer, calculateDealerProfit(playersProfit));
+
+		return gamersProfit;
+	}
+
+	private Map<Gamer, Profit> calculatePlayersProfit(Dealer dealer) {
+		Map<Gamer, Profit> playersResult = new HashMap<>();
 
 		for (Player player : findPlayers()) {
 			ResultType result = ResultType.of(player, dealer);
-			playerToResult.put(player, new Profit(result.calculateProfit(player.getMoney())));
+			playersResult.put(player, new Profit(result.calculateProfit(player.getMoney())));
 		}
-		return playerToResult;
+		return playersResult;
 	}
 
-	private Profit findDealerResult() {
+	private Profit calculateDealerProfit(List<Profit> playersProfit) {
 		Profit profit = Profit.ZERO;
-		for (Profit each : playersToProfit.values()) {
-			profit = profit.plus(each.negative());
+		for (Profit eachProfit : playersProfit) {
+			profit = profit.plus(eachProfit.negative());
 		}
 		return profit;
 	}
@@ -64,11 +72,7 @@ public class GameResult {
 		return gamersScore;
 	}
 
-	public Map<Player, Profit> getPlayersToProfit() {
-		return playersToProfit;
-	}
-
-	public Profit getDealerResult() {
-		return dealerResult;
+	public Map<Gamer, Profit> getGamersProfit() {
+		return gamersProfit;
 	}
 }
