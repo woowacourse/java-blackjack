@@ -1,4 +1,3 @@
-import domain.betting.BettingLogs;
 import domain.card.CardDeck;
 import domain.game.UserIntention;
 import domain.player.Dealer;
@@ -18,12 +17,12 @@ public class Application {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
         final Dealer dealer = new Dealer();
         final Users users = new Users(UserFactory.create(InputView.inputNames()));
-        final BettingLogs bettingLogs = BettingLogGenerator.create(users);
+        BettingLogGenerator.calculate(users);
 
         distributeInitialCard(cardDeck, dealer, users);
         distributeInfo(dealer, users);
         addMoreCards(cardDeck, dealer, users);
-        printResults(dealer, users, bettingLogs);
+        printResults(dealer, users);
     }
 
     private static void distributeInitialCard(final CardDeck cardDeck, final Dealer dealer, final Users users) {
@@ -67,8 +66,8 @@ public class Application {
         }
     }
 
-    private static void printResults(final Dealer dealer, final Users users, BettingLogs bettingLogs) {
+    private static void printResults(final Dealer dealer, final Users users) {
         OutputView.printPlayersResult(dealer, users);
-        OutputView.printLastResult(ResultGenerator.create(dealer, users, bettingLogs));
+        OutputView.printLastResult(ResultGenerator.create(dealer, users));
     }
 }

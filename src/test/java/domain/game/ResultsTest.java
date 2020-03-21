@@ -18,13 +18,7 @@ public class ResultsTest {
     void create() {
         Dealer dealer = new Dealer();
         Users users = new Users(UserFactory.create("userA,userB"));
-        List<BettingLog> bettingLogsList = new ArrayList<>();
 
-        bettingLogsList.add(new BettingLog("userA", new Money("1000")));
-        bettingLogsList.add(new BettingLog("userB", new Money("2000")));
-
-        BettingLogs bettingLogs = new BettingLogs(bettingLogsList);
-
-        assertThat(ResultGenerator.create(dealer, users, bettingLogs)).isInstanceOf(Results.class);
+        assertThat(ResultGenerator.create(dealer, users)).isInstanceOf(Results.class);
     }
 }

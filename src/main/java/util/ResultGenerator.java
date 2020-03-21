@@ -14,31 +14,28 @@ public class ResultGenerator {
     private ResultGenerator() {
     }
 
-    public static Results create(final Dealer dealer, final Users users, BettingLogs bettingLogs) {
+    public static Results create(final Dealer dealer, final Users users) {
         Map<Name, Result> results = new LinkedHashMap<>();
 
-        addDealerResults(dealer, users, results, bettingLogs);
-        addUserResults(dealer, users, results, bettingLogs);
+        addDealerResults(dealer, users, results);
+        addUserResults(dealer, users, results);
         return new Results(results);
     }
 
-    private static void addDealerResults(final Dealer dealer, final Users users, final Map<Name, Result> results, BettingLogs bettingLogs) {
+    private static void addDealerResults(final Dealer dealer, final Users users, final Map<Name, Result> results) {
         Result result = new Result();
 
         for (User user : users) {
-            BettingLog userBettingLog = bettingLogs.getUserLog(user.getName());
-
-            result.calculateWinningMoney(dealer, user, userBettingLog);
+            result.calculateWinningMoney(dealer, user);
         }
         results.put(new Name(dealer.getName()), result);
     }
 
-    private static void addUserResults(final Dealer dealer, final Users users, final Map<Name, Result> results, BettingLogs bettingLogs) {
+    private static void addUserResults(final Dealer dealer, final Users users, final Map<Name, Result> results) {
         for (User user : users) {
-            BettingLog userBettingLog = bettingLogs.getUserLog(user.getName());
             Result result = new Result();
 
-            result.calculateWinningMoney(user, dealer, userBettingLog);
+            result.calculateWinningMoney(user, dealer);
             results.put(new Name(user.getName()), result);
         }
     }

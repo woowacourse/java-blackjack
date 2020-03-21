@@ -23,22 +23,7 @@ public class ResultGeneratorTest {
         User userA = new User("userA");
         User userB = new User("userB");
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = new CardDeck(CardFactory.create());
-        List<BettingLog> bettingLogsList = new ArrayList<>();
 
-        bettingLogsList.add(new BettingLog("userA", new Money("1000")));
-        bettingLogsList.add(new BettingLog("userB", new Money("2000")));
-
-        BettingLogs bettingLogs = new BettingLogs(bettingLogsList);
-
-        cardDeck.shuffle();
-        CardDistributor.giveOneCard(cardDeck, userA);
-        CardDistributor.giveOneCard(cardDeck, userA);
-        CardDistributor.giveOneCard(cardDeck, userB);
-        CardDistributor.giveOneCard(cardDeck, userB);
-        dealer.addCard(cardDeck.drawOne());
-        dealer.addCard(cardDeck.drawOne());
-
-        assertThat(ResultGenerator.create(dealer, new Users(Arrays.asList(userA, userB)), bettingLogs)).isInstanceOf(Results.class);
+        assertThat(ResultGenerator.create(dealer, new Users(Arrays.asList(userA, userB)))).isInstanceOf(Results.class);
     }
 }

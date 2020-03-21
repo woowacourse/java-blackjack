@@ -42,9 +42,8 @@ public class Result {
         return winCount >= ONE;
     }
 
-    public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer, BettingLog userBettingLog) {
-        BigDecimal bettingMoney = userBettingLog.getMoney();
-
+    public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer) {
+        BigDecimal bettingMoney = getBettingMoney(mainPlayer, opponentPlayer);
         if (isBlackJackWin(mainPlayer, opponentPlayer)) {
             winningMoney = winningMoney.addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
@@ -62,6 +61,17 @@ public class Result {
             return;
         }
         winningMoney = winningMoney.subtractMoney(bettingMoney);
+    }
+
+    private BigDecimal getBettingMoney(Player mainPlayer, Player opponentPlayer) {
+        Money userMoney;
+
+        if (mainPlayer instanceof User) {
+            userMoney = ((User) mainPlayer).getBettingMoney();
+            return userMoney.getMoney();
+        }
+        userMoney = ((User) opponentPlayer).getBettingMoney();
+        return userMoney.getMoney();
     }
 
     private boolean isBlackJackWin(Player mainPlayer, Player opponentPlayer) {
