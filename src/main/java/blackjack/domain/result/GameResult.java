@@ -1,21 +1,20 @@
 package blackjack.domain.result;
 
-import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.score.Score;
 
 import java.util.Arrays;
 
 public enum GameResult {
-    WIN(new WinStrategy(), new WinRate()),
-    DRAW(new DrawStrategy(), new DrawRate()),
-    LOSE(new LoseStrategy(), new LoseRate());
+    WIN(new WinStrategy(), new WinRateStrategy()),
+    DRAW(new DrawStrategy(), new DrawRateStrategy()),
+    LOSE(new LoseStrategy(), new LoseRateStrategy());
 
     private final GameResultStrategy gameResultStrategy;
-    private final MoneyRate moneyRate;
+    private final MoneyRateStrategy moneyRateStrategy;
 
-    GameResult(GameResultStrategy gameResultStrategy, MoneyRate moneyRate) {
+    GameResult(GameResultStrategy gameResultStrategy, MoneyRateStrategy moneyRateStrategy) {
         this.gameResultStrategy = gameResultStrategy;
-        this.moneyRate = moneyRate;
+        this.moneyRateStrategy = moneyRateStrategy;
     }
 
     public static GameResult findByScores(Score dealerScore, Score gamblerScore) {
@@ -36,12 +35,10 @@ public enum GameResult {
     }
 
     private boolean fulfill(Score dealerScore, Score gamblerScore) {
-        return gameResultStrategy.fulfill1(dealerScore, gamblerScore);
+        return gameResultStrategy.fulfill(dealerScore, gamblerScore);
     }
 
-    public double getApplyRateMoney(Score score, BettingMoney bettingMoney) {
-        double rate = this.moneyRate.getRate(score);
-        return bettingMoney.multipleRate(rate)
-                .getMoney();
+    public double getResultRate(Score gamblerScore) {
+        return this.moneyRateStrategy.getRate(gamblerScore);
     }
 }

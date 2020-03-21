@@ -2,6 +2,6 @@ package blackjack.domain.result;
 
 import blackjack.domain.score.Score;
 
-interface MoneyRate {
+interface MoneyRateStrategy {
     double getRate(Score score);
 }

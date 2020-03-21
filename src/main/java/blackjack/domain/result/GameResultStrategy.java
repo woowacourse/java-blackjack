@@ -4,7 +4,7 @@ import blackjack.domain.score.Score;
 
 abstract class GameResultStrategy {
 
-    public boolean fulfill1(Score dealerScore, Score gamblerScore) {
+    public boolean fulfill(Score dealerScore, Score gamblerScore) {
         boolean enough = enough(dealerScore, gamblerScore);
         if (enough) {
             return true;

@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.score.Score;
 
-class LoseRate implements MoneyRate {
+class LoseRateStrategy implements MoneyRateStrategy {
 
     private static final double LOSE_RATE = -1D;
 

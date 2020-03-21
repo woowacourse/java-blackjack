@@ -40,6 +40,10 @@ public class Card {
         return cardNumber.getMessage();
     }
 
+    private boolean isSameCard(Symbol symbol, CardNumber cardNumber) {
+        return this.symbol == symbol && this.cardNumber == cardNumber;
+    }
+
     private static final class CardCache {
         private static final Card[] cache;
 
@@ -61,8 +65,7 @@ public class Card {
         public static Card of(Symbol symbol, CardNumber cardNumber) {
             validate(symbol, cardNumber);
             return Arrays.stream(cache)
-                    .filter(card -> card.symbol == symbol)
-                    .filter(card -> card.cardNumber == cardNumber)
+                    .filter(card -> card.isSameCard(symbol, cardNumber))
                     .findFirst()
                     .orElseThrow(AssertionError::new);
         }

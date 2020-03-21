@@ -69,5 +69,9 @@ public abstract class Player {
         return this.playerInfo.getName();
     }
 
+    public double getMoney() {
+        return this.playerInfo.getBettingMoney();
+    }
+
     public abstract boolean isDrawable();
 }

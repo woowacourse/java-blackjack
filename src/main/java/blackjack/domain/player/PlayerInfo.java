@@ -30,7 +30,8 @@ public class PlayerInfo {
         return new Gambler(CardBundle.emptyBundle(), this);
     }
 
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
+    public double getBettingMoney() {
+        return bettingMoney.getMoney();
     }
+
 }

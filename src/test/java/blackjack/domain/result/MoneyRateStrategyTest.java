@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MoneyRateTest {
+class MoneyRateStrategyTest {
 
     @DisplayName("WinRate 블랙잭여부에 따라 이율 차등 배분")
     @ParameterizedTest
@@ -26,8 +26,8 @@ class MoneyRateTest {
         Score score = new Score(cardBundle);
 
         //when
-        MoneyRate moneyRate = new WinRate();
-        Double actualRate = moneyRate.getRate(score);
+        MoneyRateStrategy moneyRateStrategy = new WinRateStrategy();
+        Double actualRate = moneyRateStrategy.getRate(score);
 
         //then
         assertThat(actualRate).isEqualTo(expectRate);
@@ -43,8 +43,8 @@ class MoneyRateTest {
         Score score = new Score(cardBundle);
 
         //when
-        MoneyRate moneyRate = new DrawRate();
-        Double actualRate = moneyRate.getRate(score);
+        MoneyRateStrategy moneyRateStrategy = new DrawRateStrategy();
+        Double actualRate = moneyRateStrategy.getRate(score);
 
         //then
         assertThat(actualRate).isEqualTo(0D);
@@ -60,8 +60,8 @@ class MoneyRateTest {
         Score score = new Score(cardBundle);
 
         //when
-        MoneyRate moneyRate = new LoseRate();
-        Double actualRate = moneyRate.getRate(score);
+        MoneyRateStrategy moneyRateStrategy = new LoseRateStrategy();
+        Double actualRate = moneyRateStrategy.getRate(score);
 
         //then
         assertThat(actualRate).isEqualTo(-1D);

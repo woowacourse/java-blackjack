@@ -1,6 +1,5 @@
 package blackjack.view.dto;
 
-import blackjack.domain.generic.BettingMoney;
 import blackjack.domain.player.PlayerInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,6 @@ class NameMoneyDTOTest {
 
         //then
         assertThat(playerInfo.getName()).isEqualTo("bebop");
-        assertThat(playerInfo.getBettingMoney()).isEqualTo(BettingMoney.of(1000));
+        assertThat(playerInfo.getBettingMoney()).isEqualTo(1000D);
     }
 }

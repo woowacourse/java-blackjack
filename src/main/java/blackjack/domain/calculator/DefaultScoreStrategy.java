@@ -6,7 +6,7 @@ class DefaultScoreStrategy implements ScoreStrategy {
 
     @Override
     public boolean support(CardBundle cards) {
-        return true;
+        return !cards.hasAce();
     }
 
     @Override

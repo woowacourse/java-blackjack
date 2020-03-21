@@ -25,7 +25,8 @@ public class Dealer extends Player implements Reportable {
         Score gamblerScore = gambler.getScore();
         GameResult gameResult = GameResult.findByScores(getScore(), gamblerScore);
 
-        double money = gameResult.getApplyRateMoney(gamblerScore, gambler.playerInfo.getBettingMoney());
+        double rate = gameResult.getResultRate(gamblerScore);
+        double money = gambler.getMoney() * rate;
 
         return new GameReport(gambler.getName(), money);
     }
