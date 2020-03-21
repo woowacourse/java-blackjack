@@ -4,9 +4,7 @@ import java.util.Arrays;
 
 public enum YesOrNo {
 
-    y("y"),
     Y("Y"),
-    n("n"),
     N("N");
 
     private final String answer;
@@ -17,10 +15,10 @@ public enum YesOrNo {
 
     public static boolean isYes(String input) {
         YesOrNo answerInput = Arrays.stream(values())
-                .filter(yesOrNo -> yesOrNo.answer.equals(input))
+                .filter(yesOrNo -> yesOrNo.answer.equalsIgnoreCase(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
 
-        return answerInput == Y || answerInput == y;
+        return answerInput == Y;
     }
 }
