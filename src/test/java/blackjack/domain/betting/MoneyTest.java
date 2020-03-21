@@ -23,11 +23,13 @@ class MoneyTest {
 		assertThat(Money.zero()).isNotNull();
 	}
 
+	@DisplayName("zero()가 0인지 테스트")
 	@Test
 	void zero_IsEqualToZeroInstance() {
 		assertThat(Money.zero()).isEqualTo(Money.of("0"));
 	}
 
+	@DisplayName("of()가 인스턴스를 반환하는지 테스트")
 	@ParameterizedTest
 	@ValueSource(strings = {"1000", "1000.0", "1000d", "0"})
 	void of_IsNotNull(String input) {
@@ -35,6 +37,7 @@ class MoneyTest {
 		assertThat(money).isNotNull();
 	}
 
+	@DisplayName("올바르지 않은 값이 들어왔을때 MoneyException을 던지는지 테스트")
 	@ParameterizedTest
 	@ValueSource(strings = {"", " ", "abc"})
 	void of_NotDouble_ThrowMoneyException(String input) {
@@ -42,12 +45,14 @@ class MoneyTest {
 				.isInstanceOf(MoneyException.class);
 	}
 
+	@DisplayName("null 값이 들어왔을때 MoneyException을 던지는지 테스트")
 	@Test
 	void of_Null_ThrowMoneyException() {
 		assertThatThrownBy(() -> Money.of(null))
 				.isInstanceOf(MoneyException.class);
 	}
 
+	@DisplayName("computeResultAmount()가 resultType에 맞추어 적절한 값을 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("computeResultAmount")
 	void computeResultAmount(ResultType resultType, String expect) {
@@ -62,6 +67,7 @@ class MoneyTest {
 				Arguments.of(ResultType.LOSE, "-1000"));
 	}
 
+	@DisplayName("add()가 두 값을 올바르게 더하는지 테스트")
 	@ParameterizedTest
 	@CsvSource(value = {"1000,500,1500", "999.5,0.5,1000", "0,500.5,500.5"})
 	void add(String input1, String input2, String expect) {
