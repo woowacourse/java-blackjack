@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
+import domain.result.ResultType;
 import domain.user.strategy.draw.DrawStrategy;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Objects;
 
 public class User implements Comparable<User> {
 	public static final String NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE = "null이 인자로 올 수 없습니다.";
+	private static final int ZERO = 0;
 
 	protected Cards cards;
 	protected DrawStrategy drawStrategy;
@@ -57,20 +59,29 @@ public class User implements Comparable<User> {
 		return cards.calculateScore();
 	}
 
-	public boolean isNotBurst() {
-		return cards.isNotBurst();
+	public ResultType compare(User other) {
+		if (cards.isBlackJack() && other.cards.isNotBlackjack()) {
+			return ResultType.BLACKJACK_WIN;
+		}
+		if (cards.isNotBlackjack() && this.compareTo(other) > ZERO) {
+			return ResultType.WIN;
+		}
+		if (isBothBlackjack(other.cards) || cards.isNotBurst() && this.isSameScore(other)) {
+			return ResultType.DRAW;
+		}
+		return ResultType.LOSE;
 	}
 
-	public boolean isBurst() {
-		return cards.isBurst();
+	private boolean isBothBlackjack(Cards otherCards) {
+		return cards.isBlackJack() && otherCards.isBlackJack();
 	}
 
 	public boolean isNotBlackjack() {
-		return cards.isNotBlackJack();
+		return cards.isNotBlackjack();
 	}
 
-	public boolean isBlackjack() {
-		return cards.isBlackJack();
+	public boolean isSameScore(User other) {
+		return this.compareTo(other) == 0;
 	}
 
 	@Override

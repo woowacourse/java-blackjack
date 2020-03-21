@@ -18,7 +18,7 @@ public class Result {
 
 	public static Result from (Dealer dealer, Players players) {
 		Map<Player, ResultType> results = new HashMap<>();
-		players.forEach(player -> results.put(player, ResultType.from(player, dealer)));
+		players.forEach(player -> results.put(player, player.compare(dealer)));
 		return new Result(results);
 	}
 

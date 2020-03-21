@@ -48,11 +48,7 @@ public class Cards {
 		return !cards.isEmpty() && calculateScore() != BURST_SCORE;
 	}
 
-	public boolean isBurst() {
-		return !cards.isEmpty() && calculateScore() == BURST_SCORE;
-	}
-
-	public boolean isNotBlackJack() {
+	public boolean isNotBlackjack() {
 		return !(hasInitialSize() && calculateScore() == BLACKJACK_SCORE);
 	}
 
