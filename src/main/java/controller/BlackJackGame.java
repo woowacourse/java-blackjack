@@ -13,7 +13,7 @@ public class BlackJackGame {
 
     private final Deck deck;
 
-    public static BlackJackGame set(Deck deck) {
+    public static BlackJackGame setDeck(Deck deck) {
         return new BlackJackGame(deck);
     }
 
