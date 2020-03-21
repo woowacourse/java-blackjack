@@ -63,4 +63,38 @@ public class PlayerTest {
 		assertThat(player.isLose(dealer)).isTrue();
 		assertThat(player.isDraw(dealer)).isFalse();
 	}
+
+	@Test
+	void shouldAddCard_카드_추가를_허용하고_받을_수_있는_경우() {
+		User user = new Player("a");
+		user.addCard(Card.of("하트", "10"));
+		user.addCard(Card.of("하트", "A"));
+		assertThat(user.shouldAddCard(true)).isTrue();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가를_허용하지_않고_받을_수_있는_경우() {
+		User user = new Player("a");
+		user.addCard(Card.of("하트", "10"));
+		user.addCard(Card.of("하트", "A"));
+		assertThat(user.shouldAddCard(false)).isFalse();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가는_허용하고_받을_수_없는_경우() {
+		User user = new Player("a");
+		user.addCard(Card.of("하트", "J"));
+		user.addCard(Card.of("하트", "Q"));
+		user.addCard(Card.of("하트", "K"));
+		assertThat(user.shouldAddCard(true)).isFalse();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가는_허용하지_않고_받을_수_없는_경우() {
+		User user = new Player("a");
+		user.addCard(Card.of("하트", "J"));
+		user.addCard(Card.of("하트", "Q"));
+		user.addCard(Card.of("하트", "K"));
+		assertThat(user.shouldAddCard(false)).isFalse();
+	}
 }

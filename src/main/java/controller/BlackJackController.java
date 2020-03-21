@@ -61,14 +61,14 @@ public class BlackJackController {
 	}
 
 	private void addCardIfWant(Player player) {
-		while (player.isNotBust() && WhetherAddCard.of(InputView.inputMoreCard(player)).isYes()) {
+		while (player.shouldAddCard(WhetherAddCard.of(InputView.inputMoreCard(player)).isYes())) {
 			dealer.giveCard(cardDeck, player);
 			OutputView.printCards(player.getName(), player.getCards());
 		}
 	}
 
 	private void addCardIfNeed() {
-		while (dealer.shouldAddCard()) {
+		while (dealer.shouldAddCard(true)) {
 			dealer.addCard(cardDeck.pop());
 			OutputView.printDealerAddCard();
 		}

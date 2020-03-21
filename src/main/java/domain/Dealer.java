@@ -17,12 +17,13 @@ public class Dealer extends User {
 		players.forEach(player -> giveCard(cardDeck, player));
 	}
 
-	public boolean shouldAddCard() {
-		return getScore() <= SHOULD_ADD_CARD_POINT;
-	}
-
 	public Card getFirstCard() {
 		return getCards().get(FIRST_CARD_INDEX);
+	}
+
+	@Override
+	public boolean shouldAddCard(boolean accept) {
+		return accept && !isScoreGreaterThan(SHOULD_ADD_CARD_POINT);
 	}
 
 	@Override

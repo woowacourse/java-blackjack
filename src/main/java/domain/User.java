@@ -55,6 +55,8 @@ public abstract class User {
 				.isGreaterThan(score);
 	}
 
+	public abstract boolean shouldAddCard(boolean accept);
+
 	public boolean isLose(User that) {
 		return !isWin(that) && !isDraw(that);
 	}
