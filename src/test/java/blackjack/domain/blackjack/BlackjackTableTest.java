@@ -5,11 +5,16 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
@@ -18,6 +23,8 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.exceptions.InvalidBlackjackTableException;
+import blackjack.domain.result.BettingMoney;
+import blackjack.domain.result.Report;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -126,5 +133,57 @@ class BlackjackTableTest {
 		assertThatThrownBy(() -> blackjackTable.playWith(value))
 			.isInstanceOf(InvalidBlackjackTableException.class)
 			.hasMessage(InvalidBlackjackTableException.USER_DECISIONS_NULL);
+	}
+
+	@ParameterizedTest
+	@MethodSource("provideBlackjackTableAndPlayersBettingMoney")
+	void reportFrom_PlayersBettingMoney_GeneratePlayersBettingMoneyInstance(BlackjackTable blackjackTable,
+		Report playersBettingMoney, Map<Player, BettingMoney> expected) {
+		assertThat(blackjackTable.reportFrom(playersBettingMoney)).extracting("playersBettingMoney")
+			.isEqualTo(expected);
+	}
+
+	private static Stream<Arguments> provideBlackjackTableAndPlayersBettingMoney() {
+		Deck deck = new Deck(CardFactory.create());
+
+		Dealer dealer = Dealer.from(Arrays.asList(
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+
+		Player pobi = Player.valueOf("pobi", Arrays.asList(
+			Card.of(Symbol.QUEEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		Player sony = Player.valueOf("sony", Arrays.asList(
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		Player stitch = Player.valueOf("stitch", Arrays.asList(
+			Card.of(Symbol.SEVEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		List<Player> players = Arrays.asList(pobi, sony, stitch);
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+
+		Map<Player, BettingMoney> bettingMoney = new LinkedHashMap<>();
+		bettingMoney.put(pobi, BettingMoney.valueOf("10000"));
+		bettingMoney.put(sony, BettingMoney.valueOf("5000"));
+		bettingMoney.put(stitch, BettingMoney.valueOf("1000"));
+		Report playersBettingMoney = new Report(bettingMoney);
+
+		Map<Player, BettingMoney> expected = new LinkedHashMap<>();
+		expected.put(pobi, BettingMoney.valueOf(10000));
+		expected.put(sony, BettingMoney.valueOf(0));
+		expected.put(stitch, BettingMoney.valueOf(-1000));
+
+		return Stream.of(
+			Arguments.of(blackjackTable, playersBettingMoney, expected));
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_Null_InvalidBlackjackTableExceptionThrown(Report playersBettingMoney) {
+		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
+
+		assertThatThrownBy(() -> blackjackTable.reportFrom(playersBettingMoney))
+			.isInstanceOf(InvalidBlackjackTableException.class)
+			.hasMessage(InvalidBlackjackTableException.PLAYERS_BETTING_MONEY_NULL);
 	}
 }

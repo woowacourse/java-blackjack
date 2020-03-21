@@ -9,16 +9,16 @@ import blackjack.domain.exceptions.InvalidResultScoreException;
 
 public class ResultScore implements Comparable<ResultScore> {
 	private final Score score;
-	private final ScoreType scoreType;
+	private final HandType handType;
 
-	public ResultScore(Score score, ScoreType scoreType) {
-		validate(score, scoreType);
+	ResultScore(Score score, HandType handType) {
+		validate(score, handType);
 		this.score = score;
-		this.scoreType = scoreType;
+		this.handType = handType;
 	}
 
-	private void validate(Score score, ScoreType scoreType) {
-		if (Objects.isNull(score) || Objects.isNull(scoreType)) {
+	private void validate(Score score, HandType handType) {
+		if (Objects.isNull(score) || Objects.isNull(handType)) {
 			throw new InvalidResultScoreException(InvalidResultScoreException.SCORE_OR_SCORE_TYPE_NULL);
 		}
 	}
@@ -26,8 +26,8 @@ public class ResultScore implements Comparable<ResultScore> {
 	public static ResultScore of(List<Card> cards) {
 		validate(cards);
 		Score score = calculateScore(cards);
-		ScoreType scoreType = ScoreType.of(score, isInitialDealtSize(cards));
-		return new ResultScore(score, scoreType);
+		HandType handType = HandType.of(score, isInitialDealtSize(cards));
+		return new ResultScore(score, handType);
 	}
 
 	private static void validate(List<Card> cards) {
@@ -68,11 +68,11 @@ public class ResultScore implements Comparable<ResultScore> {
 	}
 
 	public boolean isBlackjack() {
-		return scoreType.isBlackjack();
+		return handType.isBlackjack();
 	}
 
 	public boolean isBust() {
-		return scoreType.isBust();
+		return handType.isBust();
 	}
 
 	public boolean isNormal() {
@@ -102,11 +102,11 @@ public class ResultScore implements Comparable<ResultScore> {
 		}
 		ResultScore that = (ResultScore)object;
 		return Objects.equals(score, that.score) &&
-			scoreType == that.scoreType;
+			handType == that.handType;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(score, scoreType);
+		return Objects.hash(score, handType);
 	}
 }

@@ -12,7 +12,7 @@ import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.BettingMoney;
-import blackjack.domain.result.PlayersBettingMoney;
+import blackjack.domain.result.Report;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerFactory;
@@ -29,7 +29,7 @@ public class Application {
 		blackjackController.play(generatePlayersBettingMoney(players));
 	}
 
-	private static PlayersBettingMoney generatePlayersBettingMoney(List<Player> players) {
+	private static Report generatePlayersBettingMoney(List<Player> players) {
 		return players.stream()
 			.collect(collectingAndThen(
 				toMap(
@@ -37,6 +37,6 @@ public class Application {
 					player -> BettingMoney.valueOf(InputView.inputBettingMoneyFrom(player)),
 					(x, y) -> x,
 					LinkedHashMap::new),
-				PlayersBettingMoney::new));
+				Report::new));
 	}
 }

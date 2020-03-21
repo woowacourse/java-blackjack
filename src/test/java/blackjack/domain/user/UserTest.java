@@ -19,8 +19,6 @@ import blackjack.domain.card.Type;
 import blackjack.domain.exceptions.InvalidDeckException;
 import blackjack.domain.exceptions.InvalidUserException;
 import blackjack.domain.result.ResultScore;
-import blackjack.domain.result.Score;
-import blackjack.domain.result.ScoreType;
 
 class UserTest {
 	@Test
@@ -94,7 +92,7 @@ class UserTest {
 			Card.of(Symbol.ACE, Type.SPADE));
 		User user = Dealer.from(cards);
 
-		ResultScore expected = new ResultScore(Score.valueOf(21), ScoreType.BLACKJACK);
+		ResultScore expected = ResultScore.of(cards);
 		assertThat(user.calculateResultScore()).isEqualTo(expected);
 	}
 

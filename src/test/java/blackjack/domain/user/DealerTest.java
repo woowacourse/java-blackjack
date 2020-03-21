@@ -47,6 +47,15 @@ class DealerTest {
 	}
 
 	@Test
+	void isBlackjack_CalculateResultScore_CheckHandType() {
+		Dealer dealer = Dealer.from(Arrays.asList(
+			Card.of(Symbol.TEN, Type.DIAMOND),
+			Card.of(Symbol.ACE, Type.SPADE)));
+
+		assertThat(dealer.isBlackjack()).isTrue();
+	}
+
+	@Test
 	void canDraw_CurrentScoreLowerThanDrawableMaxScore_ReturnTrue() {
 		Dealer dealer = Dealer.from(Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
 		assertThat(dealer.canDraw()).isTrue();

@@ -20,28 +20,28 @@ public enum ResultType {
 		(playerResultScore, dealerResultScore) -> playerResultScore.compareTo(dealerResultScore) < 0,
 		bettingMoney -> bettingMoney.multiplyBy(-1.0));
 
-	private final BiPredicate<ResultScore, ResultScore> judgeByScoreType;
+	private final BiPredicate<ResultScore, ResultScore> judgeByHandType;
 	private final BiPredicate<ResultScore, ResultScore> judgeByCompare;
 	private final Function<BettingMoney, BettingMoney> calculateProfit;
 
-	ResultType(BiPredicate<ResultScore, ResultScore> judgeByScoreType,
+	ResultType(BiPredicate<ResultScore, ResultScore> judgeByHandType,
 		BiPredicate<ResultScore, ResultScore> judgeByCompare,
 		Function<BettingMoney, BettingMoney> calculateProfit) {
-		this.judgeByScoreType = judgeByScoreType;
+		this.judgeByHandType = judgeByHandType;
 		this.judgeByCompare = judgeByCompare;
 		this.calculateProfit = calculateProfit;
 	}
 
-	ResultType(BiPredicate<ResultScore, ResultScore> judgeByScoreType,
+	ResultType(BiPredicate<ResultScore, ResultScore> judgeByHandType,
 		Function<BettingMoney, BettingMoney> calculateProfit) {
-		this(judgeByScoreType, (playerResultScore, dealerResultScore) -> false, calculateProfit);
+		this(judgeByHandType, (playerResultScore, dealerResultScore) -> false, calculateProfit);
 	}
 
 	public static ResultType from(ResultScore playerResultScore, ResultScore dealerResultScore) {
 		validate(playerResultScore, dealerResultScore);
 
 		return Arrays.stream(values())
-			.filter(value -> value.judgeByScoreType.test(playerResultScore, dealerResultScore))
+			.filter(value -> value.judgeByHandType.test(playerResultScore, dealerResultScore))
 			.findFirst()
 			.orElse(compareResultScoreFrom(playerResultScore, dealerResultScore));
 	}

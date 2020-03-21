@@ -16,13 +16,13 @@ import blackjack.domain.exceptions.InvalidResultScoreException;
 
 class ResultScoreTest {
 	@Test
-	void ResultScore_ScoreAndScoreType_GetInstance() {
-		assertThat(new ResultScore(Score.valueOf(10), ScoreType.BLACKJACK)).isInstanceOf(ResultScore.class);
+	void ResultScore_ScoreAndHandType_GetInstance() {
+		assertThat(new ResultScore(Score.valueOf(10), HandType.BLACKJACK)).isInstanceOf(ResultScore.class);
 	}
 
 	@Test
-	void validate_NullScoreOrNullScoreType_InvalidResultScoreExceptionThrown() {
-		assertThatThrownBy(() -> new ResultScore(null, ScoreType.BLACKJACK))
+	void validate_NullScoreOrNullHandType_InvalidResultScoreExceptionThrown() {
+		assertThatThrownBy(() -> new ResultScore(null, HandType.BLACKJACK))
 			.isInstanceOf(InvalidResultScoreException.class)
 			.hasMessage(InvalidResultScoreException.SCORE_OR_SCORE_TYPE_NULL);
 	}
@@ -75,7 +75,7 @@ class ResultScoreTest {
 	}
 
 	@Test
-	void isBlackjack_ScoreType_CompareResultOfScoreType() {
+	void isBlackjack_HandType_CompareResultOfHandType() {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.ACE, Type.DIAMOND));
@@ -84,7 +84,7 @@ class ResultScoreTest {
 	}
 
 	@Test
-	void isBust_ScoreType_CompareResultOfScoreType() {
+	void isBust_HandType_CompareResultOfHandType() {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.TEN, Type.SPADE),
@@ -94,7 +94,7 @@ class ResultScoreTest {
 	}
 
 	@Test
-	void isNormal_ScoreType_CompareResultOfScoreType() {
+	void isNormal_HandType_CompareResultOfHandType() {
 		List<Card> cards = Arrays.asList(
 			Card.of(Symbol.TEN, Type.CLUB),
 			Card.of(Symbol.FOUR, Type.DIAMOND));
@@ -104,8 +104,8 @@ class ResultScoreTest {
 
 	@Test
 	void compareTo_ResultScore_CompareByScore() {
-		ResultScore resultScore1 = new ResultScore(Score.valueOf(17), ScoreType.NORMAL);
-		ResultScore resultScore2 = new ResultScore(Score.valueOf(19), ScoreType.NORMAL);
+		ResultScore resultScore1 = new ResultScore(Score.valueOf(17), HandType.NORMAL);
+		ResultScore resultScore2 = new ResultScore(Score.valueOf(19), HandType.NORMAL);
 
 		assertThat(resultScore1.compareTo(resultScore2)).isEqualTo(Integer.compare(17, 19));
 	}

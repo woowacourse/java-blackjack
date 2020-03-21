@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.blackjack.UserDecisions;
-import blackjack.domain.result.PlayersBettingMoney;
 import blackjack.domain.result.Report;
 import blackjack.domain.user.User;
 import blackjack.view.InputView;
@@ -19,7 +18,7 @@ public class BlackjackController {
 		this.blackjackTable = blackjackTable;
 	}
 
-	public void play(PlayersBettingMoney playersBettingMoney) {
+	public void play(Report playersBettingMoney) {
 		Objects.requireNonNull(playersBettingMoney, "플레이어들의 배팅 머니가 존재하지 않습니다.");
 		List<User> users = blackjackTable.collectUsers();
 
@@ -41,9 +40,9 @@ public class BlackjackController {
 		blackjackTable.playWith(userDecisions);
 	}
 
-	private void printBlackjackReport(List<User> users, PlayersBettingMoney playersBettingMoney) {
-		Report blackJackReport = Report.from(blackjackTable, playersBettingMoney);
+	private void printBlackjackReport(List<User> users, Report playersBettingMoney) {
+		Report report = blackjackTable.reportFrom(playersBettingMoney);
 		OutputView.printUsersHandAndScore(users);
-		OutputView.printBlackjackReport(blackJackReport);
+		OutputView.printBlackjackReport(report);
 	}
 }

@@ -33,6 +33,10 @@ public class Dealer extends User {
 		}
 	}
 
+	public boolean isBlackjack() {
+		return calculateResultScore().isBlackjack();
+	}
+
 	@Override
 	public boolean canDraw() {
 		return calculateResultScore().isLowerThan(DEALER_DRAWABLE_MAX_SCORE);

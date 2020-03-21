@@ -47,10 +47,10 @@ public class OutputView {
 			+ " - 결과: " + user.getScore());
 	}
 
-	public static void printBlackjackReport(Report blackJackReport) {
+	public static void printBlackjackReport(Report report) {
 		System.out.println(NEWLINE + FINAL_RESULT_MESSAGE);
-		printUserResult(Dealer.NAME, blackJackReport.calculateDealerProfit());
-		printPlayersResult(blackJackReport.calculatePlayersProfit());
+		printUserResult(Dealer.NAME, report.getDealerBettingProfit());
+		printPlayersResult(report.getPlayersBettingProfit());
 	}
 
 	private static void printPlayersResult(Map<Player, Integer> playersResult) {
