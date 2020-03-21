@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.result.Answer;
 import exception.AnswerFormatException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

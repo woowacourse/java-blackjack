@@ -1,4 +1,4 @@
-package domain.gamer;
+package domain.result;
 
 import java.util.Arrays;
 

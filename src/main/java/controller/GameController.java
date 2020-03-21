@@ -4,10 +4,10 @@ import static java.util.stream.Collectors.*;
 
 import domain.card.CardsFactory;
 import domain.card.Deck;
-import domain.gamer.Answer;
-import domain.gamer.CardsResult;
+import domain.result.Answer;
+import domain.result.CardsResult;
 import domain.gamer.Dealer;
-import domain.gamer.GameResult;
+import domain.result.GameResult;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 import utils.InputUtils;

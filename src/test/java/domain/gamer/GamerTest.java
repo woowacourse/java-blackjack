@@ -1,17 +1,24 @@
 package domain.gamer;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardSuit;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.Arrays;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardSuit;
+import exception.NameFormatException;
 
 public class GamerTest {
+	@Test
+	@DisplayName("잘못된 이름 입력시 예외처리")
+	void isValidNameTest() {
+		assertThatThrownBy(() -> new Player("po/bi", "50")).isInstanceOf(NameFormatException.class);
+	}
+
 	@Test
 	@DisplayName("점수가 제대로 들어가는지 확인하는 테스트")
 	public void calculateTest() {

@@ -1,8 +1,12 @@
-package domain.gamer;
+package domain.result;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Gamers;
 
 public class CardsResult {
 	private Map<Gamer, Integer> gamersCardResult;

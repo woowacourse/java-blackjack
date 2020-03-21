@@ -5,13 +5,14 @@ import java.util.Objects;
 import exception.InvalidMoneyException;
 
 public class Money {
+	public static final double BLACKJACK_WIN_MONEY_RATIO = 1.5;
 	private int money;
 
 	public Money(String inputMoney) {
 		try {
 			this.money = Integer.parseInt(inputMoney);
 		} catch (NumberFormatException e) {
-			throw new InvalidMoneyException();
+			throw new InvalidMoneyException(inputMoney);
 		}
 
 		validBettingMoney(money);
@@ -23,7 +24,7 @@ public class Money {
 
 	private void validBettingMoney(int money) {
 		if (money < 0) {
-			throw new InvalidMoneyException();
+			throw new InvalidMoneyException(money);
 		}
 	}
 

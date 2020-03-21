@@ -14,9 +14,6 @@ public class CardsFactory {
 			.collect(Collectors.toList());
 	}
 
-	private CardsFactory() {
-	}
-
 	public static List<Card> getCards() {
 		return cards;
 	}

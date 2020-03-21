@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import domain.card.Deck;
+import domain.result.GameResult;
 
 public class Gamers {
 	private static final int INIT_CARD_SIZE = 2;
@@ -27,8 +28,9 @@ public class Gamers {
 	public GameResult generateGameResults() {
 		return players.stream()
 			.collect(collectingAndThen(toMap(player -> player,
-				player -> player.findMatchResult(dealer),
-				(a, b) -> a,
+				player -> player.findMatchResult(dealer)
+					.getMatchResultStrategy()
+					.earnCalculate(player.getMoney()), (a, b) -> a,
 				LinkedHashMap::new), GameResult::new));
 	}
 

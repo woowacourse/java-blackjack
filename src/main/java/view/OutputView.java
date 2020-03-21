@@ -3,9 +3,9 @@ package view;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
-import domain.gamer.CardsResult;
+import domain.result.CardsResult;
 import domain.gamer.Dealer;
-import domain.gamer.GameResult;
+import domain.result.GameResult;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;

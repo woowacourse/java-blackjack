@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardSuit;
+import domain.result.GameResult;
 
 public class GameResultTest {
 	@Test
