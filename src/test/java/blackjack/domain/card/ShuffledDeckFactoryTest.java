@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -16,11 +17,13 @@ class ShuffledDeckFactoryTest {
 		deckFactory = new ShuffledDeckFactory();
 	}
 
+	@DisplayName("ShuffledDeckFactory()가 인스턴스를 반환하는지 테스트")
 	@Test
 	void ShuffledDeckFactory_IsNotNull() {
 		assertThat(deckFactory).isNotNull();
 	}
 
+	@DisplayName("create()가 중복되지 않는 52개의 카드를 반환하는지 테스트")
 	@Test
 	void create_ReturnSizeFifteenAndNotDuplicatedDeck() {
 		// when
