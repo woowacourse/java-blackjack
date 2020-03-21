@@ -21,11 +21,7 @@ public class Score {
     }
 
     public Score plus(final Score value) {
-        return plus(value.value);
-    }
-
-    public Score plus(final int value) {
-        return new Score(this.value + value);
+        return new Score(this.value + value.value);
     }
 
     public boolean isMaxScore() {

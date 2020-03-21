@@ -6,7 +6,7 @@ import second.domain.gamer.Player;
 import java.util.Arrays;
 
 public enum ResultType {
-    ONLY_PLAYER_BLACK_JACK("플레이어 블랙잭", new OnlyMeBlackJackResultTypeStrategy(), 1.5),
+    ONLY_PLAYER_BLACK_JACK("플레이어 블랙잭", (gamer, counterGamer) -> gamer.isBlackJack() && !counterGamer.isBlackJack(), 1.5),
     DRAW("무승부", new DrawResultTypeStrategy(), 0),
     WIN("승", new WinResultTypeStrategy(), 1),
     LOSE("패", new LoseResultTypeStrategy(), -1);
