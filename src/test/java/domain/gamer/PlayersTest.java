@@ -21,27 +21,30 @@ import domain.money.Money;
 public class PlayersTest {
 	@Test
 	void Should_ThrownException_When_NameIsDuplicated() {
-		List<Name> playersName = Arrays.asList(new Name("a"), new Name("a"), new Name("b"));
-		List<Money> moneys = Arrays.asList(Money.of("10000"), Money.of("10000"), Money.of("10000"));
-		assertThatThrownBy(() -> new Players(playersName, moneys))
+		List<Player> players = Arrays.asList(new Player(new Name("a"), Money.of("10000")),
+			new Player(new Name("a"), Money.of("10000")), new Player(new Name("a"), Money.of("10000")));
+
+		assertThatThrownBy(() -> new Players(players))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("중복");
 	}
 
 	@Test
 	void Should_ThrownException_When_Overmanned() {
-		List<Name> playersName = Arrays.asList(new Name("a"), new Name("b"), new Name("c"), new Name("d"),
-			new Name("e"), new Name("f"));
-		List<Money> moneys = Arrays.asList(Money.of("10000"), Money.of("10000"), Money.of("10000"));
-		assertThatThrownBy(() -> new Players(playersName, moneys))
+		List<Player> players = Arrays.asList(new Player(new Name("a"), Money.of("10000")),
+			new Player(new Name("b"), Money.of("10000")), new Player(new Name("c"), Money.of("10000")),
+			new Player(new Name("d"), Money.of("10000")), new Player(new Name("e"), Money.of("10000")),
+			new Player(new Name("f"), Money.of("10000")));
+
+		assertThatThrownBy(() -> new Players(players))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("초과");
 	}
 
 	@Test
 	void testIsAllPlayerBust() {
-		Players players = new Players(Arrays.asList(new Name("a"), new Name("c"), new Name("b")),
-			Arrays.asList(Money.of("10000"), Money.of("10000"), Money.of("10000")));
+		Players players = new Players(Arrays.asList(new Player(new Name("a"), Money.of("10000")),
+			new Player(new Name("b"), Money.of("10000")), new Player(new Name("c"), Money.of("10000"))));
 
 		for (Player player : players.getPlayers()) {
 			player.hit(new Card(Type.HEART, Symbol.KING));
@@ -54,8 +57,8 @@ public class PlayersTest {
 
 	@Test
 	void Should_hitAllPlayers_when_CardIsGiven() {
-		Players players = new Players(Arrays.asList(new Name("a"), new Name("c"), new Name("b")),
-			Arrays.asList(Money.of("10000"), Money.of("10000"), Money.of("10000")));
+		Players players = new Players(Arrays.asList(new Player(new Name("a"), Money.of("10000")),
+			new Player(new Name("b"), Money.of("10000")), new Player(new Name("c"), Money.of("10000"))));
 
 		players.hitAll(new Deck());
 

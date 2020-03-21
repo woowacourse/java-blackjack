@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,7 @@ public class Controller {
 	private static Players initializePlayers() {
 		try {
 			List<Name> names = initializeNames();
-			return new Players(names, initializeBettingMoney(names));
+			return new Players(initializePlayersBy(names));
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
 			return initializePlayers();
@@ -57,13 +56,10 @@ public class Controller {
 		}
 	}
 
-	private static List<Money> initializeBettingMoney(List<Name> names) {
-		List<Money> moneys = new ArrayList<>();
-
-		for (Name name : names) {
-			moneys.add(askBettingMoney(name));
-		}
-		return moneys;
+	private static List<Player> initializePlayersBy(List<Name> names) {
+		return names.stream()
+			.map(name -> new Player(name, askBettingMoney(name)))
+			.collect(Collectors.toList());
 	}
 
 	private static Money askBettingMoney(Name name) {

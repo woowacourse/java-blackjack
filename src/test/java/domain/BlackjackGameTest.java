@@ -24,9 +24,8 @@ public class BlackjackGameTest {
 
 	@BeforeEach
 	void setUp() {
-		blackjackGame = new BlackjackGame(new Players(
-			Arrays.asList(new Name("a"), new Name("c"), new Name("b")),
-			Arrays.asList(Money.of("10000"), Money.of("10000"), Money.of("10000"))));
+		blackjackGame = new BlackjackGame(new Players(Arrays.asList(new Player(new Name("a"), Money.of("10000")),
+			new Player(new Name("b"), Money.of("10000")), new Player(new Name("c"), Money.of("10000")))));
 	}
 
 	@Test

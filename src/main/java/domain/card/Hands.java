@@ -2,6 +2,7 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *    손패를 나타내는 클래스입니다.
@@ -45,6 +46,21 @@ public class Hands {
 
 	public void add(Card card) {
 		cards.add(card);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Hands))
+			return false;
+		Hands hands = (Hands)o;
+		return Objects.equals(cards, hands.cards);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cards);
 	}
 
 	public List<Card> getCards() {
