@@ -11,10 +11,19 @@ import blackjack.card.domain.CardBundle;
 public abstract class Player {
 	private static final int STARTING_CARDS = 2;
 	protected final CardBundle cardBundle;
+	protected final String name;
 
-	public Player(CardBundle cardBundle) {
+	public Player(CardBundle cardBundle, String name) {
 		Objects.requireNonNull(cardBundle, "카드번들이 존재하지 않습니다.");
+		validateName(name);
 		this.cardBundle = cardBundle;
+		this.name = name;
+	}
+
+	private void validateName(String name) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("이름의 입력이 없습니다.");
+		}
 	}
 
 	public void addCard(Card card) {
@@ -51,31 +60,17 @@ public abstract class Player {
 		return cardBundle.isSameCount(STARTING_CARDS);
 	}
 
-	public abstract boolean isHit();
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Player player = (Player)o;
-		return Objects.equals(cardBundle, player.cardBundle);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(cardBundle);
-	}
-
-	public abstract String getName();
-
-	public List<Card> getCardBundle() {
-		return Collections.unmodifiableList(this.cardBundle.getCards());
-	}
-
 	public int getScore() {
 		return cardBundle.calculateScore();
 	}
 
+	public abstract boolean isHit();
+
+	public String getName() {
+		return name;
+	}
+
+	public List<Card> getCardBundle() {
+		return Collections.unmodifiableList(this.cardBundle.getCards());
+	}
 }

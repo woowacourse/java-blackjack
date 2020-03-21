@@ -9,10 +9,9 @@ import blackjack.card.domain.CardBundle;
 import blackjack.card.domain.CardDeck;
 import blackjack.player.domain.Dealer;
 import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Money;
 import blackjack.player.domain.Player;
 import blackjack.player.domain.Players;
-import blackjack.player.domain.component.Money;
-import blackjack.player.domain.component.PlayerInfo;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -47,7 +46,7 @@ public class BlackjackController {
 		players.add(dealer);
 		for (String name : names) {
 			Money bettingMoney = Money.create(inputView.inputBettingMoney(name));
-			Gambler gambler = new Gambler(new CardBundle(), new PlayerInfo(name, bettingMoney));
+			Gambler gambler = new Gambler(new CardBundle(), name, bettingMoney);
 			players.add(gambler);
 		}
 		return new Players(players);

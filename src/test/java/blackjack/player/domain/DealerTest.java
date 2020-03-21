@@ -1,8 +1,6 @@
 package blackjack.player.domain;
 
-//todo : 지금은 승, 패로 되어있는데 profit을 뱉도록 변경해야함.
-
-import static blackjack.player.domain.component.PlayerInfoHelper.*;
+import static blackjack.player.domain.GamblerHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -12,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
@@ -26,16 +25,16 @@ class DealerTest {
 		// {"TWO,LOSE", "FIVE,DRAW", "SIX,WIN"
 		return Stream.of(
 			Arguments.of(
-				CardNumber.ACE, new GameReport(aPlayerInfo("bebop"), GameResult.BLACKJACK_WIN)
+				CardNumber.ACE, new GameReport(aGambler("bebop", 1000), GameResult.BLACKJACK_WIN)
 			),
 			Arguments.of(
-				CardNumber.FOUR, new GameReport(aPlayerInfo("bebop"), GameResult.WIN)
+				CardNumber.FOUR, new GameReport(aGambler("bebop", 1000), GameResult.WIN)
 			),
 			Arguments.of(
-				CardNumber.THREE, new GameReport(aPlayerInfo("bebop"), GameResult.DRAW)
+				CardNumber.THREE, new GameReport(aGambler("bebop", 1000), GameResult.DRAW)
 			),
 			Arguments.of(
-				CardNumber.TWO, new GameReport(aPlayerInfo("bebop"), GameResult.LOSE)
+				CardNumber.TWO, new GameReport(aGambler("bebop", 1000), GameResult.LOSE)
 			)
 		);
 	}
@@ -49,7 +48,7 @@ class DealerTest {
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.TEN));
 		dealer.addCard(Card.of(Symbol.DIAMOND, CardNumber.THREE));
 
-		Player gambler = new Gambler(new CardBundle(), aPlayerInfo("bebop"));
+		Player gambler = new Gambler(new CardBundle(), "bebop", Money.create(1000));
 		gambler.addCard(Card.of(Symbol.DIAMOND, CardNumber.TEN));
 		gambler.addCard(Card.of(Symbol.DIAMOND, cardNumber));
 
@@ -74,5 +73,13 @@ class DealerTest {
 
 		//then
 		assertThat(drawable).isEqualTo(expect);
+	}
+
+	@DisplayName("딜러의 카드번들이 없으면 Exception")
+	@ParameterizedTest
+	@NullSource
+	void name(CardBundle cardBundle) {
+		assertThatThrownBy(() -> new Dealer(cardBundle))
+			.isInstanceOf(NullPointerException.class);
 	}
 }

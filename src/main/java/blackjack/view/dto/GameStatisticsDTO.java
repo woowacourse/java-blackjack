@@ -7,7 +7,6 @@ import blackjack.player.domain.report.GameReport;
 import blackjack.player.domain.report.GameReports;
 
 public class GameStatisticsDTO {
-	private static final int REVERSE_VALUE = -1;
 	private final String dealerResult;
 	private final String gamblerResult;
 
@@ -23,16 +22,9 @@ public class GameStatisticsDTO {
 			.collect(Collectors.joining(System.lineSeparator()));
 	}
 
-	private long calculateMoney(GameReport gameReport) {
-		return gameReport
-			.getPlayerInfo()
-			.calculateResultMoney(gameReport.getProfit())
-			.getAmount();
-	}
-
 	private String getName(GameReport gameReport) {
 		return gameReport
-			.getPlayerInfo()
+			.getGambler()
 			.getName();
 	}
 

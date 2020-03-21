@@ -1,5 +1,6 @@
 package blackjack.player.domain.report;
 
+import static blackjack.player.domain.GamblerHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -11,38 +12,37 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.card.domain.GameResult;
-import blackjack.player.domain.component.Money;
-import blackjack.player.domain.component.PlayerInfo;
+import blackjack.player.domain.Money;
 
 class GameReportsTest {
 	private static Stream<Arguments> gameReportsProvider() {
 		return Stream.of(
 			Arguments.of(
 				new GameReports(Arrays.asList(
-					new GameReport(new PlayerInfo("allen", Money.create(1000)), GameResult.WIN),
-					new GameReport(new PlayerInfo("pobi", Money.create(1000)), GameResult.WIN),
-					new GameReport(new PlayerInfo("bebop", Money.create(1000)), GameResult.WIN)
+					new GameReport(aGambler("allen", 1000), GameResult.WIN),
+					new GameReport(aGambler("pobi", 1000), GameResult.WIN),
+					new GameReport(aGambler("bebop", 1000), GameResult.WIN)
 				)), -3000
 			),
 			Arguments.of(
 				new GameReports(Arrays.asList(
-					new GameReport(new PlayerInfo("allen", Money.create(1000)), GameResult.DRAW),
-					new GameReport(new PlayerInfo("pobi", Money.create(1000)), GameResult.DRAW),
-					new GameReport(new PlayerInfo("bebop", Money.create(1000)), GameResult.DRAW)
+					new GameReport(aGambler("allen", 1000), GameResult.DRAW),
+					new GameReport(aGambler("pobi", 1000), GameResult.DRAW),
+					new GameReport(aGambler("bebop", 1000), GameResult.DRAW)
 				)), 0
 			),
 			Arguments.of(
 				new GameReports(Arrays.asList(
-					new GameReport(new PlayerInfo("allen", Money.create(1000)), GameResult.LOSE),
-					new GameReport(new PlayerInfo("pobi", Money.create(1000)), GameResult.LOSE),
-					new GameReport(new PlayerInfo("bebop", Money.create(1000)), GameResult.LOSE)
+					new GameReport(aGambler("allen", 1000), GameResult.LOSE),
+					new GameReport(aGambler("pobi", 1000), GameResult.LOSE),
+					new GameReport(aGambler("bebop", 1000), GameResult.LOSE)
 				)), 3000
 			),
 			Arguments.of(
 				new GameReports(Arrays.asList(
-					new GameReport(new PlayerInfo("allen", Money.create(1000)), GameResult.BLACKJACK_WIN),
-					new GameReport(new PlayerInfo("pobi", Money.create(1000)), GameResult.BLACKJACK_WIN),
-					new GameReport(new PlayerInfo("bebop", Money.create(1000)), GameResult.BLACKJACK_WIN)
+					new GameReport(aGambler("allen", 1000), GameResult.BLACKJACK_WIN),
+					new GameReport(aGambler("pobi", 1000), GameResult.BLACKJACK_WIN),
+					new GameReport(aGambler("bebop", 1000), GameResult.BLACKJACK_WIN)
 				)), -4500
 			)
 		);

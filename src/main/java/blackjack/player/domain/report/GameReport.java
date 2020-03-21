@@ -3,30 +3,22 @@ package blackjack.player.domain.report;
 import java.util.Objects;
 
 import blackjack.card.domain.GameResult;
-import blackjack.player.domain.component.Money;
-import blackjack.player.domain.component.PlayerInfo;
+import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Money;
 
 public class GameReport {
-	private final PlayerInfo playerInfo;
+	private final Gambler gambler;
 	private final GameResult gameResult;
 
-	public GameReport(PlayerInfo playerInfo, GameResult gameResult) {
-		Objects.requireNonNull(playerInfo, "플레이어 정보가 없습니다.");
+	public GameReport(Gambler gambler, GameResult gameResult) {
+		Objects.requireNonNull(gambler, "플레이어 정보가 없습니다.");
 		Objects.requireNonNull(gameResult, "결과 정보가 없습니다.");
-		this.playerInfo = playerInfo;
+		this.gambler = gambler;
 		this.gameResult = gameResult;
 	}
 
 	public Money calculateGamblerProfit() {
-		return playerInfo.calculateResultMoney(gameResult.getRate());
-	}
-
-	public PlayerInfo getPlayerInfo() {
-		return playerInfo;
-	}
-
-	public double getProfit() {
-		return gameResult.getRate();
+		return gambler.calculateProfit(gameResult.getRate());
 	}
 
 	@Override
@@ -36,12 +28,16 @@ public class GameReport {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		GameReport that = (GameReport)o;
-		return Objects.equals(playerInfo, that.playerInfo) &&
+		return Objects.equals(gambler, that.gambler) &&
 			gameResult == that.gameResult;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(playerInfo, gameResult);
+		return Objects.hash(gambler, gameResult);
+	}
+
+	public Gambler getGambler() {
+		return gambler;
 	}
 }

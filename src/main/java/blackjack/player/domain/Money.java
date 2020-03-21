@@ -1,4 +1,4 @@
-package blackjack.player.domain.component;
+package blackjack.player.domain;
 
 import java.util.Objects;
 
@@ -47,8 +47,8 @@ public class Money {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Money money1 = (Money)o;
-		return amount == money1.amount;
+		Money money = (Money)o;
+		return amount == money.amount;
 	}
 
 	@Override

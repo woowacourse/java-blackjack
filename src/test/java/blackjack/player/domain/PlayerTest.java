@@ -1,7 +1,7 @@
 package blackjack.player.domain;
 
 import static blackjack.card.domain.CardBundleHelper.*;
-import static blackjack.player.domain.component.PlayerInfoHelper.*;
+import static blackjack.player.domain.GamblerHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -25,7 +25,7 @@ class PlayerTest {
 				new Dealer(new CardBundle()), false, true
 			),
 			Arguments.of(
-				new Gambler(new CardBundle(), aPlayerInfo("pobi")), true, false
+				aGambler("pobi", 1000), true, false
 			)
 		);
 	}

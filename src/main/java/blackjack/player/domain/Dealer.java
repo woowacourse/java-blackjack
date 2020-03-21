@@ -10,7 +10,7 @@ public class Dealer extends Player {
 	private static final String DEALER_NAME = "딜러";
 
 	public Dealer(CardBundle cardBundle) {
-		super(cardBundle);
+		super(cardBundle, DEALER_NAME);
 	}
 
 	@Override
@@ -18,13 +18,8 @@ public class Dealer extends Player {
 		return cardBundle.calculateScore() <= HIT_VALUE;
 	}
 
-	@Override
-	public String getName() {
-		return DEALER_NAME;
-	}
-
 	public GameReport createReport(Gambler gambler) {
-		return new GameReport(gambler.getPlayerInfo(), this.cardBundle.calculateWinOrLose(gambler.cardBundle));
+		return new GameReport(gambler, this.cardBundle.calculateWinOrLose(gambler.cardBundle));
 	}
 
 	public Card getFirstCard() {

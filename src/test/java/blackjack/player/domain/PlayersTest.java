@@ -1,7 +1,7 @@
 package blackjack.player.domain;
 
 import static blackjack.card.domain.CardBundleHelper.*;
-import static blackjack.player.domain.component.PlayerInfoHelper.*;
+import static blackjack.player.domain.GamblerHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -37,13 +37,13 @@ class PlayersTest {
 		//given
 		Player dealer = new Dealer(aCardBundle(CardNumber.KING, CardNumber.KING));
 		Player gambler1 = new Gambler(aCardBundle(CardNumber.ACE, CardNumber.KING),
-			aPlayerInfo("bebop"));
+			"bebop", Money.create(1000));
 		Player gambler2 = new Gambler(aCardBundle(CardNumber.TWO, CardNumber.KING, CardNumber.NINE),
-			aPlayerInfo("muni"));
+			"muni", Money.create(1000));
 		Player gambler3 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.KING),
-			aPlayerInfo("pobi"));
+			"pobi", Money.create(1000));
 		Player gambler4 = new Gambler(aCardBundle(CardNumber.KING, CardNumber.NINE),
-			aPlayerInfo("allen"));
+			"allen", Money.create(1000));
 		Players players = new Players(Arrays.asList(dealer, gambler1, gambler2, gambler3, gambler4));
 
 		//when
@@ -51,10 +51,10 @@ class PlayersTest {
 
 		//then
 		assertThat(reports).isEqualTo(new GameReports(Arrays.asList(
-			new GameReport(aPlayerInfo("bebop"), GameResult.BLACKJACK_WIN),
-			new GameReport(aPlayerInfo("muni"), GameResult.WIN),
-			new GameReport(aPlayerInfo("pobi"), GameResult.DRAW),
-			new GameReport(aPlayerInfo("allen"), GameResult.LOSE)))
+			new GameReport((Gambler)gambler1, GameResult.BLACKJACK_WIN),
+			new GameReport((Gambler)gambler2, GameResult.WIN),
+			new GameReport((Gambler)gambler3, GameResult.DRAW),
+			new GameReport((Gambler)gambler4, GameResult.LOSE)))
 		);
 	}
 
@@ -63,7 +63,7 @@ class PlayersTest {
 	void findGamblers() {
 		//given
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), aPlayerInfo("allen")),
+			Arrays.asList(aGambler("allen", 1000),
 				new Dealer(new CardBundle())));
 
 		//when
@@ -79,7 +79,7 @@ class PlayersTest {
 	void findDealer() {
 		//given
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), aPlayerInfo("allen")),
+			Arrays.asList(aGambler("allen", 1000),
 				new Dealer(new CardBundle())));
 
 		//when
@@ -93,7 +93,7 @@ class PlayersTest {
 	@Test
 	void drawStartingCard() {
 		Players players = new Players(
-			Arrays.asList(new Gambler(new CardBundle(), aPlayerInfo("allen")),
+			Arrays.asList(aGambler("allen", 1000),
 				new Dealer(new CardBundle())));
 
 		CardDeck cardDeck = CardDeck.getInstance(Card.getAllCards());

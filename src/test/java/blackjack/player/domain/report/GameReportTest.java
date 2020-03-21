@@ -1,6 +1,6 @@
 package blackjack.player.domain.report;
 
-import static blackjack.player.domain.component.PlayerInfoHelper.*;
+import static blackjack.player.domain.GamblerHelper.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -12,34 +12,34 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.card.domain.GameResult;
-import blackjack.player.domain.component.Money;
-import blackjack.player.domain.component.PlayerInfo;
+import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Money;
 
 class GameReportTest {
 
 	private static Stream<Arguments> gameReportProvider() {
 		return Stream.of(
 			Arguments.of(
-				new GameReport(new PlayerInfo("앨런", Money.create(1000)), GameResult.WIN), Money.create(1000)
+				new GameReport(aGambler("allen", 1000), GameResult.WIN), Money.create(1000)
 			),
 			Arguments.of(
-				new GameReport(new PlayerInfo("앨런", Money.create(1000)), GameResult.DRAW), Money.create(0)
+				new GameReport(aGambler("allen", 1000), GameResult.DRAW), Money.create(0)
 			),
 			Arguments.of(
-				new GameReport(new PlayerInfo("앨런", Money.create(1000)), GameResult.LOSE), Money.create(-1000)
+				new GameReport(aGambler("allen", 1000), GameResult.LOSE), Money.create(-1000)
 			),
 			Arguments.of(
-				new GameReport(new PlayerInfo("앨런", Money.create(1000)), GameResult.BLACKJACK_WIN), Money.create(1500)
+				new GameReport(aGambler("allen", 1000), GameResult.BLACKJACK_WIN), Money.create(1500)
 			)
 		);
 	}
 
-	@DisplayName("플레이어 정보가 없으면 Exception")
+	@DisplayName("겜블러 정보가 없으면 Exception")
 	@ParameterizedTest
 	@NullSource
-	void test(PlayerInfo arongPlayerInfo) {
+	void test(Gambler gambler) {
 		assertThatThrownBy(() -> {
-			new GameReport(arongPlayerInfo, GameResult.WIN);
+			new GameReport(gambler, GameResult.WIN);
 		}).isInstanceOf(NullPointerException.class);
 	}
 
@@ -48,7 +48,7 @@ class GameReportTest {
 	@NullSource
 	void test2(GameResult gameResult) {
 		assertThatThrownBy(() -> {
-			new GameReport(aPlayerInfo("allen"), gameResult);
+			new GameReport(aGambler("allen", 1000), gameResult);
 		}).isInstanceOf(NullPointerException.class);
 	}
 

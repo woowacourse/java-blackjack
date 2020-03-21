@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import blackjack.player.domain.component.Money;
+import blackjack.player.domain.Money;
 
 public class GameReports {
 	private final List<GameReport> gameReports;
@@ -23,7 +23,7 @@ public class GameReports {
 	public Money calculateDealerProfit() {
 		Money gamblerTotalProfit = gameReports.stream()
 			.map(GameReport::calculateGamblerProfit)
-			.reduce(Money::sum).orElse(Money.create(-1));
+			.reduce(Money.create(0), Money::sum);
 
 		return gamblerTotalProfit.calculateNegative();
 	}
