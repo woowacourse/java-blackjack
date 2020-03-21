@@ -47,7 +47,7 @@ public class Cards {
         return score;
     }
 
-    public boolean isStatusNone() {
+    public boolean isStatusHitable() {
         return status == Status.HIT_ABLE;
     }
 

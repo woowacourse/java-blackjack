@@ -43,6 +43,6 @@ public class Player extends User {
 
     @Override
     public boolean isReceivableOneMoreCard() {
-        return cards.isStatusNone();
+        return cards.isStatusHitable();
     }
 }

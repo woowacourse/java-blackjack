@@ -5,7 +5,7 @@ import blackjack.domain.strategy.DealerStatusStrategy;
 import java.util.List;
 
 public class Dealer extends User {
-    private static final int DEALER_CRITICAL_SCORE = 16;
+    public static final int DEALER_CRITICAL_SCORE = 16;
     private static final int DEALER_INITIAL_CARDS_SIZE = 1;
     private static final String KOREAN_NAME = "딜러";
 
@@ -20,10 +20,6 @@ public class Dealer extends User {
             dealerInstance = new Dealer();
         }
         return dealerInstance;
-    }
-
-    public static int getCriticalScore() {
-        return DEALER_CRITICAL_SCORE;
     }
 
     public PlayerResult getResultOf(Player player) {

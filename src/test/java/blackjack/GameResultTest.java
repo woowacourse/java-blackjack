@@ -83,7 +83,7 @@ public class GameResultTest {
 
     @DisplayName("딜러 NONE인 경우 점수 비교 결과 확인")
     @Test
-    void calculateResultWhenDealerStatusNone() {
+    void calculateResultWhenDealerStatusHitable() {
         CardDeck dealerDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
                         new Card(Symbol.CLOVER, Type.SEVEN),

@@ -75,7 +75,7 @@ public class BlackJackGame {
     private void playDealerTurn() {
         if (dealer.isReceivableOneMoreCard()) {
             dealer.receiveOneMoreCard(cardDeck);
-            OutputView.printDealerPlayConfirmMessage(Dealer.getCriticalScore());
+            OutputView.printDealerPlayConfirmMessage(Dealer.DEALER_CRITICAL_SCORE);
         }
     }
 
