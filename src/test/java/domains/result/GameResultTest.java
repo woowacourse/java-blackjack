@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import domains.card.Card;
+import domains.card.Deck;
 import domains.card.Symbol;
 import domains.card.Type;
 import domains.user.Dealer;
@@ -44,8 +45,8 @@ class GameResultTest {
 		Card king = new Card(Symbol.KING, Type.HEART);
 		Card four = new Card(Symbol.FOUR, Type.DIAMOND);
 
-		Player ddoring = new Player(new PlayerName("또링"), "4000", new Hands(Arrays.asList(ace, king)));
-		Player smallBear = new Player(new PlayerName("작은곰"), "4000", new Hands(Arrays.asList(ace, four)));
+		Player ddoring = new Player(new PlayerName("또링"), new Hands(Arrays.asList(ace, king)));
+		Player smallBear = new Player(new PlayerName("작은곰"), new Hands(Arrays.asList(ace, four)));
 		Players players = new Players(new ArrayList<>(Arrays.asList(ddoring, smallBear)));
 
 		Dealer dealer = new Dealer(new Hands(Arrays.asList(ace, four)));

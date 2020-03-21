@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import domains.card.Deck;
 import domains.result.ResultType;
-import domains.user.money.BettingMoney;
 import domains.user.name.PlayerName;
 
 public class Player extends User {
@@ -12,17 +11,15 @@ public class Player extends User {
 	private static final String NO = "n";
 
 	private PlayerName name;
-	private BettingMoney bettingMoney;
 
-	public Player(PlayerName name, String bettingMoney, Hands hands) {
+	public Player(PlayerName name, Hands hands) {
 		this.name = name;
-		this.bettingMoney = new BettingMoney(bettingMoney);
 		this.hands = hands;
 		this.blackJack = hands.isBlackJack();
 	}
 
-	public Player(PlayerName name, String bettingMoney, Deck deck) {
-		this(name, bettingMoney, new Hands(deck));
+	public Player(PlayerName name, Deck deck) {
+		this(name, new Hands(deck));
 	}
 
 	public boolean needMoreCard(String answer, Deck deck) {
@@ -70,9 +67,5 @@ public class Player extends User {
 
 	public String getName() {
 		return name.toString();
-	}
-
-	public BettingMoney getBettingMoney() {
-		return this.bettingMoney;
 	}
 }

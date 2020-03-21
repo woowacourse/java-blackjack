@@ -9,15 +9,14 @@ import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
 import domains.user.money.ProfitMoney;
-import domains.user.name.PlayerName;
 
 public class OutputView {
 	public static void printInputPlayerNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 	}
 
-	public static void printInputBettingMoney(PlayerName name) {
-		System.out.println(name + "의 베팅금액을 입력하세요.");
+	public static void printInputBettingMoney(Player player) {
+		System.out.println(player.getName() + "의 베팅금액을 입력하세요.");
 	}
 
 	public static void printInitialHands(Players players, Dealer dealer) {

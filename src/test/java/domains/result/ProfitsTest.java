@@ -20,6 +20,8 @@ import domains.user.Dealer;
 import domains.user.Hands;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.User;
+import domains.user.money.BettingMoney;
 import domains.user.money.ProfitMoney;
 import domains.user.name.PlayerName;
 
@@ -27,13 +29,14 @@ class ProfitsTest {
 	@DisplayName("게임 결과를 받아 수익을 계산")
 	@ParameterizedTest
 	@MethodSource("gameResultData")
-	void construct_GivenGameResult_CreateProfits(Player winner, Player loser, Player drawer, GameResult gameResult) {
-		Map<Player, ProfitMoney> playerProfits = new Profits(gameResult).getPlayerProfits();
+	void construct_GivenGameResult_CreateProfits(Players players, Map<Player, ResultType> gameResult,
+		Map<Player, BettingMoney> playersBettingMoney) {
+		Map<Player, ProfitMoney> playerProfits = new Profits(gameResult, playersBettingMoney).getPlayerProfits();
 
 		Map<Player, ProfitMoney> expectedProfits = new HashMap<>();
-		expectedProfits.put(winner, new ProfitMoney(1500));
-		expectedProfits.put(loser, new ProfitMoney(-50000));
-		expectedProfits.put(drawer, new ProfitMoney(0));
+		expectedProfits.put(players.getPlayers().get(0), new ProfitMoney(1500));
+		expectedProfits.put(players.getPlayers().get(1), new ProfitMoney(-50000));
+		expectedProfits.put(players.getPlayers().get(2), new ProfitMoney(0));
 
 		assertThat(playerProfits).isEqualTo(expectedProfits);
 	}
@@ -49,16 +52,22 @@ class ProfitsTest {
 		Hands drawHands = new Hands(new ArrayList<>(Arrays.asList(eight, king)));
 		Hands dealerHands = new Hands(new ArrayList<>(Arrays.asList(eight, king)));
 
-		Player ddoring = new Player(new PlayerName("또링"), "1000", winHands);
-		Player smallbear = new Player(new PlayerName("작은곰"), "50000", loseHands);
-		Player havi = new Player(new PlayerName("하비"), "50000", drawHands);
+		Player ddoring = new Player(new PlayerName("또링"), winHands);
+		Player smallbear = new Player(new PlayerName("작은곰"), loseHands);
+		Player havi = new Player(new PlayerName("하비"), drawHands);
 
 		Players players = new Players(Arrays.asList(ddoring, smallbear, havi));
+
+		Map<User, BettingMoney> playersBettingMoney = new HashMap<>();
+		playersBettingMoney.put(ddoring, new BettingMoney("1000"));
+		playersBettingMoney.put(smallbear, new BettingMoney("50000"));
+		playersBettingMoney.put(havi, new BettingMoney("50000"));
+
 		Dealer dealer = new Dealer(dealerHands);
-		GameResult gameResult = new GameResult(players, dealer);
+		Map<Player, ResultType> gameResult = GameResultFactory.create(players, dealer);
 
 		return Stream.of(
-			Arguments.of(ddoring, smallbear, havi, gameResult)
+			Arguments.of(players, gameResult, playersBettingMoney)
 		);
 	}
 }

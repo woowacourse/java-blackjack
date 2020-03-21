@@ -1,6 +1,6 @@
 package domains.result;
 
-import domains.user.Player;
+import domains.user.money.BettingMoney;
 import domains.user.money.ProfitMoney;
 
 public enum ResultType {
@@ -25,7 +25,7 @@ public enum ResultType {
 		return DRAW;
 	}
 
-	public ProfitMoney calculateProfitMoney(Player player) {
-		return player.getBettingMoney().multiply(this.profitRate);
+	public ProfitMoney calculateProfitMoney(BettingMoney bettingMoney) {
+		return bettingMoney.multiply(this.profitRate);
 	}
 }

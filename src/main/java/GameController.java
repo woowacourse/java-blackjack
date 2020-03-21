@@ -1,48 +1,36 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import domains.card.Deck;
-import domains.result.GameResult;
+import domains.result.GameResultFactory;
 import domains.result.Profits;
+import domains.result.ResultType;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
-import domains.user.name.PlayerName;
-import domains.user.name.PlayerNames;
+import domains.user.money.BettingMoney;
 import view.InputView;
 import view.OutputView;
 
 class GameController {
-	private Players players;
-
 	GameController() {
 		OutputView.printInputPlayerNames();
-		PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(deck);
-		bet(playerNames, deck);
+		Players players = new Players(InputView.inputPlayerNames(), deck);
+		Map<Player, BettingMoney> playersBettingMoney = players.bet(OutputView::printInputBettingMoney, InputView::inputBettingMoney);
 		OutputView.printInitialHands(players, dealer);
 
-		hitOrStay(dealer, deck);
+		hitOrStay(players, dealer, deck);
 		if (dealer.isHit()) {
 			OutputView.printDealerHitCard();
 		}
 		OutputView.printAllHands(players, dealer);
 
-		GameResult gameResult = new GameResult(players, dealer);
-		OutputView.printGameResult(new Profits(gameResult));
+		Map<Player, ResultType> playerResult = GameResultFactory.create(players, dealer);
+		OutputView.printGameResult(new Profits(playerResult, playersBettingMoney));
 	}
 
-	private void bet(PlayerNames playerNames, Deck deck) {
-		List<Player> inputPlayers = new ArrayList<>();
-		for (PlayerName name : playerNames) {
-			OutputView.printInputBettingMoney(name);
-			inputPlayers.add(new Player(name, InputView.inputBettingMoney(), deck));
-		}
-		players = new Players(inputPlayers);
-	}
-
-	private void hitOrStay(Dealer dealer, Deck deck) {
+	private void hitOrStay(Players players, Dealer dealer, Deck deck) {
 		for (Player player : players) {
 			needMoreCard(player, deck);
 		}

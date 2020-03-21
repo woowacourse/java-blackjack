@@ -28,7 +28,7 @@ class PlayerTest {
 	@BeforeAll
 	static void setUp() {
 		deck = new Deck();
-		player = new Player(new PlayerName("또링"), "4000", deck);
+		player = new Player(new PlayerName("또링"), deck);
 	}
 
 	@DisplayName("생성했을 때, 두 장의 카드를 보유하고 있는지 확인")
@@ -51,7 +51,7 @@ class PlayerTest {
 	@MethodSource("burstData")
 	void hit_ScoreOver21_BurstIsTrue(List<Card> hands) {
 		Hands hand = new Hands(hands);
-		Player dealer = new Player(new PlayerName("작은곰"), "100000", hand);
+		Player dealer = new Player(new PlayerName("작은곰"), hand);
 
 		dealer.hit(deck);
 
@@ -67,5 +67,4 @@ class PlayerTest {
 			Arguments.of(new ArrayList<>(Arrays.asList(five, seven, ten)))
 		);
 	}
-
 }
