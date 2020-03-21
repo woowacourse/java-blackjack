@@ -34,8 +34,8 @@ public class BlackJackController {
 		cardDeck.shuffle();
 		distributeTwoCard();
 		if (dealer.isNotBlackJack()) {
-			askMoreCard();
-			addCardIfNeed();
+			continueAddIfPlayersWantCard();
+			continueAddIfDealerNeedCard();
 		}
 		OutputView.printCardsResults(dealer, players);
 		OutputView.printProfits(Profits.calculate(dealer, players, bettingMoneys));
@@ -56,7 +56,7 @@ public class BlackJackController {
 		OutputView.printFirstDistribute(dealer, players);
 	}
 
-	private void askMoreCard() {
+	private void continueAddIfPlayersWantCard() {
 		players.forEach(this::addCardIfWant);
 	}
 
@@ -67,7 +67,7 @@ public class BlackJackController {
 		}
 	}
 
-	private void addCardIfNeed() {
+	private void continueAddIfDealerNeedCard() {
 		while (dealer.shouldAddCard(true)) {
 			dealer.addCard(cardDeck.pop());
 			OutputView.printDealerAddCard();
