@@ -12,6 +12,7 @@ public class ParticipantCards {
 	private static final int ACE_BONUS = 10;
 	private static final int FIRST_CARD_INDEX = 0;
 	private static final int ACE_SCORE = 1;
+
 	private final List<Card> cards = new ArrayList<>();
 
 	public void add(Card card) {

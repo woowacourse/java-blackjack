@@ -72,7 +72,7 @@ public class OutputView {
 
 	private static void printDealerResult(Map<Name, Double> userResultMap) {
 		StringBuilder sb = new StringBuilder("딜러: ");
-		int dealerProfit = 0;
+		double dealerProfit = 0;
 		for (double value : userResultMap.values()) {
 			dealerProfit += value;
 		}
