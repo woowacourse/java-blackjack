@@ -22,11 +22,11 @@ public class Player extends User {
 		this(name, new Hands(deck));
 	}
 
-	public boolean needMoreCard(String answer, Deck deck) {
+	public boolean needMoreCard(Deck deck, String answer) {
 		checkNullOrEmpty(answer);
 		checkYesOrNo(answer);
 
-		if (YES.equals(answer)) {
+		if (YES.equals(answer) && !isBurst()) {
 			hit(deck);
 			return true;
 		}

@@ -16,8 +16,4 @@ public class GameResult {
 	public ResultType getWinOrLose(Player player) {
 		return playerResult.get(player);
 	}
-
-	Map<Player, ResultType> getPlayerResult() {
-		return playerResult;
-	}
 }

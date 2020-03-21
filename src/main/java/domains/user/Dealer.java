@@ -1,11 +1,12 @@
 package domains.user;
 
+import java.util.function.Consumer;
+
 import domains.card.Card;
 import domains.card.Deck;
 
 public class Dealer extends User {
 	private static final int DEALER_HIT_POINT = 16;
-	private static final int HAND_SIZE_WHEN_HIT = 3;
 
 	public Dealer(Deck deck) {
 		this(new Hands(deck));
@@ -16,13 +17,10 @@ public class Dealer extends User {
 		this.blackJack = hands.isBlackJack();
 	}
 
-	public boolean isHit() {
-		return this.hands.size() == HAND_SIZE_WHEN_HIT;
-	}
-
-	public void hitOrStay(Deck deck) {
+	public void hitOrStay(Deck deck, Consumer<Dealer> printDealerHitCard) {
 		if (this.hands.score() <= DEALER_HIT_POINT) {
 			hit(deck);
+			printDealerHitCard.accept(this);
 		}
 	}
 

@@ -15,7 +15,6 @@ public class GameResultFactory {
 			ResultType resultType = player.checkResultType(dealer);
 			playerResult.put(player, resultType);
 		}
-
 		return playerResult;
 	}
 }

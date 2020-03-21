@@ -20,29 +20,14 @@ class GameController {
 		OutputView.printInitialHands(players, dealer);
 
 		hitOrStay(players, dealer, deck);
-		if (dealer.isHit()) {
-			OutputView.printDealerHitCard();
-		}
-		OutputView.printAllHands(players, dealer);
 
 		Map<Player, ResultType> playerResult = GameResultFactory.create(players, dealer);
+		OutputView.printAllHands(players, dealer);
 		OutputView.printGameResult(new Profits(playerResult, playersBettingMoney));
 	}
 
 	private void hitOrStay(Players players, Dealer dealer, Deck deck) {
-		for (Player player : players) {
-			needMoreCard(player, deck);
-		}
-		dealer.hitOrStay(deck);
-	}
-
-	private void needMoreCard(Player player, Deck deck) {
-		while (player.needMoreCard(InputView.inputYesOrNo(player), deck)) {
-			if (player.isBurst()) {
-				OutputView.printBurst(player);
-				break;
-			}
-			OutputView.printHands(player);
-		}
+		players.hitOrStay(deck, InputView::inputYesOrNo, OutputView::printHands);
+		dealer.hitOrStay(deck, OutputView::printDealerHitCard);
 	}
 }

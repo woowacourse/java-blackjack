@@ -6,6 +6,7 @@ import java.util.List;
 public class Deck {
 	private static final int FIRST_INDEX = 0;
 	private static final int INITIAL_DRAW_SIZE = 2;
+
 	private List<Card> deck;
 
 	public Deck() {

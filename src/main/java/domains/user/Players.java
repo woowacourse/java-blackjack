@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import domains.card.Deck;
@@ -33,6 +34,14 @@ public class Players implements Iterable<Player> {
 			playerBettingMoney.put(player, new BettingMoney(inputBettingMoney.apply(player)));
 		}
 		return playerBettingMoney;
+	}
+
+	public void hitOrStay(Deck deck, Function<Player, String> inputYesOrNo, Consumer<Player> printHands) {
+		for (Player player : players) {
+			while (player.needMoreCard(deck, inputYesOrNo.apply(player))) {
+				printHands.accept(player);
+			}
+		}
 	}
 
 	public List<Player> getPlayers() {

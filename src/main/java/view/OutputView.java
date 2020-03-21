@@ -11,11 +11,11 @@ import domains.user.Players;
 import domains.user.money.ProfitMoney;
 
 public class OutputView {
-	public static void printInputPlayerNames() {
+	static void printInputPlayerNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 	}
 
-	public static void printInputBettingMoney(Player player) {
+	static void printInputBettingMoney(Player player) {
 		System.out.println(player.getName() + "의 베팅금액을 입력하세요.");
 	}
 
@@ -36,15 +36,11 @@ public class OutputView {
 		System.out.println(player.getName() + "카드 : " + player.getHandsWords());
 	}
 
-	public static void printNeedMoreCard(Player player) {
+	static void printNeedMoreCard(Player player) {
 		System.out.println(player.getName() + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 	}
 
-	public static void printBurst(Player player) {
-		System.out.println(player.getName() + "은 버스트입니다.");
-	}
-
-	public static void printDealerHitCard() {
+	public static void printDealerHitCard(Dealer dealer) {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 

@@ -11,7 +11,6 @@ public class Profits {
 
 	public Profits(Map<Player, ResultType> playerResult, Map<Player, BettingMoney> playersBettingMoney) {
 		this.playerProfits = ProfitsFactory.create(playerResult, playersBettingMoney);
-
 	}
 
 	public ProfitMoney createDealerProfit() {

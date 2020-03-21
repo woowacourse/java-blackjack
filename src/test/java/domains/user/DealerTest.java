@@ -18,6 +18,7 @@ import domains.card.Card;
 import domains.card.Deck;
 import domains.card.Symbol;
 import domains.card.Type;
+import view.OutputView;
 
 class DealerTest {
 	private static Deck deck;
@@ -41,7 +42,7 @@ class DealerTest {
 		Hands hand = new Hands(hands);
 		Dealer dealer = new Dealer(hand);
 
-		dealer.hitOrStay(deck);
+		dealer.hitOrStay(deck, OutputView::printDealerHitCard);
 
 		assertThat(dealer.handSize()).isEqualTo(2);
 	}

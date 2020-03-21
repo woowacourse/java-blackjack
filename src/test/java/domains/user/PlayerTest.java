@@ -41,7 +41,7 @@ class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"Y", "1", "q"})
 	void needMoreCard_InvalidAnswer_ExceptionThrown(String answer) {
-		assertThatThrownBy(() -> player.needMoreCard(answer, deck))
+		assertThatThrownBy(() -> player.needMoreCard(deck, answer))
 			.isInstanceOf(InvalidPlayerException.class)
 			.hasMessage(InvalidPlayerException.INVALID_INPUT);
 	}
