@@ -27,7 +27,7 @@ public class GameStatisticsDTO {
 		return gameReport
 			.getPlayerInfo()
 			.calculateResultMoney(gameReport.getProfit())
-			.getMoney();
+			.getAmount();
 	}
 
 	private String getName(GameReport gameReport) {

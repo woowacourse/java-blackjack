@@ -5,7 +5,6 @@ import java.util.Objects;
 import blackjack.card.domain.GameResult;
 import blackjack.player.domain.component.PlayerInfo;
 
-// todo : 테스트 정리
 public class GameReport {
 	private final PlayerInfo playerInfo;
 	private final GameResult gameResult;

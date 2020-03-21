@@ -15,7 +15,6 @@ public class CardBundle {
 		cards.add(card);
 	}
 
-	// todo : 블랙잭인 경우 승패여부가 로직에 안들어감 ex) 딜러 블랙잭, 플레이어 3장 블랙잭인경우 무승부임!
 	public GameResult calculateWinOrLose(CardBundle gamblerCardBundle) {
 		return GameResult.createGameResult(this, gamblerCardBundle);
 	}

@@ -15,7 +15,7 @@ class MoneyTest {
 	@NullSource
 	void createMoney(String money) {
 		assertThatThrownBy(() -> {
-			Money.createMoney(money);
+			Money.create(money);
 		}).isInstanceOf(RuntimeException.class);
 	}
 
@@ -23,16 +23,16 @@ class MoneyTest {
 	@Test
 	void createMoney2() {
 		assertThatThrownBy(() -> {
-			Money.createMoney("만원");
+			Money.create("만원");
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("머니에서 인수를 곱했을때 제대로 곱해지는지 확인")
 	@Test
 	void multiply() {
-		Money thousand = Money.createMoney(1000);
+		Money thousand = Money.create(1000);
 		double profit = 1.5;
-		Money thousandFiveHundred = Money.createMoney(1500);
+		Money thousandFiveHundred = Money.create(1500);
 
 		Money actual = thousand.multiply(profit);
 		assertThat(actual).isEqualTo(thousandFiveHundred);
@@ -42,7 +42,7 @@ class MoneyTest {
 	@ParameterizedTest
 	@CsvSource(value = {"1000,true", "999,false", "998,false"})
 	void isLessThan(int value, boolean expect) {
-		Money money = Money.createMoney(999);
+		Money money = Money.create(999);
 
 		assertThat(money.isLessThan(value)).isEqualTo(expect);
 	}

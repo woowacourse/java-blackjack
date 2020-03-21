@@ -8,7 +8,6 @@ import blackjack.card.domain.resultstrategy.GamblerLoseStrategy;
 import blackjack.card.domain.resultstrategy.GamblerWinStrategy;
 import blackjack.card.domain.resultstrategy.GameResultStrategy;
 
-// todo: 테스트코드 수정
 public enum GameResult {
 	BLACKJACK_WIN(new GamblerBlackJackWinStrategy(), 1.5d),
 	WIN(new GamblerWinStrategy(), 1.0d),

@@ -46,7 +46,7 @@ public class BlackjackController {
 		List<Player> players = new ArrayList<>();
 		players.add(dealer);
 		for (String name : names) {
-			Money bettingMoney = Money.createMoney(inputView.inputBettingMoney(name));
+			Money bettingMoney = Money.create(inputView.inputBettingMoney(name));
 			Gambler gambler = new Gambler(new CardBundle(), new PlayerInfo(name, bettingMoney));
 			players.add(gambler);
 		}

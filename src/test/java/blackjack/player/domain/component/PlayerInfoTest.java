@@ -13,7 +13,7 @@ class PlayerInfoTest {
 	@Test
 	void name() {
 		assertThatThrownBy(() -> {
-			new PlayerInfo("allen", Money.createMoney(0));
+			new PlayerInfo("allen", Money.create(0));
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -22,15 +22,15 @@ class PlayerInfoTest {
 	@NullAndEmptySource
 	void name2(String arongName) {
 		assertThatThrownBy(() -> {
-			new PlayerInfo(arongName, Money.createMoney(1000));
+			new PlayerInfo(arongName, Money.create(1000));
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	void calculateResultMoney() {
-		PlayerInfo playerInfo = new PlayerInfo("allen", Money.createMoney(1000));
+		PlayerInfo playerInfo = new PlayerInfo("allen", Money.create(1000));
 		double profit = 1.5;
-		Money expect = Money.createMoney(1500);
+		Money expect = Money.create(1500);
 
 		assertThat(playerInfo.calculateResultMoney(profit)).isEqualTo(expect);
 	}
