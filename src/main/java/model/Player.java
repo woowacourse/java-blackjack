@@ -18,6 +18,6 @@ public class Player extends User {
     }
 
     public Bet getMultiplyBet(double ratio) {
-        return bet.MultiplyBet(ratio);
+        return bet.multiplyBet(ratio);
     }
 }
