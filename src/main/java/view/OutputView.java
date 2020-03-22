@@ -1,11 +1,8 @@
 package view;
 
 import common.PlayerDto;
-import domain.PlayersResult;
 import domain.card.Card;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
+import domain.gamer.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +61,11 @@ public class OutputView {
         System.out.println(String.format("%s: %s - 결과: %d", playerDto.getName(), gamerCards, gamerScore));
     }
 
-    public static void printGameResult(PlayersResult playersResult, Players players) {
+    public static void printGameResult(DealerWallet dealerWallet, PlayerWallets playerWallets) {
         System.out.println("최종 수익");
-        System.out.println(String.format("딜러 : %d",playersResult.dealerProfit()));
-        for (Player player : players.getPlayers()) {
-            System.out.println(player.getName() + " : " + player.getPlayerBettingMoney());
+        System.out.println(String.format("딜러 : %d",dealerWallet.getMoney()));
+        for (PlayerWallet playerWallet : playerWallets.getPlayerWallets()) {
+            System.out.println(playerWallet.getName() + " : " + playerWallet.getMoney());
         }
     }
 }

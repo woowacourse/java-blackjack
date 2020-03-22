@@ -20,7 +20,7 @@ class PlayerDtoTest {
     void setUp() {
         PlayingCards playingCards1 = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
 
-        playerDto = PlayerDto.of(new Player("player1", 10000,playingCards1));
+        playerDto = PlayerDto.of(new Player("player1", 10000, playingCards1));
     }
 
     @Test

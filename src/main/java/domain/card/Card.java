@@ -15,7 +15,7 @@ public class Card {
         return symbol == Symbol.ACE;
     }
 
-    public int getValue() {
+    int getValue() {
         return symbol.getValue();
     }
 

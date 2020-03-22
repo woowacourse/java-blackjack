@@ -32,7 +32,7 @@ public class PlayingCards {
     }
 
     private int selectAce(int result, Card card) {
-        if(card.getSymbol().getValue() == Symbol.ACE.getValue()) {
+        if (card.getSymbol().getValue() == Symbol.ACE.getValue()) {
             card.changeAceCard(result);
             result += card.getValue();
         }

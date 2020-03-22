@@ -26,7 +26,7 @@ public enum Symbol {
     }
 
     public void selectAce(int sumWithOutAceValue) {
-        if(sumWithOutAceValue + ELEVEN_ACE_VALUE <= 21) {
+        if (sumWithOutAceValue + ELEVEN_ACE_VALUE <= 21) {
             this.value = ELEVEN_ACE_VALUE;
             return;
         }

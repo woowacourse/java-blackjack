@@ -4,9 +4,7 @@ import domain.card.Card;
 import domain.card.PlayingCards;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-import domain.gamer.Players;
+import domain.gamer.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,13 +22,15 @@ public class PlayerResultsTest {
         Card card3 = new Card(Symbol.FOUR, Type.DIAMOND);
         Card card4 = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1,card2));
-        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3,card4));
-        Player player1 = new Player("player1", 10000,playerPlayingCards);
+        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1, card2));
+        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
+        Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
         Players players = new Players(Arrays.asList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
-        assertThat(playersResult.dealerProfit()).isEqualTo(-10000);
+        PlayerWallets playerWallets = new PlayerWallets(playersResult);
+        DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
+        assertThat(dealerWallet.getMoney()).isEqualTo(-10000);
     }
 
     @Test
@@ -41,13 +41,15 @@ public class PlayerResultsTest {
         Card card3 = new Card(Symbol.FIVE, Type.DIAMOND);
         Card card4 = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1,card2));
-        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3,card4));
-        Player player1 = new Player("player1", 10000,playerPlayingCards);
+        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1, card2));
+        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
+        Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
         Players players = new Players(Arrays.asList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
-        assertThat(playersResult.dealerProfit()).isEqualTo(10000);
+        PlayerWallets playerWallets = new PlayerWallets(playersResult);
+        DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
+        assertThat(dealerWallet.getMoney()).isEqualTo(10000);
     }
 
     @Test
@@ -58,13 +60,15 @@ public class PlayerResultsTest {
         Card card3 = new Card(Symbol.FOUR, Type.HEART);
         Card card4 = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1,card2));
-        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3,card4));
-        Player player1 = new Player("player1", 10000,playerPlayingCards);
+        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1, card2));
+        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
+        Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
         Players players = new Players(Arrays.asList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
-        assertThat(playersResult.dealerProfit()).isEqualTo(0);
+        PlayerWallets playerWallets = new PlayerWallets(playersResult);
+        DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
+        assertThat(dealerWallet.getMoney()).isEqualTo(0);
     }
 
     @Test
@@ -75,13 +79,15 @@ public class PlayerResultsTest {
         Card card3 = new Card(Symbol.TWO, Type.HEART);
         Card card4 = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1,card2));
-        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3,card4));
-        Player player1 = new Player("player1", 10000,playerPlayingCards);
+        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1, card2));
+        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
+        Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
         Players players = new Players(Arrays.asList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
-        assertThat(playersResult.dealerProfit()).isEqualTo(-15000);
+        PlayerWallets playerWallets = new PlayerWallets(playersResult);
+        DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
+        assertThat(dealerWallet.getMoney()).isEqualTo(-15000);
     }
 
     @Test
@@ -93,12 +99,14 @@ public class PlayerResultsTest {
         Card card4 = new Card(Symbol.TWO, Type.HEART);
         Card card5 = new Card(Symbol.FOUR, Type.DIAMOND);
 
-        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1,card2,card3));
-        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card4,card5));
-        Player player1 = new Player("player1", 10000,playerPlayingCards);
+        PlayingCards playerPlayingCards = new PlayingCards(Arrays.asList(card1, card2, card3));
+        PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card4, card5));
+        Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
         Players players = new Players(Arrays.asList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
-        assertThat(playersResult.dealerProfit()).isEqualTo(10000);
+        PlayerWallets playerWallets = new PlayerWallets(playersResult);
+        DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
+        assertThat(dealerWallet.getMoney()).isEqualTo(10000);
     }
 }

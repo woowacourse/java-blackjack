@@ -14,10 +14,6 @@ public class Player {
         this.playingCards = playingCards;
     }
 
-    public Player money(int playerBettingMoney) {
-        return new Player(name, playerBettingMoney, playingCards);
-    }
-
     public void addCard(Deck deck) {
         playingCards.add(deck.handOutCard());
     }
@@ -42,8 +38,12 @@ public class Player {
         return playingCards;
     }
 
-    public int getPlayerBettingMoney() {
+    int getPlayerBettingMoney() {
         return playerBettingMoney;
+    }
+
+    boolean isBlackJack() {
+        return playingCards.isBlackJack();
     }
 }
 
