@@ -34,7 +34,7 @@ public class GameResult {
                 .stream()
                 .reduce(0, Integer::sum);
 
-        return totalProfitOfPlayers * (-1);
+        return -totalProfitOfPlayers;
     }
 
     public Map<User, Integer> getUserToCardPoint() {
