@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String NEWLINE = System.getProperty("line.separator");
+    public static final String NEWLINE = System.lineSeparator();
     public static final String DELIMITER = ", ";
     private static final int FIRST_CARD = 0;
 
