@@ -12,10 +12,10 @@ public class PlayersInfo {
 
     private PlayersInfo(Map<String, Integer> playersInfo) {
         this.playersInfo = playersInfo.entrySet()
-            .stream()
-            .collect(Collectors.toMap(entry -> new Player(entry.getKey()),
-                    entry -> new BettingMoney(entry.getValue()),
-                    (e1, e2) -> e1, LinkedHashMap::new));
+                .stream()
+                .collect(Collectors.toMap(entry -> new Player(entry.getKey()),
+                        entry -> new BettingMoney(entry.getValue()),
+                        (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public static PlayersInfo of(Map<String, Integer> playerNames) {
@@ -24,7 +24,7 @@ public class PlayersInfo {
 
     public void draw(Deck deck) {
         playersInfo.forEach(
-                (player, bettingMoney) -> player.draw(deck)
+                (player, bettingMoney) -> player.draw(deck.dealOut())
         );
     }
 

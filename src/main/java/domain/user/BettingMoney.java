@@ -18,6 +18,6 @@ public class BettingMoney {
     }
 
     public int calculateProfit(Dealer dealer, Player player) {
-        return (int)(money * player.decideRatio(dealer).getRatio());
+        return (int) (money * player.decideRatio(dealer).getRatio());
     }
 }

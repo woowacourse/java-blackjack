@@ -25,7 +25,7 @@ public class BlackJackGame {
 
     public void firstDealOut(Dealer dealer, PlayersInfo playersInfo) {
         for (int i = 0; i < FIRST_CARD_COUNT; i++) {
-            dealer.draw(deck);
+            dealer.draw(deck.dealOut());
             playersInfo.draw(deck);
         }
     }
@@ -38,7 +38,7 @@ public class BlackJackGame {
 
     private void playerAdditionalDealOut(Player player) {
         while (player.isAvailableToDraw() && isYes(UserDto.of(player))) {
-            player.draw(deck);
+            player.draw(deck.dealOut());
             OutputView.printPlayerDealOutResult(UserDto.of(player));
         }
     }
@@ -50,7 +50,7 @@ public class BlackJackGame {
 
     private void dealerAdditionalDealOut(Dealer dealer) {
         while (dealer.isAvailableToDraw()) {
-            dealer.draw(deck);
+            dealer.draw(deck.dealOut());
             OutputView.printDealerDealOut(UserDto.of(dealer));
         }
     }

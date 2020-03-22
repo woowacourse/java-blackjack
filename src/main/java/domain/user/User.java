@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Deck;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +16,8 @@ public abstract class User implements Comparable<User> {
         this.name = new Name(name);
     }
 
-    public void draw(Deck deck) {
-        cards.add(deck.dealOut());
+    public void draw(Card card) {
+        cards.add(card);
     }
 
     public abstract boolean isAvailableToDraw();

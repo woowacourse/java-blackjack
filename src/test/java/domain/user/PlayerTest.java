@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Deck;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.result.PrizeRatio;
@@ -11,29 +10,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.mockito.BDDMockito.given;
 
 class PlayerTest {
 
     private Player player;
     private Dealer dealer;
 
-    @Mock
-    private Deck deck;
-
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         dealer = Dealer.appoint();
         player = new Player("이름");
     }
@@ -50,12 +40,9 @@ class PlayerTest {
     @MethodSource("createOption")
     void isAvailableToDraw(Card card, boolean expected) {
         MockitoAnnotations.initMocks(this);
-        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.TEN));
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.EIGHT));
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(card);
-        player.draw(deck);
+        player.draw(new Card(Symbol.CLOVER, Type.TEN));
+        player.draw(new Card(Symbol.CLOVER, Type.EIGHT));
+        player.draw(card);
 
         assertThat(player.isAvailableToDraw()).isEqualTo(expected);
     }
@@ -72,22 +59,13 @@ class PlayerTest {
     @DisplayName("포인트 비교로 승자 확인")
     @MethodSource("createCardSet")
     void reflect(Card playerCard, Card dealerCard, PrizeRatio expected) {
-        Queue<Card> cards = new LinkedList<>(Arrays.asList(
-                new Card(Symbol.DIAMOND, Type.KING),
-                new Card(Symbol.DIAMOND, Type.SIX),
-                new Card(Symbol.CLOVER, Type.KING),
-                new Card(Symbol.CLOVER, Type.SIX))
-        );
-        given(deck.dealOut()).will(invocation -> cards.poll());
-        player.draw(deck);
-        player.draw(deck);
-        dealer.draw(deck);
-        dealer.draw(deck);
+        player.draw(new Card(Symbol.DIAMOND, Type.KING));
+        player.draw(new Card(Symbol.DIAMOND, Type.SIX));
+        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
+        dealer.draw(new Card(Symbol.CLOVER, Type.SIX));
 
-        given(deck.dealOut()).willReturn(playerCard);
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(dealerCard);
-        dealer.draw(deck);
+        player.draw(playerCard);
+        dealer.draw(dealerCard);
 
         assertThat(player.decideRatio(dealer)).isEqualTo(expected);
     }
@@ -124,15 +102,11 @@ class PlayerTest {
     @Test
     @DisplayName("점수가 같고 모두 블랙잭인 경우")
     void drawIfBothBlackJack() {
-        given(deck.dealOut()).willReturn(new Card(Symbol.DIAMOND, Type.KING));
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.HEART, Type.ACE));
-        player.draw(deck);
+        player.draw(new Card(Symbol.DIAMOND, Type.KING));
+        player.draw(new Card(Symbol.HEART, Type.ACE));
 
-        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.KING));
-        dealer.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.ACE));
-        dealer.draw(deck);
+        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
+        dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
         assertThat(player.decideRatio(dealer)).isEqualTo(PrizeRatio.DRAW);
     }
@@ -140,17 +114,12 @@ class PlayerTest {
     @Test
     @DisplayName("점수가 같고 플레이어만 블랙잭인 경우")
     void drawIfPlayerBlackJack() {
-        given(deck.dealOut()).willReturn(new Card(Symbol.DIAMOND, Type.KING));
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.HEART, Type.ACE));
-        player.draw(deck);
+        player.draw(new Card(Symbol.DIAMOND, Type.KING));
+        player.draw(new Card(Symbol.HEART, Type.ACE));
 
-        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.KING));
-        dealer.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.SIX));
-        dealer.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.FIVE));
-        dealer.draw(deck);
+        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
+        dealer.draw(new Card(Symbol.SPADE, Type.SIX));
+        dealer.draw(new Card(Symbol.SPADE, Type.FIVE));
 
         assertThat(player.decideRatio(dealer)).isEqualTo(PrizeRatio.BLACKJACK);
     }
@@ -158,17 +127,12 @@ class PlayerTest {
     @Test
     @DisplayName("점수가 같고 딜러만 블랙잭인 경우")
     void drawIfDealerBlackJack() {
-        given(deck.dealOut()).willReturn(new Card(Symbol.DIAMOND, Type.KING));
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.HEART, Type.SIX));
-        player.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.FIVE));
-        player.draw(deck);
+        player.draw(new Card(Symbol.DIAMOND, Type.KING));
+        player.draw(new Card(Symbol.HEART, Type.SIX));
+        player.draw(new Card(Symbol.CLOVER, Type.FIVE));
 
-        given(deck.dealOut()).willReturn(new Card(Symbol.CLOVER, Type.KING));
-        dealer.draw(deck);
-        given(deck.dealOut()).willReturn(new Card(Symbol.SPADE, Type.ACE));
-        dealer.draw(deck);
+        dealer.draw(new Card(Symbol.CLOVER, Type.KING));
+        dealer.draw(new Card(Symbol.SPADE, Type.ACE));
 
         assertThat(player.decideRatio(dealer)).isEqualTo(PrizeRatio.LOSE);
     }
