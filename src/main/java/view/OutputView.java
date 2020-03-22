@@ -40,7 +40,11 @@ public class OutputView {
 		System.out.println(player.getName() + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 	}
 
-	public static void printDealerHitCard(Dealer dealer) {
+	public static void printBurst(Player player) {
+		System.out.println(player.getName() + "은 버스트입니다.");
+	}
+
+	public static void printDealerHitCard() {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 

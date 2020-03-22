@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Map;
 
 import domains.card.Deck;
@@ -16,7 +17,7 @@ class GameController {
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(deck);
 		Players players = new Players(InputView.inputPlayerNames(), deck);
-		Map<Player, BettingMoney> playersBettingMoney = players.bet(InputView::inputBettingMoney);
+		Map<Player, BettingMoney> playersBettingMoney = bet(players);
 		OutputView.printInitialHands(players, dealer);
 
 		hitOrStay(players, dealer, deck);
@@ -26,8 +27,32 @@ class GameController {
 		OutputView.printGameResult(new Profits(playerResult, playersBettingMoney));
 	}
 
+	private Map<Player, BettingMoney> bet(Players players) {
+		Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
+		for (Player player : players) {
+			playerBettingMoney.put(player, new BettingMoney(InputView.inputBettingMoney(player)));
+		}
+		return playerBettingMoney;
+	}
+
 	private void hitOrStay(Players players, Dealer dealer, Deck deck) {
-		players.hitOrStay(deck, InputView::inputYesOrNo, OutputView::printHands);
-		dealer.hitOrStay(deck, OutputView::printDealerHitCard);
+		for (Player player : players) {
+			needMoreCard(deck, player);
+		}
+
+		dealer.hitOrStay(deck);
+		if (dealer.isHit()) {
+			OutputView.printDealerHitCard();
+		}
+	}
+
+	private void needMoreCard(Deck deck, Player player) {
+		while (player.needMoreCard(deck, InputView.inputYesOrNo(player))) {
+			if (player.isBurst()) {
+				OutputView.printBurst(player);
+				break;
+			}
+			OutputView.printHands(player);
+		}
 	}
 }
