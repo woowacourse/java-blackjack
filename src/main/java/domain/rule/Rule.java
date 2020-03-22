@@ -4,6 +4,9 @@ import domain.card.Hand;
 import domain.result.Score;
 
 public class Rule {
+	private static final int PLAYER_HIT_CEILING = 21;
+	private static final int DEALER_HIT_CEILING = 17;
+
 	public static boolean isBust(Hand hand) {
 		return Score.from(hand).isBiggerThan(Score.BLACKJACK);
 	}
@@ -21,7 +24,11 @@ public class Rule {
 		return !isBlackJack(hand);
 	}
 
-	public static boolean canHit(Hand hand, int hitThreshold) {
-		return Score.from(hand).isLowerThan(Score.from(hitThreshold));
+	public static boolean canPlayerHit(Hand hand) {
+		return Score.from(hand).isLowerThan(Score.from(PLAYER_HIT_CEILING));
+	}
+
+	public static boolean canDealerHit(Hand hand) {
+		return Score.from(hand).isLowerThan(Score.from(DEALER_HIT_CEILING));
 	}
 }

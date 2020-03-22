@@ -1,8 +1,12 @@
 package domain.gamer;
 
+import domain.card.Hand;
+import domain.rule.Rule;
+
+import java.util.function.Function;
+
 public class Dealer extends Gamer {
 	private static final String DEALER_NAME = "딜러";
-	private static final int DEALER_HIT_CEILING = 17;
 	private static final int DEALER_FIRST_OPENED_COUNT = 1;
 
 	public Dealer() {
@@ -10,8 +14,8 @@ public class Dealer extends Gamer {
 	}
 
 	@Override
-	protected int getHitPoint() {
-		return DEALER_HIT_CEILING;
+	protected Function<Hand, Boolean> hitStrategy() {
+		return Rule::canDealerHit;
 	}
 
 	@Override

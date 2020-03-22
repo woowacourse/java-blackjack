@@ -1,7 +1,11 @@
 package domain.gamer;
 
+import domain.card.Hand;
+import domain.rule.Rule;
+
+import java.util.function.Function;
+
 public class Player extends Gamer {
-	private static final int PLAYER_HIT_CEILING = 21;
 	private static final int PLAYER_FIRST_OPENED_COUNT = 2;
 
 	private final Money money;
@@ -12,8 +16,8 @@ public class Player extends Gamer {
 	}
 
 	@Override
-	protected int getHitPoint() {
-		return PLAYER_HIT_CEILING;
+	protected Function<Hand, Boolean> hitStrategy() {
+		return Rule::canPlayerHit;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import domain.rule.Rule;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 public abstract class Gamer {
 	private static final int ZERO = 0;
@@ -19,7 +20,7 @@ public abstract class Gamer {
 		this.hand = Hand.createEmpty();
 	}
 
-	protected abstract int getHitPoint();
+	protected abstract Function<Hand, Boolean> hitStrategy();
 
 	protected abstract int firstOpenedCardsCount();
 
@@ -27,12 +28,12 @@ public abstract class Gamer {
 		return Score.from(hand);
 	}
 
-	public void hit(Card card) {
-		hand.add(card);
+	public boolean canHit() {
+		return hitStrategy().apply(hand);
 	}
 
-	public boolean canHit() {
-		return Rule.canHit(hand, getHitPoint());
+	public void hit(Card card) {
+		hand.add(card);
 	}
 
 	public boolean isBust() {
