@@ -1,10 +1,11 @@
 package domains.user;
 
-import java.util.Objects;
+	import java.util.Arrays;
+	import java.util.Objects;
 
-import domains.card.Deck;
-import domains.result.ResultType;
-import domains.user.name.PlayerName;
+	import domains.card.Deck;
+	import domains.result.ResultType;
+	import domains.user.name.PlayerName;
 
 public class Player extends User {
 	private static final String YES = "y";
@@ -47,22 +48,10 @@ public class Player extends User {
 	}
 
 	public ResultType checkResultType(Dealer dealer) {
-		if (this.isBlackJack() && !dealer.isBlackJack()) {
-			return ResultType.BLACKJACK;
-		}
-		if (this.isBurst() && !dealer.isBurst()) {
-			return ResultType.LOSE;
-		}
-		if (dealer.isBurst() && !this.isBurst()) {
-			return ResultType.WIN;
-		}
-		if (this.score() > dealer.score()) {
-			return ResultType.WIN;
-		}
-		if (this.score() < dealer.score()) {
-			return ResultType.LOSE;
-		}
-		return ResultType.DRAW;
+		return Arrays.stream(ResultType.values())
+			.filter(resultType -> resultType.getJudgeResultType().apply(this, dealer))
+			.findFirst()
+			.get();
 	}
 
 	public String getName() {

@@ -30,7 +30,7 @@ public class User {
 		return burst;
 	}
 
-	boolean isBlackJack() {
+	public boolean isBlackJack() {
 		return blackJack;
 	}
 }
