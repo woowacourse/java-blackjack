@@ -6,16 +6,16 @@ import java.util.stream.Collectors;
 import domain.gamer.Players;
 
 /**
- *   class description
+ *   Players에 대한 DTO입니다.
  *
  *   @author ParkDooWon, AnHyungJu  
  */
 public class PlayersDto {
-	private List<PlayerDto> players;
+	private List<GamerDto> players;
 
 	private PlayersDto(Players players) {
 		this.players = players.getPlayers().stream()
-			.map(PlayerDto::from)
+			.map(GamerDto::from)
 			.collect(Collectors.toList());
 	}
 
@@ -23,7 +23,7 @@ public class PlayersDto {
 		return new PlayersDto(players);
 	}
 
-	public List<PlayerDto> getPlayers() {
+	public List<GamerDto> getPlayers() {
 		return players;
 	}
 }

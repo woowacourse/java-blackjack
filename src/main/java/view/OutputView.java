@@ -7,9 +7,7 @@ import domain.card.Card;
 import domain.card.Hands;
 import domain.gamer.Gamer;
 import domain.gamer.Name;
-import view.dto.DealerDto;
 import view.dto.GamerDto;
-import view.dto.PlayerDto;
 import view.dto.PlayersDto;
 
 /**
@@ -28,7 +26,7 @@ public class OutputView {
 		System.out.println(String.format("%s의 베팅 금액은?", name.getName()));
 	}
 
-	public static void printInitial(PlayersDto playersDto, DealerDto dealerDto) {
+	public static void printInitial(PlayersDto playersDto, GamerDto dealerDto) {
 		printInitialDraw(playersDto);
 		printInitialCards(playersDto, dealerDto);
 	}
@@ -36,20 +34,20 @@ public class OutputView {
 	public static void printInitialDraw(PlayersDto playersDto) {
 		String stringBuilder = "딜러와 "
 			+ playersDto.getPlayers().stream()
-			.map(PlayerDto::getName)
+			.map(GamerDto::getName)
 			.collect(Collectors.joining(", "))
 			+ "에게 2장을 나누었습니다.";
 		System.out.println(stringBuilder);
 	}
 
-	public static void printInitialCards(PlayersDto playersDto, DealerDto dealerDto) {
+	public static void printInitialCards(PlayersDto playersDto, GamerDto dealerDto) {
 		System.out.println(showDealerInitialCard(dealerDto));
-		for (PlayerDto player : playersDto.getPlayers()) {
+		for (GamerDto player : playersDto.getPlayers()) {
 			System.out.println(showCards(player));
 		}
 	}
 
-	private static String showDealerInitialCard(DealerDto dealer) {
+	private static String showDealerInitialCard(GamerDto dealer) {
 		Hands hands = dealer.getHands();
 		return dealer.getName()
 			+ ": "
@@ -63,18 +61,18 @@ public class OutputView {
 		System.out.println("딜러가 블랙잭입니다.");
 	}
 
-	public static void printCards(PlayerDto playerDto) {
-		System.out.println(showCards(playerDto));
+	public static void printCards(GamerDto gamerDto) {
+		System.out.println(showCards(gamerDto));
 	}
 
 	public static void printDealerDraw() {
 		System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
 	}
 
-	public static void printResult(PlayersDto playersDto, DealerDto dealerDto) {
+	public static void printResult(PlayersDto playersDto, GamerDto dealerDto) {
 		System.out.println(NEW_LINE + "##최종 점수");
 		System.out.println(showCards(dealerDto) + " - " + dealerDto.getTotalScore());
-		for (PlayerDto playerDto : playersDto.getPlayers()) {
+		for (GamerDto playerDto : playersDto.getPlayers()) {
 			System.out.println(showCards(playerDto) + " - " + playerDto.getTotalScore());
 		}
 	}

@@ -14,8 +14,7 @@ import domain.gamer.Players;
 import domain.money.Money;
 import view.InputView;
 import view.OutputView;
-import view.dto.DealerDto;
-import view.dto.PlayerDto;
+import view.dto.GamerDto;
 import view.dto.PlayersDto;
 
 /**
@@ -76,7 +75,7 @@ public class Controller {
 
 	private static void initialize(Players players, Dealer dealer, Deck deck) {
 		initialDraw(players, dealer, deck);
-		OutputView.printInitial(PlayersDto.from(players), DealerDto.from(dealer));
+		OutputView.printInitial(PlayersDto.from(players), GamerDto.from(dealer));
 	}
 
 	private static void initialDraw(Players players, Dealer dealer, Deck deck) {
@@ -107,7 +106,7 @@ public class Controller {
 		}
 		while (isContinue(player)) {
 			player.draw(deck.deal());
-			OutputView.printCards(PlayerDto.from(player));
+			OutputView.printCards(GamerDto.from(player));
 		}
 	}
 
@@ -124,7 +123,7 @@ public class Controller {
 
 	private static YesOrNo getYesOrNo(Player player) {
 		try {
-			String choice = InputView.inputMoreCard(PlayerDto.from(player));
+			String choice = InputView.inputMoreCard(GamerDto.from(player));
 			return YesOrNo.getChoice(choice);
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
@@ -135,7 +134,7 @@ public class Controller {
 	private static void end(Players players, Dealer dealer) {
 		GameResult gameResult = GameResult.of(players, dealer);
 		PlayersDto playersDto = PlayersDto.from(players);
-		DealerDto dealerDto = DealerDto.from(dealer);
+		GamerDto dealerDto = GamerDto.from(dealer);
 
 		OutputView.printResult(playersDto, dealerDto);
 		OutputView.printMatchResult(gameResult);
