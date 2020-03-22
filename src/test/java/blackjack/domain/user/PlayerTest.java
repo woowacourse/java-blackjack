@@ -64,6 +64,6 @@ public class PlayerTest {
     @Test
     @DisplayName("사용자의 최종 수익 확인")
     void checkFinalProfit() {
-        assertThat(player.getProfitByResult(Result.BLACKJACK)).isEqualTo(new Money(15000));
+        assertThat(player.getProfit(Result.BLACKJACK)).isEqualTo(new Money(15000));
     }
 }

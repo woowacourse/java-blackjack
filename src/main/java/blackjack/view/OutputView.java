@@ -102,7 +102,7 @@ public class OutputView {
     private static String parseAllPlayerResults(TotalResult totalResult) {
         StringBuilder sb = new StringBuilder();
         totalResult.getResult().forEach((player, result) ->
-                sb.append(player.getName()).append(COLON).append(player.getProfitByResult(result)).append(NEW_LINE));
+                sb.append(player.getName()).append(COLON).append(player.getProfit(result)).append(NEW_LINE));
         return sb.toString();
     }
 
