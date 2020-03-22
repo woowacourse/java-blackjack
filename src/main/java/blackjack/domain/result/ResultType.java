@@ -11,10 +11,7 @@ public enum ResultType {
     }),
     WIN("승", 1, (playerPoint, dealerPoint)
             -> {
-        if (playerPoint.isBalckJack()) {
-            return false;
-        }
-        if (playerPoint.isBust()) {
+        if (playerPoint.isBalckJack() || playerPoint.isBust()) {
             return false;
         }
         if (playerPoint.isNotBust() && dealerPoint.isBust()) {

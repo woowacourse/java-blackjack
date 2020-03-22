@@ -27,8 +27,6 @@ public class Player extends User {
     }
 
     public double computeProfit(ResultType resultType) {
-        System.out.print("betting money: "+bettingAmount.getBettingMoney());
-        System.out.println(" profit rate: "+resultType.getProfitRate());
         return bettingAmount.getBettingMoney() * resultType.getProfitRate();
     }
 }
