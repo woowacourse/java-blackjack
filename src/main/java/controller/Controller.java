@@ -75,13 +75,8 @@ public class Controller {
 	}
 
 	private static void initialize(Players players, Dealer dealer, Deck deck) {
-		try {
-			initialDraw(players, dealer, deck);
-			OutputView.printInitial(PlayersDto.from(players), DealerDto.from(dealer));
-		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e);
-			initialize(players, dealer, deck);
-		}
+		initialDraw(players, dealer, deck);
+		OutputView.printInitial(PlayersDto.from(players), DealerDto.from(dealer));
 	}
 
 	private static void initialDraw(Players players, Dealer dealer, Deck deck) {
