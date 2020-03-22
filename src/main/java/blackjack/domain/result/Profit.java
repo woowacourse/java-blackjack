@@ -14,8 +14,8 @@ public class Profit {
         this.profit = profit;
     }
 
-    public static Profit of(Player player, User dealer) {
-        BettingMoney bettingMoney = BettingMoneyRepository.findBy(player);
+    public static Profit of(User player, User dealer) {
+        BettingMoney bettingMoney = BettingMoneyRepository.findBy((Player) player);
         double profitRate = ProfitRate.of(player, dealer);
 
         return new Profit(bettingMoney.multiplyAndGetValue(profitRate));
