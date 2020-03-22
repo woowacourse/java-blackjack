@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.controller.dto.NamesDto;
 import blackjack.controller.dto.PlayersBettingMoneyDto;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,13 +27,13 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static PlayersBettingMoneyDto askPlayerBettingMoney(List<String> names) {
-        Map<String, String> bettingTable = new LinkedHashMap<>();
+    public static PlayersBettingMoneyDto askPlayerBettingMoney(Players players) {
+        Map<Player, String> bettingTable = new LinkedHashMap<>();
 
-        for (String name : names) {
-            System.out.println(String.format(ASK_PLAYER_BETTING_MONEY_MESSAGE, name));
+        for (Player player : players) {
+            System.out.println(String.format(ASK_PLAYER_BETTING_MONEY_MESSAGE, player.getName()));
             String bettingMoney = SCANNER.nextLine();
-            bettingTable.put(name, bettingMoney);
+            bettingTable.put(player, bettingMoney);
         }
         return new PlayersBettingMoneyDto(bettingTable);
     }

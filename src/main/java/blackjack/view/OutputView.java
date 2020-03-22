@@ -52,14 +52,14 @@ public class OutputView {
     }
 
     private static void printInitialHand(Dealer dealer, Players players) {
-        System.out.println(String.format(CARD_STATUS_FORMAT, dealer.getName(), dealer.getOpenCard().toString()));
+        System.out.println(String.format(CARD_STATUS_FORMAT, dealer.getName(), dealer.getFirstCard().toString()));
         for (Player player : players) {
             printPlayerHand(player);
         }
     }
 
     private static void printCardStatusAndResult(Gamer gamer) {
-        System.out.println(String.format(CARD_STATUS_AND_RESULT_FORMAT, gamer.getName(), makeHandResult(gamer.getHand()), gamer.handScore().getNumber()));
+        System.out.println(String.format(CARD_STATUS_AND_RESULT_FORMAT, gamer.getName(), makeHandResult(gamer.getHand()), gamer.handScore()));
     }
 
     private static String makeHandResult(List<Card> cards) {

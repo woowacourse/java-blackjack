@@ -10,30 +10,30 @@ import java.util.Objects;
 public abstract class Gamer {
 
     private String name;
-    Hand hand;
+    protected Hand hand;
 
     Gamer(String name) {
         this.name = Objects.requireNonNull(name);
         this.hand = new Hand();
     }
 
+    public abstract boolean canDrawCard();
+
     public void draw(Card card) {
         hand.add(card);
+    }
+
+    public boolean isBusted() {
+        return hand.isBusted();
     }
 
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
 
-    public boolean isBusted() {
-        return handScore().isBusted();
+    public int handScore() {
+        return hand.getScore().getNumber();
     }
-
-    public Score handScore() {
-        return hand.getScore();
-    }
-
-    public abstract boolean canDrawCard();
 
     public String getName() {
         return name;

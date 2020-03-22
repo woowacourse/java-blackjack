@@ -13,10 +13,10 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDrawCard() {
-        return handScore().getNumber() <= DRAW_THRESHOLD;
+        return handScore() <= DRAW_THRESHOLD;
     }
 
-    public Card getOpenCard() {
-        return hand.getCards().get(0);
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 }

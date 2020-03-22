@@ -20,13 +20,12 @@ public class BettingTable {
         this.bettingMoneyTable = Collections.unmodifiableMap(bettingMoneyTable);
     }
 
-    public static BettingTable of(Players players, Map<String, String> playersBettingMoney) {
+    public static BettingTable of(Map<Player, String> playersBettingMoney) {
         Map<Player, BettingMoney> bettingMoneyTable = new LinkedHashMap<>();
 
-        for (Map.Entry<String, String> entry : playersBettingMoney.entrySet()) {
-            Player player = players.findPlayer(entry.getKey());
+        for (Map.Entry<Player, String> entry : playersBettingMoney.entrySet()) {
             BettingMoney money = new BettingMoney(Integer.parseInt(entry.getValue()));
-            bettingMoneyTable.put(player, money);
+            bettingMoneyTable.put(entry.getKey(), money);
         }
 
         return new BettingTable(bettingMoneyTable);
@@ -37,12 +36,16 @@ public class BettingTable {
         int dealerProfit = 0;
 
         for (Player player : players) {
-            BlackJackResult result = PlayerResultMatcher.match(dealer, player);
-            int playerProfit = (int) (result.getProfitRate() * bettingMoneyTable.get(player).getValue());
+            BlackJackResult result = BlackJackResult.findResult(dealer, player);
+            int playerProfit = calculatePlayerProfit(player, result);
             dealerProfit -= playerProfit;
             gamersProfit.put(player, new Profit(playerProfit));
         }
         gamersProfit.put(dealer, new Profit(dealerProfit));
         return new GamersResultDto(gamersProfit);
+    }
+
+    private int calculatePlayerProfit(Player player, BlackJackResult result) {
+        return (int) (bettingMoneyTable.get(player).getValue() * result.getProfitRate());
     }
 }

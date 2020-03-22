@@ -16,7 +16,7 @@ public class BlackJackApplication {
         Deck deck = new Deck(CardFactory.generate());
         Dealer dealer = new Dealer();
         Players players = Players.of(InputView.askPlayerNames().get());
-        BettingTable bettingTable = BettingTable.of(players, InputView.askPlayerBettingMoney(players.getNames()).get());
+        BettingTable bettingTable = BettingTable.of(InputView.askPlayerBettingMoney(players).get());
 
         BlackJackController.initializeCard(dealer, players, deck);
         OutputView.printInitialCards(dealer, players);

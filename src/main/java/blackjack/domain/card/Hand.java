@@ -17,6 +17,10 @@ public class Hand {
         hand.add(card);
     }
 
+    public boolean isBusted() {
+        return getScore().isBusted();
+    }
+
     public boolean isBlackJack() {
         return hand.size() == 2 && getScore().isBlackJack();
     }
@@ -27,5 +31,13 @@ public class Hand {
 
     public List<Card> getCards() {
         return hand;
+    }
+
+    public Card getFirstCard() {
+        if (hand.isEmpty()) {
+            throw new IndexOutOfBoundsException("카드가 없습니다.");
+        }
+
+        return hand.get(0);
     }
 }

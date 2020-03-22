@@ -8,7 +8,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canDrawCard() {
-        return !handScore().isBusted();
+        return !isBusted();
     }
 
     @Override

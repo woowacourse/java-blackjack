@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Score implements Comparable<Score> {
+public class Score {
 
     private static final int BUSTED = 0;
     private static final int BLACKJACK_THRESHOLD = 21;
@@ -46,10 +46,5 @@ public class Score implements Comparable<Score> {
 
     public int getNumber() {
         return score;
-    }
-
-    @Override
-    public int compareTo(Score target) {
-        return Integer.compare(this.score, target.score);
     }
 }
