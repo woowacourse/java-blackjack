@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WinningResult {
+    private static final double DEALER_PROFIT_RATE = -1;
+
     private Map<String, Double> winningResult;
 
     private WinningResult(Users users) {
@@ -20,10 +22,19 @@ public class WinningResult {
         winningResult = new LinkedHashMap<>();
 
         Dealer dealer = users.getDealer();
+        winningResult.put(dealer.getName(), 0d);
         for (Player player : users.getPlayer()) {
             ProfitStrategy profitStrategy = ProfitFactory.create(player, dealer);
             winningResult.put(player.getName(), profitStrategy.getProfit(player.getBettingMoney()));
         }
+        winningResult.put(dealer.getName(), calculateDealerProfit());
+    }
+
+    private double calculateDealerProfit() {
+        double playerProfitSum = winningResult.values().stream()
+                .mapToDouble(Double::doubleValue)
+                .sum();
+        return DEALER_PROFIT_RATE * playerProfitSum;
     }
 
     public static WinningResult create(Users users) {

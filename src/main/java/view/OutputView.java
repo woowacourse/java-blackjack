@@ -3,8 +3,6 @@ package view;
 import dto.ResponsePlayerDTO;
 import dto.ResponseWinningResultDTO;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +12,6 @@ public class OutputView {
     private static final int DEALER_INDEX = 0;
     private static final int START_USER_INDEX = 1;
     private static final int DEALER_NOT_HIT = 2;
-    private static final double DEALER_PROFIT_SUM_RATE = -1;
 
     private OutputView() {
     }
@@ -80,14 +77,8 @@ public class OutputView {
     }
 
     public static List<String> getWinningProfit(Map<String, Double> winningProfit) {
-        double dealerProfit = DEALER_PROFIT_SUM_RATE * winningProfit.values().stream()
-                .mapToDouble(Double::doubleValue)
-                .sum();
-        List<String> result = new ArrayList<>(
-                Collections.singletonList(String.format("딜러: %.0f", dealerProfit)));
-        result.addAll(winningProfit.entrySet().stream()
+        return winningProfit.entrySet().stream()
                 .map(entry -> String.format("%s: %.0f", entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList()));
-        return result;
+                .collect(Collectors.toList());
     }
 }

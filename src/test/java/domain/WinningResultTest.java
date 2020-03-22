@@ -36,7 +36,7 @@ public class WinningResultTest {
         WinningResult winningResult = WinningResult.create(users);
         Map<String, Double> winningPlayerResult = winningResult.getWinningResult();
 
-        Assertions.assertThat(winningPlayerResult.keySet()).containsExactly("lavine", "Subway");
-        Assertions.assertThat(winningPlayerResult.values()).containsExactly(10_000d, -10_000d);
+        Assertions.assertThat(winningPlayerResult.keySet()).containsExactly("딜러", "lavine", "Subway");
+        Assertions.assertThat(winningPlayerResult.values()).containsExactly(-0d, 10_000d, -10_000d);
     }
 }
