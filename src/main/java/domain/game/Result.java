@@ -43,7 +43,7 @@ public class Result {
     }
 
     public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer) {
-        BigDecimal bettingMoney = getBettingMoney(mainPlayer, opponentPlayer);
+        BigDecimal bettingMoney = getUserBettingMoney(mainPlayer, opponentPlayer);
         if (isBlackJackWin(mainPlayer, opponentPlayer)) {
             winningMoney = winningMoney.addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
             return;
@@ -63,7 +63,7 @@ public class Result {
         winningMoney = winningMoney.subtractMoney(bettingMoney);
     }
 
-    private BigDecimal getBettingMoney(Player mainPlayer, Player opponentPlayer) {
+    private BigDecimal getUserBettingMoney(Player mainPlayer, Player opponentPlayer) {
         Money userMoney;
 
         if (mainPlayer instanceof User) {

@@ -8,6 +8,7 @@ import domain.player.Name;
 import domain.player.Player;
 import domain.player.Users;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,7 @@ public class OutputView {
         Name name = entry.getKey();
         Result result = entry.getValue();
 
-        System.out.println(name.getValue() + ": " + result.getWinningMoney());
+        System.out.println(name.getValue() + ": " + result.getWinningMoney()
+                .setScale(0, RoundingMode.FLOOR));
     }
 }
