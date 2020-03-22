@@ -53,7 +53,7 @@ public class PlayersInfo {
         return playersInfo.entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> (int)(entry.getValue().getMoney() * entry.getKey().decideRatio(dealer).getRatio()),
+                        entry -> entry.getValue().calculateProfit(dealer, entry.getKey()),
                         (e1, e2) -> e1, LinkedHashMap::new));
     }
 
