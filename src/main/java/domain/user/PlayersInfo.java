@@ -33,9 +33,9 @@ public class PlayersInfo {
         );
     }
 
-    public void additionalDealOut(Deck deck, Function<String, Boolean> isYes, Consumer<UserDto> showResult) {
+    public void additionalDealOut(Deck deck, Function<UserDto, Boolean> isYes, Consumer<UserDto> showResult) {
         playersInfo.forEach((player, bettingMoney) -> {
-            while (player.isAvailableToDraw() && isYes.apply(UserDto.of(player).getName())) {
+            while (player.isAvailableToDraw() && isYes.apply(UserDto.of(player))) {
                 player.draw(deck);
                 showResult.accept(UserDto.of(player));
             }

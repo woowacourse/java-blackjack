@@ -1,5 +1,7 @@
 package view;
 
+import view.dto.UserDto;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -27,8 +29,8 @@ public class InputView {
         return Integer.parseInt(SCANNER.nextLine());
     }
 
-    public static String receiveYesOrNoInput(String name) {
-        System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
+    public static String receiveYesOrNoInput(UserDto userDto) {
+        System.out.println(userDto.getName() + "은(는) 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         return SCANNER.nextLine();
     }
 }

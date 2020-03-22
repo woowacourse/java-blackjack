@@ -6,6 +6,7 @@ import domain.user.PlayersInfo;
 import util.YesOrNo;
 import view.InputView;
 import view.OutputView;
+import view.dto.UserDto;
 
 public class BlackJackGame {
 
@@ -33,8 +34,8 @@ public class BlackJackGame {
         dealer.additionalDealOut(deck, OutputView::printDealerDealOut);
     }
 
-    private boolean isYes(String name) {
-        String input = InputView.receiveYesOrNoInput(name);
+    private boolean isYes(UserDto userDto) {
+        String input = InputView.receiveYesOrNoInput(userDto);
         return YesOrNo.isYes(input);
     }
 }
