@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blackjack.domain.DrawDecideType;
-import com.blackjack.domain.GameRule;
 import com.blackjack.domain.GameTable;
 import com.blackjack.domain.PlayerRecords;
 import com.blackjack.domain.user.Dealer;
@@ -41,17 +40,15 @@ public class BlackjackController {
 	private void printUserCards(Dealer dealer, List<Player> players) {
 		System.out.println();
 		printUserCardInfo(dealer);
-		printUserScore(dealer.calculateHand());
+		printUserScore(dealer.calculateScore());
 		for (User player : players) {
 			printUserCardInfo(player);
-			printUserScore(player.calculateHand());
+			printUserScore(player.calculateScore());
 		}
 	}
 
 	private void printResult(Dealer dealer, List<Player> players) {
-		GameRule gameRule = new GameRule(dealer, players);
-
-		PlayerRecords playerRecords = gameRule.calculateResult();
+		PlayerRecords playerRecords = PlayerRecords.createPlayerRecords(dealer, players);
 		printResultMessage();
 
 		printDealerRecord(playerRecords.calculateDealerResult());
@@ -82,15 +79,11 @@ public class BlackjackController {
 	}
 
 	private void drawPlayerUntilEndTurn(GameTable gameTable, Player player) {
-		while (canDraw(player) && wantDraw(player)) {
+		while (player.canDraw() && wantDraw(player)) {
 			gameTable.draw(player);
 			printUserCardInfo(player);
 			System.out.println();
 		}
-	}
-
-	private boolean canDraw(Player player) {
-		return player.canDraw();
 	}
 
 	private boolean wantDraw(Player player) {

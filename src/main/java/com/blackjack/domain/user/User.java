@@ -7,7 +7,7 @@ import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 
 public abstract class User {
-	final Hand hand;
+	protected final Hand hand;
 	private final Name name;
 
 	User(Name name) {
@@ -22,7 +22,7 @@ public abstract class User {
 		}
 	}
 
-	public Score calculateHand() {
+	public Score calculateScore() {
 		return hand.calculate();
 	}
 
