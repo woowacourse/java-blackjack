@@ -24,13 +24,14 @@ public class Dealer extends Player {
     }
 
     public PlayerResult compare(Player player) {
-        if(player.isBlackJack() && !isBlackJack()) {
+        if (player.isBlackJack() && !isBlackJack()) {
             return PlayerResult.BLACKJACKWIN;
-        } else if(player.isBust() || player.isBust() && isBust()) {
+        } else if (player.isBust() || (player.isBust() && isBust())) {
             return PlayerResult.LOSE;
-        } else if((!player.isBust() && isBust()) || (player.calculateScore() > calculateScore())) {
+        } else if ((!player.isBust() && isBust()) || (player.calculateScore() > calculateScore())) {
             return PlayerResult.WIN;
-        }else if(player.calculateScore() == calculateScore()) {return PlayerResult.DRAW;
+        } else if (player.calculateScore() == calculateScore()) {
+            return PlayerResult.DRAW;
         }
         return PlayerResult.LOSE;
     }

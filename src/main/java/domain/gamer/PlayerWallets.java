@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerWallets {
-    final List<PlayerWallet> playerWallets;
+    private final List<PlayerWallet> playerWallets;
 
     public PlayerWallets(PlayersResult playersResult) {
         List<PlayerWallet> playerWallets = new ArrayList<>();
 
         for (Player player : playersResult.getPlayerResults().keySet()) {
-            playerWallets.add(new PlayerWallet(player,calculatePlayerProfit(playersResult.getPlayerResults(),player)));
+            playerWallets.add(new PlayerWallet(player, calculatePlayerProfit(playersResult.getPlayerResults(), player)));
         }
         this.playerWallets = playerWallets;
     }

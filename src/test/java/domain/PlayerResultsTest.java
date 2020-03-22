@@ -9,10 +9,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayerResultsTest {
+class PlayerResultsTest {
 
     @Test
     @DisplayName("딜러가 플레어어 에게 패 할 경우의 딜러 이익이 플레이어의 배팅 금액 만큼 감소한다.")
@@ -26,7 +27,7 @@ public class PlayerResultsTest {
         PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
         Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
-        Players players = new Players(Arrays.asList(player1));
+        Players players = new Players(Collections.singletonList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
         PlayerWallets playerWallets = new PlayerWallets(playersResult);
         DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
@@ -45,7 +46,7 @@ public class PlayerResultsTest {
         PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
         Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
-        Players players = new Players(Arrays.asList(player1));
+        Players players = new Players(Collections.singletonList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
         PlayerWallets playerWallets = new PlayerWallets(playersResult);
         DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
@@ -64,7 +65,7 @@ public class PlayerResultsTest {
         PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
         Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
-        Players players = new Players(Arrays.asList(player1));
+        Players players = new Players(Collections.singletonList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
         PlayerWallets playerWallets = new PlayerWallets(playersResult);
         DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
@@ -83,7 +84,7 @@ public class PlayerResultsTest {
         PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card3, card4));
         Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
-        Players players = new Players(Arrays.asList(player1));
+        Players players = new Players(Collections.singletonList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
         PlayerWallets playerWallets = new PlayerWallets(playersResult);
         DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
@@ -103,10 +104,10 @@ public class PlayerResultsTest {
         PlayingCards dealerPlayingCards = new PlayingCards(Arrays.asList(card4, card5));
         Player player1 = new Player("player1", 10000, playerPlayingCards);
         Dealer dealer = new Dealer(dealerPlayingCards);
-        Players players = new Players(Arrays.asList(player1));
+        Players players = new Players(Collections.singletonList(player1));
         PlayersResult playersResult = new PlayersResult(players, dealer);
         PlayerWallets playerWallets = new PlayerWallets(playersResult);
-        DealerWallet dealerWallet = new DealerWallet(dealer,playerWallets);
+        DealerWallet dealerWallet = new DealerWallet(dealer, playerWallets);
         assertThat(dealerWallet.getMoney()).isEqualTo(10000);
     }
 }

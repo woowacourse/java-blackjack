@@ -15,13 +15,13 @@ public class OutputView {
 
     public static void printInitGamersState(PlayerDto dealerDto, Players players) {
         List<PlayerDto> playerDtos = new ArrayList<>();
-        for(int playerIndex=0; playerIndex < players.participantNumber(); playerIndex++){
+        for (int playerIndex = 0; playerIndex < players.participantNumber(); playerIndex++) {
             Player player = players.eachPlayer(playerIndex);
-            playerDtos.add(new PlayerDto(player.getName(),player.getPlayingCards().getCards()));
+            playerDtos.add(new PlayerDto(player.getName(), player.getPlayingCards().getCards()));
         }
         String dealerName = dealerDto.getName();
         String playerNames = playerDtos.stream().map(PlayerDto::getName).collect(Collectors.joining(DELIMITER));
-        System.out.println(String.format("%s와 %s에게 2장의 카드를 나누었습니다.",dealerName, playerNames));
+        System.out.println(String.format("%s와 %s에게 2장의 카드를 나누었습니다.", dealerName, playerNames));
         printInitDealerCard(dealerDto);
         for (PlayerDto playerDto : playerDtos) {
             printGamerCardsState(playerDto);
@@ -30,7 +30,7 @@ public class OutputView {
 
     public static void printAllPlayerCardsStateWithScore(Players players, Dealer dealer) {
         printEachPlayerCardsStateWithScore(PlayerDto.of(dealer), dealer.calculateScore());
-        for(int playerIndex=0; playerIndex < players.participantNumber(); playerIndex++){
+        for (int playerIndex = 0; playerIndex < players.participantNumber(); playerIndex++) {
             Player player = players.eachPlayer(playerIndex);
             printEachPlayerCardsStateWithScore(PlayerDto.of(player), player.calculateScore());
         }
@@ -38,9 +38,9 @@ public class OutputView {
     }
 
     private static void printInitDealerCard(PlayerDto dealerDto) {
-        Card card =  dealerDto.getCards().get(FIRST_CARD_INDEX);
+        Card card = dealerDto.getCards().get(FIRST_CARD_INDEX);
         System.out.println(String.format("%s : %s%s"
-                ,dealerDto.getName(),card.getSymbol().getWord(), card.getType().getPattern()));
+                , dealerDto.getName(), card.getSymbol().getWord(), card.getType().getPattern()));
     }
 
     public static void printGamerCardsState(PlayerDto playerDto) {
@@ -63,7 +63,7 @@ public class OutputView {
 
     public static void printGameResult(DealerWallet dealerWallet, PlayerWallets playerWallets) {
         System.out.println("최종 수익");
-        System.out.println(String.format("딜러 : %d",dealerWallet.getMoney()));
+        System.out.println(String.format("딜러 : %d", dealerWallet.getMoney()));
         for (PlayerWallet playerWallet : playerWallets.getPlayerWallets()) {
             System.out.println(playerWallet.getName() + " : " + playerWallet.getMoney());
         }
