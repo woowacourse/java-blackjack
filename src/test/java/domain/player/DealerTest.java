@@ -41,4 +41,22 @@ public class DealerTest {
 
         Assertions.assertThat(dealer.isHit()).isTrue();
     }
+
+    @DisplayName("딜러가 추가로 지급 받은 카드의 수를 반환하는지 테스트")
+    @Test
+    void getHitCardsCountTest() {
+        Dealer noHitDealer = new Dealer(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE)
+        )));
+        Dealer hitDealer = new Dealer(new ArrayList<>(Arrays.asList(
+                Card.of(CardNumber.ACE, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.TWO, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.KING, CardSuitSymbol.SPACE),
+                Card.of(CardNumber.FOUR, CardSuitSymbol.SPACE)
+        )));
+
+        Assertions.assertThat(noHitDealer.getHitCardsCount()).isEqualTo(0);
+        Assertions.assertThat(hitDealer.getHitCardsCount()).isEqualTo(2);
+    }
 }

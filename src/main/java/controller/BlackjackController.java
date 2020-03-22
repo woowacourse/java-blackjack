@@ -67,7 +67,7 @@ public class BlackjackController {
         while (blackJackRule.isHit(dealer)) {
             blackJackRule.hit(dealer, cardDeck.drawCard());
         }
-        OutputView.printDealerAdditionalCard(dealer.getCardsSize());
+        OutputView.printDealerAdditionalCard(dealer.getHitCardsCount());
     }
 
     private static Answer getAnswer(User user) {

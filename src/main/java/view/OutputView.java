@@ -11,7 +11,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final int DEALER_INDEX = 0;
     private static final int START_USER_INDEX = 1;
-    private static final int DEALER_NOT_HIT = 2;
+    private static final int DEALER_NOT_HIT = 0;
 
     private OutputView() {
     }
