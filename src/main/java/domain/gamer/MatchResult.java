@@ -5,16 +5,20 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 public enum MatchResult {
-    BUST((playerScore, dealerScore) -> playerScore >= Constants.BUST_NUMBER,
+    BUST((playerScore, dealerScore) -> playerScore >= MatchResult.BUST_NUMBER,
             Money::reversion),
-    WIN((playerScore, dealerScore) -> playerScore > dealerScore || dealerScore >= Constants.BUST_NUMBER,
+    WIN((playerScore, dealerScore) -> playerScore > dealerScore || dealerScore >= MatchResult.BUST_NUMBER,
             bettingMoney -> bettingMoney),
     DRAW((playerScore, dealerScore) -> playerScore == dealerScore,
             Money::getZeroMoney),
-    LOSE((playerScore, dealerScore) -> playerScore < dealerScore || playerScore >= Constants.BUST_NUMBER,
+    LOSE((playerScore, dealerScore) -> playerScore < dealerScore || playerScore >= MatchResult.BUST_NUMBER,
             Money::reversion),
-    BLACKJACK((playerScore, dealerScore) -> playerScore == Constants.BLACKJACK_NUMBER,
-            bettingMoney -> bettingMoney.multiply(Constants.BLACKJACK_MAGNIFICATION));
+    BLACKJACK((playerScore, dealerScore) -> playerScore == MatchResult.BLACKJACK_NUMBER,
+            bettingMoney -> bettingMoney.multiply(MatchResult.BLACKJACK_MAGNIFICATION));
+
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final double BLACKJACK_MAGNIFICATION = 1.5;
+    private static final int BUST_NUMBER = 22;
 
     private final BiPredicate<Integer, Integer> matchResultPredicate;
     private final Function<Money, Money> earnCalculator;
@@ -34,11 +38,5 @@ public enum MatchResult {
 
     public Function<Money, Money> getEarnCalculator() {
         return earnCalculator;
-    }
-
-    private static class Constants {
-        public static final double BLACKJACK_MAGNIFICATION = 1.5;
-        public static final int BUST_NUMBER = 22;
-        public static final int BLACKJACK_NUMBER = 21;
     }
 }
