@@ -4,15 +4,15 @@ import domains.result.ResultType;
 import domains.user.Dealer;
 import domains.user.Player;
 
-public class PlayerBlackJackStrategy implements ResultStrategy {
+public class PlayerDrawStrategy implements ResultStrategy {
     @Override
     public boolean checkResult(Player player, Dealer dealer) {
-        // Player가 블랙잭일 경우, 게임이 종료되고 블랙잭의 결과를 얻게 됨.
-        return player.isBlackJack();
+        return (player.isBurst() && dealer.isBurst())
+                || (player.score() == dealer.score());
     }
 
     @Override
     public ResultType getResult(Player player, Dealer dealer) {
-        return ResultType.BLACKJACK;
+        return ResultType.DRAW;
     }
 }

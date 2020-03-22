@@ -4,17 +4,15 @@ import domains.result.ResultType;
 import domains.user.Dealer;
 import domains.user.Player;
 
-public class PlayerBurstStrategy implements ResultStrategy {
+public class PlayerLoseStrategy implements ResultStrategy {
     @Override
-    public boolean checkResult(Player player) {
-        return player.isBurst();
+    public boolean checkResult(Player player, Dealer dealer) {
+        return (player.isBurst() && !dealer.isBurst())
+                || (player.score() < dealer.score());
     }
 
     @Override
     public ResultType getResult(Player player, Dealer dealer) {
-        if (dealer.isBurst()) {
-            return ResultType.DRAW;
-        }
         return ResultType.LOSE;
     }
 }
