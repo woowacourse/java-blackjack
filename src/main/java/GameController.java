@@ -17,7 +17,7 @@ class GameController {
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(deck);
 		Players players = new Players(InputView.inputPlayerNames(), deck);
-		Map<Player, BettingMoney> playersBettingMoney = bet(players);
+		Map<Player, BettingMoney> playersBettingMoney = inputBettingMoney(players);
 		OutputView.printInitialHands(players, dealer);
 
 		hitOrStay(players, dealer, deck);
@@ -27,10 +27,10 @@ class GameController {
 		OutputView.printGameResult(new Profits(playersGameResult, playersBettingMoney));
 	}
 
-	private Map<Player, BettingMoney> bet(Players players) {
+	private Map<Player, BettingMoney> inputBettingMoney(Players players) {
 		Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
 		for (Player player : players) {
-			playerBettingMoney.put(player, new BettingMoney(InputView.inputBettingMoney(player)));
+			playerBettingMoney.put(player, player.bet(InputView.inputBettingMoney(player)));
 		}
 		return playerBettingMoney;
 	}

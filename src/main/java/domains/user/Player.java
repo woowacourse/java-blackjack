@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import domains.card.Deck;
 import domains.result.ResultType;
+import domains.user.money.BettingMoney;
 import domains.user.name.PlayerName;
 
 public class Player extends User {
@@ -21,6 +22,10 @@ public class Player extends User {
 
 	public Player(PlayerName name, Deck deck) {
 		this(name, new Hands(deck));
+	}
+
+	public BettingMoney bet(String bettingMoney){
+		return new BettingMoney(bettingMoney);
 	}
 
 	public boolean needMoreCard(Deck deck, String answer) {

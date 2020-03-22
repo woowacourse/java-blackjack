@@ -1,16 +1,12 @@
 package domains.user;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import domains.card.Deck;
-import domains.user.money.BettingMoney;
 import domains.user.name.PlayerName;
 import domains.user.name.PlayerNames;
-import view.InputView;
 
 public class Players implements Iterable<Player> {
 	private List<Player> players;
@@ -25,14 +21,6 @@ public class Players implements Iterable<Player> {
 		for (PlayerName name : playerNames) {
 			players.add(new Player(name, deck));
 		}
-	}
-
-	public Map<Player, BettingMoney> bet(String bettingMoney) {
-		Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
-		for (Player player : players) {
-			playerBettingMoney.put(player, new BettingMoney(bettingMoney));
-		}
-		return playerBettingMoney;
 	}
 
 	public List<Player> getPlayers() {
