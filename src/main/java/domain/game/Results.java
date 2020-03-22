@@ -1,17 +1,17 @@
 package domain.game;
 
-import java.util.Iterator;
-import java.util.List;
+import domain.player.Name;
 
-public class Results implements Iterable<Result> {
-    private final List<Result> results;
+import java.util.Map;
 
-    public Results(final List<Result> results) {
+public class Results {
+    private final Map<Name, Result> results;
+
+    public Results(final Map<Name, Result> results) {
         this.results = results;
     }
 
-    @Override
-    public Iterator<Result> iterator() {
-        return results.iterator();
+    public Map<Name, Result> getResults() {
+        return results;
     }
 }

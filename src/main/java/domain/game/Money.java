@@ -32,10 +32,6 @@ public class Money {
         return new Money(this.money.add(money));
     }
 
-    public Money subtractMoney(BigDecimal money) {
-        return new Money(this.money.subtract(money));
-    }
-
     public BigDecimal getMoney() {
         return money;
     }
