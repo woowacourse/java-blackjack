@@ -43,7 +43,7 @@ public class BlackjackGame {
         player.receiveCard(deck.draw());
     }
 
-    public boolean dealerIsBlackJack() {
+    public boolean isDealerBlackJack() {
         return dealer.isBlackJack();
     }
 

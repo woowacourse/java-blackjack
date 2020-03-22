@@ -43,7 +43,7 @@ public class BlackjackGameController {
     }
 
     private static void drawMoreCard(BlackjackGame game) {
-        if(!game.dealerIsBlackJack()) {
+        if(!game.isDealerBlackJack()) {
             hitMoreCard(game.getPlayers(), game);
             dealerDrawsAdditionalCard(game);
         }
