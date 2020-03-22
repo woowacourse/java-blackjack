@@ -51,6 +51,14 @@ public abstract class Gamer {
 		return Rule.isNotBlackJack(hand);
 	}
 
+	public boolean hasBiggerScoreThan(Gamer other) {
+		return getScore().isBiggerThan(other.getScore());
+	}
+
+	public boolean hasEqualScoreWith(Gamer other) {
+		return getScore().isEqualTo(other.getScore());
+	}
+
 	public List<Card> firstOpenedCards() {
 		return hand.getCards()
 				.subList(ZERO, firstOpenedCardsCount());
