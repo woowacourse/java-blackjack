@@ -49,25 +49,6 @@ public class Player extends User {
         throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);
     }
 
-    public ResultType checkResultType(Dealer dealer) {
-        if (this.isBlackJack() && !dealer.isBlackJack()) {
-            return ResultType.BLACKJACK;
-        }
-        if (this.isBurst() && !dealer.isBurst()) {
-            return ResultType.LOSE;
-        }
-        if (dealer.isBurst() && !this.isBurst()) {
-            return ResultType.WIN;
-        }
-        if (this.score() > dealer.score()) {
-            return ResultType.WIN;
-        }
-        if (this.score() < dealer.score()) {
-            return ResultType.LOSE;
-        }
-        return ResultType.DRAW;
-    }
-
     public ProfitMoney calculateProfitMoney(ResultType resultType) {
         return this.bettingMoney.multiply(resultType.getProfitRate());
     }
