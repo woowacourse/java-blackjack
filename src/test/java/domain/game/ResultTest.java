@@ -84,6 +84,25 @@ public class ResultTest {
     }
 
     @Test
+    @DisplayName("수익률 테스트 - 승리시 1배의 수익금")
+    void calculateWinningMoney_WhenNormalWin_Get100PercentMoney() {
+        User user = new User("user");
+        Dealer dealer = new Dealer();
+
+        user.addBettingMoney(new Money("1000"));
+        user.addCard(Card.of("스페이드", "5"));
+        user.addCard(Card.of("스페이드", "4"));
+        dealer.addCard(Card.of("스페이드", "3"));
+        dealer.addCard(Card.of("스페이드", "5"));
+
+        Results results = ResultGenerator.create(dealer, new Users(Arrays.asList(user)));
+        Result userResult = results.getResults().get(new Name("user"));
+        BigDecimal userWinningMoney = userResult.getWinningMoney();
+
+        assertThat(userWinningMoney.setScale(0, RoundingMode.FLOOR)).isEqualTo("1000");
+    }
+
+    @Test
     @DisplayName("수익률 테스트 - 블랙잭 무승부시 배팅금액 반환")
     void calculateWinningMoney_WhenBlackJackDraw_GetBackBettingMoney() {
         User user = new User("user");
@@ -122,8 +141,27 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("수익률 테스트 - 승리시 1배의 수익금")
-    void calculateWinningMoney_WhenNormalWin_Get100PercentMoney() {
+    @DisplayName("수익률 테스트 - 딜러가 블랙잭 패배시 1.5배 비용 지불")
+    void calculateWinningMoney_WhenDraw_Pay150PercentMoney() {
+        User user = new User("user");
+        Dealer dealer = new Dealer();
+
+        user.addBettingMoney(new Money("1000"));
+        user.addCard(Card.of("스페이드", "A"));
+        user.addCard(Card.of("스페이드", "K"));
+        dealer.addCard(Card.of("스페이드", "3"));
+        dealer.addCard(Card.of("스페이드", "10"));
+
+        Results results = ResultGenerator.create(dealer, new Users(Arrays.asList(user)));
+        Result dealerResult = results.getResults().get(new Name("딜러"));
+        BigDecimal userWinningMoney = dealerResult.getWinningMoney();
+
+        assertThat(userWinningMoney.setScale(0, RoundingMode.FLOOR)).isEqualTo("-1500");
+    }
+
+    @Test
+    @DisplayName("수익률 테스트 - 패배시 1배 비용 지불")
+    void calculateWinningMoney_WhenLose_Pay100PercentMoney() {
         User user = new User("user");
         Dealer dealer = new Dealer();
 
@@ -131,12 +169,13 @@ public class ResultTest {
         user.addCard(Card.of("스페이드", "5"));
         user.addCard(Card.of("스페이드", "4"));
         dealer.addCard(Card.of("스페이드", "3"));
-        dealer.addCard(Card.of("스페이드", "5"));
+        dealer.addCard(Card.of("스페이드", "10"));
 
         Results results = ResultGenerator.create(dealer, new Users(Arrays.asList(user)));
         Result userResult = results.getResults().get(new Name("user"));
         BigDecimal userWinningMoney = userResult.getWinningMoney();
 
-        assertThat(userWinningMoney.setScale(0, RoundingMode.FLOOR)).isEqualTo("1000");
+        assertThat(userWinningMoney.setScale(0, RoundingMode.FLOOR)).isEqualTo("-1000");
     }
+
 }

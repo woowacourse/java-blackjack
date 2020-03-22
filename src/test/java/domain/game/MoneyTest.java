@@ -29,13 +29,4 @@ public class MoneyTest {
 
         assertThat(money.getMoney().toString()).isEqualTo("6000");
     }
-
-    @Test
-    @DisplayName("배팅 금액 감소")
-    void subtractBettingMoney() {
-        Money money = new Money("1000");
-        money = money.subtractMoney(new BigDecimal("5000"));
-
-        assertThat(money.getMoney().toString()).isEqualTo("-4000");
-    }
 }

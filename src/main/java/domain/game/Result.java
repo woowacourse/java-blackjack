@@ -44,23 +44,10 @@ public class Result {
 
     public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer) {
         BigDecimal bettingMoney = getUserBettingMoney(mainPlayer, opponentPlayer);
-        if (isBlackJackWin(mainPlayer, opponentPlayer)) {
-            winningMoney = winningMoney.addMoney(bettingMoney.multiply(new BigDecimal("1.5")));
-            return;
-        }
-        if (isBlackJackDraw(mainPlayer, opponentPlayer)
-                || isNormalDraw(mainPlayer, opponentPlayer)) {
-            return;
-        }
-        if (isNormalWin(mainPlayer, opponentPlayer)) {
-            winningMoney = winningMoney.addMoney(bettingMoney);
-            return;
-        }
-        if (isBlackJackLose(opponentPlayer)) {
-            winningMoney = winningMoney.subtractMoney(bettingMoney.multiply(new BigDecimal("1.5")));
-            return;
-        }
-        winningMoney = winningMoney.subtractMoney(bettingMoney);
+        ResultType resultType = ResultType.of(mainPlayer, opponentPlayer);
+        BigDecimal rewardRate = new BigDecimal(resultType.getRewardRate());
+
+        winningMoney = winningMoney.addMoney(bettingMoney.multiply(rewardRate));
     }
 
     private BigDecimal getUserBettingMoney(Player mainPlayer, Player opponentPlayer) {
@@ -72,32 +59,6 @@ public class Result {
         }
         userMoney = ((User) opponentPlayer).getBettingMoney();
         return userMoney.getMoney();
-    }
-
-    private boolean isBlackJackWin(Player mainPlayer, Player opponentPlayer) {
-        return mainPlayer instanceof User
-                && mainPlayer.isWin(opponentPlayer)
-                && mainPlayer.isBlackJack()
-                && !opponentPlayer.isBlackJack();
-    }
-
-    private boolean isBlackJackDraw(Player mainPlayer, Player opponentPlayer) {
-        return mainPlayer.isWin(opponentPlayer)
-                && mainPlayer.isBlackJack()
-                && opponentPlayer.isBlackJack();
-    }
-
-    private boolean isNormalDraw(Player mainPlayer, Player opponentPlayer) {
-        return mainPlayer.isDraw(opponentPlayer);
-    }
-
-    private boolean isNormalWin(Player mainPlayer, Player opponentPlayer) {
-        return mainPlayer.isWin(opponentPlayer);
-    }
-
-    private boolean isBlackJackLose(Player opponentPlayer) {
-        return opponentPlayer instanceof User
-                && opponentPlayer.isBlackJack();
     }
 
     public BigDecimal getWinningMoney() {
