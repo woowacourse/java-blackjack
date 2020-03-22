@@ -24,13 +24,14 @@ public enum ResultType {
     }),
     DRAW("무", 0, (playerPoint, dealerPoint)
             -> {
+        if (playerPoint.isBust()) {
+            return false;
+        }
         if ((playerPoint.isBalckJack() && !dealerPoint.isBalckJack())
                 || (!playerPoint.isBalckJack() && dealerPoint.isBalckJack())) {
             return false;
         }
-        if (playerPoint.isNotBust()
-                && dealerPoint.isNotBust()
-                && playerPoint.isSameWith(dealerPoint)) {
+        if (playerPoint.isSameWith(dealerPoint)) {
             return true;
         }
         return false;
@@ -81,10 +82,6 @@ public enum ResultType {
             return ResultType.WIN;
         }
         return resultType;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public double getProfitRate() {
