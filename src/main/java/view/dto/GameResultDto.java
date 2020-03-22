@@ -13,7 +13,7 @@ public class GameResultDto {
     private Map<Player, Integer> profitOfPlayers;
     private int profitOfDealer;
 
-    public GameResultDto(GameResult gameResult) {
+    private GameResultDto(GameResult gameResult) {
         userToCardPoint = new LinkedHashMap<>();
         Map<User, Integer> userPoints = gameResult.getUserToCardPoint();
         for (User user : userPoints.keySet()) {
