@@ -41,7 +41,7 @@ public class OutputView {
 
     private static void printStatusWithScore(User user) {
         String formattedCards = ViewFormatter.formatCards(user.getCards());
-        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, new Point(user.getCards()).getPoint());
+        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.getPoint().getPoint());
         System.out.println(status);
     }
 

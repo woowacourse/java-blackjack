@@ -1,41 +1,20 @@
 package blackjack.domain.user.component;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.component.CardNumber;
-
-import java.util.List;
+import blackjack.domain.card.Cards;
 
 public class Point implements Comparable<Point> {
-    private static int BLACK_JACK = 21;
     private final boolean isBalckJack;
     private int point;
+    public static int BLACK_JACK = 21;
 
     public Point(int point, boolean isBalckJack) {
         this.point = point;
         this.isBalckJack = isBalckJack;
     }
 
-    public Point (List<Card> cards) {
-        point = cards.stream()
-                .mapToInt(x -> x.getCardPoint())
-                .sum();
-        if (hasAce(cards)) {
-            handleAce(cards);
-        }
-        isBalckJack = (cards.size() == 2 && point == BLACK_JACK);
-    }
-
-    private static boolean hasAce(List<Card> cards) {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-        return aceCount > 0;
-    }
-
-    private void handleAce(List<Card> cards) {
-        if (point < BLACK_JACK) {
-            point += CardNumber.ACE_DIFF;
-        }
+    public Point (Cards cards) {
+        point = cards.computePoint();
+        isBalckJack = (cards.getSize() == 2 && point == BLACK_JACK);
     }
 
     public int diffWithBlackJack() {

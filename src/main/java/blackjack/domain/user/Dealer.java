@@ -17,7 +17,7 @@ public class Dealer extends User {
 
     @Override
     public boolean receivable() {
-        Point point = new Point(getCards());
+        Point point = new Point(cards);
         if (point.compareTo(new Point(LOWER_BOUND, false)) <= 0) {
             return true;
         }
