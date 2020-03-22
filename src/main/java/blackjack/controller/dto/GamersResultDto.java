@@ -3,6 +3,7 @@ package blackjack.controller.dto;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.money.Profit;
 
+import java.util.Collections;
 import java.util.Map;
 
 public final class GamersResultDto {
@@ -11,12 +12,12 @@ public final class GamersResultDto {
 
     public GamersResultDto(Map<Gamer, Profit> gamersResult) {
         validate(gamersResult);
-        this.gamersResult = gamersResult;
+        this.gamersResult = Collections.unmodifiableMap(gamersResult);
     }
 
     private void validate(Map<Gamer, Profit> gamersResult) {
         if (gamersResult == null || gamersResult.isEmpty()) {
-            throw new IllegalArgumentException("플레이어 결과가 텅~ 비었네요!");
+            throw new IllegalArgumentException("결과가 없습니다.");
         }
     }
 

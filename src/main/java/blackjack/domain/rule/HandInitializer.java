@@ -7,10 +7,10 @@ import blackjack.domain.gamer.Players;
 
 public class HandInitializer {
 
-    private static final int INITIAL_HAND_COUNT = 2;
+    public static final int INITIAL_HAND_SIZE = 2;
 
     public static void initialize(Dealer dealer, Players players, Deck deck) {
-        for (int i = 0; i < INITIAL_HAND_COUNT; i++) {
+        for (int i = 0; i < INITIAL_HAND_SIZE; i++) {
             drawCard(dealer, players, deck);
         }
     }

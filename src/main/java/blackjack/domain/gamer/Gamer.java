@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.rule.Score;
 
 import java.util.List;
 import java.util.Objects;

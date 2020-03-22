@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.rule.HandInitializer;
 import blackjack.domain.rule.Score;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return hand.size() == 2 && getScore().isBlackJack();
+        return hand.size() == HandInitializer.INITIAL_HAND_SIZE && getScore().isBlackJack();
     }
 
     public Score getScore() {

@@ -22,13 +22,13 @@ public enum BlackJackResult implements BlackJackResultMatcher {
     DRAW("무", 0) {
         @Override
         public boolean match(Dealer dealer, Player player) {
-            return player.handScore() == dealer.handScore();
+            return !player.isBusted() && player.handScore() == dealer.handScore();
         }
     },
     LOSE("패", -1) {
         @Override
         public boolean match(Dealer dealer, Player player) {
-            return player.handScore() < dealer.handScore();
+            return player.isBusted() || player.handScore() < dealer.handScore();
         }
     };
 

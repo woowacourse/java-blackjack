@@ -1,6 +1,7 @@
 package blackjack.controller.dto;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class NamesDto {
         if (names.isEmpty() || splittedNames.isEmpty())
             throw new NullPointerException("비어있는 값을 입력하셨습니다");
 
-        return splittedNames;
+        return Collections.unmodifiableList(splittedNames);
     }
 
     public List<String> get() {
