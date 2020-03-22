@@ -47,25 +47,25 @@ public class ResultTest {
     @Test
     @DisplayName("딜러와 플레이어 모두 21을 넘긴 경우 LOSE")
     void bothBustTest() {
-        assertThat(Result.getResult(bustDealer, bustPlayer)).isEqualTo(Result.LOSE);
+        assertThat(Result.getResult(bustDealer, bustPlayer)).isEqualTo(Result.BUST_LOSE);
     }
 
     @Test
     @DisplayName("딜러만 21을 넘긴 경우 플레이어 WIN")
     void dealerBustTest() {
-        assertThat(Result.getResult(bustDealer, notBustPlayer)).isEqualTo(Result.WIN);
+        assertThat(Result.getResult(bustDealer, notBustPlayer)).isEqualTo(Result.BUST_WIN);
     }
 
     @Test
     @DisplayName("딜러와 플레이어 모두 21인 경우 DRAW")
     void bothBlackJackTest() {
-        assertThat(Result.getResult(blackJackDealer, blackJackPlayer)).isEqualTo(Result.DRAW);
+        assertThat(Result.getResult(blackJackDealer, blackJackPlayer)).isEqualTo(Result.BLACKJACK_DRAW);
     }
 
     @Test
     @DisplayName("딜러만 블랙잭인 경우 플레이어 Lose")
     void dealerBlackJackTest() {
-        assertThat(Result.getResult(blackJackDealer, notBustPlayer)).isEqualTo(Result.LOSE);
+        assertThat(Result.getResult(blackJackDealer, notBustPlayer)).isEqualTo(Result.BLACKJACK_LOSE);
     }
 
     @Test
