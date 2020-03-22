@@ -36,6 +36,7 @@ public class BlackjackGameController {
         );
     }
 
+    //TODO: 데미테르의 법칙 준수
     private static BlackjackGame startBlackjackGame(List<Player> players) {
         return new BlackjackGame(
                     players,

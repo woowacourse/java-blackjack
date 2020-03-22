@@ -26,11 +26,10 @@ public class CardFactory {
     }
 
     public static CardFactory getInstance() {
-        return CardFactory.instance;
+        return instance;
     }
 
     public List<Card> issueNewDeck() {
         return new LinkedList<>(cards);
     }
-
 }
