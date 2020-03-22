@@ -8,23 +8,23 @@ import java.util.List;
 import java.util.Map;
 
 public class GameResult {
-	private final Map<String, Double> userResult;
+	private final Map<String, Double> userIncomes;
 	private final double dealerIncome;
 
 	public GameResult(List<User> users, Dealer dealer) {
-		Map<String, Double> userResult = new HashMap<>();
+		Map<String, Double> userIncomes = new HashMap<>();
 		double dealerIncome = Money.ZERO;
 		for (User user : users) {
 			double userIncome = user.compareScore(dealer);
-			userResult.put(user.getName(), userIncome);
+			userIncomes.put(user.getName(), userIncome);
 			dealerIncome -= userIncome;
 		}
-		this.userResult = userResult;
+		this.userIncomes = userIncomes;
 		this.dealerIncome = dealerIncome;
 	}
 
-	public Map<String, Double> getUserResult() {
-		return userResult;
+	public Map<String, Double> getUserIncomes() {
+		return userIncomes;
 	}
 
 	public double getDealerIncome() {
