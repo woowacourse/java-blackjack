@@ -3,6 +3,7 @@ package com.blackjack.domain;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -19,5 +20,11 @@ class DrawDecideTypeTest {
 	@ValueSource(strings = {"a", ""})
 	void of_GivenInvalidInput_ExceptionThrown(String input) {
 		assertThatThrownBy(() -> DrawDecideType.of(input)).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@DisplayName("isDraw에서 DRAW의 symbol을 인자로 넣은 경우 true반환")
+	@Test
+	void isDraw() {
+		assertThat(DrawDecideType.isDraw("y")).isTrue();
 	}
 }

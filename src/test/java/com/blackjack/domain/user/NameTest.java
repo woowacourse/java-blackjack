@@ -32,4 +32,12 @@ class NameTest {
 	void constructor_OutOfLength_ExceptionThrown() {
 		assertThatThrownBy(() -> new Name("1234567890")).isInstanceOf(IllegalArgumentException.class);
 	}
+
+	@DisplayName("같은 이름으로 생성된 객체를 비교할 경우 true 반환")
+	@Test
+	void equals() {
+		Name name1 = new Name("a");
+		Name name2 = new Name("a");
+		assertThat(name1.equals(name2)).isTrue();
+	}
 }
