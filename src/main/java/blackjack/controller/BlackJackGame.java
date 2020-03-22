@@ -5,6 +5,7 @@ import blackjack.exception.ResponseNotMatchException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -25,9 +26,19 @@ public class BlackJackGame {
     }
 
     private void enrollPlayers() {
-        players = new Players(InputView.inputUserNames().stream()
-                .map(Player::new)
+        List<String> playerNames = InputView.inputPlayerNames();
+        players = new Players(playerNames.stream()
+                .map(this::createEachPlayer)
                 .collect(Collectors.toList()));
+    }
+
+    private Player createEachPlayer(String playerName) {
+        try {
+            return new Player(playerName, InputView.inputBettingMoney(playerName));
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return createEachPlayer(playerName);
+        }
     }
 
     private void distributeCards() {
@@ -36,7 +47,7 @@ public class BlackJackGame {
         dealer.receiveDistributedCards(cardDeck);
 
         players.receiveDistributedCardsAllPlayers(cardDeck);
-        OutputView.printInitialPlayerCards(dealer, players);
+        OutputView.printInitialUserCards(dealer, players);
     }
 
     private void play() {
@@ -64,12 +75,12 @@ public class BlackJackGame {
     private void playDealerTurn() {
         if (dealer.isReceivableOneMoreCard()) {
             dealer.receiveOneMoreCard(cardDeck);
-            OutputView.printDealerPlayConfirmMessage();
+            OutputView.printDealerPlayConfirmMessage(Dealer.DEALER_CRITICAL_SCORE);
         }
     }
 
     private void calculateResult() {
-        OutputView.printPlayerFinalScore(dealer, players);
+        OutputView.printUserFinalScore(dealer, players);
         GameResult gameResult = GameResult.calculateGameResult(dealer, players);
         OutputView.printGameResult(gameResult);
     }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,36 +16,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameResultTest {
     private Dealer dealer;
     private Players players;
-    private List<Card> cards;
     private CardDeck cardDeck;
 
     @BeforeEach
     void setUp() {
-        cards = new ArrayList<>(
+        cardDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
-                        new Card(Symbol.DIAMOND, Type.JACK),
-                        new Card(Symbol.SPADE, Type.ACE),
-                        new Card(Symbol.DIAMOND, Type.THREE),
+                        new Card(Symbol.CLOVER, Type.QUEEN),
                         new Card(Symbol.CLOVER, Type.ACE),
-                        new Card(Symbol.CLOVER, Type.JACK),
-                        new Card(Symbol.SPADE, Type.JACK),
-                        new Card(Symbol.HEART, Type.SEVEN)
+                        new Card(Symbol.DIAMOND, Type.SIX),
+                        new Card(Symbol.HEART, Type.SEVEN),
+                        new Card(Symbol.SPADE, Type.FIVE),
+                        new Card(Symbol.SPADE, Type.QUEEN),
+                        new Card(Symbol.HEART, Type.TEN)
                 )
-        );
-        cardDeck = new CardDeck(cards);
+        ));
         dealer = Dealer.getDealer();
         players = new Players(new ArrayList<>(
                 Arrays.asList(
-                        new Player("bossdog"),
-                        new Player("yes"),
-                        new Player("pobi")
+                        new Player("bossdog", 10000),
+                        new Player("yes", 10000),
+                        new Player("pobi", 10000)
                 )
         ));
-        players.getPlayers()
-                .stream()
-                .mapToInt(User::calculateScore)
-                .forEach(System.out::println);
-
         players.getPlayers()
                 .forEach(player -> player.receiveDistributedCards(cardDeck));
         players.getPlayers()
@@ -63,11 +55,11 @@ public class GameResultTest {
                 )
         ));
         dealer.receiveDistributedCards(dealerDeck);
-        Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
+        Map<User, Integer> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
-        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(PlayerResult.DRAW);
-        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(PlayerResult.LOSE);
-        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(0);
+        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(-10000);
+        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(-10000);
     }
 
     @DisplayName("딜러 버스트인 경우 결과 확인")
@@ -82,15 +74,16 @@ public class GameResultTest {
         ));
         dealer.receiveDistributedCards(dealerDeck);
         dealer.receiveOneMoreCard(dealerDeck);
-        Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
-        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(PlayerResult.WIN);
-        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(PlayerResult.WIN);
-        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(PlayerResult.LOSE);
+        Map<User, Integer> result = GameResult.calculateGameResult(dealer, players).getGameResult();
+
+        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(15000);
+        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(10000);
+        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(-10000);
     }
 
     @DisplayName("딜러 NONE인 경우 점수 비교 결과 확인")
     @Test
-    void calculateResultWhenDealerStatusNone() {
+    void calculateResultWhenDealerStatusHitable() {
         CardDeck dealerDeck = new CardDeck(new ArrayList<>(
                 Arrays.asList(
                         new Card(Symbol.CLOVER, Type.SEVEN),
@@ -98,11 +91,11 @@ public class GameResultTest {
                 )
         ));
         dealer.receiveDistributedCards(dealerDeck);
-        Map<Player, PlayerResult> result = GameResult.calculateGameResult(dealer, players).getGameResult();
+        Map<User, Integer> result = GameResult.calculateGameResult(dealer, players).getGameResult();
 
-        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(PlayerResult.WIN);
-        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(PlayerResult.LOSE);
-        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(PlayerResult.LOSE);
+        assertThat(result.get(players.getPlayers().get(0))).isEqualTo(15000);
+        assertThat(result.get(players.getPlayers().get(1))).isEqualTo(-10000);
+        assertThat(result.get(players.getPlayers().get(2))).isEqualTo(-10000);
     }
 
     @AfterEach

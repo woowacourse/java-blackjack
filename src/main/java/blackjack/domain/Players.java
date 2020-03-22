@@ -10,12 +10,11 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public void receiveDistributedCardsAllPlayers(CardDeck cardDeck) {
         players.forEach(player -> player.receiveDistributedCards(cardDeck));
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

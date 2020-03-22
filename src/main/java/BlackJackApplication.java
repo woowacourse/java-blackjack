@@ -1,5 +1,3 @@
-package blackjack;
-
 import blackjack.controller.BlackJackGame;
 
 public class BlackJackApplication {

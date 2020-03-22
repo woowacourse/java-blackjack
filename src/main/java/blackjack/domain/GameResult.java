@@ -1,35 +1,46 @@
 package blackjack.domain;
 
-import blackjack.domain.strategy.DealerStatusStrategy;
-
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResult {
-    private Map<Player, PlayerResult> gameResult;
+    private static final int DEALER_PROFIT_FACTOR = -1;
+    private static final int DEFAULT_DEALER_PROFIT = 0;
+    private Map<User, Integer> gameResult;
 
-    private GameResult(Map<Player, PlayerResult> result) {
+    private GameResult(Map<User, Integer> result) {
         this.gameResult = result;
     }
 
     public static GameResult calculateGameResult(Dealer dealer, Players players) {
-        Map<Player, PlayerResult> result = new LinkedHashMap<>();
+        Map<User, Integer> result = new LinkedHashMap<>();
+        result.put(dealer, DEFAULT_DEALER_PROFIT);
         players.getPlayers()
                 .forEach(player ->
-                        result.put(player, calculateResultByDealerStatusStrategy(dealer, player))
+                        result.put(player, calculateResultByDealerStatusStrategy(dealer, player)
+                                .calculateProfit(player.getBettingMoney()))
                 );
+        result.put(dealer, calculateDealerProfit(result));
         return new GameResult(result);
     }
 
-    private static PlayerResult calculateResultByDealerStatusStrategy(Dealer dealer, Player player) {
-        DealerStatusStrategy dealerStatusStrategy = dealer.status.getDealerStatusStrategy();
-        return dealerStatusStrategy.calculateResultByPlayerStatus(dealer, player);
+    private static int calculateDealerProfit(Map<User, Integer> result) {
+        return DEALER_PROFIT_FACTOR * result.keySet()
+                .stream()
+                .mapToInt(result::get)
+                .sum();
     }
 
-    public Map<Player, PlayerResult> getGameResult() {
+    private static PlayerResult calculateResultByDealerStatusStrategy(Dealer dealer, Player player) {
+        return dealer.getResultOf(player);
+    }
+
+    public Map<User, Integer> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
     }
 
-    public String getKoreanName(Player player) {
-        return gameResult.get(player).getKoreanName();
+    public int getProfit(User user) {
+        return gameResult.get(user);
     }
 }
