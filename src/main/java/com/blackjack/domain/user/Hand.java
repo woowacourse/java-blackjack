@@ -10,8 +10,6 @@ import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 
 public class Hand {
-	private static final int ACE_UPWARD_CONDITION = 11;
-	private static final int ACE_UPWARD_SCORE = 10;
 	private List<Card> cards;
 
 	public Hand(List<Card> cards) {
@@ -23,26 +21,19 @@ public class Hand {
 		cards.add(card);
 	}
 
-	public Score calculate() {
-		int totalScore = computeAceBy(sumAllCard(cards), hasAce(cards));
-		return new Score(totalScore, isFirstDraw());
+	public Score calculateScore() {
+		return Score.of(sumAllCards(), hasAce(), isFirstDraw());
 	}
 
-	private int computeAceBy(int totalScore, boolean hasAce) {
-		if (totalScore <= ACE_UPWARD_CONDITION && hasAce) {
-			totalScore += ACE_UPWARD_SCORE;
-		}
-		return totalScore;
-	}
-
-	private int sumAllCard(List<Card> cards) {
+	private int sumAllCards() {
 		return cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
 	}
 
-	private boolean hasAce(List<Card> cards) {
-		return cards.stream().anyMatch(Card::isAce);
+	private boolean hasAce() {
+		return cards.stream()
+				.anyMatch(Card::isAce);
 	}
 
 	private boolean isFirstDraw() {

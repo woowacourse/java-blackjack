@@ -6,29 +6,22 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.blackjack.domain.ResultType;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.card.Denomination;
 import com.blackjack.domain.card.Suit;
 
 class PlayerTest {
-	@DisplayName("베팅 금액이 null인 경우 예외 발생")
-	@Test
-	void constructor_BettingMoneyIsNull_ExceptionThrown() {
-		assertThatThrownBy(() -> new Player(new Name("pobi"), null))
-				.isInstanceOf(IllegalArgumentException.class);
-	}
-
 	@DisplayName("플레이어명이 null인 경우 예외 발생")
 	@Test
 	void constructor_PlayerNameIsNull_ExceptionThrown() {
-		assertThatThrownBy(() -> new Player(null)).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> new Player(null, 1_000))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("가지고 있는 카드가 20 이하여서 카드를 더 뽑을 수 있는 경우 true를 반환한다")
 	@Test
 	void canDraw_GivenCard_ReturnTrue() {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player("pobi", 1_000);
 
 		player.draw(Card.valueOf(Denomination.TEN, Suit.SPADE));
 		player.draw(Card.valueOf(Denomination.TEN, Suit.CLUB));
@@ -39,7 +32,7 @@ class PlayerTest {
 	@DisplayName("가지고 있는 카드가 21 이상이여서 카드를 더 뽑을 수 있는 경우 false를 반환한다")
 	@Test
 	void canDraw_OverThenSixteenScore_False() {
-		Player player = new Player(new Name("pobi"));
+		Player player = new Player("pobi", 1_000);
 
 		player.draw(Card.valueOf(Denomination.JACK, Suit.CLUB));
 		player.draw(Card.valueOf(Denomination.TEN, Suit.CLUB));
@@ -52,6 +45,6 @@ class PlayerTest {
 	@Test
 	void calculateProfit() {
 		Player player = new Player("pobi", 1_000);
-		assertThat(player.calculateProfit(ResultType.BLACKJACK_WIN)).isEqualTo(1_500);
+		assertThat(player.calculateProfit(1.5)).isEqualTo(1_500);
 	}
 }

@@ -28,9 +28,8 @@ public class GameTable {
 		}
 	}
 
-	public void draw(User user) {
-		Card card = cardDeck.pop();
-		user.draw(card);
+	private void drawToDealer() {
+		draw(dealer);
 	}
 
 	private void drawToPlayers() {
@@ -39,7 +38,8 @@ public class GameTable {
 		}
 	}
 
-	private void drawToDealer() {
-		draw(dealer);
+	public void draw(User user) {
+		Card card = cardDeck.pop();
+		user.draw(card);
 	}
 }

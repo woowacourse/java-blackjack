@@ -3,7 +3,7 @@ package com.blackjack.view;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.blackjack.domain.PlayerRecords;
+import com.blackjack.domain.PlayerProfits;
 import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 import com.blackjack.domain.user.Player;
@@ -42,8 +42,8 @@ public class OutputView {
 		System.out.println("\n## 최종 수익");
 	}
 
-	public static void printUserRecords(PlayerRecords playerRecords) {
-		playerRecords.getRecords().forEach((key, value) -> System.out.printf("%s: %s\n", key.getName(), value));
+	public static void printUserRecords(PlayerProfits playerProfits) {
+		playerProfits.getRecords().forEach((key, value) -> System.out.printf("%s: %s\n", key.getName(), value));
 	}
 
 	public static void printDealerRecord(int dealerProfit) {

@@ -2,19 +2,19 @@ package com.blackjack.domain;
 
 import java.util.stream.Stream;
 
-public enum DrawDecideType {
-	DRAW("y"),
+public enum HitDecideType {
+	HIT("y"),
 	STAND("n");
 
 	private String symbol;
 
-	DrawDecideType(String symbol) {
+	HitDecideType(String symbol) {
 		this.symbol = symbol;
 	}
 
-	public static DrawDecideType of(String symbol) {
+	public static HitDecideType of(String symbol) {
 		return Stream.of(values())
-				.filter(drawDecideType -> drawDecideType.isSameSymbol(symbol))
+				.filter(hitDecideType -> hitDecideType.isSameSymbol(symbol))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
 	}
@@ -23,7 +23,7 @@ public enum DrawDecideType {
 		return this.symbol.equals(symbol);
 	}
 
-	public boolean isDraw() {
-		return DRAW.equals(this);
+	public boolean isHit() {
+		return HIT.equals(this);
 	}
 }

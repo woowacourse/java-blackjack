@@ -5,17 +5,21 @@ import java.util.Map;
 
 import com.blackjack.domain.user.User;
 
-public class PlayerRecords {
+public class PlayerProfits {
 	private final Map<User, Integer> records;
 
-	public PlayerRecords(Map<User, Integer> records) {
+	public PlayerProfits(Map<User, Integer> records) {
 		this.records = Collections.unmodifiableMap(records);
 	}
 
-	public int calculateDealerResult() {
+	public int calculateDealerProfit() {
+		return calculateAllUserProfits() * -1;
+	}
+
+	private int calculateAllUserProfits() {
 		return records.values()
 				.stream()
-				.mapToInt(profit -> -profit)
+				.mapToInt(Integer::intValue)
 				.sum();
 	}
 

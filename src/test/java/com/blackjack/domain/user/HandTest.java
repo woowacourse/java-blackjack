@@ -26,7 +26,7 @@ class HandTest {
 		Hand hand = new Hand(
 				Arrays.asList(Card.valueOf(Denomination.SIX, Suit.CLUB),
 						Card.valueOf(Denomination.FIVE, Suit.DIAMOND)));
-		assertThat(hand.calculate()).isEqualTo(new Score(11));
+		assertThat(hand.calculateScore()).isEqualTo(new Score(11));
 	}
 
 	@DisplayName("ACE를 포함하고 상향하지 않았을 때 점수 생성")
@@ -35,7 +35,7 @@ class HandTest {
 		Hand hand = new Hand(Arrays.asList(Card.valueOf(Denomination.ACE, Suit.CLUB),
 				Card.valueOf(Denomination.TEN, Suit.DIAMOND),
 				Card.valueOf(Denomination.JACK, Suit.DIAMOND)));
-		assertThat(hand.calculate()).isEqualTo(new Score(21));
+		assertThat(hand.calculateScore()).isEqualTo(new Score(21));
 	}
 
 	@DisplayName("ACE를 포함하고 상향했을 때 점수 생성")
@@ -43,6 +43,6 @@ class HandTest {
 	void calculateScore_IncludeAceAndUpward_CreateTotalScore() {
 		Hand hand = new Hand(
 				Arrays.asList(Card.valueOf(Denomination.ACE, Suit.CLUB), Card.valueOf(Denomination.TEN, Suit.DIAMOND)));
-		assertThat(hand.calculate()).isEqualTo(new Score(21));
+		assertThat(hand.calculateScore()).isEqualTo(new Score(21));
 	}
 }

@@ -67,6 +67,6 @@ public class GameRuleTest {
 		players.get(0).draw(Card.valueOf(Denomination.KING, Suit.CLUB));
 
 		GameRule gameRule = new GameRule(dealer, players);
-		assertThat(gameRule.calculateResult()).isInstanceOf(PlayerRecords.class);
+		assertThat(gameRule.calculatePlayerProfits()).isInstanceOf(PlayerProfits.class);
 	}
 }

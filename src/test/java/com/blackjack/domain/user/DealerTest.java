@@ -46,7 +46,7 @@ class DealerTest {
 		dealer.draw(Card.valueOf(Denomination.TEN, Suit.CLUB));
 		dealer.draw(Card.valueOf(Denomination.TEN, Suit.HEART));
 
-		Score score = dealer.calculateHand();
+		Score score = dealer.calculateScore();
 		assertThat(score.isBust()).isTrue();
 	}
 }

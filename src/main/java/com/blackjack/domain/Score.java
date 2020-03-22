@@ -4,9 +4,10 @@ import java.util.Objects;
 
 public class Score implements Comparable<Score> {
 	public static final int BLACKJACK_SCORE = 21;
+	private static final int ACE_UPWARD_CONDITION_UPPER_BOUND = 11;
+	private static final int ACE_UPWARD_SCORE = 10;
 	private static final int MIN_SCORE = 0;
 	private static final int MAX_SCORE = 30;
-	private static final int BUSTED = 0;
 
 	private final int score;
 	private final boolean isFirstDraw;
@@ -19,6 +20,17 @@ public class Score implements Comparable<Score> {
 		validateBounds(score);
 		this.score = score;
 		this.isFirstDraw = isFirstDraw;
+	}
+
+	public static Score of(int score, boolean hasAce, boolean isFirstDraw) {
+		return new Score(computeByAce(score, hasAce), isFirstDraw);
+	}
+
+	private static int computeByAce(int score, boolean hasAce) {
+		if (hasAce && score <= ACE_UPWARD_CONDITION_UPPER_BOUND) {
+			return score + ACE_UPWARD_SCORE;
+		}
+		return score;
 	}
 
 	private void validateBounds(int score) {
@@ -35,20 +47,20 @@ public class Score implements Comparable<Score> {
 		return score > BLACKJACK_SCORE;
 	}
 
+	public boolean isNotBust() {
+		return !isBust();
+	}
+
 	public boolean isBlackjack() {
-		return score == BLACKJACK_SCORE && isFirstDraw;
+		return isFirstDraw && score == BLACKJACK_SCORE;
 	}
 
-	@Override
+	public boolean isNotBlackjack() {
+		return !isBlackjack();
+	}
+
 	public int compareTo(Score that) {
-		return Integer.compare(this.undervalueIfBusted(), that.undervalueIfBusted());
-	}
-
-	private int undervalueIfBusted() {
-		if (isBust()) {
-			return BUSTED;
-		}
-		return score;
+		return Integer.compare(this.score, that.score);
 	}
 
 	@Override

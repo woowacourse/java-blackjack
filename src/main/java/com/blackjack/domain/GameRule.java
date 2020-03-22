@@ -26,27 +26,18 @@ public class GameRule {
 		}
 	}
 
-	public PlayerRecords calculateResult() {
+	public PlayerProfits calculatePlayerProfits() {
 		return players.stream()
 				.collect(Collectors.collectingAndThen(toMap(
 						player -> player,
-						player -> calculateProfit(player, dealer),
+						player -> calculateProfit(dealer, player),
 						(r1, r2) -> r1,
 						LinkedHashMap::new
-				), PlayerRecords::new));
+				), PlayerProfits::new));
 	}
 
-	private Integer calculateProfit(Player player, Dealer dealer) {
-		ResultType result = compareScore(player, dealer);
-		return player.calculateProfit(result);
-	}
-
-	private ResultType compareScore(Player player, Dealer dealer) {
-		Score playerScore = player.calculateHand();
-		Score dealerScore = dealer.calculateHand();
-		if (playerScore.isBust()) {
-			return ResultType.LOSE;
-		}
-		return ResultType.of(playerScore, dealerScore);
+	private Integer calculateProfit(Dealer dealer, Player player) {
+		ResultType result = PlayerGameRule.compareTo(dealer, player);
+		return player.calculateProfit(result.getProfitRate());
 	}
 }
