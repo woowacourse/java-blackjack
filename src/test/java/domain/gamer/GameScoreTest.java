@@ -34,7 +34,7 @@ public class GameScoreTest {
                 new Card(CardSuit.CLOVER, CardNumber.TEN))
         );
 
-        GameResult gameResult = gamers.generateGameResults();
+        GameResult gameResult = new GameResult(gamers);
 
         Map<Player, Money> totalEarning = gameResult.getPlayersTotalEarning();
         List<Player> players = new ArrayList<>(totalEarning.keySet());

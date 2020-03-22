@@ -22,7 +22,7 @@ public class GameController {
         OutputView.printAddCardAtDealer();
         OutputView.printCardsResultAndScore(new CardsResult(gamers));
 
-        GameResult gameResult = gamers.generateGameResults();
+        GameResult gameResult = new GameResult(gamers);
         OutputView.printTotalEarningResult(gameResult);
     }
 

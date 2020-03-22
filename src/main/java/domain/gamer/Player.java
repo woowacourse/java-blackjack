@@ -20,22 +20,6 @@ public class Player extends Gamer {
         return !name.matches(PATTERN);
     }
 
-    public MatchResult findMatchResult(Dealer dealer) {
-        if (isBlackJack() && dealer.isBlackJack()) {
-            return MatchResult.DRAW;
-        }
-
-        if (isBlackJack()) {
-            return MatchResult.BLACKJACK;
-        }
-
-        if (dealer.isBlackJack()) {
-            return MatchResult.LOSE;
-        }
-
-        return MatchResult.of(score.getScore(), dealer.score.getScore());
-    }
-
     @Override
     public boolean isDrawable() {
         return score.getScore() < DRAW_CARD_PIVOT;
