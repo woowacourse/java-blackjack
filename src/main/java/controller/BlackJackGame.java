@@ -12,7 +12,7 @@ public class BlackJackGame {
     public static final String COMMA = ",";
     public static final int ADDITIONAL_DRAW_COUNT = 1;
     public static final int INITIAL_DRAW_COUNT = 2;
-    public static final int HIT_BOUNDARY = 16;
+    public static final int DEALER_HIT_BOUNDARY = 16;
     public static final int BLACK_JACK_COUNT = 21;
 
     public static void play() {
@@ -43,7 +43,7 @@ public class BlackJackGame {
     }
 
     private static void drawCardEachPlayer(Deck deck, Player player) {
-        while (!player.isMoreThanBlackJack()) {
+        while (player.isHitBound()) {
             Answer answer = Answer.getYesOrNoByValue(InputView.inputYesOrNo(player));
             if (!answer.isYes()) {
                 break;

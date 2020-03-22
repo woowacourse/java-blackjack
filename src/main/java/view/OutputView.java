@@ -5,7 +5,7 @@ import model.*;
 import java.util.Map;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
-import static controller.BlackJackGame.HIT_BOUNDARY;
+import static controller.BlackJackGame.DEALER_HIT_BOUNDARY;
 import static model.Dealer.DEALER_NAME;
 
 public class OutputView {
@@ -59,7 +59,7 @@ public class OutputView {
         stringBuilder.append(NEW_LINE)
                 .append(dealer.getName())
                 .append("는 ")
-                .append(HIT_BOUNDARY)
+                .append(DEALER_HIT_BOUNDARY)
                 .append("이하라 한장의 카드를 더 받았습니다.");
         System.out.println(stringBuilder.toString());
     }

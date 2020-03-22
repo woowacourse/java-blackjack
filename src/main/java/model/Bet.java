@@ -4,6 +4,8 @@ import exception.BetFormatException;
 import exception.BetRangeException;
 import utils.StringUtils;
 
+import java.util.Objects;
+
 public class Bet {
     public static final double LOWER_BET_BOUND = 100;
 
@@ -14,15 +16,10 @@ public class Bet {
         this.bet = Double.parseDouble(input);
     }
 
-    public Bet(double input) {
-        validateRange(input);
-        this.bet = input;
-    }
-
     private void validate(String input) {
         StringUtils.validateString(input);
         validateFormat(input);
-        validateRange(Double.parseDouble(input));
+        validateRange(input);
     }
 
     private void validateFormat(String input) {
@@ -33,17 +30,26 @@ public class Bet {
         }
     }
 
-    private void validateRange(double input) {
-        if (input < LOWER_BET_BOUND) {
+    private void validateRange(String input) {
+        if (Double.parseDouble(input) < LOWER_BET_BOUND) {
             throw new BetRangeException("베팅금액은 100원 이상부터 입력 가능합니다.");
         }
     }
 
-    public Bet multiplyBet(double ratio) {
-        return new Bet(bet * ratio);
+    public double multiplyBet(double ratio) {
+        return bet * ratio;
     }
 
-    public double getBet() {
-        return bet;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bet bet1 = (Bet) o;
+        return Double.compare(bet1.bet, bet) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bet);
     }
 }

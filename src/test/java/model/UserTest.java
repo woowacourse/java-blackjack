@@ -31,8 +31,7 @@ public class UserTest {
     ));
     private Dealer notBustDealer = new Dealer(Arrays.asList(
             new Card(Symbol.KING, Type.DIAMOND),
-            new Card(Symbol.QUEEN, Type.DIAMOND),
-            new Card(Symbol.ACE, Type.DIAMOND)
+            new Card(Symbol.TWO, Type.DIAMOND)
     ));
 
     @Test
@@ -66,10 +65,12 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("moreThanBlackjack 테스트")
-    void isMoreThanBlackJackTest() {
-        assertThat(notBustPlayer.isMoreThanBlackJack()).isFalse();
-        assertThat(blackJackPlayer.isMoreThanBlackJack()).isTrue();
-        assertThat(bustPlayer.isMoreThanBlackJack()).isTrue();
+    @DisplayName("isHitBoundTest 테스트")
+    void isHitBoundTest() {
+        assertThat(notBustPlayer.isHitBound()).isTrue();
+        assertThat(blackJackPlayer.isHitBound()).isFalse();
+        assertThat(bustPlayer.isHitBound()).isFalse();
+        assertThat(notBustDealer.isHitBound()).isTrue();
+        assertThat(bustDealer.isHitBound()).isFalse();
     }
 }

@@ -17,7 +17,12 @@ public class Player extends User {
         this.bet = new Bet(Double.toString(LOWER_BET_BOUND));
     }
 
-    public Bet getMultiplyBet(double ratio) {
+    public double getMultiplyBet(double ratio) {
         return bet.multiplyBet(ratio);
+    }
+
+    @Override
+    public boolean isHitBound() {
+        return cardHand.isLowerThanBlackJack();
     }
 }

@@ -54,8 +54,8 @@ public class CardHand implements Iterable<Card> {
         return (getScore() == BLACK_JACK_COUNT) && (cards.size() == INITIAL_DRAW_COUNT);
     }
 
-    public boolean isMoreThanBlackJack() {
-        return getScore() >= BLACK_JACK_COUNT;
+    public boolean isLowerThanBlackJack() {
+        return getScore() < BLACK_JACK_COUNT;
     }
 
     public List<Card> getCards() {

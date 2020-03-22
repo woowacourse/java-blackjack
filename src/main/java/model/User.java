@@ -7,7 +7,7 @@ import java.util.List;
 
 import static controller.BlackJackGame.*;
 
-public class User implements Comparable<User> {
+public abstract class User implements Comparable<User> {
     protected final String name;
     protected final CardHand cardHand;
 
@@ -55,8 +55,10 @@ public class User implements Comparable<User> {
         return cardHand.isBlackJack();
     }
 
-    public boolean isMoreThanBlackJack() {
-        return cardHand.isMoreThanBlackJack();
+    public abstract boolean isHitBound();
+
+    public boolean isLowerThanBlackJack() {
+        return cardHand.isLowerThanBlackJack();
     }
 
     public int getScore() {
@@ -65,6 +67,14 @@ public class User implements Comparable<User> {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isLowerThan(User other) {
+        return this.getScore() < other.getScore();
+    }
+
+    public boolean isSameWith(User other) {
+        return this.getScore() == other.getScore();
     }
 
     @Override

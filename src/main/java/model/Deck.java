@@ -13,7 +13,7 @@ public class Deck {
 
     public Deck(List<Card> cards) {
         this.cards.addAll(cards);
-        Collections.shuffle(cards);
+        Collections.shuffle(this.cards);
     }
 
     public Card draw() {
