@@ -40,14 +40,14 @@ public class Card {
 	}
 
 	private boolean isSameCard(Denomination denomination, Suit suit) {
-		return isSameSymbol(denomination) && isSameType(suit);
+		return isSameDenomination(denomination) && isSameSuit(suit);
 	}
 
-	private boolean isSameSymbol(Denomination denomination) {
+	private boolean isSameDenomination(Denomination denomination) {
 		return this.denomination.equals(denomination);
 	}
 
-	private boolean isSameType(Suit suit) {
+	private boolean isSameSuit(Suit suit) {
 		return this.suit.equals(suit);
 	}
 

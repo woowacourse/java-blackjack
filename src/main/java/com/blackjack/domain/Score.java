@@ -1,37 +1,41 @@
 package com.blackjack.domain;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Score implements Comparable<Score> {
 	public static final int BLACKJACK_SCORE = 21;
-	private static final String SCORE_OUT_OF_RANGE_MESSAGE = "점수의 범위를 벗어났습니다.";
-	private static final int BUST_SCORE = 0;
-	private static final Map<Integer, Score> SCORE_CACHE = new HashMap<>();
-
-	static {
-		for (int score = BUST_SCORE; score <= BLACKJACK_SCORE; ++score) {
-			SCORE_CACHE.put(score, new Score(score));
-		}
-	}
+	private static final int ACE_UPWARD_CONDITION_UPPER_BOUND = 11;
+	private static final int ACE_UPWARD_SCORE = 10;
+	private static final int MIN_SCORE = 0;
+	private static final int MAX_SCORE = 30;
 
 	private final int score;
+	private final boolean isFirstDraw;
 
-	private Score(int score) {
-		validateBounds(score);
-		this.score = score;
+	public Score(int score) {
+		this(score, false);
 	}
 
-	public static Score valueOf(int value) {
-		return Optional.ofNullable(SCORE_CACHE.get(value))
-				.orElse(new Score(value));
+	public Score(int score, boolean isFirstDraw) {
+		validateBounds(score);
+		this.score = score;
+		this.isFirstDraw = isFirstDraw;
+	}
+
+	public static Score of(int score, boolean hasAce, boolean isFirstDraw) {
+		return new Score(computeByAce(score, hasAce), isFirstDraw);
+	}
+
+	private static int computeByAce(int score, boolean hasAce) {
+		if (hasAce && score <= ACE_UPWARD_CONDITION_UPPER_BOUND) {
+			return score + ACE_UPWARD_SCORE;
+		}
+		return score;
 	}
 
 	private void validateBounds(int score) {
-		if (score < BUST_SCORE) {
-			throw new IllegalArgumentException(SCORE_OUT_OF_RANGE_MESSAGE);
+		if (score < MIN_SCORE || score > MAX_SCORE) {
+			throw new IllegalArgumentException("점수의 범위를 벗어났습니다.");
 		}
 	}
 
@@ -40,10 +44,21 @@ public class Score implements Comparable<Score> {
 	}
 
 	public boolean isBust() {
-		return score == BUST_SCORE;
+		return score > BLACKJACK_SCORE;
 	}
 
-	@Override
+	public boolean isNotBust() {
+		return !isBust();
+	}
+
+	public boolean isBlackjack() {
+		return isFirstDraw && score == BLACKJACK_SCORE;
+	}
+
+	public boolean isNotBlackjack() {
+		return !isBlackjack();
+	}
+
 	public int compareTo(Score that) {
 		return Integer.compare(this.score, that.score);
 	}

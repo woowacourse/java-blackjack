@@ -15,7 +15,12 @@ public class InputView {
 		return SCANNER.nextLine();
 	}
 
-	public static String inputDrawDecideType(User player) {
+	public static int inputBettingMoney(String playerName) {
+		System.out.printf("%s의 베팅 금액은?\n", playerName);
+		return Integer.parseInt(SCANNER.nextLine());
+	}
+
+	public static String inputHitDecideType(User player) {
 		System.out.printf("%s은(는) 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
 		return SCANNER.nextLine();
 	}

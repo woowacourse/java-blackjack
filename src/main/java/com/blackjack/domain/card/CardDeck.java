@@ -1,7 +1,6 @@
 package com.blackjack.domain.card;
 
 import java.util.Collections;
-import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,10 +35,9 @@ public class CardDeck {
 	}
 
 	public Card pop() {
-		try {
-			return cards.pop();
-		} catch (EmptyStackException e) {
+		if (cards.isEmpty()) {
 			throw new EmptyCardDeckException();
 		}
+		return cards.pop();
 	}
 }
