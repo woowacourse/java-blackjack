@@ -37,7 +37,7 @@ public abstract class Gamer {
 		return hands.isBlackjack();
 	}
 
-	public boolean wins(int score) {
+	public boolean isWin(int score) {
 		return (score > Hands.BLACKJACK_SCORE) || ((this.scoreHands() <= Hands.BLACKJACK_SCORE) && (score
 			< this.scoreHands()));
 	}

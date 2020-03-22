@@ -39,10 +39,10 @@ public class GameResult {
 		if (player.isPush(dealer.scoreHands())) {
 			gameResult.put(player, new PushStrategy().calculate(player.getBettingMoney()));
 		}
-		if (player.wins(dealer.scoreHands())) {
+		if (player.isWin(dealer.scoreHands())) {
 			gameResult.put(player, new WinStrategy().calculate(player.getBettingMoney()));
 		}
-		if (player.wins(dealer.scoreHands()) && player.isBlackjack() && !dealer.isBlackjack()) {
+		if (player.isWin(dealer.scoreHands()) && player.isBlackjack() && !dealer.isBlackjack()) {
 			gameResult.put(player, new BlackjackWinStrategy().calculate(player.getBettingMoney()));
 		}
 	}
