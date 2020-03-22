@@ -112,7 +112,7 @@ public class Controller {
 	}
 
 	private static void progressDealer(Dealer dealer, Deck deck) {
-		while (dealer.canDraw()) {
+		while (dealer.canHit()) {
 			OutputView.printDealerDraw();
 			dealer.draw(deck.deal());
 		}
