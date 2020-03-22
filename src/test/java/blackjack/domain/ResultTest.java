@@ -17,39 +17,39 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResultTest {
 
     private Dealer dealer;
-    private Player player1;
-    private Player player2;
-    private Player player3;
-    private Player player4;
+    private Player pobi;
+    private Player hiro;
+    private Player rebecca;
+    private Player Jay;
 
     @BeforeEach
     void setup() {
         dealer = new Dealer();
-        player1 = new Player("pobi");
-        player2 = new Player("hiro");
-        player3 = new Player("rebecca");
-        player4 = new Player("Jay");
+        pobi = new Player("pobi");
+        hiro = new Player("hiro");
+        rebecca = new Player("rebecca");
+        Jay = new Player("Jay");
         dealer.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.SPADE, Symbol.EIGHT),
                         new Card(Suit.HEART, Symbol.TEN)
                 ));
-        player1.receiveInitialCards(
+        pobi.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.SPADE, Symbol.ACE),
                         new Card(Suit.CLUB, Symbol.TEN)
                 ));
-        player2.receiveInitialCards(
+        hiro.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.CLUB, Symbol.TEN),
                         new Card(Suit.CLUB, Symbol.KING)
                 ));
-        player3.receiveInitialCards(
+        rebecca.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.DIAMOND, Symbol.FOUR),
                         new Card(Suit.CLUB, Symbol.KING)
                 ));
-        player4.receiveInitialCards(
+        Jay.receiveInitialCards(
                 Arrays.asList(
                         new Card(Suit.CLUB, Symbol.EIGHT),
                         new Card(Suit.CLUB, Symbol.KING)
@@ -60,10 +60,10 @@ public class ResultTest {
     @Test
     @DisplayName("승, 무, 패 결과가 잘 나오는지 확인")
     void checkResult() {
-        assertThat(Result.of(dealer, player1)).isEqualTo(Result.BLACKJACK);
-        assertThat(Result.of(dealer, player2)).isEqualTo(Result.WIN);
-        assertThat(Result.of(dealer, player3)).isEqualTo(Result.LOSE);
-        assertThat(Result.of(dealer, player4)).isEqualTo(Result.DRAW);
+        assertThat(Result.of(dealer, pobi)).isEqualTo(Result.BLACKJACK);
+        assertThat(Result.of(dealer, hiro)).isEqualTo(Result.WIN);
+        assertThat(Result.of(dealer, rebecca)).isEqualTo(Result.LOSE);
+        assertThat(Result.of(dealer, Jay)).isEqualTo(Result.DRAW);
     }
 
     @Test

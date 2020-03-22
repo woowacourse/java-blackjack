@@ -14,16 +14,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
-    Card card1, card2, card3;
+    Card cardClubSix, cardHeartKing, cardDiamondAce;
     List<Card> initialCards;
     Player player;
 
     @BeforeEach
     void setUp() {
-        card1 = new Card(Suit.CLUB, Symbol.SIX);
-        card2 = new Card(Suit.HEART, Symbol.KING);
-        card3 = new Card(Suit.DIAMOND, Symbol.ACE);
-        initialCards = Arrays.asList(card1, card2);
+        cardClubSix = new Card(Suit.CLUB, Symbol.SIX);
+        cardHeartKing = new Card(Suit.HEART, Symbol.KING);
+        cardDiamondAce = new Card(Suit.DIAMOND, Symbol.ACE);
+        initialCards = Arrays.asList(cardClubSix, cardHeartKing);
         player = new Player("pobi", 10000);
         player.receiveInitialCards(initialCards);
     }
@@ -31,7 +31,7 @@ public class PlayerTest {
     @Test
     @DisplayName("사용자가 초기 카드를 받는 것을 테스트")
     void receiveInitialCardsTest() {
-        assertThat(player.getCards()).isEqualTo(Arrays.asList(card1, card2));
+        assertThat(player.getCards()).isEqualTo(Arrays.asList(cardClubSix, cardHeartKing));
     }
 
     @Test
@@ -51,14 +51,14 @@ public class PlayerTest {
     @Test
     @DisplayName("사용자가 처음 받은 카드 두장을 출력하는 기능 확인")
     void displayPlayerInitialCardInfoTest() {
-        assertThat(player.getInitialCards()).isEqualTo(Arrays.asList(card1, card2));
+        assertThat(player.getInitialCards()).isEqualTo(Arrays.asList(cardClubSix, cardHeartKing));
     }
 
     @Test
     @DisplayName("사용자가 갖고 있는 카드 정보를 모두 출력하는 기능 확인")
     void displayPlayerCardInfoTest() {
-        player.receiveCard(card3);
-        assertThat(player.getCards()).isEqualTo(Arrays.asList(card1, card2, card3));
+        player.receiveCard(cardDiamondAce);
+        assertThat(player.getCards()).isEqualTo(Arrays.asList(cardClubSix, cardHeartKing, cardDiamondAce));
     }
 
     @Test
