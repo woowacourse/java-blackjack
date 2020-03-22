@@ -13,7 +13,8 @@ public class MoneyTest {
 	@Test
 	void Should_ThrowException_When_NotInteger() {
 		assertThatThrownBy(() -> Money.of("a"))
-			.isInstanceOf(NumberFormatException.class);
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("양수");
 	}
 
 	@Test
