@@ -1,11 +1,11 @@
 package domains.user;
 
-	import java.util.Arrays;
-	import java.util.Objects;
+import java.util.Arrays;
+import java.util.Objects;
 
-	import domains.card.Deck;
-	import domains.result.ResultType;
-	import domains.user.name.PlayerName;
+import domains.card.Deck;
+import domains.result.ResultType;
+import domains.user.name.PlayerName;
 
 public class Player extends User {
 	private static final String YES = "y";
@@ -27,7 +27,7 @@ public class Player extends User {
 		checkNullOrEmpty(answer);
 		checkYesOrNo(answer);
 
-		if (YES.equals(answer) && !isBurst()) {
+		if (YES.equals(answer)) {
 			hit(deck);
 			return true;
 		}

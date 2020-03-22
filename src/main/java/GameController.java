@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import domains.card.Deck;
-import domains.result.GameResultFactory;
+import domains.result.GameResult;
 import domains.result.Profits;
 import domains.result.ResultType;
 import domains.user.Dealer;
@@ -22,9 +22,9 @@ class GameController {
 
 		hitOrStay(players, dealer, deck);
 
-		Map<Player, ResultType> playerResult = GameResultFactory.create(players, dealer);
+		Map<Player, ResultType> playersGameResult = GameResult.create(players, dealer);
 		OutputView.printAllHands(players, dealer);
-		OutputView.printGameResult(new Profits(playerResult, playersBettingMoney));
+		OutputView.printGameResult(new Profits(playersGameResult, playersBettingMoney));
 	}
 
 	private Map<Player, BettingMoney> bet(Players players) {

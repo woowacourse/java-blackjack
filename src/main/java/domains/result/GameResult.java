@@ -1,5 +1,6 @@
 package domains.result;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import domains.user.Dealer;
@@ -7,13 +8,13 @@ import domains.user.Player;
 import domains.user.Players;
 
 public class GameResult {
-	private Map<Player, ResultType> playerResult;
+	public static Map<Player, ResultType> create(Players players, Dealer dealer) {
+		Map<Player, ResultType> playerResult = new HashMap<>();
 
-	public GameResult(Players players, Dealer dealer) {
-		this.playerResult = GameResultFactory.create(players, dealer);
-	}
-
-	public ResultType getWinOrLose(Player player) {
-		return playerResult.get(player);
+		for (Player player : players) {
+			ResultType resultType = player.checkResultType(dealer);
+			playerResult.put(player, resultType);
+		}
+		return playerResult;
 	}
 }

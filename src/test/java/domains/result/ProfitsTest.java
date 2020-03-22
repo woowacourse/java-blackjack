@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -65,7 +64,7 @@ class ProfitsTest {
 		playersBettingMoney.put(havi, new BettingMoney("50000"));
 
 		Dealer dealer = new Dealer(dealerHands);
-		Map<Player, ResultType> gameResult = GameResultFactory.create(players, dealer);
+		Map<Player, ResultType> gameResult = GameResult.create(players, dealer);
 
 		return Stream.of(
 			Arguments.of(players, gameResult, playersBettingMoney)
