@@ -3,15 +3,12 @@ package view;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
-import domain.result.DealerResult;
-import domain.result.Result;
 import domain.user.Dealer;
 import domain.user.Participant;
 import domain.user.Player;
 import domain.user.Players;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class OutputView {
     static void printEnterPlayerNames() {
@@ -85,22 +82,22 @@ public class OutputView {
     }
 
     public static void printResultMessage() {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public static void printDealerResult(DealerResult result) {
-        System.out.print("딜러 : ");
-        for (Entry<Result, Integer> entry : result.getDealerResult().entrySet()) {
-            System.out.printf("%d%s ", entry.getValue(), entry.getKey());
-        }
-        System.out.println();
+    public static void printDealerResult(int dealerRevenue) {
+        System.out.printf("딜러 : %d\n", dealerRevenue);
     }
 
-    public static void printPlayerResult(String name, Result result) {
-        System.out.println(name + ": " + result);
+    public static void printPlayerResult(String name, int revenue) {
+        System.out.printf("%s: %d\n", name, revenue);
     }
 
     public static void printExceptionMessage(Exception e) {
         System.out.println(e.getMessage());
+    }
+
+    public static void printEnterBetAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
     }
 }

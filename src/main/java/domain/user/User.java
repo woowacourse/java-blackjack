@@ -26,7 +26,11 @@ public abstract class User implements Participant {
         cards.put(deck.deal());
     }
 
-   public List<Card> getCards() {
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public List<Card> getCards() {
         return cards.getCards();
     }
 

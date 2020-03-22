@@ -1,28 +1,20 @@
 package domain.result;
 
+import java.util.function.Function;
+
 public enum Result {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN(betAmount -> (int) (betAmount * 1.5)),
+    WIN(betAmount -> betAmount),
+    DRAW(betAmount -> 0),
+    LOSE(betAmount -> -betAmount);
 
-    private final String korean;
+    private final Function<Integer, Integer> getRevenue;
 
-    Result(final String resultKorean) {
-        this.korean = resultKorean;
+    Result(final Function<Integer, Integer> getRevenue) {
+        this.getRevenue = getRevenue;
     }
 
-    public Result getOpponentResult() {
-        if (this == Result.WIN) {
-            return Result.LOSE;
-        }
-        if (this == Result.LOSE) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
-    }
-
-    @Override
-    public String toString() {
-        return this.korean;
+    public int revenueOf(int betAmount) {
+        return getRevenue.apply(betAmount);
     }
 }

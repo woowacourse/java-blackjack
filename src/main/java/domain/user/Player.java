@@ -5,17 +5,26 @@ import domain.result.Result;
 
 public class Player extends User {
     private Name name;
+    private int betAmount;
 
-    public Player(String name) {
+    public Player(String name, int betAmount) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("이름이 비어있습니다.");
         }
+        if (betAmount < 0) {
+            throw new IllegalArgumentException("배팅 금액이 음수일 수 없습니다.");
+        }
         this.name = new Name(name);
+        this.betAmount = betAmount;
     }
 
     @Override
     public boolean canReceiveCard() {
         return this.isSmallerThan(Cards.BLACKJACK_SCORE);
+    }
+
+    public int calculateRevenue(Dealer dealer) {
+        return this.calculateResult(dealer).revenueOf(this.betAmount);
     }
 
     public Result calculateResult(Dealer dealer) {
@@ -24,6 +33,9 @@ public class Player extends User {
         }
         if (isPlayerLose(dealer)) {
             return Result.LOSE;
+        }
+        if (isBlackJack()) {
+            return Result.BLACKJACK_WIN;
         }
         return Result.WIN;
     }
