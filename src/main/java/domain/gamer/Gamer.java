@@ -13,6 +13,7 @@ public abstract class Gamer {
 	private static final int ACE_HIDDEN_SCORE = 10;
 	private static final int BLACKJACK_CARD_SIZE = 2;
 	private static final String NAME_PATTERN = "[a-zA-Z가-힣]*";
+	private static final String DEFAULT_MONEY = "0";
 
 	private String name;
 	private final List<Card> cards;
@@ -26,6 +27,10 @@ public abstract class Gamer {
 		this.name = name;
 		cards = new ArrayList<>();
 		this.money = new Money(money);
+	}
+
+	public Gamer(String name) {
+		this(name, DEFAULT_MONEY);
 	}
 
 	private boolean isInvalidName(String name) {

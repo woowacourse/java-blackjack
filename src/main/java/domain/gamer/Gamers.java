@@ -28,8 +28,8 @@ public class Gamers {
 	public GameResult generateGameResults() {
 		return players.stream()
 			.collect(collectingAndThen(toMap(player -> player,
-				player -> player.findMatchResult(dealer)
-					.getCalculateEarn().apply(player.getMoney()), (a, b) -> a,
+				player -> player.getMoney().multiply(player.findMatchResult(dealer).getMoneyRatio()),
+				(a, b) -> a,
 				LinkedHashMap::new), GameResult::new));
 	}
 

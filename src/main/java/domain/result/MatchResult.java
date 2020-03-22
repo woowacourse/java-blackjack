@@ -3,35 +3,36 @@ package domain.result;
 import static domain.gamer.Gamer.*;
 
 import java.util.Arrays;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
 
-import domain.gamer.Money;
+import domain.result.resultStrategy.BustStrategy;
+import domain.result.resultStrategy.DrawStrategy;
+import domain.result.resultStrategy.LoseStrategy;
+import domain.result.resultStrategy.MatchResultStrategy;
+import domain.result.resultStrategy.WinStrategy;
 
 public enum MatchResult {
-	BUST((playerScore, dealerScore) -> playerScore >= BUST_NUMBER, money -> money.multiply(-1)),
-	WIN((playerScore, dealerScore) -> playerScore > dealerScore, money -> money.multiply(1)),
-	DRAW((playerScore, dealerScore) -> playerScore == dealerScore, money -> money.multiply(0)),
-	LOSE((playerScore, dealerScore) -> playerScore < dealerScore, money -> money.multiply(-1)),
-	BLACKJACK((playerScore, dealerScore) -> playerScore == BLACKJACK_NUMBER, money -> money.multiply(1.5));
+	BUST(new BustStrategy(), -1),
+	WIN(new WinStrategy(), 1),
+	DRAW(new DrawStrategy(), 0),
+	LOSE(new LoseStrategy(), -1),
+	BLACKJACK((playerScore, dealerScore) -> playerScore == BLACKJACK_NUMBER, 1.5);
 
-	private final BiPredicate<Integer, Integer> matchResultStrategy;
-	private final Function<Money, Money> calculateEarn;
+	private final MatchResultStrategy matchResultStrategy;
+	private final double moneyRatio;
 
-	MatchResult(BiPredicate<Integer, Integer> matchResultStrategy,
-		Function<Money, Money> calculateEarn) {
+	MatchResult(MatchResultStrategy matchResultStrategy, double moneyRatio) {
 		this.matchResultStrategy = matchResultStrategy;
-		this.calculateEarn = calculateEarn;
+		this.moneyRatio = moneyRatio;
 	}
 
 	public static MatchResult of(int playerScore, int dealerScore) {
 		return Arrays.stream(MatchResult.values())
-			.filter(x -> x.matchResultStrategy.test(playerScore, dealerScore))
+			.filter(x -> x.matchResultStrategy.matchResultPredicate(playerScore, dealerScore))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("잘못된 값입니다."));
 	}
 
-	public Function<Money, Money> getCalculateEarn() {
-		return calculateEarn;
+	public double getMoneyRatio() {
+		return moneyRatio;
 	}
 }
