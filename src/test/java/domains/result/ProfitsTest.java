@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -33,10 +34,17 @@ class ProfitsTest {
 		Map<Player, BettingMoney> playersBettingMoney) {
 		Map<Player, ProfitMoney> playerProfits = new Profits(gameResult, playersBettingMoney).getPlayerProfits();
 
+		Iterator<Player> iterator = players.iterator();
+		Player blackjackWinner = iterator.next();
+		Player winner = iterator.next();
+		Player drawer = iterator.next();
+		Player loser = iterator.next();
+
 		Map<Player, ProfitMoney> expectedProfits = new HashMap<>();
-		expectedProfits.put(players.getPlayers().get(0), new ProfitMoney(1500));
-		expectedProfits.put(players.getPlayers().get(1), new ProfitMoney(-50000));
-		expectedProfits.put(players.getPlayers().get(2), new ProfitMoney(0));
+		expectedProfits.put(blackjackWinner, new ProfitMoney(15000));
+		expectedProfits.put(winner, new ProfitMoney(20000));
+		expectedProfits.put(drawer, new ProfitMoney(0));
+		expectedProfits.put(loser, new ProfitMoney(-30000));
 
 		assertThat(playerProfits).isEqualTo(expectedProfits);
 	}
@@ -47,21 +55,24 @@ class ProfitsTest {
 		Card eight = new Card(Symbol.EIGHT, Type.SPADE);
 		Card king = new Card(Symbol.KING, Type.HEART);
 
-		Hands winHands = new Hands(new ArrayList<>(Arrays.asList(ace, king)));
-		Hands loseHands = new Hands(new ArrayList<>(Arrays.asList(six, ace)));
+		Hands blackjackWinHands = new Hands(new ArrayList<>(Arrays.asList(ace, king)));
+		Hands winHands = new Hands(new ArrayList<>(Arrays.asList(eight, ace, king)));
 		Hands drawHands = new Hands(new ArrayList<>(Arrays.asList(eight, king)));
+		Hands loseHands = new Hands(new ArrayList<>(Arrays.asList(six, ace)));
 		Hands dealerHands = new Hands(new ArrayList<>(Arrays.asList(eight, king)));
 
-		Player ddoring = new Player(new PlayerName("또링"), winHands);
-		Player smallbear = new Player(new PlayerName("작은곰"), loseHands);
+		Player ddoring = new Player(new PlayerName("또링"), blackjackWinHands);
+		Player pobi = new Player(new PlayerName("포비"), winHands);
 		Player havi = new Player(new PlayerName("하비"), drawHands);
+		Player smallbear = new Player(new PlayerName("작은곰"), loseHands);
 
-		Players players = new Players(Arrays.asList(ddoring, smallbear, havi));
+		Players players = new Players(Arrays.asList(ddoring, pobi, havi, smallbear));
 
 		Map<User, BettingMoney> playersBettingMoney = new HashMap<>();
-		playersBettingMoney.put(ddoring, new BettingMoney("1000"));
-		playersBettingMoney.put(smallbear, new BettingMoney("50000"));
-		playersBettingMoney.put(havi, new BettingMoney("50000"));
+		playersBettingMoney.put(ddoring, new BettingMoney("10000"));
+		playersBettingMoney.put(pobi, new BettingMoney("20000"));
+		playersBettingMoney.put(smallbear, new BettingMoney("30000"));
+		playersBettingMoney.put(havi, new BettingMoney("40000"));
 
 		Dealer dealer = new Dealer(dealerHands);
 		Map<Player, ResultType> gameResult = GameResult.create(players, dealer);

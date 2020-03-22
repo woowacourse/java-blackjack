@@ -24,7 +24,7 @@ public class Player extends User {
 		this(name, new Hands(deck));
 	}
 
-	public BettingMoney bet(String bettingMoney){
+	public BettingMoney bet(String bettingMoney) {
 		return new BettingMoney(bettingMoney);
 	}
 
@@ -56,7 +56,7 @@ public class Player extends User {
 		return Arrays.stream(ResultType.values())
 			.filter(resultType -> resultType.getJudgeResultType().apply(this, dealer))
 			.findFirst()
-			.get();
+			.orElseThrow(()->new InvalidPlayerException(InvalidPlayerException.WRONG_RESULT_TYPE));
 	}
 
 	public String getName() {

@@ -30,14 +30,14 @@ class GameResultTest {
 	@ParameterizedTest
 	@MethodSource("gameData")
 	void getWinOrLose_GivenPlayers_WinAndDraw(Players players, Dealer dealer) {
-		GameResult gameResult = new GameResult(players, dealer);
+		Map<Player, ResultType> gameResult = GameResult.create(players, dealer);
 
 		Iterator<Player> iterator = players.iterator();
 		Player ddoring = iterator.next();
 		Player smallBear = iterator.next();
 
-		assertThat(gameResult.getWinOrLose(ddoring)).isEqualTo(ResultType.BLACKJACK);
-		assertThat(gameResult.getWinOrLose(smallBear)).isEqualTo(ResultType.DRAW);
+		assertThat(gameResult.get(ddoring)).isEqualTo(ResultType.BLACKJACK);
+		assertThat(gameResult.get(smallBear)).isEqualTo(ResultType.DRAW);
 	}
 
 	static Stream<Arguments> gameData() {

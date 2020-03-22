@@ -23,10 +23,6 @@ public class Players implements Iterable<Player> {
 		}
 	}
 
-	public List<Player> getPlayers() {
-		return players;
-	}
-
 	@Override
 	public Iterator<Player> iterator() {
 		return players.iterator();
