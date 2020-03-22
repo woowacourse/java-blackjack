@@ -8,9 +8,8 @@ import static domain.user.User.NULL_CAN_NOT_BE_A_PARAMETER_EXCEPTION_MESSAGE;
 
 public class Cards {
 	private static final int BLACKJACK_SCORE = 21;
-	private static final int BURST_START_BOUNDARY = 22;
-	private static final int BURST_SCORE = 0;
 	private static final int INITIAL_CARDS_SIZE = 2;
+	private static final int BURST_SCORE = 0;
 
 	private List<Card> cards;
 
@@ -28,25 +27,33 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public boolean isNotBlackJack() {
-		return !(hasInitialSize() && calculateScore() == BLACKJACK_SCORE);
-	}
-
 	public int calculateScore() {
-		int score = cards.stream()
+		int rawScore = cards.stream()
 				.mapToInt(Card::getScore)
 				.sum();
 
-		if (score >= BURST_START_BOUNDARY) {
+		int specialScore = cards.stream()
+				.filter(card -> card.getSymbol().getPromotableJudge(rawScore))
+				.mapToInt(card -> card.getSymbol().getPromotionScore())
+				.findFirst()
+				.orElse(BURST_SCORE);
+
+		if (rawScore + specialScore > BLACKJACK_SCORE) {
 			return BURST_SCORE;
 		}
+		return rawScore + specialScore;
+	}
 
-		int finalScore = score;
-		score = cards.stream()
-				.mapToInt(card -> card.getScore(finalScore))
-				.sum();
+	public boolean isNotBurst() {
+		return !cards.isEmpty() && calculateScore() != BURST_SCORE;
+	}
 
-		return score;
+	public boolean isNotBlackjack() {
+		return !(hasInitialSize() && calculateScore() == BLACKJACK_SCORE);
+	}
+
+	public boolean isBlackJack() {
+		return hasInitialSize() && calculateScore() == BLACKJACK_SCORE;
 	}
 
 	public boolean hasInitialSize() {

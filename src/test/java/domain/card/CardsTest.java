@@ -45,10 +45,18 @@ public class CardsTest {
 		assertEquals(expected, cards.toList());
 	}
 
-	@DisplayName("Ace한 장일 경우 11점 반환 확인")
+	@DisplayName("Ace 한 장일 경우 11점 반환 확인")
 	@Test
 	void getPoint_When_One_Ace_Card_Return_11() {
 		assertThat(cards.calculateScore()).isEqualTo(11);
+	}
+
+	@DisplayName("Ace 두 장일 경우 12점 반환 확인")
+	@Test
+	void getPoint_When_Two_Ace_Card_Return_12() {
+		Card card1 = new Card(Symbol.ACE, Type.SPADE);
+		cards.add(card1);
+		assertThat(cards.calculateScore()).isEqualTo(12);
 	}
 
 	@DisplayName("2장의 카드를 가지고 있을 떄 hasInitialSize()가 true반환")

@@ -1,11 +1,10 @@
 package domain.card;
 
-import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public enum Symbol {
-	ACE(1, "A", userScore -> userScore <= 11 && userScore + 11 <= 21, () -> 1 + 10),
+	ACE(1, "A", userScore -> userScore <= 11, () -> 10),
 	TWO(2, "2"),
 	THREE(3, "3"),
 	FOUR(4, "4"),
@@ -21,27 +20,26 @@ public enum Symbol {
 
 	private final int score;
 	private final String name;
-	private Predicate<Integer> scoreJudge;
-	private Supplier<Integer> scoreConverter;
+	private Predicate<Integer> promotableJudge;
+	private Supplier<Integer> promotionScore;
 
 	Symbol(int score, String name) {
-		this(score, name, userScore -> true, () -> score);
+		this(score, name, userScore -> false, () -> 0);
 	}
 
-	Symbol(int score, String name, Predicate<Integer> scoreJudge, Supplier<Integer> scoreConverter) {
+	Symbol(int score, String name, Predicate<Integer> promotableJudge, Supplier<Integer> promotionScore) {
 		this.score = score;
 		this.name = name;
-		this.scoreJudge = scoreJudge;
-		this.scoreConverter = scoreConverter;
+		this.promotableJudge = promotableJudge;
+		this.promotionScore = promotionScore;
 	}
 
-	public int getConvertedScoreByJudge(int userScore) {
-		return Arrays.stream(Symbol.values())
-				.filter(symbol -> symbol.equals(this))
-				.filter(symbol -> symbol.scoreJudge.test(userScore))
-				.mapToInt(symbol -> symbol.scoreConverter.get())
-				.findFirst()
-				.orElse(this.score);
+	public boolean getPromotableJudge(int userScore) {
+		return promotableJudge.test(userScore);
+	}
+
+	public int getPromotionScore() {
+		return promotionScore.get();
 	}
 
 	public int getScore() {

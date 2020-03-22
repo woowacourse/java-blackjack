@@ -80,7 +80,7 @@ public class UserTest {
 		Card card1 = new Card(Symbol.QUEEN, Type.HEART);
 		Card card2 = new Card(Symbol.SEVEN, Type.HEART);
 
-		User player = new Player("toney");
+		User player = new Player("toney", 10);
 		player.addCard(card1);
 		player.addCard(card2);
 
@@ -94,7 +94,7 @@ public class UserTest {
 		Card card2 = new Card(Symbol.SEVEN, Type.HEART);
 		Card card3 = new Card(Symbol.FIVE, Type.HEART);
 
-		User player = new Player("toney");
+		User player = new Player("toney", 10);
 		player.addCard(card1);
 		player.addCard(card2);
 		player.addCard(card3);

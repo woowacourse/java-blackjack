@@ -17,25 +17,20 @@ class ResultTest {
 		assertThat(new Result(new HashMap<>())).isInstanceOf(Result.class);
 	}
 
-	@DisplayName("승리 플레이어 1, 무승부 플레이어 2, 패배 플레이어 3명일 경우 Result 반환 확인")
+	@DisplayName("승리 플레이어 1, 무승부 플레이어 2, 패배 플레이어 3명일 경우 결과에 맞는 dealerRevenueResult 반환 확인")
 	@Test
 	void createDealerResult_When_One_Win_Two_Draw_Three_Lose_From_Players() {
 		Map<Player, ResultType> values = new HashMap<>();
-		values.put(new Player("1"), ResultType.WIN);
-		values.put(new Player("2"), ResultType.DRAW);
-		values.put(new Player("3"), ResultType.DRAW);
-		values.put(new Player("4"), ResultType.LOSE);
-		values.put(new Player("5"), ResultType.LOSE);
-		values.put(new Player("6"), ResultType.LOSE);
-
+		values.put(new Player("1", 10), ResultType.WIN);
+		values.put(new Player("2", 10), ResultType.DRAW);
+		values.put(new Player("3", 10), ResultType.DRAW);
+		values.put(new Player("4", 10), ResultType.LOSE);
+		values.put(new Player("5", 10), ResultType.LOSE);
+		values.put(new Player("6", 10), ResultType.LOSE);
 		Result result = new Result(values);
 
-		Map<ResultType, Long> expected = new HashMap<>();
-		expected.put(ResultType.LOSE, 1L);
-		expected.put(ResultType.DRAW, 2L);
-		expected.put(ResultType.WIN, 3L);
-
-		Map<ResultType, Long> actual = result.createDealerResult();
+		double expected = 20;
+		double actual = result.createDealerRevenueResult();
 
 		assertThat(actual).isEqualTo(expected);
 	}

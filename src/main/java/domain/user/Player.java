@@ -5,21 +5,26 @@ import domain.user.strategy.draw.PlayerDrawStrategy;
 import java.util.Objects;
 
 public class Player extends User {
-	public static final String INPUT_EMPTY_NAME = "이름이 빈 문자열입니다.";
+	private final Name name;
+	private final BettingMoney bettingMoney;
 
-	private final String name;
+	public Player(String name, int bettingMoney) {
+		this(new Name(name), new BettingMoney(bettingMoney));
+	}
 
-	public Player(String name) {
-		if (name.isEmpty()) {
-			throw new IllegalArgumentException(INPUT_EMPTY_NAME);
-		}
+	public Player(Name name, BettingMoney bettingMoney) {
 		this.name = name;
+		this.bettingMoney = bettingMoney;
 		super.drawStrategy = new PlayerDrawStrategy();
+	}
+
+	public double getBettingMoney() {
+		return bettingMoney.getBettingMoney();
 	}
 
 	@Override
 	public String toString() {
-		return name;
+		return name.toString();
 	}
 
 	@Override
