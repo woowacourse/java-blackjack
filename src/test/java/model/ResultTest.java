@@ -38,6 +38,14 @@ public class ResultTest {
             new Card(Symbol.ACE, Type.HEART)
     ));
 
+    @Test
+    @DisplayName("플레이어만 첫 패가 21인 경우 BLACKJACK")
+    void blackJackTest() {
+        assertThat(Result.compete(notBustDealer, blackJackPlayer)).isEqualTo(Result.BLACKJACK);
+        assertThat(Result.compete(bustDealer, blackJackPlayer)).isEqualTo(Result.BLACKJACK);
+
+    }
+
     @DisplayName("딜러와 플레이어 모두 21을 넘긴 경우 LOSE")
     @Test
     void bothBustTest() {
