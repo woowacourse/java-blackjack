@@ -1,11 +1,9 @@
 package domain.user;
 
-import domain.card.Deck;
 import domain.card.DeckFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -19,9 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayersInfoTest {
 
     private PlayersInfo playersInfo;
-
-    @Mock
-    private Deck deck;
 
     @BeforeEach
     void setUp() {

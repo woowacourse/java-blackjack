@@ -2,10 +2,7 @@ package domain.user;
 
 import domain.card.Deck;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -47,10 +44,10 @@ public class PlayersInfo {
     }
 
     public List<Player> getPlayers() {
-        return new ArrayList<>(playersInfo.keySet());
+        return Collections.unmodifiableList(new ArrayList<>(playersInfo.keySet()));
     }
 
     public Map<Player, BettingMoney> getPlayersInfo() {
-        return playersInfo;
+        return Collections.unmodifiableMap(playersInfo);
     }
 }

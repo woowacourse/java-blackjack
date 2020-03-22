@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class User implements Comparable<User> {
@@ -44,6 +45,6 @@ public abstract class User implements Comparable<User> {
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return Collections.unmodifiableList(cards.getCards());
     }
 }

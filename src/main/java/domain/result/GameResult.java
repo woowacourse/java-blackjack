@@ -5,6 +5,7 @@ import domain.user.Player;
 import domain.user.PlayersInfo;
 import domain.user.User;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,10 +39,10 @@ public class GameResult {
     }
 
     public Map<User, Integer> getUserToCardPoint() {
-        return userToCardPoint;
+        return Collections.unmodifiableMap(userToCardPoint);
     }
 
     public Map<Player, Integer> getProfitOfPlayers() {
-        return profitOfPlayers;
+        return Collections.unmodifiableMap(profitOfPlayers);
     }
 }
