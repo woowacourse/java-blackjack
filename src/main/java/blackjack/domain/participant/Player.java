@@ -14,6 +14,10 @@ public class Player extends Participant {
         super(name);
     }
 
+    public Player(String name) {
+        super(name);
+    }
+
     @Override
     public boolean canGetMoreCard() {
         return !ResultRule.isBust(cards);

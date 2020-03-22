@@ -3,8 +3,8 @@ package blackjack.view;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.ResponseDTO.ProfitDTO;
-import blackjack.domain.result.ResponseDTO.WinningDTO;
+import blackjack.domain.result.responseDto.ProfitDto;
+import blackjack.domain.result.responseDto.WinningDto;
 
 import java.util.List;
 
@@ -55,20 +55,20 @@ public class OutputView {
         System.out.println(String.format(CARD_FINAL_INFO_MSG, name, cardInfo, score));
     }
 
-    public static void printFinalResult(List<WinningDTO> winningDTOS) {
+    public static void printFinalResult(List<WinningDto> winningDtos) {
         System.out.println();
         System.out.println(FINAL_RESULT_ANNOUNCE_MSG);
 
-        for (WinningDTO dto : winningDTOS) {
+        for (WinningDto dto : winningDtos) {
             System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), dto.getRecord()));
         }
     }
 
-    public static void printFinalProfit(List<ProfitDTO> profitDTOS) {
+    public static void printFinalProfit(List<ProfitDto> profitDtos) {
         System.out.println();
         System.out.println(FINAL_RESULT_ANNOUNCE_MSG);
 
-        for (ProfitDTO dto : profitDTOS) {
+        for (ProfitDto dto : profitDtos) {
             System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), dto.getProfit()));
         }
     }

@@ -2,8 +2,6 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.BettingPlayer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.attribute.Money;
-import blackjack.domain.participant.attribute.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,10 +27,10 @@ class PlayersResultsTest {
     @Test
     void test2() {
         List<PlayerResult> results = new ArrayList<>();
-        results.add(new PlayerResult(new Player(new Name("포비")), LOSE));
-        results.add(new PlayerResult(new Player(new Name("쪼밀리")), LOSE));
-        results.add(new PlayerResult(new Player(new Name("타미")), LOSE));
-        results.add(new PlayerResult(new Player(new Name("CU")), WIN));
+        results.add(new PlayerResult(new Player("포비"), LOSE));
+        results.add(new PlayerResult(new Player("쪼밀리"), LOSE));
+        results.add(new PlayerResult(new Player("타미"), LOSE));
+        results.add(new PlayerResult(new Player("CU"), WIN));
 
 
         PlayersResults playersResults = new PlayersResults(results);
@@ -48,10 +46,10 @@ class PlayersResultsTest {
     @Test
     void test3() {
         List<PlayerResult> results = new ArrayList<>();
-        results.add(new PlayerResult(new BettingPlayer(new Name("포비"), new Money(1000)), LOSE));
-        results.add(new PlayerResult(new BettingPlayer(new Name("쪼밀리"), new Money(1000)), LOSE));
-        results.add(new PlayerResult(new BettingPlayer(new Name("타미"), new Money(1000)), LOSE));
-        results.add(new PlayerResult(new BettingPlayer(new Name("CU"), new Money(1000)), WIN));
+        results.add(new PlayerResult(new BettingPlayer("포비", 1000), LOSE));
+        results.add(new PlayerResult(new BettingPlayer("쪼밀리", 1000), LOSE));
+        results.add(new PlayerResult(new BettingPlayer("타미", 1000), LOSE));
+        results.add(new PlayerResult(new BettingPlayer("CU", 1000), WIN));
 
         PlayersResults playersResults = new PlayersResults(results);
 

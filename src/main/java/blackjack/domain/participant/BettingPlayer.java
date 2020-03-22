@@ -15,6 +15,16 @@ public class BettingPlayer extends Player {
         this.money = money;
     }
 
+    public BettingPlayer(String name, int money) {
+        super(name);
+        this.money = new Money(money);
+    }
+
+    public BettingPlayer(Name name, int money) {
+        super(name);
+        this.money = new Money(money);
+    }
+
     public double computeProfit(ResultType type) {
         return money.computeProfit(type);
     }

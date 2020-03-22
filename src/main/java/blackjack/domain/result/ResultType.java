@@ -31,7 +31,7 @@ public enum ResultType {
         return word;
     }
 
-    public double getProfitRate() {
-        return profitRate;
+    public double computeProfit(double bettingMoney) {
+        return this.profitRate * bettingMoney;
     }
 }

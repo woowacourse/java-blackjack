@@ -7,13 +7,20 @@ import blackjack.domain.participant.attribute.Name;
 import java.util.List;
 import java.util.Objects;
 
+import static blackjack.domain.card.Card.NULL_ERR_MSG;
+
 public abstract class Participant {
     protected final Name name;
     protected final Cards cards = new Cards();
 
     public Participant(Name name) {
-        Objects.requireNonNull(name);
+        Objects.requireNonNull(name, NULL_ERR_MSG);
         this.name = name;
+    }
+
+    public Participant(String name) {
+        Objects.requireNonNull(name, NULL_ERR_MSG);
+        this.name = new Name(name);
     }
 
     public abstract boolean canGetMoreCard();

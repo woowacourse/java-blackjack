@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.participant.attribute.Name;
-
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -10,7 +8,7 @@ public class Dealer extends Participant {
     private static final int FIRST_CARD = 1;
 
     public Dealer() {
-        super(new Name(DEALER_NAME));
+        super(DEALER_NAME);
     }
 
     @Override

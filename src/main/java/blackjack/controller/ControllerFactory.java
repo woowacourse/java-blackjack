@@ -11,7 +11,7 @@ public class ControllerFactory {
     private ControllerFactory() {
     }
 
-    public static BlackJackController of(String game) {
+    public static BlackJackController createByIdentifier(String game) {
         Objects.requireNonNull(game, NULL_ERR_MSG);
 
         if (DEFAULT_GAME.equals(game)) {

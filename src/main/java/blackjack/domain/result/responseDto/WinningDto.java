@@ -1,14 +1,14 @@
-package blackjack.domain.result.ResponseDTO;
+package blackjack.domain.result.responseDto;
 
 import java.util.Objects;
 
 import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
-public class WinningDTO {
+public class WinningDto {
     private final String name;
     private final String record;
 
-    public WinningDTO(String name, String record) {
+    public WinningDto(String name, String record) {
         Objects.requireNonNull(name, NULL_ERR_MSG);
         Objects.requireNonNull(record, NULL_ERR_MSG);
         this.name = name;

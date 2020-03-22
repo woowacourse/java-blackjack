@@ -2,10 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.PlayersFactory;
 import blackjack.domain.participant.attribute.Money;
 import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.PlayersResults;
-import blackjack.domain.result.ResponseDTO.ProfitDTO;
+import blackjack.domain.result.responseDto.ProfitDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,7 +20,7 @@ public class BettingGame extends BlackJackController {
     protected Players createPlayers() {
         List<Name> names = createNames();
         List<Money> bettingMoneys = createMoneys(names);
-        return new Players(names, bettingMoneys);
+        return PlayersFactory.createBettingPlayers(names, bettingMoneys);
     }
 
     private List<Name> createNames() {
@@ -38,16 +39,16 @@ public class BettingGame extends BlackJackController {
     protected void showResult(Players players, Dealer dealer) {
         PlayersResults playersResults = players.createPlayerResults(dealer);
 
-        ProfitDTO dealerDTO = new ProfitDTO(dealer.name(), playersResults.computeDealerProfit());
+        ProfitDto dealerDto = new ProfitDto(dealer.name(), playersResults.computeDealerProfit());
 
-        List<ProfitDTO> playerDTOS = playersResults.getPlayersResults().stream()
-                .map(result -> new ProfitDTO(result.name(), result.computeProfit()))
+        List<ProfitDto> playerDtos = playersResults.stream()
+                .map(result -> new ProfitDto(result.name(), result.computeProfit()))
                 .collect(Collectors.toList());
 
-        List<ProfitDTO> profitDTOS = new ArrayList<>();
-        profitDTOS.add(dealerDTO);
-        profitDTOS.addAll(playerDTOS);
+        List<ProfitDto> profitDtos = new ArrayList<>();
+        profitDtos.add(dealerDto);
+        profitDtos.addAll(playerDtos);
 
-        OutputView.printFinalProfit(profitDTOS);
+        OutputView.printFinalProfit(profitDtos);
     }
 }

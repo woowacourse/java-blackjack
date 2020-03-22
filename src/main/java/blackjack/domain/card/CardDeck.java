@@ -7,6 +7,7 @@ import java.util.Queue;
 
 public class CardDeck {
     public static final int NUMBER_OF_FIRST_CARDS = 2;
+
     private final Queue<Card> cards;
 
     public CardDeck() {

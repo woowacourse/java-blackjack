@@ -19,7 +19,7 @@ public class Money {
 
     public double computeProfit(ResultType type) {
         Objects.requireNonNull(type, NULL_RESULT_TYPE_ERR_MSG);
-        return type.getProfitRate() * this.bettingMoney;
+        return type.computeProfit(this.bettingMoney);
     }
 }
 

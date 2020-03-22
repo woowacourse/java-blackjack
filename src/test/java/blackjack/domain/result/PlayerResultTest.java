@@ -1,7 +1,6 @@
 package blackjack.domain.result;
 
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.attribute.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,7 @@ class PlayerResultTest {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new PlayerResult(new Player(new Name("쪼밀리")), null))
+        assertThatThrownBy(() -> new PlayerResult(new Player("쪼밀리"), null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
@@ -33,7 +32,7 @@ class PlayerResultTest {
     @ParameterizedTest
     @CsvSource(value = {"WIN, true", "DRAW, false", "LOSE, false"})
     void test2(ResultType type, boolean expected) {
-        PlayerResult playerResult = new PlayerResult(new Player(new Name("쪼밀리")), ResultType.WIN);
+        PlayerResult playerResult = new PlayerResult(new Player("쪼밀리"), ResultType.WIN);
 
         boolean actual = playerResult.hasSameResult(type);
 

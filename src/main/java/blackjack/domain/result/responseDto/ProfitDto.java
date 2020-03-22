@@ -1,10 +1,10 @@
-package blackjack.domain.result.ResponseDTO;
+package blackjack.domain.result.responseDto;
 
-public class ProfitDTO {
+public class ProfitDto {
     private final String name;
     private final double profit;
 
-    public ProfitDTO(String name, double profit) {
+    public ProfitDto(String name, double profit) {
         this.name = name;
         this.profit = profit;
     }
