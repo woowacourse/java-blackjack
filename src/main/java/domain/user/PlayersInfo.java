@@ -1,13 +1,11 @@
 package domain.user;
 
 import domain.card.Deck;
-import view.dto.UserDto;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -33,15 +31,6 @@ public class PlayersInfo {
         );
     }
 
-    public void additionalDealOut(Deck deck, Function<UserDto, Boolean> isYes, Consumer<UserDto> showResult) {
-        playersInfo.forEach((player, bettingMoney) -> {
-            while (player.isAvailableToDraw() && isYes.apply(UserDto.of(player))) {
-                player.draw(deck);
-                showResult.accept(UserDto.of(player));
-            }
-        });
-    }
-
     public Map<Player, Integer> calculatePoint() {
         return playersInfo.keySet()
                 .stream()
@@ -59,5 +48,9 @@ public class PlayersInfo {
 
     public List<Player> getPlayers() {
         return new ArrayList<>(playersInfo.keySet());
+    }
+
+    public Map<Player, BettingMoney> getPlayersInfo() {
+        return playersInfo;
     }
 }

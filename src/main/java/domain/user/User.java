@@ -20,7 +20,7 @@ public abstract class User implements Comparable<User> {
         cards.add(deck.dealOut());
     }
 
-    protected abstract boolean isAvailableToDraw();
+    public abstract boolean isAvailableToDraw();
 
     public boolean isBust() {
         return cards.areBust();

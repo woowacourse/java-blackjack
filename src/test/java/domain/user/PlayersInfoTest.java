@@ -1,19 +1,20 @@
 package domain.user;
 
-import domain.card.*;
+import domain.card.Deck;
+import domain.card.DeckFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import view.OutputView;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
 class PlayersInfoTest {
 
@@ -50,27 +51,5 @@ class PlayersInfoTest {
                 .collect(Collectors.toList());
 
         assertThat(expected).isEqualTo(result);
-    }
-
-    @Test
-    @DisplayName("추가 드로우")
-    void additionalDealOut() {
-        MockitoAnnotations.initMocks(this);
-        Queue<Card> cards = new LinkedList<>(Arrays.asList(
-                new Card(Symbol.SPADE, Type.SIX),
-                new Card(Symbol.SPADE, Type.SEVEN),
-                new Card(Symbol.HEART, Type.FIVE),
-                new Card(Symbol.CLOVER, Type.SIX))
-        );
-        List<Card> expected = new ArrayList<>(cards);
-
-        given(deck.dealOut()).will(invocation -> cards.poll());
-
-        PlayersInfo mockPlayersInfo = PlayersInfo.of(Collections.singletonMap("pobi", 1000));
-        mockPlayersInfo.additionalDealOut(deck, (name) -> true, OutputView::printPlayerDealOutResult);
-
-        List<Card> actual = mockPlayersInfo.getPlayers().get(0).getCards();
-
-        assertThat(actual).containsAll(expected);
     }
 }

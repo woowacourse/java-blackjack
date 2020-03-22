@@ -12,7 +12,7 @@ public class Player extends User {
     }
 
     @Override
-    protected boolean isAvailableToDraw() {
+    public boolean isAvailableToDraw() {
         return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint();
     }
 

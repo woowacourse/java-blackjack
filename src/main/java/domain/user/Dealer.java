@@ -1,10 +1,5 @@
 package domain.user;
 
-import domain.card.Deck;
-import view.dto.UserDto;
-
-import java.util.function.Consumer;
-
 public class Dealer extends User {
 
     public static final String NAME = "딜러";
@@ -19,15 +14,8 @@ public class Dealer extends User {
     }
 
     @Override
-    protected boolean isAvailableToDraw() {
+    public boolean isAvailableToDraw() {
         return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint()
                 && cards.calculatePoint() < PIVOT;
-    }
-
-    public void additionalDealOut(Deck deck, Consumer<UserDto> showResult) {
-        while (isAvailableToDraw()) {
-            draw(deck);
-            showResult.accept(UserDto.of(this));
-        }
     }
 }

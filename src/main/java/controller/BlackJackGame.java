@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.Deck;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.PlayersInfo;
 import util.YesOrNo;
 import view.InputView;
@@ -30,12 +31,27 @@ public class BlackJackGame {
     }
 
     public void additionalDealOut(Dealer dealer, PlayersInfo playersInfo) {
-        playersInfo.additionalDealOut(deck, this::isYes, OutputView::printPlayerDealOutResult);
-        dealer.additionalDealOut(deck, OutputView::printDealerDealOut);
+        playersInfo.getPlayersInfo()
+                .forEach((player, bettingMoney) -> playerAdditionalDealOut(player));
+        dealerAdditionalDealOut(dealer);
+    }
+
+    private void playerAdditionalDealOut(Player player) {
+        while (player.isAvailableToDraw() && isYes(UserDto.of(player))) {
+            player.draw(deck);
+            OutputView.printPlayerDealOutResult(UserDto.of(player));
+        }
     }
 
     private boolean isYes(UserDto userDto) {
         String input = InputView.receiveYesOrNoInput(userDto);
         return YesOrNo.isYes(input);
+    }
+
+    private void dealerAdditionalDealOut(Dealer dealer) {
+        while (dealer.isAvailableToDraw()) {
+            dealer.draw(deck);
+            OutputView.printDealerDealOut(UserDto.of(dealer));
+        }
     }
 }
