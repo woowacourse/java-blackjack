@@ -13,13 +13,13 @@ public class MoneyTest {
     @ValueSource(ints = {10000, 30000, 100000})
     @DisplayName("Money 생성하고 값 불러오기 테스트")
     void moneyGenerateTest(int value) {
-        assertThat(new Money(value).getMoney()).isEqualTo(value);
+        assertThat(new Money(value).getAmount()).isEqualTo(value);
     }
 
     @Test
     @DisplayName("돈이 없는 Money 객체 생성하기 테스트")
     void zeroMoneyTest() {
-        assertThat(new Money().getMoney()).isEqualTo(0);
+        assertThat(new Money().getAmount()).isEqualTo(0);
     }
 
     @ParameterizedTest

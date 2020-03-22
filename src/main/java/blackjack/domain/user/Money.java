@@ -3,10 +3,10 @@ package blackjack.domain.user;
 import java.util.Objects;
 
 public class Money {
-    private final int money;
+    private final int amount;
 
-    public Money(int money) {
-        this.money = money;
+    public Money(int amount) {
+        this.amount = amount;
     }
 
     public Money() {
@@ -14,27 +14,27 @@ public class Money {
     }
 
     public Money multiply(double rate) {
-        return new Money((int) (this.money * rate));
+        return new Money((int) (this.amount * rate));
     }
 
-    public Money add(int money) {
-        return new Money(this.money + money);
+    public Money add(int amount) {
+        return new Money(this.amount + amount);
     }
 
     public Money add(Money money) {
-        return add(money.money);
+        return add(money.amount);
     }
 
-    public Money subtract(int money) {
-        return new Money(this.money - money);
+    public Money subtract(int amount) {
+        return new Money(this.amount - amount);
     }
 
     public Money subtract(Money money) {
-        return subtract(money.money);
+        return subtract(money.amount);
     }
 
-    public int getMoney() {
-        return this.money;
+    public int getAmount() {
+        return this.amount;
     }
 
     @Override
@@ -42,16 +42,16 @@ public class Money {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Money money1 = (Money) o;
-        return money == money1.money;
+        return amount == money1.amount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(money);
+        return Objects.hash(amount);
     }
 
     @Override
     public String toString() {
-        return Integer.toString(money);
+        return Integer.toString(amount);
     }
 }
