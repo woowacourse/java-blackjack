@@ -1,7 +1,7 @@
 package blackjack;
 
-import blackjack.card.domain.CardDeck;
-import blackjack.card.domain.CardFactory;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardFactory;
 import blackjack.view.InputView;
 
 import java.util.Scanner;

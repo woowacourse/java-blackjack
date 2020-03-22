@@ -1,9 +1,5 @@
 package blackjack.view.dto;
 
-import blackjack.card.domain.CardBundle;
-import blackjack.player.domain.Gambler;
-import blackjack.player.domain.Player;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +13,13 @@ public class NamesDTO {
         validate(inputNames);
         this.names = Arrays.stream(inputNames.split(DELIMITER))
                 .collect(Collectors.toList());
+        validateSize();
+    }
+
+    private void validateSize() {
+        if (this.names.isEmpty()) {
+            throw new IllegalArgumentException("입력한 이름이 없습니다.");
+        }
     }
 
     private void validate(String inputNames) {
@@ -25,10 +28,8 @@ public class NamesDTO {
         }
     }
 
-    public List<Player> toPlayers() {
-        return names.stream()
-                .map(name -> new Gambler(CardBundle.emptyBundle(), name))
-                .collect(Collectors.toList());
+    public List<String> getNames() {
+        return names;
     }
 
 }
