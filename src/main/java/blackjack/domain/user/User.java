@@ -33,10 +33,6 @@ public abstract class User implements GameRule {
         return new Point(cards);
     }
 
-    public double getPoint() {
-        return createPoint().getPoint();
-    }
-
     public List<Card> getCards() {
         return cards.getCards();
     }
