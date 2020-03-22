@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Map;
-
 public class Money {
 	public static final double ZERO = 0;
 	public static final int MINUS_CONVERTER = -1;
@@ -45,11 +43,5 @@ public class Money {
 
 	public double toBlackJackWinMoney() {
 		return money * BLACK_JACK_BONUS;
-	}
-
-	public static double calculateDealerMoney(GameResult gameResult) {
-		Map<String, Double> userResult = gameResult.getUserResult();
-		return userResult.values().stream()
-				.reduce(ZERO, Double::sum) * MINUS_CONVERTER;
 	}
 }

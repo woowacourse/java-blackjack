@@ -9,17 +9,25 @@ import java.util.Map;
 
 public class GameResult {
 	private final Map<String, Double> userResult;
+	private final double dealerIncome;
 
 	public GameResult(List<User> users, Dealer dealer) {
 		Map<String, Double> userResult = new HashMap<>();
+		double dealerIncome = Money.ZERO;
 		for (User user : users) {
-			double income = user.compareScore(dealer);
-			userResult.put(user.getName(), income);
+			double userIncome = user.compareScore(dealer);
+			userResult.put(user.getName(), userIncome);
+			dealerIncome -= userIncome;
 		}
 		this.userResult = userResult;
+		this.dealerIncome = dealerIncome;
 	}
 
 	public Map<String, Double> getUserResult() {
 		return userResult;
+	}
+
+	public double getDealerIncome() {
+		return dealerIncome;
 	}
 }

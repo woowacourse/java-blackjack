@@ -1,7 +1,6 @@
 package view;
 
 import domain.GameResult;
-import domain.Money;
 import domain.Rule;
 import domain.player.Player;
 import utils.CardPrintUtils;
@@ -43,7 +42,7 @@ public class OutputView {
 	}
 
 	public static void printDealerResult(GameResult gameResult) {
-		double dealerMoney = Money.calculateDealerMoney(gameResult);
+		double dealerMoney = gameResult.getDealerIncome();
 		System.out.println(String.format(STRING_FORMAT_DEALER_RESULT, dealerMoney));
 	}
 
