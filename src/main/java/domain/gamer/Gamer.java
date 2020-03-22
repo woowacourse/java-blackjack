@@ -25,7 +25,7 @@ public abstract class Gamer {
 	protected abstract int firstOpenedCardsCount();
 
 	public Score getScore() {
-		return Score.from(hand);
+		return Rule.newScore(hand);
 	}
 
 	public boolean canHit() {

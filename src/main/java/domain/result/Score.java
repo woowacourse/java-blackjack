@@ -1,13 +1,9 @@
 package domain.result;
 
-import domain.card.Hand;
-
 import java.util.Objects;
 
 public class Score {
 	public static final Score BLACKJACK = Score.from(21);
-	private static final int TEN = 10;
-	private static final int BLACKJACK_SCORE = 21;
 
 	private final int score;
 
@@ -17,19 +13,6 @@ public class Score {
 
 	public static Score from(int score) {
 		return new Score(score);
-	}
-
-	public static Score from(Hand hand) {
-		int score = hand.sumOfCards();
-
-		return new Score(reviseAceScore(hand.hasAce(), score));
-	}
-
-	private static int reviseAceScore(boolean hasAce, int score) {
-		if (hasAce && (score + TEN <= BLACKJACK_SCORE)) {
-			score += TEN;
-		}
-		return score;
 	}
 
 	public boolean isBiggerThan(Score other) {
