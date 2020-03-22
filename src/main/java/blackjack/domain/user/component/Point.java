@@ -19,20 +19,21 @@ public class Point implements Comparable<Point> {
         point = cards.stream()
                 .mapToInt(x -> x.getCardPoint())
                 .sum();
-        handleAce(cards);
+        if (hasAce(cards)) {
+            handleAce(cards);
+        }
         isBalckJack = (cards.size() == 2 && point == BLACK_JACK);
     }
 
-    private static int getAceCount(List<Card> cards) {
+    private static boolean hasAce(List<Card> cards) {
         int aceCount = (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-        return aceCount;
+        return aceCount > 0;
     }
 
     private void handleAce(List<Card> cards) {
-        int aceCount = getAceCount(cards);
-        if ((point < BLACK_JACK) && (aceCount > 0)) {
+        if (point < BLACK_JACK) {
             point += CardNumber.ACE_DIFF;
         }
     }
