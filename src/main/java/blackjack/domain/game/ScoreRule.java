@@ -4,12 +4,14 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
+import static blackjack.domain.game.BlackjackGame.INITIAL_CARDS;
+
 public class ScoreRule {
     private static final int MAX_SCORE = 21;
     private static final int ACE_INCREMENT = 10;
 
     public static boolean isBlackjack(List<Card> cards) {
-        return cards.size() == 2
+        return cards.size() == INITIAL_CARDS
                 && calculateTotalScore(cards) == MAX_SCORE;
     }
 
@@ -29,12 +31,16 @@ public class ScoreRule {
     }
 
     public static int calculateTotalScore(List<Card> cards) {
-        int score = incrementAceScore(cards, cards.stream()
-                .mapToInt(Card::getScore)
-                .sum());
+        int score = incrementAceScore(cards, getSum(cards));
         if (score > MAX_SCORE) {
             return 0;
         }
         return score;
+    }
+
+    private static int getSum(List<Card> cards) {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 }
