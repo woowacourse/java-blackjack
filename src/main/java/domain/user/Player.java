@@ -16,7 +16,7 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isReceiveAble(){
+    public boolean isReceiveAble() {
         return isSmallerThan(Cards.BLACKJACK_SCORE);
     }
 
@@ -24,8 +24,8 @@ public class Player extends User {
         this.result = result;
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public Result getResult() {

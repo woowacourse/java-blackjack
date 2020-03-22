@@ -1,21 +1,21 @@
 package domain.result;
 
 import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 public class PlayersResult {
 
     private static final String NULL_PLAYER_RESULT_ERROR_MESSAGE = "플레이어가 존재하지 않습니다. 잘못된 결과입니다.";
-    private Map<String, Double> playerResult;
+    private List<PlayerResult> playersResult;
 
-    PlayersResult(Map<String, Double> playerResult) {
-        if (playerResult == null || playerResult.isEmpty()) {
+    PlayersResult(List<PlayerResult> playersResult) {
+        if (playersResult == null || playersResult.isEmpty()) {
             throw new NullPointerException(NULL_PLAYER_RESULT_ERROR_MESSAGE);
         }
-        this.playerResult = playerResult;
+        this.playersResult = playersResult;
     }
 
-    public Map<String, Double> getPlayerResult() {
-        return Collections.unmodifiableMap(playerResult);
+    public List<PlayerResult> getPlayersResult() {
+        return Collections.unmodifiableList(playersResult);
     }
 }

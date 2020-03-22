@@ -2,14 +2,13 @@ package controller;
 
 import domain.card.CardFactory;
 import domain.card.Deck;
+import domain.result.PlayerResult;
 import domain.result.ResultCalculator;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import view.InputView;
 import view.OutputView;
-
-import java.util.Map;
 
 public class BlackJackController {
     public static void run() {
@@ -60,7 +59,7 @@ public class BlackJackController {
 
     private static boolean willPlayerGetMoreCard(Player player) {
         return player.isReceiveAble()
-                && InputView.askWantMoreCard(player.getName());
+                && InputView.askWantMoreCard(player.getName().getName());
     }
 
     private static void dealToDealer(Dealer dealer, Deck deck) {
@@ -75,7 +74,7 @@ public class BlackJackController {
         resultCalculator.calculateDealerAndPlayersResult(dealer, players);
         OutputView.printResultMessage();
         OutputView.printDealerResult(resultCalculator.getDealerResult());
-        for (Map.Entry<String, Double> playerResult : resultCalculator.getPlayersResult().entrySet()) {
+        for (PlayerResult playerResult : resultCalculator.getPlayersResult().getPlayersResult()) {
             OutputView.printPlayerResult(playerResult);
         }
     }

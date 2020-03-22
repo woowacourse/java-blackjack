@@ -5,7 +5,7 @@ import utils.StringUtils;
 public class Name {
     private String name;
 
-    Name(String name) {
+    public Name(String name) {
         StringUtils.checkNameNullAndEmpty(name);
         this.name = name;
     }
@@ -14,7 +14,7 @@ public class Name {
         return this.name.equals(name);
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 }

@@ -5,8 +5,8 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultCalculator {
 
@@ -18,9 +18,9 @@ public class ResultCalculator {
     }
 
     public void calculateDealerAndPlayersResult(Dealer dealer, Players players) {
-        Map<String, Double> result = new LinkedHashMap<>();
+        List<PlayerResult> result = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            result.put(player.getName(), calculateResult(dealer, player));
+            result.add(new PlayerResult(player.getName(), calculateResult(dealer, player)));
         }
         this.playersResult = new PlayersResult(result);
     }
@@ -67,7 +67,7 @@ public class ResultCalculator {
         return dealerResult.getDealerResult();
     }
 
-    public Map<String, Double> getPlayersResult() {
-        return playersResult.getPlayerResult();
+    public PlayersResult getPlayersResult() {
+        return this.playersResult;
     }
 }
