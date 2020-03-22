@@ -15,13 +15,14 @@ public class Bet {
     }
 
     public Bet(double input) {
+        validateRange(input);
         this.bet = input;
     }
 
     private void validate(String input) {
         StringUtils.validateString(input);
         validateFormat(input);
-        validateRange(input);
+        validateRange(Double.parseDouble(input));
     }
 
     private void validateFormat(String input) {
@@ -32,13 +33,13 @@ public class Bet {
         }
     }
 
-    private void validateRange(String input) {
-        if (Double.parseDouble(input) < LOWER_BET_BOUND) {
+    private void validateRange(double input) {
+        if (input < LOWER_BET_BOUND) {
             throw new BetRangeException("베팅금액은 100원 이상부터 입력 가능합니다.");
         }
     }
 
-    public Bet MultiplyBet(double ratio) {
+    public Bet multiplyBet(double ratio) {
         return new Bet(bet * ratio);
     }
 
