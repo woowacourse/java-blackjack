@@ -1,10 +1,16 @@
 package domain.profit;
 
-import domain.CardCalculator;
 import domain.player.Dealer;
 import domain.player.Player;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ProfitFactory {
+    private static final List<ProfitStrategy> strategies = Arrays.asList(
+            new BothBlackJack(), new PlayerBlackJack(), new PlayerLoose(), new PlayerWin()
+    );
+
     private ProfitFactory() {
     }
 
@@ -13,15 +19,9 @@ public class ProfitFactory {
             throw new NullPointerException("플레이어 또는 딜러를 입력하지 않았습니다.");
         }
 
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            return new BothBlackJack();
-        }
-        if (player.isBlackJack()) {
-            return new PlayerBlackJack();
-        }
-        if (CardCalculator.determineWinner(player.getCard(), dealer.getCard())) {
-            return new PlayerWin();
-        }
-        return new PlayerLoose();
+        return strategies.stream()
+                .filter(ps -> ps.condition(player, dealer))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("결과를 반영할 규칙이 없습니다."));
     }
 }
