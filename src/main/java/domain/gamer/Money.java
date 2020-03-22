@@ -1,8 +1,6 @@
 package domain.gamer;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Money {
 	public static final Money ZERO = new Money(0);
@@ -31,12 +29,6 @@ public class Money {
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(String.format("%s 는 잘못된 형태의 입니다.", money));
 		}
-	}
-
-	public static List<Money> list(List<String> bettingMoney) {
-		return bettingMoney.stream()
-				.map(Money::new)
-				.collect(Collectors.toList());
 	}
 
 	public double multiply(double ratio) {

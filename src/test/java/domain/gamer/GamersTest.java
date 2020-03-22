@@ -62,15 +62,4 @@ class GamersTest {
 	void getDealerTest() {
 		assertThat(gamers.getDealer()).isEqualTo(dealer);
 	}
-
-	@Test
-	@DisplayName("Money의 list를 올바르게 생성하는지 테스트")
-	void listTest() {
-		List<String> inputs = Arrays.asList("10000", "2000", "3333");
-		List<Money> expected = Arrays.asList(new Money(10000),
-				new Money(2000),
-				new Money("3333"));
-
-		assertThat(Money.list(inputs)).isEqualTo(expected);
-	}
 }

@@ -28,9 +28,8 @@ public class BlackJackController {
 	}
 
 	private List<Player> createPlayers() {
-		List<Name> names = Name.list(InputView.inputUserNames());
-		List<Money> bettingMoney = Money.list(InputView.inputMoney(names));
-		return PlayersFactory.of(names, bettingMoney);
+		List<Name> names = PlayersFactory.newNames(InputView.inputUserNames());
+		return PlayersFactory.of(names, InputView.inputMoney(names));
 	}
 
 	private void init() {
