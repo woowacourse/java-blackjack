@@ -3,9 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.Results;
 import blackjack.domain.user.*;
-import blackjack.domain.user.component.Point;
-import org.w3c.dom.ls.LSOutput;
-
 
 public class OutputView {
     private static final String DELIMITER = ",";
@@ -41,7 +38,7 @@ public class OutputView {
 
     private static void printStatusWithScore(User user) {
         String formattedCards = ViewFormatter.formatCards(user.getCards());
-        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.getPoint().getPoint());
+        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.getPoint());
         System.out.println(status);
     }
 

@@ -34,6 +34,6 @@ public class InputView {
     public static YesOrNo getYorN(Name name) {
         String msg = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
         System.out.println(String.format(msg, name));
-        return YesOrNo.get(scanner.nextLine());
+        return YesOrNo.from(scanner.nextLine());
     }
 }

@@ -14,6 +14,11 @@ public class Cards {
         cards = new ArrayList<>();
     }
 
+    public Cards(List<Card> cards) {
+        Objects.requireNonNull(cards);
+        this.cards = cards;
+    }
+
     public void add(Card card) {
         Objects.requireNonNull(card);
         cards.add(card);
@@ -30,14 +35,7 @@ public class Cards {
         int totalPoint =  cards.stream()
                 .mapToInt(x -> x.getCardPoint())
                 .sum();
-        if (hasAce()) {
-            totalPoint = handleAce(totalPoint);
-        }
-        return totalPoint;
-    }
-
-    private int handleAce(int totalPoint) {
-        if (totalPoint < Point.BLACK_JACK) {
+        if (hasAce() && totalPoint < Point.BLACK_JACK) {
             totalPoint += CardNumber.ACE_DIFF;
         }
         return totalPoint;

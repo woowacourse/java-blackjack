@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.component.Name;
 import blackjack.domain.user.component.Point;
 
 public class Dealer extends User {
@@ -8,7 +9,7 @@ public class Dealer extends User {
     public static final int LOWER_BOUND = 16;
 
     public Dealer() {
-        super(name);
+        super(new Name(name));
     }
 
     public Card getFirstCard() {
@@ -17,8 +18,8 @@ public class Dealer extends User {
 
     @Override
     public boolean receivable() {
-        Point point = new Point(cards);
-        if (point.compareTo(new Point(LOWER_BOUND, false)) <= 0) {
+        Point point = createPoint();
+        if (point.isSmallerThan(new Point(LOWER_BOUND, false))) {
             return true;
         }
         return false;

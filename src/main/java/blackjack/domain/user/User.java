@@ -8,7 +8,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.user.component.Name;
 import blackjack.domain.user.component.Point;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ public abstract class User implements GameRule {
     protected static int ADDITIONAL_CARD_SIZE = 1;
 
     private Name name;
-    protected Cards cards;
+    private Cards cards;
 
     public User(Name name) {
         Objects.requireNonNull(name);
@@ -26,34 +25,34 @@ public abstract class User implements GameRule {
         this.cards = new Cards();
     }
 
-    public User(String name) {
-        this.name = new Name(name);
-        this.cards = new Cards();
-    }
-
     public Name getName() {
         return name;
+    }
+
+    public Point createPoint() {
+        return new Point(cards);
+    }
+
+    public double getPoint() {
+        return createPoint().getPoint();
     }
 
     public List<Card> getCards() {
         return cards.getCards();
     }
 
-    public Point getPoint() {
-        return new Point(cards);
-    }
     public void drawCard(CardDeck deck) {
         Objects.requireNonNull(deck, String.format(NULL_ERR_MSG, "카드"));
         int receivableCardSize = getReceivableCardSize();
         for (int i = 0; i < receivableCardSize; i++) {
             Card card = deck.getCard();
-            cards.add(card);
+            getCards().add(card);
         }
     }
 
     @Override
     public int getReceivableCardSize() {
-        if (cards.getSize() == 0) {
+        if (getCards().size() == 0) {
             return INITIAL_CARD_SIZE;
         }
         if (receivable()) {

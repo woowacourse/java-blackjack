@@ -1,10 +1,8 @@
 package blackjack.domain.result;
 
 import blackjack.domain.user.*;
-import blackjack.domain.user.component.Point;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Results {
@@ -29,7 +27,7 @@ public class Results {
     }
 
     private static ResultType computePlayerResultType(User player, User dealer) {
-        return ResultType.computeResult(player.getPoint(), dealer.getPoint());
+        return ResultType.computeResult(player.createPoint(), dealer.createPoint());
     }
 
     private static Result computeDealerResult(User dealer, List<Result> results) {

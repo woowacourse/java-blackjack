@@ -37,6 +37,14 @@ public class Point implements Comparable<Point> {
         return this.point;
     }
 
+    public boolean isSmallerThan(Point point) {
+        return compareTo(point) < 0;
+    }
+
+    public boolean isSameWith(Point point) {
+        return compareTo(point) == 0;
+    }
+
     @Override
     public int compareTo(Point point) {
         return this.getPoint() - point.getPoint();

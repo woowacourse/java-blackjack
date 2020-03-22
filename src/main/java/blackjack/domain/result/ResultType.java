@@ -30,7 +30,7 @@ public enum ResultType {
         }
         if (playerPoint.isNotBust()
                 && dealerPoint.isNotBust()
-                && playerPoint.compareTo(dealerPoint) == 0) {
+                && playerPoint.isSameWith(dealerPoint)) {
             return true;
         }
         return false;
