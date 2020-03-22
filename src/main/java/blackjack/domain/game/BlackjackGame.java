@@ -31,7 +31,7 @@ public class BlackjackGame {
         players.forEach(t -> t.receiveInitialCards(deck.draw(INITIAL_CARDS)));
     }
 
-    public boolean dealerHitsAdditionalCard() {
+    public boolean isDealerHitsAdditionalCard() {
         if (dealer.isUnderThreshold()) {
             dealer.receiveCard(deck.draw());
             return true;
