@@ -18,4 +18,9 @@ public class PlayersResult {
     public List<PlayerResult> getPlayersResult() {
         return Collections.unmodifiableList(playersResult);
     }
+
+    public double sumResults() {
+        return playersResult.stream()
+                .mapToDouble(playersResult -> playersResult.getResultMoney().getResultMoney()).sum();
+    }
 }

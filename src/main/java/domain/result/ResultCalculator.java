@@ -10,11 +10,9 @@ import java.util.List;
 
 public class ResultCalculator {
 
-    private DealerResult dealerResult;
     private PlayersResult playersResult;
 
     public ResultCalculator() {
-        dealerResult = new DealerResult();
     }
 
     public void calculateDealerAndPlayersResult(Dealer dealer, Players players) {
@@ -37,7 +35,6 @@ public class ResultCalculator {
         double resultMoney = result.calculateResultMoney(
                 player.getBettingMoney(), player.getCards().isBlackJack()
         );
-        dealerResult.resultContributor(resultMoney);
         return resultMoney;
     }
 
@@ -52,10 +49,6 @@ public class ResultCalculator {
 
     double calculateResult(Dealer dealer, Player player) {
         return calculateMoney(player, player.compare(dealer));
-    }
-
-    public double getDealerResult() {
-        return dealerResult.getDealerResult();
     }
 
     public PlayersResult getPlayersResult() {

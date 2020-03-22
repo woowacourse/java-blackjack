@@ -73,7 +73,7 @@ public class BlackJackController {
         ResultCalculator resultCalculator = new ResultCalculator();
         resultCalculator.calculateDealerAndPlayersResult(dealer, players);
         OutputView.printResultMessage();
-        OutputView.printDealerResult(resultCalculator.getDealerResult());
+        OutputView.printDealerResult(resultCalculator.getPlayersResult().sumResults() * -1);
         for (PlayerResult playerResult : resultCalculator.getPlayersResult().getPlayersResult()) {
             OutputView.printPlayerResult(playerResult);
         }

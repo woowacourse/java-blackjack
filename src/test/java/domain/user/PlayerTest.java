@@ -39,10 +39,4 @@ public class PlayerTest {
         player.receiveCard(deck);
         assertThat(player.getCards().getCards().size()).isEqualTo(sizeBeforeReceiveCard + 1);
     }
-
-    @Test
-    @DisplayName("딜러를 인자로 받아 승패인지 확인")
-    void compare() {
-
-    }
 }
