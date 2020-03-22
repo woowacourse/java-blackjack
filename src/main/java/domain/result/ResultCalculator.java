@@ -25,14 +25,12 @@ public class ResultCalculator {
         this.playersResult = new PlayersResult(result);
     }
 
-    double calculateResult(Dealer dealer, Player player) {
-        if (isDraw(dealer, player)) {
-            return calculateMoney(player, Result.DRAW);
-        }
-        if (isPlayerLose(dealer, player)) {
-            return calculateMoney(player, Result.LOSE);
-        }
-        return calculateMoney(player, Result.WIN);
+    public static boolean isDraw(int dealerScore, int playerScore) {
+        /*
+         * 딜러와 플레이어 모두 21 이하
+         * 딜러와 플레이어의 숫자가 같은 경우만 무승부
+         * */
+        return dealerScore <= Cards.BLACKJACK_SCORE && playerScore == dealerScore;
     }
 
     private double calculateMoney(Player player, Result result) {
@@ -43,24 +41,17 @@ public class ResultCalculator {
         return resultMoney;
     }
 
-    private boolean isDraw(Dealer dealer, Player player) {
-        /*
-         * 딜러와 플레이어 모두 21 이하
-         * 딜러와 플레이어의 숫자가 같은 경우만 무승부
-         * */
-        return !(player.isLargerThan(Cards.BLACKJACK_SCORE)
-                || dealer.isLargerThan(Cards.BLACKJACK_SCORE))
-                && dealer.isScoreSame(player.getTotalScore());
-    }
-
-    private boolean isPlayerLose(Dealer dealer, Player player) {
+    public static boolean isPlayerLose(int dealerScore, int playerScore) {
         /*
          * 플레이어의 점수가 21 초과면 무조건 패
          * 플레어와 딜러 모두 21 이하인 경우에 더 작은 경우 패
          * */
-        return player.isLargerThan(Cards.BLACKJACK_SCORE)
-                || (!(player.isLargerThan(Cards.BLACKJACK_SCORE) || dealer.isLargerThan(Cards.BLACKJACK_SCORE))
-                && player.isSmallerThan(dealer.getTotalScore()));
+        return playerScore > Cards.BLACKJACK_SCORE
+                || (dealerScore <= Cards.BLACKJACK_SCORE && playerScore < dealerScore);
+    }
+
+    double calculateResult(Dealer dealer, Player player) {
+        return calculateMoney(player, player.compare(dealer));
     }
 
     public double getDealerResult() {

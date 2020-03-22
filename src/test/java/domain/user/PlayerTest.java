@@ -1,14 +1,14 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import domain.card.CardFactory;
 import domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -33,10 +33,16 @@ public class PlayerTest {
     @DisplayName("한 장의 카드를 더 받기")
     void receiveCard() {
         Deck deck = CardFactory.create();
-        Player player = new Player("pobi",1);
+        Player player = new Player("pobi", 1);
         player.receiveFirstCards(deck);
         int sizeBeforeReceiveCard = player.getCards().getCards().size();
         player.receiveCard(deck);
         assertThat(player.getCards().getCards().size()).isEqualTo(sizeBeforeReceiveCard + 1);
+    }
+
+    @Test
+    @DisplayName("딜러를 인자로 받아 승패인지 확인")
+    void compare() {
+
     }
 }
