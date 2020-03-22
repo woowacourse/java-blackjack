@@ -1,12 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.component.Figure;
-import blackjack.domain.card.component.Type;
 import blackjack.domain.participant.attribute.Name;
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.PlayersResults;
-import blackjack.domain.result.ResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -67,27 +61,5 @@ public class PlayersTest {
         List<String> actualNames = players.names();
 
         assertThat(actualNames).isEqualTo(expectedNames);
-    }
-
-    @DisplayName("플레이어들의 결과 생성 확인")
-    @Test
-    void test4() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(Card.of(Type.FIVE, Figure.HEART));
-
-        Players players = PlayersFactory.createPlayers(names);
-        List<Player> playersList = players.getPlayers();
-        playersList.get(0).addCard(Card.of(Type.FOUR, Figure.SPADE));
-        playersList.get(1).addCard(Card.of(Type.FIVE, Figure.SPADE));
-        playersList.get(2).addCard(Card.of(Type.SIX, Figure.SPADE));
-
-        List<PlayerResult> expectedResult = Arrays.asList(
-                new PlayerResult(playersList.get(0), ResultType.LOSE),
-                new PlayerResult(playersList.get(1), ResultType.DRAW),
-                new PlayerResult(playersList.get(2), ResultType.WIN));
-
-        PlayersResults actualResult = players.createPlayerResults(dealer);
-
-        assertThat(actualResult).isEqualTo(new PlayersResults(expectedResult));
     }
 }

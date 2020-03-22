@@ -1,9 +1,11 @@
-package blackjack.domain.result;
+package blackjack.domain.result.outcome;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.component.Figure;
 import blackjack.domain.card.component.Type;
+import blackjack.domain.result.ResultRule;
+import blackjack.domain.result.ResultType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,15 @@
 package blackjack;
 
-import blackjack.controller.BlackJackController;
-import blackjack.controller.ControllerFactory;
+import blackjack.controller.Controller;
+import blackjack.controller.ModeStrategy;
+import blackjack.controller.ModeStrategyFactory;
 import blackjack.view.InputView;
 
 public class Main {
     public static void main(String[] args) {
         String selectedGame = InputView.enterGame();
-        BlackJackController controller = ControllerFactory.createByIdentifier(selectedGame);
+        ModeStrategy gameMode = ModeStrategyFactory.createByIdentifier(selectedGame);
+        Controller controller = new Controller(gameMode);
         controller.play();
     }
 }
