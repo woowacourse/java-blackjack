@@ -35,6 +35,14 @@ class DealerTest {
 		assertThat(dealer.handSize()).isEqualTo(2);
 	}
 
+	@DisplayName("딜러가 힛했을 경우 isHit이 true를 반환하는지 확인")
+	@Test
+	void isHit_Hit_ReturnTrue() {
+		Dealer dealer = new Dealer(deck);
+		dealer.hit(deck);
+		assertThat(dealer.isHit()).isTrue();
+	}
+
 	@DisplayName("패의 숫자가 16 초과일 때, 카드를 뽑지 않음을 확인")
 	@ParameterizedTest
 	@MethodSource("over16Data")
@@ -42,7 +50,7 @@ class DealerTest {
 		Hands hand = new Hands(hands);
 		Dealer dealer = new Dealer(hand);
 
-		//dealer.hitOrStay(deck, OutputView::printDealerHitCard);
+		dealer.hitOrStay(deck);
 
 		assertThat(dealer.handSize()).isEqualTo(2);
 	}
