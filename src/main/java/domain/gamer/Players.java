@@ -25,6 +25,10 @@ public class Players {
 		players.forEach(player -> player.draw(deck.deal()));
 	}
 
+	public void changeProfitStrategy(int dealerScore) {
+		players.forEach(player -> player.changeProfitStrategy(dealerScore));
+	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}

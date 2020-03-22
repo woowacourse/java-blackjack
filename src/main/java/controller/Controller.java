@@ -132,6 +132,7 @@ public class Controller {
 	}
 
 	private static void end(Players players, Dealer dealer) {
+		players.changeProfitStrategy(dealer.scoreHands());
 		GameResult gameResult = GameResult.of(players, dealer);
 		PlayersDto playersDto = PlayersDto.from(players);
 		GamerDto dealerDto = GamerDto.from(dealer);

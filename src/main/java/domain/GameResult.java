@@ -7,10 +7,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.money.BlackjackWinStrategy;
-import domain.money.DefeatStrategy;
-import domain.money.PushStrategy;
-import domain.money.WinStrategy;
 
 /**
  *    게임 결과 클래스입니다.
@@ -26,7 +22,7 @@ public class GameResult {
 	private GameResult(Players players, Dealer dealer) {
 		gameResult = new LinkedHashMap<>();
 
-		players.getPlayers().forEach(player -> makeResult(dealer, player));
+		players.getPlayers().forEach(this::makeResult);
 		makeDealerResult(dealer);
 	}
 
@@ -34,17 +30,8 @@ public class GameResult {
 		return new GameResult(players, dealer);
 	}
 
-	private void makeResult(Dealer dealer, Player player) {
-		gameResult.put(player, new DefeatStrategy().calculate(player.getBettingMoney()));
-		if (player.isPush(dealer.scoreHands())) {
-			gameResult.put(player, new PushStrategy().calculate(player.getBettingMoney()));
-		}
-		if (player.isWin(dealer.scoreHands())) {
-			gameResult.put(player, new WinStrategy().calculate(player.getBettingMoney()));
-		}
-		if (player.isWin(dealer.scoreHands()) && player.isBlackjack() && !dealer.isBlackjack()) {
-			gameResult.put(player, new BlackjackWinStrategy().calculate(player.getBettingMoney()));
-		}
+	private void makeResult(Player player) {
+		gameResult.put(player, player.calculateProfit());
 	}
 
 	private void makeDealerResult(Dealer dealer) {
