@@ -1,13 +1,17 @@
 package view;
 
-import domain.card.Card;
-import domain.gamer.*;
-
-import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.card.Card;
+import domain.result.CardsResult;
+import domain.gamer.Dealer;
+import domain.result.GameResult;
+import domain.gamer.Gamer;
+import domain.gamer.Gamers;
+import domain.gamer.Player;
+
 public class OutputView {
-	public static final String DELIMITER = ",";
+	private static final String DELIMITER = ",";
 	private static final String NEWLINE = "\n";
 
 	public static void printPlayerNamesGuide() {
@@ -66,46 +70,26 @@ public class OutputView {
 		System.out.println("딜러는 17이상이 될 때까지 카드를 더 받았습니다.");
 	}
 
+	public static void printBettingMoneyGuide(String playerName) {
+		System.out.printf("%s의 배팅 금액은? %s", playerName, NEWLINE);
+	}
+
 	public static void printAddCardGuide(Player player) {
 		System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%s", player.getName(), NEWLINE);
 	}
 
-	public static void printGameResults(Gamers gamers) {
-		printCardsResultAndScore(gamers);
-		printPlayersWinOrLose(gamers.generateGameResults());
-	}
-
-	private static void printCardsResultAndScore(Gamers gamers) {
+	public static void printCardsResultAndScore(CardsResult cardsResult) {
 		System.out.println();
-		System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(gamers.getDealer()),
-			gamers.getDealer().calculateScore());
-		gamers.getPlayers()
-			.forEach(player -> System.out.printf("%s - 결과 : %s" + NEWLINE, printCards(player),
-				player.calculateScore()));
+		cardsResult.getGamersCardResult()
+			.forEach((gamer, score) -> System.out.println(printCards(gamer) + " - 결과 : " + score));
 	}
 
-	private static void printPlayersWinOrLose(GameResult gameResult) {
-		StringBuilder dealerResult = new StringBuilder();
-		dealerResult.append(NEWLINE)
-			.append("## 최종승패")
-			.append(NEWLINE)
-			.append("딜러 : ")
-			.append(printResultCount(gameResult, MatchResult.LOSE, MatchResult.WIN.getInitial()))
-			.append(printResultCount(gameResult, MatchResult.DRAW, MatchResult.DRAW.getInitial()))
-			.append(printResultCount(gameResult, MatchResult.WIN, MatchResult.LOSE.getInitial()));
-		System.out.println(dealerResult.toString());
-		gameResult.getGameResult().forEach((a, b) -> System.out.println(a.getName() + " : " + b.getInitial()));
-	}
+	public static void printTotalEarningResult(GameResult gameResult) {
+		System.out.println();
+		System.out.println("### 최종 수익");
+		System.out.println("딜러 : " + gameResult.getDealerEarning().getMoney());
 
-	private static String printResultCount(GameResult gameResult, MatchResult matchResult,
-		String dealerInitial) {
-		StringBuilder winOrLoseAndCount = new StringBuilder();
-		winOrLoseAndCount.append(gameResult.getGameResult()
-			.values()
-			.stream()
-			.filter(x -> x == matchResult)
-			.count())
-			.append(dealerInitial);
-		return winOrLoseAndCount.toString();
+		gameResult.getPlayersTotalEarning()
+			.forEach((player, money) -> System.out.println(player.getName() + " : " + money.getMoney()));
 	}
 }

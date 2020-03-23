@@ -1,15 +1,13 @@
 package domain.gamer;
 
-import domain.card.Deck;
-import utils.InputUtils;
+import static java.util.stream.Collectors.*;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.toList;
+import domain.card.Deck;
+import domain.result.GameResult;
 
 public class Gamers {
 	private static final int INIT_CARD_SIZE = 2;
@@ -17,11 +15,8 @@ public class Gamers {
 	private List<Player> players;
 	private Dealer dealer;
 
-	public Gamers(String players, Dealer dealer) {
-		this.players = InputUtils.splitAsDelimiter(players)
-			.stream()
-			.map(Player::new)
-			.collect(toList());
+	public Gamers(List<Player> players, Dealer dealer) {
+		this.players = players;
 		this.dealer = dealer;
 	}
 
@@ -33,8 +28,9 @@ public class Gamers {
 	public GameResult generateGameResults() {
 		return players.stream()
 			.collect(collectingAndThen(toMap(player -> player,
-				player -> player.findMatchResult(dealer.calculateScore())),
-				GameResult::new));
+				player -> player.getMoney().multiply(player.findMatchResult(dealer).getMoneyRatio()),
+				(a, b) -> a,
+				LinkedHashMap::new), GameResult::new));
 	}
 
 	public Dealer getDealer() {

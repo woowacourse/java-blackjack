@@ -1,36 +1,32 @@
 package domain.gamer;
 
-import exception.NameFormatException;
+import domain.result.MatchResult;
 
 public class Player extends Gamer {
-    private static final String PATTERN = "[a-zA-Z가-힣]*";
-    private static final int DRAW_CARD_PIVOT = 21;
+	private static final int DRAW_CARD_PIVOT = 21;
 
-    public Player(String name) {
-        super(name);
-        if (isInvalidName(name)) {
-            throw new NameFormatException("잘못된 이름입니다.");
-        }
-    }
+	public Player(String name, String money) {
+		super(name, money);
+	}
 
-    private boolean isInvalidName(String name) {
-        return !name.matches(PATTERN);
-    }
+	public MatchResult findMatchResult(Dealer dealer) {
+		if (isBlackJack() && dealer.isBlackJack()) {
+			return MatchResult.DRAW;
+		}
 
-    public MatchResult findMatchResult(int dealerScore) {
-        if (calculateScore() > DRAW_CARD_PIVOT) {
-            return MatchResult.LOSE;
-        }
+		if (isBlackJack()) {
+			return MatchResult.BLACKJACK;
+		}
 
-        if (dealerScore > DRAW_CARD_PIVOT) {
-            return MatchResult.WIN;
-        }
+		if (dealer.isBlackJack()) {
+			return MatchResult.LOSE;
+		}
 
-        return MatchResult.of(calculateScore() - dealerScore);
-    }
+		return MatchResult.of(calculateScore(), dealer.calculateScore());
+	}
 
-    @Override
-    public boolean isDrawable() {
-        return super.calculateScore() < DRAW_CARD_PIVOT;
-    }
+	@Override
+	public boolean isDrawable() {
+		return super.calculateScore() < DRAW_CARD_PIVOT;
+	}
 }
