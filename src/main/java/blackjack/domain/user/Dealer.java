@@ -1,23 +1,23 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.component.Name;
 
 public class Dealer extends User {
     private static final String name = "딜러";
     public static final int LOWER_BOUND = 16;
 
     public Dealer() {
-        super(name);
+        super(new Name(name));
     }
 
     public Card getFirstCard() {
-        return getCards().get(0);
+        return getCards().getCards().get(0);
     }
 
     @Override
     public boolean receivable() {
-        Point point = new Point(getCards());
-        if (point.compareTo(new Point(LOWER_BOUND)) <= 0) {
+        if (getCards().computePoint() < LOWER_BOUND) {
             return true;
         }
         return false;

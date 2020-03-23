@@ -4,9 +4,9 @@ package blackjack.domain.user;
 import blackjack.domain.GameRule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
+import blackjack.domain.user.component.Name;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class User implements GameRule {
@@ -15,18 +15,19 @@ public abstract class User implements GameRule {
     protected static int ADDITIONAL_CARD_SIZE = 1;
 
     private Name name;
-    protected List<Card> cards;
+    private Cards cards;
 
-    public User(String name) {
-        this.name = new Name(name);
-        this.cards = new ArrayList<>();
+    public User(Name name) {
+        Objects.requireNonNull(name);
+        this.name = name;
+        this.cards = new Cards();
     }
 
     public Name getName() {
         return name;
     }
 
-    public List<Card> getCards() {
+    public Cards getCards() {
         return cards;
     }
 
@@ -35,13 +36,13 @@ public abstract class User implements GameRule {
         int receivableCardSize = getReceivableCardSize();
         for (int i = 0; i < receivableCardSize; i++) {
             Card card = deck.getCard();
-            getCards().add(card);
+            cards.add(card);
         }
     }
 
     @Override
     public int getReceivableCardSize() {
-        if (getCards().size() == 0) {
+        if (cards.getSize() == 0) {
             return INITIAL_CARD_SIZE;
         }
         if (receivable()) {

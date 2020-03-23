@@ -14,7 +14,7 @@ public enum YesOrNo {
         this.answer = answer;
     }
 
-    public static YesOrNo get(String input) {
+    public static YesOrNo from(String input) {
         return Arrays.stream(YesOrNo.values())
                 .filter(x -> x.getInput().equals(input))
                 .findFirst()

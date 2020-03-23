@@ -8,10 +8,10 @@ public class CardDeck {
     private static final String DUPLICATE_ERROR_MSG = "중복되는 카드가 존재합니다.";
     private final Queue<Card> cards;
 
-    public CardDeck(List<Card> input) {
-        Objects.requireNonNull(input, String.format(NULL_ERR_MSG, "카드"));
-        cards = new LinkedList<>(input);
-        validateNotDuplicate(cards);
+    public CardDeck(Cards cards) {
+        Objects.requireNonNull(cards, String.format(NULL_ERR_MSG, "카드"));
+        this.cards = new LinkedList<>(cards.getCards());
+        validateNotDuplicate(this.cards);
     }
 
     private void validateNotDuplicate(Queue<Card> cards) {

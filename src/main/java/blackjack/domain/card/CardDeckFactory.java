@@ -21,6 +21,6 @@ public class CardDeckFactory {
 
     public static CardDeck create() {
         Collections.shuffle(cachedCards);
-        return new CardDeck(cachedCards);
+        return new CardDeck(new Cards(cachedCards));
     }
 }

@@ -2,43 +2,51 @@ package blackjack.domain.result;
 
 import blackjack.domain.user.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Results {
-    private Map<Name, ResultType> playerResult;
-    private Map<ResultType, Integer> dealerResult;
+    private List<Result> results;
 
-    public Results(Map<Name, ResultType> playerResult,
-                   Map<ResultType, Integer> dealerResult) {
-        this.playerResult = playerResult;
-        this.dealerResult = dealerResult;
+    public Results(List<Result> results) {
+        Objects.requireNonNull(results);
+        if (results.isEmpty()) {
+            throw  new IllegalArgumentException();
+        }
+        this.results = results;
     }
 
     public static Results createResults(Players players, Dealer dealer) {
-        Map<Name, ResultType> playerResult = new HashMap<>();
-        Map<ResultType, Integer> dealerResult = new HashMap<>();
-        for (ResultType resultType : ResultType.values()) {
-            dealerResult.put(resultType, 0);
-        }
-
+        List<Result> results = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            ResultType playerResultType = computePlayerResult(player, dealer);
-            playerResult.put(player.getName(), playerResultType);
-            dealerResult.compute(ResultType.opposite(playerResultType), (k, v) -> ++v);
+            ResultType resultType = computePlayerResultType(player, dealer);
+            results.add(new Result(player, player.computeProfit(resultType)));
         }
-        return new Results(playerResult, dealerResult);
+        results.add(computeDealerResult(dealer, results));
+        return new Results(results);
     }
 
-    private static ResultType computePlayerResult(User player, User dealer) {
-        return ResultType.computeResult(new Point(player.getCards()), new Point(dealer.getCards()));
+    private static ResultType computePlayerResultType(User player, User dealer) {
+        return ResultType.computeResult(player.getCards(), dealer.getCards());
     }
 
-    public Map<Name, ResultType> getPlayerResult() {
-        return playerResult;
+    private static Result computeDealerResult(User dealer, List<Result> results) {
+        double sum = results.stream()
+                .mapToDouble(x -> x.getProfit())
+                .sum();
+        return new Result(dealer, -1 * sum);
     }
 
-    public Map<ResultType, Integer> getDealerResult() {
-         return dealerResult;
+    public List<Result> getPlayerResults() {
+        return results.stream()
+                .filter(x -> x.getUser().getClass().equals(Player.class))
+                .collect(Collectors.toList());
+    }
+
+    public Result getDealerResult() {
+         return results.stream()
+                 .filter(x -> x.getUser().getClass().equals(Dealer.class))
+                 .findAny()
+                 .orElseThrow(IllegalAccessError::new);
     }
 }

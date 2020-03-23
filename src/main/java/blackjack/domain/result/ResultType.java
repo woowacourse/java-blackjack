@@ -1,62 +1,25 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.Point;
+import blackjack.domain.card.Cards;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
 
 public enum ResultType {
-    WIN("승", (playerPoint, dealerPoint)
-            -> {
-        if (playerPoint.isBust()) {
-            return false;
-        }
-        if (playerPoint.isNotBust() && dealerPoint.isBust()) {
-            return true;
-        }
-        if (playerPoint.diffWithBlackJack() < dealerPoint.diffWithBlackJack()) {
-            return true;
-        }
-        return false;
-    }),
-    DRAW("무", (playerPoint, dealerPoint)
-            -> {
-        if (playerPoint.isNotBust()
-                && dealerPoint.isNotBust()
-                && playerPoint.compareTo(dealerPoint) == 0) {
-            return true;
-        }
-        return false;
-    }),
-    LOSE("패", (playerPoint, dealerPoint)
-            -> {
-        if (playerPoint.isBust()) {
-            return true;
-        }
-        if (dealerPoint.isBust()) {
-            return false;
-        }
-        if (playerPoint.diffWithBlackJack() > dealerPoint.diffWithBlackJack()) {
-            return true;
-        }
-        return false;
-    });
+    BLACK_JACK( 1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE( -1);
 
-    private final String message;
-    private final BiFunction<Point, Point, Boolean> judge;
+    private final double profitRate;
 
-    ResultType(String message, BiFunction<Point, Point, Boolean> judge) {
-        this.message = message;
-        this.judge = judge;
+    ResultType(double profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public boolean getJudgement(Point playerPoint, Point dealerPoint) {
-        return judge.apply(playerPoint, dealerPoint);
-    }
-
-    public static ResultType computeResult(Point playerPoint, Point dealerPoint) {
-        return Arrays.stream(ResultType.values())
-                .filter(x -> x.getJudgement(playerPoint, dealerPoint))
+    public static ResultType computeResult(Cards playerCards, Cards dealerCards) {
+        return Arrays.stream(Judge.values())
+                .filter(x -> x.judgeState.test(playerCards))
+                .map(x -> x.judgeResultType.apply(playerCards, dealerCards))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("결과를 판단할 수 없습니다."));
     }
@@ -71,7 +34,7 @@ public enum ResultType {
         return resultType;
     }
 
-    public String getMessage() {
-        return message;
+    public double getProfitRate() {
+        return profitRate;
     }
 }

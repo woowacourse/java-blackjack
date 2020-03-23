@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.result.Results;
 import blackjack.domain.user.*;
 
-
 public class OutputView {
     private static final String DELIMITER = ",";
     private static final String SET_INIT_CARDS_MSG = "딜러와  %s에게 2장의 나누었습니다.";
@@ -32,14 +31,14 @@ public class OutputView {
     }
 
     public static void printStatus(User user) {
-        String formattedCards = ViewFormatter.formatCards(user.getCards());
+        String formattedCards = ViewFormatter.formatCards(user.getCards().getCards());
         String status = String.format(STATUS_FORMT, user.getName(), formattedCards);
         System.out.println(status);
     }
 
     private static void printStatusWithScore(User user) {
-        String formattedCards = ViewFormatter.formatCards(user.getCards());
-        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, new Point(user.getCards()).getPoint());
+        String formattedCards = ViewFormatter.formatCards(user.getCards().getCards());
+        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.getCards().computePoint());
         System.out.println(status);
     }
 
@@ -60,10 +59,11 @@ public class OutputView {
     public static void printFinalResult(Results results) {
         System.out.println();
         System.out.println("## 최종 승패");
-        String dealer = ViewFormatter.formatDealerResult(results.getDealerResult());
+
+        String dealer = ViewFormatter.formatResult(results.getDealerResult());
         System.out.println(dealer);
-        results.getPlayerResult()
-                .forEach((k, v) ->
-                            System.out.println(ViewFormatter.formatPlayerResult(k, v.getMessage())));
+
+        results.getPlayerResults()
+                .forEach(x -> System.out.println(ViewFormatter.formatResult(x)));
     }
 }

@@ -12,9 +12,9 @@ import blackjack.view.OutputView;
 
 
 public class Controller {
-    private Dealer dealer;
-    private Players players;
-    private CardDeck deck;
+    private final Dealer dealer;
+    private final Players players;
+    private final CardDeck deck;
 
     public Controller(Dealer dealer, Players players, CardDeck cardDeck) {
         this.dealer = dealer;
