@@ -8,23 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 class DealerTest {
 
-    Deck deck = mock(Deck.class);
 
     @Test
     @DisplayName("#shuffle() : should return Dealer")
     void construct() {
-        when(deck.shuffle()).thenReturn(deck);
-        new Card(Symbol.TEN, Type.HEART);
+        Deck deck = createDeckforTest(1);
         assertThat(Dealer.shuffle(deck)).isNotNull();
     }
 
@@ -32,10 +26,7 @@ class DealerTest {
     @DisplayName("#hit() : should add card without return")
     void hit() {
         //given
-        when(deck.shuffle()).thenReturn(deck);
-        when(deck.pop())
-                .thenReturn(new Card(Symbol.QUEEN, Type.SPADE))
-                .thenReturn(new Card(Symbol.QUEEN, Type.CLOVER));
+        Deck deck = createDeckforTest(2);
         Dealer dealer = Dealer.shuffle(deck);
         Card card = new Card(Symbol.QUEEN, Type.SPADE);
 
@@ -50,13 +41,9 @@ class DealerTest {
     @DisplayName("#confirmCards : should add cards for given times without return")
     void confirmCards() {
         //given
-        when(deck.shuffle()).thenReturn(deck);
-        when(deck.pop())
-                .thenReturn(new Card(Symbol.QUEEN, Type.SPADE))
-                .thenReturn(new Card(Symbol.KING, Type.SPADE));
+        Deck deck = createDeckforTest(4);
         Dealer dealer = Dealer.shuffle(deck);
-        List<Card> cards = setUpDeck();
-        int hitSize = cards.size();
+        int hitSize = 2;
         int defaultSizeOfCards = dealer.countCards();
 
         //when
@@ -68,39 +55,53 @@ class DealerTest {
 
     @ParameterizedTest
     @MethodSource({"getResultsForCalculateProfit"})
-    void calculateProfit(Result result, int rate) {
+    void calculateProfit(Result result, int moneyValue, int expectedProfitValue) {
         //given
-        Money bettingMoney = mock(Money.class);
-        double valueOfBettingMoney = 10;
-        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        when(bettingMoney.getValue()).thenReturn(valueOfBettingMoney);
-        Profit expectedProfit = mock(Profit.class);
-        when(expectedProfit.multiply((int) valueOfBettingMoney)).thenReturn(expectedProfit);
-        Deck deck = mock(Deck.class);
-        when(deck.shuffle()).thenReturn(deck);
+        Money bettingMoney = Money.of(moneyValue);
+        Deck deck = createDeckforTest(2);
         Dealer dealer = Dealer.shuffle(deck);
         //when
         Profit actualProfit = dealer.calculateProfit(result, bettingMoney);
         //then
-        assertThat(actualProfit).isEqualTo(new Profit(((int) valueOfBettingMoney) * rate));
-        verify(bettingMoney).multiply(anyDouble());
-
+        assertThat(actualProfit).isEqualTo(new Profit(expectedProfitValue));
     }
 
     private static Stream<Arguments> getResultsForCalculateProfit() {
         return Stream.of(
-                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK, -1),
-                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk, -1),
-                Arguments.of(Result.DRAW, 1),
-                Arguments.of(Result.DEALER_WIN, 1)
+                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK, 1000, -1500),
+                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk, 1000, -1000),
+                Arguments.of(Result.DRAW, 1000, 0),
+                Arguments.of(Result.DEALER_WIN, 1000, 1000)
         );
     }
 
-    private List<Card> setUpDeck() {
-        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.DIAMOND), new Card(Symbol.QUEEN, Type.CLOVER));
-        for (Card card : cards) {
-            when(deck.pop()).thenReturn(card);
+
+    private Deck createDeckforTest(int countOfPop) {
+        final Integer[] countOfPops = new Integer[countOfPop];
+
+        class TestDeck implements Deck {
+
+            @Override
+            public Deck shuffle() {
+                return this;
+            }
+
+            @Override
+            public Card pop() {
+                if (countOfPops[0] == null) {
+                    countOfPops[0] = 1;
+                    return new Card(Symbol.QUEEN, Type.SPADE);
+                } else if(countOfPops[1] == null) {
+                    return new Card(Symbol.QUEEN, Type.CLOVER);
+                } else if(countOfPops[2] == null) {
+                    new Card(Symbol.QUEEN, Type.HEART);
+                } else if (countOfPops[3] == null) {
+                    return new Card(Symbol.QUEEN, Type.DIAMOND);
+                }
+                return new Card(Symbol.KING, Type.SPADE);
+            }
         }
-        return cards;
+
+        return new TestDeck();
     }
 }
