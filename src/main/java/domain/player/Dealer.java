@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.Rull;
+import domain.Rule;
 
 public class Dealer extends Player {
 	private static final String DEALER_NAME = "딜러";
@@ -10,6 +10,6 @@ public class Dealer extends Player {
 	}
 
 	public boolean isHit() {
-		return playerCards.calculateScore() <= Rull.DEALER_HIT_SCORE;
+		return playerCards.calculateScore() <= Rule.DEALER_HIT_SCORE;
 	}
 }

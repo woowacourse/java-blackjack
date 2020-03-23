@@ -1,10 +1,11 @@
 package utils;
 
+import domain.Money;
 import domain.card.cardfactory.Card;
 import domain.card.cardfactory.Shape;
 import domain.card.cardfactory.Symbol;
-import domain.player.Player;
 import domain.player.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 class CardPrintUtilsTest {
+	private User user;
+
+	@BeforeEach
+	void setUp() {
+		user = new User("a", Money.valueOf(1000));
+	}
+
 	@DisplayName("모든 카드 출력 테스트")
 	@Test
 	void toStringAllCardTest() {
-		Player user = new User("a");
 		List<Card> cards = new ArrayList<>();
 		cards.add(new Card(Symbol.ACE, Shape.DIAMOND));
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));
@@ -29,7 +36,6 @@ class CardPrintUtilsTest {
 	@DisplayName("한장의 카드 출력 테스트")
 	@Test
 	void toStringOneCardTest() {
-		Player user = new User("a");
 		List<Card> cards = new ArrayList<>();
 		cards.add(new Card(Symbol.ACE, Shape.DIAMOND));
 		cards.add(new Card(Symbol.EIGHT, Shape.SPADE));

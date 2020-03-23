@@ -10,7 +10,7 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return this.symbol == Symbol.ACE;
+		return symbol == Symbol.ACE;
 	}
 
 	public int getScore() {

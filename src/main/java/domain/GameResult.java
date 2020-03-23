@@ -8,35 +8,26 @@ import java.util.List;
 import java.util.Map;
 
 public class GameResult {
-	private final Map<String, Result> userResult;
+	private final Map<String, Double> userIncomes;
+	private final double dealerIncome;
 
 	public GameResult(List<User> users, Dealer dealer) {
-		Map<String, Result> userResult = new HashMap<>();
+		Map<String, Double> userIncomes = new HashMap<>();
+		double dealerIncome = Money.ZERO;
 		for (User user : users) {
-			userResult.put(user.getName(), user.compareScore(dealer));
+			double userIncome = user.compareScore(dealer);
+			userIncomes.put(user.getName(), userIncome);
+			dealerIncome -= userIncome;
 		}
-		this.userResult = userResult;
+		this.userIncomes = userIncomes;
+		this.dealerIncome = dealerIncome;
 	}
 
-	public int calculateDealerWinCount() {
-		return (int) userResult.values().stream()
-				.filter(Result::isLose)
-				.count();
+	public Map<String, Double> getUserIncomes() {
+		return userIncomes;
 	}
 
-	public int calculateDealerDrawCount() {
-		return (int) userResult.values().stream()
-				.filter(Result::isDraw)
-				.count();
-	}
-
-	public int calculateDealerLoseCount() {
-		return (int) userResult.values().stream()
-				.filter(Result::isWin)
-				.count();
-	}
-
-	public Map<String, Result> getUserResult() {
-		return userResult;
+	public double getDealerIncome() {
+		return dealerIncome;
 	}
 }

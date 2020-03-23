@@ -1,6 +1,5 @@
 package domain.player;
 
-
 import domain.card.cardfactory.Card;
 
 import java.util.List;
@@ -11,4 +10,8 @@ public interface Gamer {
 	int calculateScore();
 
 	int calculateBurstIsZeroScore();
+
+	boolean isBlackJack();
+
+	boolean nonBlackJack();
 }

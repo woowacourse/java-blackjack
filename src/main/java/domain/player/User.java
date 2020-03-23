@@ -1,21 +1,48 @@
 package domain.player;
 
-import domain.Result;
+import domain.Money;
+import domain.Rule;
 
 public class User extends Player {
-	public User(String name) {
+	private final Money money;
+	private boolean isInitCardBlackJack = false;
+
+	public User(String name, Money money) {
 		super(name);
+		this.money = money;
 	}
 
-	public Result compareScore(Gamer gamer) {
-		int toCompareScore = gamer.calculateBurstIsZeroScore();
+	public boolean isPossibleAddCard() {
+		return playerCards.calculateScore() < Rule.MAX_SCORE;
+	}
+
+	public double compareScore(Gamer gamerToCompare) {
+		if (isInitCardBlackJack) {
+			return blackJackCompare(gamerToCompare);
+		}
+		return normalCompare(gamerToCompare);
+	}
+
+	private double blackJackCompare(Gamer gamerToCompare) {
+		if (gamerToCompare.isBlackJack()) {
+			return Money.ZERO;
+		}
+		return money.toBlackJackWinMoney();
+	}
+
+	private double normalCompare(Gamer gamerToCompare) {
+		int toCompareScore = gamerToCompare.calculateBurstIsZeroScore();
 		int userScore = calculateBurstIsZeroScore();
 		if (userScore > toCompareScore) {
-			return Result.WIN;
+			return money.getMoney();
 		}
 		if (userScore == toCompareScore) {
-			return Result.DRAW;
+			return Money.ZERO;
 		}
-		return Result.LOSE;
+		return money.toLoseMoney();
+	}
+
+	public void checkInitCardBlackJack() {
+		this.isInitCardBlackJack = this.isBlackJack();
 	}
 }
