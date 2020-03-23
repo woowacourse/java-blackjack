@@ -2,17 +2,13 @@ package model.card;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
     private final Symbol symbol;
     private final Type type;
 
     public Card(Symbol symbol, Type type) {
         this.symbol = symbol;
         this.type = type;
-    }
-
-    public Symbol getSymbol() {
-        return symbol;
     }
 
     public boolean isAce() {
@@ -24,8 +20,7 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return symbol == card.symbol &&
-                type == card.type;
+        return (symbol == card.symbol) && (type == card.type);
     }
 
     @Override
@@ -36,5 +31,9 @@ public class Card {
     @Override
     public String toString() {
         return symbol.toString() + type.toString();
+    }
+
+    public int calculateScore() {
+        return symbol.getScore();
     }
 }

@@ -2,12 +2,13 @@ package model.card;
 
 import exception.EmptyDeckException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
+import model.user.card.CardHand;
 
 public class Deck {
-    private List<Card> cards = new ArrayList<>();
+    private Stack<Card> cards = new Stack<>();
 
     public Deck(List<Card> cards) {
         this.cards.addAll(cards);
@@ -22,16 +23,10 @@ public class Deck {
         validateSize(count);
         CardHand cardHand = new CardHand();
         for (int i = 0; i < count; i++) {
-            int lastIndex = getCurrentDeckSize() - 1;
-            Card card = cards.get(lastIndex);
+            Card card = cards.pop();
             cardHand.addCard(card);
-            cards.remove(lastIndex);
         }
         return cardHand;
-    }
-
-    public int getCurrentDeckSize() {
-        return cards.size();
     }
 
     private void validateSize(int count) {
@@ -40,4 +35,7 @@ public class Deck {
         }
     }
 
+    public int getCurrentDeckSize() {
+        return cards.size();
+    }
 }
