@@ -29,7 +29,6 @@ public class Console implements UserInterface {
         InputView.printPlayerNamesRequlest();
         List<String> playerNames = inputPlayerNames();
         for (String playerName : playerNames) {
-            InputView.printRequestBettingMoney(playerName);
             int bettingMoney = inputBettingMoney(playerName);
             PlayerDto playerDto = PlayerDto.input(playerName, bettingMoney);
             playerDtos.add(playerDto);
@@ -40,12 +39,14 @@ public class Console implements UserInterface {
 
     @Override
     public List<String> inputPlayerNames() {
+        InputView.printPlayerNamesRequlest();
         String input = scanner.nextLine();
         return StringUtils.parseWithDelimeter(input, DELIMITER);
     }
 
     @Override
     public int inputBettingMoney(String playerName) {
+        InputView.printRequestBettingMoney(playerName);
         String input = scanner.nextLine();
         return Integer.parseInt(input);
     }

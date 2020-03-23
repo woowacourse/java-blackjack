@@ -21,7 +21,7 @@ public class Profit {
         return new Profit(this.value + other.value);
     }
 
-    int getValue() {
+    public int getValue() {
         return value;
     }
 

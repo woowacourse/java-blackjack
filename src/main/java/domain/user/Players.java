@@ -1,7 +1,5 @@
 package domain.user;
 
-import common.PlayerDto;
-import common.PlayersDto;
 import domain.UserInterface;
 import domain.card.Card;
 import domain.card.PlayingCards;
@@ -10,7 +8,6 @@ import domain.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Players {
     private static final int DEAFAULT_DEALER_PROFIT = 0;
@@ -24,12 +21,15 @@ public class Players {
     }
 
     public static Players join(UserInterface userInterface) {
-        PlayersDto playersDto = userInterface.inputPlayers();
+
         List<Player> players = new ArrayList<>();
-        for (PlayerDto playerDto : playersDto.getPlayerDtos()) {
-            Player player = Player.join(playerDto.getName(), playerDto.getBettingMoney());
+        List<String> playerNames = userInterface.inputPlayerNames();
+        for (String playerName : playerNames) {
+            int bettingMoney = userInterface.inputBettingMoney(playerName);
+            Player player = Player.join(playerName, bettingMoney);
             players.add(player);
         }
+
         return new Players(players, userInterface);
     }
 
@@ -72,24 +72,8 @@ public class Players {
         return dealerProfit;
     }
 
-    public PlayersDto serialize() {
-        List<PlayerDto> playerDtos = new ArrayList<>();
-        for (Player player : players) {
-            PlayerDto playerDto = PlayerDto.of(player.getName(),
-                    player.getBettingBoney(),
-                    player.getCards().serialize(),
-                    player.getScore());
-            Profit profit = player.getProfit();
-            if (Objects.nonNull(profit)) {
-                playerDto = PlayerDto.of(playerDto.getName(),
-                        playerDto.getBettingMoney(),
-                        playerDto.getCards(),
-                        playerDto.getScore(),
-                        profit.getValue());
-            }
-            playerDtos.add(playerDto);
-        }
-        return PlayersDto.of(playerDtos);
+    public List<Player> getPlayers() {
+        return players;
     }
 
     private Profit calculateDealerProfit(Dealer dealer, Profit sumOfDealerProfit, Player player, Result result) {

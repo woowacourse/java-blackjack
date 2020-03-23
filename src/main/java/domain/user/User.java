@@ -49,7 +49,7 @@ public abstract class User {
         playingCards = playingCards.add(card);
     }
 
-    protected Profit getProfit() {
+    public Profit getProfit() {
         return profit;
     }
 
