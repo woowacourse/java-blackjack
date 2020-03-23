@@ -13,6 +13,7 @@ import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class BlackjackController {
@@ -60,11 +61,17 @@ public class BlackjackController {
     }
 
     private void drawMoreCards(Players players) {
-        for (Player player : players.get()) {
-            while (player.isDrawable() && isAgreePlayerDraw(player)) {
-                player.draw(cardDeck);
-                OutputView.printCards(player.getName(), player.getCards());
-            }
+        Iterator<Player> playerIterator = players.createIterator();
+        while (playerIterator.hasNext()) {
+            Player player = playerIterator.next();
+            drawCards(player);
+        }
+    }
+
+    private void drawCards(Player player) {
+        while (player.isDrawable() && isAgreePlayerDraw(player)) {
+            player.draw(cardDeck);
+            OutputView.printCards(player.getName(), player.getCards());
         }
     }
 
