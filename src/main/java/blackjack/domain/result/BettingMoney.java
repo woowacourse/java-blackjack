@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.result.Exception.BettingMoneyException;
 
 public class BettingMoney {
+    private static final int MAX_INVALID_RANGE_BETTING_MONEY = 0;
     private int bettingMoney;
 
     private BettingMoney(int bettingMoney) {
@@ -24,7 +25,7 @@ public class BettingMoney {
     }
 
     private static void validateRange(int bettingMoney) {
-        if (bettingMoney <= 0) {
+        if (bettingMoney <= MAX_INVALID_RANGE_BETTING_MONEY) {
             throw new BettingMoneyException("배팅 금액은 양수만 가능합니다.");
         }
     }
