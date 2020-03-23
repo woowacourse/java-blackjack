@@ -1,23 +1,31 @@
 package domain.card;
 
+import java.util.Objects;
+
 public enum Symbol {
     ACE(1, "A", new AceCalculator()),
-    TWO(2, "2", (sum) -> 2),
-    THREE(3, "3", (sum) -> 3),
-    FOUR(4, "4", (sum) -> 4),
-    FIVE(5, "5", (sum) -> 5),
-    SIX(6, "6", (sum) -> 6),
-    SEVEN(7, "7", (sum) -> 7),
-    EIGHT(8, "8", (sum) -> 8),
-    NINE(9, "9", (sum) -> 9),
-    TEN(10, "10", (sum) -> 10),
-    JACK(10, "J", (sum) -> 10),
-    QUEEN(10, "Q", (sum) -> 10),
-    KING(10, "K", (sum) -> 10);
+    TWO(2, "2"),
+    THREE(3, "3"),
+    FOUR(4, "4"),
+    FIVE(5, "5"),
+    SIX(6, "6"),
+    SEVEN(7, "7"),
+    EIGHT(8, "8"),
+    NINE(9, "9"),
+    TEN(10, "10"),
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K");
 
     private final int value;
     private final String pattern;
     private final SymbolCalculator calculator;
+
+    Symbol(int value, String pattern) {
+        this.value = value;
+        this.pattern = pattern;
+        this.calculator = null;
+    }
 
     Symbol(int value, String pattern, SymbolCalculator calculator) {
         this.value = value;
@@ -26,6 +34,9 @@ public enum Symbol {
     }
 
     int calculate(int sum) {
+        if (Objects.isNull(calculator)) {
+            return value;
+        }
         return calculator.calculate(sum);
     }
 
