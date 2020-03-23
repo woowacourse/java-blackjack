@@ -1,6 +1,7 @@
 package blackjack.domain.testAssistant;
 
 import blackjack.domain.card.*;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 import blackjack.domain.user.Name;
 
@@ -61,5 +62,9 @@ public class TestAssistant {
 
 	public static Score createScore(int score) {
 		return Score.of(score);
+	}
+
+	public static Dealer createDealer(String... strings) {
+		return Dealer.of(createHand(strings));
 	}
 }

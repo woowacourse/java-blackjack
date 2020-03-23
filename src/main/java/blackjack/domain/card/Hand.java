@@ -107,6 +107,10 @@ public final class Hand {
 		return computeScore().isUnder(score);
 	}
 
+	public List<Card> getListOfFirstCard() {
+		return Collections.singletonList(hand.get(0));
+	}
+
 	public List<Card> getHand() {
 		return Collections.unmodifiableList(hand);
 	}

@@ -19,7 +19,7 @@ public class Blackjack {
 
 	public static void main(String[] args) {
 		Players players = preparePlayers();
-		Playable dealer = Dealer.dealer();
+		Playable dealer = Dealer.empty();
 		Drawable deck = prepareDeck();
 
 		start(players, dealer, deck);

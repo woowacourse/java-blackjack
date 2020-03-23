@@ -3,7 +3,6 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.result.Results;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Playable;
 import blackjack.domain.user.Players;
@@ -21,7 +20,7 @@ class ResultsTest {
 
 	@BeforeEach
 	void setUp() {
-		Playable dealer = Dealer.dealer();
+		Playable dealer = Dealer.empty();
 		dealer.receiveCard(Card.of(Symbol.ACE, Type.SPADE));
 
 		players = Players.of(Arrays.asList("그니", "무늬", "포비"), Arrays.asList("1000", "1000", "1000"));

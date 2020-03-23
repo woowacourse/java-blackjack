@@ -17,18 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ScoreTest {
-	static Score zero;
-	static Score five;
-	static Score six;
-	static Score eleven;
-
-	@BeforeAll
-	static void beforeAll() {
-		zero = Score.zero();
-		five = Score.of(5);
-		six = Score.of(6);
-		eleven = Score.of(11);
-	}
 
 	@DisplayName("of()가 0 이상인 수가 들어왔을 때 인스턴스를 생성하는지 테스트")
 	@ParameterizedTest

@@ -8,17 +8,21 @@ import java.util.Collections;
 import java.util.List;
 
 public final class Dealer extends AbstractPlayer {
-	private Dealer() {
-		super(new Name(DEALER_NAME));
+	private Dealer(Hand hand) {
+		super(new Name(DEALER_NAME), hand);
 	}
 
-	public static Dealer dealer() {
-		return new Dealer();
+	public static Dealer empty() {
+		return new Dealer(new Hand());
+	}
+
+	public static Dealer of(Hand hand) {
+		return new Dealer(hand);
 	}
 
 	@Override
 	public List<Card> getStartHand() {
-		return Collections.singletonList(getHand().getHand().get(0));
+		return getHand().getListOfFirstCard();
 	}
 
 	@Override

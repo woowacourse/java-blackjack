@@ -13,8 +13,12 @@ public abstract class AbstractPlayer implements Playable {
 	private final Hand hand;
 
 	protected AbstractPlayer(Name name) {
+		this(name, new Hand());
+	}
+
+	protected AbstractPlayer(Name name, Hand hand) {
 		this.name = name;
-		this.hand = new Hand();
+		this.hand = hand;
 	}
 
 	@Override
