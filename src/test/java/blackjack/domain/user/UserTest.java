@@ -2,14 +2,23 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.InvalidDeckException;
+import blackjack.domain.card.Hand;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.exceptions.InvalidDeckException;
+import blackjack.domain.exceptions.InvalidUserException;
+import blackjack.domain.result.ResultScore;
 
 class UserTest {
 	@Test
@@ -24,14 +33,22 @@ class UserTest {
 	void validate_InvalidUserName_InvalidUserExceptionThrown(String name) {
 		assertThatThrownBy(() -> new Dealer(name))
 			.isInstanceOf(InvalidUserException.class)
-			.hasMessage(InvalidUserException.NULL_OR_EMPTY);
+			.hasMessage(InvalidUserException.NULL_NAME);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_NullHand_InvalidUserExceptionThrown(Hand hand) {
+		assertThatThrownBy(() -> new Dealer("dealer", hand))
+			.isInstanceOf(InvalidUserException.class)
+			.hasMessage(InvalidUserException.NULL_HAND);
 	}
 
 	@Test
-	void draw_DrawCard_AddDrawCardToHand() {
+	void hit_DrawCard_AddDrawCardToHand() {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
-		user.draw(deck);
+		user.hit(deck);
 
 		assertThat(user).extracting("hand").asList()
 			.hasOnlyElementsOfType(Card.class)
@@ -39,19 +56,19 @@ class UserTest {
 	}
 
 	@Test
-	void validateDeck_Null_InvalidDeckExceptionThrown() {
+	void validate_Null_InvalidDeckExceptionThrown() {
 		User user = new Dealer("user");
 
-		assertThatThrownBy(() -> user.draw(null))
+		assertThatThrownBy(() -> user.hit(null))
 			.isInstanceOf(InvalidDeckException.class)
-			.hasMessage(InvalidDeckException.NULL);
+			.hasMessage(InvalidDeckException.EMPTY);
 	}
 
 	@Test
-	void draw_DrawNumberOfCards_AddDrawCardsToHand() {
+	void hit_DrawNumberOfCards_AddDrawCardsToHand() {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
-		user.draw(deck, 2);
+		user.hit(deck, 2);
 
 		assertThat(user).extracting("hand").asList()
 			.hasOnlyElementsOfType(Card.class)
@@ -59,12 +76,34 @@ class UserTest {
 	}
 
 	@Test
-	void validateDrawNumber_InvalidNumberOfCards_InvalidUserExceptionThrown() {
+	void validate_InvalidNumberOfCards_InvalidUserExceptionThrown() {
 		User user = new Dealer("user");
 		Deck deck = new Deck(CardFactory.create());
 
-		assertThatThrownBy(() -> user.draw(deck, 0))
+		assertThatThrownBy(() -> user.hit(deck, 0))
 			.isInstanceOf(InvalidUserException.class)
 			.hasMessage(InvalidUserException.INVALID_DRAW_NUMBER);
+	}
+
+	@Test
+	void calculateResultScore_UserHand_ReturnResultScore() {
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.TEN, Type.DIAMOND),
+			Card.of(Symbol.ACE, Type.SPADE));
+		User user = Dealer.from(cards);
+
+		ResultScore expected = ResultScore.of(cards);
+		assertThat(user.calculateResultScore()).isEqualTo(expected);
+	}
+
+	@Test
+	void getScore_UserHand_ReturnIntScore() {
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.TEN, Type.DIAMOND),
+			Card.of(Symbol.ACE, Type.SPADE));
+		User user = Dealer.from(cards);
+
+		int expected = 21;
+		assertThat(user.getScore()).isEqualTo(expected);
 	}
 }

@@ -2,13 +2,32 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
+import blackjack.domain.exceptions.InvalidCardException;
+
 public class Card {
 	private final Symbol symbol;
 	private final Type type;
 
-	public Card(Symbol symbol, Type type) {
+	Card(Symbol symbol, Type type) {
+		validate(symbol, type);
 		this.symbol = symbol;
 		this.type = type;
+	}
+
+	public static Card of(Symbol symbol, Type type) {
+		validate(symbol, type);
+		return CardFactory.pickUp(symbol, type);
+	}
+
+	static String name(Symbol symbol, Type type) {
+		validate(symbol, type);
+		return symbol.toString() + type.toString();
+	}
+
+	private static void validate(Symbol symbol, Type type) {
+		if (Objects.isNull(symbol) || Objects.isNull(type)) {
+			throw new InvalidCardException(InvalidCardException.NULL);
+		}
 	}
 
 	public boolean isAce() {
@@ -39,6 +58,6 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return symbol.getSymbol() + type.getType();
+		return name(this.symbol, this.type);
 	}
 }

@@ -2,56 +2,52 @@ package blackjack.domain.result;
 
 import static java.util.stream.Collectors.*;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 
-import blackjack.domain.user.Dealer;
+import blackjack.domain.exceptions.InvalidReportException;
 import blackjack.domain.user.Player;
 
 public class Report {
-	private final Map<ResultType, Long> dealerResult;
-	private final Map<Player, ResultType> playersResult;
+	private static final int BETTING_PROFIT_MULTIPLIER_FOR_DEALER = -1;
 
-	private Report(Map<ResultType, Long> dealerResult, Map<Player, ResultType> playersResult) {
-		this.dealerResult = dealerResult;
-		this.playersResult = playersResult;
+	private Map<Player, Integer> playersProfit;
+
+	public Report(Map<Player, Integer> playersProfit) {
+		validate(playersProfit);
+		this.playersProfit = playersProfit;
 	}
 
-	public static Report from(Dealer dealer, List<Player> players) {
-		validateUser(dealer, players);
-		return new Report(
-			generateDealerResult(dealer, players),
-			generatePlayersResult(dealer, players));
-	}
-
-	private static void validateUser(Dealer dealer, List<Player> players) {
-		if (Objects.isNull(dealer) || Objects.isNull(players) || players.isEmpty()) {
+	private void validate(Map<Player, Integer> playersBettingMoney) {
+		if (Objects.isNull(playersBettingMoney) || playersBettingMoney.isEmpty()) {
 			throw new InvalidReportException(InvalidReportException.NULL);
 		}
 	}
 
-	private static Map<Player, ResultType> generatePlayersResult(Dealer dealer, List<Player> players) {
-		return players.stream()
+	public static Report calculateResultBy(Map<Player, ResultType> playersResultType,
+		Map<Player, BettingMoney> playersBettingMoney) {
+		return playersResultType.entrySet().stream()
 			.collect(collectingAndThen(
-				toMap(Function.identity(), player -> ResultType.of(player, dealer)),
-				LinkedHashMap::new));
+				toMap(
+					Map.Entry::getKey,
+					entry -> calculateBettingProfitBy(playersBettingMoney.get(entry.getKey()), entry.getValue()),
+					(x, y) -> x,
+					LinkedHashMap::new),
+				Report::new));
 	}
 
-	private static Map<ResultType, Long> generateDealerResult(Dealer dealer, List<Player> players) {
-		return players.stream()
-			.map(player -> ResultType.of(dealer, player))
-			.collect(collectingAndThen(groupingBy(Function.identity(), counting()), EnumMap::new));
+	private static Integer calculateBettingProfitBy(BettingMoney playerBettingMoney, ResultType resultType) {
+		return resultType.calculateProfitFrom(playerBettingMoney);
 	}
 
-	public Map<ResultType, Long> getDealerResult() {
-		return dealerResult;
+	public int getDealerBettingProfit() {
+		return BETTING_PROFIT_MULTIPLIER_FOR_DEALER * playersProfit.values()
+			.stream()
+			.reduce(0, Integer::sum);
 	}
 
-	public Map<Player, ResultType> getPlayersResult() {
-		return playersResult;
+	public Map<Player, Integer> getPlayersProfit() {
+		return playersProfit;
 	}
 }

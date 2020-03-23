@@ -1,67 +1,51 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.*;
-import static blackjack.view.OutputView.*;
-
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-import blackjack.domain.BlackjackTable;
-import blackjack.domain.DrawOpinion;
+import blackjack.domain.blackjack.BlackjackTable;
+import blackjack.domain.blackjack.UserDecisions;
+import blackjack.domain.result.BettingMoney;
 import blackjack.domain.result.Report;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackController {
 	private final BlackjackTable blackjackTable;
 
 	public BlackjackController(BlackjackTable blackjackTable) {
+		Objects.requireNonNull(blackjackTable, "블랙잭 테이블이 존재하지 않습니다.");
 		this.blackjackTable = blackjackTable;
 	}
 
-	public void playGame(Dealer dealer, List<Player> players) {
-		List<User> users = blackjackTable.collectToUsersFrom(dealer, players);
+	public void play(Map<Player, BettingMoney> playersBettingMoney) {
+		Objects.requireNonNull(playersBettingMoney, "플레이어들의 배팅 머니가 존재하지 않습니다.");
+		List<User> users = blackjackTable.collectUsers();
 
-		drawInitialCardsFrom(users);
-		continueDrawCardsEach(dealer, players);
-
-		printUsersCardsAndScore(users);
-
-		Report blackJackReport = Report.from(dealer, players);
-		printBlackjackReport(blackJackReport);
-	}
-
-	private void drawInitialCardsFrom(List<User> users) {
-		blackjackTable.drawInitialCards(users);
-		printUsersInitialDraw(BlackjackTable.INITIAL_DRAW_NUMBER, users);
-	}
-
-	private void continueDrawCardsEach(Dealer dealer, List<Player> players) {
-		for (Player player : players) {
-			drawCardsFrom(player);
+		dealInitialHand(users);
+		if (!blackjackTable.isDealerBlackjack()) {
+			playContinue();
 		}
-		drawCardsFrom(dealer);
+		printBlackjackReport(users, playersBettingMoney);
 	}
 
-	private void drawCardsFrom(Player player) {
-		while (canDraw(player) && wantDraw(player)) {
-			blackjackTable.drawCardFrom(player);
-			printUserHand(player, player.getHand());
-		}
+	private void dealInitialHand(List<User> users) {
+		blackjackTable.dealInitialHand();
+		OutputView.printUsersInitialDealtHand(BlackjackTable.INITIAL_DEAL_NUMBER, users);
 	}
 
-	private boolean canDraw(User user) {
-		return user.canDraw();
+	private void playContinue() {
+		UserDecisions userDecisions = new UserDecisions(InputView::inputChoiceFrom, OutputView::printUserHand,
+			OutputView::printDealerDraw);
+		blackjackTable.playWith(userDecisions);
 	}
 
-	private boolean wantDraw(Player player) {
-		return DrawOpinion.of(inputDrawOpinion(player)).isYes();
-	}
-
-	private void drawCardsFrom(Dealer dealer) {
-		while (canDraw(dealer)) {
-			blackjackTable.drawCardFrom(dealer);
-			printDealerDrawCard();
-		}
+	private void printBlackjackReport(List<User> users, Map<Player, BettingMoney> playersBettingMoney) {
+		Report report = blackjackTable.reportFrom(playersBettingMoney);
+		OutputView.printUsersHandAndScore(users);
+		OutputView.printBlackjackReport(report);
 	}
 }

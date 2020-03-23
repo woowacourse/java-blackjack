@@ -10,26 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.exceptions.InvalidDealerException;
 
 class DealerTest {
-	private static Stream<Arguments> provideUndrawableDealer() {
-		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
-
-		Dealer dealer = new Dealer("dealer");
-		Deck deck = new Deck(CardFactory.create());
-
-		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			dealer.draw(deck);
-		}
-		return Stream.of(Arguments.of(dealer));
-	}
-
 	@Test
 	void Dealer_InputDealerName_GenerateInstance() {
 		Dealer dealer = new Dealer("dealer");
@@ -39,18 +29,36 @@ class DealerTest {
 	}
 
 	@Test
-	void valueOf_InputDealerNameAndCards_GenerateInstance() {
+	void from_InputDealerNameAndCards_GenerateInstance() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
 
-		assertThat(new Dealer("dealer", cards)).isInstanceOf(Dealer.class)
+		assertThat(Dealer.from(cards)).isInstanceOf(Dealer.class)
 			.extracting("hand").isEqualTo(cards);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_EmptyCards_InvalidDealerExceptionThrown(List<Card> cards) {
+		assertThatThrownBy(() -> Dealer.from(cards))
+			.isInstanceOf(InvalidDealerException.class)
+			.hasMessage(InvalidDealerException.EMPTY);
+	}
+
+	@Test
+	void isBlackjack_CalculateResultScore_CheckHandType() {
+		Dealer dealer = Dealer.from(Arrays.asList(
+			Card.of(Symbol.TEN, Type.DIAMOND),
+			Card.of(Symbol.ACE, Type.SPADE)));
+
+		assertThat(dealer.isBlackjack()).isTrue();
 	}
 
 	@Test
 	void canDraw_CurrentScoreLowerThanDrawableMaxScore_ReturnTrue() {
-		assertThat(new Dealer("dealer").canDraw()).isTrue();
+		Dealer dealer = Dealer.from(Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
+		assertThat(dealer.canDraw()).isTrue();
 	}
 
 	@ParameterizedTest
@@ -59,14 +67,26 @@ class DealerTest {
 		assertThat(dealer.canDraw()).isFalse();
 	}
 
-	@Test
-	void getInitialHand_DealerDrawInitialTwoCards_ReturnOneCard() {
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
-		Dealer dealer = Dealer.valueOf("dealer", cards);
+	private static Stream<Arguments> provideUndrawableDealer() {
+		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
 
-		assertThat(dealer.getInitialHand()).hasSize(1)
-			.isEqualTo(Arrays.asList(new Card(Symbol.SEVEN, Type.CLUB)));
+		Dealer dealer = new Dealer("dealer");
+		Deck deck = new Deck(CardFactory.create());
+
+		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
+			dealer.hit(deck);
+		}
+		return Stream.of(Arguments.of(dealer));
+	}
+
+	@Test
+	void getInitialDealtHand_DealerDealInitialTwoCards_ReturnOneCard() {
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
+		Dealer dealer = Dealer.from(cards);
+
+		assertThat(dealer.getInitialDealtHand()).hasSize(1)
+			.isEqualTo(Arrays.asList(Card.of(Symbol.SEVEN, Type.CLUB)));
 	}
 }

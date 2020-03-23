@@ -1,4 +1,4 @@
-package blackjack.domain.user.hand;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,10 +7,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.exceptions.InvalidScoreException;
 
 class ScoreTest {
 	@Test
@@ -29,7 +31,7 @@ class ScoreTest {
 	@ParameterizedTest
 	@EnumSource(value = Symbol.class)
 	void valueOf_InputCard_ReturnInstance(Symbol symbol) {
-		Card card = new Card(symbol, Type.CLUB);
+		Card card = Card.of(symbol, Type.CLUB);
 
 		assertThat(Score.valueOf(card)).isInstanceOf(Score.class)
 			.extracting("score").isEqualTo(card.getScore());
@@ -40,28 +42,23 @@ class ScoreTest {
 	void valueOf_InputNull_NullPointerExceptionThrown(Card card) {
 		assertThatThrownBy(() -> Score.valueOf(card))
 			.isInstanceOf(InvalidScoreException.class)
-			.hasMessage(InvalidScoreException.NULL);
+			.hasMessage(InvalidScoreException.CARD_NULL);
 	}
 
-	@Test
-	void add_InputCard_addScore() {
-		Card card = new Card(Symbol.TWO, Type.CLUB);
-		assertThat(Score.ZERO.add(card)).extracting("score").isEqualTo(2);
+	@ParameterizedTest
+	@ValueSource(ints = {1, 5, 10})
+	void add_InputScore_addScore(int value) {
+		Score score = Score.valueOf(value);
+
+		assertThat(Score.ZERO.add(score)).extracting("score").isEqualTo(value);
 	}
 
-	@Test
-	void add_ACECardAddBy11_addScore() {
-		Card card = new Card(Symbol.ACE, Type.CLUB);
-
-		assertThat(Score.ZERO.add(card)).extracting("score").isEqualTo(11);
-	}
-
-	@Test
-	void add_ACECardAddBy1_addScore() {
-		Card card = new Card(Symbol.ACE, Type.CLUB);
-		Score score = Score.valueOf(11);
-
-		assertThat(score.add(card)).extracting("score").isEqualTo(12);
+	@ParameterizedTest
+	@NullSource
+	void add_InputScore_addScore(Score score) {
+		assertThatThrownBy(() -> Score.valueOf(10).add(score))
+			.isInstanceOf(InvalidScoreException.class)
+			.hasMessage(InvalidScoreException.SCORE_NULL);
 	}
 
 	@ParameterizedTest
@@ -78,5 +75,21 @@ class ScoreTest {
 		Score score = Score.valueOf(9);
 
 		assertThat(score.isMoreThan(value)).isEqualTo(expected);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"9,true", "10,false"})
+	void isEqual_InputIntegerScore_ReturnCompareResult(int value, boolean expected) {
+		Score score = Score.valueOf(9);
+
+		assertThat(score.isEqual(value)).isEqualTo(expected);
+	}
+
+	@Test
+	void compareTo_CompareScore_ReturnCompareByIntScore() {
+		Score score1 = Score.valueOf(17);
+		Score score2 = Score.valueOf(16);
+
+		assertThat(score1.compareTo(score2)).isEqualTo(Integer.compare(17, 16));
 	}
 }

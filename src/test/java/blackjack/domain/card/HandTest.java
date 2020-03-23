@@ -6,9 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
-import blackjack.domain.user.hand.Hand;
-import blackjack.domain.user.hand.Score;
+import blackjack.domain.exceptions.InvalidHandException;
 
 class HandTest {
 	@Test
@@ -19,57 +20,40 @@ class HandTest {
 	@Test
 	void add_Card_AddCardToHand() {
 		Hand hand = new Hand();
-		Card card = new Card(Symbol.ACE, Type.CLUB);
+		Card card = Card.of(Symbol.ACE, Type.CLUB);
 		hand.add(card);
 
 		assertThat(hand).extracting("cards").asList().contains(card);
+	}
+
+	@ParameterizedTest
+	@NullSource
+	void validate_NullIntoAdd_InvalidHandExceptionThrown(Card card) {
+		Hand hand = new Hand();
+
+		assertThatThrownBy(() -> hand.add(card))
+			.isInstanceOf(InvalidHandException.class)
+			.hasMessage(InvalidHandException.NULL);
 	}
 
 	@Test
 	void add_CardList_AddCardsToHand() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
+			Card.of(Symbol.ACE, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
 		hand.add(cards);
 
 		assertThat(hand).extracting("cards").asList().containsAll(cards);
 	}
 
-	@Test
-	void calculateScore_SumCards() {
+	@ParameterizedTest
+	@NullSource
+	void validate_NullCardsIntoAdd_InvalidHandExceptionThrown(List<Card> cards) {
 		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.TWO, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
-		hand.add(cards);
 
-		Score expected = Score.valueOf(10);
-		assertThat(hand.calculateScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculateScore_WithAceCard_SumCards() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
-		hand.add(cards);
-
-		Score expected = Score.valueOf(19);
-		assertThat(hand.calculateScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculateBustHandledScore_BustScore_ReturnZeroScore() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.JACK, Type.DIAMOND),
-			new Card(Symbol.QUEEN, Type.HEART),
-			new Card(Symbol.TWO, Type.SPADE));
-		hand.add(cards);
-
-		Score expected = Score.ZERO;
-		assertThat(hand.calculateBustHandledScore()).isEqualTo(expected);
+		assertThatThrownBy(() -> hand.add(cards))
+			.isInstanceOf(InvalidHandException.class)
+			.hasMessage(InvalidHandException.EMPTY);
 	}
 }

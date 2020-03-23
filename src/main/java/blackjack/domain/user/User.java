@@ -1,103 +1,106 @@
 package blackjack.domain.user;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.InvalidDeckException;
-import blackjack.domain.user.hand.Hand;
+import blackjack.domain.card.Hand;
+import blackjack.domain.exceptions.InvalidDeckException;
+import blackjack.domain.exceptions.InvalidUserException;
+import blackjack.domain.result.ResultScore;
 
-public abstract class User implements Comparable<User> {
+public abstract class User implements BlackjackParticipant {
 	private static final int DRAW_LOWER_BOUND = 1;
+
 	protected final String name;
 	protected final Hand hand;
 
-	public User(String name) {
-		validate(name);
+	User(String name, Hand hand) {
+		validate(name, hand);
 		this.name = name.trim();
-		this.hand = new Hand();
+		this.hand = hand;
 	}
 
-	User(String name, List<Card> cards) {
-		this(name);
-		this.hand.add(cards);
+	User(String name) {
+		this(name, new Hand());
 	}
 
-	private void validate(String name) {
+	private void validate(String name, Hand hand) {
 		if (Objects.isNull(name) || name.trim().isEmpty()) {
-			throw new InvalidUserException(InvalidUserException.NULL_OR_EMPTY);
+			throw new InvalidUserException(InvalidUserException.NULL_NAME);
+		}
+		if (Objects.isNull(hand)) {
+			throw new InvalidUserException(InvalidUserException.NULL_HAND);
 		}
 	}
 
-	public void draw(Deck deck) {
-		validateDeck(deck);
+	@Override
+	public void hit(Deck deck) {
+		validate(deck);
 		hand.add(deck.draw());
 	}
 
-	private void validateDeck(Deck deck) {
+	private void validate(Deck deck) {
 		if (Objects.isNull(deck)) {
-			throw new InvalidDeckException(InvalidDeckException.NULL);
+			throw new InvalidDeckException(InvalidDeckException.EMPTY);
 		}
 	}
 
-	public void draw(Deck deck, int drawNumber) {
-		validateDeck(deck);
-		validateDrawNumber(drawNumber);
-		List<Card> drawCards = IntStream.range(0, drawNumber)
-			.mapToObj(e -> deck.draw())
-			.collect(toList());
-		hand.add(drawCards);
+	@Override
+	public void hit(Deck deck, int drawNumber) {
+		validate(drawNumber);
+		IntStream.range(0, drawNumber)
+			.forEach(e -> hit(deck));
 	}
 
-	protected void validateDrawNumber(int drawNumber) {
+	protected void validate(int drawNumber) {
 		if (drawNumber < DRAW_LOWER_BOUND) {
 			throw new InvalidUserException(InvalidUserException.INVALID_DRAW_NUMBER);
 		}
 	}
 
+	@Override
 	public abstract boolean canDraw();
 
+	@Override
+	public ResultScore calculateResultScore() {
+		return hand.calculateResultScore();
+	}
+
+	@Override
+	public abstract List<Card> getInitialDealtHand();
+
+	@Override
+	public int getScore() {
+		return calculateResultScore().getIntScore();
+	}
+
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	public abstract List<Card> getInitialHand();
-
+	@Override
 	public List<Card> getHand() {
 		return hand.getCards();
 	}
 
-	public int getScore() {
-		return hand.calculateScore().getScore();
-	}
-
-	private int getBustHandledScore() {
-		return hand.calculateBustHandledScore().getScore();
-	}
-
 	@Override
-	public int compareTo(User that) {
-		return Integer.compare(this.getBustHandledScore(), that.getBustHandledScore());
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (object == null || getClass() != object.getClass()) {
 			return false;
 		}
-		User that = (User)o;
-		return name.equals(that.name);
+		User user = (User)object;
+		return Objects.equals(name, user.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(name, hand);
 	}
 }
