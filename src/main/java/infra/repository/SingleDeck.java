@@ -31,7 +31,7 @@ public class SingleDeck implements Deck {
     }
 
     public static SingleDeck setUp() {
-        List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
+        List<Card> cards = new ArrayList<>(CARDS_BOX);
         return new SingleDeck(cards);
     }
 
