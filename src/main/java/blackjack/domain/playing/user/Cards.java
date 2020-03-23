@@ -62,8 +62,7 @@ public class Cards {
         return cards.size();
     }
 
-    public List<Card> getCardS() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
 }

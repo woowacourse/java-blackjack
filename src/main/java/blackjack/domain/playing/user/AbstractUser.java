@@ -91,6 +91,6 @@ public class AbstractUser implements User {
     }
 
     public List<Card> getCards() {
-        return cards.getCardS();
+        return cards.getCards();
     }
 }
