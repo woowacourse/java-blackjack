@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     public static void participantsStatus(Participants participants) {
-        for (Participant participant : participants) {
+        for (Participant participant : participants.getParticipants()) {
             participantStatus(participant);
         }
         System.out.println();
@@ -68,7 +68,7 @@ public class OutputView {
     }
 
     public static void result(Participants participants) {
-        for (Participant participant : participants) {
+        for (Participant participant : participants.getParticipants()) {
             System.out.println(statusToString(participant) + " - 결과: " + participant.score());
         }
         System.out.println();
@@ -76,12 +76,6 @@ public class OutputView {
 
     public static String statusToString(Participant participant) {
         return participant.getName() + ": " + participant.handStatus();
-    }
-
-    public static void basicStatistics(BasicResult basicResult, Participants participants) {
-        System.out.println("## 최종 승패");
-        // System.out.println(dealerResult(basicResult.getDealerResult()));
-        // System.out.println(playerResult(basicResult.getPlayerResults()));
     }
 
     public static void moneyStatistics(MoneyResult moneyResult, Participants participants) {

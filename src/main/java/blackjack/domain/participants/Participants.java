@@ -8,45 +8,38 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants implements Iterable<Participant> {
+public class Participants {
     public static final int FIRST_CARDS_COUNT = 2;
 
-    private final List<Participant> participants;
+    private final Dealer dealer;
+    private final List<Player> players;
 
     public Participants(final Dealer dealer, final List<Player> players) {
-        this.participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
+        this.dealer = dealer;
+        this.players = players;
     }
 
     public void initialDraw(Deck deck) {
         for (int i = 0; i < FIRST_CARDS_COUNT; i++) {
-            participants.forEach(participant -> participant.draw(deck.pop()));
+            dealer.draw(deck.pop());
+            players.forEach(player -> player.draw(deck.pop()));
         }
     }
 
     public Dealer getDealer() {
-        return (Dealer) participants.stream()
-                .filter(Participant::isDealer)
-                .findFirst()
-                .orElseThrow(() ->
-                        new InvalidParticipantsException("딜러가 없는 게임은 무효입니다.")
-                );
+        return dealer;
     }
 
     public List<Player> getPlayers() {
-        return participants.stream()
-                .filter(participant -> !participant.isDealer())
-                .map(participant -> (Player) participant)
-                .collect(Collectors.toList());
+        return players;
     }
 
     public List<Participant> getParticipants() {
-        return participants;
-    }
+        List<Participant> participants = new ArrayList<>();
 
-    @Override
-    public Iterator<Participant> iterator() {
-        return participants.iterator();
+        participants.add(dealer);
+        participants.addAll(players);
+
+        return participants;
     }
 }
