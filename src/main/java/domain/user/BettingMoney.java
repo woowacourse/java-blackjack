@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.result.PrizeRatio;
+
 public class BettingMoney {
 
     private static final int CRITERIA = 0;
@@ -17,7 +19,7 @@ public class BettingMoney {
         }
     }
 
-    public int calculateProfit(Dealer dealer, Player player) {
-        return (int) (money * player.decideRatio(dealer).getRatio());
+    public int calculateProfit(PrizeRatio ratio) {
+        return (int) (money * ratio.getRatio());
     }
 }
