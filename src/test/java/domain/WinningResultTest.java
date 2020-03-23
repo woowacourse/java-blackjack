@@ -5,26 +5,51 @@ import domain.card.Cards;
 import domain.card.Symbol;
 import domain.card.Type;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class WinningResultTest {
-    @Test
-    @DisplayName("WinningResult 통합 테스트")
-    void WinningResultTest() {
-        Cards playerCards = new Cards();
-        Cards dealerCards = new Cards();
+    private Cards playerCards;
+    private Cards dealerCards;
+
+    @BeforeEach
+    void init() {
+        playerCards = new Cards();
+        dealerCards = new Cards();
         playerCards.add(new Card(Type.CLUB, Symbol.ACE));
         dealerCards.add(new Card(Type.CLUB, Symbol.TEN));
+    }
+
+    @Test
+    @DisplayName("Win Test")
+    void win() {
         Assertions.assertThat(WinningResult.of(playerCards,dealerCards))
                 .isEqualTo(WinningResult.WIN);
+    }
 
+    @Test
+    @DisplayName("Draw test")
+    void lose() {
+        playerCards.add(new Card(Type.HEART, Symbol.TWO));
+        dealerCards.add(new Card(Type.CLUB, Symbol.THREE));
+        Assertions.assertThat(WinningResult.of(playerCards, dealerCards))
+                .isEqualTo(WinningResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("Lose test")
+    void draw() {
         dealerCards.add(new Card(Type.CLUB, Symbol.TWO));
-        Assertions.assertThat(WinningResult.of(playerCards,dealerCards))
+        Assertions.assertThat(WinningResult.of(playerCards, dealerCards))
                 .isEqualTo(WinningResult.LOSE);
+    }
 
+    @Test
+    @DisplayName("Blackjack test")
+    void blackjack() {
         playerCards.add(new Card(Type.CLUB, Symbol.JACK));
-        Assertions.assertThat(WinningResult.of(playerCards,dealerCards))
+        Assertions.assertThat(WinningResult.of(playerCards, dealerCards))
                 .isEqualTo(WinningResult.BLACKJACK);
     }
 }
