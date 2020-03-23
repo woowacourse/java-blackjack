@@ -21,7 +21,7 @@ public class Player extends User {
         this(player.getName(), playingCards, player.bettingMoney);
     }
 
-    static Player of(String name, PlayingCards playingCards, Money bettingMoney) {
+    public static Player of(String name, PlayingCards playingCards, Money bettingMoney) {
         return new Player(name, playingCards, bettingMoney);
     }
 

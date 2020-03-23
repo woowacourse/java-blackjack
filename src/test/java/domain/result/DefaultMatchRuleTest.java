@@ -1,214 +1,164 @@
 package domain.result;
 
+import domain.card.*;
 import domain.user.Dealer;
+import domain.user.Money;
 import domain.user.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class DefaultMatchRuleTest {
     private DefaultMatchRule defaultMatchRule;
+    private PlayingCards blackjack = PlayingCards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
+    private PlayingCards bust = PlayingCards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.TEN, Type.SPADE), new Card(Symbol.JACK, Type.SPADE)));
+    private PlayingCards _20 = PlayingCards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.JACK, Type.SPADE)));
+    private PlayingCards _19 = PlayingCards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.NINE, Type.SPADE)));
+    private PlayingCards _18 = PlayingCards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.EIGHT, Type.SPADE)));
+
 
     @BeforeEach
     void setUp() {
         defaultMatchRule = new DefaultMatchRule();
     }
 
-    @ParameterizedTest
-    @DisplayName("#match() : should return Result.DEALER_WIN")
-    @MethodSource({"getCasesForDealerWin"})
-    void matchDealerWin(Player player, Dealer dealer) {
+    @Test
+    @DisplayName("#match() : should return Result.DEALER_WIN because Player bust")
+    void matchDealerWinBecausePlayerBust() {
+        Player player = Player.of("testPlayer", bust, Money.of(1000));
+        Deck deck = createNormalDeckforTest(2);
+        Dealer dealer = Dealer.shuffle(deck);
         Result result = defaultMatchRule.match(player, dealer);
         assertThat(result).isEqualTo(Result.DEALER_WIN);
     }
 
-    @ParameterizedTest
-    @DisplayName("#match() : should return Result.PLAYER_WIN_WITH_BLACKJACK")
-    @MethodSource({"getCasesForPlayerWinWithBlackjack"})
-    void matchPlayerWinWithBlackjack(Player player, Dealer dealer) {
+    @Test
+    @DisplayName("#match() : should return Result.PLAYER_WIN_WITH_BLACkJACK")
+    void matchPlayerWinWithBlackjackDealerBustPlayerBlackjack() {
+        Player player = Player.of("testPlayer", blackjack, Money.of(1000));
+        Deck deck = createNormalDeckforTest(3);
+        Dealer dealer = Dealer.shuffle(deck);
+        dealer.confirmCards(1);
         Result result = defaultMatchRule.match(player, dealer);
         assertThat(result).isEqualTo(Result.PLAYER_WIN_WITH_BLACKJACK);
     }
 
-    @ParameterizedTest
-    @DisplayName("#match() : should return Result.PLAYER_WIN_WITHOUT_BLACKJACK")
-    @MethodSource({"getCasesForPlayerWinWithoutBlackjack"})
-    void matchPlayerWinWWithoutBlackjack(Player player, Dealer dealer) {
+    @Test
+    @DisplayName("#match() : should return Result.PLAYER_WIN_WITHOUT_BLACkJACK")
+    void matchPlayerWinWithoutBlackjackDealerBustPlayerNormal() {
+        Player player = Player.of("testPlayer", _20, Money.of(1000));
+        Deck deck = createNormalDeckforTest(3);
+        Dealer dealer = Dealer.shuffle(deck);
+        dealer.confirmCards(1);
         Result result = defaultMatchRule.match(player, dealer);
         assertThat(result).isEqualTo(Result.PLAYER_WIN_WITHOUT_BLACKJACk);
     }
 
-    @ParameterizedTest
-    @DisplayName("#match() : should return Result.DRAW")
-    @MethodSource({"getCasesForDraw"})
-    void matchDraw(Player player, Dealer dealer) {
+    @Test
+    @DisplayName("#match() : should return Result.DRAW Dealer Blackjack Player Blackjack")
+    void matchDrawBothBlackjack() {
+        Player player = Player.of("testPlayer", blackjack, Money.of(1000));
+        Deck deck = createBlackjackDeckForTest();
+        Dealer dealer = Dealer.shuffle(deck);
         Result result = defaultMatchRule.match(player, dealer);
         assertThat(result).isEqualTo(Result.DRAW);
     }
 
-    private static Stream<Arguments> getCasesForDealerWin() {
-        int scoreOfPlayer = 15;
-        Player mockPlayer = stubPlayerForDealerWin(scoreOfPlayer);
-        Dealer mockDealer = stubDealerForDealerWin(scoreOfPlayer);
-
-        return Stream.of(
-                Arguments.of(mockPlayer, mockDealer),
-                Arguments.of(mockPlayer, mockDealer)
-        );
+    @Test
+    @DisplayName("#match() : should return Result.PLAYER_WIN_WITH_BLACKACK")
+    void matchPlayerWinWithBlackjack() {
+        Player player = Player.of("testPlayer", blackjack, Money.of(1000));
+        Deck deck = createNormalDeckforTest(2);
+        Dealer dealer = Dealer.shuffle(deck);
+        Result result = defaultMatchRule.match(player, dealer);
+        assertThat(result).isEqualTo(Result.PLAYER_WIN_WITH_BLACKJACK);
     }
 
-    private static Player stubPlayerForDealerWin(int scoreOfPlayer) {
-        Player mockPlayer = mock(Player.class);
-
-        when(mockPlayer.isBust())
-                .thenReturn(true)
-                .thenReturn(false);
-
-        when(mockPlayer.isBlackjack())
-                .thenReturn(false)
-                .thenReturn(false);
-
-        when(mockPlayer.calculateScore()).thenReturn(scoreOfPlayer);
-        return mockPlayer;
+    @Test
+    @DisplayName("#match() : should return Result.DEALER_WIN with score")
+    void matchDealerWinWithScore() {
+        Player player = Player.of("testPlayer", _18, Money.of(1000));
+        Deck deck = createNormalDeckforTest(2);
+        Dealer dealer = Dealer.shuffle(deck);
+        Result result = defaultMatchRule.match(player, dealer);
+        assertThat(result).isEqualTo(Result.DEALER_WIN);
     }
 
-    private static Dealer stubDealerForDealerWin(int scoreOfPlayer) {
-        Dealer mockDealer = mock(Dealer.class);
-        when(mockDealer.isBust())
-                .thenReturn(false);
-        when(mockDealer.isBlackjack()).thenReturn(false);
-        when(mockDealer.isNotBlackjack()).thenReturn(false);
-
-        when(mockDealer.calculateScore()).thenReturn(scoreOfPlayer + 1);
-        return mockDealer;
+    @Test
+    @DisplayName("#match() : should return Result.DRAW with score")
+    void matchDrawWithScore() {
+        Player player = Player.of("testPlayer", _19, Money.of(1000));
+        Deck deck = createNormalDeckforTest(2);
+        Dealer dealer = Dealer.shuffle(deck);
+        Result result = defaultMatchRule.match(player, dealer);
+        assertThat(result).isEqualTo(Result.DRAW);
     }
 
-    private static Stream<Arguments> getCasesForPlayerWinWithBlackjack() {
-        Player mockPlayer = stubPlayerForPlayerWinWithBlackjack();
-        Dealer mockDealer = stubDealerForPlayerWinWithBlackjack();
-        return Stream.of(
-                Arguments.of(mockPlayer, mockDealer),
-                Arguments.of(mockPlayer, mockDealer)
-        );
+    @Test
+    @DisplayName("#match() : should return Result.PLAYER_WIN_WITHOUT_BLACKJACK with score")
+    void matcPlayerWinWithScore() {
+        Player player = Player.of("testPlayer", _20, Money.of(1000));
+        Deck deck = createNormalDeckforTest(2);
+        Dealer dealer = Dealer.shuffle(deck);
+        Result result = defaultMatchRule.match(player, dealer);
+        assertThat(result).isEqualTo(Result.PLAYER_WIN_WITHOUT_BLACKJACk);
     }
 
-    private static Player stubPlayerForPlayerWinWithBlackjack() {
-        Player mockPlayer = mock(Player.class);
-        when(mockPlayer.isBust())
-                .thenReturn(false)
-                .thenReturn(false);
+    private Deck createBlackjackDeckForTest() {
+        final Integer[] countOfPops = new Integer[2];
 
-        when(mockPlayer.isBlackjack())
-                .thenReturn(true)
-                .thenReturn(false)
-                .thenReturn(true)
-                .thenReturn(true);
+        class TestDeck implements Deck {
 
-        when(mockPlayer.isNotBlackjack()).thenReturn(false);
-        return mockPlayer;
+            @Override
+            public Deck shuffle() {
+                return this;
+            }
+
+            @Override
+            public Card pop() {
+                if (countOfPops[0] == null) {
+                    countOfPops[0] = 1;
+                    return new Card(Symbol.QUEEN, Type.SPADE);
+                } else if(countOfPops[1] == null) {
+                    return new Card(Symbol.ACE, Type.CLOVER);
+                }
+                return new Card(Symbol.KING, Type.SPADE);
+            }
+        }
+
+        return new TestDeck();
     }
 
-    private static Dealer stubDealerForPlayerWinWithBlackjack() {
-        Dealer mockDealer = mock(Dealer.class);
-        when(mockDealer.isBust())
-                .thenReturn(true)
-                .thenReturn(false)
-                .thenReturn(false);
+    private Deck createNormalDeckforTest(int countOfPop) {
+        final Integer[] countOfPops = new Integer[countOfPop];
 
-        when(mockDealer.isBlackjack()).thenReturn(false);
-        when(mockDealer.isNotBlackjack()).thenReturn(true);
-        return mockDealer;
-    }
+        class TestDeck implements Deck {
 
-    private static Stream<Arguments> getCasesForPlayerWinWithoutBlackjack() {
-        int scoreOfPlayer = 15;
-        Player mockPlayer = stubPlayerForPlayerWinWithoutBlackjack(scoreOfPlayer);
-        Dealer mockDealer = stubDealerForPlayerWinoutBlackjack(scoreOfPlayer);
-        return Stream.of(
-                Arguments.of(mockPlayer, mockDealer),
-                Arguments.of(mockPlayer, mockDealer)
-        );
-    }
+            @Override
+            public Deck shuffle() {
+                return this;
+            }
 
-    private static Player stubPlayerForPlayerWinWithoutBlackjack(int scoreOfPlayer) {
-        Player mockPlayer = mock(Player.class);
-        when(mockPlayer.isBust())
-                .thenReturn(false)
-                .thenReturn(false);
-        when(mockPlayer.isBlackjack())
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false);
-        when(mockPlayer.isNotBlackjack())
-                .thenReturn(true)
-                .thenReturn(false);
-        when(mockPlayer.calculateScore()).thenReturn(scoreOfPlayer);
-        return mockPlayer;
-    }
+            @Override
+            public Card pop() {
+                if (countOfPops[0] == null) {
+                    countOfPops[0] = 1;
+                    return new Card(Symbol.QUEEN, Type.SPADE);
+                } else if(countOfPops[1] == null) {
+                    return new Card(Symbol.NINE, Type.CLOVER);
+                } else if(countOfPops[2] == null) {
+                    new Card(Symbol.QUEEN, Type.HEART);
+                } else if (countOfPops[3] == null) {
+                    return new Card(Symbol.QUEEN, Type.DIAMOND);
+                }
+                return new Card(Symbol.KING, Type.SPADE);
+            }
+        }
 
-    private static Dealer stubDealerForPlayerWinoutBlackjack(int scoreOfPlayer) {
-        Dealer mockDealer = mock(Dealer.class);
-        when(mockDealer.isBust())
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(false)
-                .thenReturn(false);
-        when(mockDealer.isBlackjack())
-                .thenReturn(false)
-                .thenReturn(false);
-        when(mockDealer.calculateScore()).thenReturn(scoreOfPlayer - 1);
-        return mockDealer;
-    }
-
-    private static Stream<Arguments> getCasesForDraw() {
-        int score = 15;
-        Player mockPlayer = stubPlayerForDraw(score);
-        Dealer mockDealer = stubDealerForDraw(score);
-        return Stream.of(
-                Arguments.of(mockPlayer, mockDealer),
-                Arguments.of(mockPlayer, mockDealer)
-        );
-    }
-
-    private static Player stubPlayerForDraw(int score) {
-        Player mockPlayer = mock(Player.class);
-        when(mockPlayer.isBust())
-                .thenReturn(false)
-                .thenReturn(false);
-        when((mockPlayer.isBlackjack()))
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false);
-        when(mockPlayer.isNotBlackjack())
-                .thenReturn(true)
-                .thenReturn(true);
-        when(mockPlayer.calculateScore()).thenReturn(score);
-        return mockPlayer;
-    }
-
-    private static Dealer stubDealerForDraw(int score) {
-        Dealer mockDealer = mock(Dealer.class);
-        when(mockDealer.isBlackjack())
-                .thenReturn(true)
-                .thenReturn(false);
-        when(mockDealer.isBust())
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false);
-        when(mockDealer.isNotBlackjack()).thenReturn(true);
-        when(mockDealer.calculateScore()).thenReturn(score);
-        return mockDealer;
+        return new TestDeck();
     }
 }

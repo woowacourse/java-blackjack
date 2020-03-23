@@ -58,7 +58,7 @@ public class Dealer extends User {
         return deck.pop();
     }
 
-    void confirmCards(int hitSize) {
+    public void confirmCards(int hitSize) {
         for (int i = 0; i < hitSize; i++) {
             Card card = deck.pop();
             hit(card);
