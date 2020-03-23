@@ -25,6 +25,10 @@ public class Cards {
         }
     }
 
+    public boolean isMoreThanScore(Cards cards) {
+        return getScore().isMoreThan(cards.getScore());
+    }
+
     public Score getScore() {
         int score = cards.stream()
                 .mapToInt(Card::getValue)
@@ -36,6 +40,10 @@ public class Cards {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public boolean matchScore(Cards cards) {
+        return this.getScore().equals(cards.getScore());
     }
 
     public boolean isBust() {

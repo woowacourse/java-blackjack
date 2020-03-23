@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Cards;
-import domain.card.Score;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -32,11 +31,11 @@ public enum WinningResult {
         if (playerCards.isBust() || playerCards.isBlackJack()) {
             return false;
         }
-        return dealerCards.isBust() || playerCards.getScore().isMoreThan(dealerCards.getScore());
+        return dealerCards.isBust() || playerCards.isMoreThanScore(dealerCards);
     }
 
     private static boolean isDraw(Cards playerCards, Cards dealerCards) {
-        return playerCards.getScore().equals(dealerCards.getScore()) && !playerCards.isBust();
+        return playerCards.matchScore(dealerCards) && !playerCards.isBust();
     }
 
     private static boolean isBlackjack(Cards playerCards, Cards dealerCards) {
