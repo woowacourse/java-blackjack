@@ -19,7 +19,6 @@ public class Dealer extends User {
         return this.cards.subList(0, CARD_SHOW_LIMIT);
     }
 
-    //TODO: 딜러는 16이하, 플레이어는 21이하 구현 합치기
     public boolean isUnderThreshold() {
         return (this.getTotalScore() <= THRESHOLD && !this.isBusted());
     }
