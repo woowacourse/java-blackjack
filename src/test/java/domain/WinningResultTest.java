@@ -30,7 +30,7 @@ public class WinningResultTest {
 
     @Test
     @DisplayName("Draw test")
-    void lose() {
+    void draw() {
         playerCards.add(new Card(Type.HEART, Symbol.TWO));
         dealerCards.add(new Card(Type.CLUB, Symbol.THREE));
         Assertions.assertThat(WinningResult.of(playerCards, dealerCards))
@@ -39,7 +39,7 @@ public class WinningResultTest {
 
     @Test
     @DisplayName("Lose test")
-    void draw() {
+    void lose() {
         dealerCards.add(new Card(Type.CLUB, Symbol.TWO));
         Assertions.assertThat(WinningResult.of(playerCards, dealerCards))
                 .isEqualTo(WinningResult.LOSE);
