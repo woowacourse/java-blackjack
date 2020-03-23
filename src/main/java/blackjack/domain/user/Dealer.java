@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +23,6 @@ public final class Dealer extends AbstractPlayer {
 
 	@Override
 	public boolean canReceiveCard() {
-		return getHand().isUnder(MINIMUM_NUMBER_TO_DEALER_STAY);
+		return getHand().isUnder(Score.of(MINIMUM_NUMBER_TO_DEALER_STAY));
 	}
 }

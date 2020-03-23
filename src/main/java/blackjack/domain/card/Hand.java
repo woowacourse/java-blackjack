@@ -44,7 +44,7 @@ public final class Hand {
 	}
 
 	private Score maximizeSimpleSumIfHasAce(Score simpleSum) {
-		if (simpleSum.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
+		if (simpleSum.isUnder(Score.of(MAX_SCORE_TO_MAXIMIZE)) && hasAce()) {
 			return simpleSum.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
 		}
 		return simpleSum;
@@ -63,7 +63,7 @@ public final class Hand {
 	}
 
 	public boolean isBust() {
-		return computeScore().isOver(MAX_SCORE);
+		return computeScore().isOver(Score.of(MAX_SCORE));
 	}
 
 	public boolean isBlackjackWin(Hand other) {
@@ -103,7 +103,7 @@ public final class Hand {
 		return computeScore().equals(other.computeScore());
 	}
 
-	public boolean isUnder(int score) {
+	public boolean isUnder(Score score) {
 		return computeScore().isUnder(score);
 	}
 

@@ -22,7 +22,9 @@ class DeckTest {
 	@DisplayName("of()가 적절한 입력을 받았을 때, 인스턴스를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("of_ValidInput_IsNotNull")
-	void of_ValidInput_IsNotNull(Deck deck) {
+	void of_ValidInput_IsNotNull(String input) {
+		Deck deck = createDeck(input);
+
 		assertThat(deck).isNotNull();
 	}
 
