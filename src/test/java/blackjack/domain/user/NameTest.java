@@ -39,5 +39,4 @@ class NameTest {
 	void equals_HasSameValues_IsTrue(String input) {
 		assertThat(createName(input)).isEqualTo(new Name(input));
 	}
-
 }
