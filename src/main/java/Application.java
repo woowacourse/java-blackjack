@@ -23,7 +23,7 @@ public class Application {
         PlayersInfo players = PlayersInfo.of(playersInfo);
         Dealer dealer = Dealer.appoint();
 
-        BlackJackGame blackJackGame = BlackJackGame.setDeck(DeckFactory.createDeck());
+        BlackJackGame blackJackGame = BlackJackGame.getInstance(DeckFactory.createDeck());
 
         blackJackGame.firstDealOut(dealer, players);
         OutputView.printFirstDealOutResult(UserDto.of(dealer), PlayersDto.of(players));

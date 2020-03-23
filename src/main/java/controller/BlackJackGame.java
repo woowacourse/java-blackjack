@@ -19,7 +19,7 @@ public class BlackJackGame {
         this.deck = deck;
     }
 
-    public static BlackJackGame setDeck(Deck deck) {
+    public static BlackJackGame getInstance(Deck deck) {
         return new BlackJackGame(deck);
     }
 
