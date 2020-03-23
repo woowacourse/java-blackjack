@@ -6,7 +6,7 @@ import blackjack.domain.result.Exception.PofitRateException;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-public enum ProfitRate {
+public enum Rule {
     PLAYER_IS_BLACKJACK(((player, dealer) -> player.isBlackjack() && dealer.isNotBlackjack()), 1.5),
     DEALER_IS_BLACKJACK(((player, dealer) -> player.isBlackjack() && dealer.isBlackjack()), 0.0),
     PLAYER_IS_BUST((player, dealer) -> player.isBust(), -1.0),
@@ -16,19 +16,19 @@ public enum ProfitRate {
     PLAYER_SCORE_IS_LOWER(((player, dealer) -> player.isNotBlackjack() && player.isNotBust() && dealer.isNotBust() && player.isUnderScore(dealer)), -1.0);
 
     private BiFunction<User, User, Boolean> condition;
-    private double profit;
+    private double profitRate;
 
-    ProfitRate(BiFunction<User, User, Boolean> condition, double profit) {
+    Rule(BiFunction<User, User, Boolean> condition, double profitRate) {
         this.condition = condition;
-        this.profit = profit;
+        this.profitRate = profitRate;
     }
 
-    public static double of(User player, User dealer) {
+    public static double getProfitRate(User player, User dealer) {
         return Arrays.stream(values())
                 .filter(rule -> rule.apply(player, dealer))
                 .findFirst()
                 .orElseThrow(PofitRateException::new)
-                .profit;
+                .profitRate;
     }
 
     private Boolean apply(User player, User dealer) {

@@ -1,6 +1,7 @@
 package blackjack.domain.playing.user;
 
 import blackjack.domain.playing.card.Score;
+import blackjack.domain.result.Profit;
 
 public interface User {
 
@@ -19,4 +20,6 @@ public interface User {
     boolean isUnderScore(User other);
 
     boolean isSameScore(User other);
+
+    Profit calculateProfit(User dealer);
 }

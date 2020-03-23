@@ -15,19 +15,19 @@
 //
 //    @ParameterizedTest
 //    @MethodSource("createUsersAndProfit")
-////    void of(User player, User dealer, Profit profit) {
-////        assertThat(Profit.of(player, dealer).getProfit()).isEqualTo(profit);
+////    void getProfitRate(User player, User dealer, Profit profit) {
+////        assertThat(Profit.getProfitRate(player, dealer).getProfit()).isEqualTo(profit);
 ////    }
 ////
 ////    private static Stream<Arguments> createUsersAndProfit() {
-////        return Stream.of(
-////                Arguments.of(new BlackjackPlayer(), new ScoreTwentyDealer(), 1.5),
-////                Arguments.of(new BlackjackPlayer(), new BlackjackDealer(), 0.0),
-////                Arguments.of(new BustPlayer(), new ScoreTwentyDealer(), -1.0),
-////                Arguments.of(new BustPlayer(), new BustDealer(), -1.0),
-////                Arguments.of(new ScoreNineteenPlayer(), new ScoreEighteenDealer(), 1.0),
-////                Arguments.of(new ScoreNineteenPlayer(), new ScoreNineteenDealer(), 0.0),
-////                Arguments.of(new ScoreNineteenPlayer(), new ScoreTwentyDealer(), -1.0)
+////        return Stream.getProfitRate(
+////                Arguments.getProfitRate(new BlackjackPlayer(), new ScoreTwentyDealer(), 1.5),
+////                Arguments.getProfitRate(new BlackjackPlayer(), new BlackjackDealer(), 0.0),
+////                Arguments.getProfitRate(new BustPlayer(), new ScoreTwentyDealer(), -1.0),
+////                Arguments.getProfitRate(new BustPlayer(), new BustDealer(), -1.0),
+////                Arguments.getProfitRate(new ScoreNineteenPlayer(), new ScoreEighteenDealer(), 1.0),
+////                Arguments.getProfitRate(new ScoreNineteenPlayer(), new ScoreNineteenDealer(), 0.0),
+////                Arguments.getProfitRate(new ScoreNineteenPlayer(), new ScoreTwentyDealer(), -1.0)
 ////        );
 ////    }
 //

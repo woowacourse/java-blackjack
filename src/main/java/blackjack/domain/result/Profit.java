@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.playing.user.BettingMoney;
 import blackjack.domain.playing.user.User;
 
 import java.util.List;
@@ -15,10 +14,7 @@ public class Profit {
     }
 
     public static Profit of(User player, User dealer) {
-        BettingMoney bettingMoney = null;
-        double profitRate = ProfitRate.of(player, dealer);
-
-        return new Profit(bettingMoney.multiplyAndGetValue(profitRate));
+        return player.calculateProfit(dealer);
     }
 
     public static Profit sum(List<Profit> profits) {

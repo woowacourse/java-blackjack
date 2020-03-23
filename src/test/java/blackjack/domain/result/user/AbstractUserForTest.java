@@ -2,7 +2,10 @@ package blackjack.domain.result.user;
 
 import blackjack.domain.playing.card.Score;
 import blackjack.domain.playing.user.AbstractUser;
+import blackjack.domain.playing.user.BettingMoney;
 import blackjack.domain.playing.user.User;
+import blackjack.domain.result.Profit;
+import blackjack.domain.result.Rule;
 
 public abstract class AbstractUserForTest implements User {
     @Override
@@ -41,4 +44,10 @@ public abstract class AbstractUserForTest implements User {
         return calculateScore().equals(other.calculateScore());
     }
 
+    @Override
+    public Profit calculateProfit(User user) {
+        BettingMoney bettingMoney = null;
+        double profitRate = Rule.getProfitRate(this, user);
+        return new Profit(bettingMoney.multiplyAndGetValue(profitRate));
+    }
 }

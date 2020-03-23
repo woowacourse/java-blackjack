@@ -10,12 +10,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ProfitRateTest {
+class RuleTest {
 
     @ParameterizedTest
     @MethodSource("createUsersAndProfitRate")
     void of(User player, User dealer, double profitRate) {
-        assertThat(ProfitRate.of(player, dealer)).isEqualTo(profitRate);
+        assertThat(Rule.getProfitRate(player, dealer)).isEqualTo(profitRate);
     }
 
     private static Stream<Arguments> createUsersAndProfitRate() {
