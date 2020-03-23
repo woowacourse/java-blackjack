@@ -39,7 +39,7 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return score.isBust();
+        return score.isBurst();
     }
 
     public boolean isSameScoreAs(Gamer counterGamer) {
