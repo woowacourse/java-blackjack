@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.user.User;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Profit {
     private static final Profit ZERO_PROFIT = new Profit(0);
@@ -37,5 +38,25 @@ public class Profit {
 
     public int getProfit() {
         return profit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profit profit1 = (Profit) o;
+        return profit == profit1.profit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(profit);
+    }
+
+    @Override
+    public String toString() {
+        return "Profit{" +
+                "profit=" + profit +
+                '}';
     }
 }

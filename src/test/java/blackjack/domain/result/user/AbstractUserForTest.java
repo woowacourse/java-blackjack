@@ -8,6 +8,8 @@ import blackjack.domain.user.BettingMoney;
 import blackjack.domain.user.User;
 
 public abstract class AbstractUserForTest implements User {
+    private BettingMoney bettingMoney = BettingMoney.from("1000");
+
     @Override
     public abstract Score calculateScore();
 
@@ -46,7 +48,6 @@ public abstract class AbstractUserForTest implements User {
 
     @Override
     public Profit calculateProfit(User user) {
-        BettingMoney bettingMoney = null;
         double profitRate = Rule.getProfitRate(this, user);
         return new Profit(bettingMoney.multiplyAndGetValue(profitRate));
     }
