@@ -1,8 +1,9 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.CardsFactory;
 import blackjack.domain.card.Drawable;
-import blackjack.domain.card.ShuffledDeckFactory;
+import blackjack.domain.card.ShuffledCardsFactory;
 import blackjack.domain.result.Results;
 import blackjack.domain.user.*;
 import blackjack.domain.yesOrNo.YesOrNo;
@@ -51,7 +52,8 @@ public class Blackjack {
 	}
 
 	private static Deck prepareDeck() {
-		return Deck.ofDeckFactory(new ShuffledDeckFactory());
+		CardsFactory cardsFactory = new ShuffledCardsFactory();
+		return Deck.of(cardsFactory.create());
 	}
 
 	private static void start(Players players, Playable dealer, Drawable deck) {

@@ -54,21 +54,6 @@ class DeckTest {
 		assertThat(Deck.of(Collections.emptyList())).isNotNull();
 	}
 
-	@DisplayName("ofDeckFactory()가 중복되지 않고 적절한 크기인지 테스트")
-	@Test
-	void ofDeckFactory_ShuffledDeckFactory_IsSizeFifteenAndNotDuplicated() {
-		// when
-		Drawable deck = Deck.ofDeckFactory(new ShuffledDeckFactory());
-
-		// then
-		Set<Card> cards = new HashSet<>();
-		for (int i = 0; i < 52; i++) {
-			cards.add(deck.draw());
-		}
-
-		assertThat(cards.size()).isEqualTo(52);
-	}
-
 	@DisplayName("draw()가 덱의 맨 윗 카드를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("draw_Deck_ReturnTopCard")

@@ -22,10 +22,6 @@ public final class Deck implements Drawable {
 		return new Deck(stack);
 	}
 
-	public static Deck ofDeckFactory(DeckFactory deckFactory) {
-		return deckFactory.create();
-	}
-
 	@Override
 	public Card draw() {
 		if (cards.isEmpty()) {
