@@ -12,8 +12,8 @@ public class ScoreCalculator {
     public static Score calculate(final HandCards handCards) {
         Score defaultSum = new Score(handCards.calculateDefaultSum());
 
-        if(defaultSum.isBust()) {
-            return new Score(0);
+        if(defaultSum.isBurst()) {
+            return defaultSum;
         }
 
         if (handCards.hasAce()) {
@@ -26,7 +26,7 @@ public class ScoreCalculator {
     private static Score updateAceScore(final Score score) {
         Score bigAceScore = score.plus(ACE_ADDITIONAL_SCORE);
 
-        if (bigAceScore.isBust()) {
+        if (bigAceScore.isBurst()) {
             return score;
         }
 

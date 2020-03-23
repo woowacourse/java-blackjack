@@ -28,7 +28,7 @@ public class Score {
         return this.value == BLACK_JACK_MAX_SCORE;
     }
 
-    public boolean isBust() {
+    public boolean isBurst() {
         return this.value == BURST_SCORE;
     }
 
