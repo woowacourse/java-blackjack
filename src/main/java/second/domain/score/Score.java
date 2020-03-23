@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Score {
     private static final int BURST_SCORE = 0;
-    private static final int BLACK_JACK_MAX_SCORE = 21;
+    static final int BLACK_JACK_MAX_SCORE = 21;
 
     private final int value;
 
