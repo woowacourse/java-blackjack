@@ -19,7 +19,7 @@ class ProfitTest {
     @MethodSource("createUsersAndProfit")
     void of(User player, User dealer, double profitRate) {
         int profit = (int) (1000 * profitRate);
-        assertThat(Profit.of(player, dealer).getProfit()).isEqualTo(profit);
+        assertThat(player.calculateProfit(dealer).getProfit()).isEqualTo(profit);
     }
 
     private static Stream<Arguments> createUsersAndProfit() {

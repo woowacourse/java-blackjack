@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.User;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -12,10 +10,6 @@ public class Profit {
 
     public Profit(int profit) {
         this.profit = profit;
-    }
-
-    public static Profit of(User player, User dealer) {
-        return player.calculateProfit(dealer);
     }
 
     public static Profit sum(List<Profit> profits) {

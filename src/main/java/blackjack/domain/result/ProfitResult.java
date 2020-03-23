@@ -22,7 +22,7 @@ public class ProfitResult {
         Map<Player, Profit> playerProfit = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
-            playerProfit.put(player, Profit.of(player, dealer));
+            playerProfit.put(player, player.calculateProfit(dealer));
         }
 
         List<Profit> profits = new ArrayList<>(playerProfit.values());
