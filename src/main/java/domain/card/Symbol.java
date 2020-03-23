@@ -24,7 +24,7 @@ public enum Symbol {
     Symbol(int value, String pattern) {
         this.value = value;
         this.pattern = pattern;
-        this.calculator = null;
+        this.calculator = new DefaultSymbolCalculator(pattern);
     }
 
     Symbol(int value, String pattern, SymbolCalculator calculator) {
@@ -34,9 +34,6 @@ public enum Symbol {
     }
 
     int calculate(int sum) {
-        if (Objects.isNull(calculator)) {
-            return value;
-        }
         return calculator.calculate(sum);
     }
 
@@ -73,5 +70,29 @@ public enum Symbol {
         private boolean cabBeJoker(int sum) {
             return sum <= BLACKJACK - JOKER_VALUE;
         }
+    }
+
+    private static class DefaultSymbolCalculator implements SymbolCalculator {
+        private String pattern;
+
+        private DefaultSymbolCalculator(String pattern) {
+            this.pattern = pattern;
+        }
+
+        @Override
+        public int calculate(int sum) {
+            Symbol symbol = findByPattern(pattern);
+            return symbol.getValue();
+        }
+    }
+
+    private static Symbol findByPattern(String pattern) {
+        for (Symbol symbol : values()) {
+            if (symbol.getPattern().equals(pattern)) {
+                return symbol;
+            }
+        }
+
+        throw new IllegalArgumentException("해당 심볼을 찾을 수 없습니다.");
     }
 }
