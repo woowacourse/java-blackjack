@@ -15,12 +15,12 @@ import domain.result.GameResult;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackController {
+public class BlackjackController {
 	private final List<Player> players;
 	private final Dealer dealer;
 	private final Deck deck;
 
-	public BlackJackController() {
+	public BlackjackController() {
 		this.players = createPlayers();
 		this.dealer = new Dealer();
 		this.deck = new Deck();
