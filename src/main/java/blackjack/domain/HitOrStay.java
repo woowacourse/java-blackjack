@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain;
 
 import blackjack.domain.user.exception.HitOrStayException;
 

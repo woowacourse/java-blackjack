@@ -1,8 +1,13 @@
-package blackjack.domain.card;
+package blackjack.domain.deck;
 
-import blackjack.domain.card.exception.DeckException;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Type;
+import blackjack.domain.deck.exception.DeckException;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Stack;
 
 public class Deck {
     private final Stack<Card> cards;

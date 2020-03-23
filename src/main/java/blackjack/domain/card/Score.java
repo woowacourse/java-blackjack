@@ -27,6 +27,10 @@ public class Score {
         return score < number;
     }
 
+    public boolean isSame(int number) {
+        return score == number;
+    }
+
     public boolean isOver(int number) {
         return score > number;
     }

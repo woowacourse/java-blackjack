@@ -1,9 +1,10 @@
-package blackjack.domain.user;
+package blackjack.domain;
 
 import blackjack.domain.user.exception.HitOrStayException;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HitOrStayTest {
     @Test

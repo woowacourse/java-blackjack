@@ -13,7 +13,7 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    private Cards(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -58,7 +58,11 @@ public class Cards {
         return !cards.isEmpty();
     }
 
-    public List<Card> getCardS() {
+    public int count() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }

@@ -1,6 +1,7 @@
-package blackjack.domain.card;
+package blackjack.domain.deck;
 
-import blackjack.domain.card.exception.DeckException;
+import blackjack.domain.card.Card;
+import blackjack.domain.deck.exception.DeckException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

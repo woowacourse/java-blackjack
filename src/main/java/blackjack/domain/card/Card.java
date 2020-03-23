@@ -3,6 +3,8 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
+    private static final String BLANK = " ";
+
     private final Symbol symbol;
     private final Type type;
 
@@ -42,6 +44,6 @@ public class Card {
     }
 
     public String getName() {
-        return symbol.getName() + " " + type.getName();
+        return symbol.getName() + BLANK + type.getName();
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain.card.exception;
+package blackjack.domain.deck.exception;
 
 public class DeckException extends RuntimeException {
     public DeckException(String message) {
