@@ -32,5 +32,4 @@ public class CardFactory {
     public List<Card> issueNewDeck() {
         return new LinkedList<>(cards);
     }
-
 }
