@@ -7,8 +7,6 @@ import second.domain.gamer.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
-
 public class Results {
     private final List<Result> playerResults;
     private final Result dealerResult;
@@ -40,7 +38,6 @@ public class Results {
     }
 
     private Result generateDealerResult(final List<Result> playersResults, final Dealer dealer) {
-        // Optional 써야하니까 reduce 사용 X 심지어 가독성도 이게 더 나은 것 같다.
         int dealerProfit = 0;
         for (Result result : playersResults) {
             dealerProfit += result.getMoney().getValue();
