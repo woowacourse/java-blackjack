@@ -43,7 +43,7 @@ public abstract class User {
         this.money = this.money.add(profit);
     }
 
-    public Money getProfitByResult(Result result) {
+    public Money getProfit(Result result) {
         return this.money.multiply(result.getRate());
     }
 

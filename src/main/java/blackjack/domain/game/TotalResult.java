@@ -23,7 +23,7 @@ public class TotalResult {
         for (Map.Entry<Player, Result> entry : totalResult.entrySet()) {
             Player player = entry.getKey();
             Result result = entry.getValue();
-            dealerProfit = dealerProfit.subtract(player.getProfitByResult(result));
+            dealerProfit = dealerProfit.subtract(player.getProfit(result));
         }
         return dealerProfit;
     }
