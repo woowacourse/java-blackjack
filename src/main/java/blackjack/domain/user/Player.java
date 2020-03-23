@@ -13,17 +13,18 @@ public final class Player extends AbstractPlayer {
 	public Player(Name name, Hand hand, Money money) {
 		super(name, hand);
 		this.money = money;
+
 		validateNameIsDifferentFromDealer(name);
 	}
 
 	private void validateNameIsDifferentFromDealer(Name name) {
-		if (name.equals(new Name(DEALER_NAME))) {
+		if (new Name(DEALER_NAME).equals(name)) {
 			throw new PlayerException("플레이어의 이름은 " + DEALER_NAME + "일 수 없습니다.");
 		}
 	}
 
 	public static Player of(Name name, Money money) {
-		return new Player(name, new Hand(),money);
+		return new Player(name, new Hand(), money);
 	}
 
 	public Money getMoney() {

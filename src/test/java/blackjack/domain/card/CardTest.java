@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static blackjack.domain.testAssistant.TestAssistant.createCard;
+import static blackjack.domain.testAssistant.TestFactory.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {

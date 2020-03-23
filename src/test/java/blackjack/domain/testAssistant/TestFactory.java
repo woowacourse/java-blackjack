@@ -4,14 +4,15 @@ import blackjack.domain.card.*;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TestAssistant {
+public class TestFactory {
 
-	private TestAssistant() {
+	private TestFactory() {
 	}
 
 	/**
@@ -34,7 +35,7 @@ public class TestAssistant {
 	 */
 	public static List<Card> createCards(String... strings) {
 		return Stream.of(strings)
-				.map(TestAssistant::createCard)
+				.map(TestFactory::createCard)
 				.collect(Collectors.toList());
 	}
 
@@ -67,4 +68,17 @@ public class TestAssistant {
 	public static Dealer createDealer(String... strings) {
 		return Dealer.of(createHand(strings));
 	}
+
+	public static Player createPlayer(String name, String money, String... hand) {
+		return new Player(createName(name), createHand(hand), createMoney(money));
+	}
+
+	public static Player createPlayerByName(String name) {
+		return new Player(createName(name), createHand(), createMoney("0"));
+	}
+
+	public static Player createPlayerByHand(String... hand) {
+		return new Player(createName("그니"), createHand(hand), createMoney("0"));
+	}
+
 }
