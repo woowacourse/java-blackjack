@@ -11,16 +11,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 class PlayerTest {
 
@@ -32,7 +26,7 @@ class PlayerTest {
         initCards = new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.DIAMOND), new Card(Symbol.QUEEN, Type.CLOVER)));
         PlayingCards playingCards = PlayingCards.of(initCards);
         String name = "player";
-        player = Player.of(name, playingCards, mock(Money.class));
+        player = Player.of(name, playingCards, Money.of(1000));
     }
 
     @Test
@@ -84,21 +78,21 @@ class PlayerTest {
 
     @ParameterizedTest
     @MethodSource({"getResultsForCalculateProfit"})
-    void calculateProfit(Result result) {
-        Money bettingMoney = mock(Money.class);
-        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-        player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
+    void calculateProfit(Result result, int moneyValue, int profitValue) {
+        Money bettingMoney = Money.of(moneyValue);
+        player = Player.of("testName", PlayingCards.of(initCards), bettingMoney);
         //when
         player.calculateProfit(result);
-        verify(bettingMoney).multiply(anyDouble());
+        Profit profit = player.getProfit();
+        assertThat(profit).isEqualTo(new Profit(profitValue));
     }
 
     private static Stream<Arguments> getResultsForCalculateProfit() {
         return Stream.of(
-                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK),
-                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk),
-                Arguments.of(Result.DRAW),
-                Arguments.of(Result.DEALER_WIN)
+                Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK, 1000, 1500),
+                Arguments.of(Result.PLAYER_WIN_WITHOUT_BLACKJACk, 1000, 1000),
+                Arguments.of(Result.DRAW, 1000, 0),
+                Arguments.of(Result.DEALER_WIN, 1000, -1000)
         );
     }
 
