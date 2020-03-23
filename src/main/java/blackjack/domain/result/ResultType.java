@@ -13,12 +13,12 @@ public enum ResultType {
 	DRAW(0, "무", Hand::isDraw);
 
 	private final double multiple;
-	private final String result;
+	private final String resultString;
 	private final BiFunction<Hand, Hand, Boolean> isTypeOf;
 
-	ResultType(double multiple, String result, BiFunction<Hand, Hand, Boolean> isTypeOf) {
+	ResultType(double multiple, String resultString, BiFunction<Hand, Hand, Boolean> isTypeOf) {
 		this.multiple = multiple;
-		this.result = result;
+		this.resultString = resultString;
 		this.isTypeOf = isTypeOf;
 	}
 
@@ -43,5 +43,9 @@ public enum ResultType {
 
 	public boolean isDraw() {
 		return this == DRAW;
+	}
+
+	public String getResultString() {
+		return resultString;
 	}
 }

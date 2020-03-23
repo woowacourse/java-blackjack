@@ -103,14 +103,7 @@ public final class OutputView {
 	}
 
 	private static String boolToResultWord(ResultType resultType) {
-		if (resultType.isWinOrBlackjackWin()) {
-			return "승";
-		}
-		if (resultType.isDraw()) {
-			return "무";
-		}
-
-		return "패";
+		return resultType.getResultString();
 	}
 
 	public static void printGameResultMonies(Results results) {
