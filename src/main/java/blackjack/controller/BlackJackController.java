@@ -1,20 +1,20 @@
 package blackjack.controller;
 
-import blackjack.controller.dto.GamersResultDto;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.BettingTable;
-import blackjack.domain.rule.HandInitializer;
 import blackjack.domain.rule.PlayerAnswer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackJackController {
 
-    public static void initializeCard(Dealer dealer, Players players, Deck deck) {
-        HandInitializer.initialize(dealer, players, deck);
+    public static Players createPlayers() {
+        List<String> names = InputView.askPlayerNames().get();
+        return Players.of(InputView.askPlayerBettingMoney(names));
     }
 
     public static void drawMoreCard(Dealer dealer, Players players, Deck deck) {
@@ -45,9 +45,5 @@ public class BlackJackController {
     private static boolean wantMoreCard(Player player) {
         PlayerAnswer answer = PlayerAnswer.of(InputView.askHitOrStand(player));
         return answer.isYes();
-    }
-
-    public static GamersResultDto calculateProfit(Dealer dealer, Players players, BettingTable bettingTable) {
-        return bettingTable.calculateProfit(dealer, players);
     }
 }

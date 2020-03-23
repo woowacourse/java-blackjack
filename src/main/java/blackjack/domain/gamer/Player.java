@@ -1,9 +1,18 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.money.BettingMoney;
+
 public class Player extends Gamer {
 
-    public Player(String name) {
+    private BettingMoney bettingMoney;
+
+    public Player(final String name, final String bettingMoney) {
         super(name);
+        this.bettingMoney = new BettingMoney(Integer.parseInt(bettingMoney));
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 
     @Override

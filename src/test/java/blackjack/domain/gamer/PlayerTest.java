@@ -22,7 +22,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("엘리");
+        player = new Player("엘리", "10000");
     }
 
     @Test

@@ -25,7 +25,7 @@ public class OutputView {
 
     public static void printInitialCards(Dealer dealer, Players players) {
         System.out.print(System.lineSeparator());
-        System.out.println(String.format(INITIAL_CARD_FORMAT, players.getNames().stream().collect(Collectors.joining(DELIMITER))));
+        System.out.println(String.format(INITIAL_CARD_FORMAT, String.join(DELIMITER, players.getNames())));
         printInitialHand(dealer, players);
         System.out.print(System.lineSeparator());
     }

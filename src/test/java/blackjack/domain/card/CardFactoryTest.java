@@ -12,7 +12,7 @@ public class CardFactoryTest {
     @Test
     @DisplayName("카드 리스트 생성")
     void generate() {
-        List<Card> cards = CardFactory.generate();
+        List<Card> cards = CardFactory.create();
         assertThat(cards.size()).isEqualTo(52);
     }
 }

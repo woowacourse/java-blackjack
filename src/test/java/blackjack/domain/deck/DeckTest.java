@@ -24,7 +24,7 @@ public class DeckTest {
     @Test
     @DisplayName("카드 꺼내기")
     void pick() {
-        List<Card> cards = CardFactory.generate();
+        List<Card> cards = CardFactory.create();
         Deck deck = new Deck(cards);
         assertThat(deck.pick()).isInstanceOf(Card.class);
     }
@@ -32,7 +32,7 @@ public class DeckTest {
     @Test
     @DisplayName("카드 꺼내기")
     void pickThrowException() {
-        List<Card> cards = CardFactory.generate();
+        List<Card> cards = CardFactory.create();
         Deck deck = new Deck(cards);
         for (int i = 0; i < 52; i++) {
             deck.pick();

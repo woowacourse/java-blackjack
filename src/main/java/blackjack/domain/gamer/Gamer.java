@@ -11,7 +11,7 @@ public abstract class Gamer {
     private String name;
     protected Hand hand;
 
-    Gamer(String name) {
+    Gamer(final String name) {
         this.name = Objects.requireNonNull(name);
         this.hand = new Hand();
     }

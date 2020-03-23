@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import blackjack.controller.dto.PlayersBettingMoneyDto;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players implements Iterable<Player> {
@@ -13,10 +13,12 @@ public class Players implements Iterable<Player> {
         this.players = Collections.unmodifiableList(players);
     }
 
-    public static Players of(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+    public static Players of(PlayersBettingMoneyDto playersBettingMoneyDto) {
+        Map<String, String> playersBettingMoney = playersBettingMoneyDto.get();
+        List<Player> players = new ArrayList<>();
+        for (Map.Entry<String, String> entry : playersBettingMoney.entrySet()) {
+            players.add(new Player(entry.getKey(), entry.getValue()));
+        }
         return new Players(players);
     }
 

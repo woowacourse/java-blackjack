@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.controller.dto.PlayersBettingMoneyDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardType;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,77 +20,71 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BettingTableTest {
 
     Dealer dealer = new Dealer();
+    Map<String, String> nameBettingMoney;
 
     @BeforeEach
     void setUp() {
         setDealerCard();
+        nameBettingMoney = new HashMap<>();
     }
 
     @Test
     @DisplayName("블랙잭 Winner 수익 계산")
     void calculateProfitBlackJackWinner() {
-        Players players = Players.of(Arrays.asList("blackJackWinner"));
+        nameBettingMoney.put("blackJackWinner", "10000");
+        PlayersBettingMoneyDto dto = new PlayersBettingMoneyDto(nameBettingMoney);
+        Players players = Players.of(dto);
         Player blackJackWinner = players.findPlayer("blackJackWinner");
-        Map<Player, String> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(blackJackWinner, "10000");
 
         blackJackWinner.draw(new Card(CardSymbol.ACE, CardType.CLOVER));
         blackJackWinner.draw(new Card(CardSymbol.KING, CardType.CLOVER));
 
-        BettingTable bettingTable = BettingTable.of(playerBettingMoney);
-
-        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(blackJackWinner, new Profit(15000))
+        assertThat(new BettingTable().calculateProfit(dealer, players).getGamersResult()).containsEntry(blackJackWinner, new Profit(15000))
                 .containsEntry(dealer, new Profit(-15000));
     }
 
     @Test
     @DisplayName("Winner 수익 계산")
     void calculateProfitWinner() {
-        Players players = Players.of(Arrays.asList("winner"));
+        nameBettingMoney.put("winner", "10000");
+        PlayersBettingMoneyDto dto = new PlayersBettingMoneyDto(nameBettingMoney);
+        Players players = Players.of(dto);
         Player winner = players.findPlayer("winner");
-        Map<Player, String> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(winner, "10000");
 
         winner.draw(new Card(CardSymbol.NINE, CardType.CLOVER));
         winner.draw(new Card(CardSymbol.KING, CardType.CLOVER));
 
-        BettingTable bettingTable = BettingTable.of(playerBettingMoney);
-
-        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(winner, new Profit(10000))
+        assertThat(new BettingTable().calculateProfit(dealer, players).getGamersResult()).containsEntry(winner, new Profit(10000))
                 .containsEntry(dealer, new Profit(-10000));
     }
 
     @Test
     @DisplayName("Drawer 수익 계산")
     void calculateProfitDrawer() {
-        Players players = Players.of(Arrays.asList("drawer"));
+        nameBettingMoney.put("drawer", "10000");
+        PlayersBettingMoneyDto dto = new PlayersBettingMoneyDto(nameBettingMoney);
+        Players players = Players.of(dto);
         Player drawer = players.findPlayer("drawer");
-        Map<Player, String> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(drawer, "5000");
 
         drawer.draw(new Card(CardSymbol.FIVE, CardType.CLOVER));
         drawer.draw(new Card(CardSymbol.KING, CardType.CLOVER));
 
-        BettingTable bettingTable = BettingTable.of(playerBettingMoney);
-
-        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(drawer, new Profit(0))
+        assertThat(new BettingTable().calculateProfit(dealer, players).getGamersResult()).containsEntry(drawer, new Profit(0))
                 .containsEntry(dealer, new Profit(0));
     }
 
     @Test
     @DisplayName("Loser 수익 계산")
     void calculateProfitLoser() {
-        Players players = Players.of(Arrays.asList("loser"));
+        nameBettingMoney.put("loser", "10000");
+        PlayersBettingMoneyDto dto = new PlayersBettingMoneyDto(nameBettingMoney);
+        Players players = Players.of(dto);
         Player loser = players.findPlayer("loser");
-        Map<Player, String> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(loser, "10000");
 
         loser.draw(new Card(CardSymbol.THREE, CardType.CLOVER));
         loser.draw(new Card(CardSymbol.KING, CardType.CLOVER));
 
-        BettingTable bettingTable = BettingTable.of(playerBettingMoney);
-
-        assertThat(bettingTable.calculateProfit(dealer, players).getGamersResult()).containsEntry(loser, new Profit(-10000))
+        assertThat(new BettingTable().calculateProfit(dealer, players).getGamersResult()).containsEntry(loser, new Profit(-10000))
                 .containsEntry(dealer, new Profit(10000));
     }
 

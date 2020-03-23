@@ -1,26 +1,24 @@
 package blackjack.controller.dto;
 
-import blackjack.domain.gamer.Player;
-
 import java.util.Collections;
 import java.util.Map;
 
 public class PlayersBettingMoneyDto {
 
-    private Map<Player, String> bettingTable;
+    private Map<String, String> playersBettingMoney;
 
-    public PlayersBettingMoneyDto(Map<Player, String> bettingTable) {
-        validate(bettingTable);
-        this.bettingTable = Collections.unmodifiableMap(bettingTable);
+    public PlayersBettingMoneyDto(Map<String, String> playersBettingMoney) {
+        validate(playersBettingMoney);
+        this.playersBettingMoney = Collections.unmodifiableMap(playersBettingMoney);
     }
 
-    private void validate(Map<Player, String> bettingTable) {
-        if (bettingTable == null || bettingTable.isEmpty()) {
-            throw new IllegalArgumentException("사용자의 배팅 금액을 입력해주세요.");
+    private void validate(Map<String, String> playersBettingMoney) {
+        if (playersBettingMoney == null || playersBettingMoney.isEmpty()) {
+            throw new IllegalArgumentException("사용자가 존재하지 않습니다.");
         }
     }
 
-    public Map<Player, String> get() {
-        return bettingTable;
+    public Map<String, String> get() {
+        return playersBettingMoney;
     }
 }

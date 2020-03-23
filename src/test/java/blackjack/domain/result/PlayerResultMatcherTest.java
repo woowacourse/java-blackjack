@@ -20,7 +20,7 @@ class PlayerResultMatcherTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        player = new Player("pobi");
+        player = new Player("pobi", "10000");
     }
 
     @Test

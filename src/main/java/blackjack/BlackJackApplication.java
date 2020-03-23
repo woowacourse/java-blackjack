@@ -7,24 +7,23 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.BettingTable;
-import blackjack.view.InputView;
+import blackjack.domain.rule.HandInitializer;
 import blackjack.view.OutputView;
 
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        Deck deck = new Deck(CardFactory.generate());
+        Deck deck = new Deck(CardFactory.create());
         Dealer dealer = new Dealer();
-        Players players = Players.of(InputView.askPlayerNames().get());
-        BettingTable bettingTable = BettingTable.of(InputView.askPlayerBettingMoney(players).get());
+        Players players = BlackJackController.createPlayers();
 
-        BlackJackController.initializeCard(dealer, players, deck);
+        HandInitializer.initialize(dealer, players, deck);
         OutputView.printInitialCards(dealer, players);
 
         BlackJackController.drawMoreCard(dealer, players, deck);
         OutputView.printGamerScore(dealer, players);
 
-        GamersResultDto gamersResultDto = BlackJackController.calculateProfit(dealer, players, bettingTable);
+        GamersResultDto gamersResultDto = new BettingTable().calculateProfit(dealer, players);
         OutputView.printGamersProfit(gamersResultDto);
     }
 }
