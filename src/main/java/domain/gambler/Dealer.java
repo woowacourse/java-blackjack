@@ -7,8 +7,8 @@ import domain.card.Score;
 
 public class Dealer implements Gambler {
     private static final int FIRST_INDEX = 0;
-    private static final int DEALER_MAX_HIT_SCORE = 16;
     private static final Name NAME = new Name("딜러");
+    public static final int DEALER_MAX_HIT_SCORE = 16;
 
     private final Name name;
     private final Cards cards;

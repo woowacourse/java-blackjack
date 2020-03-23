@@ -1,6 +1,6 @@
 package view;
 
-import domain.*;
+import domain.ProfitResult;
 import domain.gambler.*;
 
 import java.util.Map;
@@ -58,7 +58,7 @@ public class OutputView {
     }
 
     public static void printDealerHitMessage() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("\n딜러는" + Dealer.DEALER_MAX_HIT_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     private static void printDealerResult(Dealer dealer, Money dealerMoney) {
