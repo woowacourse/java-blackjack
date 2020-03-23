@@ -40,18 +40,12 @@ public class CardsTest {
     @Test
     @DisplayName("블랙잭 여부 확인")
     void isBlackJack() {
-        Cards cards = new Cards();
-
-        cards.addCard(Card.of("스페이드", "K"));
-        cards.addCard(Card.of("스페이드", "A"));
-        assertThat(cards.getScore()).isEqualTo(21);
-        assertThat(cards.getSize()).isEqualTo(2);
     }
 
     @ParameterizedTest
     @DisplayName("버스트 확인")
     @CsvSource(value = {"K,Q:False", "K,Q,2:True"}, delimiter = ':')
-    void isBust(String input, Boolean expected) {
+    void isBust_IfPointMoreThan21_IsTrue(String input, Boolean expected) {
         Cards cards = new Cards();
         String[] inputSymbols = input.split(",");
 

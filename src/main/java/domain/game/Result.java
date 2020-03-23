@@ -1,15 +1,21 @@
 package domain.game;
 
+import domain.player.Player;
+import domain.player.User;
+
+import java.math.BigDecimal;
+
 public class Result {
     private static final int ONE = 1;
-    private final String name;
+
     private int winCount;
     private int loseCount;
+    private Money winningMoney;
 
-    public Result(final String name) {
-        this.name = name;
+    public Result() {
         this.winCount = 0;
         this.loseCount = 0;
+        this.winningMoney = new Money("0");
     }
 
     public void addWinCount() {
@@ -18,10 +24,6 @@ public class Result {
 
     public void addLoseCount() {
         loseCount++;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getWinCount() {
@@ -38,5 +40,28 @@ public class Result {
 
     public boolean hasWin() {
         return winCount >= ONE;
+    }
+
+    public void calculateWinningMoney(Player mainPlayer, Player opponentPlayer) {
+        BigDecimal bettingMoney = getUserBettingMoney(mainPlayer, opponentPlayer);
+        ResultType resultType = ResultType.of(mainPlayer, opponentPlayer);
+        BigDecimal rewardRate = new BigDecimal(resultType.getRewardRate());
+
+        winningMoney = winningMoney.addMoney(bettingMoney.multiply(rewardRate));
+    }
+
+    private BigDecimal getUserBettingMoney(Player mainPlayer, Player opponentPlayer) {
+        Money userMoney;
+
+        if (mainPlayer instanceof User) {
+            userMoney = ((User) mainPlayer).getBettingMoney();
+            return userMoney.getMoney();
+        }
+        userMoney = ((User) opponentPlayer).getBettingMoney();
+        return userMoney.getMoney();
+    }
+
+    public BigDecimal getWinningMoney() {
+        return winningMoney.getMoney();
     }
 }

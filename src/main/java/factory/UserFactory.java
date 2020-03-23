@@ -1,6 +1,6 @@
 package factory;
 
-import domain.user.User;
+import domain.player.User;
 
 import java.util.Arrays;
 import java.util.Collections;

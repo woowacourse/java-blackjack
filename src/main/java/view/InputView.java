@@ -1,6 +1,6 @@
 package view;
 
-import domain.user.User;
+import domain.player.User;
 
 import java.util.Scanner;
 
@@ -14,6 +14,11 @@ public class InputView {
 
     public static String inputMoreCard(final User user) {
         System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        return SCANNER.nextLine();
+    }
+
+    public static String inputBettingMoney(User user) {
+        System.out.println(user.getName() + "의 배팅금액은?");
         return SCANNER.nextLine();
     }
 }

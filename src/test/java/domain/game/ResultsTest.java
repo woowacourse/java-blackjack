@@ -1,7 +1,7 @@
 package domain.game;
 
-import domain.user.Dealer;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Users;
 import factory.UserFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

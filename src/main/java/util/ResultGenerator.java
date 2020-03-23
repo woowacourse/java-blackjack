@@ -2,49 +2,41 @@ package util;
 
 import domain.game.Result;
 import domain.game.Results;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Name;
+import domain.player.User;
+import domain.player.Users;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ResultGenerator {
     private ResultGenerator() {
     }
 
     public static Results create(final Dealer dealer, final Users users) {
-        List<Result> results = new ArrayList<>();
+        Map<Name, Result> results = new LinkedHashMap<>();
 
         addDealerResults(dealer, users, results);
         addUserResults(dealer, users, results);
         return new Results(results);
     }
 
-    private static void addDealerResults(final Dealer dealer, final Users users, final List<Result> results) {
-        Result result = new Result(dealer.getName());
+    private static void addDealerResults(final Dealer dealer, final Users users, final Map<Name, Result> results) {
+        Result result = new Result();
 
         for (User user : users) {
-            calculateWinLose(dealer, user, result);
+            result.calculateWinningMoney(dealer, user);
         }
-        results.add(result);
+        results.put(new Name(dealer.getName()), result);
     }
 
-    private static void addUserResults(final Dealer dealer, final Users users, final List<Result> results) {
+    private static void addUserResults(final Dealer dealer, final Users users, final Map<Name, Result> results) {
         for (User user : users) {
-            Result result = new Result(user.getName());
+            Result result = new Result();
 
-            calculateWinLose(user, dealer, result);
-            results.add(result);
+            result.calculateWinningMoney(user, dealer);
+            results.put(new Name(user.getName()), result);
         }
-    }
-
-    private static void calculateWinLose(final Player mainPlayer, final Player opponentPlayer, final Result result) {
-        if (mainPlayer.isWin(opponentPlayer)) {
-            result.addWinCount();
-            return;
-        }
-        result.addLoseCount();
     }
 }

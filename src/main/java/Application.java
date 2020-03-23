@@ -1,11 +1,12 @@
 import domain.card.CardDeck;
 import domain.game.UserIntention;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
-import domain.user.Users;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.User;
+import domain.player.Users;
 import factory.CardFactory;
 import factory.UserFactory;
+import util.BettingLogGenerator;
 import util.CardDistributor;
 import util.ResultGenerator;
 import view.InputView;
@@ -16,6 +17,7 @@ public class Application {
         final CardDeck cardDeck = new CardDeck(CardFactory.create());
         final Dealer dealer = new Dealer();
         final Users users = new Users(UserFactory.create(InputView.inputNames()));
+        BettingLogGenerator.calculate(users);
 
         distributeInitialCard(cardDeck, dealer, users);
         distributeInfo(dealer, users);
@@ -40,11 +42,11 @@ public class Application {
     }
 
     private static void addMoreCards(final CardDeck cardDeck, final Dealer dealer, final Users users) {
-        userMoreCard(cardDeck, users);
-        dealerMoreCard(cardDeck, dealer);
+        giveUserMoreCard(cardDeck, users);
+        giveDealerMoreCard(cardDeck, dealer);
     }
 
-    private static void userMoreCard(final CardDeck cardDeck, final Users users) {
+    private static void giveUserMoreCard(final CardDeck cardDeck, final Users users) {
         for (User user : users) {
             giveCardsIfUserWant(cardDeck, user);
         }
@@ -57,7 +59,7 @@ public class Application {
         }
     }
 
-    private static void dealerMoreCard(final CardDeck cardDeck, final Dealer dealer) {
+    private static void giveDealerMoreCard(final CardDeck cardDeck, final Dealer dealer) {
         while (dealer.shouldAddCard()) {
             CardDistributor.giveOneCard(cardDeck, dealer);
             OutputView.printDealerAddCard();
