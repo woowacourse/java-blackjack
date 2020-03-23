@@ -66,14 +66,14 @@ public class BlackjackGameController {
 
     private static void dealerDrawsAdditionalCard(BlackjackGame game) {
         while(game.dealerHitsAdditionalCard()) {
-            game.dealerHitsAdditionalCard();
+            game.dealerDrawsMoreCard();
             OutputView.printDealerHitMoreCard();
         }
     }
 
     private static void generateFinalResults(BlackjackGame game) {
         OutputView.printFinalCardScore(game);
-        TotalResult totalResult = game.calculateResultsPerPlayer();
+        TotalResult totalResult = game.generateResults();
         Money dealerProfit = totalResult.calculateDealerProfit();
         OutputView.printFinalResult(totalResult, dealerProfit);
     }

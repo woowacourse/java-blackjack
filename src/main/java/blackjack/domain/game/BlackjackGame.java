@@ -35,7 +35,7 @@ public class BlackjackGame {
         return dealer.isUnderThreshold();
     }
 
-    private void dealerDrawsMoreCard() {
+    public void dealerDrawsMoreCard() {
         dealer.receiveCard(deck.draw());
     }
 
@@ -59,5 +59,9 @@ public class BlackjackGame {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public TotalResult generateResults() {
+        return new TotalResult(dealer, players);
     }
 }
