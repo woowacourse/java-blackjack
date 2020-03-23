@@ -36,7 +36,6 @@ public class BlackjackGameController {
         );
     }
 
-    //TODO: 데미테르의 법칙 준수
     private static BlackjackGame startBlackjackGame(List<Player> players) {
         return new BlackjackGame(
                     players,
@@ -44,7 +43,7 @@ public class BlackjackGameController {
     }
 
     private static void drawMoreCard(BlackjackGame game) {
-        if(!game.dealerIsBlackJack()) {
+        if(!game.isDealerBlackjack()) {
             hitMoreCard(game.getPlayers(), game);
             dealerDrawsAdditionalCard(game);
         }
@@ -67,6 +66,7 @@ public class BlackjackGameController {
 
     private static void dealerDrawsAdditionalCard(BlackjackGame game) {
         while(game.dealerHitsAdditionalCard()) {
+            game.dealerHitsAdditionalCard();
             OutputView.printDealerHitMoreCard();
         }
     }

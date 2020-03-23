@@ -32,18 +32,18 @@ public class BlackjackGame {
     }
 
     public boolean dealerHitsAdditionalCard() {
-        if (dealer.isUnderThreshold()) {
-            dealer.receiveCard(deck.draw());
-            return true;
-        }
-        return false;
+        return dealer.isUnderThreshold();
+    }
+
+    private void dealerDrawsMoreCard() {
+        dealer.receiveCard(deck.draw());
     }
 
     public void hitCard(Player player) {
         player.receiveCard(deck.draw());
     }
 
-    public boolean dealerIsBlackJack() {
+    public boolean isDealerBlackjack() {
         return dealer.isBlackJack();
     }
 
