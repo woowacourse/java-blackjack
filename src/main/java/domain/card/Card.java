@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    static final String INVALID_ACE_MEESAGE = "%s는 당 함수를 활용할 수 없습니다.";
+    static final String INVALID_ACE_ONLY_NOTACE_ARE_ALLOWED_MEESAGE = "A는 당 함수를 활용할 수 없습니다.";
     private final Symbol symbol;
     private final Type type;
 
@@ -14,7 +14,7 @@ public class Card {
 
     int calculateExceptAce() {
         if (symbol.equals(Symbol.ACE)) {
-            throw new IllegalStateException(String.format(INVALID_ACE_MEESAGE, Symbol.ACE.getPattern()));
+            throw new IllegalStateException(INVALID_ACE_ONLY_NOTACE_ARE_ALLOWED_MEESAGE);
         }
 
         return symbol.getValue();

@@ -35,7 +35,7 @@ public class CardTest {
         Card card = new Card(symbol, Type.SPADE);
         assertThatThrownBy(card::calculateExceptAce)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(String.format(Card.INVALID_ACE_MEESAGE, symbol.getPattern()));
+                .hasMessage(Card.INVALID_ACE_ONLY_NOTACE_ARE_ALLOWED_MEESAGE);
     }
 
     @Test
