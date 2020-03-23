@@ -6,9 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.user.component.Name;
-import blackjack.domain.user.component.Point;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class User implements GameRule {
@@ -29,12 +27,8 @@ public abstract class User implements GameRule {
         return name;
     }
 
-    public Point createPoint() {
-        return new Point(cards);
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 
     public void drawCard(CardDeck deck) {
@@ -42,13 +36,13 @@ public abstract class User implements GameRule {
         int receivableCardSize = getReceivableCardSize();
         for (int i = 0; i < receivableCardSize; i++) {
             Card card = deck.getCard();
-            getCards().add(card);
+            cards.add(card);
         }
     }
 
     @Override
     public int getReceivableCardSize() {
-        if (getCards().size() == 0) {
+        if (cards.getSize() == 0) {
             return INITIAL_CARD_SIZE;
         }
         if (receivable()) {

@@ -18,7 +18,7 @@ public class Player extends User {
 
     @Override
     public boolean receivable() {
-        return !createPoint().isBust();
+        return !getCards().isBust();
     }
 
     public double computeProfit(ResultType resultType) {

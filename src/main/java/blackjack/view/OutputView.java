@@ -31,14 +31,14 @@ public class OutputView {
     }
 
     public static void printStatus(User user) {
-        String formattedCards = ViewFormatter.formatCards(user.getCards());
+        String formattedCards = ViewFormatter.formatCards(user.getCards().getCards());
         String status = String.format(STATUS_FORMT, user.getName(), formattedCards);
         System.out.println(status);
     }
 
     private static void printStatusWithScore(User user) {
-        String formattedCards = ViewFormatter.formatCards(user.getCards());
-        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.createPoint().getPoint());
+        String formattedCards = ViewFormatter.formatCards(user.getCards().getCards());
+        String status = String.format(FINAL_STATUS_FORMAT, user.getName(), formattedCards, user.getCards().computePoint());
         System.out.println(status);
     }
 

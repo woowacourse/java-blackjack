@@ -1,13 +1,14 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.component.CardNumber;
-import blackjack.domain.user.component.Point;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Cards {
+    private static int BLACK_JACK = 21;
+    private static int BLACK_JACK_SIZE = 2;
     private List<Card> cards;
 
     public Cards() {
@@ -24,6 +25,19 @@ public class Cards {
         cards.add(card);
     }
 
+    public int computePoint() {
+        int totalPoint = computeTotalPoint();
+        totalPoint = handleAce(totalPoint);
+        totalPoint = handleBust(totalPoint);
+        return totalPoint;
+    }
+
+    private int computeTotalPoint(){
+        return cards.stream()
+                .mapToInt(x -> x.getCardPoint())
+                .sum();
+    }
+
     public boolean hasAce() {
         int aceCount = (int) cards.stream()
                 .filter(Card::isAce)
@@ -31,14 +45,34 @@ public class Cards {
         return aceCount > 0;
     }
 
-    public int computePoint() {
-        int totalPoint =  cards.stream()
-                .mapToInt(x -> x.getCardPoint())
-                .sum();
-        if (hasAce() && totalPoint < Point.BLACK_JACK) {
+    private int handleAce(int totalPoint) {
+        if (hasAce() && totalPoint < BLACK_JACK) {
             totalPoint += CardNumber.ACE_DIFF;
         }
         return totalPoint;
+    }
+
+    private int handleBust (int totalPoint) {
+        if (totalPoint > BLACK_JACK) {
+            return 0;
+        }
+        return totalPoint;
+    }
+
+    public int getDiffWithBlackJack() {
+        return computePoint() - BLACK_JACK;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_SIZE && computePoint() == BLACK_JACK;
+    }
+
+    public boolean isBust() {
+        return computePoint() <= 0;
+    }
+
+    public boolean isNormal() {
+        return !isBlackJack() && !isBust();
     }
 
     public int getSize() {

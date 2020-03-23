@@ -20,7 +20,7 @@ public class Card {
 
 
     public boolean isAce() {
-        return this.cardNumber.equals(CardNumber.ACE);
+        return cardNumber.equals(CardNumber.ACE);
     }
 
     public String getCardFigure() {

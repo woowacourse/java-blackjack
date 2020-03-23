@@ -27,7 +27,7 @@ public class Results {
     }
 
     private static ResultType computePlayerResultType(User player, User dealer) {
-        return ResultType.computeResult(player.createPoint(), dealer.createPoint());
+        return ResultType.computeResult(player.getCards(), dealer.getCards());
     }
 
     private static Result computeDealerResult(User dealer, List<Result> results) {
