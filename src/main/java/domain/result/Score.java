@@ -6,7 +6,7 @@ import domain.gamer.Gamer;
 
 public class Score {
 	private static final int BLACKJACK_SCORE = 21;
-	private static final int TEN = 10;
+	private static final int ACE_BONUS_SCORE = 10;
 	public static final Score BLACKJACK = Score.from(BLACKJACK_SCORE);
 
 	private final int score;
@@ -21,8 +21,8 @@ public class Score {
 
 	public static Score from(Gamer gamer) {
 		int rawScore = gamer.calculateCardSum();
-		if (gamer.hasAce() && rawScore + TEN <= BLACKJACK_SCORE) {
-			return Score.from(rawScore + TEN);
+		if (gamer.hasAce() && rawScore + ACE_BONUS_SCORE <= BLACKJACK_SCORE) {
+			return Score.from(rawScore + ACE_BONUS_SCORE);
 		}
 		return Score.from(rawScore);
 	}
