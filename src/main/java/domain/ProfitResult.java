@@ -12,8 +12,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ProfitResult {
-
-    private static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+    private static final String PLAYERS_NULL_EXCEPTION_MESSAGE = "Players null exception.";
+    private static final String DEALER_NULL_EXCEPTION_MESSAGE = "Dealer null exception.";
 
     private final Map<Player, Money> playerResults;
     private final Money dealerResults;
@@ -27,13 +27,13 @@ public class ProfitResult {
 
     private void validatePlayers(Players players) {
         if (Objects.isNull(players)) {
-            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+            throw new NullPointerException(PLAYERS_NULL_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateDealer(Dealer dealer) {
         if (Objects.isNull(dealer)) {
-            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+            throw new NullPointerException(DEALER_NULL_EXCEPTION_MESSAGE);
         }
     }
 

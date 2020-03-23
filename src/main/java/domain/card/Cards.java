@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Cards {
     private static final String DUPLICATE_CARD_EXCEPTION_MESSAGE = "Duplicate card exception.";
-    private static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+    private static final String CARD_NULL_EXCEPTION_MESSAGE = "Card null exception.";
     private static final int BLACK_JACK_CARDS_AMOUNT = 2;
 
     private List<Card> cards = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Cards {
 
     private void validateCard(Card card) {
         if (Objects.isNull(card)) {
-            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+            throw new NullPointerException(CARD_NULL_EXCEPTION_MESSAGE);
         }
         if (cards.contains(card)) {
             throw new IllegalArgumentException(DUPLICATE_CARD_EXCEPTION_MESSAGE);

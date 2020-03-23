@@ -8,7 +8,8 @@ import domain.card.Score;
 import java.util.Objects;
 
 public class Player implements Gambler {
-    private static final String NULL_EXCEPTION_MESSAGE = "Null exception occur.";
+    private static final String NAME_NULL_EXCEPTION_MESSAGE = "Name null exception.";
+    private static final String MONEY_NULL_EXCEPTION_MESSAGE = "Money null exception.";
     private static final int PLAYER_MAX_HIT_SCORE = 20;
 
     private final Name name;
@@ -25,13 +26,13 @@ public class Player implements Gambler {
 
     private void validateName(Name name) {
         if (Objects.isNull(name)) {
-            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+            throw new NullPointerException(NAME_NULL_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateMoney(Money money) {
         if (Objects.isNull(money)) {
-            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+            throw new NullPointerException(MONEY_NULL_EXCEPTION_MESSAGE);
         }
     }
 

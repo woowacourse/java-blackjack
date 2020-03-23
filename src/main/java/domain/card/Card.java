@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private static final String NULL_EXCEPTION_MESSAGE = "Null exception.";
+    private static final String TYPE_OR_SYMBOL_NULL_EXCEPTION_MESSAGE = "Type or symbol null exception.";
 
     private Type type;
     private Symbol symbol;
@@ -16,7 +16,7 @@ public class Card {
 
     private void validateNotNull(Type type, Symbol symbol) {
         if (Objects.isNull(type) || Objects.isNull(symbol)) {
-            throw new IllegalArgumentException(NULL_EXCEPTION_MESSAGE);
+            throw new NullPointerException(TYPE_OR_SYMBOL_NULL_EXCEPTION_MESSAGE);
         }
     }
 

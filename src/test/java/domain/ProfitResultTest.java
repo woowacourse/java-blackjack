@@ -35,7 +35,7 @@ public class ProfitResultTest {
     @Test
     void validNotNull() {
         assertThatThrownBy(() -> new ProfitResult(new Dealer(), null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Null");
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("null");
     }
 }
