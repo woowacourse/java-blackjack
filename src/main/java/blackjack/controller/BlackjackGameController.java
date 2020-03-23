@@ -65,7 +65,8 @@ public class BlackjackGameController {
     }
 
     private static void dealerDrawsAdditionalCard(BlackjackGame game) {
-        while(game.isDealerHitsAdditionalCard()) {
+        while(game.isDealerUnderThreshold()) {
+            game.dealerHitsAdditionalCard();
             OutputView.printDealerHitMoreCard();
         }
     }
