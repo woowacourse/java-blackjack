@@ -12,7 +12,7 @@ public class Cards {
 
     private final List<Card> cards;
 
-    Cards(List<Card> cards) {
+    private Cards(List<Card> cards) {
         this.cards = cards;
     }
 
