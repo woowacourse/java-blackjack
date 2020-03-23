@@ -15,7 +15,7 @@ public abstract class Gamer {
     public Gamer(final String name, final HandCards handCards, final Money money) {
         this.name = name;
         this.handCards = handCards;
-        this.score = ScoreCalculator.calculate(handCards);
+        this.score = new Score(0);
         this.money = money;
     }
 
