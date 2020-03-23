@@ -14,7 +14,7 @@ public class BlackjackService {
         this.matchRule = matchRule;
     }
 
-    public static BlackjackService start(Dealer dealer, MatchRule matchRule) {
+    public static BlackjackService of(Dealer dealer, MatchRule matchRule) {
         return new BlackjackService(dealer, matchRule);
     }
 

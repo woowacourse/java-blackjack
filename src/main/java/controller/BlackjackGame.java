@@ -21,7 +21,7 @@ public class BlackjackGame {
     public void play() {
         Dealer dealer = Dealer.shuffle(deck);
         Players players = Players.join(userInterface);
-        BlackjackService blackjackService = BlackjackService.start(dealer, matchRule);
+        BlackjackService blackjackService = BlackjackService.of(dealer, matchRule);
         players = distributeInitCards(dealer, players, blackjackService);
         players = confirmCards(dealer, players, blackjackService);
         Profit dealerProfit = blackjackService.match(players);

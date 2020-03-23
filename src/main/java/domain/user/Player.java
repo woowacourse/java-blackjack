@@ -36,6 +36,7 @@ public class Player extends User {
         return Result.judge(matchRule, this, user);
     }
 
+    //todo: refac playerDto
     public PlayerDto serialize(PlayerDto playerDto) {
         playerDto.setName(name);
         playerDto.setBettingMoney(bettingMoney.serialize());

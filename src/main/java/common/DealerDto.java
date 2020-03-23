@@ -24,6 +24,7 @@ public class DealerDto {
         return new DealerDto(name, cards, profit, score);
     }
 
+    //setter 제거
     public void setCards(List<String> cards) {
         this.cards = cards;
     }

@@ -22,6 +22,7 @@ public class Console implements UserInterface {
         return scanner.nextLine();
     }
 
+    //todo: playerNames와 bettingMoney 분리
     @Override
     public PlayersDto inputPlayers() {
         List<PlayerDto> playerDtos = new ArrayList<>();
