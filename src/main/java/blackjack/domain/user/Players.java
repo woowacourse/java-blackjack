@@ -49,23 +49,8 @@ public final class Players {
 		}
 	}
 
-	public int memberSize() {
-		return players.size();
-	}
-
 	public List<Playable> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
 
-	public List<Name> getNames() {
-		return players.stream()
-				.map(Playable::getName)
-				.collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
-	}
-
-	public List<Money> getMonies() {
-		return players.stream()
-				.map(player -> ((Player)player).getMoney())
-				.collect(Collectors.toList());
-	}
 }
