@@ -1,14 +1,12 @@
 package ui;
 
 import common.PlayerDto;
-import common.PlayersDto;
 import domain.UserInterface;
 import domain.user.Player;
 import utils.StringUtils;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,21 +18,6 @@ public class Console implements UserInterface {
     public String inputWantToHit(String playerName) {
         InputView.printRequestWantToHit(playerName);
         return scanner.nextLine();
-    }
-
-    //todo: playerNames와 bettingMoney 분리
-    @Override
-    public PlayersDto inputPlayers() {
-        List<PlayerDto> playerDtos = new ArrayList<>();
-        InputView.printPlayerNamesRequlest();
-        List<String> playerNames = inputPlayerNames();
-        for (String playerName : playerNames) {
-            int bettingMoney = inputBettingMoney(playerName);
-            PlayerDto playerDto = PlayerDto.input(playerName, bettingMoney);
-            playerDtos.add(playerDto);
-        }
-
-        return PlayersDto.of(playerDtos);
     }
 
     @Override

@@ -82,18 +82,10 @@ class PlayerTest {
         assertThat(player.countCards()).isEqualTo(defaultSizeOfCards + 1);
     }
 
-    private List<Card> setupExpectedCards(List<Card> cardsToAdd) {
-        List<Card> expectedCards = new ArrayList<>();
-        expectedCards.addAll(initCards);
-        expectedCards.addAll(cardsToAdd);
-        return expectedCards;
-    }
-
     @ParameterizedTest
     @MethodSource({"getResultsForCalculateProfit"})
     void calculateProfit(Result result) {
         Money bettingMoney = mock(Money.class);
-        //todo: refac multiply mocking logic
         when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
         player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
         //when
