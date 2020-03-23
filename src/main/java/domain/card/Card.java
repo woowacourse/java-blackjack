@@ -13,7 +13,7 @@ public class Card {
     }
 
     int calculateExceptAce() {
-        if (symbol.equals(Symbol.ACE)) {
+        if (symbol.isAce()) {
             throw new IllegalStateException(INVALID_ACE_ONLY_NOTACE_ARE_ALLOWED_MEESAGE);
         }
 

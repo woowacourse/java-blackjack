@@ -37,6 +37,10 @@ public enum Symbol {
         return pattern;
     }
 
+    boolean isAce() {
+        return this.equals(Symbol.ACE);
+    }
+
     private interface SymbolCalculator {
         int calculate(int sum);
     }
