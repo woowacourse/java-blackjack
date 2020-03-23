@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.playing.user.User;
+import blackjack.domain.user.User;
 
 import java.util.List;
 

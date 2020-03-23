@@ -1,11 +1,11 @@
 package blackjack.domain.result.user;
 
-import blackjack.domain.playing.card.Score;
-import blackjack.domain.playing.user.AbstractUser;
-import blackjack.domain.playing.user.BettingMoney;
-import blackjack.domain.playing.user.User;
+import blackjack.domain.card.Score;
 import blackjack.domain.result.Profit;
 import blackjack.domain.result.Rule;
+import blackjack.domain.user.AbstractUser;
+import blackjack.domain.user.BettingMoney;
+import blackjack.domain.user.User;
 
 public abstract class AbstractUserForTest implements User {
     @Override

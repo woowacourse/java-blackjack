@@ -1,6 +1,6 @@
 package blackjack.domain.result.user;
 
-import blackjack.domain.playing.card.Score;
+import blackjack.domain.card.Score;
 
 public class ScoreNineteenPlayer extends AbstractUserForTest {
     @Override

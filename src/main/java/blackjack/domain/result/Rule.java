@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.playing.user.User;
 import blackjack.domain.result.Exception.PofitRateException;
+import blackjack.domain.user.User;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;

@@ -1,12 +1,12 @@
 package blackjack;
 
-import blackjack.domain.playing.HitOrStay;
-import blackjack.domain.playing.deck.Deck;
-import blackjack.domain.playing.user.Dealer;
-import blackjack.domain.playing.user.Player;
-import blackjack.domain.playing.user.Players;
-import blackjack.domain.playing.user.exception.HitOrStayException;
+import blackjack.domain.HitOrStay;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.result.ProfitResult;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.exception.HitOrStayException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
