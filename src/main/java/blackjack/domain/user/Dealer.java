@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,16 +17,6 @@ public final class Dealer extends AbstractPlayer {
 	@Override
 	public List<Card> getStartHand() {
 		return Collections.singletonList(getHand().getHand().get(0));
-	}
-
-	@Override
-	public Boolean isWinner(Score dealerScore) {
-		return !isBust();
-	}
-
-	@Override
-	public boolean isLoser(Score dealerScore) {
-		return isBust();
 	}
 
 	@Override

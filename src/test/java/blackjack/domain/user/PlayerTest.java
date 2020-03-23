@@ -94,39 +94,6 @@ public class PlayerTest {
 				Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart));
 	}
 
-	@DisplayName("isWinner()가 player가 비교 score 값보다 클 시 true를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isWinner_HasScoreBiggerThanInputScore_ReturnTrue")
-	void isWinner_HasScoreBiggerThanInputScore_ReturnTrue(List<Card> cards, int score) {
-		player.receiveCards(cards);
-		assertThat(player.isWinner(Score.of(score))).isTrue();
-	}
-
-	static Stream<Arguments> isWinner_HasScoreBiggerThanInputScore_ReturnTrue() {
-		return Stream.of(Arguments.of(Collections.singletonList(tenClub), 9),
-				Arguments.of(Collections.singletonList(aceSpade), 10),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart), 20),
-				Arguments.of(Arrays.asList(jackHeart, jackHeart, aceSpade), 20),
-				Arguments.of(Arrays.asList(tenClub, jackHeart), 19),
-				Arguments.of(Arrays.asList(tenClub, jackHeart), 0));
-	}
-
-	@DisplayName("isWinner()가 player가 비교 score 값보다 같거나 작을 시 false를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse")
-	void isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse(List<Card> cards, int score) {
-		player.receiveCards(cards);
-		assertThat(player.isWinner(Score.of(score))).isFalse();
-	}
-
-	static Stream<Arguments> isWinner_HasScoreSameOrSmallerThanInputScore_ReturnFalse() {
-		return Stream.of(Arguments.of(Collections.singletonList(tenClub), 10),
-				Arguments.of(Collections.singletonList(aceSpade), 11),
-				Arguments.of(Arrays.asList(jackHeart, sixDiamond), 16),
-				Arguments.of(Arrays.asList(jackHeart, sixDiamond), 21),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21));
-	}
-
 	@DisplayName("computeScore()가 적절한 값을 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("computeScore_HasCards_ReturnScore")
@@ -141,28 +108,6 @@ public class PlayerTest {
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond, aceSpade), 18),
 				Arguments.of(Collections.emptyList(), 0));
-	}
-
-	@DisplayName("isBust()가 점수가 21보다 클 시 true를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isBust_ScoreMoreThanTwelve_ReturnTrue")
-	void isBust_ScoreMoreThanTwelve_ReturnTrue(List<Card> cards) {
-		player.receiveCards(cards);
-		assertThat(player.isBust()).isTrue();
-	}
-
-	static Stream<List<Card>> isBust_ScoreMoreThanTwelve_ReturnTrue() {
-		return Stream.of(Arrays.asList(tenClub, tenClub, twoClub),
-				Arrays.asList(jackHeart, sixDiamond, sixDiamond),
-				Arrays.asList(jackHeart, jackHeart, aceSpade, aceSpade));
-	}
-
-	@DisplayName("isBust()가 점수가 21이하일 시 false를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isBust_ScoreSameOrLessThanTwelve_ReturnFalse")
-	void isBust_ScoreSameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
-		player.receiveCards(cards);
-		assertThat(player.isBust()).isFalse();
 	}
 
 	static Stream<List<Card>> isBust_ScoreSameOrLessThanTwelve_ReturnFalse() {

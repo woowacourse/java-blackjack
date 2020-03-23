@@ -29,18 +29,13 @@ public abstract class AbstractPlayer implements Playable {
 	}
 
 	@Override
-	public boolean isBust() {
-		return computeScore().isOver(MAX_SCORE);
-	}
-
-	@Override
 	public Score computeScore() {
 		return hand.computeScore();
 	}
 
 	@Override
 	public boolean isBlackjack() {
-		return hand.isBlackJack();
+		return hand.isBlackjack();
 	}
 
 	@Override

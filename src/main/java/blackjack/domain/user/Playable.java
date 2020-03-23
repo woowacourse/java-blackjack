@@ -18,17 +18,11 @@ public interface Playable {
 
 	boolean isBlackjack();
 
-	boolean isBust();
-
 	List<Card> getStartHand();
 
 	Hand getHand();
 
 	Name getName();
 
-	Boolean isWinner(Score dealerScore);
-
 	boolean canReceiveCard();
-
-	boolean isLoser(Score computeScore);
 }

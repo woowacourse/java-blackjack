@@ -50,13 +50,38 @@ public final class Hand {
 		return hand.stream().anyMatch(Card::isAce);
 	}
 
-	public boolean isBlackJack() {
+	public boolean isBlackjack() {
 		return hasOnlyTwoCards() &&	computeScore().equals(Score.of(MAX_SCORE));
 	}
 
 	private boolean hasOnlyTwoCards() {
 		return hand.size() == TWO;
 	}
+
+	public boolean isBust() {
+		return computeScore().isOver(MAX_SCORE);
+	}
+
+	public Boolean isWin(Hand other) {
+		if (isBust()) {
+			return false;
+		}
+		if (other.isBust()) {
+			return true;
+		}
+		return computeScore().isOver(other.computeScore());
+	}
+
+	public boolean isLose(Hand other) {
+		if (isBust()) {
+			return true;
+		}
+		if (other.isBust()) {
+			return false;
+		}
+		return computeScore().isUnder(other.computeScore());
+	}
+
 
 	public List<Card> getHand() {
 		return Collections.unmodifiableList(hand);

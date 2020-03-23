@@ -105,36 +105,6 @@ class DealerTest {
 						Collections.singletonList(aceSpade)));
 	}
 
-	@DisplayName("isWinner()가 버스트되지 않았을 경우에 true를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isWinner_NotBusted_ReturnTrue")
-	void isWinner_NotBusted_ReturnTrue(List<Card> cards) {
-		dealer.receiveCards(cards);
-		assertThat(dealer.isWinner(Score.of(21))).isTrue();
-	}
-
-	static Stream<List<Card>> isWinner_NotBusted_ReturnTrue() {
-		return Stream.of(Collections.singletonList(aceSpade),
-				Collections.singletonList(sixDiamond),
-				Arrays.asList(tenClub, jackHeart),
-				Arrays.asList(tenClub, tenClub),
-				Arrays.asList(aceSpade, tenClub, tenClub));
-	}
-
-	@DisplayName("isWinner()가 버스트된 경우에 false를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isWinner_Busted_ReturnFalse")
-	void isWinner_Busted_ReturnFalse(List<Card> cards) {
-		dealer.receiveCards(cards);
-		assertThat(dealer.isWinner(Score.of(0))).isFalse();
-	}
-
-	static Stream<List<Card>> isWinner_Busted_ReturnFalse() {
-		return Stream.of(Arrays.asList(aceSpade, tenClub, tenClub, aceSpade),
-				Arrays.asList(twoClub, jackHeart, jackHeart),
-				Arrays.asList(tenClub, sixDiamond, sixDiamond));
-	}
-
 	@DisplayName("computeScore()가 점수를 적절히 계산하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("computeScore_ReturnItsScore")
@@ -149,35 +119,6 @@ class DealerTest {
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
 				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond, aceSpade), 18),
 				Arguments.of(Collections.emptyList(), 0));
-	}
-
-	@DisplayName("isBust()가 점수가 21보다 큰 경우 true를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isBust_MoreThanTwentyOne_ReturnTrue")
-	void isBust_MoreThanTwentyOne_ReturnTrue(List<Card> cards) {
-		dealer.receiveCards(cards);
-		assertThat(dealer.isBust()).isTrue();
-	}
-
-	static Stream<List<Card>> isBust_MoreThanTwentyOne_ReturnTrue() {
-		return Stream.of(Arrays.asList(tenClub, tenClub, twoClub),
-				Arrays.asList(jackHeart, sixDiamond, sixDiamond),
-				Arrays.asList(jackHeart, jackHeart, aceSpade, aceSpade));
-	}
-
-	@DisplayName("isBust()가 점수가 21이하인 경우 false를 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("isBust_SameOrLessThanTwelve_ReturnFalse")
-	void isBust_SameOrLessThanTwelve_ReturnFalse(List<Card> cards) {
-		dealer.receiveCards(cards);
-		assertThat(dealer.isBust()).isFalse();
-	}
-
-	static Stream<List<Card>> isBust_SameOrLessThanTwelve_ReturnFalse() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(tenClub, aceSpade),
-				Arrays.asList(tenClub, jackHeart, aceSpade));
 	}
 
 	@DisplayName("getName()이 딜러의 이름을 반환하는지 테스트")

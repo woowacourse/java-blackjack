@@ -56,7 +56,7 @@ public final class OutputView {
 	}
 
 	private static void printIfBust(Playable player) {
-		if (player.isBust()) {
+		if (player.getHand().isBust()) {
 			System.out.println(BUST_MESSAGE);
 		}
 	}
@@ -82,7 +82,7 @@ public final class OutputView {
 	}
 
 	private static String createResultScore(Playable player) {
-		if (player.isBust()) {
+		if (player.getHand().isBust()) {
 			return "bust";
 		}
 		return String.valueOf(player.computeScore().getScore());

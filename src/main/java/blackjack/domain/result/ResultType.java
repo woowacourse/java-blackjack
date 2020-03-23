@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Hand;
 import blackjack.domain.user.Playable;
 
 public enum ResultType {
@@ -16,25 +17,25 @@ public enum ResultType {
 		this.result = result;
 	}
 
-	public static ResultType getPlayerResultByDealer(Playable player, Playable dealer) {
+	public static ResultType getPlayerResultByDealer(Hand player, Hand dealer) {
 		if (player.isBlackjack()) {
 			return getPlayerResultByDealerIfPlayerIsBlackJack(dealer);
 		}
 		return getPlayerResultByDealerIfPlayerIsNotBlackJack(player, dealer);
 	}
 
-	private static ResultType getPlayerResultByDealerIfPlayerIsBlackJack(Playable dealer) {
+	private static ResultType getPlayerResultByDealerIfPlayerIsBlackJack(Hand dealer) {
 		if (dealer.isBlackjack()) {
 			return DRAW;
 		}
 		return BLACKJACK_WIN;
 	}
 
-	private static ResultType getPlayerResultByDealerIfPlayerIsNotBlackJack(Playable player, Playable dealer) {
-		if (player.isWinner(dealer.computeScore())) {
+	private static ResultType getPlayerResultByDealerIfPlayerIsNotBlackJack(Hand player, Hand dealer) {
+		if (player.isWin(dealer)) {
 			return WIN;
 		}
-		if (player.isLoser(dealer.computeScore())) {
+		if (player.isLose(dealer)) {
 			return LOSE;
 		}
 		return DRAW;

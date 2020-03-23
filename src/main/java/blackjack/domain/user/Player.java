@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Score;
 import blackjack.domain.result.ResultType;
 import blackjack.domain.user.exceptions.PlayerException;
 
@@ -40,29 +39,7 @@ public final class Player extends AbstractPlayer {
 	}
 
 	@Override
-	public Boolean isWinner(Score dealerScore) {
-		if (isBust()) {
-			return false;
-		}
-		if (dealerScore.isOver(MAX_SCORE)) {
-			return true;
-		}
-		return computeScore().isOver(dealerScore);
-	}
-
-	@Override
-	public boolean isLoser(Score dealerScore) {
-		if (isBust()) {
-			return true;
-		}
-		if (dealerScore.isOver(MAX_SCORE)) {
-			return false;
-		}
-		return computeScore().isUnder(dealerScore);
-	}
-
-	@Override
 	public boolean canReceiveCard() {
-		return !isBust();
+		return !getHand().isBust();
 	}
 }
