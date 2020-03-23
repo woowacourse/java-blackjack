@@ -23,7 +23,7 @@ public enum Result {
 
 	public static Result of(Gamer gamer, Gamer otherGamer) {
 		return Arrays.stream(Result.values())
-			.filter(result -> result.resultPolicy.compare(gamer, otherGamer))
+			.filter(result -> result.resultPolicy.canApply(gamer, otherGamer))
 			.findFirst()
 			.orElseThrow(() -> new AssertionError("ResultType 중 반드시 하나가 반환되어야합니다."));
 	}

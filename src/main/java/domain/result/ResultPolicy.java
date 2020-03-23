@@ -4,5 +4,5 @@ import domain.gamer.Gamer;
 
 @FunctionalInterface
 public interface ResultPolicy {
-	boolean compare(Gamer gamer, Gamer other);
+	boolean canApply(Gamer gamer, Gamer other);
 }
