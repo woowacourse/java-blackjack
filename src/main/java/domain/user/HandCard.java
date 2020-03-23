@@ -1,15 +1,13 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.game.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HandCard {
-    public static final int ACE_BONUS_SCORE = 10;
-    public static final int BLACKJACK_FULL_SCORE = 21;
-
     private final List<Card> cards;
 
     public HandCard() {
@@ -34,8 +32,8 @@ public class HandCard {
     }
 
     private int getAceScore(int sum) {
-        if (sum <= (BLACKJACK_FULL_SCORE - ACE_BONUS_SCORE) && hasAce()) {
-            return sum + ACE_BONUS_SCORE;
+        if (sum <= (Rule.getBlackjackFullScore() - Rule.getAceBonusScore()) && hasAce()) {
+            return sum + Rule.getAceBonusScore();
         }
         return sum;
     }
@@ -46,10 +44,18 @@ public class HandCard {
     }
 
     public boolean isOver() {
-        return BLACKJACK_FULL_SCORE < getScore();
+        return Rule.getBlackjackFullScore() < getScore();
     }
 
     public boolean isEmpty() {
         return cards.isEmpty();
+    }
+
+    public boolean isBlackJack() {
+        return Rule.getBlackjackFullScore() == getScore();
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }

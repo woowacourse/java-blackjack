@@ -1,9 +1,10 @@
-package domain;
+package domain.game;
 
 import java.util.*;
 
 public class Names {
     public static final String ERROR_VALIDATE_MESSAGE = "입력이 잘못되었습니다.";
+
     private final List<String> names;
 
     public Names(List<String> names) {

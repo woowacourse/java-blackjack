@@ -1,6 +1,7 @@
 package view;
 
-import domain.PlayerAnswer;
+import domain.game.Money;
+import domain.game.PlayerAnswer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,10 @@ public class InputView {
     }
 
     public static PlayerAnswer requestDraw() {
-        return new PlayerAnswer(scanner.nextLine());
+        return PlayerAnswer.of(scanner.nextLine());
+    }
+
+    public static Money requestMoney() {
+        return new Money(Integer.parseInt(scanner.nextLine()));
     }
 }

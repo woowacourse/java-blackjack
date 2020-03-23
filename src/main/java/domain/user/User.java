@@ -1,18 +1,18 @@
 package domain.user;
 
 import domain.card.CardDeck;
+import domain.game.Rule;
 
 import java.util.Objects;
 
 public abstract class User {
-    private static final int FIRST_DRAW_NUMBER = 2;
-
-    protected final HandCard handCard = new HandCard();
+    protected final HandCard handCard;
     private final String name;
 
     public User(String name) {
         validate(name);
         this.name = name;
+        handCard = new HandCard();
     }
 
     private void validate(String name) {
@@ -33,8 +33,8 @@ public abstract class User {
         if (!handCard.isEmpty()) {
             throw new IllegalStateException("잘못된 메서드 호출입니다.");
         }
-        for (int i = 0; i < FIRST_DRAW_NUMBER; i++) {
-            handCard.add(cardDeck.draw());
+        for (int i = 0; i < Rule.getFirstDrawNumber(); i++) {
+            draw(cardDeck);
         }
     }
 
@@ -46,6 +46,10 @@ public abstract class User {
                 .append(": ")
                 .append(handCard.getNames());
         return stringBuilder.toString();
+    }
+
+    public boolean isBlackJack() {
+        return handCard.isBlackJack();
     }
 
     public int getScore() {

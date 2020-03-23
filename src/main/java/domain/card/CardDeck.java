@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Stack;
 
 public class CardDeck {
-    private final Stack<Card> cards = new Stack<>();
+    private final Stack<Card> cards;
 
+    /*package-private*/
     CardDeck(List<Card> cards) {
         Collections.shuffle(cards);
+        this.cards = new Stack<>();
         this.cards.addAll(cards);
     }
 

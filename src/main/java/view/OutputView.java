@@ -1,6 +1,8 @@
 package view;
 
-import domain.GameResult;
+import domain.game.GameResult;
+import domain.game.Money;
+import domain.game.Rule;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -8,11 +10,13 @@ import domain.user.User;
 
 import java.util.Map;
 
-import static domain.user.Dealer.DRAW_MAX_SCORE;
-
 public class OutputView {
     public static void printNameFormat() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+
+    public static void printMoneyFormat(String name) {
+        System.out.println(name + "의 배팅 금액은?");
     }
 
     public static void printCardFormat(User user) {
@@ -20,7 +24,7 @@ public class OutputView {
     }
 
     public static void printFirstDrawFormat(Dealer dealer, Players players) {
-        String playerNames = String.join(",", players.getName());
+        String playerNames = String.join(",", players.getNames());
         StringBuilder stringBuilder = new StringBuilder()
                 .append(dealer.getName())
                 .append("와 ")
@@ -46,7 +50,7 @@ public class OutputView {
     }
 
     public static void printDealerDraw(Dealer dealer) {
-        System.out.println(dealer.getName() + " 는" + DRAW_MAX_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() + " 는" + Rule.getDrawMaxScore() + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printStatusWithScore(User user) {
@@ -59,21 +63,14 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(GameResult gameResult, Dealer dealer) {
-        System.out.println("## 최종 승패\n");
-        System.out.println(dealer.getName() + ": " + gameResult.calculateDealerWins() + "승 " + gameResult.calculateDealerLoses() + "패");
+    public static void printGameResult(GameResult gameResult, Players players, Dealer dealer) {
+        System.out.println("## 최종 수익\n");
+        System.out.println(dealer.getName() + ": " + gameResult.getDealerMoney());
 
-        Map<String, Boolean> playerResult = gameResult.getPlayerResult();
-        playerResult.keySet().forEach(name -> {
+        Map<String, Money> playerResult = gameResult.getPlayerResult();
+        players.getNames().forEach(name -> {
             System.out.print(name + ": ");
-            System.out.println(makeResultWord(playerResult.get(name)));
+            System.out.println(playerResult.get(name).getValue());
         });
-    }
-
-    private static String makeResultWord(Boolean result) {
-        if (result) {
-            return "승";
-        }
-        return "패";
     }
 }

@@ -1,10 +1,11 @@
 package controller;
 
-import domain.PlayerAnswer;
-import domain.GameResult;
-import domain.Names;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
+import domain.game.GameResult;
+import domain.game.Moneys;
+import domain.game.Names;
+import domain.game.PlayerAnswer;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -23,12 +24,17 @@ public class Controller {
             drawMoreCards(player);
         }
         drawMoreCards(dealer);
-        passResult(dealer, players);
+        passResult(dealer, players, new GameResult(players, dealer));
     }
 
     private Players createPlayers() {
         Names names = new Names(InputView.requestName());
-        return new Players(names);
+        Moneys moneys = new Moneys();
+        for (String name : names.get()) {
+            OutputView.printMoneyFormat(name);
+            moneys.add(name, InputView.requestMoney());
+        }
+        return new Players(names, moneys);
     }
 
     private void drawFirstCards(Dealer dealer, Players players) {
@@ -59,9 +65,9 @@ public class Controller {
         return playerAnswer.isAgree();
     }
 
-    private void passResult(Dealer dealer, Players players) {
+    private void passResult(Dealer dealer, Players players, GameResult gameResult) {
         OutputView.printStatusWithScore(dealer);
         OutputView.printStatusWithScore(players);
-        OutputView.printGameResult(new GameResult(players, dealer), dealer);
+        OutputView.printGameResult(gameResult, players, dealer);
     }
 }

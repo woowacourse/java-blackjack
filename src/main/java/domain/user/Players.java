@@ -1,8 +1,10 @@
 package domain.user;
 
-import domain.Names;
 import domain.card.CardDeck;
+import domain.game.Moneys;
+import domain.game.Names;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,18 +12,19 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(Names names) {
-        players = names.get()
-                .stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+    public Players(Names names, Moneys moneys) {
+        players = new ArrayList<>();
+        for (String name : names.get()) {
+            Player player = new Player(name, moneys.getValue(name));
+            players.add(player);
+        }
     }
 
     public List<Player> get() {
         return Collections.unmodifiableList(players);
     }
 
-    public void firstDraw(CardDeck cardDeck) {
+    public void firstDraw(final CardDeck cardDeck) {
         for (Player player : players) {
             player.firstDraw(cardDeck);
         }
@@ -33,7 +36,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getName() {
+    public List<String> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
