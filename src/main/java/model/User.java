@@ -1,23 +1,41 @@
 package model;
 
+import exception.IllegalDrawException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static controller.BlackJackGame.*;
 
 public abstract class User {
-    public static final String DELIMITER = ", ";
-
     protected final String name;
     protected final CardHand cardHand;
 
-    public User(String name, Deck deck, int initialDrawCount) {
+    public User(String name, Deck deck) {
         this.name = name;
-        this.cardHand = deck.draw(initialDrawCount);
+        this.cardHand = new CardHand();
+        firstDraw(deck);
     }
 
-    public static int compare(final User dealer, final User player) {
-        return Integer.compare(dealer.getScore(), player.getScore());
+    public User(String name, List<Card> cards) {
+        this.name = name;
+        this.cardHand = new CardHand();
+        cards.forEach(cardHand::addCard);
+    }
+
+    public void firstDraw(Deck deck) {
+        if (!cardHand.isEmpty()) {
+            throw new IllegalDrawException("2장 Draw는 패가 없는 경우에만 가능합니다.");
+        }
+        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
+            cardHand.addCard(deck.draw());
+        }
+    }
+
+    public void additionalDraw(Deck deck) {
+        for (int i = 0; i < ADDITIONAL_DRAW_COUNT; i++) {
+            cardHand.addCard(deck.draw());
+        }
     }
 
     public String toStringCardHand() {
@@ -26,24 +44,32 @@ public abstract class User {
         for (Card card : cardHand) {
             cardNames.add(card.toString());
         }
-        return String.join(DELIMITER, cardNames);
-    }
-
-    public void drawCard(Deck deck, int drawCount) {
-        for (Card drawCard : deck.draw(drawCount)) {
-            this.cardHand.addCard(drawCard);
-        }
+        return String.join(COMMA, cardNames);
     }
 
     public boolean isBust() {
-        return getScore() > BLACK_JACK_COUNT;
+        return cardHand.isBust();
     }
 
+    public boolean isBlackJack() {
+        return cardHand.isBlackJack();
+    }
+
+    public abstract boolean isHitBound();
+
     public int getScore() {
-        return cardHand.calculateScore();
+        return cardHand.getScore();
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isLowerThan(User other) {
+        return this.getScore() < other.getScore();
+    }
+
+    public boolean isSameWith(User other) {
+        return this.getScore() == other.getScore();
     }
 }

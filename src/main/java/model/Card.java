@@ -2,7 +2,7 @@ package model;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
     private final Symbol symbol;
     private final Type type;
 
@@ -15,13 +15,13 @@ public class Card {
         return symbol == Symbol.ACE;
     }
 
+    public int getScore() {
+        return symbol.getScore();
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return symbol == card.symbol &&
-                type == card.type;
+    public String toString() {
+        return symbol.toString() + type.toString();
     }
 
     @Override
@@ -30,11 +30,11 @@ public class Card {
     }
 
     @Override
-    public String toString() {
-        return symbol.toString() + type.toString();
-    }
-
-    public int calculateScore() {
-        return symbol.getScore();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return symbol == card.symbol &&
+                type == card.type;
     }
 }

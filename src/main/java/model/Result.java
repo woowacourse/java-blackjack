@@ -3,63 +3,52 @@ package model;
 import exception.IllegalResultException;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 
 public enum Result {
-    WIN("승", -1),
-    LOSE("패", 1),
-    DRAW("무", 0);
+    BLACKJACK(Constants.BLACK_JACK_RATIO, ((dealer, player) ->
+            !(dealer.isBlackJack()) && player.isBlackJack())
+    ),
+    WIN(Constants.WIN_RATIO, (dealer, player) -> {
+        if (!player.isBust() && !player.isBlackJack()) {
+            return dealer.isBust() || dealer.isLowerThan(player);
+        }
+        return false;
+    }),
+    LOSE(Constants.LOSE_RATIO, (dealer, player) -> {
+        if (!player.isBlackJack()) {
+            return player.isBust()
+                    || (!player.isBust() && !dealer.isBust() && player.isLowerThan(dealer))
+                    || (dealer.isBlackJack() && !player.isBlackJack());
+        }
+        return false;
+    }),
+    DRAW(Constants.DRAW_RATIO, (dealer, player) -> dealer.isBlackJack() && player.isBlackJack()
+            || (!player.isBust() && !dealer.isBust() && player.isSameWith(dealer)));
 
-    String result;
-    int resultValue;
+    private final double ratio;
+    private final BiFunction<Dealer, Player, Boolean> function;
 
-    Result(String result, int resultValue) {
-        this.result = result;
-        this.resultValue = resultValue;
+    Result(double ratio, BiFunction<Dealer, Player, Boolean> function) {
+        this.ratio = ratio;
+        this.function = function;
     }
 
-    @Override
-    public String toString() {
-        return result;
+    public Profit calculateProfit(Player player) {
+        return new Profit(player.getMultiplyBet(ratio));
     }
 
     public static Result compete(Dealer dealer, Player player) {
-        if (dealer.isBust() && player.isBust()) {
-            return DRAW;
-        }
-        if (dealer.isBust()) {
-            return WIN;
-        }
-        if (player.isBust()) {
-            return LOSE;
-        }
-        int compareValue = User.compare(dealer, player);
-        return Arrays.stream(Result.values())
-                .filter(result -> result.isSameResult(compareValue))
-                .findFirst()
+        return Arrays.stream(values())
+                .filter(result -> result.function.apply(dealer, player))
+                .findAny()
                 .orElseThrow(() -> new IllegalResultException("올바른 비교 값이 아닙니다."));
     }
 
-    private boolean isSameResult(int compareValue) {
-        return this.resultValue == compareValue;
+    private static class Constants {
+        public static final double BLACK_JACK_RATIO = 1.5;
+        public static final double WIN_RATIO = 1.0;
+        public static final double LOSE_RATIO = -1.0;
+        public static final double DRAW_RATIO = 0.0;
     }
-
-    public static Result oppositeResult(Result result) {
-        if (isWin(result)) {
-            return LOSE;
-        }
-        if (isLose(result)) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
-    private static boolean isLose(final Result result) {
-        return result == LOSE;
-    }
-
-    private static boolean isWin(final Result result) {
-        return result == WIN;
-    }
-
-
 }

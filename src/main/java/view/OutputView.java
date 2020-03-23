@@ -5,18 +5,25 @@ import model.*;
 import java.util.Map;
 
 import static controller.BlackJackGame.INITIAL_DRAW_COUNT;
-import static controller.BlackJackGame.HIT_BOUNDARY;
+import static controller.BlackJackGame.DEALER_HIT_BOUNDARY;
 import static model.Dealer.DEALER_NAME;
 
 public class OutputView {
     public static final String DELIMITER = ": ";
     public static final String NEW_LINE = "\n";
     public static final String RESULT_STRING = " - 결과: ";
+    private static final String CARD = "카드";
+
+
+    public static void printInitialState(Players players, Dealer dealer) {
+        printInitialCards(players, dealer);
+        printUsersCard(players, dealer);
+    }
 
     public static void printInitialCards(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("\n")
+        stringBuilder.append(NEW_LINE)
                 .append(dealer.getName())
                 .append("와 ")
                 .append(players.getNames())
@@ -32,7 +39,7 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        System.out.print(NEW_LINE + dealer.getName() + DELIMITER + dealer.toStringCardHandFirst());
+        System.out.print(NEW_LINE + dealer.getName() + CARD + DELIMITER + dealer.toStringCardHandFirst());
     }
 
     private static void printPlayersCard(Players players) {
@@ -43,7 +50,7 @@ public class OutputView {
     }
 
     public static void printPlayerCard(User user) {
-        System.out.print(NEW_LINE + user.getName() + DELIMITER + user.toStringCardHand());
+        System.out.print(NEW_LINE + user.getName() + CARD + DELIMITER + user.toStringCardHand());
     }
 
     public static void printDealerDraw(Dealer dealer) {
@@ -52,9 +59,14 @@ public class OutputView {
         stringBuilder.append(NEW_LINE)
                 .append(dealer.getName())
                 .append("는 ")
-                .append(HIT_BOUNDARY)
+                .append(DEALER_HIT_BOUNDARY)
                 .append("이하라 한장의 카드를 더 받았습니다.");
         System.out.println(stringBuilder.toString());
+    }
+
+    public static void printResult(GameResult gameResult, Players players, Dealer dealer) {
+        printFinalCardHandResult(players, dealer);
+        printGameResult(gameResult);
     }
 
     public static void printFinalCardHandResult(final Players players, final Dealer dealer) {
@@ -67,27 +79,24 @@ public class OutputView {
         }
     }
 
-    public static void printResult(final GameResult gameResult) {
-        System.out.println(NEW_LINE + NEW_LINE + "## 최종 승패");
+    public static void printGameResult(final GameResult gameResult) {
+        System.out.println(NEW_LINE + NEW_LINE + "## 최종 수익");
         printDealerResult(gameResult.getDealerResult());
         printPlayersResult(gameResult.getPlayerResult());
     }
 
-    public static void printDealerResult(final Map<Result, Integer> result) {
+    public static void printDealerResult(final Profit result) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(DEALER_NAME)
                 .append(DELIMITER)
-                .append(result.get(Result.WIN))
-                .append("승 ")
-                .append(result.get(Result.LOSE))
-                .append("패");
+                .append((int) result.getProfit());
         System.out.println(stringBuilder.toString());
     }
 
-    private static void printPlayersResult(final Map<Player, Result> result) {
+    private static void printPlayersResult(final Map<Player, Profit> result) {
         for (Player player : result.keySet()) {
             System.out.print(player.getName() + DELIMITER);
-            System.out.println(result.get(player).toString());
+            System.out.println((int) result.get(player).getProfit());
         }
     }
 }

@@ -20,15 +20,20 @@ public class DeckTest {
 
     @Test
     void drawTest() {
-        assertThatThrownBy(() -> deck.draw(DECK_SIZE + 1))
-                .isInstanceOf(EmptyDeckException.class)
-                .hasMessageMatching("53장 이상 draw 할 카드가 존재하지 않습니다.");
+        assertThatThrownBy(() -> {
+            for (int i = 0; i < DECK_SIZE + 1; i++) {
+                deck.draw();
+            }
+        }).isInstanceOf(EmptyDeckException.class)
+                .hasMessageMatching("Deck에 카드가 존재하지 않습니다.");
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void check_CardSize_Test(int count) {
-        deck.draw(count);
+        for (int i = 0; i < count; i++) {
+            deck.draw();
+        }
         assertThat(deck.getCurrentDeckSize()).isEqualTo(DECK_SIZE - count);
     }
 }

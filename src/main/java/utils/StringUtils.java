@@ -6,6 +6,11 @@ import java.util.Objects;
 
 public class StringUtils {
 
+    public static void validateString(String input) {
+        validateNull(input);
+        validateEmpty(input);
+    }
+
     public static void validateEmpty(String input) {
         if (input.trim().isEmpty()) {
             throw new IllegalStringInputException("입력은 한 글자 이상이어야 합니다.");

@@ -4,9 +4,9 @@ import utils.StringUtils;
 
 import java.util.*;
 
-public class PlayerNames implements Iterable<String> {
-    private static final String COMMA = ",";
+import static controller.BlackJackGame.COMMA;
 
+public class PlayerNames implements Iterable<String> {
     private final List<String> names;
 
     public PlayerNames(String input) {
@@ -15,7 +15,7 @@ public class PlayerNames implements Iterable<String> {
     }
 
     private void validate(String input) {
-        StringUtils.validateNull(input);
+        StringUtils.validateString(input);
         validateSplit(input);
     }
 

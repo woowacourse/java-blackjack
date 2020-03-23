@@ -1,20 +1,27 @@
 package model;
 
-import static controller.BlackJackGame.HIT_BOUNDARY;
+import java.util.List;
+
+import static controller.BlackJackGame.DEALER_HIT_BOUNDARY;
 
 public class Dealer extends User {
-    public static final int ZERO = 0;
+    private static final int FIRST = 0;
     public static final String DEALER_NAME = "딜러";
 
-    public Dealer(Deck deck, int initialDrawCount) {
-        super(DEALER_NAME, deck, initialDrawCount);
+    public Dealer(Deck deck) {
+        super(DEALER_NAME, deck);
+    }
+
+    public Dealer(List<Card> cards) {
+        super(DEALER_NAME, cards);
     }
 
     public String toStringCardHandFirst() {
-        return cardHand.getCards().get(ZERO).toString();
+        return cardHand.getCards().get(FIRST).toString();
     }
 
+    @Override
     public boolean isHitBound() {
-        return getScore() <= HIT_BOUNDARY;
+        return getScore() <= DEALER_HIT_BOUNDARY;
     }
 }
