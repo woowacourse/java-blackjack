@@ -5,17 +5,18 @@ import domain.card.Deck;
 import view.InputView;
 import view.OutputView;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
     List<Player> players;
 
-    public Players (List<String> playersName, Deck deck) {
-        List<Player> players = playersName.stream()
-                .map(name -> new Player(deck.getInitCards(), name))
-                .collect(Collectors.toList()) ;
+    public Players(List<Player> players) {
         this.players = players;
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public void receivePlayerCards(Deck deck) {

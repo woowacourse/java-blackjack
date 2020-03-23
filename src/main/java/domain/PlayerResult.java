@@ -1,30 +1,18 @@
 package domain;
 
-import domain.gamer.Dealer;
-import domain.gamer.Player;
-
 public enum PlayerResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACKWIN(1.5),
+    DRAW(0),
+    WIN(1.0),
+    LOSE(-1.0);
 
-    private static final String ERROR = "조건이 아무래도 이상합니다.";
-    private String resultState;
+    private double resultState;
 
-    PlayerResult(String resultState) {
+    PlayerResult(double resultState) {
         this.resultState = resultState;
     }
 
-    public String getResultState() {
+    public double getResultState() {
         return resultState;
-    }
-
-    public static PlayerResult match(Dealer dealer, Player player) {
-        if(!player.isBust() && dealer.isBust() || player.calculateScore() > dealer.calculateScore()) {
-            return PlayerResult.WIN;
-        } else if(!dealer.isBust() && !player.isBust() && player.calculateScore() == dealer.calculateScore()) {
-            return PlayerResult.DRAW;
-        }
-        return PlayerResult.LOSE;
     }
 }

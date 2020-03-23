@@ -18,18 +18,20 @@ class PlayerDtoTest {
 
     @BeforeEach
     void setUp() {
-        PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
-        playerDto = PlayerDto.of(new Player(playingCards, "testName"));
+        PlayingCards playingCards1 = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
+
+        playerDto = PlayerDto.of(new Player("player1", 10000, playingCards1));
     }
 
     @Test
     void of() {
-        assertThat(PlayerDto.of(new Player(new PlayingCards(Collections.emptyList()), "testName"))).isNotNull();
+        PlayingCards playingCards1 = new PlayingCards(Collections.singletonList(new Card(Symbol.QUEEN, Type.CLOVER)));
+        assertThat(PlayerDto.of(new Player("player1", 10000, playingCards1))).isNotNull();
     }
 
     @Test
     void getName() {
-        assertThat(playerDto.getName()).isEqualTo("testName");
+        assertThat(playerDto.getName()).isEqualTo("player1");
     }
 
     @Test

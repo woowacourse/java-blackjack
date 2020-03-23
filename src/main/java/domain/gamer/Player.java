@@ -4,13 +4,14 @@ import domain.card.Deck;
 import domain.card.PlayingCards;
 
 public class Player {
-
-    final PlayingCards playingCards;
     private final String name;
+    private int playerBettingMoney;
+    final PlayingCards playingCards;
 
-    public Player(PlayingCards playingCards, String name) {
-        this.playingCards = playingCards;
+    public Player(String name, int playerBettingMoney, PlayingCards playingCards) {
         this.name = name;
+        this.playerBettingMoney = playerBettingMoney;
+        this.playingCards = playingCards;
     }
 
     public void addCard(Deck deck) {
@@ -35,6 +36,14 @@ public class Player {
 
     public PlayingCards getPlayingCards() {
         return playingCards;
+    }
+
+    int getPlayerBettingMoney() {
+        return playerBettingMoney;
+    }
+
+    boolean isBlackJack() {
+        return playingCards.isBlackJack();
     }
 }
 

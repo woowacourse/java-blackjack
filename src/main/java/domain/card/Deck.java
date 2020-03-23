@@ -44,9 +44,11 @@ public class Deck {
 
     public PlayingCards getInitCards() {
         List<Card> cards = new ArrayList<>();
+
         for (int i = 0; i < INIT_CARDS_SIZE; i++) {
             cards.add(handOutCard());
         }
+
         return new PlayingCards(cards);
     }
 
