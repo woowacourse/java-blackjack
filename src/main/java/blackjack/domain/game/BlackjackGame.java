@@ -6,12 +6,6 @@ import blackjack.domain.user.Player;
 
 import java.util.*;
 
-/**
- * 블랙잭 게임을 진행하는 클래스
- *
- * @author hotheadfactory, chws
- */
-
 public class BlackjackGame {
     public static final int INITIAL_CARDS = 2;
 
@@ -20,6 +14,9 @@ public class BlackjackGame {
     private final Deck deck;
 
     public BlackjackGame(Dealer dealer, List<Player> players, Deck deck) {
+        Objects.requireNonNull(dealer, "dealer가 null일 수 없습니다");
+        Objects.requireNonNull(players, "players가 null일 수 없습니다");
+        Objects.requireNonNull(deck, "deck이 null일 수 없습니다");
         this.dealer = dealer;
         this.players = Collections.unmodifiableList(players);
         this.deck = deck;
@@ -35,29 +32,25 @@ public class BlackjackGame {
     }
 
     public boolean dealerHitsAdditionalCard() {
-        if (dealer.isUnderThreshold()) {
-            dealer.receiveCard(deck.draw());
-            return true;
-        }
-        return false;
+        return dealer.isUnderThreshold();
     }
 
-    public Map<Player, Result> calculateResultsPerPlayer() {
-        Map<Player, Result> totalResult = new LinkedHashMap<>();
-        players.forEach(player -> totalResult.put(player, Result.of(dealer, player)));
-        return totalResult;
+    public void dealerDrawsMoreCard() {
+        dealer.receiveCard(deck.draw());
     }
 
-    public Map<Result, Integer> calculateTotalResultCount() {
-        Map<Result, Integer> playerResult = new HashMap<>();
-        playerResult.put(Result.WIN, 0);
-        playerResult.put(Result.DRAW, 0);
-        playerResult.put(Result.LOSE, 0);
+    public void hitCard(Player player) {
+        player.receiveCard(deck.draw());
+    }
 
-        for (Result r : calculateResultsPerPlayer().values()) {
-            playerResult.put(r, playerResult.get(r) + 1);
-        }
-        return playerResult;
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackJack();
+    }
+
+    public void updateUserMoney() {
+        TotalResult totalResult = new TotalResult(dealer, players);
+        totalResult.getResult().forEach((player, result) -> player.addMoney(player.getProfit(result)));
+        dealer.addMoney(totalResult.calculateDealerProfit());
     }
 
     public List<Player> getPlayers() {
@@ -68,7 +61,7 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public void hitCard(Player player) {
-        player.receiveCard(deck.draw());
+    public TotalResult generateResults() {
+        return new TotalResult(dealer, players);
     }
 }

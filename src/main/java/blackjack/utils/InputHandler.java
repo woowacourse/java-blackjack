@@ -14,11 +14,15 @@ public class InputHandler {
 
     public static List<String> parseName(String input) {
         validateNullOrEmptyName(input);
-        List<String> names = Arrays.asList(input.trim()
-                .replace(SPACE, BLANK)
-                .split(DELIMITER));
+        List<String> names = splitNames(input);
         validateDuplicatedName(names);
         return names;
+    }
+
+    private static List<String> splitNames(String input) {
+        return Arrays.asList(input.trim()
+                .replace(SPACE, BLANK)
+                .split(DELIMITER));
     }
 
     private static void validateNullOrEmptyName(String input) {

@@ -2,13 +2,13 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.Result;
+import blackjack.domain.game.TotalResult;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -17,22 +17,28 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = "\n";
     private static final String COLON = ": ";
-    private static final String WINS = "승 ";
-    private static final String DRAWS = "무 ";
-    private static final String LOSES = "패";
     private static final String DEALER = "딜러";
+    private static final String AND = "와 ";
 
     public static void printInitialCardDistribution(BlackjackGame game) {
         List<Player> players = game.getPlayers();
-        System.out.println(players.stream()
-                .map(User::getName)
-                .collect(Collectors.joining(DELIMITER)) +
+        System.out.println(DEALER + AND + parsePlayerNames(players) +
                 "에게 " + BlackjackGame.INITIAL_CARDS + "장의 카드를 나누었습니다.\n\n" +
-                showInitialCardStatus(game.getDealer()) + "\n" +
+                parseUserInitialCardStatus(game, players)
+        );
+    }
+
+    private static String parsePlayerNames(List<Player> players) {
+        return players.stream()
+                .map(User::getName)
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private static String parseUserInitialCardStatus(BlackjackGame game, List<Player> players) {
+        return showInitialCardStatus(game.getDealer()) + "\n" +
                 players.stream()
                         .map(OutputView::showInitialCardStatus)
-                        .collect(Collectors.joining(NEW_LINE))
-        );
+                        .collect(Collectors.joining(NEW_LINE));
     }
 
     public static void printUserStatus(User user) {
@@ -51,9 +57,9 @@ public class OutputView {
         System.out.println("\n## 결과 : \n" + parseFinalScoreAnnouncement(game) + "\n");
     }
 
-    public static void printFinalResult(Map<Player, Result> totalResult, Map<Result, Integer> resultCount) {
-        System.out.println("## 최종 승패");
-        System.out.println(parseDealerFinalResult(resultCount));
+    public static void printFinalResult(TotalResult totalResult, Money dealerProfit) {
+        System.out.println("## 최종 수익");
+        System.out.println(parseDealerFinalResult(dealerProfit));
         System.out.println(parseAllPlayerResults(totalResult));
     }
 
@@ -75,29 +81,32 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static String showFinalResultPerUsers(User user) {
-        return showCurrentCardStatus(user) + RESULT + user.getTotalScore();
+    private static String showFinalResultPerUser(User user) {
+        return showCurrentCardStatus(user) + RESULT + parseFinalScorePerUser(user.getTotalScore());
+    }
+
+    private static String parseFinalScorePerUser(int totalScore) {
+        if (totalScore == 0) {
+            return "버스트";
+        }
+        return Integer.toString(totalScore);
     }
 
     private static String parseFinalScoreAnnouncement(BlackjackGame game) {
-        return showFinalResultPerUsers(game.getDealer()) + "\n" +
+        return showFinalResultPerUser(game.getDealer()) + "\n" +
                 game.getPlayers().stream()
-                        .map(OutputView::showFinalResultPerUsers)
+                        .map(OutputView::showFinalResultPerUser)
                         .collect(Collectors.joining(NEW_LINE));
     }
 
-    private static String parseAllPlayerResults(Map<Player, Result> totalResult) {
+    private static String parseAllPlayerResults(TotalResult totalResult) {
         StringBuilder sb = new StringBuilder();
-        totalResult.forEach((player, result) ->
-                sb.append(player.getName()).append(COLON).append(result.getName()).append(NEW_LINE));
+        totalResult.getResult().forEach((player, result) ->
+                sb.append(player.getName()).append(COLON).append(player.getProfit(result)).append(NEW_LINE));
         return sb.toString();
     }
 
-    private static String parseDealerFinalResult(Map<Result, Integer> playerResult) {
-        return DEALER + COLON +
-                playerResult.get(Result.LOSE) + WINS +
-                playerResult.get(Result.DRAW) + DRAWS +
-                playerResult.get(Result.WIN) + LOSES +
-                NEW_LINE;
+    private static String parseDealerFinalResult(Money dealerProfit) {
+        return DEALER + COLON + dealerProfit;
     }
 }

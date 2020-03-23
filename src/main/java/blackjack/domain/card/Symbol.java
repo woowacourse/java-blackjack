@@ -11,9 +11,9 @@ public enum Symbol {
     EIGHT(8, "8"),
     NINE(9, "9"),
     TEN(10, "10"),
-    JACK(10, "잭"),
-    QUEEN(10, "퀸"),
-    KING(10, "킹");
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K");
 
     private int score;
     private String name;

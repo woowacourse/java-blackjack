@@ -10,6 +10,10 @@ public class Player extends User {
         super(name);
     }
 
+    public Player(String name, int money) {
+        super(name, money);
+    }
+
     @Override
     public List<Card> getInitialCards() {
         return super.getCards();
