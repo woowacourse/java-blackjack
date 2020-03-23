@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.TestUtils;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
@@ -14,11 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,15 +27,8 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        List<String> names = Arrays.asList("win", "lose", "draw", "blackjack");
-        Map<String, Integer> playerInfo = names.stream()
-                .collect(Collectors.toMap(Function.identity(), name -> 1000,
-                        (e1, e2) -> {
-                            throw new AssertionError("중복된 키가 있습니다.");
-                        },
-                        LinkedHashMap::new));
+        playersInfo = TestUtils.createPlayersInfo(Arrays.asList("win", "lose", "draw", "blackjack"), 1000);
 
-        playersInfo = PlayersInfo.of(playerInfo);
         dealer = Dealer.appoint();
         dealer.draw(new Card(Symbol.SPADE, Type.SIX));
 
