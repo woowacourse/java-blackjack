@@ -14,8 +14,6 @@ import view.dto.UserPrizeDto;
 import view.dto.UserScoreDto;
 
 public class BlackjackGame {
-	private static final int FIRST_DRAW_COUNT = 2;
-
 	public void play() {
 		final Players players = PlayerFactory.create(InputView.inputNames(), InputView::inputBettingMoney);
 		final Dealer dealer = new Dealer();
@@ -30,10 +28,8 @@ public class BlackjackGame {
 	}
 
 	private void drawFirstTime(Players players, Dealer dealer, CardDeck cardDeck) {
-		for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
-			players.draw(cardDeck);
-			dealer.draw(cardDeck);
-		}
+		players.drawFirstTime(cardDeck);
+		dealer.drawFirstTime(cardDeck);
 		OutputView.printInitialDrawResult(players, dealer);
 	}
 

@@ -9,8 +9,8 @@ import domain.card.Card;
 import domain.card.Symbol;
 
 public class Score {
+	public static final int VALID_MAXIMUM_SCORE_VALUE = 21;
 	private static final int VALID_MINIMUM_SCORE_VALUE = 0;
-	private static final int VALID_MAXIMUM_SCORE_VALUE = 21;
 	private static final String OUT_OF_SCORE_VALUE_BOUNDARY_EXCEPTION_MESSAGE = String.format("점수는 %d보다 작을 수 없습니다.%s",
 		VALID_MINIMUM_SCORE_VALUE, System.lineSeparator());
 
@@ -72,6 +72,10 @@ public class Score {
 
 	public boolean isBust() {
 		return score > VALID_MAXIMUM_SCORE_VALUE;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package domain.user;
 
+import static domain.score.Score.*;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -14,8 +17,7 @@ public class Player extends User {
 	private final Money bettingMoney;
 
 	private Player(Name name, Money bettingMoney) {
-		super(name);
-		this.bettingMoney = bettingMoney;
+		this(name, bettingMoney, new Cards(new ArrayList<>()));
 	}
 
 	private Player(Name name, Money bettingMoney, Cards cards) {
@@ -32,14 +34,14 @@ public class Player extends User {
 			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
 	}
 
-	public Prize calculatePlayerPrize(User other) {
+	public Prize calculatePlayerPrize(Dealer other) {
 		MatchResult matchResult = MatchResult.calculatePlayerMatchResult(this, other);
 		return matchResult.calculatePrize(bettingMoney);
 	}
 
 	@Override
 	public boolean isDrawable() {
-		return !isBlackjack() && !isBust() && !cards.isMaximumScore();
+		return !isBlackjack() && calculateScore().isSmallerThan(ofValue(VALID_MAXIMUM_SCORE_VALUE));
 	}
 
 	@Override

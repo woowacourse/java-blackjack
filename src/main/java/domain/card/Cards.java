@@ -29,10 +29,6 @@ public class Cards {
 		return calculateScore().isBust();
 	}
 
-	public boolean isMaximumScore() {
-		return calculateScore().isMaximum();
-	}
-
 	public Score calculateScore() {
 		return Score.calculateTotal(cards);
 	}

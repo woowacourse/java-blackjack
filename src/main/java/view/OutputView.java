@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
-import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -62,7 +61,7 @@ public class OutputView {
 		return card.getSymbolName() + card.getType();
 	}
 
-	private static String parseScore(Score score) {
+	private static String parseScore(int score) {
 		return String.format(RESULT_CARD_SCORE_FORMAT, score);
 	}
 

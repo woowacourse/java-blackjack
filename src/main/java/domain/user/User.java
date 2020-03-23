@@ -1,6 +1,5 @@
 package domain.user;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,16 +9,20 @@ import domain.card.Cards;
 import domain.score.Score;
 
 public abstract class User {
+	private static final int FIRST_DRAW_COUNT = 2;
+
 	protected final Name name;
 	protected final Cards cards;
-
-	public User(Name name) {
-		this(name, new Cards(new ArrayList<>()));
-	}
 
 	public User(Name name, Cards cards) {
 		this.name = Objects.requireNonNull(name);
 		this.cards = Objects.requireNonNull(cards);
+	}
+
+	public void drawFirstTime(CardDeck deck) {
+		for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
+			draw(deck);
+		}
 	}
 
 	public void draw(CardDeck deck) {

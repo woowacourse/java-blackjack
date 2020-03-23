@@ -12,11 +12,11 @@ import domain.user.Player;
 
 public class UserPrizeDto {
 	private final String userName;
-	private final Prize prize;
+	private final int prize;
 
-	public UserPrizeDto(String userName, Prize prize) {
+	public UserPrizeDto(String userName, int prize) {
 		this.userName = Objects.requireNonNull(userName);
-		this.prize = Objects.requireNonNull(prize);
+		this.prize = prize;
 	}
 
 	public static List<UserPrizeDto> createAllUsersDto(GameResult gameResult) {
@@ -29,13 +29,13 @@ public class UserPrizeDto {
 	private static UserPrizeDto calculateDealerPrize(GameResult gameResult) {
 		String dealerName = gameResult.getDealerName();
 		Prize dealerPrize = gameResult.calculateDealerPrize();
-		return new UserPrizeDto(dealerName, dealerPrize);
+		return new UserPrizeDto(dealerName, dealerPrize.getPrize());
 	}
 
 	private static List<UserPrizeDto> calculatePlayerPrizes(GameResult gameResult) {
 		Map<Player, Prize> playerPrizeResult = gameResult.getPlayerPrizeResult();
 		return playerPrizeResult.entrySet().stream()
-			.map(entry -> new UserPrizeDto(entry.getKey().getName(), entry.getValue()))
+			.map(entry -> new UserPrizeDto(entry.getKey().getName(), entry.getValue().getPrize()))
 			.collect(Collectors.toList());
 	}
 
@@ -43,7 +43,7 @@ public class UserPrizeDto {
 		return userName;
 	}
 
-	public Prize getPrize() {
+	public int getPrize() {
 		return prize;
 	}
 }

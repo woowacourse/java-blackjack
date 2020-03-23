@@ -28,6 +28,10 @@ public class Prize {
 		return Prize.valueOf(firstPrize.prize + secondPrize.prize);
 	}
 
+	public int getPrize() {
+		return prize;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

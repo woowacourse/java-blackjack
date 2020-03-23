@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import domain.card.Card;
-import domain.score.Score;
 import domain.user.Dealer;
 import domain.user.Players;
 import domain.user.User;
@@ -15,18 +14,20 @@ import domain.user.User;
 public class UserScoreDto {
 	private static final String PLAYERS_DEALER_NULL_EXCEPTION_MESSAGE = "플레이어들, 딜러는 null이 될 수 없습니다.";
 
-	private final User user;
-	private final Score score;
+	private final String name;
+	private final List<Card> cards;
+	private final int score;
 
-	public UserScoreDto(User user, Score score) {
-		this.user = Objects.requireNonNull(user);
-		this.score = Objects.requireNonNull(score);
+	public UserScoreDto(String name, List<Card> cards, int score) {
+		this.name = name;
+		this.cards = Objects.requireNonNull(cards);
+		this.score = score;
 	}
 
 	public static List<UserScoreDto> createAllUsersDto(Players players, Dealer dealer) {
 		validateNull(players, dealer);
 		return Stream.concat(players.getPlayers().stream(), Stream.of(dealer))
-			.map(user -> new UserScoreDto(user, user.calculateScore()))
+			.map(user -> new UserScoreDto(user.getName(), user.getCards(), user.calculateScore().getScore()))
 			.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
 	}
 
@@ -37,14 +38,14 @@ public class UserScoreDto {
 	}
 
 	public String getName() {
-		return user.getName();
+		return name;
 	}
 
-	public Score getScore() {
+	public int getScore() {
 		return score;
 	}
 
 	public List<Card> getCards() {
-		return user.getCards();
+		return cards;
 	}
 }

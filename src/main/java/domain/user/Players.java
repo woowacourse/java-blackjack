@@ -24,9 +24,9 @@ public class Players implements Iterable<Player> {
 		}
 	}
 
-	public void draw(CardDeck cardDeck) {
+	public void drawFirstTime(CardDeck cardDeck) {
 		for (Player player : players) {
-			player.draw(cardDeck);
+			player.drawFirstTime(cardDeck);
 		}
 	}
 
