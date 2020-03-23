@@ -18,11 +18,16 @@ public class ScoreRule {
     }
 
     private static int incrementAceScore(List<Card> cards, int score) {
-        if (cards.stream().anyMatch(Card::isAce) && score <= MAX_SCORE - ACE_INCREMENT) {
+        if (containsAce(cards) && score <= MAX_SCORE - ACE_INCREMENT) {
             score += ACE_INCREMENT;
         }
         return score;
     }
+
+    private static boolean containsAce(List<Card> cards) {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
 
     public static int calculateTotalScore(List<Card> cards) {
         int score = cards.stream()
