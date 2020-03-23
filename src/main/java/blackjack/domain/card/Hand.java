@@ -66,7 +66,14 @@ public final class Hand {
 		return computeScore().isOver(MAX_SCORE);
 	}
 
-	public Boolean isWin(Hand other) {
+	public boolean isBlackjackWin(Hand other) {
+		return isBlackjack() && !other.isBlackjack();
+	}
+
+	public boolean isWinWithoutBlackjack(Hand other) {
+		if (isBlackjack()) {
+			return false;
+		}
 		if (isBust()) {
 			return false;
 		}
@@ -77,6 +84,9 @@ public final class Hand {
 	}
 
 	public boolean isLose(Hand other) {
+		if (!isBlackjack() && other.isBlackjack()) {
+			return true;
+		}
 		if (isBust()) {
 			return true;
 		}
@@ -84,6 +94,13 @@ public final class Hand {
 			return false;
 		}
 		return computeScore().isUnder(other.computeScore());
+	}
+
+	public Boolean isDraw(Hand other) {
+		if (isBlackjack() ^ other.isBlackjack()) {
+			return false;
+		}
+		return computeScore().equals(other.computeScore());
 	}
 
 	public boolean isUnder(int score) {

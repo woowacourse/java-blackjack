@@ -1,44 +1,32 @@
 package blackjack.domain.result;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.user.Playable;
+import blackjack.domain.result.exceptions.ResultTypeException;
+
+import java.util.Arrays;
+import java.util.function.BiFunction;
 
 public enum ResultType {
-	BLACKJACK_WIN(1.5, "승"),
-	WIN(1, "승"),
-	LOSE(-1, "패"),
-	DRAW(0, "무");
+	BLACKJACK_WIN(1.5, "승", Hand::isBlackjackWin),
+	WIN(1, "승", Hand::isWinWithoutBlackjack),
+	LOSE(-1, "패", Hand::isLose),
+	DRAW(0, "무", Hand::isDraw);
 
 	private final double multiple;
 	private final String result;
+	private final BiFunction<Hand, Hand, Boolean> isTypeOf;
 
-	ResultType(double multiple, String result) {
+	ResultType(double multiple, String result, BiFunction<Hand, Hand, Boolean> isTypeOf) {
 		this.multiple = multiple;
 		this.result = result;
+		this.isTypeOf = isTypeOf;
 	}
 
 	public static ResultType getPlayerResultByDealer(Hand player, Hand dealer) {
-		if (player.isBlackjack()) {
-			return getPlayerResultByDealerIfPlayerIsBlackJack(dealer);
-		}
-		return getPlayerResultByDealerIfPlayerIsNotBlackJack(player, dealer);
-	}
-
-	private static ResultType getPlayerResultByDealerIfPlayerIsBlackJack(Hand dealer) {
-		if (dealer.isBlackjack()) {
-			return DRAW;
-		}
-		return BLACKJACK_WIN;
-	}
-
-	private static ResultType getPlayerResultByDealerIfPlayerIsNotBlackJack(Hand player, Hand dealer) {
-		if (player.isWin(dealer)) {
-			return WIN;
-		}
-		if (player.isLose(dealer)) {
-			return LOSE;
-		}
-		return DRAW;
+		return Arrays.stream(values())
+				.filter(resultType -> resultType.isTypeOf.apply(player, dealer))
+				.findFirst()
+				.orElseThrow(() -> new ResultTypeException("ResultType 값을 찾을 수 없습니다."));
 	}
 
 	public double computeResultAmount(double amount) {
