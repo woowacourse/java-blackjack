@@ -1,4 +1,3 @@
-import domain.gambler.Money;
 import domain.ProfitResult;
 import domain.YesOrNo;
 import domain.card.CardDeck;
@@ -57,7 +56,7 @@ public class BlackJackApplication {
     }
 
     private static void drawMorePlayerCard(CardDeck cardDeck, Player player) {
-        while (player.canHit() && YesOrNo.of(InputView.inputMoreCard(player)) == YesOrNo.YES) {
+        while (player.canHit() && YesOrNo.isYes(InputView.inputMoreCard(player))) {
             player.drawCard(cardDeck);
             OutputView.printUserCards(player, false);
         }

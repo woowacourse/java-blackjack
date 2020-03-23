@@ -1,5 +1,6 @@
 package view;
 
+import domain.YesOrNo;
 import domain.gambler.Name;
 import domain.gambler.Player;
 
@@ -13,9 +14,9 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String inputMoreCard(Player player) {
+    public static YesOrNo inputMoreCard(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        return YesOrNo.of(scanner.nextLine());
     }
 
     public static String inputMoney(Name playerName) {

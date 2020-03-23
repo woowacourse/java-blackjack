@@ -24,4 +24,8 @@ public enum YesOrNo {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_EXCEPTION_MESSAGE));
     }
+
+    public static boolean isYes(YesOrNo input) {
+        return input == YES;
+    }
 }
