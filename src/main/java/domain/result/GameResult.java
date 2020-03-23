@@ -26,7 +26,7 @@ public class GameResult {
 		scores.put(dealer, dealer.getScore());
 		for (Player player : players) {
 			Result result = Result.of(player, dealer);
-			playerToProfit.put(player, new Profit(result.calculate(player.getMoney())));
+			playerToProfit.put(player, player.createProfit(result.getTimes()));
 			scores.put(player, player.getScore());
 		}
 		return new GameResult(playerToProfit, scores);

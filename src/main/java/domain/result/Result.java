@@ -32,6 +32,10 @@ public enum Result {
 		return money.multiply(this.times);
 	}
 
+	public double getTimes() {
+		return times;
+	}
+
 	public String getResult() {
 		return this.result;
 	}
