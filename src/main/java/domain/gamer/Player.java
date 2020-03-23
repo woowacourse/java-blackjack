@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.card.Hands;
+import domain.money.Money;
 
 /**
  *    게임 플레이어 나타내는 클래스입니다.
@@ -8,16 +9,19 @@ import domain.card.Hands;
  *    @author AnHyungJu, ParkDooWon
  */
 public class Player extends Gamer {
-	public Player(String name) {
+	private Money bettingMoney;
+
+	public Player(Name name, Money money) {
 		super(name);
+		bettingMoney = money;
 	}
 
-	public boolean wins(int score) {
-		return (score > Hands.BLACKJACK_SCORE) || ((this.scoreHands() <= Hands.BLACKJACK_SCORE) && (score
-			< this.scoreHands()));
+	@Override
+	public boolean canHit() {
+		return scoreHands() < Hands.BLACKJACK_SCORE;
 	}
 
-	public boolean isPush(int score) {
-		return score <= Hands.BLACKJACK_SCORE && (score == this.scoreHands());
+	public Money getBettingMoney() {
+		return bettingMoney;
 	}
 }

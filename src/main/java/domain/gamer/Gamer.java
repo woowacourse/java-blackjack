@@ -10,21 +10,16 @@ import domain.card.Hands;
  *
  *    @author AnHyungJu, ParkDooWon
  */
-public class Gamer {
-	private String name;
+public abstract class Gamer {
+	private Name name;
 	private Hands hands;
 
-	public Gamer(String name) {
-		validateNullAndEmpty(name);
+	public Gamer(Name name) {
 		this.name = name;
 		this.hands = new Hands();
 	}
 
-	private void validateNullAndEmpty(String name) {
-		if ((name == null) || name.isEmpty()) {
-			throw new IllegalArgumentException("null이나 빈 값이 들어올 수 없습니다.");
-		}
-	}
+	public abstract boolean canHit();
 
 	public void hit(Card card) {
 		hands.add(card);
@@ -42,8 +37,21 @@ public class Gamer {
 		return hands.isBlackjack();
 	}
 
-	public boolean canHit() {
-		return hands.calculateTotalScore() < Hands.BLACKJACK_SCORE;
+	public boolean wins(int score) {
+		return (score > Hands.BLACKJACK_SCORE) || ((this.scoreHands() <= Hands.BLACKJACK_SCORE) && (score
+			< this.scoreHands()));
+	}
+
+	public boolean isPush(int score) {
+		return score <= Hands.BLACKJACK_SCORE && (score == this.scoreHands());
+	}
+
+	@Override
+	public String toString() {
+		return "Gamer{" +
+			"name='" + name + '\'' +
+			", hands=" + hands +
+			'}';
 	}
 
 	@Override
@@ -67,6 +75,6 @@ public class Gamer {
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 }

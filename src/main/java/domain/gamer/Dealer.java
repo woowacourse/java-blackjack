@@ -9,11 +9,11 @@ public class Dealer extends Gamer {
 	private static final int DRAW_CONDITION = 16;
 
 	public Dealer() {
-		super("딜러");
+		super(new Name("딜러"));
 	}
 
 	@Override
 	public boolean canHit() {
-		return super.scoreHands() <= DRAW_CONDITION;
+		return scoreHands() <= DRAW_CONDITION;
 	}
 }

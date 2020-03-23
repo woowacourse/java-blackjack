@@ -1,12 +1,20 @@
 package controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import domain.BlackjackGame;
 import domain.GameResult;
+import domain.HitAnswer;
+import domain.gamer.Name;
 import domain.gamer.Player;
+import domain.gamer.Players;
+import domain.money.Money;
 import view.InputView;
 import view.OutputView;
 import view.dto.BlackjackGameDto;
-import view.dto.PlayerDto;
+import view.dto.GamerDto;
+import view.dto.NameDto;
 
 /**
  *   class controller 클래스입니다.
@@ -14,8 +22,6 @@ import view.dto.PlayerDto;
  *   @author ParkDooWon, AnHyungJu  
  */
 public class Controller {
-	private static final String YES = "Y";
-
 	public static void run() {
 		BlackjackGame blackjackGame = initialize();
 		progress(blackjackGame);
@@ -23,15 +29,45 @@ public class Controller {
 	}
 
 	private static BlackjackGame initialize() {
-		try {
-			BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayersName());
+		BlackjackGame blackjackGame = new BlackjackGame(initializePlayers());
+		blackjackGame.initialDraw();
+		OutputView.printInitial(BlackjackGameDto.from(blackjackGame));
+		return blackjackGame;
+	}
 
-			blackjackGame.initialDraw();
-			OutputView.printInitial(BlackjackGameDto.from(blackjackGame));
-			return blackjackGame;
+	private static Players initializePlayers() {
+		try {
+			List<Name> names = initializeNames();
+			return new Players(initializePlayersBy(names));
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e);
-			return initialize();
+			return initializePlayers();
+		}
+	}
+
+	private static List<Name> initializeNames() {
+		try {
+			return InputView.inputPlayersName().stream()
+				.map(Name::new)
+				.collect(Collectors.toList());
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return initializeNames();
+		}
+	}
+
+	private static List<Player> initializePlayersBy(List<Name> names) {
+		return names.stream()
+			.map(name -> new Player(name, askBettingMoney(name)))
+			.collect(Collectors.toList());
+	}
+
+	private static Money askBettingMoney(Name name) {
+		try {
+			return Money.of(InputView.inputBettingMoney(NameDto.from(name)));
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return askBettingMoney(name);
 		}
 	}
 
@@ -57,7 +93,7 @@ public class Controller {
 
 		while (blackjackGame.getDealer().canHit()) {
 			OutputView.printDealerDraw();
-			blackjackGame.drawDealer();
+			blackjackGame.draw(blackjackGame.getDealer());
 		}
 	}
 
@@ -67,15 +103,25 @@ public class Controller {
 		}
 		while (isContinue(player)) {
 			blackjackGame.draw(player);
-			OutputView.printCards(PlayerDto.from(player));
+			OutputView.printCards(GamerDto.from(player));
 		}
 	}
 
 	private static boolean isContinue(Player player) {
-		return player.canHit() && YES.equalsIgnoreCase(InputView.inputMoreCard(PlayerDto.from(player)));
+		return player.canHit() && inputHitAnswer(player).isYes();
+	}
+
+	private static HitAnswer inputHitAnswer(Player player) {
+		try {
+			return HitAnswer.of(InputView.inputMoreCard(GamerDto.from(player)));
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e);
+			return inputHitAnswer(player);
+		}
 	}
 
 	private static void end(BlackjackGame blackjackGame) {
+		OutputView.printCardsResult(BlackjackGameDto.from(blackjackGame));
 		OutputView.printGameResult(GameResult.of(blackjackGame));
 	}
 }
