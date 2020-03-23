@@ -3,10 +3,9 @@ package blackjack.domain.user;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.user.exceptions.PlayersException;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public final class Players {
 	private final List<Playable> players;
@@ -37,7 +36,7 @@ public final class Players {
 	public static Players of(List<String> playerNames, List<String> monies) {
 		List<Playable> players = new ArrayList<>();
 		for (int i = 0; i < playerNames.size(); i++) {
-			players.add(Player.of(playerNames.get(i), monies.get(i)));
+			players.add(new Player(new Name(playerNames.get(i)), Money.of(monies.get(i))));
 		}
 
 		return new Players(players);

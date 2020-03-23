@@ -9,7 +9,7 @@ import java.util.List;
 public final class Player extends AbstractPlayer {
 	private final Money money;
 
-	private Player(Name name, Money money) {
+	public Player(Name name, Money money) {
 		super(name);
 		this.money = money;
 		validateNameIsDifferentFromDealer(name);
@@ -21,25 +21,17 @@ public final class Player extends AbstractPlayer {
 		}
 	}
 
-	public static Player of(String name, String money) {
-		return new Player(new Name(name), Money.of(money));
-	}
-
-	public Money computeResultMoney(ResultType resultType) {
-		return money.computeResultingAmount(resultType);
-	}
-
 	public Money getMoney() {
 		return money;
 	}
 
 	@Override
-	public List<Card> getStartHand() {
-		return getHand().getHand();
+	public boolean canReceiveCard() {
+		return !getHand().isBust();
 	}
 
 	@Override
-	public boolean canReceiveCard() {
-		return !getHand().isBust();
+	public List<Card> getStartHand() {
+		return getHand().getHand();
 	}
 }
