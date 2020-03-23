@@ -23,11 +23,29 @@ class MoneyResultTest {
         CARDS_22_BUSTED.forEach(jason::draw);
 
         Participants participants = new Participants(dealer, pobi, jason);
-        MoneyChanger moneyChanger = new MoneyChanger(participants);
-        moneyChanger.receive(pobi, "1000");
-        moneyChanger.receive(jason, "1500");
-        MoneyResult result = new MoneyResult(participants, moneyChanger);
+        pobi.bet("1000");
+        jason.bet("1500");
+        MoneyResult result = new MoneyResult(participants);
         String expectedToString = "딜러: 2500\npobi: -1000\njason: -1500";
+        assertThat(result).hasToString(expectedToString);
+    }
+
+    @DisplayName("블랙잭으로 우승할 때 결과 테스트")
+    @Test
+    void playerBlackJackTest() {
+        Dealer dealer = new Dealer();
+        Player pobi = new Player("pobi");
+        Player jason = new Player("jason");
+
+        CARDS_8.forEach(dealer::draw);
+        CARDS_21_ACE_AS_ELEVEN.forEach(pobi::draw);
+        CARDS_22_BUSTED.forEach(jason::draw);
+
+        Participants participants = new Participants(dealer, pobi, jason);
+        pobi.bet("1000");
+        jason.bet("1500");
+        MoneyResult result = new MoneyResult(participants);
+        String expectedToString = "딜러: 0\npobi: 1500\njason: -1500";
         assertThat(result).hasToString(expectedToString);
     }
 }

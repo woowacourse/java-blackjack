@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.participants.Participant;
@@ -11,14 +9,8 @@ import blackjack.domain.rule.BasicRule;
 
 public class MoneyResult extends Result {
 
-    private MoneyChanger moneyChanger;
-    private Map<Participant, Money> moneyResult;
-
-    public MoneyResult(final Participants participants, MoneyChanger moneyChanger) {
+    public MoneyResult(final Participants participants) {
         super(participants);
-        this.moneyChanger = moneyChanger;
-        this.moneyResult = new HashMap<>();
-        this.moneyResult.put(dealer, Money.zero());
         for (Participant player : players) {
             decideWinner(player);
         }
@@ -26,39 +18,32 @@ public class MoneyResult extends Result {
 
     @Override
     protected void execute(final Participant player, final Status playerStatus) {
-        Money playerMoney = moneyChanger.get(player);
-        Money dealerMoney = moneyResult.getOrDefault(dealer, Money.zero());
+        Money playerMoney = player.getMoney();
         if (playerStatus == Status.LOSE) {
-            moneyResult.put(player, playerMoney.getOpposite());
-            moneyResult.put(dealer, dealerMoney.add(playerMoney));
-        }
-        if (playerStatus == Status.DRAW) {
-            moneyResult.put(player, Money.zero());
-        }
-        if (playerStatus == Status.WIN) {
-            handleBlackJack(player, playerMoney, dealerMoney);
+            dealer.earn(playerMoney);
+            player.loseAll();
+        } else if (playerStatus == Status.DRAW) {
+            player.lose(playerMoney);
+        } else if (playerStatus == Status.WIN) {
+            handleBlackJack(player, playerMoney);
         }
     }
 
-    private void handleBlackJack(final Participant player, final Money playerMoney, final Money dealerMoney) {
+    private void handleBlackJack(final Participant player, final Money playerMoney) {
         if (BasicRule.isBlackJack(player.score(), player.cardCount())) {
-            Money playerPrize = playerMoney.multiply(BasicRule.BLACK_JACK_EARNING);
-            moneyResult.put(player, playerPrize);
-            moneyResult.put(dealer, dealerMoney.subtract(playerPrize));
-            return;
+            player.earn(playerMoney.multiply(BasicRule.BLACK_JACK_PROFIT));
         }
-        moneyResult.put(player, playerMoney);
-        moneyResult.put(dealer, dealerMoney.subtract(playerMoney));
+        dealer.lose(player.getMoney());
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(dealer.getName()).append(": ");
-        stringBuilder.append(moneyResult.get(dealer));
+        stringBuilder.append(dealer.getMoney());
         stringBuilder.append(LINE_BREAK);
         stringBuilder.append(players.stream()
-            .map(player -> player.getName() + ": " + moneyResult.get(player))
+            .map(player -> player.getName() + ": " + player.getMoney())
             .collect(Collectors.joining(LINE_BREAK)));
         return stringBuilder.toString();
     }

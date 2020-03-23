@@ -7,7 +7,6 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.result.MoneyChanger;
 import blackjack.domain.result.MoneyResult;
 import blackjack.domain.rule.BasicRule;
 import blackjack.exceptions.InvalidMoneyException;
@@ -20,7 +19,6 @@ public class BlackJack {
     private final Deck deck;
     private final Dealer dealer;
     private Participants participants;
-    private MoneyChanger moneyChanger;
 
     private BlackJack() {
         this.deck = Deck.create();
@@ -34,7 +32,6 @@ public class BlackJack {
     private void play() {
         OutputView.nameInstruction();
         this.participants = getParticipants();
-        this.moneyChanger = new MoneyChanger(participants);
         bettingPhase();
         initialPhase();
         userGamePhase();
@@ -60,7 +57,7 @@ public class BlackJack {
     private void betMoney(final Participant participant) {
         try {
             OutputView.moneyInstruction(participant);
-            moneyChanger.receive(participant, InputView.getInput());
+            participant.bet(InputView.getInput());
         } catch (InvalidMoneyException e) {
             OutputView.printError(e.getMessage());
             betMoney(participant);
@@ -112,6 +109,6 @@ public class BlackJack {
 
     private void endPhase() {
         OutputView.result(participants);
-        OutputView.statistics(new MoneyResult(participants, moneyChanger));
+        OutputView.statistics(new MoneyResult(participants));
     }
 }

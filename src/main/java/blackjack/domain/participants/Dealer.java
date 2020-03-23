@@ -2,14 +2,17 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participants.money.Money;
 
 public class Dealer implements Participant {
     public static final int DEALER_DRAW_CRITERIA = 17;
 
     private Cards cards;
+    private Money money;
 
     public Dealer() {
         this.cards = new Cards();
+        this.money = Money.zero();
     }
 
     public int addedCardCount() {
@@ -60,5 +63,31 @@ public class Dealer implements Participant {
     @Override
     public String cards() {
         return cards.toString();
+    }
+
+    @Override
+    public void bet(final String amount) {
+        this.money = Money.create(amount);
+
+    }
+
+    @Override
+    public void earn(final Money money) {
+        this.money = this.money.add(money);
+    }
+
+    @Override
+    public void lose(final Money money) {
+        this.money = this.money.subtract(money);
+    }
+
+    @Override
+    public void loseAll() {
+        money = money.getOpposite();
+    }
+
+    @Override
+    public Money getMoney() {
+        return money;
     }
 }
