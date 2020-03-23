@@ -21,7 +21,8 @@ public class CardDeckTest {
         for (int i = 0; i < 52; i++) {
             cardDeck.draw();
         }
-        assertThatThrownBy(cardDeck::draw).isInstanceOf(IndexOutOfBoundsException.class)
+        assertThatThrownBy(cardDeck::draw)
+            .isInstanceOf(IndexOutOfBoundsException.class)
             .hasMessageContaining("남아있지");
     }
 }

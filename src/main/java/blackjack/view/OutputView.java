@@ -1,81 +1,74 @@
 package blackjack.view;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
+import blackjack.domain.player.Player;
 import blackjack.domain.result.CardsResult;
-import blackjack.domain.result.Outcome;
-import blackjack.domain.result.ParticipantsResult;
-import blackjack.domain.user.Participants;
-import blackjack.domain.user.User;
+import blackjack.domain.result.GameResult;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    public static void printCardDistribution(Participants participants) {
+    public static void printCardDistribution(Dealer dealer, Gamblers gamblers) {
         System.out.println();
-        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다."
-            , participants.getDealerName()
-            , String.join(", ", participants.getPlayerNames()));
+        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(),
+            String.join(", ", gamblers.getGamblesNames()));
         System.out.println();
     }
 
-    public static void printUsersCards(Participants participants) {
-        User dealer = participants.getDealer();
-        System.out.printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstCardInfo()));
+    public static void printUsersCards(Dealer dealer, Gamblers gamblers) {
+        System.out
+            .printf("%s: %s", dealer.getName(), String.join(",", dealer.getFirstTimeCardsInfo()));
         System.out.println();
-        for (User player : participants.getPlayers()) {
-            printPlayerCards(player);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            System.out.println(getPlayerCardsInfos(gambler, gambler.getFirstTimeCardsInfo()));
         }
         System.out.println();
     }
 
-    public static void printPlayerCards(User player) {
-        System.out.println(getUserCards(player));
+    private static <T extends Player> String getPlayerCardsInfos(T player,
+        List<String> cardsInfos) {
+        return String.format("%s: %s", player.getName(), String.join(", ", cardsInfos));
     }
 
-    private static String getUserCards(User user) {
-        return String.format("%s: %s", user.getName()
-            , String.join(", ", user.getCardsInfos()));
+    public static void printGamblerCards(Gambler gambler) {
+        System.out.println(getPlayerCardsInfos(gambler, gambler.getCardsInfos()));
     }
 
-    public static void printDealerOneMoreCard(User dealer) {
+    public static void printDealerOneMoreCard(Dealer dealer) {
         System.out.println();
         System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.", dealer.getName());
         System.out.println();
     }
 
-    public static void printUsersCardsAndScore(Participants participants) {
+    public static void printCardsInfosAndResult(Dealer dealer, Gamblers gamblers) {
         System.out.println();
-        for (User user : participants.getParticipants()) {
-            printUserCardsAndScore(user);
+        printPlayerCardsInfosAndResult(dealer);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            printPlayerCardsInfosAndResult(gambler);
         }
     }
 
-    public static void printUserCardsAndScore(User user) {
-        CardsResult userCardsResult = user.getScore();
-        System.out.printf("%s - 결과: %s", getUserCards(user), userCardsResult.getResult());
+    private static <T extends Player> void printPlayerCardsInfosAndResult(T player) {
+        CardsResult playerResult = player.getCardsResult();
+        System.out.printf("%s - 결과: %s", getPlayerCardsInfos(player, player.getCardsInfos()),
+            playerResult.getResult());
         System.out.println();
     }
 
-    public static void printFinalResult(Participants participants,
-        ParticipantsResult participantsResult) {
+    public static void printFinalResult(GameResult gameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        printDealerFinalResult(participants.getDealer(),
-            participantsResult.getDealerResultsNoZero());
-        printPlayerFinalResult(participantsResult.getPlayersResult());
+        printFinalResultByNameAndResult(gameResult.getDealerResult());
+        printFinalResultByNameAndResult(gameResult.getGamblerResults());
     }
 
-    private static void printDealerFinalResult(User dealer, Map<Outcome, Integer> gameResult) {
-        System.out.printf("%s: ", dealer.getName());
-        for (Outcome outcome : gameResult.keySet()) {
-            System.out.print(gameResult.get(outcome) + outcome.getConverseName() + " ");
-        }
-        System.out.println();
-    }
-
-    private static void printPlayerFinalResult(Map<User, Outcome> playersResult) {
-        for (User player : playersResult.keySet()) {
-            Outcome outcome = playersResult.get(player);
-            System.out.printf("%s: %s", player.getName(), outcome.getName());
+    private static <T extends Player> void printFinalResultByNameAndResult(
+        Map<T, Integer> playersResults) {
+        for (T player : playersResults.keySet()) {
+            System.out.printf("%s: %s", player.getName(), playersResults.get(player));
             System.out.println();
         }
     }
