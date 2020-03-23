@@ -1,42 +1,51 @@
 package domain.user;
 
+import static domain.score.Score.*;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
 import domain.result.MatchResult;
+import domain.result.Prize;
 
 public class Player extends User {
 	private static final int FIRST_SHOW_SIZE = 2;
 
-	private Player(Name name) {
-		super(name);
+	private final Money bettingMoney;
+
+	private Player(Name name, Money bettingMoney) {
+		this(name, bettingMoney, new Cards(new ArrayList<>()));
 	}
 
-	private Player(Name name, Cards cards) {
+	private Player(Name name, Money bettingMoney, Cards cards) {
 		super(name, cards);
+		this.bettingMoney = bettingMoney;
 	}
 
-	public static Player valueOf(String name) {
-		return new Player(new Name(name));
+	public static Player fromNameAndMoney(String name, int bettingMoney) {
+		return new Player(new Name(name), Money.valueOf(bettingMoney));
 	}
 
-	public static Player fromNameAndCards(String name, Card... cards) {
-		return new Player(new Name(name), new Cards(Arrays.asList(Objects.requireNonNull(cards))));
+	public static Player fromNameAndMoneyAndCards(String name, int bettingMoney, Card... cards) {
+		return new Player(new Name(name), Money.valueOf(bettingMoney),
+			new Cards(Arrays.asList(Objects.requireNonNull(cards))));
+	}
+
+	public Prize calculatePlayerPrize(Dealer other) {
+		MatchResult matchResult = MatchResult.calculatePlayerMatchResult(this, other);
+		return matchResult.calculatePrize(bettingMoney);
 	}
 
 	@Override
 	public boolean isDrawable() {
-		return !isBlackjack() && !isBust();
-	}
-
-	public MatchResult calculateMatchResult(Dealer dealer) {
-		return MatchResult.calculatePlayerMatchResult(this, Objects.requireNonNull(dealer));
+		return !isBlackjack() && calculateScore().isSmallerThan(ofValue(VALID_MAXIMUM_SCORE_VALUE));
 	}
 
 	@Override
-	protected int getFirstShowCardSize() {
+	public int getFirstShowCardSize() {
 		return FIRST_SHOW_SIZE;
 	}
 

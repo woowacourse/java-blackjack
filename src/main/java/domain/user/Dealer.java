@@ -1,17 +1,19 @@
 package domain.user;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.score.Score;
 
 public class Dealer extends User {
-	private static final int MAXIMUM_DRAWABLE_SCORE = 16;
+	private static final int MINIMUM_NOT_DRAWABLE_SCORE = 17;
 	private static final int FIRST_SHOW_SIZE = 1;
 
 	public Dealer() {
-		super(Name.ofDealer());
+		this(Name.ofDealer(), new Cards(new ArrayList<>()));
 	}
 
 	private Dealer(Name name, Cards cards) {
@@ -24,11 +26,11 @@ public class Dealer extends User {
 
 	@Override
 	public boolean isDrawable() {
-		return cards.calculateScore() <= MAXIMUM_DRAWABLE_SCORE;
+		return calculateScore().isSmallerThan(Score.ofValue(MINIMUM_NOT_DRAWABLE_SCORE));
 	}
 
 	@Override
-	protected int getFirstShowCardSize() {
+	public int getFirstShowCardSize() {
 		return FIRST_SHOW_SIZE;
 	}
 }

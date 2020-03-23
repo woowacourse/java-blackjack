@@ -7,8 +7,12 @@ public class Card {
 	private final Symbol symbol;
 
 	public Card(Type type, Symbol symbol) {
-		this.type = type;
-		this.symbol = symbol;
+		this.type = Objects.requireNonNull(type);
+		this.symbol = Objects.requireNonNull(symbol);
+	}
+
+	public static Card of(Type type, Symbol symbol) {
+		return new Card(type, symbol);
 	}
 
 	public String getSymbolName() {
@@ -43,5 +47,13 @@ public class Card {
 	@Override
 	public int hashCode() {
 		return Objects.hash(type, symbol);
+	}
+
+	@Override
+	public String toString() {
+		return "Card{" +
+			"type=" + type +
+			", symbol=" + symbol +
+			'}';
 	}
 }

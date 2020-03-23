@@ -3,10 +3,10 @@ package domain.card;
 import java.util.Arrays;
 
 public enum Symbol {
-	ACE("1", 1, 10),
-	TWO("2", 2, 0),
-	THREE("3", 3, 0),
-	FOUR("4", 4, 0),
+	ACE("A", 1, 10),
+	TWO("2", 2),
+	THREE("3", 3),
+	FOUR("4", 4),
 	FIVE("5", 5),
 	SIX("6", 6),
 	SEVEN("7", 7),
