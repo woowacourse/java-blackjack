@@ -25,8 +25,10 @@ public class InputView {
 
 	public static List<String> inputMoney(List<Name> names) {
 		List<String> bettingMoney = new ArrayList<>();
+		StringBuilder sb = new StringBuilder();
 		for (Name name : names) {
-			System.out.println(name.getName() + "의 배팅 금액은?");
+			sb.append(name.getName())
+				.append("의 배팅 금액은?");
 			bettingMoney.add(scanner.nextLine());
 		}
 		return bettingMoney;
