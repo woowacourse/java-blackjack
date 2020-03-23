@@ -41,7 +41,7 @@ public class PlayerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = new Player(new Name("그니"), Money.of("1000"));
+		player = Player.of(new Name("그니"), Money.of("1000"));
 	}
 
 	@DisplayName("of()가 인스턴스를 반환하는지 테스트")
@@ -53,7 +53,7 @@ public class PlayerTest {
 	@DisplayName("of()가 딜러 이름일 경우 예외를 던지는지 테스트")
 	@Test
 	void of_HasDealerName_ThrowPlayerException() {
-		assertThatThrownBy(() -> new Player(new Name("딜러"), Money.of("1000")))
+		assertThatThrownBy(() -> Player.of(new Name("딜러"), Money.of("1000")))
 				.isInstanceOf(PlayerException.class);
 	}
 

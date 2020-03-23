@@ -36,7 +36,7 @@ public final class Players {
 	public static Players of(List<String> playerNames, List<String> monies) {
 		List<Playable> players = new ArrayList<>();
 		for (int i = 0; i < playerNames.size(); i++) {
-			players.add(new Player(new Name(playerNames.get(i)), Money.of(monies.get(i))));
+			players.add(Player.of(new Name(playerNames.get(i)), Money.of(monies.get(i))));
 		}
 
 		return new Players(players);

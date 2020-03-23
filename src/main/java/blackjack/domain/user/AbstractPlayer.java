@@ -7,14 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractPlayer implements Playable {
-	protected static final int MAX_SCORE = 21;
-
 	private final Name name;
 	private final Hand hand;
-
-	protected AbstractPlayer(Name name) {
-		this(name, new Hand());
-	}
 
 	protected AbstractPlayer(Name name, Hand hand) {
 		this.name = name;
