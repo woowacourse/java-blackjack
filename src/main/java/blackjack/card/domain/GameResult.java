@@ -2,32 +2,36 @@ package blackjack.card.domain;
 
 import java.util.Arrays;
 
+import blackjack.card.domain.resultstrategy.DrawStrategy;
+import blackjack.card.domain.resultstrategy.GamblerBlackJackWinStrategy;
+import blackjack.card.domain.resultstrategy.GamblerLoseStrategy;
+import blackjack.card.domain.resultstrategy.GamblerWinStrategy;
+import blackjack.card.domain.resultstrategy.GameResultStrategy;
+
 public enum GameResult {
-	WIN(1, "승"),
-	DRAW(0, "무"),
-	LOSE(-1, "패");
+	BLACKJACK_WIN(new GamblerBlackJackWinStrategy(), 1.5d),
+	WIN(new GamblerWinStrategy(), 1.0d),
+	DRAW(new DrawStrategy(), 0d),
+	LOSE(new GamblerLoseStrategy(), -1d);
 
-	private final int result;
-	private final String message;
+	private final GameResultStrategy gameResultStrategy;
+	private final Double rate;
 
-	GameResult(int result, String message) {
-		this.result = result;
-		this.message = message;
+	GameResult(GameResultStrategy gameResultStrategy, Double rate) {
+		this.gameResultStrategy = gameResultStrategy;
+		this.rate = rate;
 	}
 
-	private static GameResult findByResult(int result) {
+	public static GameResult createGameResult(CardBundle dealerCardBundle, CardBundle gamblerCardBundle) {
 		return Arrays.stream(values())
-			.filter(gameResult -> gameResult.result == result)
+			.filter(gameResult -> gameResult.gameResultStrategy.isResult(dealerCardBundle, gamblerCardBundle))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException(String.format("%d 는 존재하지 않는 결과 값 입니다.", result)));
+			.orElseThrow(() -> new IllegalArgumentException("승패가 지정되지 않았습니다."));
 	}
 
-	public static GameResult createGameResult(int gamblerScore, int dealerScore) {
-		int compare = Integer.compare(gamblerScore, dealerScore);
-		return findByResult(compare);
-	}
-
-	public String getMessage() {
-		return message;
+	public double getRate() {
+		return rate;
 	}
 }
+
+

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CardBundle {
+	private static final int STARTING_CARD_COUNT = 2;
 	private static final int ACE_WEIGHT = 10;
 	private static final int BLACKJACK_MAXIMUM_VALUE = 21;
 	private final List<Card> cards = new ArrayList<>();
@@ -15,13 +16,7 @@ public class CardBundle {
 	}
 
 	public GameResult calculateWinOrLose(CardBundle gamblerCardBundle) {
-		if (gamblerCardBundle.isBurst()) {
-			return GameResult.LOSE;
-		}
-		if (isBurst()) {
-			return GameResult.WIN;
-		}
-		return GameResult.createGameResult(gamblerCardBundle.calculateScore(), this.calculateScore());
+		return GameResult.createGameResult(this, gamblerCardBundle);
 	}
 
 	public int calculateScore() {
@@ -44,7 +39,8 @@ public class CardBundle {
 	}
 
 	public boolean isBlackjack() {
-		return cards.size() == 2 && calculateScore() == BLACKJACK_MAXIMUM_VALUE;
+		return cards.size() == STARTING_CARD_COUNT
+			&& calculateScore() == BLACKJACK_MAXIMUM_VALUE;
 	}
 
 	private boolean hasAce() {
@@ -52,7 +48,7 @@ public class CardBundle {
 			.anyMatch(Card::isAce);
 	}
 
-	private boolean isBurst() {
+	public boolean isBurst() {
 		return calculateScore() > BLACKJACK_MAXIMUM_VALUE;
 	}
 
@@ -62,6 +58,10 @@ public class CardBundle {
 
 	public boolean isNotBurst() {
 		return !isBurst();
+	}
+
+	public boolean isSameScore(CardBundle other) {
+		return this.calculateScore() == other.calculateScore();
 	}
 
 	@Override
@@ -81,5 +81,9 @@ public class CardBundle {
 
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
+	}
+
+	public boolean isSameCount(int startingCards) {
+		return startingCards == cards.size();
 	}
 }

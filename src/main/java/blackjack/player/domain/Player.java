@@ -2,41 +2,28 @@ package blackjack.player.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import blackjack.card.domain.Card;
 import blackjack.card.domain.CardBundle;
-import blackjack.player.domain.report.GameReport;
 
 public abstract class Player {
-	protected final String name;
+	private static final int STARTING_CARDS = 2;
 	protected final CardBundle cardBundle;
+	protected final String name;
 
 	public Player(CardBundle cardBundle, String name) {
-		validate(cardBundle, name);
+		Objects.requireNonNull(cardBundle, "카드번들이 존재하지 않습니다.");
+		validateName(name);
 		this.cardBundle = cardBundle;
 		this.name = name;
 	}
 
-	private void validate(CardBundle cardBundle, String name) {
-		checkCardBundle(cardBundle);
-		checkName(name);
-	}
-
-	private void checkName(String name) {
+	private void validateName(String name) {
 		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("플레이어의 이름이 존재하지 않습니다.");
+			throw new IllegalArgumentException("이름의 입력이 없습니다.");
 		}
-	}
-
-	private void checkCardBundle(CardBundle cardBundle) {
-		if (cardBundle == null) {
-			throw new IllegalArgumentException("카드번들이 존재하지 않습니다.");
-		}
-	}
-
-	public String getName() {
-		return this.name;
 	}
 
 	public void addCard(Card card) {
@@ -61,10 +48,6 @@ public abstract class Player {
 		return cardBundle.isBlackjack();
 	}
 
-	public boolean isNotBlackjack() {
-		return !isBlackjack();
-	}
-
 	public boolean isDealer() {
 		return this instanceof Dealer;
 	}
@@ -73,15 +56,21 @@ public abstract class Player {
 		return this instanceof Gambler;
 	}
 
-	public abstract boolean isHit();
-
-	public abstract GameReport createReport(Player player);
-
-	public List<Card> getCardBundle() {
-		return Collections.unmodifiableList(this.cardBundle.getCards());
+	public boolean hasStatingCards() {
+		return cardBundle.isSameCount(STARTING_CARDS);
 	}
 
 	public int getScore() {
 		return cardBundle.calculateScore();
+	}
+
+	public abstract boolean isHit();
+
+	public String getName() {
+		return name;
+	}
+
+	public List<Card> getCardBundle() {
+		return Collections.unmodifiableList(this.cardBundle.getCards());
 	}
 }

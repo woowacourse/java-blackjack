@@ -3,52 +3,22 @@ package blackjack.player.domain.report;
 import java.util.Objects;
 
 import blackjack.card.domain.GameResult;
+import blackjack.player.domain.Gambler;
+import blackjack.player.domain.Money;
 
 public class GameReport {
-	private final String name;
+	private final Gambler gambler;
 	private final GameResult gameResult;
 
-	public GameReport(String name, GameResult gameResult) {
-		validate(name, gameResult);
-		this.name = name;
+	public GameReport(Gambler gambler, GameResult gameResult) {
+		Objects.requireNonNull(gambler, "플레이어 정보가 없습니다.");
+		Objects.requireNonNull(gameResult, "결과 정보가 없습니다.");
+		this.gambler = gambler;
 		this.gameResult = gameResult;
 	}
 
-	private void validate(String name, GameResult gameResult) {
-		checkName(name);
-		checkGameResult(gameResult);
-	}
-
-	private void checkGameResult(GameResult gameResult) {
-		if (gameResult == null) {
-			throw new IllegalArgumentException("GameResult가 존재하지 유효하지 않습니다.");
-		}
-	}
-
-	private void checkName(String name) {
-		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("비어있는 이름을 사용했습니다.");
-		}
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getMessage() {
-		return gameResult.getMessage();
-	}
-
-	public boolean isWin() {
-		return this.gameResult == GameResult.WIN;
-	}
-
-	public boolean isDraw() {
-		return this.gameResult == GameResult.DRAW;
-	}
-
-	public boolean isLose() {
-		return this.gameResult == GameResult.LOSE;
+	public Money calculateGamblerProfit() {
+		return gambler.calculateProfit(gameResult.getRate());
 	}
 
 	@Override
@@ -58,12 +28,16 @@ public class GameReport {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		GameReport that = (GameReport)o;
-		return Objects.equals(name, that.name) &&
+		return Objects.equals(gambler, that.gambler) &&
 			gameResult == that.gameResult;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, gameResult);
+		return Objects.hash(gambler, gameResult);
+	}
+
+	public Gambler getGambler() {
+		return gambler;
 	}
 }

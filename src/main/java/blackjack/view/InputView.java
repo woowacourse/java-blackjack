@@ -1,21 +1,31 @@
 package blackjack.view;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
 import blackjack.player.domain.Player;
 import blackjack.view.dto.DrawRequestDTO;
-import blackjack.view.dto.NamesDTO;
-
-import java.util.Scanner;
 
 public class InputView {
+	private static final String DELIMITER = ",";
 	private final Scanner scanner;
 
 	public InputView(Scanner scanner) {
 		this.scanner = scanner;
 	}
 
-	public NamesDTO inputPlayNames() {
+	public List<String> inputPlayNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-		return new NamesDTO(this.scanner.nextLine());
+		return Arrays.stream(scanner.nextLine()
+			.split(DELIMITER))
+			.collect(Collectors.toList());
+	}
+
+	public String inputBettingMoney(String name) {
+		System.out.println(String.format("%s의 배팅 금액은?", name));
+		return scanner.nextLine();
 	}
 
 	public DrawRequestDTO inputDrawRequest(Player player) {

@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import blackjack.player.domain.Money;
+
 public class GameReports {
 	private final List<GameReport> gameReports;
 
@@ -18,26 +20,12 @@ public class GameReports {
 		}
 	}
 
-	public int getGamblerWinCount() {
-		return (int)gameReports.stream()
-			.filter(GameReport::isWin)
-			.count();
-	}
+	public Money calculateDealerProfit() {
+		Money gamblerTotalProfit = gameReports.stream()
+			.map(GameReport::calculateGamblerProfit)
+			.reduce(Money.create(0), Money::sum);
 
-	public int getGamblerDrawCount() {
-		return (int)gameReports.stream()
-			.filter(GameReport::isDraw)
-			.count();
-	}
-
-	public int getGamblerLoseCount() {
-		return (int)gameReports.stream()
-			.filter(GameReport::isLose)
-			.count();
-	}
-
-	public List<GameReport> getReports() {
-		return Collections.unmodifiableList(this.gameReports);
+		return gamblerTotalProfit.calculateNegative();
 	}
 
 	@Override
@@ -53,5 +41,9 @@ public class GameReports {
 	@Override
 	public int hashCode() {
 		return Objects.hash(gameReports);
+	}
+
+	public List<GameReport> getReports() {
+		return Collections.unmodifiableList(this.gameReports);
 	}
 }
