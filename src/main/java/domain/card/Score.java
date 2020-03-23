@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
     private static final int NONE_ACE_COUNT = 0;
     private static final String INVALID_PARAMETER_EXCEPTION_MESSAGE = "Invalid parameter exception. (score/aceCount can not negative";
-    private final int BLACK_JACK_SCORE = 21;
+    private final int BLACK_JACK = 21;
     private static final int ACE_WEIGHT = 10;
 
     private final int score;
@@ -22,7 +22,7 @@ public class Score {
     }
 
     private int addAceWeight(int score, long aceCount) {
-        while (aceCount > 0 && score + ACE_WEIGHT <= BLACK_JACK_SCORE) {
+        while (aceCount > 0 && score + ACE_WEIGHT <= BLACK_JACK) {
             score += ACE_WEIGHT;
             aceCount--;
         }
@@ -30,11 +30,11 @@ public class Score {
     }
 
     public boolean isBlackJackScore() {
-        return score == BLACK_JACK_SCORE;
+        return score == BLACK_JACK;
     }
 
     public boolean isBust() {
-        return score > BLACK_JACK_SCORE;
+        return score > BLACK_JACK;
     }
 
     public boolean canHit(int maxHitScore) {

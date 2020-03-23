@@ -6,8 +6,9 @@ public class Money {
 
     private static final String NEGATIVE_EXCEPTION_MESSAGE = "금액은 음수가 아니어야 합니다";
     private static final String MINIMUM_UNIT_EXCEPTION_MESSAGE = "금액의 최소 단위는 10입니다.";
-    public static final int ZERO = 0;
-    public static final int TENS = 10;
+    private static final int TENS = 10;
+    private static final int ZERO_NUMBER = 0;
+    public static final Money ZERO = fromPositive("0");
 
     private final int money;
 
@@ -26,10 +27,10 @@ public class Money {
     }
 
     private static void validateMoney(int money) {
-        if (money < ZERO) {
+        if (money < ZERO_NUMBER) {
             throw new IllegalArgumentException(NEGATIVE_EXCEPTION_MESSAGE);
         }
-        if (money % TENS != ZERO) {
+        if (money % TENS != ZERO_NUMBER) {
             throw new IllegalArgumentException(MINIMUM_UNIT_EXCEPTION_MESSAGE);
         }
     }

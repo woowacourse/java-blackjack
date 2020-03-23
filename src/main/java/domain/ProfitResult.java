@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class ProfitResult {
     private static final String PLAYERS_NULL_EXCEPTION_MESSAGE = "Players null exception.";
     private static final String DEALER_NULL_EXCEPTION_MESSAGE = "Dealer null exception.";
+    public static final double MINUS = -1.0;
 
     private final Map<Player, Money> playerResults;
     private final Money dealerResults;
@@ -45,11 +46,11 @@ public class ProfitResult {
     }
 
     private Money calculateDealerResults() {
-        Money dealerMoney = Money.fromPositive("0");
+        Money dealerMoney = Money.ZERO;
         for (Money money : this.playerResults.values()) {
             dealerMoney = dealerMoney.add(money);
         }
-        return dealerMoney.multiply(-1.0);
+        return dealerMoney.multiply(MINUS);
     }
 
     public Map<Player, Money> getPlayerResults() {
