@@ -51,13 +51,13 @@ class PlayingCardsTest {
         //given
         int defaultSizeOfPlayingCards = playingCards.size();
         List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLOVER), new Card(Symbol.QUEEN, Type.DIAMOND));
-        PlayingCards playingCardsToAdd = PlayingCards.of(cards);
+        Cards cardsToAdd = Cards.of(cards);
 
         //when
-        PlayingCards playingCards = this.playingCards.add(playingCardsToAdd);
+        PlayingCards playingCards = this.playingCards.add(cardsToAdd);
 
         //then
-        assertThat(playingCards.size()).isEqualTo(defaultSizeOfPlayingCards + playingCardsToAdd.size());
+        assertThat(playingCards.size()).isEqualTo(defaultSizeOfPlayingCards + cardsToAdd.size());
     }
 
     @ParameterizedTest

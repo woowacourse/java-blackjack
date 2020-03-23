@@ -67,20 +67,4 @@ class CardsTest {
         int sum = cards.calculateSumExceptAce();
         assertThat(sum).isEqualTo(Symbol.QUEEN.getValue());
     }
-
-    @ParameterizedTest
-    @MethodSource({"getCasesForTestingCalculateSumOfAces"})
-    @DisplayName("#calculateSumWithAces : should return score input cards input aces")
-    void calculateSumOfAces(int sum, int expected) {
-        Cards cards = Cards.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)));
-        int actual = cards.calculateSumWithAces(sum);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForTestingCalculateSumOfAces() {
-        return Stream.of(
-                Arguments.of(10, 21),
-                Arguments.of(11, 12)
-        );
-    }
 }

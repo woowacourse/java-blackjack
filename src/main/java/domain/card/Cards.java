@@ -16,10 +16,6 @@ public class Cards {
         this.cards = cards;
     }
 
-    Cards(Cards cards) {
-        this(cards.cards);
-    }
-
     static Cards of(List<Card> cards) {
         if (cards.size() < MIN_SIZE) {
             throw new IllegalArgumentException(INVALID_SIZE_MESSAGE);
@@ -27,7 +23,7 @@ public class Cards {
         return new Cards(cards);
     }
 
-    public int size() {
+    int size() {
         return cards.size();
     }
 
@@ -41,7 +37,7 @@ public class Cards {
         return of(this.cards);
     }
 
-    protected List<String> serialize() {
+    List<String> serialize() {
         return cards.stream().map(Card::toString).collect(Collectors.toList());
     }
 
@@ -50,12 +46,16 @@ public class Cards {
         return calculateSumExceptAce(cards);
     }
 
-    int calculateSumWithAces(int sum) {
-        if (hasAce()) {
-            Cards aces = getAces();
-            return calculateSumWithAces(sum, aces);
-        }
-        return sum;
+    boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+    boolean hasCardNotAce() {
+        return cards.stream().anyMatch(Card::isNotAce);
+    }
+
+    List<Card> getCards() {
+        return cards;
     }
 
     private int calculateSumExceptAce(Cards cards) {
@@ -70,36 +70,9 @@ public class Cards {
         return sum;
     }
 
-    private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
-    }
-
-    private int calculateSumWithAces(int sum, Cards aces) {
-        if (aces.hasCardNotAce()) {
-            throw new InvalidStateException("복수의 에이스 카드 내에 부적절한 카드가 존해합니다.");
-        }
-        for (Card card : aces.cards) {
-            int score = card.calculate(sum);
-            sum += score;
-        }
-        return sum;
-    }
-
-    private boolean hasCardNotAce() {
-        return cards.stream().anyMatch(Card::isNotAce);
-    }
-
     private Cards getCardsExceptAce() {
         List<Card> cards = this.cards.stream().filter(Card::isNotAce).collect(Collectors.toList());
         return Cards.of(cards);
-    }
-
-    private Cards getAces() {
-        List<Card> aces = this.cards.stream().filter(Card::isAce).collect(Collectors.toList());
-        if (aces.isEmpty()) {
-            throw new InvalidStateException(String.format("%s가 존재하지 않습니다.", Symbol.ACE.getPattern()));
-        }
-        return Cards.of(aces);
     }
 
     @Override
