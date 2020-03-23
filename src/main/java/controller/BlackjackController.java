@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Controller {
+public class BlackjackController {
     private CardDeck cardDeck = new CardDeck();
 
     public void run() {
