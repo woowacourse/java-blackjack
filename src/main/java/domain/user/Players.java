@@ -27,7 +27,7 @@ public class Players {
         PlayersDto playersDto = userInterface.inputPlayers();
         List<Player> players = new ArrayList<>();
         for (PlayerDto playerDto : playersDto.getPlayerDtos()) {
-            Player player = Player.join(playerDto);
+            Player player = Player.join(playerDto.getName(), playerDto.getBettingMoney());
             players.add(player);
         }
         return new Players(players, userInterface);
@@ -75,7 +75,10 @@ public class Players {
     public PlayersDto serialize() {
         List<PlayerDto> playerDtos = new ArrayList<>();
         for (Player player : players) {
-            PlayerDto playerDto = player.serialize();
+            PlayerDto playerDto = PlayerDto.of(player.getName(),
+                    player.getBettingBoney(),
+                    player.getCards().serialize(),
+                    player.getScore());
             Profit profit = player.getProfit();
             if (Objects.nonNull(profit)) {
                 playerDto = PlayerDto.of(playerDto.getName(),

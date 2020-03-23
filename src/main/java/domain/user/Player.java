@@ -1,6 +1,5 @@
 package domain.user;
 
-import common.PlayerDto;
 import domain.card.PlayingCards;
 import domain.result.MatchRule;
 import domain.result.Result;
@@ -26,9 +25,8 @@ public class Player extends User {
         return new Player(name, playingCards, bettingMoney);
     }
 
-    static Player join(PlayerDto playerDto) {
-        int bettingMoney = playerDto.getBettingMoney();
-        return new Player(playerDto.getName(), Money.of(bettingMoney));
+    static Player join(String name, int bettingMoney) {
+        return new Player(name, Money.of(bettingMoney));
     }
 
     @Override
@@ -36,10 +34,20 @@ public class Player extends User {
         return Result.judge(matchRule, this, user);
     }
 
-    //todo: refac playerDto
-    public PlayerDto serialize() {
-        int score = calculateScore();
-        return PlayerDto.of(name, bettingMoney.serialize(), playingCards.serialize(), score);
+    public String getName() {
+        return name;
+    }
+
+    public int getBettingBoney() {
+        return bettingMoney.serialize();
+    }
+
+    public PlayingCards getCards() {
+        return playingCards;
+    }
+
+    public int getScore() {
+        return calculateScore();
     }
 
     Player receiveInitCards(PlayingCards playingCards) {
