@@ -5,56 +5,74 @@ import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-
 public class GameResult {
-	private final Map<Player, Score> playersScore;
-	private final Dealer dealer;
-	private final Score dealerScore;
+	private final Map<Gamer, Score> gamersScore;
+	private final Map<Gamer, Profit> gamersProfit;
 
 	public GameResult(Gamers gamers) {
-		this.playersScore = playersScore(gamers);
-		this.dealer = gamers.getDealer();
-		this.dealerScore = Score.from(dealer);
+		this.gamersScore = findScoreBy(gamers);
+		this.gamersProfit = calculateGamersProfit();
 	}
 
-	public static Map<Player, Score> playersScore(Gamers gamers) {
-		Map<Player, Score> playerToScore = new HashMap<>();
-		for (Player player : gamers.getPlayers()) {
-			playerToScore.put(player, Score.from(player));
-		}
-
-		return playerToScore;
-	}
-
-	public Map<Player, ResultType> playersResult() {
-		Map<Player, ResultType> playerToResult = new HashMap<>();
-		for (Player player : playersScore.keySet()) {
-			playerToResult.put(player, ResultType.of(playersScore.get(player), dealerScore));
-		}
-
-		return playerToResult;
-	}
-
-	public Map<ResultType, Integer> dealerResult() {
-		List<ResultType> dealerResultType = playersResult()
-				.values()
+	private Map<Gamer, Score> findScoreBy(Gamers gamers) {
+		return gamers.getGamers()
 				.stream()
-				.map(ResultType::reverse)
-				.collect(toList());
-
-		return dealerResultType.stream()  //TreeMap을 만들기 위한 로직
-				.collect(Collectors.toMap(result -> result, result -> Collections.frequency(dealerResultType, result),
-						(v1, v2) -> v1, TreeMap::new));
+				.collect(Collectors.toMap(Function.identity(), Gamer::getScore));
 	}
 
-	public Map<Gamer, Score> gamersScore() {
-		Map<Gamer, Score> scores = new HashMap<>(playersScore);
-		scores.put(dealer, dealerScore);
+	private Map<Gamer, Profit> calculateGamersProfit() {
+		Dealer dealer = findDealer();
 
-		return scores;
+		Map<Gamer, Profit> gamersProfit = new HashMap<>(calculatePlayersProfit(dealer));
+
+		List<Profit> playersProfit = new ArrayList<>(gamersProfit.values());
+		gamersProfit.put(dealer, calculateDealerProfit(playersProfit));
+
+		return gamersProfit;
+	}
+
+	private Map<Gamer, Profit> calculatePlayersProfit(Dealer dealer) {
+		Map<Gamer, Profit> playersResult = new HashMap<>();
+
+		for (Player player : findPlayers()) {
+			PlayerResult result = PlayerResult.of(player, dealer);
+			playersResult.put(player, new Profit(result.calculateProfit(player.getMoney())));
+		}
+		return playersResult;
+	}
+
+	private Profit calculateDealerProfit(List<Profit> playersProfit) {
+		Profit profit = Profit.ZERO;
+		for (Profit eachProfit : playersProfit) {
+			profit = profit.plus(eachProfit.negative());
+		}
+		return profit;
+	}
+
+	private List<Player> findPlayers() {
+		List<Gamer> gamers = new ArrayList<>(gamersScore.keySet());
+
+		return Gamers.findPlayers(gamers);
+	}
+
+	private Dealer findDealer() {
+		List<Gamer> gamers = new ArrayList<>(gamersScore.keySet());
+
+		return Gamers.findDealer(gamers);
+	}
+
+	public Map<Gamer, Score> getGamersScore() {
+		return gamersScore;
+	}
+
+	public Map<Gamer, Profit> getGamersProfit() {
+		return gamersProfit;
 	}
 }

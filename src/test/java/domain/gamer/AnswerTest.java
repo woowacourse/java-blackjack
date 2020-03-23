@@ -1,11 +1,12 @@
 package domain.gamer;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class AnswerTest {
 	@ParameterizedTest
@@ -24,13 +25,18 @@ class AnswerTest {
 		assertThatThrownBy(() -> {
 			Answer.from(input);
 		}).isInstanceOf(IllegalArgumentException.class)
-			.hasMessageMatching("올바르지 않은 대답입니다.");
+				.hasMessageMatching("올바르지 않은 대답입니다.");
 	}
 
 	@Test
-	@DisplayName("isYes 테스트")
-	void isYesTest() {
+	@DisplayName("Yes의 isYes 테스트")
+	void yesIsYesTest() {
 		assertThat(Answer.YES.isYes()).isTrue();
+	}
+
+	@Test
+	@DisplayName("No의 isYes 테스트")
+	void noIsNotYesTest() {
 		assertThat(Answer.NO.isYes()).isFalse();
 	}
 }

@@ -1,90 +1,89 @@
 package domain.gamer;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.result.Score;
+import domain.rule.Rule;
+
 import java.util.List;
 import java.util.Objects;
-
-import domain.card.Card;
-import domain.result.Score;
+import java.util.function.Function;
 
 public abstract class Gamer {
 	private static final int ZERO = 0;
 
-	private final String name;
-	private final List<Card> cards;
+	private final Name name;
+	private final Hand hand;
 
-	public Gamer(String name) {
-		validate(name);
+	public Gamer(Name name) {
 		this.name = name;
-		this.cards = new ArrayList<>();
+		this.hand = Hand.createEmpty();
 	}
 
-	private void validate(String name) {
-		validateNull(name);
-		validateSpace(name);
-	}
-
-	private void validateNull(String name) {
-		if (Objects.isNull(name)) {
-			throw new NullPointerException("이름은 null이 될 수 없습니다.");
-		}
-	}
-
-	private void validateSpace(String name) {
-		if (name.trim().isEmpty()) {
-			throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-		}
-	}
-
-	protected abstract int getHitPoint();
+	protected abstract Function<Hand, Boolean> hitStrategy();
 
 	protected abstract int firstOpenedCardsCount();
 
-	public void hit(Card card) {
-		cards.add(card);
+	public Score getScore() {
+		return Rule.newScore(hand);
 	}
 
 	public boolean canHit() {
-		return sumOfCards() < getHitPoint();
+		return hitStrategy().apply(hand);
+	}
+
+	public void hit(Card card) {
+		hand.add(card);
+	}
+
+	public boolean isBust() {
+		return Rule.isBust(hand);
+	}
+
+	public boolean isNotBust() {
+		return Rule.isNotBust(hand);
+	}
+
+	public boolean isBlackJack() {
+		return Rule.isBlackJack(hand);
+	}
+
+	public boolean isNotBlackJack() {
+		return Rule.isNotBlackJack(hand);
+	}
+
+	public boolean hasBiggerScoreThan(Gamer other) {
+		return getScore().isBiggerThan(other.getScore());
+	}
+
+	public boolean hasEqualScoreWith(Gamer other) {
+		return getScore().isEqualTo(other.getScore());
 	}
 
 	public List<Card> firstOpenedCards() {
-		return cards.subList(ZERO, firstOpenedCardsCount());
-	}
-
-	public int sumOfCards() {
-		return cards.stream()
-				.mapToInt(Card::getScore)
-				.sum();
-	}
-
-	public boolean hasAce() {
-		return cards.stream()
-				.anyMatch(Card::isAce);
+		return hand.getCards()
+				.subList(ZERO, firstOpenedCardsCount());
 	}
 
 	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
+		return hand.getCards();
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object)
-			return true;
-		if (object == null || getClass() != object.getClass())
-			return false;
-		Gamer that = (Gamer) object;
-		return Objects.equals(name, that.name) &&
-				Objects.equals(cards, that.cards);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Gamer gamer = (Gamer) o;
+		return Objects.equals(name, gamer.name) &&
+				Objects.equals(hand, gamer.hand);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, cards);
+		return Objects.hash(name, hand);
 	}
 }

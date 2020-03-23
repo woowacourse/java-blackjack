@@ -3,10 +3,7 @@ package domain.result;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
-import domain.gamer.Dealer;
-import domain.gamer.Gamer;
-import domain.gamer.Gamers;
-import domain.gamer.Player;
+import domain.gamer.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,20 +15,24 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultTypeTest {
+class GameResultTest {
 	private List<Player> players;
 	private Dealer dealer;
 	private Gamers gamers;
 
 	@BeforeEach
 	void setUp() {
-		players = Arrays.asList(new Player("pobi"), new Player("jason"));
+		players = Arrays.asList(new Player(new Name("pobi"), new Money(10000)),
+				new Player(new Name("jason"), new Money(5000)),
+				new Player(new Name("brwon"), new Money(3000)));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));
 		players.get(0).hit(new Card(Symbol.ACE, Type.CLUB));
 		players.get(1).hit(new Card(Symbol.NINE, Type.CLUB));
 		players.get(1).hit(new Card(Symbol.TEN, Type.CLUB));
+		players.get(2).hit(new Card(Symbol.TEN, Type.CLUB));
+		players.get(2).hit(new Card(Symbol.ACE, Type.CLUB));
 		dealer.hit(new Card(Symbol.EIGHT, Type.CLUB));
 		dealer.hit(new Card(Symbol.SEVEN, Type.CLUB));
 
@@ -39,28 +40,17 @@ class GameResultTypeTest {
 	}
 
 	@Test
-	@DisplayName("플레이어의 결과가 올바르게 생성되는지 확인")
-	void fromTest() {
+	@DisplayName("플레이어의 수익이 올바르게 계산되는 확인")
+	void gamerProfitTest() {
 		GameResult gameResult = new GameResult(gamers);
 
-		Map<Player, ResultType> expected = new HashMap<>();
-		expected.put(players.get(0), ResultType.LOSE);
-		expected.put(players.get(1), ResultType.WIN);
+		Map<Gamer, Profit> expected = new HashMap<>();
+		expected.put(players.get(0), new Profit(-10000));
+		expected.put(players.get(1), new Profit(5000));
+		expected.put(players.get(2), new Profit(1500));
+		expected.put(dealer, new Profit(3500));
 
-		assertThat(gameResult.playersResult()).isEqualTo(expected);
-	}
-
-	@Test
-	@DisplayName("딜러의 결과가 올바르게 생성되는지 확인")
-	void dealerResultTest() {
-		GameResult gameResult = new GameResult(gamers);
-
-		Map<ResultType, Integer> expected = new HashMap<>();
-		expected.put(ResultType.LOSE, 1);
-		expected.put(ResultType.WIN, 1);
-
-		assertThat(gameResult.dealerResult()).isEqualTo(expected);
-
+		assertThat(gameResult.getGamersProfit()).isEqualTo(expected);
 	}
 
 	@Test
@@ -69,10 +59,11 @@ class GameResultTypeTest {
 		GameResult gameResult = new GameResult(gamers);
 
 		Map<Gamer, Score> expected = new HashMap<>();
-		expected.put(players.get(0), Score.from(players.get(0)));
-		expected.put(players.get(1), Score.from(players.get(1)));
-		expected.put(dealer, Score.from(dealer));
+		expected.put(players.get(0), players.get(0).getScore());
+		expected.put(players.get(1), players.get(1).getScore());
+		expected.put(players.get(2), players.get(2).getScore());
+		expected.put(dealer, dealer.getScore());
 
-		assertThat(gameResult.gamersScore()).isEqualTo(expected);
+		assertThat(gameResult.getGamersScore()).isEqualTo(expected);
 	}
 }

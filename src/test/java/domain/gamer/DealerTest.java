@@ -1,13 +1,12 @@
 package domain.gamer;
 
-import static org.assertj.core.api.Assertions.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 	@Test

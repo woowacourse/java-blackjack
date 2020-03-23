@@ -41,18 +41,26 @@ public class Gamers {
 	}
 
 	public List<Player> getPlayers() {
+		return findPlayers(gamers);
+	}
+
+	public static List<Player> findPlayers(List<Gamer> gamers) {
 		return gamers.stream()
 				.filter(gamer -> gamer.getClass() == Player.class)
 				.map(player -> (Player) player)
-				.collect(Collectors.toUnmodifiableList());
+				.collect(Collectors.toList());
 	}
 
 	public Dealer getDealer() {
+		return findDealer(gamers);
+	}
+
+	public static Dealer findDealer(List<Gamer> gamers) {
 		return gamers.stream()
 				.filter(gamer -> gamer.getClass() == Dealer.class)
 				.map(dealer -> (Dealer) dealer)
 				.findFirst()
-				.orElseThrow(AssertionError::new);
+				.orElseThrow(() -> new AssertionError("딜러는 반드시 존재해야합니다."));
 	}
 
 	public List<Gamer> getGamers() {

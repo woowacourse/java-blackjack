@@ -13,7 +13,7 @@ public class BlackJackController {
 	private final Deck deck;
 
 	public BlackJackController() {
-		List<Player> players = PlayersFactory.newPlayers(InputView.inputUserNames());
+		List<Player> players = createPlayers();
 		Dealer dealer = new Dealer();
 		this.deck = new Deck();
 		this.gamers = new Gamers(players, dealer);
@@ -24,10 +24,12 @@ public class BlackJackController {
 		giveCardToPlayers();
 		giveCardToDealer();
 
-		GameResult gameResult = new GameResult(gamers);
-		OutputView.printCardsAndScore(gameResult.gamersScore());
-		OutputView.printDealerResult(gameResult.dealerResult());
-		OutputView.printPlayersResult(gameResult.playersResult());
+		OutputView.printResult(new GameResult(gamers));
+	}
+
+	private List<Player> createPlayers() {
+		List<Name> names = PlayersFactory.newNames(InputView.inputUserNames());
+		return PlayersFactory.of(names, InputView.inputMoney(names));
 	}
 
 	private void init() {

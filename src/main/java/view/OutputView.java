@@ -1,18 +1,16 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
 import domain.card.Card;
-import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 import domain.result.GameResult;
-import domain.result.ResultType;
+import domain.result.Profit;
 import domain.result.Score;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 	private static final String NEW_LINE = System.lineSeparator();
@@ -59,7 +57,12 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printCardsAndScore(Map<Gamer, Score> gamerToScore) {
+	public static void printResult(GameResult gameResult) {
+		printCardsAndScore(gameResult.getGamersScore());
+		printResult(gameResult.getGamersProfit());
+	}
+
+	private static void printCardsAndScore(Map<Gamer, Score> gamerToScore) {
 		StringBuilder sb = new StringBuilder();
 		for (Gamer gamer : gamerToScore.keySet()) {
 			sb.append(createCardFormat(gamer.getName(), gamer.getCards()))
@@ -76,22 +79,13 @@ public class OutputView {
 		return sb.toString();
 	}
 
-	public static void printDealerResult(Map<ResultType, Integer> dealerResult) {
+	private static void printResult(Map<Gamer, Profit> gamersProfit) {
 		System.out.println("## 최종승패");
 		StringBuilder sb = new StringBuilder();
-		sb.append("딜러: ");
-		for (ResultType resultType : dealerResult.keySet()) {
-			sb.append(dealerResult.get(resultType)).append(resultType.getResult());
-		}
-		System.out.println(sb);
-	}
-
-	public static void printPlayersResult(Map<Player, ResultType> playersResult) {
-		StringBuilder sb = new StringBuilder();
-		for (Map.Entry<Player, ResultType> playerResultEntry : playersResult.entrySet()) {
-			sb.append(playerResultEntry.getKey().getName())
+		for (Map.Entry<Gamer, Profit> gamerProfitEntry : gamersProfit.entrySet()) {
+			sb.append(gamerProfitEntry.getKey().getName())
 					.append(": ")
-					.append(playerResultEntry.getValue().getResult())
+					.append(gamerProfitEntry.getValue().getProfit())
 					.append(NEW_LINE);
 		}
 		System.out.println(sb);

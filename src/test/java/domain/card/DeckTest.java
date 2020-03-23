@@ -1,11 +1,11 @@
 package domain.card;
 
-import static org.assertj.core.api.Assertions.*;
-
+import exception.EmptyDeckException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import exception.EmptyDeckException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DeckTest {
 	@Test
