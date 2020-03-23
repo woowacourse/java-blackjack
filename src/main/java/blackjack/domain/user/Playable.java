@@ -14,10 +14,6 @@ public interface Playable {
 
 	void receiveCards(List<Card> cards);
 
-	Score computeScore();
-
-	boolean isBlackjack();
-
 	List<Card> getStartHand();
 
 	Hand getHand();

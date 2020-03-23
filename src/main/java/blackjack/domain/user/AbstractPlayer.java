@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Score;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,16 +25,6 @@ public abstract class AbstractPlayer implements Playable {
 	@Override
 	public void receiveCards(List<Card> cards) {
 		hand.addAll(cards);
-	}
-
-	@Override
-	public Score computeScore() {
-		return hand.computeScore();
-	}
-
-	@Override
-	public boolean isBlackjack() {
-		return hand.isBlackjack();
 	}
 
 	@Override

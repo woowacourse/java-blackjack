@@ -105,22 +105,6 @@ class DealerTest {
 						Collections.singletonList(aceSpade)));
 	}
 
-	@DisplayName("computeScore()가 점수를 적절히 계산하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("computeScore_ReturnItsScore")
-	void computeScore_ReturnItsScore(List<Card> cards, int score) {
-		dealer.receiveCards(cards);
-		assertThat(dealer.computeScore()).isEqualTo(Score.of(score));
-	}
-
-	static Stream<Arguments> computeScore_ReturnItsScore() {
-		return Stream.of(Arguments.of(Collections.singletonList(aceSpade), 11),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond, aceSpade), 18),
-				Arguments.of(Collections.emptyList(), 0));
-	}
-
 	@DisplayName("getName()이 딜러의 이름을 반환하는지 테스트")
 	@Test
 	void getName_Dealer_ReturnDealerName() {

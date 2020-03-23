@@ -17,6 +17,10 @@ public final class Hand {
 		hand = new ArrayList<>();
 	}
 
+	public Hand(List<Card> cards) {
+		hand = cards;
+	}
+
 	public void add(Card card) {
 		hand.add(card);
 	}
@@ -82,6 +86,9 @@ public final class Hand {
 		return computeScore().isUnder(other.computeScore());
 	}
 
+	public boolean isUnder(int score) {
+		return computeScore().isUnder(score);
+	}
 
 	public List<Card> getHand() {
 		return Collections.unmodifiableList(hand);

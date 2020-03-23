@@ -94,29 +94,6 @@ public class PlayerTest {
 				Arrays.asList(aceSpade, sixDiamond, tenClub, jackHeart));
 	}
 
-	@DisplayName("computeScore()가 적절한 값을 반환하는지 테스트")
-	@ParameterizedTest
-	@MethodSource("computeScore_HasCards_ReturnScore")
-	void computeScore_HasCards_ReturnScore(List<Card> cards, int score) {
-		player.receiveCards(cards);
-		assertThat(player.computeScore()).isEqualTo(Score.of(score));
-	}
-
-	static Stream<Arguments> computeScore_HasCards_ReturnScore() {
-		return Stream.of(Arguments.of(Collections.singletonList(aceSpade), 11),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart), 21),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond), 17),
-				Arguments.of(Arrays.asList(aceSpade, jackHeart, sixDiamond, aceSpade), 18),
-				Arguments.of(Collections.emptyList(), 0));
-	}
-
-	static Stream<List<Card>> isBust_ScoreSameOrLessThanTwelve_ReturnFalse() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(tenClub, aceSpade),
-				Arrays.asList(tenClub, jackHeart, aceSpade));
-	}
-
 	@DisplayName("canReceiveCard()가 버스트되지 않았을 시 true를 반환하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("canReceiveCard_NotBusted_ReturnTrue")
