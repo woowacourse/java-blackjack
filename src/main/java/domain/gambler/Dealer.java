@@ -8,14 +8,14 @@ import domain.card.Score;
 public class Dealer implements Gambler {
     private static final int FIRST_INDEX = 0;
     private static final int DEALER_MAX_HIT_SCORE = 16;
-    private static final Name DEALER_NAME = new Name("딜러");
+    private static final Name NAME = new Name("딜러");
 
     private final Name name;
     private final Cards cards;
 
     public Dealer() {
         this.cards = new Cards();
-        this.name = DEALER_NAME;
+        this.name = NAME;
     }
 
     @Override
