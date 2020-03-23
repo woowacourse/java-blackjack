@@ -73,7 +73,7 @@ public class HandCardsTest {
         HandCards blackJackCard = new HandCards(parseNumbersToCards(Rank.ACE, Rank.K));
         HandCards outOfSizeBlackJackCards = new HandCards(parseNumbersToCards(Rank.ACE, Rank.SIX, Rank.FIVE));
 
-        assertThat(blackJackCard.isRightSize(BlackJackGame.INITIAL_CARD_AMOUNT)).isTrue();
-        assertThat(outOfSizeBlackJackCards.isRightSize(BlackJackGame.INITIAL_CARD_AMOUNT)).isFalse();
+        assertThat(blackJackCard.hasSizeOf(BlackJackGame.INITIAL_CARD_AMOUNT)).isTrue();
+        assertThat(outOfSizeBlackJackCards.hasSizeOf(BlackJackGame.INITIAL_CARD_AMOUNT)).isFalse();
     }
 }

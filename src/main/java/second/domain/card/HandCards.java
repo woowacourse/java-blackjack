@@ -34,7 +34,7 @@ public class HandCards {
                 .sum();
     }
 
-    public boolean isRightSize(int size) {
+    public boolean hasSizeOf(int size) {
         return cards.size() == size;
     }
 
