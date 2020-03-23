@@ -3,17 +3,17 @@ package dto;
 import java.util.*;
 
 public class ResponseWinningResultDTO {
-    private Map<String, Boolean> winningPlayer;
+    private Map<String, Double> winningProfit;
 
-    private ResponseWinningResultDTO(Map<String, Boolean> winningPlayer) {
-        this.winningPlayer = winningPlayer;
+    private ResponseWinningResultDTO(Map<String, Double> winningProfit) {
+        this.winningProfit = winningProfit;
     }
 
-    public static ResponseWinningResultDTO create(Map<String, Boolean> winningPlayer) {
-        return new ResponseWinningResultDTO(winningPlayer);
+    public static ResponseWinningResultDTO create(Map<String, Double> winningProfit) {
+        return new ResponseWinningResultDTO(winningProfit);
     }
 
-    public Map<String, Boolean> getWinningPlayer() {
-        return this.winningPlayer;
+    public Map<String, Double> getWinningProfit() {
+        return this.winningProfit;
     }
 }

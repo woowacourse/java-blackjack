@@ -25,20 +25,6 @@ public class CardsTest {
         );
     }
 
-    @DisplayName("16을 초과하는지 판단하는 메서드 테스트")
-    @Test
-    void isCardsSumUnderSixteenTest() {
-        Cards overSixteen = Cards.of(new ArrayList<>(Arrays.asList(
-                Card.of(CardNumber.KING, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SEVEN, CardSuitSymbol.CLUB))));
-        Cards underSixteen = Cards.of(new ArrayList<>(Arrays.asList(
-                Card.of(CardNumber.KING, CardSuitSymbol.CLUB),
-                Card.of(CardNumber.SIX, CardSuitSymbol.CLUB))));
-
-        Assertions.assertThat(overSixteen.isCardsSumUnderSixteen()).isFalse();
-        Assertions.assertThat(underSixteen.isCardsSumUnderSixteen()).isTrue();
-    }
-
     @DisplayName("Cards 가 ace 를 갖고 있는지 판단하는 메서드 테스트")
     @Test
     void containAceTest() {

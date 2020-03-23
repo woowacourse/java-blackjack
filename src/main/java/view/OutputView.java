@@ -3,8 +3,6 @@ package view;
 import dto.ResponsePlayerDTO;
 import dto.ResponseWinningResultDTO;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +11,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final int DEALER_INDEX = 0;
     private static final int START_USER_INDEX = 1;
+    private static final int DEALER_NOT_HIT = 0;
 
     private OutputView() {
     }
@@ -52,8 +51,12 @@ public class OutputView {
         System.out.println(result.getName() + "카드: " + String.join(DELIMITER, result.getCardNumbers()));
     }
 
-    public static void printDealerAdditionalCard() {
-        System.out.println("\n딜러는 16이하라 카드를 한장 더 받았습니다.");
+    public static void printDealerAdditionalCard(int dealerHitCount) {
+        if (dealerHitCount == DEALER_NOT_HIT) {
+            System.out.println("\n딜러는 17이상이라 카드를 더 받지 않았습니다.");
+            return;
+        }
+        System.out.printf("\n딜러는 16이하라 카드를 %d장 더 받았습니다.\n", dealerHitCount - DEALER_NOT_HIT);
     }
 
     public static void printFinalResult(List<ResponsePlayerDTO> result) {
@@ -65,33 +68,17 @@ public class OutputView {
         }
     }
 
-    public static void printWinningResult(ResponseWinningResultDTO responseWinningResultDTO) {
-        System.out.println("\n## 최종 승패");
-        Map<String, Boolean> winningPlayer = responseWinningResultDTO.getWinningPlayer();
-        for (String result : getWinningResult(winningPlayer)) {
+    public static void printFinalProfit(ResponseWinningResultDTO responseWinningResultDTO) {
+        System.out.println("\n## 최종 수익");
+        Map<String, Double> winningProfit = responseWinningResultDTO.getWinningProfit();
+        for (String result : getWinningProfit(winningProfit)) {
             System.out.println(result);
         }
     }
 
-    public static List<String> getWinningResult(Map<String, Boolean> winningPlayer) {
-        int allUserWinCount = (int) winningPlayer.values().stream().filter(win -> win).count();
-        int allUserLoseCount = winningPlayer.values().size() - allUserWinCount;
-        List<String> result = new ArrayList<>(
-                Collections.singletonList("딜러: " + allUserLoseCount + "승 " + allUserWinCount + "패"));
-        result.addAll(winningPlayer.entrySet().stream()
-                .map(entry -> winString(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList()));
-        return result;
-    }
-
-    private static String winString(String name, boolean isWin) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        if (isWin) {
-            sb.append(": 승");
-            return sb.toString();
-        }
-        sb.append(": 패");
-        return sb.toString();
+    public static List<String> getWinningProfit(Map<String, Double> winningProfit) {
+        return winningProfit.entrySet().stream()
+                .map(entry -> String.format("%s: %.0f", entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
