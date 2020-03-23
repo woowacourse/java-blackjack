@@ -2,6 +2,8 @@ package domains.card;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,14 @@ class DeckTest {
 
 		deck.draw();
 
-		assertThat(deck.isSize(--initialSize)).isTrue();
+		assertThat(deck.isSize(initialSize - 1)).isTrue();
+	}
+
+	@DisplayName("덱이 비어있을 경우 예외처리")
+	@Test
+	void draw_DeckIsEmpty_ExceptionThrown() {
+		Deck deck = new Deck(new ArrayList<>());
+		assertThatThrownBy(deck::draw).isInstanceOf(InvalidDeckException.class)
+			.hasMessage(InvalidDeckException.DECK_IS_EMPTY);
 	}
 }

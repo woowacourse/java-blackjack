@@ -1,8 +1,12 @@
 package domains.user;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import domains.card.Deck;
+import domains.result.ResultType;
+import domains.user.money.BettingMoney;
+import domains.user.name.PlayerName;
 
 public class Player extends User {
 	private static final String YES = "y";
@@ -10,21 +14,25 @@ public class Player extends User {
 
 	private PlayerName name;
 
-	public Player(String name, Deck deck) {
-		this.name = new PlayerName(name);
-		this.hands = new Hands(deck);
-	}
-
-	public Player(String name, Hands hands) {
-		this.name = new PlayerName(name);
+	public Player(PlayerName name, Hands hands) {
+		this.name = name;
 		this.hands = hands;
+		this.blackJack = hands.isBlackJack();
 	}
 
-	public boolean needMoreCard(String answer, Deck deck) {
+	public Player(PlayerName name, Deck deck) {
+		this(name, new Hands(deck));
+	}
+
+	public BettingMoney bet(String bettingMoney) {
+		return new BettingMoney(bettingMoney);
+	}
+
+	public boolean needMoreCard(Deck deck, String answer) {
 		checkNullOrEmpty(answer);
 		checkYesOrNo(answer);
 
-		if (answer.equals(YES)) {
+		if (YES.equals(answer)) {
 			hit(deck);
 			return true;
 		}
@@ -38,10 +46,17 @@ public class Player extends User {
 	}
 
 	private void checkYesOrNo(String answer) {
-		if (answer.equals(YES) || answer.equals(NO)) {
+		if (YES.equals(answer) || NO.equals(answer)) {
 			return;
 		}
 		throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);
+	}
+
+	public ResultType checkResultType(Dealer dealer) {
+		return Arrays.stream(ResultType.values())
+			.filter(resultType -> resultType.getJudgeResultType().apply(this, dealer))
+			.findFirst()
+			.orElseThrow(()->new InvalidPlayerException(InvalidPlayerException.WRONG_RESULT_TYPE));
 	}
 
 	public String getName() {

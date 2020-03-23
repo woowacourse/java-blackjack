@@ -6,13 +6,21 @@ import java.util.List;
 public class Deck {
 	private static final int FIRST_INDEX = 0;
 	private static final int INITIAL_DRAW_SIZE = 2;
+
 	private List<Card> deck;
 
 	public Deck() {
 		this.deck = DeckFactory.create();
 	}
 
+	public Deck(List<Card> deck) {
+		this.deck = deck;
+	}
+
 	public Card draw() {
+		if (deck.isEmpty()) {
+			throw new InvalidDeckException(InvalidDeckException.DECK_IS_EMPTY);
+		}
 		return deck.remove(FIRST_INDEX);
 	}
 

@@ -18,8 +18,9 @@ import domains.card.Card;
 import domains.card.Deck;
 import domains.card.Symbol;
 import domains.card.Type;
+import view.OutputView;
 
-public class DealerTest {
+class DealerTest {
 	private static Deck deck;
 
 	@BeforeAll
@@ -32,6 +33,14 @@ public class DealerTest {
 	void constructor_InitializeDealer_HandsSizeIsTwo() {
 		Dealer dealer = new Dealer(deck);
 		assertThat(dealer.handSize()).isEqualTo(2);
+	}
+
+	@DisplayName("딜러가 힛했을 경우 isHit이 true를 반환하는지 확인")
+	@Test
+	void isHit_Hit_ReturnTrue() {
+		Dealer dealer = new Dealer(deck);
+		dealer.hit(deck);
+		assertThat(dealer.isHit()).isTrue();
 	}
 
 	@DisplayName("패의 숫자가 16 초과일 때, 카드를 뽑지 않음을 확인")
@@ -84,5 +93,40 @@ public class DealerTest {
 			Arguments.of(new ArrayList<>(Arrays.asList(four, five))),
 			Arguments.of(new ArrayList<>(Arrays.asList(four, seven)))
 		);
+	}
+
+	@DisplayName("카드를 한 장 더 받았을 때, 버스트가 됐는지 확인")
+	@ParameterizedTest
+	@MethodSource("burstData")
+	void hit_ScoreOver21_BurstIsTrue(List<Card> hands) {
+		Hands hand = new Hands(hands);
+		Dealer dealer = new Dealer(hand);
+
+		dealer.hit(deck);
+
+		assertThat(dealer.isBurst()).isTrue();
+	}
+
+	static Stream<Arguments> burstData() {
+		Card five = new Card(Symbol.FIVE, Type.SPADE);
+		Card seven = new Card(Symbol.SEVEN, Type.HEART);
+		Card ten = new Card(Symbol.TEN, Type.CLUB);
+
+		return Stream.of(
+			Arguments.of(new ArrayList<>(Arrays.asList(five, seven, ten)))
+		);
+	}
+
+	@DisplayName("딜러 Hands의 한 장의 카드만 가져오는 함수")
+	@Test
+	void openFirstCard_GivenFiveAndKing_ReturnFive() {
+		Card five = new Card(Symbol.FIVE, Type.SPADE);
+		Card king = new Card(Symbol.KING, Type.HEART);
+		Hands hands = new Hands(Arrays.asList(five, king));
+		Dealer dealer = new Dealer(hands);
+
+		Card actualCard = dealer.openFirstCard();
+
+		assertThat(actualCard).isEqualTo(five);
 	}
 }

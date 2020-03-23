@@ -13,20 +13,13 @@ public class Hands {
 	private static final String DELIMITER = ",";
 
 	private List<Card> hands;
-	private int score;
-	private boolean hasAce;
 
-	{
-		this.score = 0;
-		this.hasAce = false;
+	public Hands(List<Card> hands) {
+		this.hands = hands;
 	}
 
 	Hands(Deck deck) {
 		this.hands = deck.initialDraw();
-	}
-
-	public Hands(List<Card> hands) {
-		this.hands = hands;
 	}
 
 	int size() {
@@ -38,28 +31,37 @@ public class Hands {
 	}
 
 	public int score() {
-		score = hands.stream()
-			.peek(this::checkAce)
-			.mapToInt(Card::score)
-			.sum();
-		determineAceScore();
-		return this.score;
+		int score = 0;
+		boolean hasAce = false;
+		for (Card hand : hands) {
+			hasAce = checkAce(hand, hasAce);
+			score += hand.score();
+		}
+		score = determineAceScore(score, hasAce);
+		return score;
 	}
 
-	private void determineAceScore() {
+	private int determineAceScore(int score, boolean hasAce) {
 		if (score <= ACE_SCORE_CHANGE_POINT && hasAce) {
-			score += ACE_EXTRA_SCORE;
+			return score + ACE_EXTRA_SCORE;
 		}
+		return score;
 	}
 
-	private void checkAce(Card card) {
-		if (card.isAce()) {
-			hasAce = true;
-		}
+	private boolean checkAce(Card card, boolean hasAce) {
+		return hasAce || card.isAce();
 	}
 
 	public boolean isBurst() {
 		return score() > BURST_SCORE;
+	}
+
+	public boolean isBlackJack() {
+		return score() == BURST_SCORE;
+	}
+
+	Card from(int index) {
+		return hands.get(index);
 	}
 
 	@Override

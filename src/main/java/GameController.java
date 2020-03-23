@@ -1,54 +1,58 @@
+import java.util.HashMap;
+import java.util.Map;
+
 import domains.card.Deck;
 import domains.result.GameResult;
+import domains.result.Profits;
+import domains.result.ResultType;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.money.BettingMoney;
 import view.InputView;
 import view.OutputView;
 
 class GameController {
 	GameController() {
 		Deck deck = new Deck();
-		OutputView.printInputPlayerNames();
-		Players players = new Players(InputView.inputPlayerNames(), deck);
 		Dealer dealer = new Dealer(deck);
+		Players players = new Players(InputView.inputPlayerNames(), deck);
+		Map<Player, BettingMoney> playersBettingMoney = inputBettingMoney(players);
 		OutputView.printInitialHands(players, dealer);
 
-		run(deck, dealer, players);
+		hitOrStay(players, dealer, deck);
+
+		Map<Player, ResultType> playersGameResult = GameResult.create(players, dealer);
+		OutputView.printAllHands(players, dealer);
+		OutputView.printGameResult(new Profits(playersGameResult, playersBettingMoney));
 	}
 
-	private void run(Deck deck, Dealer dealer, Players players) {
-		hitOrStay(players, deck);
-		dealer.hitOrStay(deck);
+	private Map<Player, BettingMoney> inputBettingMoney(Players players) {
+		Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
+		for (Player player : players) {
+			playerBettingMoney.put(player, player.bet(InputView.inputBettingMoney(player)));
+		}
+		return playerBettingMoney;
+	}
 
-		if (dealer.didHit()) {
+	private void hitOrStay(Players players, Dealer dealer, Deck deck) {
+		for (Player player : players) {
+			needMoreCard(deck, player);
+		}
+
+		dealer.hitOrStay(deck);
+		if (dealer.isHit()) {
 			OutputView.printDealerHitCard();
 		}
-
-		OutputView.printAllHands(players, dealer);
-
-		GameResult gameResult = new GameResult(players, dealer);
-		OutputView.printGameResult(gameResult);
 	}
 
-	private void hitOrStay(Players players, Deck deck) {
-		for (Player player : players) {
-			needMoreCard(player, deck);
-		}
-	}
-
-	private void needMoreCard(Player player, Deck deck) {
-		while (player.needMoreCard(getAnswerForNeedMoreCard(player), deck)) {
-			if (player.checkBurst()) {
+	private void needMoreCard(Deck deck, Player player) {
+		while (player.needMoreCard(deck, InputView.inputYesOrNo(player))) {
+			if (player.isBurst()) {
 				OutputView.printBurst(player);
 				break;
 			}
 			OutputView.printHands(player);
 		}
-	}
-
-	private String getAnswerForNeedMoreCard(Player player) {
-		OutputView.printNeedMoreCard(player);
-		return InputView.inputYesOrNo();
 	}
 }

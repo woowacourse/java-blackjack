@@ -3,19 +3,20 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import domains.result.GameResult;
-import domains.result.ResultType;
+import domains.result.Profits;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.money.ProfitMoney;
 
 public class OutputView {
-	private static final String BLANK = " ";
-
-	public static void printInputPlayerNames() {
+	static void printInputPlayerNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+	}
+
+	static void printInputBettingMoney(Player player) {
+		System.out.println(player.getName() + "의 베팅금액을 입력하세요.");
 	}
 
 	public static void printInitialHands(Players players, Dealer dealer) {
@@ -25,7 +26,7 @@ public class OutputView {
 		}
 		System.out.println("딜러와 " + String.join(",", names) + "에게 2장의 카드를 나누었습니다.");
 
-		System.out.println("딜러 카드: " + dealer.getHandsWords());
+		System.out.println("딜러 카드: " + dealer.openFirstCard());
 		for (Player player : players) {
 			printHands(player);
 		}
@@ -35,7 +36,7 @@ public class OutputView {
 		System.out.println(player.getName() + "카드 : " + player.getHandsWords());
 	}
 
-	public static void printNeedMoreCard(Player player) {
+	static void printNeedMoreCard(Player player) {
 		System.out.println(player.getName() + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 	}
 
@@ -54,20 +55,12 @@ public class OutputView {
 		}
 	}
 
-	public static void printGameResult(GameResult gameResult) {
-		System.out.println("딜러: " + convertToString(gameResult.calculateDealerResult()));
-		Map<Player, ResultType> result = gameResult.getGameResult();
-		for (Player player : result.keySet()) {
-			System.out.println(player.getName() + ": " + result.get(player).getWinOrLose());
-		}
-	}
+	public static void printGameResult(Profits profits) {
+		System.out.println("딜러: " + profits.createDealerProfit());
 
-	private static String convertToString(Map<ResultType, Long> dealerGameResult) {
-		return dealerGameResult.entrySet().stream().map(
-			result -> {
-				long count = result.getValue();
-				String resultName = result.getKey().getWinOrLose();
-				return count + resultName;
-			}).collect(Collectors.joining(BLANK));
+		Map<Player, ProfitMoney> playerProfits = profits.getPlayerProfits();
+		for (Player player : playerProfits.keySet()) {
+			System.out.println(player.getName() + " : " + playerProfits.get(player));
+		}
 	}
 }
