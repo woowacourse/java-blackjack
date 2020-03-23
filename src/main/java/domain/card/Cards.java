@@ -2,6 +2,7 @@ package domain.card;
 
 import sun.plugin.dom.exception.InvalidStateException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,13 +29,15 @@ public class Cards {
     }
 
     protected Cards add(Card card) {
+        List<Card> cards = new ArrayList<>(this.cards);
         cards.add(card);
         return of(cards);
     }
 
-    protected Cards add(Cards cards) {
-        this.cards.addAll(cards.cards);
-        return of(this.cards);
+    protected Cards add(Cards cardsToAdd) {
+        List<Card> cards = new ArrayList<>(this.cards);
+        cards.addAll(cardsToAdd.cards);
+        return of(cards);
     }
 
     List<String> serialize() {
@@ -49,11 +52,13 @@ public class Cards {
     }
 
     boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     boolean hasCardNotAce() {
-        return cards.stream().anyMatch(Card::isNotAce);
+        return cards.stream()
+                .anyMatch(Card::isNotAce);
     }
 
     List<Card> getCards() {
@@ -73,7 +78,9 @@ public class Cards {
     }
 
     private Cards getCardsExceptAce() {
-        List<Card> cards = this.cards.stream().filter(Card::isNotAce).collect(Collectors.toList());
+        List<Card> cards = this.cards.stream()
+                .filter(Card::isNotAce)
+                .collect(Collectors.toList());
         return Cards.of(cards);
     }
 

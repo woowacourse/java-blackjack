@@ -20,7 +20,9 @@ class PlayingCardsTest {
 
     @BeforeEach
     void setUp() {
-        playingCards = PlayingCards.of(new ArrayList<>(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.QUEEN, Type.CLOVER))));
+        playingCards = PlayingCards.of(new ArrayList<>(
+                Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE),
+                        new Card(Symbol.QUEEN, Type.CLOVER))));
     }
 
     @Test
@@ -35,7 +37,7 @@ class PlayingCardsTest {
     void add() {
         Card card = new Card(Symbol.TEN, Type.DIAMOND);
         int defaultCardsSize = playingCards.size();
-        playingCards.add(card);
+        PlayingCards playingCards = this.playingCards.add(card);
         assertThat(playingCards.size()).isEqualTo(defaultCardsSize + 1);
     }
 

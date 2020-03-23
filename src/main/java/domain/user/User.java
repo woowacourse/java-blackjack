@@ -46,7 +46,7 @@ public abstract class User {
     }
 
     protected void hit(Card card) {
-        playingCards.add(card);
+        playingCards = playingCards.add(card);
     }
 
     protected Profit getProfit() {
@@ -54,7 +54,7 @@ public abstract class User {
     }
 
     void addCard(Card card) {
-        playingCards.add(card);
+        playingCards= playingCards.add(card);
     }
 
     int countCards() {

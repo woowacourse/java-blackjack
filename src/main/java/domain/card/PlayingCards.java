@@ -28,8 +28,12 @@ public class PlayingCards {
         return new PlayingCards(cards);
     }
 
+    public static PlayingCards of(Cards cards) {
+        return of(cards.getCards());
+    }
+
     public PlayingCards add(Card card) {
-        return new PlayingCards(cards.add(card));
+        return of(cards.add(card));
     }
 
     public PlayingCards add(Cards cardsToAdd) {
