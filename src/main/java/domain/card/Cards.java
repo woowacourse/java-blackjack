@@ -38,7 +38,9 @@ public class Cards {
     }
 
     List<String> serialize() {
-        return cards.stream().map(Card::toString).collect(Collectors.toList());
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.toList());
     }
 
     int calculateSumExceptAce() {
