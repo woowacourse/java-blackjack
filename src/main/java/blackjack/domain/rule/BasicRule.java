@@ -21,10 +21,6 @@ public enum BasicRule {
         isBusted(player.score()) || dealer.score() > player.score() && !isBusted(dealer.score())
     );
 
-    static {
-
-    }
-
     private static final int BUST_LIMIT = 21;
     private static final int BLACK_JACK_CARD_SIZE = 2;
 
