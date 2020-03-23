@@ -46,7 +46,6 @@ public abstract class AbstractUserForTest implements User {
         return calculateScore().equals(other.calculateScore());
     }
 
-    @Override
     public Profit calculateProfit(User user) {
         double profitRate = Rule.getProfitRate(this, user);
         return new Profit(bettingMoney.multiplyAndGetValue(profitRate));

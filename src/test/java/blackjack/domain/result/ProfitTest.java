@@ -17,7 +17,7 @@ class ProfitTest {
 
     @ParameterizedTest
     @MethodSource("createUsersAndProfit")
-    void of(User player, User dealer, double profitRate) {
+    void of(AbstractUserForTest player, User dealer, double profitRate) {
         int profit = (int) (1000 * profitRate);
         assertThat(player.calculateProfit(dealer).getProfit()).isEqualTo(profit);
     }

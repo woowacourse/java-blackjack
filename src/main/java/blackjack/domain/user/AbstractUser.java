@@ -3,8 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.deck.Deck;
-import blackjack.domain.result.Profit;
-import blackjack.domain.result.Rule;
 import blackjack.domain.user.exception.UserException;
 
 import java.util.List;
@@ -82,13 +80,6 @@ public class AbstractUser implements User {
     @Override
     public boolean isSameScore(User other) {
         return calculateScore().equals(other.calculateScore());
-    }
-
-    @Override
-    public Profit calculateProfit(User user) {
-        BettingMoney bettingMoney = null;
-        double profitRate = Rule.getProfitRate(this, user);
-        return new Profit(bettingMoney.multiplyAndGetValue(profitRate));
     }
 
     public String getName() {
