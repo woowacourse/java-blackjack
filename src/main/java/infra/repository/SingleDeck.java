@@ -30,6 +30,11 @@ public class SingleDeck implements Deck {
         this.cards = cards;
     }
 
+    public static SingleDeck setUp() {
+        List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
+        return new SingleDeck(cards);
+    }
+
     @Override
     public Deck shuffle() {
         Collections.shuffle(cards);
@@ -42,11 +47,6 @@ public class SingleDeck implements Deck {
             throw new IllegalStateException(EMPTY_DECK_MESSAGE);
         }
         return cards.remove(POP_INDEX);
-    }
-
-    public static SingleDeck setUp() {
-        List<Card> cards = new ArrayList<>(Collections.unmodifiableCollection(CARDS_BOX));
-        return new SingleDeck(cards);
     }
 
     int size() {
