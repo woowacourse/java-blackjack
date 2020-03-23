@@ -18,7 +18,7 @@ class DealerTest {
     @Test
     @DisplayName("#shuffle() : should return Dealer")
     void construct() {
-        Deck deck = createDeckforTest(1);
+        Deck deck = createDeckforTest(2);
         assertThat(Dealer.shuffle(deck)).isNotNull();
     }
 
