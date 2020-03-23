@@ -25,10 +25,6 @@ public class PlayerDto {
         this.profit = profit;
     }
 
-    public static PlayerDto input(String name, int bettingMoney) {
-        return new PlayerDto(name, bettingMoney);
-    }
-
     public static PlayerDto of(String name, int bettingMoney, List<String> cards, int score) {
         return new PlayerDto(name, bettingMoney, cards, score);
     }
