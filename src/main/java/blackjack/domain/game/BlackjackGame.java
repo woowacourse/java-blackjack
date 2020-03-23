@@ -48,9 +48,7 @@ public class BlackjackGame {
     }
 
     public TotalResult calculateResultsPerPlayer() {
-        Map<Player, Result> totalResult = new LinkedHashMap<>();
-        players.forEach(player -> totalResult.put(player, Result.of(dealer, player)));
-        return new TotalResult(totalResult);
+        return new TotalResult(players, dealer);
     }
 
     public void updateUserMoney() {
