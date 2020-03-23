@@ -1,13 +1,15 @@
-package blackjack.domain.user;
+package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.Results;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Playable;
+import blackjack.domain.user.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 

@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
-import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
+import blackjack.domain.result.ResultType;
 import blackjack.domain.user.exceptions.PlayerException;
 
 import java.util.List;

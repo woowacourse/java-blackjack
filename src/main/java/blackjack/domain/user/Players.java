@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.betting.Money;
 import blackjack.domain.card.Drawable;
 import blackjack.domain.user.exceptions.PlayersException;
 

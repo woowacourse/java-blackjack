@@ -1,7 +1,8 @@
-package blackjack.domain.betting;
+package blackjack.domain.user;
 
-import blackjack.domain.betting.exceptions.MoneyException;
-import blackjack.domain.user.ResultType;
+import blackjack.domain.user.Money;
+import blackjack.domain.user.exceptions.MoneyException;
+import blackjack.domain.result.ResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

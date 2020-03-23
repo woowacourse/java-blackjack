@@ -1,4 +1,6 @@
-package blackjack.domain.user;
+package blackjack.domain.result;
+
+import blackjack.domain.user.Playable;
 
 public enum ResultType {
 	BLACKJACK_WIN(1.5, "승"),

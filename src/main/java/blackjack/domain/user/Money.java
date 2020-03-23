@@ -1,7 +1,7 @@
-package blackjack.domain.betting;
+package blackjack.domain.user;
 
-import blackjack.domain.betting.exceptions.MoneyException;
-import blackjack.domain.user.ResultType;
+import blackjack.domain.user.exceptions.MoneyException;
+import blackjack.domain.result.ResultType;
 
 import java.util.Objects;
 

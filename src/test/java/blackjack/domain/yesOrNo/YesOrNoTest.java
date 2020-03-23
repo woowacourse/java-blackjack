@@ -1,6 +1,7 @@
-package blackjack.domain.user;
+package blackjack.domain.yesOrNo;
 
-import blackjack.domain.user.exceptions.YesOrNoException;
+import blackjack.domain.yesOrNo.exceptions.YesOrNoException;
+import blackjack.domain.yesOrNo.YesOrNo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

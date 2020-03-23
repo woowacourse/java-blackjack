@@ -1,6 +1,8 @@
-package blackjack.domain.user;
+package blackjack.domain.result;
 
-public class Result {
+import blackjack.domain.user.Playable;
+
+public final class Result {
 	private Playable player;
 	private ResultType result;
 
