@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import exception.InvalidMoneyException;
+
 class MoneyTest {
 	@Test
 	@DisplayName("더블형태의 생성자를 지원하는지 테스트")
@@ -31,7 +33,7 @@ class MoneyTest {
 	void minusBettingMoney() {
 		assertThatThrownBy(() -> {
 			Money.of(-10000);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(InvalidMoneyException.class);
 	}
 
 	@Test

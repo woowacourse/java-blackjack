@@ -1,5 +1,7 @@
 package domain.gamer;
 
+import exception.InvalidMoneyException;
+
 public class Money {
 	public static final Money ZERO = new Money(0);
 
@@ -12,7 +14,7 @@ public class Money {
 
 	private void validate(double money) {
 		if (money < 0) {
-			throw new IllegalArgumentException("Money는 음수가 될 수 없습니다.");
+			throw new InvalidMoneyException(String.valueOf(money));
 		}
 	}
 
