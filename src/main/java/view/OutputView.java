@@ -3,8 +3,7 @@ package view;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
-import domain.result.DealerResult;
-import domain.result.Result;
+import domain.result.PlayerResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -12,7 +11,6 @@ import domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class OutputView {
     static void printEnterPlayerNames() {
@@ -21,9 +19,9 @@ public class OutputView {
 
     public static void printFirstCardDealt(Dealer dealer, Players players) {
         List<String> playerNames = players.getNames();
-        System.out.printf("딜러와 %s 에게 %d장의 카드를 나누어주었습니다.\n",
-            String.join(", ", playerNames),
-            Deck.NUMBER_OF_FIRST_DEAL_CARDS
+        System.out.printf("딜러와 %s 에게 %d장의 카드를 나누어주었습니다.\n\n",
+                String.join(", ", playerNames),
+                Deck.NUMBER_OF_FIRST_DEAL_CARDS
         );
         printAnyDealerCard(dealer);
         printPlayersCards(players);
@@ -37,12 +35,12 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        printUserCards(player.getName(), player);
+        printUserCards(player.getName().getName(), player);
     }
 
     private static void printUserCards(String name, User user) {
         System.out.print(name + "카드 : "
-            + formatCardStatus(user.getCards())
+                + formatCardStatus(user.getCards().getCards())
         );
     }
 
@@ -65,7 +63,7 @@ public class OutputView {
     }
 
     public static void printDealerHasReceivedMoreCard() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
+        System.out.printf("딜러는 %d 이하라 한장의 카드를 더 받았습니다.\n", Cards.MAX_SUM_FOR_DEALER_MORE_CARD);
         System.out.println();
     }
 
@@ -86,22 +84,24 @@ public class OutputView {
     }
 
     public static void printResultMessage() {
-        System.out.println("## 최종 승패");
-    }
-
-    public static void printDealerResult(DealerResult result) {
-        System.out.print("딜러 : ");
-        for (Entry<Result, Integer> entry : result.getDealerResult().entrySet()) {
-            System.out.printf("%d%s ", entry.getValue(), entry.getKey());
-        }
-        System.out.println();
-    }
-
-    public static void printPlayerResult(String name, Result result) {
-        System.out.println(name + ": " + result);
+        System.out.println("## 최종 수익");
     }
 
     public static void printExceptionMessage(Exception e) {
         System.out.println(e.getMessage());
+    }
+
+    public static void printEnterBettingMoney(String name) {
+        System.out.println(name + "의 배팅금액은?");
+    }
+
+    public static void printDealerResult(double dealerResult) {
+        System.out.printf("딜러 : %.0f", dealerResult);
+        System.out.println();
+    }
+
+    public static void printPlayerResult(PlayerResult playerResult) {
+        System.out.printf("%s : %.0f", playerResult.getName().getName(), playerResult.getResultMoney().getResultMoney());
+        System.out.println();
     }
 }

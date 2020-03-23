@@ -19,7 +19,7 @@ public class DealerTest {
         Deck deck = CardFactory.create();
         Dealer dealer = new Dealer();
         dealer.receiveFirstCards(deck);
-        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
     }
 
     @Test

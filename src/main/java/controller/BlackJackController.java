@@ -1,8 +1,8 @@
 package controller;
 
 import domain.card.CardFactory;
-import domain.card.Cards;
 import domain.card.Deck;
+import domain.result.PlayerResult;
 import domain.result.ResultCalculator;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -29,7 +29,7 @@ public class BlackJackController {
         dealToDealer(dealer, deck);
 
         OutputView.printFinalCardStatus(dealer, players);
-        conclude(players, dealer);
+        conclude(dealer, players);
     }
 
     private static Deck createShuffledDeck() {
@@ -59,7 +59,7 @@ public class BlackJackController {
 
     private static boolean willPlayerGetMoreCard(Player player) {
         return player.isReceiveAble()
-            && InputView.askWantMoreCard(player.getName());
+                && InputView.askWantMoreCard(player.getName().getName());
     }
 
     private static void dealToDealer(Dealer dealer, Deck deck) {
@@ -69,14 +69,13 @@ public class BlackJackController {
         }
     }
 
-    private static void conclude(Players players, Dealer dealer) {
+    private static void conclude(Dealer dealer, Players players) {
         ResultCalculator resultCalculator = new ResultCalculator();
+        resultCalculator.calculateDealerAndPlayersResult(dealer, players);
         OutputView.printResultMessage();
-        OutputView.printDealerResult(resultCalculator.calculateDealerAndPlayersResult(dealer, players));
-        for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(
-                player.getName(), player.getResult()
-            );
+        OutputView.printDealerResult(resultCalculator.getPlayersResult().sumResults() * -1);
+        for (PlayerResult playerResult : resultCalculator.getPlayersResult().getPlayersResult()) {
+            OutputView.printPlayerResult(playerResult);
         }
     }
 }

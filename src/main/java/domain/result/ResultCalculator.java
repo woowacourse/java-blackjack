@@ -4,54 +4,54 @@ import domain.card.Cards;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultCalculator {
 
-    private Map<Result, Integer> dealerResult = new HashMap<>();
+    private PlayersResult playersResult;
 
-    public ResultCalculator(){
-        Arrays.stream(Result.values())
-                .forEach(result -> dealerResult.put(result, 0));
+    public ResultCalculator() {
     }
 
-    public DealerResult calculateDealerAndPlayersResult(Dealer dealer, Players players) {
-        for(Player player : players.getPlayers()) {
-            player.setResult(calculateResult(dealer, player));
+    public void calculateDealerAndPlayersResult(Dealer dealer, Players players) {
+        List<PlayerResult> result = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            result.add(new PlayerResult(player.getName(), calculateResult(dealer, player)));
         }
-        return new DealerResult(this.dealerResult);
+        this.playersResult = new PlayersResult(result);
     }
 
-    public Result calculateResult(Dealer dealer, Player player) {
-        if (isDraw(dealer, player)) {
-            dealerResult.replace(Result.DRAW, dealerResult.get(Result.DRAW) + 1);
-            return Result.DRAW;
-        }
-        if (isPlayerLose(dealer, player)) {
-            dealerResult.replace(Result.WIN, dealerResult.get(Result.WIN) + 1);
-            return Result.LOSE;
-        }
-        dealerResult.replace(Result.LOSE, dealerResult.get(Result.LOSE) + 1);
-        return Result.WIN;
-    }
-
-    private boolean isDraw(Dealer dealer, Player player) {
-        boolean isBothOverBlackJack = dealer.isLargerThan(Cards.BLACKJACK_SCORE)
-            && player.isLargerThan(Cards.BLACKJACK_SCORE);
-
-        return isBothOverBlackJack || dealer.isScoreSame(player.getTotalScore());
-    }
-
-    private boolean isPlayerLose(Dealer dealer, Player player) {
+    public static boolean isDraw(int dealerScore, int playerScore) {
         /*
-         * 딜러는 파산이 아닐 때
-         * 플레이어가 파산했거나, 딜러가 플레이어보다 점수가 높으면 짐.
+         * 딜러와 플레이어 모두 21 이하
+         * 딜러와 플레이어의 숫자가 같은 경우만 무승부
          * */
-        return !dealer.isLargerThan(Cards.BLACKJACK_SCORE)
-            && (player.isLargerThan(Cards.BLACKJACK_SCORE)
-            || dealer.isLargerThan(player.getTotalScore()));
+        return dealerScore <= Cards.BLACKJACK_SCORE && playerScore == dealerScore;
     }
 
+    private double calculateMoney(Player player, Result result) {
+        double resultMoney = result.calculateResultMoney(
+                player.getBettingMoney(), player.getCards().isBlackJack()
+        );
+        return resultMoney;
+    }
+
+    public static boolean isPlayerLose(int dealerScore, int playerScore) {
+        /*
+         * 플레이어의 점수가 21 초과면 무조건 패
+         * 플레어와 딜러 모두 21 이하인 경우에 더 작은 경우 패
+         * */
+        return playerScore > Cards.BLACKJACK_SCORE
+                || (dealerScore <= Cards.BLACKJACK_SCORE && playerScore < dealerScore);
+    }
+
+    double calculateResult(Dealer dealer, Player player) {
+        return calculateMoney(player, player.compare(dealer));
+    }
+
+    public PlayersResult getPlayersResult() {
+        return this.playersResult;
+    }
 }
