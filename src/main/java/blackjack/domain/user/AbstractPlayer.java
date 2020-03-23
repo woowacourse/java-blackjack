@@ -40,7 +40,7 @@ public abstract class AbstractPlayer implements Playable {
 
 	@Override
 	public boolean isBlackjack() {
-		return hand.hasOnlyTwoCards() && computeScore().equals(Score.of(MAX_SCORE));
+		return hand.isBlackJack();
 	}
 
 	@Override

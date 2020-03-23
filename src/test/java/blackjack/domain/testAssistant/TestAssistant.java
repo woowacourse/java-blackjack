@@ -38,6 +38,9 @@ public class TestAssistant {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * @param strings 예시) {"ACE,HEART", "ONE,SPADE", "TWO,CLUB"}
+	 */
 	public static Deck createDeck(String... strings) {
 		return Deck.of(createCards(strings));
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Hand {
+	private static final int MAX_SCORE = 21;
 	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
 	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
 	private static final int TWO = 2;
@@ -49,7 +50,11 @@ public final class Hand {
 		return hand.stream().anyMatch(Card::isAce);
 	}
 
-	public boolean hasOnlyTwoCards() {
+	public boolean isBlackJack() {
+		return hasOnlyTwoCards() &&	computeScore().equals(Score.of(MAX_SCORE));
+	}
+
+	private boolean hasOnlyTwoCards() {
 		return hand.size() == TWO;
 	}
 
