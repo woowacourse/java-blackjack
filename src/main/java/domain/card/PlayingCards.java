@@ -81,7 +81,10 @@ public class PlayingCards {
     }
 
     private Cards getAces() {
-        List<Card> aces = this.cards.getCards().stream().filter(Card::isAce).collect(Collectors.toList());
+        List<Card> aces = this.cards.getCards()
+                .stream()
+                .filter(Card::isAce)
+                .collect(Collectors.toList());
         if (aces.isEmpty()) {
             throw new InvalidStateException(String.format("%s가 존재하지 않습니다.", Symbol.ACE.getPattern()));
         }
