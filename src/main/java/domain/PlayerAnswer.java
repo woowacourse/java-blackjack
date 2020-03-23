@@ -14,9 +14,13 @@ public enum PlayerAnswer {
 
     public static PlayerAnswer of(String answer) {
         return Arrays.stream(values())
-                .filter(v -> v.answer.equals(answer))
+                .filter(v -> v.isEqualTo(answer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y와 n만 입력 가능합니다."));
+    }
+
+    private boolean isEqualTo(String answer) {
+        return this.answer.equals(answer);
     }
 
     public boolean isYes() {
