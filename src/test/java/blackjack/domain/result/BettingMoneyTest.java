@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.playing.user.BettingMoney;
 import blackjack.domain.result.Exception.BettingMoneyException;
 import org.junit.jupiter.api.Test;
 

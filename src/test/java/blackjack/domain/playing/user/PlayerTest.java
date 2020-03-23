@@ -7,6 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerTest {
     @Test
     void of() {
-        assertThat(Player.of("무늬")).isNotNull();
+        assertThat(Player.of("무늬", "10000")).isNotNull();
     }
 }

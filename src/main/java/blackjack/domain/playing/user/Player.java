@@ -1,11 +1,14 @@
 package blackjack.domain.playing.user;
 
 public class Player extends AbstractUser {
-    private Player(String name) {
+    private final BettingMoney bettingMoney;
+
+    private Player(String name, String bettingMoney) {
         super(name, Cards.emptyCards());
+        this.bettingMoney = BettingMoney.from(bettingMoney);
     }
 
-    public static Player of(String name) {
-        return new Player(name);
+    public static Player of(String name, String bettingMoney) {
+        return new Player(name, bettingMoney);
     }
 }

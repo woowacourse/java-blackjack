@@ -82,10 +82,6 @@ public class AbstractUser implements User {
         return calculateScore().equals(other.calculateScore());
     }
 
-    protected boolean hasName(String name) {
-        return this.name.equals(name);
-    }
-
     public String getName() {
         return name;
     }

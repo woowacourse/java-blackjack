@@ -6,18 +6,13 @@ import blackjack.domain.playing.user.Dealer;
 import blackjack.domain.playing.user.Player;
 import blackjack.domain.playing.user.Players;
 import blackjack.domain.playing.user.exception.HitOrStayException;
-import blackjack.domain.result.BettingMoney;
-import blackjack.domain.result.BettingMoneyRepository;
-import blackjack.domain.result.Exception.BettingMoneyException;
 import blackjack.domain.result.ProfitResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Blackjack {
     public static void main(String[] args) {
-        Players players = Players.of(InputView.inputPlayerNames());
-        createBettingResult(players);
-
+        Players players = Players.of(InputView.inputPlayerProperties());
         Dealer dealer = Dealer.create();
         Deck deck = Deck.createWithShuffle();
 
@@ -35,21 +30,6 @@ public class Blackjack {
         OutputView.printProfitResult(profitResult);
     }
 
-    private static void createBettingResult(Players players) {
-        for (Player player : players.getPlayers()) {
-            BettingMoney bettingMoney = inputBettingMoney(player);
-            BettingMoneyRepository.save(player, bettingMoney);
-        }
-    }
-
-    private static BettingMoney inputBettingMoney(Player player) {
-        try {
-            return BettingMoney.from(InputView.inputBettingMoney(player));
-        } catch (BettingMoneyException e) {
-            OutputView.printExceptionMessage(e);
-            return inputBettingMoney(player);
-        }
-    }
 
     private static void playAllPlayersTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
