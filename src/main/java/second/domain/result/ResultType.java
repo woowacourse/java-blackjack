@@ -21,7 +21,6 @@ public enum ResultType {
         this.profitMultipleValue = profitMultipleValue;
     }
 
-    // TODO :  이기거나 진사람이 없을경우 Exception 발생
     public static ResultType of(final Player player, final Dealer dealer) {
         return Arrays.stream(ResultType.values())
                 .filter(type -> type.resultJudge.judge(player, dealer))
