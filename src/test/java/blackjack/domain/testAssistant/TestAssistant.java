@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Name;
 
 import java.util.List;
@@ -48,5 +49,9 @@ public class TestAssistant {
 
 	public static Name createName(String string) {
 		return new Name(string);
+	}
+
+	public static Money createMoney(String string) {
+		return Money.of(string);
 	}
 }

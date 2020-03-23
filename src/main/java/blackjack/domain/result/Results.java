@@ -24,7 +24,7 @@ public final class Results {
 	private static List<Result> createPlayersResult(Playable dealer, Players players) {
 		List<Result> results = new ArrayList<>();
 		for (Playable player : players.getPlayers()) {
-			results.add(new Result(player, ResultType.getPlayerResultByDealer(player, dealer)));
+			results.add(new Result(player, ResultType.getPlayerResultByDealer(player.getHand(), dealer.getHand())));
 		}
 
 		return results;
