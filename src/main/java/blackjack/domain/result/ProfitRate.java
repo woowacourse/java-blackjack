@@ -11,9 +11,9 @@ public enum ProfitRate {
     DEALER_IS_BLACKJACK(((player, dealer) -> player.isBlackjack() && dealer.isBlackjack()), 0.0),
     PLAYER_IS_BUST((player, dealer) -> player.isBust(), -1.0),
     DEALER_IS_BUST((player, dealer) -> player.isNotBust() && dealer.isBust(), 1.0),
-    PLAYER_SCORE_IS_GREATER(((player, dealer) -> player.isNotBust() && dealer.isNotBust() && player.isOverScore(dealer)), 1.0),
-    PLAYER_SCORE_IS_SAME(((player, dealer) -> player.isNotBust() && dealer.isNotBust() && player.isSameScore(dealer)), 0.0),
-    PLAYER_SCORE_IS_LOWER(((player, dealer) -> player.isNotBust() && dealer.isNotBust() && player.isUnderScore(dealer)), -1.0);
+    PLAYER_SCORE_IS_GREATER(((player, dealer) -> player.isNotBlackjack() && player.isNotBust() && dealer.isNotBust() && player.isOverScore(dealer)), 1.0),
+    PLAYER_SCORE_IS_SAME(((player, dealer) -> player.isNotBlackjack() && player.isNotBust() && dealer.isNotBust() && player.isSameScore(dealer)), 0.0),
+    PLAYER_SCORE_IS_LOWER(((player, dealer) -> player.isNotBlackjack() && player.isNotBust() && dealer.isNotBust() && player.isUnderScore(dealer)), -1.0);
 
     private BiFunction<User, User, Boolean> condition;
     private double profit;
