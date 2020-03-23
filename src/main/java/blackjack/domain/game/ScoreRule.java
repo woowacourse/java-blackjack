@@ -25,9 +25,10 @@ public class ScoreRule {
     }
 
     public static int calculateTotalScore(List<Card> cards) {
-        int score = incrementAceScore(cards, cards.stream()
+        int score = cards.stream()
                 .mapToInt(Card::getScore)
-                .sum());
+                .sum();
+        score = incrementAceScore(cards, score);
         if (score > MAX_SCORE) {
             return 0;
         }
