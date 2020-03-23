@@ -89,26 +89,18 @@ class PlayerTest {
         return expectedCards;
     }
 
-//    @ParameterizedTest
-//    @MethodSource({"getResultsForCalculateProfit"})
-//    void calculateProfit(Result result) {
-//        Money bettingMoney = mock(Money.class);
-//        //todo: refac multiply mocking logic
-//        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
-//        player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
-//        //when
-//        Money profit = player.calculateProfit(result);
-//        assertThat(profit).isEqualTo(bettingMoney);
-//        verifyCalculateProfit(result, bettingMoney);
-//    }
-
-    private void verifyCalculateProfit(Result result, Money bettingMoney) {
-        if (result.equals(Result.DEALER_WIN)) {
-            verify(bettingMoney, times(2)).multiply(anyDouble());
-        } else {
-            verify(bettingMoney, times(1)).multiply(anyDouble());
-        }
+    @ParameterizedTest
+    @MethodSource({"getResultsForCalculateProfit"})
+    void calculateProfit(Result result) {
+        Money bettingMoney = mock(Money.class);
+        //todo: refac multiply mocking logic
+        when(bettingMoney.multiply(anyDouble())).thenReturn(bettingMoney);
+        player = Player.of("testName", mock(PlayingCards.class), bettingMoney);
+        //when
+        player.calculateProfit(result);
+        verify(bettingMoney).multiply(anyDouble());
     }
+
     private static Stream<Arguments> getResultsForCalculateProfit() {
         return Stream.of(
                 Arguments.of(Result.PLAYER_WIN_WITH_BLACKJACK),

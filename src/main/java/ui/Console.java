@@ -52,6 +52,6 @@ public class Console implements UserInterface {
 
     @Override
     public void showCurrentStateOfPlayer(Player player) {
-        OutputView.printCurrentStateOfPlayer(player.serialize(PlayerDto.init()));
+        OutputView.printCurrentStateOfPlayer(player.serialize());
     }
 }

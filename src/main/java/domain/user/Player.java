@@ -37,12 +37,9 @@ public class Player extends User {
     }
 
     //todo: refac playerDto
-    public PlayerDto serialize(PlayerDto playerDto) {
-        playerDto.setName(name);
-        playerDto.setBettingMoney(bettingMoney.serialize());
-        playerDto.setCards(playingCards.serialize());
-        playerDto.setScore(calculateScore());
-        return playerDto;
+    public PlayerDto serialize() {
+        int score = calculateScore();
+        return PlayerDto.of(name, bettingMoney.serialize(), playingCards.serialize(), score);
     }
 
     Player receiveInitCards(PlayingCards playingCards) {

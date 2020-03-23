@@ -75,10 +75,14 @@ public class Players {
     public PlayersDto serialize() {
         List<PlayerDto> playerDtos = new ArrayList<>();
         for (Player player : players) {
-            PlayerDto playerDto = player.serialize(PlayerDto.init());
+            PlayerDto playerDto = player.serialize();
             Profit profit = player.getProfit();
             if (Objects.nonNull(profit)) {
-                playerDto.setProfit(profit.getValue());
+                playerDto = PlayerDto.of(playerDto.getName(),
+                        playerDto.getBettingMoney(),
+                        playerDto.getCards(),
+                        playerDto.getScore(),
+                        profit.getValue());
             }
             playerDtos.add(playerDto);
         }
