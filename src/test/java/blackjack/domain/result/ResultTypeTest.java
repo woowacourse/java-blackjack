@@ -128,9 +128,9 @@ class ResultTypeTest {
 
 	@Test
 	void calculateProfitFrom_BettingMoney_ReturnMultipliedBettingMoney() {
-		BettingMoney value = BettingMoney.valueOf("10000");
+		BettingMoney value = new BettingMoney("10000");
 
-		BettingMoney expected = BettingMoney.valueOf(15000);
+		int expected = 15000;
 		assertThat(ResultType.BLACKJACK_WIN.calculateProfitFrom(value)).isEqualTo(expected);
 	}
 }

@@ -13,10 +13,10 @@ import blackjack.domain.user.User;
 public class UserDecisions {
 	private final Function<Player, String> choice;
 	private final BiConsumer<User, List<Card>> handStatus;
-	private final Runnable dealerChoice;
+	private final PrintChoice dealerChoice;
 
 	public UserDecisions(Function<Player, String> choice, BiConsumer<User, List<Card>> handStatus,
-		Runnable dealerChoice) {
+		PrintChoice dealerChoice) {
 		validate(choice, handStatus, dealerChoice);
 		this.choice = choice;
 		this.handStatus = handStatus;
@@ -24,7 +24,7 @@ public class UserDecisions {
 	}
 
 	private void validate(Function<Player, String> choice, BiConsumer<User, List<Card>> handStatus,
-		Runnable dealerChoice) {
+		PrintChoice dealerChoice) {
 		if (Objects.isNull(choice) || Objects.isNull(handStatus) || Objects.isNull(dealerChoice)) {
 			throw new InvalidUserDecisionsException(InvalidUserDecisionsException.USER_DECISIONS_NULL);
 		}
@@ -48,6 +48,6 @@ public class UserDecisions {
 	}
 
 	public void showDealerHitStatus() {
-		dealerChoice.run();
+		dealerChoice.print();
 	}
 }

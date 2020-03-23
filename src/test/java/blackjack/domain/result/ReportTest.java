@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
@@ -18,19 +18,19 @@ import blackjack.domain.user.Player;
 
 class ReportTest {
 	@Test
-	void PlayersBettingMoney_PlayersBettingMoney_GenerateInstance() {
+	void Report_PlayersBettingMoneyByInt_GenerateInstance() {
 		Player pobi = Player.valueOf("pobi", Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
 		Player stitch = Player.valueOf("stitch", Arrays.asList(Card.of(Symbol.ACE, Type.HEART)));
-		Map<Player, BettingMoney> playersBettingMoney = new HashMap<>();
-		playersBettingMoney.put(pobi, BettingMoney.valueOf(10000));
-		playersBettingMoney.put(stitch, BettingMoney.valueOf(5000));
+		Map<Player, Integer> playersBettingMoney = new HashMap<>();
+		playersBettingMoney.put(pobi, 10000);
+		playersBettingMoney.put(stitch, 5000);
 
 		assertThat(new Report(playersBettingMoney)).isInstanceOf(Report.class);
 	}
 
 	@ParameterizedTest
-	@NullSource
-	void validate_EmptyPlayersBettingMoney_InvalidPlayersBettingMoneyExceptionThrown(Map<Player, BettingMoney> value) {
+	@NullAndEmptySource
+	void validate_EmptyPlayersBettingMoney_InvalidPlayersBettingMoneyExceptionThrown(Map<Player, Integer> value) {
 		assertThatThrownBy(() -> new Report(value))
 			.isInstanceOf(InvalidReportException.class)
 			.hasMessage(InvalidReportException.NULL);
@@ -42,20 +42,19 @@ class ReportTest {
 		Player stitch = Player.valueOf("stitch", Arrays.asList(Card.of(Symbol.ACE, Type.HEART)));
 
 		Map<Player, BettingMoney> bettingMoney = new HashMap<>();
-		bettingMoney.put(pobi, BettingMoney.valueOf(10000));
-		bettingMoney.put(stitch, BettingMoney.valueOf(5000));
-		Report playersBettingMoney = new Report(bettingMoney);
+		bettingMoney.put(pobi, new BettingMoney(10000));
+		bettingMoney.put(stitch, new BettingMoney(5000));
 
 		Map<Player, ResultType> playersResultType = new HashMap<>();
 		playersResultType.put(pobi, ResultType.WIN);
 		playersResultType.put(stitch, ResultType.LOSE);
 
-		Map<Player, BettingMoney> expected = new HashMap<>();
-		expected.put(pobi, BettingMoney.valueOf(10000));
-		expected.put(stitch, BettingMoney.valueOf(-5000));
+		Map<Player, Integer> expected = new HashMap<>();
+		expected.put(pobi, 10000);
+		expected.put(stitch, -5000);
 
-		assertThat(playersBettingMoney.calculateResultBy(playersResultType))
-			.extracting("playersBettingMoney").isEqualTo(expected);
+		assertThat(Report.calculateResultBy(playersResultType, bettingMoney))
+			.extracting("playersProfit").isEqualTo(expected);
 	}
 
 	@Test
@@ -63,28 +62,12 @@ class ReportTest {
 		Player pobi = Player.valueOf("pobi", Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
 		Player stitch = Player.valueOf("stitch", Arrays.asList(Card.of(Symbol.ACE, Type.HEART)));
 
-		Map<Player, BettingMoney> bettingMoney = new HashMap<>();
-		bettingMoney.put(pobi, BettingMoney.valueOf(10000));
-		bettingMoney.put(stitch, BettingMoney.valueOf(-5000));
+		Map<Player, Integer> bettingMoney = new HashMap<>();
+		bettingMoney.put(pobi, 10000);
+		bettingMoney.put(stitch, -5000);
 		Report report = new Report(bettingMoney);
 
 		int expected = -5000;
 		assertThat(report.getDealerBettingProfit()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculatePlayersProfit_PlayersResult_ReturnPlayersResultToInt() {
-		Player pobi = Player.valueOf("pobi", Arrays.asList(Card.of(Symbol.EIGHT, Type.DIAMOND)));
-		Player stitch = Player.valueOf("stitch", Arrays.asList(Card.of(Symbol.ACE, Type.HEART)));
-
-		Map<Player, BettingMoney> bettingMoney = new HashMap<>();
-		bettingMoney.put(pobi, BettingMoney.valueOf(10000));
-		bettingMoney.put(stitch, BettingMoney.valueOf(5000));
-		Report report = new Report(bettingMoney);
-
-		Map<Player, Integer> expected = new HashMap<>();
-		expected.put(pobi, 10000);
-		expected.put(stitch, 5000);
-		assertThat(report.getPlayersBettingProfit()).isEqualTo(expected);
 	}
 }

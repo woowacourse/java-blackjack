@@ -50,7 +50,7 @@ public class OutputView {
 	public static void printBlackjackReport(Report report) {
 		System.out.println(NEWLINE + FINAL_RESULT_MESSAGE);
 		printUserResult(Dealer.NAME, report.getDealerBettingProfit());
-		printPlayersResult(report.getPlayersBettingProfit());
+		printPlayersResult(report.getPlayersProfit());
 	}
 
 	private static void printPlayersResult(Map<Player, Integer> playersResult) {

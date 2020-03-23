@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import blackjack.domain.card.Card;
@@ -24,7 +25,6 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
 import blackjack.domain.exceptions.InvalidBlackjackTableException;
 import blackjack.domain.result.BettingMoney;
-import blackjack.domain.result.Report;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -138,8 +138,8 @@ class BlackjackTableTest {
 	@ParameterizedTest
 	@MethodSource("provideBlackjackTableAndPlayersBettingMoney")
 	void reportFrom_PlayersBettingMoney_GeneratePlayersBettingMoneyInstance(BlackjackTable blackjackTable,
-		Report playersBettingMoney, Map<Player, BettingMoney> expected) {
-		assertThat(blackjackTable.reportFrom(playersBettingMoney)).extracting("playersBettingMoney")
+		Map<Player, BettingMoney> playersBettingMoney, Map<Player, BettingMoney> expected) {
+		assertThat(blackjackTable.reportFrom(playersBettingMoney)).extracting("playersProfit")
 			.isEqualTo(expected);
 	}
 
@@ -163,27 +163,26 @@ class BlackjackTableTest {
 		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		Map<Player, BettingMoney> bettingMoney = new LinkedHashMap<>();
-		bettingMoney.put(pobi, BettingMoney.valueOf("10000"));
-		bettingMoney.put(sony, BettingMoney.valueOf("5000"));
-		bettingMoney.put(stitch, BettingMoney.valueOf("1000"));
-		Report playersBettingMoney = new Report(bettingMoney);
+		bettingMoney.put(pobi, new BettingMoney("10000"));
+		bettingMoney.put(sony, new BettingMoney("5000"));
+		bettingMoney.put(stitch, new BettingMoney("1000"));
 
-		Map<Player, BettingMoney> expected = new LinkedHashMap<>();
-		expected.put(pobi, BettingMoney.valueOf(10000));
-		expected.put(sony, BettingMoney.valueOf(0));
-		expected.put(stitch, BettingMoney.valueOf(-1000));
+		Map<Player, Integer> expected = new LinkedHashMap<>();
+		expected.put(pobi, 10000);
+		expected.put(sony, 0);
+		expected.put(stitch, -1000);
 
 		return Stream.of(
-			Arguments.of(blackjackTable, playersBettingMoney, expected));
+			Arguments.of(blackjackTable, bettingMoney, expected));
 	}
 
 	@ParameterizedTest
-	@NullSource
-	void validate_Null_InvalidBlackjackTableExceptionThrown(Report playersBettingMoney) {
+	@NullAndEmptySource
+	void validate_Null_InvalidBlackjackTableExceptionThrown(Map<Player, BettingMoney> playersBettingMoney) {
 		BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
 
 		assertThatThrownBy(() -> blackjackTable.reportFrom(playersBettingMoney))
 			.isInstanceOf(InvalidBlackjackTableException.class)
-			.hasMessage(InvalidBlackjackTableException.PLAYERS_BETTING_MONEY_NULL);
+			.hasMessage(InvalidBlackjackTableException.PLAYERS_BETTING_MONEY_EMPTY);
 	}
 }

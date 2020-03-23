@@ -22,18 +22,18 @@ public enum ResultType {
 
 	private final BiPredicate<ResultScore, ResultScore> judgeByHandType;
 	private final BiPredicate<ResultScore, ResultScore> judgeByCompare;
-	private final Function<BettingMoney, BettingMoney> calculateProfit;
+	private final Function<BettingMoney, Integer> calculateProfit;
 
 	ResultType(BiPredicate<ResultScore, ResultScore> judgeByHandType,
 		BiPredicate<ResultScore, ResultScore> judgeByCompare,
-		Function<BettingMoney, BettingMoney> calculateProfit) {
+		Function<BettingMoney, Integer> calculateProfit) {
 		this.judgeByHandType = judgeByHandType;
 		this.judgeByCompare = judgeByCompare;
 		this.calculateProfit = calculateProfit;
 	}
 
 	ResultType(BiPredicate<ResultScore, ResultScore> judgeByHandType,
-		Function<BettingMoney, BettingMoney> calculateProfit) {
+		Function<BettingMoney, Integer> calculateProfit) {
 		this(judgeByHandType, (playerResultScore, dealerResultScore) -> false, calculateProfit);
 	}
 
@@ -52,7 +52,7 @@ public enum ResultType {
 		}
 	}
 
-	public BettingMoney calculateProfitFrom(BettingMoney bettingMoney) {
+	public Integer calculateProfitFrom(BettingMoney bettingMoney) {
 		return this.calculateProfit.apply(bettingMoney);
 
 	}

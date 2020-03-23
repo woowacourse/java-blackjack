@@ -7,24 +7,25 @@ import blackjack.domain.exceptions.InvalidBettingMoneyException;
 public class BettingMoney {
 	private final int bettingMoney;
 
-	private BettingMoney(int bettingMoney) {
+	public BettingMoney(int bettingMoney) {
+		validate(bettingMoney);
 		this.bettingMoney = bettingMoney;
 	}
 
-	public static BettingMoney valueOf(int bettingMoney) {
-		return new BettingMoney(bettingMoney);
+	private static void validate(int bettingMoney) {
+		if (bettingMoney < 0) {
+			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.INVALID);
+		}
 	}
 
-	public static BettingMoney valueOf(String bettingMoney) {
-		return BettingMoney.valueOf(parseToInt(bettingMoney));
+	public BettingMoney(String bettingMoney) {
+		this(parseToInt(bettingMoney));
 	}
 
 	private static int parseToInt(String bettingMoney) {
-		validate(bettingMoney);
 		try {
-			int parsedInt = Integer.parseInt(bettingMoney);
-			validateNegative(parsedInt);
-			return parsedInt;
+			validate(bettingMoney);
+			return Integer.parseInt(bettingMoney);
 		} catch (NumberFormatException e) {
 			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.NOT_INTEGER);
 		}
@@ -36,34 +37,7 @@ public class BettingMoney {
 		}
 	}
 
-	private static void validateNegative(int bettingMoney) {
-		if (bettingMoney < 0) {
-			throw new InvalidBettingMoneyException(InvalidBettingMoneyException.INVALID);
-		}
-	}
-
-	public BettingMoney multiplyBy(Double bettingRate) {
-		return BettingMoney.valueOf((int)(this.bettingMoney * bettingRate));
-	}
-
-	public int getBettingMoney() {
-		return bettingMoney;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-		if (object == null || getClass() != object.getClass()) {
-			return false;
-		}
-		BettingMoney that = (BettingMoney)object;
-		return bettingMoney == that.bettingMoney;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(bettingMoney);
+	public int multiplyBy(Double bettingRate) {
+		return (int)(this.bettingMoney * bettingRate);
 	}
 }

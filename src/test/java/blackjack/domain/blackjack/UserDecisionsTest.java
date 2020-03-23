@@ -18,7 +18,7 @@ class UserDecisionsTest {
 	void UserDecisions_InputFunctionAndBiConsumerAndRunnable_GenerateInstance() {
 		Function<Player, String> choice = (Player player) -> "y";
 		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable showDealerHitStatus = () -> System.out.println("test");
+		PrintChoice showDealerHitStatus = () -> System.out.println("test");
 
 		assertThat(new UserDecisions(choice, showHandStatus, showDealerHitStatus)).isInstanceOf(UserDecisions.class);
 	}
@@ -27,7 +27,7 @@ class UserDecisionsTest {
 	void validate_NullConstructorArguments_InvalidUserDecisionsExceptionThrown() {
 		Function<Player, String> choice = (Player player) -> "y";
 		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable showDealerHitStatus = () -> System.out.println("test");
+		PrintChoice showDealerHitStatus = () -> System.out.println("test");
 
 		assertThatThrownBy(() -> new UserDecisions(null, showHandStatus, showDealerHitStatus))
 			.isInstanceOf(InvalidUserDecisionsException.class)
@@ -44,7 +44,7 @@ class UserDecisionsTest {
 	void validate_NullPlayer_InvalidUserDecisionsExceptionThrown() {
 		Function<Player, String> choice = (Player player) -> "y";
 		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable showDealerHitStatus = () -> System.out.println("test");
+		PrintChoice showDealerHitStatus = () -> System.out.println("test");
 		UserDecisions userDecisions = new UserDecisions(choice, showHandStatus, showDealerHitStatus);
 
 		assertThatThrownBy(() -> userDecisions.isHit(null))
@@ -60,7 +60,7 @@ class UserDecisionsTest {
 		Player testPlayer = new Player("player");
 		Function<Player, String> choice = (Player player) -> "y";
 		BiConsumer<User, List<Card>> showHandStatus = (User user, List<Card> cards) -> System.out.println("test");
-		Runnable showDealerHitStatus = () -> System.out.println("test");
+		PrintChoice showDealerHitStatus = () -> System.out.println("test");
 		UserDecisions userDecisions = new UserDecisions(choice, showHandStatus, showDealerHitStatus);
 
 		assertThat(userDecisions.isHit(testPlayer)).isTrue();

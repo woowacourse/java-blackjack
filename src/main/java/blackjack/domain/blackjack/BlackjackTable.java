@@ -5,11 +5,13 @@ import static java.util.stream.Collectors.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.exceptions.InvalidBlackjackTableException;
+import blackjack.domain.result.BettingMoney;
 import blackjack.domain.result.Report;
 import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Dealer;
@@ -84,7 +86,7 @@ public class BlackjackTable {
 		}
 	}
 
-	public Report reportFrom(Report playersBettingMoney) {
+	public Report reportFrom(Map<Player, BettingMoney> playersBettingMoney) {
 		validate(playersBettingMoney);
 		return players.stream()
 			.collect(collectingAndThen(
@@ -93,12 +95,12 @@ public class BlackjackTable {
 					player -> ResultType.from(player.calculateResultScore(), dealer.calculateResultScore()),
 					(x, y) -> x,
 					LinkedHashMap::new),
-				playersBettingMoney::calculateResultBy));
+				playersResult -> Report.calculateResultBy(playersResult, playersBettingMoney)));
 	}
 
-	private void validate(Report playersBettingMoney) {
-		if (Objects.isNull(playersBettingMoney)) {
-			throw new InvalidBlackjackTableException(InvalidBlackjackTableException.PLAYERS_BETTING_MONEY_NULL);
+	private void validate(Map<Player, BettingMoney> playersBettingMoney) {
+		if (Objects.isNull(playersBettingMoney) || playersBettingMoney.isEmpty()) {
+			throw new InvalidBlackjackTableException(InvalidBlackjackTableException.PLAYERS_BETTING_MONEY_EMPTY);
 		}
 	}
 }
