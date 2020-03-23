@@ -54,13 +54,20 @@ public class BlackjackGameController {
     }
 
     private static void askForHit(Player player, BlackjackGame game) {
-        while (InputView.askForHit(player.getName())) {
+        while (isPlayerHitCard(player)) {
             game.hitCard(player);
             OutputView.printUserStatus(player);
-            if (player.isBusted()) {
-                OutputView.printBusted(player.getName());
-                break;
-            }
+        }
+        showBusted(player);
+    }
+
+    private static boolean isPlayerHitCard(Player player) {
+        return !player.isBusted() && InputView.askForHit(player.getName());
+    }
+
+    private static void showBusted(Player player) {
+        if(player.isBusted()) {
+            OutputView.printBusted(player.getName());
         }
     }
 
