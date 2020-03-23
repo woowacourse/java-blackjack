@@ -1,8 +1,12 @@
 import domains.card.Deck;
 import domains.result.GameResult;
+import domains.result.GameResultFactory;
+import domains.result.Profits;
 import domains.user.Dealer;
 import domains.user.Player;
 import domains.user.Players;
+import domains.user.name.PlayerName;
+import domains.user.name.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
@@ -10,34 +14,48 @@ public class GameController {
     private Deck deck;
     private Players players;
     private Dealer dealer;
-    private GameResult gameResult;
 
     public GameController() {
         deck = new Deck();
-        gameResult = new GameResult();
+        players = new Players();
+
         OutputView.printInputPlayerNames();
-        players = new Players(InputView.inputPlayerNames(), deck);
+        PlayerNames playerNames = new PlayerNames(InputView.inputPlayerNames());
+
+        bet(playerNames);
+
         dealer = new Dealer(deck);
+
         OutputView.printInitialHands(players, dealer);
+
         run();
+    }
+
+    private void bet(PlayerNames playerNames) {
+        for (PlayerName name : playerNames) {
+            OutputView.printInputBettingMoney(name);
+            players.add(new Player(name, InputView.inputBettingMoney(), deck));
+        }
     }
 
     private void run() {
         hitOrStay();
-        dealer.hit(deck);
-        if (dealer.handSize() == 3) {
+
+        if (dealer.isHit()) {
             OutputView.printDealerHitCard();
         }
         OutputView.printAllHands(players, dealer);
 
-        gameResult.create(players, dealer);
-        OutputView.printGameResult(gameResult);
+        GameResult gameResult = GameResultFactory.create(players, dealer);
+        OutputView.printGameResult(new Profits(gameResult));
     }
 
     private void hitOrStay() {
         for (Player player : players) {
             needMoreCard(player);
         }
+
+        dealer.hitOrStay(deck);
     }
 
     private void needMoreCard(Player player) {

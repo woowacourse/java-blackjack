@@ -1,7 +1,10 @@
 package domains.user;
 
 import domains.card.Deck;
-import domains.result.KindOfGameResult;
+import domains.result.ResultType;
+import domains.user.money.BettingMoney;
+import domains.user.money.ProfitMoney;
+import domains.user.name.PlayerName;
 
 import java.util.Objects;
 
@@ -10,15 +13,16 @@ public class Player extends User {
     private static final String NO = "n";
 
     private PlayerName name;
+    private BettingMoney bettingMoney;
 
-    public Player(String name, Deck deck) {
-        this.name = new PlayerName(name);
-        this.hands = new Hands(deck);
+    public Player(PlayerName name, String bettingMoney, Hands hands) {
+        super(hands);
+        this.name = name;
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
-    public Player(String name, Hands hands) {
-        this.name = new PlayerName(name);
-        this.hands = hands;
+    public Player(PlayerName name, String bettingMoney, Deck deck) {
+        this(name, bettingMoney, new Hands(deck));
     }
 
     public boolean needMoreCard(String answer, Deck deck) {
@@ -45,28 +49,11 @@ public class Player extends User {
         throw new InvalidPlayerException(InvalidPlayerException.INVALID_INPUT);
     }
 
-    public KindOfGameResult checkKindOfGameResult(Dealer dealer) {
-        if (dealer.isBurst() && !this.isBurst()) {
-            return KindOfGameResult.WIN;
-        }
-        if (this.score() > dealer.score()) {
-            return KindOfGameResult.WIN;
-        }
-        if (this.score() < dealer.score()) {
-            return KindOfGameResult.LOSE;
-        }
-        return KindOfGameResult.DRAW;
+    public ProfitMoney calculateProfitMoney(ResultType resultType) {
+        return this.bettingMoney.multiply(resultType.getProfitRate());
     }
 
     public String getName() {
         return name.toString();
-    }
-
-    @Override
-    public void hit(Deck deck) {
-        hands.draw(deck);
-        if (hands.isBurst()) {
-            this.burst = true;
-        }
     }
 }

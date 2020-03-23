@@ -1,58 +1,39 @@
 package domains.result;
 
-import domains.user.Dealer;
 import domains.user.Player;
-import domains.user.Players;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private Map<Player, KindOfGameResult> playerResult;
-    private Map<KindOfGameResult, Integer> gameResult;
+    public static final int INITIAL_COUNT = 0;
+    public static final int ADD_COUNT = 1;
 
-    public GameResult() {
-        this.playerResult = new HashMap<>();
-        this.gameResult = new HashMap<>();
+    private Map<Player, ResultType> playerResult;
+
+    public GameResult(Map<Player, ResultType> playerResult) {
+        this.playerResult = playerResult;
     }
 
-    public void create(Players players, Dealer dealer) {
-        for (Player player : players) {
-            if (checkBurstPlayer(player)) {
-                continue;
-            }
-            playerResult.put(player, player.checkKindOfGameResult(dealer));
-        }
-        calculateDealerResult();
-    }
-
-    private boolean checkBurstPlayer(Player player) {
-        if (player.isBurst()) {
-            playerResult.put(player, KindOfGameResult.LOSE);
-            return true;
-        }
-        return false;
-    }
-
-    public KindOfGameResult getWinOrLose(Player player) {
+    public ResultType getPlayerGameResult(Player player) {
         return playerResult.get(player);
     }
 
-    private void calculateDealerResult() {
-        for (KindOfGameResult kindOfGameResult : KindOfGameResult.values()) {
-            gameResult.put(kindOfGameResult, 0);
+    public Map<ResultType, Integer> calculateDealerResult() {
+        Map<ResultType, Integer> dealerResult = new HashMap<>();
+
+        for (ResultType resultType : ResultType.values()) {
+            dealerResult.put(resultType, INITIAL_COUNT);
         }
 
-        for (KindOfGameResult result : playerResult.values()) {
-            gameResult.put(result, gameResult.get(result) + 1);
+        for (ResultType result : playerResult.values()) {
+            dealerResult.put(result.oppose(), dealerResult.get(result) + ADD_COUNT);
         }
+
+        return dealerResult;
     }
 
-    public Map<Player, KindOfGameResult> getPlayerResult() {
+    public Map<Player, ResultType> getPlayerResult() {
         return playerResult;
-    }
-
-    public Map<KindOfGameResult, Integer> getGameResult() {
-        return gameResult;
     }
 }

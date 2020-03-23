@@ -1,4 +1,4 @@
-package domains.user;
+package domains.user.name;
 
 import java.util.Objects;
 

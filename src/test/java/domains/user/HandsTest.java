@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HandsTest {
     @DisplayName("카드 점수를 정상적으로 계산하는지 확인")
@@ -56,6 +57,29 @@ public class HandsTest {
                 Arguments.of(new ArrayList<>(Arrays.asList(six, seven, nine))),
                 Arguments.of(new ArrayList<>(Arrays.asList(seven, nine, ten))),
                 Arguments.of(new ArrayList<>(Arrays.asList(six, nine, ten)))
+        );
+    }
+
+    @DisplayName("블랙잭일 경우 true 반환")
+    @ParameterizedTest
+    @MethodSource("blackjackData")
+    void isBlackJack_BlackJack_ReturnTrue(List<Card> cards) {
+        Hands hands = new Hands(cards);
+        assertTrue(hands.isBlackJack());
+    }
+
+    static Stream<Arguments> blackjackData() {
+        Card ace = new Card(Symbol.ACE, Type.CLUB);
+        Card ten = new Card(Symbol.TEN, Type.HEART);
+        Card jack = new Card(Symbol.JACK, Type.HEART);
+        Card queen = new Card(Symbol.QUEEN, Type.SPADE);
+        Card king = new Card(Symbol.KING, Type.SPADE);
+
+        return Stream.of(
+                Arguments.of(new ArrayList<>(Arrays.asList(ace, ten))),
+                Arguments.of(new ArrayList<>(Arrays.asList(ace, jack))),
+                Arguments.of(new ArrayList<>(Arrays.asList(ace, queen))),
+                Arguments.of(new ArrayList<>(Arrays.asList(ace, king)))
         );
     }
 }
