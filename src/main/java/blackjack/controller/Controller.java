@@ -11,7 +11,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: 2020-03-23 Strategy 2개로 분리?, 주입 시점 변경?
 public class Controller<T extends Player> {
     private final CardDeck deck = new CardDeck();
     private final ModeStrategy<T> gameMode;

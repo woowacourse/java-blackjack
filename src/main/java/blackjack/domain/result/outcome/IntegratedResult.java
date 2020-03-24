@@ -10,29 +10,22 @@ import java.util.Objects;
 
 import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
-// TODO: 2020-03-23 Name, ResultTye 입력받는 생성자 삭제 고려
+public class IntegratedResult<T extends Player, E, U> {
+    private final T player;
+    private final ResultType resultType;
+    private final ResultResolver<T, E, U> resultResolver;
 
-public class PlayerResult implements Reportable<ResultType> {
-    private Name name;
-    private ResultType resultType;
-
-    public PlayerResult(Player player, Dealer dealer) {
+    public IntegratedResult(T player, Dealer dealer, ResultResolver<T, E, U> resultResolver) {
         Objects.requireNonNull(player, NULL_ERR_MSG);
         Objects.requireNonNull(dealer, NULL_ERR_MSG);
-        this.name = player.getName();
+        Objects.requireNonNull(resultResolver, NULL_ERR_MSG);
+        this.player = player;
         this.resultType = ResultRule.findResult(player.getCards(), dealer.getCards());
+        this.resultResolver = resultResolver;
     }
 
-    public PlayerResult(Name name, ResultType resultType) {
-        Objects.requireNonNull(name, NULL_ERR_MSG);
-        Objects.requireNonNull(resultType, NULL_ERR_MSG);
-        this.name = name;
-        this.resultType = resultType;
-    }
-
-    @Override
-    public ResultType showPlayerResult() {
-        return resultType;
+    public E showPlayerResult() {
+        return resultResolver.showPlayerResult(player, resultType);
     }
 
     public boolean hasSameResult(ResultType type) {
@@ -40,26 +33,21 @@ public class PlayerResult implements Reportable<ResultType> {
     }
 
     public Name getName() {
-        return name;
-    }
-
-    public ResultType getResultType() {
-        return resultType;
+        return player.getName();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PlayerResult that = (PlayerResult) o;
-        return Objects.equals(name, that.name) &&
-                resultType == that.resultType;
+        IntegratedResult<?, ?, ?> that = (IntegratedResult<?, ?, ?>) o;
+        return Objects.equals(player, that.player) &&
+                resultType == that.resultType &&
+                Objects.equals(resultResolver, that.resultResolver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, resultType);
+        return Objects.hash(player, resultType, resultResolver);
     }
-
-
 }

@@ -7,7 +7,8 @@ import blackjack.domain.participant.PlayersFactory;
 import blackjack.domain.participant.attribute.Money;
 import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.model.ProfitDto;
-import blackjack.domain.result.outcome.BettingPlayersResults;
+import blackjack.domain.result.outcome.BettingResultResolver;
+import blackjack.domain.result.outcome.IntegratedResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -30,12 +31,12 @@ public class BettingMode implements ModeStrategy<BettingPlayer> {
 
     @Override
     public void showResult(Players<BettingPlayer> players, Dealer dealer) {
-        BettingPlayersResults playersResults = new BettingPlayersResults(players, dealer);
+        IntegratedResults<BettingPlayer, Double, Double> playerResults = new IntegratedResults<>(players, dealer, new BettingResultResolver());
 
-        List<ProfitDto> playerDtos = playersResults.stream()
+        List<ProfitDto> playerDtos = playerResults.stream()
                 .map(result -> new ProfitDto(result.getName(), result.showPlayerResult()))
                 .collect(Collectors.toList());
 
-        OutputView.printFinalProfit(dealer.name(), playersResults.computeDealerResult(), playerDtos);
+        OutputView.printFinalProfit(dealer.name(), playerResults.computeDealerResult(), playerDtos);
     }
 }
