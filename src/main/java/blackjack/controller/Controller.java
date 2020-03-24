@@ -11,73 +11,67 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Controller<T extends Player> {
-    private final CardDeck deck = new CardDeck();
-    private final ModeStrategy<T> gameMode;
-
-    public Controller(ModeStrategy<T> gameMode) {
-        this.gameMode = gameMode;
-    }
-
-    public void play() {
-        Players<T> players = createPlayers();
+public class Controller {
+    public static <T extends Player> void play(ModeStrategy<T> gameMode) {
+        Players<T> players = createPlayers(gameMode);
         Dealer dealer = new Dealer();
+        CardDeck deck = new CardDeck();
 
-        dealFirstCards(dealer);
-        dealFirstCards(players);
+        dealFirstCards(dealer, deck);
+        dealFirstCards(players, deck);
         OutputView.printInitialStatus(players, dealer);
 
-        dealAdditionalCards(players);
-        dealAdditionalCards(dealer);
+        dealAdditionalCards(players, deck);
+        dealAdditionalCards(dealer, deck);
         OutputView.printFinalStatus(players, dealer);
 
-        showResult(players, dealer);
+        showResult(players, dealer, gameMode);
     }
 
-    private Players<T> createPlayers() {
+    private static <T extends Player> Players<T> createPlayers(ModeStrategy<T> gameMode) {
         List<Name> names = createNames();
         return gameMode.createPlayers(names);
     }
 
-    private List<Name> createNames() {
+    private static List<Name> createNames() {
         return InputView.enterNames().stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
     }
 
-    private void dealFirstCards(Dealer dealer) {
+    private static void dealFirstCards(Dealer dealer, CardDeck deck) {
         deck.dealFirstCards(dealer);
     }
 
-    private void dealFirstCards(Players<T> players) {
+    private static <T extends Player> void dealFirstCards(Players<T> players, CardDeck deck) {
         players.stream()
                 .forEach(deck::dealFirstCards);
     }
 
-    private void dealAdditionalCards(Players<T> players) {
+    private static <T extends Player> void dealAdditionalCards(Players<T> players, CardDeck deck) {
         players.stream()
-                .forEach(this::dealAdditionalCards);
+                .forEach(player -> dealAdditionalCards(player, deck));
     }
 
-    private void dealAdditionalCards(Player player) {
+    private static void dealAdditionalCards(Player player, CardDeck deck) {
         while (player.canGetMoreCard() && player.wantMoreCard(readYesOrNo(player))) {
             deck.dealAdditionalCard(player);
             OutputView.printCardsStatus(player.name(), player.showCards());
         }
     }
 
-    private void dealAdditionalCards(Dealer dealer) {
+    private static void dealAdditionalCards(Dealer dealer, CardDeck deck) {
         while (dealer.canGetMoreCard()) {
             deck.dealAdditionalCard(dealer);
             OutputView.printDealerGetMoreCard();
         }
     }
 
-    private String readYesOrNo(Player player) {
+    private static String readYesOrNo(Player player) {
         return InputView.readYesOrNo(player.name());
     }
 
-    private void showResult(Players<T> players, Dealer dealer) {
+    private static <T extends Player> void showResult(Players<T> players, Dealer dealer, ModeStrategy<T> gameMode) {
         gameMode.showResult(players, dealer);
     }
 }

@@ -11,17 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static blackjack.domain.card.Card.NULL_ERR_MSG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class IntegratedResultsTest {
+class PlayerResultsTest {
     private static Dealer dealer;
     private static List<Name> names;
     private static List<Money> moneys;
@@ -31,11 +31,11 @@ class IntegratedResultsTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        names = Arrays.asList("쪼밀리", "라면").stream()
+        names = Stream.of("쪼밀리", "라면")
                 .map(Name::new)
                 .collect(Collectors.toList());
 
-        moneys = Arrays.asList(1000, 2000).stream()
+        moneys = Stream.of(1000, 2000)
                 .map(Money::new)
                 .collect(Collectors.toList());
 
@@ -47,7 +47,7 @@ class IntegratedResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 모두 null이 값 전달된 경우")
     @Test
     void test1() {
-        assertThatThrownBy(() -> new IntegratedResults<>(null, null, null))
+        assertThatThrownBy(() -> new PlayerResults<>(null, null, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -55,11 +55,11 @@ class IntegratedResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 players가 null인 경우")
     @Test
     void test2() {
-        assertThatThrownBy(() -> new IntegratedResults<>(null, dealer, new WinOrLoseResultResolver()))
+        assertThatThrownBy(() -> new PlayerResults<>(null, dealer, new WinOrLoseResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResults<>(null, dealer, new BettingResultResolver()))
+        assertThatThrownBy(() -> new PlayerResults<>(null, dealer, new BettingResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -67,11 +67,11 @@ class IntegratedResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 dealer가 null인 경우")
     @Test
     void test3() {
-        assertThatThrownBy(() -> new IntegratedResults<>(winOrLosePlayers, null, new WinOrLoseResultResolver()))
+        assertThatThrownBy(() -> new PlayerResults<>(winOrLosePlayers, null, new WinOrLoseResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResults<>(bettingPlayers, null, new BettingResultResolver()))
+        assertThatThrownBy(() -> new PlayerResults<>(bettingPlayers, null, new BettingResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -79,11 +79,11 @@ class IntegratedResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 resolver가 null인 경우")
     @Test
     void test4() {
-        assertThatThrownBy(() -> new IntegratedResults<>(winOrLosePlayers, dealer, null))
+        assertThatThrownBy(() -> new PlayerResults<>(winOrLosePlayers, dealer, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResults<>(bettingPlayers, dealer, null))
+        assertThatThrownBy(() -> new PlayerResults<>(bettingPlayers, dealer, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -97,8 +97,8 @@ class IntegratedResultsTest {
         players.get(0).addCard(Card.of(Type.FIVE, Figure.HEART));
         players.get(1).addCard(Card.of(Type.TEN, Figure.SPADE));
 
-        IntegratedResults<Player, ResultType, Map<ResultType, Long>> results
-                = new IntegratedResults<>(winOrLosePlayers, dealer, new WinOrLoseResultResolver());
+        PlayerResults<Player, ResultType, Map<ResultType, Long>> results
+                = new PlayerResults<>(winOrLosePlayers, dealer, new WinOrLoseResultResolver());
 
         Map<ResultType, Long> actualResult = results.computeDealerResult();
 
@@ -118,8 +118,8 @@ class IntegratedResultsTest {
         players.get(0).addCard(Card.of(Type.FIVE, Figure.HEART));
         players.get(1).addCard(Card.of(Type.TEN, Figure.SPADE));
 
-        IntegratedResults<BettingPlayer, Double, Double> results
-                = new IntegratedResults<>(bettingPlayers, dealer, new BettingResultResolver());
+        PlayerResults<BettingPlayer, Double, Double> results
+                = new PlayerResults<>(bettingPlayers, dealer, new BettingResultResolver());
 
         Double actualResult = results.computeDealerResult();
 

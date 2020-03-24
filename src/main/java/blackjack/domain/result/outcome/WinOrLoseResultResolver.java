@@ -16,9 +16,9 @@ public class WinOrLoseResultResolver implements ResultResolver<Player, ResultTyp
     }
 
     @Override
-    public Map<ResultType, Long> computeDealerResult(List<IntegratedResult<Player, ResultType, Map<ResultType, Long>>> playerResults) {
+    public Map<ResultType, Long> computeDealerResult(List<PlayerResult<Player, ResultType, Map<ResultType, Long>>> playerResults) {
         return playerResults.stream()
-                .map(IntegratedResult::showPlayerResult)
+                .map(PlayerResult::showPlayerResult)
                 .map(ResultType::reverse)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }

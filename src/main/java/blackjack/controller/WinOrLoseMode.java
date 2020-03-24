@@ -7,7 +7,7 @@ import blackjack.domain.participant.PlayersFactory;
 import blackjack.domain.participant.attribute.Name;
 import blackjack.domain.result.ResultType;
 import blackjack.domain.result.model.WinningDto;
-import blackjack.domain.result.outcome.IntegratedResults;
+import blackjack.domain.result.outcome.PlayerResults;
 import blackjack.domain.result.outcome.WinOrLoseResultResolver;
 import blackjack.view.OutputView;
 
@@ -24,8 +24,8 @@ public class WinOrLoseMode implements ModeStrategy<Player> {
 
     @Override
     public void showResult(Players<Player> players, Dealer dealer) {
-        IntegratedResults<Player, ResultType, Map<ResultType, Long>> playerResults
-                = new IntegratedResults<>(players, dealer, new WinOrLoseResultResolver());
+        PlayerResults<Player, ResultType, Map<ResultType, Long>> playerResults
+                = new PlayerResults<>(players, dealer, new WinOrLoseResultResolver());
 
         List<WinningDto> playerDtos = playerResults.stream()
                 .map(result -> new WinningDto(result.getName(), result.showPlayerResult()))

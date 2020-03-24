@@ -8,5 +8,5 @@ import java.util.List;
 public interface ResultResolver<T extends Player, E, U> {
     E showPlayerResult(T player, ResultType type);
 
-    U computeDealerResult(List<IntegratedResult<T, E, U>> playerResults);
+    U computeDealerResult(List<PlayerResult<T, E, U>> playerResults);
 }

@@ -18,36 +18,36 @@ import static blackjack.domain.card.Card.NULL_ERR_MSG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class IntegratedResultTest {
+class PlayerResultTest {
 
     @DisplayName("예외 테스트: 생성자에 Null이 들어온 경우 Exception 발생")
     @Test
     void test1() {
-        assertThatThrownBy(() -> new IntegratedResult<>(null, null, null))
+        assertThatThrownBy(() -> new PlayerResult<>(null, null, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResult<>(new Player("쪼밀리"), new Dealer(), null))
+        assertThatThrownBy(() -> new PlayerResult<>(new Player("쪼밀리"), new Dealer(), null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResult<>(new BettingPlayer("쪼밀리", 1000), new Dealer(), null))
+        assertThatThrownBy(() -> new PlayerResult<>(new BettingPlayer("쪼밀리", 1000), new Dealer(), null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResult<>(new Player("쪼밀리"), null, new WinOrLoseResultResolver()))
+        assertThatThrownBy(() -> new PlayerResult<>(new Player("쪼밀리"), null, new WinOrLoseResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResult<>(new BettingPlayer("쪼밀리", 1000), null, new BettingResultResolver()))
+        assertThatThrownBy(() -> new PlayerResult<>(new BettingPlayer("쪼밀리", 1000), null, new BettingResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResult<>(null, new Dealer(), new WinOrLoseResultResolver()))
+        assertThatThrownBy(() -> new PlayerResult<>(null, new Dealer(), new WinOrLoseResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new IntegratedResult<>(null, new Dealer(), new BettingResultResolver()))
+        assertThatThrownBy(() -> new PlayerResult<>(null, new Dealer(), new BettingResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -64,8 +64,8 @@ class IntegratedResultTest {
         player.addCard(Card.of(Type.JACK, Figure.HEART));
         player.addCard(Card.of(type, figure));
 
-        IntegratedResult<Player, ResultType, Map<ResultType, Long>> result
-                = new IntegratedResult<>(player, dealer, new WinOrLoseResultResolver());
+        PlayerResult<Player, ResultType, Map<ResultType, Long>> result
+                = new PlayerResult<>(player, dealer, new WinOrLoseResultResolver());
 
         ResultType actualResult = result.showPlayerResult();
 
@@ -84,8 +84,8 @@ class IntegratedResultTest {
         bettingPlayer.addCard(Card.of(Type.JACK, Figure.HEART));
         bettingPlayer.addCard(Card.of(type, figure));
 
-        IntegratedResult<BettingPlayer, Double, Double> result
-                = new IntegratedResult<>(bettingPlayer, dealer, new BettingResultResolver());
+        PlayerResult<BettingPlayer, Double, Double> result
+                = new PlayerResult<>(bettingPlayer, dealer, new BettingResultResolver());
 
         Double actualResult = result.showPlayerResult();
 

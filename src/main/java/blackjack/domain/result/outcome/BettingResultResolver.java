@@ -12,9 +12,9 @@ public class BettingResultResolver implements ResultResolver<BettingPlayer, Doub
     }
 
     @Override
-    public Double computeDealerResult(List<IntegratedResult<BettingPlayer, Double, Double>> playerResults) {
+    public Double computeDealerResult(List<PlayerResult<BettingPlayer, Double, Double>> playerResults) {
         return -playerResults.stream()
-                .mapToDouble(IntegratedResult::showPlayerResult)
+                .mapToDouble(PlayerResult::showPlayerResult)
                 .sum();
     }
 }
