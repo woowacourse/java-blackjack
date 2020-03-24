@@ -36,20 +36,4 @@ public class InputHandler {
             throw new IllegalArgumentException(NAME_DUPLICATED);
         }
     }
-
-    public static void hitMoreCard(Users users, Deck deck) {
-        users.getPlayer()
-                .forEach(user -> askForHit(deck, user));
-    }
-
-    private static void askForHit(Deck deck, User user) {
-        while (InputView.askForHit(user.getName())) {
-            user.receiveCard(deck.draw());
-            OutputView.printCardStatus(user);
-            if (user.isBusted()) {
-                OutputView.printBusted(user.getName());
-                break;
-            }
-        }
-    }
 }
