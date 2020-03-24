@@ -13,6 +13,6 @@ public class BettingMoney {
     }
 
     public int calculateEarning(PlayerResult playerResult) {
-        return playerResult.multiply(bettingMoney);
+        return (int) (bettingMoney * playerResult.getEarningRate());
     }
 }

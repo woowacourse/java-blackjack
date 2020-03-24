@@ -30,12 +30,12 @@ public enum PlayerResult {
                 .orElseThrow(() -> new NotFoundResultException("승무패 조건에 맞지 않습니다."));
     }
 
-    public int multiply(int bettingMoney) {
-        return (int) (bettingMoney * earningRate);
-    }
-
     public String getName() {
         return name;
+    }
+
+    public double getEarningRate() {
+        return earningRate;
     }
 
     public boolean isMatch(Gamer dealer, Gamer player) {
