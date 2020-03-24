@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum Symbol {
     ACE("A", 1),
@@ -15,8 +15,6 @@ public enum Symbol {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final int ACE_WEIGHT = 11 - ACE.value;
-
     private final String symbol;
     private final int value;
 
@@ -24,10 +22,6 @@ public enum Symbol {
     Symbol(String symbol, int value) {
         this.symbol = symbol;
         this.value = value;
-    }
-
-    public static int getAceWeight() {
-        return ACE_WEIGHT;
     }
 
     public int getValue() {

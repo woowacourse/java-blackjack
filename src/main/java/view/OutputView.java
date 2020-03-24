@@ -1,6 +1,7 @@
 package view;
 
-import domain.*;
+import domain.ProfitResult;
+import domain.gambler.*;
 
 import java.util.Map;
 
@@ -28,10 +29,10 @@ public class OutputView {
         printPlayersCards(players, withScore);
     }
 
-    public static void printUserCards(User user, boolean withScore) {
-        System.out.print(user.getName() + ": " + user.getCards());
+    public static void printUserCards(Gambler gambler, boolean withScore) {
+        System.out.print(gambler.getName() + ": " + gambler.getCards());
         if (withScore) {
-            System.out.print("- 결과: " + user.getScore());
+            System.out.print("- 결과: " + gambler.getScore());
         }
         System.out.println();
     }
@@ -42,34 +43,26 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(Dealer dealer, Players players) {
+    public static void printFinalResult(Dealer dealer, ProfitResult profitResult) {
         System.out.println("\n## 최종 승패");
-        printDealerResult(dealer, players);
-        for (Player player : players.getPlayers()) {
-            printPlayerResult(dealer, player);
-        }
+        printDealerResult(dealer, profitResult.getDealerResult());
+        printPlayerResult(profitResult.getPlayerResults());
     }
 
-    private static void printPlayerResult(Dealer dealer, Player player) {
-        System.out.println(player.getName() + ": " + player.getWinningResult(dealer.getScore()).getKorean());
+    private static void printPlayerResult(Map<Player, Money> playersResult) {
+        for (Player player : playersResult.keySet()) {
+            Money playerMoney = playersResult.get(player);
+            System.out.printf("%s: %s", player.getName(), playerMoney);
+            System.out.println();
+        }
     }
 
     public static void printDealerHitMessage() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("\n딜러는" + Dealer.DEALER_MAX_HIT_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    private static void printDealerResult(Dealer dealer, Players players) {
-        System.out.println(dealer.getName() + ": " + makeDealerResult(dealer.getWinningResult(players.getAllScore())));
-    }
-
-    private static String makeDealerResult(Map<WinningResult, Integer> dealerWinningResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (WinningResult winningResult : WinningResult.values()) {
-            int winningResultCount = dealerWinningResult.get(winningResult);
-            if (winningResultCount != 0) {
-                stringBuilder.append(winningResultCount + winningResult.getKorean() + " ");
-            }
-        }
-        return stringBuilder.toString();
+    private static void printDealerResult(Dealer dealer, Money dealerMoney) {
+        System.out.printf("%s: ", dealer.getName());
+        System.out.println(dealerMoney);
     }
 }

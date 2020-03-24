@@ -1,5 +1,6 @@
-package domain;
+package domain.card;
 
+import domain.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ public class CardsTest {
     @DisplayName("카드 합계 출력")
     void getScore() {
         Assertions.assertThat(cards.getScore())
-                .isEqualTo(20);
+                .isEqualTo(new Score(20));
     }
 
     @Test
@@ -46,7 +47,9 @@ public class CardsTest {
         Assertions.assertThat(cards.isBlackJack())
                 .isFalse();
 
+        cards = new Cards();
         cards.add(new Card(Type.CLUB, Symbol.ACE));
+        cards.add(new Card(Type.CLUB, Symbol.JACK));
         Assertions.assertThat(cards.isBlackJack())
                 .isTrue();
     }

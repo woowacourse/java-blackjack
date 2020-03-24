@@ -1,4 +1,4 @@
-package domain;
+package domain.gambler;
 
 import java.util.Objects;
 
