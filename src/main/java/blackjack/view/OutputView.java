@@ -9,7 +9,6 @@ import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.result.BasicResult;
 import blackjack.domain.result.MoneyResult;
 
 public class OutputView {

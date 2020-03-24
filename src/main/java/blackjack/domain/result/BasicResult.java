@@ -9,19 +9,20 @@ import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.rule.BasicRule;
+import blackjack.domain.rule.MoneyRule;
 
 public class BasicResult implements Result {
-    private Map<BasicRule, Integer> dealerResult;
-    private Map<Participant, BasicRule> playerResults;
+    private Map<MoneyRule, Integer> dealerResult;
+    private Map<Participant, MoneyRule> playerResults;
 
     public BasicResult() {
         dealerResult = new HashMap<>();
         playerResults = new HashMap<>();
     }
 
-    private void set(Player player, BasicRule basicRule) {
-        dealerResult.put(basicRule, dealerResult.getOrDefault(basicRule, 0) + 1);
-        playerResults.put(player, basicRule);
+    private void set(Player player, MoneyRule moneyRule) {
+        dealerResult.put(moneyRule, dealerResult.getOrDefault(moneyRule, 0) + 1);
+        playerResults.put(player, moneyRule);
     }
 
     @Override
@@ -29,15 +30,15 @@ public class BasicResult implements Result {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            set(player, BasicRule.getResultOfPlayer(dealer, player));
+            set(player, BasicRule.of(dealer, player));
         }
     }
 
-    public Map<BasicRule, Integer> getDealerResult() {
+    public Map<MoneyRule, Integer> getDealerResult() {
         return dealerResult;
     }
 
-    public Map<Participant, BasicRule> getPlayerResults() {
+    public Map<Participant, MoneyRule> getPlayerResults() {
         return playerResults;
     }
 }

@@ -25,8 +25,8 @@ public class MoneyResult implements Result {
         playersMoney.put(player, new Money(money));
     }
 
-    private Money applyMoney(Money bettingMoney, BasicRule basicRule) {
-        return bettingMoney.multiply(MoneyRule.getMoneyRule(basicRule).getMultiplyValue());
+    private Money applyMoney(Money bettingMoney, MoneyRule moneyRule) {
+        return bettingMoney.multiply(moneyRule.getMultiplyValue());
     }
 
     @Override
@@ -34,9 +34,9 @@ public class MoneyResult implements Result {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            BasicRule playerBasicRule = BasicRule.getResultOfPlayer(dealer, player);
+            MoneyRule playerMoneyRule = BasicRule.of(dealer, player);
             Money playerBettingMoney = playersMoney.getOrDefault(player, new Money(0));
-            Money playerMoney = applyMoney(playerBettingMoney, playerBasicRule);
+            Money playerMoney = applyMoney(playerBettingMoney, playerMoneyRule);
             playersMoney.put(player, playerMoney);
             dealerMoney = dealerMoney.subtract(playerMoney);
         }
