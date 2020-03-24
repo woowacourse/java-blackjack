@@ -1,46 +1,26 @@
 package domain.result;
 
 import domain.gamer.Gamer;
+import domain.result.rule.*;
 
 import java.util.Arrays;
 
 public enum PlayerResult {
-    BLACKJACK_WIN("블랙잭승", 1.5) {
-        @Override
-        boolean isMatch(Gamer dealer, Gamer player) {
-            return (dealer.isNotBlackJack() && player.isBlackJack());
-        }
-    },
-
-    WIN("승", 1) {
-        @Override
-        boolean isMatch(Gamer dealer, Gamer player) {
-            return (player.isNotBust() && (dealer.isBust() || player.calculateScore().compareTo(dealer.calculateScore()) > 0))
-                    && player.isNotBlackJack();
-        }
-    },
-    DRAW("무", 0) {
-        @Override
-        boolean isMatch(Gamer dealer, Gamer player) {
-            return (player.isNotBust() && player.isNotBlackJack() && dealer.isNotBlackJack() && player.calculateScore() == dealer.calculateScore())
-                    || (dealer.isBlackJack() && player.isBlackJack());
-        }
-    },
-    LOSE("패", -1) {
-        @Override
-        boolean isMatch(Gamer dealer, Gamer player) {
-            return player.isBust()
-                    || player.calculateScore().compareTo(dealer.calculateScore()) < 0
-                    || (dealer.isBlackJack() && player.isNotBlackJack());
-        }
-    };
+    BLACKJACK_WIN("블랙잭승", 1.5, new BlackJackWinningRule()),
+    WIN("승", 1, new WinningRule()),
+    DRAW("무", 0, new DrawRule()),
+    LOSE("패", -1, ((dealer, player) -> player.isBust()
+            || player.calculateScore().compareTo(dealer.calculateScore()) < 0
+            || (dealer.isBlackJack() && player.isNotBlackJack())));
 
     private final String name;
     private final double earningRate;
+    private final MatchRule matchRule;
 
-    PlayerResult(String name, double earningRate) {
+    PlayerResult(String name, double earningRate, MatchRule matchRule) {
         this.name = name;
         this.earningRate = earningRate;
+        this.matchRule = matchRule;
     }
 
     public static PlayerResult match(Gamer dealer, Gamer player) {
@@ -58,5 +38,7 @@ public enum PlayerResult {
         return name;
     }
 
-    abstract boolean isMatch(Gamer dealer, Gamer player);
+    public boolean isMatch(Gamer dealer, Gamer player) {
+        return matchRule.isMatch(dealer, player);
+    }
 }
