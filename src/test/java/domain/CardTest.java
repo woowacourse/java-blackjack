@@ -15,7 +15,7 @@ public class CardTest {
 	void create_null을_입력한_경우() {
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of(Type.CLOVER, null));
 		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of(null, Symbol.ACE));
-		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of((Type)null, (Symbol)null));
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Card.of((Type) null, (Symbol) null));
 	}
 
 	@Test

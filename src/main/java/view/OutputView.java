@@ -8,8 +8,8 @@ import domain.Card;
 import domain.Dealer;
 import domain.Name;
 import domain.Players;
-import domain.Record;
-import domain.Results;
+import domain.Profit;
+import domain.Profits;
 import domain.User;
 
 public class OutputView {
@@ -46,27 +46,12 @@ public class OutputView {
 				.collect(Collectors.joining(", "));
 	}
 
-	public static void printGameResult(Results results) {
-		System.out.println("## 최종 승패");
-		results.getValue()
-				.forEach(OutputView::printIndividualResult);
+	public static void printProfits(Profits profits) {
+		System.out.println("## 최종 수익");
+		profits.getValue().forEach(OutputView::printProfit);
 	}
 
-	private static void printIndividualResult(Name name, Record record) {
-		if (record.hasMany()) {
-			System.out.printf(
-					"%s: %d승 %d무 %s패\n", name.getValue(), record.getWinCount(), record.getDrawCount(),
-					record.getLoseCount());
-			return;
-		}
-		if (record.hasWin()) {
-			System.out.println(name.getValue() + ": 승");
-			return;
-		}
-		if (record.hasDraw()) {
-			System.out.println(name.getValue() + ": 무");
-			return;
-		}
-		System.out.println(name.getValue() + ": 패");
+	private static void printProfit(Name name, Profit profit) {
+		System.out.printf("%s: %.0f\n", name.getValue(), profit.getValue());
 	}
 }

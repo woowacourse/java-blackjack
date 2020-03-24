@@ -6,6 +6,11 @@ public class Player extends User {
 	}
 
 	@Override
+	public boolean shouldAddCard(boolean accept) {
+		return accept && isNotBust();
+	}
+
+	@Override
 	public boolean isWin(User that) {
 		boolean isScoreWin = isNotBust() && (that.isBust() || isScoreGreaterThan(that.getScore()));
 		boolean isBlackJackWin = isBlackJack() && that.isNotBlackJack();

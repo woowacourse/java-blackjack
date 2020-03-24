@@ -31,12 +31,6 @@ public class DealerTest {
 	}
 
 	@Test
-	void shouldAddCard() {
-		Dealer dealer = new Dealer();
-		assertThat(dealer.shouldAddCard()).isTrue();
-	}
-
-	@Test
 	void getFirstCard() {
 		Dealer dealer = new Dealer();
 		dealer.addCard(Card.of("스페이드", "A"));
@@ -96,5 +90,37 @@ public class DealerTest {
 		assertThat(dealer.isWin(player)).isFalse();
 		assertThat(dealer.isLose(player)).isTrue();
 		assertThat(dealer.isDraw(player)).isFalse();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가를_허용하고_받을_수_있는_경우() {
+		User user = new Dealer();
+		user.addCard(Card.of("하트", "10"));
+		user.addCard(Card.of("하트", "6"));
+		assertThat(user.shouldAddCard(true)).isTrue();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가를_허용하지_않고_받을_수_있는_경우() {
+		User user = new Dealer();
+		user.addCard(Card.of("하트", "10"));
+		user.addCard(Card.of("하트", "6"));
+		assertThat(user.shouldAddCard(false)).isFalse();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가는_허용하고_받을_수_없는_경우() {
+		User user = new Dealer();
+		user.addCard(Card.of("하트", "10"));
+		user.addCard(Card.of("하트", "7"));
+		assertThat(user.shouldAddCard(true)).isFalse();
+	}
+
+	@Test
+	void shouldAddCard_카드_추가는_허용하지_않고_받을_수_없는_경우() {
+		User user = new Dealer();
+		user.addCard(Card.of("하트", "10"));
+		user.addCard(Card.of("하트", "7"));
+		assertThat(user.shouldAddCard(false)).isFalse();
 	}
 }
