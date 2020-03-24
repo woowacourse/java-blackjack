@@ -15,15 +15,18 @@ import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
 import domain.gamer.Dealer;
+import domain.gamer.Money;
+import domain.gamer.Name;
 import domain.gamer.Player;
 
-class GameResultTypeTest {
+class GameResultTest {
 	private List<Player> players;
 	private Dealer dealer;
 
 	@BeforeEach
 	void setUp() {
-		players = Arrays.asList(new Player("pobi"), new Player("jason"));
+		players = Arrays.asList(new Player(new Name("pobi"), Money.of(10000)),
+			new Player(new Name("jason"), Money.of(5000)));
 		dealer = new Dealer();
 
 		players.get(0).hit(new Card(Symbol.TWO, Type.CLUB));
@@ -38,12 +41,11 @@ class GameResultTypeTest {
 	@DisplayName("게임 결과가 올바르게 생성되는지 확인")
 	void fromTest() {
 		GameResult gameResult = GameResult.of(players, dealer);
+		Map<Player, Profit> expected = new HashMap<>();
+		expected.put(players.get(0), new Profit(-10000));
+		expected.put(players.get(1), new Profit(5000));
 
-		Map<Player, ResultType> expected = new HashMap<>();
-		expected.put(players.get(0), ResultType.LOSE);
-		expected.put(players.get(1), ResultType.WIN);
-
-		assertThat(gameResult.getPlayersResult()).isEqualTo(expected);
+		assertThat(gameResult.getPlayerToProfit()).isEqualTo(expected);
 	}
 
 	@Test
@@ -51,11 +53,6 @@ class GameResultTypeTest {
 	void dealerResultTest() {
 		GameResult gameResult = GameResult.of(players, dealer);
 
-		Map<ResultType, Integer> expected = new HashMap<>();
-		expected.put(ResultType.LOSE, 1);
-		expected.put(ResultType.WIN, 1);
-
-		assertThat(gameResult.dealerResult()).isEqualTo(expected);
-
+		assertThat(gameResult.dealerResult()).isEqualTo(new Profit(5000));
 	}
 }

@@ -1,14 +1,13 @@
 package domain.result;
 
-import java.util.List;
 import java.util.Objects;
 
-import domain.card.Card;
-import domain.card.Symbol;
+import domain.gamer.Gamer;
 
 public class Score {
-	private static final int TEN = 10;
 	private static final int BLACKJACK_SCORE = 21;
+	private static final int ACE_BONUS_SCORE = 10;
+	public static final Score BLACKJACK = Score.from(BLACKJACK_SCORE);
 
 	private final int score;
 
@@ -16,29 +15,16 @@ public class Score {
 		this.score = score;
 	}
 
-	public static Score of(int score) {
+	public static Score from(int score) {
 		return new Score(score);
 	}
 
-	public static Score calculate(List<Card> cards) {
-		int rawScore = calculateRaw(cards);
-		if (containAce(cards) && rawScore + TEN <= BLACKJACK_SCORE) {
-			return new Score(rawScore + TEN);
+	public static Score from(Gamer gamer) {
+		int rawScore = gamer.calculateCardSum();
+		if (gamer.hasAce() && rawScore + ACE_BONUS_SCORE <= BLACKJACK_SCORE) {
+			return Score.from(rawScore + ACE_BONUS_SCORE);
 		}
-		return new Score(rawScore);
-	}
-
-	private static int calculateRaw(List<Card> cards) {
-		return cards.stream()
-			.map(Card::getSymbol)
-			.mapToInt(Symbol::getScore)
-			.sum();
-	}
-
-	private static boolean containAce(List<Card> cards) {
-		return cards.stream()
-			.map(Card::getSymbol)
-			.anyMatch(Symbol::isAce);
+		return Score.from(rawScore);
 	}
 
 	public boolean isBiggerThan(Score other) {
@@ -51,10 +37,6 @@ public class Score {
 
 	public boolean isLowerThan(Score other) {
 		return this.score < other.score;
-	}
-
-	public boolean isBust() {
-		return this.score > BLACKJACK_SCORE;
 	}
 
 	public int getScore() {

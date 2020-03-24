@@ -1,75 +1,68 @@
 package domain.gamer;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import domain.card.Card;
+import domain.card.Hand;
 import domain.result.Score;
+import domain.rule.Rule;
 
 public abstract class Gamer {
-	private final String name;
-	private final List<Card> cards;
+	private final Hand hand;
+	private final Name name;
 
-	public Gamer(String name) {
-		validate(name);
+	public Gamer(Name name) {
 		this.name = name;
-		this.cards = new ArrayList<>();
+		this.hand = Hand.fromEmpty();
 	}
 
-	private void validate(String name) {
-		validateNull(name);
-		validateSpace(name);
+	public boolean hasTwoCards() {
+		return hand.hasTwoCards();
 	}
-
-	private void validateNull(String name) {
-		if (Objects.isNull(name)) {
-			throw new NullPointerException("이름은 null이 될 수 없습니다.");
-		}
-	}
-
-	private void validateSpace(String name) {
-		if (name.trim().isEmpty()) {
-			throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-		}
-	}
-
-	protected abstract Score getHitPoint();
 
 	public void hit(Card card) {
-		cards.add(card);
+		hand.add(card);
+	}
+
+	public int calculateCardSum() {
+		return hand.calculate();
+	}
+
+	public boolean hasAce() {
+		return hand.hasAce();
 	}
 
 	public boolean canHit() {
-		return Score.calculate(cards).isLowerThan(getHitPoint());
+		return Rule.canHit(this);
 	}
 
-	public Score calculateScore() {
-		return Score.calculate(cards);
+	public boolean isBust() {
+		return Rule.isBust(this);
+	}
+
+	public boolean isNotBust() {
+		return Rule.isNotBust(this);
+	}
+
+	public boolean isBlackJack() {
+		return Rule.isBlackJack(this);
+	}
+
+	public boolean isNotBlackJack() {
+		return Rule.isNotBlackJack(this);
 	}
 
 	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
+		return hand.getCards();
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object)
-			return true;
-		if (object == null || getClass() != object.getClass())
-			return false;
-		Gamer that = (Gamer)object;
-		return Objects.equals(name, that.name) &&
-			Objects.equals(cards, that.cards);
+	public Score getScore() {
+		return Rule.calculateScore(this);
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(name, cards);
-	}
+	public abstract int getHitPoint();
 }
