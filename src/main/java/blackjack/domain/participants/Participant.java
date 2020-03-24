@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import static blackjack.domain.rule.BasicRule.*;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
@@ -19,7 +20,7 @@ public abstract class Participant {
     }
 
     public int score() {
-        return hand.calculate();
+        return Score.validate(hand.calculate());
     }
 
     public int countHand() {
