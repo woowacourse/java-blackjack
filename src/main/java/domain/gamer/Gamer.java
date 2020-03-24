@@ -28,13 +28,13 @@ public abstract class Gamer {
 
     private static void validateWhiteSpace(String name) {
         if (name.chars().anyMatch(Character::isWhitespace)) {
-            throw new WhiteSpaceNameException("공백 문자가 입력되었습니다.");
+            throw new WhiteSpaceNameException();
         }
     }
 
     private static void validateNullAndEmpty(String name) {
         if (Objects.isNull(name) || name.isEmpty()) {
-            throw new EmptyNameException("값을 올바르게 입력해주세요.");
+            throw new EmptyNameException();
         }
     }
 
@@ -80,7 +80,7 @@ public abstract class Gamer {
 
     public List<Card> getFirstCard() {
         if (playingCards.isEmpty()) {
-            throw new EmptyCardsException("카드가 한 장 이상 있어야 합니다.");
+            throw new EmptyCardsException();
         }
         return Collections.unmodifiableList(getCards().subList(0, MINIMUM_FIRST_CARD_COUNT));
     }

@@ -19,7 +19,7 @@ public class UserResponseTest {
     void valueOfWithException() {
         assertThatThrownBy(() -> UserResponse.of("a"))
                 .isInstanceOf(IllegalResponseException.class)
-                .hasMessage("값이 올바르지 않습니다.");
+                .hasMessage("값이 올바르지 않습니다. (입력 : a)");
     }
 
     @Test

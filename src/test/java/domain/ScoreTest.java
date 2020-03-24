@@ -28,7 +28,7 @@ public class ScoreTest {
     void valueOfException1() {
         assertThatThrownBy(() -> Score.valueOf(-1))
                 .isInstanceOf(NegativeScoreException.class)
-                .hasMessage("Score 값은 양수이어야 합니다.");
+                .hasMessage("Score 값은 양수이어야 합니다. (입력 : -1)");
     }
 
     @Test
