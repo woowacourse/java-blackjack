@@ -4,12 +4,17 @@ import domain.card.Card;
 
 import java.util.List;
 
-public class GamerCardsDto extends GamerBaseDto {
+public class GamerCardsDto {
+    private String name;
     private List<Card> cards;
 
     public GamerCardsDto(String name, List<Card> cards) {
-        super(name);
+        this.name = name;
         this.cards = cards;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Card> getCards() {
