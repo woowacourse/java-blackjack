@@ -9,7 +9,7 @@ public class Name {
 
     public Name(final String input) {
         validate(input);
-        this.name = input;
+        this.name = input.trim();
     }
 
     private void validate(String input) {
@@ -22,5 +22,7 @@ public class Name {
         return Objects.isNull(name) || name.trim().isEmpty();
     }
 
-
+    public String getName() {
+        return name;
+    }
 }

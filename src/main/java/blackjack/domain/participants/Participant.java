@@ -1,20 +1,46 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.rule.BasicRule.*;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
-public interface Participant {
-    void draw(Card card);
+public abstract class Participant {
+    protected final Hand hand;
+    private final Name name;
 
-    int score();
+    public Participant(final String input) {
+        this.hand = new Hand();
+        this.name = new Name(input);
+    }
 
-    void drawMoreCard(Deck deck);
+    public void draw(final Card card) {
+        hand.add(card);
+    }
 
-    boolean isDealer();
+    public int score() {
+        return hand.calculate();
+    }
 
-    String handStatus();
+    public int countHand() {
+        return hand.size();
+    }
 
-    String getName();
+    public boolean isBust() {
+        return score() > BUST_LIMIT;
+    }
 
-    int countHand();
+    public boolean isBlackjack() {
+        return score() == BUST_LIMIT && countHand() == BLACK_JACK_CARD_SIZE;
+    }
+
+    public String handStatus() {
+        return hand.toString();
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public abstract void drawMoreCard(final Deck deck);
 }

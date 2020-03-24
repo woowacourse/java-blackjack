@@ -1,79 +1,15 @@
 package blackjack.domain.participants;
 
-import java.util.Objects;
-
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.exceptions.InvalidPlayerException;
 
-public class Player implements Participant {
-    private final Hand hand;
-    private final String name;
+public class Player extends Participant {
 
-    public Player(final String name) {
-        validate(name);
-        this.name = name.trim();
-        this.hand = new Hand();
+    public Player(String input) {
+        super(input);
     }
 
-    private void validate(final String name) {
-        if (isNullOrEmpty(name)) {
-            throw new InvalidPlayerException("빈 칸 또는 null 값이 들어올 수 없습니다.");
-        }
-    }
-
-    private boolean isNullOrEmpty(final String name) {
-        return Objects.isNull(name) || name.trim().isEmpty();
-    }
-
-    @Override
-    public int score() {
-        return hand.calculate();
-    }
-
-    @Override
     public void drawMoreCard(final Deck deck) {
         draw(deck.pop());
     }
 
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
-    public String handStatus() {
-        return hand.toString();
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int countHand() {
-        return hand.size();
-    }
-
-    @Override
-    public void draw(final Card card) {
-        hand.add(card);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Player player = (Player)o;
-        return Objects.equals(hand, player.hand) &&
-            Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(hand, name);
-    }
 }

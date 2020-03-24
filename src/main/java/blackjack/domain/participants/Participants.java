@@ -1,12 +1,9 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Deck;
-import blackjack.exceptions.InvalidParticipantsException;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import blackjack.domain.card.Deck;
 
 public class Participants {
     public static final int FIRST_CARDS_COUNT = 2;
