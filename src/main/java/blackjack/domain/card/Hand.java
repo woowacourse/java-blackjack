@@ -9,7 +9,6 @@ import java.util.Objects;
 
 public class Hand {
 
-    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> hand = new ArrayList<>();
 
@@ -32,7 +31,7 @@ public class Hand {
 
     public boolean isBlackJack() {
         Score score = sumScore();
-        return score.isMaxValue() && hand.size() == BLACKJACK_CARD_SIZE;
+        return score.isBlackjack(hand.size());
     }
 
     private Score sumScore() {

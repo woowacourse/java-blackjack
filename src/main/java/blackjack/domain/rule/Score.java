@@ -11,6 +11,7 @@ public class Score {
     private static final int BUSTED = 0;
     private static final int ACE_NUMBER_GAP = 10;
     private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final Map<Integer, Score> SCORE_MATCHER;
 
     private int score;
@@ -43,8 +44,8 @@ public class Score {
         return score == BUSTED;
     }
 
-    public boolean isMaxValue() {
-        return score == BLACKJACK;
+    public boolean isBlackjack(int sizeOfHand) {
+        return score == BLACKJACK && sizeOfHand == BLACKJACK_CARD_SIZE;
     }
 
     public int getScore() {
