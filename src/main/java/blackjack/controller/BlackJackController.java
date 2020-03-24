@@ -21,9 +21,8 @@ public class BlackJackController {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.input());
-        MoneyResult moneyResult = new MoneyResult();
 
-        players.initMoney(inputMoneys(players), moneyResult);
+        MoneyResult moneyResult = players.initMoney(inputMoneys(players));
         Participants participants = initParticipants(dealer, players);
 
         initialPhase(deck, participants);
