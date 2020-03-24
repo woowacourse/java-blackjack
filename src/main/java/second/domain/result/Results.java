@@ -1,42 +1,56 @@
 package second.domain.result;
 
 import second.domain.gamer.Dealer;
+import second.domain.gamer.Money;
 import second.domain.gamer.Player;
 
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingInt;
+import java.util.stream.Collectors;
 
 public class Results {
-    private final Map<ResultType, List<Player>> playerResults;
-    private final Map<ResultType, Integer> dealerResults;
+    private final List<Result> playerResults;
+    private final Result dealerResult;
 
     private Results(final List<Player> players, final Dealer dealer) {
         this.playerResults = generatePlayerResults(players, dealer);
-        this.dealerResults = generateDealerResult(players, dealer);
+        this.dealerResult = generateDealerResult(this.playerResults, dealer);
     }
 
-    public static Results generate(final List<Player> players, final Dealer dealer) {
+    public static Results of(final List<Player> players, final Dealer dealer) {
         return new Results(players, dealer);
     }
 
-    private Map<ResultType, List<Player>> generatePlayerResults(final List<Player> players, final Dealer dealer) {
+    private List<Result> generatePlayerResults(final List<Player> players, final Dealer dealer) {
         return players.stream()
-                .collect(groupingBy(player -> ResultType.from(player, dealer)));
+                .map(player -> generateResult(dealer, player))
+                .collect(Collectors.toList());
     }
 
-    private Map<ResultType, Integer> generateDealerResult(final List<Player> players, final Dealer dealer) {
-        return players.stream()
-                .collect(groupingBy(player -> ResultType.from(dealer, player), summingInt(x -> 1)));
+    private Result generateResult(Dealer dealer, Player player) {
+        return new Result(
+                player.getName(),
+                player.calculateProfit(calculateProfitMultipleValue(dealer, player))
+        );
     }
 
-    public Map<ResultType, List<Player>> getPlayerResults() {
+    private double calculateProfitMultipleValue(Dealer dealer, Player player) {
+        return ResultType.of(player, dealer).getProfitMultipleValue();
+    }
+
+    private Result generateDealerResult(final List<Result> playersResults, final Dealer dealer) {
+        int dealerProfit = 0;
+        for (Result result : playersResults) {
+            dealerProfit += result.getMoney().getValue();
+        }
+
+        return new Result(dealer.getName(), new Money(-dealerProfit));
+    }
+
+    public List<Result> getPlayerResults() {
         return playerResults;
     }
 
-    public Map<ResultType, Integer> getDealerResult() {
-        return dealerResults;
+    public Result getDealerResult() {
+        return dealerResult;
     }
 }

@@ -2,14 +2,17 @@ package second.domain.score;
 
 import java.util.Objects;
 
-import static second.domain.score.ScoreCalculator.BLACK_JACK_SCORE;
-
 public class Score {
     private static final int BURST_SCORE = 0;
+    static final int BLACK_JACK_MAX_SCORE = 21;
 
     private final int value;
 
     public Score(final int value) {
+        if (value > BLACK_JACK_MAX_SCORE) {
+            this.value = BURST_SCORE;
+            return;
+        }
         this.value = value;
     }
 
@@ -18,18 +21,19 @@ public class Score {
     }
 
     public Score plus(final Score value) {
-        return plus(this.value + value.value);
+        return new Score(this.value + value.value);
     }
 
-    public Score plus(final int value) {
-        if (this.value + value > BLACK_JACK_SCORE.value) {
-            return new Score(BURST_SCORE);
-        }
-        return new Score(this.value + value);
+    public boolean isMaxScore() {
+        return this.value == BLACK_JACK_MAX_SCORE;
     }
 
-    public boolean isBust() {
+    public boolean isBurst() {
         return this.value == BURST_SCORE;
+    }
+
+    public boolean isSameAs(Score score) {
+        return this.value == score.value;
     }
 
     public int getValue() {

@@ -1,5 +1,6 @@
 package second.domain.gamer;
 
+import second.domain.BlackJackRule;
 import second.domain.card.Card;
 import second.domain.card.HandCards;
 import second.domain.score.Score;
@@ -8,12 +9,14 @@ import second.domain.score.ScoreCalculator;
 public abstract class Gamer {
     private final String name;
     private final HandCards handCards;
+    private final Money money;
     private Score score;
 
-    public Gamer(final String name, final HandCards handCards) {
+    public Gamer(final String name, final HandCards handCards, final Money money) {
         this.name = name;
         this.handCards = handCards;
-        this.score = ScoreCalculator.calculate(handCards);
+        this.score = new Score(0);
+        this.money = money;
     }
 
     public abstract boolean canDrawMore();
@@ -26,15 +29,25 @@ public abstract class Gamer {
         return isLargerScoreThan(gamer.score);
     }
 
-    public void draw(final Card card) {
-        final Card drawCard = card;
-        handCards.drawCard(drawCard);
+    public boolean isBlackJack() {
+        return BlackJackRule.isBlackJack(handCards, score);
+    }
 
-        score = score.plus(drawCard.extractScore());
+    public void draw(final Card card) {
+        handCards.drawCard(card);
+        score = ScoreCalculator.calculate(handCards);
     }
 
     public boolean isBust() {
-        return score.isBust();
+        return score.isBurst();
+    }
+
+    public boolean isSameScoreAs(Gamer counterGamer) {
+        return score.isSameAs(counterGamer.score);
+    }
+
+    public Money calculateProfit(double value) {
+        return this.money.times(value);
     }
 
     public String getName() {

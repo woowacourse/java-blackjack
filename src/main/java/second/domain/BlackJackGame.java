@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BlackJackGame {
-    private static final int INITIAL_CARD_AMOUNT = 2;
+    public static final int INITIAL_CARD_AMOUNT = 2;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -42,24 +42,24 @@ public class BlackJackGame {
             turn(playerDecisions, player);
             playerDecisions.hands(player);
         }
-        turn(dealer);
+        draw(dealer);
     }
 
-    private void turn(final PlayerDecisions playerDecisions, final Player player) {
-        while (playerDecisions.isHit(player) && player.canDrawMore()) {
-            turn(player);
+    private void turn(final PlayerDecisions playerDecisions, final Gamer gamer) {
+        while (gamer.canDrawMore()) {
+            if (!playerDecisions.isHit(gamer))
+                break;
+            draw(gamer);
+            playerDecisions.hands(gamer);
         }
     }
 
-    private void turn(final Gamer gamer) {
-        if (!gamer.canDrawMore()) {
-            return;
-        }
+    private void draw(Gamer gamer) {
         gamer.draw(cardDeck.pickCard());
     }
 
     public Results calculateResults() {
-        return Results.generate(players, dealer);
+        return Results.of(players, dealer);
     }
 
     public List<Player> getPlayers() {

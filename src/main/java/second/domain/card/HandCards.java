@@ -34,6 +34,10 @@ public class HandCards {
                 .sum();
     }
 
+    public boolean hasSizeOf(int size) {
+        return cards.size() == size;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
