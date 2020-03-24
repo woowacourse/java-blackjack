@@ -2,23 +2,20 @@ package domain.user;
 
 public class Dealer extends User {
 
-    private static final String DEALER = "딜러";
+    public static final String NAME = "딜러";
     private static final int PIVOT = 17;
 
     private Dealer() {
-        super(DEALER);
+        super(NAME);
     }
 
     public static Dealer appoint() {
         return new Dealer();
     }
 
-    public String getFirstCard() {
-        return cards.get(0).getName();
-    }
-
     @Override
     public boolean isAvailableToDraw() {
-        return !isBust() && !isBlackJack() && !isBlackJackPoint() && calculatePoint() < PIVOT;
+        return !cards.areBust() && !cards.areBlackJack() && !cards.areBlackJackPoint()
+                && cards.calculatePoint() < PIVOT;
     }
 }

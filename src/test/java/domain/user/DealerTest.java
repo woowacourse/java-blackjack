@@ -1,8 +1,8 @@
 package domain.user;
 
-import domain.deck.Card;
-import domain.deck.Symbol;
-import domain.deck.Type;
+import domain.card.Card;
+import domain.card.Symbol;
+import domain.card.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,21 +29,13 @@ class DealerTest {
         assertThat(Dealer.appoint()).isNotNull();
     }
 
-    @Test
-    @DisplayName("첫 카드 분배 결과")
-    void getFirstCard() {
-        dealer.draw(new Card(Symbol.CLOVER, Type.EIGHT));
-        dealer.draw(new Card(Symbol.DIAMOND, Type.ACE));
-
-        assertThat(dealer.getFirstCard()).isEqualTo("8클로버");
-    }
-
     @ParameterizedTest
     @DisplayName("딜러 기준 드로우 가능한지 확인")
     @MethodSource("createOption")
     void isAvailableToDraw(Card card, boolean expected) {
         dealer.draw(new Card(Symbol.CLOVER, Type.TEN));
-        dealer.draw(card);
+
+        dealer.cards.add(card);
 
         assertThat(dealer.isAvailableToDraw()).isEqualTo(expected);
     }

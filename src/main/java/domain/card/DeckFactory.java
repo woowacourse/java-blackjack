@@ -1,20 +1,20 @@
-package domain.deck;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeckFactory {
 
-    private static final Deck deck = createDeck();
+    private static List<Card> DECK_CARDS = createDeckCards();
 
-    private static Deck createDeck() {
+    private static List<Card> createDeckCards() {
         List<Card> cards = new ArrayList<>();
 
         for (Symbol symbol : Symbol.values()) {
             cards.addAll(createCard(symbol));
         }
 
-        return new Deck(cards);
+        return cards;
     }
 
     private static List<Card> createCard(Symbol symbol) {
@@ -27,7 +27,7 @@ public class DeckFactory {
         return cards;
     }
 
-    public static Deck getDeck() {
-        return deck;
+    public static Deck createDeck() {
+        return new Deck(DECK_CARDS);
     }
 }

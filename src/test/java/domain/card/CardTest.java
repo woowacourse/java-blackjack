@@ -1,14 +1,14 @@
-package domain.deck;
-
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
+package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CardTest {
 
@@ -36,11 +36,5 @@ class CardTest {
     void getPoint() {
         Card card = new Card(Symbol.SPADE, Type.FIVE);
         assertThat(card.getPoint()).isEqualTo(5);
-    }
-
-    @Test
-    void getName() {
-        Card card = new Card(Symbol.SPADE, Type.QUEEN);
-        assertThat(card.getName()).isEqualTo("Q스페이드");
     }
 }

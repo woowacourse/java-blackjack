@@ -1,19 +1,19 @@
-package domain.deck;
+package domain.card;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 class DeckTest {
 
     @Test
     @DisplayName("생성 확인")
     void create() {
-        assertThatCode(DeckFactory::getDeck)
+        assertThatCode(DeckFactory::createDeck)
                 .doesNotThrowAnyException();
     }
 
@@ -45,7 +45,7 @@ class DeckTest {
     @Test
     @DisplayName("카드 한장을 분배")
     void dealOut() {
-        Deck deck = DeckFactory.getDeck();
+        Deck deck = DeckFactory.createDeck();
         assertThat(deck.dealOut()).isExactlyInstanceOf(Card.class);
     }
 }
