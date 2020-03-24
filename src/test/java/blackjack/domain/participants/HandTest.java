@@ -27,7 +27,7 @@ public class HandTest {
         Card.from(Suit.CLUB, Rank.JACK),
         Card.from(Suit.SPADE, Rank.ACE)
     );
-    public static final List<Card> CARDS_21_ACE_AS_ELEVEN = Arrays.asList(
+    public static final List<Card> CARDS_21_BLACKJACK = Arrays.asList(
         Card.from(Suit.SPADE, Rank.ACE),
         Card.from(Suit.SPADE, Rank.KING)
     );
@@ -55,7 +55,7 @@ public class HandTest {
                 CARDS_21_ACE_AS_ONE, 21
             ),
             Arguments.of("ACE가 11로 계산되는 경우",
-                CARDS_21_ACE_AS_ELEVEN, 21
+                CARDS_21_BLACKJACK, 21
             ),
             Arguments.of("Busted의 경우",
                 CARDS_22_BUSTED, 22

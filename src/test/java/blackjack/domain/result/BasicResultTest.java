@@ -14,7 +14,7 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.rule.BasicRule;
+import blackjack.domain.rule.MoneyRule;
 
 public class BasicResultTest {
 
@@ -38,15 +38,15 @@ public class BasicResultTest {
         BasicResult basicResult = new BasicResult();
         basicResult.judge(participants);
 
-        Map<BasicRule, Integer> dealerResult = basicResult.getDealerResult();
-        Map<Participant, BasicRule> playerResults = basicResult.getPlayerResults();
+        Map<MoneyRule, Integer> dealerResult = basicResult.getDealerResult();
+        Map<Participant, MoneyRule> playerResults = basicResult.getPlayerResults();
 
-        assertThat(dealerResult.get(BasicRule.WIN)).isEqualTo(1);
-        assertThat(dealerResult.get(BasicRule.DRAW)).isEqualTo(1);
-        assertThat(dealerResult.get(BasicRule.LOSE)).isEqualTo(1);
+        assertThat(dealerResult.get(MoneyRule.WIN)).isEqualTo(1);
+        assertThat(dealerResult.get(MoneyRule.DRAW)).isEqualTo(1);
+        assertThat(dealerResult.get(MoneyRule.LOSE)).isEqualTo(1);
 
-        assertThat(playerResults.get(pobi)).isEqualTo(BasicRule.WIN);
-        assertThat(playerResults.get(jason)).isEqualTo(BasicRule.DRAW);
-        assertThat(playerResults.get(bingbong)).isEqualTo(BasicRule.LOSE);
+        assertThat(playerResults.get(pobi)).isEqualTo(MoneyRule.WIN);
+        assertThat(playerResults.get(jason)).isEqualTo(MoneyRule.DRAW);
+        assertThat(playerResults.get(bingbong)).isEqualTo(MoneyRule.LOSE);
     }
 }
