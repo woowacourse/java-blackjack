@@ -1,59 +1,75 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import blackjack.domain.game.Result;
+import blackjack.domain.game.ScoreRule;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
-    private static final int MAX_VALID_SUM = 21;
-    private static final int BUSTED_VAL_RESET = 0;
     protected final String name;
-    protected UserCards cards = new UserCards(new LinkedList<>());
+    protected final List<Card> cards;
+    protected Money money;
+
+    public User(String name, Money money) {
+        Objects.requireNonNull(name, "name이 null일 수 없습니다");
+        Objects.requireNonNull(money, "money가 null일 수 없습니다");
+
+        this.name = name;
+        this.cards = new LinkedList<>();
+        this.money = money;
+    }
+
+    public User(String name, int money) {
+        this(name, new Money(money));
+    }
 
     public User(String name) {
-        validateUserName(name);
-        this.name = name;
-    }
-
-    private void validateUserName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 필수입니다");
-        }
-    }
-
-    public void receiveInitialCards(List<Card> initialCards) {
-        Objects.requireNonNull(initialCards, "초기 카드는 필수입니다");
-        cards.addCard(initialCards);
+        this(name, 0);
     }
 
     public void receiveCard(Card card) {
-        Objects.requireNonNull(card, "카드는 필수입니다");
-        cards.addCard(card);
+        cards.add(card);
     }
 
-    public int getTotalScore() {
-        return cards.calculateTotalScore();
+    public void receiveInitialCards(List<Card> initialCards) {
+        Objects.requireNonNull(initialCards);
+        this.cards.addAll(initialCards);
+    }
+
+    public void addMoney(Money profit) {
+        this.money = this.money.add(profit);
+    }
+
+    public Money getProfit(Result result) {
+        return this.money.multiply(result.getRate());
     }
 
     public boolean isBusted() {
-        return cards.calculateTotalScore() == BUSTED_VAL_RESET;
+        return ScoreRule.isBusted(cards);
     }
 
     public boolean isBlackJack() {
-        return cards.getCards().size() == Deck.NUM_OF_INITIAL_CARDS
-                && cards.calculateTotalScore() == MAX_VALID_SUM;
+        return ScoreRule.isBlackjack(cards);
+    }
+
+    public int compareScore(User user) {
+        return this.getTotalScore() - user.getTotalScore();
     }
 
     public String getName() {
         return this.name;
     }
 
-    public abstract List<Card> getInitialCards();
+    public int getTotalScore() {
+        return ScoreRule.calculateTotalScore(cards);
+    }
 
     public List<Card> getCards() {
-        return this.cards.getCards();
+        return this.cards;
     }
+
+    public abstract List<Card> getInitialCards();
 }

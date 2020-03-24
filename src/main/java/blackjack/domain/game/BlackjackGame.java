@@ -1,47 +1,67 @@
 package blackjack.domain.game;
 
-import blackjack.domain.Result;
-import blackjack.domain.TotalResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Users;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class BlackjackGame {
+    public static final int INITIAL_CARDS = 2;
 
-    private Users users;
-    private Deck deck;
+    private final Dealer dealer;
+    private final List<Player> players;
+    private final Deck deck;
 
-    public BlackjackGame(Users users, Deck deck) {
-        Objects.requireNonNull(users, "users가 null입니다");
-        Objects.requireNonNull(deck, "deck이 null입니다");
-        this.users = users;
+    public BlackjackGame(Dealer dealer, List<Player> players, Deck deck) {
+        Objects.requireNonNull(dealer, "dealer가 null일 수 없습니다");
+        Objects.requireNonNull(players, "players가 null일 수 없습니다");
+        Objects.requireNonNull(deck, "deck이 null일 수 없습니다");
+        this.dealer = dealer;
+        this.players = Collections.unmodifiableList(players);
         this.deck = deck;
     }
 
+    public BlackjackGame(List<Player> players, Deck deck) {
+        this(new Dealer(), players, deck);
+    }
+
     public void distributeInitialCards() {
-        users.getUsers()
-                .forEach(t -> t.receiveInitialCards(deck.drawInitialCards()));
+        dealer.receiveInitialCards(deck.draw(INITIAL_CARDS));
+        players.forEach(t -> t.receiveInitialCards(deck.draw(INITIAL_CARDS)));
     }
 
-    public TotalResult calculateAllResult(Users users) {
-        Dealer dealer = users.getDealer();
-        Map<Player, Result> totalResult = new LinkedHashMap<>();
-        users.getPlayer()
-                .forEach(player -> totalResult.put(player, Result.of(dealer, player)));
-        return new TotalResult(totalResult);
+    public boolean isDealerUnderThreshold() {
+        return dealer.isUnderThreshold();
     }
 
-    public boolean decideDealerToHitCard() {
-        Dealer dealer = users.getDealer();
-        if (dealer.isUnderThreshold()) {
-            dealer.receiveCard(deck.draw());
-            return true;
-        }
-        return false;
+    public void dealerHitsAdditionalCard() {
+        dealer.receiveCard(deck.draw());
+    }
+
+    public void hitCard(Player player) {
+        player.receiveCard(deck.draw());
+    }
+
+    public boolean isDealerBlackJack() {
+        return dealer.isBlackJack();
+    }
+
+    public TotalResult calculateResultsPerPlayer() {
+        return new TotalResult(players, dealer);
+    }
+
+    public void updateUserMoney() {
+        TotalResult totalResult = calculateResultsPerPlayer();
+        totalResult.getResult().forEach((player, result) -> player.addMoney(player.getProfit(result)));
+        dealer.addMoney(totalResult.calculateDealerProfit());
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

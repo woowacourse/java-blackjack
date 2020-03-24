@@ -17,12 +17,26 @@ public class Card {
         return symbol.getScore();
     }
 
+    public boolean isAce() {
+        return this.symbol.isAce();
+    }
+
     @Override
     public String toString() {
         return suit.getName() + symbol.getName();
     }
 
-    public boolean isAce() {
-        return this.symbol.isAce();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return suit == card.suit &&
+                symbol == card.symbol;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, symbol);
     }
 }

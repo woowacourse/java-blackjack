@@ -9,8 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -39,31 +39,22 @@ public class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 하나만 표시하는지 확인")
     void displayDealerCardInfo() {
-        Card card1 = new Card(Suit.SPADE, Symbol.JACK);
-        Card card2 = new Card(Suit.DIAMOND, Symbol.THREE);
-        List<Card> cards = Arrays.asList(card1, card2);
+        List<Card> cards = Arrays.asList(
+                new Card(Suit.SPADE, Symbol.JACK),
+                new Card(Suit.DIAMOND, Symbol.THREE)
+        );
         Dealer dealer = new Dealer();
         dealer.receiveInitialCards(cards);
-        assertThat(dealer.getInitialCards()).containsExactly(card1);
+        assertThat(dealer.getInitialCards())
+                .isEqualTo(Collections.singletonList(new Card(Suit.SPADE, Symbol.JACK)));
     }
 
     @ParameterizedTest
     @DisplayName("딜러의 카드 합이 16 이하인지 확인")
     @MethodSource("generateStandardDealer")
-    void scoreUnderSixteenTest(List<Card> userCards, boolean expected) {
+    void scoreUnderSixteenTest(List<Card> cards, boolean expected) {
         Dealer dealer = new Dealer();
-        dealer.receiveInitialCards(userCards);
+        dealer.receiveInitialCards(cards);
         assertThat(dealer.isUnderThreshold()).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("딜러의 카드 합이 21을 초과하면 BUSTED로 표시되는지 확인")
-    void totalScoreOver21Busted() {
-        Dealer dealer = new Dealer();
-        dealer.receiveInitialCards(new ArrayList<>(Arrays.asList(
-                new Card(Suit.CLUB, Symbol.JACK),
-                new Card(Suit.SPADE, Symbol.SIX))));
-        dealer.receiveCard(new Card(Suit.DIAMOND, Symbol.QUEEN));
-        assertThat(dealer.isBusted()).isTrue();
     }
 }

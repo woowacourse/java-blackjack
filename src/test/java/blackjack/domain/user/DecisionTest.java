@@ -21,6 +21,7 @@ public class DecisionTest {
     @DisplayName("잘못된 값이 입력됐을 때 exception 확인")
     void wrongInput(String value) {
         assertThatThrownBy(() -> Decision.chosenBy(value))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("올바르지 않은 입력");
     }
 }

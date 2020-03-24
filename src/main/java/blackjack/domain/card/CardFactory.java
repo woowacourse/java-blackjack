@@ -29,7 +29,8 @@ public class CardFactory {
         return CardFactory.instance;
     }
 
-    public List<Card> issueNewCards() {
+    public List<Card> issueNewDeck() {
         return new LinkedList<>(cards);
     }
+
 }

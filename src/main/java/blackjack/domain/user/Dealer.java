@@ -6,24 +6,20 @@ import java.util.List;
 
 public class Dealer extends User {
 
-    public static final String DEALER = "딜러";
+    private static final String DEALER = "딜러";
     public static final int THRESHOLD = 16;
-    public static final int INITIAL_SHOW_CARD_AMOUNT = 1;
+    private static final int CARD_SHOW_LIMIT = 1;
 
     public Dealer() {
         super(DEALER);
     }
 
-    public boolean isUnderThreshold() {
-        return cards.calculateTotalScore() <= THRESHOLD;
-    }
-
-    public int compareScoreWith(Player player) {
-        return this.getTotalScore() - player.getTotalScore();
-    }
-
     @Override
     public List<Card> getInitialCards() {
-        return this.cards.getCards(INITIAL_SHOW_CARD_AMOUNT);
+        return this.cards.subList(0, CARD_SHOW_LIMIT);
+    }
+
+    public boolean isUnderThreshold() {
+        return (this.getTotalScore() <= THRESHOLD && !this.isBusted());
     }
 }

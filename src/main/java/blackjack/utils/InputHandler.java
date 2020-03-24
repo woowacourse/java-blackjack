@@ -1,11 +1,5 @@
 package blackjack.utils;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.user.User;
-import blackjack.domain.user.Users;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,15 +14,15 @@ public class InputHandler {
 
     public static List<String> parseName(String input) {
         validateNullOrEmptyName(input);
-        List<String> names = Arrays.asList(splitNames(input));
+        List<String> names = splitNames(input);
         validateDuplicatedName(names);
         return names;
     }
 
-    private static String[] splitNames(String input) {
-        return input.trim()
+    private static List<String> splitNames(String input) {
+        return Arrays.asList(input.trim()
                 .replace(SPACE, BLANK)
-                .split(DELIMITER);
+                .split(DELIMITER));
     }
 
     private static void validateNullOrEmptyName(String input) {
@@ -40,22 +34,6 @@ public class InputHandler {
     private static void validateDuplicatedName(List<String> names) {
         if (names.size() != new HashSet<>(names).size()) {
             throw new IllegalArgumentException(NAME_DUPLICATED);
-        }
-    }
-
-    public static void hitMoreCard(Users users, Deck deck) {
-        users.getPlayer()
-                .forEach(user -> askForHit(deck, user));
-    }
-
-    private static void askForHit(Deck deck, User user) {
-        while (InputView.askForHit(user.getName())) {
-            user.receiveCard(deck.draw());
-            OutputView.printCardStatus(user);
-            if (user.isBusted()) {
-                OutputView.printBusted(user.getName());
-                break;
-            }
         }
     }
 }
