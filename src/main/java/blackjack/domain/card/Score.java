@@ -32,16 +32,12 @@ public final class Score {
 		return new Score(this.score + other.score);
 	}
 
-	public boolean isUnder(int number) {
-		return score < number;
-	}
-
-	public boolean isOver(int number) {
-		return score > number;
+	public boolean isUnder(Score other) {
+		return score < other.score;
 	}
 
 	public boolean isOver(Score other) {
-		return isOver(other.score);
+		return score > other.score;
 	}
 
 	public int getScore() {

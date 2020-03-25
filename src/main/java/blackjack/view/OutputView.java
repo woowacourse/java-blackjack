@@ -1,9 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.Playable;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.Results;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultType;
+import blackjack.domain.result.Results;
+import blackjack.domain.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,11 @@ public final class OutputView {
 
 	private static void printStartInfoHead(Playable dealer, Players players) {
 		String playerNames = players.getPlayers().stream()
-				.map(Playable::getName)
+				.map((player) -> player.getName().getString())
 				.collect(Collectors.joining(", "));
 
 		System.out.printf("%s와 %s에게 %d장을 나누었습니다." + NEW_LINE,
-				dealer.getName(), playerNames, dealer.countCards());
+				dealer.getName().getString(), playerNames, dealer.getHand().getHand().size());
 	}
 
 	private static void printAllPlayerCards(Players players) {
@@ -36,7 +37,7 @@ public final class OutputView {
 
 	public static void printPlayerCard(Playable player) {
 		String userCards = createPlayerStartCardInfo(player);
-		System.out.printf("%s : %s" + NEW_LINE, player.getName(), userCards);
+		System.out.printf("%s : %s" + NEW_LINE, player.getName().getString(), userCards);
 
 		printIfBust(player);
 	}
@@ -55,7 +56,7 @@ public final class OutputView {
 	}
 
 	private static void printIfBust(Playable player) {
-		if (player.isBust()) {
+		if (player.getHand().isBust()) {
 			System.out.println(BUST_MESSAGE);
 		}
 	}
@@ -70,45 +71,48 @@ public final class OutputView {
 			String score = createResultScore(player);
 
 			System.out.printf("%s : %s - 결과: %s" + NEW_LINE,
-					player.getName(), userCards, score);
+					player.getName().getString(), userCards, score);
 		}
 	}
 
 	private static String createPlayerCardInfo(Playable player) {
-		return player.getHand().stream()
+		return player.getHand().getHand().stream()
 				.map(Card::getName)
 				.collect(Collectors.joining(", "));
 	}
 
 	private static String createResultScore(Playable player) {
-		if (player.isBust()) {
+		if (player.getHand().isBust()) {
 			return "bust";
 		}
-		return String.valueOf(player.getScore().getScore());
+		return String.valueOf(player.getHand().computeScore().getScore());
 	}
 
 	public static void printResult(Results results) {
 		System.out.println("## 최종 승패");
 		System.out.println("딜러" + " : " + createDealerResult(results));
-		for (Playable player : results.getPlayerResults().keySet()) {
-			System.out.println(createPlayerResult(player, results));
+		for (Result result : results.getResults()) {
+			System.out.printf("%s : %s\n", result.getPlayable().getName().getString(),
+					boolToResultWord(result.getResultType()));
 		}
 	}
 
 	private static String createDealerResult(Results results) {
-		return String.format("%d승 %d패",
-				results.getDealerWin(), results.getDealerLose());
+		return String.format("%d승 %d무 %d패",
+				results.getDealerWin(), results.getDealerDraw(), results.getDealerLose());
 	}
 
-	private static String createPlayerResult(Playable player, Results results) {
-		String resultWord = boolToResultWord(results.getResult(player));
-		return String.format("%s : %s", player.getName(), resultWord);
+	private static String boolToResultWord(ResultType resultType) {
+		return resultType.getResultString();
 	}
 
-	private static String boolToResultWord(boolean bool) {
-		if (bool) {
-			return "승";
+	public static void printGameResultMonies(Results results) {
+		System.out.println("## 최종수익");
+		System.out.printf("%s: %f\n", Playable.DEALER_NAME, results.getDealerMoney());
+		for (Result result : results.getResults()) {
+			System.out.printf("%s: %f\n", result.getPlayable().getName().getString(),
+					result.getResultType().computeResultAmount(
+							((Player)result.getPlayable()).getMoney().getAmount()));
 		}
-		return "패";
 	}
 }

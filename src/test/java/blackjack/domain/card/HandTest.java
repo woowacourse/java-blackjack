@@ -1,127 +1,83 @@
 package blackjack.domain.card;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static blackjack.domain.testAssistant.TestFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
-	private static Card aceSpade;
-	private static Card twoClub;
-	private static Card sixDiamond;
-	private static Card tenClub;
-	private static Card jackHeart;
-
-	private Hand hand;
-
-	@BeforeAll
-	static void beforeAll() {
-		aceSpade = Card.of(Symbol.ACE, Type.SPADE);
-		twoClub = Card.of(Symbol.TWO, Type.CLUB);
-		sixDiamond = Card.of(Symbol.SIX, Type.DIAMOND);
-		tenClub = Card.of(Symbol.TEN, Type.CLUB);
-		jackHeart = Card.of(Symbol.JACK, Type.HEART);
-	}
-
-	@BeforeEach
-	void setUp() {
-		hand = new Hand();
-	}
-
+	@DisplayName("Hand()가 인스턴스를 반환하는지 테스트")
 	@Test
 	void Hand_IsNotNull() {
+		Hand hand = createHand();
+
 		assertThat(hand).isNotNull();
 	}
 
+	@DisplayName("add()가 hand에 카드를 추가하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("add_Card_AddCardToHand")
-	void add_Card_AddCardToHand(Card card) {
+	void add_Card_AddCardToHand(Hand hand, Card card, Hand expect) {
 		hand.add(card);
-		assertThat(hand.getHand()).isEqualTo(Collections.singletonList(card));
+
+		assertThat(hand).isEqualTo(expect);
 	}
 
-	static Stream<Card> add_Card_AddCardToHand() {
-		return Stream.of(aceSpade, twoClub, sixDiamond, tenClub, jackHeart);
+	static Stream<Arguments> add_Card_AddCardToHand() {
+		return Stream.of(
+				Arguments.of(createHand(),
+						createCard("ACE,SPADE"),
+						createHand("ACE,SPADE")),
+				Arguments.of(createHand("ACE,SPADE"),
+						createCard("TWO,CLUB"),
+						createHand("ACE,SPADE", "TWO,CLUB"))
+		);
 	}
 
-	@ParameterizedTest
-	@MethodSource("add_TwoCards_AddTwoCardsToHand")
-	void add_TwoCards_AddTwoCardsToHand(List<Card> cards) {
-		for (Card card : cards) {
-			hand.add(card);
-		}
-		assertThat(hand.getHand()).isEqualTo(cards);
-	}
-
-	static Stream<List<Card>> add_TwoCards_AddTwoCardsToHand() {
-		return Stream.of(Arrays.asList(aceSpade, twoClub),
-				Arrays.asList(sixDiamond, tenClub),
-				Arrays.asList(jackHeart, jackHeart));
-	}
-
+	@DisplayName("addAll()가 카드를 추가하는지 테스트")
 	@ParameterizedTest
 	@MethodSource("addAll_Cards_AddAllToHand")
-	void addAll_Cards_AddAllToHand(List<Card> cards) {
+	void addAll_Cards_AddAllToHand(Hand hand, List<Card> cards, Hand expect) {
 		hand.addAll(cards);
-		assertThat(hand.getHand()).isEqualTo(cards);
+
+		assertThat(hand).isEqualTo(expect);
 	}
 
-	static Stream<List<Card>> addAll_Cards_AddAllToHand() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(sixDiamond, tenClub),
-				Arrays.asList(aceSpade, sixDiamond, tenClub, twoClub, jackHeart, jackHeart));
+	static Stream<Arguments> addAll_Cards_AddAllToHand() {
+		return Stream.of(
+				Arguments.of(createHand(), createCards(), createHand()),
+				Arguments.of(createHand(),
+						createCards("ACE,CLUB"),
+						createHand("ACE,CLUB")),
+				Arguments.of(createHand(),
+						createCards("ACE,CLUB", "TWO,SPADE"),
+						createHand("ACE,CLUB", "TWO,SPADE")),
+				Arguments.of(createHand("ACE,CLUB"),
+						createCards("TWO,CLUB", "THREE,SPADE"),
+						createHand("ACE,CLUB", "TWO,CLUB", "THREE,SPADE"))
+		);
 	}
 
+	@DisplayName("computeScore()가 점수를 계산하여 반환하는지 테스트")
 	@ParameterizedTest
-	@MethodSource("size_HasCards_ReturnCardsSize")
-	void size_HasCards_ReturnCardsSize(List<Card> cards) {
-		hand.addAll(cards);
-		assertThat(cards.size()).isEqualTo(cards.size());
+	@MethodSource("computeScore")
+	void computeScore(Hand hand, Score score) {
+		assertThat(hand.computeScore()).isEqualTo(score);
 	}
 
-	static Stream<List<Card>> size_HasCards_ReturnCardsSize() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(sixDiamond, tenClub),
-				Arrays.asList(aceSpade, sixDiamond, tenClub, twoClub, jackHeart, jackHeart));
-	}
-
-	@ParameterizedTest
-	@MethodSource("getScore")
-	void getScore(List<Card> cards, int score) {
-		hand.addAll(cards);
-		assertThat(hand.getScore()).isEqualTo(Score.of(score));
-	}
-
-	static Stream<Arguments> getScore() {
-		return Stream.of(Arguments.of(Collections.emptyList(), 0),
-				Arguments.of(Collections.singletonList(aceSpade), 11),
-				Arguments.of(Arrays.asList(aceSpade, tenClub), 21),
-				Arguments.of(Arrays.asList(tenClub, jackHeart, aceSpade), 21),
-				Arguments.of(Arrays.asList(jackHeart, aceSpade, twoClub), 13));
-	}
-
-	@ParameterizedTest
-	@MethodSource("get_HasCards_ReturnCards")
-	void get_HasCards_ReturnCards(List<Card> cards) {
-		hand.addAll(cards);
-		assertThat(hand.getHand()).isEqualTo(cards);
-	}
-
-	static Stream<List<Card>> get_HasCards_ReturnCards() {
-		return Stream.of(Collections.emptyList(),
-				Collections.singletonList(aceSpade),
-				Arrays.asList(sixDiamond, tenClub),
-				Arrays.asList(aceSpade, sixDiamond, tenClub, twoClub, jackHeart, jackHeart));
+	static Stream<Arguments> computeScore() {
+		return Stream.of(Arguments.of(createHand(), createScore(0)),
+				Arguments.of(createHand("ACE,SPADE"), createScore(11)),
+				Arguments.of(createHand("ACE,SPADE", "TEN,CLUB"), createScore(21)),
+				Arguments.of(createHand("JACK,SPADE", "KING,CLUB", "ACE,CLUB"), createScore(21)),
+				Arguments.of(createHand("JACK,SPADE", "TWO,SPADE", "ACE,HEART"), createScore(13))
+		);
 	}
 }

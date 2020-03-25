@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Drawable;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Score;
 
 import java.util.List;
@@ -10,23 +10,15 @@ public interface Playable {
 	String DEALER_NAME = "딜러";
 	int MINIMUM_NUMBER_TO_DEALER_STAY = 17;
 
-	void giveCard(Card card);
+	void receiveCard(Card card);
 
-	void giveCards(List<Card> cards);
-
-	Score getScore();
-
-	boolean isBust();
+	void receiveCards(List<Card> cards);
 
 	List<Card> getStartHand();
 
-	List<Card> getHand();
+	Hand getHand();
 
-	int countCards();
-
-	String getName();
-
-	Boolean isWinner(Score dealerScore);
+	Name getName();
 
 	boolean canReceiveCard();
 }

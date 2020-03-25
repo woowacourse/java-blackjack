@@ -1,22 +1,25 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.CardsFactory;
 import blackjack.domain.card.Drawable;
-import blackjack.domain.card.ShuffledDeckFactory;
+import blackjack.domain.card.ShuffledCardsFactory;
+import blackjack.domain.result.Results;
 import blackjack.domain.user.*;
-import blackjack.domain.user.exceptions.AbstractPlayerException;
-import blackjack.domain.user.exceptions.PlayerException;
-import blackjack.domain.user.exceptions.PlayersException;
-import blackjack.domain.user.exceptions.YesOrNoException;
-import blackjack.view.ErrorView;
+import blackjack.domain.yesOrNo.YesOrNo;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Blackjack {
 
 	public static void main(String[] args) {
 		Players players = preparePlayers();
-		Playable dealer = Dealer.dealer();
+		Playable dealer = Dealer.empty();
 		Drawable deck = prepareDeck();
 
 		start(players, dealer, deck);
@@ -24,34 +27,39 @@ public class Blackjack {
 		progressPlayers(players, deck);
 		progressDealer(dealer, deck);
 
-		finish(players, dealer);
+		Results results = finish(players, dealer);
+		showGameResultMonies(results);
 	}
 
 	private static Players preparePlayers() {
-		Players players;
-		do {
-			players = preparePlayersIfValid();
-		} while (players == null);
-		return players;
+		List<String> names = prepareNames();
+		return Players.of(names, prepareMonies(names));
 	}
 
-	private static Players preparePlayersIfValid() {
-		try {
-			return Players.of(InputView.inputPlayerNames());
-		} catch (PlayersException | PlayerException |AbstractPlayerException e) {
-			ErrorView.printMessage(e);
-			return null;
+	private static List<String> prepareNames() {
+		return Arrays.stream(InputView.inputPlayerNames()
+				.split(","))
+				.map(String::trim)
+				.collect(Collectors.toList());
+	}
+
+	private static List<String> prepareMonies(List<String> names) {
+		List<String> monies = new ArrayList<>();
+		for (String name : names) {
+			monies.add(InputView.inputBettingMoney(name));
 		}
+		return monies;
 	}
 
 	private static Deck prepareDeck() {
-		return Deck.ofDeckFactory(new ShuffledDeckFactory());
+		CardsFactory cardsFactory = new ShuffledCardsFactory();
+		return Deck.of(cardsFactory.create());
 	}
 
 	private static void start(Players players, Playable dealer, Drawable deck) {
 		players.giveTwoCardsEachPlayer(deck);
 
-		dealer.giveCards(deck.drawTwoCards());
+		dealer.receiveCards(deck.drawTwoCards());
 
 		OutputView.printStartInfo(dealer, players);
 	}
@@ -64,7 +72,7 @@ public class Blackjack {
 
 	private static void progressPlayer(Playable player, Drawable deck) {
 		while (willProgress(player)) {
-			player.giveCard(deck.draw());
+			player.receiveCard(deck.draw());
 			OutputView.printPlayerCard(player);
 		}
 	}
@@ -78,32 +86,25 @@ public class Blackjack {
 	}
 
 	private static YesOrNo prepareYesOrNo(Playable player) {
-		YesOrNo yesOrNo;
-		do {
-			yesOrNo = prepareYesOrNoIfValid(player);
-		} while (yesOrNo == null);
-		return yesOrNo;
-	}
-
-	private static YesOrNo prepareYesOrNoIfValid(Playable player) {
-		try {
-			return YesOrNo.of(InputView.inputYesOrNo(player));
-		} catch (YesOrNoException e) {
-			ErrorView.printMessage(e);
-			return null;
-		}
+		return YesOrNo.of(InputView.inputYesOrNo(player));
 	}
 
 	private static void progressDealer(Playable dealer, Drawable deck) {
 		while (dealer.canReceiveCard()) {
-			dealer.giveCard(deck.draw());
+			dealer.receiveCard(deck.draw());
 			OutputView.printDealerTurn(dealer);
 		}
 	}
 
-	private static void finish(Players players, Playable dealer) {
+	private static Results finish(Players players, Playable dealer) {
 		OutputView.printFinalInfo(dealer, players);
 		Results results = Results.of(dealer, players);
 		OutputView.printResult(results);
+
+		return results;
+	}
+
+	private static void showGameResultMonies(Results results) {
+		OutputView.printGameResultMonies(results);
 	}
 }

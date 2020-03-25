@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class ShuffledDeckFactory implements DeckFactory {
+public final class ShuffledCardsFactory implements CardsFactory {
+
 	@Override
-	public Deck create() {
+	public List<Card> create() {
 		List<Card> cards = createCards();
 		Collections.shuffle(cards);
 
-		return Deck.of(cards);
+		return cards;
 	}
 
 	private List<Card> createCards() {

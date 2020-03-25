@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Hand {
+	private static final int MAX_SCORE = 21;
 	private static final int MAX_SCORE_TO_MAXIMIZE = 12;
 	private static final int ADDING_SCORE_TO_MAXIMIZE = 10;
+	private static final int TWO = 2;
 
 	private final List<Card> hand;
 
 	public Hand() {
 		hand = new ArrayList<>();
+	}
+
+	public Hand(List<Card> cards) {
+		hand = cards;
 	}
 
 	public void add(Card card) {
@@ -23,16 +29,12 @@ public final class Hand {
 		hand.addAll(cards);
 	}
 
-	public int size() {
-		return hand.size();
+	public Score computeScore() {
+		Score simpleSum = simplySumScores();
+		return maximizeSimpleSumIfHasAce(simpleSum);
 	}
 
-	public Score getScore() {
-		Score score = simpleSum();
-		return maximizeIfHasAce(score);
-	}
-
-	private Score simpleSum() {
+	private Score simplySumScores() {
 		Score score = Score.zero();
 
 		for (Card card : hand) {
@@ -41,15 +43,72 @@ public final class Hand {
 		return score;
 	}
 
-	private Score maximizeIfHasAce(Score score) {
-		if (score.isUnder(MAX_SCORE_TO_MAXIMIZE) && hasAce()) {
-			return score.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
+	private Score maximizeSimpleSumIfHasAce(Score simpleSum) {
+		if (simpleSum.isUnder(Score.of(MAX_SCORE_TO_MAXIMIZE)) && hasAce()) {
+			return simpleSum.add(Score.of(ADDING_SCORE_TO_MAXIMIZE));
 		}
-		return score;
+		return simpleSum;
 	}
 
 	private boolean hasAce() {
 		return hand.stream().anyMatch(Card::isAce);
+	}
+
+	public boolean isBlackjack() {
+		return hasOnlyTwoCards() &&	computeScore().equals(Score.of(MAX_SCORE));
+	}
+
+	private boolean hasOnlyTwoCards() {
+		return hand.size() == TWO;
+	}
+
+	public boolean isBust() {
+		return computeScore().isOver(Score.of(MAX_SCORE));
+	}
+
+	public boolean isBlackjackWin(Hand other) {
+		return isBlackjack() && !other.isBlackjack();
+	}
+
+	public boolean isWinWithoutBlackjack(Hand other) {
+		if (isBlackjack()) {
+			return false;
+		}
+		if (isBust()) {
+			return false;
+		}
+		if (other.isBust()) {
+			return true;
+		}
+		return computeScore().isOver(other.computeScore());
+	}
+
+	public boolean isLose(Hand other) {
+		if (!isBlackjack() && other.isBlackjack()) {
+			return true;
+		}
+		if (isBust()) {
+			return true;
+		}
+		if (other.isBust()) {
+			return false;
+		}
+		return computeScore().isUnder(other.computeScore());
+	}
+
+	public Boolean isDraw(Hand other) {
+		if (isBlackjack() ^ other.isBlackjack()) {
+			return false;
+		}
+		return computeScore().equals(other.computeScore());
+	}
+
+	public boolean isUnder(Score score) {
+		return computeScore().isUnder(score);
+	}
+
+	public List<Card> getListOfFirstCard() {
+		return Collections.singletonList(hand.get(0));
 	}
 
 	public List<Card> getHand() {
