@@ -9,8 +9,7 @@ public class DealerDto {
     private int profit;
 
     public DealerDto(String name, List<String> cards) {
-        this.name = name;
-        this.cards = cards;
+        this(name, cards, 0, 0);
     }
 
     private DealerDto(String name, List<String> cards, int profit, int score) {
