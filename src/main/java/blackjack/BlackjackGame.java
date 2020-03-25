@@ -58,10 +58,6 @@ public class BlackjackGame {
 		if (ruleChecker.isBlackjack(dealer)) {
 			return;
 		}
-		drawCard(players, dealer);
-	}
-
-	private void drawCard(Players players, Dealer dealer) {
 		drawPlayersCard(players);
 		drawDealerCard(dealer);
 	}
