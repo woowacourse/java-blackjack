@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.YesOrNo;
-import domain.betting.BettingBoard;
 import domain.betting.FinalMoney;
-import domain.betting.Money;
 import domain.card.CardDivider;
 import domain.result.DealerResult;
 import domain.result.MatchResult;
@@ -16,6 +14,7 @@ import domain.result.UserResult;
 import domain.result.score.DealerFinalScore;
 import domain.result.score.PlayerFinalScore;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.PlayerFactory;
 import domain.user.User;
 import view.InputView;
@@ -24,35 +23,27 @@ import view.OutputView;
 public class BlackjackGame {
 	private final CardDivider cardDivider;
 	private final RuleChecker ruleChecker;
-	private final List<User> users;
+	private final List<Player> players;
 	private final Dealer dealer;
 
 	public BlackjackGame() {
 		this.cardDivider = new CardDivider();
 		ruleChecker = new RuleChecker();
 		dealer = new Dealer();
-		users = PlayerFactory.create(InputView.inputNames());
+		players = PlayerFactory.create(InputView.inputNames(), InputView::inputBettingMoney);
 	}
 
-	public void run() {
-		BettingBoard bettingBoard = betPlayers();
+	public void play() {
 		List<User> allUsers = initAllUsers();
 		initCards(allUsers);
 		printBlackjackUsers(allUsers);
 		checkCanDraw();
 		OutputView.printUserResult(allUsers);
-		showGameResult(bettingBoard);
-	}
-
-	private BettingBoard betPlayers() {
-		List<Money> moneys = users.stream()
-			.map(user -> Money.from(InputView.inputBettingMoney(user.getName())))
-			.collect(Collectors.toList());
-		return new BettingBoard(users, moneys);
+		showGameResult();
 	}
 
 	private List<User> initAllUsers() {
-		List<User> allUsers = new ArrayList<>(users);
+		List<User> allUsers = new ArrayList<>(players);
 		allUsers.add(dealer);
 		return allUsers;
 	}
@@ -75,15 +66,15 @@ public class BlackjackGame {
 		if (ruleChecker.isBlackjack(dealer)) {
 			return;
 		}
-		drawCard(users, dealer);
+		drawCard(players, dealer);
 	}
 
-	private void drawCard(List<User> users, Dealer dealer) {
+	private void drawCard(List<Player> users, Dealer dealer) {
 		drawPlayersCard(users);
 		drawDealerCard(dealer);
 	}
 
-	private void drawPlayersCard(List<User> users) {
+	private void drawPlayersCard(List<Player> users) {
 		for (User user : users) {
 			drawPlayerCard(user);
 		}
@@ -119,22 +110,21 @@ public class BlackjackGame {
 		}
 	}
 
-	private void showGameResult(BettingBoard bettingBoard) {
+	private void showGameResult() {
 		DealerFinalScore dealerFinalScore = new DealerFinalScore(dealer);
 
-		List<UserResult> userResults = createUserResults(dealerFinalScore, bettingBoard);
+		List<UserResult> userResults = createUserResults(dealerFinalScore);
 		DealerResult dealerResult = new DealerResult(userResults);
 
 		OutputView.printGameResult(userResults, dealerResult);
 	}
 
-	private List<UserResult> createUserResults(DealerFinalScore dealerFinalScore, BettingBoard bettingBoard) {
+	private List<UserResult> createUserResults(DealerFinalScore dealerFinalScore) {
 		List<UserResult> userResults = new ArrayList<>();
-		for (User user : users) {
-			Money betMoney = bettingBoard.get(user);
-			MatchResult matchResult = MatchResult.findMatchResult(new PlayerFinalScore(user), dealerFinalScore);
-			FinalMoney finalMoney = matchResult.makeMoneyResult(betMoney);
-			userResults.add(new UserResult(user.getName(), finalMoney.compare(betMoney)));
+		for (Player player : players) {
+			MatchResult matchResult = MatchResult.findMatchResult(new PlayerFinalScore(player), dealerFinalScore);
+			FinalMoney finalMoney = matchResult.makeMoneyResult(player);
+			userResults.add(new UserResult(player.getName(), finalMoney.compare(player)));
 		}
 		return userResults;
 	}

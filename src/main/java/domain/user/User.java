@@ -1,9 +1,12 @@
 package domain.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import domain.betting.Money;
 import domain.card.Card;
+import domain.card.CardDivider;
 import domain.card.Cards;
 
 public abstract class User {
@@ -17,6 +20,9 @@ public abstract class User {
 		this.cards.addAll(cards);
 	}
 
+	public void drawFirst(CardDivider cardDivider) {
+		this.cards.addAll(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
+	}
 	public int getCardsSize() {
 		return cards.size();
 	}

@@ -7,6 +7,8 @@ import domain.betting.FinalMoney;
 import domain.betting.Money;
 import domain.result.score.DealerFinalScore;
 import domain.result.score.PlayerFinalScore;
+import domain.user.Player;
+import domain.user.User;
 
 public enum MatchResult {
 	BLACKJACK_WIN(Referee::isPlayerBlackjackWin, 2.5),
@@ -31,8 +33,8 @@ public enum MatchResult {
 			.orElseThrow(() -> new IllegalArgumentException(NO_SUCH_MESSAGE));
 	}
 
-	public FinalMoney makeMoneyResult(Money money) {
-		return new FinalMoney(money.calculateProfit(this.profitRate));
+	public FinalMoney makeMoneyResult(Player player) {
+		return new FinalMoney(player.calculateProfit(this.profitRate));
 	}
 
 }

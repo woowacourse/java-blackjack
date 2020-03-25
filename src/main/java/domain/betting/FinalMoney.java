@@ -1,5 +1,7 @@
 package domain.betting;
 
+import domain.user.Player;
+
 public class FinalMoney {
 	private final int money;
 
@@ -7,7 +9,7 @@ public class FinalMoney {
 		this.money = money;
 	}
 
-	public int compare(Money money) {
-		return money.calculateDifferent(this.money);
+	public int compare(Player player) {
+		return player.calculateDifferent(this.money);
 	}
 }
