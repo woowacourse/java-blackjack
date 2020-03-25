@@ -4,11 +4,9 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 import domain.betting.FinalMoney;
-import domain.betting.Money;
 import domain.result.score.DealerFinalScore;
 import domain.result.score.PlayerFinalScore;
 import domain.user.Player;
-import domain.user.User;
 
 public enum MatchResult {
 	BLACKJACK_WIN(Referee::isPlayerBlackjackWin, 2.5),

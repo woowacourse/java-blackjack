@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.stream.IntStream;
 
-import domain.user.Dealer;
-import domain.user.Player;
 import domain.user.User;
 
 public class CardDivider {

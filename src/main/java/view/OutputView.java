@@ -53,11 +53,11 @@ public class OutputView {
 		StringBuilder builder = new StringBuilder();
 		Stream.concat(players.getPlayers().stream(), Stream.of(dealer))
 			.forEach(user -> {
-			builder.append(user.getName());
-			builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
-			builder.append(String.format(RESULT_CARD_SCORE_FORMAT, user.calculateScore()));
-			builder.append(NEW_LINE);
-		});
+				builder.append(user.getName());
+				builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
+				builder.append(String.format(RESULT_CARD_SCORE_FORMAT, user.calculateScore()));
+				builder.append(NEW_LINE);
+			});
 		System.out.println(builder);
 	}
 

@@ -15,7 +15,7 @@ public class DealerResultTest {
 			new UserResult("둔덩1", 1000),
 			new UserResult("둔덩2", 1000),
 			new UserResult("둔덩3", 1000)
-			);
+		);
 		DealerResult dealerResult = new DealerResult(userResults);
 
 		assertThat(dealerResult.getProfit()).isEqualTo(-3000);

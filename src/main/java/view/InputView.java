@@ -1,9 +1,6 @@
 package view;
 
 import java.util.Scanner;
-import java.util.function.Consumer;
-
-import domain.user.User;
 
 public class InputView {
 	private static final Scanner SCANNER = new Scanner(System.in);

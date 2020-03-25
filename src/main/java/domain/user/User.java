@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.betting.Money;
 import domain.card.Card;
 import domain.card.CardDivider;
 import domain.card.Cards;
