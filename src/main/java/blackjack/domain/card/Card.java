@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Card {
     private Suit suit;
@@ -12,7 +13,7 @@ public class Card {
     }
 
     public static Card from(Suit suit, Rank rank) {
-        return CardCache.cards.get(rank.getSymbol() + suit.getName());
+        return CardCache.CARDS.get(rank.name() + suit.name());
     }
 
     public boolean isAce() {
@@ -29,7 +30,7 @@ public class Card {
     }
 
     private static class CardCache {
-        private static final Map<String, Card> cards = new HashMap<>();
+        private static final Map<String, Card> CARDS = new HashMap<>();
 
         static {
             makeCards();
@@ -43,7 +44,7 @@ public class Card {
 
         private static void loop(final Suit suit) {
             for (Rank rank : Rank.values()) {
-                cards.put(rank.getSymbol() + suit.getName(), new Card(suit, rank));
+                CARDS.put(rank.name() + suit.name(), new Card(suit, rank));
             }
         }
 

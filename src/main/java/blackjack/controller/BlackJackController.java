@@ -1,35 +1,52 @@
 package blackjack.controller;
 
-import blackjack.domain.Rule;
-import blackjack.domain.RuleImpl;
+import java.util.ArrayList;
+import java.util.List;
+
 import blackjack.domain.card.Deck;
-import blackjack.domain.participants.*;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.Players;
+import blackjack.domain.result.MoneyResult;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
-
 public class BlackJackController {
     public static void run() {
         OutputView.nameInstruction();
+
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Players players = new Players(InputView.getInput());
-        Participants participants = getParticipants(dealer, players);
+        Players players = new Players(InputView.input());
+
+        MoneyResult moneyResult = players.initMoney(inputMoneys(players));
+        Participants participants = initParticipants(dealer, players);
+
         initialPhase(deck, participants);
         userGamePhase(deck, participants);
         dealerGamePhase(dealer);
-        endPhase(participants);
+        endPhase(participants, moneyResult);
     }
 
-    private static Participants getParticipants(final Dealer dealer, Players players) {
+    private static Participants initParticipants(final Dealer dealer, Players players) {
         try {
             return new Participants(dealer, players.getPlayers());
         } catch (InvalidPlayerException e) {
             OutputView.printError(e.getMessage());
-            return getParticipants(dealer, players);
+            return initParticipants(dealer, players);
         }
+    }
+
+    private static List<String> inputMoneys(Players players) {
+        List<String> inputMoneys = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            OutputView.inputMoney(player);
+            inputMoneys.add(InputView.input());
+        }
+        return inputMoneys;
     }
 
     private static void initialPhase(final Deck deck, final Participants participants) {
@@ -59,12 +76,11 @@ public class BlackJackController {
             OutputView.moreCardInstruction(player);
             wantsMoreCard = wantsToDrawMore(deck, player);
             OutputView.participantStatus(player);
-        } while (wantsMoreCard && !player.isBusted());
+        } while (wantsMoreCard && !player.isBust());
     }
 
     private static boolean wantsToDrawMore(final Deck deck, final Player player) {
-        final boolean wantsMoreCard;
-        wantsMoreCard = InputView.yesOrNo();
+        final boolean wantsMoreCard = InputView.yesOrNo();
         if (wantsMoreCard) {
             player.draw(deck.pop());
         }
@@ -75,10 +91,10 @@ public class BlackJackController {
         OutputView.moreCardInstruction(dealer);
     }
 
-    private static void endPhase(final Participants participants) {
-        Rule rule = new RuleImpl();
-        rule.judgeBasic(participants);
+    private static void endPhase(final Participants participants, MoneyResult moneyResult) {
+        moneyResult.judge(participants);
+
         OutputView.result(participants);
-        OutputView.statistics(participants);
+        OutputView.moneyStatistics(moneyResult, participants);
     }
 }

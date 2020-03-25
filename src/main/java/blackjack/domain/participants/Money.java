@@ -1,0 +1,66 @@
+package blackjack.domain.participants;
+
+import java.util.Objects;
+
+import blackjack.exceptions.InvalidMoneyException;
+
+public class Money {
+    private long amount;
+
+    public Money(final long amount) {
+        this.amount = amount;
+    }
+
+    public Money(final String value) {
+        this(validate(value));
+    }
+
+    private static long validate(String value) {
+        if (Objects.isNull(value) || value.trim().isEmpty()) {
+            throw new InvalidMoneyException("Null 또는 빈 값을 입력하셨습니다.");
+        }
+        try {
+            return validatePositive(Long.parseLong(value));
+        } catch (NumberFormatException e) {
+            throw new InvalidMoneyException("잘못된 값을 입력하셨습니다.");
+        }
+    }
+
+    private static long validatePositive(final long parsed) {
+        if (parsed < 0) {
+            throw new NumberFormatException();
+        }
+        return parsed;
+    }
+
+    public Money add(final Money bettingMoney) {
+        return new Money(this.amount + bettingMoney.amount);
+    }
+
+    public Money multiply(final double number) {
+        return new Money((long)(this.amount * number));
+    }
+
+    public Money subtract(final Money bettingMoney) {
+        return new Money(this.amount - bettingMoney.amount);
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Money money = (Money)o;
+        return amount == money.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
+    }
+}
