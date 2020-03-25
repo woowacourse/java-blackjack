@@ -24,7 +24,7 @@ public class BettingTable {
         Map<Gamer, Profit> gamerProfitTable = new LinkedHashMap<>();
         Profit dealerProfit = Profit.from(0);
         for (Player player : players) {
-            BlackJackResult result = ResultMatcher.match(player, dealer);
+            BlackJackResult result = BlackJackResult.judge(player, dealer);
             BettingMoney bettingMoney = bettingMoneyTable.get(player);
             Profit playerProfit = result.profit(bettingMoney);
             gamerProfitTable.put(player, playerProfit);
