@@ -1,26 +1,32 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.rule.HandCalculator;
-
-import static blackjack.domain.rule.Score.SCORES;
-
-import java.util.Objects;
+import blackjack.domain.money.BettingMoney;
 
 public class Player extends Gamer {
 
-    private final String name;
+    private BettingMoney bettingMoney;
 
-    public Player(String name) {
-        this.name = Objects.requireNonNull(name);
+    public Player(final String name, final String bettingMoney) {
+        super(name);
+        this.bettingMoney = new BettingMoney(Integer.parseInt(bettingMoney));
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getValue();
     }
 
     @Override
     public boolean canDrawCard() {
-        return !handScore().isBusted();
+        return !isBusted();
     }
 
     @Override
-    public String getName() {
-        return name;
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

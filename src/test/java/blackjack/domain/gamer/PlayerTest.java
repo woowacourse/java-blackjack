@@ -22,13 +22,21 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("엘리");
+        player = new Player("엘리", "10000");
     }
 
     @Test
     @DisplayName("플레이어는 이름을 입력받아 생성")
     void player() {
         assertThat(player.getName()).isEqualTo("엘리");
+    }
+
+    @Test
+    @DisplayName("카드를 더 추가할 수 있는지 확인")
+    void canDrawCard() {
+        player.draw(new Card(CardSymbol.KING, CardType.SPADE));
+        player.draw(new Card(CardSymbol.KING, CardType.SPADE));
+        assertThat(player.canDrawCard()).isTrue();
     }
 
     @ParameterizedTest

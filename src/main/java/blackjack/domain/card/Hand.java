@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.rule.HandInitializer;
 import blackjack.domain.rule.Score;
 
 import java.util.ArrayList;
@@ -17,11 +18,27 @@ public class Hand {
         hand.add(card);
     }
 
+    public boolean isBusted() {
+        return getScore().isBusted();
+    }
+
+    public boolean isBlackJack() {
+        return hand.size() == HandInitializer.INITIAL_HAND_SIZE && getScore().isBlackJack();
+    }
+
     public Score getScore() {
         return Score.calculateScore(hand);
     }
 
-    public List<Card> getCardStatus() {
+    public List<Card> getCards() {
         return hand;
+    }
+
+    public Card getFirstCard() {
+        if (hand.isEmpty()) {
+            throw new IndexOutOfBoundsException("카드가 없습니다.");
+        }
+
+        return hand.get(0);
     }
 }

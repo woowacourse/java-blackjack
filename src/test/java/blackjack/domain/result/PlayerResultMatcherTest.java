@@ -20,21 +20,31 @@ class PlayerResultMatcherTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        player = new Player("pobi");
+        player = new Player("pobi", "10000");
     }
 
     @Test
-    @DisplayName("player가 버스트 되면 무조건 패배")
+    @DisplayName("player가 버스트 되면 무조건 패배 (dealer 버스트 x)")
     void playerBusted() {
         makeGamerBusted(player);
-        assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.LOSE);
+        makeGamerNotBusted(dealer);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("player가 버스트 되면 무조건 패배 (dealer 버스트 o)")
+    void playerBusted2() {
+        makeGamerBusted(player);
+        makeGamerBusted(dealer);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.LOSE);
     }
 
     @Test
     @DisplayName("player 버스트 x, dealer 버스트 o")
     void dealerBusted() {
         makeGamerBusted(dealer);
-        assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.WIN);
+        makeGamerNotBusted(player);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.WIN);
     }
 
     @Test
@@ -42,7 +52,7 @@ class PlayerResultMatcherTest {
     void playerWin() {
         dealer.draw(new Card(CardSymbol.KING, CardType.CLOVER));
         player.draw(new Card(CardSymbol.ACE, CardType.CLOVER));
-        assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.WIN);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.WIN);
     }
 
     @Test
@@ -50,7 +60,7 @@ class PlayerResultMatcherTest {
     void playerDraw() {
         dealer.draw(new Card(CardSymbol.KING, CardType.CLOVER));
         player.draw(new Card(CardSymbol.KING, CardType.DIAMOND));
-        assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.DRAW);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.DRAW);
     }
 
     @Test
@@ -58,13 +68,31 @@ class PlayerResultMatcherTest {
     void playerLose() {
         dealer.draw(new Card(CardSymbol.ACE, CardType.CLOVER));
         player.draw(new Card(CardSymbol.KING, CardType.DIAMOND));
-        assertThat(PlayerResultMatcher.match(dealer, player)).isEqualTo(BlackJackResult.LOSE);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("player 블랙잭")
+    void playerBlackJack() {
+        makeGamerBlackJack(player);
+        makeGamerNotBusted(dealer);
+        assertThat(BlackJackResult.findResult(dealer, player)).isEqualTo(BlackJackResult.BLACKJACK_WIN);
     }
 
     private void makeGamerBusted(Gamer gamer) {
         gamer.draw(new Card(CardSymbol.KING, CardType.SPADE));
         gamer.draw(new Card(CardSymbol.KING, CardType.CLOVER));
         gamer.draw(new Card(CardSymbol.KING, CardType.DIAMOND));
+    }
+
+    private void makeGamerNotBusted(Gamer gamer) {
+        gamer.draw(new Card(CardSymbol.FIVE, CardType.DIAMOND));
+        gamer.draw(new Card(CardSymbol.THREE, CardType.SPADE));
+    }
+
+    private void makeGamerBlackJack(Gamer gamer) {
+        gamer.draw(new Card(CardSymbol.ACE, CardType.CLOVER));
+        gamer.draw(new Card(CardSymbol.QUEEN, CardType.DIAMOND));
     }
 
 }

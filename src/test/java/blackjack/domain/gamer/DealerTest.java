@@ -27,7 +27,7 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("createCards")
     @DisplayName("딜러가 갖고 있는 카드의 합이 16 이하인지 확인")
-    void shouldReceiveCard1(List<Card> cards, boolean shouldDrawCard) {
+    void shouldReceiveCard(List<Card> cards, boolean shouldDrawCard) {
         for (Card card : cards) {
             dealer.draw(card);
         }

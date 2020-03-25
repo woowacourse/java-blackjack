@@ -5,8 +5,7 @@ import java.util.List;
 
 public class CardFactory {
 
-    public static List<Card> generate() {
-
+    public static List<Card> create() {
         List<Card> cards = new ArrayList<>();
 
         for (CardSymbol symbol : CardSymbol.values()) {
