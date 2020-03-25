@@ -50,7 +50,7 @@ public class BlackjackGame {
 
 	private void initCards(List<User> allUsers) {
 		for (User user : allUsers) {
-			user.addCards(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
+			user.drawFirst(cardDivider);
 		}
 		OutputView.printInitialResult(allUsers);
 	}

@@ -18,6 +18,7 @@ public class Player extends User {
 	public Player(String name) {
 		this(name, DEFAULT_MONEY);
 	}
+
 	public Player(String name, String money) {
 		this.money = Money.from(Objects.requireNonNull(money));
 		validEmptyAndNull(name);
@@ -35,7 +36,7 @@ public class Player extends User {
 		return money.calculateProfit(profitRate);
 	}
 
-	public  int calculateDifferent(int money) {
+	public int calculateDifferent(int money) {
 		return this.money.calculateDifferent(money);
 	}
 
@@ -58,10 +59,6 @@ public class Player extends User {
 	public List<Card> getInitialCard() {
 		return cards.getCards()
 			.subList(INITIAL_FROM_INDEX, INITIAL_TO_INDEX);
-	}
-
-	public Money getMoney() {
-		return money;
 	}
 
 	@Override
