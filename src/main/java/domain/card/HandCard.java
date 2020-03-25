@@ -1,10 +1,8 @@
-package domain.user;
-
-import domain.card.Card;
+package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HandCard {
     public static final int ACE_BONUS_SCORE = 10;
@@ -23,12 +21,6 @@ public class HandCard {
 
     public void add(Card card) {
         cards.add(card);
-    }
-
-    public String getNames() {
-        return cards.stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(","));
     }
 
     public int getScore() {
@@ -56,5 +48,9 @@ public class HandCard {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_COUNT && getScore() == PERFECT_SCORE;
+    }
+
+    public List<Card> get() {
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -1,7 +1,5 @@
 package view;
 
-import domain.PlayerAnswer;
-
 import java.util.Scanner;
 
 public class InputView {
@@ -13,7 +11,12 @@ public class InputView {
         return scanner.nextLine().split(NAMES_DELIMITER);
     }
 
-    public static PlayerAnswer requestDraw() {
-        return new PlayerAnswer(scanner.nextLine());
+    public static String requestBettingMoney(String name) {
+        OutputView.printBettingMoneyFormat(name);
+        return scanner.nextLine();
+    }
+
+    public static String requestDraw() {
+        return scanner.nextLine();
     }
 }
