@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Objects;
-
 public enum Symbol {
     ACE(1, "A", new AceCalculator()),
     TWO(2, "2"),

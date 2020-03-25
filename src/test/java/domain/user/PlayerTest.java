@@ -83,8 +83,8 @@ class PlayerTest {
         player = Player.of("testName", PlayingCards.of(initCards), bettingMoney);
         //when
         player.calculateProfit(result);
-        Profit profit = player.getProfit();
-        assertThat(profit).isEqualTo(new Profit(profitValue));
+        int profit = player.getProfit();
+        assertThat(profit).isEqualTo(profitValue);
     }
 
     private static Stream<Arguments> getResultsForCalculateProfit() {

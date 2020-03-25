@@ -53,15 +53,8 @@ public class BlackjackGame {
             PlayerDto playerDto = PlayerDto.of(player.getName(),
                     player.getBettingBoney(),
                     player.getCards().serialize(),
-                    player.getScore());
-            Profit profit = player.getProfit();
-            if (Objects.nonNull(profit)) {
-                playerDto = PlayerDto.of(playerDto.getName(),
-                        playerDto.getBettingMoney(),
-                        playerDto.getCards(),
-                        playerDto.getScore(),
-                        profit.getValue());
-            }
+                    player.getScore(),
+                    player.getProfit());
             playerDtos.add(playerDto);
         }
         return PlayersDto.of(playerDtos);

@@ -14,7 +14,7 @@ public abstract class User {
 
     protected final String name;
     protected PlayingCards playingCards;
-    protected Profit profit;
+    protected Profit profit = new Profit(0);
 
     User(String name) {
         this.name = name;
@@ -49,8 +49,8 @@ public abstract class User {
         playingCards = playingCards.add(card);
     }
 
-    public Profit getProfit() {
-        return profit;
+    public int getProfit() {
+        return profit.getValue();
     }
 
     void addCard(Card card) {
