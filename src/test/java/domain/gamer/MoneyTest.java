@@ -25,8 +25,7 @@ public class MoneyTest {
     @Test
     @DisplayName("0원을 반환하는 테스트")
     void getZeroMoneyTest() {
-        Money money = new Money("3000");
-        assertThat(money.getZeroMoney()).isEqualTo(new Money("0"));
+        assertThat(Money.ZERO_MONEY).isEqualTo(Money.ZERO_MONEY);
     }
 
     @Test

@@ -5,7 +5,7 @@ import exception.InvalidMoneyException;
 import java.util.Objects;
 
 public class Money {
-    private static final Money ZERO_MONEY = new Money(0);
+    public static final Money ZERO_MONEY = new Money(0);
 
     private int money;
 
@@ -31,10 +31,6 @@ public class Money {
 
     public Money reversion() {
         return new Money(-money);
-    }
-
-    public Money getZeroMoney() {
-        return ZERO_MONEY;
     }
 
     public Money sum(Money other) {
