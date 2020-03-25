@@ -21,6 +21,10 @@ public class Cards {
 		this.cards.addAll(cards);
 	}
 
+	public void add(Card card) {
+		this.cards.add(card);
+	}
+
 	public int size() {
 		return cards.size();
 	}

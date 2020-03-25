@@ -23,6 +23,11 @@ public abstract class User {
 	public void drawFirst(CardDivider cardDivider) {
 		this.cards.addAll(Arrays.asList(cardDivider.divide(), cardDivider.divide()));
 	}
+
+	public void draw(CardDivider cardDivider) {
+		this.cards.add(cardDivider.divide());
+	}
+
 	public int getCardsSize() {
 		return cards.size();
 	}
