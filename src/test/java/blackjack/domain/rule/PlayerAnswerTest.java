@@ -14,4 +14,11 @@ class PlayerAnswerTest {
         assertThat(PlayerAnswer.of("y")).isEqualTo(PlayerAnswer.Y);
         assertThat(PlayerAnswer.of("n")).isEqualTo(PlayerAnswer.N);
     }
+
+    @Test
+    @DisplayName("PlayerAnswer가 Yes인지 반환")
+    void isYes() {
+        assertThat(PlayerAnswer.of("y").isYes()).isTrue();
+        assertThat(PlayerAnswer.of("n").isYes()).isFalse();
+    }
 }

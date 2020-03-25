@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardFactoryTest {
+class CardFactoryTest {
 
     @Test
     @DisplayName("카드 리스트 생성")

@@ -1,14 +1,17 @@
 package blackjack.domain.rule;
 
-import blackjack.domain.result.BlackJackResult;
+import blackjack.domain.card.Card;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Score {
 
     private static final int BUSTED = 0;
+    private static final int ACE_NUMBER_GAP = 10;
     private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final Map<Integer, Score> SCORE_MATCHER;
 
     private int score;
@@ -31,22 +34,41 @@ public class Score {
         return SCORE_MATCHER.get(score);
     }
 
-    public BlackJackResult match(Score target) {
-        if (isBusted()) {
-            return BlackJackResult.LOSE;
-        }
-        if (this.score < target.score)
-            return BlackJackResult.LOSE;
-        if (this.score > target.score)
-            return BlackJackResult.WIN;
-        return BlackJackResult.DRAW;
+    public static Score from(List<Card> cards) {
+        int result = sumAll(cards);
+        result = subtractIfContainingAce(cards, result);
+        return Score.from(result);
     }
 
     public boolean isBusted() {
         return score == BUSTED;
     }
 
+    public boolean isBlackjack(int sizeOfHand) {
+        return score == BLACKJACK && sizeOfHand == BLACKJACK_CARD_SIZE;
+    }
+
     public int getScore() {
         return score;
+    }
+
+    private static int sumAll(List<Card> cards) {
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+    }
+
+    private static int subtractIfContainingAce(List<Card> cards, int result) {
+        for (Card card : cards) {
+            result = subtract(result, card);
+        }
+        return result;
+    }
+
+    private static int subtract(int result, Card card) {
+        if (result > BLACKJACK && card.isAce()) {
+            result -= ACE_NUMBER_GAP;
+        }
+        return result;
     }
 }

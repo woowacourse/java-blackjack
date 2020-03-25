@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.result.BlackJackResult;
-import blackjack.domain.rule.HandCalculator;
 import blackjack.domain.rule.Score;
 
 import java.util.ArrayList;
@@ -10,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Hand {
+
 
     private final List<Card> hand = new ArrayList<>();
 
@@ -21,7 +20,8 @@ public class Hand {
     }
 
     public int calculate() {
-        return sumScore().getScore();
+        Score score = sumScore();
+        return score.getScore();
     }
 
     public boolean isBusted() {
@@ -29,12 +29,13 @@ public class Hand {
         return score.isBusted();
     }
 
-    public BlackJackResult match(Hand hand) {
-        return sumScore().match(hand.sumScore());
+    public boolean isBlackJack() {
+        Score score = sumScore();
+        return score.isBlackjack(hand.size());
     }
 
     private Score sumScore() {
-        return HandCalculator.calculate(hand);
+        return Score.from(hand);
     }
 
     public List<Card> getHand() {

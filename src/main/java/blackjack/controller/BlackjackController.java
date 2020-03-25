@@ -1,21 +1,23 @@
 package blackjack.controller;
 
+import blackjack.controller.dto.request.BettingDto;
 import blackjack.controller.dto.request.NamesRequestDto;
-import blackjack.controller.dto.response.GamersResultResponse;
+import blackjack.controller.dto.response.GamersResultResponseDto;
 import blackjack.controller.dto.response.HandResponseDto;
 import blackjack.controller.dto.response.HandResponseDtos;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.result.BlackJackResult;
+import blackjack.domain.result.GamerProfitTable;
+import blackjack.domain.rule.BettingTable;
 import blackjack.domain.rule.HandInitializer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,11 @@ public class BlackjackController {
     public void run(Dealer dealer, Deck deck) {
         Players players = createPlayers(inputView.askPlayerNames());
 
-        HandResponseDtos handResponseDtos = initializeHand(dealer, players, deck);
+        BettingDto bettingDto = inputView.askBettingMoney(players.getNames());
+        BettingTable bettingTable = createBettingTable(players, bettingDto);
+
+        initializeHand(dealer, players, deck);
+        HandResponseDtos handResponseDtos = getInitialHand(dealer, players);
         outputView.printInitialHand(handResponseDtos);
 
         runPlayersHitOrStay(deck, players);
@@ -41,22 +47,52 @@ public class BlackjackController {
         HandResponseDtos result = getFinalHand(dealer, players);
         outputView.printHandWithScore(result);
 
-        GamersResultResponse gamersResultResponse = getResultResponse(dealer, players);
-        outputView.printResult(gamersResultResponse);
+        GamersResultResponseDto gamersResultResponseDto = getGamersResultResponse(dealer, players, bettingTable);
+        outputView.printResult(gamersResultResponseDto);
+
     }
 
-    private Players createPlayers(NamesRequestDto namesRequestDto) {
+    public Players createPlayers(NamesRequestDto namesRequestDto) {
         return Players.from(namesRequestDto.getNames());
     }
 
-    private HandResponseDtos initializeHand(Dealer dealer, Players players, Deck deck) {
+    public void initializeHand(Dealer dealer, Players players, Deck deck) {
         HandInitializer.initialize(dealer, players, deck);
+    }
+
+    public HandResponseDtos getInitialHand(Dealer dealer, Players players) {
         List<HandResponseDto> handResponseDtoList = new ArrayList<>();
         handResponseDtoList.add(HandResponseDto.ofInitialDealer(dealer));
         for (Player player : players) {
             handResponseDtoList.add(HandResponseDto.of(player));
         }
         return new HandResponseDtos(handResponseDtoList);
+    }
+
+    public HandResponseDtos getFinalHand(Dealer dealer, Players players) {
+        List<HandResponseDto> handResponseDtos = new ArrayList<>();
+        handResponseDtos.add(HandResponseDto.of(dealer));
+        for (Player player : players) {
+            handResponseDtos.add(HandResponseDto.of(player));
+        }
+        return new HandResponseDtos(handResponseDtos);
+    }
+
+    public BettingTable createBettingTable(Players players, BettingDto bettingDto) {
+        Map<Player, BettingMoney> playerMoneyMap = new LinkedHashMap<>();
+        Map<String, String> bettingTableDto = bettingDto.getBettingTable();
+        for (Map.Entry<String, String> nameMoneyEntry : bettingTableDto.entrySet()) {
+            Player player = players.findPlayerBy(nameMoneyEntry.getKey());
+            BettingMoney bettingMoney = BettingMoney.from(nameMoneyEntry.getValue());
+            playerMoneyMap.put(player, bettingMoney);
+        }
+
+        return new BettingTable(playerMoneyMap);
+    }
+
+    public GamersResultResponseDto getGamersResultResponse(Dealer dealer, Players players, BettingTable bettingTable) {
+        GamerProfitTable gamerProfitTable = bettingTable.calculateProfitResult(players, dealer);
+        return GamersResultResponseDto.from(gamerProfitTable);
     }
 
     private void runPlayersHitOrStay(Deck deck, Players players) {
@@ -81,25 +117,4 @@ public class BlackjackController {
         }
     }
 
-    private HandResponseDtos getFinalHand(Dealer dealer, Players players) {
-        List<HandResponseDto> handResponseDtos = new ArrayList<>();
-        handResponseDtos.add(HandResponseDto.of(dealer));
-        for (Player player : players) {
-            handResponseDtos.add(HandResponseDto.of(player));
-        }
-        return new HandResponseDtos(handResponseDtos);
-    }
-
-    private GamersResultResponse getResultResponse(Dealer dealer, Players players) {
-        Map<Player, BlackJackResult> playersResult = new HashMap<>();
-        EnumMap<BlackJackResult, Integer> dealerResult = new EnumMap<>(BlackJackResult.class);
-        for (Player player : players) {
-            BlackJackResult result = player.match(dealer);
-            playersResult.put(player, result);
-            dealerResult.computeIfPresent(result.reverse(), (key, value) -> ++value);
-            dealerResult.putIfAbsent(result.reverse(), 1);
-        }
-
-        return new GamersResultResponse(dealerResult, playersResult);
-    }
 }
