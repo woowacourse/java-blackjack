@@ -69,37 +69,37 @@ public class BlackjackGame {
 		drawCard(players, dealer);
 	}
 
-	private void drawCard(List<Player> users, Dealer dealer) {
-		drawPlayersCard(users);
+	private void drawCard(List<Player> players, Dealer dealer) {
+		drawPlayersCard(players);
 		drawDealerCard(dealer);
 	}
 
-	private void drawPlayersCard(List<Player> users) {
-		for (User user : users) {
-			drawPlayerCard(user);
+	private void drawPlayersCard(List<Player> players) {
+		for (Player player: players) {
+			drawPlayerCard(player);
 		}
 	}
 
-	private void drawPlayerCard(User user) {
-		if (ruleChecker.isBlackjack(user)) {
+	private void drawPlayerCard(Player player) {
+		if (ruleChecker.isBlackjack(player)) {
 			return;
 		}
-		while (isUserNotBust(user) && isContinuousFromInput(user)) {
-			user.addCards(Arrays.asList(cardDivider.divide()));
-			OutputView.printUserCard(user);
+		while (isPlayerNotBust(player) && isContinuousFromInput(player)) {
+			player.addCards(Arrays.asList(cardDivider.divide()));
+			OutputView.printUserCard(player);
 		}
 	}
 
-	private boolean isUserNotBust(User user) {
-		if (ruleChecker.isBust(user) == false) {
+	private boolean isPlayerNotBust(Player player) {
+		if (ruleChecker.isBust(player) == false) {
 			return true;
 		}
-		OutputView.printUserBust(user);
+		OutputView.printUserBust(player);
 		return false;
 	}
 
-	private boolean isContinuousFromInput(User user) {
-		YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(user.getName()));
+	private boolean isContinuousFromInput(Player player) {
+		YesOrNo yesOrNo = new YesOrNo(InputView.inputYesORNo(player.getName()));
 		return yesOrNo.isContinue();
 	}
 
