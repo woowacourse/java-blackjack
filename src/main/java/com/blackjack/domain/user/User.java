@@ -1,24 +1,33 @@
 package com.blackjack.domain.user;
 
 import java.util.Collections;
+import java.util.Objects;
 
+import com.blackjack.domain.Score;
 import com.blackjack.domain.card.Card;
 
 public abstract class User {
-	final Hand hand;
+	protected final Hand hand;
 	private final Name name;
 
 	User(Name name) {
-		this.hand = new Hand(Collections.emptyList());
+		validateNameIsNotNull(name);
 		this.name = name;
+		this.hand = new Hand(Collections.emptyList());
+	}
+
+	private void validateNameIsNotNull(Name name) {
+		if (Objects.isNull(name)) {
+			throw new IllegalArgumentException("이름이 존재하지 않습니다.");
+		}
+	}
+
+	public Score calculateScore() {
+		return hand.calculate();
 	}
 
 	public void draw(Card card) {
 		hand.add(card);
-	}
-
-	public int calculateScore() {
-		return hand.calculateScore();
 	}
 
 	public abstract boolean canDraw();

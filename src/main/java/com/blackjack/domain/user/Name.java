@@ -15,9 +15,9 @@ public class Name {
 		this.name = name;
 	}
 
-	private void validateLength(String name) {
-		if (name.length() >= MAX_NAME_LENGTH) {
-			throw new IllegalArgumentException("이름은 길이가 올바르지 않습니다.");
+	private void validateNullOrEmpty(String name) {
+		if (Objects.isNull(name) || name.isEmpty()) {
+			throw new IllegalArgumentException("이름은 null이거나 빈 문자열이 될 수 없습니다.");
 		}
 	}
 
@@ -27,9 +27,9 @@ public class Name {
 		}
 	}
 
-	private void validateNullOrEmpty(String name) {
-		if (Objects.isNull(name) || name.isEmpty()) {
-			throw new IllegalArgumentException("이름은 null이거나 빈 문자열이 될 수 없습니다.");
+	private void validateLength(String name) {
+		if (name.length() >= MAX_NAME_LENGTH) {
+			throw new IllegalArgumentException("이름은 길이가 올바르지 않습니다.");
 		}
 	}
 

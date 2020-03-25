@@ -1,6 +1,6 @@
 package com.blackjack.domain;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 public enum DrawDecideType {
 	DRAW("y"),
@@ -13,7 +13,7 @@ public enum DrawDecideType {
 	}
 
 	public static DrawDecideType of(String symbol) {
-		return Arrays.stream(values())
+		return Stream.of(values())
 				.filter(drawDecideType -> drawDecideType.isSameOf(symbol))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));

@@ -23,23 +23,27 @@ class HandTest {
 	@DisplayName("ACE를 포함하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_ExcludeAce_CreateTotalScore() {
-		Hand hand = new Hand(Arrays.asList(new Card(CardNumber.SIX, CardSymbol.CLUB), new Card(CardNumber.FIVE, CardSymbol.DIAMOND)));
-		assertThat(hand.calculateScore()).isEqualTo(new Score(11));
+		Hand hand = new Hand(
+				Arrays.asList(Card.valueOf(CardNumber.SIX, CardSymbol.CLUB),
+						Card.valueOf(CardNumber.FIVE, CardSymbol.DIAMOND)));
+		assertThat(hand.calculate()).isEqualTo(new Score(11));
 	}
 
 	@DisplayName("ACE를 포함하고 상향하지 않았을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndNotUpward_CreateTotalScore() {
-		Hand hand = new Hand(Arrays.asList(new Card(CardNumber.ACE, CardSymbol.CLUB),
-				new Card(CardNumber.TEN, CardSymbol.DIAMOND),
-				new Card(CardNumber.JACK, CardSymbol.DIAMOND)));
-		assertThat(hand.calculateScore()).isEqualTo(new Score(21));
+		Hand hand = new Hand(Arrays.asList(Card.valueOf(CardNumber.ACE, CardSymbol.CLUB),
+				Card.valueOf(CardNumber.TEN, CardSymbol.DIAMOND),
+				Card.valueOf(CardNumber.JACK, CardSymbol.DIAMOND)));
+		assertThat(hand.calculate()).isEqualTo(new Score(21));
 	}
 
 	@DisplayName("ACE를 포함하고 상향했을 때 점수 생성")
 	@Test
 	void calculateScore_IncludeAceAndUpward_CreateTotalScore() {
-		Hand hand = new Hand(Arrays.asList(new Card(CardNumber.ACE, CardSymbol.CLUB), new Card(CardNumber.TEN, CardSymbol.DIAMOND)));
-		assertThat(hand.calculateScore()).isEqualTo(new Score(21));
+		Hand hand = new Hand(
+				Arrays.asList(Card.valueOf(CardNumber.ACE, CardSymbol.CLUB),
+						Card.valueOf(CardNumber.TEN, CardSymbol.DIAMOND)));
+		assertThat(hand.calculate()).isEqualTo(new Score(21));
 	}
 }

@@ -1,47 +1,46 @@
 package com.blackjack.domain;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public enum ResultType {
-	WIN("승", 1),
-	DRAW("무", 0),
-	LOSE("패", -1);
+	BLACKJACK_WIN(Score::isBlackjack, (compareResult) -> compareResult > 0, 1.5),
+	WIN((compareResult) -> compareResult > 0, 1),
+	DRAW((compareResult) -> compareResult == 0, 0),
+	LOSE((compareResult) -> compareResult < 0, -1);
 
-	private String alias;
-	private int compareResult;
+	private Predicate<Score> blackjackMatch;
+	private Predicate<Integer> match;
+	private double profitRate;
 
-	ResultType(String alias, int compareResult) {
-		this.alias = alias;
-		this.compareResult = compareResult;
+	ResultType(Predicate<Integer> match, double profitRate) {
+		this((playerScore) -> true, match, profitRate);
 	}
 
-	public static ResultType of(int compare) {
+	ResultType(Predicate<Score> blackjackMatch, Predicate<Integer> match, double profitRate) {
+		this.blackjackMatch = blackjackMatch;
+		this.match = match;
+		this.profitRate = profitRate;
+	}
+
+	public static ResultType of(Score playerScore, Score dealerScore) {
+		int compareResult = playerScore.compareTo(dealerScore);
 		return Arrays.stream(values())
-				.filter(resultType -> resultType.compareResult == compare)
-				.findAny()
+				.filter(resultType -> resultType.isMatch(compareResult))
+				.filter(resultType -> resultType.isBlackjack(playerScore))
+				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public ResultType reverseResultType() {
-		if (isLose()) {
-			return WIN;
-		}
-		if (isWin()) {
-			return LOSE;
-		}
-		return DRAW;
+	private boolean isBlackjack(Score playerScore) {
+		return blackjackMatch.test(playerScore);
 	}
 
-	private boolean isWin() {
-		return WIN.equals(this);
+	private boolean isMatch(int compareResult) {
+		return match.test(compareResult);
 	}
 
-	private boolean isLose() {
-		return LOSE.equals(this);
-	}
-
-	@Override
-	public String toString() {
-		return alias;
+	public double getProfitRate() {
+		return profitRate;
 	}
 }

@@ -1,22 +1,19 @@
 package com.blackjack.util;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.blackjack.domain.user.Name;
-
-public class NameParser {
+public class StringUtil {
 	private static final String DELIMITER = ",";
 
-	private NameParser() {
+	private StringUtil() {
 	}
 
-	public static List<Name> parseName(String input) {
+	public static List<String> splitByDelimiter(String input) {
 		return Stream.of(input.split(DELIMITER))
 				.map(String::trim)
-				.map(Name::new)
 				.collect(toList());
 	}
 }
