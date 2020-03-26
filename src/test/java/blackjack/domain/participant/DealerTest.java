@@ -1,18 +1,13 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Figure;
-import blackjack.domain.card.Type;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.ResultType;
+import blackjack.domain.card.component.Figure;
+import blackjack.domain.card.component.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import static blackjack.domain.participant.Dealer.DEALER_NAME;
@@ -55,25 +50,5 @@ public class DealerTest {
 
         assertThat(cardInfoSize).isEqualTo(1);
         assertThat(firstCardInfo).contains("5클로버");
-    }
-
-    @DisplayName("DealerResult 생성 확인")
-    @Test
-    void test4() {
-        Dealer dealer = new Dealer();
-        List<PlayerResult> playerResults = Arrays.asList(new PlayerResult(new Name("타미"), ResultType.WIN),
-                new PlayerResult(new Name("포비"), ResultType.DRAW),
-                new PlayerResult(new Name("쪼밀리"), ResultType.LOSE));
-
-        HashMap<ResultType, Integer> dealerResult = new HashMap<>();
-        dealerResult.put(ResultType.LOSE, 1);
-        dealerResult.put(ResultType.DRAW, 1);
-        dealerResult.put(ResultType.WIN, 1);
-
-        DealerResult expectedResult = new DealerResult(new Name(DEALER_NAME), dealerResult);
-
-        DealerResult actualResult = dealer.createDealerResult(playerResults);
-
-        assertThat(actualResult).isEqualTo(expectedResult);
     }
 }

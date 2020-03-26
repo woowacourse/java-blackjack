@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.result.ResultType.BUST;
+import static blackjack.domain.result.ResultRule.BLACKJACK_SCORE;
 
 public class Cards {
     private static final int ACE_VALUE_DIFFERENCE = 10;
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         this.cards.add(card);
@@ -20,13 +20,12 @@ public class Cards {
         int sum = cards.stream()
                 .mapToInt(Card::cardValue)
                 .sum();
-
         return handleAce(sum);
     }
 
     private int handleAce(int sum) {
         for (Card card : cards) {
-            if (sum <= BUST) {
+            if (sum <= BLACKJACK_SCORE) {
                 break;
             }
 

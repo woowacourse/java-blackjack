@@ -1,37 +1,23 @@
 package blackjack.domain.result;
 
-import java.util.List;
-
 public enum ResultType {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK(1.5, "블랙잭"),
+    WIN(1, "승"),
+    LOSE(-1, "패"),
+    DRAW(0, "무");
 
-    public static final int BUST = 21;
-
+    private final double profitRate;
     private final String word;
 
-    ResultType(String word) {
+    ResultType(double profitRate, String word) {
+        this.profitRate = profitRate;
         this.word = word;
     }
 
-    public static ResultType findResultByScore(int playerScore, int dealerScore) {
-        if (playerScore > BUST) {
+    public ResultType reverse() {
+        if (this == BLACKJACK) {
             return LOSE;
         }
-        if (dealerScore > BUST) {
-            return WIN;
-        }
-        if (playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return LOSE;
-    }
-
-    public ResultType reverse() {
         if (this == WIN) {
             return LOSE;
         }
@@ -41,10 +27,8 @@ public enum ResultType {
         return this;
     }
 
-    public int countSameResultType(List<PlayerResult> playerResults) {
-        return (int) playerResults.stream()
-                .filter(playerResult -> playerResult.hasSameResult(this))
-                .count();
+    public double getProfitRate() {
+        return profitRate;
     }
 
     public String getWord() {

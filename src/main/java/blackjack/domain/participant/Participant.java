@@ -2,16 +2,24 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.attribute.Name;
 
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Participant {
-    protected Name name;
-    protected Cards cards = new Cards();
+import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
-    public Participant(String name) {
-        this.name = new Name(name);
+public abstract class Participant {
+    protected final Name name;
+    final Cards cards = new Cards();
+
+    Participant(Name name) {
+        Objects.requireNonNull(name, NULL_ERR_MSG);
+        this.name = name;
+    }
+
+    Participant(String name) {
+        this(new Name(name));
     }
 
     public abstract boolean canGetMoreCard();
@@ -34,6 +42,10 @@ public abstract class Participant {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public Name getName() {
+        return name;
     }
 
     @Override

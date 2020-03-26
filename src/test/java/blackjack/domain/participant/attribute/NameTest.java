@@ -1,9 +1,9 @@
-package blackjack.domain.participant;
+package blackjack.domain.participant.attribute;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.participant.Name.*;
+import static blackjack.domain.participant.attribute.Name.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NameTest {

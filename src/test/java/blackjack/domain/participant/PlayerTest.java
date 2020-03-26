@@ -1,10 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Figure;
-import blackjack.domain.card.Type;
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.ResultType;
+import blackjack.domain.card.component.Figure;
+import blackjack.domain.card.component.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,10 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
-
     @DisplayName("카드를 더 받을 수 있는지 확인")
     @ParameterizedTest
-    @CsvSource(value = {"FIVE, true", "SIX, false", "ACE, true"})
+    @CsvSource(value = {"SIX, true", "SEVEN, false", "ACE, true"})
     void test1(Type type, boolean expected) {
         Player player = new Player("포비");
         player.addCard(Card.of(Type.TEN, Figure.CLOVER));
@@ -28,24 +25,6 @@ class PlayerTest {
         boolean actual = player.canGetMoreCard();
 
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("게임 결과 생성 확인")
-    @ParameterizedTest
-    @CsvSource(value = {"FOUR, LOSE", "FIVE, DRAW", "SIX, WIN"})
-    void test2(Type type, ResultType resultType) {
-        Dealer dealer = new Dealer();
-        dealer.addCard(Card.of(Type.TEN, Figure.HEART));
-        dealer.addCard(Card.of(Type.FIVE, Figure.HEART));
-
-        Player player = new Player("포비");
-        player.addCard(Card.of(Type.TEN, Figure.CLOVER));
-        player.addCard(Card.of(type, Figure.CLOVER));
-
-        PlayerResult actualResult = player.createPlayerResult(dealer);
-        PlayerResult expectedResult = new PlayerResult(new Name("포비"), resultType);
-
-        assertThat(actualResult).isEqualTo(expectedResult);
     }
 
     @DisplayName("추가 카드 희망 여부 확인")

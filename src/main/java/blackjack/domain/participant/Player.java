@@ -1,14 +1,16 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.ResultType;
-
-import static blackjack.domain.result.ResultType.BUST;
+import blackjack.domain.participant.attribute.Name;
+import blackjack.domain.result.ResultRule;
 
 public class Player extends Participant {
     private static final String YES = "y";
     private static final String NO = "n";
     static final String NOT_SUPPORTED_REPLY_ERR_MSG = "응답은 y 혹은 n만 가능합니다.";
+
+    public Player(Name name) {
+        super(name);
+    }
 
     public Player(String name) {
         super(name);
@@ -16,12 +18,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canGetMoreCard() {
-        return cards.computeScore() < BUST;
-    }
-
-    public PlayerResult createPlayerResult(Dealer dealer) {
-        ResultType resultType = ResultType.findResultByScore(computeScore(), dealer.computeScore());
-        return new PlayerResult(name, resultType);
+        return !ResultRule.isBust(cards);
     }
 
     public boolean wantMoreCard(String reply) {
