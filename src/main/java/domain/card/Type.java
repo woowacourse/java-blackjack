@@ -6,13 +6,13 @@ public enum Type {
     HEART("♡"),
     CLOVER("♧");
 
-    private String pattern;
+    private final String pattern;
 
     Type(String pattern) {
         this.pattern = pattern;
     }
 
-    public String getPattern() {
+    String getPattern() {
         return pattern;
     }
 }

@@ -1,51 +1,94 @@
 package domain.card;
 
+import sun.plugin.dom.exception.InvalidStateException;
+
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PlayingCards {
-    private static final int ACE_BONUS = 10;
     private static final int BLACK_JACK = 21;
-    private List<Card> cards;
+    private static final int MIN_SIZE = 2;
 
-    public PlayingCards(List<Card> cards) {
+    private final Cards cards;
+
+    private PlayingCards(List<Card> cards) {
+        this.cards = Cards.of(cards);
+    }
+
+    private PlayingCards(Cards cards) {
         this.cards = cards;
     }
 
-    public void add(Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public int calculateScore() {
-        int result = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        for (Card card : cards) {
-            if (canAddAceBonus(result, card)) {
-                result += ACE_BONUS;
-            }
+    public static PlayingCards of(List<Card> cards) {
+        if (cards.size() < MIN_SIZE) {
+            throw new IllegalArgumentException(String.format("카드의 개수가 최소 갯수인 %s보다 작습니다.", MIN_SIZE));
         }
-        return result;
+
+        return new PlayingCards(cards);
     }
 
-    private boolean canAddAceBonus(int result, Card card) {
-        return card.isAce() && result + ACE_BONUS <= BLACK_JACK;
+    public static PlayingCards of(Cards cards) {
+        return of(cards.getCards());
+    }
+
+    public PlayingCards add(Card card) {
+        return of(cards.add(card));
+    }
+
+    public PlayingCards add(Cards cardsToAdd) {
+        return new PlayingCards(cards.add(cardsToAdd));
+    }
+
+    public int calculate() {
+        int sumWithoutAce = cards.calculateSumExceptAce();
+        return calculateSumWithAces(sumWithoutAce);
+    }
+
+    public boolean isBust() {
+        return BLACK_JACK < calculate();
+    }
+
+    public boolean isSameSize(int size) {
+        return cards.size() == size;
+    }
+
+    public List<String> serialize() {
+        return cards.serialize();
     }
 
     public int size() {
         return cards.size();
     }
 
-    public boolean isBust() {
-        return BLACK_JACK < calculateScore();
+    private int calculateSumWithAces(int sum) {
+        if (cards.hasAce()) {
+            Cards aces = getAces();
+            return calculateSumWithAces(sum, aces);
+        }
+        return sum;
     }
 
-    public boolean isNotBust() {
-        return calculateScore() <= BLACK_JACK;
+    private int calculateSumWithAces(int sum, Cards aces) {
+        if (aces.hasCardNotAce()) {
+            throw new InvalidStateException("복수의 에이스 카드 내에 부적절한 카드가 존해합니다.");
+        }
+        for (Card card : aces.getCards()) {
+            int score = card.calculate(sum);
+            sum += score;
+        }
+        return sum;
+    }
+
+    private Cards getAces() {
+        List<Card> aces = this.cards.getCards()
+                .stream()
+                .filter(Card::isAce)
+                .collect(Collectors.toList());
+        if (aces.isEmpty()) {
+            throw new InvalidStateException(String.format("%s가 존재하지 않습니다.", Symbol.ACE.getPattern()));
+        }
+        return Cards.of(aces);
     }
 
     @Override

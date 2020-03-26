@@ -3,6 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
+    static final String INVALID_ACE_ONLY_NOTACE_ARE_ALLOWED_MEESAGE = "A는 당 함수를 활용할 수 없습니다.";
     private final Symbol symbol;
     private final Type type;
 
@@ -11,12 +12,24 @@ public class Card {
         this.type = type;
     }
 
-    boolean isAce() {
-        return symbol == Symbol.ACE;
+    int calculateExceptAce() {
+        if (symbol.isAce()) {
+            throw new IllegalStateException(INVALID_ACE_ONLY_NOTACE_ARE_ALLOWED_MEESAGE);
+        }
+
+        return symbol.getValue();
     }
 
-    int getValue() {
-        return symbol.getValue();
+    int calculate(int sum) {
+        return symbol.calculate(sum);
+    }
+
+    boolean isAce() {
+        return symbol.equals(Symbol.ACE);
+    }
+
+    boolean isNotAce() {
+        return !symbol.equals(Symbol.ACE);
     }
 
     @Override
@@ -33,11 +46,8 @@ public class Card {
         return Objects.hash(symbol, type);
     }
 
-    public String getPattern() {
-        return type.getPattern();
-    }
-
-    public String getWord() {
-        return symbol.getWord();
+    @Override
+    public String toString() {
+        return symbol.getValue() + type.getPattern();
     }
 }

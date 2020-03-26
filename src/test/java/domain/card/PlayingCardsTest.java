@@ -3,9 +3,15 @@ package domain.card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,13 +20,15 @@ class PlayingCardsTest {
 
     @BeforeEach
     void setUp() {
-        playingCards = new PlayingCards(new ArrayList<>());
+        playingCards = PlayingCards.of(new ArrayList<>(
+                Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE),
+                        new Card(Symbol.QUEEN, Type.CLOVER))));
     }
 
     @Test
     @DisplayName("PlayingCards 생성")
     void cards() {
-        PlayingCards playingCards = new PlayingCards(Collections.singletonList(new Card(Symbol.TWO, Type.HEART)));
+        PlayingCards playingCards = PlayingCards.of(Arrays.asList(new Card(Symbol.TWO, Type.HEART), new Card(Symbol.KING, Type.CLOVER)));
         assertThat(playingCards).isNotNull();
     }
 
@@ -28,68 +36,55 @@ class PlayingCardsTest {
     @DisplayName("Cards에 카드 추가")
     void add() {
         Card card = new Card(Symbol.TEN, Type.DIAMOND);
-        playingCards.add(card);
-        assertThat(playingCards.getCards()).isEqualTo(Collections.singletonList(card));
-    }
-
-    @Test
-    @DisplayName("Cards의 Score를 계산")
-    void calculateScore() {
-        playingCards.add(new Card(Symbol.TEN, Type.DIAMOND));
-        playingCards.add(new Card(Symbol.FIVE, Type.DIAMOND));
-        assertThat(playingCards.calculateScore()).isEqualTo(15);
-    }
-
-    @Test
-    @DisplayName("버스트에 따라서 ACE값이 결정되서 계산한다")
-    void calculateWithAceNotBurst() {
-        playingCards.add(new Card(Symbol.TEN, Type.DIAMOND));
-        playingCards.add(new Card(Symbol.ACE, Type.DIAMOND));
-        assertThat(playingCards.calculateScore()).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("버스트에 따라서 ACE값이 결정되서 계산한다")
-    void calculateWithAceOnBurst() {
-        playingCards.add(new Card(Symbol.TEN, Type.DIAMOND));
-        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
-        playingCards.add(new Card(Symbol.ACE, Type.SPADE));
-        assertThat(playingCards.calculateScore()).isEqualTo(20);
-    }
-
-    @Test
-    @DisplayName("버스트에 따라서 ACE값이 결정되서 계산한다")
-    void calculateWithAceOnBurst1() {
-        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
-        playingCards.add(new Card(Symbol.ACE, Type.SPADE));
-        playingCards.add(new Card(Symbol.ACE, Type.SPADE));
-        assertThat(playingCards.calculateScore()).isEqualTo(21);
+        int defaultCardsSize = playingCards.size();
+        PlayingCards playingCards = this.playingCards.add(card);
+        assertThat(playingCards.size()).isEqualTo(defaultCardsSize + 1);
     }
 
     @Test
     @DisplayName("카드의 갯수를 구한다")
     void size() {
-        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
-        playingCards.add(new Card(Symbol.ACE, Type.SPADE));
         assertThat(playingCards.size()).isEqualTo(2);
     }
 
     @Test
-    @DisplayName("버스트라는 걸 확인한다")
-    void isBust() {
-        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
-        playingCards.add(new Card(Symbol.TEN, Type.SPADE));
-        playingCards.add(new Card(Symbol.EIGHT, Type.SPADE));
+    @DisplayName("#add() : should return playingCards with added cards")
+    void addPlayingCards() {
+        //given
+        int defaultSizeOfPlayingCards = playingCards.size();
+        List<Card> cards = Arrays.asList(new Card(Symbol.QUEEN, Type.CLOVER), new Card(Symbol.QUEEN, Type.DIAMOND));
+        Cards cardsToAdd = Cards.of(cards);
 
-        assertThat(playingCards.isBust()).isTrue();
+        //when
+        PlayingCards playingCards = this.playingCards.add(cardsToAdd);
+
+        //then
+        assertThat(playingCards.size()).isEqualTo(defaultSizeOfPlayingCards + cardsToAdd.size());
     }
 
-    @Test
-    @DisplayName("버스트가 아닌 걸 확인한다")
-    void isNotBust() {
-        playingCards.add(new Card(Symbol.NINE, Type.CLOVER));
-        playingCards.add(new Card(Symbol.TEN, Type.SPADE));
+    @ParameterizedTest
+    @MethodSource({"getCasesForTestingCalculate"})
+    @DisplayName("#calculate : should return sum input card scores")
+    void calculate(List<Card> cards, int expected) {
+        PlayingCards playingCards = PlayingCards.of(cards);
+        int sum = playingCards.calculate();
+        assertThat(sum).isEqualTo(expected);
 
-        assertThat(playingCards.isBust()).isFalse();
+    }
+
+    private static Stream<Arguments> getCasesForTestingCalculate() {
+        int jokerValue = 11;
+        return Stream.of(
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.NINE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + Symbol.NINE.getValue(), "without ace, not bust"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.NINE, Type.SPADE), new Card(Symbol.THREE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + Symbol.NINE.getValue() + Symbol.THREE.getValue(), "without ace, bust"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + jokerValue, "with ace, not bust, joker"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.TWO, Type.SPADE), new Card(Symbol.ACE, Type.SPADE)),
+                        Symbol.QUEEN.getValue() + Symbol.TWO.getValue() + Symbol.ACE.getValue(), "with ace, not bust, not joker"),
+                Arguments.of(Arrays.asList(new Card(Symbol.QUEEN, Type.SPADE), new Card(Symbol.ACE, Type.SPADE), new Card(Symbol.ACE, Type.DIAMOND)),
+                        Symbol.QUEEN.getValue() + jokerValue + Symbol.ACE.getValue(), "with ace, bust, joker and not joker")
+        );
     }
 }
