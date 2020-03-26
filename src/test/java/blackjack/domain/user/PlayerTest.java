@@ -17,12 +17,13 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.BettingMoney;
 
 class PlayerTest {
 	private static Stream<Arguments> provideUndrawablePlayer() {
 		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
 
-		Player player = new Player("player");
+		Player player = new Player("player", BettingMoney.valueOf("1000"));
 		Deck deck = new Deck(CardFactory.create());
 
 		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
@@ -33,7 +34,7 @@ class PlayerTest {
 
 	@Test
 	void Player_InputPlayerName_GenerateInstance() {
-		assertThat(new Player("player")).isInstanceOf(Player.class);
+		assertThat(new Player("player",BettingMoney.valueOf("1000"))).isInstanceOf(Player.class);
 	}
 
 	@Test
@@ -48,7 +49,7 @@ class PlayerTest {
 
 	@Test
 	void canDraw_CurrentScoreLowerThanDrawableMaxScore_ReturnTrue() {
-		assertThat(new Player("player").canDraw()).isTrue();
+		assertThat(new Player("player",BettingMoney.valueOf("1000")).canDraw()).isTrue();
 	}
 
 	@ParameterizedTest
@@ -60,7 +61,7 @@ class PlayerTest {
 	@Test
 	void getInitialDealtHand_PlayerDealInitialTwoCards_HasTwoCards() {
 		Deck deck = new Deck(CardFactory.create());
-		Player player = new Player("player");
+		Player player = new Player("player",BettingMoney.valueOf("1000"));
 		player.hit(deck, BlackjackTable.INITIAL_DEAL_NUMBER);
 
 		assertThat(player.getInitialDealtHand()).hasSize(BlackjackTable.INITIAL_DEAL_NUMBER);

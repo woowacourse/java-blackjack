@@ -14,8 +14,9 @@ public class Player extends User {
         super(name, hand);
     }
 
-    public Player(String name) {
+    public Player(String name, BettingMoney bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
     public static Player valueOf(String name, List<Card> cards) {

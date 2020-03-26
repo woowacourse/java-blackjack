@@ -3,6 +3,7 @@ package blackjack;
 import static blackjack.util.StringUtil.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.controller.BlackjackController;
 import blackjack.domain.blackjack.BlackjackTable;
@@ -18,16 +19,17 @@ public class Application {
     public static void main(String[] args) {
         Deck deck = new Deck(CardFactory.create());
         Dealer dealer = new Dealer(Dealer.NAME);
-        List<Player> players = PlayerFactory.create(parsingPlayerNames(InputView.inputPlayerNames()));
+        List<String> playerNames = parsingPlayerNames(InputView.inputPlayerNames());
+        List<Player> players = PlayerFactory.create(playerNames, generatePlayersBettingMoney(playerNames));
         BlackjackTable blackjackTable = new BlackjackTable(deck, dealer, players);
-        generatePlayersBettingMoney(players);
 
         BlackjackController blackjackController = new BlackjackController(blackjackTable);
         blackjackController.run();
     }
 
-    private static void generatePlayersBettingMoney(List<Player> players) {
-        players.forEach(
-            player -> player.setBettingMoney(BettingMoney.valueOf(InputView.inputBettingMoneyFrom(player))));
+    private static List<BettingMoney> generatePlayersBettingMoney(List<String> playerNames) {
+        return playerNames.stream().map(
+            playerName -> BettingMoney.valueOf(InputView.inputBettingMoneyFrom(playerName)))
+            .collect(Collectors.toList());
     }
 }

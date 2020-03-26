@@ -15,6 +15,7 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -30,9 +31,9 @@ class BlackjackTableTest {
 
         dealer = new Dealer(Dealer.NAME);
 
-        Player pobi = new Player("pobi");
-        Player sony = new Player("sony");
-        Player stitch = new Player("stitch");
+        Player pobi = new Player("pobi", BettingMoney.valueOf("1000"));
+        Player sony = new Player("sony",BettingMoney.valueOf("1000"));
+        Player stitch = new Player("stitch",BettingMoney.valueOf("1000"));
         players = Arrays.asList(pobi, sony, stitch);
     }
 

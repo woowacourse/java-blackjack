@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.BettingMoney;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
@@ -40,9 +41,9 @@ class StringUtilTest {
 	void joinPlayerNames_PlayerList_JoinPlayerNamesToString() {
 		List<User> users = Arrays.asList(
 			new Dealer("dealer"),
-			new Player("pobi"),
-			new Player("sony"),
-			new Player("stitch"));
+			new Player("pobi",BettingMoney.valueOf("1000")),
+			new Player("sony",BettingMoney.valueOf("1000")),
+			new Player("stitch",BettingMoney.valueOf("1000")));
 
 		String expected = "pobi, sony, stitch";
 		assertThat(StringUtil.joinPlayerNames(users)).isEqualTo(expected);
