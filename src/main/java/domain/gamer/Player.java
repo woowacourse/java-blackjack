@@ -2,7 +2,6 @@ package domain.gamer;
 
 import domain.MatchResult;
 import domain.card.Hands;
-import domain.money.DefeatStrategy;
 import domain.money.Money;
 import domain.money.ProfitStrategy;
 
@@ -12,13 +11,15 @@ import domain.money.ProfitStrategy;
  *    @author AnHyungJu, ParkDooWon
  */
 public class Player extends Gamer {
+	private static final double DEFEAT_RATIO = -0.1;
+
 	private Money bettingMoney;
 	private ProfitStrategy profitStrategy;
 
 	public Player(Name name, Money money) {
 		super(name);
 		bettingMoney = money;
-		this.profitStrategy = new DefeatStrategy();
+		this.profitStrategy = (Money bettingMoney) -> bettingMoney.getValue() * DEFEAT_RATIO;
 	}
 
 	public void changeProfitStrategy(int dealerScore) {

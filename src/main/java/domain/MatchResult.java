@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 
 import domain.money.BlackjackWinStrategy;
-import domain.money.DefeatStrategy;
+import domain.money.Money;
 import domain.money.ProfitStrategy;
 import domain.money.PushStrategy;
 import domain.money.WinStrategy;
@@ -17,7 +17,7 @@ public enum MatchResult {
 	WIN(true, false, new WinStrategy()),
 	BLACKJACK_WIN(true, false, new BlackjackWinStrategy()),
 	PUSH(false, true, new PushStrategy()),
-	DEFEAT(false, false, new DefeatStrategy());
+	DEFEAT(false, false, (Money money) -> money.getValue() * -0.1);
 
 	private boolean win;
 	private boolean push;
