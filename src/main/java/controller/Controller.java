@@ -6,6 +6,7 @@ import java.util.List;
 import domain.GameResult;
 import domain.YesOrNo;
 import domain.card.Deck;
+import domain.exception.InvalidChoiceException;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Names;
@@ -125,7 +126,7 @@ public class Controller {
 		try {
 			String choice = InputView.inputMoreCard(GamerDto.from(player));
 			return YesOrNo.getChoice(choice);
-		} catch (IllegalArgumentException e) {
+		} catch (InvalidChoiceException e) {
 			OutputView.printErrorMessage(e);
 			return getYesOrNo(player);
 		}
