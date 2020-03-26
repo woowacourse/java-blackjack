@@ -29,10 +29,10 @@ class GameParticipantTest {
         moneys.add(Money.create("0"));
         moneys.add(Money.create("0"));
         Players players = new Players(names, moneys);
-        players.getPlayer(0).receive(new Card(Symbol.QUEEN, Shape.클로버));
-        players.getPlayer(0).receive(new Card(Symbol.ACE, Shape.클로버));
-        players.getPlayer(1).receive(new Card(Symbol.NINE, Shape.클로버));
-        players.getPlayer(2).receive(new Card(Symbol.EIGHT, Shape.클로버));
+        players.getPlayer(0).receive(new Card(Symbol.QUEEN, Shape.CLOVER));
+        players.getPlayer(0).receive(new Card(Symbol.ACE, Shape.CLOVER));
+        players.getPlayer(1).receive(new Card(Symbol.NINE, Shape.CLOVER));
+        players.getPlayer(2).receive(new Card(Symbol.EIGHT, Shape.CLOVER));
         GameParticipant gameParticipant = new GameParticipant(players);
         gameParticipant.checkBlackJack();
         assertThat(players.getPlayer(0).isBlackJack()).isTrue();

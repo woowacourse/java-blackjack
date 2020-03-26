@@ -15,6 +15,6 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return symbol + shape.toString();
+		return symbol + shape.getKoreanName();
 	}
 }

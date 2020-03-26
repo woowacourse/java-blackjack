@@ -24,9 +24,9 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 혼자 블랙잭일 때 수익으로 (베팅금액*1.5)를 뱉어내는지")
     void isPlayerBlackJack() {
-        player.receive(new Card(Symbol.ACE, Shape.클로버));
-        player.receive(new Card(Symbol.QUEEN, Shape.다이아몬드));
-        dealer.receive(new Card(Symbol.FOUR, Shape.다이아몬드));
+        player.receive(new Card(Symbol.ACE, Shape.CLOVER));
+        player.receive(new Card(Symbol.QUEEN, Shape.DIAMOND));
+        dealer.receive(new Card(Symbol.FOUR, Shape.DIAMOND));
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
         assertThat(player.computeProfit(dealer)).isEqualTo(150);
@@ -35,10 +35,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 딜러 둘 다 블랙잭일 때 수익으로 0을 뱉어내는지")
     void isPlayerDealerBlackJack() {
-        player.receive(new Card(Symbol.ACE, Shape.클로버));
-        player.receive(new Card(Symbol.QUEEN, Shape.다이아몬드));
-        dealer.receive(new Card(Symbol.ACE, Shape.하트));
-        dealer.receive(new Card(Symbol.QUEEN, Shape.클로버));
+        player.receive(new Card(Symbol.ACE, Shape.CLOVER));
+        player.receive(new Card(Symbol.QUEEN, Shape.DIAMOND));
+        dealer.receive(new Card(Symbol.ACE, Shape.HEART));
+        dealer.receive(new Card(Symbol.QUEEN, Shape.CLOVER));
 
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
@@ -49,10 +49,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어가 버스트일 때 수익으로 -(베팅금액)를 뱉어내는지")
     void isPlayerBust() {
-        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        player.receive(new Card(Symbol.EIGHT, Shape.스페이드));
-        player.receive(new Card(Symbol.EIGHT, Shape.하트));
-        dealer.receive(new Card(Symbol.FOUR, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.DIAMOND));
+        player.receive(new Card(Symbol.EIGHT, Shape.SPADE));
+        player.receive(new Card(Symbol.EIGHT, Shape.HEART));
+        dealer.receive(new Card(Symbol.FOUR, Shape.SPADE));
 
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
@@ -63,12 +63,12 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 딜러 모두 버스트일 때 수익으로 -(베팅금액)를 뱉어내는지")
     void isPlayerDealerBust() {
-        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        player.receive(new Card(Symbol.EIGHT, Shape.스페이드));
-        player.receive(new Card(Symbol.EIGHT, Shape.하트));
-        dealer.receive(new Card(Symbol.FOUR, Shape.스페이드));
-        dealer.receive(new Card(Symbol.QUEEN, Shape.다이아몬드));
-        dealer.receive(new Card(Symbol.KING, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.DIAMOND));
+        player.receive(new Card(Symbol.EIGHT, Shape.SPADE));
+        player.receive(new Card(Symbol.EIGHT, Shape.HEART));
+        dealer.receive(new Card(Symbol.FOUR, Shape.SPADE));
+        dealer.receive(new Card(Symbol.QUEEN, Shape.DIAMOND));
+        dealer.receive(new Card(Symbol.KING, Shape.SPADE));
 
         player.setBlackJack(player.calculateScore());
         dealer.setBlackJack(dealer.calculateScore());
@@ -79,17 +79,17 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어가 점수가 높을 때 수익으로 +(베팅금액)을 뱉어내는지")
     void isPlayerWin() {
-        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        player.receive(new Card(Symbol.EIGHT, Shape.하트));
-        dealer.receive(new Card(Symbol.FOUR, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.DIAMOND));
+        player.receive(new Card(Symbol.EIGHT, Shape.HEART));
+        dealer.receive(new Card(Symbol.FOUR, Shape.SPADE));
         assertThat(player.computeProfit(dealer)).isEqualTo(100);
     }
 
     @Test
     @DisplayName("플레이어와 딜러 점수가 같을 때 수익으로 0을 뱉어내는지")
     void isPlayerDraw() {
-        player.receive(new Card(Symbol.SEVEN, Shape.다이아몬드));
-        dealer.receive(new Card(Symbol.SEVEN, Shape.스페이드));
+        player.receive(new Card(Symbol.SEVEN, Shape.DIAMOND));
+        dealer.receive(new Card(Symbol.SEVEN, Shape.SPADE));
         assertThat(player.computeProfit(dealer)).isEqualTo(0);
     }
 
