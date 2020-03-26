@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.attribute.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,7 @@ class CardDeckTest {
     private static Stream<Arguments> createParticipant() {
         return Stream.of(
                 Arguments.of(new Dealer()),
-                Arguments.of(new Player(new Name("포비"))));
+                Arguments.of(new Player("포비")));
     }
 
     @DisplayName("52장의 카드 한 벌을 생성하는지 확인")

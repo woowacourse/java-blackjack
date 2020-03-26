@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static blackjack.domain.result.ResultType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ResultRuleTest {
+class ResultRuleTest {
     private static final Cards bustCards = new Cards();
     private static final Cards blackjackCards = new Cards();
     private static final Cards scoreCards_21 = new Cards();
@@ -95,7 +95,6 @@ public class ResultRuleTest {
     }
 
     @DisplayName("플레이어 LOSE 확인 3: 둘 다 Bust가 아니고, 딜러 카드합이 21에 더 가까울 때")
-
     @Test
     void name5() {
         Cards playerCards = scoreCards_10;

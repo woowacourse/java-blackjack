@@ -11,12 +11,11 @@ import java.util.stream.Stream;
 
 import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
-public class PlayerResults<T extends Player, E, U> {
-
+public class PlayerResultBundle<T extends Player, E, U> {
     private final List<PlayerResult<T, E, U>> playerResults;
     private final ResultResolver<T, E, U> resultResolver;
 
-    public PlayerResults(Players<T> players, Dealer dealer, ResultResolver<T, E, U> resultResolver) {
+    public PlayerResultBundle(Players<T> players, Dealer dealer, ResultResolver<T, E, U> resultResolver) {
         Objects.requireNonNull(players, NULL_ERR_MSG);
         Objects.requireNonNull(dealer, NULL_ERR_MSG);
         Objects.requireNonNull(resultResolver, NULL_ERR_MSG);

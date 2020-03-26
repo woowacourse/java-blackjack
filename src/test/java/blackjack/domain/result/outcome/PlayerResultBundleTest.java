@@ -21,7 +21,7 @@ import static blackjack.domain.card.Card.NULL_ERR_MSG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PlayerResultsTest {
+class PlayerResultBundleTest {
     private static Dealer dealer;
     private static List<Name> names;
     private static List<Money> moneys;
@@ -47,7 +47,7 @@ class PlayerResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 모두 null이 값 전달된 경우")
     @Test
     void test1() {
-        assertThatThrownBy(() -> new PlayerResults<>(null, null, null))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(null, null, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -55,11 +55,11 @@ class PlayerResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 players가 null인 경우")
     @Test
     void test2() {
-        assertThatThrownBy(() -> new PlayerResults<>(null, dealer, new WinOrLoseResultResolver()))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(null, dealer, new WinOrLoseResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new PlayerResults<>(null, dealer, new BettingResultResolver()))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(null, dealer, new BettingResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -67,11 +67,11 @@ class PlayerResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 dealer가 null인 경우")
     @Test
     void test3() {
-        assertThatThrownBy(() -> new PlayerResults<>(winOrLosePlayers, null, new WinOrLoseResultResolver()))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(winOrLosePlayers, null, new WinOrLoseResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new PlayerResults<>(bettingPlayers, null, new BettingResultResolver()))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(bettingPlayers, null, new BettingResultResolver()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -79,11 +79,11 @@ class PlayerResultsTest {
     @DisplayName("예외 테스트: IntegratedResults 생성자에 resolver가 null인 경우")
     @Test
     void test4() {
-        assertThatThrownBy(() -> new PlayerResults<>(winOrLosePlayers, dealer, null))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(winOrLosePlayers, dealer, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
 
-        assertThatThrownBy(() -> new PlayerResults<>(bettingPlayers, dealer, null))
+        assertThatThrownBy(() -> new PlayerResultBundle<>(bettingPlayers, dealer, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(NULL_ERR_MSG);
     }
@@ -97,8 +97,8 @@ class PlayerResultsTest {
         players.get(0).addCard(Card.of(Type.FIVE, Figure.HEART));
         players.get(1).addCard(Card.of(Type.TEN, Figure.SPADE));
 
-        PlayerResults<Player, ResultType, Map<ResultType, Long>> results
-                = new PlayerResults<>(winOrLosePlayers, dealer, new WinOrLoseResultResolver());
+        PlayerResultBundle<Player, ResultType, Map<ResultType, Long>> results
+                = new PlayerResultBundle<>(winOrLosePlayers, dealer, new WinOrLoseResultResolver());
 
         Map<ResultType, Long> actualResult = results.computeDealerResult();
 
@@ -118,8 +118,8 @@ class PlayerResultsTest {
         players.get(0).addCard(Card.of(Type.FIVE, Figure.HEART));
         players.get(1).addCard(Card.of(Type.TEN, Figure.SPADE));
 
-        PlayerResults<BettingPlayer, Double, Double> results
-                = new PlayerResults<>(bettingPlayers, dealer, new BettingResultResolver());
+        PlayerResultBundle<BettingPlayer, Double, Double> results
+                = new PlayerResultBundle<>(bettingPlayers, dealer, new BettingResultResolver());
 
         Double actualResult = results.computeDealerResult();
 

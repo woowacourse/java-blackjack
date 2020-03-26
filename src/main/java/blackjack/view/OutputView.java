@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.view.ResultTypeWordMapper.resultToKorean;
-
 public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String INITIAL_DEAL_INFO_MSG = "딜러와 %s에게 2장의 나누었습니다.";
@@ -67,13 +65,13 @@ public class OutputView {
 
         String dealerRecord = Arrays.stream(ResultType.values())
                 .filter(dealerResult::containsKey)
-                .map(type -> dealerResult.get(type) + resultToKorean(type))
+                .map(type -> dealerResult.get(type) + type.getWord())
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println(String.format(FINAL_RESULT_MSG, dealerName, dealerRecord));
 
         for (WinningDto dto : playerDtos) {
-            System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), resultToKorean(dto.getResultType())));
+            System.out.println(String.format(FINAL_RESULT_MSG, dto.getName(), (dto.getResultType().getWord())));
         }
     }
 

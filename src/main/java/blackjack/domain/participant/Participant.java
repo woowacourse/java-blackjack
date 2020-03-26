@@ -11,16 +11,15 @@ import static blackjack.domain.card.Card.NULL_ERR_MSG;
 
 public abstract class Participant {
     protected final Name name;
-    protected final Cards cards = new Cards();
+    final Cards cards = new Cards();
 
-    public Participant(Name name) {
+    Participant(Name name) {
         Objects.requireNonNull(name, NULL_ERR_MSG);
         this.name = name;
     }
 
-    public Participant(String name) {
-        Objects.requireNonNull(name, NULL_ERR_MSG);
-        this.name = new Name(name);
+    Participant(String name) {
+        this(new Name(name));
     }
 
     public abstract boolean canGetMoreCard();
@@ -62,6 +61,4 @@ public abstract class Participant {
     public int hashCode() {
         return Objects.hash(name, cards);
     }
-
-
 }

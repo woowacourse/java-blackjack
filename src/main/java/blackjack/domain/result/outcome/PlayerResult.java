@@ -28,10 +28,6 @@ public class PlayerResult<T extends Player, E, U> {
         return resultResolver.showPlayerResult(player, resultType);
     }
 
-    public boolean hasSameResult(ResultType type) {
-        return this.resultType == type;
-    }
-
     public Name getName() {
         return player.getName();
     }

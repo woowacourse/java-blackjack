@@ -3,15 +3,18 @@ package blackjack;
 import blackjack.controller.Controller;
 import blackjack.controller.ModeStrategy;
 import blackjack.controller.ModeStrategyFactory;
+import blackjack.domain.participant.BettingPlayer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 
 public class Main {
 
-    @SuppressWarnings("unchecked")
-    public static <T extends Player> void main(String[] args) {
+    public static void main(String[] args) {
+        Player bettingPlayer = new BettingPlayer("쪼밀리", 1000);
+        int i = bettingPlayer.computeScore();
+
         String selectedGame = InputView.enterGame();
-        ModeStrategy<T> gameMode = ModeStrategyFactory.createByIdentifier(selectedGame);
+        ModeStrategy<?> gameMode = ModeStrategyFactory.createByIdentifier(selectedGame);
         Controller.play(gameMode);
     }
 }

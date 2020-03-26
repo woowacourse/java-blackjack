@@ -1,15 +1,17 @@
 package blackjack.domain.result;
 
 public enum ResultType {
-    BLACKJACK(1.5),
-    WIN(1),
-    LOSE(-1),
-    DRAW(0);
+    BLACKJACK(1.5, "블랙잭"),
+    WIN(1, "승"),
+    LOSE(-1, "패"),
+    DRAW(0, "무");
 
     private final double profitRate;
+    private final String word;
 
-    ResultType(double profitRate) {
+    ResultType(double profitRate, String word) {
         this.profitRate = profitRate;
+        this.word = word;
     }
 
     public ResultType reverse() {
@@ -25,7 +27,11 @@ public enum ResultType {
         return this;
     }
 
-    public double computeProfit(double bettingMoney) {
-        return this.profitRate * bettingMoney;
+    public double getProfitRate() {
+        return profitRate;
+    }
+
+    public String getWord() {
+        return word;
     }
 }

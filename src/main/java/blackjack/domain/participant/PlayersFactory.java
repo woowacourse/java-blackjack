@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import static blackjack.domain.participant.Players.*;
 
-// TODO: 베팅 플레이어 리스트 생성 테스트, 새로운 Player가 생기면 여기가 변경됨. 개선 가능성 있으까?
 public class PlayersFactory {
     private static final String UNMATCHED_PARAMETER_NUMBERS_ERR_MSG = "전달받은 이름과 배팅 금액의 수가 일치하지 않습니다.";
 

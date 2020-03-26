@@ -19,7 +19,7 @@ public class Players<T extends Player> {
         this.players = players;
     }
 
-    private <E extends Player> void validatePlayers(List<E> players) {
+    private void validatePlayers(List<T> players) {
         Objects.requireNonNull(players, NULL_ARGUMENT_ERR_MSG);
 
         if (players.isEmpty()) {

@@ -8,7 +8,7 @@ import java.util.List;
 public class BettingResultResolver implements ResultResolver<BettingPlayer, Double, Double> {
     @Override
     public Double showPlayerResult(BettingPlayer player, ResultType type) {
-        return player.getMoney().computeProfit(type);
+        return player.computeProfit(type);
     }
 
     @Override

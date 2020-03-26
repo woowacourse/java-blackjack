@@ -11,7 +11,7 @@ public class ModeStrategyFactory {
     private ModeStrategyFactory() {
     }
 
-    public static ModeStrategy createByIdentifier(String game) {
+    public static ModeStrategy<?> createByIdentifier(String game) {
         Objects.requireNonNull(game, NULL_ERR_MSG);
 
         if (WIN_OR_LOSE_GAME.equals(game)) {

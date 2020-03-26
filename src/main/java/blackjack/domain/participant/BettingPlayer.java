@@ -2,13 +2,16 @@ package blackjack.domain.participant;
 
 import blackjack.domain.participant.attribute.Money;
 import blackjack.domain.participant.attribute.Name;
+import blackjack.domain.result.ResultType;
 
 import java.util.Objects;
+
+import static blackjack.domain.participant.attribute.Money.NULL_RESULT_TYPE_ERR_MSG;
 
 public class BettingPlayer extends Player {
     private final Money money;
 
-    public BettingPlayer(Name name, Money money) {
+    BettingPlayer(Name name, Money money) {
         super(name);
         Objects.requireNonNull(money);
         this.money = money;
@@ -19,8 +22,9 @@ public class BettingPlayer extends Player {
         this.money = new Money(money);
     }
 
-    public Money getMoney() {
-        return money;
+    public Double computeProfit(ResultType type) {
+        Objects.requireNonNull(type, NULL_RESULT_TYPE_ERR_MSG);
+        return money.computeProfit(type);
     }
 
     @Override
