@@ -15,20 +15,32 @@ public class Player extends Participant {
 	}
 
 	public double computeProfit(Dealer dealer) {
-		if (this.isBlackJack() && !dealer.isBlackJack()) {
+		if (isPlayerWinByBlackJack(dealer)) {
 			return bettingMoney.getAmount() * BLACKJACK_PROFIT_RATE;
 		}
-		if (this.isBust() || isLowerThanDealerScore(dealer)) {
+		if (isPlayerLose(dealer)) {
 			return bettingMoney.getAmount() * MINUS_PROFIT;
 		}
-		if (dealer.isBust() || isHigherThanDealerScore(dealer)) {
+		if (isPlayerWin(dealer)) {
 			return bettingMoney.getAmount();
 		}
 		return 0;
 	}
 
+	private boolean isPlayerWinByBlackJack(Dealer dealer) {
+		return this.isBlackJack() && !dealer.isBlackJack();
+	}
+
+	private boolean isPlayerWin(Dealer dealer) {
+		return dealer.isBust() || isHigherThanDealerScore(dealer);
+	}
+
 	private boolean isLowerThanDealerScore(Dealer dealer) {
 		return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() < dealer.calculateScore());
+	}
+
+	private boolean isPlayerLose(Dealer dealer) {
+		return this.isBust() || isLowerThanDealerScore(dealer);
 	}
 
 	private boolean isHigherThanDealerScore(Dealer dealer) {
