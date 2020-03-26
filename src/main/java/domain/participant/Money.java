@@ -1,6 +1,7 @@
 package domain.participant;
 
 public class Money {
+	public static final int ZERO = 0;
 	private double money;
 
 	private Money(String money) {
@@ -18,7 +19,7 @@ public class Money {
 	}
 
 	private void validateAmount(Double money) {
-		if (money < 0) {
+		if (money < ZERO) {
 			throw new IllegalArgumentException("베팅 금액은 음수가 아니어야 합니다.");
 		}
 	}
