@@ -17,7 +17,7 @@ class MoneyTest {
     @ValueSource(strings = {"abc", "0", "-100"})
     void invalidConstructor(String input) {
         assertThatThrownBy(() -> {
-            Money.create(input);
+            new Money(input);
         }).isInstanceOf(InvalidMoneyException.class);
     }
 
@@ -26,12 +26,12 @@ class MoneyTest {
     void add() {
         // given
         String amount = "1000";
-        Money money = Money.create(amount);
-        Money other = Money.create(amount);
+        Money money = new Money(amount);
+        Money other = new Money(amount);
         // when
-        Money actual = money.add(other);
+        money.add(other);
         // then
-        assertThat(actual.getAmount()).isEqualTo(2000);
+        assertThat(money.getAmount()).isEqualTo(2000);
     }
 
     @DisplayName("돈 뺄셈")
@@ -39,12 +39,12 @@ class MoneyTest {
     void subtract() {
         // given
         String amount = "1000";
-        Money money = Money.create(amount);
-        Money other = Money.create(amount);
+        Money money = new Money(amount);
+        Money other = new Money(amount);
         // when
-        Money actual = money.subtract(other);
+        money.subtract(other);
         // then
-        assertThat(actual.getAmount()).isEqualTo(0);
+        assertThat(money.getAmount()).isEqualTo(0);
     }
 
     @DisplayName("돈 곱셈")
@@ -52,11 +52,10 @@ class MoneyTest {
     void multiply() {
         // given
         String amount = "1000";
-        Money money = Money.create(amount);
-        Money other = Money.create(amount);
+        Money money = new Money(amount);
         // when
-        Money actual = money.multiply(1.5);
+        money.multiply(1.5);
         // then
-        assertThat(actual.getAmount()).isEqualTo(1500);
+        assertThat(money.getAmount()).isEqualTo(1500);
     }
 }

@@ -31,7 +31,7 @@ public class MoneyResult extends Result {
 
     private void handleBlackJack(final Participant player, final Money playerMoney) {
         if (BasicRule.isBlackJack(player.score(), player.cardCount())) {
-            player.earn(playerMoney.multiply(BasicRule.BLACK_JACK_PROFIT));
+            playerMoney.multiply(BasicRule.BLACK_JACK_PROFIT);
         }
         dealer.lose(player.getMoney());
     }

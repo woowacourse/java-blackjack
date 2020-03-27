@@ -11,12 +11,12 @@ public class Money {
         this.amount = amount;
     }
 
-    public static Money zero() {
-        return new Money(0);
+    public Money() {
+        this(0);
     }
 
-    public static Money create(final String input) {
-        return new Money(validAmount(input));
+    public Money(final String input) {
+        this(validAmount(input));
     }
 
     private static double validAmount(final String input) {
@@ -38,24 +38,24 @@ public class Money {
         }
     }
 
-    public Money add(final Money other) {
-        return new Money(amount + other.amount);
+    public void add(final Money other) {
+        amount += other.amount;
     }
 
-    public Money subtract(final Money other) {
-        return new Money(amount - other.amount);
+    public void subtract(final Money other) {
+        amount -= other.amount;
     }
 
-    public Money multiply(double times) {
-        return new Money(amount * times);
+    public void multiply(double times) {
+        amount *= times;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public Money getOpposite() {
-        return new Money(-amount);
+    public void getOpposite() {
+        amount = -amount;
     }
 
     @Override
