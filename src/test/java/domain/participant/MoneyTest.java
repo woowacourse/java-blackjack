@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class MoneyTest {
-    @ParameterizedTest
-    @ValueSource(strings = {"a", "-"})
-    @DisplayName("베팅금액의 인풋값으로 올바르지 않은 형식의 값이 들어가는 경우 예외를 잘 처리하는지")
-    void invalidInput(String input) {
-        assertThatThrownBy(() ->
+class MoneyTest {
+	@ParameterizedTest
+	@ValueSource(strings = {"a", "-"})
+	@DisplayName("베팅금액의 인풋값으로 올바르지 않은 형식의 값이 들어가는 경우 예외를 잘 처리하는지")
+	void invalidInput(String input) {
+		assertThatThrownBy(() ->
 			Money.create(input)
 		).isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("올바른 형식의 입력이 아닙니다.");
-    }
+	}
 
     @Test
     @DisplayName("베팅금액의 인풋값으로 음수가 들어가는 경우 예외를 잘 처리하는지")

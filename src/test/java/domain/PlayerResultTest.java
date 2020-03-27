@@ -17,7 +17,7 @@ import domain.participant.Money;
 import domain.participant.Name;
 import domain.participant.Player;
 
-public class PlayerResultTest {
+class PlayerResultTest {
 	private static final List<Name> names = Arrays.asList(Name.create("참여자1"), Name.create("참여자2"),
 		Name.create("참여자3"));
 	private static final List<Money> moneys = Arrays.asList(Money.create("100"), Money.create("200"),

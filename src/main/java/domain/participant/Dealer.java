@@ -4,7 +4,7 @@ import domain.card.CardDeck;
 
 public class Dealer extends Participant {
 	private static final int DEALER_STANDARD_SCORE = 16;
-	public static final String DELIMITER = " : ";
+	private static final String DELIMITER = " : ";
 
 	public Dealer() {
 		super(Name.create("딜러"));

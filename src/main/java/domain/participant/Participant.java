@@ -5,8 +5,8 @@ import domain.card.Card;
 
 public class Participant implements ParticipantInterface {
 	private static final int MAX_SCORE = 21;
-	public static final int BLACKJACK_SCORE = 21;
-	public static final int INITIAL_CARDS_NUMBER = 2;
+	private static final int BLACKJACK_SCORE = 21;
+	private static final int INITIAL_CARDS_NUMBER = 2;
 
 	private Name name;
 	private ParticipantCards cards;

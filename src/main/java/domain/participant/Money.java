@@ -1,7 +1,7 @@
 package domain.participant;
 
 public class Money {
-	public static final int ZERO = 0;
+	private static final int ZERO = 0;
 	private double money;
 
 	private Money(String money) {

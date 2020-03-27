@@ -7,7 +7,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum Result {
-	BLACKJACKWIN("블랙잭", Player::isWinByBlackJack, 1.5),
+	BLACKJACK_WIN("블랙잭", Player::isWinByBlackJack, 1.5),
 	WIN("승", Player::isWin, 1),
 	LOSE("패", Player::isLose, -1),
 	DRAW("무", Player::isDraw, 0);
