@@ -22,10 +22,6 @@ public class Players {
 		return players.stream().map(Participant::getName).collect(Collectors.toList());
 	}
 
-	public Player getPlayer(int index) {
-		return players.get(index);
-	}
-
 	public List<Player> getPlayers() {
 		return players;
 	}

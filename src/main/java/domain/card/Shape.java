@@ -6,13 +6,13 @@ public enum Shape {
 	HEART("하트"),
 	CLOVER("클로버");
 
-	private String koreanName;
+	private String name;
 
-	Shape(String koreanName) {
-		this.koreanName = koreanName;
+	Shape(String name) {
+		this.name = name;
 	}
 
-	public String getKoreanName() {
-		return koreanName;
+	public String getName() {
+		return name;
 	}
 }

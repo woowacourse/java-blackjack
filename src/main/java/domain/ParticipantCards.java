@@ -20,27 +20,23 @@ public class ParticipantCards {
 	}
 
 	public int calculateScore() {
-		int score = 0;
-		boolean containsAce = false;
-		for (Card card : cards) {
-			containsAce = checkIfAce(card, containsAce);
-			score += card.getScore();
+		int numberOfAce = (int)cards.stream().filter(c -> c.getScore() == ACE_SCORE).count();
+		int sum = cards.stream().mapToInt(Card::getScore).sum();
+		for (int i = 0; i < numberOfAce; i++) {
+			sum = plusTenIfNotBust(sum);
 		}
-		return calculateFinalScore(score, containsAce);
+		return sum;
 	}
 
-	private boolean checkIfAce(Card card, boolean containsAce) {
-		if (card.getScore() == ACE_SCORE) {
-			return true;
+	private int plusTenIfNotBust(int sum) {
+		if (sum + ACE_BONUS <= MAX_SCORE) {
+			return sum + ACE_BONUS;
 		}
-		return containsAce;
+		return sum;
 	}
 
-	private int calculateFinalScore(int score, boolean containAce) {
-		if (containAce && score + ACE_BONUS <= MAX_SCORE) {
-			return score + ACE_BONUS;
-		}
-		return score;
+	public int getSize() {
+		return cards.size();
 	}
 
 	public String toStringOneCard() {

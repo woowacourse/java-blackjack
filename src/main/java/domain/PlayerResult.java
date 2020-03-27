@@ -13,7 +13,8 @@ public class PlayerResult {
 		Dealer dealer = participant.getDealer();
 		Players players = participant.getPlayers();
 		for (Player player : players.getPlayers()) {
-			playerResult.put(player, player.computeProfit(dealer));
+			double profit = Result.deduceProfitRate(player, dealer) * player.getBettingMoney();
+			playerResult.put(player, profit);
 		}
 	}
 

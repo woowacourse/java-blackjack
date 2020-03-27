@@ -6,7 +6,6 @@ import domain.GameParticipant;
 import domain.PlayerResult;
 import domain.Players;
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 

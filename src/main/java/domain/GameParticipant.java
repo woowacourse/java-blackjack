@@ -24,19 +24,11 @@ public class GameParticipant {
 		for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
 			giveOneCardToAllPlayers();
 		}
-		checkBlackJack();
 	}
 
 	private void giveOneCardToAllPlayers() {
 		for (Player player : players.getPlayers()) {
 			player.receive(cardDeck.draw());
-		}
-	}
-
-	public void checkBlackJack() {
-		dealer.setBlackJack(dealer.calculateScore());
-		for (Player player : players.getPlayers()) {
-			player.setBlackJack(player.calculateScore());
 		}
 	}
 

@@ -21,13 +21,13 @@ class ParticipantCardsTest {
     }
 
     @Test
-    @DisplayName("카드 점수 계산하는 기능 테스트 - Ace 미포함")
+	@DisplayName("Ace가 포함되지 않은 경우 카드 점수 계산 기능이 제대로 되는지")
     void calculateScore() {
         assertThat(cards.calculateScore()).isEqualTo(10);
     }
 
-    @Test
-    @DisplayName("카드 점수 계산하는 기능 테스트 - Ace 포함")
+	@Test
+	@DisplayName("Ace가 포함된 경우 카드 점수 계산 기능이 제대로 되는지")
     void calculateScoreWithAce() {
         cards.add((new Card(Symbol.ACE, Shape.HEART)));
         assertThat(cards.calculateScore()).isEqualTo(21);

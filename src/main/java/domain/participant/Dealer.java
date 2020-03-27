@@ -4,6 +4,7 @@ import domain.card.CardDeck;
 
 public class Dealer extends Participant {
 	private static final int DEALER_STANDARD_SCORE = 16;
+	public static final String DELIMITER = " : ";
 
 	public Dealer() {
 		super(Name.create("딜러"));
@@ -19,6 +20,6 @@ public class Dealer extends Participant {
 	}
 
 	public String toStringFirstDraw() {
-		return getName() + " : " + this.getCards().toStringOneCard();
+		return getName() + DELIMITER + this.getCards().toStringOneCard();
 	}
 }
