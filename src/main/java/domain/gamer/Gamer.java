@@ -7,20 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gamer {
+    public static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_CARD_SIZE = 2;
+
     private String name;
-    protected final List<Card> cards = new ArrayList<>();
-    protected Result result;
+    private final List<Card> cards;
+    protected Score score;
 
     public Gamer(String name) {
         this.name = name;
-        this.result = new Result();
+        this.score = new Score();
+        cards = new ArrayList<>();
+
     }
 
     public abstract boolean isDrawable();
 
     public void addCard(List<Card> cards) {
         this.cards.addAll(cards);
-        result.calculateScore(this.cards, isContainAce());
+        score.calculateScore(this.cards, isContainAce());
+    }
+
+    public boolean isBlackJack() {
+        return score.getScore() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     public boolean isContainAce() {
@@ -34,9 +43,5 @@ public abstract class Gamer {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public Result getResult() {
-        return result;
     }
 }

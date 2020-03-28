@@ -52,8 +52,27 @@ public class DealerTest {
     void addCardAtDealerTest(List<Card> cards, int expectedSize) {
         Dealer dealer = new Dealer();
         dealer.addCard(cards);
-        Deck deck = new Deck(CardsFactory.getInstance());
-        dealer.addCardAtDealer(deck.popCard(1));
+        Deck deck = new Deck(CardsFactory.getCards());
+        dealer.addCardAtDealer(deck);
         assertThat(dealer.getCards()).hasSize(expectedSize);
+    }
+
+    @Test
+    @DisplayName("추가된후 카드끼리 중복이 없어야함")
+    void addCardAtDealerTest() {
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck(CardsFactory.getCards());
+        while (dealer.isDrawable()) {
+            dealer.addCardAtDealer(deck);
+        }
+
+        int dealerCardSize = dealer.getCards().size();
+        int dealerCardSizeAfterDistinct = (int) dealer.getCards()
+                .stream()
+                .map(card -> card.getCardNumber().getCardInitial() + card.getCardSuit().getSuit())
+                .distinct()
+                .count();
+
+        assertThat(dealerCardSize).isEqualTo(dealerCardSizeAfterDistinct);
     }
 }

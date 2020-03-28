@@ -12,9 +12,13 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public static String inputAsBettingMoney(String playerName) {
+        OutputView.printBettingMoneyGuide(playerName);
+        return scanner.nextLine();
+    }
+
     public static String inputAsDrawable(Player player) {
         OutputView.printAddCardGuide(player);
         return scanner.next();
     }
-
 }

@@ -1,12 +1,10 @@
 package domain.gamer;
 
-import domain.card.Card;
-
-import java.util.List;
+import domain.card.Deck;
 
 public class Dealer extends Gamer {
     private static final int DRAW_CARD_PIVOT = 16;
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         super(DEALER_NAME);
@@ -14,12 +12,12 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean isDrawable() {
-        return result.getScore() <= DRAW_CARD_PIVOT;
+        return score.getScore() <= DRAW_CARD_PIVOT;
     }
 
-    public void addCardAtDealer(List<Card> card) {
+    public void addCardAtDealer(Deck deck) {
         while (isDrawable()) {
-            addCard(card);
+            addCard(deck.popCard());
         }
     }
 }
