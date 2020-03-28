@@ -8,10 +8,10 @@ import java.util.List;
 import static domain.gamer.Dealer.DEALER_NAME;
 
 public class BlackJackRule extends GameRule {
-    private static final Score BLACKJACK_SCORE = Score.of(21);
-    private static final Score DEALER_THRESHOLD_SCORE = Score.of(16);
+    public static final Score BLACKJACK_SCORE = Score.of(21);
+    public static final Score DEALER_THRESHOLD_SCORE = Score.of(16);
     private static final Score ACE_ADDITIONAL_SCORE = Score.of(10);
-    private static final int DEALER_MAXIMUM_CARDS_AMOUNT = 3;
+    public static final int DEALER_MAXIMUM_CARDS_AMOUNT = 3;
     private static final int BLACKJACK_CARDS_AMOUNT = 2;
     private static final Money DRAW_PROFIT = new Money(0);
     private static final double BLACKJACK_BONUS = 1.5;
@@ -38,16 +38,6 @@ public class BlackJackRule extends GameRule {
         return aceAdditionalScore;
     }
 
-    @Override
-    public boolean canDrawMore(Gamer gamer) {
-        if (gamer.getClass() == Player.class) {
-            return !isBurst(gamer);
-        }
-
-        return !calculateScore(gamer).isBiggerThan(DEALER_THRESHOLD_SCORE)
-                && gamer.getHand().size() < DEALER_MAXIMUM_CARDS_AMOUNT;
-    }
-
     private boolean isBurst(Gamer gamer) {
         return calculateScore(gamer).isBiggerThan(BLACKJACK_SCORE);
     }
@@ -59,7 +49,7 @@ public class BlackJackRule extends GameRule {
         }
 
         if (isBurst(player) || isBurst(dealer)) {
-            return deriveBurstExistCase(player, dealer);
+            return deriveBurstExistCase(player);
         }
 
         return deriveUsualCase(player, dealer);
@@ -82,7 +72,7 @@ public class BlackJackRule extends GameRule {
         return new Result(player.getName(), player.getBettingMoney().negate());
     }
 
-    private Result deriveBurstExistCase(Player player, Dealer dealer) {
+    private Result deriveBurstExistCase(Player player) {
         if (isBurst(player)) {
             return new Result(player.getName(), player.getBettingMoney().negate());
         }

@@ -23,6 +23,8 @@ public abstract class Gamer {
 
     public abstract List<Card> openInitialCards();
 
+    public abstract boolean canDrawMore(ScoreCalculable scoreCalculable);
+
     private void validateEmptyHand() {
         if (!hand.isEmpty()) {
             throw new IllegalStateException("손패가 비어있지 않습니다.");
@@ -37,10 +39,10 @@ public abstract class Gamer {
         }
     }
 
-    public void playTurn(CardProvidable cardProvidable, GameRule rule, TurnActions turnActions) {
+    public void playTurn(CardProvidable cardProvidable,ScoreCalculable scoreCalculable, TurnActions turnActions) {
         while (turnActions.isHit(this)) {
             hand.drawCard(cardProvidable);
-            if (!rule.canDrawMore(this)) {
+            if (!canDrawMore(scoreCalculable)) {
                 break;
             }
             turnActions.showHand(this);
