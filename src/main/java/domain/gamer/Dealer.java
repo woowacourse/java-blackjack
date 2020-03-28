@@ -8,21 +8,12 @@ package domain.gamer;
 public class Dealer extends Gamer {
 	private static final int DRAW_CONDITION = 16;
 
-	private DealerGameResult dealerGameResult;
-
 	public Dealer() {
-		super("딜러");
+		super(new Name("딜러"));
 	}
 
-	public boolean canDraw() {
+	@Override
+	public boolean canHit() {
 		return scoreHands() <= DRAW_CONDITION;
-	}
-
-	public void findResult(int win, int lose, int draw) {
-		dealerGameResult = new DealerGameResult(win, lose, draw);
-	}
-
-	public DealerGameResult getDealerGameResult() {
-		return dealerGameResult;
 	}
 }

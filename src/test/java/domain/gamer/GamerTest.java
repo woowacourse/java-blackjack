@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import domain.card.Card;
 import domain.card.Symbol;
 import domain.card.Type;
+import domain.money.Money;
 
 /**
  *
@@ -40,7 +41,7 @@ public class GamerTest {
 	@ParameterizedTest
 	@MethodSource("generateBustInput")
 	void 버스트(List<Card> cards, boolean expected) {
-		Gamer gamer = new Gamer("a");
+		Player gamer = new Player(new Name("a"), Money.of("10000"));
 		for (Card card : cards) {
 			gamer.draw(card);
 		}
@@ -50,7 +51,7 @@ public class GamerTest {
 	@ParameterizedTest
 	@MethodSource("generateBlackjackInput")
 	void 블랙잭(List<Card> cards, boolean expected) {
-		Gamer gamer = new Gamer("a");
+		Player gamer = new Player(new Name("a"), Money.of("10000"));
 		for (Card card : cards) {
 			gamer.draw(card);
 		}
@@ -60,7 +61,7 @@ public class GamerTest {
 	@ParameterizedTest
 	@NullAndEmptySource
 	void 이름_null이나_빈_값(String name) {
-		assertThatThrownBy(() -> new Player(name))
+		assertThatThrownBy(() -> new Player(new Name(""), Money.of("10000")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("null이나 빈 값");
 	}

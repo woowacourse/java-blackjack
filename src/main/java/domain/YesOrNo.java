@@ -1,6 +1,8 @@
-package domain.card;
+package domain;
 
 import java.util.Arrays;
+
+import domain.exception.InvalidChoiceException;
 
 /**
  *   Yes와 No를 가지는 enum
@@ -21,10 +23,10 @@ public enum YesOrNo {
 		return Arrays.stream(YesOrNo.values())
 			.filter(c -> c.choice.equals(choice))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("Y또는 N중 하나를 입력해야합니다."));
+			.orElseThrow(() -> new InvalidChoiceException(choice));
 	}
 
 	public boolean isYes() {
-		return this == YesOrNo.YES;
+		return this == YES;
 	}
 }
