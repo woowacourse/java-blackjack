@@ -7,7 +7,7 @@ import domain.result.ResultDerivable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Dealer extends AbstractGamer {
+public class Dealer extends Gamer {
     public static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer() {
@@ -20,7 +20,7 @@ public class Dealer extends AbstractGamer {
 
     @Override
     public List<Card> openInitialCards() {
-        return Arrays.asList(hand.getOneCard());
+        return Arrays.asList(hand.getFirstCard());
     }
 
     public Result determineResult(List<Result> playerResults, ResultDerivable resultDerivable) {

@@ -29,7 +29,7 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    public Card getOneCard() {
+    public Card getFirstCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("핸드가 비어있습니다.");
         }

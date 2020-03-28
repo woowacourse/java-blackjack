@@ -1,25 +1,25 @@
 package domain.gamer.action;
 
-import domain.gamer.AbstractGamer;
+import domain.gamer.Gamer;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class TurnActions {
-    private final Function<AbstractGamer, YesNo> choice;
-    private final Consumer<AbstractGamer> handShower;
+    private final Function<Gamer, YesNo> choice;
+    private final Consumer<Gamer> handShower;
 
-    public TurnActions(Function<AbstractGamer, YesNo> choice, Consumer<AbstractGamer> handShower) {
+    public TurnActions(Function<Gamer, YesNo> choice, Consumer<Gamer> handShower) {
         this.choice = choice;
         this.handShower = handShower;
     }
 
-    public boolean isHit(AbstractGamer gamer) {
+    public boolean isHit(Gamer gamer) {
         return choice.apply(gamer)
                 .isYes();
     }
 
-    public void showHand(AbstractGamer gamer) {
+    public void showHand(Gamer gamer) {
         handShower.accept(gamer);
     }
 }

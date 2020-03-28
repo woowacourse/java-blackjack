@@ -1,7 +1,7 @@
 package domain.result.score;
 
-import domain.gamer.AbstractGamer;
+import domain.gamer.Gamer;
 
 public interface ScoreCalculable {
-    Score calculateScore(AbstractGamer gamer);
+    Score calculateScore(Gamer gamer);
 }

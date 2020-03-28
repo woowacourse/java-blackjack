@@ -1,6 +1,6 @@
 package view;
 
-import domain.gamer.AbstractGamer;
+import domain.gamer.Gamer;
 import domain.gamer.action.YesNo;
 
 import java.util.Arrays;
@@ -49,7 +49,7 @@ public class InputView {
                 .anyMatch(ch -> !Character.isDigit(ch));
     }
 
-    public static YesNo askDrawMore(AbstractGamer player) {
+    public static YesNo askDrawMore(Gamer player) {
         System.out.println(player.getName().getValue() + " 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         return YesNo.of(SCANNER.nextLine());

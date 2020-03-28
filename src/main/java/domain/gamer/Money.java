@@ -17,7 +17,7 @@ public class Money {
         return new Money(this.value + operand.value);
     }
 
-    public Money reverse() {
+    public Money negate() {
         return new Money(-this.value);
     }
 

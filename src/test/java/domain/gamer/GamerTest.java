@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractGamerTest {
+public class GamerTest {
     @Test
     void 처음에_카드_뽑기_테스트() {
         Player player = new Player(new Name("phobi"));

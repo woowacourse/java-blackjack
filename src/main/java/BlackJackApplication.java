@@ -32,7 +32,7 @@ public class BlackJackApplication {
         List<Name> playerNames = enterNames();
         OutputView.printEmptyLine();
 
-        return enterBettingMoneys(playerNames);
+        return betMoneys(playerNames);
     }
 
     private static List<Name> enterNames() {
@@ -42,7 +42,7 @@ public class BlackJackApplication {
                 .collect(toList());
     }
 
-    private static List<Player> enterBettingMoneys(List<Name> playerNames) {
+    private static List<Player> betMoneys(List<Name> playerNames) {
         return playerNames.stream()
                 .map(BlackJackApplication::enterBettingMoney)
                 .collect(toList());

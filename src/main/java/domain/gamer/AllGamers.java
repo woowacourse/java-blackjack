@@ -49,8 +49,8 @@ public class AllGamers {
                 .collect(toList());
     }
 
-    public List<AbstractGamer> joinAllGamers() {
-        List<AbstractGamer> gamers = new ArrayList<>();
+    public List<Gamer> joinAllGamers() {
+        List<Gamer> gamers = new ArrayList<>();
         gamers.add(dealer);
         gamers.addAll(players);
 

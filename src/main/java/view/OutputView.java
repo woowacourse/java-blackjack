@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.gamer.AbstractGamer;
+import domain.gamer.Gamer;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
@@ -32,7 +32,7 @@ public class OutputView {
                 .collect(joining(", "));
     }
 
-    private static String parseGamerInitialState(AbstractGamer gamer) {
+    private static String parseGamerInitialState(Gamer gamer) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(gamer.getName().getValue());
@@ -49,19 +49,19 @@ public class OutputView {
                 .collect(joining(", "));
     }
 
-    public static void printGamerState(AbstractGamer gamer) {
+    public static void printGamerState(Gamer gamer) {
         System.out.println(parseGamerState(gamer));
     }
 
-    private static String parseGamerState(AbstractGamer gamer) {
+    private static String parseGamerState(Gamer gamer) {
         return gamer.getName().getValue() + ": " + parseCards(gamer.openAllCards());
     }
 
-    public static void printDealerCanDrawMore(AbstractGamer dealer) {
+    public static void printDealerCanDrawMore(Gamer dealer) {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printScore(AbstractGamer gamer, Score score) {
+    public static void printScore(Gamer gamer, Score score) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(parseGamerState(gamer));

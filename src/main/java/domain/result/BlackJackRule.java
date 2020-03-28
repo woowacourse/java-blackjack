@@ -17,7 +17,7 @@ public class BlackJackRule extends GameRule {
     private static final double BLACKJACK_BONUS = 1.5;
 
     @Override
-    public Score calculateScore(AbstractGamer gamer) {
+    public Score calculateScore(Gamer gamer) {
         Hand hand = gamer.getHand();
         Score defaultSum = hand.calculateDefaultSum();
 
@@ -39,7 +39,7 @@ public class BlackJackRule extends GameRule {
     }
 
     @Override
-    public boolean canDrawMore(AbstractGamer gamer) {
+    public boolean canDrawMore(Gamer gamer) {
         if (gamer.getClass() == Player.class) {
             return !isBurst(gamer);
         }
@@ -48,7 +48,7 @@ public class BlackJackRule extends GameRule {
                 && gamer.getHand().size() < DEALER_MAXIMUM_CARDS_AMOUNT;
     }
 
-    private boolean isBurst(AbstractGamer gamer) {
+    private boolean isBurst(Gamer gamer) {
         return calculateScore(gamer).isBiggerThan(BLACKJACK_SCORE);
     }
 
@@ -65,7 +65,7 @@ public class BlackJackRule extends GameRule {
         return deriveUsualCase(player, dealer);
     }
 
-    private boolean isBlackJack(AbstractGamer gamer) {
+    private boolean isBlackJack(Gamer gamer) {
         return calculateScore(gamer).equals(BLACKJACK_SCORE)
                 && gamer.getHand().size() == BLACKJACK_CARDS_AMOUNT;
     }
@@ -79,12 +79,12 @@ public class BlackJackRule extends GameRule {
             return new Result(player.getName(), player.getBettingMoney().multiply(BLACKJACK_BONUS));
         }
 
-        return new Result(player.getName(), player.getBettingMoney().reverse());
+        return new Result(player.getName(), player.getBettingMoney().negate());
     }
 
     private Result deriveBurstExistCase(Player player, Dealer dealer) {
         if (isBurst(player)) {
-            return new Result(player.getName(), player.getBettingMoney().reverse());
+            return new Result(player.getName(), player.getBettingMoney().negate());
         }
 
         return new Result(player.getName(), player.getBettingMoney());
@@ -102,7 +102,7 @@ public class BlackJackRule extends GameRule {
             return new Result(player.getName(), DRAW_PROFIT);
         }
 
-        return new Result(player.getName(), player.getBettingMoney().reverse());
+        return new Result(player.getName(), player.getBettingMoney().negate());
     }
 
     @Override
@@ -111,6 +111,6 @@ public class BlackJackRule extends GameRule {
                 .map(Result::getProfit)
                 .reduce(new Money(0), (a, b) -> a.plus(b));
 
-        return new Result(DEALER_NAME, totalSum.reverse());
+        return new Result(DEALER_NAME, totalSum.negate());
     }
 }

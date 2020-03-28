@@ -6,7 +6,7 @@ import domain.result.ResultDerivable;
 
 import java.util.List;
 
-public class Player extends AbstractGamer {
+public class Player extends Gamer {
     private static final Money DEFAULT_MONEY = new Money(0);
 
     private Money bettingMoney;

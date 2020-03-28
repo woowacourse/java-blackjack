@@ -4,8 +4,8 @@ import domain.gamer.Money;
 import domain.gamer.Name;
 
 public class Result {
-    Name gamerName;
-    Money profit;
+    private final Name gamerName;
+    private final Money profit;
 
     public Result(Name gamerName, Money profit) {
         this.gamerName = gamerName;
