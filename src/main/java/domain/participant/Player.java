@@ -1,38 +1,39 @@
 package domain.participant;
 
-import domain.result.Result;
-
 public class Player extends Participant {
+	private Money bettingMoney;
 
-    public Player(String name) {
-        super(name);
-        validateName(name);
-    }
+	public Player(Name name, Money bettingMoney) {
+		super(name);
+		this.bettingMoney = bettingMoney;
+	}
 
-    private void validateName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 blank 값이 될 수 없습니다.");
-        }
-    }
+	public boolean isWinByBlackJack(Dealer dealer) {
+		return this.isBlackJack() && !dealer.isBlackJack();
+	}
 
-    public Result beatDealer(Dealer dealer) {
-        if (this.isBust() || isLowerThanDealerScore(dealer)) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust() || isHigherThanDealerScore(dealer)) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
-    }
+	public boolean isWin(Dealer dealer) {
+		return ((dealer.isBust() && !this.isBust()) || isHigherThanDealerScore(dealer)) && !this.isWinByBlackJack(
+			dealer);
+	}
 
-    private boolean isLowerThanDealerScore(Dealer dealer) {
-        return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() < dealer.calculateScore());
-    }
+	public boolean isLose(Dealer dealer) {
+		return this.isBust() || isLowerThanDealerScore(dealer);
+	}
 
-    private boolean isHigherThanDealerScore(Dealer dealer) {
-        return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() > dealer.calculateScore());
-    }
+	public boolean isDraw(Dealer dealer) {
+		return (this.calculateScore() == dealer.calculateScore()) && !this.isBust();
+	}
 
+	private boolean isLowerThanDealerScore(Dealer dealer) {
+		return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() < dealer.calculateScore());
+	}
 
+	private boolean isHigherThanDealerScore(Dealer dealer) {
+		return ((!dealer.isBust() && !this.isBust()) && this.calculateScore() > dealer.calculateScore());
+	}
 
+	public double getBettingMoney() {
+		return bettingMoney.getAmount();
+	}
 }

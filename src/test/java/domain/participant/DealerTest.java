@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import domain.card.CardDeck;
 
 class DealerTest {
-
     private static final int CRITERIA_SCORE = 16;
 
     @Test

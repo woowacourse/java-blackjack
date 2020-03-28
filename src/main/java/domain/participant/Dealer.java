@@ -3,22 +3,23 @@ package domain.participant;
 import domain.card.CardDeck;
 
 public class Dealer extends Participant {
-    private static final int DEALER_STANDARD_SCORE = 16;
+	private static final int DEALER_STANDARD_SCORE = 16;
+	private static final String DELIMITER = " : ";
 
-    public Dealer() {
-        super("딜러");
-    }
+	public Dealer() {
+		super(Name.create("딜러"));
+	}
 
-    public int performHit(CardDeck cardDeck) {
-        int hitNumber = 0;
-        while (this.calculateScore() <= DEALER_STANDARD_SCORE) {
-            hitNumber++;
-            this.receive(cardDeck.draw());
-        }
-        return hitNumber;
-    }
+	public int performHit(CardDeck cardDeck) {
+		int hitNumber = 0;
+		while (this.calculateScore() <= DEALER_STANDARD_SCORE) {
+			hitNumber++;
+			this.receive(cardDeck.draw());
+		}
+		return hitNumber;
+	}
 
-    public String toStringFirstDraw() {
-        return getName() + " : " + this.getCards().toStringOneCard();
-    }
+	public String toStringFirstDraw() {
+		return getName() + DELIMITER + this.getCards().toStringOneCard();
+	}
 }
