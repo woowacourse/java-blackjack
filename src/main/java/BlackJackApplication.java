@@ -17,15 +17,15 @@ public class BlackJackApplication {
     public static void main(String[] args) {
         BlackJackRule blackJackRule = new BlackJackRule();
         CardDeck cardDeck = new CardDeck();
-        AllGamers allGamers = new AllGamers(enterInitialInformation());
+        AllGamers allGamers = new AllGamers(enterInitialInformation(), blackJackRule);
 
         playInitialDrawPhase(allGamers, cardDeck);
 
-        playAdditionalTurns(allGamers, cardDeck, blackJackRule);
+        playAdditionalTurns(allGamers, cardDeck);
 
         showAllScores(allGamers, blackJackRule);
 
-        showAllResults(allGamers, blackJackRule);
+        showAllResults(allGamers);
     }
 
     private static List<Player> enterInitialInformation() {
@@ -59,12 +59,12 @@ public class BlackJackApplication {
         OutputView.printInitialCards(allGamers.getDealer(), allGamers.getPlayers());
     }
 
-    private static void playAdditionalTurns(AllGamers allGamers, CardDeck cardDeck, BlackJackRule blackJackRule) {
+    private static void playAdditionalTurns(AllGamers allGamers, CardDeck cardDeck) {
         TurnActions playerTurnActions = new TurnActions(InputView::askDrawMore, OutputView::printGamerState);
         TurnActions dealerTurnActions = new TurnActions(dealer -> YesNo.YES, OutputView::printDealerCanDrawMore);
 
-        allGamers.playPlayersTurn(cardDeck, blackJackRule, playerTurnActions);
-        allGamers.playDealerTurn(cardDeck, blackJackRule, dealerTurnActions);
+        allGamers.playPlayersTurn(cardDeck, playerTurnActions);
+        allGamers.playDealerTurn(cardDeck, dealerTurnActions);
 
         OutputView.printEmptyLine();
     }
@@ -76,7 +76,7 @@ public class BlackJackApplication {
         OutputView.printEmptyLine();
     }
 
-    private static void showAllResults(AllGamers allGamers, BlackJackRule blackJackRule) {
-        OutputView.printResults(allGamers.gainAllResults(blackJackRule));
+    private static void showAllResults(AllGamers allGamers) {
+        OutputView.printResults(allGamers.gainAllResults());
     }
 }
