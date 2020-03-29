@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.controller.BlackJack;
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.BasicRule;
 
 public class Cards {
     public static final int GAP_BETWEEN_ACE_VALUE = 10;
@@ -37,9 +37,13 @@ public class Cards {
         return reduceIfAceExists(total);
     }
 
+    public int count() {
+        return cards.size();
+    }
+
     private int reduceIfAceExists(int total) {
         int aceCount = countAce();
-        while (total > BlackJack.BLACK_JACK_SCORE && aceCount > 0) {
+        while (total > BasicRule.BLACK_JACK_SCORE && aceCount > 0) {
             total -= GAP_BETWEEN_ACE_VALUE;
             aceCount--;
         }
@@ -59,5 +63,9 @@ public class Cards {
         return cards.stream()
             .map(Card::toString)
             .collect(Collectors.joining(DELIMITER));
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

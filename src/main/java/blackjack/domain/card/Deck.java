@@ -23,6 +23,7 @@ public class Deck {
     public Card pop() {
         if (cards.isEmpty()) {
             this.cards = Card.createCards();
+            shuffle();
         }
         return cards.pop();
     }

@@ -7,13 +7,14 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
-import blackjack.domain.result.SimpleResult;
+import blackjack.domain.result.MoneyResult;
+import blackjack.domain.rule.BasicRule;
+import blackjack.exceptions.InvalidMoneyException;
 import blackjack.exceptions.InvalidPlayerException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJack {
-    public static final int BLACK_JACK_SCORE = 21;
 
     private final Deck deck;
     private final Dealer dealer;
@@ -31,6 +32,7 @@ public class BlackJack {
     private void play() {
         OutputView.nameInstruction();
         this.participants = getParticipants();
+        bettingPhase();
         initialPhase();
         userGamePhase();
         dealerGamePhase();
@@ -43,6 +45,22 @@ public class BlackJack {
         } catch (InvalidPlayerException e) {
             OutputView.printError(e.getMessage());
             return getParticipants();
+        }
+    }
+
+    private void bettingPhase() {
+        for (Participant participant : participants.getPlayers()) {
+            betMoney(participant);
+        }
+    }
+
+    private void betMoney(final Participant participant) {
+        try {
+            OutputView.moneyInstruction(participant);
+            participant.bet(InputView.getInput());
+        } catch (InvalidMoneyException e) {
+            OutputView.printError(e.getMessage());
+            betMoney(participant);
         }
     }
 
@@ -73,7 +91,7 @@ public class BlackJack {
             OutputView.moreCardInstruction(player);
             wantsMoreCard = wantsToDrawMore(player);
             OutputView.participantStatus(player);
-        } while (wantsMoreCard && player.score() < BLACK_JACK_SCORE);
+        } while (wantsMoreCard && !BasicRule.isBusted(player.score()));
     }
 
     private boolean wantsToDrawMore(final Player player) {
@@ -91,6 +109,6 @@ public class BlackJack {
 
     private void endPhase() {
         OutputView.result(participants);
-        OutputView.statistics(new SimpleResult(participants));
+        OutputView.statistics(new MoneyResult(participants));
     }
 }

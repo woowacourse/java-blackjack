@@ -1,4 +1,4 @@
-package blackjack.domain.participants;
+package blackjack.domain.result;
 
 public enum Status {
     WIN("승"),
