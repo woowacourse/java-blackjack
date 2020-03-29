@@ -2,45 +2,62 @@ package blackjack.domain.result;
 
 import static java.util.stream.Collectors.*;
 
-import java.util.EnumMap;
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
-import blackjack.domain.user.Dealer;
+import blackjack.domain.blackjack.BlackjackTable;
+import blackjack.domain.exceptions.InvalidReportException;
 import blackjack.domain.user.Player;
 
 public class Report {
-    private final Map<ResultType, Long> dealerResult;
-    private final Map<Player, ResultType> playersResult;
+    private static final int BETTING_PROFIT_MULTIPLIER_FOR_DEALER = -1;
+    private final Map<Player, BettingMoney> playersProfit;
 
-    private Report(Map<ResultType, Long> dealerResult, Map<Player, ResultType> playersResult) {
-        this.dealerResult = dealerResult;
-        this.playersResult = playersResult;
+    private Report(Map<Player, BettingMoney> playersProfit) {
+        this.playersProfit = playersProfit;
     }
 
-    public static Report from(Dealer dealer, List<Player> players) {
-        return new Report(
-            generateDealerResult(dealer, players),
-            generatePlayersResult(dealer, players));
+    public static Report from(BlackjackTable blackjackTable) {
+        validate(blackjackTable);
+        return new Report(generatePlayersProfit(blackjackTable));
     }
 
-    private static Map<Player, ResultType> generatePlayersResult(Dealer dealer, List<Player> players) {
-        return players.stream()
-            .collect(toMap(Function.identity(), player -> ResultType.from(player, dealer)));
+    private static void validate(BlackjackTable blackjackTable) {
+        if (Objects.isNull(blackjackTable)) {
+            throw new InvalidReportException(InvalidReportException.EMPTY);
+        }
     }
 
-    private static Map<ResultType, Long> generateDealerResult(Dealer dealer, List<Player> players) {
-        return players.stream()
-            .map(player -> ResultType.from(dealer, player))
-            .collect(collectingAndThen(groupingBy(Function.identity(), counting()), EnumMap::new));
+    private static Map<Player, BettingMoney> generatePlayersProfit(BlackjackTable blackjackTable) {
+        ResultScore dealerResultScore = blackjackTable.getDealerResultScore();
+
+        return blackjackTable.getPlayers().stream()
+            .collect(collectingAndThen(
+                toMap(Function.identity(),
+                    player -> ResultType.from(player.calculateResultScore(), dealerResultScore)
+                        .calculateProfitFrom(player.getBettingMoney()),
+                    (x, y) -> x,
+                    LinkedHashMap::new),
+                Collections::unmodifiableMap));
     }
 
-    public Map<ResultType, Long> getDealerResult() {
-        return dealerResult;
+    public int calculateDealerProfit() {
+        int playersTotalProfit = playersProfit.values().stream()
+            .map(BettingMoney::getBettingMoney)
+            .reduce(0, Integer::sum);
+        return playersTotalProfit * BETTING_PROFIT_MULTIPLIER_FOR_DEALER;
     }
 
-    public Map<Player, ResultType> getPlayersResult() {
-        return playersResult;
+    public Map<Player, Integer> getPlayersProfit() {
+        return playersProfit.keySet().stream()
+            .collect(collectingAndThen(
+                toMap(Function.identity(),
+                    player -> playersProfit.get(player).getBettingMoney(),
+                    (x, y) -> x,
+                    LinkedHashMap::new),
+                Collections::unmodifiableMap));
     }
 }

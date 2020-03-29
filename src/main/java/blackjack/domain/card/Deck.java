@@ -1,27 +1,33 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+
+import blackjack.domain.exceptions.InvalidDeckException;
 
 public class Deck {
 	private static final int TOP = 0;
 
-	private List<Card> cards;
+	private final List<Card> cards;
 
-	public Deck() {
-		this.cards = refill(CardRepository.cards());
+	public Deck(List<Card> cards) {
+		validate(cards);
+		Collections.shuffle(cards);
+		this.cards = cards;
 	}
 
-	private List<Card> refill(List<Card> cards) {
-		List<Card> refillCards = new ArrayList<>(cards);
-		Collections.shuffle(refillCards);
-		return refillCards;
+	private void validate(List<Card> cards) {
+		long distinctCardSize = new HashSet<>(cards).size();
+
+		if (cards.size() != distinctCardSize) {
+			throw new InvalidDeckException(InvalidDeckException.INVALID);
+		}
 	}
 
 	public Card draw() {
 		if (cards.isEmpty()) {
-			cards = refill(CardRepository.cards());
+			throw new InvalidDeckException(InvalidDeckException.DECK_EMPTY);
 		}
 		return cards.remove(TOP);
 	}

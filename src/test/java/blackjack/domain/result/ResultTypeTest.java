@@ -3,76 +3,149 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.User;
+import blackjack.domain.exceptions.InvalidResultTypeException;
 
 class ResultTypeTest {
+	@Test
+	void validate_NullPlayerResultScoreOrNullDealerResultScore_InvalidResultTypeExceptionThrown() {
+		Hand playerHand = new Hand();
+		playerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.ACE, Type.DIAMOND)));
+		Hand dealerHand = new Hand();
+		dealerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND)));
+
+		assertThatThrownBy(() -> ResultType.from(null, ResultScore.of(dealerHand)))
+			.isInstanceOf(InvalidResultTypeException.class)
+			.hasMessage(InvalidResultTypeException.NULL);
+		assertThatThrownBy(() -> ResultType.from(ResultScore.of(playerHand), null))
+			.isInstanceOf(InvalidResultTypeException.class)
+			.hasMessage(InvalidResultTypeException.NULL);
+	}
+
+	@Test
+	void isBlackjackWin_PlayerResultScoreIsBlackjackAndDealerResultScoreIsNotBlackjack_ReturnBlackjackInstance() {
+		Hand playerHand = new Hand();
+		playerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.ACE, Type.DIAMOND)));
+		Hand dealerHand = new Hand();
+		dealerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND)));
+
+		assertThat(ResultType.from(ResultScore.of(playerHand), ResultScore.of(dealerHand)))
+			.isEqualTo(ResultType.BLACKJACK_WIN);
+	}
+
+	@Test
+	void isWin_PlayerResultScoreIsNormalAndDealerResultScoreIsBust_ReturnWinInstance() {
+		Hand playerHand = new Hand();
+		playerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.THREE, Type.DIAMOND)));
+		Hand dealerHand = new Hand();
+		dealerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.SPADE),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+
+		assertThat(ResultType.from(ResultScore.of(playerHand), ResultScore.of(dealerHand)))
+			.isEqualTo(ResultType.WIN);
+	}
+
+	@Test
+	void isDraw_PlayerResultScoreIsBlackjackAndDealerResultScoreIsBlackjack_ReturnDrawInstance() {
+		Hand playerHand = new Hand();
+		playerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.ACE, Type.DIAMOND)));
+		Hand dealerHand = new Hand();
+		dealerHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.SPADE),
+			Card.of(Symbol.ACE, Type.HEART)));
+
+		assertThat(ResultType.from(ResultScore.of(playerHand), ResultScore.of(dealerHand)))
+			.isEqualTo(ResultType.DRAW);
+	}
+
+	@Test
+	void isLose_PlayerResultScoreIsBustOrIsNotBlackjackAndDealerResultScoreIsBlackjack_ReturnLoseInstance() {
+		Hand playerNotBlackjackHand = new Hand();
+		playerNotBlackjackHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.THREE, Type.DIAMOND)));
+		Hand playerBustHand = new Hand();
+		playerBustHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.SPADE),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		Hand dealerBlackjackHand = new Hand();
+		dealerBlackjackHand.add(Arrays.asList(
+			Card.of(Symbol.TEN, Type.CLUB),
+			Card.of(Symbol.ACE, Type.DIAMOND)));
+
+		assertThat(ResultType.from(ResultScore.of(playerBustHand), ResultScore.of(dealerBlackjackHand)))
+			.isEqualTo(ResultType.LOSE);
+		assertThat(ResultType.from(ResultScore.of(playerNotBlackjackHand), ResultScore.of(dealerBlackjackHand)))
+			.isEqualTo(ResultType.LOSE);
+	}
+
 	@ParameterizedTest
-	@MethodSource("provideDealerAndPlayerScoreWithReturnType")
-	void from_DealerScoreAndPlayerScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
-		assertThat(ResultType.from(targetUser, compareUser)).isEqualTo(expected);
+	@MethodSource("provideDealerAndPlayerResultScoreWithReturnType")
+	void compareResultScoreFrom_PlayerResultScoreAndDealerResultScore_ReturnCompareResult(ResultScore playerResultScore,
+		ResultScore dealerResultScore, ResultType expected) {
+
+		assertThat(ResultType.from(playerResultScore, dealerResultScore)).isEqualTo(expected);
 	}
 
-	private static Stream<Arguments> provideDealerAndPlayerScoreWithReturnType() {
-		List<Card> dealerCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> pobiCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> sonyCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> stitchCards = Arrays.asList(new Card(Symbol.SEVEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
+	private static Stream<Arguments> provideDealerAndPlayerResultScoreWithReturnType() {
+		Hand dealerHand = new Hand();
+		dealerHand.add(Arrays.asList(
+			Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		ResultScore dealerResultScore = ResultScore.of(dealerHand);
 
-		Player pobi = Player.valueOf("pobi", pobiCards);
-		Player sony = Player.valueOf("sony", sonyCards);
-		Player stitch = Player.valueOf("stitch", stitchCards);
+		Hand winHand = new Hand();
+		winHand.add(Arrays.asList(
+			Card.of(Symbol.QUEEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		ResultScore winPlayerResultScore = ResultScore.of(winHand);
 
-		Dealer dealer = Dealer.valueOf("dealer", dealerCards);
+		Hand drawHand = new Hand();
+		drawHand.add(Arrays.asList(Card.of(Symbol.EIGHT, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		ResultScore drawPlayerResultScore = ResultScore.of(drawHand);
+
+		Hand loseHand = new Hand();
+		loseHand.add(Arrays.asList(Card.of(Symbol.SEVEN, Type.HEART),
+			Card.of(Symbol.KING, Type.DIAMOND)));
+		ResultScore losePlayerResultScore = ResultScore.of(loseHand);
+
 		return Stream.of(
-			Arguments.arguments(dealer, pobi, ResultType.LOSE),
-			Arguments.arguments(dealer, sony, ResultType.DRAW),
-			Arguments.arguments(dealer, stitch, ResultType.WIN));
+			Arguments.of(winPlayerResultScore, dealerResultScore, ResultType.WIN),
+			Arguments.of(drawPlayerResultScore, dealerResultScore, ResultType.DRAW),
+			Arguments.of(losePlayerResultScore, dealerResultScore, ResultType.LOSE));
 	}
 
-	@ParameterizedTest
-	@MethodSource("providePlayerBustScoreWithReturnType")
-	void from_DealerScoreAndPlayerBustScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
-		assertThat(ResultType.from(targetUser, compareUser)).isEqualTo(expected);
-	}
+	@Test
+	void calculateProfitFrom_BettingMoney_ReturnMultipliedBettingMoney() {
+		BettingMoney value = BettingMoney.valueOf("1000");
 
-	private static Stream<Arguments> providePlayerBustScoreWithReturnType() {
-		List<Card> dealerCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> pobiBustCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND), new Card(Symbol.TEN, Type.DIAMOND));
-		Player pobi = Player.valueOf("pobi", pobiBustCards);
-
-		Dealer dealer = Dealer.valueOf("dealer", dealerCards);
-		return Stream.of(
-			Arguments.arguments(dealer, pobi, ResultType.WIN));
-	}
-
-	@ParameterizedTest
-	@MethodSource("provideDealerBustScoreWithReturnType")
-	void from_DealerBustScoreAndPlayerScore_ReturnResultType(User targetUser, User compareUser, ResultType expected) {
-		assertThat(ResultType.from(targetUser, compareUser)).isEqualTo(expected);
-	}
-
-	private static Stream<Arguments> provideDealerBustScoreWithReturnType() {
-		List<Card> dealerBustCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND),new Card(Symbol.TEN, Type.DIAMOND));
-		List<Card> pobiCards = Arrays.asList(new Card(Symbol.QUEEN, Type.HEART), new Card(Symbol.KING, Type.DIAMOND));
-		List<Card> sonyBustCards = Arrays.asList(new Card(Symbol.EIGHT, Type.HEART), new Card(Symbol.KING, Type.DIAMOND),new Card(Symbol.EIGHT, Type.DIAMOND));
-		Player pobi = Player.valueOf("pobi", pobiCards);
-		Player sony = Player.valueOf("sony", sonyBustCards);
-
-		Dealer dealer = Dealer.valueOf("dealer", dealerBustCards);
-		return Stream.of(
-			Arguments.arguments(dealer, pobi, ResultType.LOSE),
-			Arguments.arguments(dealer, sony, ResultType.WIN));
+		BettingMoney expected = new BettingMoney(-1000);
+		assertThat(ResultType.LOSE.calculateProfitFrom(value)).isEqualTo(expected);
 	}
 }

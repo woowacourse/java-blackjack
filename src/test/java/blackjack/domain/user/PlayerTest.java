@@ -11,30 +11,45 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import blackjack.domain.blackjack.BlackjackTable;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.BettingMoney;
 
 class PlayerTest {
+	private static Stream<Arguments> provideUndrawablePlayer() {
+		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
+
+		Player player = new Player("player", BettingMoney.valueOf("1000"));
+		Deck deck = new Deck(CardFactory.create());
+
+		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
+			player.hit(deck);
+		}
+		return Stream.of(Arguments.of(player));
+	}
+
 	@Test
 	void Player_InputPlayerName_GenerateInstance() {
-		assertThat(new Player("player")).isInstanceOf(Player.class);
+		assertThat(new Player("player",BettingMoney.valueOf("1000"))).isInstanceOf(Player.class);
 	}
 
 	@Test
 	void valueOf_InputPlayerNameAndCards_GenerateInstance() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
 
-		assertThat(new Player("player", cards)).isInstanceOf(Player.class)
+		assertThat(Player.valueOf("player", cards)).isInstanceOf(Player.class)
 			.extracting("hand").isEqualTo(cards);
 	}
 
 	@Test
 	void canDraw_CurrentScoreLowerThanDrawableMaxScore_ReturnTrue() {
-		assertThat(new Player("player").canDraw()).isTrue();
+		assertThat(new Player("player",BettingMoney.valueOf("1000")).canDraw()).isTrue();
 	}
 
 	@ParameterizedTest
@@ -43,15 +58,12 @@ class PlayerTest {
 		assertThat(player.canDraw()).isFalse();
 	}
 
-	private static Stream<Arguments> provideUndrawablePlayer() {
-		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
+	@Test
+	void getInitialDealtHand_PlayerDealInitialTwoCards_HasTwoCards() {
+		Deck deck = new Deck(CardFactory.create());
+		Player player = new Player("player",BettingMoney.valueOf("1000"));
+		player.hit(deck, BlackjackTable.INITIAL_DEAL_NUMBER);
 
-		Player player = new Player("player");
-		Deck deck = new Deck();
-
-		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			player.draw(deck);
-		}
-		return Stream.of(Arguments.of(player));
+		assertThat(player.getInitialDealtHand()).hasSize(BlackjackTable.INITIAL_DEAL_NUMBER);
 	}
 }

@@ -7,8 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.user.hand.Hand;
-import blackjack.domain.user.hand.Score;
+import blackjack.domain.result.Score;
 
 class HandTest {
 	@Test
@@ -19,7 +18,7 @@ class HandTest {
 	@Test
 	void add_Card_AddCardToHand() {
 		Hand hand = new Hand();
-		Card card = new Card(Symbol.ACE, Type.CLUB);
+		Card card = Card.of(Symbol.ACE, Type.CLUB);
 		hand.add(card);
 
 		assertThat(hand).extracting("cards").asList().contains(card);
@@ -29,47 +28,22 @@ class HandTest {
 	void add_CardList_AddCardsToHand() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
+			Card.of(Symbol.ACE, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
 		hand.add(cards);
 
 		assertThat(hand).extracting("cards").asList().containsAll(cards);
 	}
 
 	@Test
-	void calculateScore_SumCards() {
+	void calculateScore_CardsInHand_CalculatedScore() {
 		Hand hand = new Hand();
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.TWO, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
-		hand.add(cards);
-
-		Score expected = Score.valueOf(10);
-		assertThat(hand.calculateScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculateScore_WithAceCard_SumCards() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.ACE, Type.CLUB),
-			new Card(Symbol.EIGHT, Type.DIAMOND));
+			Card.of(Symbol.ACE, Type.CLUB),
+			Card.of(Symbol.EIGHT, Type.DIAMOND));
 		hand.add(cards);
 
 		Score expected = Score.valueOf(19);
-		assertThat(hand.calculateScore()).isEqualTo(expected);
-	}
-
-	@Test
-	void calculateScore_WithBustCard_SumCards() {
-		Hand hand = new Hand();
-		List<Card> cards = Arrays.asList(
-			new Card(Symbol.FOUR, Type.HEART),
-			new Card(Symbol.EIGHT, Type.CLUB),
-			new Card(Symbol.TEN, Type.DIAMOND));
-		hand.add(cards);
-
-		Score expected = Score.BUST;
 		assertThat(hand.calculateScore()).isEqualTo(expected);
 	}
 }

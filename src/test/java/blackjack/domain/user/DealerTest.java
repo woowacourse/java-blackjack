@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Type;
@@ -28,10 +29,10 @@ class DealerTest {
 	@Test
 	void valueOf_InputDealerNameAndCards_GenerateInstance() {
 		List<Card> cards = Arrays.asList(
-			new Card(Symbol.SEVEN, Type.CLUB),
-			new Card(Symbol.TWO, Type.DIAMOND));
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
 
-		assertThat(new Dealer("dealer", cards)).isInstanceOf(Dealer.class)
+		assertThat(Dealer.valueOf("dealer", cards)).isInstanceOf(Dealer.class)
 			.extracting("hand").isEqualTo(cards);
 	}
 
@@ -50,11 +51,22 @@ class DealerTest {
 		final int WORST_CASE_OF_DRAWABLE_COUNT = 12;
 
 		Dealer dealer = new Dealer("dealer");
-		Deck deck = new Deck();
+		Deck deck = new Deck(CardFactory.create());
 
 		for (int i = 0; i < WORST_CASE_OF_DRAWABLE_COUNT; i++) {
-			dealer.draw(deck);
+			dealer.hit(deck);
 		}
 		return Stream.of(Arguments.of(dealer));
+	}
+
+	@Test
+	void getInitialDealtHand_DealerDealInitialTwoCards_ReturnOneCard() {
+		List<Card> cards = Arrays.asList(
+			Card.of(Symbol.SEVEN, Type.CLUB),
+			Card.of(Symbol.TWO, Type.DIAMOND));
+		Dealer dealer = Dealer.valueOf("dealer", cards);
+
+		assertThat(dealer.getInitialDealtHand()).hasSize(1)
+			.isEqualTo(Arrays.asList(Card.of(Symbol.SEVEN, Type.CLUB)));
 	}
 }
