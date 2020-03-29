@@ -2,26 +2,20 @@ package domain.result;
 
 import java.util.Objects;
 
-import domain.user.User;
-
 public class UserResult {
-	private final User user;
-	private final MatchResult matchResult;
+	private final String name;
+	private final int profit;
 
-	public UserResult(User user, MatchResult matchResult) {
-		this.user = Objects.requireNonNull(user);
-		this.matchResult = Objects.requireNonNull(matchResult);
+	public UserResult(String name, int profit) {
+		this.name = Objects.requireNonNull(name);
+		this.profit = profit;
 	}
 
 	public String getName() {
-		return user.getName();
+		return name;
 	}
 
-	public String getMatchResult() {
-		return matchResult.getMatchResult();
-	}
-
-	public MatchResult getReverseResult() {
-		return matchResult.reverseWinAndLose();
+	public int getProfit() {
+		return profit;
 	}
 }

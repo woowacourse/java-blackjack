@@ -1,29 +1,22 @@
 package domain.result;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class DealerResult {
-	private static final long INIT_MATCH_COUNT = 0L;
+	private static final int PROFIT_FORMULA = -1;
 
-	private final List<UserResult> playerResults;
+	private final int profit;
 
 	public DealerResult(List<UserResult> playerResults) {
-		this.playerResults = Objects.requireNonNull(playerResults);
+		Objects.requireNonNull(playerResults);
+		this.profit = playerResults.stream()
+			.map(UserResult::getProfit)
+			.reduce(Integer::sum)
+			.orElseThrow(IllegalArgumentException::new) * PROFIT_FORMULA;
 	}
 
-	public Map<MatchResult, Long> reversePlayersResult() {
-		Map<MatchResult, Long> result = playerResults.stream()
-			.map(UserResult::getReverseResult)
-			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-		Arrays.stream(MatchResult.values())
-			.forEach(key -> result.putIfAbsent(key, INIT_MATCH_COUNT));
-
-		return result;
+	public int getProfit() {
+		return profit;
 	}
 }

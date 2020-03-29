@@ -1,10 +1,13 @@
 package domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.stream.IntStream;
+
+import domain.user.User;
 
 public class CardDivider {
 	private static final int START_RANGE_INDEX = 0;
@@ -33,5 +36,9 @@ public class CardDivider {
 		}
 		int order = orders.pop();
 		return cards.get(order);
+	}
+
+	public void initCards(User user) {
+		user.addCards(Arrays.asList(divide(), divide()));
 	}
 }

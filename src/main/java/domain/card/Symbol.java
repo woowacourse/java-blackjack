@@ -9,7 +9,7 @@ public enum Symbol {
 	SPADE("스페이드");
 
 	private static final String WRONG_SYMBOL_MESSAGE = "잘못된 심볼 이름입니다.";
-	
+
 	private final String name;
 
 	Symbol(String name) {

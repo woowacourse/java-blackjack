@@ -27,5 +27,4 @@ public class CardFactoryTest {
 
 		assertThat(size).isEqualTo(52);
 	}
-
 }

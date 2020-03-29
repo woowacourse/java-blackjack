@@ -1,13 +1,14 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import domain.card.Card;
 import domain.result.DealerResult;
-import domain.result.MatchResult;
 import domain.result.UserResult;
+import domain.user.Dealer;
+import domain.user.Players;
 import domain.user.User;
 
 public class OutputView {
@@ -16,15 +17,16 @@ public class OutputView {
 	private static final String RESULT_CARD_SCORE_FORMAT = "- 결과: %d";
 	private static final String NEW_LINE = System.lineSeparator();
 	private static final String CARD_FORMAT = "%s%s";
-	private static final String BLANK = " ";
+	private static final String DEALER_FINAL_RESULT_FORMAT = "%s: %s";
 
-	public static void printInitialResult(List<User> users) {
+	public static void printInitialResult(Players players, Dealer dealer) {
 		StringBuilder builder = new StringBuilder();
-		for (User user : users) {
-			builder.append(user.getName());
-			builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getInitialCard())));
-			builder.append(NEW_LINE);
-		}
+		Stream.concat(players.getPlayers().stream(), Stream.of(dealer))
+			.forEach(user -> {
+				builder.append(user.getName());
+				builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getInitialCard())));
+				builder.append(NEW_LINE);
+			});
 		System.out.println(builder);
 	}
 
@@ -47,14 +49,15 @@ public class OutputView {
 
 	}
 
-	public static void printUserResult(List<User> users) {
+	public static void printUserResult(Players players, Dealer dealer) {
 		StringBuilder builder = new StringBuilder();
-		for (User user : users) {
-			builder.append(user.getName());
-			builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
-			builder.append(String.format(RESULT_CARD_SCORE_FORMAT, user.calculateScore()));
-			builder.append(NEW_LINE);
-		}
+		Stream.concat(players.getPlayers().stream(), Stream.of(dealer))
+			.forEach(user -> {
+				builder.append(user.getName());
+				builder.append(String.format(CARD_STRING_FORMAT, parseCardsString(user.getCards())));
+				builder.append(String.format(RESULT_CARD_SCORE_FORMAT, user.calculateScore()));
+				builder.append(NEW_LINE);
+			});
 		System.out.println(builder);
 	}
 
@@ -73,29 +76,15 @@ public class OutputView {
 	}
 
 	public static void printGameResult(List<UserResult> userResults, DealerResult dealerResult) {
-		System.out.println("## 최종 승패");
-		printDealerResult(dealerResult);
+		System.out.println("## 최종 수익");
+		System.out.printf("딜러: %s%s", dealerResult.getProfit(), NEW_LINE);
 		printUsersResult(userResults);
-	}
-
-	private static void printDealerResult(DealerResult dealerResult) {
-		StringBuilder builder = new StringBuilder("딜러: ");
-
-		Map<MatchResult, Long> map = dealerResult.reversePlayersResult();
-		for (MatchResult matchResult : MatchResult.values()) {
-			builder.append(map.get(matchResult));
-			builder.append(matchResult.getMatchResult());
-			builder.append(BLANK);
-		}
-		System.out.println(builder);
 	}
 
 	private static void printUsersResult(List<UserResult> userResults) {
 		StringBuilder builder = new StringBuilder();
 		for (UserResult userResult : userResults) {
-			builder.append(userResult.getName());
-			builder.append(":");
-			builder.append(userResult.getMatchResult());
+			builder.append(String.format(DEALER_FINAL_RESULT_FORMAT, userResult.getName(), userResult.getProfit()));
 			builder.append(NEW_LINE);
 		}
 		System.out.println(builder);
