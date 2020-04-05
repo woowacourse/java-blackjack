@@ -2,16 +2,15 @@ package domain.gamer;
 
 import domain.card.Card;
 import domain.result.Result;
-import domain.result.ResultDerivable;
 import domain.result.score.ScoreCalculable;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static domain.result.BlackJackRule.DEALER_MAXIMUM_CARDS_AMOUNT;
 import static domain.result.BlackJackRule.DEALER_THRESHOLD_SCORE;
 
 public class Dealer extends Gamer {
+    private static final int MAXIMUM_CARDS_AMOUNT = 3;
     public static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer() {
@@ -30,10 +29,14 @@ public class Dealer extends Gamer {
     @Override
     public boolean canDrawMore(ScoreCalculable scoreCalculable) {
         return !calculateScore(scoreCalculable).isBiggerThan(DEALER_THRESHOLD_SCORE)
-                && hand.size() < DEALER_MAXIMUM_CARDS_AMOUNT;
+                && hand.size() < MAXIMUM_CARDS_AMOUNT;
     }
 
-    public Result determineResult(List<Result> playerResults, ResultDerivable resultDerivable) {
-        return resultDerivable.deriveDealerResult(playerResults);
+    public Result determineResult(List<Result> playerResults) {
+        Money totalSum = playerResults.stream()
+                .map(Result::getProfit)
+                .reduce(new Money(0), (a, b) -> a.plus(b));
+
+        return new Result(DEALER_NAME, totalSum.negate());
     }
 }

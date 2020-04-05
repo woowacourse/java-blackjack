@@ -2,9 +2,8 @@ package domain.gamer;
 
 import domain.card.providable.CardProvidable;
 import domain.gamer.action.TurnActions;
-import domain.result.GameRule;
 import domain.result.Result;
-import domain.result.ResultDerivable;
+import domain.result.score.ScoreCalculable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +13,12 @@ import static java.util.stream.Collectors.toList;
 public class AllGamers {
     private final Dealer dealer;
     private final List<Player> players;
-    private final GameRule gameRule;
+    private final ScoreCalculable scoreCalculable;
 
-    public AllGamers(List<Player> players, GameRule gameRule) {
+    public AllGamers(List<Player> players, ScoreCalculable scoreCalculable) {
         this.dealer = new Dealer();
         this.players = players;
-        this.gameRule = gameRule;
+        this.scoreCalculable = scoreCalculable;
     }
 
     public void drawInitialCards(CardProvidable cardProvidable) {
@@ -28,18 +27,18 @@ public class AllGamers {
     }
 
     public void playPlayersTurn(CardProvidable cardProvidable, TurnActions turnActions) {
-        players.forEach(player -> player.playTurn(cardProvidable, gameRule, turnActions));
+        players.forEach(player -> player.playTurn(cardProvidable, scoreCalculable, turnActions));
     }
 
     public void playDealerTurn(CardProvidable cardProvidable, TurnActions turnActions) {
-        dealer.playTurn(cardProvidable, gameRule, turnActions);
+        dealer.playTurn(cardProvidable, scoreCalculable, turnActions);
     }
 
     public List<Result> gainAllResults() {
         List<Result> allResults = new ArrayList<>();
 
         List<Result> playerResults = gainPlayerResults();
-        allResults.add(dealer.determineResult(playerResults, gameRule));
+        allResults.add(dealer.determineResult(playerResults));
         allResults.addAll(playerResults);
 
         return allResults;
@@ -47,7 +46,7 @@ public class AllGamers {
 
     private List<Result> gainPlayerResults() {
         return players.stream()
-                .map(player -> player.determineResult(dealer, gameRule))
+                .map(player -> player.determineResult(dealer, scoreCalculable))
                 .collect(toList());
     }
 

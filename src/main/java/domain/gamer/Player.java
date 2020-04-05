@@ -2,12 +2,10 @@ package domain.gamer;
 
 import domain.card.Card;
 import domain.result.Result;
-import domain.result.ResultDerivable;
+import domain.result.score.Score;
 import domain.result.score.ScoreCalculable;
 
 import java.util.List;
-
-import static domain.result.BlackJackRule.BLACKJACK_SCORE;
 
 public class Player extends Gamer {
     private static final Money DEFAULT_MONEY = new Money(0);
@@ -38,14 +36,53 @@ public class Player extends Gamer {
 
     @Override
     public boolean canDrawMore(ScoreCalculable scoreCalculable) {
-        return !calculateScore(scoreCalculable).isBiggerThan(BLACKJACK_SCORE);
+        return !isBurst(scoreCalculable);
     }
 
-    public Result determineResult(Dealer dealer, ResultDerivable resultDerivable) {
-        return resultDerivable.derivePlayerResult(this, dealer);
+    public Result determineResult(Dealer dealer, ScoreCalculable scoreCalculable) {
+        if (this.isBlackJack(scoreCalculable) || dealer.isBlackJack(scoreCalculable)) {
+            return deriveBlackJackExistCase(dealer, scoreCalculable);
+        }
+
+        if (this.isBurst(scoreCalculable) || dealer.isBurst(scoreCalculable)) {
+            return deriveBurstExistCase(scoreCalculable);
+        }
+
+        return deriveUsualCase(dealer, scoreCalculable);
     }
 
-    public Money getBettingMoney() {
-        return bettingMoney;
+    private Result deriveBlackJackExistCase(Dealer dealer, ScoreCalculable scoreCalculable) {
+        if (this.isBlackJack(scoreCalculable) && dealer.isBlackJack(scoreCalculable)) {
+            return new Result(name, DRAW_PROFIT);
+        }
+
+        if (this.isBlackJack(scoreCalculable)) {
+            return new Result(name, bettingMoney.multiply(BLACKJACK_BONUS));
+        }
+
+        return new Result(name, bettingMoney.negate());
+    }
+
+    private Result deriveBurstExistCase(ScoreCalculable scoreCalculable) {
+        if (this.isBurst(scoreCalculable)) {
+            return new Result(name, bettingMoney.negate());
+        }
+
+        return new Result(name, bettingMoney);
+    }
+
+    private Result deriveUsualCase(Dealer dealer, ScoreCalculable scoreCalculable) {
+        Score playerScore = this.calculateScore(scoreCalculable);
+        Score dealerScore = dealer.calculateScore(scoreCalculable);
+
+        if (playerScore.isBiggerThan(dealerScore)) {
+            return new Result(name, bettingMoney);
+        }
+
+        if (playerScore.equals(dealerScore)) {
+            return new Result(name, DRAW_PROFIT);
+        }
+
+        return new Result(name, bettingMoney.negate());
     }
 }

@@ -3,18 +3,21 @@ package domain.gamer;
 import domain.card.Card;
 import domain.card.providable.CardProvidable;
 import domain.gamer.action.TurnActions;
-import domain.result.GameRule;
 import domain.result.score.Score;
 import domain.result.score.ScoreCalculable;
 
 import java.util.List;
 import java.util.Objects;
 
+import static domain.result.BlackJackRule.BLACKJACK_SCORE;
+
 public abstract class Gamer {
     private static final int INITIAL_CARDS_AMOUNT = 2;
+    protected static final Money DRAW_PROFIT = new Money(0);
+    protected static final double BLACKJACK_BONUS = 1.5;
 
     protected final Hand hand;
-    private final Name name;
+    protected final Name name;
 
     Gamer(Name name, Hand hand) {
         this.name = name;
@@ -57,6 +60,15 @@ public abstract class Gamer {
 
     public Score calculateScore(ScoreCalculable scoreCalculable) {
         return scoreCalculable.calculateScore(this);
+    }
+
+    public boolean isBlackJack(ScoreCalculable scoreCalculable) {
+        return calculateScore(scoreCalculable).equals(BLACKJACK_SCORE)
+                && hand.size() == INITIAL_CARDS_AMOUNT;
+    }
+
+    public boolean isBurst(ScoreCalculable scoreCalculable) {
+        return calculateScore(scoreCalculable).isBiggerThan(BLACKJACK_SCORE);
     }
 
     public Name getName() {
