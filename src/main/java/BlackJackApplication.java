@@ -1,98 +1,82 @@
 import domain.card.providable.CardDeck;
-import domain.gamer.Dealer;
+import domain.gamer.AllGamers;
+import domain.gamer.Money;
+import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.result.Results;
+import domain.gamer.action.TurnActions;
+import domain.gamer.action.YesNo;
+import domain.result.BlackJackRule;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class BlackJackApplication {
     public static void main(String[] args) {
+        BlackJackRule blackJackRule = new BlackJackRule();
         CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer();
-        List<Player> players = inputPlayerNames();
-        OutputView.printEmptyLine();
+        AllGamers allGamers = new AllGamers(enterInitialInformation(), blackJackRule);
 
-        doInitialDrawPhase(dealer, players, cardDeck);
+        playInitialDrawPhase(allGamers, cardDeck);
 
-        doAdditionalDrawPhase(dealer, players, cardDeck);
+        playAdditionalTurns(allGamers, cardDeck);
 
-        doResultsPhase(dealer, players);
+        showAllScores(allGamers, blackJackRule);
+
+        showAllResults(allGamers);
     }
 
-    private static List<Player> inputPlayerNames() {
+    private static List<Player> enterInitialInformation() {
+        List<Name> playerNames = enterNames();
+        OutputView.printEmptyLine();
+
+        return betMoneys(playerNames);
+    }
+
+    private static List<Name> enterNames() {
         return InputView.inputPlayerNames()
                 .stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+                .map(Name::new)
+                .collect(toList());
     }
 
-    private static void doInitialDrawPhase(Dealer dealer, List<Player> players, CardDeck cardDeck) {
-        dealer.drawInitialCards(cardDeck);
-        players.forEach(player -> player.drawInitialCards(cardDeck));
+    private static List<Player> betMoneys(List<Name> playerNames) {
+        return playerNames.stream()
+                .map(BlackJackApplication::enterBettingMoney)
+                .collect(toList());
+    }
 
-        OutputView.printInitialCards(dealer, players);
+    private static Player enterBettingMoney(Name name) {
+        return new Player(name, new Money(InputView.inputBettingMoney(name.getValue())));
+    }
+
+    private static void playInitialDrawPhase(AllGamers allGamers, CardDeck cardDeck) {
+        allGamers.drawInitialCards(cardDeck);
+
         OutputView.printEmptyLine();
+        OutputView.printInitialCards(allGamers.getDealer(), allGamers.getPlayers());
     }
 
-    private static void doAdditionalDrawPhase(Dealer dealer, List<Player> players, CardDeck cardDeck) {
-        askPlayersDrawMore(players, cardDeck);
-        OutputView.printEmptyLine();
+    private static void playAdditionalTurns(AllGamers allGamers, CardDeck cardDeck) {
+        TurnActions playerTurnActions = new TurnActions(InputView::askDrawMore, OutputView::printGamerState);
+        TurnActions dealerTurnActions = new TurnActions(dealer -> YesNo.YES, OutputView::printDealerCanDrawMore);
 
-        determineDealerMoreDraw(dealer, cardDeck);
-        OutputView.printEmptyLine();
-    }
-
-    private static void askPlayersDrawMore(List<Player> players, CardDeck cardDeck) {
-        for (Player player : players) {
-            askMoreDraw(player, cardDeck);
-        }
-    }
-
-    private static void askMoreDraw(Player player, CardDeck cardDeck) {
-        while (canDrawMore(player)) {
-            if (!InputView.askDrawMore(player)) {
-                OutputView.printGamerState(player);
-                break;
-            }
-
-            player.drawCard(cardDeck);
-            OutputView.printGamerState(player);
-        }
-    }
-
-    private static boolean canDrawMore(Player player) {
-        if (player.canDrawMore() == false) {
-            OutputView.printCanNotDrawMessage(player);
-        }
-
-        return player.canDrawMore();
-    }
-
-    private static void determineDealerMoreDraw(Dealer dealer, CardDeck cardDeck) {
-        if (dealer.canDrawMore()) {
-            OutputView.printDealerCanDrawMore();
-            dealer.drawCard(cardDeck);
-        }
-    }
-
-    private static void doResultsPhase(Dealer dealer, List<Player> players) {
-        printScores(dealer, players);
-        printResults(dealer, players);
-    }
-
-    private static void printScores(Dealer dealer, List<Player> players) {
-        OutputView.printScore(dealer);
-        players.forEach(player -> OutputView.printScore(player));
+        allGamers.playPlayersTurn(cardDeck, playerTurnActions);
+        allGamers.playDealerTurn(cardDeck, dealerTurnActions);
 
         OutputView.printEmptyLine();
     }
 
-    private static void printResults(Dealer dealer, List<Player> players) {
-        Results results = new Results(players, dealer);
+    private static void showAllScores(AllGamers allGamers, BlackJackRule blackJackRule) {
+        allGamers.joinAllGamers()
+                .forEach(gamer -> OutputView.printScore(gamer, gamer.calculateScore(blackJackRule)));
 
-        OutputView.printResults(results);
+        OutputView.printEmptyLine();
+    }
+
+    private static void showAllResults(AllGamers allGamers) {
+        OutputView.printResults(allGamers.gainAllResults());
     }
 }

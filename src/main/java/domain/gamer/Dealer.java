@@ -1,28 +1,42 @@
 package domain.gamer;
 
 import domain.card.Card;
-import domain.card.cardDrawable.Hand;
-import domain.result.Score;
+import domain.result.Result;
+import domain.result.score.ScoreCalculable;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static domain.result.ScoreCalculable.DEALER_DRAW_THRESHOLD;
+import static domain.result.BlackJackRule.DEALER_THRESHOLD_SCORE;
 
-public class Dealer extends AbstractGamer {
-    public static final String DEALER_NAME = "딜러";
+public class Dealer extends Gamer {
+    private static final int MAXIMUM_CARDS_AMOUNT = 3;
+    public static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer() {
         super(DEALER_NAME, new Hand());
     }
 
-    @Override
-    public boolean canDrawMore() {
-        return calculateScore().isLowOrEqualThan(new Score(DEALER_DRAW_THRESHOLD));
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     @Override
     public List<Card> openInitialCards() {
-        return Arrays.asList(hand.getOneCard());
+        return Arrays.asList(hand.getFirstCard());
+    }
+
+    @Override
+    public boolean canDrawMore(ScoreCalculable scoreCalculable) {
+        return !calculateScore(scoreCalculable).isBiggerThan(DEALER_THRESHOLD_SCORE)
+                && hand.size() < MAXIMUM_CARDS_AMOUNT;
+    }
+
+    public Result determineResult(List<Result> playerResults) {
+        Money totalSum = playerResults.stream()
+                .map(Result::getProfit)
+                .reduce(new Money(0), (a, b) -> a.plus(b));
+
+        return new Result(DEALER_NAME, totalSum.negate());
     }
 }

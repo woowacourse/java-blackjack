@@ -1,24 +1,26 @@
-package domain.result;
+package domain.result.score;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Score {
-    private final int value;
+    private final Integer value;
 
     public Score(int value) {
         this.value = value;
     }
 
-    public Score plus(Score score) {
-        return new Score(this.value + value);
+    public static Score of(int value) {
+        return new Score(value);
     }
 
-    public boolean isBiggerThan(Score score) {
-        return this.value > score.value;
+    public Score plus(Score operand) {
+        return Score.of(this.value + operand.value);
     }
 
-    public boolean isLowOrEqualThan(Score score) {
-        return this.value <= score.value;
+    public boolean isBiggerThan(Score compared) {
+        return this.value > compared.value;
     }
 
     public int getValue() {
@@ -30,7 +32,7 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;
-        return value == score.value;
+        return Objects.equals(value, score.value);
     }
 
     @Override

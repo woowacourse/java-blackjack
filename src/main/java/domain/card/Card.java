@@ -1,13 +1,11 @@
 package domain.card;
 
-import domain.result.Score;
+import domain.result.score.Score;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Card {
-    private static final String CARD_NO_EXIST_MESSAGE = "적절한 number 또는 symbol의 카드가 존재하지 않습니다.";
     private final Rank rank;
     private final Suit suit;
 
@@ -21,7 +19,7 @@ public class Card {
                 .stream()
                 .filter(card -> card.isCardOf(rank, suit))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(CARD_NO_EXIST_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("적절한 number 또는 symbol의 카드가 존재하지 않습니다."));
     }
 
     private boolean isCardOf(Rank rank, Suit suit) {
@@ -33,7 +31,7 @@ public class Card {
     }
 
     public static List<Card> getAllCards() {
-        return Collections.unmodifiableList(CardCache.cards);
+        return CardCache.cards;
     }
 
     public Score extractScore() {
