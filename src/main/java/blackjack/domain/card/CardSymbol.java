@@ -5,14 +5,15 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CardSymbol {
+
     private static final Map<String, CardSymbol> SYMBOL_CACHE = new HashMap<>();
 
     private String symbol;
 
     static {
-        for (SymbolCandidate targetSymbol : SymbolCandidate.values()) {
-            CardSymbol cardSymbol = new CardSymbol(targetSymbol);
-            SYMBOL_CACHE.put(targetSymbol.getSymbol(), cardSymbol);
+        for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
+            CardSymbol cardSymbol = new CardSymbol(symbolCandidate);
+            SYMBOL_CACHE.put(symbolCandidate.getSymbol(), cardSymbol);
         }
     }
 

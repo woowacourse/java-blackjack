@@ -12,9 +12,10 @@ public class CardNumber {
     private int value;
 
     static {
-        for (NumberCandidate sample : NumberCandidate.values()) {
-            CardNumber cardNumber = new CardNumber(sample.getNumber(), sample.getValue());
-            NUMBER_CACHE.put(sample.getNumber(), cardNumber);
+        for (NumberCandidate numberCandidate : NumberCandidate.values()) {
+            CardNumber cardNumber = new CardNumber(numberCandidate.getNumber(),
+                numberCandidate.getValue());
+            NUMBER_CACHE.put(numberCandidate.getNumber(), cardNumber);
         }
     }
 
