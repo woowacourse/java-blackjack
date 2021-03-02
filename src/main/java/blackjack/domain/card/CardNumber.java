@@ -1,11 +1,5 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.toList;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public enum CardNumber {
   ACE(1),
   TWO(2),

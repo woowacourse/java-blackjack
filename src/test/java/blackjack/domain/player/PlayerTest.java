@@ -7,7 +7,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Symbol;
 import blackjack.exception.CardDuplicateException;
 import java.util.List;
-import javax.swing.SpringLayout;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

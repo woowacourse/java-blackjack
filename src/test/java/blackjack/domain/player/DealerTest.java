@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Symbol;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 public class DealerTest {
 

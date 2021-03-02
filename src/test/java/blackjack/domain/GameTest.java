@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Symbol;

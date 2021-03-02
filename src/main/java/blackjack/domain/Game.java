@@ -4,9 +4,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.GamerState;
-import blackjack.domain.player.Player;
 import blackjack.exception.PlayerNotFoundException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
