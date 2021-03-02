@@ -1,5 +1,14 @@
-# java-blackjack
-블랙잭 게임 미션 저장소
+# 연료 주입
 
-## 우아한테크코스 코드리뷰
-* [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+## 기능 요구사항
+1. 사전 세팅
+    - 소나타(10KM/L) 2대, 아반떼(15KM/L) 1대, K5(13KM/L) 2대
+    - 연료는 초기에 0L 이다.(주입되어 있는 연료량 없음)
+    
+2. 이동 거리를 입력 받는다
+
+3. 각 차량별로 필요한 연료량을 나타낸다
+   
+## 프로그래밍 요구사항
+- 상속과 추상 메소드 활용
+- if/else 사용하지 않음
