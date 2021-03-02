@@ -11,12 +11,12 @@
     - [ ] 구현 : 자신의 점수가 16 이하인 지 확인
 
 - Card
-- [ ] 구현 : Symbol(enum) 과 CardNumber(enum) 의 값을 가진다.
+- [x] 구현 : Symbol(enum) 과 CardNumber(enum) 의 값을 가진다.
 - [X] 구현 : CardNumber에서 점수를 가져올 수 있다.
 
 - Cards
 - [ ] 구현 : 셔플할 수 있다. (생성자)  
-- [ ] 예외 : 동일한 카드를 넣을 수 없다.
+- [X] 예외 : 동일한 카드를 넣을 수 없다.
 
 - CardsFactory
 - [ ] 구현 : 생성자에서 모든 카드의 수를 초기화한다.  
