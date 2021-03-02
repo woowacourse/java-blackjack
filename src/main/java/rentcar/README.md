@@ -6,7 +6,7 @@
 	- Sonata : 10km/리터
 - [x] 아반테 구현
 	- Avante : 15km/리터
-- [ ] K5 구현
+- [x] K5 구현
 	- K5 : 13km/리터
 - [ ] RentCompany 생성 구현
 - [ ] RentCompany에서 Report를 생성하는 기능 구현
