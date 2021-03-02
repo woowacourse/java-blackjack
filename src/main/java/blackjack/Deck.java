@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
@@ -11,6 +12,7 @@ public class Deck {
     }
 
     public static Deck create(Stack<Card> cards) {
+        Collections.shuffle(cards);
         return new Deck(cards);
     }
 }
