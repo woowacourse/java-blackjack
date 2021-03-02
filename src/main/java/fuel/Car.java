@@ -12,4 +12,6 @@ public abstract class Car {
     public double calculateAmountOfFuel() {
         return (double) moveDistance / fuelEfficiency;
     }
+
+    public abstract String getName();
 }
