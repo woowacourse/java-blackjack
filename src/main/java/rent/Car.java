@@ -1,6 +1,13 @@
 package rent;
 
 public abstract class Car {
+
+    protected final double tripDistance;
+
+    public Car(double tripDistance) {
+        this.tripDistance = tripDistance;
+    }
+
     /**
      * 리터당 이동 거리. 즉, 연비
      */
