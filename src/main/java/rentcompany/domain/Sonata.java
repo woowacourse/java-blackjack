@@ -1,6 +1,6 @@
 package rentcompany.domain;
 
-public class Sonata extends Car{
+public class Sonata extends Car {
     private final String name = "Sonata";
     private final double tripDistance;
     private final Fuel distancePerLiter = new Fuel(10D);

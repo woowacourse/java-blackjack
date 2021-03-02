@@ -14,7 +14,7 @@ public class RentCompany {
         carList.add(car);
     }
 
-    public int size(){
+    public int size() {
         return carList.size();
     }
 
