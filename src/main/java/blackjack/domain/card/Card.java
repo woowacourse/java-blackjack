@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Card {
 
@@ -27,13 +27,9 @@ public class Card {
         static final List<Card> cache;
 
         static {
-            cache = new ArrayList<>();
-
-            for (Denomination denomination : Denomination.values()) {
-                for (Shape shape : Shape.values()) {
-                    cache.add(new Card(denomination, shape));
-                }
-            }
+            cache = Arrays.stream(Denomination.values())
+                .flatMap(denomination -> Arrays.stream(Shape.values()).map(shape -> new Card(denomination, shape)))
+                .collect(Collectors.toList());
         }
     }
 
