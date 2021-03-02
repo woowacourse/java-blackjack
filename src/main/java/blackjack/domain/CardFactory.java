@@ -21,6 +21,6 @@ public class CardFactory {
     }
 
     public static List<Card> make(){
-        return Collections.unmodifiableList(cards);
+        return new ArrayList<>(cards);
     }
 }
