@@ -1,4 +1,4 @@
-package fuelInjection;
+package fuelinjection;
 
 public abstract class Car {
     int fuelEfficiency;

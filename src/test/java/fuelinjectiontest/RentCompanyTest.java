@@ -1,9 +1,9 @@
-package fuelInjectionTest;
+package fuelinjectiontest;
 
-import fuelInjection.Avante;
-import fuelInjection.K5;
-import fuelInjection.RentCompany;
-import fuelInjection.Sonata;
+import fuelinjection.Avante;
+import fuelinjection.K5;
+import fuelinjection.RentCompany;
+import fuelinjection.Sonata;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

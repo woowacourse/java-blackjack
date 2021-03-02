@@ -1,11 +1,11 @@
-package fuelInjection;
+package fuelinjection;
 
-public class Avante extends Car {
+public class K5 extends Car {
 
-    public Avante(int distance) {
+    public K5(int distance) {
         super.distance = distance;
-        super.fuelEfficiency = 15;
-        super.carName = "Avante";
+        super.fuelEfficiency = 13;
+        super.carName = "K5";
     }
 
     @Override
