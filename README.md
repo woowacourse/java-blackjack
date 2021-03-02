@@ -1,5 +1,34 @@
 # java-blackjack
 블랙잭 게임 미션 저장소
 
-## 우아한테크코스 코드리뷰
-* [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+## 기능 요구사항
+### Domain(TDD)
+- [ ] Card
+  - [ ] 미리 분배할 카드들을 캐싱 한다.
+  - [ ] Suit 와 Number 상태값을 가진다.
+
+- [ ] Cards (유저가 가지고 있는 카드 묶음)
+  - [ ] 현재 스코어를 계산한다.
+    
+- [ ] Player 
+  - [ ] Cards, Name, isBust 상태값을 가진다.
+  - [ ] 초기 카드를 받는다. (2장)
+  - [ ] 카드를 추가로 받는다.(수동) 
+  - [ ] Bust 여부 계산한다.
+    
+- [ ] Players (게임에 참여한 플레이어 그룹)
+
+- [ ] Dealer
+  - [ ] Cards 상태값을 가진다.
+  - [ ] 초기 카드를 받는다. (2장)
+  - [ ] 카드를 추가로 받는다.(자동)
+  - [ ] Player와의 승자 판별한다.
+  - [ ] Bust 여부 계산한다.
+    
+- [ ] Name
+
+### Controller, Service, View
+- [ ] InputView (String 으로 받는다)
+- [ ] OutputView
+의식의 흐름대로
+  
