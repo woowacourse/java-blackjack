@@ -6,6 +6,6 @@ import blackjack.view.InputView;
 public class BlackjackController {
 
     public void run() {
-        InputView.inputPlayerNames();
+        Game game = new Game(InputView.inputPlayerNames());
     }
 }
