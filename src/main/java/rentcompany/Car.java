@@ -2,6 +2,8 @@ package rentcompany;
 
 public abstract class Car {
 
+    protected int tripDistance;
+
     /**
      * 리터당 이동 거리. 즉, 연비
      */
