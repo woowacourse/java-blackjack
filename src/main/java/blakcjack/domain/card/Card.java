@@ -1,18 +1,39 @@
 package blakcjack.domain.card;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Card {
+	private static final Map<String, Card> cache = new HashMap<>();
+
 	private final CardSymbol cardSymbol;
 	private final CardNumber cardNumber;
+
+	static {
+		for (final CardSymbol cardSymbol : CardSymbol.values()) {
+			for (final CardNumber cardNumber : CardNumber.values()) {
+				final String key = generateKey(cardSymbol, cardNumber);
+				final Card card = new Card(cardSymbol, cardNumber);
+				cache.put(key, card);
+			}
+		}
+	}
 
 	private Card(final CardSymbol cardSymbol, final CardNumber cardNumber) {
 		this.cardSymbol = cardSymbol;
 		this.cardNumber = cardNumber;
 	}
 
-	public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber ) {
-		return new Card(cardSymbol, cardNumber);
+	public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber) {
+		final String key = generateKey(cardSymbol, cardNumber);
+		return Optional.ofNullable(cache.get(key))
+				.orElseThrow(IllegalArgumentException::new);
+	}
+
+	private static String generateKey(CardSymbol cardSymbol, CardNumber cardNumber) {
+		return cardSymbol.name() + cardNumber.name();
 	}
 
 	@Override
