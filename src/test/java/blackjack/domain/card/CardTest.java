@@ -10,7 +10,12 @@ class CardTest {
     @Test
     void create() {
         Card card = new Card(Type.DIAMOND, Denomination.FOUR);
-
         assertThat(card).isEqualTo(new Card(Type.DIAMOND, Denomination.FOUR));
+    }
+
+    @Test
+    void cardInformation() {
+        Card card = new Card(Type.DIAMOND, Denomination.FOUR);
+        assertThat(card.toString()).isEqualTo("4다이아몬드");
     }
 }

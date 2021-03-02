@@ -24,4 +24,9 @@ public class Card {
     public int hashCode() {
         return Objects.hash(type, denomination);
     }
+
+    @Override
+    public String toString() {
+        return denomination.getName() + type.getName();
+    }
 }
