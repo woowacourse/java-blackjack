@@ -11,11 +11,6 @@ public class Avante extends  Car {
 	}
 
 	@Override
-	double getTripDistance() {
-		return tripDistance;
-	}
-
-	@Override
 	String getName() {
 		return "Avante";
 	}

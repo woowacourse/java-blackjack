@@ -9,9 +9,11 @@ public abstract class Car {
 
 	abstract double getDistancePerLiter();
 
-	abstract double getTripDistance();
-
 	abstract String getName();
+
+	protected double getTripDistance() {
+		return this.tripDistance;
+	}
 
 	public double getChargeQuantity() {
 		return getTripDistance() / getDistancePerLiter();
