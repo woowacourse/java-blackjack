@@ -34,6 +34,4 @@ public class CarTest {
         Sonata sonata = new Sonata(150);
         assertThat(sonata.getChargeQuantity()).isEqualTo(expectedValue);
     }
-
-
 }
