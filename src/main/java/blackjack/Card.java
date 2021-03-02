@@ -8,4 +8,8 @@ public class Card {
         this.cardNumber = cardNumber;
         this.cardType = cardType;
     }
+
+    public int getCardNumber() {
+        return this.cardNumber.getNumber();
+    }
 }
