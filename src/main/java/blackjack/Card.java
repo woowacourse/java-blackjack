@@ -2,7 +2,6 @@ package blackjack;
 
 public class Card {
 
-
     private final String name;
     private final String value;
 
