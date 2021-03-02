@@ -11,8 +11,8 @@ class SonataTest {
 		Sonata sonata = new Sonata(150);
 		assertAll(
 				() -> assertThat(sonata.getName()).isEqualTo("Sonata"),
-				() -> assertThat(sonata.getTripDistance()).isEqualTo(150f),
-				() -> assertThat(sonata.getDistancePerLiter()).isEqualTo(10f)
+				() -> assertThat(sonata.getTripDistance()).isEqualTo(150),
+				() -> assertThat(sonata.getDistancePerLiter()).isEqualTo(10)
 		);
 	}
 }
