@@ -3,6 +3,7 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Cards {
     private final List<Card> cards;
@@ -37,6 +38,8 @@ public class Cards {
     }
 
     public String showCards() {
-        return "3스페이드";
+        return cards.stream()
+            .map(Card::getName)
+            .collect(Collectors.joining(", "));
     }
 }

@@ -37,12 +37,12 @@ public class CardsTest {
         assertThat(cards.showCards()).isEqualTo("3스페이드");
 
         List<Card> deck2 = new ArrayList<>(Collections.singletonList(new Card("다이아몬드", 7)));
-        Cards cards2 = new Cards(deck);
+        Cards cards2 = new Cards(deck2);
         assertThat(cards2.showCards()).isEqualTo("7다이아몬드");
 
     }
 
-/*    @Test
+    @Test
     @DisplayName("리스트에 든 카드들을 보여준다.")
     void show(){
         List<Card> deck = new ArrayList<>(Arrays.asList(
@@ -52,6 +52,6 @@ public class CardsTest {
         Cards cards = new Cards(deck);
 
         assertThat(cards.showCards()).isEqualTo("7스페이드, 3다이아몬드");
-    }*/
+    }
 
 }
