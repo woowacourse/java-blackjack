@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class ParticipantTest {
+
     @ParameterizedTest
     @DisplayName("양쪽 공백을 제외한 이름의 글자 수가 1글자 이상이 아닐 경우 예외 발생")
     @ValueSource(strings = {"   ", " "})

@@ -6,10 +6,12 @@ public class Participant {
     private static final int INVALID_NAME_LENGTH = 0;
 
     private final String name;
+    private final Cards cards;
 
     public Participant(String name) {
         validateName(name);
         this.name = name.trim();
+        this.cards = new Cards();
     }
 
     private void validateName(String name) {
@@ -22,5 +24,9 @@ public class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public void receiveDefaultCards(Cards receivedCards) {
+        cards.add(receivedCards);
     }
 }
