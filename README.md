@@ -3,9 +3,12 @@
 
 ## 기능 요구사항
 ### Domain(TDD)
-- [ ] Card
-  - [ ] 미리 분배할 카드들을 캐싱 한다.
-  - [ ] Suit 와 Number 상태값을 가진다.
+- [x] Card
+  - [x] 미리 분배할 카드들을 캐싱 한다.
+  - [x] Suit 와 Number 상태값을 가진다.
+  
+- [x] Suit, Face
+  - [x] enum을 사용하여 카드에서 사용하는 정보를 관리한다. 
 
 - [ ] Cards (유저가 가지고 있는 카드 묶음)
   - [ ] 현재 스코어를 계산한다.
@@ -30,5 +33,4 @@
 ### Controller, Service, View
 - [ ] InputView (String 으로 받는다)
 - [ ] OutputView
-의식의 흐름대로
   
