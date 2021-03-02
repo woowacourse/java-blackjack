@@ -12,6 +12,7 @@ class RentCompanyTest {
     private static final String NEWLINE = System.getProperty("line.separator");
     private RentCompany company;
 
+
 //    @Test
 //    public void report() throws Exception {
 //        RentCompany company = RentCompany.create(); // factory method를 사용해 생성
