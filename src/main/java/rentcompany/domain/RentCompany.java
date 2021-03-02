@@ -19,6 +19,12 @@ public class RentCompany {
     }
 
     public String generateReport() {
-        return null;
+        StringBuilder reportBuilder = new StringBuilder();
+
+        for (Car car : carList) {
+            reportBuilder.append(String.format("%s : %.0f리터\n", car.getName(), car.getChargeQuantity()));
+        }
+
+        return reportBuilder.toString();
     }
 }

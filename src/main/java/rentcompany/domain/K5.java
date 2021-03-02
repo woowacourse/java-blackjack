@@ -8,4 +8,24 @@ public class K5 extends Car{
     public K5(int tripDistance) {
         this.tripDistance = tripDistance;
     }
+
+    @Override
+    double getDistancePerLiter() {
+        return distancePerLiter;
+    }
+
+    @Override
+    double getTripDistance() {
+        return tripDistance;
+    }
+
+    @Override
+    String getName() {
+        return name;
+    }
+
+    @Override
+    double getChargeQuantity() {
+        return super.getChargeQuantity();
+    }
 }
