@@ -11,18 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
     @Test
-    @DisplayName("이름 입력 분리")
-    void playerNameSplit() {
-        String input = "pobi,jason";
-        List<Player> players = new ArrayList<>();
-        for (String name : input.split(",")) {
-            Player player = Player.create(name);
-            players.add(player);
-        }
-        assertThat(players.size()).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("이름에 공백 입력 경우 예외 처리")
     void playerNameSplitException() {
         String input = "pobi, jason";
