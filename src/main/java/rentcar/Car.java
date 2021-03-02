@@ -1,7 +1,8 @@
 package rentcar;
 
 public abstract class Car {
-    protected final int distance;
+
+    private final int distance;
 
     public Car(int distance) {
         this.distance = distance;
