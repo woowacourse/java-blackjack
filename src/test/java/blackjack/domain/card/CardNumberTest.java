@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.CardNumber;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,7 @@ public class CardNumberTest {
     }
 
     @ParameterizedTest
-    @DisplayName("로또 숫자 포장 값 매칭 테스트")
+    @DisplayName("카드 숫자 포장 값 매칭 테스트")
     @MethodSource("testNumberSample")
     void cardNumberTest(String number, int value) {
         CardNumber cardNumber = CardNumber.from(number);
@@ -38,7 +37,7 @@ public class CardNumberTest {
     }
 
     @ParameterizedTest
-    @DisplayName("로또 숫자 동일 인스턴스 확인 테스트")
+    @DisplayName("카드 숫자 동일 인스턴스 확인 테스트")
     @MethodSource("testNumberInstanceSample")
     void cardNumberInstanceTest(String number, CardNumber cardTargetNumber) {
         CardNumber cardNumber = CardNumber.from(number);

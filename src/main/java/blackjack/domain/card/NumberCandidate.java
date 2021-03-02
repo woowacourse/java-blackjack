@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public enum NumberCandidate {
     TWO("2", 2), THREE("3", 3), FOUR("4", 4), FIVE("5", 5), SIX("6", 6), SEVEN("7", 7),
@@ -7,7 +7,7 @@ public enum NumberCandidate {
     private String number;
     private int value;
 
-    NumberCandidate(String number, int value){
+    NumberCandidate(String number, int value) {
         this.number = number;
         this.value = value;
     }
