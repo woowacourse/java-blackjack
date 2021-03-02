@@ -9,11 +9,11 @@ public class CardTest {
 
     @Test
     void 생성_및_비교() {
-        Card card1 = new Card(Denomination.FIVE, Shape.CLUBS);
-        Card card2 = new Card(Denomination.FIVE, Shape.CLUBS);
+        Card card1 = Card.of(Denomination.FIVE, Shape.CLUBS);
+        Card card2 = Card.of(Denomination.FIVE, Shape.CLUBS);
 
         assertThat(card1).isEqualTo(card2);
-
+        assertThat(card1).isSameAs(card2);
     }
 
 }
