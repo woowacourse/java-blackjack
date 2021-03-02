@@ -1,5 +1,15 @@
-# java-blackjack
-블랙잭 게임 미션 저장소
+# 🚀 상속, interface - 연료 주입
 
-## 우아한테크코스 코드리뷰
-* [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+- [ ] 자동차 인터페이스를 만든다.
+
+- [ ] 주입해야 할 연료량 구하는 기능 추가
+
+- [ ] 자동차 정보 반환 기능 추가
+  - [ ] 연비
+  - [ ] 여행 거리  
+  - [ ] 차종의 이름
+    
+- 렌트 회사
+  - [ ] 자동차 추가 기능
+  - [ ] 리포트 반환 기능 
+
