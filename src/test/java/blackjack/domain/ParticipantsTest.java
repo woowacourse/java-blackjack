@@ -12,7 +12,7 @@ public class ParticipantsTest {
     @DisplayName("이름별로 참여자들을 생성한다.")
     @Test
     void createParticipants() {
-        List<String> names = Arrays.asList("amazzi","dani","pobi");
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Participants participants = new Participants(names);
 
         assertThat(participants).isInstanceOf(Participants.class);
