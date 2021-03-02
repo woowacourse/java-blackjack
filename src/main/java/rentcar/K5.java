@@ -3,10 +3,10 @@ package rentcar;
 public class K5 extends Car {
     private final String name = "K5";
     private final double distancePerLiter = 13;
-    private final double tripDistance;
+    private final TripDistance tripDistance;
 
     public K5(double tripDistance) {
-        this.tripDistance = tripDistance;
+        this.tripDistance = new TripDistance(tripDistance);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class K5 extends Car {
 
     @Override
     double getTripDistance() {
-        return tripDistance;
+        return tripDistance.getDistance();
     }
 
     @Override

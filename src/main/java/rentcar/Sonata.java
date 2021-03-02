@@ -3,10 +3,10 @@ package rentcar;
 public class Sonata extends Car {
     private final String name = "Sonata";
     private final double distancePerLiter = 10;
-    private final double tripDistance;
+    private final TripDistance tripDistance;
 
     public Sonata(double tripDistance) {
-        this.tripDistance = tripDistance;
+        this.tripDistance = new TripDistance(tripDistance);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class Sonata extends Car {
 
     @Override
     double getTripDistance() {
-        return tripDistance;
+        return tripDistance.getDistance();
     }
 
     @Override
