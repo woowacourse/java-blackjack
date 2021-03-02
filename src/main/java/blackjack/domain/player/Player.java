@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Status;
 import blackjack.domain.card.Card;
 import blackjack.exception.CardDuplicateException;
 import java.util.ArrayList;
@@ -30,5 +31,9 @@ public class Player {
     return deck.stream()
         .mapToInt(Card::getScore)
         .sum();
+  }
+
+  public Status getStatus() {
+    return Status.evaluateScore(getScore());
   }
 }

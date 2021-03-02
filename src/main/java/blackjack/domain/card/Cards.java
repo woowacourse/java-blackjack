@@ -12,7 +12,6 @@ public class Cards {
   public Cards(final List<Card> cards) {
     duplicateValidate(cards);
 
-    Collections.shuffle(cards);
     this.cards = cards;
   }
 
@@ -24,6 +23,10 @@ public class Cards {
 
   public Card next() {
     return cards.get(index++);
+  }
+
+  public void shuffle() {
+    Collections.shuffle(cards);
   }
 
 }
