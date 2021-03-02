@@ -10,5 +10,3 @@
 	- K5 : 13km/리터
 - [ ] RentCompany 생성 구현
 - [ ] RentCompany에서 Report를 생성하는 기능 구현
-
-
