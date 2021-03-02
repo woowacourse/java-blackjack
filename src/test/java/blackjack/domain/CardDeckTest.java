@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,4 +15,19 @@ public class CardDeckTest {
         assertThat(cardDeck.size()).isEqualTo(52);
     }
 
+    @DisplayName("카드 덱에서 카드 1장을 뽑는다.")
+    @Test
+    void draw() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.draw();
+        assertThat(cardDeck.size()).isEqualTo(51);
+    }
+
+    @DisplayName("카드 덱에서 기본 카드 2장을 뽑는다.")
+    @Test
+    void drawDefaultCards() {
+        CardDeck cardDeck = new CardDeck();
+        List<Card> cards = cardDeck.drawDefaultCards();
+        assertThat(cards.size()).isEqualTo(2);
+    }
 }
