@@ -8,6 +8,9 @@
 ### 도메인 설계   
 ![image](https://user-images.githubusercontent.com/48986787/109641715-603ebd00-7b95-11eb-9f53-467024e8ab28.png)
 
+## 명세(메세지) 관점
+![image](https://user-images.githubusercontent.com/48986787/109643272-5453fa80-7b97-11eb-962c-b6d1d657dec5.png)
+
 
 
 ## 기능 요구사항 
