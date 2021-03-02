@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Hands {
@@ -8,5 +9,13 @@ public class Hands {
 
     public Hands(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> toList() {
+        return Collections.unmodifiableList(cards);
     }
 }
