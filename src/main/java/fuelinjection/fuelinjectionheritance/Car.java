@@ -8,7 +8,9 @@ public abstract class Car {
     }
 
     abstract String getName();
+
     abstract int getFuelEfficiency();
+
     abstract int getRequiredFuel();
 
     protected int getMoveDistance() {

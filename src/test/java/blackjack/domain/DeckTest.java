@@ -15,11 +15,11 @@ public class DeckTest {
     @DisplayName("덱 생성 검사")
     void createDeck() {
         Deck deck = new Deck(Arrays.asList(
-                new Card(Shape.DIAMOND, CardValue.ACE),
-                new Card(Shape.SPADE, CardValue.ACE)));
+                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+                Card.valueOf(Shape.SPADE, CardValue.ACE)));
 
         assertThat(deck.getCards()).contains(
-                new Card(Shape.DIAMOND, CardValue.ACE),
-                new Card(Shape.SPADE, CardValue.ACE));
+                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+                Card.valueOf(Shape.SPADE, CardValue.ACE));
     }
 }

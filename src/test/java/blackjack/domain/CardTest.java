@@ -10,12 +10,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class CardTest {
-    @DisplayName("카드 동일성 검증")
+
+    @DisplayName("캐싱 및 동일성 테스트")
     @Test
-    void createCard() {
-        Shape diamond = Shape.DIAMOND;
-        CardValue a = CardValue.ACE;
-        Card diamondOne = new Card(diamond, a);
-        assertThat(diamondOne).isEqualTo(new Card(diamond, a));
+    void caching() {
+        assertThat(Card.valueOf(Shape.DIAMOND, CardValue.ACE)).isSameAs((Card.valueOf(Shape.DIAMOND, CardValue.ACE)));
     }
 }

@@ -1,6 +1,6 @@
 package fuelinjection.fuelinjectionheritance;
 
-public class Sonata extends Car{
+public class Sonata extends Car {
     private static final String NAME = "Sonata";
     private static final int FUEL_EFFICIENCY = 10;
 
