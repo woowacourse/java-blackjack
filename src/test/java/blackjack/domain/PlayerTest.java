@@ -39,4 +39,36 @@ public class PlayerTest {
         player.drawCard(card);
         assertThat(player.getResult()).isEqualTo(13);
     }
+
+    @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @Test
+    void canDrawCard1() {
+        Player player = new Player();
+        Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        player.drawCard(twoCard);
+        assertThat(player.isCanDraw()).isTrue();
+    }
+
+    @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @Test
+    void canDrawCard21() {
+        Player player = new Player();
+        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+        player.drawCard(sevenCard);
+        player.drawCard(sevenCard);
+        player.drawCard(sevenCard);
+        assertThat(player.isCanDraw()).isTrue();
+    }
+
+    @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
+    @Test
+    void cannotDrawCard22() {
+        Player player = new Player();
+        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+        player.drawCard(sevenCard);
+        player.drawCard(sevenCard);
+        Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
+        player.drawCard(eightCard);
+        assertThat(player.isCanDraw()).isFalse();
+    }
 }
