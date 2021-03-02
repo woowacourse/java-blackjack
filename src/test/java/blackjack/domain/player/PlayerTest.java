@@ -1,10 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Symbol;
 import blackjack.exception.CardDuplicateException;
 import java.util.List;
+import javax.swing.SpringLayout;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +23,7 @@ public class PlayerTest {
     player.addCardToDeck(card);
     List<Card> deck = player.getDeck();
 
-    Assertions.assertThat(deck).containsExactly(card);
+    assertThat(deck).containsExactly(card);
   }
 
   @Test
@@ -34,6 +37,16 @@ public class PlayerTest {
     Assertions.assertThatThrownBy(
         () -> player.addCardToDeck(card2)
     ).isInstanceOf(CardDuplicateException.class);
+  }
 
+  @Test
+  @DisplayName("덱의 점수를 계산한다")
+  void getScore() {
+    Player player = new Player();
+
+    player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.FIVE));
+    player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.SIX));
+
+    assertThat(player.getScore()).isEqualTo(11);
   }
 }

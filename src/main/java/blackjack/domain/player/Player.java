@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.exception.CardDuplicateException;
@@ -24,5 +24,11 @@ public class Player {
 
   public List<Card> getDeck() {
     return Collections.unmodifiableList(deck);
+  }
+
+  protected int getScore() {
+    return deck.stream()
+        .mapToInt(Card::getScore)
+        .sum();
   }
 }
