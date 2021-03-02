@@ -12,9 +12,6 @@ public class Card {
     this.cardNumber = cardNumber;
   }
 
-  public Card() {
-  }
-
   public int getScore() {
     return cardNumber.getScore();
   }
