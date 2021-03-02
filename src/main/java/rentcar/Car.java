@@ -18,4 +18,8 @@ public abstract class Car {
 	public double getChargeQuantity() {
 		return getTripDistance() / getDistancePerLiter();
 	}
+
+	public String getSummary() {
+		return getName() + " : " + Math.round(getChargeQuantity()) + "리터";
+	}
 }

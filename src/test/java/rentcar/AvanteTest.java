@@ -15,4 +15,11 @@ class AvanteTest {
 				() -> assertThat(avante.getDistancePerLiter()).isEqualTo(15)
 		);
 	}
+
+	@Test
+	void getSummary() {
+		Avante avante = new Avante(300);
+		assertThat(avante.getSummary())
+				.isEqualTo("Avante : 20리터");
+	}
 }

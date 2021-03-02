@@ -8,5 +8,5 @@
 	- Avante : 15km/리터
 - [x] K5 구현
 	- K5 : 13km/리터
-- [ ] RentCompany 생성 구현
-- [ ] RentCompany에서 Report를 생성하는 기능 구현
+- [x] RentCompany 생성 구현
+- [x] RentCompany에서 Report를 생성하는 기능 구현

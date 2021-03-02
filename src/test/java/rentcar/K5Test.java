@@ -15,4 +15,11 @@ public class K5Test {
 				() -> assertThat(k5.getDistancePerLiter()).isEqualTo(13)
 		);
 	}
+
+	@Test
+	void getSummary() {
+		K5 k5 = new K5(260);
+		assertThat(k5.getSummary())
+				.isEqualTo("K5 : 20리터");
+	}
 }

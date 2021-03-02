@@ -15,4 +15,11 @@ class SonataTest {
 				() -> assertThat(sonata.getDistancePerLiter()).isEqualTo(10)
 		);
 	}
+
+	@Test
+	void getSummary() {
+		Sonata sonata = new Sonata(150);
+		assertThat(sonata.getSummary())
+				.isEqualTo("Sonata : 15리터");
+	}
 }
