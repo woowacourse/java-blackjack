@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
 class K5Test {
 
@@ -23,6 +22,6 @@ class K5Test {
         Car car = new K5(distance);
 
         // then
-        assertThat(car.getChargeQuantity()).isEqualTo((double)distance/13);
+        assertThat(car.getChargeQuantity()).isEqualTo((double) distance / 13);
     }
 }
