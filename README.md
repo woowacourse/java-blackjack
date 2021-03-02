@@ -39,7 +39,7 @@
 - [ ] 무작위 카드를 한 장 반환한다.
 
 ### Card
-- [ ] 숫자와 문양에 따른 카드 생성
+- [x] 숫자와 문양에 따른 카드 생성
 
 ## 우아한테크코스 코드리뷰
 * [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
