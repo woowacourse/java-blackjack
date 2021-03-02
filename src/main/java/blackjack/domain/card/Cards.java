@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.exception.CardDuplicateException;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -9,6 +10,8 @@ public class Cards {
 
   public Cards(final List<Card> cards) {
     duplicateValidate(cards);
+
+    Collections.shuffle(cards);
     this.cards = cards;
   }
 
