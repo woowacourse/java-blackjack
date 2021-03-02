@@ -12,6 +12,10 @@ public class Card {
         this.shape = shape;
     }
 
+    public boolean isAce() {
+        return symbol == Symbol.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -27,5 +31,9 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, shape);
+    }
+
+    public int getScore() {
+        return symbol.getScore();
     }
 }
