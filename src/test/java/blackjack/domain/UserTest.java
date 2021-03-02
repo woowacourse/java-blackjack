@@ -9,7 +9,7 @@ public class UserTest {
     @DisplayName("User 객체를 생성한다.")
     @Test
     public void createUser() {
-        User user = new User();
+        User user = new User("amazzi");
 
         assertThat(user).isInstanceOf(User.class);
     }
