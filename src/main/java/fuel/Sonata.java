@@ -2,6 +2,8 @@ package fuel;
 
 public class Sonata implements Car {
     private int amount;
+    private static final int DISTANCE_PER_LITER = 10;
+    private static final String NAME = "Sonata";
 
     public Sonata(int amount) {
         this.amount = amount;
@@ -9,16 +11,16 @@ public class Sonata implements Car {
 
     @Override
     public double getDistancePerLiter() {
-        return 0;
+        return DISTANCE_PER_LITER;
     }
 
     @Override
     public double getTripDistance() {
-        return 0;
+        return amount;
     }
 
     @Override
     public String getName() {
-        return null;
+        return NAME;
     }
 }
