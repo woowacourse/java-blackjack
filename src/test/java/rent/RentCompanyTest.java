@@ -15,6 +15,7 @@ public class RentCompanyTest {
         company.addCar(new Sonata(120));
         company.addCar(new Avante(300));
         company.addCar(new K5(390));
+        company.addCar(new K5(130)); // 안되야하는거 아닌가?
 
         String report = company.generateReport();
         assertThat(report).isEqualTo(
