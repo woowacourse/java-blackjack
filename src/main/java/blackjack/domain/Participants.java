@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -11,10 +12,17 @@ public class Participants {
         this.participants = participants;
     }
 
-    public void validateOverlappedNames(List<Participant> participants) {
+    public static Participants from(List<String> participantNames) {
+        List<Participant> participants = participantNames.stream()
+                                                         .map(Participant::new)
+                                                         .collect(Collectors.toList());
+        return new Participants(participants);
+    }
+
+    private void validateOverlappedNames(List<Participant> participants) {
         long participantsCount = participants.size();
         long distinctParticipantsCount = participants.stream()
-                                                     .map(participant -> participant.getName())
+                                                     .map(Participant::getName)
                                                      .distinct()
                                                      .count();
         if (participantsCount != distinctParticipantsCount) {
