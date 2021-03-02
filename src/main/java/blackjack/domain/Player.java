@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.exception.CardDuplicateException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,10 @@ public class Player {
   }
 
   public void addCardToDeck(Card card) {
+    if (deck.contains(card)) {
+      throw new CardDuplicateException();
+    }
+
     deck.add(card);
   }
 
