@@ -2,19 +2,17 @@ package rent.car;
 
 public abstract class Car {
 
-    protected double distancePerLiter;
-    protected double tripDistance;
-    protected String name;
+    private double tripDistance;
 
-    public Car(double distancePerLiter, double tripDistance, String name) {
-        this.distancePerLiter = distancePerLiter;
+    public Car(double tripDistance) {
         this.tripDistance = tripDistance;
-        this.name = name;
     }
 
     public abstract double getDistancePerLiter();
 
-    public abstract double getTripDistance();
+    public double getTripDistance() {
+        return tripDistance;
+    }
 
     public abstract String getName();
 

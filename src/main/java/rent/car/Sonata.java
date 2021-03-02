@@ -6,21 +6,16 @@ public class Sonata extends Car {
     private static final double DISTANCE_PER_LITER = 10;
 
     public Sonata(double distance) {
-        super(DISTANCE_PER_LITER, distance, NAME);
+        super(distance);
     }
 
     @Override
     public double getDistancePerLiter() {
-        return distancePerLiter;
-    }
-
-    @Override
-    public double getTripDistance() {
-        return tripDistance;
+        return DISTANCE_PER_LITER;
     }
 
     @Override
     public String getName() {
-        return name;
+        return NAME;
     }
 }
