@@ -1,6 +1,6 @@
 package rentcar;
 
-public class Avante extends  Car {
+public class Avante extends Car {
 	public Avante(double tripDistance) {
 		super(tripDistance);
 	}

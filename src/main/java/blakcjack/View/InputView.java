@@ -10,7 +10,7 @@ public class InputView {
 
 	public static List<String> takePlayerNamesInput() {
 		return Arrays.stream(scanner.nextLine().split(","))
-		.map(String::trim)
-		.collect(Collectors.toList());
+				.map(String::trim)
+				.collect(Collectors.toList());
 	}
 }
