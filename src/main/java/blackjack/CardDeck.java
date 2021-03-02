@@ -17,9 +17,14 @@ public class CardDeck {
             Arrays.stream(CardNumber.values())
                 .forEach(number -> cards.add(new Card(number, type)));
         }
+        Collections.shuffle(cards);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public Card distribute() {
+        return cards.remove(0);
     }
 }

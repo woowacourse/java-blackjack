@@ -20,4 +20,12 @@ public class CardDeckTest {
         CardDeck cardDeck = new CardDeck();
         assertThat(cardDeck.getCards().size()).isEqualTo(52);
     }
+
+    @Test
+    @DisplayName("카드덱이 정상적으로 카드를 분배하는지 확인")
+    void distribute() {
+        CardDeck cardDeck = new CardDeck();
+        assertThat(cardDeck.distribute()).isInstanceOf(Card.class);
+        assertThat(cardDeck.getCards().size()).isEqualTo(51);
+    }
 }
