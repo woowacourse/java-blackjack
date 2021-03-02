@@ -17,13 +17,13 @@ public class RentCompany {
         return new RentCompany();
     }
 
-    public void addCar(Car car){
+    public void addCar(Car car) {
         cars.add(car);
     }
 
     public String generateReport() {
         StringBuilder report = new StringBuilder();
-        for (Car car: cars) {
+        for (Car car : cars) {
             report.append(car.getName() + " : " + (int) car.getChargeQuantity() + "리터" + NEWLINE);
         }
         return report.toString();
