@@ -1,9 +1,12 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
     private final String name;
+    private final List<Card> cards = new ArrayList<>();
 
     private Player(String name) {
         this.name = name;
@@ -35,5 +38,17 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public void receiveCard(Card card) {
+        cards.add(card);
+    }
+
+    public int calculatePoint() {
+        int point = 0;
+        for(Card card : cards) {
+            point = card.addPoint(point);
+        }
+        return point;
     }
 }

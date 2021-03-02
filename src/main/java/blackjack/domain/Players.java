@@ -35,6 +35,12 @@ public class Players {
     }
 
     public String getNames() {
-        return String.join(", ", players.stream().map(Player::getName).collect(Collectors.toList()));
+        return players.stream().map(Player::getName).collect(Collectors.joining(", "));
+    }
+
+    public void giveCards(Deck deck) {
+        for(Player player : players) {
+            player.receiveCard(deck.dealCard());
+        }
     }
 }

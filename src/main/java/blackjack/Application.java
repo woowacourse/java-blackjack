@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Deck;
 import blackjack.domain.Players;
 
 import java.util.Scanner;
@@ -10,5 +11,7 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         Players players = new Players(scanner.nextLine());
         System.out.println("딜러와 "+ players.getNames() + "에게 " + "2장씩 나누었습니다.");
+        Deck deck = new Deck();
+        players.giveCards(deck);
     }
 }
