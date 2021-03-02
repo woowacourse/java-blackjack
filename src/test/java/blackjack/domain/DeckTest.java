@@ -7,9 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DeckTest {
     private Deck deck;
@@ -34,12 +36,15 @@ public class DeckTest {
     void draw() {
         Card card = deck.draw();
         assertThat(card).isSameAs(Card.valueOf(Shape.DIAMOND, CardValue.ACE));
-        assertThat(deck.getCardQueue().size()).isEqualTo(1);
+        assertThat(deck.getCards().size()).isEqualTo(1);
     }
 
-    //    @Test
-//    @DisplayName("덱이 소진되었을 경우 검증")
-//    void draw() {
-//
-//    }
+    @Test
+    @DisplayName("덱이 소진되었을 경우 검증")
+    void notEnoughCards() {
+        deck = new Deck(new ArrayList<>());
+        assertThatThrownBy(() -> deck.draw())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("덱이 모두 소진되었습니다.");
+    }
 }

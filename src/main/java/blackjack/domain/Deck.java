@@ -8,23 +8,21 @@ import java.util.List;
 import java.util.Queue;
 
 public class Deck {
-    private final List<Card> cards;
-    private final Queue<Card> cardQueue;
+    private final Queue<Card> cards;
 
     public Deck(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
-        this.cardQueue = new LinkedList<>(cards);
+        this.cards = new LinkedList<>(cards);
     }
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }
 
-    public List<Card> getCardQueue() {
-        return new ArrayList<>(cardQueue);
-    }
-
     public Card draw() {
-        return cardQueue.poll();
+        Card card = cards.poll();
+        if (card == null) {
+            throw new IllegalStateException("덱이 모두 소진되었습니다.");
+        }
+        return card;
     }
 }
