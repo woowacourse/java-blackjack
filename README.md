@@ -1,5 +1,22 @@
 # java-blackjack
 블랙잭 게임 미션 저장소
 
-## 우아한테크코스 코드리뷰
-* [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+
+
+
+# java-rent
+상속, interface - 연료 주입
+
+## 요구사항
+현재 보유하고 있는 차량은 Sonata 2대, Avante 1대, K5 2대로 총 5대의 차량을 보유하고 있다. 
+고객이 인터넷으로부터 예약할 때 여행할 목적지의 대략적인 이동거리를 입력 받는다. 
+이 이동거리를 활용해 차량 별로 필요한 연료를 주입한다. 
+차량 별로 주입해야 할 연료량을 확인할 수 있는 보고서를 생성해야 한다.
+
+각 차량별 연비는 다음과 같다.
+
+* Sonata : 10km/리터
+* Avante : 15km/리터
+* K5 : 13km/리터
+
+## 기능 요구사항
