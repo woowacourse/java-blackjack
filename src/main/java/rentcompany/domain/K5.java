@@ -3,7 +3,7 @@ package rentcompany.domain;
 public class K5 extends Car{
     private final String name = "K5";
     private final double tripDistance;
-    private final double distancePerLiter = 13;
+    private final Fuel distancePerLiter = new Fuel(13D);
 
     public K5(int tripDistance) {
         this.tripDistance = tripDistance;
@@ -11,7 +11,7 @@ public class K5 extends Car{
 
     @Override
     double getDistancePerLiter() {
-        return distancePerLiter;
+        return distancePerLiter.getQuantity();
     }
 
     @Override
