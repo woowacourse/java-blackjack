@@ -2,15 +2,15 @@ package blackjack;
 
 public class Card {
 
-    private final String name;
-    private final String value;
+    private final CardSymbol symbol;
+    private final CardValue value;
 
-    private Card(final String name, final String value) {
-        this.name = name;
+    private Card(final CardSymbol symbol, final CardValue value) {
+        this.symbol = symbol;
         this.value = value;
     }
 
-    public static Card create(final String symbol, final String value) {
+    public static Card create(final CardSymbol symbol, final CardValue value) {
         return new Card(symbol, value);
     }
 }
