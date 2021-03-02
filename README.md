@@ -12,7 +12,7 @@
 
 - Card
 - [ ] 구현 : Symbol(enum) 과 CardNumber(enum) 의 값을 가진다.
-- [ ] 구현 : CardNumber에서 점수를 가져올 수 있다.
+- [X] 구현 : CardNumber에서 점수를 가져올 수 있다.
 
 - Cards
 - [ ] 구현 : 셔플할 수 있다. (생성자)  
