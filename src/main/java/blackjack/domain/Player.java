@@ -39,4 +39,8 @@ public class Player {
         }
         return highValue;
     }
+
+    public boolean isCanDraw() {
+        return getResult() <= BLACKJACK;
+    }
 }
