@@ -47,6 +47,6 @@ public class DeckTest {
     @DisplayName("참여자 생성 성공")
     @Test
     void initiateGamersTest() {
-        assertThat(deck.initiateGamers(Arrays.asList("joanne","pk"))).isInstanceOf(Gamers.class);
+        assertThat(deck.initiateGamers(Arrays.asList("joanne", "pk"))).isInstanceOf(Gamers.class);
     }
 }

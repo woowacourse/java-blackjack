@@ -3,10 +3,12 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
+import java.util.List;
+
 public abstract class Gamer {
 
+    protected final Hands hands;
     private String name;
-    private final Hands hands;
 
     public Gamer(String name, Hands hands) {
         this.name = name;
@@ -16,6 +18,8 @@ public abstract class Gamer {
     public void receiveCard(Card card) {
         hands.add(card);
     }
+
+    abstract public List<Card> showInitialHands();
 
     public String getName() {
         return name;
