@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -16,5 +17,12 @@ public class Participants {
                 .filter(participant -> participant instanceof Dealer)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Dealer가 존재하지 않습니다!"));
+    }
+
+
+    public List<Participant> extractPlayers() {
+        return participants.stream()
+                .filter(participant -> participant instanceof Player)
+                .collect(Collectors.toList());
     }
 }

@@ -62,4 +62,17 @@ class ParticipantsTest {
         assertThatThrownBy(() -> participants.extractDealer())
                 .isExactlyInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("플레이어들를 뽑아낸다")
+    @Test
+    void test_extract_players() {
+        //given
+        Participants participants = new Participants(participantGroup);
+
+        //when
+        List<Participant> players = participants.extractPlayers();
+
+        //then
+        assertThat(players).hasSize(2);
+    }
 }
