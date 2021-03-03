@@ -31,4 +31,8 @@ public enum Symbol {
         }
         return symbol;
     }
+
+    public String getName() {
+        return name;
+    }
 }

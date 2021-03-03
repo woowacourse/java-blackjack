@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +35,12 @@ public class Card {
         return findCard;
     }
 
+    public static List<Card> getShuffledCards() {
+        List<Card> cards = new ArrayList<>(CARDS);
+        Collections.shuffle(cards);
+        return cards;
+    }
+
     public int getScore() {
         return number.getScore();
     }
@@ -43,7 +50,7 @@ public class Card {
     }
 
     public String getCardStatus() {
-        return number.getName() + symbol.name();
+        return number.getName() + symbol.getName();
     }
 
     @Override
