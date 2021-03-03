@@ -34,6 +34,11 @@ public abstract class User {
         if (this.cards.stream().anyMatch(card -> card.getScore() == ACE_SCORE) && score <= 11) {
             score += TEN_SCORE;
         }
+
+        if (score > 21) {
+            score = Card.BUST;
+        }
+
         return score;
     }
 

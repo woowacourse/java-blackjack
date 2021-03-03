@@ -41,7 +41,7 @@ public class Player extends User {
 
     @Override
     public boolean isStay() {
-        if (this.isStay || getScore() > 21) {
+        if (this.isStay || getScore() == Card.BUST) {
             return true;
         }
         return false;
