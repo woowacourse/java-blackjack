@@ -28,9 +28,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isCanDraw() {
-        return false;
-    }
+    abstract public boolean isCanDraw();
 
     @Override
     public int getValue() {
