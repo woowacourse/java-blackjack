@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.DealerResult;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.view.InputView;
@@ -16,6 +17,10 @@ public class BlackJackController {
         OutputView.showInitiate(dealer, players);
         processPlayers(entireCardDeck, players);
         processDealer(entireCardDeck, dealer);
+        OutputView.showScoreResult(dealer, players);
+        DealerResult dealerResult = new DealerResult(dealer, players.getPlayers());
+        OutputView.showDealerTable(dealerResult);
+        OutputView.showIndividualTable(dealer, players);
     }
 
     private void processPlayers(CardDeck cardDeck, Players players) {
