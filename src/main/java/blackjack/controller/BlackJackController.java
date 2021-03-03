@@ -35,12 +35,16 @@ public class BlackJackController {
 
     private void drawCard(User user) {
         while (user.isCanDraw()) {
-            String yesOrNo = InputView.getYesOrNo(new PlayerDto(user));
-            if (user.isDrawContinue(yesOrNo)) {
-                user.drawRandomOneCard();
-            }
-            printCardsWhenDraw(user);
+            askDrawContinue(user);
         }
+    }
+
+    private void askDrawContinue(User user) {
+        String yesOrNo = InputView.getYesOrNo(new PlayerDto(user));
+        if (user.isDrawContinue(yesOrNo)) {
+            user.drawRandomOneCard();
+        }
+        printCardsWhenDraw(user);
     }
 
     private void printCardsWhenDraw(User user) {
