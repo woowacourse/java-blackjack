@@ -1,6 +1,7 @@
 package fuelinjection.fuelinjectionheritance;
 
 public abstract class Car {
+
     private final int moveDistance;
 
     public Car(int moveDistance) {

@@ -1,6 +1,7 @@
 package fuelinjection.fuelinjectioninterface;
 
 public class Avante implements Car {
+
     private static final String NAME = "Avante";
     private static final int FUEL_EFFICIENCY = 15;
 

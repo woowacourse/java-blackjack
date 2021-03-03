@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Hand {
-    private final static int BUST = 22;
+
+    private static final int DEFAULT_SCORE = 0;
+    private static final int BUST = 22;
     private final Set<Card> hand;
 
     public Hand(List<Card> cards) {
@@ -16,7 +18,7 @@ public class Hand {
     }
 
     public int getScore() {
-        return calculateScore(new LinkedList<>(hand), 0);
+        return calculateScore(new LinkedList<>(hand), DEFAULT_SCORE);
     }
 
     private int calculateScore(List<Card> leftCards, int currentScore) {
@@ -25,28 +27,17 @@ public class Hand {
         }
 
         List<Integer> scores = leftCards.get(0).getScores();
-        Collections.sort(scores, Collections.reverseOrder());
+        List<Card> cardsTail = leftCards.subList(1, leftCards.size());
 
-        int resultScore = 0;
-        for (int score : scores) {
-            resultScore = calculateScore(leftCards.subList(1, leftCards.size()), currentScore + score);
-            if (resultScore < BUST) {
-                return resultScore;
-            }
-        }
-
-        return resultScore;
+        return findOptimalScore(scores, cardsTail, currentScore);
     }
 
-//    public int calculateMyScore() {
-//        int scoreSum = 0;
-//        for (Card card : hand) {
-//            List<Integer> values = card.getScores();
-//            Collections.sort(values, Collections.reverseOrder());
-//            int score = card.getScores().stream()
-//                .filter(value -> scoreSum + value < BUST)
-//                .findFirst()
-//                .orElse;
-//        }
-//    }
+    private int findOptimalScore(List<Integer> scores, List<Card> cardsTail, int currentScore) {
+        return scores.stream()
+            .sorted(Collections.reverseOrder())
+            .map(score -> calculateScore(cardsTail, currentScore + score))
+            .filter(totalScore -> totalScore < BUST)
+            .findFirst()
+            .orElse(calculateScore(cardsTail, currentScore + Collections.min(scores)));
+    }
 }

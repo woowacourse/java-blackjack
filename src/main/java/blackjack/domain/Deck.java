@@ -1,13 +1,13 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class Deck {
+
     private final Queue<Card> cards;
 
     public Deck(List<Card> cards) {

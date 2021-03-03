@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
+
     private static final String DELIMITER = ",";
     private final Set<Player> players;
 
@@ -16,8 +17,8 @@ public class Players {
 
     public static Players valueOf(String unParsedNames) {
         List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER))
-                .map(Player::new)
-                .collect(Collectors.toList());
+            .map(Player::new)
+            .collect(Collectors.toList());
         validateDuplication(parsedPlayers);
         return new Players(new HashSet<>(parsedPlayers));
     }

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Card {
+
     private static final Set<Card> CARD_POOL;
 
     static {
@@ -26,26 +27,30 @@ public class Card {
         Set<Card> cardPool = new HashSet<>();
         for (Shape shape : Shape.values()) {
             Arrays.stream(CardValue.values())
-                    .forEach(value -> cardPool
-                            .add(new Card(shape, value)));
+                .forEach(value -> cardPool
+                    .add(new Card(shape, value)));
         }
         return cardPool;
     }
 
     public static Card valueOf(Shape shape, CardValue value) {
         return CARD_POOL.stream()
-                .filter(card -> card.shape == shape && card.value == value)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+            .filter(card -> card.shape == shape && card.value == value)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Card card = (Card) o;
         return shape == card.shape &&
-                value == card.value;
+            value == card.value;
     }
 
     @Override

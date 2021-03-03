@@ -21,8 +21,8 @@ public class Cars {
     public String toString() {
         StringBuffer result = new StringBuffer();
         cars.stream()
-                .map(car -> car.getName() + " : " + car.getRequiredFuel() + "리터" + NEWLINE)
-                .forEach(car -> result.append(car));
+            .map(car -> car.getName() + " : " + car.getRequiredFuel() + "리터" + NEWLINE)
+            .forEach(car -> result.append(car));
         return result.toString();
     }
 }

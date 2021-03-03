@@ -1,6 +1,7 @@
 package fuelinjection.fuelinjectionheritance;
 
 public class K5 extends Car {
+
     private static final String NAME = "K5";
     private static final int FUEL_EFFICIENCY = 13;
 

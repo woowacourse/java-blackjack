@@ -1,12 +1,13 @@
 package blackjack.domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 public class PlayerTest {
+
     @DisplayName("플레이어 생성")
     @Test
     void create() {
@@ -18,7 +19,7 @@ public class PlayerTest {
     @Test
     void validate() {
         assertThatThrownBy(() -> new Player(""))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("공백은 이름으로 사용할 수 없습니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("공백은 이름으로 사용할 수 없습니다.");
     }
 }
