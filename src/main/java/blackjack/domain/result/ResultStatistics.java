@@ -14,7 +14,7 @@ public class ResultStatistics {
 
     public ResultStatistics(final Challengers challengers, final Dealer dealer) {
         challengers.getPlayers()
-                .forEach(challenger -> resultStatistics.put(challenger, dealer.getChallengerResult(challenger)));
+                .forEach(challenger -> resultStatistics.put(challenger, challenger.getChallengerResult(dealer)));
     }
 
     public int getChallengerResult(final Result result) {

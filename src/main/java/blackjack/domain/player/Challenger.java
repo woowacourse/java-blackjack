@@ -1,8 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Cards;
-
-import java.util.Objects;
+import blackjack.domain.result.Result;
 
 public class Challenger extends Player {
     private final Name name;
@@ -14,16 +13,13 @@ public class Challenger extends Player {
         this.isBust = false;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Challenger that = (Challenger) o;
-        return isBust == that.isBust && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, isBust);
+    public Result getChallengerResult(final Dealer dealer) {
+        if (this.getScore() > dealer.getScore()) {
+            return Result.WIN;
+        }
+        if (this.getScore() < dealer.getScore()) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 }
