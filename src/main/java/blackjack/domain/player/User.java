@@ -3,10 +3,6 @@ package blackjack.domain.player;
 public class User extends AbstractPlayer {
     private static final String YES = "y";
 
-    public User() {
-        super();
-    }
-
     public User(String name) {
         super(name);
     }

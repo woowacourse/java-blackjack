@@ -8,18 +8,18 @@ import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class UserTest {
+    private static final String TEST_NAME = "pobi";
+    
     @DisplayName("A 1개 판단 테스트")
     @Test
     void aceOne() {
-        User user = new User();
+        User user = new User(TEST_NAME);
         Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
         user.drawCard(card);
         assertThat(user.getValue()).isEqualTo(11);
@@ -32,7 +32,7 @@ public class UserTest {
     @DisplayName("A 2개 판단 테스트")
     @Test
     void aceTwo() {
-        User user = new User();
+        User user = new User(TEST_NAME);
         Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
         user.drawCard(card);
         user.drawCard(card);
@@ -42,7 +42,7 @@ public class UserTest {
     @DisplayName("A 3개 판단 테스트")
     @Test
     void aceThree() {
-        User user = new User();
+        User user = new User(TEST_NAME);
         Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
         user.drawCard(card);
         user.drawCard(card);
@@ -53,7 +53,7 @@ public class UserTest {
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCard1() {
-        User user = new User();
+        User user = new User(TEST_NAME);
         Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
         user.drawCard(twoCard);
         assertThat(user.isCanDraw()).isTrue();
@@ -62,7 +62,7 @@ public class UserTest {
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCard21() {
-        User user = new User();
+        User user = new User(TEST_NAME);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
         user.drawCard(sevenCard);
         user.drawCard(sevenCard);
@@ -73,7 +73,7 @@ public class UserTest {
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
     @Test
     void cannotDrawCard22() {
-        User user = new User();
+        User user = new User(TEST_NAME);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
         user.drawCard(sevenCard);
         user.drawCard(sevenCard);
@@ -104,7 +104,7 @@ public class UserTest {
         Dealer dealer = new Dealer();
         dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
-        User user = new User();
+        User user = new User(TEST_NAME);
         user.drawCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
 
         ResultType resultType = user.getResult(dealer);
@@ -117,7 +117,7 @@ public class UserTest {
         Dealer dealer = new Dealer();
         dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
-        User user = new User();
+        User user = new User(TEST_NAME);
         user.drawCard(new Card(CardShape.CLUB, CardNumber.SIX));
 
         ResultType resultType = user.getResult(dealer);
@@ -130,7 +130,7 @@ public class UserTest {
         Dealer dealer = new Dealer();
         dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
-        User user = new User();
+        User user = new User(TEST_NAME);
         user.drawCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
 
         ResultType resultType = user.getResult(dealer);
@@ -143,7 +143,7 @@ public class UserTest {
         Dealer dealer = new Dealer();
         dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
-        User user = new User();
+        User user = new User(TEST_NAME);
         user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
         user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
         user.drawCard(new Card(CardShape.CLUB, CardNumber.TWO));

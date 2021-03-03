@@ -17,10 +17,6 @@ public abstract class AbstractPlayer implements Player {
     private final Name name;
     private boolean isDrawStop = false;
 
-    public AbstractPlayer() {
-        this("anonymous");
-    }
-
     public AbstractPlayer(String name) {
         cards = new ArrayList<>();
         this.name = new Name(name);
@@ -60,18 +56,6 @@ public abstract class AbstractPlayer implements Player {
         return highValue;
     }
 
-    public ResultType getResult(Dealer dealer) {
-        int userValue = getValue();
-        int dealerValue = dealer.getValue();
-        if (userValue > BLACKJACK || userValue < dealerValue) {
-            return ResultType.LOSS;
-        }
-        if (userValue == dealerValue) {
-            return ResultType.DRAW;
-        }
-        return ResultType.WIN;
-    }
-
     @Override
     public void stopDraw() {
         isDrawStop = true;
@@ -89,6 +73,18 @@ public abstract class AbstractPlayer implements Player {
         for (int i = 0; i < FIRST_DRAW_CARDS_COUNT; i++) {
             drawCard(cards.draw());
         }
+    }
+
+    public ResultType getResult(Dealer dealer) {
+        int userValue = getValue();
+        int dealerValue = dealer.getValue();
+        if (userValue > BLACKJACK || userValue < dealerValue) {
+            return ResultType.LOSS;
+        }
+        if (userValue == dealerValue) {
+            return ResultType.DRAW;
+        }
+        return ResultType.WIN;
     }
 
     @Override
