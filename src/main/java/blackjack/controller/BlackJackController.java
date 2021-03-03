@@ -16,11 +16,10 @@ public class BlackJackController {
     public void run() {
         Players players = new Players(InputView.scanPlayerNames());
         Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createDeck();
 
         List<User> users = new ArrayList<>(players.getPlayers());
         users.add(0, dealer);
-
-        CardDeck cardDeck = CardDeck.createDeck();
 
         initialHit(users, cardDeck);
 
