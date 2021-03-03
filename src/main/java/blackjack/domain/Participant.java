@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Participant {
 
     private static final String INVALID_PARTICIPANT_NAME = "플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.";
@@ -24,6 +26,10 @@ public class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
     public void receiveDefaultCards(Cards receivedCards) {

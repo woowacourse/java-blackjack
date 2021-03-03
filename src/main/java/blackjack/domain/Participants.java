@@ -35,4 +35,20 @@ public class Participants {
             participant.receiveDefaultCards(cardDeck.drawDefaultCards());
         }
     }
+
+    public List<String> getParticipantNames() {
+        return participants.stream()
+                           .map(Participant::getName)
+                           .collect(Collectors.toList());
+    }
+
+//    public List<List<Card>> getParticipantsCards() {
+//        return participants.stream()
+//                           .map(Participant::getCards)
+//                           .collect(Collectors.toList());
+//    }
+
+    public List<Participant> toList() {
+        return participants;
+    }
 }

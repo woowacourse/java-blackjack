@@ -4,6 +4,7 @@ import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participants;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
 
 public class Application {
@@ -16,6 +17,6 @@ public class Application {
 
         dealer.receiveDefaultCards(cardDeck.drawDefaultCards());
         players.receiveDefaultCards(cardDeck);
-
+        OutputView.printDefaultCards(dealer, players);
     }
 }
