@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
+    protected String name;
     protected List<Card> cards;
 
     public User() {

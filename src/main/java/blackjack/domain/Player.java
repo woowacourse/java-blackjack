@@ -5,6 +5,11 @@ import blackjack.domain.card.Card;
 public class Player extends User {
     boolean isStay = false;
 
+    public Player(String name) {
+        super();
+        this.name = name;
+    }
+
     public void stay() {
         this.isStay = true;
     }
