@@ -22,4 +22,11 @@ public class OutputView {
                         .collect(Collectors.joining(", "));
         System.out.printf("%s카드: %s", name, cardStatus + NEWLINE);
     }
+
+    public static void showCardResult(final String name, final List<Card> cards, final int result) {
+        final String cardStatus = cards.stream()
+                .map(Card::getCard)
+                .collect(Collectors.joining(", "));
+        System.out.printf("%s카드: %s - 결과: %d" + NEWLINE, name, cardStatus, result);
+    }
 }

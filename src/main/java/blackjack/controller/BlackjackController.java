@@ -22,8 +22,13 @@ public class BlackjackController {
         gameProgress(players, cardDeck);
 
         while(dealer.checkMoreCardAvailable()) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
             dealer.receiveCard(cardDeck.distribute());
+        }
+
+        OutputView.showCardResult(dealer.getName(), dealer.getMyCards(), dealer.calculate());
+        for (Player player : players) {
+            OutputView.showCardResult(player.getName(), player.getMyCards(), player.calculate());
         }
     }
 
