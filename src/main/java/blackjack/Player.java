@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Player {
+    public static final int BLACKJACK_NUMBER = 21;
+    public static final int ZERO = 0;
+    public static final int DIFFERENCE_OF_ACE_VALUE = 10;
     private final Name name;
     private final List<Card> cards = new ArrayList<>();
 
@@ -20,6 +23,32 @@ public class Player {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public int calculateResult() {
+        int currentCardsValue = calculateCards();
+        int possibleLoopCount = countAce();
+
+        while(canLowerCardsValue(currentCardsValue, possibleLoopCount)) {
+            currentCardsValue = lowerValueOfAce(currentCardsValue);
+            possibleLoopCount--;
+        }
+
+        return currentCardsValue;
+    }
+
+    private boolean canLowerCardsValue(int value, int remainLoop) {
+        return value > BLACKJACK_NUMBER && remainLoop > ZERO;
+    }
+
+    private int lowerValueOfAce(int value) {
+        return value - DIFFERENCE_OF_ACE_VALUE;
+    }
+
+    public int countAce() {
+        return (int) cards.stream()
+                          .filter(Card::isAce)
+                          .count();
     }
 
     public int calculateCards() {
