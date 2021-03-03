@@ -24,5 +24,4 @@ public class CardSymbolTest {
         CardSymbol cardSymbol = CardSymbol.from(symbol);
         assertThat(cardSymbol).isEqualTo(value);
     }
-
 }

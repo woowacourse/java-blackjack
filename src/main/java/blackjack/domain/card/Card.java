@@ -2,12 +2,20 @@ package blackjack.domain.card;
 
 public class Card {
 
-    private CardNumber cardNumber;
-    private CardSymbol cardSymbol;
+    private final CardNumber cardNumber;
+    private final CardSymbol cardSymbol;
 
     public Card(CardNumber number, CardSymbol symbol) {
         this.cardNumber = number;
         this.cardSymbol = symbol;
+    }
+
+    public boolean isAce() {
+        CardNumber aceNumber = CardNumber.from("A");
+        if (cardNumber.equals(aceNumber)) {
+            return true;
+        }
+        return false;
     }
 
     public int getPoint() {
