@@ -22,7 +22,6 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 점수 테스트")
     void getPlayerPoint() {
-        String name = "Sorong";
         Dealer dealer = new Dealer(userDeck);
         int playerScore = 15;
         assertThat(dealer.getPoint()).isEqualTo(playerScore);
@@ -31,7 +30,6 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 드로우 성공 테스트")
     void getAvailableDraw() {
-        String name = "Sorong";
         Dealer dealer = new Dealer(userDeck);
         assertThat(dealer.isAvailableDraw()).isTrue();
     }
@@ -39,7 +37,6 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 드로우 실패 테스트")
     void getUnavailableDraw() {
-        String name = "Sorong";
         Card card3 = new Card(CardNumber.from("2"), CardSymbol.from("다이아몬드"));
         userDeck.add(card3);
         Dealer dealer = new Dealer(userDeck);
