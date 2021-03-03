@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

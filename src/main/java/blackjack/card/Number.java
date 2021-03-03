@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.card;
 
 public enum Number {
     ACE("A", 11),

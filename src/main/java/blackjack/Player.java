@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.card.Card;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +24,8 @@ public class Player {
 
     public int calculateCards() {
         return cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
+                    .mapToInt(Card::getValue)
+                    .sum();
     }
 
     public String getName() {

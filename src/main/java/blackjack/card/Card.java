@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.card;
 
 public class Card {
     private final Number number;

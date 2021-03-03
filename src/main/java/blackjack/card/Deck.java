@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +17,8 @@ public class Deck {
 
     private static List<Card> cardsOf(Shape shape) {
         return Arrays.stream(Number.values())
-              .map(number -> new Card(number, shape))
-              .collect(Collectors.toList());
+                     .map(number -> new Card(number, shape))
+                     .collect(Collectors.toList());
     }
 
     public static Card draw() {

@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.card;
 
 public enum Shape {
     SPADE("스페이드"),
