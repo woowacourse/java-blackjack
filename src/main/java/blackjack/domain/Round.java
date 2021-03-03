@@ -1,6 +1,8 @@
 package blackjack.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,18 +28,23 @@ public class Round {
         players.forEach(player -> player.addFirstCards(makeTwoCards()));
     }
 
-    public Map<String, List<Card>> initializeStatus() {
-        Map<String, List<Card>> status = new LinkedHashMap<>();
-        status.put(dealer.getName(), dealer.getCards());
-        players.forEach(player -> status.put(player.getName(), player.getCards()));
-        return status;
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public Card makeOneCard() {
+        return shuffledCards.remove(0);
+    }
+
+    public boolean addDealerCard() {
+        if (!dealer.isGameOver(21)) {
+            dealer.addCard(makeOneCard());
+            return true;
+        }
+        return false;
     }
 }

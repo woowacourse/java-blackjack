@@ -1,18 +1,16 @@
-package blackjack.view;
+package blackjack.view.dto;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
 public class RoundInitializeStatusDto {
-//    private Map<String, List<Card>> status = new HashMap<>();
+    //    private Map<String, List<Card>> status = new HashMap<>();
     private Dealer dealer;
     private List<Player> players;
 

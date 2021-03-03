@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Dealer {
-    private static final int TURN_OVER_COUNT = 16;
+    public static final int TURN_OVER_COUNT = 16;
     private static final String name = "딜러";
 
     private final List<Card> cards = new ArrayList<>();
@@ -51,5 +51,9 @@ public class Dealer {
         return (int) cards.stream()
                 .filter(Card::containAce)
                 .count();
+    }
+
+    public void addCard(Card makeOneCard) {
+        cards.add(makeOneCard);
     }
 }
