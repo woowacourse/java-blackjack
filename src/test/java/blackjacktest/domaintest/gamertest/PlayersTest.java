@@ -30,4 +30,10 @@ public class PlayersTest {
     void createPlayersFail(String input) {
         assertThatThrownBy(() -> new Players(input)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("참가자 8명 초과 시 에러 발생")
+    void checkPlayersCount() {
+        assertThatThrownBy(() -> new Players("pika, air, a, b, c, d, e, f, g")).isInstanceOf(IllegalArgumentException.class);
+    }
 }
