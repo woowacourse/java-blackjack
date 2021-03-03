@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.rule.ScoreRule;
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.ScoreRule;
 
 import java.util.List;
 
