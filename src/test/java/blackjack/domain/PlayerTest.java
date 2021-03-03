@@ -13,16 +13,15 @@ public class PlayerTest {
         String input = "pobi, jason";
         assertThatThrownBy(() -> {
             for (String name : input.split(",")) {
-                Player.create(name);
+                new Player(name);
             }
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void checkReceiveCard() {
-        Deck deck = new Deck();
         Card card = new Card(CardPattern.CLOVER, CardNumber.TEN);
-        Player player = Player.create("pobi");
+        Player player = new Player("pobi");
         player.receiveCard(card);
         assertEquals(player.calculatePoint(), 10);
     }
