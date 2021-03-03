@@ -27,7 +27,7 @@ public enum Symbol {
     public static Symbol from(String name) {
         Symbol symbol = SYMBOLS.get(name);
         if (Objects.isNull(symbol)) {
-            throw new IllegalArgumentException("없는 문장임!");
+            throw new IllegalArgumentException(String.format("입력된 문양은 없는 카드문양입니다! : %s", name));
         }
         return symbol;
     }

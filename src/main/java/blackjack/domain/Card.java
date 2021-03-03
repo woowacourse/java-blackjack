@@ -2,20 +2,49 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Card {
-    private String name;
-    private List<String> cards = new ArrayList<>();
+    private static final List<Card> CARDS = new ArrayList<>();
+
+    private final Symbol symbol;
+    private final Number number;
 
     static {
-        // 카드 52개 생성
+        for (Symbol symbol : Symbol.values()) {
+            for (Number number : Number.values()) {
+                CARDS.add(new Card(symbol, number));
+            }
+        }
     }
 
-    public Card(String name) {
-        this.name = name;
+    private Card(Symbol symbol, Number number ) {
+        this.symbol = symbol;
+        this.number = number;
     }
 
-    public Card of(String name) {
-        return new Card(name);
+    public static Card of(String symbolName, String numberName) {
+        Symbol symbol = Symbol.from(symbolName);
+        Number number = Number.from(numberName);
+
+        Card findCard = CARDS.stream()
+                .filter(card -> card.symbol == symbol && card.number == number)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("없는 카드임!"));
+        return findCard;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return symbol == card.symbol && number == card.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol, number);
     }
 }
