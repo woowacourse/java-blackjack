@@ -36,6 +36,10 @@ public class Card {
 		return cardSymbol.name() + cardNumber.name();
 	}
 
+	public boolean isAce() {
+		return cardNumber.equals(CardNumber.ACE);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -51,6 +55,10 @@ public class Card {
 
 	public CardNumber getCardNumber() {
 		return cardNumber;
+	}
+
+	public int getCardNumberValue() {
+		return cardNumber.getValue();
 	}
 
 	public CardSymbol getCardSymbol() {

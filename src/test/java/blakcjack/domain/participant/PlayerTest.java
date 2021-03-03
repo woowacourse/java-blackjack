@@ -28,4 +28,18 @@ public class PlayerTest {
 
 		assertThat(player.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
 	}
+
+	@DisplayName("점수 계산 성공")
+	@Test
+	void score() {
+		Player player = new Player(new Name("pobi"));
+
+		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		player.receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
+		player.receiveCard(Card.of(CardSymbol.DIAMOND, CardNumber.ACE));
+		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.FIVE));
+
+		assertThat(player.calculateScore()).isEqualTo(19);
+	}
 }
