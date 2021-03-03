@@ -1,6 +1,6 @@
 package blackjack.domain.carddeck;
 
-public enum CardPattern {
+public enum Pattern {
 
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
@@ -9,7 +9,7 @@ public enum CardPattern {
 
     private final String pattern;
 
-    CardPattern(final String pattern) {
+    Pattern(final String pattern) {
         this.pattern = pattern;
     }
 

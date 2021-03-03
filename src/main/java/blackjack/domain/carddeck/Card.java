@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardPattern pattern;
-    private final CardNumber number;
+    private final Pattern pattern;
+    private final Number number;
 
-    public Card(CardPattern pattern, CardNumber number) {
+    public Card(Pattern pattern, Number number) {
         this.pattern = pattern;
         this.number = number;
     }
 
-    public CardPattern getPattern() {
+    public Pattern getPattern() {
         return pattern;
     }
 
-    public CardNumber getNumber() {
+    public Number getNumber() {
         return number;
     }
 
