@@ -34,6 +34,15 @@ public class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러가 갖고 있는 카드의 합을 확인")
+    void calculateMyCardSum() {
+        Dealer dealer = new Dealer("딜러");
+        dealer.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
+        assertThat(dealer.calculateMyCardSum()).isEqualTo(12);
+    }
+
+    @Test
     @DisplayName("딜러가 버스트인지 확인")
     void isBust() {
         Dealer dealer = new Dealer("딜러");
