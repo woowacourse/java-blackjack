@@ -9,7 +9,7 @@ public class RentCompanyTest {
 
     @Test
     void report() {
-        RentCompany company = RentCompany.create(); // factory method를 사용해 생성
+        RentCompany company = RentCompany.create();
         company.addCar(new Sonata(150));
         company.addCar(new K5(260));
         company.addCar(new Sonata(120));
