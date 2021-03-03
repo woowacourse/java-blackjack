@@ -30,4 +30,8 @@ public enum CardValue {
     public int getValue() {
         return value;
     }
+
+    public static boolean isAce(CardValue cardValue) {
+        return ACE.equals(cardValue);
+    }
 }

@@ -23,4 +23,8 @@ public class Card {
     public int getValue() {
         return value.getValue();
     }
+
+    public CardValue getCardValue() {
+        return value;
+    }
 }
