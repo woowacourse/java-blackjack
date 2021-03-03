@@ -67,18 +67,6 @@ public abstract class AbstractPlayer implements Player {
         }
     }
 
-    public ResultType getResult(Dealer dealer) {
-        int userValue = getValue();
-        int dealerValue = dealer.getValue();
-        if (userValue > BLACKJACK || userValue < dealerValue) {
-            return ResultType.LOSS;
-        }
-        if (userValue == dealerValue) {
-            return ResultType.DRAW;
-        }
-        return ResultType.WIN;
-    }
-
     @Override
     public Name getName() {
         return name;

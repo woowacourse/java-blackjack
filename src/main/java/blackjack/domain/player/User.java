@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.domain.ResultType;
+
 public class User extends AbstractPlayer {
     private static final String YES = "y";
     private static final String NO = "n";
@@ -13,7 +15,7 @@ public class User extends AbstractPlayer {
         return isDrawStop;
     }
 
-    public void stopDraw() {
+    private void stopDraw() {
         isDrawStop = true;
     }
 
@@ -29,6 +31,18 @@ public class User extends AbstractPlayer {
         }
         stopDraw();
         return false;
+    }
+
+    public ResultType getResult(Dealer dealer) {
+        int userValue = getValue();
+        int dealerValue = dealer.getValue();
+        if (userValue > BLACKJACK || userValue < dealerValue) {
+            return ResultType.LOSS;
+        }
+        if (userValue == dealerValue) {
+            return ResultType.DRAW;
+        }
+        return ResultType.WIN;
     }
 
     private void drawInputValidate(String value) {
