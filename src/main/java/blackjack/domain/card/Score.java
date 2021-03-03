@@ -23,6 +23,10 @@ public class Score {
         return value == BLACK_JACK;
     }
 
+    public boolean isBelow(int limitScoreToHit) {
+        return value >= limitScoreToHit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
