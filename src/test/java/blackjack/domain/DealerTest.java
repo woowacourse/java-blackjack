@@ -56,13 +56,14 @@ public class DealerTest {
     public void isDrawableFalse() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Shape.SPACE, Value.TWO),
+                new Card(Shape.CLOVER, Value.KING),
+                new Card(Shape.SPACE, Value.QUEEN)
         )));
 
         assertThat(dealer.isDrawable()).isFalse();
     }
-//
+
 //    @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
 //    @Test
 //    void draw() {
