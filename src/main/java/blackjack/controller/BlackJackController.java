@@ -5,6 +5,7 @@ import blackjack.domain.Players;
 import blackjack.domain.User;
 import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,13 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
 
         List<User> users = new ArrayList<>(players.getPlayers());
-        users.add(dealer);
+        users.add(0, dealer);
 
         CardDeck cardDeck = CardDeck.createDeck();
 
         initialHit(users, cardDeck);
+
+        OutputView.printInitialComment(users);
     }
 
     private void initialHit(List<User> users, CardDeck cardDeck) {

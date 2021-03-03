@@ -12,4 +12,9 @@ public class Card {
     public int getScore() {
         return cardNumber.getScore();
     }
+
+    @Override
+    public String toString() {
+        return this.cardNumber.getScore() + this.suit.getName();
+    }
 }

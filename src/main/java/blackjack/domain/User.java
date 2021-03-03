@@ -27,4 +27,8 @@ public abstract class User {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public String getName() {
+        return this.name;
+    }
 }
