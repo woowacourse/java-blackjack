@@ -6,9 +6,11 @@ import java.util.List;
 
 public class Player {
 
+    private final Name name;
     private final Hand hand;
 
-    public Player() {
+    public Player(Name name) {
+        this.name = name;
         this.hand = new Hand();
     }
 
