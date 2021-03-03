@@ -34,6 +34,18 @@ public class Card {
         return findCard;
     }
 
+    public int getScore() {
+        return number.getScore();
+    }
+
+    public boolean containAce() {
+        return number.isAce();
+    }
+
+    public String getCardStatus() {
+        return number.getName() + symbol.name();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,13 +57,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, number);
-    }
-
-    public int getScore() {
-        return number.getScore();
-    }
-
-    public boolean containAce() {
-        return number.isAce();
     }
 }

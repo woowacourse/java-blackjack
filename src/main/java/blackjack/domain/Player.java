@@ -66,4 +66,8 @@ public class Player {
                 .filter(Card::containAce)
                 .count();
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Dealer {
     private static final int TURN_OVER_COUNT = 16;
+    private static final String name = "딜러";
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -15,6 +16,10 @@ public class Dealer {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public static String getName() {
+        return name;
     }
 
     public boolean isGameOver(int gameOverScore) {
