@@ -1,17 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-class DenominationTest {
-
+class SuitTest {
     @Test
     @DisplayName("of를 통한 enum 객체 테스트")
-    void testDenomination() {
-        Denomination denomination = Denomination.of("2");
-        assertThat(denomination).isEqualTo(Denomination.TWO);
+    void testSuit() {
+        Suit suit = Suit.of("클로버");
+        assertThat(suit).isEqualTo(Suit.CLUB);
     }
 }

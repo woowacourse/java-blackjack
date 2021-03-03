@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.*;
 
@@ -28,6 +28,10 @@ public class Card {
 
     public static LinkedList<Card> getCards(){
         return new LinkedList<>(cards);
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     @Override
