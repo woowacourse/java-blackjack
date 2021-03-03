@@ -3,20 +3,15 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player {
-
-    private static final String POSITIVE = "y";
-    private static final String NEGATIVE = "n";
+public class Player extends BlackJackParticipant{
+    private static final int STARTING_CARD_COUNT = 2;
 
     private final String name;
-    private final Hand hand;
-    private boolean hit;
 
     public Player(String name) {
+        super();
         validateName(name);
         this.name = name;
-        this.hand = new Hand(new ArrayList<>());
-        hit = true;
     }
 
     private void validateName(String name) {
@@ -25,21 +20,18 @@ public class Player {
         }
     }
 
+    @Override
     public void drawCard(Deck deck) {
-        hand.addCard(deck.draw());
-
+        getHand().addCard(deck.draw());
+        if (getHand().isBust()) {
+            cannotDraw();
+        }
     }
 
     public void willContinue(String input) {
-        hit = Response.getHitStatus(input);
-    }
-
-    public boolean isContinue() {
-        return hit;
-    }
-
-    public Hand getHand() {
-        return hand;
+        if (!Response.getHitStatus(input)) {
+            cannotDraw();
+        }
     }
 
     @Override
