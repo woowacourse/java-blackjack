@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
@@ -9,24 +8,13 @@ import blackjack.domain.card.Shape;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class GameResultTest {
 
     @Test
-    @DisplayName("플레이어 이름 중복 검증")
-    void validateDuplication() {
-        assertThatThrownBy(() -> Players.valueOf("a,b,a"))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("중복된 이름은 사용할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("승패 결과")
-    void match() {
+    void name() {
         Player pobi = new Player("pobi");
         Player jason = new Player("jason");
         Player root = new Player("root");
@@ -56,11 +44,11 @@ public class PlayersTest {
         Players players = new Players(new HashSet<>(Arrays.asList(pobi, jason, root)));
         GameResult gameResult = players.match(dealer);
 
-        Map<Player, Result> expected = new HashMap<>();
-        expected.put(pobi, Result.WIN);
-        expected.put(jason, Result.TIE);
-        expected.put(root, Result.LOSE);
+        Map<Result, Integer> expected = new HashMap<>();
+        expected.put(Result.WIN, 1);
+        expected.put(Result.TIE, 1);
+        expected.put(Result.LOSE, 1);
 
-        assertThat(gameResult).isEqualTo(new GameResult(expected));
+        assertThat(gameResult.getStatistics()).isEqualTo(expected);
     }
 }

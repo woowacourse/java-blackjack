@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,7 +13,7 @@ public class Players {
     private static final String DELIMITER = ",";
     private final Set<Player> players;
 
-    private Players(Set<Player> players) {
+    public Players(Set<Player> players) {
         this.players = new HashSet<>(players);
     }
 
@@ -27,5 +29,12 @@ public class Players {
         if (players.size() != new HashSet<>(players).size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
+    }
+
+    public GameResult match(Dealer dealer) {
+        Map<Player, Result> result = new HashMap<>();
+        players.stream().forEach(player -> result.put(player, player.match(dealer)));
+
+        return new GameResult(result);
     }
 }

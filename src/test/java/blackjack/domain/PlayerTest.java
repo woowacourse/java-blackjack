@@ -7,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,5 +55,39 @@ public class PlayerTest {
             root.willContinue("x"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("불가능한 입력 입니다.");
+    }
+
+    @Test
+    @DisplayName("승패 결과")
+    void match() {
+        Player pobi = new Player("pobi");
+        Player jason = new Player("jason");
+        Player root = new Player("root");
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+            Card.valueOf(Shape.SPADE, CardValue.EIGHT),
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+            Card.valueOf(Shape.HEART, CardValue.EIGHT),
+            Card.valueOf(Shape.SPADE, CardValue.TEN),
+            Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
+            Card.valueOf(Shape.CLOVER, CardValue.TEN),
+            Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
+
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
+
+        pobi.drawCard(deck);
+        pobi.drawCard(deck);
+
+        jason.drawCard(deck);
+        jason.drawCard(deck);
+
+        root.drawCard(deck);
+        root.drawCard(deck);
+
+        assertThat(pobi.match(dealer)).isEqualTo(Result.WIN);
+        assertThat(jason.match(dealer)).isEqualTo(Result.TIE);
+        assertThat(root.match(dealer)).isEqualTo(Result.LOSE);
     }
 }

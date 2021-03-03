@@ -13,6 +13,10 @@ public abstract class BlackJackParticipant {
 
     abstract public void drawCard(Deck deck);
 
+    public int getScore() {
+        return hand.getScore();
+    }
+
     public Hand getHand() {
         return hand;
     }

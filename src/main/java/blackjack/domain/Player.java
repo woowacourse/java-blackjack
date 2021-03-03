@@ -34,6 +34,13 @@ public class Player extends BlackJackParticipant{
         }
     }
 
+    public Result match(Dealer dealer) {
+        int myScore = getScore();
+        int dealerScore = dealer.getScore();
+
+        return Result.getResult(myScore - dealerScore);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

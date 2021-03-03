@@ -22,9 +22,9 @@
 - [x] 딜러 생성
     - [x] 16 이하일 경우 한장을 더 뽑는 기능   
     
-- [ ] 출력 기능
-    - [ ] 결과 출력 기능
-    - [ ] 승패 출력 기능 
+- [x] 출력 기능
+    - [x] 결과 출력 기능
+    - [x] 승패 출력 기능 
 
 ## 우아한테크코스 코드리뷰
 * [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
