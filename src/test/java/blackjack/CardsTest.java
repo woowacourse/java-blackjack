@@ -54,4 +54,14 @@ public class CardsTest {
         assertThat(cards.showCards()).isEqualTo("7스페이드, 3다이아몬드");
     }
 
+    @DisplayName("카드들의 점수 총합을 계산한다.")
+    @Test
+    void calculate(){
+        Cards cards = new Cards();
+        cards.addCard(new Card(Denomination.SIX,Suit.CLOVER));
+        cards.addCard(new Card(Denomination.QUEEN,Suit.SPADE));
+        assertThat(cards.getScore()).isEqualTo(16);
+    }
+
+
 }
