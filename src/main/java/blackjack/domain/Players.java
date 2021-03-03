@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +34,7 @@ public class Players {
     }
 
     public GameResult match(Dealer dealer) {
-        Map<Player, Result> result = new HashMap<>();
+        Map<Player, ResultType> result = new HashMap<>();
         players.stream().forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);

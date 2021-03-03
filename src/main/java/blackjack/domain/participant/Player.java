@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import java.util.ArrayList;
+import blackjack.domain.Deck;
+import blackjack.domain.Response;
+import blackjack.domain.ResultType;
 import java.util.Objects;
 
 public class Player extends BlackJackParticipant{
@@ -34,11 +36,11 @@ public class Player extends BlackJackParticipant{
         }
     }
 
-    public Result match(Dealer dealer) {
+    public ResultType match(Dealer dealer) {
         int myScore = getScore();
         int dealerScore = dealer.getScore();
 
-        return Result.getResult(myScore - dealerScore);
+        return ResultType.getResultType(myScore - dealerScore);
     }
 
     @Override

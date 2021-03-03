@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,10 +46,10 @@ public class GameResultTest {
         Players players = new Players(new HashSet<>(Arrays.asList(pobi, jason, root)));
         GameResult gameResult = players.match(dealer);
 
-        Map<Result, Integer> expected = new HashMap<>();
-        expected.put(Result.WIN, 1);
-        expected.put(Result.TIE, 1);
-        expected.put(Result.LOSE, 1);
+        Map<ResultType, Integer> expected = new HashMap<>();
+        expected.put(ResultType.WIN, 1);
+        expected.put(ResultType.TIE, 1);
+        expected.put(ResultType.LOSE, 1);
 
         assertThat(gameResult.getStatistics()).isEqualTo(expected);
     }

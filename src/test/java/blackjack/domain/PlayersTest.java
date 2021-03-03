@@ -6,10 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,10 +57,10 @@ public class PlayersTest {
         Players players = new Players(new HashSet<>(Arrays.asList(pobi, jason, root)));
         GameResult gameResult = players.match(dealer);
 
-        Map<Player, Result> expected = new HashMap<>();
-        expected.put(pobi, Result.WIN);
-        expected.put(jason, Result.TIE);
-        expected.put(root, Result.LOSE);
+        Map<Player, ResultType> expected = new HashMap<>();
+        expected.put(pobi, ResultType.WIN);
+        expected.put(jason, ResultType.TIE);
+        expected.put(root, ResultType.LOSE);
 
         assertThat(gameResult).isEqualTo(new GameResult(expected));
     }

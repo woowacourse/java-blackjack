@@ -6,8 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -86,8 +87,8 @@ public class PlayerTest {
         root.drawCard(deck);
         root.drawCard(deck);
 
-        assertThat(pobi.match(dealer)).isEqualTo(Result.WIN);
-        assertThat(jason.match(dealer)).isEqualTo(Result.TIE);
-        assertThat(root.match(dealer)).isEqualTo(Result.LOSE);
+        assertThat(pobi.match(dealer)).isEqualTo(ResultType.WIN);
+        assertThat(jason.match(dealer)).isEqualTo(ResultType.TIE);
+        assertThat(root.match(dealer)).isEqualTo(ResultType.LOSE);
     }
 }
