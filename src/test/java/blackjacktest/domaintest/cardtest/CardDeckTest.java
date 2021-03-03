@@ -1,9 +1,9 @@
-package blackjacktest.domaintest;
+package blackjacktest.domaintest.cardtest;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Denomination;
-import blackjack.domain.Shape;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

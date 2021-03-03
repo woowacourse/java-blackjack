@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 public class Player extends Person {
 

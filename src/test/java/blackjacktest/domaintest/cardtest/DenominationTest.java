@@ -1,6 +1,6 @@
-package blackjacktest.domaintest;
+package blackjacktest.domaintest.cardtest;
 
-import blackjack.domain.Denomination;
+import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
