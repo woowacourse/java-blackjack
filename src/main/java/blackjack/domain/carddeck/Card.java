@@ -12,6 +12,14 @@ public class Card {
         this.number = number;
     }
 
+    public boolean isAce() {
+        return this.number.equals(Number.ACE);
+    }
+
+    public int getScore(){
+        return number.getNumber();
+    }
+
     public Pattern getPattern() {
         return pattern;
     }

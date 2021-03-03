@@ -16,4 +16,14 @@ public class CardTest {
         assertThat(card).isNotEqualTo(new Card(Pattern.HEART, Number.ACE));
         assertThat(card).isNotEqualTo(new Card(Pattern.CLOVER, Number.KING));
     }
+
+    @Test
+    @DisplayName("자신이 ACE 카드인지 확인한다.")
+    void testIsAceCard() {
+        Card card1 = new Card(Pattern.CLOVER, Number.ACE);
+        Card card2 = new Card(Pattern.CLOVER, Number.TWO);
+
+        assertThat(card1.isAce()).isTrue();
+        assertThat(card2.isAce()).isFalse();
+    }
 }
