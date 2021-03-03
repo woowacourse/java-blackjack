@@ -5,6 +5,7 @@ import java.util.List;
 public class Player implements Participant {
     private static final int FROM = 0;
     private static final int TO = 2;
+    private static final int DRAW_BOUND_SCORE = 21;
 
     private String name;
     private List<Card> cards;
@@ -33,6 +34,7 @@ public class Player implements Participant {
 
     @Override
     public boolean isReceiveCard() {
-        return false;
+        int totalScore = scoreRule.sumTotalScore(cards);
+        return totalScore <= DRAW_BOUND_SCORE;
     }
 }
