@@ -3,7 +3,6 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Card {
     private static final List<Card> CARDS = new ArrayList<>();
@@ -19,7 +18,7 @@ public class Card {
         }
     }
 
-    private Card(Symbol symbol, Number number ) {
+    private Card(Symbol symbol, Number number) {
         this.symbol = symbol;
         this.number = number;
     }
@@ -46,5 +45,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, number);
+    }
+
+    public int getScore() {
+        return number.getScore();
+    }
+
+    public boolean containAce() {
+        return number.isAce();
     }
 }
