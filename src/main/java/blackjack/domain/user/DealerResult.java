@@ -1,18 +1,23 @@
 package blackjack.domain.user;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DealerResult {
 
-    private final Map<String, Integer> dealerResult = new HashMap<>();
+    private final Map<String, Integer> dealerResult = new LinkedHashMap<>();
+    {
+        this.dealerResult.put("승", 0);
+        this.dealerResult.put("무", 0);
+        this.dealerResult.put("패", 0);
+    }
 
     public DealerResult(Dealer dealer, List<Player> players) {
         for (Player player : players) {
             String result = translateToDealer(player.betResult(dealer));
-            int resultCount = dealerResult.getOrDefault(result, 0);
+            int resultCount = dealerResult.get(result);
             dealerResult.put(result, resultCount + 1);
         }
     }
