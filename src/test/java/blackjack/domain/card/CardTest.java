@@ -33,4 +33,11 @@ class CardTest {
         );
     }
 
+    @Test
+    void equals_fail() {
+        Card card = new Card(Suit.SPACE, Rank.ONE);
+        Card card1 = new Card(Suit.SPACE, Rank.TWO);
+
+        assertThat(card).isNotEqualTo(card1);
+    }
 }
