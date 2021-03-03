@@ -17,8 +17,4 @@ public interface Player {
     int getValue();
 
     void draw();
-
-    boolean isDrawStop();
-
-    void stopDraw();
 }

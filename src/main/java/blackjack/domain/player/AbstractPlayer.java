@@ -15,7 +15,6 @@ public abstract class AbstractPlayer implements Player {
 
     private final List<Card> cards;
     private final Name name;
-    private boolean isDrawStop = false;
 
     public AbstractPlayer(String name) {
         cards = new ArrayList<>();
@@ -55,11 +54,6 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void stopDraw() {
-        isDrawStop = true;
-    }
-
-    @Override
     public void draw() {
         Cards cards = Cards.getCards();
         drawCard(cards.draw());
@@ -83,11 +77,6 @@ public abstract class AbstractPlayer implements Player {
             return ResultType.DRAW;
         }
         return ResultType.WIN;
-    }
-
-    @Override
-    public boolean isDrawStop() {
-        return isDrawStop;
     }
 
     @Override
