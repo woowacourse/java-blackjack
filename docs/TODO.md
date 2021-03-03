@@ -5,3 +5,6 @@
 ## 완료한 일
 - Deck --> 52개 만들기 + 52개 저장
 - Cards --> 일급 컬렉션
+
+## 정의
+- ResultBoard: User 가 Dealer 에 대해 승/무/패 했는지 저장하는 Map
