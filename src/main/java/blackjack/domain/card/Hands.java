@@ -25,14 +25,14 @@ public class Hands {
         return point;
     }
 
-    public int sum() {
+    private int sum() {
         return cards.stream()
                 .map(Card::getValue)
                 .reduce(Integer::sum)
                 .get();
     }
 
-    public boolean containsAce() {
+    private boolean containsAce() {
         return cards.stream()
                 .map(Card::getCardValue)
                 .anyMatch(CardValue::isAce);

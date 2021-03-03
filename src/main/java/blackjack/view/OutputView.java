@@ -3,11 +3,11 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
     private static final String NEWLINE = System.getProperty("line.separator");
 
     public static void gameStart(Gamers gamers) {

@@ -26,7 +26,7 @@ public class BlackjackController {
     }
 
     private void hitOrStand(Deck deck, Gamer gamer) {
-        while(InputView.receiveAnswer(gamer.getName())) {
+        while (InputView.receiveAnswer(gamer.getName())) {
             gamer.receiveCard(deck.giveCard());
             OutputView.allCards(gamer);
             System.out.println(gamer.getPoint());

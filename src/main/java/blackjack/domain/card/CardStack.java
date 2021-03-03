@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class CardStack {
+
     private final Stack<Card> cards;
 
     private CardStack(Stack<Card> cards) {

@@ -3,7 +3,6 @@ package blackjack.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class InputView {
@@ -40,7 +39,7 @@ public class InputView {
     }
 
     private static void validateAnswer(String answer) {
-        if (!answer.matches(YES_OR_NO_REGEX)){
+        if (!answer.matches(YES_OR_NO_REGEX)) {
             throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
         }
     }

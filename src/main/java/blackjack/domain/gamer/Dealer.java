@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-
 import java.util.List;
 
 public class Dealer extends Gamer {
@@ -18,7 +17,7 @@ public class Dealer extends Gamer {
     }
 
     public boolean checkBoundary() {
-        return (hands.calculate() < 17);
+        return (hands.calculate() < ADD_CARD_BOUNDARY);
     }
 
     @Override

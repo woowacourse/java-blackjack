@@ -1,10 +1,8 @@
 package blackjack.domain.card;
 
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +35,5 @@ public class Deck {
                 .map(name -> new Player(name, giveFirstHand()))
                 .collect(Collectors.toList());
         return new Gamers(players, new Dealer(giveFirstHand()));
-    }
-
-    public void giveMoreCards(Gamer gamer) {
-        gamer.receiveCard(cards.getSingleCard());
     }
 }

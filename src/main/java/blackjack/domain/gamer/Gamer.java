@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-
 import java.util.List;
 
 public abstract class Gamer {
