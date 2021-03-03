@@ -51,4 +51,16 @@ class HandTest {
         assertThat(hand.getScore()).isEqualTo(19);
         assertThat(hand.getStatus()).isEqualTo(HandStatus.HIT);
     }
+
+    @DisplayName("카드 추가 메소드 테스트 : 추가 후 BUST")
+    @Test
+    public void addCard_Bust() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Denomination.EIGHT, Suit.CLUBS));
+        cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
+        Hand hand = new Hand(cards);
+
+        hand.addCard(new Card(Denomination.QUEEN, Suit.HEARTS));
+        assertThat(hand.getStatus()).isEqualTo(HandStatus.BUST);
+    }
 }

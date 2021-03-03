@@ -79,6 +79,10 @@ public class Hand {
         return status;
     }
 
+    public void convertStatusToStay() {
+        status = HandStatus.STAY;
+    }
+
     public int getScore() {
         return score;
     }

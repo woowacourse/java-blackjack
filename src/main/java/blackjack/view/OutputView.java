@@ -33,7 +33,7 @@ public class OutputView {
         System.out.printf("%s: %s%n", dealer.getName(), dealerCards);
     }
 
-    private static void printPlayerCard(User player) {
+    public static void printPlayerCard(User player) {
         String cardString = player.getCards().stream()
             .map(card -> String.format("%s%s", card.getDenomination().getName(), card.getSuit().getName()))
             .collect(Collectors.joining(NAME_DELIMITER));

@@ -11,10 +11,8 @@ import java.util.stream.Collectors;
 public class Game {
     private final User dealer;
     private final List<User> players;
-    private Deck deck;
 
     public Game(List<String> names) {
-        deck = new Deck();
         dealer = new Dealer();
         players = createPlayer(names);
     }
@@ -25,7 +23,7 @@ public class Game {
             .collect(Collectors.toList());
     }
 
-    public void initialCards() {
+    public void initialCards(Deck deck) {
         dealer.initialHands(deck.pickInitialCards());
         players.forEach(player -> player.initialHands(deck.pickInitialCards()));
     }

@@ -10,6 +10,11 @@ public class Dealer extends User {
     }
 
     @Override
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }
