@@ -24,7 +24,7 @@ public abstract class AbstractPlayer implements PayerInterface {
     }
 
     @Override
-    public int getResult() {
+    public int getValue() {
         int lowValue = getLowValue();
         int highValue = getHighValue(lowValue);
         if (highValue > BLACKJACK) {

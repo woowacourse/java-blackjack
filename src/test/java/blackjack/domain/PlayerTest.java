@@ -12,11 +12,11 @@ public class PlayerTest {
         Player player = new Player();
         Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
         player.drawCard(card);
-        assertThat(player.getResult()).isEqualTo(11);
+        assertThat(player.getValue()).isEqualTo(11);
         card = new Card(CardShape.DIAMOND, CardNumber.KING);
         player.drawCard(card);
         player.drawCard(card);
-        assertThat(player.getResult()).isEqualTo(21);
+        assertThat(player.getValue()).isEqualTo(21);
     }
 
     @DisplayName("A 2개 판단 테스트")
@@ -26,7 +26,7 @@ public class PlayerTest {
         Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
         player.drawCard(card);
         player.drawCard(card);
-        assertThat(player.getResult()).isEqualTo(12);
+        assertThat(player.getValue()).isEqualTo(12);
     }
 
     @DisplayName("A 3개 판단 테스트")
@@ -37,7 +37,7 @@ public class PlayerTest {
         player.drawCard(card);
         player.drawCard(card);
         player.drawCard(card);
-        assertThat(player.getResult()).isEqualTo(13);
+        assertThat(player.getValue()).isEqualTo(13);
     }
 
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
