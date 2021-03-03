@@ -53,4 +53,27 @@ public class OutputView {
         String cards = getCardsInformation(participant.getCards());
         System.out.println(participant.getName() + "카드: " + cards);
     }
+
+    public static void printDealerDrawingMessage() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
+    public static void printFinalCardsAndScore(Dealer dealer, Participants players) {
+        printParticipantCardWithScore(dealer);
+        printParticipantsCardWithScore(players);
+
+    }
+
+    private static void printParticipantCardWithScore(Participant participant) {
+        String cards = getCardsInformation(participant.getCards());
+        System.out.println(cards + " - 결과: " + participant.showScoreTotal());
+    }
+
+
+    private static void printParticipantsCardWithScore(Participants participants) {
+        List<Participant> participantGroup = participants.toList();
+        for (Participant participant : participantGroup) {
+            printParticipantCardWithScore(participant);
+        }
+    }
 }

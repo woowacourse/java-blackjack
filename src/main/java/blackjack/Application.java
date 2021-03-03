@@ -33,5 +33,12 @@ public class Application {
             }
         }
 
+        if (dealer.isAbleToReceiveCard()) {
+            dealer.receiveCard(cardDeck.draw());
+            OutputView.printDealerDrawingMessage();
+        }
+
+        OutputView.printFinalCardsAndScore(dealer, players);
+
     }
 }
