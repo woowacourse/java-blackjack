@@ -17,4 +17,8 @@ public abstract class Player {
     public boolean isBust() {
         return cards.isBust();
     }
+
+    public int getScore() {
+        return this.cards.getScore();
+    }
 }
