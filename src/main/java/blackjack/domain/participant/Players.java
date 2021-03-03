@@ -1,0 +1,41 @@
+package blackjack.domain.participant;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
+public class Players {
+
+    private final List<Player> players;
+
+    public Players(List<String> names) {
+        this.players = convertToPlayers(names);
+        validateDuplicate(names);
+    }
+
+    private List<Player> convertToPlayers(final List<String> names) {
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            players.add(new Player(new Name(name)));
+        }
+        return players;
+    }
+
+    private void validateDuplicate(List<String> names) {
+        if (new HashSet<>(names).size() != names.size()) {
+            throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
+        }
+    }
+
+    public void initTwoCardsByDealer(Dealer dealer){
+        for (Player player : this.players) {
+            player.receiveCard(dealer.giveCard());
+            player.receiveCard(dealer.giveCard());
+        }
+    }
+
+    public List<Player> toList() {
+        return Collections.unmodifiableList(new ArrayList<>(this.players));
+    }
+}
