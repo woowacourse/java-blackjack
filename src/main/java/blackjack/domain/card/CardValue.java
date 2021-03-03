@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,5 +25,10 @@ public enum CardValue {
     CardValue(String name, List<Integer> values) {
         this.name = name;
         this.values = values;
+    }
+
+
+    public List<Integer> getScores() {
+        return new ArrayList<>(values);
     }
 }
