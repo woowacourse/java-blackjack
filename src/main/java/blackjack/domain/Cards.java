@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import fuel.Car;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

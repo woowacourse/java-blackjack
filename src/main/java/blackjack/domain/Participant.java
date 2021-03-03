@@ -1,20 +1,22 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Participant {
-    protected List<Card> cards;
+    protected Cards cards = new Cards(new ArrayList<>());
 
     public Participant() {
     }
 
-    public void distribute(List<Card> cards) {
+    public void distribute(Cards cards) {
         this.cards = cards;
     }
 
     public int calculateTotalValue() {
-        return cards.stream()
+        return cards.cards().stream()
                 .mapToInt(Card::value)
                 .sum();
     }
+
+    public abstract void draw();
 }

@@ -40,4 +40,29 @@ public class UserTest {
 
         assertThat(user.calculateTotalValue()).isEqualTo(19);
     }
+
+    @DisplayName("카드 합계가 21을 넘는지 확인한다. - 넘는 경우")
+    @Test
+    public void isAboveStandardTrue() {
+        User user = new User("amazzi");
+        user.distribute(new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.TWO),
+                new Card(Shape.DIAMOND, Value.JACK),
+                new Card(Shape.CLOVER, Value.QUEEN)
+        )));
+
+        assertThat(user.isAboveStandard()).isTrue();
+    }
+
+    @DisplayName("카드 합계가 21을 넘는지 확인한다. - 안 넘는 경우")
+    @Test
+    public void isAboveStandardFalse() {
+        User user = new User("amazzi");
+        user.distribute(new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.TWO),
+                new Card(Shape.DIAMOND, Value.JACK)
+        )));
+
+        assertThat(user.isAboveStandard()).isFalse();
+    }
 }
