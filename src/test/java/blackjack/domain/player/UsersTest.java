@@ -1,15 +1,11 @@
 package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Name;
-import blackjack.domain.player.User;
-import blackjack.domain.player.Users;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +26,7 @@ public class UsersTest {
         User user1 = new User("pobi");
         user1.drawCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
 
-        User user2 = new User("json");
+        User user2 = new User("jason");
         user2.drawCard(new Card(CardShape.CLUB, CardNumber.SIX));
 
         User user3 = new User("inbi");
@@ -43,6 +39,17 @@ public class UsersTest {
 
         List<User> convertUsers = new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
         users = new Users(convertUsers);
+    }
+
+    @DisplayName("Users 생성자 동일 비교 테스트")
+    @Test
+    void constructorsEqual() {
+        String usersNames = "pobi,jason,inbi,mungto";
+        Users users2 = new Users(usersNames);
+        for (int i = 0; i < 4; i++) {
+            assertThat(users.getUsers().get(i).getName())
+                .isEqualTo(users2.getUsers().get(i).getName());
+        }
     }
 
     @DisplayName("게임 결과 반환 테스트")
