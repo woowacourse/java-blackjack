@@ -4,8 +4,6 @@ import blackjack.card.Card;
 import blackjack.card.Deck;
 import blackjack.card.Number;
 import blackjack.card.Shape;
-import blackjack.participant.Participant;
-import blackjack.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,7 +82,7 @@ public class ParticipantTest {
         participant.addCard(JACK_SPADE);
         participant.addCard(JACK_SPADE);
         participant.addCard(ACE_CLOVER);
-        assertFalse(participant.isDead());
+        assertFalse(participant.isBurst());
     }
 
     @Test
@@ -93,6 +91,6 @@ public class ParticipantTest {
         participant.addCard(JACK_SPADE);
         participant.addCard(JACK_SPADE);
         participant.addCard(JACK_SPADE);
-        assertTrue(participant.isDead());
+        assertTrue(participant.isBurst());
     }
 }
