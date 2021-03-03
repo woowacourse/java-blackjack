@@ -25,7 +25,7 @@ public class Player {
         return Collections.unmodifiableList(cards);
     }
 
-    public void addFirstCard(List<Card> cards) {
+    public void addFirstCards(List<Card> cards) {
         this.cards.addAll(cards);
     }
 

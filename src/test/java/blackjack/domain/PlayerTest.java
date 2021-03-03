@@ -18,7 +18,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         player = new Player("pobi");
-        player.addFirstCard(Arrays.asList(
+        player.addFirstCards(Arrays.asList(
                 Card.of("스페이드", "10"),
                 Card.of("하트", "J")
         ));
@@ -69,7 +69,7 @@ class PlayerTest {
     @Test
     void first_cards_game_over_score() {
         Player player = new Player("pobi");
-        player.addFirstCard(Arrays.asList(
+        player.addFirstCards(Arrays.asList(
                 Card.of("스페이드", "A"),
                 Card.of("하트", "A")
         ));
@@ -82,7 +82,7 @@ class PlayerTest {
     @Test
     void add_card_game_over_score() {
         Player player = new Player("pobi");
-        player.addFirstCard(Arrays.asList(
+        player.addFirstCards(Arrays.asList(
                 Card.of("스페이드", "A"),
                 Card.of("하트", "A")
         ));
