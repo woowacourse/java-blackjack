@@ -16,6 +16,9 @@ public class Player extends User {
 
     @Override
     public boolean isStay() {
-        return isStay;
+        if (this.isStay || getScore() > 21) {
+            return true;
+        }
+        return false;
     }
 }

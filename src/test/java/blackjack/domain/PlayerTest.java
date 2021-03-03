@@ -1,6 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +18,7 @@ class PlayerTest {
     void hitCard() {
         Player player = new Player();
         CardDeck cardDeck = CardDeck.createDeck();
-
         player.hit(cardDeck.getDeck().pop());
-
         assertThat(player.getCards()).hasSize(1);
     }
 
@@ -33,6 +34,22 @@ class PlayerTest {
     void isStayTrue() {
         Player player = new Player();
         player.stay();
+        assertTrue(player.isStay());
+    }
+
+    @DisplayName("isStay:true - 플레이어 카드의 총합이 21을 초과하는 경우 자동 중단")
+    @Test
+    void isStayTrueWhenBust() {
+        Player player = new Player();
+
+        Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
+        Card card2 = new Card(Suit.CLUB, CardNumber.SEVEN);
+        Card card3 = new Card(Suit.CLUB, CardNumber.SIX);
+
+        player.hit(card1);
+        player.hit(card2);
+        player.hit(card3);
+
         assertTrue(player.isStay());
     }
 

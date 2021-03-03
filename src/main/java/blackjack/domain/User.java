@@ -17,6 +17,12 @@ public abstract class User {
 
     public abstract boolean isStay();
 
+    public int getScore() {
+        return this.cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

@@ -10,11 +10,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isStay() {
-        int totalSum = 0;
-        for (Card card : cards) {
-            totalSum += card.getScore();
-        }
-
-        return totalSum > 16;
+        return getScore() > 16;
     }
 }
