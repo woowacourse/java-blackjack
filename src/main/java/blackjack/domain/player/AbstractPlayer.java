@@ -83,7 +83,6 @@ public abstract class AbstractPlayer implements Player {
         drawCard(cards.draw());
     }
 
-
     @Override
     public void drawTwoCards() {
         Cards cards = Cards.getCards();

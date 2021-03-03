@@ -7,7 +7,6 @@ import blackjack.domain.player.PlayerDto;
 import blackjack.domain.player.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,12 +14,16 @@ public class BlackJackController {
     public void play() {
         Users users = new Users(InputView.getUsersName());
         Player dealer = new Dealer();
-        List<Player> players = setPlayers(users, dealer);
-        players.forEach(Player::drawTwoCards);
-        List<PlayerDto> playerDtos = getPlayerDtos(players);
-        OutputView.printGiveTwoCardsMessage(playerDtos);
+        drawTwoCards(users, dealer);
+        List<PlayerDto> usersDtos = getUserDtos(users);
+        OutputView.printGiveTwoCardsMessage(usersDtos, new PlayerDto(dealer));
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
+    }
+
+    private void drawTwoCards(Users users, Player dealer) {
+        dealer.drawTwoCards();
+        users.getUsers().forEach(Player::drawTwoCards);
     }
 
     private void dealerDraw(Player dealer) {
@@ -30,15 +33,8 @@ public class BlackJackController {
         }
     }
 
-    private List<Player> setPlayers(Users users, Player dealer) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users.getUsers());
-        return players;
-    }
-
-    private List<PlayerDto> getPlayerDtos(List<Player> players) {
-        return players.stream()
+    private List<PlayerDto> getUserDtos(Users users) {
+        return users.getUsers().stream()
             .map(PlayerDto::new)
             .collect(Collectors.toList());
     }

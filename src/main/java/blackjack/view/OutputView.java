@@ -6,26 +6,19 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class OutputView {
-    public static void printUserCards(PlayerDto userDto) {
-        System.out.print(userDto.getName() + "카드: ");
+    public static void printUserCards(PlayerDto playerDto) {
+        System.out.print(playerDto.getName() + "카드: ");
         StringJoiner stringJoiner = new StringJoiner(", ");
-        userDto.getCards().forEach(card -> stringJoiner.add(card.toString()));
+        playerDto.getCards().forEach(card -> stringJoiner.add(card.toString()));
         System.out.println(stringJoiner.toString());
     }
 
-    public static void printGiveTwoCardsMessage(List<PlayerDto> playerDtos) {
-        PlayerDto dealer = null;
-        for (int i = 0; i < playerDtos.size(); i++) {
-            if ("딜러".equals(playerDtos.get(i).getName())) {
-                dealer = playerDtos.remove(i);
-                break;
-            }
-        }
+    public static void printGiveTwoCardsMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
         StringJoiner stringJoiner = new StringJoiner(", ");
         playerDtos.forEach(playerDto -> stringJoiner.add(playerDto.getName()));
         System.out.println("딜러와 " + stringJoiner.toString() + "에게 2장을 나누었습니다.");
-        printUserCards(dealer);
-        playerDtos.forEach(playerDto -> printUserCards(playerDto));
+        printUserCards(dealerDto);
+        playerDtos.forEach(OutputView::printUserCards);
         System.out.println();
     }
 
