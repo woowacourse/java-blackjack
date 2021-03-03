@@ -16,20 +16,24 @@ public enum CardNumber {
     KING("K", 10);
 
     private final String symbol;
-    private final int number;
-    private final int extraNumber;
+    private final int value;
+    private final int extraValue;
 
-    CardNumber(final String symbol, final int number, final int extraNumber) {
+    CardNumber(final String symbol, final int value, final int extraValue) {
         this.symbol = symbol;
-        this.number = number;
-        this.extraNumber = extraNumber;
+        this.value = value;
+        this.extraValue = extraValue;
     }
 
-    CardNumber(final String symbol, final int number) {
-        this(symbol, number, number);
+    CardNumber(final String symbol, final int value) {
+        this(symbol, value, value);
     }
 
-    public int getNumber() {
-        return this.number;
+    public int getValue() {
+        return this.value;
+    }
+
+    public int getExtraValue() {
+        return this.extraValue;
     }
 }

@@ -1,6 +1,7 @@
 package blackjack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Player {
@@ -56,10 +57,15 @@ public class Player {
     }
 
     private List<Integer> calculateAceSum(int aceCount) {
-        final List<Integer> aceSums = new ArrayList<>();
-        aceSums.add(10 + aceCount);
-        aceSums.add(aceCount);
-        return aceSums;
+        int oneNormalRestExtra = CardNumber.ACE.getValue();
+        int allExtra = CardNumber.ACE.getExtraValue();
+
+        for (int i = 1; i < aceCount; i++) {
+            oneNormalRestExtra += CardNumber.ACE.getExtraValue();
+            allExtra += CardNumber.ACE.getExtraValue();
+        }
+
+        return new ArrayList<>(Arrays.asList(oneNormalRestExtra, allExtra));
     }
 
     private int findMaxPossibleValue(final List<Integer> possibleSum) {

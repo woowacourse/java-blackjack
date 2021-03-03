@@ -14,6 +14,6 @@ public class Card {
     }
 
     public int getCardNumber() {
-        return this.cardNumber.getNumber();
+        return this.cardNumber.getValue();
     }
 }
