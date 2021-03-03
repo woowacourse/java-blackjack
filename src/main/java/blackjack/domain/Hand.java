@@ -40,4 +40,8 @@ public class Hand {
             .findFirst()
             .orElse(calculateScore(cardsTail, currentScore + Collections.min(scores)));
     }
+
+    public boolean isBust() {
+        return getScore() >= BUST;
+    }
 }

@@ -8,6 +8,7 @@ import blackjack.domain.card.Shape;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,5 +44,21 @@ public class HandTest {
     @MethodSource("provideHand")
     void getScore(Hand input, int expected) {
         assertThat(input.getScore()).isEqualTo(expected);
+    }
+
+    @DisplayName("버스트 확인 기능")
+    @Test
+    void isBust() {
+        Hand bustHand = new Hand(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+            Card.valueOf(Shape.SPADE, CardValue.KING),
+            Card.valueOf(Shape.SPADE, CardValue.TWO)));
+        assertThat(bustHand.isBust()).isTrue();
+
+        Hand validHand = new Hand(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+            Card.valueOf(Shape.SPADE, CardValue.KING),
+            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+        assertThat(validHand.isBust()).isFalse();
     }
 }
