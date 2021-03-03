@@ -39,4 +39,20 @@ public class PlayerTest {
         assertThat(root.getHand()).isEqualToComparingFieldByField(
             new Hand(Arrays.asList(Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
     }
+
+    @Test
+    @DisplayName("유저가 카드를 계속 더 받을건지 입력")
+    void willContinue() {
+        Player root = new Player("root");
+        root.willContinue("y");
+        assertThat(root.isContinue()).isTrue();
+
+        root.willContinue("n");
+        assertThat(root.isContinue()).isFalse();
+
+        assertThatThrownBy(() ->
+            root.willContinue("x"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("불가능한 입력 입니다.");
+    }
 }

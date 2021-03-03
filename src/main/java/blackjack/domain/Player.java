@@ -5,13 +5,18 @@ import java.util.Objects;
 
 public class Player {
 
+    private static final String POSITIVE = "y";
+    private static final String NEGATIVE = "n";
+
     private final String name;
     private final Hand hand;
+    private boolean hit;
 
     public Player(String name) {
         validateName(name);
         this.name = name;
         this.hand = new Hand(new ArrayList<>());
+        hit = true;
     }
 
     private void validateName(String name) {
@@ -22,6 +27,15 @@ public class Player {
 
     public void drawCard(Deck deck) {
         hand.addCard(deck.draw());
+
+    }
+
+    public void willContinue(String input) {
+        hit = Response.getHitStatus(input);
+    }
+
+    public boolean isContinue() {
+        return hit;
     }
 
     public Hand getHand() {
