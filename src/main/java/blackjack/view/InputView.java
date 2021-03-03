@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
+    private static final String NEWLINE = System.getProperty("line.separator");
     private static final Scanner scanner = new Scanner(System.in);
     private static final String REQUEST_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉽표 기준으로 분리)";
 
@@ -14,5 +15,10 @@ public class InputView {
         return Arrays.stream(scanner.nextLine().trim().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+    }
+
+    public static String askMoreCard(final String name) {
+        System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEWLINE, name);
+        return scanner.nextLine();
     }
 }

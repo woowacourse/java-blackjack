@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.Card;
 import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
@@ -20,7 +19,17 @@ public class BlackjackController {
         distribute(players, dealer, cardDeck);
         showDistributeStatus(players);
         showDistributedCard(players, dealer);
-
+        for (Player player : players) {
+            while(true) {
+                String choice = InputView.askMoreCard(player.getName());
+                if ("n".equals(choice)) {
+                    OutputView.showPlayerCard(player.getName(), player.getMyCards());
+                    break;
+                }
+                player.receiveCard(cardDeck.distribute());
+                OutputView.showPlayerCard(player.getName(), player.getMyCards());
+            }
+        }
     }
 
     private List<Player> playerSetUp() {
