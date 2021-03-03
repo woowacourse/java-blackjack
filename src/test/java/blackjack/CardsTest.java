@@ -22,8 +22,8 @@ public class CardsTest {
     @DisplayName("카드가 들어 있는 리스트를 생성한다.")
     void createCards() {
         List<Card> deck = new ArrayList<>(Arrays.asList(
-            new Card("스페이드",7),
-            new Card("다이아몬드",3)
+            new Card(Denomination.THREE,Suit.SPADE),
+            new Card(Denomination.SEVEN,Suit.DIAMOND)
         ));
         Cards cards = new Cards(deck);
         assertThat(cards).isEqualTo(new Cards(deck));
@@ -32,11 +32,11 @@ public class CardsTest {
     @Test
     @DisplayName("리스트에 든 카드를 보여준다.")
     void showOne(){
-        List<Card> deck = new ArrayList<>(Collections.singletonList(new Card("스페이드", 3)));
+        List<Card> deck = new ArrayList<>(Collections.singletonList(new Card(Denomination.THREE,Suit.SPADE)));
         Cards cards = new Cards(deck);
         assertThat(cards.showCards()).isEqualTo("3스페이드");
 
-        List<Card> deck2 = new ArrayList<>(Collections.singletonList(new Card("다이아몬드", 7)));
+        List<Card> deck2 = new ArrayList<>(Collections.singletonList(new Card(Denomination.SEVEN,Suit.DIAMOND)));
         Cards cards2 = new Cards(deck2);
         assertThat(cards2.showCards()).isEqualTo("7다이아몬드");
 
@@ -46,8 +46,8 @@ public class CardsTest {
     @DisplayName("리스트에 든 카드들을 보여준다.")
     void show(){
         List<Card> deck = new ArrayList<>(Arrays.asList(
-            new Card("스페이드",7),
-            new Card("다이아몬드",3)
+            new Card(Denomination.SEVEN,Suit.SPADE),
+            new Card(Denomination.THREE,Suit.DIAMOND)
         ));
         Cards cards = new Cards(deck);
 

@@ -1,27 +1,31 @@
 package blackjack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Card {
 
-    private final String symbol;
-    private final int number;
+    private final Denomination denomination;
+    private final Suit suit;
 
-    public Card(String symbol, int number) {
-        this.symbol = symbol;
-        this.number = number;
+    public Card(Denomination denomination, Suit suit) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
     public boolean isAce(){
-        return number == 1;
+        return denomination.isAce();
     }
 
     public String getName() {
-        return number + symbol;
+        return denomination.getDenomination() + suit;
     }
 
     public int getScore() {
-        return number;
+        return denomination.getScore();
     }
 
 
@@ -34,12 +38,33 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return number == card.number &&
-            Objects.equals(symbol, card.symbol);
+        return denomination == card.denomination &&
+            Objects.equals(suit, card.suit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, number);
+        return Objects.hash(suit, denomination);
+    }
+
+    private static class CardCache {
+        static final List<Card> CARD_CACHE = new ArrayList<>();
+
+        static {
+            CARD_CACHE.addAll(generateCards());
+        }
+
+        static List<Card> generateCards(){
+            return Stream.of(Denomination.values())
+                .flatMap(CardCache::generateCardsBySymbol)
+                .collect(Collectors.toList());
+        }
+
+        static Stream<Card> generateCardsBySymbol(Denomination denomination) {
+            return Stream.of(Suit.values())
+                .map(suit -> new Card(denomination,suit));
+        }
+
+
     }
 }

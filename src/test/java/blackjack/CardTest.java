@@ -8,19 +8,19 @@ public class CardTest {
 
     @Test
     public void create(){
-        Card card = new Card("스페이드",10);
-        assertThat(card).isEqualTo(new Card("스페이드",10));
+        Card card = new Card(Denomination.JACK,Suit.CLOVER);
+        assertThat(card).isEqualTo(new Card(Denomination.JACK,Suit.CLOVER));
     }
 
     @Test
     public void getName(){
-        Card card = new Card("다이아몬드",3);
+        Card card = new Card(Denomination.THREE,Suit.DIAMOND);
         assertThat(card.getName()).isEqualTo("3다이아몬드");
     }
 
     @Test
     public void getScore(){
-        Card card = new Card("다이아몬드",3);
+        Card card = new Card(Denomination.THREE,Suit.SPADE);
         assertThat(card.getScore()).isEqualTo(3);
     }
 
