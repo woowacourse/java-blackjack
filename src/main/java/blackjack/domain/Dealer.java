@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer implements Participant {
+    private static final int FROM = 0;
+    private static final int TO = 1;
 
     private final String name;
     private final ArrayList<Card> cards;
@@ -22,6 +24,6 @@ public class Dealer implements Participant {
 
     @Override
     public List<Card> showCards() {
-        return cards;
+        return cards.subList(FROM, TO);
     }
 }

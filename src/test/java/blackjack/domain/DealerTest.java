@@ -5,6 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 
 class DealerTest {
 
@@ -14,6 +17,21 @@ class DealerTest {
         Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 0);
         Card card = new Card(CardType.DIAMOND, CardValue.TEN);
         dealer.receiveCard(card);
-        Assertions.assertThat(dealer.showCards().contains(card)).isTrue();
+        assertThat(dealer.showCards().contains(card)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 한장의 카드만 보여준다.")
+    void test_dealer_show_card() {
+        //given
+        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 0);
+        dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.TEN));
+        dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.ACE));
+
+        //when
+        List<Card> cards = dealer.showCards();
+
+        //then
+        assertThat(cards).hasSize(1);
     }
 }
