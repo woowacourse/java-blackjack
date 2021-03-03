@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Value;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.OptionalInt;
@@ -10,14 +11,19 @@ import java.util.stream.IntStream;
 
 public class Hand {
     private static final int BLACK_JACK = 21;
+    private static final int FIRST_INDEX = 0;
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public static Hand createEmptyHand(){
+        return new Hand(Collections.emptyList());
+    }
+
+    public void add(Card card){
+        cards.add(card);
     }
 
     public int calculateScore() {
@@ -53,5 +59,13 @@ public class Hand {
                 .map(Card::getValue)
                 .mapToInt(Value::getScore)
                 .sum();
+    }
+
+    public Card getFirstCard(){
+        return cards.get(FIRST_INDEX);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
