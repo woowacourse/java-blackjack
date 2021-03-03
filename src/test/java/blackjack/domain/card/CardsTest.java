@@ -27,6 +27,7 @@ public class CardsTest {
     @DisplayName("카드를 두장 넣고 한장 추가하면, 사이즈가 3이 나온다.")
     void add() {
         cards.add(Card.of());
+
         assertThat(cards.getList().size()).isEqualTo(3);
     }
 
@@ -42,6 +43,7 @@ public class CardsTest {
     void bust() {
         cards.add(new Card(Suit.다이아몬드, Face.JACK));
         cards.add(new Card(Suit.다이아몬드, Face.KING));
+
         assertThat(cards.isBust()).isTrue();
     }
 }

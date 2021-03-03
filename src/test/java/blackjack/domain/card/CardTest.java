@@ -12,6 +12,7 @@ public class CardTest {
     @DisplayName("카드가 만들어졌으면, true를 리턴한다.")
     void createTest() {
         Card card = Card.of();
+
         assertThat(card).isInstanceOf(Card.class);
     }
 
