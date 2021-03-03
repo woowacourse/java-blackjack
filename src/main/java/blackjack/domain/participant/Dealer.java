@@ -5,6 +5,11 @@ import blackjack.domain.Deck;
 public class Dealer extends BlackJackParticipant{
 
     private static final int DEALER_LIMIT = 16;
+    private static final String DEALER_NAME = "딜러";
+
+    public Dealer() {
+        super(DEALER_NAME);
+    }
 
     @Override
     public void drawCard(Deck deck) {

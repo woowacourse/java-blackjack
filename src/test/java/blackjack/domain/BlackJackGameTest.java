@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.controller.BlackJackController;
 import blackjack.domain.card.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,5 +29,10 @@ public class BlackJackGameTest {
         blackJackGame.getPlayers().stream()
             .forEach(player -> assertThat(player.getHand().unwrap().size()).isEqualTo(2));
         assertThat(blackJackGame.getDealer().getHand().unwrap().size()).isEqualTo(2);
+    }
+
+    @Test
+    void name() {
+        BlackJackController.play();
     }
 }

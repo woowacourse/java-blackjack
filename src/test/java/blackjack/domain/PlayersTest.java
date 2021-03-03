@@ -54,7 +54,7 @@ public class PlayersTest {
         root.drawCard(deck);
         root.drawCard(deck);
 
-        Players players = new Players(new HashSet<>(Arrays.asList(pobi, jason, root)));
+        Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);
 
         Map<Player, ResultType> expected = new HashMap<>();
