@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,14 +18,13 @@ public class CardsTest {
 
     @DisplayName("card 뽑기 테스트")
     @Test
-    void drawTest() {
-        Cards cards = Cards.getCards();
-        Set<Card> cardsNotDuplicate = new HashSet<>();
-        for (int i = 0; i < 52; i++) {
-            cardsNotDuplicate.add(cards.draw());
-        }
-        assertThat(cardsNotDuplicate.size()).isEqualTo(52);
-        assertThatThrownBy(cards::draw)
-            .isInstanceOf(ArrayIndexOutOfBoundsException.class);
+    void drawCard() {
+        List<Card> cards = new ArrayList<>();
+        Arrays.stream(CardShape.values())
+            .forEach(shape -> Arrays.stream(CardNumber.values())
+                .forEach(number -> cards.add(new Card(shape, number))));
+
+        Card card = Cards.getCards().draw();
+        assertThat(cards).contains(card);
     }
 }
