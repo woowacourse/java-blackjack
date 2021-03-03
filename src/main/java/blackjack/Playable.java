@@ -12,4 +12,8 @@ public interface Playable {
     int sumCards();
 
     int sumCardsForResult();
+
+    boolean isAvailableToTake();
+
+    int result(int i);
 }

@@ -51,4 +51,14 @@ public class Player implements Playable {
         }
         return sum;
     }
+
+    @Override
+    public boolean isAvailableToTake() {
+        return sumCards() <= 21;
+    }
+
+    @Override
+    public int result(int i) {
+        return 0;
+    }
 }

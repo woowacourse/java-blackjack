@@ -75,5 +75,4 @@ public class PlayerTest {
 
         assertThat(score).isEqualTo(14);
     }
-
 }
