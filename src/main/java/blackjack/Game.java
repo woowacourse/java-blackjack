@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.card.Deck;
 import blackjack.participant.Dealer;
+import blackjack.participant.GameResult;
 import blackjack.participant.Participant;
 import blackjack.participant.Player;
 
@@ -49,17 +50,12 @@ public class Game {
         }
     }
 
-    public List<Integer> getDealerResult() {
-        int winCount = 0;
-        int drawCount = 0;
-        int loseCount = 0;
+    public GameResult getDealerResult() {
+        GameResult totalPlayerResult = new GameResult();
         for (Player player : players) {
-            winCount += player.getLoseCount();
-            drawCount += player.getDrawCount();
-            loseCount += player.getWinCount();
+            totalPlayerResult.plus(player.getGameResult());
         }
-
-        return Arrays.asList(winCount, drawCount, loseCount);
+        return totalPlayerResult.reverse();
     }
 
     public List<Player> getPlayers() {

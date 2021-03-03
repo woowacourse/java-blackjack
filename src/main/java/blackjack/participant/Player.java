@@ -7,6 +7,7 @@ public class Player extends Participant{
     private int winCount;
     private int drawCount;
     private int loseCount;
+    private GameResult gameResult = new GameResult();
 
     public Player(String inputName) {
         this(new Name(inputName));
@@ -22,11 +23,11 @@ public class Player extends Participant{
 
     public void fight(Dealer dealer) {
         if (isBurst()) {
-            loseCount++;
+            gameResult.lose();
             return;
         }
         if (isBlackJack()) {
-            winCount++;
+            gameResult.win();
             return;
         }
         compareValue(dealer);
@@ -34,14 +35,14 @@ public class Player extends Participant{
 
     private void compareValue(Dealer dealer) {
         if (this.calculateResult() > dealer.calculateResult()) {
-            winCount++;
+            gameResult.win();
             return;
         }
         if (this.calculateResult() < dealer.calculateResult()) {
-            loseCount++;
+            gameResult.lose();
             return;
         }
-        drawCount++;
+        gameResult.draw();
     }
 
     @Override
@@ -50,14 +51,18 @@ public class Player extends Participant{
     }
 
     public int getWinCount() {
-        return winCount;
+        return gameResult.getWinCount();
     }
 
     public int getDrawCount() {
-        return drawCount;
+        return gameResult.getDrawCount();
     }
 
     public int getLoseCount() {
-        return loseCount;
+        return gameResult.getLoseCount();
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
     }
 }
