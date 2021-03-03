@@ -5,21 +5,22 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-  private final List<Card> deck;
 
-  public Deck() {
-    this.deck = new ArrayList<>();
-  }
+    private final List<Card> deck;
 
-  public boolean contains(Card card) {
-    return deck.contains(card);
-  }
+    public Deck() {
+        this.deck = new ArrayList<>();
+    }
 
-  public void add(Card card) {
-    deck.add(card);
-  }
+    public boolean contains(Card card) {
+        return deck.contains(card);
+    }
 
-  public List<Card> getCards() {
-    return Collections.unmodifiableList(deck);
-  }
+    public void add(Card card) {
+        deck.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(deck);
+    }
 }

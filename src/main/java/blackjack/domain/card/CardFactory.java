@@ -5,25 +5,25 @@ import java.util.List;
 
 public class CardFactory {
 
-  private static final List<Card> normalCards = initNormalCards();
+    private static final List<Card> normalCards = initNormalCards();
 
-  public static List<Card> getNormalCards() {
-    return normalCards;
-  }
-
-  private static List<Card> initNormalCards() {
-    List<Card> cards = new ArrayList<>();
-
-    for (Symbol symbol : Symbol.values()) {
-      createCards(cards, symbol);
+    public static List<Card> getNormalCards() {
+        return normalCards;
     }
 
-    return cards;
-  }
+    private static List<Card> initNormalCards() {
+        List<Card> cards = new ArrayList<>();
 
-  private static void createCards(List<Card> cards, Symbol symbol) {
-    for (CardNumber cardNumber : CardNumber.values()) {
-      cards.add(new Card(symbol, cardNumber));
+        for (Symbol symbol : Symbol.values()) {
+            createCards(cards, symbol);
+        }
+
+        return cards;
     }
-  }
+
+    private static void createCards(List<Card> cards, Symbol symbol) {
+        for (CardNumber cardNumber : CardNumber.values()) {
+            cards.add(new Card(symbol, cardNumber));
+        }
+    }
 }

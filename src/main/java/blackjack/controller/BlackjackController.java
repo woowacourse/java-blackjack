@@ -17,73 +17,73 @@ import java.util.List;
 
 public class BlackjackController {
 
-  private final Cards cards;
+    private final Cards cards;
 
-  public BlackjackController(Cards cards) {
-    this.cards = cards;
-  }
-
-  public void run() {
-    Game game = gameInitialize();
-
-    drawCardToPlayers(game);
-
-    printCurrentDeckAndScore(game.getGamersAsList(), game.getDealer());
-
-    OutputView.printResult(game.getDealerResult(), game.getGamerResult());
-  }
-
-  private Game gameInitialize() {
-    Dealer dealer = new Dealer();
-    Gamers gamers = new Gamers(InputView.getGamerNamesFromUser());
-    Game game = new Game(cards, dealer, gamers);
-
-    List<PlayerDto> playerDtos = DtoAssembler.createPlayerDtos(game.getGamersAsList());
-    PlayerDto dealerDto = DtoAssembler.createPlayerDto(dealer);
-
-    OutputView.printDrawResult(playerDtos);
-    OutputView.printDealerAndPlayersDeckState(dealerDto, playerDtos);
-
-    return game;
-  }
-
-  private void drawCardToPlayers(Game game) {
-    drawCardToGamers(game);
-    drawCardToDealer(game);
-  }
-
-  private void drawCardToGamers(Game game) {
-    List<String> names = game.getGamerNames();
-    for (String gamerName : names) {
-      drawCardToGamer(game, gamerName);
+    public BlackjackController(Cards cards) {
+        this.cards = cards;
     }
-  }
 
-  private void drawCardToGamer(Game game, String gamerName) {
-    while (InputView.getYesOrNo(gamerName) && game.drawCardToGamer(gamerName)) {
-      OutputView.printPlayersDeckState(
-          DtoAssembler.createPlayerDto(
-              game.findGamerByName(gamerName)
-          )
-      );
+    public void run() {
+        Game game = gameInitialize();
+
+        drawCardToPlayers(game);
+
+        printCurrentDeckAndScore(game.getGamersAsList(), game.getDealer());
+
+        OutputView.printResult(game.getDealerResult(), game.getGamerResult());
     }
-  }
 
-  private void drawCardToDealer(Game game) {
-    if (game.drawCardToDealer()) {
-      OutputView.dealerDrawsCard();
+    private Game gameInitialize() {
+        Dealer dealer = new Dealer();
+        Gamers gamers = new Gamers(InputView.getGamerNamesFromUser());
+        Game game = new Game(cards, dealer, gamers);
+
+        List<PlayerDto> playerDtos = DtoAssembler.createPlayerDtos(game.getGamersAsList());
+        PlayerDto dealerDto = DtoAssembler.createPlayerDto(dealer);
+
+        OutputView.printDrawResult(playerDtos);
+        OutputView.printDealerAndPlayersDeckState(dealerDto, playerDtos);
+
+        return game;
     }
-  }
 
-  private void printCurrentDeckAndScore(List<Player> gamers, Player dealer) {
-    List<Player> allPlayers = new ArrayList<>(Collections.singletonList(dealer));
-    allPlayers.addAll(gamers);
+    private void drawCardToPlayers(Game game) {
+        drawCardToGamers(game);
+        drawCardToDealer(game);
+    }
 
-    OutputView.printCurrentDeckAndScore(
-        allPlayers.stream()
-            .map(DtoAssembler::createPlayerDto)
-            .collect(toList())
-    );
-  }
+    private void drawCardToGamers(Game game) {
+        List<String> names = game.getGamerNames();
+        for (String gamerName : names) {
+            drawCardToGamer(game, gamerName);
+        }
+    }
+
+    private void drawCardToGamer(Game game, String gamerName) {
+        while (InputView.getYesOrNo(gamerName) && game.drawCardToGamer(gamerName)) {
+            OutputView.printPlayersDeckState(
+                DtoAssembler.createPlayerDto(
+                    game.findGamerByName(gamerName)
+                )
+            );
+        }
+    }
+
+    private void drawCardToDealer(Game game) {
+        if (game.drawCardToDealer()) {
+            OutputView.dealerDrawsCard();
+        }
+    }
+
+    private void printCurrentDeckAndScore(List<Player> gamers, Player dealer) {
+        List<Player> allPlayers = new ArrayList<>(Collections.singletonList(dealer));
+        allPlayers.addAll(gamers);
+
+        OutputView.printCurrentDeckAndScore(
+            allPlayers.stream()
+                .map(DtoAssembler::createPlayerDto)
+                .collect(toList())
+        );
+    }
 
 }

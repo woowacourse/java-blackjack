@@ -9,45 +9,45 @@ import java.util.List;
 
 public abstract class Player {
 
-  private final Deck deck;
-  private final String name;
+    private final Deck deck;
+    private final String name;
 
-  private final ScoreCalculator scoreCalculator;
+    private final ScoreCalculator scoreCalculator;
 
-  public Player(String name, ScoreCalculator scoreCalculator) {
-    this.deck = new Deck();
-    this.name = name;
-    this.scoreCalculator = scoreCalculator;
-  }
-
-  public void addCardToDeck(Card card) {
-    if (deck.contains(card)) {
-      throw new CardDuplicateException();
+    public Player(String name, ScoreCalculator scoreCalculator) {
+        this.deck = new Deck();
+        this.name = name;
+        this.scoreCalculator = scoreCalculator;
     }
 
-    deck.add(card);
-  }
+    public void addCardToDeck(Card card) {
+        if (deck.contains(card)) {
+            throw new CardDuplicateException();
+        }
 
-  public List<Card> getDeckAsList() {
-    return deck.getCards();
-  }
+        deck.add(card);
+    }
 
-  public int getScore() {
-    return scoreCalculator.apply(deck);
-  }
+    public List<Card> getDeckAsList() {
+        return deck.getCards();
+    }
 
-  public Status getStatus() {
-    return Status.evaluateScore(getScore());
-  }
+    public int getScore() {
+        return scoreCalculator.apply(deck);
+    }
 
-  public String getName() {
-    return name;
-  }
+    public Status getStatus() {
+        return Status.evaluateScore(getScore());
+    }
 
-  public boolean isSameName(String name) {
-    return getName().equals(name);
-  }
+    public String getName() {
+        return name;
+    }
 
-  public abstract boolean isDrawable();
+    public boolean isSameName(String name) {
+        return getName().equals(name);
+    }
+
+    public abstract boolean isDrawable();
 
 }
