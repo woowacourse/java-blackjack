@@ -3,6 +3,9 @@ package blackjack.domain;
 import java.util.List;
 
 public class Player implements Participant {
+    private static final int FROM = 0;
+    private static final int TO = 2;
+
     private String name;
     private List<Card> cards;
     private ScoreRule scoreRule;
@@ -19,7 +22,17 @@ public class Player implements Participant {
     }
 
     @Override
+    public List<Card> showInitCards() {
+        return cards.subList(FROM, TO);
+    }
+
+    @Override
     public List<Card> showCards() {
         return cards;
+    }
+
+    @Override
+    public boolean isReceiveCard() {
+        return false;
     }
 }

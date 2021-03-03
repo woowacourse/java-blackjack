@@ -34,4 +34,16 @@ class DealerTest {
         //then
         assertThat(cards).hasSize(1);
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 한장을 더 뽑을 수 있는지 확인한다")
+    void test_dealer_is_receive_card() {
+        //given
+        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 16);
+        dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.TEN));
+        dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.ACE));
+        //when
+        assertThat(dealer.isReceiveCard()).isTrue();
+        //then
+    }
 }
