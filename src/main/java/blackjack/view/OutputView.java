@@ -10,10 +10,11 @@ import java.util.StringJoiner;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
+    private static final String DELIMITER = ", ";
 
     private static void printUserCards(PlayerDto playerDto) {
         System.out.print(playerDto.getName() + "카드: ");
-        StringJoiner stringJoiner = new StringJoiner(", ");
+        StringJoiner stringJoiner = new StringJoiner(DELIMITER);
         playerDto.getCards().forEach(card -> stringJoiner.add(card.toString()));
         System.out.print(stringJoiner.toString());
     }
@@ -24,7 +25,7 @@ public class OutputView {
     }
 
     public static void printGiveTwoCardsMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
-        StringJoiner stringJoiner = new StringJoiner(", ");
+        StringJoiner stringJoiner = new StringJoiner(DELIMITER);
         playerDtos.forEach(playerDto -> stringJoiner.add(playerDto.getName()));
         System.out.println("딜러와 " + stringJoiner.toString() + "에게 2장을 나누었습니다.");
         printUserInitialCards(dealerDto);
@@ -38,7 +39,7 @@ public class OutputView {
     }
 
     public static void printFinalCardsMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
-        StringJoiner stringJoiner = new StringJoiner(", ");
+        StringJoiner stringJoiner = new StringJoiner(DELIMITER);
         playerDtos.forEach(playerDto -> stringJoiner.add(playerDto.getName()));
         printUserFinalCards(dealerDto);
         playerDtos.forEach(OutputView::printUserFinalCards);
