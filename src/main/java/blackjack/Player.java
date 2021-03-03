@@ -20,6 +20,12 @@ public class Player {
         cards.add(card);
     }
 
+    public int calculateCards() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
     public String getName() {
         return name.toString();
     }
