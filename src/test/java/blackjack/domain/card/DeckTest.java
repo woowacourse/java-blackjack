@@ -18,7 +18,7 @@ public class DeckTest {
     @Test
     void getCardTest() {
         Deck deck = new Deck();
-        assertThat(deck.getCard(0)).isEqualTo(new Card(Type.SPACE, Denomination.ACE));
+        assertThat(deck.getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
         assertThat(deck.getCard(51)).isEqualTo(new Card(Type.CLUB, Denomination.KING));
     }
 }
