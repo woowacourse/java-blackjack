@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractPlayer implements PayerInterface {
+public abstract class AbstractPlayer implements Player {
     protected static final int ACE_DIFF = 10;
     protected static final int BLACKJACK = 21;
 
@@ -51,5 +51,21 @@ public abstract class AbstractPlayer implements PayerInterface {
             highValue += ACE_DIFF;
         }
         return highValue;
+    }
+
+    public ResultType getResult(Dealer dealer) {
+        int userValue = getValue();
+        int dealerValue = dealer.getValue();
+        if (userValue > BLACKJACK || userValue < dealerValue) {
+            return ResultType.LOSS;
+        }
+        if (userValue == dealerValue) {
+            return ResultType.DRAW;
+        }
+        return ResultType.WIN;
+    }
+
+    public Name getName() {
+        return name;
     }
 }
