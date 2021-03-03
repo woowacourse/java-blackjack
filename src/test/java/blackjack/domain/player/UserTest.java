@@ -15,44 +15,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class UserTest {
     private static final String TEST_NAME = "pobi";
-    
-    @DisplayName("A 1개 판단 테스트")
-    @Test
-    void aceOne() {
-        User user = new User(TEST_NAME);
-        Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
-        user.drawCard(card);
-        assertThat(user.getValue()).isEqualTo(11);
-        card = new Card(CardShape.DIAMOND, CardNumber.KING);
-        user.drawCard(card);
-        user.drawCard(card);
-        assertThat(user.getValue()).isEqualTo(21);
-    }
-
-    @DisplayName("A 2개 판단 테스트")
-    @Test
-    void aceTwo() {
-        User user = new User(TEST_NAME);
-        Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
-        user.drawCard(card);
-        user.drawCard(card);
-        assertThat(user.getValue()).isEqualTo(12);
-    }
-
-    @DisplayName("A 3개 판단 테스트")
-    @Test
-    void aceThree() {
-        User user = new User(TEST_NAME);
-        Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
-        user.drawCard(card);
-        user.drawCard(card);
-        user.drawCard(card);
-        assertThat(user.getValue()).isEqualTo(13);
-    }
 
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
-    void canDrawCard1() {
+    void canDrawCardWhen1() {
         User user = new User(TEST_NAME);
         Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
         user.drawCard(twoCard);
@@ -61,7 +27,7 @@ public class UserTest {
 
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
-    void canDrawCard21() {
+    void canDrawCardWhen21() {
         User user = new User(TEST_NAME);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
         user.drawCard(sevenCard);
@@ -72,7 +38,7 @@ public class UserTest {
 
     @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
     @Test
-    void cannotDrawCard22() {
+    void cannotDrawCardWhen22() {
         User user = new User(TEST_NAME);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
         user.drawCard(sevenCard);
@@ -95,6 +61,24 @@ public class UserTest {
     @ValueSource(strings = {"", "  "})
     void invalidNames(String nameInput) {
         assertThatThrownBy(() -> new User(nameInput))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("카드 계속해서 뽑기 여부 입력 테스트")
+    @Test
+    void isDrawContinue() {
+        User user = new User(TEST_NAME);
+
+        assertThat(user.isDrawContinue("y")).isTrue();
+        assertThat(user.isDrawStop()).isFalse();
+
+        assertThat(user.isDrawContinue("n")).isFalse();
+        assertThat(user.isDrawStop()).isTrue();
+
+        assertThat(user.isDrawContinue("y")).isTrue();
+        assertThat(user.isDrawStop()).isTrue();
+
+        assertThatThrownBy(() -> user.isDrawContinue("a"))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
