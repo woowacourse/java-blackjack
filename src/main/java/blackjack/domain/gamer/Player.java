@@ -1,10 +1,13 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Cards;
+
 public class Player extends Person {
 
     public Player(String name) {
         validateNameLength(name);
         super.name = name;
+        super.cards = new Cards();
     }
 
     private void validateNameLength(String name) {

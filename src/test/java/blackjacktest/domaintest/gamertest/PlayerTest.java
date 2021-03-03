@@ -1,6 +1,7 @@
 package blackjacktest.domaintest.gamertest;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.card.Shape;
@@ -42,8 +43,8 @@ public class PlayerTest {
     @DisplayName("플레이어 카드 추가 성공")
     void receiveCard() {
         player.receiveCard(new Card(Shape.SPADE, Denomination.FOUR));
-        List<Card> cards = player.getCards();
-        assertThat(cards.get(0)).isEqualTo(new Card(Shape.SPADE, Denomination.FOUR));
+        Cards cards = player.getCards();
+        assertThat(cards.peekCard()).isEqualTo(new Card(Shape.SPADE, Denomination.FOUR));
     }
 
     @Test
@@ -53,8 +54,8 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.CLOVER, Denomination.THREE));
         player.receiveCard(new Card(Shape.HEART, Denomination.ACE));
 
-        List<Card> cards = player.getCards();
-        assertTrue(cards.containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
+        Cards cards = player.getCards();
+        assertTrue(cards.getCards().containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
                 new Card(Shape.CLOVER, Denomination.THREE),
                 new Card(Shape.HEART, Denomination.ACE))));
     }

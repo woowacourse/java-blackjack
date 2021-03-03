@@ -25,6 +25,19 @@ public class Cards {
         return new Cards(newCards);
     }
 
+    public Card peekCard() {
+        return cards.get(0);
+    }
+
+    public Cards removeCard() {
+        if(cards.size() == 0){
+            throw new IndexOutOfBoundsException("남은 카드가 없습니다.");
+        }
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.remove(0);
+        return new Cards(newCards);
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

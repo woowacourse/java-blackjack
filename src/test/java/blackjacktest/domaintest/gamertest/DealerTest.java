@@ -1,5 +1,6 @@
 package blackjacktest.domaintest.gamertest;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -32,8 +33,8 @@ public class DealerTest {
     @DisplayName("딜러 카드 추가 성공")
     void receiveCard() {
         dealer.receiveCard(new Card(Shape.CLOVER, Denomination.EIGHT));
-        List<Card> cards = dealer.getCards();
-        assertThat(cards.get(0)).isEqualTo(new Card(Shape.CLOVER, Denomination.EIGHT));
+        Cards cards = dealer.getCards();
+        assertThat(cards.peekCard()).isEqualTo(new Card(Shape.CLOVER, Denomination.EIGHT));
     }
 
     @Test
@@ -43,8 +44,8 @@ public class DealerTest {
         dealer.receiveCard(new Card(Shape.CLOVER, Denomination.THREE));
         dealer.receiveCard(new Card(Shape.HEART, Denomination.ACE));
 
-        List<Card> cards = dealer.getCards();
-        assertTrue(cards.containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
+        Cards cards = dealer.getCards();
+        assertTrue(cards.getCards().containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
                 new Card(Shape.CLOVER, Denomination.THREE),
                 new Card(Shape.HEART, Denomination.ACE))));
     }
