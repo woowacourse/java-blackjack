@@ -16,7 +16,7 @@ public enum Response {
 
     public static boolean getHitStatus(String input) {
         return Arrays.stream(Response.values())
-            .filter(response -> response.input == input.toLowerCase())
+            .filter(response -> response.input.equals(input.toLowerCase()))
             .map(response -> response.hit)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("불가능한 입력 입니다."));

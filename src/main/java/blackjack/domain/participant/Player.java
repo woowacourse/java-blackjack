@@ -3,9 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.Deck;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
-import java.util.Objects;
 
-public class Player extends BlackJackParticipant{
+public class Player extends BlackJackParticipant {
 
     public Player(String name) {
         super(name);
@@ -19,13 +18,18 @@ public class Player extends BlackJackParticipant{
         }
     }
 
-    public void willContinue(String input) {
+    public void willContinue(String input, Deck deck) {
         if (!Response.getHitStatus(input)) {
             cannotDraw();
+            return;
         }
+        drawCard(deck);
     }
 
     public ResultType match(Dealer dealer) {
+        if (getHand().isBust()) {
+            return ResultType.LOSE;
+        }
         int myScore = getScore();
         int dealerScore = dealer.getScore();
 

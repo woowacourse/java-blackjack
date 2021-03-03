@@ -22,4 +22,18 @@ public enum ResultType {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public ResultType opposite() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return TIE;
+    }
 }

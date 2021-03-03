@@ -45,6 +45,14 @@ public class Card {
         return new ArrayList<>(CARD_POOL);
     }
 
+    public List<Integer> getScores() {
+        return value.getScores();
+    }
+
+    public String getCardName() {
+        return this.value.getValue() + this.shape.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -61,9 +69,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(shape, value);
-    }
-
-    public List<Integer> getScores() {
-        return value.getScores();
     }
 }

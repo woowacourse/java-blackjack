@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
+
     private BlackJackGame blackJackGame;
 
     @BeforeEach
@@ -19,7 +20,7 @@ public class BlackJackGameTest {
     @DisplayName("초기 덱 생성 검증")
     @Test
     void checkInitialDeck() {
-        assertThat(blackJackGame.getDeck().size()).isEqualTo(52);
+        assertThat(blackJackGame.getDeck().getCards().size()).isEqualTo(52);
     }
 
     @DisplayName("초기 카드 분배 검증")

@@ -27,6 +27,9 @@ public enum CardValue {
         this.values = values;
     }
 
+    public String getValue() {
+        return this.name;
+    }
 
     public List<Integer> getScores() {
         return new ArrayList<>(values);

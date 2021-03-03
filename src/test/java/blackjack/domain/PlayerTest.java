@@ -46,14 +46,18 @@ public class PlayerTest {
     @DisplayName("유저가 카드를 계속 더 받을건지 입력")
     void willContinue() {
         Player root = new Player("root");
-        root.willContinue("y");
+        Deck deck = new Deck(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+
+        root.willContinue("y", deck);
         assertThat(root.isContinue()).isTrue();
 
-        root.willContinue("n");
+        root.willContinue("n", deck);
         assertThat(root.isContinue()).isFalse();
 
         assertThatThrownBy(() ->
-            root.willContinue("x"))
+            root.willContinue("x", deck))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("불가능한 입력 입니다.");
     }

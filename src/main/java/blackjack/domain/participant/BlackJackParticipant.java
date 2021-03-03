@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class BlackJackParticipant {
+
     private final Hand hand;
-    private boolean hit;
     private final String name;
+    private boolean hit;
 
     public BlackJackParticipant(String name) {
         validateName(name);
@@ -41,7 +42,9 @@ public abstract class BlackJackParticipant {
         return name;
     }
 
-    protected void cannotDraw() { this.hit = false;}
+    protected void cannotDraw() {
+        this.hit = false;
+    }
 
     @Override
     public boolean equals(Object o) {

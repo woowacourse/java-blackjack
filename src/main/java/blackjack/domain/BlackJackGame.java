@@ -1,9 +1,12 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.BlackJackParticipant;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackJackGame {
@@ -18,6 +21,7 @@ public class BlackJackGame {
     public BlackJackGame(String playersInput, List<Card> deck) {
         this.unpreparedPlayers = Players.valueOf(playersInput);
         this.preparedPlayers = new Players(new ArrayList<>());
+        Collections.shuffle(deck);
         this.deck = new Deck(deck);
         this.dealer = new Dealer();
     }
@@ -39,15 +43,27 @@ public class BlackJackGame {
         return unpreparedPlayers.isEmpty();
     }
 
-    public List<Card> getDeck() {
-        return this.deck.getCards();
+    public Deck getDeck() {
+        return this.deck;
     }
 
     public List<Player> getPlayers() {
-        return this.unpreparedPlayers.unwrap();
+        List<Player> result = unpreparedPlayers.unwrap();
+        result.addAll(preparedPlayers.unwrap());
+        return result;
     }
 
     public Dealer getDealer() {
         return this.dealer;
+    }
+
+    public List<BlackJackParticipant> getParticipants() {
+        List<BlackJackParticipant> participants = new ArrayList(Arrays.asList(dealer));
+        participants.addAll(getPlayers());
+        return participants;
+    }
+
+    public GameResult getGameResult() {
+        return preparedPlayers.match(dealer);
     }
 }
