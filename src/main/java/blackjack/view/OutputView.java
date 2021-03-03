@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Gamers;
 
 import java.util.List;
@@ -18,23 +17,23 @@ public class OutputView {
         final String name = String.join(", ", names);
         System.out.printf("딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, name);
 
-        printCardInfo(gamers);
+        printHandsInfo(gamers);
     }
 
-    private static void printCardInfo(Gamers gamers) {
+    public static void printHandsInfo(Gamers gamers) {
+        printHandsOf(gamers.getDealer());
         gamers.getPlayers()
-                .forEach(OutputView::printPlayerCards);
+                .forEach(OutputView::printHandsOf);
     }
 
-    public static void printPlayerCards(Player player) {
-        final String playerName = player.getName();
-        final String cardInfo = player.getHands().toList().stream()
+    private static void printHandsOf(Gamer gamer) {
+        System.out.println(gamer.getName() + " : " + printEachCard(gamer.showInitialHands()));
+    }
+
+    private static String printEachCard(List<Card> cards) {
+        return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
-        System.out.println(playerName + " : " + cardInfo);
     }
 
-    public static void printDealerCard() {
-
-    }
 }
