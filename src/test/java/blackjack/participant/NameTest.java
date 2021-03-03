@@ -1,5 +1,6 @@
-package blackjack;
+package blackjack.participant;
 
+import blackjack.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

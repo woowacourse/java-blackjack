@@ -1,9 +1,11 @@
-package blackjack;
+package blackjack.participant;
 
 import blackjack.card.Card;
 import blackjack.card.Deck;
 import blackjack.card.Number;
 import blackjack.card.Shape;
+import blackjack.participant.Participant;
+import blackjack.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

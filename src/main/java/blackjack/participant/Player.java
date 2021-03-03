@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.participant;
 
 public class Player extends Participant{
     private final Name name;

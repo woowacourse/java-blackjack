@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.participant;
 
 
 import utils.StringUtils;
