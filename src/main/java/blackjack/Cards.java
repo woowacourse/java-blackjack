@@ -16,8 +16,18 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
     public boolean isEmpty() {
         return cards.isEmpty();
+    }
+
+    public String showCards() {
+        return cards.stream()
+            .map(Card::getName)
+            .collect(Collectors.joining(", "));
     }
 
     @Override
@@ -37,9 +47,7 @@ public class Cards {
         return Objects.hash(cards);
     }
 
-    public String showCards() {
-        return cards.stream()
-            .map(Card::getName)
-            .collect(Collectors.joining(", "));
+    public int getScore() {
+        return cards.stream().mapToInt(Card::getScore).sum();
     }
 }
