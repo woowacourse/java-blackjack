@@ -20,4 +20,8 @@ public abstract class User {
     public int getPoint() {
         return userDeck.score();
     }
+
+    public boolean isBurstCondition() {
+        return this.getPoint() == UserDeck.BURST_CONDITION;
+    }
 }
