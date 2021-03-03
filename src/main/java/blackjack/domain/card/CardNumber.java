@@ -12,7 +12,7 @@ public enum CardNumber {
     NINE("9", 9),
     TEN("10", 10),
     JACK("J", 10),
-    QUEEN("K", 10),
+    QUEEN("Q", 10),
     KING("K", 10);
 
     private final String number;
