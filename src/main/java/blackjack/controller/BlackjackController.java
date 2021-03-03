@@ -19,21 +19,11 @@ public class BlackjackController {
         distribute(players, dealer, cardDeck);
         showDistributeStatus(players);
         showDistributedCard(players, dealer);
-        for (Player player : players) {
-            while(true) {
-                String choice = InputView.askMoreCard(player.getName());
-                if ("n".equals(choice)) {
-                    OutputView.showPlayerCard(player.getName(), player.getMyCards());
-                    break;
-                }
-                player.receiveCard(cardDeck.distribute());
-                OutputView.showPlayerCard(player.getName(), player.getMyCards());
+        gameProgress(players, cardDeck);
 
-                if (player.isBust()) {
-                    System.out.println("카드의 합이 21을 넘어, 게임에서 패배하였습니다.");
-                    break;
-                }
-            }
+        while(dealer.checkMoreCardAvailable()) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            dealer.receiveCard(cardDeck.distribute());
         }
     }
 
@@ -66,6 +56,25 @@ public class BlackjackController {
         OutputView.showDealerCard(dealer.getName(), dealer.getMyCards().get(0));
         for (final Player player : players) {
             OutputView.showPlayerCard(player.getName(), player.getMyCards());
+        }
+    }
+
+    private void gameProgress(final List<Player> players, final CardDeck cardDeck) {
+        for (Player player : players) {
+            while(true) {
+                String choice = InputView.askMoreCard(player.getName());
+                if ("n".equals(choice)) {
+                    OutputView.showPlayerCard(player.getName(), player.getMyCards());
+                    break;
+                }
+                player.receiveCard(cardDeck.distribute());
+                OutputView.showPlayerCard(player.getName(), player.getMyCards());
+
+                if (player.isBust()) {
+                    System.out.println("카드의 합이 21을 넘어, 게임에서 패배하였습니다.");
+                    break;
+                }
+            }
         }
     }
 }
