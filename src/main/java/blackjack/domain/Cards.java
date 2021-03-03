@@ -1,6 +1,9 @@
 package blackjack.domain;
 
+import fuel.Car;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -8,5 +11,9 @@ public class Cards {
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public List<Card> cards(){
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -9,9 +9,8 @@ public class CardsTest {
     @DisplayName("Cards 객체를 생성한다.")
     @Test
     public void createCards() {
-        Deck deck = new Deck(CardFactory.make());
         GameStatus gameStatus = new GameStatus(true);
-        Cards cards = new Cards(deck.pop(gameStatus));
+        Cards cards = Deck.pop(gameStatus);
 
         assertThat(cards).isInstanceOf(Cards.class);
     }
