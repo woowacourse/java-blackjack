@@ -19,4 +19,12 @@ public class Player {
     public Cards cards() {
         return cards;
     }
+
+    public boolean isBlackjack(){
+        return cards.size() == 2 && cards.getScore() == 21;
+    }
+
+    public int getScore() {
+        return cards.getScore();
+    }
 }

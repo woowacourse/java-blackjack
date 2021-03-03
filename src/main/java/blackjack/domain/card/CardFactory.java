@@ -26,4 +26,5 @@ public class CardFactory {
         }
         return cards;
     }
+
 }
