@@ -2,6 +2,7 @@ package blackjack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,11 @@ public class Deck {
         return Arrays.stream(Number.values())
               .map(number -> new Card(number, shape))
               .collect(Collectors.toList());
+    }
+
+    public static Card draw() {
+        Collections.shuffle(cards);
+        return cards.get(0);
     }
 
     public static List<Card> getCards() {
