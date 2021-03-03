@@ -8,6 +8,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return calculateTotalValue() <= STANDARD;
+        return cards.calculateTotalValue() <= STANDARD;
     }
 }

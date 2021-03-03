@@ -3,6 +3,8 @@ package blackjack.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
@@ -12,6 +14,16 @@ public class CardsTest {
         Cards cards = Deck.popTwo();
 
         assertThat(cards).isInstanceOf(Cards.class);
+    }
+
+    @DisplayName("카드 합계를 구한다.")
+    @Test
+    public void calculateTotalCards() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        ));
+        assertThat(cards.calculateTotalValue()).isEqualTo(18);
     }
 
     @DisplayName("카드들을 하나의 객체로 합친다.")

@@ -15,6 +15,12 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
+    public int calculateTotalValue() {
+        return cards.stream()
+                .mapToInt(Card::value)
+                .sum();
+    }
+
     public void combine(Cards otherCards) {
         this.cards.addAll(otherCards.cards());
     }

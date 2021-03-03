@@ -28,17 +28,6 @@ public class DealerTest {
         assertThat(cards.cards().size()).isEqualTo(2);
     }
 
-    @DisplayName("카드 합계를 구한다.")
-    @Test
-    public void calculateTotalCards() {
-        Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-        assertThat(dealer.calculateTotalValue()).isEqualTo(18);
-    }
-
     @DisplayName("카드 합계가 16 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
     public void isDrawableTrue() {

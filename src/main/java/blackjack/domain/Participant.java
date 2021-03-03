@@ -12,12 +12,6 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    public int calculateTotalValue() {
-        return cards.cards().stream()
-                .mapToInt(Card::value)
-                .sum();
-    }
-
     public abstract boolean isDrawable();
 
     public void draw(){

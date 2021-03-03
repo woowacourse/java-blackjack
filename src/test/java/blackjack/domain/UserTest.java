@@ -29,18 +29,6 @@ public class UserTest {
         assertThat(cards.cards().size()).isEqualTo(2);
     }
 
-    @DisplayName("카드 합계를 구한다.")
-    @Test
-    public void calculateTotalCards() {
-        User user = new User("amazzi");
-        user.distribute(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.NINE),
-                new Card(Shape.DIAMOND, Value.JACK)
-        )));
-
-        assertThat(user.calculateTotalValue()).isEqualTo(19);
-    }
-
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
     public void isDrawableTrue() {
