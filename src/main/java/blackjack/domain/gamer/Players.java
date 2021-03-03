@@ -13,18 +13,8 @@ public class Players {
 
     public Players(String input) {
         List<Player> players = splitInput(input);
-        validateNullValue(players);
         validatePlayerCount(players);
         this.players = new ArrayList<>(players);
-    }
-
-    private void validateNullValue(List<Player> list) {
-        list.stream()
-                .filter(player -> player.isEqualName(""))
-                .findAny()
-                .ifPresent(name -> {
-                    throw new IllegalArgumentException("유효하지 않은 플레이어 이름입니다.");
-                });
     }
 
     private void validatePlayerCount(List<Player> player) {
