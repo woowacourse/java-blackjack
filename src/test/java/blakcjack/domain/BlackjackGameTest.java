@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static blakcjack.domain.BlackjackGame.DUPLICATE_NAME_ERROR;
+import static org.assertj.core.api.Assertions.*;
 
 class BlackjackGameTest {
 	private List<String> names;
@@ -36,6 +36,14 @@ class BlackjackGameTest {
 	void create() {
 		assertThatCode(() -> new BlackjackGame(deck, names))
 				.doesNotThrowAnyException();
+	}
+
+	@DisplayName("중복 이름 검증")
+	@Test
+	void validateDuplicateNames() {
+		assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi","pobi")))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessage(DUPLICATE_NAME_ERROR);
 	}
 
 	@DisplayName("카드 한 장 나눠주기 성공")
