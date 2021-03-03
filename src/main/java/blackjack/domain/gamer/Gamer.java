@@ -4,8 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
 public abstract class Gamer {
-    private final Hands hands; // 초기 카드 두장
+
     private String name;
+    private final Hands hands;
 
     public Gamer(String name, Hands hands) {
         this.name = name;
@@ -16,4 +17,11 @@ public abstract class Gamer {
         hands.add(card);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Hands getHands() {
+        return hands;
+    }
 }
