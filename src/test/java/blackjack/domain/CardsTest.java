@@ -13,4 +13,22 @@ public class CardsTest {
 
         assertThat(cards).isInstanceOf(Cards.class);
     }
+
+    @DisplayName("카드를 두장 뽑는다 - 시작 단계")
+    @Test
+    public void peekTwoCardsStart(){
+        Cards cards = new Cards(CardFactory.make());
+
+        assertThat(cards.pop(true).size()).isEqualTo(2);
+        assertThat(cards.size()).isEqualTo(50);
+    }
+
+    @DisplayName("카드를 두장 뽑는다 - 진행 단계")
+    @Test
+    public void peekTwoCardsOngoing(){
+        Cards cards = new Cards(CardFactory.make());
+
+        assertThat(cards.pop(false).size()).isEqualTo(1);
+        assertThat(cards.size()).isEqualTo(51);
+    }
 }
