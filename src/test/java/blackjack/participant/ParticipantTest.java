@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParticipantTest {
     private static final Card TWO_DIAMOND = new Card(Number.TWO, Shape.DIAMOND);
@@ -74,5 +76,23 @@ public class ParticipantTest {
         }
 
         assertThat(participant.calculateResult()).isEqualTo(expectedResult);
+    }
+
+    @Test
+    @DisplayName("현재 카드 값이 21을 넘지 않을 때")
+    void notExceedBlackjackNumber() {
+        participant.addCard(JACK_SPADE);
+        participant.addCard(JACK_SPADE);
+        participant.addCard(ACE_CLOVER);
+        assertFalse(participant.isDead());
+    }
+
+    @Test
+    @DisplayName("현재 카드 값이 21을 넘을 때")
+    void exceedBlackjackNumber() {
+        participant.addCard(JACK_SPADE);
+        participant.addCard(JACK_SPADE);
+        participant.addCard(JACK_SPADE);
+        assertTrue(participant.isDead());
     }
 }

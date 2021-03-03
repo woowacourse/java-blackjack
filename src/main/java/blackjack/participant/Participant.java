@@ -21,7 +21,7 @@ public abstract class Participant {
         int currentCardsValue = calculateCards();
         int possibleLoopCount = countAce();
 
-        while(canLowerCardsValue(currentCardsValue, possibleLoopCount)) {
+        while (canLowerCardsValue(currentCardsValue, possibleLoopCount)) {
             currentCardsValue = lowerValueOfAce(currentCardsValue);
             possibleLoopCount--;
         }
@@ -49,9 +49,15 @@ public abstract class Participant {
                     .sum();
     }
 
+    public boolean isDead() {
+        return calculateResult() > Game.BLACKJACK_NUMBER;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
     abstract String getName();
 }
+
+
