@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -14,5 +15,10 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Map<User, ResultType> checkWinOrLose(int score) {
+        return players.stream()
+                .collect(Collectors.toMap(player -> player, player -> player.decisionResult(score)));
     }
 }

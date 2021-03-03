@@ -9,6 +9,7 @@ import java.util.List;
 
 public abstract class User {
     private static final int ACE_SCORE = 1;
+    private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int TEN_SCORE = 10;
 
     protected String name;
@@ -23,9 +24,17 @@ public abstract class User {
     public abstract boolean isStay();
 
     public int getScore() {
-        return this.cards.stream()
+        if (this.isBlackJack()) {
+            return Card.BLACKJACK_SCORE;
+        }
+
+        int score = this.cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+        if (this.cards.stream().anyMatch(card -> card.getScore() == ACE_SCORE) && score <= 11) {
+            score += TEN_SCORE;
+        }
+        return score;
     }
 
     public List<Card> getCards() {
@@ -37,7 +46,7 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (this.cards.stream().anyMatch(card -> card.getScore() == ACE_SCORE)) {
+        if (this.cards.stream().anyMatch(card -> card.getScore() == ACE_SCORE) && this.cards.size() == BLACKJACK_SIZE_CONDITION) {
             return cards.stream()
                     .anyMatch(card -> card.getScore() == TEN_SCORE);
         }
