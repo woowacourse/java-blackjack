@@ -4,13 +4,14 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class GameResult {
+//todo : GameResult와의 중복 제거
+public class DealerGameResult {
     private final List<Card> resultCards;
-    private final WinOrLose winOrLose;
+    private final List<WinOrLose> winOrLoses;
 
-    public GameResult(List<Card> resultCards, WinOrLose winOrLose) {
+    public DealerGameResult(List<Card> resultCards, List<WinOrLose> winOrLoses) {
         this.resultCards = resultCards;
-        this.winOrLose = winOrLose;
+        this.winOrLoses = winOrLoses;
     }
 
     public int calculateScore() {
@@ -19,7 +20,7 @@ public class GameResult {
                 .sum();
     }
 
-    public WinOrLose getWinOrLose(){
-        return winOrLose;
+    public List<WinOrLose> getWinOrLoses(){
+        return winOrLoses;
     }
 }
