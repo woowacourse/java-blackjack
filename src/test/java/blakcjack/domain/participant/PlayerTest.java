@@ -3,6 +3,7 @@ package blakcjack.domain.participant;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
+import blakcjack.domain.name.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +15,14 @@ public class PlayerTest {
 	@DisplayName("플레이어 객체 생성 성공")
 	@Test
 	void create() {
-		final Player player = new Player("pobi");
-		assertThat(player).isEqualTo(new Player("pobi"));
+		final Player player = new Player(new Name("pobi"));
+		assertThat(player).isEqualTo(new Player(new Name("pobi")));
 	}
 
 	@DisplayName("카드 받기 성공")
 	@Test
 	void receiveCard() {
-		final Player player = new Player("sakjung");
+		final Player player = new Player(new Name("sakjung"));
 		final Card card = Card.of(CardSymbol.CLUB, CardNumber.ACE);
 		player.receiveCard(card);
 

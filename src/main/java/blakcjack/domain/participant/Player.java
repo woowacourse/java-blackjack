@@ -1,7 +1,9 @@
 package blakcjack.domain.participant;
 
+import blakcjack.domain.name.Name;
+
 public class Player extends Participant {
-	public Player(String name) {
+	public Player(final Name name) {
 		super(name);
 	}
 }

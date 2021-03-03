@@ -4,6 +4,7 @@ import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
@@ -43,7 +44,7 @@ class BlackjackGameTest {
 		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
 		final List<Participant> players = blackjackGame.getPlayers();
 		final Participant pobi = players.get(0);
-		final Participant expected = new Player("pobi");
+		final Participant expected = new Player(new Name("pobi"));
 		expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
 
 		blackjackGame.distributeOneCard(pobi);
@@ -66,7 +67,7 @@ class BlackjackGameTest {
 		});
 		final List<Participant> expectedPlayers = new ArrayList<>();
 		for (String name : names) {
-			Player player = new Player(name);
+			Player player = new Player(new Name(name));
 			player.receiveCard(deck.drawCard());
 			player.receiveCard(deck.drawCard());
 			expectedPlayers.add(player);

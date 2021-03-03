@@ -1,20 +1,18 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Card;
+import blakcjack.domain.name.Name;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-//TODO
-// participant name Name으로 바꾸기
-
 public abstract class Participant {
-	protected final String name;
+	protected final Name name;
 	protected final List<Card> cards = new ArrayList<>();
 
-	protected Participant(final String name) {
+	protected Participant(final Name name) {
 		this.name = name;
 	}
 
@@ -27,7 +25,7 @@ public abstract class Participant {
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 
 	@Override

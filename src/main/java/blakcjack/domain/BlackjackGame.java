@@ -1,6 +1,7 @@
 package blakcjack.domain;
 
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
@@ -18,7 +19,7 @@ public class BlackjackGame {
 		this.deck = deck;
 		this.dealer = new Dealer();
 		for (String name : names) {
-			players.add(new Player(name));
+			players.add(new Player(new Name(name)));
 		}
 	}
 
@@ -36,5 +37,9 @@ public class BlackjackGame {
 			distributeOneCard(player);
 		}
 		distributeOneCard(dealer);
+	}
+
+	public Dealer getDealer() {
+		return (Dealer) dealer;
 	}
 }
