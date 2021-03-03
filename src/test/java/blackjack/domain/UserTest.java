@@ -41,9 +41,21 @@ public class UserTest {
         assertThat(user.calculateTotalValue()).isEqualTo(19);
     }
 
-    @DisplayName("카드 합계가 21을 넘는지 확인한다. - 넘는 경우")
+    @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
-    public void isAboveStandardTrue() {
+    public void isDrawableTrue() {
+        User user = new User("amazzi");
+        user.distribute(new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.TWO),
+                new Card(Shape.DIAMOND, Value.JACK)
+        )));
+
+        assertThat(user.isDrawable()).isTrue();
+    }
+
+    @DisplayName("카드 합계가 21 초과인지 확인한다. - 카드를 더 받을 수 없다.")
+    @Test
+    public void isDrawableFalse() {
         User user = new User("amazzi");
         user.distribute(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.TWO),
@@ -51,18 +63,6 @@ public class UserTest {
                 new Card(Shape.CLOVER, Value.QUEEN)
         )));
 
-        assertThat(user.isAboveStandard()).isTrue();
-    }
-
-    @DisplayName("카드 합계가 21을 넘는지 확인한다. - 안 넘는 경우")
-    @Test
-    public void isAboveStandardFalse() {
-        User user = new User("amazzi");
-        user.distribute(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.TWO),
-                new Card(Shape.DIAMOND, Value.JACK)
-        )));
-
-        assertThat(user.isAboveStandard()).isFalse();
+        assertThat(user.isDrawable()).isFalse();
     }
 }

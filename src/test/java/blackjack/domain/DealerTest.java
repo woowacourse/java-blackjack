@@ -39,30 +39,30 @@ public class DealerTest {
         assertThat(dealer.calculateTotalValue()).isEqualTo(18);
     }
 
-    @DisplayName("카드 합계가 16을 넘는지 확인한다. - 안 넘는 경우")
+    @DisplayName("카드 합계가 16 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
-    public void isUnderStandardTrue() {
+    public void isDrawableTrue() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.TWO),
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(dealer.isUnderStandard()).isTrue();
+        assertThat(dealer.isDrawable()).isTrue();
     }
 
-    @DisplayName("카드 합계가 16을 넘는지 확인한다. - 넘는 경우")
+    @DisplayName("카드 합계가 17 이상인지 확인한다. - 카드를 더 받을 수 없다.")
     @Test
-    public void isUnderStandardFalse() {
+    public void isDrawableFalse() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(dealer.isUnderStandard()).isFalse();
+        assertThat(dealer.isDrawable()).isFalse();
     }
-
+//
 //    @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
 //    @Test
 //    void draw() {

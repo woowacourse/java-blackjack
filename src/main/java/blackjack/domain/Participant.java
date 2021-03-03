@@ -18,5 +18,7 @@ public abstract class Participant {
                 .sum();
     }
 
+    public abstract boolean isDrawable();
+
     public abstract void draw();
 }

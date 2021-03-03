@@ -9,8 +9,9 @@ public class User extends Participant {
         this.name = name;
     }
 
-    public boolean isAboveStandard() {
-        return calculateTotalValue() > STANDARD;
+    @Override
+    public boolean isDrawable() {
+        return calculateTotalValue() < STANDARD;
     }
 
     @Override

@@ -6,7 +6,8 @@ public class Dealer extends Participant {
     public Dealer() {
     }
 
-    public boolean isUnderStandard() {
+    @Override
+    public boolean isDrawable() {
         return calculateTotalValue() <= STANDARD;
     }
 
