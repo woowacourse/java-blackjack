@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.*;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
