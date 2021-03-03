@@ -29,8 +29,8 @@ public class PlayerTest {
         new Card(Symbol.TEN, Shape.HEART)
     );
     private static final List<Card> CARDS_SCORE_22 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.NINE, Shape.HEART),
+        new Card(Symbol.JACK, Shape.HEART),
+        new Card(Symbol.TEN, Shape.HEART),
         new Card(Symbol.TWO, Shape.HEART)
     );
 
@@ -41,7 +41,7 @@ public class PlayerTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{displayName}")
     @DisplayName("ACE를 1로 했을 때 카드 합이 21 미만일 경우 true를 반환")
     @MethodSource("generateData")
     public void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
@@ -55,37 +55,37 @@ public class PlayerTest {
 
     @Test
     @DisplayName("둘 다 21을 초과하지 않을 경우, 플레이어가 딜러보다 score가 높아야 이긴다.")
-    public void isWin_PlayerAndDealerScoreUnder21() {
+    public void judgeResult_PlayerAndDealerScoreUnder21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
 
         player.receiveCards(new Cards(CARDS_SCORE_20));
         dealer.receiveCards(new Cards(CARDS_SCORE_19));
 
-        assertThat(player.isWin(dealer)).isTrue();
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
     }
 
     @Test
     @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하면 플레이어 패배")
-    public void isWin_PlayerAndDealerScoreOver21() {
+    public void judgeResult_PlayerAndDealerScoreOver21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
 
         player.receiveCards(new Cards(CARDS_SCORE_22));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
 
-        assertThat(player.isWin(dealer)).isFalse();
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하지 않으면 플레이어 승")
-    public void isWin_DealerScoreOver21() {
+    public void judgeResult_DealerScoreOver21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
 
         player.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
 
-        assertThat(player.isWin(dealer)).isTrue();
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
     }
 }

@@ -14,15 +14,15 @@ public class Player extends Participant {
         return currentScore < MAXIMUM_SCORE_LIMIT;
     }
 
-    public boolean isWin(Dealer dealer) {
+    public Result judgeResult(Dealer dealer) {
         int dealerScore = dealer.getFinalScore();
         int playerScore = getFinalScore();
         if (playerScore > MAXIMUM_SCORE_LIMIT) {
-            return false;
+            return Result.LOSE;
         }
-        if (dealerScore > MAXIMUM_SCORE_LIMIT) {
-            return true;
+        if (dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore == dealerScore) {
+            return Result.DRAW;
         }
-        return playerScore > dealerScore;
+        return Result.WIN;
     }
 }
