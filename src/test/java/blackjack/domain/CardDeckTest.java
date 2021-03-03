@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,7 @@ public class CardDeckTest {
     @Test
     void drawDefaultCards() {
         CardDeck cardDeck = new CardDeck();
-        List<Card> cards = cardDeck.drawDefaultCards();
+        Cards cards = cardDeck.drawDefaultCards();
         assertThat(cards.size()).isEqualTo(2);
     }
 }

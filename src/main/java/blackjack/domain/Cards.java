@@ -48,4 +48,8 @@ public class Cards {
                           .filter(Card::isAce)
                           .count();
     }
+
+    int size() {
+        return cards.size();
+    }
 }

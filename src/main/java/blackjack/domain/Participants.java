@@ -29,4 +29,10 @@ public class Participants {
             throw new IllegalArgumentException("참가자들의 이름은 중복이 없어야 합니다.");
         }
     }
+
+    public void receiveDefaultCards(CardDeck cardDeck) {
+        for (Participant participant : participants) {
+            participant.receiveDefaultCards(cardDeck.drawDefaultCards());
+        }
+    }
 }

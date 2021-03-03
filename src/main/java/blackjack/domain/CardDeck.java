@@ -34,10 +34,10 @@ public class CardDeck {
         return cardDeck.remove(lastIndex);
     }
 
-    public List<Card> drawDefaultCards() {
+    public Cards drawDefaultCards() {
         List<Card> cards = new ArrayList<>();
         cards.add(draw());
         cards.add(draw());
-        return cards;
+        return new Cards(cards);
     }
 }
