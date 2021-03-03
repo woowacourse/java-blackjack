@@ -22,4 +22,11 @@ public class Card {
         return this.cardNumber.getValue();
     }
 
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public String getCard() {
+        return cardNumber.getAlphabet() + cardSymbol.getSymbol();
+    }
 }

@@ -25,6 +25,10 @@ public class CardSymbol {
         return SYMBOL_CACHE.get(symbol);
     }
 
+    public String getSymbol() {
+        return this.symbol;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

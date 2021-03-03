@@ -17,11 +17,16 @@ public abstract class User {
         userDeck.add(card);
     }
 
+    public boolean isBurstCondition() {
+        return this.getPoint() == UserDeck.BURST_CONDITION;
+    }
+
+    public UserDeck getUserDeck() {
+        return userDeck;
+    }
+
     public int getPoint() {
         return userDeck.score();
     }
 
-    public boolean isBurstCondition() {
-        return this.getPoint() == UserDeck.BURST_CONDITION;
-    }
 }

@@ -28,4 +28,8 @@ public class Player extends User {
         }
         return "무";
     }
+
+    public String getName() {
+        return name;
+    }
 }

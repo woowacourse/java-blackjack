@@ -38,4 +38,8 @@ public class UserDeck {
             .mapToInt(Card::getPoint)
             .sum();
     }
+
+    public List<Card> getUserCards() {
+        return userCards;
+    }
 }

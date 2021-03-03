@@ -32,6 +32,10 @@ public class CardNumber {
         return this.value;
     }
 
+    public String getAlphabet() {
+        return alphabet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
