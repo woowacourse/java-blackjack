@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.Deck;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
+import blackjack.domain.card.Card;
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends BlackJackParticipant{

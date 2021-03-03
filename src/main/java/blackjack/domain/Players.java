@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,5 +39,9 @@ public class Players {
         players.stream().forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);
+    }
+
+    public List<Player> unwrap() {
+        return new ArrayList<>(players);
     }
 }

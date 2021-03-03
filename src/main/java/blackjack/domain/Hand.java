@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -47,5 +48,9 @@ public class Hand {
 
     public void addCard(Card card) {
         hand.add(card);
+    }
+
+    public List<Card> unwrap() {
+        return new ArrayList<>(hand);
     }
 }
