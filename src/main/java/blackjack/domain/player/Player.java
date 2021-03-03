@@ -10,9 +10,11 @@ import java.util.List;
 public class Player {
 
   private List<Card> deck;
+  private String name;
 
-  public Player() {
+  public Player(String name) {
     this.deck = new ArrayList<>();
+    this.name = name;
   }
 
   public void addCardToDeck(Card card) {
@@ -27,13 +29,34 @@ public class Player {
     return Collections.unmodifiableList(deck);
   }
 
-  protected int getScore() {
-    return deck.stream()
-        .mapToInt(Card::getScore)
-        .sum();
+  public int getScore() {
+
+    return getScoreIncludeAce(getScoreExceptAce());
+  }
+
+  private int getScoreExceptAce() {
+    return deck.stream().filter(card -> !card.isAce()).mapToInt(Card::getScore).sum();
+  }
+
+  private int getScoreIncludeAce(int scoreExceptAce) {
+    return deck.stream().filter(Card::isAce).mapToInt(card -> {
+      if(scoreExceptAce + card.getScore() + 10 > 21) {
+        return card.getScore();
+      }
+      return card.getScore() + 10;
+    }).sum() + scoreExceptAce;
   }
 
   public Status getStatus() {
     return Status.evaluateScore(getScore());
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public boolean isSameName(String name) {
+    return getName().equals(name);
+  }
+
 }

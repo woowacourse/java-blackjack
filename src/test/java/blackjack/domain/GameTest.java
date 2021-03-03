@@ -10,6 +10,7 @@ import blackjack.domain.card.Symbol;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.GamerState;
+import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.exception.PlayerNotFoundException;
 import java.util.Arrays;
@@ -24,9 +25,7 @@ public class GameTest {
 
   @BeforeEach
   void setUp() {
-    Dealer dealer = new Dealer();
-    Gamer gamer1 = new Gamer("nabom");
-    Gamer gamer2 = new Gamer("neozal");
+    Player dealer = new Dealer();
     List<Card> cards = Arrays.asList(
         new Card(Symbol.CLOVER, CardNumber.ACE),
         new Card(Symbol.HEART, CardNumber.ACE),
@@ -36,7 +35,7 @@ public class GameTest {
         new Card(Symbol.HEART, CardNumber.TWO),
         new Card(Symbol.HEART, CardNumber.THREE)
     );
-    game = new Game(new Cards(cards), dealer, Arrays.asList(gamer1, gamer2));
+    game = new Game(new Cards(cards), dealer, new Gamers("nabom", "neozal"));
   }
 
   @Test

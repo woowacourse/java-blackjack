@@ -1,28 +1,39 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameResult {
 
-  private final int dealerScore;
-  private final Map<String, Integer> gamerScore;
+  private final Player dealer;
+  private final List<Player> players;
 
-  public GameResult(int dealerScore, Map<String, Integer> gamerScore) {
-    this.dealerScore = dealerScore;
-    this.gamerScore = gamerScore;
+
+  public GameResult(Player dealer, List<Player> players) {
+    this.dealer = dealer;
+    this.players = players;
   }
 
   public Map<String, Boolean> getGamerResult() {
-    Map<String, Boolean> gamerResult = new HashMap<>();
+    return players.stream().collect(toMap(Player::getName, this::calculateWinning));
+  }
 
-    gamerScore.forEach((name, score) -> gamerResult.put(name, score > dealerScore));
+  private boolean calculateWinning(Player player) {
+    if(dealer.getStatus() == Status.BURST && player.getStatus() != Status.BURST) {
+      return true;
+    }
 
-    return gamerResult;
+    return player.getStatus() != Status.BURST && dealer.getScore() < player.getScore();
   }
 
   public List<Boolean> getDealerResult() {

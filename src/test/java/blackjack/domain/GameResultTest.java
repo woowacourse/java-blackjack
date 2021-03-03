@@ -2,6 +2,13 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -13,18 +20,27 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class GameResultTest {
+
   GameResult gameResult;
 
   @BeforeEach
   void setUp() {
-    int dealerScore = 10;
-    Map<String, Integer> gamerScore = new HashMap<>();
+    Map<Player, Integer> gamerScore = new HashMap<>();
 
-    gamerScore.put("nabom", 15);
-    gamerScore.put("neozal", 8);
+    gamerScore.put(new Gamer("nabom"), 15);
+    gamerScore.put(new Gamer("neozal"), 8);
+
+    Dealer dealer = new Dealer();
+    dealer.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.KING));
+    Gamer gamer1 = new Gamer("nabom");
+    gamer1.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.JACK));
+    gamer1.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.FIVE));
+    Gamer gamer2 = new Gamer("neozal");
+    gamer2.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.THREE));
+    gamer2.addCardToDeck(new Card(Symbol.HEART, CardNumber.FIVE));
 
     gameResult = new GameResult(
-        dealerScore, gamerScore
+        dealer, Arrays.asList(gamer1, gamer2)
     );
   }
 
