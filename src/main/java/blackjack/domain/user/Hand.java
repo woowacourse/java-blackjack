@@ -60,8 +60,7 @@ public class Hand {
 
     private int sumScore() {
         return cards.stream()
-                .map(Card::getValue)
-                .mapToInt(Value::getScore)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
