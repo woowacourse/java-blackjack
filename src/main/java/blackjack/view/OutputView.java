@@ -15,6 +15,7 @@ public class OutputView {
     public static final String INITIAL_CARD_MESSAGE = "딜러와 %s에게 카드를 2장씩 나누었습니다.";
     public static final String DEALER_CARD = "딜러: %s";
     public static final String PLAYER_CARD = "%s카드: %s";
+    public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     private OutputView() {};
 
@@ -27,9 +28,7 @@ public class OutputView {
         String dealerCard = dealer.getUserDeck().getUserCards().get(1).getCard();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getPlayers()) {
-            String playerName = player.getName();
-            String cards = combineAllCard(player);
-            System.out.printf(PLAYER_CARD + NEWLINE, playerName, cards);
+            showPlayerCard(player);
         }
     }
 
@@ -42,6 +41,11 @@ public class OutputView {
         System.out.printf(INITIAL_CARD_MESSAGE + NEWLINE, nameCollect);
     }
 
+    public static void showPlayerCard(Player player) {
+        String cards = combineAllCard(player);
+        System.out.printf(PLAYER_CARD + NEWLINE, player.getName(), cards);
+    }
+
     private static String combineAllCard(User user) {
         List<String> allCards = new ArrayList<>();
         for (Card card : user.getUserDeck().getUserCards()) {
@@ -50,4 +54,7 @@ public class OutputView {
         return String.join(STRING_DELIMITER, allCards);
     }
 
+    public static void showDealerDraw() {
+        System.out.println(DEALER_DRAW_MESSAGE);
+    }
 }
