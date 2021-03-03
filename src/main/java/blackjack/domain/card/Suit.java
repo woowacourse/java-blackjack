@@ -20,4 +20,8 @@ public enum Suit {
                 .findFirst()
                 .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 Suit입니다."));
     }
+
+    public String suit() {
+        return suit;
+    }
 }

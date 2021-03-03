@@ -8,13 +8,18 @@ public class Name {
 
     public Name(String name){
         validateName(name);
+        name= name.trim();
         this.name = name;
     }
 
     private void validateName(String name) {
-        if(Objects.isNull(name) || name.trim().isEmpty()){
+        if(Objects.isNull(name) || name.isEmpty()){
             throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
         }
+    }
+
+    public String name(){
+        return name;
     }
 
     @Override

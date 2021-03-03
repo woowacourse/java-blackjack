@@ -29,9 +29,14 @@ public class Card {
     public static LinkedList<Card> getCards(){
         return new LinkedList<>(cards);
     }
+    // TODO :: CARDS 이름 중의적 (캐싱된 카드들과 플레이어가 들고 있는 카드들)
 
     public Denomination getDenomination() {
         return denomination;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
 
     @Override

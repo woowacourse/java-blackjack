@@ -32,7 +32,7 @@ public enum Denomination {
                 .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 Denomination입니다."));
     }
 
-    public String getDenomination() {
+    public String denomination() {
         return denomination;
     }
 

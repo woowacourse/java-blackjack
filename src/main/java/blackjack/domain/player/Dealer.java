@@ -6,6 +6,7 @@ import blackjack.domain.card.Score;
 
 public class Dealer implements Player {
 
+    private static final int NUMBER_OF_INITIAL_CARDS = 1;
     private static final int LIMIT_SCORE_TO_HIT = 16;
 
     private final Name name;
@@ -18,6 +19,13 @@ public class Dealer implements Player {
 
     private boolean ableToDraw(){
         return cards.getScore().isBelow(LIMIT_SCORE_TO_HIT);
+    }
+
+    @Override
+    public void initializeCards(Deck deck) {
+        for(int i=0; i<NUMBER_OF_INITIAL_CARDS; i++){
+            cards.add(deck.draw());
+        }
     }
 
     @Override

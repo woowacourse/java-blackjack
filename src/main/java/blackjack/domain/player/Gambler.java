@@ -6,12 +6,21 @@ import blackjack.domain.card.Score;
 
 public class Gambler implements Player{
 
+    private static final int NUMBER_OF_INITIAL_CARDS = 2;
+
     private final Name name;
     private final Cards cards;
 
     public Gambler(Name name){
         this.name= name;
         this.cards = new Cards();
+    }
+
+    @Override
+    public void initializeCards(Deck deck){
+        for(int i=0; i<NUMBER_OF_INITIAL_CARDS; i++){
+            cards.add(deck.draw());
+        }
     }
 
     @Override
