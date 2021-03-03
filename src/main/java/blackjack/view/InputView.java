@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.player.UserDto;
+import blackjack.domain.player.PlayerDto;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,7 +13,7 @@ public class InputView {
         return value;
     }
 
-    public static String getYesOrNo(UserDto userDto) {
+    public static String getYesOrNo(PlayerDto userDto) {
         System.out.println(userDto.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return SCANNER.nextLine();
     }

@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public abstract class AbstractPlayer implements Player {
     protected static final int ACE_DIFF = 10;
     protected static final int BLACKJACK = 21;
+    private static final int FIRST_DRAW_CARDS_COUNT = 2;
 
     private final List<Card> cards;
     private final Name name;
@@ -69,10 +71,20 @@ public abstract class AbstractPlayer implements Player {
         return ResultType.WIN;
     }
 
+    @Override
+    public void drawTwoCards() {
+        Cards cards = Cards.getCards();
+        for (int i = 0; i < FIRST_DRAW_CARDS_COUNT; i++) {
+            drawCard(cards.draw());
+        }
+    }
+
+    @Override
     public Name getName() {
         return name;
     }
 
+    @Override
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

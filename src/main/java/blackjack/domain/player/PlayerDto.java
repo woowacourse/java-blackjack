@@ -4,15 +4,15 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDto {
+public class PlayerDto {
     private final Name name;
     private final List<Card> cards;
     private final int value;
 
-    public UserDto(User user) {
-        name = user.getName();
-        cards = new ArrayList<>(user.getCards());
-        value = user.getValue();
+    public PlayerDto(Player player) {
+        name = player.getName();
+        cards = new ArrayList<>(player.getCards());
+        value = player.getValue();
     }
 
     public String getName() {
