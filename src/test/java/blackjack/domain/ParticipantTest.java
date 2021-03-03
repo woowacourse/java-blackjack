@@ -15,7 +15,7 @@ public class ParticipantTest {
     @ValueSource(strings = {"   ", " "})
     public void validateParticipantName(String name) {
         assertThatCode(() -> {
-            new Participant(name);
+            new Player(name);
         }).isInstanceOf(IllegalArgumentException.class)
           .hasMessage("플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.");
     }
@@ -23,7 +23,7 @@ public class ParticipantTest {
     @DisplayName("게임 참가자는 1장의 카드를 뽑을 수 있다.")
     @Test
     public void drawCard() {
-        Participant participant = new Participant("jason");
+        Participant participant = new Player("jason");
         Card card = new Card(Symbol.EIGHT, Shape.CLOVER);
         participant.receiveCard(card);
         int scoreTotal = participant.showScoreTotal();

@@ -30,7 +30,7 @@ class CardsTest {
             new Card(Symbol.QUEEN, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
 
-        int score = cards.calculateScore();
+        int score = cards.calculateFinalScore();
 
         assertThat(score).isEqualTo(18);
     }
@@ -42,7 +42,7 @@ class CardsTest {
             new Card(Symbol.JACK, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
 
-        int score = cards.calculateScore();
+        int score = cards.calculateFinalScore();
 
         assertThat(score).isEqualTo(21);
     }
@@ -53,7 +53,7 @@ class CardsTest {
     void calculateScoreWhenAceIsOver(List<Card> cardList, int targetScore) {
         Cards cards = new Cards(cardList);
 
-        int score = cards.calculateScore();
+        int score = cards.calculateFinalScore();
 
         assertThat(score).isEqualTo(targetScore);
     }
@@ -65,8 +65,18 @@ class CardsTest {
             new Card(Symbol.ACE, Shape.DIAMOND), new Card(Symbol.ACE, Shape.CLOVER));
         Cards cards = new Cards(cardList);
 
-        int score = cards.calculateScore();
+        int score = cards.calculateFinalScore();
 
         assertThat(score).isEqualTo(13);
+    }
+
+    @DisplayName("ace를 11이 아닌 1로 계산한 최소 점수를 반환한다")
+    @Test
+    void calculateMinimumScoreTotal() {
+        List<Card> cardList = Arrays.asList(new Card(Symbol.QUEEN, Shape.CLOVER),
+            new Card(Symbol.ACE, Shape.DIAMOND));
+        Cards cards = new Cards(cardList);
+        int minimumScore = cards.calculateScoreWhenAceIsMinimum();
+        assertThat(minimumScore).isEqualTo(11);
     }
 }

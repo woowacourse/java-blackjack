@@ -7,4 +7,9 @@ public class Dealer extends Participant {
     public Dealer() {
         super(DEALER_NAME);
     }
+
+    @Override
+    public boolean isAbleToReceiveCard() {
+        return false;
+    }
 }

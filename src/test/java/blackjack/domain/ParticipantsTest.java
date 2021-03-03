@@ -14,8 +14,8 @@ public class ParticipantsTest {
     @DisplayName("참가자들의 이름은 중복이 없어야 한다.")
     public void validateOverlappedNames() {
         List<Participant> participantGroup = Arrays.asList(
-            new Participant("jason"),
-            new Participant("jason")
+            new Player("jason"),
+            new Player("jason")
         );
 
         assertThatCode(() -> {
@@ -31,8 +31,8 @@ public class ParticipantsTest {
         int initCardDeckSize = cardDeck.size();
         cardDeck.drawDefaultCards();
         Participants participants = new Participants(Arrays.asList(
-            new Participant("jason"),
-            new Participant("pobi")
+            new Player("jason"),
+            new Player("pobi")
         ));
         participants.receiveDefaultCards(cardDeck);
         assertThat(cardDeck.size()).isEqualTo(initCardDeckSize - 4);

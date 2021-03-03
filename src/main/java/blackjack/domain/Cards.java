@@ -26,11 +26,15 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculateScore() {
+    public int calculateScoreWhenAceIsMinimum() {
+        return cards.stream()
+                    .mapToInt(Card::getScore)
+                    .sum();
+    }
+
+    public int calculateFinalScore() {
         int aceCounts = getAceCounts();
-        int sum = cards.stream()
-                       .mapToInt(Card::getScore)
-                       .sum();
+        int sum = calculateScoreWhenAceIsMinimum();
         for (int i = 0; i < aceCounts; i++) {
             sum += plusBonusAceScore(sum);
         }
