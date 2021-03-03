@@ -21,7 +21,7 @@ public class Player {
     }
 
     public String getName() {
-        return name.getName();
+        return name.toString();
     }
 
     public List<Card> getCards() {
