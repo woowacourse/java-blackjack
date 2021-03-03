@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Users {
-    public static final String DELIMITER = ",";
+    private static final String DELIMITER = ",";
     private final List<User> users;
 
     public Users(List<User> users) {
