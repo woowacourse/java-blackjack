@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,10 @@ public class Card {
             .filter(card -> card.shape == shape && card.value == value)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static List<Card> getAllCards() {
+        return new ArrayList<>(CARD_POOL);
     }
 
     @Override
