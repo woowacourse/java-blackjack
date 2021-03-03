@@ -47,9 +47,10 @@ public class PlayerTest {
     @Test
     @DisplayName("에이스 카드가 하나있을 때 합 구하기")
     void calculateMyCardSumWhenAceIsOne() {
+        player.receiveCard(new Card(CardNumber.JACK, CardType.CLOVER));
+        player.receiveCard(new Card(CardNumber.FIVE, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        Assertions.assertThat(player.calculate()).isEqualTo(13);
+        Assertions.assertThat(player.calculate()).isEqualTo(16);
     }
 
     @ParameterizedTest

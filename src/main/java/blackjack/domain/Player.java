@@ -10,6 +10,7 @@ public class Player {
 
     private final String name;
     private final List<Card> myCards;
+    private boolean win = true;
 
     public Player(final String name) {
         this.name = name;
@@ -40,7 +41,7 @@ public class Player {
         final int aceCount = (int) myCards.stream()
                 .filter(Card::isAce)
                 .count();
-        if (aceCount < 2) {
+        if (aceCount == 0) {
             return calculateSingleCase();
         }
         return calculateMultipleCase(aceCount);
@@ -83,5 +84,13 @@ public class Player {
                 .mapToInt(Integer::intValue)
                 .max()
                 .orElse(BUST_LIMIT);
+    }
+
+    public void lose() {
+        this.win = false;
+    }
+
+    public boolean getWin() {
+        return win;
     }
 }

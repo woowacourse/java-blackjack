@@ -29,4 +29,20 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         System.out.printf("%s카드: %s - 결과: %d" + NEWLINE, name, cardStatus, result);
     }
+
+    public static void showGameResult(String name, int winCount, int loseCount) {
+        System.out.println(NEWLINE + "## 최종 승패");
+        System.out.printf("%s: %d승 %d패" + NEWLINE, name, winCount, loseCount);
+    }
+
+    public static void showPlayerGameResult(String name, boolean winner) {
+        System.out.println(name + winningMark(winner));
+    }
+
+    private static String winningMark(boolean winner) {
+        if (winner) {
+            return ": 승";
+        }
+        return ": 패";
+    }
 }

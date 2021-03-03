@@ -8,6 +8,10 @@ public class Dealer extends Player {
     }
 
     public boolean checkMoreCardAvailable() {
-        return (calculate() < MAX_SUM_FOR_MORE_CARD);
+        return (calculate() <= MAX_SUM_FOR_MORE_CARD);
+    }
+
+    public boolean isWinner(int playerResult) {
+        return (playerResult <= calculate() && !isBust());
     }
 }
