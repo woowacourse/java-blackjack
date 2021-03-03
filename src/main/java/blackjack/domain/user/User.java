@@ -22,7 +22,5 @@ public abstract class User {
 
     public abstract String getName();
 
-    public abstract int getHitLimit();
-
     public abstract boolean isHit();
 }

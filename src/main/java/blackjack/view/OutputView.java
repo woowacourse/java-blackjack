@@ -19,7 +19,7 @@ public class OutputView {
         String playerNames = players.stream()
             .map(User::getName)
             .collect(Collectors.joining(NAME_DELIMITER));
-        System.out.printf("%s와 %s에게 2장의 나누었습니다.%n", dealer.getName(), playerNames);
+        System.out.printf("%n%s와 %s에게 2장의 나누었습니다.%n", dealer.getName(), playerNames);
     }
 
     public static void printUserCard(User dealer, List<User> players) {
@@ -41,4 +41,16 @@ public class OutputView {
         System.out.printf("%s의 카드: %s%n", player.getName(), cardString);
     }
 
+    public static void printDealerDraw(boolean hasDrawn) {
+        if (hasDrawn) {
+            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            return;
+        }
+
+        System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.");
+    }
+
+    public static void printLine() {
+        System.out.println();
+    }
 }

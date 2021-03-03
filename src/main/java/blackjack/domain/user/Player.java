@@ -23,11 +23,6 @@ public class Player extends User {
     }
 
     @Override
-    public int getHitLimit() {
-        return 0;
-    }
-
-    @Override
     public boolean isHit() {
         return hand.getStatus() == HandStatus.HIT;
     }

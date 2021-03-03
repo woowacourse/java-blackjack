@@ -69,18 +69,20 @@ public class Hand {
         if (score == MAX_SCORE && cards.size() == BLACK_JACK_CARD_SIZE) {
             return HandStatus.BLACK_JACK;
         }
+
         if (score > MAX_SCORE) {
             return HandStatus.BUST;
         }
-        return HandStatus.HIT;
-    }
 
-    public HandStatus getStatus() {
-        return status;
+        return HandStatus.HIT;
     }
 
     public void convertStatusToStay() {
         status = HandStatus.STAY;
+    }
+
+    public HandStatus getStatus() {
+        return status;
     }
 
     public int getScore() {

@@ -5,17 +5,21 @@ public class Dealer extends User {
     private static final int DRAW_LIMIT = 16;
 
     @Override
-    public int getHitLimit() {
-        return 0;
+    public boolean isHit() {
+        checkIfStay();
+        return hand.getStatus() == HandStatus.HIT;
     }
 
-    @Override
-    public boolean isHit() {
-        return false;
+    private void checkIfStay() {
+        if (hand.getScore() > DRAW_LIMIT && hand.getStatus() == HandStatus.HIT) {
+            hand.convertStatusToStay();
+        }
     }
 
     @Override
     public String getName() {
         return NAME;
     }
+
+
 }
