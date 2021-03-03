@@ -19,4 +19,8 @@ public class Deck {
     public boolean isEmpty() {
         return cards.isEmpty();
     }
+
+    public Card giveSingleCard() {
+        return cards.getSingleCard();
+    }
 }

@@ -27,4 +27,8 @@ public class CardStack {
     public boolean isEmpty() {
         return cards.isEmpty();
     }
+
+    public Card getSingleCard() {
+        return cards.pop();
+    }
 }
