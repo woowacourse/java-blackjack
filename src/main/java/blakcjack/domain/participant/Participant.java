@@ -28,11 +28,11 @@ public abstract class Participant {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Participant that = (Participant) o;
-		return Objects.equals(name, that.name);
+		return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(name, cards);
 	}
 }
