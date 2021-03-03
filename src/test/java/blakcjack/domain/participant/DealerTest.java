@@ -1,7 +1,12 @@
 package blakcjack.domain.participant;
 
+import blakcjack.domain.card.Card;
+import blakcjack.domain.card.CardNumber;
+import blakcjack.domain.card.CardSymbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,5 +16,15 @@ public class DealerTest {
 	void create() {
 		final Dealer dealer = new Dealer();
 		assertThat(dealer).isEqualTo(new Dealer());
+	}
+
+	@DisplayName("카드 받기 성공")
+	@Test
+	void receiveCard() {
+		final Dealer dealer = new Dealer();
+		final Card card = Card.of(CardSymbol.CLUB, CardNumber.ACE);
+		dealer.receiveCard(card);
+
+		assertThat(dealer.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
 	}
 }
