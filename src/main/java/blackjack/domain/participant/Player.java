@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Player extends Participant {
 
@@ -20,36 +19,23 @@ public class Player extends Participant {
         return new Player(name, new CardHand(new ArrayList<>()));
     }
 
-    public boolean isBurst() {
-        return cardHand.isBurst();
+    public boolean lowerThanThreshold() {
+        return cardHand.lowerThanThreshold();
     }
 
     public void receiveCard(Card card) {
         cardHand.add(card);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
-
     public List<Card> getCardHand() {
         return cardHand.getCards();
     }
 
-//### 플레이어
+    public String getName() {
+        return name;
+    }
+
+    //### 플레이어
 //- [ ] 이름을 가짐
 //- [ ] 카드 패를 가짐
 //- [ ] 시작하면 카드 두 장을 받는다
