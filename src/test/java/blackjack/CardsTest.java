@@ -36,4 +36,12 @@ public class CardsTest {
         assertThat(cards.getScore()).isEqualTo(12);
         assertThat(cards.getScore()).isNotEqualTo(13);
     }
+
+    @Test
+    @DisplayName("22점이 나오는경우, Bust가 발생한다.")
+    void bust() {
+        cards.add(new Card(Suit.다이아몬드, Face.JACK));
+        cards.add(new Card(Suit.다이아몬드, Face.KING));
+        assertThat(cards.isBust()).isTrue();
+    }
 }

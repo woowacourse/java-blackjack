@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    public static final int BLACK_JACK_SCORE = 21;
+    public static final int ACE_PIVOT = 11;
+    public static final int ACE_CONVERSION = 10;
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -22,10 +25,14 @@ public class Cards {
         boolean hasAce = hasAce();
         int sum = cards.stream().mapToInt(Card::getFaceValue).sum();
 
-        if (sum <= 11 && hasAce) {
-            return sum + 10;
+        if (sum <= ACE_PIVOT && hasAce) {
+            return sum + ACE_CONVERSION;
         }
         return sum;
+    }
+
+    public boolean isBust() {
+        return getScore() > BLACK_JACK_SCORE;
     }
 
     private boolean hasAce() {
