@@ -1,5 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Gamers;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Deck {
 
     private final CardStack cards;
@@ -22,5 +29,12 @@ public class Deck {
 
     public Card giveSingleCard() {
         return cards.getSingleCard();
+    }
+
+    public Gamers initiateGamers(List<String> names) {
+        List<Player> players = names.stream()
+                .map(name -> new Player(name, giveFirstHand()))
+                .collect(Collectors.toList());
+        return new Gamers(players, new Dealer(giveFirstHand()));
     }
 }
