@@ -10,30 +10,37 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String NEWLINE = System.getProperty("line.separator");
 
-    public static void printGameStartMsg(Gamers gamers) {
-        final List<String> names = gamers.getPlayers().stream()
+    public static void gameStart(Gamers gamers) {
+        final List<String> names = gamers.players().stream()
                 .map(Gamer::getName)
                 .collect(Collectors.toList());
         final String name = String.join(", ", names);
         System.out.printf("딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, name);
 
-        printHandsInfo(gamers);
+        initialHands(gamers);
     }
 
-    public static void printHandsInfo(Gamers gamers) {
-        printHandsOf(gamers.getDealer());
-        gamers.getPlayers()
-                .forEach(OutputView::printHandsOf);
+    private static void initialHands(Gamers gamers) {
+        initialCards(gamers.dealer());
+        gamers.players().forEach(OutputView::initialCards);
     }
 
-    private static void printHandsOf(Gamer gamer) {
-        System.out.println(gamer.getName() + " : " + printEachCard(gamer.showInitialHands()));
+    public static void showHands(Gamers gamers) {
+        allCards(gamers.dealer());
+        gamers.players().forEach(OutputView::allCards);
     }
 
-    private static String printEachCard(List<Card> cards) {
+    private static void initialCards(Gamer gamer) {
+        System.out.println(gamer.getName() + " : " + cardToString(gamer.showOpenHands()));
+    }
+
+    public static void allCards(Gamer gamer) {
+        System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
+    }
+
+    private static String cardToString(List<Card> cards) {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
-
 }

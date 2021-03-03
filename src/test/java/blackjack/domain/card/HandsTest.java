@@ -23,7 +23,7 @@ public class HandsTest {
     void add() {
         List<Card> cards = new ArrayList<>();
         Hands hands = new Hands(cards);
-        hands.add(Card.create(CardSymbol.CLUB, CardValue.KING));
+        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.KING));
 
         assertThat(hands.toList().size()).isEqualTo(1);
     }

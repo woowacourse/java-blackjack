@@ -13,7 +13,7 @@ public class Hands {
         this.cards = cards;
     }
 
-    public void add(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 

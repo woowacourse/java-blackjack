@@ -6,12 +6,13 @@ import blackjack.domain.card.Hands;
 import java.util.List;
 
 public class Player extends Gamer {
+
     public Player(String name, Hands hands) {
         super(name, hands);
     }
 
     @Override
-    public List<Card> showInitialHands() {
+    public List<Card> showOpenHands() {
         return hands.getCardOf(2);
     }
 }

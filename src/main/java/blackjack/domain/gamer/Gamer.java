@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Gamer {
@@ -15,11 +16,11 @@ public abstract class Gamer {
         this.hands = hands;
     }
 
-    public void receiveCard(Card card) {
-        hands.add(card);
-    }
+    public abstract List<Card> showOpenHands();
 
-    abstract public List<Card> showInitialHands();
+    public List<Card> showHands() {
+        return hands.toList();
+    }
 
     public String getName() {
         return name;
@@ -27,5 +28,9 @@ public abstract class Gamer {
 
     public Hands getHands() {
         return hands;
+    }
+
+    public void receiveCard(Card card) {
+        hands.addCard(card);
     }
 }

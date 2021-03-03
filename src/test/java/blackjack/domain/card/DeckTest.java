@@ -23,7 +23,7 @@ public class DeckTest {
     @DisplayName("Deck 객체 생성")
     @Test
     void createCards() {
-        assertThatCode(() -> Deck.create()).doesNotThrowAnyException();
+        assertThatCode(Deck::create).doesNotThrowAnyException();
     }
 
     @DisplayName("초기 나눠주는 Hands는 두 장의 카드로 이루어진다.")
@@ -41,7 +41,7 @@ public class DeckTest {
     @DisplayName("카드 한 장 나눠주기")
     @Test
     void giveSingleCard() {
-        assertThat(deck.giveSingleCard()).isInstanceOf(Card.class);
+        assertThat(deck.giveCard()).isInstanceOf(Card.class);
     }
 
     @DisplayName("참여자 생성 성공")

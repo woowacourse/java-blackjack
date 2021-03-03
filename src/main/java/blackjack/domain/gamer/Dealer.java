@@ -16,7 +16,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public List<Card> showInitialHands() {
+    public List<Card> showOpenHands() {
         return hands.getCardOf(1);
     }
 }
