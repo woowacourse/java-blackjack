@@ -15,7 +15,8 @@ public class OutputView {
 		stringBuilder.append(dealer.getName())
 				.append("와 ")
 				.append(concatenatePlayerNames(players))
-				.append("에게 2장의 카드를 나누었습니다.\n");
+				.append("에게 2장의 카드를 나누었습니다.")
+				.append(System.lineSeparator());
 
 		stringBuilder.append(makeCardSummary(dealer));
 		for (final Participant participant : players) {
@@ -53,5 +54,9 @@ public class OutputView {
 
 	private static String getCardInformation(final Card card) {
 		return card.getCardNumber().getName() + card.getCardSymbol().getName();
+	}
+
+	public static void printDealerAdditionalCardMessage() {
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
 	}
 }

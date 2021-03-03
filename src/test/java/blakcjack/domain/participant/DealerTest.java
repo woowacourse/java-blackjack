@@ -27,4 +27,16 @@ public class DealerTest {
 
 		assertThat(dealer.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
 	}
+
+	@DisplayName("17점 미만이면 통과")
+	@Test
+	void isScoreLowerThanSevenTeen() {
+		final Dealer dealer = new Dealer();
+		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.TEN));
+		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.SIX));
+		assertThat(dealer.isScoreLowerThanSevenTeen()).isTrue();
+
+		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		assertThat(dealer.isScoreLowerThanSevenTeen()).isFalse();
+	}
 }

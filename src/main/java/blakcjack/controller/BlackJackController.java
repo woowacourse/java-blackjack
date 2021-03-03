@@ -27,6 +27,8 @@ public class BlackJackController {
 		for (final Participant player : players) {
 			drawForMaximumCapability(blackjackGame, player);
 		}
+
+		drawForMaximumCapability(blackjackGame, dealer);
 	}
 
 	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
@@ -39,5 +41,12 @@ public class BlackJackController {
 	private boolean isYes(final Participant player) {
 		final String yesOrNo = InputView.takeHitOrStand(player.getName());
 		return YES.equals(yesOrNo);
+	}
+
+	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
+		while (dealer.isScoreLowerThanSevenTeen()) {
+			blackjackGame.distributeOneCard(dealer);
+			OutputView.printDealerAdditionalCardMessage();
+		}
 	}
 }
