@@ -44,4 +44,8 @@ public class Hand {
     public boolean isBust() {
         return getScore() >= BUST;
     }
+
+    public void addCard(Card card) {
+        hand.add(card);
+    }
 }

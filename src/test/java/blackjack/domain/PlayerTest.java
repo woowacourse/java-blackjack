@@ -3,6 +3,10 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Shape;
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,5 +25,18 @@ public class PlayerTest {
         assertThatThrownBy(() -> new Player(""))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("공백은 이름으로 사용할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("카드 한 장 뽑는 기능")
+    void drawCard() {
+        Player root = new Player("root");
+        Deck deck = new Deck(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+
+        root.drawCard(deck);
+        assertThat(root.getHand()).isEqualToComparingFieldByField(
+            new Hand(Arrays.asList(Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
     }
 }
