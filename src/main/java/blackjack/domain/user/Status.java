@@ -26,4 +26,7 @@ public enum Status {
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_CONDITION_ERROR_MSG)); //default value
     }
 
+    public boolean canContinueGame() {
+        return canContinueGame;
+    }
 }

@@ -12,12 +12,21 @@ public class Dealer {
         this.hand = Hand.createEmptyHand();
     }
 
+    public void firstDraw(Card first, Card second) {
+        drawCard(first);
+        drawCard(second);
+    }
+
     public void drawCard(Card card) {
         hand.add(card);
     }
 
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    public int handSize() {
+        return hand.size();
     }
 
     public Card getFirstCard() {

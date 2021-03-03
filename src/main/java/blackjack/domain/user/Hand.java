@@ -26,6 +26,10 @@ public class Hand {
         cards.add(card);
     }
 
+    public int size(){
+        return cards.size();
+    }
+
     public int calculateScore() {
         int score = sumScore();
 

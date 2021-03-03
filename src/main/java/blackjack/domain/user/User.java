@@ -32,7 +32,15 @@ public class User {
         status = Status.STOP;
     }
 
+    public boolean isSameStatus(Status status){
+        return this.status == status;
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    public boolean canContinueGame() {
+        return status.canContinueGame();
     }
 }
