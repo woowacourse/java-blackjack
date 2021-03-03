@@ -11,5 +11,6 @@ public class BlackjackController {
         final Deck deck = Deck.create();
         final Gamers gamers = deck.initiateGamers(InputView.receiveNames());
         OutputView.printGameStartMsg(gamers);
+        InputView.receiveAnswer("joanne");
     }
 }
