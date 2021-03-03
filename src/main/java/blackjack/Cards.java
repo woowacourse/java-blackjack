@@ -17,4 +17,18 @@ public class Cards {
     public List<Card> getList() {
         return new ArrayList<>(cards);
     }
+
+    public int getScore() {
+        boolean hasAce = hasAce();
+        int sum = cards.stream().mapToInt(Card::getFaceValue).sum();
+
+        if (sum <= 11 && hasAce) {
+            return sum + 10;
+        }
+        return sum;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
 }

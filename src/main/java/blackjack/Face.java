@@ -1,6 +1,7 @@
 package blackjack;
 
 public enum Face {
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -12,8 +13,7 @@ public enum Face {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10),
-    ACE(11);
+    KING(10);
 
     private int value;
 
