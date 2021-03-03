@@ -1,21 +1,21 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Card {
     private final Face face;
     private final Suit suit;
 
-    private static final List<Card> cached = new ArrayList<>();
+    private static final List<Card> cached;
 
     static {
-        for (Suit suit : Suit.values()) {
-            for (Face face : Face.values()) {
-                cached.add(new Card(suit, face));
-            }
-        }
+        // flatMap에 대한 이해가 필요.
+        cached = Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Face.values()).map(face -> new Card(suit, face)))
+                .collect(Collectors.toList());
         Collections.shuffle(cached);
     }
 
@@ -35,7 +35,7 @@ public class Card {
         return this.face.equals(Face.ACE);
     }
 
-    public int getFaceValue(){
+    public int getFaceValue() {
         return this.face.getValue();
     }
 }
