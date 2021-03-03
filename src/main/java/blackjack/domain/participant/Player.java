@@ -40,4 +40,13 @@ public class Player implements Participant {
         int totalScore = scoreRule.sumTotalScore(cards);
         return totalScore <= DRAW_BOUND_SCORE;
     }
+
+    @Override
+    public int sumTotalScore() {
+        return scoreRule.sumTotalScore(cards);
+    }
+
+    public String getName() {
+        return name;
+    }
 }

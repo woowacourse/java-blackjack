@@ -1,17 +1,21 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
+import blackjack.dto.ScoreResultDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DealerTest {
 
@@ -53,5 +57,77 @@ class DealerTest {
 
         //then
         assertThat(isReceived).isEqualTo(actual);
+    }
+
+    @DisplayName("딜러가 플레이어들과 점수를 비교하여 승패를 가른다.")
+    @Test
+    void test_decide_win_or_lose() {
+        //given
+        Dealer dealer = new Dealer("pobi", new ArrayList<>(), cards -> 16);
+        Player firstPlayer = new Player("roki", new ArrayList<>(), cards -> 15);
+        Player secondPlayer = new Player("suri", new ArrayList<>(), cards -> 17);
+        Player thirdPlayer = new Player("brown", new ArrayList<>(), cards -> 16);
+        List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
+
+        //when
+        List<ScoreResultDto> playerResults = dealer.decideWinOrLose(players);
+
+        //then
+        assertAll(
+                () -> assertThat(playerResults.get(0).getName()).isEqualTo("roki"),
+                () -> assertThat(playerResults.get(0).getGameResult()).isEqualTo(GameResult.LOSE),
+                () -> assertThat(playerResults.get(1).getName()).isEqualTo("suri"),
+                () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.WIN),
+                () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
+                () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.DRAW)
+        );
+    }
+
+    @DisplayName("딜러의 점수가 21점을 초과하 모든 플레이어는 승리한다")
+    @Test
+    void test_decide_win_or_lose_if_dealer_score_over() {
+        //given
+        Dealer dealer = new Dealer("pobi", new ArrayList<>(), cards -> 22);
+        Player firstPlayer = new Player("roki", new ArrayList<>(), cards -> 0);
+        Player secondPlayer = new Player("suri", new ArrayList<>(), cards -> 17);
+        Player thirdPlayer = new Player("brown", new ArrayList<>(), cards -> 16);
+        List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
+
+        //when
+        List<ScoreResultDto> playerResults = dealer.decideWinOrLose(players);
+
+        //then
+        assertAll(
+                () -> assertThat(playerResults.get(0).getName()).isEqualTo("roki"),
+                () -> assertThat(playerResults.get(0).getGameResult()).isEqualTo(GameResult.WIN),
+                () -> assertThat(playerResults.get(1).getName()).isEqualTo("suri"),
+                () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.WIN),
+                () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
+                () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.WIN)
+        );
+    }
+
+    @DisplayName("점수가 21점을 초과한 플레이어는 패배한다")
+    @Test
+    void test_decide_win_or_lose_if_player_score_over() {
+        //given
+        Dealer dealer = new Dealer("pobi", new ArrayList<>(), cards -> 15);
+        Player firstPlayer = new Player("roki", new ArrayList<>(), cards -> 22);
+        Player secondPlayer = new Player("suri", new ArrayList<>(), cards -> 24);
+        Player thirdPlayer = new Player("brown", new ArrayList<>(), cards -> 16);
+        List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
+
+        //when
+        List<ScoreResultDto> playerResults = dealer.decideWinOrLose(players);
+
+        //then
+        assertAll(
+                () -> assertThat(playerResults.get(0).getName()).isEqualTo("roki"),
+                () -> assertThat(playerResults.get(0).getGameResult()).isEqualTo(GameResult.LOSE),
+                () -> assertThat(playerResults.get(1).getName()).isEqualTo("suri"),
+                () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.LOSE),
+                () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
+                () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.WIN)
+        );
     }
 }

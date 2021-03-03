@@ -1,11 +1,15 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
+import blackjack.dto.ScoreResultDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Dealer implements Participant {
+    public static final int SCORE_LIMIT = 21;
     private static final int FROM = 0;
     private static final int TO = 1;
     private static final int DRAW_BOUND_SCORE = 16;
@@ -39,5 +43,24 @@ public class Dealer implements Participant {
     public boolean isReceiveCard() {
         int totalScore = scoreRule.sumTotalScore(cards);
         return totalScore <= DRAW_BOUND_SCORE;
+    }
+
+    @Override
+    public int sumTotalScore() {
+        return scoreRule.sumTotalScore(cards);
+    }
+
+    public List<ScoreResultDto> decideWinOrLose(List<Player> players) {
+        int dealerTotalSum = sumTotalScore();
+
+        if (dealerTotalSum > SCORE_LIMIT) {
+            return players.stream()
+                    .map(player -> new ScoreResultDto(player.getName(), GameResult.WIN))
+                    .collect(Collectors.toList());
+        }
+
+        return players.stream()
+                .map(player -> new ScoreResultDto(player.getName(), GameResult.get(player, dealerTotalSum)))
+                .collect(Collectors.toList());
     }
 }

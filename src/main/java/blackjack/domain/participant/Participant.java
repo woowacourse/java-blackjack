@@ -12,4 +12,6 @@ interface Participant {
     List<Card> showCards();
 
     boolean isReceiveCard();
+
+    int sumTotalScore();
 }
