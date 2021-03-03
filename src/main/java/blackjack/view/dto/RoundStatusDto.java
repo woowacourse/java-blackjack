@@ -9,14 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class RoundInitializeStatusDto {
-    //    private Map<String, List<Card>> status = new HashMap<>();
+public class RoundStatusDto {
     private Dealer dealer;
     private List<Player> players;
 
-    public RoundInitializeStatusDto(Dealer dealer, List<Player> players) {
+    public RoundStatusDto(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public String getDealerName() {
