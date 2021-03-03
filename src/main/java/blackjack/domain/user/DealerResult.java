@@ -8,6 +8,7 @@ import java.util.Map;
 public class DealerResult {
 
     private final Map<String, Integer> dealerResult = new LinkedHashMap<>();
+
     {
         this.dealerResult.put("승", 0);
         this.dealerResult.put("무", 0);
