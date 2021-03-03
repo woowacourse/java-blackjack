@@ -40,6 +40,12 @@ public class Game {
         participant.addCard(Deck.draw());
     }
 
+    public void playDealerTurn() {
+        while (!dealer.isStay()) {
+            giveCard(dealer);
+        }
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
