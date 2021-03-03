@@ -26,6 +26,10 @@ public class Card {
                 .findFirst().orElseThrow(()-> new IllegalArgumentException("유효하지 않은 카드입니다."));
     }
 
+    public static LinkedList<Card> getCards(){
+        return new LinkedList<>(cards);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
