@@ -12,6 +12,14 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
+    public int value() {
+        return denomination.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
