@@ -16,6 +16,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public static List<Card> values() {
+        return CardCache.CARD_CACHE;
+    }
+
     public boolean isAce(){
         return denomination.isAce();
     }
@@ -27,7 +31,6 @@ public class Card {
     public int getScore() {
         return denomination.getScore();
     }
-
 
     @Override
     public boolean equals(Object o) {
