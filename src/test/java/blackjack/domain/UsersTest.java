@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,5 +27,33 @@ public class UsersTest {
         Users users = new Users(names);
 
         assertThat(users.users().size()).isEqualTo(3);
+    }
+
+    @DisplayName("각 사용자에게 초기에 카드 두장을 배분한다.")
+    @Test
+    void DistributeToEachUser() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        Users users = new Users(names);
+        users.distributeToEachUser();
+        assertThat(users.users().stream().allMatch(user -> user.cards.cards().size() == 2)).isTrue();
+    }
+
+    @DisplayName("각 사용자들의 모든 카드를 보여준다.")
+    @Test
+    void showCardsByUsers(){
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        Users users = new Users(names);
+        users.distributeToEachUser();
+        List<List<Card>> cardsGroup = users.showCardsByUsers();
+        assertThat(cardsGroup.stream().allMatch(cards -> cards.size() == 2)).isTrue();
+    }
+
+    @DisplayName("사용자 이름들을 확인한다.")
+    @Test
+    void showNames() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        Users users = new Users(names);
+        List<String> namesGroup = users.showNames();
+        assertThat(namesGroup).isEqualTo(Arrays.asList("amazzi", "dani", "pobi"));
     }
 }

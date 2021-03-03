@@ -12,4 +12,9 @@ public class Card {
     public int value() {
         return this.value.getValue();
     }
+
+    @Override
+    public String toString() {
+        return value.getValue() + shape.getShape();
+    }
 }

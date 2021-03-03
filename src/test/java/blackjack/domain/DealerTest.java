@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,5 +65,17 @@ public class DealerTest {
         dealer.draw();
         Cards cards = dealer.cards;
         assertThat(cards.cards().size()).isEqualTo(3);
+    }
+
+    @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")
+    @Test
+    void show() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        List<Card> card = dealer.show();
+        assertThat(card.size()).isEqualTo(1);
     }
 }
