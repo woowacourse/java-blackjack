@@ -1,6 +1,8 @@
 package blackjack;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class FixedCardDeck implements CardDeck {
@@ -26,5 +28,13 @@ public class FixedCardDeck implements CardDeck {
     @Override
     public boolean isEmpty() {
         return cards.isEmpty();
+    }
+
+    @Override
+    public List<Card> initCards() {
+        List<Card> cardsValue = new ArrayList<>();
+        cardsValue.add(pop());
+        cardsValue.add(pop());
+        return cardsValue;
     }
 }

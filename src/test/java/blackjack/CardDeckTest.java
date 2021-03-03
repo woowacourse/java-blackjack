@@ -3,6 +3,8 @@ package blackjack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -59,5 +61,25 @@ public class CardDeckTest {
         }
 
         assertThatThrownBy(() -> cardDeck.pop()).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("초기 2장 확인")
+    void initCards() {
+        CardDeck cardDeck = new FixedCardDeck();
+
+        List<Card> cards = cardDeck.initCards();
+
+        assertThat(cards.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("초기 2장 확인 일치")
+    void initCards2() {
+        CardDeck cardDeck = new FixedCardDeck();
+
+        List<Card> cards = cardDeck.initCards();
+
+        assertThat(cards).contains(Card.from("A클로버"), Card.from("2클로버"));
     }
 }
