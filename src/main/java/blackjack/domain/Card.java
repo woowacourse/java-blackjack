@@ -13,7 +13,19 @@ public class Card {
         return (this.cardNumber == CardNumber.ACE);
     }
 
+    public String getCardSymbol() {
+        return cardNumber.getSymbol();
+    }
+
     public int getCardNumber() {
-        return this.cardNumber.getValue();
+        return cardNumber.getValue();
+    }
+
+    public String getCardType() {
+        return cardType.getType();
+    }
+
+    public String getCard() {
+        return getCardSymbol() + getCardType();
     }
 }

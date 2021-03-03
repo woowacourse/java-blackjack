@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -19,8 +20,16 @@ public class Player {
         myCards.add(card);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getCardCount() {
         return myCards.size();
+    }
+
+    public List<Card> getMyCards() {
+        return Collections.unmodifiableList(myCards);
     }
 
     public boolean isBust() {

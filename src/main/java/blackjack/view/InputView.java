@@ -15,5 +15,4 @@ public class InputView {
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
-
 }

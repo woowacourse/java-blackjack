@@ -29,6 +29,10 @@ public enum CardNumber {
         this(symbol, value, value);
     }
 
+    public String getSymbol() {
+        return this.symbol;
+    }
+
     public int getValue() {
         return this.value;
     }
