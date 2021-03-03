@@ -7,6 +7,7 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.다이아몬드, Face.KING));
 
         List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), "brown");
+        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         challengers.add(challenger);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
@@ -56,7 +57,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.다이아몬드, Face.KING));
 
         List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), "pobi");
+        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         challengers.add(challenger);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
@@ -75,7 +76,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.다이아몬드, Face.TWO));
 
         List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), "CU");
+        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         challengers.add(challenger);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);

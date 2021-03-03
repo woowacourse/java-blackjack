@@ -5,10 +5,10 @@ import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public class Challenger extends Player {
-    private final String name;
+    private final Name name;
     private boolean isBust;
 
-    public Challenger(final Cards cards, final String name) {
+    public Challenger(final Cards cards, final Name name) {
         super(cards);
         this.name = name;
         this.isBust = false;

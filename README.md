@@ -30,9 +30,9 @@
     - [x] Bust 여부 계산한다.
 
 
-- [ ] Players (게임에 참여한 플레이어 그룹)
+- [x] Challengers (게임에 참여한 플레이어 그룹)
 
-- [ ] Name
+- [x] Name
 
 ### Controller, Service, View
 - [ ] InputView (String 으로 받는다)
