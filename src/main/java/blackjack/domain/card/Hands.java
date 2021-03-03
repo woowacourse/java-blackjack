@@ -17,6 +17,13 @@ public class Hands {
         cards.add(card);
     }
 
+    public int calculate() {
+        return cards.stream()
+                .map(Card::getValue)
+                .reduce(Integer::sum)
+                .get();
+    }
+
     public List<Card> toList() {
         return Collections.unmodifiableList(cards);
     }

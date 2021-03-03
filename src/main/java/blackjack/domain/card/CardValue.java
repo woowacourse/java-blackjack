@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 public enum CardValue {
-    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -13,7 +12,8 @@ public enum CardValue {
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K");
+    KING(10, "K"),
+    ACE(11, "A");
 
     private final int value;
     private final String name;
@@ -25,5 +25,9 @@ public enum CardValue {
 
     public String getName() {
         return name;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

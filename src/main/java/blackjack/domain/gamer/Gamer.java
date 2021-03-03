@@ -30,6 +30,10 @@ public abstract class Gamer {
         return hands;
     }
 
+    public int getPoint() {
+        return hands.calculate();
+    }
+
     public void receiveCard(Card card) {
         hands.addCard(card);
     }

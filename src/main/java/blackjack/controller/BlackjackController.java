@@ -16,12 +16,15 @@ public class BlackjackController {
         for (Gamer gamer : gamers.players()) {
             hitOrStand(deck, gamer);
         }
+
+        OutputView.gamersAllCards(gamers);
     }
 
     private void hitOrStand(Deck deck, Gamer gamer) {
         while(InputView.receiveAnswer(gamer.getName())) {
             gamer.receiveCard(deck.giveCard());
             OutputView.allCards(gamer);
+            System.out.println(gamer.getPoint());
         }
     }
 }

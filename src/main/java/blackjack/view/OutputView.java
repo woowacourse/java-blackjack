@@ -17,25 +17,25 @@ public class OutputView {
         final String name = String.join(", ", names);
         System.out.printf("딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, name);
 
-        initialHands(gamers);
+        gamersOpenCards(gamers);
     }
 
-    private static void initialHands(Gamers gamers) {
-        initialCards(gamers.dealer());
-        gamers.players().forEach(OutputView::initialCards);
-    }
-
-    public static void showHands(Gamers gamers) {
+    public static void gamersAllCards(Gamers gamers) {
         allCards(gamers.dealer());
         gamers.players().forEach(OutputView::allCards);
     }
 
-    private static void initialCards(Gamer gamer) {
-        System.out.println(gamer.getName() + " : " + cardToString(gamer.showOpenHands()));
-    }
-
     public static void allCards(Gamer gamer) {
         System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
+    }
+
+    private static void gamersOpenCards(Gamers gamers) {
+        openCards(gamers.dealer());
+        gamers.players().forEach(OutputView::openCards);
+    }
+
+    private static void openCards(Gamer gamer) {
+        System.out.println(gamer.getName() + " : " + cardToString(gamer.showOpenHands()));
     }
 
     private static String cardToString(List<Card> cards) {

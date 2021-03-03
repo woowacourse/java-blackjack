@@ -19,4 +19,8 @@ public class Card {
     public String getName() {
         return name;
     }
+
+    public int getValue() {
+        return value.getValue();
+    }
 }
