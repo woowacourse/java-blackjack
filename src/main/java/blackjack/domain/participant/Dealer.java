@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
+import java.util.Collections;
+import java.util.List;
 
 public class Dealer {
 
@@ -28,5 +30,9 @@ public class Dealer {
 
     public int getTotalScore(){
         return hand.totalScore();
+    }
+
+    public List<Card> getHand(){
+        return Collections.unmodifiableList(hand.toList());
     }
 }

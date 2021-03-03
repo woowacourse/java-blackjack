@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.carddeck.Card;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Hand {
@@ -53,5 +55,9 @@ public class Hand {
 
     private boolean isBurst(final int score) {
         return score > MAX_SCORE;
+    }
+
+    public List<Card> toList() {
+        return new ArrayList<>(cards);
     }
 }
