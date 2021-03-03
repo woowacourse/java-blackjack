@@ -4,8 +4,11 @@ import java.util.List;
 
 public abstract class Participant {
     protected List<Card> cards;
+
     public Participant() {
     }
 
-
+    public void distribute(List<Card> cards) {
+        this.cards = cards;
+    }
 }
