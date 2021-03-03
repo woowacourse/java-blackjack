@@ -12,6 +12,10 @@ public class Card {
     this.cardNumber = cardNumber;
   }
 
+  public String getName() {
+    return cardNumber.getName() + symbol.getName();
+  }
+
   public int getScore() {
     return cardNumber.getScore();
   }
@@ -41,4 +45,5 @@ public class Card {
   public String toString() {
     return cardNumber.getName() + symbol.getName();
   }
+
 }

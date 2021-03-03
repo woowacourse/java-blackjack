@@ -5,11 +5,7 @@ import java.util.List;
 
 public class CardFactory {
 
-  private static final List<Card> normalCards;
-
-  static {
-    normalCards = initNormalCards();
-  }
+  private static final List<Card> normalCards = initNormalCards();
 
   public static List<Card> getNormalCards() {
     return normalCards;

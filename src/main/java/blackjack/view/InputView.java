@@ -5,13 +5,12 @@ import static java.util.stream.Collectors.toList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
 
   private static final Scanner SCANNER = new Scanner(System.in);
   private static final String GAMER_NAME_MESSAGE = "게임에 참여알 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-  private static final String ASK_DRAW_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 yes, 아니요는 no)";
+  private static final String ASK_DRAW_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니요는 n)" + System.lineSeparator();
   private static final String REGEX = ",";
 
   public static List<String> getGamerNamesFromUser() {

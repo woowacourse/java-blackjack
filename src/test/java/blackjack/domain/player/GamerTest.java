@@ -11,16 +11,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTest {
+public class GamerTest {
 
   @Test
   @DisplayName("각 플레이어 덱에 카드를 추가한다.")
   void addCardToDeck() {
-    Player player = new Player("player");
+    Player player = new Gamer("player");
     Card card = new Card(Symbol.CLOVER, CardNumber.EIGHT);
 
     player.addCardToDeck(card);
-    List<Card> deck = player.getDeck();
+    List<Card> deck = player.getDeckAsList();
 
     assertThat(deck).containsExactly(card);
   }
@@ -28,7 +28,7 @@ public class PlayerTest {
   @Test
   @DisplayName("카드를 추가할 때 중복되면 예외를 발생한다.")
   void addCardToDeck_CardDuplicateException() {
-    Player player = new Player("player");
+    Player player = new Gamer("player");
     Card card1 = new Card(Symbol.CLOVER, CardNumber.EIGHT);
     Card card2 = new Card(Symbol.CLOVER, CardNumber.EIGHT);
 
@@ -41,7 +41,7 @@ public class PlayerTest {
   @Test
   @DisplayName("덱의 점수를 계산한다")
   void getScore() {
-    Player player = new Player("player");
+    Player player = new Gamer("player");
 
     player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.FIVE));
     player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.SIX));

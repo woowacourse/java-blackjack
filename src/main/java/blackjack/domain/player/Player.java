@@ -2,19 +2,22 @@ package blackjack.domain.player;
 
 import blackjack.domain.Status;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.exception.CardDuplicateException;
-import java.util.ArrayList;
-import java.util.Collections;
+import blackjack.util.ScoreCalculator;
 import java.util.List;
 
-public class Player {
+public abstract class Player {
 
-  private List<Card> deck;
-  private String name;
+  private final Deck deck;
+  private final String name;
 
-  public Player(String name) {
-    this.deck = new ArrayList<>();
+  private final ScoreCalculator scoreCalculator;
+
+  public Player(String name, ScoreCalculator scoreCalculator) {
+    this.deck = new Deck();
     this.name = name;
+    this.scoreCalculator = scoreCalculator;
   }
 
   public void addCardToDeck(Card card) {
@@ -25,26 +28,12 @@ public class Player {
     deck.add(card);
   }
 
-  public List<Card> getDeck() {
-    return Collections.unmodifiableList(deck);
+  public List<Card> getDeckAsList() {
+    return deck.getCards();
   }
 
   public int getScore() {
-
-    return getScoreIncludeAce(getScoreExceptAce());
-  }
-
-  private int getScoreExceptAce() {
-    return deck.stream().filter(card -> !card.isAce()).mapToInt(Card::getScore).sum();
-  }
-
-  private int getScoreIncludeAce(int scoreExceptAce) {
-    return deck.stream().filter(Card::isAce).mapToInt(card -> {
-      if(scoreExceptAce + card.getScore() + 10 > 21) {
-        return card.getScore();
-      }
-      return card.getScore() + 10;
-    }).sum() + scoreExceptAce;
+    return scoreCalculator.apply(deck);
   }
 
   public Status getStatus() {
@@ -58,5 +47,7 @@ public class Player {
   public boolean isSameName(String name) {
     return getName().equals(name);
   }
+
+  public abstract boolean isDrawable();
 
 }

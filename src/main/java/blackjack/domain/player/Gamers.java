@@ -1,21 +1,13 @@
 package blackjack.domain.player;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Gamers {
@@ -24,9 +16,7 @@ public class Gamers {
 
   public Gamers(List<String> names) {
     validateDuplicate(names);
-    this.gamers = names.stream()
-        .map(Gamer::new)
-        .collect(Collectors.toList());
+    this.gamers = namesToGamers(names);
   }
 
   public Gamers(String ... input) {
@@ -39,8 +29,10 @@ public class Gamers {
     }
   }
 
-  public List<Player> getGamers() {
-    return Collections.unmodifiableList(gamers);
+  private List<Player> namesToGamers(List<String> names) {
+    return names.stream()
+        .map(Gamer::new)
+        .collect(Collectors.toList());
   }
 
   public void drawToGamers(Cards cards) {
@@ -56,10 +48,14 @@ public class Gamers {
         .orElseThrow(PlayerNotFoundException::new);
   }
 
-  public Map<Player, Integer> getGamersScore() {
-    return gamers.stream()
-        .collect(toMap(Function.identity(), Player::getScore));
+  public List<Player> getGamers() {
+    return Collections.unmodifiableList(gamers);
   }
 
+  public List<String> getGamerNames() {
+    return gamers.stream()
+        .map(Player::getName)
+        .collect(toList());
+  }
 }
 
