@@ -9,4 +9,11 @@ public class Card {
         this.cardValue = cardValue;
     }
 
+    public boolean isAce() {
+        return this.cardValue == CardValue.ACE;
+    }
+
+    public int getPoint() {
+        return cardValue.getPoint();
+    }
 }

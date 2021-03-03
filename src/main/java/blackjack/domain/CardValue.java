@@ -13,4 +13,8 @@ public enum CardValue {
         this.value = value;
         this.point = point;
     }
+
+    public int getPoint() {
+        return this.point;
+    }
 }
