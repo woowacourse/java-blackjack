@@ -1,9 +1,13 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
     @DisplayName("A 1개 판단 테스트")
@@ -70,5 +74,21 @@ public class PlayerTest {
         Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
         player.drawCard(eightCard);
         assertThat(player.isCanDraw()).isFalse();
+    }
+
+    @DisplayName("이름 유효성 검사 - 유효한 이름")
+    @ParameterizedTest
+    @ValueSource(strings = {"딜러", " jason ", " pobi"})
+    void validNames(String nameInput) {
+        assertThatCode(() -> new Player(nameInput))
+            .doesNotThrowAnyException();
+    }
+
+    @DisplayName("이름 유효성 검사 - 유효하지 않은 이름")
+    @ParameterizedTest
+    @ValueSource(strings = {"", "  "})
+    void invalidNames(String nameInput) {
+        assertThatThrownBy(() -> new Player(nameInput))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

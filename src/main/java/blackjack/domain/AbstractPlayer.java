@@ -8,9 +8,15 @@ public abstract class AbstractPlayer implements PayerInterface {
     protected static final int BLACKJACK = 21;
 
     private final List<Card> cards;
+    private final Name name;
 
     public AbstractPlayer() {
+        this("anonymous");
+    }
+
+    public AbstractPlayer(String name) {
         cards = new ArrayList<>();
+        this.name = new Name(name);
     }
 
     @Override

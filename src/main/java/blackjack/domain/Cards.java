@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-
     private static Cards instance;
     private final List<Card> cards;
 
