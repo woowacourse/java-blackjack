@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -18,5 +19,19 @@ public class Application {
         dealer.receiveDefaultCards(cardDeck.drawDefaultCards());
         players.receiveDefaultCards(cardDeck);
         OutputView.printDefaultCards(dealer, players);
+
+        for (Participant player : players.toList()) {
+            while (player.isAbleToReceiveCard()) {
+                String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
+                if (answer.equals("y")) {
+                    player.receiveCard(cardDeck.draw());
+                }
+                OutputView.printParticipantCard(player);
+                if (answer.equals("n")) {
+                    break;
+                }
+            }
+        }
+
     }
 }
