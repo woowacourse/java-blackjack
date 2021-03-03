@@ -15,6 +15,7 @@ public abstract class AbstractPlayer implements Player {
 
     private final List<Card> cards;
     private final Name name;
+    private boolean isDrawStop = false;
 
     public AbstractPlayer() {
         this("anonymous");
@@ -72,11 +73,28 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public void stopDraw() {
+        isDrawStop = true;
+    }
+
+    @Override
+    public void draw() {
+        Cards cards = Cards.getCards();
+        drawCard(cards.draw());
+    }
+
+
+    @Override
     public void drawTwoCards() {
         Cards cards = Cards.getCards();
         for (int i = 0; i < FIRST_DRAW_CARDS_COUNT; i++) {
             drawCard(cards.draw());
         }
+    }
+
+    @Override
+    public boolean isDrawStop() {
+        return isDrawStop;
     }
 
     @Override

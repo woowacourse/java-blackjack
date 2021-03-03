@@ -13,33 +13,42 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
     public void play() {
-        String usersNames = InputView.getUsersName();
-        List<Player> players = new ArrayList<>();
-
+        Users users = new Users(InputView.getUsersName());
         Player dealer = new Dealer();
-        players.add(dealer);
+        List<Player> players = setPlayers(users, dealer);
+        players.forEach(Player::drawTwoCards);
+        List<PlayerDto> playerDtos = getPlayerDtos(players);
+        OutputView.printGiveTwoCardsMessage(playerDtos);
+        users.getUsers().forEach(this::drawCard);
+        dealerDraw(dealer);
+    }
 
-        Users users = new Users(usersNames);
-        players.addAll(users.getUsers());
-
-        for (Player player : players) {
-            player.drawTwoCards();
+    private void dealerDraw(Player dealer) {
+        if (dealer.isCanDraw()) {
+            OutputView.printDealerDrawCardMessage();
+            dealer.draw();
         }
+    }
 
-        List<PlayerDto> playerDtos = players.stream()
+    private List<Player> setPlayers(Users users, Player dealer) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(users.getUsers());
+        return players;
+    }
+
+    private List<PlayerDto> getPlayerDtos(List<Player> players) {
+        return players.stream()
             .map(PlayerDto::new)
             .collect(Collectors.toList());
-
-        OutputView.printGiveTwoCardsMessage(playerDtos);
-
-        for (User user : users.getUsers()) {
-            drawCard(user);
-        }
     }
 
     private void drawCard(User user) {
         while (user.isCanDraw()) {
-            user.draw(InputView.getYesOrNo(new PlayerDto(user)));
+            String yesOrNo = InputView.getYesOrNo(new PlayerDto(user));
+            if (user.isDrawContinue(yesOrNo)) {
+                user.draw();
+            }
             printCardsWhenDraw(user);
         }
     }

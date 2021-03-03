@@ -10,6 +10,6 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public boolean isCanDraw() {
-        return getValue() <= DRAW_BOUND;
+        return getValue() <= DRAW_BOUND ;
     }
 }
