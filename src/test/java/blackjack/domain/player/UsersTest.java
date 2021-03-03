@@ -57,7 +57,7 @@ public class UsersTest {
     void result() {
         Map<Name, ResultType> result = users.getResult(dealer);
         assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
-        assertThat(result.get(new Name("json"))).isEqualTo(ResultType.LOSS);
+        assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.LOSS);
         assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
         assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
     }
