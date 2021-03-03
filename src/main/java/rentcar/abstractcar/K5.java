@@ -1,6 +1,6 @@
-package interfacecar;
+package rentcar.abstractcar;
 
-public class K5 implements Car {
+public class K5 extends Car {
 
     private final double tripDistance;
 
@@ -9,12 +9,12 @@ public class K5 implements Car {
     }
 
     @Override
-    public double getDistancePerLiter() {
+    double getDistancePerLiter() {
         return 13;
     }
 
     @Override
-    public double getTripDistance() {
+    double getTripDistance() {
         return this.tripDistance;
     }
 }

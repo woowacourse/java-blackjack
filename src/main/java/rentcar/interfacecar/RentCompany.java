@@ -1,4 +1,4 @@
-package interfacecar;
+package rentcar.interfacecar;
 
 import java.util.ArrayList;
 import java.util.List;

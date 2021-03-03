@@ -1,4 +1,4 @@
-package abstractcar;
+package rentcar.abstractcar;
 
 public abstract class Car {
 

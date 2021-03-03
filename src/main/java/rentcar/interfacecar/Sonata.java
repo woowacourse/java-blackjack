@@ -1,6 +1,6 @@
-package abstractcar;
+package rentcar.interfacecar;
 
-public class Sonata extends Car {
+public class Sonata implements Car {
 
     private final double tripDistance;
 
@@ -9,12 +9,12 @@ public class Sonata extends Car {
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return 10;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return this.tripDistance;
     }
 }

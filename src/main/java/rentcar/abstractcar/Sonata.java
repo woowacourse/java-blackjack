@@ -1,16 +1,16 @@
-package abstractcar;
+package rentcar.abstractcar;
 
-public class K5 extends Car {
+public class Sonata extends Car {
 
     private final double tripDistance;
 
-    public K5(final double tripDistance) {
+    public Sonata(final double tripDistance) {
         this.tripDistance = tripDistance;
     }
 
     @Override
     double getDistancePerLiter() {
-        return 13;
+        return 10;
     }
 
     @Override

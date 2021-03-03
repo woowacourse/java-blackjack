@@ -1,16 +1,16 @@
-package interfacecar;
+package rentcar.interfacecar;
 
-public class Avante implements Car {
+public class K5 implements Car {
 
     private final double tripDistance;
 
-    public Avante(final double tripDistance) {
+    public K5(final double tripDistance) {
         this.tripDistance = tripDistance;
     }
 
     @Override
     public double getDistancePerLiter() {
-        return 15;
+        return 13;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package interfacecar;
+package rentcar.interfacecar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

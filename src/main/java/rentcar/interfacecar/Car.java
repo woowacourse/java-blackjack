@@ -1,4 +1,4 @@
-package interfacecar;
+package rentcar.interfacecar;
 
 public interface Car {
 
