@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.User;
 import blackjack.domain.Users;
 
 import java.util.List;
@@ -37,5 +38,9 @@ public class OutputView {
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
         System.out.println(cardsGroup);
+    }
+
+    public static void printMoreDraw(User user) {
+        System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 }

@@ -21,6 +21,10 @@ public class InputView {
          throw new IllegalArgumentException("구분자는 콤마로 입력해주세요.");
     }
 
+    public static String inputDrawAnswer() {
+        return SCANNER.nextLine();
+    }
+
     private static String deleteWhiteSpaces(String input){
         return input.replaceAll(WITH_BLANK, NO_BLANK);
     }

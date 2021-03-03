@@ -1,8 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Users;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -21,5 +19,13 @@ public class BlackjackController {
         OutputView.printDistribute(users);
         OutputView.printDealerCard(dealer.show());
         OutputView.printUsersCards(users);
+
+        for(User user : users.users()){
+            if(user.isDrawable()){
+                OutputView.printMoreDraw(user);
+                DrawAnswer.find(InputView.inputDrawAnswer());
+                user.draw();
+            }
+        }
     }
 }
