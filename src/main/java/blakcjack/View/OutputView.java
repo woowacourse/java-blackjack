@@ -24,6 +24,10 @@ public class OutputView {
 		System.out.println(stringBuilder.toString());
 	}
 
+	public static void printPlayerHand(final Participant participant) {
+		System.out.println(makeCardSummary(participant));
+	}
+
 	private static String concatenatePlayerNames(List<Participant> players) {
 		return players.stream().map(Participant::getName)
 				.collect(Collectors.joining(", "));

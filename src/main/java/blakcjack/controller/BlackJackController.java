@@ -1,6 +1,7 @@
 package blakcjack.controller;
 
 import blakcjack.View.InputView;
+import blakcjack.View.OutputView;
 import blakcjack.domain.BlackjackGame;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.participant.Dealer;
@@ -31,6 +32,7 @@ public class BlackJackController {
 	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
 		while (player.isScoreLowerThanBlackJackValue() && isYes(player)) {
 			blackjackGame.distributeOneCard(player);
+			OutputView.printPlayerHand(player);
 		}
 	}
 
