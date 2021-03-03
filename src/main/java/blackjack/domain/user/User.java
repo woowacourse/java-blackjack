@@ -7,14 +7,29 @@ import java.util.List;
 public class User {
     private final Hand hand;
     private final String name;
+    private Status status;
 
     public User(String name) {
         this.hand = Hand.createEmptyHand();
         this.name = name;
     }
 
+    public void firstDraw(Card first, Card second){
+        drawCard(first);
+        drawCard(second);
+    }
+
+    public int handSize() {
+        return hand.size();
+    }
+
     public void drawCard(Card card) {
         hand.add(card);
+        status = Status.of(hand.calculateScore()); // 게임중, 블랙잭, 버스트
+    }
+
+    public void stopUser(){
+        status = Status.STOP;
     }
 
     public List<Card> getCards() {
