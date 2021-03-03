@@ -42,8 +42,11 @@ class DealerTest {
         Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 16);
         dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.TEN));
         dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.ACE));
+
         //when
-        assertThat(dealer.isReceiveCard()).isTrue();
+        boolean isReceived = dealer.isReceiveCard();
+
         //then
+        assertThat(isReceived).isTrue();
     }
 }
