@@ -1,5 +1,6 @@
 package blackjack;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,10 +25,21 @@ public class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러가 카드를 더 받을 수 있는지 확인")
     void checkMoreCardAvailable() {
         Dealer dealer = new Dealer("딜러");
         dealer.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         assertThat(dealer.checkMoreCardAvailable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트인지 확인")
+    void isBust() {
+        Dealer dealer = new Dealer("딜러");
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
+        AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
     }
 }

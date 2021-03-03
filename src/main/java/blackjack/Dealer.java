@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer {
+    private static final int BUST_LIMIT = 21;
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
 
     private final String name;
@@ -24,6 +25,10 @@ public class Dealer {
 
     public boolean checkMoreCardAvailable() {
         return (calculateMyCardSum() < MAX_SUM_FOR_MORE_CARD);
+    }
+
+    public boolean isBust() {
+        return calculateMyCardSum() > BUST_LIMIT;
     }
 
     private int calculateMyCardSum() {
