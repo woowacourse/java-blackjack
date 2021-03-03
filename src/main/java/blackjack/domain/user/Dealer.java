@@ -7,6 +7,7 @@ import java.util.List;
 public class Dealer {
     private static final int NO_MORE_DRAW_NUMBER = 16;
     private final Hand hand;
+    private Status status;
 
     public Dealer() {
         this.hand = Hand.createEmptyHand();
@@ -19,6 +20,7 @@ public class Dealer {
 
     public void drawCard(Card card) {
         hand.add(card);
+        changeStatus();
     }
 
     public List<Card> getCards() {
@@ -29,11 +31,23 @@ public class Dealer {
         return hand.size();
     }
 
+    public boolean isSameStatus(Status status){
+        return this.status == status;
+    }
+
+    public void changeStatus(){
+        status = Status.of(hand.calculateScore());
+    }
+
     public Card getFirstCard() {
         return hand.getFirstCard();
     }
 
     public boolean isUnderSixteen() {
         return hand.calculateScore() < NO_MORE_DRAW_NUMBER;
+    }
+
+    public int calculateScore() {
+        return hand.calculateScore();
     }
 }
