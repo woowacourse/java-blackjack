@@ -2,43 +2,46 @@ package blackjack;
 
 import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
 
+    private static final String AGREE = "y";
+    private static final String DECLINE = "n";
+
     public static void main(String[] args) {
-        List<String> participantNames = InputView.inputPlayerNames();
-        Participants players = Participants.from(participantNames);
-        Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
-
-        dealer.receiveCards(cardDeck.drawDefaultCards());
-        players.receiveDefaultCards(cardDeck);
-        OutputView.printDefaultCards(dealer, players);
-
-        for (Participant player : players.toList()) {
-            while (player.isAbleToReceiveCard()) {
-                String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
-                if (answer.equals("y")) {
-                    player.receiveCard(cardDeck.draw());
-                }
-                OutputView.printParticipantCard(player);
-                if (answer.equals("n")) {
-                    break;
-                }
-            }
-        }
-
+        Dealer dealer = new Dealer();
+        List<Player> players = InputView.inputPlayerNames()
+                                        .stream()
+                                        .map(Player::new)
+                                        .collect(Collectors.toList());
+        Participants participants = Participants.of(dealer, players);
+        participants.receiveDefaultCards(cardDeck);
+        OutputView.printDefaultCardMessage(dealer, players);
+        players.forEach(player -> drawMoreCard(player, cardDeck));
         if (dealer.isAbleToReceiveCard()) {
             dealer.receiveCard(cardDeck.draw());
-            OutputView.printDealerDrawingMessage();
+            OutputView.printDealerDrawingMessage(dealer);
         }
+        OutputView.printFinalCardsAndScore(participants);
+    }
 
-        OutputView.printFinalCardsAndScore(dealer, players);
-
+    private static void drawMoreCard(Player player, CardDeck cardDeck) {
+        while (player.isAbleToReceiveCard()) {
+            String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
+            if (answer.equals(AGREE)) {
+                player.receiveCard(cardDeck.draw());
+            }
+            OutputView.printEachPlayerCards(player);
+            if (answer.equals(DECLINE)) {
+                break;
+            }
+        }
     }
 }

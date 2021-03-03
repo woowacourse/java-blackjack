@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Participants {
 
@@ -12,10 +13,9 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants from(List<String> participantNames) {
-        List<Participant> participants = participantNames.stream()
-                                                         .map(Player::new)
-                                                         .collect(Collectors.toList());
+    public static Participants of(Dealer dealer, List<Player> players) {
+        List<Participant> participants = Stream.concat(Stream.of(dealer), players.stream())
+                                               .collect(Collectors.toList());
         return new Participants(participants);
     }
 
