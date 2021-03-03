@@ -29,4 +29,12 @@ public class Participant {
     public void receiveDefaultCards(Cards receivedCards) {
         cards.add(receivedCards);
     }
+
+    public int showScoreTotal() {
+        return cards.calculateScore();
+    }
+
+    public void receiveCard(Card card) {
+        cards.add(card);
+    }
 }

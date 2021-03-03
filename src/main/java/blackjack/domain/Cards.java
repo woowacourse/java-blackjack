@@ -21,6 +21,10 @@ public class Cards {
         cards.addAll(targetCards.cards);
     }
 
+    public void add(Card card) {
+        cards.add(card);
+    }
+
     public int calculateScore() {
         int aceCounts = getAceCounts();
         int sum = cards.stream()
