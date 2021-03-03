@@ -16,6 +16,14 @@ public abstract class User {
         hand.addCard(card);
     }
 
+    public ResultDTO getResultDTO() {
+        String name = getName();
+        List<Card> cards = hand.getCards();
+        int score = hand.getScore();
+
+        return new ResultDTO(name, cards, score);
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
     }
@@ -23,4 +31,5 @@ public abstract class User {
     public abstract String getName();
 
     public abstract boolean isHit();
+
 }

@@ -3,10 +3,13 @@ package blackjack.domain;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import javax.xml.transform.Result;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,14 +33,6 @@ public class Game {
         players.forEach(player -> player.initialHands(deck.pickInitialCards()));
     }
 
-    public User getDealer() {
-        return dealer;
-    }
-
-    public List<User> getPlayers() {
-        return players;
-    }
-
     public boolean askDrawToDealer(Deck deck) {
         if(!dealer.isHit()) {
             return false;
@@ -47,5 +42,21 @@ public class Game {
             dealer.draw(deck.pickSingleCard());
         }
         return true;
+    }
+
+    public User getDealer() {
+        return dealer;
+    }
+
+    public List<User> getPlayers() {
+        return players;
+    }
+
+    public List<ResultDTO> getResultDTOs() {
+        List<ResultDTO> resultDTOS = new ArrayList<>();
+        resultDTOS.add(dealer.getResultDTO());
+        players.forEach(player -> resultDTOS.add(player.getResultDTO()));
+
+        return resultDTOS;
     }
 }

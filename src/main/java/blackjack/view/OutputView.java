@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
 
 import java.util.List;
@@ -34,23 +35,34 @@ public class OutputView {
     }
 
     public static void printPlayerCard(User player) {
-        String cardString = player.getCards().stream()
-            .map(card -> String.format("%s%s", card.getDenomination().getName(), card.getSuit().getName()))
-            .collect(Collectors.joining(NAME_DELIMITER));
+        String cardString = makeCardString(player.getCards());
 
         System.out.printf("%s의 카드: %s%n", player.getName(), cardString);
     }
 
+    private static String makeCardString(List<Card> cards) {
+        return cards.stream()
+            .map(card -> String.format("%s%s", card.getDenomination().getName(), card.getSuit().getName()))
+            .collect(Collectors.joining(NAME_DELIMITER));
+    }
+
     public static void printDealerDraw(boolean hasDrawn) {
         if (hasDrawn) {
-            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
             return;
         }
 
-        System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.");
+        System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.\n");
     }
 
     public static void printLine() {
         System.out.println();
+    }
+
+    public static void printUserResult(List<ResultDTO> resultDTOS) {
+        resultDTOS.forEach(resultDTO -> System.out.printf("%s 카드 : %s - 결과: %d%n",
+            resultDTO.getName(),
+            makeCardString(resultDTO.getCards()),
+            resultDTO.getScore()));
     }
 }

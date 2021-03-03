@@ -16,6 +16,7 @@ public class BlackjackController {
         OutputView.printLine();
         game.getPlayers().forEach(player -> getAdditionalCard((Player) player, deck));
         OutputView.printDealerDraw(game.askDrawToDealer(deck));
+        OutputView.printUserResult(game.getResultDTOs());
     }
 
     private void getAdditionalCard(Player player, Deck deck) {
