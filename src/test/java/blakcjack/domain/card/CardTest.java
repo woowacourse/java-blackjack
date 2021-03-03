@@ -13,6 +13,7 @@ public class CardTest {
 		assertThat(card).isEqualTo(Card.of(CardSymbol.HEART, CardNumber.ACE));
 	}
 
+	@DisplayName("캐싱 확인")
 	@Test
 	void cache() {
 		assertThat(Card.of(CardSymbol.HEART, CardNumber.ACE))
