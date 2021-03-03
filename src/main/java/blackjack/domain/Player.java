@@ -15,6 +15,14 @@ public class Player extends Participant {
     }
 
     public boolean isWin(Dealer dealer) {
-        return super.getFinalScore() > dealer.getFinalScore();
+        int dealerScore = dealer.getFinalScore();
+        int playerScore = getFinalScore();
+        if (playerScore > MAXIMUM_SCORE_LIMIT) {
+            return false;
+        }
+        if (dealerScore > MAXIMUM_SCORE_LIMIT) {
+            return true;
+        }
+        return playerScore > dealerScore;
     }
 }

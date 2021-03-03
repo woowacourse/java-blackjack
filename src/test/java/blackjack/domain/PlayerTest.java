@@ -34,7 +34,6 @@ public class PlayerTest {
         new Card(Symbol.TWO, Shape.HEART)
     );
 
-
     static Stream<Arguments> generateData() {
         return Stream.of(
             Arguments.of(CARDS_SCORE_20, true), // 합 : 20
@@ -62,6 +61,30 @@ public class PlayerTest {
 
         player.receiveCards(new Cards(CARDS_SCORE_20));
         dealer.receiveCards(new Cards(CARDS_SCORE_19));
+
+        assertThat(player.isWin(dealer)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하면 플레이어 패배")
+    public void isWin_PlayerAndDealerScoreOver21() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+
+        player.receiveCards(new Cards(CARDS_SCORE_22));
+        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+
+        assertThat(player.isWin(dealer)).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하지 않으면 플레이어 승")
+    public void isWin_DealerScoreOver21() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+
+        player.receiveCards(new Cards(CARDS_SCORE_19));
+        dealer.receiveCards(new Cards(CARDS_SCORE_22));
 
         assertThat(player.isWin(dealer)).isTrue();
     }
