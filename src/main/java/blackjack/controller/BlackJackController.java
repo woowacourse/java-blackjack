@@ -13,20 +13,21 @@ import java.util.stream.Collectors;
 public class BlackJackController {
     public void play() {
         Users users = new Users(InputView.getUsersName());
-        Player dealer = new Dealer();
+        Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
-        List<PlayerDto> usersDtos = getUserDtos(users);
-        OutputView.printGiveTwoCardsMessage(usersDtos, new PlayerDto(dealer));
+        OutputView.printGiveTwoCardsMessage(getUserDtos(users), new PlayerDto(dealer));
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
+        OutputView.printFinalCardsMessage(getUserDtos(users), new PlayerDto(dealer));
+        OutputView.printResultMessage(users.getResult(dealer));
     }
 
-    private void drawTwoCards(Users users, Player dealer) {
+    private void drawTwoCards(Users users, Dealer dealer) {
         dealer.drawTwoCards();
         users.getUsers().forEach(Player::drawTwoCards);
     }
 
-    private void dealerDraw(Player dealer) {
+    private void dealerDraw(Dealer dealer) {
         if (dealer.isCanDraw()) {
             OutputView.printDealerDrawCardMessage();
             dealer.draw();
@@ -51,7 +52,7 @@ public class BlackJackController {
 
     private void printCardsWhenDraw(User user) {
         if (!user.isDrawStop()) {
-            OutputView.printUserCards(new PlayerDto(user));
+            OutputView.printUserInitialCards(new PlayerDto(user));
         }
     }
 }
