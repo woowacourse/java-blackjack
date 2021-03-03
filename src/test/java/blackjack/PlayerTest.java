@@ -1,6 +1,7 @@
 package blackjack;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,13 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PlayerTest {
+    private Player player;
+
+    @BeforeEach
+    void setUp() {
+        player = new Player("bada");
+    }
+
     @Test
     @DisplayName("참가자가 잘 생성되는지 확인")
     void create() {
@@ -20,7 +28,6 @@ public class PlayerTest {
     @Test
     @DisplayName("참가자가 카드를 받았는지 확인")
     void receiveCard() {
-        Player player = new Player("joel");
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         assertThat(player.getCardCount()).isEqualTo(1);
     }
@@ -28,7 +35,6 @@ public class PlayerTest {
     @Test
     @DisplayName("참가자가 갖고 있는 카드의 합을 확인")
     void calculateMyCardSum() {
-        Player player = new Player("j.on");
         player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         Assertions.assertThat(player.calculate()).isEqualTo(12);
@@ -37,7 +43,6 @@ public class PlayerTest {
     @Test
     @DisplayName("에이스 카드가 하나있을 때 합 구하기")
     void calculateMyCardSumWhenAceIsOne() {
-        Player player = new Player("j.on");
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
         Assertions.assertThat(player.calculate()).isEqualTo(13);
@@ -47,7 +52,6 @@ public class PlayerTest {
     @CsvSource(value = {"ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12"}, delimiter = ':')
     @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
     void calculateMyCardSumWhenAceIsTwo(final String input, final int expected) {
-        Player player = new Player("j.on");
         final String[] inputs = input.split(",");
         for (String number : inputs) {
             CardNumber cardNumber = CardNumber.valueOf(number);
@@ -59,7 +63,6 @@ public class PlayerTest {
     @Test
     @DisplayName("참가자가 버스트인지 확인")
     void isBust() {
-        Player player = new Player("bada");
         player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         player.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));

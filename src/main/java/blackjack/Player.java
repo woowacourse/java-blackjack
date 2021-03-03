@@ -46,9 +46,9 @@ public class Player {
     private int calculateMultipleCase(int aceCount) {
         final List<Integer> possibleSum = new ArrayList<>();
         final int sumExceptAce = myCards.stream()
-                            .filter(card -> !card.isAce())
-                            .mapToInt(Card::getCardNumber)
-                            .sum();
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getCardNumber)
+                .sum();
 
         for (int aceSum : calculateAceSum(aceCount)) {
             possibleSum.add(sumExceptAce + aceSum);
