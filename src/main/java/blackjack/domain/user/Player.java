@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 public class Player extends User {
     private final String name;
@@ -12,7 +12,12 @@ public class Player extends User {
     }
 
     @Override
-    String getName() {
+    public int getHitLimit() {
+        return 0;
+    }
+
+    @Override
+    public String getName() {
         return name;
     }
 }
