@@ -4,6 +4,7 @@ import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
@@ -70,5 +71,9 @@ public abstract class AbstractPlayer implements Player {
 
     public Name getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
