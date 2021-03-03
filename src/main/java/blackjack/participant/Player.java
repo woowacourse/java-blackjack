@@ -1,5 +1,7 @@
 package blackjack.participant;
 
+import blackjack.Game;
+
 public class Player extends Participant{
     private final Name name;
 
@@ -9,6 +11,10 @@ public class Player extends Participant{
 
     private Player(Name name) {
         this.name = name;
+    }
+
+    public boolean isBlackJack() {
+        return calculateResult() == Game.BLACKJACK_NUMBER;
     }
 
     @Override
