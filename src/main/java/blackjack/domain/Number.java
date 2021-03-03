@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public enum Number {
-    ACE("A", 1, 11),
+    ACE("A", 11, 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -51,5 +51,13 @@ public enum Number {
 
     public String getName() {
         return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isAce() {
+        return this.equals(ACE);
     }
 }

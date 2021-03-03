@@ -44,7 +44,7 @@ class NumberTest {
     @ParameterizedTest
     @ValueSource(strings = {"0", "-1", "B", "a"})
     void number_wrong_name_exception_test(String name) {
-        assertThatThrownBy(()->  Number.from(name))
+        assertThatThrownBy(() -> Number.from(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("입력된 숫자는 없는 카드 숫자입니다! : %s", name));
     }
