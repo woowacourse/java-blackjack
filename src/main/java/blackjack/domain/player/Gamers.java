@@ -5,6 +5,8 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.card.Cards;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
+import blackjack.util.BlackjackScoreCalculator;
+import blackjack.util.ScoreCalculator;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,13 +16,17 @@ public class Gamers {
 
     private final List<Player> gamers;
 
-    public Gamers(List<String> names) {
+    public Gamers(List<String> names, ScoreCalculator scoreCalculator) {
         validateDuplicate(names);
-        this.gamers = namesToGamers(names);
+        this.gamers = namesToGamers(names, scoreCalculator);
     }
 
     public Gamers(String... input) {
-        this(Arrays.asList(input));
+        this(Arrays.asList(input), new BlackjackScoreCalculator());
+    }
+
+    public Gamers(ScoreCalculator scoreCalculator, String... input) {
+        this(Arrays.asList(input), scoreCalculator);
     }
 
     private void validateDuplicate(List<String> names) {
@@ -29,9 +35,9 @@ public class Gamers {
         }
     }
 
-    private List<Player> namesToGamers(List<String> names) {
+    private List<Player> namesToGamers(List<String> names, ScoreCalculator scoreCalculator) {
         return names.stream()
-            .map(Gamer::new)
+            .map(name -> new Gamer(name, scoreCalculator))
             .collect(Collectors.toList());
     }
 

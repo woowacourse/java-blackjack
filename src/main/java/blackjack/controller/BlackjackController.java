@@ -7,6 +7,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.util.BlackjackScoreCalculator;
 import blackjack.util.DtoAssembler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -34,8 +35,9 @@ public class BlackjackController {
     }
 
     private Game gameInitialize() {
-        Dealer dealer = new Dealer();
-        Gamers gamers = new Gamers(InputView.getGamerNamesFromUser());
+        BlackjackScoreCalculator scoreCalculator = new BlackjackScoreCalculator();
+        Dealer dealer = new Dealer(scoreCalculator);
+        Gamers gamers = new Gamers(InputView.getGamerNamesFromUser(), scoreCalculator);
         Game game = new Game(cards, dealer, gamers);
 
         List<PlayerDto> playerDtos = DtoAssembler.createPlayerDtos(game.getGamersAsList());
