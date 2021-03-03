@@ -12,6 +12,19 @@ public class Card {
         this.number = number;
     }
 
+    public boolean isAce(){
+        return number == 1;
+    }
+
+    public String getName() {
+        return number + symbol;
+    }
+
+    public int getScore() {
+        return number;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -28,13 +41,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, number);
-    }
-
-    public String getName() {
-        return number + symbol;
-    }
-
-    public int getScore() {
-        return number;
     }
 }
