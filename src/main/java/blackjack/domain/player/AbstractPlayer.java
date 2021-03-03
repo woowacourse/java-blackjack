@@ -54,13 +54,13 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void draw() {
+    public void drawRandomOneCard() {
         Cards cards = Cards.getCards();
         drawCard(cards.draw());
     }
 
     @Override
-    public void drawTwoCards() {
+    public void drawRandomTwoCards() {
         Cards cards = Cards.getCards();
         for (int i = 0; i < FIRST_DRAW_CARDS_COUNT; i++) {
             drawCard(cards.draw());

@@ -8,7 +8,7 @@ public interface Player {
 
     boolean isCanDraw();
 
-    void drawTwoCards();
+    void drawRandomTwoCards();
 
     Name getName();
 
@@ -16,5 +16,5 @@ public interface Player {
 
     int getValue();
 
-    void draw();
+    void drawRandomOneCard();
 }

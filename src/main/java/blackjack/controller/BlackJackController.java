@@ -23,8 +23,8 @@ public class BlackJackController {
     }
 
     private void drawTwoCards(Users users, Dealer dealer) {
-        dealer.drawTwoCards();
-        users.getUsers().forEach(Player::drawTwoCards);
+        dealer.drawRandomTwoCards();
+        users.getUsers().forEach(Player::drawRandomTwoCards);
     }
 
     private List<PlayerDto> getUserDTOs(Users users) {
@@ -37,7 +37,7 @@ public class BlackJackController {
         while (user.isCanDraw()) {
             String yesOrNo = InputView.getYesOrNo(new PlayerDto(user));
             if (user.isDrawContinue(yesOrNo)) {
-                user.draw();
+                user.drawRandomOneCard();
             }
             printCardsWhenDraw(user);
         }
@@ -52,7 +52,7 @@ public class BlackJackController {
     private void dealerDraw(Dealer dealer) {
         if (dealer.isCanDraw()) {
             OutputView.printDealerDrawCardMessage();
-            dealer.draw();
+            dealer.drawRandomOneCard();
         }
     }
 }
