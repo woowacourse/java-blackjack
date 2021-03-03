@@ -28,11 +28,16 @@ public class BlackjackController {
                 }
                 player.receiveCard(cardDeck.distribute());
                 OutputView.showPlayerCard(player.getName(), player.getMyCards());
+
+                if (player.isBust()) {
+                    System.out.println("카드의 합이 21을 넘어, 게임에서 패배하였습니다.");
+                    break;
+                }
             }
         }
     }
 
-    private List<Player> playerSetUp() {
+   private List<Player> playerSetUp() {
         final List<String> names = InputView.requestName();
         final List<Player> players = new ArrayList<>();
         for (String name : names) {
