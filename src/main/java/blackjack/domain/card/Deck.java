@@ -1,18 +1,22 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.Stack;
-
 public class Deck {
 
-    private final Stack<Card> cards;
+    private final CardStack cards;
 
-    private Deck(Stack<Card> cards) {
+    private Deck(CardStack cards) {
         this.cards = cards;
     }
 
-    public static Deck create(Stack<Card> cards) {
-        Collections.shuffle(cards);
-        return new Deck(cards);
+    public static Deck create() {
+        return new Deck(CardStack.create());
+    }
+
+    public Hands giveFirstHand() {
+        return new Hands(cards.getTwoCards());
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }
