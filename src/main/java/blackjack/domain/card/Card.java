@@ -33,6 +33,14 @@ public class Card {
         }
     }
 
+    public int getScore() {
+        return denomination.getScore();
+    }
+
+    public boolean isAce() {
+        return denomination.getName().equals("A");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
