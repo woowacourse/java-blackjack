@@ -15,7 +15,7 @@ public class OutputView {
 		stringBuilder.append(dealer.getName())
 				.append("와 ")
 				.append(concatenatePlayerNames(players))
-				.append("에게 2장의 카드를 나누었습니다.");
+				.append("에게 2장의 카드를 나누었습니다.\n");
 
 		stringBuilder.append(makeCardSummary(dealer));
 		for (final Participant participant : players) {
