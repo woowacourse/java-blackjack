@@ -36,6 +36,10 @@ public class Game {
         participant.addCard(Deck.draw());
     }
 
+    public void giveCard(Participant participant) {
+        participant.addCard(Deck.draw());
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

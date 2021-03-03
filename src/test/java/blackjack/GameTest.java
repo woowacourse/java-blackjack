@@ -1,6 +1,8 @@
 package blackjack;
 
+import blackjack.card.Deck;
 import blackjack.participant.Dealer;
+import blackjack.participant.Participant;
 import blackjack.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
-    List<String> names = Arrays.asList("wannte","bepoz");
+    final List<String> names = Arrays.asList("wannte","bepoz");
     Game game;
 
     @BeforeEach
@@ -34,5 +36,12 @@ public class GameTest {
         }
         Dealer dealer = game.getDealer();
         assertThat(dealer.getCards().size()).isEqualTo(2);
+    }
+
+    @Test
+    void giveCardToParticipant() {
+        Participant participant = game.getPlayers().get(0);
+        game.giveCard(participant);
+        assertThat(participant.getCards().size()).isEqualTo(1);
     }
 }
