@@ -23,9 +23,9 @@ public class Cards {
         Collections.shuffle(cards);
     }
 
-    public List<Card> pop(boolean isStart) {
+    public List<Card> pop(GameStatus gameStatus) {
         int endCount = 1;
-        if (isStart) {
+        if (gameStatus.isStart()) {
             endCount = 2;
         }
         return IntStream.range(START_COUNT, endCount)

@@ -18,8 +18,8 @@ public class CardsTest {
     @Test
     public void peekTwoCardsStart(){
         Cards cards = new Cards(CardFactory.make());
-
-        assertThat(cards.pop(true).size()).isEqualTo(2);
+        GameStatus gameStatus = new GameStatus(true);
+        assertThat(cards.pop(gameStatus).size()).isEqualTo(2);
         assertThat(cards.size()).isEqualTo(50);
     }
 
@@ -27,8 +27,8 @@ public class CardsTest {
     @Test
     public void peekTwoCardsOngoing(){
         Cards cards = new Cards(CardFactory.make());
-
-        assertThat(cards.pop(false).size()).isEqualTo(1);
+        GameStatus gameStatus = new GameStatus(false);
+        assertThat(cards.pop(gameStatus).size()).isEqualTo(1);
         assertThat(cards.size()).isEqualTo(51);
     }
 }
