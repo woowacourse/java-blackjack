@@ -5,6 +5,7 @@ import blackjack.participant.Dealer;
 import blackjack.participant.Participant;
 import blackjack.participant.Player;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +47,19 @@ public class Game {
         while (!dealer.isStay()) {
             giveCard(dealer);
         }
+    }
+
+    public List<Integer> getDealerResult() {
+        int winCount = 0;
+        int drawCount = 0;
+        int loseCount = 0;
+        for (Player player : players) {
+            winCount += player.getLoseCount();
+            drawCount += player.getDrawCount();
+            loseCount += player.getWinCount();
+        }
+
+        return Arrays.asList(winCount, drawCount, loseCount);
     }
 
     public List<Player> getPlayers() {
