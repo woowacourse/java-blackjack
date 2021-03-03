@@ -1,6 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.scoreboard.DealerGameResult;
+import blackjack.domain.scoreboard.GameResult;
+import blackjack.domain.scoreboard.ScoreBoard;
+import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Status;
 import blackjack.domain.user.User;
@@ -8,6 +12,9 @@ import blackjack.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
     private final Deck deck = Deck.createDeck();
@@ -39,4 +46,19 @@ public class BlackjackGame {
                 .filter(user -> user.isSameStatus(status))
                 .findFirst();
     }
+
+    public ScoreBoard createScoreBoard(){
+        return new ScoreBoard(users.stream()
+                .collect(toMap(Function.identity(), this::createGameResult)), createDealerGameResult());
+    }
+
+    private DealerGameResult createDealerGameResult() {
+        return new DealerGameResult(dealer.getCards());
+    }
+
+    private GameResult createGameResult(User user) {
+        return new GameResult(user.getCards(), WinOrLose.decideWinOrLose(user, dealer));
+    }
+
+
 }

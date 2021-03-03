@@ -26,17 +26,17 @@ public class BlackJackGameTest {
     @Test
     void testFindPlayingUser(){
         //given
-        User user1 = new User("욘");
-        User user2 = new User("웨지");
-        User user3 = new User("포비");
+        User firstUser = new User("욘");
+        User secondUser = new User("웨지");
+        User thirdUser = new User("포비");
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(user1,user2,user3));
+        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(firstUser,secondUser,thirdUser));
         //then
-        assertThat(blackJackGame.findFirstUserByStatus(Status.PLAYING).get()).isEqualTo(user1);
+        assertThat(blackJackGame.findFirstUserByStatus(Status.PLAYING).get()).isEqualTo(firstUser);
 
         //when
-        user1.stopUser();
+        firstUser.stopUser();
         //then
-        assertThat(blackJackGame.findFirstUserByStatus(Status.PLAYING).get()).isEqualTo(user2);
+        assertThat(blackJackGame.findFirstUserByStatus(Status.PLAYING).get()).isEqualTo(secondUser);
     }
 }

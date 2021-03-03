@@ -25,7 +25,11 @@ public class User {
 
     public void drawCard(Card card) {
         hand.add(card);
-        status = Status.of(hand.calculateScore()); // 게임중, 블랙잭, 버스트
+        changeStatus();
+    }
+
+    public void changeStatus(){
+        status = Status.of(hand.calculateScore());
     }
 
     public void stopUser(){
@@ -42,5 +46,9 @@ public class User {
 
     public boolean canContinueGame() {
         return status.canContinueGame();
+    }
+
+    public int calculateScore() {
+        return hand.calculateScore();
     }
 }
