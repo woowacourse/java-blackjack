@@ -32,7 +32,7 @@ public class DealerTest {
         Cards cards = new Cards(inputCards);
 
         Dealer dealer = new Dealer();
-        dealer.receiveDefaultCards(cards);
+        dealer.receiveCards(cards);
 
         assertThat(dealer.isAbleToReceiveCard()).isEqualTo(result);
     }

@@ -11,7 +11,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAbleToReceiveCard() {
-        int currentScore = showScoreTotal();
+        int currentScore = getFinalScore();
         return currentScore <= MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 }

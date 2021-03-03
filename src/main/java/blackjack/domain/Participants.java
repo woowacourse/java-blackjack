@@ -32,7 +32,7 @@ public class Participants {
 
     public void receiveDefaultCards(CardDeck cardDeck) {
         for (Participant participant : participants) {
-            participant.receiveDefaultCards(cardDeck.drawDefaultCards());
+            participant.receiveCards(cardDeck.drawDefaultCards());
         }
     }
 

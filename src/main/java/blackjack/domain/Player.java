@@ -13,4 +13,8 @@ public class Player extends Participant {
         int currentScore = calculateScoreWhenAceIsMinimum();
         return currentScore < MAXIMUM_SCORE_LIMIT;
     }
+
+    public boolean isWin(Dealer dealer) {
+        return super.getFinalScore() > dealer.getFinalScore();
+    }
 }

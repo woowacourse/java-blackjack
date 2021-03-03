@@ -26,7 +26,7 @@ public class ParticipantTest {
         Participant participant = new Player("jason");
         Card card = new Card(Symbol.EIGHT, Shape.CLOVER);
         participant.receiveCard(card);
-        int scoreTotal = participant.showScoreTotal();
+        int scoreTotal = participant.getFinalScore();
         assertThat(scoreTotal).isEqualTo(8);
     }
 }

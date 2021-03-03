@@ -66,7 +66,7 @@ public class OutputView {
 
     private static void printParticipantCardWithScore(Participant participant) {
         String cards = getCardsInformation(participant.getCards());
-        System.out.println(cards + " - 결과: " + participant.showScoreTotal());
+        System.out.println(cards + " - 결과: " + participant.getFinalScore());
     }
 
 

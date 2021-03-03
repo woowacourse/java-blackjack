@@ -16,7 +16,7 @@ public class Application {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
 
-        dealer.receiveDefaultCards(cardDeck.drawDefaultCards());
+        dealer.receiveCards(cardDeck.drawDefaultCards());
         players.receiveDefaultCards(cardDeck);
         OutputView.printDefaultCards(dealer, players);
 

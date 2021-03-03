@@ -32,11 +32,7 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    public void receiveDefaultCards(Cards receivedCards) {
-        cards.add(receivedCards);
-    }
-
-    public int showScoreTotal() {
+    public int getFinalScore() {
         return cards.calculateFinalScore();
     }
 
@@ -46,6 +42,10 @@ public abstract class Participant {
 
     public void receiveCard(Card card) {
         cards.add(card);
+    }
+
+    public void receiveCards(Cards receivedCards) {
+        cards.add(receivedCards);
     }
 
     public abstract boolean isAbleToReceiveCard();
