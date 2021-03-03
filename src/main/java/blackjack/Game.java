@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
+    public static final int BLACKJACK_NUMBER = 21;
+
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(List<Player> players) {
+    private Game(List<Player> players) {
         this.dealer = new Dealer();
         this.players = players;
     }

@@ -1,5 +1,6 @@
 package blackjack.participant;
 
+import blackjack.Game;
 import blackjack.card.Card;
 
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    public static final int BLACKJACK_NUMBER = 21;
     public static final int ZERO = 0;
     public static final int DIFFERENCE_OF_ACE_VALUE = 10;
 
@@ -30,7 +30,7 @@ public abstract class Participant {
     }
 
     private boolean canLowerCardsValue(int value, int remainLoop) {
-        return value > BLACKJACK_NUMBER && remainLoop > ZERO;
+        return value > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
     }
 
     private int lowerValueOfAce(int value) {
