@@ -3,6 +3,8 @@ package blackjack.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,18 +37,19 @@ class DealerTest {
         assertThat(cards).hasSize(1);
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("딜러가 카드를 한장을 더 뽑을 수 있는지 확인한다")
-    void test_dealer_is_receive_card() {
+    @CsvSource(value = {
+            "16:true", "17:false"
+    }, delimiter = ':')
+    void test_dealer_is_receive_card(int totalScore, boolean actual) {
         //given
-        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 16);
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.TEN));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.ACE));
+        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> totalScore);
 
         //when
         boolean isReceived = dealer.isReceiveCard();
 
         //then
-        assertThat(isReceived).isTrue();
+        assertThat(isReceived).isEqualTo(actual);
     }
 }
