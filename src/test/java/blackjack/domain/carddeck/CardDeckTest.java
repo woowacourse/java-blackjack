@@ -6,24 +6,32 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
 
+    private CardDeck cardDeck;
+
+    @BeforeEach
+    void setUp() {
+        cardDeck = CardDeck.newShuffledDeck();
+    }
+
     @Test
     @DisplayName("카드를 한장 뽑는다.")
     void testCardDeckDraw() {
-        assertThat(CardDeck.draw()).isInstanceOf(Card.class);
+        assertThat(cardDeck.draw()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("카드는 52장이다.")
     void testCardDeckSize() {
         for (int i = 0; i < 52; i++) {
-            CardDeck.draw();
+            cardDeck.draw();
         }
-        assertThatThrownBy(CardDeck::draw)
+        assertThatThrownBy(cardDeck::draw)
             .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -32,7 +40,7 @@ public class CardDeckTest {
     void testCardDuplicate() {
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(CardDeck.draw());
+            cards.add(cardDeck.draw());
         }
         assertThat(cards).hasSize(52);
     }
@@ -46,7 +54,7 @@ public class CardDeckTest {
         Set<Card> diamondCards = new HashSet<>();
 
         for (int i = 0; i < 52; i++) {
-            Card card = CardDeck.draw();
+            Card card = cardDeck.draw();
             compareCardPattern(cloverCards, card, Pattern.CLOVER);
             compareCardPattern(spadeCards, card, Pattern.SPADE);
             compareCardPattern(heartCards, card, Pattern.HEART);
