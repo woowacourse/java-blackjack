@@ -1,4 +1,7 @@
 ## 할 일
+- Controller 구현
+- View 구현
+- 리팩토링
 
 <br/>
 
