@@ -31,7 +31,7 @@ public class PlayerTest {
         Player player = new Player("j.on");
         player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        Assertions.assertThat(player.calculateMyCardSum()).isEqualTo(12);
+        Assertions.assertThat(player.calculate()).isEqualTo(12);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PlayerTest {
         Player player = new Player("j.on");
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        Assertions.assertThat(player.calculateMyCardSum()).isEqualTo(13);
+        Assertions.assertThat(player.calculate()).isEqualTo(13);
     }
 
     @ParameterizedTest
@@ -53,7 +53,7 @@ public class PlayerTest {
             CardNumber cardNumber = CardNumber.valueOf(number);
             player.receiveCard(new Card(cardNumber, CardType.CLOVER));
         }
-        Assertions.assertThat(player.calculateMyCardSum()).isEqualTo(expected);
+        Assertions.assertThat(player.calculate()).isEqualTo(expected);
     }
 
     @Test

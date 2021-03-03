@@ -23,48 +23,50 @@ public class Player {
     }
 
     public boolean isBust() {
-        return calculateMyCardSum() >= BUST_LIMIT;
+        return calculate() >= BUST_LIMIT;
     }
 
-    public int calculateMyCardSum() {
-        int aceCount = (int) myCards.stream()
-                .filter(card -> card.isAce())
+    public int calculate() {
+        final int aceCount = (int) myCards.stream()
+                .filter(Card::isAce)
                 .count();
         if (aceCount < 2) {
-            return calculateMyCardSum2();
+            return calculateSingleCase();
         }
-        return calculateMyCardSumWithAce(aceCount);
+        return calculateMultipleCase(aceCount);
     }
 
-    public int calculateMyCardSum2() {
+    private int calculateSingleCase() {
         return myCards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
     }
 
-    private int calculateMyCardSumWithAce(int aceCount) {
-        List<Integer> possibleSum = new ArrayList<>();
-        int sum = 0;
-        for (Card card : myCards) {
-            if (card.isAce())
-                continue;
-            sum += card.getCardNumber();
+    private int calculateMultipleCase(int aceCount) {
+        final List<Integer> possibleSum = new ArrayList<>();
+        final int sumExceptAce = myCards.stream()
+                            .filter(card -> !card.isAce())
+                            .mapToInt(Card::getCardNumber)
+                            .sum();
+
+        for (int aceSum : calculateAceSum(aceCount)) {
+            possibleSum.add(sumExceptAce + aceSum);
         }
-        List<Integer> aceSums = calculateAceSum(aceCount);
-        for (int aceSum : aceSums) {
-            possibleSum.add(sum + aceSum);
-        }
+        return findMaxPossibleValue(possibleSum);
+    }
+
+    private List<Integer> calculateAceSum(int aceCount) {
+        final List<Integer> aceSums = new ArrayList<>();
+        aceSums.add(10 + aceCount);
+        aceSums.add(aceCount);
+        return aceSums;
+    }
+
+    private int findMaxPossibleValue(final List<Integer> possibleSum) {
         return possibleSum.stream()
                 .filter(aceSum -> aceSum < BUST_LIMIT)
                 .mapToInt(Integer::intValue)
                 .max()
                 .orElse(BUST_LIMIT);
-    }
-
-    private List<Integer> calculateAceSum(int aceCount) {
-        List<Integer> aceSums = new ArrayList<>();
-        aceSums.add(10 + aceCount);
-        aceSums.add(aceCount);
-        return aceSums;
     }
 }
