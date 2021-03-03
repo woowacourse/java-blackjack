@@ -26,4 +26,12 @@ public class UsersTest {
 
         assertThat(users.users().size()).isEqualTo(3);
     }
+
+    @Test
+    void DistributeToEachUser() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        Users users = new Users(names);
+        users.distributeToEachUser();
+        assertThat(users.users().stream().allMatch(user -> user.cards.cards().size() == 2)).isTrue();
+    }
 }

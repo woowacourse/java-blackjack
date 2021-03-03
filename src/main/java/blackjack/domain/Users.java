@@ -16,4 +16,8 @@ public class Users {
     public List<User> users() {
         return Collections.unmodifiableList(users);
     }
+
+    public void distributeToEachUser() {
+        users.forEach(user -> user.distribute(Deck.popTwo()));
+    }
 }
