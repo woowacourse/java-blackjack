@@ -26,6 +26,13 @@ public class CardDeck {
         }
     }
 
+    public synchronized UserDeck generateUserDeck() {
+        UserDeck userDeck = new UserDeck();
+        userDeck.add(this.draw());
+        userDeck.add(this.draw());
+        return userDeck;
+    }
+
     public synchronized Card draw() {
         if (deck.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 카드를 모두 소진했습니다.");
