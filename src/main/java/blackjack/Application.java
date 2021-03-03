@@ -30,6 +30,7 @@ public class Application {
             OutputView.printDealerDrawingMessage(dealer);
         }
         OutputView.printFinalCardsAndScore(participants);
+        OutputView.printFinalResult(dealer, players);
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
