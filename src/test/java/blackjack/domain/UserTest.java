@@ -32,7 +32,7 @@ public class UserTest {
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
     public void isDrawableTrue() {
-        User user = new User("amazzi");
+        User user = new User(new Name("amazzi"));
         user.distribute(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.TWO),
                 new Card(Shape.DIAMOND, Value.JACK)
