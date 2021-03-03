@@ -11,12 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class BlackjackGameTest {
 	private List<String> names;
@@ -62,7 +62,8 @@ class BlackjackGameTest {
 	}
 
 	private List<Participant> createExpectedPlayers() {
-		final Deck deck = new Deck((cards) -> {});
+		final Deck deck = new Deck((cards) -> {
+		});
 		final List<Participant> expectedPlayers = new ArrayList<>();
 		for (String name : names) {
 			Player player = new Player(name);

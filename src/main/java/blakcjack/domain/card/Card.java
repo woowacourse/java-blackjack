@@ -8,9 +8,6 @@ import java.util.Optional;
 public class Card {
 	private static final Map<String, Card> cache = new HashMap<>();
 
-	private final CardSymbol cardSymbol;
-	private final CardNumber cardNumber;
-
 	static {
 		for (final CardSymbol cardSymbol : CardSymbol.values()) {
 			for (final CardNumber cardNumber : CardNumber.values()) {
@@ -20,6 +17,9 @@ public class Card {
 			}
 		}
 	}
+
+	private final CardSymbol cardSymbol;
+	private final CardNumber cardNumber;
 
 	private Card(final CardSymbol cardSymbol, final CardNumber cardNumber) {
 		this.cardSymbol = cardSymbol;
@@ -47,5 +47,13 @@ public class Card {
 	@Override
 	public int hashCode() {
 		return Objects.hash(cardSymbol, cardNumber);
+	}
+
+	public CardNumber getCardNumber() {
+		return cardNumber;
+	}
+
+	public CardSymbol getCardSymbol() {
+		return cardSymbol;
 	}
 }

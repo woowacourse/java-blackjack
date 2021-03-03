@@ -22,4 +22,8 @@ public enum CardNumber {
 		this.name = name;
 		this.value = value;
 	}
+
+	public String getName() {
+		return name;
+	}
 }

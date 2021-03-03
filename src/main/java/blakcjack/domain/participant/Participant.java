@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+//TODO
+// participant name Name으로 바꾸기
+
 public abstract class Participant {
 	protected final String name;
 	protected final List<Card> cards = new ArrayList<>();
@@ -21,6 +24,10 @@ public abstract class Participant {
 
 	public void receiveCard(Card card) {
 		cards.add(card);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	@Override
