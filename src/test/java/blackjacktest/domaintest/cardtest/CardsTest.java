@@ -14,14 +14,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CardsTest {
 
     @Test
-    @DisplayName("카드 꾸러미 생성")
+    @DisplayName("카드 꾸러미 생성 성공")
     void createCards() {
         Cards cards1 = new Cards(new Card(Shape.CLOVER, Denomination.FOUR));
         Cards cards2 = new Cards(Arrays.asList(
-           new Card(Shape.SPADE, Denomination.ACE),
-           new Card(Shape.HEART, Denomination.FIVE)
+                new Card(Shape.SPADE, Denomination.ACE),
+                new Card(Shape.HEART, Denomination.FIVE)
         ));
         assertThat(cards1).isNotNull();
         assertThat(cards2).isNotNull();
+    }
+
+    @Test
+    @DisplayName("카드 꾸러미에 카드 추가 성공")
+    void addCardTest() {
+        Cards cards = new Cards();
+        Cards newCards = cards.addCard(new Card(Shape.SPADE, Denomination.FIVE));
+        assertThat(newCards.getCards().get(0)).isEqualTo(new Card(Shape.SPADE, Denomination.FIVE));
     }
 }
