@@ -72,4 +72,9 @@ public class GameTest {
         new Card(Symbol.HEART, CardNumber.THREE)
     );
   }
+
+  @Test
+  void getGameResult() {
+
+  }
 }

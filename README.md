@@ -26,7 +26,9 @@
 - [x] 구현 : 이름을 받아 그 이름에 해당하는 플레이어에게 카드 배분 후 
   각 플레이어의 playerState(status, deck)를 리턴한다.
   - [x] 예외 : 존재하지 않는 사용자의 이름을 받을 시 PlayerNotFoundException 발생
-- [ ] 구현 : 최종 승패 결과를 반환한다.
+
+- GameResult
+- [x] 구현 : 최종 승패 결과를 반환한다.
 
 - Status
 - [x] 구현 : 점수를 받아 BURST, BLACKJACK, HIT 를 계산 후 반환
