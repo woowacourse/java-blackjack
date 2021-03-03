@@ -27,4 +27,16 @@ public class DealerTest {
 
         assertThat(dealer.cards.size()).isEqualTo(2);
     }
+
+    @DisplayName("카드 합계를 구한다.")
+    @Test
+    public void calculateTotalCards() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        ));
+
+        assertThat(dealer.calculateTotalValue()).isEqualTo(18);
+    }
 }

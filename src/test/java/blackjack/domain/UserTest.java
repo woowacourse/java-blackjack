@@ -27,4 +27,16 @@ public class UserTest {
 
         assertThat(user.cards.size()).isEqualTo(2);
     }
+
+    @DisplayName("카드 합계를 구한다.")
+    @Test
+    public void calculateTotalCards() {
+        User user = new User("amazzi");
+        user.distribute(Arrays.asList(
+                new Card(Shape.HEART, Value.NINE),
+                new Card(Shape.DIAMOND, Value.JACK)
+        ));
+
+        assertThat(user.calculateTotalValue()).isEqualTo(19);
+    }
 }

@@ -13,4 +13,12 @@ public class CardTest {
 
         assertThat(card).isInstanceOf(Card.class);
     }
+
+    @DisplayName("Card 객체의 값을 확인한다.")
+    @Test
+    public void checkValue() {
+        Card card = new Card(Shape.SPACE, Value.ACE);
+
+        assertThat(card.value()).isEqualTo(11);
+    }
 }

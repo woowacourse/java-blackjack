@@ -11,4 +11,10 @@ public abstract class Participant {
     public void distribute(List<Card> cards) {
         this.cards = cards;
     }
+
+    public int calculateTotalValue() {
+        return cards.stream()
+                .mapToInt(Card::value)
+                .sum();
+    }
 }
