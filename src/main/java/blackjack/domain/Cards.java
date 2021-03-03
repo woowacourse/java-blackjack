@@ -14,4 +14,8 @@ public class Cards {
     public List<Card> cards(){
         return Collections.unmodifiableList(cards);
     }
+
+    public void combine(Cards otherCards) {
+        this.cards.addAll(otherCards.cards());
+    }
 }

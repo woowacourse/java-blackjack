@@ -13,9 +13,4 @@ public class User extends Participant {
     public boolean isDrawable() {
         return calculateTotalValue() < STANDARD;
     }
-
-    @Override
-    public void draw() {
-
-    }
 }

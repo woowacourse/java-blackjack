@@ -26,12 +26,14 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public static Cards pop(GameStatus gameStatus) {
-        int endCount = 1;
-        if (gameStatus.isStart()) {
-            endCount = 2;
-        }
-        return new Cards(IntStream.range(START_COUNT, endCount)
+    public static Cards popTwo() {
+        return new Cards(IntStream.range(START_COUNT, 2)
+                .mapToObj(c -> DECK.pop())
+                .collect(Collectors.toList()));
+    }
+
+    public static Cards popOne() {
+        return new Cards(IntStream.range(START_COUNT, 1)
                 .mapToObj(c -> DECK.pop())
                 .collect(Collectors.toList()));
     }

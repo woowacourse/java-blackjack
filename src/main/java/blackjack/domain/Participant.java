@@ -20,5 +20,7 @@ public abstract class Participant {
 
     public abstract boolean isDrawable();
 
-    public abstract void draw();
+    public void draw(){
+        cards.combine(Deck.popOne());
+    }
 }

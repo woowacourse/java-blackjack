@@ -10,9 +10,4 @@ public class Dealer extends Participant {
     public boolean isDrawable() {
         return calculateTotalValue() <= STANDARD;
     }
-
-    @Override
-    public void draw(){
-
-    }
 }

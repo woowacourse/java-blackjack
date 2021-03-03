@@ -65,4 +65,17 @@ public class UserTest {
 
         assertThat(user.isDrawable()).isFalse();
     }
+
+    @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
+    @Test
+    void draw() {
+        User user = new User("amazzi");
+        user.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        user.draw();
+        Cards cards = user.cards;
+        assertThat(cards.cards().size()).isEqualTo(3);
+    }
 }
