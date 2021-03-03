@@ -12,7 +12,7 @@ public class InputView {
     private static final String INPUT_NAME_MSG = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_ANSWER_MSG = "%s는 한 장의 카드를 더 받으시겠습니까?";
 
-    private static final String YES_OR_NO_REGEX_TEST = "^[YNyn]$";
+    private static final String YES_OR_NO_REGEX = "^[YNyn]$";
 
     public static List<String> receiveNames() {
         return Arrays.stream(receiveInput(INPUT_NAME_MSG).split(","))
@@ -21,9 +21,10 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String receiveAnswer(String name) {
+    public static boolean receiveAnswer(String name) {
         String answer = receiveInput(String.format(INPUT_ANSWER_MSG, name));
-        return validateAnswer(answer);
+        validateAnswer(answer);
+        return "y".equalsIgnoreCase(answer);
     }
 
     private static String receiveInput(String message) {
@@ -38,10 +39,9 @@ public class InputView {
         return name;
     }
 
-    private static String validateAnswer(String answer) {
-        if (!answer.matches(YES_OR_NO_REGEX_TEST)){
+    private static void validateAnswer(String answer) {
+        if (!answer.matches(YES_OR_NO_REGEX)){
             throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
         }
-        return answer;
     }
 }
