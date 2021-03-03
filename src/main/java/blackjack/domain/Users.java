@@ -20,4 +20,16 @@ public class Users {
     public void distributeToEachUser() {
         users.forEach(user -> user.distribute(Deck.popTwo()));
     }
+
+    public List<List<Card>> showCardsByUsers() {
+        return users.stream()
+                .map(User::show)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> showNames() {
+        return Collections.unmodifiableList(users.stream()
+                .map(User::getName)
+                .collect(Collectors.toList()));
+    }
 }

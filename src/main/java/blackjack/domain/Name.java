@@ -27,4 +27,8 @@ public class Name {
     private boolean isEmpty(String name) {
         return EMPTY.equals(name);
     }
+
+    public String getName() {
+        return this.name;
+    }
 }

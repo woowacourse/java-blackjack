@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Participant {
     protected Cards cards = new Cards(new ArrayList<>());
@@ -17,4 +18,6 @@ public abstract class Participant {
     public void draw(){
         cards.combine(Deck.popOne());
     }
+
+    public abstract List<Card> show();
 }
