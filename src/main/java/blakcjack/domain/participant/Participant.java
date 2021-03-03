@@ -61,6 +61,10 @@ public abstract class Participant {
 				.sum();
 	}
 
+	public boolean isScoreLowerThanBlackJackValue() {
+		return calculateScore() < BLACKJACK_VALUE;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

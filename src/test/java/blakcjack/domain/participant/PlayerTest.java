@@ -42,4 +42,16 @@ public class PlayerTest {
 
 		assertThat(player.calculateScore()).isEqualTo(19);
 	}
+
+	@DisplayName("21점 미만이면 통과")
+	@Test
+	void isNotBust() {
+		final Player player = new Player(new Name("pobi"));
+		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.KING));
+		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
+		assertThat(player.isScoreLowerThanBlackJackValue()).isEqualTo(true);
+
+		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		assertThat(player.isScoreLowerThanBlackJackValue()).isEqualTo(false);
+	}
 }
