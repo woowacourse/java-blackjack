@@ -19,10 +19,10 @@ public class Participants {
                 .orElseThrow(() -> new IllegalArgumentException("Dealer가 존재하지 않습니다!"));
     }
 
-
-    public List<Participant> extractPlayers() {
+    public List<Player> extractPlayers() {
         return participants.stream()
                 .filter(participant -> participant instanceof Player)
+                .map(Player.class::cast)
                 .collect(Collectors.toList());
     }
 }

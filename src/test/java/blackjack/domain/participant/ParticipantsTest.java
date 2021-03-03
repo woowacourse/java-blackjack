@@ -70,7 +70,7 @@ class ParticipantsTest {
         Participants participants = new Participants(participantGroup);
 
         //when
-        List<Participant> players = participants.extractPlayers();
+        List<Player> players = participants.extractPlayers();
 
         //then
         assertThat(players).hasSize(2);
