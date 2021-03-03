@@ -1,17 +1,21 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.rule.ScoreRule;
+import blackjack.domain.card.Card;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Participant {
+public class Dealer implements Participant {
     private static final int FROM = 0;
-    private static final int TO = 2;
-    private static final int DRAW_BOUND_SCORE = 21;
+    private static final int TO = 1;
+    private static final int DRAW_BOUND_SCORE = 16;
 
-    private String name;
-    private List<Card> cards;
-    private ScoreRule scoreRule;
+    private final String name;
+    private final ArrayList<Card> cards;
+    private final ScoreRule scoreRule;
 
-    public Player(String name, List<Card> cards, ScoreRule scoreRule) {
+    public Dealer(String name, ArrayList<Card> cards, ScoreRule scoreRule) {
         this.name = name;
         this.cards = cards;
         this.scoreRule = scoreRule;
