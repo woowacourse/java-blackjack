@@ -12,7 +12,7 @@ public class GameTable {
 
     private final Deck deck;
     private final Dealer dealer;
-    private List<Player> players;
+    private final List<Player> players;
 
     public GameTable(List<Player> players) {
         deck = new Deck(Card.values());
@@ -43,18 +43,18 @@ public class GameTable {
     private void finish() {
         OutputView.printCardsAndScore(dealer, players);
         Result result = new Result();
-        List<Integer> matchResult = dealer.calculateMatchResult(result.getResult(dealer,players));
-        OutputView.printResult(matchResult,result.getResult(dealer, players));
+        List<Integer> matchResult = dealer.calculateMatchResult(result.getResult(dealer, players));
+        OutputView.printResult(matchResult, result.getResult(dealer, players));
     }
 
     private void askHit(Player player) {
-        while (player.isNotBust() && wantCard(player)){
+        while (player.isNotBust() && wantCard(player)) {
             player.hit(deck.pop());
-            OutputView.printPlayerCards(player);
+            OutputView.printUserCards(player);
         }
     }
 
-    private boolean wantCard(Player player){
+    private boolean wantCard(Player player) {
         OutputView.printHitGuideMessage(player);
         String hitValue = InputView.getHitValue();
         return hitValue.equals("Y");

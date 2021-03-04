@@ -15,7 +15,7 @@ public class RentCompany2 {
     }
 
     public String generateReport() {
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb = new StringBuilder();
         cars.forEach(car -> sb.append(car.getName())
             .append(" : ")
             .append((int) car.getChargeQuantity())
