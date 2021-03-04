@@ -1,7 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Deck;
+import blackjack.domain.Players;
+import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;

@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.dto.Participants;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.Response;
@@ -8,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.dto.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Collections;
@@ -40,7 +40,8 @@ public class BlackJackController {
     }
 
     private static void printGameStatus(Dealer dealer, Players players) {
-        OutputView.printGameInitializeMessage(Participants.valueOf(dealer, players), Participant.STARTING_CARD_COUNT);
+        OutputView.printGameInitializeMessage(Participants.valueOf(dealer, players),
+            Participant.STARTING_CARD_COUNT);
         OutputView.printParticipantsStatus(Participants.valueOf(dealer, players), false);
     }
 

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Participants {
+
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
