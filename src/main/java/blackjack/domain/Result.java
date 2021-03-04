@@ -34,6 +34,11 @@ public enum Result {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public static Map<Result, Integer> countByResults(List<Result> results) {
+        return Arrays.stream(values())
+                .collect(Collectors.toMap(result -> result, result -> result.count(results)));
+    }
+
     public Result reverse(Result result) {
         if (result.equals(WIN)) {
             return LOSE;
@@ -42,11 +47,6 @@ public enum Result {
             return WIN;
         }
         return result;
-    }
-
-    public static Map<Result, Integer> countByResults(List<Result> results) {
-        return Arrays.stream(values())
-                .collect(Collectors.toMap(result -> result, result -> result.count(results)));
     }
 
     public int count(List<Result> results) {

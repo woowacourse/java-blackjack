@@ -17,7 +17,7 @@ public class RentCompany {
         return new RentCompany();
     }
 
-    public void addCar(Car car){
+    public void addCar(Car car) {
         cars.add(car);
     }
 
@@ -25,7 +25,7 @@ public class RentCompany {
         StringBuilder sb = new StringBuilder();
 
         for (Car car : cars) {
-            sb.append(car.getName()).append(COLON).append((int)car.getChargeQuantity()).append(LITER).append(NEWLINE);
+            sb.append(car.getName()).append(COLON).append((int) car.getChargeQuantity()).append(LITER).append(NEWLINE);
         }
         return sb.toString();
     }

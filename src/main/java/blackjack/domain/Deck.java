@@ -18,7 +18,7 @@ public class Deck {
 
     private static List<Card> createByShape(Shape shape) {
         return Arrays.stream(Value.values())
-                .map(value->new Card(shape, value))
+                .map(value -> new Card(shape, value))
                 .collect(Collectors.toList());
     }
 
