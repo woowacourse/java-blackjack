@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
-
 public class BlackJackResult {
     private final Map<Player, MatchResult> result;
 
@@ -18,12 +17,16 @@ public class BlackJackResult {
 
     public Map<MatchResult, Integer> getDealerResult() {
         Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
-
         for (MatchResult matchResult : MatchResult.values()) {
-            dealerResult.put(matchResult, (int) result.values().stream().filter(result -> result.equals(MatchResult.getDealerMatchResultByPlayer(matchResult))).count());
+            dealerResult.put(matchResult, dealerResultCount(matchResult));
         }
-
         return dealerResult;
+    }
+
+    private int dealerResultCount(MatchResult matchResult) {
+        return (int)result.values().stream()
+                .filter(result -> result.equals(MatchResult.getDealerMatchResultByPlayer(matchResult)))
+                .count();
     }
 
     public Map<Player, MatchResult> getResult() {

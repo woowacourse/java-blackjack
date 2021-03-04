@@ -11,9 +11,9 @@ import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
     private static final int REMAIN_ACE_COUNT = 10;
-    private final List<Card> cards;
-
     private static final List<Card> CACHE;
+
+    private final List<Card> cards;
 
     static {
         CACHE = Arrays.stream(Denomination.values())
@@ -57,10 +57,6 @@ public class Cards {
         return new Cards(newCards);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public void shuffle() {
         Collections.shuffle(cards);
     }
@@ -83,5 +79,9 @@ public class Cards {
             score += REMAIN_ACE_COUNT;
         }
         return score;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

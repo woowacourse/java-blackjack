@@ -13,6 +13,7 @@ public class Players {
     private static final String BLANK = " ";
     private static final String EMPTY = "";
     private static final int MAX_COUNT = 8;
+
     private final List<Player> players;
 
     public Players(String input) {

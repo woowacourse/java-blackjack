@@ -7,6 +7,8 @@ public abstract class Person {
     protected Cards cards;
     protected String name;
 
+    public abstract boolean canDraw();
+
     public void receiveCard(Card card) {
         this.cards = cards.addCard(card);
     }
@@ -18,6 +20,4 @@ public abstract class Person {
     public String getName() {
         return name;
     }
-
-    public abstract boolean canDraw();
 }
