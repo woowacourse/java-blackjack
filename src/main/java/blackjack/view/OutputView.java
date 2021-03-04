@@ -27,8 +27,8 @@ public class OutputView {
 
     public static void showFinalStatus(RoundStatusDto statusDto) {
         List<PlayerStatusDto> playerStatusDto = statusDto.getPlayerStatusDto();
-        System.out.println(String.format("%s카드 : %s - 결과: %d", statusDto.getDealerName(), statusDto.getDealerCardStatus().stream().collect(Collectors.joining(",")), statusDto.getDealerScore()));
-        playerStatusDto.forEach(dto -> System.out.println(String.format("%s카드 : %s - 결과: %d", dto.getPlayerName(), dto.getPlayerCardStatus().stream().collect(Collectors.joining(",")), dto.getPlayerScore())));
+        System.out.println(String.format("%s카드 : %s - 결과: %d", statusDto.getDealerName(), statusDto.getDealerCardStatus().stream().collect(Collectors.joining(", ")), statusDto.getDealerScore()));
+        playerStatusDto.forEach(dto -> System.out.println(String.format("%s카드 : %s - 결과: %d", dto.getPlayerName(), dto.getPlayerCardStatus().stream().collect(Collectors.joining(", ")), dto.getPlayerScore())));
     }
 
     public static void showInitialStatus(RoundStatusDto roundStatusDto) {
@@ -40,13 +40,34 @@ public class OutputView {
                 .map(dto -> dto.getPlayerName())
                 .collect(Collectors.joining(", "));
         System.out.println(String.format(TWO_CARDS_DEAL_OUT_MESSAGE, dealerName, playerNames));
-        String dealerStatus = String.format(PARTICIPANT_STATUS_MESSAGE, dealerName, dealerCardStatus.stream().collect(Collectors.joining(",")));
+        String dealerStatus = String.format(PARTICIPANT_STATUS_MESSAGE, dealerName, dealerCardStatus.stream().collect(Collectors.joining(", ")));
         System.out.println(dealerStatus);
         playerStatusDto.forEach(dto -> System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, dto.getPlayerName(), dto.getPlayerCardStatus().stream().collect(Collectors.joining(", ")))));
     }
 
     public static void showOutComes(Map<String, List<Outcome>> outcomes) {
         System.out.println("## 최종 승패");
-        outcomes.keySet().forEach(name -> System.out.println(String.format("%s : %s", name, outcomes.get(name))));
+        List<Outcome> dealerOutcomes = outcomes.remove("딜러");
+        System.out.println(String.format("딜러: %d승 %d패 %d무", findWinCount(dealerOutcomes), findLoseCount(dealerOutcomes), findDrawCount(dealerOutcomes)));
+
+        outcomes.keySet().forEach(name -> System.out.println(String.format("%s : %s", name, outcomes.get(name).get(0).getName())));
+    }
+
+    private static int findWinCount(List<Outcome> dealerOutcomes) {
+        return (int) dealerOutcomes.stream()
+                .filter(Outcome::isWin)
+                .count();
+    }
+
+    private static int findLoseCount(List<Outcome> dealerOutcomes) {
+        return (int) dealerOutcomes.stream()
+                .filter(Outcome::isLose)
+                .count();
+    }
+
+    private static int findDrawCount(List<Outcome> dealerOutcomes) {
+        return (int) dealerOutcomes.stream()
+                .filter(Outcome::isDraw)
+                .count();
     }
 }

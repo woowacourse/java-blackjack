@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 
 public enum Outcome {
     WIN("승", (a, b) -> a>b),
-    LOOSE("패", (a,b) -> a<b),
+    LOSE("패", (a, b) -> a<b),
     DRAW("무", (a,b) -> a==b);
 
     private final String name;
@@ -34,7 +34,7 @@ public enum Outcome {
         }
 
         if (dealerScore > 21) {
-            return LOOSE;
+            return LOSE;
         }
 
         if (playerScore > 21) {
@@ -45,10 +45,10 @@ public enum Outcome {
 
     public static Outcome reverseResult(Outcome outcome) {
         if (outcome == WIN) {
-            return LOOSE;
+            return LOSE;
         }
 
-        if (outcome == LOOSE) {
+        if (outcome == LOSE) {
             return WIN;
         }
 
@@ -57,5 +57,17 @@ public enum Outcome {
 
     public String getName() {
         return name;
+    }
+
+    public static boolean isWin(Outcome outcome) {
+        return outcome == WIN;
+    }
+
+    public static boolean isLose(Outcome outcome) {
+        return outcome == LOSE;
+    }
+
+    public static boolean isDraw(Outcome outcome) {
+        return outcome == DRAW;
     }
 }
