@@ -9,6 +9,10 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class Casino {
+
+    public static final String BURST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
+    public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
+
     public Casino() {
     }
 
@@ -34,12 +38,19 @@ public class Casino {
         }
     }
 
-    //TODO:: 블랙잭이나 버스트일때 질문하지 않는 로직 추가.(메세지도 출력)
     private void doPlayerTurn(Player player, Game game) {
         while (InputView.inputYesOrNo(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);
             OutputView.printMessage("");
+            if (player.isBlackJack()) {
+                OutputView.printMessage(BLACKJACK_MESSAGE);
+                break;
+            }
+            if (player.isBurst()) {
+                OutputView.printMessage(BURST_MESSAGE);
+                break;
+            }
         }
     }
 
