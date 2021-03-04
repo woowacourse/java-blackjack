@@ -22,7 +22,7 @@ public class User extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return cards.calculateTotalValue() < STANDARD;
+        return cards.calculateTotalValue() <= STANDARD;
     }
 
     @Override

@@ -27,10 +27,12 @@ public class OutputView {
 
     public static void printUsersCards(Users users) {
         users.users()
-                .forEach(user -> {
-                    System.out.print(user.getName() + "카드" + COLON);
-                    printCards(user.show());
-                });
+                .forEach(OutputView::printUserCards);
+    }
+
+    public static void printUserCards(User user) {
+        System.out.print(user.getName() + "카드" + COLON);
+        printCards(user.show());
     }
 
     private static void printCards(List<Card> cards) {
