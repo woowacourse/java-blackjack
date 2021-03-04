@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class OneCardOpenStrategy implements CardOpenStrategy {
-    public static final int ONE_CARD_SIZE = 1;
+    private static final int ONE_CARD_SIZE = 1;
 
     @Override
     public List<Card> getCardsWithStrategy(List<Card> cards) {
