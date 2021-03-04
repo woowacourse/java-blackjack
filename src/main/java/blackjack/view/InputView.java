@@ -15,7 +15,7 @@ public class InputView {
 
     public static String inputAnswer() {
         String answer = scanner.nextLine();
-        if(!answer.equals("y") && !answer.equals("n")){
+        if (!answer.equals("y") && !answer.equals("n")) {
             throw new IllegalArgumentException("유효한 대답이 아닙니다.");
         }
         return answer;

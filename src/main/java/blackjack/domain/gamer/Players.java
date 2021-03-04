@@ -1,6 +1,8 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.MatchResult;
+import blackjack.domain.card.CardDeck;
+import blackjack.view.OutputView;
 
 import java.util.*;
 
@@ -29,15 +31,21 @@ public class Players {
                 .collect(toList());
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public Map<Player, MatchResult> verifyResultByCompareScore(Dealer dealer) {
         Map<Player, MatchResult> result = new LinkedHashMap<>();
         for (Player player : players) {
             result.put(player, dealer.matchGame(player));
         }
         return result;
+    }
+
+    public void eachPlayerDrawCard(CardDeck cardDeck) {
+        for (Player player : players) {
+            player.receiveCard(cardDeck.drawCard());
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

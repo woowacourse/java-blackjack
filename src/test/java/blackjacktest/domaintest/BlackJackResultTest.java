@@ -3,7 +3,6 @@ package blackjacktest.domaintest;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;

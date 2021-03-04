@@ -14,6 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 public class CardDeckTest {
 
     private CardDeck cardDeck;
+
     @BeforeEach
     void setUp() {
         cardDeck = new CardDeck();

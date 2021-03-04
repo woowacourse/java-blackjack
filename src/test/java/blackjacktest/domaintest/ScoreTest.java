@@ -21,7 +21,7 @@ public class ScoreTest {
                 new Card(Shape.SPADE, Denomination.ACE),
                 new Card(Shape.SPADE, Denomination.TWO),
                 new Card(Shape.HEART, Denomination.ACE)
-                ));
+        ));
 
         Cards cards2 = new Cards(Arrays.asList(
                 new Card(Shape.SPADE, Denomination.ACE),

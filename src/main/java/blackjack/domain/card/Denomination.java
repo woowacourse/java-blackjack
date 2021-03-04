@@ -18,15 +18,16 @@ public enum Denomination {
     private final int score;
     private final String name;
 
-    Denomination(String name, int score){
+    Denomination(String name, int score) {
         this.name = name;
         this.score = score;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
-    public int getScore(){
+
+    public int getScore() {
         return this.score;
     }
 }

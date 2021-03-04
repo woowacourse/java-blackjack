@@ -38,10 +38,10 @@ public enum MatchResult {
     }
 
     public static MatchResult getDealerMatchResultByPlayer(MatchResult matchResult) {
-        if(matchResult.equals(MatchResult.WIN)){
+        if (matchResult.equals(MatchResult.WIN)) {
             return MatchResult.LOSE;
         }
-        if(matchResult.equals(MatchResult.LOSE)){
+        if (matchResult.equals(MatchResult.LOSE)) {
             return MatchResult.WIN;
         }
         return MatchResult.DRAW;
