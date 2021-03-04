@@ -1,33 +1,34 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class CardsTest {
 
     private static Stream<Arguments> getCardOverMaximum() {
         return Stream.of(Arguments.of(Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER),
-            new Card(Symbol.JACK, Shape.DIAMOND),
-            new Card(Symbol.FIVE, Shape.HEART)), 16),
-            Arguments.of(Arrays.asList(new Card(Symbol.EIGHT, Shape.CLOVER),
-                new Card(Symbol.NINE, Shape.CLOVER), new Card(Symbol.ACE, Shape.CLOVER)), 18),
-            Arguments.of(Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER),
-                new Card(Symbol.NINE, Shape.CLOVER), new Card(Symbol.EIGHT, Shape.CLOVER)), 18));
+                new Card(Symbol.JACK, Shape.DIAMOND),
+                new Card(Symbol.FIVE, Shape.HEART)), 16),
+                Arguments.of(Arrays.asList(new Card(Symbol.EIGHT, Shape.CLOVER),
+                        new Card(Symbol.NINE, Shape.CLOVER), new Card(Symbol.ACE, Shape.CLOVER)), 18),
+                Arguments.of(Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER),
+                        new Card(Symbol.NINE, Shape.CLOVER), new Card(Symbol.EIGHT, Shape.CLOVER)), 18));
     }
 
     @DisplayName("카드의 점수를 확인한다")
     @Test
     void calculateScore() {
         List<Card> cardList = Arrays.asList(new Card(Symbol.EIGHT, Shape.CLOVER),
-            new Card(Symbol.QUEEN, Shape.DIAMOND));
+                new Card(Symbol.QUEEN, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
         int score = cards.calculateFinalScore();
         assertThat(score).isEqualTo(18);
@@ -37,7 +38,7 @@ class CardsTest {
     @Test
     void calculateScoreWhenAceIsUnder() {
         List<Card> cardList = Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER),
-            new Card(Symbol.JACK, Shape.DIAMOND));
+                new Card(Symbol.JACK, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
         int score = cards.calculateFinalScore();
         assertThat(score).isEqualTo(21);
@@ -56,9 +57,9 @@ class CardsTest {
     @Test
     void calculateScoreWhenMultipleAce() {
         List<Card> cardList = Arrays.asList(
-            new Card(Symbol.ACE, Shape.CLOVER),
-            new Card(Symbol.ACE, Shape.DIAMOND),
-            new Card(Symbol.ACE, Shape.CLOVER));
+                new Card(Symbol.ACE, Shape.CLOVER),
+                new Card(Symbol.ACE, Shape.DIAMOND),
+                new Card(Symbol.ACE, Shape.CLOVER));
         Cards cards = new Cards(cardList);
         int score = cards.calculateFinalScore();
         assertThat(score).isEqualTo(13);
@@ -68,8 +69,8 @@ class CardsTest {
     @Test
     void calculateMinimumScoreTotal() {
         List<Card> cardList = Arrays.asList(
-            new Card(Symbol.QUEEN, Shape.CLOVER),
-            new Card(Symbol.ACE, Shape.DIAMOND));
+                new Card(Symbol.QUEEN, Shape.CLOVER),
+                new Card(Symbol.ACE, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
         int minimumScore = cards.calculateScoreWhenAceIsMinimum();
         assertThat(minimumScore).isEqualTo(11);

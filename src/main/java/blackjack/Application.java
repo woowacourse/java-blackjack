@@ -1,11 +1,12 @@
 package blackjack;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,9 +19,9 @@ public class Application {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
         List<Player> players = InputView.inputPlayerNames()
-                                        .stream()
-                                        .map(Player::new)
-                                        .collect(Collectors.toList());
+                .stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
         Participants participants = Participants.of(dealer, players);
 
         participants.receiveDefaultCards(cardDeck);

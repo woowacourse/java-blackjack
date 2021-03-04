@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.vo.Result;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -30,7 +32,7 @@ public class Dealer extends Participant {
             Result result = player.judgeResult(this);
             Result replacedResult = replaceWinWithLose(result);
             statisticResult.put(replacedResult,
-                statisticResult.getOrDefault(replacedResult, DEFAULT_VALUE) + INCREASE_COUNT);
+                    statisticResult.getOrDefault(replacedResult, DEFAULT_VALUE) + INCREASE_COUNT);
         }
         return statisticResult;
     }

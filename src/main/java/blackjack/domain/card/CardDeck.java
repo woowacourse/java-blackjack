@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,15 +16,15 @@ public class CardDeck {
 
     public CardDeck() {
         List<Card> cards = Arrays.stream(Symbol.values())
-                                 .flatMap(this::generateCard)
-                                 .collect(Collectors.toList());
+                .flatMap(this::generateCard)
+                .collect(Collectors.toList());
         Collections.shuffle(cards);
         this.cardDeck = cards;
     }
 
     private Stream<Card> generateCard(Symbol symbol) {
         return Arrays.stream(Shape.values())
-                     .map(shape -> new Card(symbol, shape));
+                .map(shape -> new Card(symbol, shape));
     }
 
     int size() {

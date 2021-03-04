@@ -1,11 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.Result;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.vo.Result;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,8 +22,8 @@ public class OutputView {
 
     public static void printDefaultCardMessage(Dealer dealer, List<Player> players) {
         String playerNames = players.stream()
-                                    .map(Player::getName)
-                                    .collect(Collectors.joining(DELIMITER));
+                .map(Player::getName)
+                .collect(Collectors.joining(DELIMITER));
         printEmptyLine();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, dealer.getName(), playerNames);
         printDefaultDealerCard(dealer);
@@ -33,13 +34,13 @@ public class OutputView {
         List<Card> dealerCards = dealer.getCards();
         Card firstCardOfDealer = dealerCards.get(FIRST_CARD_INDEX);
         System.out.printf("%s : %s" + NEWLINE, dealer.getName(),
-            getCardInformation(firstCardOfDealer));
+                getCardInformation(firstCardOfDealer));
     }
 
     private static String getCardInformation(Card card) {
         return card.getSymbol()
-                   .getName() + card.getShape()
-                                    .getName();
+                .getName() + card.getShape()
+                .getName();
     }
 
     private static void printDefaultPlayerCards(List<Player> players) {
@@ -54,8 +55,8 @@ public class OutputView {
 
     private static String getCardsInformation(List<Card> cards) {
         return cards.stream()
-                    .map(OutputView::getCardInformation)
-                    .collect(Collectors.joining(DELIMITER));
+                .map(OutputView::getCardInformation)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     public static void printDealerDrawingMessage(Dealer dealer) {
@@ -65,14 +66,14 @@ public class OutputView {
 
     public static void printFinalCardsAndScore(Participants participants) {
         participants.toList()
-                    .forEach(OutputView::printParticipantCardWithScore);
+                .forEach(OutputView::printParticipantCardWithScore);
     }
 
     private static void printParticipantCardWithScore(Participant participant) {
         String cards = getCardsInformation(participant.getCards());
         System.out.println(
-            participant.getName() + " 카드: " + cards + " - 결과: "
-                + participant.calculateFinalScore());
+                participant.getName() + " 카드: " + cards + " - 결과: "
+                        + participant.calculateFinalScore());
     }
 
     public static void printFinalResult(Dealer dealer, List<Player> players) {
@@ -83,7 +84,7 @@ public class OutputView {
         long lossCounts = map.get(Result.LOSE);
         long drawCounts = map.get(Result.DRAW);
         System.out.println(
-            dealer.getName() + ": " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
+                dealer.getName() + ": " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
         for (Player player : players) {
             Result result = player.judgeResult(dealer);
             System.out.println(player.getName() + ": " + result.getName());

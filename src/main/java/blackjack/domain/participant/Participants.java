@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.CardDeck;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,16 +18,16 @@ public class Participants {
 
     public static Participants of(Dealer dealer, List<Player> players) {
         List<Participant> participants = Stream.concat(Stream.of(dealer), players.stream())
-                                               .collect(Collectors.toList());
+                .collect(Collectors.toList());
         return new Participants(participants);
     }
 
     private void validateOverlappedNames(List<Participant> participants) {
         long participantsCount = participants.size();
         long distinctParticipantsCount = participants.stream()
-                                                     .map(Participant::getName)
-                                                     .distinct()
-                                                     .count();
+                .map(Participant::getName)
+                .distinct()
+                .count();
         if (participantsCount != distinctParticipantsCount) {
             throw new IllegalArgumentException("참가자들의 이름은 중복이 없어야 합니다.");
         }

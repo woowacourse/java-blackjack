@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.vo.Result;
 
 public class Player extends Participant {
 
@@ -28,6 +30,6 @@ public class Player extends Participant {
 
     private boolean isDealerWin(int dealerScore, int playerScore) {
         return playerScore > MAXIMUM_SCORE_LIMIT
-            || (playerScore < dealerScore && dealerScore <= MAXIMUM_SCORE_LIMIT);
+                || (playerScore < dealerScore && dealerScore <= MAXIMUM_SCORE_LIMIT);
     }
 }

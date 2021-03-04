@@ -1,9 +1,9 @@
-package blackjack.domain;
-
-import static org.assertj.core.api.Assertions.assertThat;
+package blackjack.domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardDeckTest {
 
@@ -31,6 +31,6 @@ public class CardDeckTest {
         CardDeck cardDeck = new CardDeck();
         Cards cards = cardDeck.drawDefaultCards();
         assertThat(cards.getCards()
-                        .size()).isEqualTo(2);
+                .size()).isEqualTo(2);
     }
 }

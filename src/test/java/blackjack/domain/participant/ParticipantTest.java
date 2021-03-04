@@ -1,12 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class ParticipantTest {
 
@@ -17,7 +20,7 @@ public class ParticipantTest {
         assertThatCode(() -> {
             new Player(name);
         }).isInstanceOf(IllegalArgumentException.class)
-          .hasMessage("플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.");
+                .hasMessage("플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.");
     }
 
     @DisplayName("게임 참가자는 1장의 카드를 뽑을 수 있다.")

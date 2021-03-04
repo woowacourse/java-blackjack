@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +30,8 @@ public class Cards {
 
     public int calculateScoreWhenAceIsMinimum() {
         return cards.stream()
-                    .mapToInt(Card::getScore)
-                    .sum();
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public int calculateFinalScore() {
@@ -45,8 +45,8 @@ public class Cards {
 
     private int getAceCounts() {
         return (int) cards.stream()
-                          .filter(Card::isAce)
-                          .count();
+                .filter(Card::isAce)
+                .count();
     }
 
     private int plusBonusAceScore(int sum) {

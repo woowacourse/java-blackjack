@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,8 +22,8 @@ public abstract class Participant {
 
     private void validateName(String name) {
         int trimNameLength = Objects.requireNonNull(name)
-                                    .trim()
-                                    .length();
+                .trim()
+                .length();
         if (trimNameLength == INVALID_NAME_LENGTH) {
             throw new IllegalArgumentException(INVALID_PARTICIPANT_NAME);
         }
