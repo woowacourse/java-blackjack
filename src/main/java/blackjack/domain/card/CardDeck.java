@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
+
     private final List<Card> cards = new ArrayList<>();
 
     public CardDeck() {
@@ -15,7 +16,7 @@ public class CardDeck {
     private void initialize() {
         for (final CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
-                    .forEach(number -> cards.add(new Card(number, type)));
+                .forEach(number -> cards.add(new Card(number, type)));
         }
         Collections.shuffle(cards);
     }

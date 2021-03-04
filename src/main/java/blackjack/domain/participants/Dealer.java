@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 public class Dealer extends Player {
+
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
     private int winCount = 0;
 

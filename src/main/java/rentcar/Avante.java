@@ -1,6 +1,7 @@
 package rentcar;
 
 public class Avante extends Car {
+
     private final int mileage = 15;
 
     public Avante(final int distance) {

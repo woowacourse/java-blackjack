@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
     private static final String ERROR_MARK = "[Error] ";
     private static final String NEWLINE = System.getProperty("line.separator");
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
@@ -29,15 +29,15 @@ public class OutputView {
 
     public static void showPlayerCard(final String name, final List<Card> cards) {
         final String cardStatus = cards.stream()
-                .map(Card::getCard)
-                .collect(Collectors.joining(", "));
+            .map(Card::getCard)
+            .collect(Collectors.joining(", "));
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus + NEWLINE);
     }
 
     public static void showCardResult(final String name, final List<Card> cards, final int result) {
         final String cardStatus = cards.stream()
-                .map(Card::getCard)
-                .collect(Collectors.joining(", "));
+            .map(Card::getCard)
+            .collect(Collectors.joining(", "));
         System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name, cardStatus, result);
     }
 

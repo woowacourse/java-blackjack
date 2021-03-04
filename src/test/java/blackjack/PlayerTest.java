@@ -1,5 +1,8 @@
 package blackjack;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
@@ -11,10 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 public class PlayerTest {
+
     private Player player;
 
     @BeforeEach
@@ -26,7 +27,7 @@ public class PlayerTest {
     @DisplayName("참가자가 잘 생성되는지 확인")
     void create() {
         assertThatCode(() -> new Player("bada"))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test

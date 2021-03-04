@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Player {
+
     private static final int BUST_LIMIT = 22;
 
     private final String name;
@@ -41,8 +42,8 @@ public class Player {
 
     public int calculate() {
         final int aceCount = (int) myCards.stream()
-                .filter(Card::isAce)
-                .count();
+            .filter(Card::isAce)
+            .count();
         if (aceCount == 0) {
             return calculateSingleCase();
         }
@@ -51,16 +52,16 @@ public class Player {
 
     private int calculateSingleCase() {
         return myCards.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
+            .mapToInt(Card::getCardNumber)
+            .sum();
     }
 
     private int calculateMultipleCase(final int aceCount) {
         final List<Integer> possibleSum = new ArrayList<>();
         final int sumExceptAce = myCards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getCardNumber)
-                .sum();
+            .filter(card -> !card.isAce())
+            .mapToInt(Card::getCardNumber)
+            .sum();
 
         for (final int aceSum : calculateAceSum(aceCount)) {
             possibleSum.add(sumExceptAce + aceSum);
@@ -82,10 +83,10 @@ public class Player {
 
     private int findMaxPossibleValue(final List<Integer> possibleSum) {
         return possibleSum.stream()
-                .filter(aceSum -> aceSum < BUST_LIMIT)
-                .mapToInt(Integer::intValue)
-                .max()
-                .orElse(BUST_LIMIT);
+            .filter(aceSum -> aceSum < BUST_LIMIT)
+            .mapToInt(Integer::intValue)
+            .max()
+            .orElse(BUST_LIMIT);
     }
 
     public void lose() {

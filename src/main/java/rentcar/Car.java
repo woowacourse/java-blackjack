@@ -1,6 +1,7 @@
 package rentcar;
 
 public abstract class Car {
+
     protected final int distance;
 
     public Car(final int distance) {

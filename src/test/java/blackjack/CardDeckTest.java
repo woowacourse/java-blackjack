@@ -1,19 +1,20 @@
 package blackjack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 public class CardDeckTest {
+
     @Test
     @DisplayName("카드덱이 잘 생성되는지 확인")
     void create() {
         assertThatCode(() -> new CardDeck())
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test

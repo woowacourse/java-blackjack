@@ -5,12 +5,12 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
+
     private static final String END_GAME_MARK = "n";
 
     public void run() {
@@ -36,7 +36,8 @@ public class BlackjackController {
         return players;
     }
 
-    private void distributeCard(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
+    private void distributeCard(final List<Player> players, final Dealer dealer,
+        final CardDeck cardDeck) {
         for (final Player player : players) {
             player.receiveCard(cardDeck.distribute());
             player.receiveCard(cardDeck.distribute());
@@ -47,8 +48,8 @@ public class BlackjackController {
 
     private void showParticipantsName(final List<Player> players) {
         final String status = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
+            .map(Player::getName)
+            .collect(Collectors.joining(", "));
         OutputView.distributeMessage(status);
     }
 
@@ -122,7 +123,8 @@ public class BlackjackController {
         for (final Player player : players) {
             decideWinner(dealer, player);
         }
-        OutputView.showGameResult(dealer.getName(), dealer.getWinCount(), players.size() - dealer.getWinCount());
+        OutputView.showGameResult(dealer.getName(), dealer.getWinCount(),
+            players.size() - dealer.getWinCount());
         for (final Player player : players) {
             OutputView.showPlayerGameResult(player.getName(), player.getWin());
         }
