@@ -31,9 +31,7 @@ class OutcomeStatisticsTest {
 	@Test
 	void create() {
 		final OutcomeStatistics outcomeStatistics = new OutcomeStatistics(dealerOutcome, playersOutcome);
-		assertThat(outcomeStatistics.getDealerWinCount()).isEqualTo(2);
-		assertThat(outcomeStatistics.getDealerDrawCount()).isEqualTo(1);
-		assertThat(outcomeStatistics.getDealerLoseCount()).isEqualTo(0);
+		assertThat(outcomeStatistics.getDealerOutcome()).isEqualTo(dealerOutcome);
 		assertThat(outcomeStatistics.getPlayersOutcome()).isEqualTo(playersOutcome);
 	}
 }

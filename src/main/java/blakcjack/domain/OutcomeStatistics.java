@@ -12,18 +12,6 @@ public class OutcomeStatistics {
 		this.playersOutcome = playersOutcome;
 	}
 
-	public int getDealerWinCount() {
-		return dealerOutcome.get(Outcome.WIN);
-	}
-
-	public int getDealerDrawCount() {
-		return dealerOutcome.get(Outcome.DRAW);
-	}
-
-	public int getDealerLoseCount() {
-		return dealerOutcome.get(Outcome.LOSE);
-	}
-
 	public Map<String, Outcome> getPlayersOutcome() {
 		return playersOutcome;
 	}
