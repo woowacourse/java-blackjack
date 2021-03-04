@@ -13,13 +13,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class ParticipantsTest {
 
-    @Test
     @DisplayName("참가자들의 이름은 중복이 없어야 한다.")
+    @Test
     public void validateOverlappedNames() {
-        List<Participant> participantGroup = Arrays.asList(
-                new Player("jason"),
-                new Player("jason")
-        );
+        List<Participant> participantGroup = Arrays.asList(new Player("jason"), new Player("jason"));
 
         assertThatCode(() -> {
             new Participants(participantGroup);
@@ -27,16 +24,18 @@ public class ParticipantsTest {
                 .hasMessage("참가자들의 이름은 중복이 없어야 합니다.");
     }
 
-    @Test
     @DisplayName("플레이어들이 카드를 2장씩 받는다.")
+    @Test
     public void receiveDefaultCards() {
         CardDeck cardDeck = new CardDeck();
         Participants participants = new Participants(Arrays.asList(new Player("jason")));
         Participant jason = participants.toList()
                 .get(0);
+
         List<Card> jasonCards = jason.getCards();
         participants.receiveDefaultCards(cardDeck);
         int afterSize = jasonCards.size();
+
         assertThat(afterSize).isEqualTo(2);
     }
 }
