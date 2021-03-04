@@ -1,17 +1,15 @@
 package blackjack.controller;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.participant.BlackJackParticipant;
-import blackjack.domain.participant.Player;
-import blackjack.util.GameInitializer;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
+import blackjack.domain.participant.BlackJackParticipant;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.util.GameInitializer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,22 +34,28 @@ public class BlackJackController {
         return participants;
     }
 
-    private static void playerDrawStage(Deck deck, Player player) {
-        while (player.isContinue()) {
-            OutputView.willDrawCard(player);
-            player.willContinue(InputView.inputString(), deck);
-            OutputView.printParticipantStatus(player, false);
-        }
-    }
-
     private static void playersDrawStage(Deck deck, Players players) {
         for (Player player : players.unwrap()) {
             playerDrawStage(deck, player);
         }
     }
 
+    private static void playerDrawStage(Deck deck, Player player) {
+        while (player.isContinue()) {
+            OutputView.willDrawCard(player);
+            drawOrStop(deck, player);
+        }
+    }
+
+    private static void drawOrStop(Deck deck, Player player) {
+        if (player.willContinue(InputView.inputString())) {
+            player.drawCard(deck);
+            OutputView.printParticipantStatus(player, false);
+        }
+    }
+
     private static void dealerDrawStage(Deck deck, Dealer dealer) {
-        while(dealer.isContinue()) {
+        while (dealer.isContinue()) {
             dealer.drawCard(deck);
             OutputView.printDealerDrawCard(dealer);
         }

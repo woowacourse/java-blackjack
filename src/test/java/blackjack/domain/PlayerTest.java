@@ -50,14 +50,14 @@ public class PlayerTest {
             Card.valueOf(Shape.DIAMOND, CardValue.ACE),
             Card.valueOf(Shape.SPADE, CardValue.ACE)));
 
-        root.willContinue("y", deck);
+        root.willContinue("y");
         assertThat(root.isContinue()).isTrue();
 
-        root.willContinue("n", deck);
+        root.willContinue("n");
         assertThat(root.isContinue()).isFalse();
 
         assertThatThrownBy(() ->
-            root.willContinue("x", deck))
+            root.willContinue("x"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("불가능한 입력 입니다.");
     }

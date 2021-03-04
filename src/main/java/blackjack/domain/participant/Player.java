@@ -18,12 +18,12 @@ public class Player extends BlackJackParticipant {
         }
     }
 
-    public void willContinue(String input, Deck deck) {
+    public boolean willContinue(String input) {
         if (!Response.getHitStatus(input)) {
             cannotDraw();
-            return;
+            return false;
         }
-        drawCard(deck);
+        return true;
     }
 
     public ResultType match(Dealer dealer) {
