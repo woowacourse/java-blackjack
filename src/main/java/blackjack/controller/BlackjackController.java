@@ -11,10 +11,9 @@ public class BlackjackController {
     public void play() {
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.getPlayerNames());
-        BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
 
-        blackjackManager.initGame();
-        OutputView.printInitGame(blackjackManager.getPlayers());
-        OutputView.printCards(blackjackManager.getPlayers());
+        BlackjackManager.initGame(players, dealer);
+        OutputView.printInitGame(players.toList());
+        OutputView.printCards(players.toList());
     }
 }
