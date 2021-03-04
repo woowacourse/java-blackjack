@@ -17,16 +17,18 @@ public class Player extends User {
     }
 
     public OneGameResult betResult(Dealer dealer) {
-        if (super.isBurstCondition() && dealer.isBurstCondition()) {
-            return OneGameResult.LOSE;
-        }
-        if (super.getPoint() < dealer.getPoint()) {
+        if (isLose(dealer)) {
             return OneGameResult.LOSE;
         }
         if (super.getPoint() > dealer.getPoint()) {
             return OneGameResult.WIN;
         }
         return OneGameResult.TIE;
+    }
+
+    private boolean isLose(Dealer dealer) {
+        return (super.isBurstCondition() && dealer.isBurstCondition()) ||
+            (super.getPoint() < dealer.getPoint());
     }
 
     public String getName() {
