@@ -3,7 +3,7 @@ package blackjack;
 public interface User {
 
     void hit(Card card);
-    String showCards();
+    String getCards();
     String getName();
     int getScore();
 

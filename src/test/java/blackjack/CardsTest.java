@@ -34,11 +34,11 @@ public class CardsTest {
     void showOne(){
         List<Card> deck = new ArrayList<>(Collections.singletonList(new Card(Denomination.THREE,Suit.SPADE)));
         Cards cards = new Cards(deck);
-        assertThat(cards.showCards()).isEqualTo("3스페이드");
+        assertThat(cards.getCards()).isEqualTo("3스페이드");
 
         List<Card> deck2 = new ArrayList<>(Collections.singletonList(new Card(Denomination.SEVEN,Suit.DIAMOND)));
         Cards cards2 = new Cards(deck2);
-        assertThat(cards2.showCards()).isEqualTo("7다이아몬드");
+        assertThat(cards2.getCards()).isEqualTo("7다이아몬드");
 
     }
 
@@ -51,7 +51,7 @@ public class CardsTest {
         ));
         Cards cards = new Cards(deck);
 
-        assertThat(cards.showCards()).isEqualTo("7스페이드, 3다이아몬드");
+        assertThat(cards.getCards()).isEqualTo("7스페이드, 3다이아몬드");
     }
 
     @DisplayName("카드들의 점수 총합을 계산한다.")

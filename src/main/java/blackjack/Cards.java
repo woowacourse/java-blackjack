@@ -24,7 +24,7 @@ public class Cards {
         return cards.isEmpty();
     }
 
-    public String showCards() {
+    public String getCards() {
         return cards.stream()
             .map(Card::getName)
             .collect(Collectors.joining(", "));
