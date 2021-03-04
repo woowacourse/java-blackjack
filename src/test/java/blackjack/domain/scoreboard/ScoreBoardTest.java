@@ -3,6 +3,7 @@ package blackjack.domain.scoreboard;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.Value;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,39 +24,39 @@ public class ScoreBoardTest {
         User third = new User("포비");
         User fourth = new User("제이슨");
 
-        GameResult firstGameResult = new GameResult(
+        UserGameResult firstUserGameResult = new UserGameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
                         new Card(Suit.HEART, Value.ACE))
-                , WinOrLose.DRAW); //15
+                ,first.getName(), WinOrLose.DRAW); //15
 
-        GameResult secondGameResult = new GameResult(
+        UserGameResult secondUserGameResult = new UserGameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.TEN),
                         new Card(Suit.HEART, Value.ACE))
-                , WinOrLose.WIN); //21
+                , second.getName(), WinOrLose.WIN); //21
 
-        GameResult thirdGameResult = new GameResult(
+        UserGameResult thirdUserGameResult = new UserGameResult(
                 Arrays.asList(new Card(Suit.CLOVER, Value.TWO), new Card(Suit.HEART, Value.TWO)),
-                WinOrLose.LOSE);
+                third.getName(),WinOrLose.LOSE);
 
-        GameResult fourthGameResult = new GameResult(
+        UserGameResult fourthUserGameResult = new UserGameResult(
                 Arrays.asList(new Card(Suit.DIAMOND, Value.TWO), new Card(Suit.SPADE, Value.TWO)),
-                WinOrLose.LOSE);
+                fourth.getName(), WinOrLose.LOSE);
 
-        Map<User, GameResult> temp = new HashMap<>();
-        temp.put(first, firstGameResult);
-        temp.put(second, secondGameResult);
-        temp.put(third, thirdGameResult);
-        temp.put(fourth, fourthGameResult);
+        Map<User, UserGameResult> temp = new HashMap<>();
+        temp.put(first, firstUserGameResult);
+        temp.put(second, secondUserGameResult);
+        temp.put(third, thirdUserGameResult);
+        temp.put(fourth, fourthUserGameResult);
 
-        DealerGameResult dealerGameResult = new DealerGameResult(
+        GameResult gameResult = new GameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                        new Card(Suit.HEART, Value.ACE))
+                        new Card(Suit.HEART, Value.ACE)), Dealer.DEALER_NAME
         );
 
-        ScoreBoard scoreBoard = new ScoreBoard(temp, dealerGameResult);
+        ScoreBoard scoreBoard = new ScoreBoard(temp, gameResult);
         //when
         Map<WinOrLose, Long> dealersWinOrLoses = scoreBoard.dealerWinOrLoseCounts();
         //then

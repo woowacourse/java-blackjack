@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class BlackjackGameController {
     private static final int DEALER_MINIMUM_SCORE = 16;
 
-    public static void start() {
+    public void start() {
         BlackjackGame blackjackGame = startGameAndFirstDraw();
         printFirstDrawInformation(blackjackGame);
         OutputView.println();

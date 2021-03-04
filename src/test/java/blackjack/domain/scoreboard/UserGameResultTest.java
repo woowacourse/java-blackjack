@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultTest {
+class UserGameResultTest {
     @DisplayName("결과로 갖고 있는 카드목록의 점수를 구하는 테스트")
     @Test
     void testCalculateScore() {
@@ -22,9 +22,9 @@ class GameResultTest {
         );
 
         //when
-        GameResult gameResult = new GameResult(resultCards, WinOrLose.WIN);
+        UserGameResult userGameResult = new UserGameResult(resultCards, "유저",WinOrLose.WIN);
 
         //then
-        assertThat(gameResult.calculateScore()).isEqualTo(20);
+        assertThat(userGameResult.calculateScore()).isEqualTo(20);
     }
 }

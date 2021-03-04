@@ -2,8 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.scoreboard.DealerGameResult;
 import blackjack.domain.scoreboard.GameResult;
+import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.scoreboard.ScoreBoard;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
@@ -74,16 +74,16 @@ public class BlackjackGame {
                 , createDealerGameResult());
     }
 
-    private DealerGameResult createDealerGameResult() {
-        return new DealerGameResult(dealer.getCards());
+    private GameResult createDealerGameResult() {
+        return new GameResult(dealer.getCards(), dealer.getName());
     }
 
     public boolean existCanContinueUser(){
         return users.stream().anyMatch(User::canContinueGame);
     }
 
-    private GameResult createGameResult(User user) {
-        return new GameResult(user.getCards(), WinOrLose.decideWinOrLose(user, dealer));
+    private UserGameResult createGameResult(User user) {
+        return new UserGameResult(user.getCards(), user.getName(), WinOrLose.decideWinOrLose(user, dealer));
     }
 
 

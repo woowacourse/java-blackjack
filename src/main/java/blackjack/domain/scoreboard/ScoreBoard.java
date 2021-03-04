@@ -10,26 +10,26 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ScoreBoard {
-    private final Map<User, GameResult> userResults;
-    private final DealerGameResult dealerGameResult;
+    private final Map<User, UserGameResult> userResults;
+    private final GameResult gameResult;
 
-    public ScoreBoard(Map<User, GameResult> userResults, DealerGameResult dealerGameResult){
+    public ScoreBoard(Map<User, UserGameResult> userResults, GameResult gameResult){
         this.userResults = userResults;
-        this.dealerGameResult = dealerGameResult;
+        this.gameResult = gameResult;
     }
 
-    public Map<User, GameResult> getUserResults(){
+    public Map<User, UserGameResult> getUserResults(){
         return Collections.unmodifiableMap(userResults);
     }
 
-    public DealerGameResult getDealerGameResult(){
-        return dealerGameResult;
+    public GameResult getDealerGameResult(){
+        return gameResult;
     }
 
     public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
         return userResults.keySet().stream()
                 .map(userResults::get)
-                .map(GameResult::getWinOrLose)
+                .map(UserGameResult::getWinOrLose)
                 .collect(groupingBy(WinOrLose::opposite, counting()));
     }
 
@@ -38,11 +38,11 @@ public class ScoreBoard {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ScoreBoard that = (ScoreBoard) o;
-        return Objects.equals(userResults, that.userResults) && Objects.equals(dealerGameResult, that.dealerGameResult);
+        return Objects.equals(userResults, that.userResults) && Objects.equals(gameResult, that.gameResult);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userResults, dealerGameResult);
+        return Objects.hash(userResults, gameResult);
     }
 }

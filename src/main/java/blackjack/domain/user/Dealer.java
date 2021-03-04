@@ -2,41 +2,12 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 
-import java.util.List;
-
-public class Dealer {
+public class Dealer extends Participant{
     private static final int NO_MORE_DRAW_NUMBER = 16;
-    private final Hand hand;
-    private Status status;
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        this.hand = Hand.createEmptyHand();
-    }
-
-    public void firstDraw(Card first, Card second) {
-        drawCard(first);
-        drawCard(second);
-    }
-
-    public void drawCard(Card card) {
-        hand.add(card);
-        changeStatus();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    public int handSize() {
-        return hand.size();
-    }
-
-    public boolean isSameStatus(Status status){
-        return this.status == status;
-    }
-
-    public void changeStatus(){
-        status = Status.of(hand.calculateScore());
+        super(DEALER_NAME);
     }
 
     public Card getFirstCard() {
@@ -45,9 +16,5 @@ public class Dealer {
 
     public boolean isUnderSixteen() {
         return hand.calculateScore() < NO_MORE_DRAW_NUMBER;
-    }
-
-    public int calculateScore() {
-        return hand.calculateScore();
     }
 }

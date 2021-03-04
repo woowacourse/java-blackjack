@@ -1,10 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.scoreboard.GameResult;
+import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.scoreboard.ScoreBoard;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 
 import java.util.Arrays;
@@ -23,7 +24,6 @@ public class OutputView {
     private static final String PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT = "%s 카드: %s - 점수 : %d%n";
     private static final String FINAL_WIN_OR_LOSE_MSG = "##최종 승패";
     private static final String DEALER_MORE_DRAW_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String DEALER_NAME = "딜러";
     private static final long DEFAULT_COUNT = 0L;
 
     public static void printDrawMessage(List<String> userNames) {
@@ -38,35 +38,27 @@ public class OutputView {
 
         String dealerFirstCard = value + suit;
 
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, DEALER_NAME, dealerFirstCard);
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, dealerFirstCard);
     }
 
-    public static void printCardList(User user) {
-        String cards = user.getCards()
+    public static void printCardList(Participant participant) {
+        String cards = participant.getCards()
                 .stream()
                 .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
                 .collect(Collectors.joining(DELIMITER));
 
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, user.getName(), cards);
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, participant.getName(), cards);
     }
 
-    public static void printCardListAndScore(User user){
-        String cards = user.getCards()
+    public static void printCardListAndScore(Participant participant){
+        String cards = participant.getCards()
                 .stream()
                 .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
                 .collect(Collectors.joining(DELIMITER));
 
-        System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, user.getName(), cards, user.calculateScore());
+        System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, participant.getName(), cards, participant.calculateScore());
     }
 
-    public static void printCardListAndScore(Dealer dealer){
-        String cards = dealer.getCards()
-                .stream()
-                .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
-                .collect(Collectors.joining(DELIMITER));
-
-        System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, DEALER_NAME, cards, dealer.calculateScore());
-    }
 
     public static void printDealerMoreDrawMessage() {
         System.out.println(DEALER_MORE_DRAW_CARD_MSG);
@@ -74,7 +66,7 @@ public class OutputView {
     }
 
     public static void printScoreBoard(ScoreBoard scoreBoard, Dealer dealer){
-        Map<User, GameResult> userResults = scoreBoard.getUserResults();
+        Map<User, UserGameResult> userResults = scoreBoard.getUserResults();
         Set<User> users = userResults.keySet();
         printCardListAndScore(dealer);
         printCardListAndScore(users);
@@ -86,7 +78,7 @@ public class OutputView {
         users.forEach(OutputView::printCardListAndScore);
     }
 
-    private static void printFinalWinOrLose(ScoreBoard scoreBoard, Map<User, GameResult> userResults, Set<User> users) {
+    private static void printFinalWinOrLose(ScoreBoard scoreBoard, Map<User, UserGameResult> userResults, Set<User> users) {
         System.out.println(FINAL_WIN_OR_LOSE_MSG);
         System.out.println(createDealerResultMessage(scoreBoard));
 
@@ -96,7 +88,7 @@ public class OutputView {
     }
 
     private static String createDealerResultMessage(ScoreBoard scoreBoard) {
-        return DEALER_NAME + COLON + Arrays.stream(WinOrLose.values())
+        return Dealer.DEALER_NAME + COLON + Arrays.stream(WinOrLose.values())
                 .map(winOrLose -> scoreBoard.dealerWinOrLoseCounts()
                         .getOrDefault(winOrLose, DEFAULT_COUNT) + winOrLose.getCharacter())
                 .collect(Collectors.joining(BLANK));

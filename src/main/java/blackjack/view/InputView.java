@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.user.Dealer;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,7 +12,6 @@ public class InputView {
     private static final String DUPLICATE_NAME_ERROR_MSG = "중복된 이름은 존재할 수 없습니다.";
     private static final String EMPTY_NAME_ERROR_MSG = "빈 값은 입력될 수 없습니다.";
     // todo: 도메인에서 검증 여부
-    private static final String DEALER_NAME = "딜러";
     private static final String MORE_DRAW_MSG_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String YES = "y";
     private static final String NO = "n";
@@ -45,7 +46,7 @@ public class InputView {
     }
 
     private static void validateNotDealerName(List<String> splitNames) {
-        if (splitNames.stream().anyMatch(DEALER_NAME::equals)) {
+        if (splitNames.stream().anyMatch(Dealer.DEALER_NAME::equals)) {
             throw new IllegalArgumentException();
         }
     }
