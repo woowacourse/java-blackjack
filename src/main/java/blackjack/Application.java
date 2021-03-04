@@ -22,13 +22,12 @@ public class Application {
                                         .map(Player::new)
                                         .collect(Collectors.toList());
         Participants participants = Participants.of(dealer, players);
+
         participants.receiveDefaultCards(cardDeck);
         OutputView.printDefaultCardMessage(dealer, players);
         players.forEach(player -> drawMoreCard(player, cardDeck));
-        if (dealer.isAbleToReceiveCard()) {
-            dealer.receiveCard(cardDeck.draw());
-            OutputView.printDealerDrawingMessage(dealer);
-        }
+        receiveDealerCard(dealer, cardDeck);
+
         OutputView.printFinalCardsAndScore(participants);
         OutputView.printFinalResult(dealer, players);
     }
@@ -47,6 +46,13 @@ public class Application {
         }
         if (player.isAbleToReceiveCard()) {
             drawMoreCard(player, cardDeck);
+        }
+    }
+
+    private static void receiveDealerCard(Dealer dealer, CardDeck cardDeck) {
+        if (dealer.isAbleToReceiveCard()) {
+            dealer.receiveCard(cardDeck.draw());
+            OutputView.printDealerDrawingMessage(dealer);
         }
     }
 }
