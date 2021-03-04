@@ -5,6 +5,7 @@ import blackjack.domain.card.CardHand;
 import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dealer extends Participant {
     
@@ -36,6 +37,11 @@ public class Dealer extends Participant {
     
     public boolean shouldReceive() {
         return sumCardHand() <= DEALER_THRESHOLD;
+    }
+    
+    public List<Card> getCardsExceptFirstCard() {
+        List<Card> cards = cardHand.getCards();
+        return cards.subList(1, cards.size());
     }
     
     //### 딜러
