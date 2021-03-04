@@ -1,111 +1,91 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Result;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final String DEALER = "딜러";
+    private static final String DEALER_NAME = "딜러";
 
     public void run() {
-        List<Player> players = createPlayers(InputView.inputPlayerNames());
-        Dealer dealer = new Dealer(DEALER);
         Deck deck = new Deck();
         deck.shuffle();
-        int index = 0;
+        List<Player> players = createPlayers();
+        Dealer dealer = new Dealer(DEALER_NAME);
 
-        index = initialDrawDealer(deck, dealer, index);
-        index = initialDrawPlayer(deck, players, index);
-
-        showCards(dealer, players);
-
-        index = distributeCards(players, deck, index);
-        distributeDealer(deck, dealer, index);
-
-        compareAllPlayersWithDealer(dealer, players);
-        OutputView.printCardScore(dealer.getName(), dealer.getCards());
-        showResult(dealer, players);
+        handOutCards(deck, dealer, players);
+        printHandOutCardsResult(dealer, players);
+        drawPhaseStart(deck, players, dealer);
+        printDealerPlayersScore(players, dealer);
+        calculateBlackJackGameResult(players, dealer);
+        OutputView.printGameResult(players, dealer);
     }
 
-    public List<Player> createPlayers(List<String> names) {
-        OutputView.printParticipate(names);
+    private void printDealerPlayersScore(List<Player> players, Dealer dealer) {
+        OutputView.printParticipantCardsWithScore(dealer.getName(), dealer.getCards());
+        for(Player player : players){
+            OutputView.printParticipantCardsWithScore(player.getName(), player.getCards());
+        }
+    }
+
+    private List<Player> createPlayers() {
+        List<String> names = InputView.getPlayerNames();
         return names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
-    public int distributeCards(List<Player> players, Deck deck, int index) {
+    private void handOutCards(Deck deck, Dealer dealer, List<Player> players) {
+        OutputView.printHandOutCardsMessage(dealer, players);
+
+        dealer.draw(deck.draw());
+        dealer.draw(deck.draw());
+
         for (Player player : players) {
-            distributePlayer(deck, player, index);
+            player.draw(deck.draw());
+            player.draw(deck.draw());
         }
-        return index;
     }
 
-    private int distributePlayer(Deck deck, Player player, int index) {
-        while (player.canDrawOneMore(player.getCards().getScore()) && InputView.inputDraw(player.getName())) {
-            index = player.draw(deck, index);
-            OutputView.printCards(player.getName(), player.getCards());
-        }
-
-        return index;
-    }
-
-    public int initialDrawDealer(Deck deck, Dealer dealer, int index) {
-        return dealer.initializeDraw(deck, index);
-    }
-
-    public int initialDrawPlayer(Deck deck, List<Player> players, int index) {
+    private void printHandOutCardsResult(Dealer dealer, List<Player> players) {
+        OutputView.printParticipantCards(dealer.getName(), dealer.getCards());
         for (Player player : players) {
-            index = player.initializeDraw(deck, index);
+            OutputView.printParticipantCards(player.getName(), player.getCards());
         }
-        return index;
     }
 
-    public void showCards(Dealer dealer, List<Player> players) {
-        OutputView.printCards(dealer.getName()
-                , new Cards(Collections.singletonList(dealer.getCards().getCard(0))));
+    private void playersDrawPhaseStart(Deck deck, Player player) {
+        while (player.canDraw() && InputView.getWhetherDrawCard(player.getName())) {
+            player.draw(deck.draw());
+            OutputView.printParticipantCards(player.getName(), player.getCards());
+        }
 
+    }
+
+    private void dealerDrawPhaseStart(Deck deck, Dealer dealer) {
+        if (dealer.canDraw()) {
+            OutputView.printDealerCardDrawMessage();
+            dealer.draw(deck.draw());
+        }
+    }
+
+    private void drawPhaseStart(Deck deck, List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            playersDrawPhaseStart(deck, player);
+        }
+        dealerDrawPhaseStart(deck, dealer);
+    }
+
+    private void calculateBlackJackGameResult(List<Player> players, Dealer dealer) {
         for(Player player : players){
-            OutputView.printCards(player.getName(), player.getCards());
+            dealer.matchCards(player.getCards());
+            player.matchCards(dealer.getCards());
         }
     }
 
-    public static int distributeDealer(Deck deck, Dealer dealer, int index) {
-        Cards dealerCards = dealer.getCards();
-
-        while (dealer.canDrawOneMore(dealerCards.getScore())){
-            OutputView.printOneMoreCard();
-            index = dealer.draw(deck, index);
-        }
-
-        return index;
-    }
-
-    public void compareAllPlayersWithDealer(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
-            player.compareWithDealer(dealer);
-        }
-    }
-
-    public void showResult(Dealer dealer, List<Player> players) {
-        for(Player player : players){
-            OutputView.printCardScore(player.getName(), player.getCards());
-        }
-
-        OutputView.printDealerResult(
-                dealer.findResultCount(Result.WIN),
-                dealer.findResultCount(Result.DRAW),
-                dealer.findResultCount(Result.LOSE));
-
-        OutputView.printPlayerResult(players);
-    }
 }
