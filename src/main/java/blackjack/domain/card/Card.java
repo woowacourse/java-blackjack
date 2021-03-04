@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 public class Card {
 
     private static final String ACE = "A";
+    private static final int ACE_MAX = 11;
+    private static final int ACE_MIN = 1;
 
     private final Denomination denomination;
     private final Shape shape;
@@ -52,5 +54,12 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, shape);
+    }
+
+    public int getAceScore(int result) {
+        if (result < ACE_MAX) {
+            return ACE_MAX;
+        }
+        return ACE_MIN;
     }
 }
