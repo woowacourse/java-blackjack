@@ -1,4 +1,4 @@
-package blackjack.participant;
+package blackjack.domain.participant;
 
 public class Dealer extends Participant{
     public static final String DEALER = "딜러";

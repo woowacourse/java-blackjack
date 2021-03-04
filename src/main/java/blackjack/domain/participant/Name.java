@@ -1,4 +1,4 @@
-package blackjack.participant;
+package blackjack.domain.participant;
 
 
 import utils.StringUtils;

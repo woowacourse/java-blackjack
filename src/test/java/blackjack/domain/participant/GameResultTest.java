@@ -1,4 +1,4 @@
-package blackjack.participant;
+package blackjack.domain.participant;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,4 @@
-package blackjack.participant;
-
-import blackjack.Game;
+package blackjack.domain.participant;
 
 public class GameResult {
     private int winCount;

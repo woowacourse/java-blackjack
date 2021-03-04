@@ -1,6 +1,6 @@
-package blackjack.participant;
+package blackjack.domain.participant;
 
-import blackjack.Game;
+import blackjack.domain.Game;
 
 public class Player extends Participant{
     private final Name name;

@@ -1,12 +1,11 @@
-package blackjack;
+package blackjack.domain;
 
-import blackjack.card.Deck;
-import blackjack.participant.Dealer;
-import blackjack.participant.GameResult;
-import blackjack.participant.Participant;
-import blackjack.participant.Player;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameResult;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
