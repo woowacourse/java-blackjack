@@ -1,16 +1,16 @@
 package blackjack.domain;
 
 import java.util.Arrays;
-import java.util.function.Predicate;
+import java.util.function.IntPredicate;
 
 public enum Status {
     BURST(score -> 21 < score),
     BLACKJACK(score -> 21 == score),
     HIT(score -> 21 > score);
 
-    private final Predicate<Integer> predicate;
+    private final IntPredicate predicate;
 
-    Status(Predicate<Integer> predicate) {
+    Status(IntPredicate predicate) {
         this.predicate = predicate;
     }
 
