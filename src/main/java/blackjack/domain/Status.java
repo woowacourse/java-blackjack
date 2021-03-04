@@ -21,7 +21,8 @@ public enum Status {
         return LOSE;
     }
 
-    private String getStatus() {
+    @Override
+    public String toString() {
         return status;
     }
 }

@@ -33,12 +33,7 @@ public class GameTable {
     }
 
     private void play() {
-        players.forEach(player -> {
-            while (player.isNotBust()) {
-                askHit(player);
-            }
-        });
-
+        players.forEach(this::askHit);
         while (dealer.canHit()) {
             dealer.hit(deck.pop());
             OutputView.printDealerHitMessage();
@@ -48,14 +43,19 @@ public class GameTable {
     private void finish() {
         OutputView.printCardsAndScore(dealer, players);
         Result result = new Result();
-        OutputView.printResult(result.getResult(dealer, players));
+        List<Integer> matchResult = dealer.calculateMatchResult(result.getResult(dealer,players));
+        OutputView.printResult(matchResult,result.getResult(dealer, players));
     }
 
     private void askHit(Player player) {
-        OutputView.printHitGuideMessage(player);
-        String hitValue = InputView.getHitValue();
-        if (hitValue.equals("Y")) {
+        while(player.isNotBust()){
+            OutputView.printHitGuideMessage(player);
+            String hitValue = InputView.getHitValue();
+            if (hitValue.equals("N")) {
+                break;
+            }
             player.hit(deck.pop());
+            OutputView.printPlayerCards(player);
         }
     }
 
