@@ -5,7 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> deck = new ArrayList<>(52);
+
+    private static final int MAX_NUM_CARD = 52;
+    private static final int FIRST = 0;
+
+    private final List<Card> deck = new ArrayList<>(MAX_NUM_CARD);
 
     public Deck() {
         for (CardPattern cardPattern : CardPattern.values()) {
@@ -17,7 +21,7 @@ public class Deck {
     }
 
     public Card dealCard() {
-        return deck.remove(0);
+        return deck.remove(FIRST);
     }
 
     public Card choiceCard(int index) {

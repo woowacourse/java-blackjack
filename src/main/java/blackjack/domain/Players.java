@@ -1,10 +1,18 @@
 package blackjack.domain;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Players {
+
+    private static final String NAME_SPLITTER = ",";
+
     private final List<Player> players;
     private final Gamer dealer;
 
@@ -20,7 +28,7 @@ public class Players {
 
     private List<Player> splitPlayers(String value) {
         List<Player> splitPlayers = new ArrayList<>();
-        for (String name : value.split(",")) {
+        for (String name : value.split(NAME_SPLITTER)) {
             Player player = new Player(name);
             splitPlayers.add(player);
         }
@@ -68,24 +76,15 @@ public class Players {
         return players.stream().map(Gamer::getName).collect(Collectors.joining(", "));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Players players1 = (Players) o;
-        return Objects.equals(players, players1.players) && Objects.equals(dealer, players1.dealer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(players, dealer);
-    }
-
-    public List<Gamer> getPlayers() {
+    public List<Gamer> getAllParticipant() {
         List<Gamer> allPlayers = new ArrayList<>();
         allPlayers.add(dealer);
         allPlayers.addAll(this.players);
         return allPlayers;
+    }
+
+    public List<Player> getAllPlayers() {
+        return Collections.unmodifiableList(this.players);
     }
 
     public Map<String, Integer> calculateResult() {
@@ -116,9 +115,21 @@ public class Players {
         return result;
     }
 
-    public void makeEachPlayerResult() {
-        for (Player player : players) {
-            System.out.println(player.getName() + ": " + player.getResult());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Players players1 = (Players) o;
+        return Objects.equals(players, players1.players) && Objects.equals(dealer, players1.dealer);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(players, dealer);
+    }
+
 }

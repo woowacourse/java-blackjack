@@ -1,24 +1,31 @@
 package blackjack.domain;
 
+import blackjack.view.OutputView;
+
 public class Dealer extends Gamer {
+
+    private static final String DEFAULT_DEALER_NAME = "딜러";
+    private static final int POINT_BOUNDARY_VALUE = 16;
+    private static final String COUPLER = ": ";
+
     public Dealer() {
-        super("딜러");
+        super(DEFAULT_DEALER_NAME);
     }
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() <= 16;
+        return this.calculateJudgingPoint() <= POINT_BOUNDARY_VALUE;
     }
 
     @Override
     public String getInfo() {
-        return getName() + ": " + getDealerCards();
+        return getName() + COUPLER + getDealerCards();
     }
 
     @Override
     public Boolean continueDraw(Deck deck) {
         this.receiveCard(deck.dealCard());
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        OutputView.noticeDealerGetCard();
         return true;
     }
 }

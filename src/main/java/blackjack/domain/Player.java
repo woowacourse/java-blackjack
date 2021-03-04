@@ -1,8 +1,15 @@
 package blackjack.domain;
 
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class Player extends Gamer {
+
+    private static final int HIGHEST_POINT = 21;
+    private static final String COUPLER = "카드: ";
+    private static final String GET_CARD = "y";
+    private static final String ERROR_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";
+    private static final String PATTERN_Y_OR_N = "[yn]";
     private String result;
 
     public Player(String name) {
@@ -11,26 +18,25 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() < 21;
+        return this.calculateJudgingPoint() < HIGHEST_POINT;
     }
 
     public Boolean continueDraw(Deck deck) {
-        System.out.println(getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        OutputView.noticeGetMoreCard(getName());
         String draw = InputView.isContinueDraw();
         if (isDrawCard(draw)) {
             receiveCard(deck.dealCard());
-            System.out.println(getInfo());
+            OutputView.printPlayerInfo(getInfo());
             return true;
         }
         return false;
     }
 
     private Boolean isDrawCard(String draw) {
-        String pattern = "[yn]";
-        if (!draw.matches(pattern)) {
-            throw new IllegalArgumentException("y 혹은 n 만 입력하여 주십시오.");
+        if (!draw.matches(PATTERN_Y_OR_N)) {
+            throw new IllegalArgumentException(ERROR_Y_OR_N);
         }
-        return draw.equals("y");
+        return draw.equals(GET_CARD);
     }
 
     public void matchResult(String result) {
@@ -39,7 +45,7 @@ public class Player extends Gamer {
 
     @Override
     public String getInfo() {
-        return getName() + "카드: " + getCards();
+        return getName() + COUPLER + getCards();
     }
 
     public String getResult() {
