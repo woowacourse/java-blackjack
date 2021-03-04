@@ -7,20 +7,29 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import javafx.util.Pair;
 
 public class BlackJackController {
 
     public void play() {
-        CardDeck entireCardDeck = new CardDeck();
-        Dealer dealer = new Dealer(entireCardDeck.generateUserDeck());
-        Players players = new Players(entireCardDeck, InputView.requestPlayers());
+        CardDeck cardDeck = new CardDeck();
+        Pair<Dealer, Players> Users = playInit(cardDeck);
+        Dealer dealer = Users.getKey();
+        Players players = Users.getValue();
+        process(cardDeck, dealer, players);
+        end(dealer, players);
+    }
+
+    private Pair<Dealer, Players> playInit(CardDeck cardDeck) {
+        Dealer dealer = new Dealer(cardDeck.generateUserDeck());
+        Players players = new Players(cardDeck, InputView.requestPlayers());
         OutputView.showInitiate(dealer, players);
-        processPlayers(entireCardDeck, players);
-        processDealer(entireCardDeck, dealer);
-        OutputView.showScoreResult(dealer, players);
-        DealerResult dealerResult = new DealerResult(dealer, players.getPlayers());
-        OutputView.showDealerTable(dealerResult);
-        OutputView.showIndividualTable(dealer, players);
+        return new Pair<>(dealer, players);
+    }
+
+    private void process(CardDeck cardDeck, Dealer dealer, Players players) {
+        processPlayers(cardDeck, players);
+        processDealer(cardDeck, dealer);
     }
 
     private void processPlayers(CardDeck cardDeck, Players players) {
@@ -45,5 +54,12 @@ public class BlackJackController {
             dealer.draw(cardDeck.draw());
             OutputView.showDealerDraw();
         }
+    }
+
+    private void end(Dealer dealer, Players players) {
+        OutputView.showScoreResult(dealer, players);
+        DealerResult dealerResult = new DealerResult(dealer, players.getPlayers());
+        OutputView.showDealerTable(dealerResult);
+        OutputView.showPlayerTable(dealer, players);
     }
 }

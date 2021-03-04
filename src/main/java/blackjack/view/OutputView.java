@@ -30,7 +30,7 @@ public class OutputView {
     }
 
     public static void showInitiate(Dealer dealer, Players players) {
-        showName(players);
+        showPlayerNames(players);
         showCards(dealer, players);
     }
 
@@ -42,7 +42,7 @@ public class OutputView {
         }
     }
 
-    private static void showName(Players players) {
+    private static void showPlayerNames(Players players) {
         List<String> playerNames = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             playerNames.add(player.getName());
@@ -122,7 +122,7 @@ public class OutputView {
         return "";
     }
 
-    public static void showIndividualTable(Dealer dealer, Players players) {
+    public static void showPlayerTable(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
             String gameIndividualResult = Result.getResult(player, dealer);
