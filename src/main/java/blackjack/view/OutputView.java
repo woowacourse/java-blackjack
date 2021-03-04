@@ -28,9 +28,8 @@ public class OutputView {
             .collect(Collectors.joining(", "));
         System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerName, gamerNames);
         printDealerCardInfo(dealer);
-        for (Gamer gamer : gamers) {
-            printPlayerCardInfo(gamer);
-        }
+        gamers.stream()
+            .forEach(gamer -> printPlayerCardInfo(gamer));
         System.out.println();
     }
 
@@ -43,12 +42,6 @@ public class OutputView {
         System.out.println(playerInfoToString(player));
     }
 
-    private static String cardToString(Card card) {
-        final String demomination = card.getDenomination().getName();
-        final String shape = card.getShape().getName();
-        return demomination + shape;
-    }
-
     private static String playerInfoToString(Player player) {
         final String playerName = player.getName();
         final String playerCardInfo = player.getCards().getCards()
@@ -58,7 +51,13 @@ public class OutputView {
         return playerName + " 카드: " + playerCardInfo;
     }
 
-    public static void printDealerOnemoreDrawMessage() {
+    private static String cardToString(Card card) {
+        final String demomination = card.getDenomination().getName();
+        final String shape = card.getShape().getName();
+        return demomination + shape;
+    }
+
+    public static void printDealerOnemoreDrawedMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -74,13 +73,13 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         List<ResultType> dealerResult = gameResult.getDealerResult();
-        System.out.println("딜러: " + resultStatisticToString(dealerResult));
+        System.out.println("딜러: " + resultsStatisticToString(dealerResult));
         for (Entry<Player, ResultType> result : gameResult.getGamersResult().entrySet()) {
             System.out.printf("%s: %s\n", result.getKey().getName(), result.getValue().getValue());
         }
     }
 
-    private static String resultStatisticToString(List<ResultType> resultTypes) {
+    private static String resultsStatisticToString(List<ResultType> resultTypes) {
         Map<String, Long> result = resultTypes.stream()
             .collect(Collectors.groupingBy(ResultType::getValue, Collectors.counting()));
         return Arrays.stream(ResultType.values())
