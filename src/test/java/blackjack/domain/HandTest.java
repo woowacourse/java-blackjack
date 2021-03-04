@@ -1,41 +1,42 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
-import java.util.Arrays;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class HandTest {
 
     private static Stream<Arguments> provideHand() {
         return Stream.of(
-            Arguments.of(new Hand(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-                Card.valueOf(Shape.SPADE, CardValue.SIX)
-            )), 17),
-            Arguments.of(new Hand(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.ACE),
-                Card.valueOf(Shape.HEART, CardValue.ACE)
-            )), 12),
-            Arguments.of(new Hand(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.TEN),
-                Card.valueOf(Shape.HEART, CardValue.TWO)
-            )), 22),
-            Arguments.of(new Hand(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.TEN),
-                Card.valueOf(Shape.HEART, CardValue.ACE)
-            )), 21)
+                Arguments.of(new Hand(Arrays.asList(
+                        Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+                        Card.valueOf(Shape.SPADE, CardValue.SIX)
+                )), 17),
+                Arguments.of(new Hand(Arrays.asList(
+                        Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+                        Card.valueOf(Shape.SPADE, CardValue.ACE),
+                        Card.valueOf(Shape.HEART, CardValue.ACE)
+                )), 12),
+                Arguments.of(new Hand(Arrays.asList(
+                        Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+                        Card.valueOf(Shape.SPADE, CardValue.TEN),
+                        Card.valueOf(Shape.HEART, CardValue.TWO)
+                )), 22),
+                Arguments.of(new Hand(Arrays.asList(
+                        Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+                        Card.valueOf(Shape.SPADE, CardValue.TEN),
+                        Card.valueOf(Shape.HEART, CardValue.ACE)
+                )), 21)
         );
     }
 
@@ -50,15 +51,15 @@ public class HandTest {
     @Test
     void isBust() {
         Hand bustHand = new Hand(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
-            Card.valueOf(Shape.SPADE, CardValue.KING),
-            Card.valueOf(Shape.SPADE, CardValue.TWO)));
+                Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+                Card.valueOf(Shape.SPADE, CardValue.KING),
+                Card.valueOf(Shape.SPADE, CardValue.TWO)));
         assertThat(bustHand.isBust()).isTrue();
 
         Hand validHand = new Hand(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
-            Card.valueOf(Shape.SPADE, CardValue.KING),
-            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+                Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+                Card.valueOf(Shape.SPADE, CardValue.KING),
+                Card.valueOf(Shape.SPADE, CardValue.ACE)));
         assertThat(validHand.isBust()).isFalse();
     }
 }

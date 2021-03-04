@@ -3,7 +3,6 @@ package blackjack.util;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
-import blackjack.util.GameInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

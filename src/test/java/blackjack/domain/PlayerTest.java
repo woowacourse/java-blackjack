@@ -1,16 +1,18 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -25,8 +27,8 @@ public class PlayerTest {
     @Test
     void validate() {
         assertThatThrownBy(() -> new Player(""))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("공백은 이름으로 사용할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("공백은 이름으로 사용할 수 없습니다.");
     }
 
     @Test
@@ -34,21 +36,18 @@ public class PlayerTest {
     void drawCard() {
         Player root = new Player("root");
         Deck deck = new Deck(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+                Card.valueOf(Shape.SPADE, CardValue.ACE)));
 
         root.drawCard(deck);
         assertThat(root.getHand()).isEqualToComparingFieldByField(
-            new Hand(Arrays.asList(Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
+                new Hand(Collections.singletonList(Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
     }
 
     @Test
     @DisplayName("유저가 카드를 계속 더 받을건지 입력")
     void willContinue() {
         Player root = new Player("root");
-        Deck deck = new Deck(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-            Card.valueOf(Shape.SPADE, CardValue.ACE)));
 
         root.willContinue("y");
         assertThat(root.isContinue()).isTrue();
@@ -57,9 +56,9 @@ public class PlayerTest {
         assertThat(root.isContinue()).isFalse();
 
         assertThatThrownBy(() ->
-            root.willContinue("x"))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("불가능한 입력 입니다.");
+                root.willContinue("x"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("불가능한 입력 입니다.");
     }
 
     @Test
@@ -70,14 +69,14 @@ public class PlayerTest {
         Player root = new Player("root");
         Dealer dealer = new Dealer();
         Deck deck = new Deck(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-            Card.valueOf(Shape.SPADE, CardValue.EIGHT),
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-            Card.valueOf(Shape.HEART, CardValue.EIGHT),
-            Card.valueOf(Shape.SPADE, CardValue.TEN),
-            Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
-            Card.valueOf(Shape.CLOVER, CardValue.TEN),
-            Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
+                Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+                Card.valueOf(Shape.SPADE, CardValue.EIGHT),
+                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+                Card.valueOf(Shape.HEART, CardValue.EIGHT),
+                Card.valueOf(Shape.SPADE, CardValue.TEN),
+                Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
+                Card.valueOf(Shape.CLOVER, CardValue.TEN),
+                Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
 
         dealer.drawCard(deck);
         dealer.drawCard(deck);

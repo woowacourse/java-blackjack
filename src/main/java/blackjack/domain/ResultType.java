@@ -18,9 +18,9 @@ public enum ResultType {
 
     public static ResultType getResultType(int difference) {
         return Arrays.stream(ResultType.values())
-            .filter(resultType -> resultType.matcher.apply(difference))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
+                .filter(resultType -> resultType.matcher.apply(difference))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
     }
 
     public String getName() {

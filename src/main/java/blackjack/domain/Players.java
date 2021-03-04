@@ -2,13 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -22,8 +17,8 @@ public class Players {
 
     public static Players valueOf(String unParsedNames) {
         List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER))
-            .map(Player::new)
-            .collect(Collectors.toList());
+                .map(Player::new)
+                .collect(Collectors.toList());
         validateDuplication(parsedPlayers);
         return new Players(parsedPlayers);
     }

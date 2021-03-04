@@ -19,10 +19,10 @@ public class Cars {
 
     @Override
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         cars.stream()
-            .map(car -> car.getName() + " : " + car.getRequiredFuel() + "리터" + NEWLINE)
-            .forEach(car -> result.append(car));
+                .map(car -> car.getName() + " : " + car.getRequiredFuel() + "리터" + NEWLINE)
+                .forEach(result::append);
         return result.toString();
     }
 }

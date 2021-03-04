@@ -53,8 +53,8 @@ public class DeckTest {
     @DisplayName("덱 내 중복카드가 존재하는지 검증")
     void checkDuplication() {
         assertThatThrownBy(() -> new Deck(Arrays.asList(
-                    Card.valueOf(Shape.SPADE, CardValue.ACE),
-                    Card.valueOf(Shape.SPADE, CardValue.ACE))))
+                Card.valueOf(Shape.SPADE, CardValue.ACE),
+                Card.valueOf(Shape.SPADE, CardValue.ACE))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("덱 내 중복되는 카드가 존재합니다.");
     }

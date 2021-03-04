@@ -1,11 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Card {
 
@@ -28,17 +23,17 @@ public class Card {
         Set<Card> cardPool = new HashSet<>();
         for (Shape shape : Shape.values()) {
             Arrays.stream(CardValue.values())
-                .forEach(value -> cardPool
-                    .add(new Card(shape, value)));
+                    .forEach(value -> cardPool
+                            .add(new Card(shape, value)));
         }
         return cardPool;
     }
 
     public static Card valueOf(Shape shape, CardValue value) {
         return CARD_POOL.stream()
-            .filter(card -> card.shape == shape && card.value == value)
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+                .filter(card -> card.shape == shape && card.value == value)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public static List<Card> getAllCards() {
@@ -63,7 +58,7 @@ public class Card {
         }
         Card card = (Card) o;
         return shape == card.shape &&
-            value == card.value;
+                value == card.value;
     }
 
     @Override
