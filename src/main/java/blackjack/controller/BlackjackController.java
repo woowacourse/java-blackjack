@@ -17,7 +17,10 @@ public class BlackjackController {
         deck.shuffle();
         List<Player> players = createPlayers();
         Dealer dealer = new Dealer(DEALER_NAME);
+        turnStart(deck, dealer, players);
+    }
 
+    private void turnStart(Deck deck, Dealer dealer, List<Player> players) {
         handOutCards(deck, dealer, players);
         printHandOutCardsResult(dealer, players);
         drawPhaseStart(deck, players, dealer);
@@ -28,7 +31,7 @@ public class BlackjackController {
 
     private void printDealerPlayersScore(List<Player> players, Dealer dealer) {
         OutputView.printParticipantCardsWithScore(dealer.getName(), dealer.getCards());
-        for(Player player : players){
+        for (Player player : players) {
             OutputView.printParticipantCardsWithScore(player.getName(), player.getCards());
         }
     }
@@ -82,7 +85,7 @@ public class BlackjackController {
     }
 
     private void calculateBlackJackGameResult(List<Player> players, Dealer dealer) {
-        for(Player player : players){
+        for (Player player : players) {
             dealer.matchCards(player.getCards());
             player.matchCards(dealer.getCards());
         }
