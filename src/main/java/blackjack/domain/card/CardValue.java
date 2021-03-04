@@ -19,8 +19,8 @@ public enum CardValue {
     QUEEN("Q", Arrays.asList(10)),
     KING("K", Arrays.asList(10));
 
-    private String name;
-    private List<Integer> values;
+    private final String name;
+    private final List<Integer> values;
 
     CardValue(String name, List<Integer> values) {
         this.name = name;

@@ -38,7 +38,7 @@ public class Players {
 
     public GameResult match(Dealer dealer) {
         Map<Player, ResultType> result = new LinkedHashMap<>();
-        players.stream().forEach(player -> result.put(player, player.match(dealer)));
+        players.forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);
     }
