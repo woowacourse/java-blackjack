@@ -3,6 +3,9 @@ package rentcompany;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import rentcompany.car.Avante;
+import rentcompany.car.K5;
+import rentcompany.car.Sonata;
 
 public class RentCompanyTest {
     private static final String NEW_LINE = System.lineSeparator();

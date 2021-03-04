@@ -1,4 +1,4 @@
-package rentcompany;
+package rentcompany.car;
 
 public abstract class AbstractCar implements Car {
     private final String name;

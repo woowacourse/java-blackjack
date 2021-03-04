@@ -1,4 +1,4 @@
-package rentcompany;
+package rentcompany.car;
 
 public class Sonata extends AbstractCar {
 

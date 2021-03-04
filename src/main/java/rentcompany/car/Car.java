@@ -1,4 +1,4 @@
-package rentcompany;
+package rentcompany.car;
 
 public interface Car {
     String NEW_LINE = System.lineSeparator();
