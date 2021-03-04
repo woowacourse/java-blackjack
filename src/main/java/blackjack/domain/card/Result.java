@@ -7,10 +7,12 @@ public enum Result {
     BLACKJACK_WIN("블랙잭"),
     LOSE("패배");
 
-    private final String name;
+    private static final int BLACKJACK_VALUE = 21;
 
-    Result(String name) {
-        this.name = name;
+    private final String resultName;
+
+    Result(String resultName) {
+        this.resultName = resultName;
     }
 
     public static Result of(boolean isDealerBlackjack, boolean isPlayerBlackjack) {
@@ -46,6 +48,10 @@ public enum Result {
     }
 
     public static boolean isBurst(int score) {
-        return score > 21;
+        return score > BLACKJACK_VALUE;
+    }
+
+    public String getResultName() {
+        return resultName;
     }
 }

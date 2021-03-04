@@ -10,7 +10,7 @@ public class CardFactory {
     }
 
     public static List<Card> create() {
-        return Collections.unmodifiableList(iterateType(new ArrayList<>()));
+        return iterateType(new ArrayList<>());
     }
 
     private static List<Card> iterateType(List<Card> cards) {

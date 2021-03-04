@@ -58,4 +58,8 @@ public class Cards {
     public Card getCard(int i) {
         return cards.get(i);
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
