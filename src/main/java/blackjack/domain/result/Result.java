@@ -10,4 +10,9 @@ public enum Result {
     Result(String result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return this.result;
+    }
 }

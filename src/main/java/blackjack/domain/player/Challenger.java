@@ -7,19 +7,19 @@ import blackjack.domain.result.Result;
 import java.util.List;
 
 public class Challenger extends Player {
-    private boolean isBust;
+    //private boolean isBust;
 
     public Challenger(final Cards cards, final Name name) {
         super(cards, name);
-        this.isBust = false;
+        //this.isBust = false;
     }
 
     public Result getChallengerResult(final Dealer dealer) {
-        if (this.getScore() > dealer.getScore()) {
-            return Result.WIN;
-        }
-        if (this.getScore() < dealer.getScore()) {
+        if (isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore())) {
             return Result.LOSE;
+        }
+        if (dealer.isBust() || this.getScore() > dealer.getScore()) {
+            return Result.WIN;
         }
         return Result.DRAW;
     }

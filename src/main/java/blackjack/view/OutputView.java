@@ -5,6 +5,7 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.ResultStatistics;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     public static String NEW_LINE = System.lineSeparator();
     public static String INIT_RESULT_MESSAGE = NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.";
+    public static String DEALER_PREFIX = "딜러: ";
 
     public static void printInitSetting(final List<Player> players) {
         List<String> challengerNames = players.stream().filter(player -> player instanceof Challenger)
@@ -27,7 +29,6 @@ public class OutputView {
     }
 
     public static void printDealerReceiveMessage() {
-        printNewLine();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -50,7 +51,7 @@ public class OutputView {
     }
 
     private static void printDealerInitCard(final Dealer dealer) {
-        System.out.print("딜러: ");
+        System.out.print(DEALER_PREFIX);
         List<Card> dealerCards = dealer.getInitCards();
         dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
     }
@@ -61,5 +62,15 @@ public class OutputView {
             System.out.println( " - 결과: " + player.getScore());
         }
         printNewLine();
+    }
+
+    public static void printSummary(final ResultStatistics resultStatistics) {
+        System.out.println("## 최종 승패");
+        System.out.print(DEALER_PREFIX);
+        System.out.println(String.format("%d승 %d무 %d패",
+                resultStatistics.getDealerWins(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoses()));
+
+        resultStatistics.getResultStatistics()
+                .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
     }
 }

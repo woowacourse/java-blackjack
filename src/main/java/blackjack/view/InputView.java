@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static blackjack.view.OutputView.printNewLine;
+
 public class InputView {
 
-    public static final String ASK_MORE_CARDS = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    public static final String ASK_MORE_CARDS = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> getNames() {
@@ -18,18 +20,19 @@ public class InputView {
 
     public static boolean wantMoreCard(final Challenger challenger) {
         try {
+            printNewLine();
             System.out.println(String.format(ASK_MORE_CARDS, challenger.getName()));
             String yesOrNo = scanner.nextLine();
             validateYesOrNo(yesOrNo);
             return "y".equals(yesOrNo);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return wantMoreCard(challenger);
         }
     }
 
-    public static void validateYesOrNo(String yesOrNo){
+    public static void validateYesOrNo(String yesOrNo) {
         yesOrNo = yesOrNo.trim().toLowerCase();
-        if(!("y".equals(yesOrNo) || "n".equals(yesOrNo))){
+        if (!("y".equals(yesOrNo) || "n".equals(yesOrNo))) {
             throw new IllegalArgumentException("y 혹은 n 으로만 입력해주세요.");
         }
     }

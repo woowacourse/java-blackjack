@@ -4,6 +4,7 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.ResultStatistics;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,6 +26,9 @@ public class BlackJackController {
     }
 
     private void summary() {
+//        public ResultStatistics(final Challengers challengers, final Dealer dealer)
+        ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
+        OutputView.printSummary(resultStatistics);
     }
 
     private void result() {

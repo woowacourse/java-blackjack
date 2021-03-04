@@ -17,19 +17,23 @@ public class ResultStatistics {
                 .forEach(challenger -> resultStatistics.put(challenger, challenger.getChallengerResult(dealer)));
     }
 
-    public int getChallengerResult(final Result result) {
+    public Map<Challenger, Result> getResultStatistics() {
+        return resultStatistics;
+    }
+
+    public int calculateDealerResult(final Result result) {
         return Collections.frequency(resultStatistics.values(), result);
     }
 
     public int getDealerWins() {
-        return getChallengerResult(Result.LOSE);
+        return calculateDealerResult(Result.LOSE);
     }
 
     public int getDealerDraws() {
-        return getChallengerResult(Result.DRAW);
+        return calculateDealerResult(Result.DRAW);
     }
 
     public int getDealerLoses() {
-        return getChallengerResult(Result.WIN);
+        return calculateDealerResult(Result.WIN);
     }
 }

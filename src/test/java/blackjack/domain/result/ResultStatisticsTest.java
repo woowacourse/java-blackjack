@@ -31,7 +31,7 @@ public class ResultStatisticsTest {
     }
 
     @Test
-    @DisplayName("챌린저가 딜러보다 점수가 높으면, 승리한다.")
+    @DisplayName("챌린저가 딜러보다 점수가 높으면, 챌린저가 승리한다.")
     void winner() {
         List<Card> cardList = new ArrayList<>();
 
@@ -44,8 +44,6 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getChallengerResult(Result.WIN)).isEqualTo(1);
-        assertThat(resultStatistics.getChallengerResult(Result.WIN)).isNotEqualTo(2);
         assertThat(resultStatistics.getDealerLoses()).isEqualTo(1);
     }
 
@@ -62,14 +60,12 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getChallengerResult(Result.DRAW)).isEqualTo(1);
-        assertThat(resultStatistics.getChallengerResult(Result.DRAW)).isNotEqualTo(2);
         assertThat(resultStatistics.getDealerDraws()).isEqualTo(1);
 
     }
 
     @Test
-    @DisplayName("챌린저가 딜러보다 점수가 낮으면, 패배한다.")
+    @DisplayName("챌린저가 딜러보다 점수가 낮으면, 챌린저가 패배한다.")
     void loser() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
@@ -81,9 +77,44 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getChallengerResult(Result.LOSE)).isEqualTo(1);
-        assertThat(resultStatistics.getChallengerResult(Result.LOSE)).isNotEqualTo(2);
         assertThat(resultStatistics.getDealerWins()).isEqualTo(1);
+    }
 
+    @Test
+    @DisplayName("챌린저가 버스트가 나면 챌린저는 항상 패배한다.")
+    void bustLoser() {
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.HEART, Face.JACK));
+        cardList.add(new Card(Suit.SPADE, Face.JACK));
+
+        List<Challenger> challengers = new ArrayList<>();
+        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        challengers.add(challenger);
+
+        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
+
+        assertThat(resultStatistics.getDealerWins()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("챌린저가 버스트가 나고 딜러도 버스트가 나면 챌린저가 패배한다.")
+    void bothBustLoser() {
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.HEART, Face.JACK));
+        cardList.add(new Card(Suit.SPADE, Face.JACK));
+
+        List<Challenger> challengers = new ArrayList<>();
+        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        challengers.add(challenger);
+
+        Cards cards = new Cards(dealer.getCards());
+        cards.add(new Card(Suit.HEART, Face.JACK));
+
+        Dealer dealer1 = new Dealer(cards);
+        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer1);
+
+        assertThat(resultStatistics.getDealerWins()).isEqualTo(1);
     }
 }
