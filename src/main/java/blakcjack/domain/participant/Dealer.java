@@ -18,7 +18,7 @@ public class Dealer extends Participant {
 		return Collections.singletonList(getCards().get(FIRST_CARD_POSITION));
 	}
 
-	public boolean isScoreLowerThanSevenTeen() {
+	public boolean isScoreLowerThanMaximumDrawingCriterion() {
 		return calculateScore() < DEALER_MAXIMUM_DRAWING_CRITERION;
 	}
 }
