@@ -16,7 +16,6 @@ public class Card {
     }
 
     private final Shape shape;
-
     private final CardValue value;
 
     private Card(Shape shape, CardValue value) {

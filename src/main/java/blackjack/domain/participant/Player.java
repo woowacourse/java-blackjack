@@ -21,7 +21,7 @@ public class Player extends Participant {
         }
     }
 
-    public void willContinue(Response response, Deck deck) {
+    public void willContinue(Response response) {
         if (!response.getHitStatus()) {
             cannotContinue();
         }

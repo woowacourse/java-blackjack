@@ -60,7 +60,7 @@ public class BlackJackController {
         while (playerToPrepare.isContinue()) {
             OutputView.willDrawCard(playerToPrepare);
             Response response = Response.getResponse(InputView.inputString());
-            playerToPrepare.willContinue(response, deck);
+            playerToPrepare.willContinue(response);
             drawCardByResponse(playerToPrepare, response, deck);
         }
     }
