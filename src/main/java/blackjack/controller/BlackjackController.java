@@ -17,8 +17,8 @@ public class BlackjackController {
         dealer.distribute(Deck.popTwo());
         users.distributeToEachUser();
 
-        OutputView.printDistribute(users);
-        OutputView.printDealerCard(dealer.showOneCard());
+        OutputView.printDistribute(dealer, users);
+        OutputView.printDealerCard(dealer);
         OutputView.printUsersCards(users);
 
         for (User user : users.users()) {
@@ -50,9 +50,9 @@ public class BlackjackController {
     private void isDealerDrawable(Dealer dealer) {
         if (dealer.isDrawable()) {
             dealer.draw();
-            OutputView.printDealerDrawable();
+            OutputView.printDealerDrawable(dealer);
             return;
         }
-        OutputView.printDealerNotDrawable();
+        OutputView.printDealerNotDrawable(dealer);
     }
 }

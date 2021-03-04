@@ -14,13 +14,12 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printDistribute(Users users) {
-        System.out.println("딜러와 " + String.join(COMMA, users.showNames()) + "에게 2장의 카드를 나누었습니다.");
+    public static void printDistribute(Dealer dealer, Users users) {
+        System.out.println(dealer.getName() + "와 " + String.join(COMMA, users.showNames()) + "에게 2장의 카드를 나누었습니다.");
     }
 
-    public static void printDealerCard(Card card) {
-        System.out.print("딜러" + COLON);
-        System.out.println(card.toString());
+    public static void printDealerCard(Dealer dealer) {
+        System.out.print(dealer.getName() + COLON + dealer.showOneCard());
     }
 
     public static void printUsersCards(Users users) {
@@ -45,21 +44,22 @@ public class OutputView {
         System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDealerDrawable() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+    public static void printDealerDrawable(Dealer dealer) {
+        System.out.println("\n" + dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printDealerNotDrawable() {
-        System.out.println("\n딜러는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
+    public static void printDealerNotDrawable(Dealer dealer) {
+        System.out.println("\n" + dealer.getName() + "는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
     }
 
     public static void printResults(List<Participant> participants) {
         for (Participant participant : participants) {
-            System.out.println(participant.showCards().cards()
-                    .stream()
-                    .map(Card::toString)
-                    .collect(Collectors.joining(COMMA_WITH_BLANK)) +
-                    " - 결과: " +
+            System.out.println(participant.getName() + "카드: " +
+                    participant.showCards()
+                            .cards()
+                            .stream()
+                            .map(Card::toString)
+                            .collect(Collectors.joining(COMMA_WITH_BLANK)) + " - 결과: " +
                     participant.showCards().calculateTotalValue());
         }
     }
