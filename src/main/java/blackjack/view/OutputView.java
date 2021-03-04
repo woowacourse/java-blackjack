@@ -1,18 +1,16 @@
 package blackjack.view;
 
-import blackjack.Dealer;
-import blackjack.Player;
-import blackjack.Status;
+import blackjack.domain.Status;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
     private OutputView() {
 
     }
@@ -30,7 +28,8 @@ public class OutputView {
 
     public static void showCards(Dealer dealer, List<Player> players) {
         System.out.println(dealer.getFirstCard());
-        players.forEach(player -> System.out.println(player.getName() + "카드: " + player.getCards()));
+        players
+            .forEach(player -> System.out.println(player.getName() + "카드: " + player.getCards()));
     }
 
     public static void printDealerHitMessage() {
@@ -38,14 +37,17 @@ public class OutputView {
     }
 
     public static void printCardsAndScore(Dealer dealer, List<Player> players) {
-        System.out.println(dealer.getName() +" 카드: " + dealer.getCards() +"- 결과: " + dealer.getScore());
-        players.forEach(player -> System.out.println(player.getName() + " 카드: " + player.getCards() +"- 결과: " + player.getScore()));
+        System.out
+            .println(dealer.getName() + " 카드: " + dealer.getCards() + "- 결과: " + dealer.getScore());
+        players.forEach(player -> System.out.println(
+            player.getName() + " 카드: " + player.getCards() + "- 결과: " + player.getScore()));
     }
 
     public static void printResult(Map<Player, Status> result) {
+        System.out.println("## 최종 승패");
         List<Integer> winnings = new ArrayList<>();
         result.values()
-            .forEach(status -> winnings.add(Collections.frequency(result.values(),status)));
+            .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
         System.out.println("딜러 ");
     }
 

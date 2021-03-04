@@ -7,7 +7,8 @@ public class RentCompany2 {
 
     private final List<Car> cars = new ArrayList<>();
 
-    private RentCompany2(){ }
+    private RentCompany2() {
+    }
 
     public static RentCompany2 create() {
         return new RentCompany2();
@@ -17,13 +18,13 @@ public class RentCompany2 {
         StringBuilder sb = new StringBuilder("");
         cars.forEach(car -> sb.append(car.getName())
             .append(" : ")
-            .append((int)car.getChargeQuantity())
+            .append((int) car.getChargeQuantity())
             .append("리터")
             .append(System.lineSeparator()));
         return sb.toString();
     }
 
-    public void addCar(Car car){
+    public void addCar(Car car) {
         cars.add(car);
     }
 }

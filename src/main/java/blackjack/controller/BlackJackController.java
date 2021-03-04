@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.GameTable;
-import blackjack.Player;
+import blackjack.domain.GameTable;
+import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    public BlackJackController(){
+    public BlackJackController() {
     }
 
-    public void run(){
+    public void run() {
         OutputView.printPlayersGuideMessage();
         List<Player> players = makePlayers(InputView.inputPlayers());
         GameTable gameTable = new GameTable(players);

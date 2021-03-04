@@ -1,6 +1,6 @@
 package rentcompany.interfacecompany;
 
-public class Avante implements Car{
+public class Avante implements Car {
 
     private static final int mileage = 15;
 

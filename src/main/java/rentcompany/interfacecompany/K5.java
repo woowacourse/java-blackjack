@@ -1,6 +1,6 @@
 package rentcompany.interfacecompany;
 
-public class K5 implements Car{
+public class K5 implements Car {
 
     private static final int mileage = 13;
 

@@ -2,6 +2,10 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,7 +17,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("비어 있는 카드 리스트 생성한다.")
-    void createEmptyCards(){
+    void createEmptyCards() {
         Cards cards = new Cards();
         assertThat(cards.isEmpty()).isTrue();
     }
@@ -22,8 +26,8 @@ public class CardsTest {
     @DisplayName("카드가 들어 있는 리스트를 생성한다.")
     void createCards() {
         List<Card> deck = new ArrayList<>(Arrays.asList(
-            new Card(Denomination.THREE,Suit.SPADE),
-            new Card(Denomination.SEVEN,Suit.DIAMOND)
+            new Card(Denomination.THREE, Suit.SPADE),
+            new Card(Denomination.SEVEN, Suit.DIAMOND)
         ));
         Cards cards = new Cards(deck);
         assertThat(cards).isEqualTo(new Cards(deck));
@@ -31,12 +35,14 @@ public class CardsTest {
 
     @Test
     @DisplayName("리스트에 든 카드를 보여준다.")
-    void showOne(){
-        List<Card> deck = new ArrayList<>(Collections.singletonList(new Card(Denomination.THREE,Suit.SPADE)));
+    void showOne() {
+        List<Card> deck = new ArrayList<>(
+            Collections.singletonList(new Card(Denomination.THREE, Suit.SPADE)));
         Cards cards = new Cards(deck);
         assertThat(cards.getCards()).isEqualTo("3스페이드");
 
-        List<Card> deck2 = new ArrayList<>(Collections.singletonList(new Card(Denomination.SEVEN,Suit.DIAMOND)));
+        List<Card> deck2 = new ArrayList<>(
+            Collections.singletonList(new Card(Denomination.SEVEN, Suit.DIAMOND)));
         Cards cards2 = new Cards(deck2);
         assertThat(cards2.getCards()).isEqualTo("7다이아몬드");
 
@@ -44,10 +50,10 @@ public class CardsTest {
 
     @Test
     @DisplayName("리스트에 든 카드들을 보여준다.")
-    void show(){
+    void show() {
         List<Card> deck = new ArrayList<>(Arrays.asList(
-            new Card(Denomination.SEVEN,Suit.SPADE),
-            new Card(Denomination.THREE,Suit.DIAMOND)
+            new Card(Denomination.SEVEN, Suit.SPADE),
+            new Card(Denomination.THREE, Suit.DIAMOND)
         ));
         Cards cards = new Cards(deck);
 
@@ -56,10 +62,10 @@ public class CardsTest {
 
     @DisplayName("카드들의 점수 총합을 계산한다.")
     @Test
-    void calculate(){
+    void calculate() {
         Cards cards = new Cards();
-        cards.addCard(new Card(Denomination.SIX,Suit.CLOVER));
-        cards.addCard(new Card(Denomination.QUEEN,Suit.SPADE));
+        cards.addCard(new Card(Denomination.SIX, Suit.CLOVER));
+        cards.addCard(new Card(Denomination.QUEEN, Suit.SPADE));
         assertThat(cards.getScore()).isEqualTo(16);
     }
 

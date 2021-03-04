@@ -1,5 +1,9 @@
-package blackjack;
+package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -10,7 +14,7 @@ public class GameTable {
     private final Dealer dealer;
     private List<Player> players;
 
-    public GameTable(List<Player> players){
+    public GameTable(List<Player> players) {
         deck = new Deck(Card.values());
         this.dealer = new Dealer();
         this.players = players;
@@ -35,7 +39,7 @@ public class GameTable {
             }
         });
 
-        while(dealer.canHit()){
+        while (dealer.canHit()) {
             dealer.hit(deck.pop());
             OutputView.printDealerHitMessage();
         }

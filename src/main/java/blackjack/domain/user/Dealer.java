@@ -1,5 +1,7 @@
-package blackjack;
+package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.Arrays;
 
 public class Dealer implements User {
@@ -10,7 +12,7 @@ public class Dealer implements User {
 
     private final Cards cards;
 
-    Dealer () {
+    Dealer() {
         this.cards = new Cards();
     }
 

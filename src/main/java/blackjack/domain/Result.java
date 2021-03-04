@@ -1,5 +1,7 @@
-package blackjack;
+package blackjack.domain;
 
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +15,11 @@ public class Result {
     }
 
     public Map<Player, Status> getResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> result.put(player,compareWithDealer(dealer, player)));
+        players.forEach(player -> result.put(player, compareWithDealer(dealer, player)));
         return result;
     }
 
     private Status compareWithDealer(Dealer dealer, Player player) {
-        return Status.compare(dealer.getScore(),player.getScore());
+        return Status.compare(dealer.getScore(), player.getScore());
     }
 }

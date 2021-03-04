@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain.card;
 
 public enum Suit {
     DIAMOND("다이아몬드"),
