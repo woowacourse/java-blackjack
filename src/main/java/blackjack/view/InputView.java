@@ -10,22 +10,19 @@ public class InputView {
     private static final String WITH_BLANK = "\\s+";
     private static final String NO_BLANK = "";
 
-    private InputView(){
+    private InputView() {
     }
 
-    public static List<String> inputNames(){
-         String input = deleteWhiteSpaces(SCANNER.nextLine());
-         if(input.contains(COMMA)){
-            return Arrays.asList(input.split(COMMA));
-         }
-         throw new IllegalArgumentException("구분자는 콤마로 입력해주세요.");
+    public static List<String> inputNames() {
+        String input = deleteWhiteSpaces(SCANNER.nextLine());
+        return Arrays.asList(input.split(COMMA));
     }
 
     public static String inputDrawAnswer() {
         return SCANNER.nextLine();
     }
 
-    private static String deleteWhiteSpaces(String input){
+    private static String deleteWhiteSpaces(String input) {
         return input.replaceAll(WITH_BLANK, NO_BLANK);
     }
 }
