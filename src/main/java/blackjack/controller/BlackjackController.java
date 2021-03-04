@@ -19,7 +19,7 @@ public class BlackjackController {
         final List<Player> players = playerSetUp();
 
         distributeCard(players, dealer, cardDeck);
-        showDistributeStatus(players);
+        showParticipantsName(players);
         showDistributedCard(players, dealer);
         playerGameProgress(players, cardDeck);
         dealerGameProgress(dealer, cardDeck);
@@ -45,7 +45,7 @@ public class BlackjackController {
         dealer.receiveCard(cardDeck.distribute());
     }
 
-    private void showDistributeStatus(final List<Player> players) {
+    private void showParticipantsName(final List<Player> players) {
         final String status = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
