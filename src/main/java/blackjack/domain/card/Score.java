@@ -23,8 +23,21 @@ public class Score {
         return value == BLACK_JACK;
     }
 
-    public boolean isBelow(int limitScoreToHit) {
-        return value >= limitScoreToHit;
+    public boolean isBelow(int score) {
+        return value <= score;
+    }
+
+    public boolean isBiggerThan(Score target){
+        return value > target.value;
+    }
+
+    public boolean isLessThan(Score target){
+        return value < target.value;
+    }
+
+
+    public int score(){
+        return value;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package rentcar;
 
-public class Avante extends Car{
+public class Avante extends Car {
 
     private static final int DISTANCE_PER_LITER = 15;
 

@@ -39,6 +39,10 @@ public class Card {
         return suit;
     }
 
+    public boolean isAce(){
+        return denomination == Denomination.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

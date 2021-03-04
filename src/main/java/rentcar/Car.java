@@ -12,7 +12,7 @@ public abstract class Car {
         return getTripDistance() / getDistancePerLiter();
     }
 
-    String getReport(){
-        return getName() + " : "+ (int)getChargeQuantity() +"리터";
+    String getReport() {
+        return getName() + " : " + (int) getChargeQuantity() + "리터";
     }
 }

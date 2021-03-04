@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.YesOrNo;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
 import blackjack.domain.player.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     private final Deck deck = new Deck();
+    private Dealer dealer;
 
     public BlackJackGame(){
     }
@@ -20,7 +22,8 @@ public class BlackJackGame {
         List<String> names = Arrays.asList(allName.split(","));
         List<Player> players = new ArrayList<>();
 
-        players.add(new Dealer());
+        dealer = new Dealer();
+        players.add(dealer);
         players.addAll(names.stream()
                 .map(Name::new)
                 .map(Gambler::new)
@@ -34,15 +37,28 @@ public class BlackJackGame {
         }
     }
 
-    // dealer인 경우인데 구별 필
     public void giveCard(Player player) {
-        // dealer 드로우 조건 확인
-        player.drawCard(deck); // Deck을 넘기는게 좋을지, Card를 넘기는게 좋을지...
+        player.drawCard(deck);
     }
 
-    public void giveCard(Player player, String askDrawOrNot) {
-        if(YesOrNo.of(askDrawOrNot) == YesOrNo.YES){
-            player.drawCard(deck); // Deck을 넘기는게 좋을지, Card를 넘기는게 좋을지...
+    public void giveDealerCard(){
+        dealer.drawCard(deck);
+    }
+
+    public boolean ableToDraw(){
+        return dealer.ableToDraw();
+    }
+
+    public Result getResult(Players players){
+        Result result = new Result(dealer.getCards());
+        for(Player player : players){
+            addGamblerResult(result, player);
         }
+        return result;
+    }
+
+    private void addGamblerResult(Result result, Player player){
+        WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
+        result.add(player, winOrLose);
     }
 }

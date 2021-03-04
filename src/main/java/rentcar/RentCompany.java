@@ -7,7 +7,7 @@ public class RentCompany {
 
     private static final List<Car> cars = new ArrayList<>();
 
-    private RentCompany(){
+    private RentCompany() {
     }
 
     public static RentCompany create() {
@@ -21,7 +21,7 @@ public class RentCompany {
     public String generateReport() {
         String report = "";
 
-        for(Car car : cars){
+        for (Car car : cars) {
             report += car.getReport() + System.lineSeparator();
         }
 

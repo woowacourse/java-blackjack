@@ -13,15 +13,30 @@ public class Cards {
     }
 
     public void add(Card card) {
-        // TODO :: 점수 확인
         cards.add(card);
     }
 
-    public Score getScore(){
-        int score = cards.stream()
-                .mapToInt(card -> card.getDenomination().getScore())
-                .sum();
+    public Score getScore() {
+        int score = 0;
+        for (Card card : cards) {
+            score += card.getDenomination().getScore();
+        }
+
+        if(countAce() == 0){
+            return new Score(score);
+        }
+
+        if (score + 10 <= 21) {
+            score += 10;
+        }
+
         return new Score(score);
+    }
+
+    public int countAce() {
+        return (int) cards.stream()
+                .filter(card -> card.isAce())
+                .count();
     }
 
     public boolean isBust(){

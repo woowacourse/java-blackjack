@@ -19,7 +19,7 @@ public class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"" , " "})
+    @ValueSource(strings = {"", " "})
     @DisplayName("공백 입력시 예외 테스트")
     void testInvalidName(String name) {
         assertThatIllegalArgumentException().isThrownBy(() -> {

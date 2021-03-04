@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
+import blackjack.domain.game.WinOrLose;
 
 public class Dealer implements Player {
 
@@ -12,18 +13,34 @@ public class Dealer implements Player {
     private final Name name;
     private final Cards cards;
 
-    public Dealer(){
+    public Dealer() {
         name = new Name("딜러");
         cards = new Cards();
     }
 
-    private boolean ableToDraw(){
+    public boolean ableToDraw() {
         return cards.getScore().isBelow(LIMIT_SCORE_TO_HIT);
+    }
+
+    public WinOrLose calculateGamblerWinOrNot(Player player) {
+        if (player.getScore().isBust()) {
+            return WinOrLose.LOSE;
+        }
+        if (cards.getScore().isBust()) {
+            return WinOrLose.WIN;
+        }
+        if (cards.getScore().isBiggerThan(player.getScore())) {
+            return WinOrLose.LOSE;
+        }
+        if (cards.getScore().isLessThan(player.getScore())) {
+            return WinOrLose.WIN;
+        }
+        return WinOrLose.DRAW;
     }
 
     @Override
     public void initializeCards(Deck deck) {
-        for(int i=0; i<NUMBER_OF_INITIAL_CARDS; i++){
+        for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
             cards.add(deck.draw());
         }
     }
