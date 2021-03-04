@@ -12,14 +12,14 @@ public class Hand {
 
     private static final int DEFAULT_SCORE = 0;
     public static final int BUST = 22;
-    private final Set<Card> hand;
+    private final List<Card> hand;
 
     public Hand(List<Card> cards) {
-        hand = new HashSet<>(cards);
+        hand = new ArrayList<>(cards);
     }
 
     public int getScore() {
-        return calculateScore(new LinkedList<>(hand), DEFAULT_SCORE);
+        return calculateScore(new ArrayList<>(hand), DEFAULT_SCORE);
     }
 
     private int calculateScore(List<Card> leftCards, int currentScore) {
