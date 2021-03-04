@@ -13,11 +13,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return symbol == Symbol.ACE;
-    }
-
-    public int getScore() {
-        return symbol.getScore();
+        return symbol.isAce();
     }
 
     public Symbol getSymbol() {
@@ -26,6 +22,10 @@ public class Card {
 
     public Shape getShape() {
         return shape;
+    }
+
+    public int getScore() {
+        return symbol.getScore();
     }
 
     @Override
