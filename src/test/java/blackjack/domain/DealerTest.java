@@ -18,7 +18,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createDeck();
 
-        dealer.hit(cardDeck.getDeck().pop());
+        dealer.hit(cardDeck.drawCard());
 
         assertThat(dealer.getCards()).hasSize(1);
     }

@@ -26,10 +26,6 @@ public class CardDeck {
                 .map(suit -> new Card(suit, cardNumber));
     }
 
-    public Deque<Card> getDeck() {
-        return deck;
-    }
-
     public Card drawCard() {
         return deck.pop();
     }
