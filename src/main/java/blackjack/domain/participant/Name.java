@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Name {
 
     private static final String BLANK = " ";
-    private final String name;
+    private final String value;
 
-    public Name(final String name) {
-        this.name = name;
-        validateNull(this.name);
-        validateBlank(this.name);
+    public Name(final String value) {
+        this.value = value;
+        validateNull(this.value);
+        validateBlank(this.value);
     }
 
     private void validateNull(String name) {
@@ -32,11 +32,15 @@ public class Name {
             return false;
         }
         Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        return Objects.equals(value, name1.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
+    }
+
+    public String getValue() {
+        return this.value;
     }
 }

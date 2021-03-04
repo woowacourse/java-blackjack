@@ -68,7 +68,7 @@ public class CardDeckTest {
     }
 
     private void compareCardPattern(final Set<Card> cards, final Card card, final Pattern pattern) {
-        if (card.getPattern().equals(pattern)) {
+        if (card.getPatternName().equals(pattern.getPattern())) {
             cards.add(card);
         }
     }

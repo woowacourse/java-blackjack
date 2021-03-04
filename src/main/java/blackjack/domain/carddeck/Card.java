@@ -20,12 +20,12 @@ public class Card {
         return number.getNumber();
     }
 
-    public Pattern getPattern() {
-        return pattern;
+    public String getPatternName() {
+        return pattern.getPattern();
     }
 
-    public Number getNumber() {
-        return number;
+    public String getNumberName() {
+        return number.getName();
     }
 
     @Override

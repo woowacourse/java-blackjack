@@ -10,7 +10,7 @@ public class NumberTest {
     @Test
     @DisplayName("카드 숫자별 점수 테스트")
     void testCarNumberScore() {
-        assertThat(Number.ACE.getNumber()).isEqualTo(1);
+        assertThat(Number.ACE.getNumber()).isEqualTo(11);
         assertThat(Number.TWO.getNumber()).isEqualTo(2);
         assertThat(Number.THREE.getNumber()).isEqualTo(3);
         assertThat(Number.FOUR.getNumber()).isEqualTo(4);
