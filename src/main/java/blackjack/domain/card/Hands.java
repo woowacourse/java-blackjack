@@ -19,7 +19,7 @@ public class Hands {
 
     public int calculate() {
         int point = sum();
-        if (containsAce() && point > 21) {
+        while (containsAce() && point > 21) {
             point -= 10;
         }
         return point;
@@ -32,7 +32,7 @@ public class Hands {
                 .get();
     }
 
-    private boolean containsAce() {
+    public boolean containsAce() {
         return cards.stream()
                 .map(Card::getCardValue)
                 .anyMatch(CardValue::isAce);
