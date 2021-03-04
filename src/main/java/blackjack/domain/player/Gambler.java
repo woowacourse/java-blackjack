@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
@@ -24,8 +25,8 @@ public class Gambler implements Player{
     }
 
     @Override
-    public void drawCard(final Deck deck) {
-        cards.add(deck.draw());
+    public void drawCard(final Card card) {
+        cards.add(card);
     }
 
     @Override

@@ -18,31 +18,36 @@ public class BlackJackGame {
     public BlackJackGame(){
     }
 
-    public Players createPlayers(String allName){
-        List<String> names = Arrays.asList(allName.split(","));
+    public Players createPlayers(String nameLine){
+        List<Player> players = initPlayers(splitAndParseToNames(nameLine));
+        return new Players(players);
+    }
+
+    private List<Name> splitAndParseToNames(String nameLine){
+        return Arrays.asList(nameLine.split(","))
+                .stream().map(Name::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<Player> initPlayers(List<Name> names){
         List<Player> players = new ArrayList<>();
 
         dealer = new Dealer();
         players.add(dealer);
         players.addAll(names.stream()
-                .map(Name::new)
                 .map(Gambler::new)
+                .peek(player -> player.initializeCards(deck))
                 .collect(Collectors.toList()));
-        return new Players(players);
-    }
 
-    public void initPlayerCards(final Players players){
-        for(Player player : players){
-            player.initializeCards(deck);
-        }
+        return players;
     }
 
     public void giveCard(final Player player) {
-        player.drawCard(deck);
+        player.drawCard(deck.draw());
     }
 
     public void giveDealerCard(){
-        dealer.drawCard(deck);
+        dealer.drawCard(deck.draw());
     }
 
     public boolean ableToDraw(){

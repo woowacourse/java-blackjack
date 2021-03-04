@@ -18,7 +18,6 @@ public class BlackJackController {
 
     public static void run() {
         Players players = blackJackGame.createPlayers(InputView.askPlayerNames());
-        blackJackGame.initPlayerCards(players);
         OutputView.printPlayers(players);
 
         for (Player player : players) {
