@@ -10,7 +10,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return (this.cardNumber == CardNumber.ACE);
+        return cardNumber == CardNumber.ACE;
     }
 
     public String getCardSymbol() {

@@ -87,7 +87,7 @@ public class Player {
     }
 
     public void lose() {
-        this.win = false;
+        win = false;
     }
 
     public boolean getWin() {

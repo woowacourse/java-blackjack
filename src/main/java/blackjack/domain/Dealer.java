@@ -13,11 +13,11 @@ public class Dealer extends Player {
     }
 
     public boolean isWinner(final int playerResult) {
-        return (playerResult <= calculate() && !isBust());
+        return playerResult <= calculate() && !isBust();
     }
 
     public void increaseWinCount() {
-        this.winCount++;
+        winCount++;
     }
 
     public int getWinCount() {

@@ -30,14 +30,14 @@ public enum CardNumber {
     }
 
     public String getSymbol() {
-        return this.symbol;
+        return symbol;
     }
 
     public int getValue() {
-        return this.value;
+        return value;
     }
 
     public int getExtraValue() {
-        return this.extraValue;
+        return extraValue;
     }
 }
