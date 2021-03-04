@@ -23,7 +23,7 @@ public class BlackJackController {
 		printInitialHands(blackjackGame);
 
 		letPlayersDraw(blackjackGame);
-		drawDealerCardForMaximumCapability(blackjackGame);
+		letDealerDraw(blackjackGame);
 
 		OutputView.printFinalHandsSummary(blackjackGame);
 		OutcomeStatistics outcomeStatistics = new OutcomeStatistics(blackjackGame);
@@ -49,7 +49,7 @@ public class BlackJackController {
 		return YES.equals(yesOrNo);
 	}
 
-	private void drawDealerCardForMaximumCapability(final BlackjackGame blackjackGame) {
+	private void letDealerDraw(final BlackjackGame blackjackGame) {
 		Dealer dealer = blackjackGame.getDealer();
 		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
 			blackjackGame.distributeOneCardTo(dealer);
