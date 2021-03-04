@@ -51,6 +51,8 @@ public class BlackjackController {
     }
 
     private int distributePlayer(Deck deck, Player player, int index) {
+        OutputView.printCards(player.getName(), player.getCards());
+
         while (player.canDrawOneMore(player.getCards().getScore()) && InputView.inputDraw(player.getName())) {
             index = player.draw(deck, index);
             OutputView.printCards(player.getName(), player.getCards());
@@ -77,6 +79,8 @@ public class BlackjackController {
         for(Player player : players){
             OutputView.printCards(player.getName(), player.getCards());
         }
+
+        OutputView.printNewLine();
     }
 
     public static int distributeDealer(Deck deck, Dealer dealer, int index) {
@@ -86,6 +90,8 @@ public class BlackjackController {
             OutputView.printOneMoreCard();
             index = dealer.draw(deck, index);
         }
+
+        OutputView.printNewLine();
 
         return index;
     }

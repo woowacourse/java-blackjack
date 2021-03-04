@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class OutputView {
             result.add(card.toString());
         }
         System.out.println(name + "카드: " + String.join(DELIMITER, result));
-        System.out.print(NEW_LINE);
     }
 
     public static void printCardScore(String name, Cards cards) {
@@ -35,15 +33,14 @@ public class OutputView {
             output.add(card.toString());
         }
         System.out.println(name + "카드: " + String.join(DELIMITER, output) + " - 결과: " + cards.getScore());
-        System.out.print(NEW_LINE);
     }
 
     public static void printOneMoreCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.print(NEW_LINE);
     }
 
     public static void printDealerResult(int winCount, int drawCount, int loseCount) {
+        System.out.print(NEW_LINE);
         System.out.println("## 최종 승패");
         System.out.print("딜러" + SEPARATOR);
         if (winCount > 0) {
@@ -62,5 +59,9 @@ public class OutputView {
         for (Player player : players) {
             System.out.println(player.getName() + SEPARATOR + player.getResult().getResultName());
         }
+    }
+
+    public static void printNewLine() {
+        System.out.print(NEW_LINE);
     }
 }
