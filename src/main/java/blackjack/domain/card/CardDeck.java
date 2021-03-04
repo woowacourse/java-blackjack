@@ -1,30 +1,35 @@
 package blackjack.domain.card;
 
 import blackjack.exception.BlackJackException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CardDeck {
 
     public static final String EXTERMINATION_MESSAGE = "[ERROR] 카드를 모두 소진했습니다.";
-    private final Stack<Card> deck = new Stack<>();
+    private final Deque<Card> deck;
 
     public CardDeck() {
-        generateCardWithSymbol();
-        Collections.shuffle(this.deck);
+        List<Card> cardBunch = new ArrayList<Card>();
+        generateCardWithSymbol(cardBunch);
+        Collections.shuffle(cardBunch);
+        deck = new LinkedList<>(cardBunch);
     }
 
-    private void generateCardWithSymbol() {
+    private void generateCardWithSymbol(List<Card> cardBunch) {
         for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
             CardSymbol cardSymbol = CardSymbol.from(symbolCandidate.getSymbol());
-            generateCardWithNumber(cardSymbol);
+            generateCardWithNumber(cardBunch, cardSymbol);
         }
     }
 
-    private void generateCardWithNumber(CardSymbol cardSymbol) {
+    private void generateCardWithNumber(List<Card> cardBunch, CardSymbol cardSymbol) {
         for (NumberCandidate numberCandidate : NumberCandidate.values()) {
             CardNumber cardNumber = CardNumber.from(numberCandidate.getNumber());
-            deck.add(new Card(cardNumber, cardSymbol));
+            cardBunch.add(new Card(cardNumber, cardSymbol));
         }
     }
 
@@ -39,6 +44,6 @@ public class CardDeck {
         if (deck.isEmpty()) {
             throw new BlackJackException(EXTERMINATION_MESSAGE);
         }
-        return deck.pop();
+        return deck.removeFirst();
     }
 }
