@@ -7,7 +7,6 @@ import rentcompany.car.Car;
 public class RentCompany {
     private final List<Car> cars;
 
-
     public RentCompany() {
         cars = new ArrayList<>();
     }
