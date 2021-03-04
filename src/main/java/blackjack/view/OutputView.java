@@ -60,6 +60,7 @@ public class OutputView {
     public static void printDealerDrawingMessage(Dealer dealer) {
         printNewLine();
         System.out.printf("%s는 16이하라 한 장의 카드를 더 받았습니다.", dealer.getName());
+        printNewLine();
     }
 
     public static void printFinalCardsAndScore(Participants participants) {
