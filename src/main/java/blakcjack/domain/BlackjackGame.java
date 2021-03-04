@@ -42,6 +42,7 @@ public class BlackjackGame {
 			distributeOneCard(player);
 		}
 		distributeOneCard(dealer);
+		distributeOneCard(dealer);
 	}
 
 	public Dealer getDealer() {
