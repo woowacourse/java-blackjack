@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,7 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
-        deck= Deck.generate();
+        deck = Deck.generate();
     }
 
     @DisplayName("Deck 객체를 생성한다")
