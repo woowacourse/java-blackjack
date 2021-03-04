@@ -1,10 +1,12 @@
 package blackjack;
 
 import blackjack.controller.BlackJackGame;
+import blackjack.service.BlackJackService;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = new BlackJackGame();
+        BlackJackService blackJackService = new BlackJackService();
+        BlackJackGame blackJackGame = new BlackJackGame(blackJackService);
         blackJackGame.start();
     }
 }

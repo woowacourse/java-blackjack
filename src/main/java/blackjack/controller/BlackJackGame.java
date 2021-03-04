@@ -5,19 +5,24 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackGame {
     public static final int BLACKJACK_NUMBER = 21;
-    private static final int INIT_DRAW_COUNT = 2;
+
+    private final BlackJackService blackJackService;
+
+    public BlackJackGame(BlackJackService blackJackService) {
+        this.blackJackService = blackJackService;
+    }
 
     public void start() {
         try {
             Players players = registerPlayers();
             Dealer dealer = new Dealer();
-            CardDeck cardDeck = new CardDeck();
-            cardDeck.shuffleCard();
+            CardDeck cardDeck = blackJackService.cardDeckSetting();
             distributeCards(players, dealer, cardDeck);
             playersTurn(players, cardDeck);
             dealerTurn(dealer, cardDeck);
@@ -38,18 +43,11 @@ public class BlackJackGame {
     }
 
     private void distributeCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        eachDrawTwoCards(players, dealer, cardDeck);
+        blackJackService.eachDrawTwoCards(players, dealer, cardDeck);
         OutputView.distributeCardMessage(players);
         OutputView.showDealerFirstCard(dealer);
         for (Player player : players.getPlayers()) {
             OutputView.showCards(player);
-        }
-    }
-
-    private void eachDrawTwoCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        for (int i = 0; i < INIT_DRAW_COUNT; i++) {
-            dealer.receiveCard(cardDeck.drawCard());
-            players.eachPlayerDrawCard(cardDeck);
         }
     }
 
