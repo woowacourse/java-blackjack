@@ -24,4 +24,8 @@ public class OutputView {
         System.out.println("## 최종 승패");
         GameResult.getResult(players);
     }
+
+    public static void printExceptionMessage(IllegalArgumentException exception) {
+        System.out.println(exception.getMessage());
+    }
 }

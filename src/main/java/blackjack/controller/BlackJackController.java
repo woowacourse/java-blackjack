@@ -17,7 +17,7 @@ public class BlackJackController {
             dealWantCard(players, deck);
             printMatchResult(players);
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            OutputView.printExceptionMessage(exception);
             run();
         }
     }
