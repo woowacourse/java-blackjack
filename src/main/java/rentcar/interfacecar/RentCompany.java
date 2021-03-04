@@ -5,7 +5,8 @@ import java.util.List;
 
 public class RentCompany {
 
-    private static final String REPORT_FORMAT = "%s : %.0f리터" + System.getProperty("line.separator");
+    private static final String REPORT_FORMAT =
+        "%s : %.0f리터" + System.getProperty("line.separator");
 
     private final List<Car> cars;
 

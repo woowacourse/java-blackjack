@@ -28,11 +28,11 @@ public class Dealer {
         return getTotalScore() >= LIMIT_SCORE;
     }
 
-    public int getTotalScore(){
+    public int getTotalScore() {
         return hand.totalScore();
     }
 
-    public List<Card> getHand(){
+    public List<Card> getHand() {
         return Collections.unmodifiableList(hand.toList());
     }
 }

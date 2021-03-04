@@ -22,7 +22,7 @@ public class Hand {
 
     public int totalScore() {
         int totalScore = calculateScore();
-        if(isBurst(totalScore)) {
+        if (isBurst(totalScore)) {
             totalScore = calculateHardAceScore(totalScore);
         }
         return totalScore;

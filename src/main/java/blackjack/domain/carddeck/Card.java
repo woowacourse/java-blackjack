@@ -16,7 +16,7 @@ public class Card {
         return this.number.equals(Number.ACE);
     }
 
-    public int getScore(){
+    public int getScore() {
         return number.getNumber();
     }
 
