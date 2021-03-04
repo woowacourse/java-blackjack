@@ -1,23 +1,24 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
     private final List<Gamer> players;
 
-    public Players(String value, Dealer dealer) {
-        this.players = splitPlayers(value);
-        players.add(dealer);
+    public Players(List<Player> players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    //팩토리 -> new 사용한 시점부터 메모리 할당 -> 할당실패
-    //정적 static -> 메모리 할당을 안하고 접근 -> 동시에 여러개를 만들때
+    public Players(String value, Dealer dealer) {
+        this.players = splitPlayers(value);
+        this.dealer = dealer;
+    }
 
-    private List<Gamer> splitPlayers(String value) {
-        List<Gamer> splitPlayers = new ArrayList<>();
+    private List<Player> splitPlayers(String value) {
+        List<Player> splitPlayers = new ArrayList<>();
         for (String name : value.split(",")) {
             Player player = new Player(name);
             splitPlayers.add(player);
@@ -31,12 +32,38 @@ public class Players {
         }
     }
 
-    public String getDealerNames() {
-        return players.stream().filter(gamer -> gamer.getClass().equals(Dealer.class)).map(Gamer::getName).collect(Collectors.joining(", "));
+    public Boolean startTurn(Deck deck) {
+        boolean continueTurn = false;
+        for (Gamer gamer : players) {
+            if (!gamer.canReceiveCard()) {
+                continue;
+            }
+            if (gamer.continueDraw(deck)){
+                continueTurn = true;
+            }
+        }
+        if (dealer.canReceiveCard()) {
+            continueTurn = true;
+            dealer.continueDraw(deck);
+        }
+        return continueTurn;
+    }
+
+    public String getPlayersCards() {
+        StringBuilder playerInfo = new StringBuilder();
+        playerInfo.append(dealer.getInfo()).append("\n");
+        for (Gamer gamer : players) {
+            playerInfo.append(gamer.getInfo()).append("\n");
+        }
+        return playerInfo.toString();
+    }
+
+    public String getDealerName() {
+        return dealer.getName();
     }
 
     public String getPlayerNames() {
-        return players.stream().filter(gamer -> gamer.getClass().equals(Player.class)).map(Gamer::getName).collect(Collectors.joining(", "));
+        return players.stream().map(Gamer::getName).collect(Collectors.joining(", "));
     }
 
     @Override
@@ -44,11 +71,11 @@ public class Players {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Players players1 = (Players) o;
-        return Objects.equals(players, players1.players);
+        return Objects.equals(players, players1.players) && Objects.equals(dealer, players1.dealer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(players);
+        return Objects.hash(players, dealer);
     }
 }

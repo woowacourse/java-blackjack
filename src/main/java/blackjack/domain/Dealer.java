@@ -11,12 +11,12 @@ public class Dealer extends Gamer{
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateMinimumPoint() <= 16;
+        return this.calculateJudgingPoint() <= 16;
     }
 
     @Override
     public String getInfo() {
-        return getName()+": "+ getCards();  //TODO: 딜러카드 한장만 오픈
+        return getName()+": "+ getDealerCards();
     }
 
     @Override

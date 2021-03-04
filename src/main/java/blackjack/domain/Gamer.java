@@ -24,7 +24,7 @@ public abstract class Gamer {
         cards.add(card);
     }
 
-    protected int calculateMinimumPoint() {
+    protected int calculateJudgingPoint() {
         int point = 0;
         for(Card card : cards) {
             point = card.addPoint(point);
@@ -37,11 +37,11 @@ public abstract class Gamer {
         boolean havingAce = false;
         for (Card card : cards) {
             point += card.addPoint(point);
-            if(card.isAce()) {
+            if (card.isAce()) {
                 havingAce = true;
             }
         }
-        if(point < 11 && havingAce) {
+        if (point <= 11 && havingAce) {
             point += 10;
         }
         return point;
@@ -57,6 +57,14 @@ public abstract class Gamer {
 
     public String getCards() {
         return cards.stream().map(Card::getPatternAndNumber).collect(Collectors.joining(", "));
+    }
+
+    public String getDealerCards() {
+        List<Card> dealerCards = new ArrayList<>();
+        for (int i = 0; i < cards.size() - 1; i++) {
+            dealerCards.add(cards.get(i));
+        }
+        return dealerCards.stream().map(Card::getPatternAndNumber).collect(Collectors.joining(", "));
     }
 
     public abstract String getInfo();

@@ -1,12 +1,14 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Deck {
     private final List<Card> deck = new ArrayList<>(52);
+//            Arrays.stream(CardPattern.values())
+//            .flatMap(cardPattern -> Arrays.stream(CardNumber.values())
+//                    .map(cardNumber -> new Card(cardPattern, cardNumber)))
+//            .collect(Collectors.toList()));
 
     public Deck() {
         for(CardPattern cardPattern : CardPattern.values()) {
@@ -15,14 +17,6 @@ public class Deck {
             }
         }
         Collections.shuffle(deck);
-    }
-
-    public String getCards(){
-        StringBuilder cardNames = new StringBuilder();
-        for(Card card : deck) {
-            cardNames.append(card.getPatternAndNumber()).append("\n");
-        }
-        return cardNames.toString();
     }
 
     public Card dealCard() {
