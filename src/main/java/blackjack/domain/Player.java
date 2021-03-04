@@ -1,7 +1,15 @@
 package blackjack.domain;
 
+import static blackjack.domain.Players.DRAW;
+import static blackjack.domain.Players.LOSE;
+import static blackjack.domain.Players.RESULT_DRAW;
+import static blackjack.domain.Players.RESULT_LOSE;
+import static blackjack.domain.Players.RESULT_WIN;
+import static blackjack.domain.Players.WIN;
+
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.Map;
 
 public class Player extends Gamer {
 
@@ -39,9 +47,10 @@ public class Player extends Gamer {
         return draw.equals(GET_CARD);
     }
 
-    public void matchResult(String result) {
+    public void recordMatchResult(String result) {
         this.result = result;
     }
+
 
     @Override
     public String getInfo() {
@@ -50,5 +59,37 @@ public class Player extends Gamer {
 
     public String getResult() {
         return result;
+    }
+
+    public void judgeVictory(Map<String, Integer> dealerHistory, int dealerPoint) {
+        int playerPoint = calculateJudgingPoint();
+
+        if (isDraw(playerPoint, dealerPoint)) {
+            inputMatchResult(dealerHistory, DRAW);
+            recordMatchResult(RESULT_DRAW);
+        } else if (isWin(playerPoint, dealerPoint)) {
+            recordMatchResult(RESULT_WIN);
+            inputMatchResult(dealerHistory, LOSE);
+        } else if (idLose(playerPoint, dealerPoint)) {
+            recordMatchResult(RESULT_LOSE);
+            inputMatchResult(dealerHistory, WIN);
+        }
+    }
+
+    private void inputMatchResult(Map<String, Integer> dealerHistory, String result) {
+        dealerHistory.put(result, dealerHistory.get(result) + 1);
+    }
+
+    private boolean idLose(int playerPoint, int dealerPoint) {
+        return (playerPoint > Gamer.HIGHEST_POINT) || (playerPoint < dealerPoint);
+    }
+
+    private boolean isWin(int playerPoint, int dealerValue) {
+        return (dealerValue > Gamer.HIGHEST_POINT) || (playerPoint > dealerValue);
+    }
+
+    private boolean isDraw(int playerPoint, int dealerValue) {
+        return (playerPoint > Gamer.HIGHEST_POINT && dealerValue > Gamer.HIGHEST_POINT) || (
+            playerPoint == dealerValue);
     }
 }

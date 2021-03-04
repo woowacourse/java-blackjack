@@ -101,30 +101,20 @@ public class Players {
 
     public Map<String, Integer> calculateResult() {
         Map<String, Integer> result = new HashMap<>();
+        int dealerValue = dealer.calculateJudgingPoint();
+
+        resultInit(result);
+
+        for (Player gamer : players) {
+            gamer.judgeVictory(result, dealerValue);
+        }
+        return result;
+    }
+
+    private void resultInit(Map<String, Integer> result) {
         result.put(WIN, 0);
         result.put(LOSE, 0);
         result.put(DRAW, 0);
-        int dealerValue = dealer.calculateJudgingPoint();
-        for (Player gamer : players) {
-            if (gamer.calculateJudgingPoint() > Gamer.HIGHEST_POINT) {
-                gamer.matchResult(RESULT_LOSE);
-                result.put(WIN, result.get(WIN) + 1);
-                continue;
-            }
-            if (gamer.calculateJudgingPoint() > dealerValue || dealerValue > 21) {
-                gamer.matchResult(RESULT_WIN);
-                result.put(LOSE, result.get(LOSE) + 1);
-                continue;
-            }
-            if (gamer.calculateJudgingPoint() < dealerValue) {
-                gamer.matchResult(RESULT_LOSE);
-                result.put(WIN, result.get(WIN) + 1);
-                continue;
-            }
-            result.put(DRAW, result.get(DRAW) + 1);
-            gamer.matchResult(RESULT_DRAW);
-        }
-        return result;
     }
 
     @Override
