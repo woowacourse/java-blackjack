@@ -15,8 +15,13 @@ public enum Denomination {
     QUEEN("Q", 10),
     KING("K", 10);
 
+    private static final int ACE_MAX_SCORE = 11;
+    private static final int ACE_MIN_SCORE = 1;
+    private static final int MAX_SCORE = 21;
+
     private final int score;
     private final String name;
+
 
     Denomination(String name, int score) {
         this.name = name;
@@ -29,5 +34,12 @@ public enum Denomination {
 
     public int getScore() {
         return this.score;
+    }
+
+    public static int selectAceScore(int score) {
+        if (score > MAX_SCORE - ACE_MAX_SCORE) {
+            return ACE_MIN_SCORE;
+        }
+        return ACE_MAX_SCORE;
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 public class Score {
 
     public static final int maxScore = 21;
+
     private Score() {
     }
 
@@ -25,17 +26,22 @@ public class Score {
     }
 
     private static int calculator(List<Card> cards) {
-        int score = 0;
-        for (Card card : cards) {
-            if (card.getDenomination() == Denomination.ACE) {
-                if (score + 11 > maxScore) {
-                    score += card.getDenomination().getScore();
-                } else {
-                    score += 11;
-                }
-            } else
-                score += card.getDenomination().getScore();
+        return aceCardScore(cards, noneAceCardScore(cards));
+    }
+
+    private static int noneAceCardScore(List<Card> cards) {
+        return cards.stream()
+                .filter(card -> card.getDenomination() != Denomination.ACE)
+                .mapToInt(card -> card.getDenomination().getScore())
+                .sum();
+    }
+
+    private static int aceCardScore(List<Card> cards, int score) {
+        int aceCount = (int) cards.stream().filter(card -> card.getDenomination() == Denomination.ACE).count();
+        for (int i = 0; i < aceCount; i++) {
+            score += Denomination.selectAceScore(score);
         }
+
         return score;
     }
 }
