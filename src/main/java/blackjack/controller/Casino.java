@@ -1,14 +1,12 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
-import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Casino {
     public Casino() {
@@ -27,7 +25,7 @@ public class Casino {
 
         OutputView.printFinalCardInfo(dealer, players);
         game.fightPlayers();
-        OutputView.printWinOrLoseResult(dealer,players);
+        OutputView.printWinOrLoseResult(dealer, players);
     }
 
     private void playerTurn(Game game) {
@@ -38,7 +36,7 @@ public class Casino {
 
     //TODO:: 블랙잭이나 버스트일때 질문하지 않는 로직 추가.(메세지도 출력)
     private void doPlayerTurn(Player player, Game game) {
-        while (InputView.inputYesOrNo(player)){
+        while (InputView.inputYesOrNo(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);
             OutputView.printMessage("");

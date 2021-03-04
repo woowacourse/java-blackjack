@@ -20,7 +20,7 @@ public class GameResult {
         loseCount += 1;
     }
 
-    public void plus(GameResult gameResult){
+    public void plus(GameResult gameResult) {
         winCount += gameResult.getWinCount();
         drawCount += gameResult.getDrawCount();
         loseCount += gameResult.getLoseCount();

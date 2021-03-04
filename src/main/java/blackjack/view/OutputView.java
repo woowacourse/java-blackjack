@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Game;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
@@ -28,9 +27,10 @@ public class OutputView {
         System.out.printf(SET_UP_MESSAGE, dealer.getName(), playerNames);
 
         printCardInfo(dealer);
+        printMessage("");
         for (Player player : players) {
             printCardInfo(player);
-
+            printMessage("");
         }
     }
 

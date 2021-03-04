@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.Game;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -15,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameTest {
-    final List<String> names = Arrays.asList("wannte","bepoz");
+    final List<String> names = Arrays.asList("wannte", "bepoz");
     Game game;
 
     @BeforeEach
@@ -25,7 +24,8 @@ public class GameTest {
 
     @Test
     void createGame() {
-        assertThat(game.getPlayers().size()).isEqualTo(2);
+        assertThat(game.getPlayers()
+                       .size()).isEqualTo(2);
     }
 
     @Test
@@ -33,22 +33,27 @@ public class GameTest {
     void setUpTwoCards() {
         game.setUpTwoCards();
         for (Player player : game.getPlayers()) {
-            assertThat(player.getCards().size()).isEqualTo(2);
+            assertThat(player.getCards()
+                             .size()).isEqualTo(2);
         }
         Dealer dealer = game.getDealer();
-        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.getCards()
+                         .size()).isEqualTo(2);
     }
 
     @Test
     void giveCardToParticipant() {
-        Participant participant = game.getPlayers().get(0);
+        Participant participant = game.getPlayers()
+                                      .get(0);
         game.giveCard(participant);
-        assertThat(participant.getCards().size()).isEqualTo(1);
+        assertThat(participant.getCards()
+                              .size()).isEqualTo(1);
     }
 
     @Test
     void dealerHitUntilStay() {
         game.playDealerTurn();
-        assertTrue(game.getDealer().isStay());
+        assertTrue(game.getDealer()
+                       .isStay());
     }
 }
