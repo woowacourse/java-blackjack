@@ -48,15 +48,16 @@ public class GameTable {
     }
 
     private void askHit(Player player) {
-        while(player.isNotBust()){
-            OutputView.printHitGuideMessage(player);
-            String hitValue = InputView.getHitValue();
-            if (hitValue.equals("N")) {
-                break;
-            }
+        while (player.isNotBust() && wantCard(player)){
             player.hit(deck.pop());
             OutputView.printPlayerCards(player);
         }
+    }
+
+    private boolean wantCard(Player player){
+        OutputView.printHitGuideMessage(player);
+        String hitValue = InputView.getHitValue();
+        return hitValue.equals("Y");
     }
 
     private void drawAtFirst() {
