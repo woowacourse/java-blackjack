@@ -131,7 +131,7 @@ public class BlackjackController {
     private void decideWinner(final Dealer dealer, final Player player) {
         if (dealer.isWinner(player.calculate()) || player.isBust()) {
             player.lose();
-            dealer.increaseWinCount();
+            dealer.winSinglePlayer();
         }
     }
 }

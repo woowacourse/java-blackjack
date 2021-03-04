@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -32,11 +33,11 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 참가자에게 상속받았는지 확인")
+    @DisplayName("딜러가 Participant로 부터 상속받았는지 확인")
     void extend() {
-        final Player player = new Dealer("딜러");
-        player.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
-        assertThat(player.getCardCount()).isEqualTo(1);
+        final Participant participant = new Dealer("딜러");
+        participant.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        assertThat(participant.getCardCount()).isEqualTo(1);
     }
 
     @Test
