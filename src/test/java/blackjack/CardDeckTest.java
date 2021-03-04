@@ -12,7 +12,7 @@ public class CardDeckTest {
     @Test
     @DisplayName("카드덱이 잘 생성되는지 확인")
     void create() {
-        assertThatCode(() -> new CardDeck())
+        assertThatCode(CardDeck::new)
                 .doesNotThrowAnyException();
     }
 
