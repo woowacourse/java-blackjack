@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 public class CardTest {
 
-    @DisplayName("캐싱 및 동일성 테스트")
     @Test
+    @DisplayName("캐싱 및 동일성 테스트")
     void caching() {
         assertThat(Card.valueOf(Shape.DIAMOND, CardValue.ACE))
             .isSameAs((Card.valueOf(Shape.DIAMOND, CardValue.ACE)));

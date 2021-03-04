@@ -17,7 +17,7 @@ public class Hand {
     }
 
     public int getScore() {
-        return calculateScore(new LinkedList<>(hand), DEFAULT_SCORE);
+        return calculateScore(new ArrayList<>(hand), DEFAULT_SCORE);
     }
 
     private int calculateScore(List<Card> leftCards, int currentScore) {

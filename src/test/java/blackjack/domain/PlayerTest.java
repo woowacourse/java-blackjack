@@ -29,15 +29,15 @@ public class PlayerTest {
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
     }
 
-    @DisplayName("플레이어 생성")
     @Test
+    @DisplayName("플레이어 생성")
     void create() {
         Player root = new Player("root", deck);
         assertThat(root).isEqualTo(new Player("root", deck));
     }
 
-    @DisplayName("이름이 공백인 경우 검증")
     @Test
+    @DisplayName("이름이 공백인 경우 검증")
     void validate() {
         assertThatThrownBy(() -> new Player("", deck))
             .isInstanceOf(IllegalArgumentException.class)

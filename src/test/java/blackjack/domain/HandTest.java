@@ -46,8 +46,8 @@ public class HandTest {
         assertThat(input.getScore()).isEqualTo(expected);
     }
 
-    @DisplayName("버스트 확인 기능")
     @Test
+    @DisplayName("버스트 확인 기능")
     void isBust() {
         Hand bustHand = new Hand(Arrays.asList(
             Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
