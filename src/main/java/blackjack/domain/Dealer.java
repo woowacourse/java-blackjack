@@ -3,13 +3,13 @@ package blackjack.domain;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Dealer extends Participant {
 
     private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 16;
     private static final long DEFAULT_VALUE = 0L;
     private static final String DEALER_NAME = "딜러";
+    private static final int INCREASE_COUNT = 1;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -22,18 +22,26 @@ public class Dealer extends Participant {
     }
 
     public Map<Result, Long> getStatisticResult(List<Player> players) {
-        Map<Result, Long> statisticResult = players.stream()
-                                                   .map(player -> player.judgeResult(this))
-                                                   .collect(Collectors.groupingBy(
-                                                       result -> result,
-                                                       () -> new EnumMap<>(Result.class),
-                                                       Collectors.counting()));
-        long lossCounts = statisticResult.getOrDefault(Result.LOSE, DEFAULT_VALUE);
-        long winCounts = statisticResult.getOrDefault(Result.WIN, DEFAULT_VALUE);
-        long drawCounts = statisticResult.getOrDefault(Result.DRAW, DEFAULT_VALUE);
-        statisticResult.put(Result.WIN, lossCounts);
-        statisticResult.put(Result.LOSE, winCounts);
-        statisticResult.put(Result.DRAW, drawCounts);
+        Map<Result, Long> statisticResult = new EnumMap<>(Result.class);
+        for (Result result : Result.values()) {
+            statisticResult.put(result, DEFAULT_VALUE);
+        }
+        for (Player player : players) {
+            Result result = player.judgeResult(this);
+            Result newResult = classify(result);
+            statisticResult.put(newResult,
+                statisticResult.getOrDefault(newResult, DEFAULT_VALUE) + INCREASE_COUNT);
+        }
         return statisticResult;
+    }
+
+    private Result classify(Result result) {
+        if (result == Result.LOSE) {
+            return Result.WIN;
+        }
+        if (result == Result.WIN) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 }
