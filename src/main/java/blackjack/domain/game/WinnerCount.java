@@ -10,7 +10,7 @@ public class WinnerCount {
     private final Map<WinnerFlag, Integer> winnerCount;
 
     public WinnerCount() {
-        winnerCount = new HashMap<>(3);
+        this.winnerCount = new HashMap<>(3);
         winnerCount.put(WinnerFlag.WIN, 0);
         winnerCount.put(WinnerFlag.DRAW, 0);
         winnerCount.put(WinnerFlag.LOSE, 0);

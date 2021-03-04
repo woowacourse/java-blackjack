@@ -12,12 +12,12 @@ import static blackjack.domain.participant.Player.THRESHOLD_OF_BURST;
 public abstract class Gamer {
     public static final String COMMA_DELIMITER = ",";
 
-    private final Cards cards;
     private final PlayerName name;
+    private final Cards cards;
 
     protected Gamer(String name) {
         this.name = new PlayerName(name);
-        cards = new Cards();
+        this.cards = new Cards();
     }
 
     public void receiveCard(Card card) {
