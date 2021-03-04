@@ -3,7 +3,9 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Player {
     private static final Pattern PATTERN = Pattern.compile("^[가-힣a-zA-Z]*$");
@@ -69,5 +71,11 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getCardsStatus() {
+        return cards.stream()
+                .map(Card::getCardStatus)
+                .collect(Collectors.toList());
     }
 }

@@ -1,45 +1,27 @@
 package blackjack.view.dto;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RoundStatusDto {
-    private Dealer dealer;
-    private List<Player> players;
+    private final String dealerName;
+    private final List<String> dealerCardStatus;
+    private final List<PlayerStatusDto> playerStatusDto;
 
-    public RoundStatusDto(Dealer dealer, List<Player> players) {
-        this.dealer = dealer;
-        this.players = players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
+    public RoundStatusDto(String dealerName, List<String> dealerCardStatus, List<PlayerStatusDto> playerStatusDto) {
+        this.dealerName = dealerName;
+        this.dealerCardStatus = dealerCardStatus;
+        this.playerStatusDto = playerStatusDto;
     }
 
     public String getDealerName() {
-        return dealer.getName();
+        return dealerName;
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
+    public List<String> getDealerCardStatus() {
+        return dealerCardStatus;
     }
 
-    public Map<String, List<Card>> getStatus() {
-        Map<String, List<Card>> status = new LinkedHashMap<>();
-        status.put(dealer.getName(), dealer.getCards());
-        players.forEach(player -> status.put(player.getName(), player.getCards()));
-        return status;
+    public List<PlayerStatusDto> getPlayerStatusDto() {
+        return playerStatusDto;
     }
 }

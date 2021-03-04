@@ -1,8 +1,7 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Dealer {
     public static final int TURN_OVER_COUNT = 16;
@@ -55,5 +54,11 @@ public class Dealer {
 
     public void addCard(Card makeOneCard) {
         cards.add(makeOneCard);
+    }
+
+    public List<String> getCardsStatus() {
+        return cards.stream()
+                .map(Card::getCardStatus)
+                .collect(Collectors.toList());
     }
 }

@@ -6,6 +6,8 @@ import blackjack.domain.Player;
 import blackjack.domain.Round;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.PlayerStatusDto;
+import blackjack.view.dto.RoundStatusDto2;
 import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
@@ -21,7 +23,9 @@ public class GameController {
 
     public void start() {
         Round round = initializeGame();
-        OutputView.showInitialStatus(new RoundStatusDto(round.getDealer(), round.getPlayers()));
+        RoundStatusDto roundStatusDto = new RoundStatusDto(round.getDealerName(), round.getDealerCardStatus(), round.getPlayers().stream().map(this::getPlayerStatusDto).collect(Collectors.toList()));
+        OutputView.showInitialStatus(roundStatusDto);
+
         List<Player> players = round.getPlayers();
         for (Player player : players) {
             addCardOrPass(round, player);
@@ -29,7 +33,11 @@ public class GameController {
         if (round.addDealerCard()) {
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
-        OutputView.showFinalStatus(new RoundStatusDto(round.getDealer(), round.getPlayers()));
+        OutputView.showFinalStatus(new RoundStatusDto2(round.getDealer(), round.getPlayers()));
+    }
+
+    private PlayerStatusDto getPlayerStatusDto(Player player) {
+        return new PlayerStatusDto(player.getName(), player.getCardsStatus());
     }
 
     private void addCardOrPass(Round round, Player player) {

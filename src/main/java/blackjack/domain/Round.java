@@ -47,4 +47,12 @@ public class Round {
         }
         return false;
     }
+
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
+    public List<String> getDealerCardStatus() {
+        return dealer.getCardsStatus();
+    }
 }
