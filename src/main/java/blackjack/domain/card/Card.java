@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public class Card {
     private final CardNumber cardNumber;
