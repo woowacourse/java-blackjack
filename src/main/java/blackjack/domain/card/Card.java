@@ -3,6 +3,7 @@ package blackjack.domain.card;
 public class Card {
     public static final int BLACKJACK_SCORE = Integer.MAX_VALUE;
     public static final int BUST = Integer.MIN_VALUE;
+    private static final int ACE_SCORE = 1;
 
     private final Suit suit;
     private final CardNumber cardNumber;
@@ -14,6 +15,10 @@ public class Card {
 
     public int getScore() {
         return cardNumber.getScore();
+    }
+
+    public boolean isAce() {
+        return cardNumber.getScore() == ACE_SCORE;
     }
 
     @Override
