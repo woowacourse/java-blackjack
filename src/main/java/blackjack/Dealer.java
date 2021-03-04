@@ -1,5 +1,7 @@
 package blackjack;
 
+import java.util.Arrays;
+
 public class Dealer implements User {
 
 
@@ -22,8 +24,8 @@ public class Dealer implements User {
     }
 
     @Override
-    public String showCards() {
-        return this.cards.showCards();
+    public String getCards() {
+        return this.cards.getCards();
     }
 
     @Override
@@ -34,5 +36,9 @@ public class Dealer implements User {
     @Override
     public int getScore() {
         return cards.getScore();
+    }
+
+    public String getFirstCard() {
+        return Arrays.stream(getCards().split(", ")).findFirst().get();
     }
 }
