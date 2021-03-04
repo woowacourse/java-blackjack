@@ -19,6 +19,7 @@ public class OutputView {
     private static final String BLANK = " ";
 
     public static void printInitGame(final List<Player> players) {
+        System.out.print(NEW_LINE);
         System.out.printf(INIT_GAME_FORMAT, joinPlayerNames(players));
         System.out.print(NEW_LINE);
     }
@@ -30,8 +31,9 @@ public class OutputView {
     }
 
     public static void printHandResult(List<Player> players, Dealer dealer) {
+        System.out.print(NEW_LINE);
         System.out.print(joinDealerResult(dealer));
-        System.out.print(joinPlayersResult(players));
+        System.out.println(joinPlayersResult(players));
     }
 
     private static String joinDealerResult(Dealer dealer) {
@@ -64,6 +66,7 @@ public class OutputView {
 
     public static void printPlayersHand(final List<Player> players) {
         players.forEach(OutputView::printCards);
+        System.out.print(NEW_LINE);
     }
 
     public static void printCards(final Player player) {
