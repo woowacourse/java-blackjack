@@ -59,13 +59,14 @@ public class BlackJackController {
             OutputView.willDrawCard(playerToPrepare);
             Response response = Response.getResponse(InputView.inputString());
             playerToPrepare.willContinue(response, deck);
-            printParticipantStatusByResponse(playerToPrepare, response);
+            drawCardByResponse(playerToPrepare, response, deck);
         }
     }
 
-    private static void printParticipantStatusByResponse(Player playerToPrepare,
-        Response response) {
+    private static void drawCardByResponse(Player playerToPrepare,
+        Response response, Deck deck) {
         if (response == Response.POSITIVE) {
+            playerToPrepare.drawCard(deck);
             OutputView.printParticipantStatus(playerToPrepare, false);
         }
     }
@@ -75,6 +76,7 @@ public class BlackJackController {
             dealer.drawCard(deck);
             OutputView.printDealerDrawCard(dealer);
         }
+        OutputView.printNewLine();
     }
 
     public static void main(String[] args) {

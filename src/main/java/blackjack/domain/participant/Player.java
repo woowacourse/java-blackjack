@@ -12,8 +12,11 @@ public class Player extends Participant {
 
     @Override
     public void drawCard(Deck deck) {
+        if (!isContinue()) {
+            throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
+        }
         getHand().addCard(deck.draw());
-        if (getHand().isBust()) {
+        if (isBust()) {
             cannotDraw();
         }
     }
@@ -21,19 +24,21 @@ public class Player extends Participant {
     public void willContinue(Response response, Deck deck) {
         if (!response.getHitStatus()) {
             cannotDraw();
-            return;
         }
-        drawCard(deck);
     }
 
     public ResultType match(Dealer dealer) {
-        if (getHand().isBust()) {
+        if (isBust()) {
             return ResultType.LOSE;
         }
-        int myScore = getScore();
-        int dealerScore = dealer.getScore();
+        if (dealer.isBust()) {
+            return ResultType.WIN;
+        }
+        return matchByScore(dealer);
+    }
 
-        return ResultType.getResultType(myScore - dealerScore);
+    private ResultType matchByScore(Dealer dealer) {
+        return ResultType.getResultType(getScore() - dealer.getScore());
     }
 
 

@@ -61,7 +61,7 @@ public class OutputView {
 
     private static String makeMessageByBust(Participant participant) {
         String scoreMessage = " - 결과: " + participant.getScore();
-        if (participant.getHand().isBust()) {
+        if (participant.isBust()) {
             scoreMessage = " - 결과: BUST";
         }
         return scoreMessage;
@@ -69,6 +69,10 @@ public class OutputView {
 
     public static void willDrawCard(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 
     public static void printDealerDrawCard(Dealer dealer) {

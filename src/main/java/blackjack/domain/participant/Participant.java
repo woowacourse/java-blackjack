@@ -42,6 +42,8 @@ public abstract class Participant {
         return hit;
     }
 
+    public boolean isBust() {return hand.isBust();}
+
     public String getName() {
         return name;
     }

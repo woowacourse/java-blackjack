@@ -13,6 +13,9 @@ public class Dealer extends Participant {
 
     @Override
     public void drawCard(Deck deck) {
+        if (!isContinue()) {
+            throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
+        }
         getHand().addCard(deck.draw());
         if (isOverLimit()) {
             cannotDraw();
@@ -20,6 +23,6 @@ public class Dealer extends Participant {
     }
 
     private boolean isOverLimit() {
-        return getHand().getScore() > DEALER_LIMIT;
+        return getScore() > DEALER_LIMIT;
     }
 }
