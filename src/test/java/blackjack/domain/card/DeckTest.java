@@ -8,6 +8,6 @@ public class DeckTest {
     @Test
     void DeckSize() {
         assertThat(Deck.getCards()
-                       .size()).isEqualTo(52);
+                .size()).isEqualTo(52);
     }
 }

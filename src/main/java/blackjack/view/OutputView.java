@@ -23,8 +23,8 @@ public class OutputView {
 
     public static void printSetup(Dealer dealer, List<Player> players) {
         String playerNames = players.stream()
-                                    .map(Player::getName)
-                                    .collect(Collectors.joining(", "));
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
         lineFeed();
         System.out.printf(SET_UP_MESSAGE, dealer.getName(), playerNames);
 
@@ -39,9 +39,9 @@ public class OutputView {
 
     public static void printCardInfo(Participant participant) {
         String cardInfo = participant.getCards()
-                                     .stream()
-                                     .map(card -> card.getNumber() + card.getShape())
-                                     .collect(Collectors.joining(", "));
+                .stream()
+                .map(card -> card.getNumber() + card.getShape())
+                .collect(Collectors.joining(", "));
 
         System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
     }

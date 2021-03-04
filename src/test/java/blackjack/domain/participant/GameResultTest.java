@@ -47,6 +47,6 @@ public class GameResultTest {
         gameResult1.lose();
 
         assertThat(gameResult1.reverse()
-                              .getWinCount()).isEqualTo(2);
+                .getWinCount()).isEqualTo(2);
     }
 }

@@ -25,7 +25,7 @@ public class GameTest {
     @Test
     void createGame() {
         assertThat(game.getPlayers()
-                       .size()).isEqualTo(2);
+                .size()).isEqualTo(2);
     }
 
     @Test
@@ -34,26 +34,26 @@ public class GameTest {
         game.setUpTwoCards();
         for (Player player : game.getPlayers()) {
             assertThat(player.getCards()
-                             .size()).isEqualTo(2);
+                    .size()).isEqualTo(2);
         }
         Dealer dealer = game.getDealer();
         assertThat(dealer.getCards()
-                         .size()).isEqualTo(2);
+                .size()).isEqualTo(2);
     }
 
     @Test
     void giveCardToParticipant() {
         Participant participant = game.getPlayers()
-                                      .get(0);
+                .get(0);
         game.giveCard(participant);
         assertThat(participant.getCards()
-                              .size()).isEqualTo(1);
+                .size()).isEqualTo(1);
     }
 
     @Test
     void dealerHitUntilStay() {
         game.playDealerTurn();
         assertTrue(game.getDealer()
-                       .isStay());
+                .isStay());
     }
 }

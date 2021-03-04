@@ -17,8 +17,8 @@ public class Deck {
 
     private static List<Card> cardsOf(Shape shape) {
         return Arrays.stream(GameNumber.values())
-                     .map(number -> new Card(number, shape))
-                     .collect(Collectors.toList());
+                .map(number -> new Card(number, shape))
+                .collect(Collectors.toList());
     }
 
     public static Card draw() {

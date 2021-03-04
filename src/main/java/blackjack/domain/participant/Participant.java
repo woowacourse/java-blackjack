@@ -40,14 +40,14 @@ public abstract class Participant {
 
     public int countAce() {
         return (int) cards.stream()
-                          .filter(Card::isAce)
-                          .count();
+                .filter(Card::isAce)
+                .count();
     }
 
     public int calculateCards() {
         return cards.stream()
-                    .mapToInt(Card::getValue)
-                    .sum();
+                .mapToInt(Card::getValue)
+                .sum();
     }
 
     public boolean isBurst() {

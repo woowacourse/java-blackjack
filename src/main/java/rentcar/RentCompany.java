@@ -23,7 +23,7 @@ public class RentCompany {
         StringBuilder builder = new StringBuilder();
         for (Car car : cars) {
             builder.append(car.getReport())
-                   .append(NEWLINE);
+                    .append(NEWLINE);
         }
         return builder.toString();
     }

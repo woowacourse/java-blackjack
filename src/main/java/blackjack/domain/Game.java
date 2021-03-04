@@ -26,8 +26,8 @@ public class Game {
             throw new IllegalArgumentException("최소 1명 이상은 게임에 참여해야 합니다.");
         }
         return new Game(playerNames.stream()
-                                   .map(Player::new)
-                                   .collect(Collectors.toList()));
+                .map(Player::new)
+                .collect(Collectors.toList()));
     }
 
     public void setUpTwoCards() {
