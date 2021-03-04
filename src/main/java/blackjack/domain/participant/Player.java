@@ -17,7 +17,7 @@ public class Player {
         hand.addCard(card);
     }
 
-    public int totalScore() {
+    public int getTotalScore() {
         return hand.totalScore();
     }
 

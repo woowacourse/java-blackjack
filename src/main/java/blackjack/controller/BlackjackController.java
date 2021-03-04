@@ -15,6 +15,7 @@ public class BlackjackController {
 
         BlackjackManager.initGame(players, dealer);
         OutputView.printInitGame(players.toList());
+        OutputView.printDealer(dealer);
         OutputView.printPlayers(players.toList());
 
         for (Player player : players.toList()) {
@@ -29,5 +30,8 @@ public class BlackjackController {
             dealer.receiveCard(dealer.giveCard());
             OutputView.printDealerHit();
         }
+
+        OutputView.printResult(players.toList(), dealer);
+
     }
 }

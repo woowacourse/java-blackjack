@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.carddeck.Card;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +27,58 @@ public class OutputView {
             .collect(Collectors.joining(DELIMITER));
     }
 
+    public static void printResult(List<Player> players, Dealer dealer) {
+        System.out.print(joinDealerResult(dealer));
+        System.out.print(joinPlayersResult(players));
+    }
+
+    private static String joinDealerResult(Dealer dealer) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("딜러")
+            .append(HAND_FORMAT)
+            .append(joinCards(dealer.getHand()))
+            .append(SCORE_FORMAT)
+            .append(dealer.getTotalScore())
+            .append(NEW_LINE);
+        return sb.toString();
+    }
+
+    private static String joinPlayersResult(List<Player> players) {
+        StringBuilder sb = new StringBuilder();
+        for (Player player : players) {
+            sb.append(player.getName())
+                .append(HAND_FORMAT)
+                .append(joinCards(player.getHand()))
+                .append(SCORE_FORMAT)
+                .append(player.getTotalScore())
+                .append(NEW_LINE);
+        }
+        return sb.toString();
+    }
+
+    public static void printDealer(final Dealer dealer) {
+        printCards(dealer);
+    }
+
     public static void printPlayers(final List<Player> players) {
         players.forEach(OutputView::printCards);
     }
 
     public static void printCards(final Player player) {
         StringBuilder sb = new StringBuilder();
-            sb.append(player.getName())
-                .append(HAND_FORMAT)
-                .append(joinCards(player.getHand()))
-                .append(NEW_LINE);
+        sb.append(player.getName())
+            .append(HAND_FORMAT)
+            .append(joinCards(player.getHand()))
+            .append(NEW_LINE);
+        System.out.print(sb);
+    }
+
+    public static void printCards(final Dealer dealer) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("딜러")
+            .append(HAND_FORMAT)
+            .append(joinCards(dealer.getHand()))
+            .append(NEW_LINE);
         System.out.print(sb);
     }
 
@@ -48,6 +91,7 @@ public class OutputView {
     }
 
     public static void printDealerHit() {
+        System.out.print(NEW_LINE);
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_HIT_LIMIT);
         System.out.print(NEW_LINE);
     }

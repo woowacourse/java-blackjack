@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.carddeck.Card;
-import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +24,6 @@ public class PlayerTest {
         Card card = new Card(Pattern.DIAMOND, Number.EIGHT);
         player.receiveCard(card);
 
-        assertThat(player.totalScore()).isEqualTo(8);
+        assertThat(player.getTotalScore()).isEqualTo(8);
     }
 }
