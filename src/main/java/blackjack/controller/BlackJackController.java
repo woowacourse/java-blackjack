@@ -17,7 +17,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
-        dealer.setCardOpen(new AllCardsOpenStrategy());
+        dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
         OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));

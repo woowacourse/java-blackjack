@@ -42,8 +42,8 @@ public class DealerTest {
     void cardOpenStrategy() {
         Dealer dealer = new Dealer();
         dealer.drawRandomTwoCards();
-        assertThat(dealer.getCards().size()).isEqualTo(1);
-        dealer.setCardOpen(new AllCardsOpenStrategy());
-        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.getCardsWithStrategy().size()).isEqualTo(1);
+        dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
+        assertThat(dealer.getCardsWithStrategy().size()).isEqualTo(2);
     }
 }

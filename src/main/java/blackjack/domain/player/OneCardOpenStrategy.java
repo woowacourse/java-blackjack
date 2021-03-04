@@ -8,7 +8,7 @@ public class OneCardOpenStrategy implements CardOpenStrategy {
     public static final int ONE_CARD_SIZE = 1;
 
     @Override
-    public List<Card> getCards(List<Card> cards) {
+    public List<Card> getCardsWithStrategy(List<Card> cards) {
         return cards.subList(0, ONE_CARD_SIZE);
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AllCardsOpenStrategy implements CardOpenStrategy {
     @Override
-    public List<Card> getCards(List<Card> cards) {
+    public List<Card> getCardsWithStrategy(List<Card> cards) {
         return cards;
     }
 }
