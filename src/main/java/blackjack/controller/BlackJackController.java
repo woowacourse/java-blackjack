@@ -12,23 +12,25 @@ public class BlackJackController {
     private static final int INITIAL_DRAW_CARD_NUMBER = 2;
     private static final int DEALER_REDRAW_STANDARD = 17;
 
-    private final Dealer dealer = new Dealer();
+    private final Users users;
+    private final Dealer dealer;
+    private final CardDeck cardDeck;
+
+    public BlackJackController() {
+        this.dealer = new Dealer();
+        this.cardDeck = CardDeck.createDeck();
+        this.users = new Users(dealer, InputView.scanPlayerNames());
+        initialHit(users);
+        OutputView.printInitialComment(users);
+    }
 
     public void run() {
-        Users users = new Users(dealer, InputView.scanPlayerNames());
-
-        CardDeck cardDeck = CardDeck.createDeck();
-
-        initialHit(users, cardDeck);
-
-        OutputView.printInitialComment(users);
-
         if (dealer.isBlackJack()) {
             OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
             return;
         }
         users.getPlayers()
-                .forEach(player -> playGameForEachPlayer(player, cardDeck));
+                .forEach(this::playGameForEachPlayer);
         while (dealer.getScore() < DEALER_REDRAW_STANDARD && dealer.getScore() != Card.BUST) {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
@@ -37,20 +39,21 @@ public class BlackJackController {
         OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
     }
 
-    private void initialHit(Users users, CardDeck cardDeck) {
+
+    private void initialHit(Users users) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
             users.gerUsers()
                     .forEach(user -> user.hit(cardDeck.drawCard()));
         }
     }
 
-    private void playGameForEachPlayer(Player player, CardDeck cardDeck) {
+    private void playGameForEachPlayer(Player player) {
         while (!player.isStay()) {
-            requestHitOrNot(player, cardDeck);
+            requestHitOrNot(player);
         }
     }
 
-    private void requestHitOrNot(Player player, CardDeck cardDeck) {
+    private void requestHitOrNot(Player player) {
         if (InputView.isHit(player.getName())) {
             player.hit(cardDeck.drawCard());
             OutputView.printCardsOfPlayer(player);
