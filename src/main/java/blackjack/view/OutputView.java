@@ -72,7 +72,7 @@ public class OutputView {
 
     public static void printResult(GameResult gameResult) {
         Map<ResultType, Integer> statistics = gameResult.getStatistics();
-        System.out.print("\n## 최종 승패\n딜러: ");
+        System.out.print("## 최종 승패\n딜러: ");
         printDealerResult(statistics);
         printPlayerResult(gameResult);
     }
