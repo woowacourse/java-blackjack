@@ -9,8 +9,8 @@ import java.util.function.BiPredicate;
 
 public enum WinOrLose {
     WIN("승", (dealerScore, userScore) -> dealerScore < userScore),
-    LOSE("패", (dealerScore, userScore) -> dealerScore > userScore),
-    DRAW("무", Integer::equals);
+    DRAW("무", Integer::equals),
+    LOSE("패", (dealerScore, userScore) -> dealerScore > userScore);
 
     private static final String NONE_MATCH_CONDITION_ERROR_MSG = "승무패 조건에 없는 경우입니다.";
     private final String character;
@@ -51,5 +51,9 @@ public enum WinOrLose {
             return WIN;
         }
         return winOrLose;
+    }
+
+    public String getCharacter() {
+        return character;
     }
 }

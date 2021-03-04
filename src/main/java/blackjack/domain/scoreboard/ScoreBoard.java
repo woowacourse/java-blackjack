@@ -26,7 +26,7 @@ public class ScoreBoard {
         return dealerGameResult;
     }
 
-    public Map<WinOrLose, Long> dealersWinOrLoses(){
+    public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
         return userResults.keySet().stream()
                 .map(userResults::get)
                 .map(GameResult::getWinOrLose)

@@ -40,6 +40,10 @@ public class User {
         return this.status == status;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
     }

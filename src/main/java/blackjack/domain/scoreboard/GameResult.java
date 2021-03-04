@@ -20,6 +20,10 @@ public class GameResult {
                 .sum();
     }
 
+    public List<Card> getResultCards() {
+        return resultCards;
+    }
+
     public WinOrLose getWinOrLose(){
         return winOrLose;
     }

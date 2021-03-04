@@ -57,7 +57,7 @@ public class ScoreBoardTest {
 
         ScoreBoard scoreBoard = new ScoreBoard(temp, dealerGameResult);
         //when
-        Map<WinOrLose, Long> dealersWinOrLoses = scoreBoard.dealersWinOrLoses();
+        Map<WinOrLose, Long> dealersWinOrLoses = scoreBoard.dealerWinOrLoseCounts();
         //then
         assertThat(dealersWinOrLoses.get(WinOrLose.WIN)).isEqualTo(2L);
         assertThat(dealersWinOrLoses.get(WinOrLose.DRAW)).isEqualTo(1L);

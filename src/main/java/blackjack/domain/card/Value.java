@@ -24,16 +24,20 @@ public enum Value {
                                             .filter(value -> value != ACE_OF_ONE)
                                             .collect(Collectors.toList());
 
-    private final String value;
+    private final String letter;
     private final int score;
 
-    Value(String value, int score) {
-        this.value = value;
+    Value(String letter, int score) {
+        this.letter = letter;
         this.score = score;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public String getLetter() {
+        return letter;
     }
 
     public static List<Value> of() {

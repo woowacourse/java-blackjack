@@ -6,9 +6,13 @@ public enum Suit {
     HEART("하트"),
     CLOVER("클로버");
 
-    private final String name;
+    private final String letter;
 
-    Suit(String name) {
-        this.name = name;
+    Suit(String letter) {
+        this.letter = letter;
+    }
+
+    public String getLetter() {
+        return letter;
     }
 }
