@@ -5,7 +5,7 @@ import blackjack.view.OutputView;
 
 public class Player extends Gamer {
 
-    private static final int HIGHEST_POINT = 21;
+
     private static final String COUPLER = "카드: ";
     private static final String GET_CARD = "y";
     private static final String ERROR_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";

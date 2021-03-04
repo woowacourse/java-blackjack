@@ -11,6 +11,7 @@ public abstract class Gamer {
     private static final String ERROR_NAME_SPACE = "이름에 공백이 포함됩니다.";
     private static final int ACE_BONUS = 10;
     private static final int AVAILABLE_ACE_BONUS = 11;
+    public static final int HIGHEST_POINT = 21;
     private static final String COMMA = ", ";
     private final String name;
     private final List<Card> cards = new ArrayList<>();
