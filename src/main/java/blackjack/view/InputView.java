@@ -16,7 +16,6 @@ public class InputView {
     }
 
     public static String getHitValue() {
-
-        return null;
+        return scanner.nextLine().toUpperCase();
     }
 }
