@@ -15,7 +15,7 @@ public class BlackJackController {
         Deck deck = new Deck();
         try {
             Players players = new Players(InputView.enterNames(), dealer);
-            dealTwoCard(players, deck);
+            dealInitCard(players, deck);
             dealCard(players, deck);
             printMatchResult(players);
         } catch (IllegalArgumentException exception) {
@@ -35,7 +35,7 @@ public class BlackJackController {
         }
     }
 
-    private void dealTwoCard(Players players, Deck deck) {
+    private void dealInitCard(Players players, Deck deck) {
         OutputView.noticeDrawTwoCards(players);
         IntStream.range(0, Gamer.NUM_INIT_CARD).mapToObj(i -> deck).forEach(players::giveCards);
         OutputView.noticePlayersCards(players);
