@@ -12,6 +12,8 @@ import java.util.stream.IntStream;
 
 public class Round {
     public static final int GAME_OVER_SCORE = 21;
+    private static final int FIRST_INDEX = 0;
+
     private final List<Card> shuffledCards;
     private final Dealer dealer;
     private final List<Player> players;
@@ -24,7 +26,7 @@ public class Round {
 
     public List<Card> makeTwoCards() {
         return IntStream.range(0, 2)
-                .mapToObj(count -> shuffledCards.remove(0))
+                .mapToObj(count -> shuffledCards.remove(FIRST_INDEX))
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +44,7 @@ public class Round {
     }
 
     public Card makeOneCard() {
-        return shuffledCards.remove(0);
+        return shuffledCards.remove(FIRST_INDEX);
     }
 
     public boolean addDealerCard() {
