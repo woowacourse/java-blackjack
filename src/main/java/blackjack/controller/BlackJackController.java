@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Users;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,27 +18,33 @@ public class BlackJackController {
         this.dealer = new Dealer();
         this.cardDeck = CardDeck.createDeck();
         this.users = new Users(dealer, InputView.scanPlayerNames());
-        initialHit(users);
-        OutputView.printInitialComment(users);
     }
 
     public void run() {
+        initialHits(users);
+        OutputView.printInitialComment(users);
+
         if (dealer.isBlackJack()) {
             OutputView.printResult(users.generateResultsMapAgainstDealer());
             return;
         }
-        users.getPlayers()
-                .forEach(this::playGameForEachPlayer);
-        while (dealer.hasToDrawACard()) {
-            dealer.hit(cardDeck.drawCard());
-            OutputView.printDealerGetNewCardsMessage();
-        }
+
+        users.getPlayers().forEach(this::playGameForEachPlayer);
+        drawCardsOfDealerUntilOver16Score();
+
         OutputView.printCardsOfUsersWithScore(users);
         OutputView.printResult(users.generateResultsMapAgainstDealer());
     }
 
+    private void drawCardsOfDealerUntilOver16Score() {
+        while (dealer.hasToDrawACard()) {
+            dealer.hit(cardDeck.drawCard());
+            OutputView.printDealerGetNewCardsMessage();
+        }
+    }
 
-    private void initialHit(Users users) {
+
+    private void initialHits(Users users) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
             users.gerUsers()
                     .forEach(user -> user.hit(cardDeck.drawCard()));
