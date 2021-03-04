@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class CardsTest {
     @Test
+    @DisplayName("생성")
     void create() {
         List<Card> cards = Arrays.asList(Card.from("A다이아몬드"), Card.from("A하트"));
         assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
@@ -25,6 +26,7 @@ public class CardsTest {
     }
 
     @Test
+    @DisplayName("생성된 리스트에 카드 포함여부 확인")
     void create2() {
         List<Card> cards = Arrays.asList(Card.from("A다이아몬드"), Card.from("A하트"));
         assertThat(new Cards(cards).getUnmodifiableList()).contains(Card.from("A다이아몬드"), Card.from("A하트"));
