@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,23 +24,27 @@ public class Cards {
 
     public int calculateScore() {
         int result = 0;
-        List<Card> aceCards = new ArrayList<>();
-        for (Card card : cards) {
-            if (card.isAce()) {
-                aceCards.add(card);
-            } else {
-                result += card.getScore();
-            }
-        }
-
-        for (Card card : aceCards) {
-            if (result < 11) {
-                result += 11;
-            } else {
-                result += card.getScore();
-            }
-        }
+        result += calculateScoreExceptAce();
+        result = calculateScoreAce(result);
         return result;
+    }
+
+    private int calculateScoreAce(int result) {
+        int sum = result;
+        List<Card> aceCards = cards.stream()
+                .filter(Card::isAce)
+                .collect(Collectors.toList());
+        for (Card card : aceCards) {
+            sum += card.getAceScore(sum);
+        }
+        return sum;
+    }
+
+    private int calculateScoreExceptAce() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public List<Card> getCards() {

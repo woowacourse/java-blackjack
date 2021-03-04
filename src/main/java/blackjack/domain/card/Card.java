@@ -24,6 +24,13 @@ public class Card {
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_CARD_ERROR));
     }
 
+    public int getAceScore(int sum) {
+        if (isAce() && sum < 11) {
+            return 11;
+        }
+        return getScore();
+    }
+
     private static class CardCache {
 
         static final List<Card> cache;
