@@ -8,7 +8,10 @@ import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import static blackjack.view.InputView.NOT_DRAW_CARD;
+
 public class BlackJackGame {
+    public static final int BLACKJACK_NUMBER = 21;
     private static final int INIT_DRAW_COUNT = 2;
 
     public void start() {
@@ -59,7 +62,7 @@ public class BlackJackGame {
             try {
                 OutputView.askOneMoreCard(player);
                 String answer = InputView.inputAnswer();
-                if (answer.equals("n")) {
+                if (answer.equals(NOT_DRAW_CARD)) {
                     OutputView.showCards(player);
                     break;
                 }

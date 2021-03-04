@@ -2,13 +2,16 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.MatchResult;
 import blackjack.domain.card.CardDeck;
-import blackjack.view.OutputView;
 
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
 public class Players {
+    private static final String EXCEED_MAXIMUM_PLAYER_ERROR_MESSAGE = "최대 플레이어 인원 수는 8명입니다.";
+    private static final String DELIMITER = ",";
+    private static final String BLANK = " ";
+    private static final String EMPTY = "";
     private static final int MAX_COUNT = 8;
     private final List<Player> players;
 
@@ -20,13 +23,13 @@ public class Players {
 
     private void validatePlayerCount(List<Player> player) {
         if (player.size() > MAX_COUNT) {
-            throw new IllegalArgumentException("최대 플레이어 인원 수는 8명입니다.");
+            throw new IllegalArgumentException(EXCEED_MAXIMUM_PLAYER_ERROR_MESSAGE);
         }
     }
 
     private List<Player> splitInput(String players) {
-        return Arrays.stream(players.split(","))
-                .map(s -> s.replaceAll(" ", ""))
+        return Arrays.stream(players.split(DELIMITER))
+                .map(s -> s.replaceAll(BLANK, EMPTY))
                 .map(Player::new)
                 .collect(toList());
     }

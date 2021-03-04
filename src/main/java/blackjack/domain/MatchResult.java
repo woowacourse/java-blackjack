@@ -1,22 +1,24 @@
 package blackjack.domain;
 
+import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
+
 public enum MatchResult {
     WIN("승") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore <= 21 && dealerScore > 21) || ((playerScore > dealerScore) && playerScore <= 21);
+            return (playerScore <= BLACKJACK_NUMBER && dealerScore > BLACKJACK_NUMBER) || ((playerScore > dealerScore) && playerScore <= BLACKJACK_NUMBER);
         }
     },
     LOSE("패") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore > 21 && dealerScore <= 21) || ((playerScore < dealerScore) && dealerScore <= 21);
+            return (playerScore > BLACKJACK_NUMBER && dealerScore <= BLACKJACK_NUMBER) || ((playerScore < dealerScore) && dealerScore <= BLACKJACK_NUMBER);
         }
     },
     DRAW("무") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore > 21 && dealerScore > 21) || (playerScore == dealerScore);
+            return (playerScore > BLACKJACK_NUMBER && dealerScore > BLACKJACK_NUMBER) || (playerScore == dealerScore);
         }
     };
 

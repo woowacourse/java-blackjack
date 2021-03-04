@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
     private final List<Card> cards;
 
     public Cards() {
@@ -31,7 +32,7 @@ public class Cards {
 
     public Cards removeCard() {
         if (cards.size() == 0) {
-            throw new IndexOutOfBoundsException("남은 카드가 없습니다.");
+            throw new IndexOutOfBoundsException(NO_REMAIN_CARD_ERROR_MESSAGE);
         }
         List<Card> newCards = new ArrayList<>(cards);
         newCards.remove(0);
