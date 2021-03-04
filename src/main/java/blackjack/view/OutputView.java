@@ -15,7 +15,8 @@ public class OutputView {
     }
 
     public static void printDistribute(Dealer dealer, Players players) {
-        System.out.println("\n" + dealer.getName() + "와 " + String.join(COMMA, players.showNames()) + "에게 2장의 카드를 나누었습니다.");
+        System.out.printf("\n%s와 %s에게 2장의 카드를 나누었습니다.\n",
+                dealer.getName(), String.join(COMMA, players.showNames()));
     }
 
     public static void printDealerCard(Dealer dealer) {
@@ -33,11 +34,10 @@ public class OutputView {
     }
 
     private static void printCards(Cards cards) {
-        String cardsGroup = cards.cards()
+        System.out.println(cards.cards()
                 .stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(COMMA_WITH_BLANK));
-        System.out.println(cardsGroup);
+                .collect(Collectors.joining(COMMA_WITH_BLANK)));
     }
 
     public static void printWantHit(Player player) {
@@ -54,14 +54,17 @@ public class OutputView {
 
     public static void printCardsWithTotalValue(List<User> users) {
         for (User user : users) {
-            System.out.println(user.getName() + "카드: " +
-                    user.showCards()
-                            .cards()
-                            .stream()
-                            .map(Card::toString)
-                            .collect(Collectors.joining(COMMA_WITH_BLANK)) + " - 결과: " +
-                    user.showCards().calculateTotalValue());
+            System.out.printf("%s카드: %s - 결과: %s \n",
+                    user.getName(), cardsByUser(user), user.showCards().calculateTotalValue());
         }
+    }
+
+    private static String cardsByUser(User user) {
+        return user.showCards()
+                .cards()
+                .stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
     public static void printResults(Dealer dealer, ResultBoard resultBoard) {
