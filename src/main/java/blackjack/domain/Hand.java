@@ -3,19 +3,17 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class Hand {
 
     private static final int DEFAULT_SCORE = 0;
     private static final int BUST = 22;
-    private final Set<Card> hand;
+    private final List<Card> hand;
 
     public Hand(List<Card> cards) {
-        hand = new HashSet<>(cards);
+        hand = new ArrayList<>(cards);
     }
 
     public int getScore() {

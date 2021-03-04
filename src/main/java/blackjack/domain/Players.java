@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class Players {
     }
 
     public GameResult match(Dealer dealer) {
-        Map<Player, ResultType> result = new HashMap<>();
+        Map<Player, ResultType> result = new LinkedHashMap<>();
         players.stream().forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);
