@@ -5,6 +5,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DealerResult;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.Result;
 import blackjack.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class OutputView {
     }
 
     private static String getConventionScore(User user) {
-        int userScore = user.getPoint();
+        int userScore = user.getScore();
         if (userScore == 0) {
             return BUST_MESSAGE;
         }
@@ -106,7 +107,7 @@ public class OutputView {
 
     private static String getDealerResult(DealerResult dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, Integer> element : dealerResult.getResult().entrySet()) {
+        for (Map.Entry<String, Integer> element : dealerResult.getDealerResult().entrySet()) {
             stringBuilder.append(validValue(element));
         }
         return stringBuilder.toString();
@@ -122,7 +123,7 @@ public class OutputView {
     public static void showIndividualTable(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
-            String gameIndividualResult = player.betResult(dealer);
+            String gameIndividualResult = Result.getResult(player, dealer);
             String individualResultMessage = String
                 .format(PLAYER_RESULT, playerName, gameIndividualResult);
             System.out.println(individualResultMessage);

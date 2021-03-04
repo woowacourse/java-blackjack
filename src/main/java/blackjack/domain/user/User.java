@@ -28,4 +28,8 @@ public abstract class User {
     public int getScore() {
         return userDeck.score();
     }
+
+    public int compare(User user) {
+        return this.getScore() - user.getScore();
+    }
 }

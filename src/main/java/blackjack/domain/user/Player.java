@@ -16,19 +16,6 @@ public class Player extends User {
         return !super.isBustCondition() && super.getScore() < UserDeck.BLACK_JACK_NUMBER;
     }
 
-    public String betResult(Dealer dealer) {
-        if (super.isBustCondition() && dealer.isBustCondition()) {
-            return "패";
-        }
-        if (super.getScore() < dealer.getScore()) {
-            return "패";
-        }
-        if (super.getScore() > dealer.getScore()) {
-            return "승";
-        }
-        return "무";
-    }
-
     public String getName() {
         return name;
     }

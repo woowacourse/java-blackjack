@@ -17,23 +17,13 @@ public class DealerResult {
 
     public DealerResult(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            String result = translateToDealer(player.betResult(dealer));
+            String result = Result.getResult(dealer, player);
             int resultCount = dealerResult.get(result);
             dealerResult.put(result, resultCount + 1);
         }
     }
 
-    private String translateToDealer(String result) {
-        if (result.equals("승")) {
-            return "패";
-        }
-        if (result.equals("패")) {
-            return "승";
-        }
-        return result;
-    }
-
-    public Map<String, Integer> getResult() {
+    public Map<String, Integer> getDealerResult() {
         return Collections.unmodifiableMap(this.dealerResult);
     }
 }

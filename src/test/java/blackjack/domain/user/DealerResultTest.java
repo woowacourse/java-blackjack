@@ -44,9 +44,9 @@ public class DealerResultTest {
             )
         );
         DealerResult dealerResult = new DealerResult(dealer, players);
-        assertThat(dealerResult.getResult().get("승")).isEqualTo(1);
-        assertThat(dealerResult.getResult().get("무")).isEqualTo(1);
-        assertThat(dealerResult.getResult().get("패")).isEqualTo(2);
+        assertThat(dealerResult.getDealerResult().get("승")).isEqualTo(1);
+        assertThat(dealerResult.getDealerResult().get("무")).isEqualTo(1);
+        assertThat(dealerResult.getDealerResult().get("패")).isEqualTo(2);
     }
 
     @Test
@@ -69,8 +69,8 @@ public class DealerResultTest {
             )
         );
         DealerResult dealerResult = new DealerResult(dealer, players);
-        assertThat(dealerResult.getResult().get("승")).isEqualTo(1);
-        assertThat(dealerResult.getResult().get("무")).isEqualTo(1);
-        assertThat(dealerResult.getResult().get("패")).isEqualTo(1);
+        assertThat(dealerResult.getDealerResult().get("승")).isEqualTo(1);
+        assertThat(dealerResult.getDealerResult().get("무")).isEqualTo(1);
+        assertThat(dealerResult.getDealerResult().get("패")).isEqualTo(1);
     }
 }
