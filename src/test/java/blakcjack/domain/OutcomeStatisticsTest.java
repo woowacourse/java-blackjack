@@ -16,7 +16,7 @@ class OutcomeStatisticsTest {
 
 	@BeforeEach
 	void setUp() {
-		dealerOutcome = new HashMap<>();
+		dealerOutcome = new LinkedHashMap<>();
 		dealerOutcome.put(Outcome.WIN, 2);
 		dealerOutcome.put(Outcome.DRAW, 1);
 		dealerOutcome.put(Outcome.LOSE, 0);

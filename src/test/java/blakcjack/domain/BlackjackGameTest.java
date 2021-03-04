@@ -96,7 +96,7 @@ class BlackjackGameTest {
 	}
 
 	private OutcomeStatistics getExpectedOutcomeStatistics() {
-		Map<Outcome, Integer> dealerOutcome = new HashMap<>();
+		Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 		Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
 		dealerOutcome.put(Outcome.WIN, 2);

@@ -51,7 +51,7 @@ public class BlackjackGame {
 
 	public OutcomeStatistics judgeOutcome() {
 		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
-		final Map<Outcome, Integer> dealerOutcome = new HashMap<>();
+		final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 		initializeDealerOutcome(dealerOutcome);
 
 		for (final Participant player : players) {
