@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,19 +37,7 @@ public class Participants {
         }
     }
 
-    public List<String> getParticipantNames() {
-        return participants.stream()
-                           .map(Participant::getName)
-                           .collect(Collectors.toList());
-    }
-
-//    public List<List<Card>> getParticipantsCards() {
-//        return participants.stream()
-//                           .map(Participant::getCards)
-//                           .collect(Collectors.toList());
-//    }
-
     public List<Participant> toList() {
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
 }

@@ -28,13 +28,12 @@ public class ParticipantsTest {
     @DisplayName("플레이어들이 카드를 2장씩 받는다.")
     public void receiveDefaultCards() {
         CardDeck cardDeck = new CardDeck();
-        int initCardDeckSize = cardDeck.size();
-        cardDeck.drawDefaultCards();
-        Participants participants = new Participants(Arrays.asList(
-            new Player("jason"),
-            new Player("pobi")
-        ));
+        Participants participants = new Participants(Arrays.asList(new Player("jason")));
+        Participant jason = participants.toList()
+                                        .get(0);
+        List<Card> jasonCards = jason.getCards();
         participants.receiveDefaultCards(cardDeck);
-        assertThat(cardDeck.size()).isEqualTo(initCardDeckSize - 4);
+        int afterSize = jasonCards.size();
+        assertThat(afterSize).isEqualTo(2);
     }
 }
