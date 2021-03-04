@@ -14,17 +14,17 @@ import org.junit.jupiter.api.Test;
 
 public class DealerResultTest {
 
-    private Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
-    private Card winCard = new Card(CardNumber.from("A"), CardSymbol.from("클로버"));
-    private Card tieCard = new Card(CardNumber.from("J"), CardSymbol.from("하트"));
-    private Card loseCard = new Card(CardNumber.from("9"), CardSymbol.from("다이아몬드"));
-    private UserDeck dealerDeck = new UserDeck();
+    private final Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
+    private final Card winCard = new Card(CardNumber.from("A"), CardSymbol.from("클로버"));
+    private final Card tieCard = new Card(CardNumber.from("J"), CardSymbol.from("하트"));
+    private final Card loseCard = new Card(CardNumber.from("9"), CardSymbol.from("다이아몬드"));
+    private final UserDeck dealerDeck = new UserDeck();
     {
         dealerDeck.add(one);
     }
 
     @Test
-    @DisplayName("딜러의 게임 결과 수합1")
+    @DisplayName("딜러의 게임 결과 확인")
     void dealerResult() {
         Dealer dealer = new Dealer(dealerDeck);
 
@@ -50,7 +50,7 @@ public class DealerResultTest {
     }
 
     @Test
-    @DisplayName("딜러의 게임 결과 수합2")
+    @DisplayName("딜러의 게임 결과 확인")
     void dealerResult2() {
         Dealer dealer = new Dealer(dealerDeck);
 
