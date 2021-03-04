@@ -8,8 +8,8 @@ public class CardNumber {
 
     private static final Map<String, CardNumber> NUMBER_CACHE = new HashMap<>();
 
-    private String alphabet;
-    private int value;
+    private final String cardNumber;
+    private final int value;
 
     static {
         for (NumberCandidate numberCandidate : NumberCandidate.values()) {
@@ -19,8 +19,8 @@ public class CardNumber {
         }
     }
 
-    private CardNumber(String alphabet, int value) {
-        this.alphabet = alphabet;
+    private CardNumber(String number, int value) {
+        this.cardNumber = number;
         this.value = value;
     }
 
@@ -32,8 +32,8 @@ public class CardNumber {
         return this.value;
     }
 
-    public String getAlphabet() {
-        return alphabet;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class CardNumber {
             return false;
         }
         CardNumber that = (CardNumber) o;
-        return value == that.value && Objects.equals(alphabet, that.alphabet);
+        return value == that.value && Objects.equals(cardNumber, that.cardNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(alphabet, value);
+        return Objects.hash(cardNumber, value);
     }
 }

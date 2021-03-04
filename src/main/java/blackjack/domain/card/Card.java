@@ -20,6 +20,6 @@ public class Card {
     }
 
     public String getCard() {
-        return cardNumber.getAlphabet() + cardSymbol.getSymbol();
+        return cardNumber.getCardNumber() + cardSymbol.getSymbol();
     }
 }
