@@ -6,10 +6,8 @@ import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Result {
     private final Map<Player, WinOrLose> gamblerResults = new LinkedHashMap<>();
@@ -19,16 +17,12 @@ public class Result {
         this.dealerCards = dealerCards;
     }
 
-    public void add(Player player, WinOrLose winOrLose){
+    public void add(final Player player, WinOrLose winOrLose){
         if(!(player instanceof Gambler)){
             return;
         }
 
         gamblerResults.put(player, winOrLose);
-    }
-
-    public int countPlayers(){
-        return gamblerResults.size();
     }
 
     public int countDealerWin(){

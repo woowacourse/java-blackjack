@@ -5,7 +5,7 @@ public enum WinOrLose {
 
     private final String symbol;
 
-    WinOrLose(String symbol){
+    WinOrLose(final String symbol){
         this.symbol = symbol;
     }
 

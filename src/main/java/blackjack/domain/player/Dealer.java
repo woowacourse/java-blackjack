@@ -7,8 +7,6 @@ import blackjack.domain.card.Score;
 import blackjack.domain.game.WinOrLose;
 
 public class Dealer implements Player {
-
-    private static final int NUMBER_OF_INITIAL_CARDS = 1;
     private static final int LIMIT_SCORE_TO_HIT = 16;
 
     private final Name name;
@@ -24,26 +22,23 @@ public class Dealer implements Player {
     }
 
     public WinOrLose calculateGamblerWinOrNot(final Player player) {
-        if (player.getScore().isBust()) {
-            return WinOrLose.LOSE;
+        Score gamblerScore = player.getScore();
+        Score dealerScore = cards.getScore();
+
+        if (dealerScore.equals(gamblerScore) || dealerScore.isBust() && gamblerScore.isBust()) {
+            return WinOrLose.DRAW;
         }
-        if (cards.getScore().isBust()) {
+
+        if (dealerScore.isBust() || dealerScore.isLessThan(gamblerScore)) {
             return WinOrLose.WIN;
         }
-        if (cards.getScore().isBiggerThan(player.getScore())) {
-            return WinOrLose.LOSE;
-        }
-        if (cards.getScore().isLessThan(player.getScore())) {
-            return WinOrLose.WIN;
-        }
-        return WinOrLose.DRAW;
+
+        return WinOrLose.LOSE;
     }
 
     @Override
     public void initializeCards(final Deck deck) {
-        for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
-            cards.add(deck.draw());
-        }
+        cards.add(deck.draw());
     }
 
     @Override

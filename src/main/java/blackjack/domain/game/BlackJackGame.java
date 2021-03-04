@@ -1,8 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.YesOrNo;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Score;
 import blackjack.domain.player.*;
 
 import java.util.ArrayList;
@@ -19,8 +17,7 @@ public class BlackJackGame {
     }
 
     public Players createPlayers(String nameLine){
-        List<Player> players = initPlayers(splitAndParseToNames(nameLine));
-        return new Players(players);
+        return initPlayers(splitAndParseToNames(nameLine));
     }
 
     private List<Name> splitAndParseToNames(String nameLine){
@@ -29,17 +26,19 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private List<Player> initPlayers(List<Name> names){
+    private Players initPlayers(List<Name> names){
         List<Player> players = new ArrayList<>();
 
         dealer = new Dealer();
         players.add(dealer);
         players.addAll(names.stream()
                 .map(Gambler::new)
-                .peek(player -> player.initializeCards(deck))
                 .collect(Collectors.toList()));
 
-        return players;
+        players.stream()
+                .forEach(player -> player.initializeCards(deck));
+        
+        return new Players(players);
     }
 
     public void giveCard(final Player player) {

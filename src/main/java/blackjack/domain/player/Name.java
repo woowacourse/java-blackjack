@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Name {
 
-    private final String name;
+    private final String value;
 
-    public Name(final String name){
-        validateName(name);
-        this.name = name.trim();
+    public Name(final String value){
+        validateName(value);
+        this.value = value.trim();
     }
 
     private void validateName(final String name) {
@@ -17,8 +17,8 @@ public class Name {
         }
     }
 
-    public String name(){
-        return name;
+    public String getValue(){
+        return value;
     }
 
     @Override
@@ -26,11 +26,11 @@ public class Name {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        return Objects.equals(value, name1.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
     }
 }

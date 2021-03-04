@@ -18,7 +18,7 @@ public class BlackJackController {
 
     private Players initializePlayers(final BlackJackGame blackJackGame){
         Players players = blackJackGame.createPlayers(InputView.askPlayerNames());
-        OutputView.printPlayers(players);
+        OutputView.printPlayersCardsInformation(players);
         return players;
     }
 
@@ -37,7 +37,7 @@ public class BlackJackController {
 
         while (InputView.askDrawOrNot(player).isYes() ) {
             blackJackGame.giveCard(player);
-            OutputView.printPlayer(player);
+            OutputView.printPlayerCardsInformation(player);
         }
     }
 

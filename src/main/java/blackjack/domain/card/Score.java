@@ -28,11 +28,11 @@ public class Score {
         return value <= score;
     }
 
-    public boolean isBiggerThan(Score target){
+    public boolean isBiggerThan(final Score target){
         return value > target.value;
     }
 
-    public boolean isLessThan(Score target){
+    public boolean isLessThan(final Score target){
         return value < target.value;
     }
 
@@ -40,7 +40,7 @@ public class Score {
         return new Score(value + 10);
     }
 
-    public Score addScore(Score score){
+    public Score addScore(final Score score){
         return new Score(score.value + this.value);
     }
 
@@ -48,7 +48,7 @@ public class Score {
         return value <= BLACK_JACK;
     }
 
-    public int score(){
+    public int getValue(){
         return value;
     }
 

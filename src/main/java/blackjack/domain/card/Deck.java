@@ -1,11 +1,11 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 
 public class Deck {
 
-    private final LinkedList<Card> deck;
+    private final List<Card> deck;
 
     public Deck(){
         deck = Card.getCachingCards();
@@ -13,9 +13,12 @@ public class Deck {
     }
 
     public Card draw() {
-        if(deck.size() < 1){
+        if(deck.isEmpty()){
             throw new IndexOutOfBoundsException("deck에 남아있는 카드가 존재하지 않습니다.");
         }
-        return deck.pop();
+
+        Card selected = deck.get(0);
+        deck.remove(0);
+        return selected;
     }
 }

@@ -4,11 +4,11 @@ import java.util.*;
 
 public class Card {
 
-    private static final List<Card> cards = new ArrayList<>();
+    private static final List<Card> ORIGINAL_CARDS = new ArrayList<>();
     static {
         for(Suit suit : Suit.values()){
             Arrays.stream(Denomination.values())
-                    .forEach(denomination -> cards.add(new Card(suit, denomination)));
+                    .forEach(denomination -> ORIGINAL_CARDS.add(new Card(suit, denomination)));
         }
     }
 
@@ -21,13 +21,14 @@ public class Card {
     }
 
     public static Card of(final Suit suit, final Denomination denomination) {
-        return cards.stream()
+        return ORIGINAL_CARDS.stream()
                 .filter(card -> card.equals(new Card(suit, denomination)))
-                .findFirst().orElseThrow(()-> new IllegalArgumentException("유효하지 않은 카드입니다."));
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 카드입니다."));
     }
 
     public static LinkedList<Card> getCachingCards(){
-        return new LinkedList<>(cards);
+        return new LinkedList<>(ORIGINAL_CARDS);
     }
 
     public Denomination getDenomination() {
