@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blakcjack.domain.participant.Dealer.DEALER_NAME;
+
 public class OutputView {
 	public static void printInitialHands(final Dealer dealer, final List<Player> players) {
 		final StringBuilder stringBuilder = new StringBuilder();
@@ -81,15 +83,15 @@ public class OutputView {
 		return participant.getName() + "카드: " + concatenateCardsInformation(participant.getCards());
 	}
 
-	public static void printFinalOutcomeSummary(final OutcomeStatistics judgeOutcome, final String dealerName) {
+	public static void printFinalOutcomeSummary(final OutcomeStatistics judgeOutcome) {
 		System.out.println("## 최종 승패");
-		printDealerOutcome(judgeOutcome.getDealerOutcome(), dealerName);
+		printDealerOutcome(judgeOutcome.getDealerOutcome());
 		printPlayersOutcome(judgeOutcome.getPlayersOutcome());
 	}
 
-	private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final String dealerName) {
+	private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
 		final StringBuilder stringBuilder = new StringBuilder()
-				.append(dealerName)
+				.append(DEALER_NAME)
 				.append(":");
 
 		for (final Outcome outcome : dealerOutcome.keySet()) {

@@ -31,7 +31,7 @@ public class BlackJackController {
 
 		drawForMaximumCapability(blackjackGame, dealer);
 		OutputView.printFinalHandsSummary(dealer, players);
-		OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getName());
+		OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome());
 	}
 
 	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
