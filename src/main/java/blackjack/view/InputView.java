@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,8 @@ public class InputView {
         try {
             validateYorN(input);
             return translateSignal(input);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (BlackJackException blackJackException) {
+            System.out.println(blackJackException.getMessage());
             return requestMoreDraw(name);
         }
     }
@@ -41,7 +42,7 @@ public class InputView {
 
     private static void validateYorN(String input) {
         if (!YES_OR_NO_VALIDATION.contains(input)) {
-            throw new IllegalArgumentException(YES_OR_NO_ERROR);
+            throw new BlackJackException(YES_OR_NO_ERROR);
         }
     }
 }

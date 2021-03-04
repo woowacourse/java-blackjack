@@ -1,10 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.exception.BlackJackException;
 import java.util.Collections;
 import java.util.Stack;
 
 public class CardDeck {
 
+    public static final String EXTERMINATION_MESSAGE = "[ERROR] 카드를 모두 소진했습니다.";
     private final Stack<Card> deck = new Stack<>();
 
     public CardDeck() {
@@ -35,7 +37,7 @@ public class CardDeck {
 
     public synchronized Card draw() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 카드를 모두 소진했습니다.");
+            throw new BlackJackException(EXTERMINATION_MESSAGE);
         }
         return deck.pop();
     }
