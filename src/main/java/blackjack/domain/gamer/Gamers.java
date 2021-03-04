@@ -21,7 +21,8 @@ public class Gamers {
     public Map<ResultType, Integer> resultWithCount() {
         Map<ResultType, Integer> result = new EnumMap<>(ResultType.class);
         for (Player player : players) {
-            ResultType switchedResult = ResultCalculator.decideWinner(player, dealer).switchPosition();
+            ResultType switchedResult = ResultCalculator.decideWinner(player, dealer)
+                    .switchPosition();
             result.put(switchedResult, result.getOrDefault(switchedResult, 0) + 1);
         }
         return result;

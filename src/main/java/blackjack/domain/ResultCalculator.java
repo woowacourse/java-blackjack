@@ -50,7 +50,7 @@ public class ResultCalculator {
         if (player.hasBlackjack() && dealer.hasBlackjack()) {
             return ResultType.DRAW;
         }
-        if (player.hasBlackjack()){
+        if (player.hasBlackjack()) {
             return ResultType.WIN;
         }
         if (dealer.hasBlackjack()) {
