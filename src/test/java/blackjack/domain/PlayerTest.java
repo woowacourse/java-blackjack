@@ -52,9 +52,9 @@ class PlayerTest {
         assertTrue(player.isStay());
     }
 
-    @DisplayName("isStay:true - 플레이어 카드의 총합이 21을 초과하는 경우 자동 중단")
+    @DisplayName("isBust:true - 플레이어 카드의 총합이 21을 초과하는 경우 자동 중단")
     @Test
-    void isStayTrueWhenBust() {
+    void isBustTrueWhenOver21Score() {
         Player player = new Player("Player");
 
         Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
@@ -65,7 +65,6 @@ class PlayerTest {
         player.hit(card2);
         player.hit(card3);
 
-        assertTrue(player.isStay());
+        assertTrue(player.isBust());
     }
-
 }
