@@ -22,21 +22,10 @@ public class Dealer extends Participant {
         results.add(otherCards.compare(cards));
     }
 
-    public int getWinCount() {
+    public int getResultCount(Result result) {
         return (int) results.stream()
-            .filter(it -> it == Result.WIN)
+            .filter(it -> it == result)
             .count();
     }
 
-    public int getLoseCount() {
-        return (int) results.stream()
-            .filter(it -> it == Result.LOSE)
-            .count();
-    }
-
-    public int getDrawCount() {
-        return (int) results.stream()
-            .filter(it -> it == Result.DRAW)
-            .count();
-    }
 }
