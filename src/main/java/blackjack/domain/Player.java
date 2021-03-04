@@ -17,12 +17,17 @@ public class Player extends Participant {
     public Result judgeResult(Dealer dealer) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = calculateFinalScore();
-        if (playerScore > MAXIMUM_SCORE_LIMIT || playerScore < dealerScore) {
+        if (isDealerWin(dealerScore, playerScore)) {
             return Result.LOSE;
         }
         if (dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore == dealerScore) {
             return Result.DRAW;
         }
         return Result.WIN;
+    }
+
+    private boolean isDealerWin(int dealerScore, int playerScore) {
+        return playerScore > MAXIMUM_SCORE_LIMIT
+            || (playerScore < dealerScore && dealerScore <= MAXIMUM_SCORE_LIMIT);
     }
 }

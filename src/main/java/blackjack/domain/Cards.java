@@ -8,6 +8,8 @@ public class Cards {
 
     private static final int ACE_BONUS_SCORE = 10;
     private static final int BOUND_OF_CHANGE_ACE_VALUE = 11;
+    private static final int NO_BONUS_SCORE = 0;
+
     private final List<Card> cards;
 
     public Cards() {
@@ -34,18 +36,11 @@ public class Cards {
 
     public int calculateFinalScore() {
         int aceCounts = getAceCounts();
-        int sum = calculateScoreWhenAceIsMinimum();
+        int score = calculateScoreWhenAceIsMinimum();
         for (int i = 0; i < aceCounts; i++) {
-            sum += plusBonusAceScore(sum);
+            score += plusBonusAceScore(score);
         }
-        return sum;
-    }
-
-    private int plusBonusAceScore(int sum) {
-        if (sum <= BOUND_OF_CHANGE_ACE_VALUE) {
-            return ACE_BONUS_SCORE;
-        }
-        return 0;
+        return score;
     }
 
     private int getAceCounts() {
@@ -54,8 +49,11 @@ public class Cards {
                           .count();
     }
 
-    int size() {
-        return cards.size();
+    private int plusBonusAceScore(int sum) {
+        if (sum <= BOUND_OF_CHANGE_ACE_VALUE) {
+            return ACE_BONUS_SCORE;
+        }
+        return NO_BONUS_SCORE;
     }
 
     public List<Card> getCards() {

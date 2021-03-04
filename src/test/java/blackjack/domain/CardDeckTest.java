@@ -27,6 +27,7 @@ public class CardDeckTest {
     void drawDefaultCards() {
         CardDeck cardDeck = new CardDeck();
         Cards cards = cardDeck.drawDefaultCards();
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(cards.getCards()
+                        .size()).isEqualTo(2);
     }
 }
