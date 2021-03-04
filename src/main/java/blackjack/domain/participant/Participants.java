@@ -35,7 +35,7 @@ public class Participants {
     }
 
     public void receiveDefaultCards(CardDeck cardDeck) {
-        participants.forEach(participant -> participant.receiveCard(cardDeck.draw()));
+        participants.forEach(participant -> participant.receiveCards(cardDeck.drawDefaultCards()));
     }
 
     public List<Participant> toList() {
