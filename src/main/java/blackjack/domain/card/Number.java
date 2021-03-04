@@ -60,4 +60,8 @@ public enum Number {
     public boolean isAce() {
         return this.equals(ACE);
     }
+
+    public int useSecondScore(int score) {
+        return score - this.score + secondScore;
+    }
 }

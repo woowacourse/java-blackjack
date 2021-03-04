@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Number;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,14 +41,18 @@ public class Dealer {
             aceCount = findAceCount();
         }
 
-        for (int i = 0; i < aceCount; i++) {
-            score = score - 11;
-            score = score + 1;
-            if (score <= gameOverScore) {
-                break;
-            }
+        while (emptyAceCard(aceCount) && !belowScore(score, gameOverScore)) {
+            score = Number.ACE.useSecondScore(score);
         }
         return score;
+    }
+
+    private boolean belowScore(int score, int gameOverScore) {
+        return score <= gameOverScore;
+    }
+
+    private boolean emptyAceCard(int aceCount) {
+        return aceCount > 0;
     }
 
     private int findAceCount() {
