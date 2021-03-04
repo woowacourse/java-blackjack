@@ -1,7 +1,5 @@
-package blackjacktest.domaintest;
+package blackjack.domain;
 
-import blackjack.domain.BlackJackResult;
-import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
