@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.player.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerDto;
@@ -16,6 +17,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDto(dealer));
+        dealer.setCardOpen(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
         OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDto(dealer));
