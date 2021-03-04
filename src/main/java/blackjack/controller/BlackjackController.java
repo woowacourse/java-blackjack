@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
+    private static final String END_GAME_MARK = "n";
+
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final Dealer dealer = new Dealer("딜러");
@@ -64,7 +66,7 @@ public class BlackjackController {
     }
 
     private void singlePlayerGameProgress(CardDeck cardDeck, Player player) {
-        if ("n".equals(InputView.askMoreCard(player.getName()))) {
+        if (END_GAME_MARK.equals(InputView.askMoreCard(player.getName()))) {
             OutputView.showPlayerCard(player.getName(), player.getMyCards());
             return;
         }
@@ -86,7 +88,7 @@ public class BlackjackController {
 
     private void dealerGameProgress(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.checkMoreCardAvailable()) {
-            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            OutputView.dealerMoreCard();
             dealer.receiveCard(cardDeck.distribute());
         }
     }
