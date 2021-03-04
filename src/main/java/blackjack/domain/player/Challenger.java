@@ -7,12 +7,10 @@ import blackjack.domain.result.Result;
 import java.util.List;
 
 public class Challenger extends Player {
-    private final Name name;
     private boolean isBust;
 
     public Challenger(final Cards cards, final Name name) {
-        super(cards);
-        this.name = name;
+        super(cards, name);
         this.isBust = false;
     }
 
@@ -24,10 +22,6 @@ public class Challenger extends Player {
             return Result.LOSE;
         }
         return Result.DRAW;
-    }
-
-    public String getName() {
-        return name.value();
     }
 
     @Override

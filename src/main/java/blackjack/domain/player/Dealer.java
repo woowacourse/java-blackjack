@@ -12,7 +12,7 @@ public class Dealer extends Player {
     public static final int DEALER_SCORE_PIVOT = 16;
 
     public Dealer(Cards cards) {
-        super(cards);
+        super(cards, new Name("딜러"));
     }
 
     @Override

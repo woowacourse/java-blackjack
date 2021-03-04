@@ -7,9 +7,11 @@ import java.util.List;
 
 public abstract class Player {
     protected Cards cards;
+    private final Name name;
 
-    public Player(final Cards cards) {
+    public Player(final Cards cards, final Name name) {
         this.cards = new Cards(cards.getList());
+        this.name = new Name(name.value());
     }
 
     public abstract List<Card> getInitCards();
@@ -24,5 +26,9 @@ public abstract class Player {
 
     public int getScore() {
         return this.cards.getScore();
+    }
+
+    public String getName(){
+        return name.value();
     }
 }
