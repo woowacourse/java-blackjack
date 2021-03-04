@@ -119,16 +119,19 @@ public class BlackjackController {
     }
 
     private void showGameResult(final List<Player> players, final Dealer dealer) {
-        int winCount = 0;
         for (final Player player : players) {
-            if (dealer.isWinner(player.calculate()) || player.isBust()) {
-                winCount++;
-                player.lose();
-            }
+            decideWinner(dealer, player);
         }
-        OutputView.showGameResult(dealer.getName(), winCount, players.size() - winCount);
+        OutputView.showGameResult(dealer.getName(), dealer.getWinCount(), players.size() - dealer.getWinCount());
         for (final Player player : players) {
             OutputView.showPlayerGameResult(player.getName(), player.getWin());
+        }
+    }
+
+    private void decideWinner(Dealer dealer, Player player) {
+        if (dealer.isWinner(player.calculate()) || player.isBust()) {
+            player.lose();
+            dealer.increaseWinCount();
         }
     }
 }
