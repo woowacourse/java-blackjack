@@ -24,7 +24,7 @@ public class PlayersTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "pika, ,air", ", , , ,"})
+    @ValueSource(strings = {",,", "pika, ,air", ", , , ,"})
     @DisplayName("참가자 생성 실패")
     void createPlayersFail(String input) {
         assertThatThrownBy(() -> new Players(input)).isInstanceOf(IllegalArgumentException.class);

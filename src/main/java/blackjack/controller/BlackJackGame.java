@@ -10,6 +10,9 @@ import blackjack.view.OutputView;
 
 public class BlackJackGame {
 
+    private static final int INIT_DRAW_COUNT = 2;
+    private static final String YES = "y";
+
     public void start() {
         Players players = registerPlayers();
         Dealer dealer = new Dealer();
@@ -42,11 +45,9 @@ public class BlackJackGame {
     }
 
     private void eachDrawTwoCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INIT_DRAW_COUNT; i++) {
             dealer.receiveCard(cardDeck.drawCard());
-            for (Player player : players.getPlayers()) {
-                player.receiveCard(cardDeck.drawCard());
-            }
+            players.getPlayers().forEach(player -> player.receiveCard(cardDeck.drawCard()));
         }
     }
 
@@ -57,35 +58,28 @@ public class BlackJackGame {
     }
 
     private void askDraw(Player player, CardDeck cardDeck) {
-        while (player.canDraw()) {
-            try {
-                OutputView.askOneMoreCard(player);
-                String answer = InputView.inputAnswer();
-                if (answer.equals("n")) {
-                    OutputView.showCards(player);
-                    break;
-                }
-                player.receiveCard(cardDeck.drawCard());
-                OutputView.showCards(player);
-            } catch (IllegalArgumentException e) {
-                OutputView.printError(e.getMessage());
-                askDraw(player, cardDeck);
-            } catch (IllegalStateException e) {
-                OutputView.printError(e.getMessage());
-                break;
-            }
+        while (playerCanDraw(player)) {
+            player.receiveCard(cardDeck.drawCard());
+            OutputView.showCards(player);
         }
+    }
+
+    private boolean playerCanDraw(Player player) {
+        if (!player.canDraw()) {
+            return false;
+        }
+        OutputView.askOneMoreCard(player);
+        if (InputView.inputAnswer().equals(YES)) {
+            return true;
+        }
+        OutputView.showCards(player);
+        return false;
     }
 
     private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canDraw()) {
-            try {
-                dealer.receiveCard(cardDeck.drawCard());
-                OutputView.dealerReceiveOneCard();
-            } catch (IllegalStateException e) {
-                OutputView.printError(e.getMessage());
-                break;
-            }
+            dealer.receiveCard(cardDeck.drawCard());
+            OutputView.dealerReceiveOneCard();
         }
     }
 

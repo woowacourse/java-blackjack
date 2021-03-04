@@ -19,7 +19,8 @@ public class InputView {
     public static String inputAnswer() {
         String answer = scanner.nextLine();
         if (!answer.equals(YES) && !answer.equals(NO)) {
-            throw new IllegalArgumentException("유효한 대답이 아닙니다.");
+            OutputView.printError("유효한 대답이 아닙니다.");
+            return inputAnswer();
         }
         return answer;
     }
