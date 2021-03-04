@@ -18,13 +18,17 @@ public class BlackjackGame {
 		this.deck = deck;
 		this.dealer = new Dealer();
 
-		Set<String> nameGroup = new HashSet<>(names);
-		if (nameGroup.size() != names.size()) {
-			throw new IllegalArgumentException(DUPLICATE_NAME_ERROR);
-		}
+		validateDuplication(names);
 
 		for (String name : names) {
 			players.add(new Player(new Name(name)));
+		}
+	}
+
+	private void validateDuplication(final List<String> names) {
+		Set<String> nameGroup = new HashSet<>(names);
+		if (nameGroup.size() != names.size()) {
+			throw new IllegalArgumentException(DUPLICATE_NAME_ERROR);
 		}
 	}
 
