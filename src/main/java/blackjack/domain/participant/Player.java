@@ -9,6 +9,7 @@ public class Player extends Participant{
     private int loseCount;
     private GameResult gameResult = new GameResult();
 
+
     public Player(String inputName) {
         this(new Name(inputName));
     }
@@ -49,6 +50,7 @@ public class Player extends Participant{
     public String getName() {
         return name.toString();
     }
+
 
     public int getWinCount() {
         return gameResult.getWinCount();

@@ -16,4 +16,12 @@ public class Card {
     public int getValue() {
         return number.getValue();
     }
+
+    public String getNumber() {
+        return number.getNumber();
+    }
+
+    public String getShape() {
+        return shape.getName();
+    }
 }

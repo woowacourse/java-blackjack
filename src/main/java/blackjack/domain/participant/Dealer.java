@@ -9,7 +9,7 @@ public class Dealer extends Participant{
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return DEALER;
     }
 }

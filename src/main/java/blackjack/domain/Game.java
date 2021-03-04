@@ -43,10 +43,13 @@ public class Game {
         participant.addCard(Deck.draw());
     }
 
-    public void playDealerTurn() {
+    public int playDealerTurn() {
+        int cnt = 0;
         while (!dealer.isStay()) {
             giveCard(dealer);
+            cnt++;
         }
+        return cnt;
     }
 
     public GameResult getDealerResult() {

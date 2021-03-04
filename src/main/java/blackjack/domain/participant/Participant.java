@@ -56,8 +56,7 @@ public abstract class Participant {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
-    abstract String getName();
+    public abstract String getName();
 }
 
 
