@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public enum Status {
+public enum MatchResultType {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
@@ -9,11 +9,11 @@ public enum Status {
 
     private final String status;
 
-    Status(String status) {
+    MatchResultType(String status) {
         this.status = status;
     }
 
-    public static Status getStatus(int dealerScore, int playerScore) {
+    public static MatchResultType getStatus(int dealerScore, int playerScore) {
         if (isDealerBusted(dealerScore) || (playerScore > dealerScore && isPlayerNotBusted(playerScore))) {
             return WIN;
         }

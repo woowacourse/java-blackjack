@@ -11,7 +11,6 @@ import java.util.*;
 
 public class GameTable {
     private static final String YES = "Y";
-    private static final String NO = "N";
 
     private final Deck deck;
     private final Dealer dealer;
@@ -71,21 +70,21 @@ public class GameTable {
 
     private void finish() {
         OutputView.printCardsAndScore(dealer, players);
-        Map<Player, Status> result = getMatchResult();
+        Map<Player, MatchResultType> result = getMatchResult();
         List<Integer> matchResultCount = getMatchResultCount(result);
         OutputView.printResult(matchResultCount, result);
     }
 
-    private Map<Player, Status> getMatchResult() {
-        Map<Player, Status> result = new HashMap<>();
+    private Map<Player, MatchResultType> getMatchResult() {
+        Map<Player, MatchResultType> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player, dealer.compare(player)));
         return result;
     }
 
-    private List<Integer> getMatchResultCount(Map<Player, Status> result) {
+    private List<Integer> getMatchResultCount(Map<Player, MatchResultType> result) {
         List<Integer> matchResultCount = new ArrayList<>();
-        Arrays.stream(Status.values())
-                .forEach(status -> matchResultCount.add(Collections.frequency(result.values(), status)));
+        Arrays.stream(MatchResultType.values())
+                .forEach(matchResultType -> matchResultCount.add(Collections.frequency(result.values(), matchResultType)));
         return matchResultCount;
     }
 }

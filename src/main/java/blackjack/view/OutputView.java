@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Status;
+import blackjack.domain.MatchResultType;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
@@ -28,7 +28,7 @@ public class OutputView {
     }
 
     public static void showCards(Dealer dealer, List<Player> players) {
-        System.out.println(dealer.getName() + "카드: " + dealer.getFirstCard());
+        System.out.println(dealer.getName() + "카드: " + dealer.getFirstCard().getName());
         players.forEach(player -> System.out.println(player.getName() + "카드: " + player.getCards()));
     }
 
@@ -42,7 +42,7 @@ public class OutputView {
                 System.out.println(player.getName() + " 카드: " + player.getCards() + "- 결과: " + player.getScore()));
     }
 
-    public static void printResult(List<Integer> matchResult, Map<Player, Status> result) {
+    public static void printResult(List<Integer> matchResult, Map<Player, MatchResultType> result) {
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + matchResult.get(2) + "승" + matchResult.get(1) + "무" + matchResult.get(0) + "패");
         result.forEach((player, status) -> System.out.println(player.getName() + ": " + status.toString()));
