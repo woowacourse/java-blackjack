@@ -9,23 +9,17 @@ import java.util.stream.IntStream;
 public abstract class Participant {
 
     public static final int STARTING_CARD_COUNT = 2;
+
     private final Hand hand;
-    private final String name;
+    private final Name name;
     private boolean hit;
 
     public Participant(String name, Deck deck) {
-        validateName(name);
         this.hand = new Hand(new ArrayList<>());
         this.hit = true;
-        this.name = name;
+        this.name = new Name(name);
 
         IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> drawCard(deck));
-    }
-
-    private void validateName(String name) {
-        if (name.trim().length() == 0) {
-            throw new IllegalArgumentException("공백은 이름으로 사용할 수 없습니다.");
-        }
     }
 
     abstract public void drawCard(Deck deck);
@@ -51,7 +45,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.unwrap();
     }
 
     @Override

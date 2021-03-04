@@ -7,6 +7,7 @@ import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.GameResult;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

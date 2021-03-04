@@ -39,14 +39,6 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("이름이 공백인 경우 검증")
-    void validate() {
-        assertThatThrownBy(() -> new Player("", deck))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("공백은 이름으로 사용할 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() {
         Player root = new Player("root", deck);

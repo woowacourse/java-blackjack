@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.dto.ParticipantsDto;
-import blackjack.domain.GameResult;
+import blackjack.dto.Participants;
+import blackjack.dto.GameResult;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
@@ -18,15 +18,15 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printGameInitializeMessage(ParticipantsDto participantsDto, int startingCardCount) {
-        String participantNames = participantsDto.unwrap().stream()
+    public static void printGameInitializeMessage(Participants participants, int startingCardCount) {
+        String participantNames = participants.unwrap().stream()
             .map(Participant::getName)
             .collect(Collectors.joining(NAME_DELIMITER));
         System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
     }
 
-    public static void printParticipantsStatus(ParticipantsDto participantsDto, boolean withScore) {
-        participantsDto.unwrap().forEach(participant -> printParticipantStatus(participant, withScore));
+    public static void printParticipantsStatus(Participants participants, boolean withScore) {
+        participants.unwrap().forEach(participant -> printParticipantStatus(participant, withScore));
         System.out.println();
     }
 
