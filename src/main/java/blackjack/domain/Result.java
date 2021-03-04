@@ -19,6 +19,15 @@ public enum Result {
     }
 
     public static Result decide(Dealer dealer, User user) {
+        if (dealer.cards.isBust() && !user.cards.isBust()) {
+            return WIN;
+        }
+        if (dealer.cards.isBust() && user.cards.isBust()) {
+            return DRAW;
+        }
+        if (!dealer.cards.isBust() && user.cards.isBust()) {
+            return LOSE;
+        }
         return Arrays.stream(values())
                 .filter(value -> value.compareResult == user.cards.compareTo(dealer.cards))
                 .findFirst()

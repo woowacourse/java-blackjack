@@ -32,4 +32,6 @@ public abstract class Participant {
     public String getName() {
         return this.name.getName();
     }
+
+
 }

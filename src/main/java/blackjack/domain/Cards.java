@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards implements Comparable<Cards> {
     private static final int FIRST_CARD = 0;
-    private static final int STANDARD = 21;
+    private static final int BUST = 21;
 
     private final List<Card> cards;
 
@@ -26,7 +26,7 @@ public class Cards implements Comparable<Cards> {
         int totalValue = cards.stream()
                 .mapToInt(Card::value)
                 .sum();
-        if (this.containAce() && totalValue > STANDARD) {
+        if (this.containAce() && this.isBust()) {
             totalValue -= 10;
         }
         return totalValue;
@@ -38,6 +38,10 @@ public class Cards implements Comparable<Cards> {
 
     public void combine(Cards otherCards) {
         this.cards.addAll(otherCards.cards());
+    }
+
+    public boolean isBust() {
+        return calculateTotalValue() > BUST;
     }
 
     @Override

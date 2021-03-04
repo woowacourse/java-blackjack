@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     public static void printDealerCard(Dealer dealer) {
-        System.out.print(dealer.getName() + COLON + dealer.showOneCard());
+        System.out.println(dealer.getName() + COLON + dealer.showOneCard());
     }
 
     public static void printUsersCards(Users users) {
