@@ -45,13 +45,4 @@ public class PlayersTest {
         List<Cards> cardsGroup = players.showCardsByUsers();
         assertThat(cardsGroup.stream().allMatch(cards -> cards.cards().size() == 2)).isTrue();
     }
-
-    @DisplayName("사용자 이름들을 확인한다.")
-    @Test
-    void showNames() {
-        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        Players players = new Players(names);
-        List<String> namesGroup = players.showNames();
-        assertThat(namesGroup).isEqualTo(Arrays.asList("amazzi", "dani", "pobi"));
-    }
 }

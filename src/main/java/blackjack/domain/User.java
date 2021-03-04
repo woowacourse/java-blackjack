@@ -36,4 +36,9 @@ public abstract class User {
     public String getName() {
         return this.name.getName();
     }
+
+    @Override
+    public String toString() {
+        return name.toString();
+    }
 }

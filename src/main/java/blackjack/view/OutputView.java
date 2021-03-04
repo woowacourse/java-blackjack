@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String COLON = ": ";
     private static final String COMMA = ", ";
-    private static final String COMMA_WITH_BLANK = ", ";
 
     public static void printInputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -16,7 +15,14 @@ public class OutputView {
 
     public static void printDistribute(Dealer dealer, Players players) {
         System.out.printf("\n%s와 %s에게 2장의 카드를 나누었습니다.\n",
-                dealer.getName(), String.join(COMMA, players.showNames()));
+                dealer.getName(), playersName(players));
+    }
+
+    private static String playersName(Players players) {
+        return String.join(COMMA, players.players()
+                .stream()
+                .map(User::toString)
+                .collect(Collectors.joining(",")));
     }
 
     public static void printDealerCard(Dealer dealer) {
@@ -37,7 +43,7 @@ public class OutputView {
         System.out.println(cards.cards()
                 .stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(COMMA_WITH_BLANK)));
+                .collect(Collectors.joining(COMMA)));
     }
 
     public static void printWantHit(Player player) {
@@ -64,7 +70,7 @@ public class OutputView {
                 .cards()
                 .stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(COMMA_WITH_BLANK));
+                .collect(Collectors.joining(COMMA));
     }
 
     public static void printResults(Dealer dealer, ResultBoard resultBoard) {

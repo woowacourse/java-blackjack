@@ -26,10 +26,4 @@ public class Players {
                 .map(Player::showCards)
                 .collect(Collectors.toList());
     }
-
-    public List<String> showNames() {
-        return Collections.unmodifiableList(players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList()));
-    }
 }
