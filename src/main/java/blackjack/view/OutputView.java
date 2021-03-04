@@ -30,8 +30,8 @@ public class OutputView {
     }
 
     public static void showInitiate(Dealer dealer, Players players) {
-        showPlayerNames(players);
         showCards(dealer, players);
+        System.out.println();
     }
 
     private static void showCards(Dealer dealer, Players players) {
