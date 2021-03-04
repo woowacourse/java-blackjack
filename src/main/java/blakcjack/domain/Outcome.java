@@ -7,15 +7,24 @@ public enum Outcome {
 	WIN, DRAW, LOSE;
 
 	public static Outcome of(final Player player, final Dealer dealer) {
-		if (player.isBust()) {
-			return LOSE;
-		} else if (dealer.isBust()) {
-			return WIN;
+		if (hasAnyBust(player, dealer)) {
+			return judgeOutcomeByBust(player);
 		}
-		return calculate(player.calculateScore(), dealer.calculateScore());
+		return judgeOutcomeByScore(player.calculateScore(), dealer.calculateScore());
 	}
 
-	private static Outcome calculate(final int playerScore, final int dealerScore) {
+	private static boolean hasAnyBust(final Player player, final Dealer dealer) {
+		return player.isBust() || dealer.isBust();
+	}
+
+	private static Outcome judgeOutcomeByBust(final Player player) {
+		if (player.isBust()) {
+			return LOSE;
+		}
+		return WIN;
+	}
+
+	private static Outcome judgeOutcomeByScore(final int playerScore, final int dealerScore) {
 		if (playerScore > dealerScore) {
 			return WIN;
 		}
