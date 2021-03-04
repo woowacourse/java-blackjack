@@ -17,8 +17,8 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAbleToReceiveCard() {
-        int currentScore = calculateFinalScore();
-        return currentScore <= MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
+        int score = calculateFinalScore();
+        return score <= MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 
     public Map<Result, Long> getStatisticResult(List<Player> players) {
@@ -28,14 +28,14 @@ public class Dealer extends Participant {
         }
         for (Player player : players) {
             Result result = player.judgeResult(this);
-            Result newResult = classify(result);
-            statisticResult.put(newResult,
-                statisticResult.getOrDefault(newResult, DEFAULT_VALUE) + INCREASE_COUNT);
+            Result replacedResult = replaceWinWithLose(result);
+            statisticResult.put(replacedResult,
+                statisticResult.getOrDefault(replacedResult, DEFAULT_VALUE) + INCREASE_COUNT);
         }
         return statisticResult;
     }
 
-    private Result classify(Result result) {
+    private Result replaceWinWithLose(Result result) {
         if (result == Result.LOSE) {
             return Result.WIN;
         }

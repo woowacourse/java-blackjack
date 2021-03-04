@@ -17,7 +17,7 @@ public class Player extends Participant {
     public Result judgeResult(Dealer dealer) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = calculateFinalScore();
-        if (playerScore > MAXIMUM_SCORE_LIMIT) {
+        if (playerScore > MAXIMUM_SCORE_LIMIT || playerScore < dealerScore) {
             return Result.LOSE;
         }
         if (dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore == dealerScore) {

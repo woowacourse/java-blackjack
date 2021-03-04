@@ -53,12 +53,22 @@ public class PlayerTest {
 
     @Test
     @DisplayName("둘 다 21을 초과하지 않을 경우, 플레이어가 딜러보다 점가 높아야 이긴다.")
-    public void judgeResult_PlayerAndDealerScoreUnder21() {
+    public void judgeResult_PlayerAndDealerScoreUnder21_PlayerWin() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
         player.receiveCards(new Cards(CARDS_SCORE_20));
         dealer.receiveCards(new Cards(CARDS_SCORE_19));
         assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("둘 다 21을 초과하지 않을 경우, 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다.")
+    public void judgeResult_PlayerAndDealerScoreUnder21_PlayerLose() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.receiveCards(new Cards(CARDS_SCORE_19));
+        dealer.receiveCards(new Cards(CARDS_SCORE_20));
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
