@@ -7,6 +7,8 @@ import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,6 +59,15 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어가 버스트지 확인")
+    void playerIsBurst() {
+        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
+        assertTrue(player.isBurst());
+    }
+
+    @Test
     @DisplayName("에이스가 11이어야할 때")
     void aceCardScoring() {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
@@ -71,5 +82,19 @@ public class PlayerTest {
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
         assertEquals(player.makeMaximumPoint(), 21);
+    }
+
+    @ParameterizedTest
+    @DisplayName("다시 받을 때 올바른 입력 확인")
+    @CsvSource(value = {"y:true", "n:false"}, delimiter = ':')
+    void playerContinueDraw(String value, boolean expected) {
+        assertEquals(player.continueDraw(value), expected);
+    }
+
+    @Test
+    @DisplayName("다시 받을 때 예외 처리")
+    void playerStopDraw() {
+        assertThatThrownBy(() -> player.continueDraw("l")).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("y");
     }
 }

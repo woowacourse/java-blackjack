@@ -10,9 +10,9 @@ import blackjack.domain.participant.Players;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.game.GameManager.INITIAL_DRAWING_COUNT;
 import static blackjack.domain.participant.Dealer.MAX_OF_RECEIVE_MORE_CARD;
 import static blackjack.domain.participant.Dealer.NAME_OF_DEALER;
-import static blackjack.domain.game.GameManager.INITIAL_DRAWING_COUNT;
 import static blackjack.domain.participant.Gamer.COMMA_DELIMITER;
 
 public class OutputView {
@@ -61,11 +61,6 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_DELIMITER));
     }
 
-    public static void noticeResult() {
-        System.out.println();
-        System.out.println(NOTICE_FINAL_RESULT);
-    }
-
     public static void noticeDealerReceiveCard() {
         System.out.printf(NOTICE_DEALER_RECEIVE, MAX_OF_RECEIVE_MORE_CARD);
     }
@@ -75,6 +70,8 @@ public class OutputView {
     }
 
     public static void printResult(Map<WinnerFlag, Integer> result) {
+        System.out.println();
+        System.out.println(NOTICE_FINAL_RESULT);
         System.out.println(NAME_OF_DEALER + COLON_DELIMITER
                 + result.get(WinnerFlag.LOSE) + WinnerFlag.WIN.getFlagOutput()
                 + result.get(WinnerFlag.DRAW) + WinnerFlag.DRAW.getFlagOutput()

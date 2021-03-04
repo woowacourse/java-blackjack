@@ -13,13 +13,12 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = askPlayers(dealer);
-        //TODO: dealer랑 player 합치기
+
         Deck.shuffleCards();
         drawCards(players, dealer);
         drawUntilPossible(dealer, players);
 
         OutputView.noticePlayersPoint(dealer, players);
-        OutputView.noticeResult();
         OutputView.printResult(new WinnerCount().calculateTotalWinnings(players));
         printEachPlayerResult(players);
     }

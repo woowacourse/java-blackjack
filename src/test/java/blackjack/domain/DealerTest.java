@@ -16,6 +16,7 @@ public class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
     }
 
     @Test
@@ -27,14 +28,12 @@ public class DealerTest {
     @Test
     @DisplayName("딜러가 받은 카드 계산")
     void dealerDealCard() {
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        assertEquals(dealer.makeJudgingPoint(), 1);
+        assertEquals(dealer.makeJudgingPoint(), 10);
     }
 
     @Test
     @DisplayName("딜러가 카드를 받을 수 있는지 확인")
     void dealerPossibleReceiveCard() {
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
         dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SIX));
         assertTrue(dealer.canReceiveCard());
     }
@@ -42,8 +41,25 @@ public class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 받을 수 없는지 확인")
     void dealerImpossibleReceiveCard() {
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
         dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
         assertFalse(dealer.canReceiveCard());
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 받을 수 있어서 받았는지 확인")
+    void dealerContinueDraw() {
+        dealer.continueDraw("");
+        assertEquals(dealer.toList().size(), 2);
+    }
+
+    @Test
+    @DisplayName("딜러의 값 비교 확인")
+    void dealerIsSmallerThan() {
+        assertTrue(dealer.isSmallerThan(11));
+        assertFalse(dealer.isSmallerThan(10));
+        assertTrue(dealer.isSameThan(10));
+        assertFalse(dealer.isSameThan(11));
+        assertTrue(dealer.isBiggerThan(9));
+        assertFalse(dealer.isBiggerThan(10));
     }
 }

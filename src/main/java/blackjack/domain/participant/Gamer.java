@@ -30,7 +30,7 @@ public abstract class Gamer {
     }
 
     public void receiveCard(Card card) {
-        cards.addNewCard(card);
+        cards.addCard(card);
     }
 
     public void receiveOneCard() {
