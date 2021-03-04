@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CompeteResult;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
@@ -49,23 +50,83 @@ public class PlayerTest {
     @Test
     @DisplayName("카드 합이 조건보다 작다면 뽑지 않아야 한다")
     void canReceive_GreaterThanThreshold_CannotReceive() {
-    
+        
         // given
         Player player = Player.from("pobi");
         Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
         Card secondCard = new Card(Suit.CLOVER, Rank.JACK);
         Card thirdCard = new Card(Suit.CLOVER, Rank.ACE);
         Card fourthCard = new Card(Suit.CLOVER, Rank.ACE);
-    
+        
         player.receive(firstCard);
         player.receive(secondCard);
         player.receive(thirdCard);
         player.receive(fourthCard);
-    
+        
         // when
         boolean canReceive = player.canReceive();
-    
+        
         // then
         assertThat(canReceive).isFalse();
+    }
+    
+    @Test
+    void compete_playerSumLessThanDealerSum_Defeat() {
+        
+        // given
+        Dealer dealer = Dealer.create();
+        dealer.receive(new Card(Suit.HEART, Rank.TEN));
+        dealer.receive(new Card(Suit.HEART, Rank.JACK));
+        
+        Player pobi = Player.from("pobi");
+        pobi.receive(new Card(Suit.CLOVER, Rank.TEN));
+        pobi.receive(new Card(Suit.CLOVER, Rank.FIVE));
+        
+        // when
+        CompeteResult result = pobi.compete(dealer);
+        
+        // then
+        assertThat(result).isEqualTo(CompeteResult.DEFEAT);
+    }
+    
+    @Test
+    void compete_playerSumGreaterThanDealerSum_Win() {
+        
+        // given
+        Dealer dealer = Dealer.create();
+        dealer.receive(new Card(Suit.HEART, Rank.TEN));
+        dealer.receive(new Card(Suit.HEART, Rank.JACK));
+        
+        
+        Player pobi = Player.from("pobi");
+        pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
+        pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
+        pobi.receive(new Card(Suit.DIAMOND, Rank.ACE));
+        
+        // when
+        CompeteResult result = pobi.compete(dealer);
+        
+        // then
+        assertThat(result).isEqualTo(CompeteResult.WIN);
+    }
+    
+    @Test
+    void compete_playerSumEqualToDealerSum_Draw() {
+        
+        // given
+        Dealer dealer = Dealer.create();
+        dealer.receive(new Card(Suit.HEART, Rank.TEN));
+        dealer.receive(new Card(Suit.HEART, Rank.JACK));
+        
+        
+        Player pobi = Player.from("pobi");
+        pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
+        pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
+        
+        // when
+        CompeteResult result = pobi.compete(dealer);
+        
+        // then
+        assertThat(result).isEqualTo(CompeteResult.DRAW);
     }
 }
