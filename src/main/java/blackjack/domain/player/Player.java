@@ -16,6 +16,11 @@ public class Player {
         return index;
     }
 
+    public int initializeDraw(Deck deck, int index) {
+        draw(deck, index++);
+        return draw(deck, index);
+    }
+
     public Cards cards() {
         return cards;
     }
