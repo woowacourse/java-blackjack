@@ -10,7 +10,7 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         Dealer dealer = new Dealer();
-        Players players = participateUsers();
+        Players players = participatePlayers();
         List<User> users = setUpUsers(dealer, players);
         handOutTwoCardsToUsers(users);
         showUsersCards(dealer, players);
@@ -20,10 +20,10 @@ public class BlackjackController {
         OutputView.printResults(dealer, new ResultBoard(dealer, players));
     }
 
-    private Players participateUsers() {
+    private Players participatePlayers() {
         OutputView.printInputNames();
-        List<String> names = InputView.inputNames();
-        return new Players(names);
+        List<String> playersNames = InputView.inputNames();
+        return new Players(playersNames);
     }
 
     private List<User> setUpUsers(Dealer dealer, Players players) {
