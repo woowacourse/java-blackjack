@@ -4,66 +4,79 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.Result;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
+    
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String DEALT_BASE_CARDS_FORMAT = "%s와 %s에게 2장의 카드를 나누어주었습니다.%s";
+    private static final String NAME_AND_CARD_HAND_STATUS_FORMAT = "%s 카드: %s";
+    private static final String SUMMARY_STATISTICS_FORMAT =  "%s - 결과 : %d%s";
+    private static final String GAME_RESULT_FORMAT = "%s: %s";
+    private static final String CARD_HANDS_DELIMITER = ", ";
+    private static final String PLAYER_NAMES_DELIMITER = ", ";
+    
+    public static void printDealtBaseCards(Dealer dealer, List<Player> players) {
+        String playerNames = players.stream()
+                                    .map(Player::getName)
+                                    .collect(Collectors.joining(PLAYER_NAMES_DELIMITER));
+        
+        System.out.printf(DEALT_BASE_CARDS_FORMAT, dealer.getName(), playerNames, LINE_SEPARATOR);
+    }
+    
     public static void printPlayersCardHandStatus(Dealer dealer, List<Player> players) {
-        /*
-        딜러와 pobi, jason에게 2장의 나누었습니다.
-        딜러: 3다이아몬드
-        pobi카드: 2하트, 8스페이드
-        jason카드: 7클로버, K스페이드
-*/
-        String s1 = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
-        String s = String.format("딜러와 %s에게 2장의 나누었습니다.", s1);
-
-        System.out.printf("%s 카드: %s", dealer.getName(), cardHands(dealer));
+        printNameAndHandStatusExceptFirstCard(dealer);
+        
         for (Player player : players) {
-            System.out.printf("%s 카드: %s", player.getName(), cardHands(player));
+            printNameAndHandStatus(player);
+        }
+    
+        System.out.println();
+    }
+    
+    public static void printNameAndHandStatusExceptFirstCard(Dealer dealer) {
+        System.out.println(getNameAndHandStatusExceptFirstCard(dealer));
+    }
+    
+    public static String getNameAndHandStatusExceptFirstCard(Dealer dealer) {
+        return String.format(NAME_AND_CARD_HAND_STATUS_FORMAT, dealer.getName(), getHandStatus(dealer.getCardsExceptFirstCard()));
+    }
+    
+    public static void printNameAndHandStatus(Participant participant) {
+        System.out.println(getNameAndHandStatus(participant));
+    }
+    
+    public static String getNameAndHandStatus(Participant participant) {
+        return String.format(NAME_AND_CARD_HAND_STATUS_FORMAT, participant.getName(), getHandStatus(participant.getCards()));
+    }
+    
+    public static String getHandStatus(List<Card> cards) {
+        return cards.stream()
+                    .map(card -> card.getRankInitial() + card.getSuitName())
+                    .collect(Collectors.joining(CARD_HANDS_DELIMITER));
+    }
+    
+    public static void printDealerDrewMessage() {
+        System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+    
+    public static void printSummaryStatistics(Dealer dealer, List<Player> players) {
+        System.out.println();
+        
+        System.out.printf(SUMMARY_STATISTICS_FORMAT, getNameAndHandStatus(dealer), dealer.sumCardHand(), LINE_SEPARATOR);
+    
+        for (Player player : players) {
+            System.out.printf(SUMMARY_STATISTICS_FORMAT, getNameAndHandStatus(player), player.sumCardHand(), LINE_SEPARATOR);
         }
     }
-
-    public static void printDealerDrewMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public static void printResult(Result result) {
-        /*
-        딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
-        pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
-        jason카드: 7클로버, K스페이드 - 결과: 17
-
-        ## 최종 승패
-        딜러: 1승 1패
-        pobi: 승
-        jason: 패
-        */
-        String resultFormat = "%s 카드: %s - 결과: %d";
-
-//        Dealer de
-//        List<Card> dealerCardHand = result.getDealerCardHand();//3다이아몬드, 9클로버, 8다이아몬드
-//        int dealerSum = result.getDealerSum();
-//        System.out.printf(resultFormat, result.dealerName(), cardHands(de));
 //
-//        for (Player player : result.getPlayers()) {
-//
-//        }
-
-
-//        System.out.printf(resultFormat, dealer.getName(), cardHands(dealer), );
-//        for (Player player : players) {
-//            System.out.printf(resultFormat, player.getName(), cardHands(player), );
-//        }
-    }
-
-    public static String cardHands(Participant participant) {
-        return participant.getCardHand().stream()
-                .map(card -> card.getRankInitial() + card.getSuitName())
-                .collect(Collectors.joining(", "));
-    }
+//    public static void printGameResult(Dealer dealer, List<Player> players) {
+//        ## 최종 승패
+//        딜러: 1승 1패
+//        pobi: 승
+//        jason: 패
+//        */
+//    }
 }
