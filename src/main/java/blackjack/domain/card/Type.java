@@ -16,5 +16,4 @@ public enum Type {
     public String getName() {
         return name;
     }
-
 }

@@ -58,5 +58,4 @@ public class Dealer extends Participant {
                 .filter(r -> r == result)
                 .count();
     }
-
 }
