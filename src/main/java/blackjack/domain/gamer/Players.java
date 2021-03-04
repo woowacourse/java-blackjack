@@ -34,8 +34,7 @@ public class Players {
     }
 
     public Map<Player, MatchResult> verifyResultByCompareScore(Dealer dealer) {
-        Map<Player, MatchResult> result = new HashMap<>();
-        //result.put(new Player("air"), MatchResult.WIN);
+        Map<Player, MatchResult> result = new LinkedHashMap<>();
         for (Player player : players) {
             result.put(player, dealer.matchGame(player));
         }

@@ -15,6 +15,10 @@ public class Card implements Comparable<Card> {
         return this.denomination;
     }
 
+    public Shape getShape() {
+        return this.shape;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,9 +40,5 @@ public class Card implements Comparable<Card> {
     @Override
     public int compareTo(Card card) {
         return card.denomination.getScore() - this.denomination.getScore();
-    }
-    /**/
-    public boolean isAce() {
-        return this.denomination.equals(Denomination.ACE);
     }
 }

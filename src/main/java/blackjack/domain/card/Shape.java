@@ -8,7 +8,11 @@ public enum Shape {
 
     private final String name;
 
-    Shape(String name){
+    Shape(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

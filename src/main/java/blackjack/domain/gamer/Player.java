@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Cards;
 
 public class Player extends Person {
@@ -14,5 +15,10 @@ public class Player extends Person {
         if (name.length() < 1) {
             throw new IllegalArgumentException("유효하지 않은 플레이어 이름입니다.");
         }
+    }
+
+    @Override
+    public boolean canDraw() {
+        return Score.calculatorScore(cards) < 21;
     }
 }

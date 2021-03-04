@@ -20,4 +20,8 @@ public class CardDeck {
         this.deck = deck.removeCard();
         return drawCard;
     }
+
+    public void shuffleCard() {
+        deck.shuffle();
+    }
 }

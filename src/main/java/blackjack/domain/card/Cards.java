@@ -30,7 +30,7 @@ public class Cards {
     }
 
     public Cards removeCard() {
-        if(cards.size() == 0){
+        if (cards.size() == 0) {
             throw new IndexOutOfBoundsException("남은 카드가 없습니다.");
         }
         List<Card> newCards = new ArrayList<>(cards);
@@ -40,5 +40,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 }

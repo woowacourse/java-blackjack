@@ -11,11 +11,13 @@ public abstract class Person {
         this.cards = cards.addCard(card);
     }
 
-    public Cards getCards() {
+    public Cards getTakenCards() {
         return cards;
     }
 
     public String getName() {
         return name;
     }
+
+    public abstract boolean canDraw();
 }

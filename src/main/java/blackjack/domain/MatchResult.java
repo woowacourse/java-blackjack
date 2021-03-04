@@ -46,4 +46,8 @@ public enum MatchResult {
         }
         return MatchResult.DRAW;
     }
+
+    public String getResult() {
+        return result;
+    }
 }

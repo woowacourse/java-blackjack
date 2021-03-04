@@ -14,5 +14,10 @@ public class Dealer extends Person {
     public MatchResult matchGame(Player player) {
         return MatchResult.getPlayerMatchResult(Score.calculatorScore(player.cards), Score.calculatorScore(cards));
     }
+
+    @Override
+    public boolean canDraw() {
+        return Score.calculatorScore(cards) <= 16;
+    }
 }
 

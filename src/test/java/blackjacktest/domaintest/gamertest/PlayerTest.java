@@ -5,15 +5,11 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.card.Shape;
-import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -43,7 +39,7 @@ public class PlayerTest {
     @DisplayName("플레이어 카드 추가 성공")
     void receiveCard() {
         player.receiveCard(new Card(Shape.SPADE, Denomination.FOUR));
-        Cards cards = player.getCards();
+        Cards cards = player.getTakenCards();
         assertThat(cards.peekCard()).isEqualTo(new Card(Shape.SPADE, Denomination.FOUR));
     }
 
@@ -54,7 +50,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.CLOVER, Denomination.THREE));
         player.receiveCard(new Card(Shape.HEART, Denomination.ACE));
 
-        Cards cards = player.getCards();
+        Cards cards = player.getTakenCards();
         assertTrue(cards.getCards().containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
                 new Card(Shape.CLOVER, Denomination.THREE),
                 new Card(Shape.HEART, Denomination.ACE))));
