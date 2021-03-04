@@ -64,14 +64,14 @@ public class OutputView {
     }
 
     public static void showAllCards(Players players, Dealer dealer) {
-        System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), Score.calculatorScore(dealer.getTakenCards()));
+        System.out.printf("%n" + (CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), Score.calculatorScore(dealer.getTakenCards()));
         for (Player player : players.getPlayers()) {
             System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), Score.calculatorScore(player.getTakenCards()));
         }
     }
 
     public static void showFinalResult(BlackJackResult blackJackResult) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
 
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
         System.out.printf("딜러: ");
