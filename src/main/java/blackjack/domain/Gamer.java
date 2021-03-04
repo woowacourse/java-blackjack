@@ -37,18 +37,21 @@ public abstract class Gamer {
     }
 
     public int calculateMaximumPoint() {
-        int point = 0;
-        boolean havingAce = false;
-        for (Card card : cards) {
-            point += card.givePoint();
-            if (card.isAce()) {
-                havingAce = true;
-            }
-        }
-        if (point <= AVAILABLE_ACE_BONUS && havingAce) {
+        int point = cards.stream().map(Card::givePoint).reduce(0, Integer::sum);
+
+        if (point <= AVAILABLE_ACE_BONUS && findAce(cards)) {
             point += ACE_BONUS;
         }
         return point;
+    }
+
+    private boolean findAce(List<Card> cards) {
+        for (Card card : cards) {
+            if (card.isAce()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public abstract boolean canReceiveCard();
