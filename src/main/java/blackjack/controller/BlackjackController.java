@@ -29,7 +29,8 @@ public class BlackjackController {
         participants.add(dealer);
         participants.addAll(users.users());
         OutputView.printResults(participants);
-        OutputView.printResultBoard();
+        ResultBoard resultBoard = new ResultBoard(dealer, users);
+        OutputView.printResultBoard(dealer, resultBoard);
     }
 
     private void askForDraw(User user) {
