@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Cards {
+    private static final int FIRST_CARD_INDEX = 0;
     private final List<Card> cards;
 
     public Cards(List<Card> deck) {
@@ -46,6 +47,10 @@ public class Cards {
 
     private int countAce() {
         return Math.toIntExact(cards.stream().filter(Card::isAce).count());
+    }
+
+    public Card getFirstCard() {
+        return this.cards.get(FIRST_CARD_INDEX);
     }
 
     @Override
