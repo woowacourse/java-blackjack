@@ -18,11 +18,10 @@ public class Player extends User {
         }
     }
 
-    public ResultType decisionResult(int score) {
+    public ResultType generateResultAgainst(int score) {
         if (this.getScore() > score) {
             return ResultType.WIN;
         }
-
         if (this.getScore() < score) {
             return ResultType.LOSE;
         }
