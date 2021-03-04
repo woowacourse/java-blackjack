@@ -1,4 +1,4 @@
-package fuel;
+package rentcompany;
 
 public abstract class Car {
     private final int fuelEfficiency;

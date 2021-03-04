@@ -1,5 +1,8 @@
 package blackjack;
 
+import blackjack.domain.Card;
+import blackjack.utils.CardDeck;
+import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +63,7 @@ public class CardDeckTest {
             cardDeck.pop();
         }
 
-        assertThatThrownBy(() -> cardDeck.pop()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(cardDeck::pop).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

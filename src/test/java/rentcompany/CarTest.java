@@ -1,4 +1,4 @@
-package fuel;
+package rentcompany;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,20 +9,20 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 public class CarTest {
     @Test
     @DisplayName("소나타 생성 확인")
-    void create(){
-        assertThatCode(()-> new Sonata(150)).doesNotThrowAnyException();
+    void create() {
+        assertThatCode(() -> new Sonata(150)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("K5 생성 확인")
-    void create2(){
-        assertThatCode(()-> new K5(150)).doesNotThrowAnyException();
+    void create2() {
+        assertThatCode(() -> new K5(150)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("아반떼 생성 확인")
-    void create3(){
-        assertThatCode(()-> new Avante(150)).doesNotThrowAnyException();
+    void create3() {
+        assertThatCode(() -> new Avante(150)).doesNotThrowAnyException();
     }
 
     @Test

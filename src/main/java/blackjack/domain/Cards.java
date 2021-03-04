@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
-        if(cards.size() != INITIAL_CARDS_SIZE){
+        if (cards.size() != INITIAL_CARDS_SIZE) {
             throw new IllegalArgumentException();
         }
         this.cards = new ArrayList<>(cards);

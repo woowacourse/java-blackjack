@@ -1,6 +1,7 @@
-package blackjack;
+package blackjack.domain;
 
-import java.util.Arrays;
+import blackjack.utils.CardDeck;
+
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -9,8 +10,8 @@ public class Player implements Playable {
     private final String name;
     private final Cards cards;
 
-    public Player(String name) {
-        this(name, Arrays.asList(Card.from("A클로버"), Card.from("A클로버")));
+    public Player(String name, CardDeck cardDeck) {
+        this(name, cardDeck.initCards());
     }
 
     public Player(String name, List<Card> cards) {
@@ -31,7 +32,7 @@ public class Player implements Playable {
     }
 
     @Override
-    public List<Card> getCards() {
+    public List<Card> getUnmodifiableCards() {
         return cards.getUnmodifiableList();
     }
 
@@ -68,7 +69,23 @@ public class Player implements Playable {
     }
 
     @Override
-    public int result(int i) {
+    public int result(int counterpart) {
+        int playerSum = sumCardsForResult();
+
+        if (counterpart > 21 && playerSum <= 21) {
+            return 1;
+        }
+        if (playerSum <= 21 && counterpart < playerSum) {
+            return 1;
+        }
+
+        if (counterpart <= 21 && playerSum > 21) {
+            return -1;
+        }
+        if (counterpart <= 21 && counterpart > playerSum) {
+            return -1;
+        }
+
         return 0;
     }
 }

@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 public enum Suits {
     CLOVER("클로버"),
@@ -9,7 +9,7 @@ public enum Suits {
     private final String name;
 
     Suits(String name) {
-        this.name= name;
+        this.name = name;
     }
 
     public String getName() {

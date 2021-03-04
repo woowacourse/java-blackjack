@@ -1,5 +1,10 @@
 package blackjack;
 
+import blackjack.domain.Card;
+import blackjack.domain.Playable;
+import blackjack.domain.Player;
+import blackjack.utils.CardDeck;
+import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerTest {
     @Test
     void create() {
-        Playable player = new Player("john");
+        Playable player = new Player("john", new FixedCardDeck());
         assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
     void create2() {
-        Playable player = new Player("sarah");
+        Playable player = new Player("sarah", new FixedCardDeck());
         assertThat(player.getName()).isEqualTo("sarah");
     }
 
@@ -28,8 +33,7 @@ public class PlayerTest {
         List<Card> cards = cardDeck.initCards();
         Playable player = new Player("sarah", cards);
 
-        // 카드내역
-        List<Card> playerCards = player.getCards();
+        List<Card> playerCards = player.getUnmodifiableCards();
         assertThat(playerCards).contains(Card.from("A클로버"), Card.from("2클로버"));
     }
 
@@ -40,7 +44,7 @@ public class PlayerTest {
         List<Card> cards = cardDeck.initCards();
         Playable player = new Player("sarah", cards);
         player.takeCard(cardDeck.pop());
-        assertThat(player.getCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
+        assertThat(player.getUnmodifiableCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
     }
 
     @Test

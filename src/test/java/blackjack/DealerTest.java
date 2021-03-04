@@ -1,5 +1,10 @@
 package blackjack;
 
+import blackjack.domain.Card;
+import blackjack.domain.Dealer;
+import blackjack.domain.Playable;
+import blackjack.utils.CardDeck;
+import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +21,7 @@ public class DealerTest {
         List<Card> cards = cardDeck.initCards();
         Playable dealer = new Dealer(cards);
 
-        // 카드내역
-        List<Card> playerCards = dealer.getCards();
+        List<Card> playerCards = dealer.getUnmodifiableCards();
         assertThat(playerCards).contains(Card.from("A클로버"), Card.from("2클로버"));
     }
 
@@ -30,7 +34,7 @@ public class DealerTest {
         Playable dealer = new Dealer(cards);
 
         dealer.takeCard(cardDeck.pop());
-        assertThat(dealer.getCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
+        assertThat(dealer.getUnmodifiableCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
     }
 
     @Test

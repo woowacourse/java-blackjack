@@ -1,11 +1,11 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.List;
 
 public interface Playable {
     String getName();
 
-    List<Card> getCards();
+    List<Card> getUnmodifiableCards();
 
     void takeCard(Card pop);
 

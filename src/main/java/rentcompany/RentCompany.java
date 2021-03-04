@@ -1,4 +1,4 @@
-package fuel;
+package rentcompany;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ public class RentCompany {
     public String generateReport() {
         StringBuilder report = new StringBuilder();
         cars.forEach(car -> report.append(car.getName())
-                                .append(" : ")
-                                .append(car.calculateAmountOfFuel())
-                                .append("리터")
-                                .append(NEWLINE));
+                .append(" : ")
+                .append(car.calculateAmountOfFuel())
+                .append("리터")
+                .append(NEWLINE));
 
         return report.toString();
     }

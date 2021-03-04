@@ -1,4 +1,8 @@
-package blackjack;
+package blackjack.utils;
+
+import blackjack.domain.Card;
+import blackjack.domain.Denominations;
+import blackjack.domain.Suits;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,7 +23,7 @@ public class FixedCardDeck implements CardDeck {
 
     @Override
     public Card pop() {
-        if (cards.isEmpty()){
+        if (cards.isEmpty()) {
             throw new IllegalArgumentException();
         }
         return cards.poll();
