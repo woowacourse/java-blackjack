@@ -49,6 +49,7 @@ public class BlackJackGame {
         for (Player player : players.getPlayers()) {
             OutputView.showCards(player);
         }
+        OutputView.printNewLine();
     }
 
     private void playersTurn(Players players, CardDeck cardDeck) {
@@ -61,6 +62,7 @@ public class BlackJackGame {
         while (playerDrawCard(player)) {
             player.receiveCard(cardDeck.drawCard());
             OutputView.showCards(player);
+            OutputView.printNewLine();
         }
     }
 
@@ -83,6 +85,7 @@ public class BlackJackGame {
     private void showCurrentCard(Player player, boolean isDraw) {
         if (!isDraw) {
             OutputView.showCards(player);
+            OutputView.printNewLine();
         }
     }
 
