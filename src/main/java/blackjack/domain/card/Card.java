@@ -16,4 +16,12 @@ public class Card {
     public int getPoint() {
         return cardValue.getPoint();
     }
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
+    public CardValue getCardValue() {
+        return cardValue;
+    }
 }

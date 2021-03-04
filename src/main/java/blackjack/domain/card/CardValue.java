@@ -17,4 +17,8 @@ public enum CardValue {
     public int getPoint() {
         return this.point;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
