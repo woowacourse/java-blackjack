@@ -1,14 +1,13 @@
 package blackjack.domain;
 
-import blackjack.view.OutputView;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static blackjack.domain.Gamer.COMMA_DELIMITER;
 
 public class Players {
-    public static final String COLON_DELIMITER = ": ";
     private final List<Player> players;
     private final Gamer dealer;
 

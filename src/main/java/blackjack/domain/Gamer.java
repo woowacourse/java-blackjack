@@ -64,7 +64,7 @@ public abstract class Gamer {
     public boolean isBurst() {
         return calculateMaximumPoint() > THRESHOLD_OF_BURST;
     }
-    
+
     public abstract boolean canReceiveCard();
 
     public abstract Boolean continueDraw(String draw);

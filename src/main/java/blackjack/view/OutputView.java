@@ -1,6 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
+import blackjack.domain.WinnerFlag;
 
 import java.util.Map;
 
@@ -10,11 +13,11 @@ import static blackjack.domain.GameManager.INITIAL_DRAWING_COUNT;
 public class OutputView {
 
     public static final String COLON_DELIMITER = ": ";
+    public static final String RESULT_DELIMITER = " - 결과: ";
     private static final String NOTICE_DRAWING_CARDS = "%s와 %s에게 %d장씩 나누었습니다.\n";
     private static final String NOTICE_FINAL_RESULT = "## 최종 승패";
     private static final String NOTICE_DEALER_RECEIVE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.\n";
     private static final String CARD_DELIMITER = "카드: ";
-    public static final String RESULT_DELIMITER = " - 결과: ";
 
     public static void noticeDrawTwoCards(Players players) {
         System.out.println();

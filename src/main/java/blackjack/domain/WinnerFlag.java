@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public enum WinnerFlag {
     WIN("승 "),
-    DRAW( "무 "),
+    DRAW("무 "),
     LOSE("패 ");
 
     private final String flagOutput;
@@ -13,7 +13,7 @@ public enum WinnerFlag {
 
     public static void calculateResult(Dealer dealer, Player player) {
         int playerResult = player.calculateMaximumPoint();
-        if(dealer.isBurst() && player.isBurst() || dealer.isSameThan(playerResult)) {
+        if (dealer.isBurst() && player.isBurst() || dealer.isSameThan(playerResult)) {
             player.matchResult(DRAW);
         }
         if (player.isBurst() || (!dealer.isBurst() && dealer.isBiggerThan(playerResult))) {

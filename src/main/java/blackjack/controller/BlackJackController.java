@@ -4,24 +4,28 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Map;
-
 public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
-        Players players = new Players(InputView.enterNames(), dealer);
-        //TODO: 예외 잡기
+        Players players = askPlayers(dealer);
         //TODO: dealer랑 player 합치기
         Deck.shuffleCards();
         drawCards(players, dealer);
         drawUntilPossible(dealer, players);
 
-        WinnerCount winnerCount = new WinnerCount();
-
         OutputView.noticePlayersPoint(dealer, players);
         OutputView.noticeResult();
-        OutputView.printResult(winnerCount.calculateTotalWinnings(players));
+        OutputView.printResult(new WinnerCount().calculateTotalWinnings(players));
         printEachPlayerResult(players);
+    }
+
+    private Players askPlayers(Dealer dealer) {
+        try {
+            return new Players(InputView.enterNames(), dealer);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return askPlayers(dealer);
+        }
     }
 
     private void printEachPlayerResult(Players players) {
@@ -32,18 +36,26 @@ public class BlackJackController {
 
     private void drawCards(Players players, Dealer dealer) {
         OutputView.noticeDrawTwoCards(players);
-        GameManager gameManager = new GameManager(players);
-        gameManager.giveCards();
+        new GameManager(players).giveCards();
         OutputView.noticePlayersCards(dealer, players);
     }
 
     private void drawUntilPossible(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            playEachPlayer(player);
+            askKeepDrawing(player);
         }
         while (dealer.canReceiveCard()) {
             dealer.receiveOneCard();
             OutputView.noticeDealerReceiveCard();
+        }
+    }
+
+    private void askKeepDrawing(Player player) {
+        try {
+            playEachPlayer(player);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            playEachPlayer(player);
         }
     }
 

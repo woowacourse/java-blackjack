@@ -14,6 +14,7 @@ public class Player extends Gamer {
     public boolean canReceiveCard() {
         return this.calculateJudgingPoint() < THRESHOLD_OF_BURST;
     }
+
     //TODO: getCards하면 card들만 나오고 여기서 처리
     @Override
     public Boolean continueDraw(String draw) {
