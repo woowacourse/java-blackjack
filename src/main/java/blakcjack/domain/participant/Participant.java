@@ -31,22 +31,19 @@ public abstract class Participant {
 		return name.getName();
 	}
 
-
 	public int calculateScore() {
 		int score = calculateMinimumPossibleScore();
 		int aceCount = calculateAceCount();
 
-		for (int i = 0; i < aceCount; i++) {
-			score = getNextPossibleScore(score);
+		while (hasNextPossibleScore(aceCount, score)) {
+			score += ACE_ADDITIONAL_VALUE;
+			aceCount--;
 		}
 		return score;
 	}
 
-	private int getNextPossibleScore(int sum) {
-		if (sum + ACE_ADDITIONAL_VALUE <= BLACKJACK_VALUE) {
-			return sum + ACE_ADDITIONAL_VALUE;
-		}
-		return sum;
+	private boolean hasNextPossibleScore(final int aceCount, final int score) {
+		return 0 < aceCount && (score + ACE_ADDITIONAL_VALUE) <= BLACKJACK_VALUE;
 	}
 
 	private int calculateAceCount() {
