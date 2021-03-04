@@ -15,7 +15,7 @@ public class Card {
         return cardNumber.equals(aceNumber);
     }
 
-    public int getPoint() {
+    public int getCardValue() {
         return this.cardNumber.getValue();
     }
 

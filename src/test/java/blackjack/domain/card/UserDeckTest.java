@@ -15,7 +15,7 @@ public class UserDeckTest {
         UserDeck userDeck = new UserDeck();
         userDeck.add(one);
         userDeck.add(two);
-        assertThat(userDeck.score()).isEqualTo(13);
+        assertThat(userDeck.deckScore()).isEqualTo(13);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class UserDeckTest {
         UserDeck userDeck = new UserDeck();
         userDeck.add(one);
         userDeck.add(two);
-        assertThat(userDeck.score()).isEqualTo(16);
+        assertThat(userDeck.deckScore()).isEqualTo(16);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class UserDeckTest {
         userDeck.add(one);
         userDeck.add(two);
         userDeck.add(three);
-        assertThat(userDeck.score()).isEqualTo(17);
+        assertThat(userDeck.deckScore()).isEqualTo(17);
     }
 
 }

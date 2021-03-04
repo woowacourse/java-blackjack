@@ -14,17 +14,17 @@ public class UserDeck {
         userCards.add(card);
     }
 
-    public int score() {
-        int originalScore = calculateOriginalScore();
+    public int deckScore() {
+        int score = calculateScore();
         int aceCount = getAceCount();
-        while (aceCount != 0 && originalScore > BLACK_JACK_NUMBER) {
-            originalScore -= ACE_CALIBRATION;
+        while (aceCount != 0 && score > BLACK_JACK_NUMBER) {
+            score -= ACE_CALIBRATION;
             aceCount -= 1;
         }
-        if (originalScore > BLACK_JACK_NUMBER) {
+        if (score > BLACK_JACK_NUMBER) {
             return BUST_CONDITION;
         }
-        return originalScore;
+        return score;
     }
 
     private int getAceCount() {
@@ -33,9 +33,9 @@ public class UserDeck {
             .count();
     }
 
-    private int calculateOriginalScore() {
+    private int calculateScore() {
         return userCards.stream()
-            .mapToInt(Card::getPoint)
+            .mapToInt(Card::getCardValue)
             .sum();
     }
 

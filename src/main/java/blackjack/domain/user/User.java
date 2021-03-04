@@ -26,7 +26,7 @@ public abstract class User {
     }
 
     public int getScore() {
-        return userDeck.score();
+        return userDeck.deckScore();
     }
 
     public int compare(User user) {

@@ -22,6 +22,6 @@ public class CardTest {
     @DisplayName("카드 생성 및 점수 확인 테스트")
     @MethodSource("testCardSample")
     void general_card(Card sampleCard, int answerPoint) {
-        assertThat(sampleCard.getPoint()).isEqualTo(answerPoint);
+        assertThat(sampleCard.getCardValue()).isEqualTo(answerPoint);
     }
 }
