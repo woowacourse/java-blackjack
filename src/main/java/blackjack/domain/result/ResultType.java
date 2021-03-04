@@ -9,6 +9,7 @@ public enum ResultType {
     DRAW("무"),
     LOSE("패");
 
+    private static final int TWENTY_ONE = 21;
     private final String value;
 
     ResultType(String value) {
@@ -20,17 +21,17 @@ public enum ResultType {
         int p1Score = p1.calculateScore();
         int p2Score = p2.calculateScore();
 
-        if (p1Score > 21 && p2Score > 21) {
+        if (p1Score > TWENTY_ONE && p2Score > TWENTY_ONE) {
             result.put(p1, DRAW);
             result.put(p2, DRAW);
             return result;
         }
-        if (p1Score > 21) {
+        if (p1Score > TWENTY_ONE) {
             result.put(p1, LOSE);
             result.put(p2, WIN);
             return result;
         }
-        if (p2Score > 21) {
+        if (p2Score > TWENTY_ONE) {
             result.put(p1, WIN);
             result.put(p2, LOSE);
             return result;

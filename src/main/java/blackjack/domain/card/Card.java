@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class Card {
 
+    private static final String ACE = "A";
+
     private final Denomination denomination;
     private final Shape shape;
 
@@ -40,7 +42,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination.getName().equals("A");
+        return denomination.getName().equals(ACE);
     }
 
     public Denomination getDenomination() {

@@ -36,8 +36,4 @@ public class GameResult {
             .filter(player -> !player.getName().equals("딜러"))
             .collect(Collectors.toMap(key -> key, key -> gameResult.get(key).get(0)));
     }
-
-    public Map<Player, List<ResultType>> getGameResult() {
-        return gameResult;
-    }
 }

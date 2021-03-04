@@ -11,13 +11,15 @@ import java.util.Map;
 
 public class Dealer extends Player {
 
+    private static final int DRAW_STANDARD = 16;
+
     public Dealer(Cards cards) {
         super("딜러", cards);
     }
 
     @Override
     public void addCard(Card card) {
-        if (calculateScore() > 16) {
+        if (calculateScore() > DRAW_STANDARD) {
             throw new IllegalArgumentException("[ERROR] 딜러의 점수가 16을 초과하여 카드를 추가할 수 없습니다.");
         }
         cards.addCard(card);
@@ -37,6 +39,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canDraw() {
-        return calculateScore() <= 16;
+        return calculateScore() <= DRAW_STANDARD;
     }
 }
