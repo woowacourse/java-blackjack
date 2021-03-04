@@ -59,21 +59,29 @@ public class BlackjackController {
 
     private void playerGameProgress(final List<Player> players, final CardDeck cardDeck) {
         for (Player player : players) {
-            while (true) {
-                String choice = InputView.askMoreCard(player.getName());
-                if ("n".equals(choice)) {
-                    OutputView.showPlayerCard(player.getName(), player.getMyCards());
-                    break;
-                }
-                player.receiveCard(cardDeck.distribute());
-                OutputView.showPlayerCard(player.getName(), player.getMyCards());
-
-                if (player.isBust()) {
-                    System.out.println("카드의 합이 21을 넘어, 게임에서 패배하였습니다.");
-                    break;
-                }
-            }
+            singlePlayerGameProgress(cardDeck, player);
         }
+    }
+
+    private void singlePlayerGameProgress(CardDeck cardDeck, Player player) {
+        if ("n".equals(InputView.askMoreCard(player.getName()))) {
+            OutputView.showPlayerCard(player.getName(), player.getMyCards());
+            return;
+        }
+        player.receiveCard(cardDeck.distribute());
+        OutputView.showPlayerCard(player.getName(), player.getMyCards());
+        if (isBust(player)) {
+            return;
+        }
+        singlePlayerGameProgress(cardDeck, player);
+    }
+
+    private boolean isBust(Player player) {
+        if (player.isBust()) {
+            OutputView.bustMessage();
+            return true;
+        }
+        return false;
     }
 
     private void dealerGameProgress(final Dealer dealer, final CardDeck cardDeck) {

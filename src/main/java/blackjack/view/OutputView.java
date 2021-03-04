@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
 
     public static void distributeMessage(final String players) {
         System.out.printf(NEWLINE + "딜러와 %s에게 2장의 카드를 나누어주었습니다." + NEWLINE, players);
@@ -44,5 +45,9 @@ public class OutputView {
             return ": 승";
         }
         return ": 패";
+    }
+
+    public static void bustMessage() {
+        System.out.println(BUST_MESSAGE);
     }
 }
