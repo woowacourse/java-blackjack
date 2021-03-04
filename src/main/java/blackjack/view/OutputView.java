@@ -20,14 +20,6 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printMessage(final Object message) {
-        System.out.println(message);
-    }
-
-    public static void printMessageByFormat(final String format, final Object... message) {
-        System.out.printf(format, message);
-    }
-
     // TODO :: 네이밍
     public static void printPlayers(Players players) {
         for (Player player : players) {
@@ -83,5 +75,17 @@ public class OutputView {
         for (Player player : winningTable.keySet()) {
             OutputView.printMessage(player.getName().name() + " : " + winningTable.get(player).getSymbol());
         }
+    }
+
+    public static void printLineSeparator(){
+        System.out.println(System.lineSeparator());
+    }
+
+    public static void printMessage(final Object message) {
+        System.out.println(message);
+    }
+
+    public static void printMessageByFormat(final String format, final Object... message) {
+        System.out.printf(format, message);
     }
 }

@@ -1,8 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.YesOrNo;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.Result;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -10,41 +8,43 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-    static final BlackJackGame blackJackGame = new BlackJackGame(); // 요건 대화 필요
 
-    public static void main(String[] args) {
-        run();
+    public void run() {
+        BlackJackGame blackJackGame = new BlackJackGame();
+        Players players = initializePlayers(blackJackGame);
+        askPlayersDraw(blackJackGame, players);
+        OutputView.printResult(blackJackGame.getResult(players));
     }
 
-    public static void run() {
+    private Players initializePlayers(final BlackJackGame blackJackGame){
         Players players = blackJackGame.createPlayers(InputView.askPlayerNames());
         OutputView.printPlayers(players);
-
-        for (Player player : players) {
-            giveGamblerCard(player);
-        }
-
-        giveDealerCards();
-        OutputView.printMessage("");
-        Result result = blackJackGame.getResult(players);
-        OutputView.printResult(result);
+        return players;
     }
 
-    private static void giveGamblerCard(final Player player) {
+    private void askPlayersDraw(final BlackJackGame blackJackGame, final Players players){
+        for (Player player : players) {
+            giveGamblerCards(blackJackGame, player);
+        }
+        giveDealerCards(blackJackGame);
+        OutputView.printLineSeparator();
+    }
+
+    private void giveGamblerCards(final BlackJackGame blackJackGame, final Player player) {
         if (!(player instanceof Gambler)) {
             return;
         }
 
-        while (YesOrNo.of(InputView.askDrawOrNot(player)) == YesOrNo.YES ) {
+        while (InputView.askDrawOrNot(player).isYes() ) {
             blackJackGame.giveCard(player);
             OutputView.printPlayer(player);
         }
     }
 
-    private static void giveDealerCards(){
+    private void giveDealerCards(final BlackJackGame blackJackGame){
         while(blackJackGame.ableToDraw()){
-            OutputView.printGiveDealer();
             blackJackGame.giveDealerCard();
+            OutputView.printGiveDealer();
         }
     }
 }
