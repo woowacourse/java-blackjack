@@ -3,14 +3,11 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Users;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-    private static final int DEALER_REDRAW_STANDARD = 17;
-
     private final Users users;
     private final Dealer dealer;
     private final CardDeck cardDeck;
@@ -30,7 +27,7 @@ public class BlackJackController {
         }
         users.getPlayers()
                 .forEach(this::playGameForEachPlayer);
-        while (dealer.getScore() < DEALER_REDRAW_STANDARD && dealer.getScore() != Card.BUST) {
+        while (dealer.isDealerDrawScore()) {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
