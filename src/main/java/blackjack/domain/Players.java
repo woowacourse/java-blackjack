@@ -14,7 +14,7 @@ public class Players {
     public static final String RESULT_DRAW = "무";
     private static final String NAME_SPLITTER = ",";
     public static final String NEW_LINE = "\n";
-    public static final String COMMA_SPACE = ", ";
+    public static final String COUPLER_COMMA_SPACE = ", ";
     public static final String WIN = "win";
     public static final String LOSE = "lose";
     public static final String DRAW = "draw";
@@ -85,7 +85,8 @@ public class Players {
     }
 
     public String getPlayerNames() {
-        return players.stream().map(Gamer::getName).collect(Collectors.joining(COMMA_SPACE));
+        return players.stream().map(Gamer::getName)
+            .collect(Collectors.joining(COUPLER_COMMA_SPACE));
     }
 
     public List<Gamer> getAllParticipant() {

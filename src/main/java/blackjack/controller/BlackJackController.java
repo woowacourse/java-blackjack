@@ -2,9 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.Gamer;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.stream.IntStream;
 
 public class BlackJackController {
 
@@ -35,10 +37,7 @@ public class BlackJackController {
 
     private void dealTwoCard(Players players, Deck deck) {
         OutputView.noticeDrawTwoCards(players);
-        int count = 2;
-        for (int i = 0; i < count; i++) {
-            players.giveCards(deck);
-        }
+        IntStream.range(0, Gamer.NUM_INIT_CARD).mapToObj(i -> deck).forEach(players::giveCards);
         OutputView.noticePlayersCards(players);
     }
 }

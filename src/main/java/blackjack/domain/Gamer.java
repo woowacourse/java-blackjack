@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public abstract class Gamer {
 
+    public static final int NUM_INIT_CARD = 2;
     private static final String SPACE = " ";
     private static final String ERROR_NAME_SPACE = "이름에 공백이 포함됩니다.";
     private static final int ACE_BONUS = 10;

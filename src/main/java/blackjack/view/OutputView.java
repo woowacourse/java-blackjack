@@ -1,5 +1,13 @@
 package blackjack.view;
 
+import static blackjack.domain.Players.COUPLER_COMMA_SPACE;
+import static blackjack.domain.Players.DRAW;
+import static blackjack.domain.Players.LOSE;
+import static blackjack.domain.Players.RESULT_DRAW;
+import static blackjack.domain.Players.RESULT_LOSE;
+import static blackjack.domain.Players.RESULT_WIN;
+import static blackjack.domain.Players.WIN;
+
 import blackjack.domain.GameResult;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
@@ -8,10 +16,18 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String SKELETON_NOTICE_DRAW_TWO_CARDS = "%s와 %s에게 %d장씩 나누었습니다.";
+    public static final String NOTICE_RESULT = "## 최종 승패";
+    public static final String NOTICE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String SKELETON_GAME_RESULT_POINT = "%s - 결과: %d";
+    private static final String SKELETON_DEALER_RESULT = "딜러: %d%s %d%s %d%s";
+    private static final String SKELETON_NOTICE_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+
     public static void noticeDrawTwoCards(Players players) {
         System.out.println();
         System.out.println(
-            players.getDealerName() + "와 " + players.getPlayerNames() + "에게 " + "2장씩 나누었습니다.");
+            String.format(SKELETON_NOTICE_DRAW_TWO_CARDS, players.getDealerName(),
+                players.getPlayerNames(), Gamer.NUM_INIT_CARD));
     }
 
     public static void noticePlayersCards(Players players) {
@@ -26,7 +42,7 @@ public class OutputView {
 
     public static void noticeResult(Players players) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println(NOTICE_RESULT);
         GameResult.getResult(players);
     }
 
@@ -35,27 +51,29 @@ public class OutputView {
     }
 
     public static void noticeDealerGetCard() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(NOTICE_DEALER_GET_CARD);
     }
 
     public static void printGameResultPoint(Gamer gamer) {
-        System.out.println(gamer.getInfo() + " - 결과: " + gamer.calculateMaximumPoint());
+        System.out.println(String
+            .format(SKELETON_GAME_RESULT_POINT, gamer.getInfo(), gamer.calculateMaximumPoint()));
     }
 
     public static void printDealerResult(Map<String, Integer> result) {
+
         System.out.println(
-            "딜러: " + result.get("win") + "승 " + result.get("draw") + "무 " + result.get("lose")
-                + "패");
+            String.format(SKELETON_DEALER_RESULT, result.get(WIN), RESULT_WIN, result.get(DRAW),
+                RESULT_DRAW, result.get(LOSE), RESULT_LOSE));
     }
 
     public static void printPlayerResult(Players players) {
         for (Player player : players.getAllPlayers()) {
-            System.out.println(player.getName() + ": " + player.getResult());
+            System.out.println(player.getName() + COUPLER_COMMA_SPACE + player.getResult());
         }
     }
 
     public static void noticeGetMoreCard(String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(String.format(SKELETON_NOTICE_GET_MORE_CARD, name));
     }
 
     public static void printPlayerInfo(String info) {
