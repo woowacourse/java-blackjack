@@ -38,4 +38,5 @@ public class DeckTest {
         assertThatThrownBy(() -> deck.draw())
             .isInstanceOf(ArrayIndexOutOfBoundsException.class);
     }
+
 }

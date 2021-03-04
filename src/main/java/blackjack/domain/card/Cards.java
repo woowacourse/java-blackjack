@@ -19,6 +19,9 @@ public class Cards {
         return new Cards(cards);
     }
 
+    public static Cards of(List<Card> values) {
+        return new Cards(values);
+    }
 
     public int calculateScore() {
         int result = 0;
