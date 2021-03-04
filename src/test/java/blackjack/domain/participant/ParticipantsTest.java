@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,5 +74,26 @@ class ParticipantsTest {
 
         //then
         assertThat(players).hasSize(2);
+    }
+
+    @DisplayName("모든 참가자들에게 패를 돌린다")
+    @Test
+    void test_deal_cards_all_participants() {
+        //given
+        List<Participant> participantGroup = Arrays.asList(new Dealer(cards -> 16),
+                new Player("pobi", cards -> 18),
+                new Player("jason", cards -> 15));
+
+        Participants participants = new Participants(participantGroup);
+        Deck deck = Deck.generate();
+
+        //when
+        participants.dealCardsAllParticipants(deck);
+
+        //then
+        List<Participant> actualParticipants = participants.getParticipants();
+        assertThat(actualParticipants.get(0).showCards()).hasSize(2);
+        assertThat(actualParticipants.get(1).showCards()).hasSize(2);
+        assertThat(actualParticipants.get(2).showCards()).hasSize(2);
     }
 }
