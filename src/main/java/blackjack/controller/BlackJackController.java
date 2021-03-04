@@ -10,7 +10,6 @@ import blackjack.view.OutputView;
 
 public class BlackJackController {
     private static final int INITIAL_DRAW_CARD_NUMBER = 2;
-    private static final int DEALER_REDRAW_STANDARD = 17;
 
     private final Users users;
     private final Dealer dealer;
@@ -31,7 +30,7 @@ public class BlackJackController {
         }
         users.getPlayers()
                 .forEach(this::playGameForEachPlayer);
-        while (dealer.getScore() < DEALER_REDRAW_STANDARD && dealer.getScore() != Card.BUST) {
+        while (dealer.hasToDrawACard()) {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
