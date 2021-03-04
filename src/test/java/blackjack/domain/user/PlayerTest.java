@@ -56,7 +56,7 @@ public class PlayerTest {
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer)).isEqualTo("승");
+        assertThat(player.betResult(dealer).getResult()).isEqualTo("승");
     }
 
     @Test
@@ -71,7 +71,7 @@ public class PlayerTest {
         dealerDeck.add(dealerCard2);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer)).isEqualTo("무");
+        assertThat(player.betResult(dealer).getResult()).isEqualTo("무");
     }
 
     @Test
@@ -86,7 +86,7 @@ public class PlayerTest {
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer)).isEqualTo("패");
+        assertThat(player.betResult(dealer).getResult()).isEqualTo("패");
     }
 
     @Test
@@ -101,6 +101,6 @@ public class PlayerTest {
         dealerDeck.add(dealerCard2);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer)).isEqualTo("패");
+        assertThat(player.betResult(dealer).getResult()).isEqualTo("패");
     }
 }

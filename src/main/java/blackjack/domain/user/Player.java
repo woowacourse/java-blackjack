@@ -16,17 +16,17 @@ public class Player extends User {
         return !super.isBurstCondition() && super.getPoint() < UserDeck.BLACK_JACK_NUMBER;
     }
 
-    public String betResult(Dealer dealer) {
+    public OneGameResult betResult(Dealer dealer) {
         if (super.isBurstCondition() && dealer.isBurstCondition()) {
-            return "패";
+            return OneGameResult.LOSE;
         }
         if (super.getPoint() < dealer.getPoint()) {
-            return "패";
+            return OneGameResult.LOSE;
         }
         if (super.getPoint() > dealer.getPoint()) {
-            return "승";
+            return OneGameResult.WIN;
         }
-        return "무";
+        return OneGameResult.TIE;
     }
 
     public String getName() {

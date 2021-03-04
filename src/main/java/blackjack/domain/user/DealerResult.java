@@ -7,33 +7,33 @@ import java.util.Map;
 
 public class DealerResult {
 
-    private final Map<String, Integer> dealerResult = new LinkedHashMap<>();
+    private final Map<OneGameResult, Integer> dealerResult = new LinkedHashMap<>();
 
     {
-        this.dealerResult.put("승", 0);
-        this.dealerResult.put("무", 0);
-        this.dealerResult.put("패", 0);
+        for (OneGameResult potentialResult : OneGameResult.values()) {
+            dealerResult.put(potentialResult, 0);
+        }
     }
 
     public DealerResult(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            String result = translateToDealer(player.betResult(dealer));
+            OneGameResult result = translateToDealer(player.betResult(dealer));
             int resultCount = dealerResult.get(result);
             dealerResult.put(result, resultCount + 1);
         }
     }
 
-    private String translateToDealer(String result) {
-        if (result.equals("승")) {
-            return "패";
+    private OneGameResult translateToDealer(OneGameResult result) {
+        if (OneGameResult.WIN.equals(result)) {
+            return OneGameResult.LOSE;
         }
-        if (result.equals("패")) {
-            return "승";
+        if (OneGameResult.LOSE.equals(result)) {
+            return OneGameResult.WIN;
         }
-        return result;
+        return OneGameResult.TIE;
     }
 
-    public Map<String, Integer> getResult() {
+    public Map<OneGameResult, Integer> getResult() {
         return Collections.unmodifiableMap(this.dealerResult);
     }
 }

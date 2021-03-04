@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DealerResult;
+import blackjack.domain.user.OneGameResult;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
@@ -104,15 +105,15 @@ public class OutputView {
 
     private static String getDealerResult(DealerResult dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, Integer> element : dealerResult.getResult().entrySet()) {
+        for (Map.Entry<OneGameResult, Integer> element : dealerResult.getResult().entrySet()) {
             stringBuilder.append(validValue(element));
         }
         return stringBuilder.toString();
     }
 
-    private static String validValue(Map.Entry<String, Integer> element) {
+    private static String validValue(Map.Entry<OneGameResult, Integer> element) {
         if (element.getValue() > 0) {
-            return element.getValue() + element.getKey();
+            return element.getValue() + element.getKey().getResult();
         }
         return "";
     }
@@ -120,9 +121,9 @@ public class OutputView {
     public static void showIndividualTable(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
-            String gameIndividualResult = player.betResult(dealer);
+            OneGameResult gameIndividualResult = player.betResult(dealer);
             String individualResultMessage = String
-                .format(PLAYER_RESULT, playerName, gameIndividualResult);
+                .format(PLAYER_RESULT, playerName, gameIndividualResult.getResult());
             System.out.println(individualResultMessage);
         }
     }
