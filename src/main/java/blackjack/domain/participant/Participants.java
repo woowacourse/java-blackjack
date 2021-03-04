@@ -1,5 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +14,6 @@ public class Participants {
     public Participants(List<Participant> participants) {
         this.participants = participants;
     }
-
 
     public Dealer extractDealer() {
         return (Dealer) participants.stream()
@@ -24,5 +27,22 @@ public class Participants {
                 .filter(participant -> participant instanceof Player)
                 .map(Player.class::cast)
                 .collect(Collectors.toList());
+    }
+
+    public void dealCardsAllParticipants(Deck deck) {
+        for (Participant participant : participants) {
+            List<Card> cards = deck.handOutInitCards();
+            giveInitialCards(participant, cards);
+        }
+    }
+
+    private void giveInitialCards(Participant participant, List<Card> cards) {
+        for (Card card : cards) {
+            participant.receiveCard(card);
+        }
+    }
+
+    public List<Participant> getParticipants() {
+        return new ArrayList<>(participants);
     }
 }
