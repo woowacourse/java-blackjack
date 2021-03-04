@@ -10,8 +10,8 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToReceiveCard() {
-        int currentScore = calculateScoreWhenAceIsMinimum();
-        return currentScore < MAXIMUM_SCORE_LIMIT;
+        int minimumScore = calculateScoreWhenAceIsMinimum();
+        return minimumScore < MAXIMUM_SCORE_LIMIT;
     }
 
     public Result judgeResult(Dealer dealer) {
