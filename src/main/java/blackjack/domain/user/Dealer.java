@@ -12,6 +12,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isAvailableDraw() {
-        return !super.isBustCondition() && super.getPoint() <= DEALER_CRITERIA;
+        return !super.isBustCondition() && super.getScore() <= DEALER_CRITERIA;
     }
 }

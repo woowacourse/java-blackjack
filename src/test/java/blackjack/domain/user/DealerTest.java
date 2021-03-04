@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    private Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
-    private Card two = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
-    private UserDeck userDeck = new UserDeck();
+    private final Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
+    private final Card two = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
+    private final UserDeck userDeck = new UserDeck();
     {
         userDeck.add(one);
         userDeck.add(two);
@@ -24,7 +24,7 @@ public class DealerTest {
     void getPlayerPoint() {
         Dealer dealer = new Dealer(userDeck);
         int playerScore = 15;
-        assertThat(dealer.getPoint()).isEqualTo(playerScore);
+        assertThat(dealer.getScore()).isEqualTo(playerScore);
     }
 
     @Test

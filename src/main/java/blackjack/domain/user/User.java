@@ -18,15 +18,14 @@ public abstract class User {
     }
 
     public boolean isBustCondition() {
-        return this.getPoint() == UserDeck.BUST_CONDITION;
+        return this.getScore() == UserDeck.BUST_CONDITION;
     }
 
     public UserDeck getUserDeck() {
         return userDeck;
     }
 
-    public int getPoint() {
+    public int getScore() {
         return userDeck.score();
     }
-
 }

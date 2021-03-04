@@ -25,7 +25,7 @@ public class PlayerTest {
         String name = "Sorong";
         Player player = new Player(name, userDeck);
         int playerScore = 15;
-        assertThat(player.getPoint()).isEqualTo(playerScore);
+        assertThat(player.getScore()).isEqualTo(playerScore);
     }
 
     @Test

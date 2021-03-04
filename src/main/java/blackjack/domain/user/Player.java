@@ -13,17 +13,17 @@ public class Player extends User {
 
     @Override
     public boolean isAvailableDraw() {
-        return !super.isBustCondition() && super.getPoint() < UserDeck.BLACK_JACK_NUMBER;
+        return !super.isBustCondition() && super.getScore() < UserDeck.BLACK_JACK_NUMBER;
     }
 
     public String betResult(Dealer dealer) {
         if (super.isBustCondition() && dealer.isBustCondition()) {
             return "패";
         }
-        if (super.getPoint() < dealer.getPoint()) {
+        if (super.getScore() < dealer.getScore()) {
             return "패";
         }
-        if (super.getPoint() > dealer.getPoint()) {
+        if (super.getScore() > dealer.getScore()) {
             return "승";
         }
         return "무";
