@@ -5,13 +5,13 @@ public enum ResultType {
     LOSE("패"),
     DRAW("무");
 
-    private final String result;
+    private final String name;
 
-    ResultType(String result) {
-        this.result = result;
+    ResultType(String name) {
+        this.name = name;
     }
 
     public String getName() {
-        return this.result;
+        return this.name;
     }
 }
