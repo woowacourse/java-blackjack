@@ -16,11 +16,11 @@ public class Player extends Participant {
     }
 
     public void matchCards(Cards otherCards) {
-        if (isBlackjack()) {
+        result = otherCards.compare(cards);
+        if (cards.getScore() > 21) {
             result = Result.LOSE;
             return;
         }
-        result = otherCards.compare(cards);
     }
 
     public Result getResult() {
