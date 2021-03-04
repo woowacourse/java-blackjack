@@ -24,7 +24,6 @@ public class BlackjackController {
 
         OutputView.gamersAllCards(gamers);
 
-
         OutputView.printResultTitle();
         OutputView.dealerResult(gamers.resultWithCount());
         OutputView.playersResult(gamers.resultWithName());

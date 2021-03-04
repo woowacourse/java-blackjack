@@ -25,7 +25,7 @@ public class Gamers {
         result.put(ResultType.DRAW, 0);
         result.put(ResultType.LOSE, 0);
 
-        for(Player player : players) {
+        for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);
             result.put(resultType, result.get(resultType) + 1);
         }
@@ -34,7 +34,7 @@ public class Gamers {
 
     public Map<String, ResultType> resultWithName() {
         Map<String, ResultType> result = new HashMap<>();
-        for(Player player : players) {
+        for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);
             result.put(player.getName(), resultType.switchPosition());
         }
