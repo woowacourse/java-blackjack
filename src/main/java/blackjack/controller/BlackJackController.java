@@ -44,7 +44,6 @@ public class BlackJackController {
         }
     }
 
-
     private void initialHits(Users users) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
             users.gerUsers()
