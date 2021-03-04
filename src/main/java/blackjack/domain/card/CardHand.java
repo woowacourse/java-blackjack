@@ -15,12 +15,6 @@ public class CardHand {
         this.cards = new ArrayList<>(cards);
     }
     
-    public boolean lowerThanThreshold() {
-        return cards.stream()
-                    .mapToInt(Card::getRankValue)
-                    .sum() > MAXIMUM_THRESHOLD;
-    }
-    
     public void add(Card card) {
         cards.add(card);
     }
