@@ -11,6 +11,7 @@ import java.util.List;
 
 public class GameTable {
     private static final String YES = "Y";
+    private static final String NO = "N";
 
     private final Deck deck;
     private final Dealer dealer;
@@ -50,16 +51,20 @@ public class GameTable {
     }
 
     private void askHit(Player player) {
-        while (player.isNotBust() && wantCard(player)) {
+        String hitValue = NO;
+
+        do {
+            OutputView.printHitGuideMessage(player);
+            hitValue = InputView.getHitValue();
+            draw(player, hitValue);
+        } while (player.isNotBust() && hitValue.equals(YES));
+    }
+
+    private void draw(Player player, String hitValue) {
+        if (hitValue.equals(YES)) {
             player.hit(deck.pop());
             OutputView.printPlayerCards(player);
         }
-    }
-
-    private boolean wantCard(Player player) {
-        OutputView.printHitGuideMessage(player);
-        String hitValue = InputView.getHitValue();
-        return hitValue.equals(YES);
     }
 
     private void drawAtFirst() {
