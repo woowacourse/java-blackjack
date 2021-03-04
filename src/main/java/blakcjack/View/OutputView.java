@@ -59,7 +59,7 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printResult(final Dealer dealer, final List<Participant> players) {
+	public static void printFinalHandsSummary(final Dealer dealer, final List<Participant> players) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeFinalSummary(dealer));
 

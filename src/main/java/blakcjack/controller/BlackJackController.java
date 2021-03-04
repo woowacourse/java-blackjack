@@ -29,7 +29,7 @@ public class BlackJackController {
 		}
 
 		drawForMaximumCapability(blackjackGame, dealer);
-		OutputView.printResult(dealer, players);
+		OutputView.printFinalHandsSummary(dealer, players);
 	}
 
 	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
