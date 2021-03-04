@@ -38,6 +38,6 @@ public class Users {
         int dealerScore = getDealer().getScore();
         return users.stream()
                 .filter(user -> user instanceof Player)
-                .collect(Collectors.toMap(player -> player, player -> ((Player) player).generateResultAgainst(dealerScore)));
+                .collect(Collectors.toMap(player -> player, player -> ((Player) player).generateResultAgainstDealer(dealerScore)));
     }
 }

@@ -30,9 +30,9 @@ class UsersTest {
         player.hit(ace);
         player.hit(jack);
         // 플레이어 youngE에게 블랙잭을 준다.
-        player2.hit(ace);
+        player2.hit(jack);
         player2.hit(six);
-        // 플레이어 Kimkim에게 17을 준다.
+        // 플레이어 Kimkim에게 16을 준다.
     }
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭일 때")
@@ -51,9 +51,25 @@ class UsersTest {
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭이 아니었을 때")
     @Test
-    void checkWinOrLoseTest() {
+    void checkWinOrLoseWhenDealerHasNotBlackJackTest() {
         dealer.hit(ace);
         dealer.hit(seven);
+        Map<User, ResultType> resultMap = users.generateResultsMapAgainstDealer();
+        assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
+            {
+                put(player, ResultType.WIN);
+                put(player2, ResultType.LOSE);
+            }
+        });
+    }
+
+    @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러와 플레이어가 버스트일 때")
+    @Test
+    void checkWinOrLoseTest() {
+        dealer.hit(six);
+        dealer.hit(seven);
+        dealer.hit(jack);
+        player2.hit(seven); // player2 에게 7을 추가로 주어 23을 만들어 버스트 상태로 만든다.
         Map<User, ResultType> resultMap = users.generateResultsMapAgainstDealer();
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
