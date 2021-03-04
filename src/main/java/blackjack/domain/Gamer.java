@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class Gamer {
     private final String name;
@@ -23,7 +24,7 @@ public abstract class Gamer {
         cards.add(card);
     }
 
-    protected int calculatePoint() {
+    protected int calculateMinimumPoint() {
         int point = 0;
         for(Card card : cards) {
             point = card.addPoint(point);
@@ -31,17 +32,34 @@ public abstract class Gamer {
         return point;
     }
 
+    protected int calculateMaximumPoint() {
+        int point = 0;
+        boolean havingAce = false;
+        for (Card card : cards) {
+            point += card.addPoint(point);
+            if(card.isAce()) {
+                havingAce = true;
+            }
+        }
+        if(point < 11 && havingAce) {
+            point += 10;
+        }
+        return point;
+    }
+
+    public abstract boolean canReceiveCard();
+
+    public abstract Boolean continueDraw(Deck deck);
+
     protected String getName() {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Gamer gamer = (Gamer) o;
-        return Objects.equals(name, gamer.name) && Objects.equals(cards, gamer.cards);
+    public String getCards() {
+        return cards.stream().map(Card::getPatternAndNumber).collect(Collectors.joining(", "));
     }
+
+    public abstract String getInfo();
 
     @Override
     public int hashCode() {
