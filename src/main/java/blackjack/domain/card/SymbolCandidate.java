@@ -7,7 +7,7 @@ public enum SymbolCandidate {
     SPADE("스페이드"),
     DIAMOND("다이아몬드");
 
-    private String symbol;
+    private final String symbol;
 
     SymbolCandidate(String symbol) {
         this.symbol = symbol;

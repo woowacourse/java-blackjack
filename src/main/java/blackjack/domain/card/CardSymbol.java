@@ -7,8 +7,7 @@ import java.util.Objects;
 public class CardSymbol {
 
     private static final Map<String, CardSymbol> SYMBOL_CACHE = new HashMap<>();
-
-    private String symbol;
+    private final String symbol;
 
     static {
         for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
