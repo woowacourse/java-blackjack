@@ -1,6 +1,7 @@
 package blakcjack.domain;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class OutcomeStatistics {
 	private final Map<Outcome, Integer> dealerOutcome;
@@ -25,5 +26,13 @@ public class OutcomeStatistics {
 
 	public Map<String, Outcome> getPlayersOutcome() {
 		return playersOutcome;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		final OutcomeStatistics that = (OutcomeStatistics) o;
+		return Objects.equals(dealerOutcome, that.dealerOutcome) && Objects.equals(playersOutcome, that.playersOutcome);
 	}
 }

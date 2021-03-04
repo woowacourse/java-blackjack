@@ -12,9 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static blakcjack.domain.BlackjackGame.DUPLICATE_NAME_ERROR;
 import static org.assertj.core.api.Assertions.*;
@@ -81,5 +79,34 @@ class BlackjackGameTest {
 			expectedPlayers.add(player);
 		}
 		return expectedPlayers;
+	}
+
+	@DisplayName("최종 승패 판단 성공")
+	@Test
+	void winOrlose() {
+		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+		blackjackGame.initializeHands();
+		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
+		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.SEVEN));
+
+		final OutcomeStatistics expectedOutcomeStatistics = getExpectedOutcomeStatistics();
+		final OutcomeStatistics outcomeStatistics =  blackjackGame.judgeOutcome();
+
+		assertThat(outcomeStatistics).isEqualTo(expectedOutcomeStatistics);
+	}
+
+	private OutcomeStatistics getExpectedOutcomeStatistics() {
+		Map<Outcome, Integer> dealerOutcome = new HashMap<>();
+		Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+
+		dealerOutcome.put(Outcome.WIN, 2);
+		dealerOutcome.put(Outcome.DRAW, 1);
+		dealerOutcome.put(Outcome.LOSE, 0);
+
+		playersOutcome.put("pobi", Outcome.LOSE);
+		playersOutcome.put("sakjung", Outcome.DRAW);
+		playersOutcome.put("mediumBear", Outcome.LOSE);
+
+		return new OutcomeStatistics(dealerOutcome, playersOutcome);
 	}
 }

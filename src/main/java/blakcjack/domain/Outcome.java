@@ -4,7 +4,11 @@ import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
 
 public enum Outcome {
-	WIN, DRAW, LOSE;
+	WIN,
+	DRAW,
+	LOSE;
+
+	private static final int MAXIMUM_INDEX = 2;
 
 	public static Outcome of(final Player player, final Dealer dealer) {
 		if (hasAnyBust(player, dealer)) {
@@ -32,5 +36,9 @@ public enum Outcome {
 			return LOSE;
 		}
 		return DRAW;
+	}
+
+	public Outcome getDealerOutcome() {
+		return values()[MAXIMUM_INDEX - ordinal()];
 	}
 }

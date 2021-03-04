@@ -28,10 +28,6 @@ public class BlackjackGame {
 		}
 	}
 
-	public List<Participant> getPlayers() {
-		return Collections.unmodifiableList(players);
-	}
-
 	public void distributeOneCard(final Participant player) {
 		player.receiveCard(deck.drawCard());
 	}
@@ -45,7 +41,34 @@ public class BlackjackGame {
 		distributeOneCard(dealer);
 	}
 
+	public List<Participant> getPlayers() {
+		return Collections.unmodifiableList(players);
+	}
+
 	public Dealer getDealer() {
 		return (Dealer) dealer;
+	}
+
+	public OutcomeStatistics judgeOutcome() {
+		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+		final Map<Outcome, Integer> dealerOutcome = new HashMap<>();
+		initializeDealerOutcome(dealerOutcome);
+
+		for (final Participant player : players) {
+			final Outcome playerOutcome = Outcome.of((Player) player, (Dealer) dealer);
+			playersOutcome.put(player.getName(), playerOutcome);
+			updateDealerOutcome(dealerOutcome, playerOutcome);
+		}
+		return new OutcomeStatistics(dealerOutcome, playersOutcome);
+	}
+
+	private void updateDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final Outcome playerOutcome) {
+		dealerOutcome.computeIfPresent(playerOutcome.getDealerOutcome(), (outcome, count) -> count + 1);
+	}
+
+	private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
+		dealerOutcome.put(Outcome.WIN, 0);
+		dealerOutcome.put(Outcome.DRAW, 0);
+		dealerOutcome.put(Outcome.LOSE, 0);
 	}
 }
