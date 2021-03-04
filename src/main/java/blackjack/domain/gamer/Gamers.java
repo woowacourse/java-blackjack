@@ -13,6 +13,10 @@ public class Gamers {
         this.dealer = dealer;
     }
 
+    public void compare() {
+
+    }
+
     public List<Player> players() {
         return players;
     }
