@@ -1,9 +1,8 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import blackjack.domain.MatchResult;
+
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -32,5 +31,14 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public Map<Player, MatchResult> verifyResultByCompareScore(Dealer dealer) {
+        Map<Player, MatchResult> result = new HashMap<>();
+        //result.put(new Player("air"), MatchResult.WIN);
+        for (Player player : players) {
+            result.put(player, dealer.matchGame(player));
+        }
+        return result;
     }
 }
