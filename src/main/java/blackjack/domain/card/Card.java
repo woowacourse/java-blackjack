@@ -12,8 +12,20 @@ public class Card {
         this.rank = rank;
     }
 
+    public String getRankInitial() {
+        return rank.getInitial();
+    }
+
     public int getRankValue() {
-        return rank.getValue();
+        return rank.getNumber();
+    }
+
+    public String getSuitName() {
+        return suit.getName();
+    }
+
+    public boolean isAce() {
+        return Rank.ACE.equals(rank);
     }
 
     @Override

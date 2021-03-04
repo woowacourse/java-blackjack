@@ -14,6 +14,10 @@ public class Deck {
         this.deck = new ArrayList<>(deck);
     }
 
+    public Card drawCard() {
+        return deck.remove(0);
+    }
+
     public static Deck createShuffledDeck() {
         List<Card> deck = createDeck();
         Collections.shuffle(deck);

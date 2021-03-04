@@ -27,4 +27,24 @@ public class CardHand {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int playerSum() {
+        int result = 0;
+        for (Card card : cards) {
+            result += card.getRankValue();
+        }
+        return result;
+    }
+
+    public int dealerSum() {
+        int result = 0;
+        for (Card card : cards) {
+            if (card.isAce()) {
+                result += 11;
+                continue;
+            }
+            result += card.getRankValue();
+        }
+        return result;
+    }
 }

@@ -22,21 +22,21 @@ class CardTest {
 
     private static Stream<Arguments> equals_testcase() {
         return Stream.of(
-                Arguments.of(Suit.SPACE, Rank.ONE),
-                Arguments.of(Suit.SPACE, Rank.KING),
-                Arguments.of(Suit.DIAMOND, Rank.ONE),
+                Arguments.of(Suit.SPADE, Rank.ACE),
+                Arguments.of(Suit.SPADE, Rank.KING),
+                Arguments.of(Suit.DIAMOND, Rank.ACE),
                 Arguments.of(Suit.DIAMOND, Rank.KING),
-                Arguments.of(Suit.HEART, Rank.ONE),
+                Arguments.of(Suit.HEART, Rank.ACE),
                 Arguments.of(Suit.HEART, Rank.KING),
-                Arguments.of(Suit.CLOVER, Rank.ONE),
+                Arguments.of(Suit.CLOVER, Rank.ACE),
                 Arguments.of(Suit.CLOVER, Rank.KING)
         );
     }
 
     @Test
     void equals_fail() {
-        Card card = new Card(Suit.SPACE, Rank.ONE);
-        Card card1 = new Card(Suit.SPACE, Rank.TWO);
+        Card card = new Card(Suit.SPADE, Rank.ACE);
+        Card card1 = new Card(Suit.SPADE, Rank.TWO);
 
         assertThat(card).isNotEqualTo(card1);
     }
