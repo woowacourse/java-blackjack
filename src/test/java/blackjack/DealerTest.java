@@ -30,7 +30,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러가 참가자에게 상속받았는지 확인")
     void extend() {
-        Player player = new Dealer("딜러");
+        final Player player = new Dealer("딜러");
         player.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
         assertThat(player.getCardCount()).isEqualTo(1);
     }
@@ -71,8 +71,8 @@ public class DealerTest {
     @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
     void calculateMyCardSumWhenAceIsTwo(final String input, final int expected) {
         final String[] inputs = input.split(",");
-        for (String number : inputs) {
-            CardNumber cardNumber = CardNumber.valueOf(number);
+        for (final String number : inputs) {
+            final CardNumber cardNumber = CardNumber.valueOf(number);
             dealer.receiveCard(new Card(cardNumber, CardType.CLOVER));
         }
         Assertions.assertThat(dealer.calculate()).isEqualTo(expected);

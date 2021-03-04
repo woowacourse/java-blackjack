@@ -53,20 +53,20 @@ public class Player {
                 .sum();
     }
 
-    private int calculateMultipleCase(int aceCount) {
+    private int calculateMultipleCase(final int aceCount) {
         final List<Integer> possibleSum = new ArrayList<>();
         final int sumExceptAce = myCards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getCardNumber)
                 .sum();
 
-        for (int aceSum : calculateAceSum(aceCount)) {
+        for (final int aceSum : calculateAceSum(aceCount)) {
             possibleSum.add(sumExceptAce + aceSum);
         }
         return findMaxPossibleValue(possibleSum);
     }
 
-    private List<Integer> calculateAceSum(int aceCount) {
+    private List<Integer> calculateAceSum(final int aceCount) {
         int oneNormalRestExtra = CardNumber.ACE.getValue();
         int allExtra = CardNumber.ACE.getExtraValue();
 

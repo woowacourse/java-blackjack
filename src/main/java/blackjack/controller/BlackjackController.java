@@ -30,14 +30,14 @@ public class BlackjackController {
     private List<Player> playerSetUp() {
         final List<String> names = InputView.requestName();
         final List<Player> players = new ArrayList<>();
-        for (String name : names) {
+        for (final String name : names) {
             players.add(new Player(name));
         }
         return players;
     }
 
     private void distributeCard(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
-        for (Player player : players) {
+        for (final Player player : players) {
             player.receiveCard(cardDeck.distribute());
             player.receiveCard(cardDeck.distribute());
         }
@@ -46,7 +46,7 @@ public class BlackjackController {
     }
 
     private void showDistributeStatus(final List<Player> players) {
-        String status = players.stream()
+        final String status = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         OutputView.distributeMessage(status);
@@ -60,12 +60,12 @@ public class BlackjackController {
     }
 
     private void playerGameProgress(final List<Player> players, final CardDeck cardDeck) {
-        for (Player player : players) {
+        for (final Player player : players) {
             singlePlayerGameProgress(cardDeck, player);
         }
     }
 
-    private void singlePlayerGameProgress(CardDeck cardDeck, Player player) {
+    private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
         if (END_GAME_MARK.equals(askPlayerMoreCard(player))) {
             OutputView.showPlayerCard(player.getName(), player.getMyCards());
             return;
@@ -78,9 +78,9 @@ public class BlackjackController {
         singlePlayerGameProgress(cardDeck, player);
     }
 
-    private String askPlayerMoreCard(Player player) {
+    private String askPlayerMoreCard(final Player player) {
         try {
-            String userInput = InputView.askMoreCard(player.getName());
+            final String userInput = InputView.askMoreCard(player.getName());
             return validateMoreCardOption(userInput);
         } catch (IllegalArgumentException e) {
             OutputView.getErrorMessage(e.getMessage());
@@ -88,14 +88,14 @@ public class BlackjackController {
         }
     }
 
-    private String validateMoreCardOption(String userInput) {
+    private String validateMoreCardOption(final String userInput) {
         if ("y".equals(userInput) || "n".equals(userInput)) {
             return userInput;
         }
         throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
     }
 
-    private boolean isBust(Player player) {
+    private boolean isBust(final Player player) {
         if (player.isBust()) {
             OutputView.bustMessage();
             return true;
@@ -113,7 +113,7 @@ public class BlackjackController {
     private void showFinalCardResult(final List<Player> players, final Dealer dealer) {
         OutputView.displayNewLine();
         OutputView.showCardResult(dealer.getName(), dealer.getMyCards(), dealer.calculate());
-        for (Player player : players) {
+        for (final Player player : players) {
             OutputView.showCardResult(player.getName(), player.getMyCards(), player.calculate());
         }
     }
@@ -128,7 +128,7 @@ public class BlackjackController {
         }
     }
 
-    private void decideWinner(Dealer dealer, Player player) {
+    private void decideWinner(final Dealer dealer, final Player player) {
         if (dealer.isWinner(player.calculate()) || player.isBust()) {
             player.lose();
             dealer.increaseWinCount();

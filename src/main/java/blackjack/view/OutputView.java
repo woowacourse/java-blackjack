@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static final String ERROR_MARK = "[Error] ";
+    private static final String ERROR_MARK = "[Error] ";
     private static final String NEWLINE = System.getProperty("line.separator");
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
     private static final String DEALER_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -41,12 +41,12 @@ public class OutputView {
         System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name, cardStatus, result);
     }
 
-    public static void showGameResult(String name, int winCount, int loseCount) {
+    public static void showGameResult(final String name, final int winCount, final int loseCount) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
         System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name, winCount, loseCount);
     }
 
-    public static void showPlayerGameResult(String name, boolean winner) {
+    public static void showPlayerGameResult(final String name, final boolean winner) {
         if (winner) {
             System.out.println(name + WIN_MESSAGE);
             return;

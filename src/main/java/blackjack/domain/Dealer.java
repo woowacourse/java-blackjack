@@ -12,7 +12,7 @@ public class Dealer extends Player {
         return (calculate() <= MAX_SUM_FOR_MORE_CARD);
     }
 
-    public boolean isWinner(int playerResult) {
+    public boolean isWinner(final int playerResult) {
         return (playerResult <= calculate() && !isBust());
     }
 

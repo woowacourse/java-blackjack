@@ -13,7 +13,7 @@ public class CardDeck {
     }
 
     private void initialize() {
-        for (CardType type : CardType.values()) {
+        for (final CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
                     .forEach(number -> cards.add(new Card(number, type)));
         }

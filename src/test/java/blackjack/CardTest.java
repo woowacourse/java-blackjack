@@ -20,10 +20,10 @@ public class CardTest {
     @Test
     @DisplayName("해당 카드가 ACE 넘버인지 확인")
     void isAce() {
-        Card aceCard = new Card(CardNumber.ACE, CardType.CLOVER);
+        final Card aceCard = new Card(CardNumber.ACE, CardType.CLOVER);
         assertThat(aceCard.isAce()).isTrue();
 
-        Card notAceCard = new Card(CardNumber.TWO, CardType.CLOVER);
+        final Card notAceCard = new Card(CardNumber.TWO, CardType.CLOVER);
         assertThat(notAceCard.isAce()).isFalse();
     }
 }

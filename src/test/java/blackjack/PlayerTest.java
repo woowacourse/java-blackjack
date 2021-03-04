@@ -58,8 +58,8 @@ public class PlayerTest {
     @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
     void calculateMyCardSumWhenAceIsTwo(final String input, final int expected) {
         final String[] inputs = input.split(",");
-        for (String number : inputs) {
-            CardNumber cardNumber = CardNumber.valueOf(number);
+        for (final String number : inputs) {
+            final CardNumber cardNumber = CardNumber.valueOf(number);
             player.receiveCard(new Card(cardNumber, CardType.CLOVER));
         }
         Assertions.assertThat(player.calculate()).isEqualTo(expected);
