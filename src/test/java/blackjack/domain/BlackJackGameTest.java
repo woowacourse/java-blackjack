@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class BlackJackGameTest {
         //given
         User user = new User("욘");
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(user));
+        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(new Users(Arrays.asList(user)));
         //then
         assertThat(blackJackGame.getDealerHandSize()).isEqualTo(2);
         assertThat(user.handSize()).isEqualTo(2);
@@ -29,7 +30,7 @@ public class BlackJackGameTest {
         User secondUser = new User("웨지");
         User thirdUser = new User("포비");
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(firstUser,secondUser,thirdUser));
+        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(new Users(Arrays.asList(firstUser,secondUser,thirdUser)));
         //then
         assertThat(blackJackGame.findFirstCanPlayUser()).isEqualTo(firstUser);
 

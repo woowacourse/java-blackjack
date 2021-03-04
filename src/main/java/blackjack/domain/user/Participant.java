@@ -5,6 +5,7 @@ import blackjack.domain.user.status.Hand;
 import blackjack.domain.user.status.Status;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     protected final Hand hand;
@@ -15,6 +16,7 @@ public abstract class Participant {
         this.hand = Hand.createEmptyHand();
         this.name = name;
     }
+
     public void firstDraw(Card first, Card second) {
         drawCard(first);
         drawCard(second);
@@ -33,11 +35,15 @@ public abstract class Participant {
         return hand.size();
     }
 
-    public boolean isSameStatus(Status status){
+    public boolean isSameStatus(Status status) {
         return this.status == status;
     }
 
-    public void changeStatus(){
+    public boolean isNotStatus(Status status) {
+        return this.status != status;
+    }
+
+    public void changeStatus() {
         status = Status.of(hand.calculateScore());
     }
 
@@ -47,5 +53,18 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Participant)) return false;
+        Participant that = (Participant) o;
+        return getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

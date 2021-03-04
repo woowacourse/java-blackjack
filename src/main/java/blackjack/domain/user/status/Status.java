@@ -19,7 +19,7 @@ public enum Status {
         this.condition = condition;
     }
 
-    public static Status of(int totalScore){
+    public static Status of(int totalScore) {
         return Arrays.stream(Status.values())
                 .filter(status -> status.condition.test(totalScore))
                 .findAny()

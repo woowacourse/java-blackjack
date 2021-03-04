@@ -21,8 +21,8 @@ public enum Value {
     ACE("A", 11);
 
     private static List<Value> values = Arrays.stream(Value.values())
-                                            .filter(value -> value != ACE_OF_ONE)
-                                            .collect(Collectors.toList());
+            .filter(value -> value != ACE_OF_ONE)
+            .collect(Collectors.toList());
 
     private final String letter;
     private final int score;
@@ -32,15 +32,15 @@ public enum Value {
         this.score = score;
     }
 
+    public static List<Value> of() {
+        return values;
+    }
+
     public int getScore() {
         return score;
     }
 
     public String getLetter() {
         return letter;
-    }
-
-    public static List<Value> of() {
-        return values;
     }
 }
