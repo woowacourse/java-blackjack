@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.GameResultDto;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -15,6 +16,7 @@ public class OutputView {
     private static final String HAND_FORMAT = " 카드: ";
     private static final int DEALER_HIT_LIMIT = 16;
     private static final String SCORE_FORMAT = " - 결과: ";
+    private static final String BLANK = " ";
 
     public static void printInitGame(final List<Player> players) {
         System.out.printf(INIT_GAME_FORMAT, joinPlayerNames(players));
@@ -27,7 +29,7 @@ public class OutputView {
             .collect(Collectors.joining(DELIMITER));
     }
 
-    public static void printResult(List<Player> players, Dealer dealer) {
+    public static void printHandResult(List<Player> players, Dealer dealer) {
         System.out.print(joinDealerResult(dealer));
         System.out.print(joinPlayersResult(players));
     }
@@ -56,11 +58,11 @@ public class OutputView {
         return sb.toString();
     }
 
-    public static void printDealer(final Dealer dealer) {
+    public static void printDealerHand(final Dealer dealer) {
         printCards(dealer);
     }
 
-    public static void printPlayers(final List<Player> players) {
+    public static void printPlayersHand(final List<Player> players) {
         players.forEach(OutputView::printCards);
     }
 
@@ -93,6 +95,21 @@ public class OutputView {
     public static void printDealerHit() {
         System.out.print(NEW_LINE);
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_HIT_LIMIT);
+        System.out.println(NEW_LINE);
+    }
+
+    public static void printGameResult(GameResultDto gameResultDto) {
+        System.out.println("## 최종 승패");
+        System.out.print("딜러: ");
+        gameResultDto.getDealerResult().entrySet().forEach(entry ->
+           System.out.print(entry.getValue() + entry.getKey().getName() + BLANK));
+        System.out.print(NEW_LINE);
+        gameResultDto.getPlayerResult().entrySet().forEach(entry ->
+            System.out.println(entry.getKey() + ": " + entry.getValue().getName()));
+    }
+
+    public static void printPlayerBurst(final String playerName) {
+        System.out.printf("%s의 점수 총합이 21점을 넘어 버스트 되었습니다.", playerName);
         System.out.print(NEW_LINE);
     }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Player {
 
+    private static final int MAX_SCORE = 21;
+
     private final Name name;
     private final Hand hand;
 
@@ -27,5 +29,9 @@ public class Player {
 
     public List<Card> getHand() {
         return hand.toList();
+    }
+
+    public boolean isNotBust() {
+        return getTotalScore() <= MAX_SCORE;
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackManager;
+import blackjack.domain.GameResultDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -15,13 +16,16 @@ public class BlackjackController {
 
         BlackjackManager.initGame(players, dealer);
         OutputView.printInitGame(players.toList());
-        OutputView.printDealer(dealer);
-        OutputView.printPlayers(players.toList());
+        OutputView.printDealerHand(dealer);
+        OutputView.printPlayersHand(players.toList());
 
         for (Player player : players.toList()) {
-            while (InputView.getHitOrStay(player.getName())) {
+            while (player.isNotBust() && InputView.getHitOrStay(player.getName())) {
                 player.receiveCard(dealer.giveCard());
                 OutputView.printCards(player);
+            }
+            if (!player.isNotBust()) {
+                OutputView.printPlayerBurst(player.getName());
             }
             OutputView.printCards(player);
         }
@@ -31,7 +35,8 @@ public class BlackjackController {
             OutputView.printDealerHit();
         }
 
-        OutputView.printResult(players.toList(), dealer);
-
+        OutputView.printHandResult(players.toList(), dealer);
+        GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
+        OutputView.printGameResult(gameResultDto);
     }
 }
