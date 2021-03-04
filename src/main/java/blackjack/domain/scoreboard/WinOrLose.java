@@ -37,9 +37,13 @@ public enum WinOrLose {
     }
 
     private static WinOrLose decideWinOrLoseWhenDealerIsNotBurst(User user, Dealer dealer) {
+        if (user.isSameStatus(Status.BURST)) {
+            return LOSE;
+        }
+
         return Arrays.stream(values())
                 .filter(winOrLose -> winOrLose.scoreCompareCondition.test(dealer.calculateScore(), user.calculateScore()))
-                .findAny()
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NONE_MATCH_CONDITION_ERROR_MSG));
     }
 
