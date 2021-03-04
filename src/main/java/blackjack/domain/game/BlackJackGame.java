@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-
+    private final String SEPARATOR_OF_NAME_INPUT = ",";
     private final Deck deck = new Deck();
     private Dealer dealer;
 
@@ -21,7 +21,7 @@ public class BlackJackGame {
     }
 
     private List<Name> splitAndParseToNames(String nameLine){
-        return Arrays.asList(nameLine.split(","))
+        return Arrays.asList(nameLine.split(SEPARATOR_OF_NAME_INPUT))
                 .stream().map(Name::new)
                 .collect(Collectors.toList());
     }
