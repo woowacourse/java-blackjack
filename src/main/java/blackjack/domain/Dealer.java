@@ -3,12 +3,14 @@ package blackjack.domain;
 import java.util.List;
 
 public class Dealer extends Playable {
+    public static final int DEALER_HIT = 16;
+
     public Dealer(List<Card> cards) {
         super("딜러",cards);
     }
 
     @Override
     public boolean isAvailableToTake() {
-        return sumCards() <= 17;
+        return sumCards() <= DEALER_HIT;
     }
 }

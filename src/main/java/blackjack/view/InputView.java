@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner sc = new Scanner(System.in);
+    public static final String YES = "y";
+    public static final String NO = "n";
 
     private InputView() {
     }
@@ -16,10 +18,10 @@ public class InputView {
     public static boolean requestOneMoreCard(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String answer = sc.nextLine();
-        if ("y".equals(answer)) {
+        if (YES.equals(answer)) {
             return true;
         }
-        if ("n".equals(answer)) {
+        if (NO.equals(answer)) {
             return false;
         }
         throw new IllegalArgumentException();

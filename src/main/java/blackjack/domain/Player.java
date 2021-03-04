@@ -25,6 +25,6 @@ public class Player extends Playable {
 
     @Override
     public boolean isAvailableToTake() {
-        return sumCards() <= 21;
+        return sumCards() <= BLACKJACK;
     }
 }

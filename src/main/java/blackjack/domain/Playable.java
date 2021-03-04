@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Playable {
+    public static final int BLACKJACK = 21;
+    public static final int ACE_DIFFERENCE = 10;
     private final String name;
     private final Cards cards;
 
@@ -36,20 +38,20 @@ public abstract class Playable {
     }
 
     private boolean lose(int counterpart, int playerSum) {
-        if (counterpart <= 21 && playerSum > 21) {
+        if (counterpart <= BLACKJACK && playerSum > BLACKJACK) {
             return true;
         }
-        if (counterpart <= 21 && counterpart > playerSum) {
+        if (counterpart <= BLACKJACK && counterpart > playerSum) {
             return true;
         }
         return false;
     }
 
     private boolean win(int counterpart, int playerSum) {
-        if (counterpart > 21 && playerSum <= 21) {
+        if (counterpart > BLACKJACK && playerSum <= BLACKJACK) {
             return true;
         }
-        if (playerSum <= 21 && counterpart < playerSum) {
+        if (playerSum <= BLACKJACK && counterpart < playerSum) {
             return true;
         }
         return false;
@@ -67,9 +69,9 @@ public abstract class Playable {
     public int sumCardsForResult() {
         List<Card> cardValues = cards.getUnmodifiableList();
         int aceCount = (int) cardValues.stream().filter(Card::isAce).count();
-        int sum = cardValues.stream().mapToInt(Card::getScore).sum() + aceCount * 10;
-        while (sum > 21 && aceCount > 0) {
-            sum -= 10;
+        int sum = cardValues.stream().mapToInt(Card::getScore).sum() + aceCount * ACE_DIFFERENCE;
+        while (sum > BLACKJACK && aceCount > 0) {
+            sum -= ACE_DIFFERENCE;
             aceCount--;
         }
         return sum;
