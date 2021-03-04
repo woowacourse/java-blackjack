@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DealerTest {
-
     @DisplayName("히트 - 딜러는 카드를 받는다.")
     @Test
     void hitCard() {

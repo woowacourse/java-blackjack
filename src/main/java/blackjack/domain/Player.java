@@ -19,11 +19,11 @@ public class Player extends User {
     }
 
     public ResultType decisionResult(int score) {
-        if(this.getScore() > score) {
+        if (this.getScore() > score) {
             return ResultType.WIN;
         }
 
-        if(this.getScore() < score) {
+        if (this.getScore() < score) {
             return ResultType.LOSE;
         }
 

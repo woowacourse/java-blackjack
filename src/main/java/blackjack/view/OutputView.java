@@ -75,9 +75,9 @@ public class OutputView {
         Map<ResultType, Integer> countMap = new HashMap<>();
         Arrays.stream(ResultType.values())
                 .forEach(value -> countMap.put(value, 0));
-        
+
         checkWinOrLose.values()
-                .forEach( value -> countMap.put(value, countMap.get(value) + 1));
+                .forEach(value -> countMap.put(value, countMap.get(value) + 1));
 
         System.out.printf("딜러: %d승 %d무 %d패 \n",
                 countMap.get(ResultType.LOSE),
@@ -85,7 +85,6 @@ public class OutputView {
                 countMap.get(ResultType.WIN)
         );
     }
-
 
     public static void printDealerGetNewCardsMessage() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");

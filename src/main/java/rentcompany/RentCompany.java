@@ -22,10 +22,7 @@ public class RentCompany {
 
     public String generateReport() {
         StringBuilder sb = new StringBuilder();
-        cars.stream()
-                .forEach(item -> {
-                    sb.append(String.format(STRING_FORMAT, item.getName(), item.getChargeQuantity()));
-                });
+        cars.forEach(item -> sb.append(String.format(STRING_FORMAT, item.getName(), item.getChargeQuantity())));
         return sb.toString();
     }
 }

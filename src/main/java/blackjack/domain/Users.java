@@ -19,7 +19,7 @@ public class Users {
     public List<Player> getPlayers() {
         return users.stream()
                 .filter(user -> user instanceof Player)
-                .map(user -> (Player)user)
+                .map(user -> (Player) user)
                 .collect(Collectors.toList());
     }
 
@@ -28,7 +28,7 @@ public class Users {
     }
 
     public Dealer getDealer() {
-        return (Dealer)this.users.stream()
+        return (Dealer) this.users.stream()
                 .filter(user -> user instanceof Dealer)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
@@ -37,6 +37,6 @@ public class Users {
     public Map<User, ResultType> checkWinOrLose(int score) {
         return users.stream()
                 .filter(user -> user instanceof Player)
-                .collect(Collectors.toMap(player -> player, player -> ((Player)player).decisionResult(score)));
+                .collect(Collectors.toMap(player -> player, player -> ((Player) player).decisionResult(score)));
     }
 }

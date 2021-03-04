@@ -8,6 +8,7 @@ public abstract class Car {
     public Car(int tripDistance) {
         this.tripDistance = tripDistance;
     }
+
     /**
      * 리터당 이동 거리. 즉, 연비
      */
