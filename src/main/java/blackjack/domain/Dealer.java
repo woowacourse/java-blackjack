@@ -11,7 +11,7 @@ public class Dealer extends User {
         this.name = DEALER_NAME;
     }
 
-    public boolean isDealerDrawScore(){
+    public boolean isDealerDrawScore() {
         return this.getScore() < DEALER_REDRAW_STANDARD &&
                 this.getScore() != Card.BUST;
     }

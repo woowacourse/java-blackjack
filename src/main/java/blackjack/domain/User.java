@@ -54,14 +54,14 @@ public abstract class User {
         return false;
     }
 
-    private int checkBust(int score){
-        if(score > BLACKJACK_SCORE) {
+    private int checkBust(int score) {
+        if (score > BLACKJACK_SCORE) {
             return Card.BUST;
         }
         return score;
     }
 
-    private int checkAce(int score){
+    private int checkAce(int score) {
         if (this.cards.stream()
                 .anyMatch(Card::isAce) && score <= ACE_CHECK_SCORE) {
             return TEN_SCORE;

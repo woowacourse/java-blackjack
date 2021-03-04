@@ -6,9 +6,6 @@ public class StringUtil {
     }
 
     public static boolean isBlank(String name) {
-        if ("".equals(deleteWhiteSpaces(name))) {
-            return true;
-        }
-        return false;
+        return "".equals(deleteWhiteSpaces(name));
     }
 }

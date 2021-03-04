@@ -25,8 +25,8 @@ public class BlackJackController {
             OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
             return;
         }
-        users.getPlayers()
-                .forEach(this::playGameForEachPlayer);
+        users.getPlayers().forEach(this::playGameForEachPlayer);
+
         while (dealer.isDealerDrawScore()) {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
