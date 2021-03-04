@@ -11,22 +11,13 @@ import static blackjack.domain.participant.Player.THRESHOLD_OF_BURST;
 
 public abstract class Gamer {
     public static final String COMMA_DELIMITER = ",";
-    private static final String ERROR_MESSAGE_WITH_SPACE = "이름에 공백이 포함됩니다.";
-    private static final String SPACE = " ";
 
-    protected final Cards cards;
-    private final String name;
+    private final Cards cards;
+    private final PlayerName name;
 
     protected Gamer(String name) {
-        validateSpace(name);
-        this.name = name;
+        this.name = new PlayerName(name);
         cards = new Cards();
-    }
-
-    private void validateSpace(String name) {
-        if (name.contains(SPACE)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_WITH_SPACE);
-        }
     }
 
     public void receiveCard(Card card) {
@@ -54,7 +45,7 @@ public abstract class Gamer {
     public abstract Boolean continueDraw(String draw);
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public List<Card> toList() {
