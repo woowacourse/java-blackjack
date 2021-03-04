@@ -46,14 +46,11 @@ public class OutputView {
     }
 
     public static void showPlayerGameResult(String name, boolean winner) {
-        System.out.println(name + winningMark(winner));
-    }
-
-    private static String winningMark(boolean winner) {
         if (winner) {
-            return WIN_MESSAGE;
+            System.out.println(name + WIN_MESSAGE);
+            return;
         }
-        return LOSE_MESSAGE;
+        System.out.println(name + LOSE_MESSAGE);
     }
 
     public static void bustMessage() {
