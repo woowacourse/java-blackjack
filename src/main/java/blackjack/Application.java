@@ -13,26 +13,31 @@ public class Application {
     public static void main(String[] args) {
         final CardDeck cardDeck = new RandomCardDeck();
         final Dealer dealer = new Dealer(cardDeck.initCards());
+        final Players players = new Players(InputView.getNames(), cardDeck);
+        final Participants participants = new Participants(players, dealer);
 
-        String namesInput = InputView.getNames();
-        Players players = new Players(namesInput, cardDeck);
-        Participants participants = new Participants(players, dealer);
         OutputView.printParticipantsCards(participants);
 
+        simulate(cardDeck, dealer, players);
+
+        OutputView.printResult(participants);
+    }
+
+    private static void simulate(CardDeck cardDeck, Dealer dealer, Players players) {
         for (Player player : players.values()) {
-            while (player.isAvailableToTake() && InputView.requestOneMoreCard(player.getName())) {
-                player.takeCard(cardDeck.pop());
-                OutputView.printCards(player);
-            }
+            turnForPlayer(cardDeck, player);
         }
 
         if (dealer.isAvailableToTake()) {
             dealer.takeCard(cardDeck.pop());
             OutputView.printDealerGetCard();
         }
+    }
 
-        OutputView.printParticipantsResults(participants);
-
-        OutputView.printWinOrLose(participants.finalResult());
+    private static void turnForPlayer(CardDeck cardDeck, Player player) {
+        while (player.isAvailableToTake() && InputView.requestOneMoreCard(player.getName())) {
+            player.takeCard(cardDeck.pop());
+            OutputView.printCards(player);
+        }
     }
 }

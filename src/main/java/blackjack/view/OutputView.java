@@ -28,16 +28,22 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printParticipantsResults(Participants participants) {
+    public static void printResult(Participants participants) {
+        printParticipantsResults(participants);
+        printWinOrLose(participants.finalResult());
+    }
+
+    private static void printParticipantsResults(Participants participants) {
         for (String result : participants.result()) {
             System.out.println(result);
         }
     }
 
-    public static void printWinOrLose(Map<String, String> results) {
+    private static void printWinOrLose(Map<String, String> results) {
         System.out.println("\n## 최종 승패");
         for (Map.Entry<String, String> entry : results.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
+
 }
