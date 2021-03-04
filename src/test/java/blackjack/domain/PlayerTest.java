@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,11 +46,12 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이가 카드를 받을 수 없는지 확인")
+    @DisplayName("플레이어가 카드를 받을 수 없는지 확인")
     void playerImpossibleReceiveCard() {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
         assertFalse(player.canReceiveCard());
     }
+
 }
