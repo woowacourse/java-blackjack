@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-
     private static final Scanner scanner = new Scanner(System.in);
-    public static final String HIT_VALUE_ERROR_MESSAGE = "Y 또는 N을 입력해 주세요.";
+    private static final String HIT_VALUE_ERROR_MESSAGE = "Y 또는 N을 입력해 주세요.";
+    private static final String COMMA = ",";
 
     private InputView() {
     }
 
     public static List<String> inputPlayers() {
-        return Arrays.asList(scanner.nextLine().split(","));
+        return Arrays.asList(scanner.nextLine().split(COMMA));
     }
 
     public static String getHitValue() {

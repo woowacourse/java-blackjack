@@ -10,6 +10,8 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class GameTable {
+    private static final String YES = "Y";
+
     private final Deck deck;
     private final Dealer dealer;
     private final List<Player> players;
@@ -57,7 +59,7 @@ public class GameTable {
     private boolean wantCard(Player player) {
         OutputView.printHitGuideMessage(player);
         String hitValue = InputView.getHitValue();
-        return hitValue.equals("Y");
+        return hitValue.equals(YES);
     }
 
     private void drawAtFirst() {

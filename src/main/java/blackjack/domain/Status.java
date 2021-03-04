@@ -5,7 +5,7 @@ public enum Status {
     DRAW("무"),
     LOSE("패");
 
-    public static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACK_JACK_SCORE = 21;
     private final String status;
 
     Status(String status) {

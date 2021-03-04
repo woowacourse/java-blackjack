@@ -9,7 +9,7 @@ import java.util.*;
 public class Dealer implements User {
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_HIT_THRESHOLD = 16;
-    public static final String COMMA = ", ";
+    private static final String COMMA = ",";
 
     private final Cards cards;
 

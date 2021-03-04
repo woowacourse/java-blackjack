@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
+    private static final String PLAYER_COUNT_ERROR_MESSAGE = "플레이어 수는 1명 이상이어야 합니다.";
+
     public void run() {
         try {
             OutputView.printPlayersGuideMessage();
@@ -23,7 +25,7 @@ public class BlackJackController {
 
     private void validatePlayersNumber(List<Player> players) {
         if (players.size() < 1) {
-            throw new IllegalArgumentException("플레이어 수는 1명 이상이어야 합니다.");
+            throw new IllegalArgumentException(PLAYER_COUNT_ERROR_MESSAGE);
         }
     }
 
