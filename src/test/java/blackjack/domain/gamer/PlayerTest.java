@@ -19,7 +19,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("pika");
+        player = new Player(new Name("pika"));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 생성 실패")
     void createPlayerFail() {
-        assertThatThrownBy(() -> new Player("")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Player(new Name(""))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

@@ -26,6 +26,7 @@ public class Players {
     private List<Player> splitInput(String players) {
         return Arrays.stream(players.split(DELIMITER))
                 .map(s -> s.replaceAll(BLANK, EMPTY))
+                .map(Name::new)
                 .map(Player::new)
                 .collect(toList());
     }

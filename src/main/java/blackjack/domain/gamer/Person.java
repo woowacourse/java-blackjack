@@ -5,7 +5,8 @@ import blackjack.domain.card.Cards;
 
 public abstract class Person {
     protected Cards cards;
-    protected String name;
+    protected Name name;
+//    protected String name;
 
     public abstract boolean canDraw();
 
@@ -17,7 +18,7 @@ public abstract class Person {
         return cards;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 }

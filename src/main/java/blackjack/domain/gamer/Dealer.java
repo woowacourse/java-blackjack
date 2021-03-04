@@ -4,7 +4,7 @@ import blackjack.domain.MatchResult;
 import blackjack.domain.card.Cards;
 
 public class Dealer extends Person {
-    public static final String DEALER_NAME = "딜러";
+    public static final Name DEALER_NAME = new Name("딜러");
     private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {

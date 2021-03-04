@@ -5,10 +5,7 @@ import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Person;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.*;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,13 +37,14 @@ public class OutputView {
     public static void distributeCardMessage(Players players) {
         String playerName = players.getPlayers().stream()
                 .map(Person::getName)
+                .map(Name::getName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.printf(DISTRIBUTE_MESSAGE_FORM + "%n", playerName);
     }
 
     public static void showDealerFirstCard(Dealer dealer) {
         Card card = dealer.getCurrentCards().peekCard();
-        System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName(), cardForm(card));
+        System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName().getName(), cardForm(card));
     }
 
     private static String cardForm(Card card) {
@@ -60,7 +58,7 @@ public class OutputView {
     }
 
     public static void askOneMoreCard(Player player) {
-        System.out.printf(ASK_DRAW_CARD_FORM + "%n", player.getName());
+        System.out.printf(ASK_DRAW_CARD_FORM + "%n", player.getName().getName());
     }
 
     public static void dealerReceiveOneCard() {
@@ -80,7 +78,7 @@ public class OutputView {
         String allCards = person.getCurrentCards().getCards().stream()
                 .map(OutputView::cardForm)
                 .collect(Collectors.joining(DELIMITER));
-        return String.format(CURRENT_CARD_FORM, person.getName(), allCards);
+        return String.format(CURRENT_CARD_FORM, person.getName().getName(), allCards);
     }
 
     public static void showFinalResult(BlackJackResult blackJackResult) {
@@ -92,7 +90,7 @@ public class OutputView {
 
     private static void showDealerFinalResult(BlackJackResult blackJackResult) {
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
-        System.out.print(DEALER_NAME + ": ");
+        System.out.print(DEALER_NAME.getName() + ": ");
         dealerResult.entrySet().stream()
                 .filter(entrySet -> entrySet.getValue() != 0)
                 .forEach(entrySet -> System.out.print(entrySet.getValue() + entrySet.getKey().getResult() + " "));
@@ -101,7 +99,7 @@ public class OutputView {
 
     private static void showPlayersFinalResult(BlackJackResult blackJackResult) {
         blackJackResult.getResult()
-                .forEach((key, value) -> System.out.printf(PLAYER_RESULT_FORM + "%n", key.getName(), value.getResult()));
+                .forEach((key, value) -> System.out.printf(PLAYER_RESULT_FORM + "%n", key.getName().getName(), value.getResult()));
     }
 
     public static void printNewLine() {

@@ -25,20 +25,22 @@ public class BlackJackResultTest {
     @Test
     @DisplayName("딜러의 승패 결과 확인")
     void getResultSucceed() {
-        Players players = new Players("pika");
+        Players players = new Players("pika, air");
         Dealer dealer = new Dealer();
-
 
         for (Player player : players.getPlayers()) {
             player.receiveCard(new Card(Shape.SPADE, Denomination.JACK));
             player.receiveCard(new Card(Shape.SPADE, Denomination.ACE));
         }
+
         dealer.receiveCard(new Card(Shape.SPADE, Denomination.FIVE));
         dealer.receiveCard(new Card(Shape.SPADE, Denomination.ACE));
+
         BlackJackResult blackJackResult = new BlackJackResult(players, dealer);
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
+
         assertThat(dealerResult.get(MatchResult.WIN)).isEqualTo(0);
-        assertThat(dealerResult.get(MatchResult.LOSE)).isEqualTo(1);
+        assertThat(dealerResult.get(MatchResult.LOSE)).isEqualTo(2);
         assertThat(dealerResult.get(MatchResult.DRAW)).isEqualTo(0);
     }
 }
