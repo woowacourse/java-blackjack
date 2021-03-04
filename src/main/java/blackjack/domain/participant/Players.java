@@ -7,10 +7,13 @@ import java.util.List;
 
 public class Players {
 
+    public static final int MAX_PLAYER = 7;
+
     private final List<Player> players;
 
     public Players(List<String> names) {
         this.players = convertToPlayers(names);
+        validatePlayerCount(names);
         validateDuplicate(names);
     }
 
@@ -20,6 +23,12 @@ public class Players {
             players.add(new Player(new Name(name)));
         }
         return players;
+    }
+
+    private void validatePlayerCount(List<String> names) {
+        if(names.size() > MAX_PLAYER) {
+            throw new IllegalArgumentException("최대 참여 플레이어는 7명입니다.");
+        }
     }
 
     private void validateDuplicate(List<String> names) {
