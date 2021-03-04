@@ -40,28 +40,31 @@ public class DealerTest {
         );
     }
 
-    @ParameterizedTest
     @DisplayName("딜러는 ace를 11로 계산하고, 카드의 합계가 16이하일 때 1장 더 받을 수 있다.")
+    @ParameterizedTest
     @MethodSource("generateData")
     public void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
         Cards cards = new Cards(inputCards);
         Dealer dealer = new Dealer();
+
         dealer.receiveCards(cards);
-        assertThat(dealer.isAbleToReceiveCard()).isEqualTo(result);
+        boolean isAbleToReceiveCard = dealer.isAbleToReceiveCard();
+
+        assertThat(isAbleToReceiveCard).isEqualTo(result);
     }
 
+    @DisplayName("딜러와 플레이어의 점수를 비교하고 결과를 반환한다.")
     @ParameterizedTest
     @MethodSource("generateCardAndResult")
-    @DisplayName("딜러와 플레이어의 점수를 비교하고 결과를 반환한다.")
     public void getStatisticResult(Symbol symbol, Result result) {
         Dealer dealer = new Dealer();
-        List<Player> players = Arrays.asList(
-                new Player("jason")
-        );
+        List<Player> players = Arrays.asList(new Player("jason"));
+
         dealer.receiveCard(new Card(Symbol.FIVE, Shape.CLOVER));
-        players.get(0)
-                .receiveCard(new Card(symbol, Shape.CLOVER));
-        Map<Result, Long> resultMap = dealer.getStatisticResult(players);
-        assertThat(resultMap.get(result)).isEqualTo(1L);
+        players.get(0).receiveCard(new Card(symbol, Shape.CLOVER));
+        Map<Result, Long> resultMap = dealer.getStatisticsResult(players);
+        long resultCounts = resultMap.get(result);
+
+        assertThat(resultCounts).isEqualTo(1L);
     }
 }
