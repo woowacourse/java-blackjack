@@ -1,37 +1,67 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.*;
-import org.junit.jupiter.api.BeforeEach;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Result;
+import blackjack.domain.card.Type;
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class PlayerTest {
 
-    Player player;
-    Deck deck;
-
-    @BeforeEach
-    void setUp() {
-        player = new Player();
-        deck = new Deck();
-    }
-
-    @DisplayName("카드 받기 테스트")
+    @DisplayName("카드 뭉치를 비교했을때 플레이어는 승리한다.")
     @Test
-    void draw() {
-        player.draw(deck, 0);
+    void testMakeResultWin() {
+        Player player = new Player("pobi");
+        player.draw(new Card(Type.HEART, Denomination.THREE));
+        player.draw(new Card(Type.HEART, Denomination.TEN));
 
-        assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.FOUR)
+            )
+        );
+
+        assertThat(player.matchCards(cards)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("게임 시작 시 받은 패를 확인한다.")
+    @DisplayName("카드 뭉치를 비교했을때 플레이어는 무승부가 된다.")
     @Test
-    void initializeDraw() {
-        player.initializeDraw(deck, 0);
+    void testMakeResultDraw() {
+        Player player = new Player("pobi");
+        player.draw(new Card(Type.HEART, Denomination.THREE));
+        player.draw(new Card(Type.HEART, Denomination.FOUR));
 
-        assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
-        assertThat(player.getCards().getCard(1)).isEqualTo(new Card(Type.SPADE, Denomination.TWO));
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.FOUR)
+            )
+        );
+
+        assertThat(player.matchCards(cards)).isEqualTo(Result.DRAW);
     }
+
+    @DisplayName("카드 뭉치를 비교했을때 플레이어는 패배한다.")
+    @Test
+    void testMakeResultLose() {
+        Player player = new Player("pobi");
+        player.draw(new Card(Type.HEART, Denomination.THREE));
+        player.draw(new Card(Type.HEART, Denomination.FOUR));
+
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.TEN)
+            )
+        );
+
+        assertThat(player.matchCards(cards)).isEqualTo(Result.LOSE);
+    }
+
 }
