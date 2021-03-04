@@ -1,9 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.GameManager;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -11,7 +8,9 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.enterNames(), dealer);
-
+        //TODO: 예외 잡기
+        //TODO: dealer랑 player 합치기
+        Deck.shuffleCards();
         drawCards(players, dealer);
         drawUntilPossible(dealer, players);
 
@@ -31,14 +30,14 @@ public class BlackJackController {
             playEachPlayer(player);
         }
         while (dealer.canReceiveCard()) {
-            dealer.keepDrawing();
+            dealer.receiveOneCard();
             OutputView.noticeDealerReceiveCard();
         }
     }
 
-    private void playEachPlayer(Player player) {
+    private void playEachPlayer(Player player) {//TODO: y/n 객체화
         while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player))) {
-            player.playEachPlayer();
+            player.receiveOneCard();
             OutputView.noticePlayerCards(player);
         }
     }

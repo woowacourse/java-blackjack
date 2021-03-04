@@ -1,6 +1,9 @@
 package blackjack.domain;
 
 public class Player extends Gamer {
+    private static final String ERROR_MESSAGE_OF_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";
+    private static final int THRESHOLD_OF_BURST = 21;
+
     private String result;
 
     public Player(String name) {
@@ -9,11 +12,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() < 21;
-    }
-
-    public void playEachPlayer() {
-        receiveCard(Deck.dealCard());
+        return this.calculateJudgingPoint() < THRESHOLD_OF_BURST;
     }
 
     @Override
@@ -24,18 +23,13 @@ public class Player extends Gamer {
     private Boolean isDrawCard(String draw) {
         String pattern = "[yn]";
         if (!draw.matches(pattern)) {
-            throw new IllegalArgumentException("y 혹은 n 만 입력하여 주십시오.");
+            throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);
         }
         return draw.equals("y");
     }
 
     public void matchResult(String result) {
         this.result = result;
-    }
-
-    @Override
-    public String getInfo() {
-        return getName() + "카드: " + getCards();
     }
 
     public String getResult() {

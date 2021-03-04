@@ -13,8 +13,8 @@ public class Card {
         return number.getNumber() + pattern.getName();
     }
 
-    public int givePoint() {
-        return number.giveNumber();
+    public int addPoint(int point) {
+        return number.addNumber(point);
     }
 
     public boolean isAce() {

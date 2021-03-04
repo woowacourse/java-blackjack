@@ -23,8 +23,8 @@ public enum CardNumber {
         this.number = number;
     }
 
-    public int giveNumber() {
-        return this.number;
+    public int addNumber(int point) {
+        return point + this.number;
     }
 
     public String getNumber() {

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Deck {
+    private static final int FIRST_INDEX = 0;
+
     private static final List<Card> DECK;
 
     static {
@@ -20,7 +22,7 @@ public class Deck {
     }
 
     public static Card dealCard() {
-        return DECK.remove(0);
+        return DECK.remove(FIRST_INDEX);
     }
 
     public static Card choiceCard(int index) {

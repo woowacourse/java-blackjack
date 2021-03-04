@@ -3,7 +3,10 @@ package blackjack.domain;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.Gamer.COMMA_DELIMITER;
+
 public class Players {
+    public static final String COLON_DELIMITER = ": ";
     private final List<Player> players;
     private final Gamer dealer;
 
@@ -19,7 +22,7 @@ public class Players {
 
     private List<Player> splitPlayers(String value) {
         List<Player> splitPlayers = new ArrayList<>();
-        for (String name : value.split(",")) {
+        for (String name : value.split(COMMA_DELIMITER)) {
             Player player = new Player(name);
             splitPlayers.add(player);
         }
@@ -32,23 +35,6 @@ public class Players {
             gamer.receiveCard(Deck.dealCard());
         }
     }
-
-//    public Boolean startTurn(Deck deck) {
-//        boolean continueTurn = false;
-//        for (Gamer gamer : players) {
-//            if (!gamer.canReceiveCard()) {
-//                continue;
-//            }
-//            if (gamer.continueDraw(deck)) {
-//                continueTurn = true;
-//            }
-//        }
-//        if (dealer.canReceiveCard()) {
-//            continueTurn = true;
-//            dealer.continueDraw(deck);
-//        }
-//        return continueTurn;
-//    }
 
     public String getDealerName() {
         return dealer.getName();
@@ -105,7 +91,7 @@ public class Players {
 
     public void makeEachPlayerResult() {
         for (Player player : players) {
-            System.out.println(player.getName() + ": " + player.getResult());
+            System.out.println(player.getName() + COLON_DELIMITER + player.getResult());
         }
     }
 }

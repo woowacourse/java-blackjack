@@ -6,17 +6,25 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Gamer {
+    public static final String COMMA_DELIMITER = ",";
+    private static final int COUNT_OF_DEALER_OPENING_CARDS = 1;
+    private static final int MAXIMUM_TO_ACE_IS_ELEVEN = 11;
+    private static final int MAKING_ACE_ELEVEN = 10;
+    private static final String COMMA_DELIMITER_TO_PRINT = ", ";
+    private static final String ERROR_MESSAGE_WITH_SPACE = "이름에 공백이 포함됩니다.";
+    private static final String SPACE = " ";
+
     private final String name;
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();//TODO: cards 분리
 
     protected Gamer(String name) {
         validateSpace(name);
         this.name = name;
     }
 
-    private static void validateSpace(String name) {
-        if (name.contains(" ")) {
-            throw new IllegalArgumentException("이름에 공백이 포함됩니다.");
+    private void validateSpace(String name) {
+        if (name.contains(SPACE)) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_WITH_SPACE);
         }
     }
 
@@ -27,7 +35,7 @@ public abstract class Gamer {
     protected int calculateJudgingPoint() {
         int point = 0;
         for (Card card : cards) {
-            point += card.givePoint();
+            point = card.addPoint(point);
         }
         return point;
     }
@@ -36,15 +44,19 @@ public abstract class Gamer {
         int point = 0;
         boolean havingAce = false;
         for (Card card : cards) {
-            point += card.givePoint();
+            point = card.addPoint(point);
             if (card.isAce()) {
                 havingAce = true;
             }
         }
-        if (point <= 11 && havingAce) {
-            point += 10;
+        if (point <= MAXIMUM_TO_ACE_IS_ELEVEN && havingAce) {
+            point += MAKING_ACE_ELEVEN;
         }
         return point;
+    }
+
+    public void receiveOneCard() {
+        receiveCard(Deck.dealCard());
     }
 
     public abstract boolean canReceiveCard();
@@ -56,18 +68,17 @@ public abstract class Gamer {
     }
 
     public String getCards() {
-        return cards.stream().map(Card::getPatternAndNumber).collect(Collectors.joining(", "));
+        return cards.stream()
+                .map(Card::getPatternAndNumber)
+                .collect(Collectors.joining(COMMA_DELIMITER_TO_PRINT));
     }
 
     public String getDealerCards() {
-        List<Card> dealerCards = new ArrayList<>();
-        for (int i = 0; i < cards.size() - 1; i++) {
-            dealerCards.add(cards.get(i));
-        }
-        return dealerCards.stream().map(Card::getPatternAndNumber).collect(Collectors.joining(", "));
+        return cards.stream()
+                .limit(COUNT_OF_DEALER_OPENING_CARDS)
+                .map(Card::getPatternAndNumber)
+                .collect(Collectors.joining(COMMA_DELIMITER));
     }
-
-    public abstract String getInfo();
 
     @Override
     public boolean equals(Object o) {
