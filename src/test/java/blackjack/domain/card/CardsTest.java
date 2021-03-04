@@ -1,25 +1,95 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class CardsTest {
 
-    @DisplayName("Ace 점수 계산은 플레이어에게 유리하게 된다.")
+    @DisplayName("카드 뭉치 두 개를 비교했을때, 승리 결과가 나온다.")
     @Test
-    void name() {
-        List<Card> playerCards = new ArrayList<>();
-        playerCards.add(new Card(Type.SPADE, Denomination.ACE));
-        playerCards.add(new Card(Type.HEART, Denomination.ACE));
-        playerCards.add(new Card(Type.DIAMOND, Denomination.ACE));
+    void testCompareWin() {
+        Cards cards1 = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.FIVE)
+            )
+        );
 
-        Cards cards = new Cards(playerCards);
+        Cards cards2 = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.SIX)
+            )
+        );
 
-        assertThat(cards.getScore()).isEqualTo(13);
+        assertThat(cards1.compare(cards2)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("카드 뭉치 두 개를 비교했을때 무승부 결과가 나온다.")
+    @Test
+    void testCompareDraw() {
+        Cards cards1 = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.FIVE)
+            )
+        );
+
+        Cards cards2 = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.FIVE)
+            )
+        );
+
+        assertThat(cards1.compare(cards2)).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("카드 뭉치 두 개를 비교했을때 실패 결과가 나온다.")
+    @Test
+    void testCompareLose() {
+        Cards cards1 = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.FIVE)
+            )
+        );
+
+        Cards cards2 = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.THREE)
+            )
+        );
+
+        assertThat(cards1.compare(cards2)).isEqualTo(Result.LOSE);
+    }
+
+
+    @DisplayName("카드 뭉치가 블랙잭인 것을 확인한다.")
+    @Test
+    void testIsBlackJack() {
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.TEN)
+            )
+        );
+        assertThat(cards.isBlackJack()).isEqualTo(true);
+    }
+
+    @DisplayName("카드 뭉치가 블랙잭이 아닌 것 확인한다.")
+    @Test
+    void testIsNotBlackJack() {
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.FOUR)
+            )
+        );
+        assertThat(cards.isBlackJack()).isEqualTo(false);
     }
 }
