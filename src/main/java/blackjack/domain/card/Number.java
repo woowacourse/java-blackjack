@@ -20,6 +20,7 @@ public enum Number {
     KING("K", 10);
 
     private static final Map<String, Number> NUMBERS = new HashMap<>();
+    private static final String WRONG_NUMBER_EXCEPTION_MESSAGE = "입력된 숫자는 없는 카드 숫자입니다! : %s";
 
     static {
         for (Number number : values()) {
@@ -44,7 +45,7 @@ public enum Number {
     public static Number from(String name) {
         Number number = NUMBERS.get(name);
         if (Objects.isNull(number)) {
-            throw new IllegalArgumentException(String.format("입력된 숫자는 없는 카드 숫자입니다! : %s", name));
+            throw new IllegalArgumentException(String.format(WRONG_NUMBER_EXCEPTION_MESSAGE, name));
         }
         return number;
     }

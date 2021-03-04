@@ -11,6 +11,7 @@ public enum Symbol {
     DIAMOND("다이아몬드");
 
     private static final Map<String, Symbol> SYMBOLS = new HashMap<>();
+    private static final String WRONG_SYMBOL_EXCEPTION_MESSAGE = "입력된 문양은 없는 카드문양입니다! : %s";
 
     static {
         for (Symbol symbol : values()) {
@@ -27,7 +28,7 @@ public enum Symbol {
     public static Symbol from(String name) {
         Symbol symbol = SYMBOLS.get(name);
         if (Objects.isNull(symbol)) {
-            throw new IllegalArgumentException(String.format("입력된 문양은 없는 카드문양입니다! : %s", name));
+            throw new IllegalArgumentException(String.format(WRONG_SYMBOL_EXCEPTION_MESSAGE, name));
         }
         return symbol;
     }
