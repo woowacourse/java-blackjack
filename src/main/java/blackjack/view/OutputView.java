@@ -41,6 +41,7 @@ public class OutputView {
 
     public static void printCardsOfPlayer(Player player) {
         System.out.println(makeCardsStringFormat(player));
+        System.out.println();
     }
 
 
