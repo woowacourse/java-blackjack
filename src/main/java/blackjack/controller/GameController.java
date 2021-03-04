@@ -28,7 +28,7 @@ public class GameController {
         addPlayersCardOrPass(round);
         addDealerCard(round);
         showFinalStatus(round);
-        OutputView.showOutComes(Result.finishGame(round.getDealer(), round.getPlayers()));
+        OutputView.showOutcomes(new Result(round.getDealer(), round.getPlayers()));
     }
 
     private void showFinalStatus(Round round) {
@@ -89,8 +89,15 @@ public class GameController {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+        isDuplicatePlayers(players);
         Round round = new Round(Card.getShuffledCards(), dealer, players);
         round.initialize();
         return round;
+    }
+
+    private void isDuplicatePlayers(List<Player> players) {
+        if (players.stream().distinct().count() != players.size()) {
+            throw new IllegalArgumentException("플레이어가 중복됩니다!");
+        }
     }
 }

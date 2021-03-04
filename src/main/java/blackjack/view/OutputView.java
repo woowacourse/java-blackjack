@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.Outcome;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -61,14 +61,13 @@ public class OutputView {
                         dto.getPlayerCardStatus().stream().collect(Collectors.joining(DELIMITER)))));
     }
 
-    public static void showOutComes(Map<String, List<Outcome>> outcomes) {
+    public static void showOutcomes(Result result) {
         System.out.println(RESULT_MESSAGE);
-        List<Outcome> dealerOutcomes = outcomes.remove(DEALER);
+        List<Outcome> dealerOutcomes = result.getDealerOutcomes();
         System.out.println(String.format(DEALER_RESULT_MESSAGE,
                 findWinCount(dealerOutcomes), findLoseCount(dealerOutcomes), findDrawCount(dealerOutcomes)));
-
-        outcomes.keySet().forEach(name ->
-                System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, name, outcomes.get(name).get(0).getName())));
+        result.getPlayerResults().forEach((name, outcome) ->
+                System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, name, outcome.getName())));
     }
 
     private static int findWinCount(List<Outcome> dealerOutcomes) {

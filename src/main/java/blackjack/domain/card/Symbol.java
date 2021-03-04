@@ -12,14 +12,13 @@ public enum Symbol {
 
     private static final Map<String, Symbol> SYMBOLS = new HashMap<>();
     private static final String WRONG_SYMBOL_EXCEPTION_MESSAGE = "입력된 문양은 없는 카드문양입니다! : %s";
+    private final String name;
 
     static {
         for (Symbol symbol : values()) {
             SYMBOLS.put(symbol.name, symbol);
         }
     }
-
-    private final String name;
 
     Symbol(String name) {
         this.name = name;

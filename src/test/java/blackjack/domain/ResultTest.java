@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.*;
+
 class ResultTest {
 
     private Dealer dealer;
@@ -44,30 +46,22 @@ class ResultTest {
     @DisplayName("Result 객체 정상 생성 테스트")
     @Test
     void result_generate_test() {
-        Result result = new Result();
-
-        Map<String, List<Outcome>> results = result.finishGame(dealer, players);
-
-        List<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
-        List<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
-
-        Assertions.assertThat(firstPlayerOutcomes).containsExactly(Outcome.WIN);
-        Assertions.assertThat(secondPlayerOutcomes).containsExactly(Outcome.LOSE);
+        Result result = new Result(dealer, players);
+        Map<String, Outcome> playerResults = result.getPlayerResults();
+        assertThat(playerResults.get("pobi")).isEqualTo(Outcome.WIN);
+        assertThat(playerResults.get("jason")).isEqualTo(Outcome.LOSE);
     }
 
     @DisplayName("딜러가 버스터 일때 승패 체크 테스트")
     @Test
     void result_buster_test() {
-        Result result = new Result();
         dealer.addCard(Card.of("스페이드", "10"));
         players.get(0).addCard(Card.of("스페이드", "9"));
 
-        Map<String, List<Outcome>> results = result.finishGame(dealer, players);
+        Result result = new Result(dealer, players);
+        Map<String, Outcome> playerResults = result.getPlayerResults();
 
-        List<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
-        List<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
-
-        Assertions.assertThat(firstPlayerOutcomes).containsExactly(Outcome.LOSE);
-        Assertions.assertThat(secondPlayerOutcomes).containsExactly(Outcome.WIN);
+        assertThat(playerResults.get("pobi")).isEqualTo(Outcome.LOSE);
+        assertThat(playerResults.get("jason")).isEqualTo(Outcome.WIN);
     }
 }

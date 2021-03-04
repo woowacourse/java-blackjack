@@ -31,7 +31,7 @@ public enum Outcome {
         return Arrays.stream(values())
                 .filter(value -> value.compareFunction.test(dealerScore, playerScore))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체크할수 없습니다!!"));
+                .orElseThrow(() -> new IllegalArgumentException("예측되는 승패를 찾을 수 없습니다."));
     }
 
     private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {

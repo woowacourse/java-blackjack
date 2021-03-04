@@ -26,9 +26,7 @@ public class Dealer {
     }
 
     public boolean isGameOver(int gameOverScore) {
-        int score = calculateScore(gameOverScore);
-
-        return (score > TURN_OVER_COUNT);
+        return calculateScore(gameOverScore) > TURN_OVER_COUNT;
     }
 
     public int calculateScore(int gameOverScore) {
