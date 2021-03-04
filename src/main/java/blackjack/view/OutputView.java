@@ -75,4 +75,14 @@ public class OutputView {
             System.out.println(player.getName() + NAME_SEPARATOR + player.getResult().getName());
         }
     }
+
+    public static void printDealerCards(String participantName, Cards cards) {
+        System.out.print(participantName + "카드: ");
+
+        Card card = cards.getCards().get(0);
+        List<String> results = new ArrayList<>();
+
+        results.add(card.getType().getName() + card.getDenomination().getName());
+        System.out.println(String.join(DELIMITER, results));
+    }
 }

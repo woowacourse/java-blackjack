@@ -56,7 +56,7 @@ public class BlackjackController {
     }
 
     private void printHandOutCardsResult(Dealer dealer, List<Player> players) {
-        OutputView.printParticipantCards(dealer.getName(), dealer.getCards());
+        OutputView.printDealerCards(dealer.getName(), dealer.getCards());
         for (Player player : players) {
             OutputView.printParticipantCards(player.getName(), player.getCards());
         }
