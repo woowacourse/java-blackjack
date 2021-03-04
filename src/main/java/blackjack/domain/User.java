@@ -15,7 +15,7 @@ public abstract class User {
     protected String name;
     protected List<Card> cards;
 
-    public User() {
+    protected User() {
         this.cards = new ArrayList<>();
     }
 
