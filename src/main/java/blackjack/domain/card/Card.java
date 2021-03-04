@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
+    private static final String NOT_EXIST_CARD_ERROR = "[ERROR] 존재하지 않는 카드입니다.";
 
     private final Denomination denomination;
     private final Shape shape;
@@ -20,7 +21,7 @@ public class Card {
             .stream()
             .filter(card -> card.denomination == denomination && card.shape == shape)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 카드입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_CARD_ERROR));
     }
 
     private static class CardCache {

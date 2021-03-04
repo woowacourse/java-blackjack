@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-
+    private static final String NOT_EXIST_CARD_IN_DECK = "[ERROR] 덱에 더이상 카드가 없습니다.";
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {
@@ -16,7 +16,7 @@ public class Deck {
 
     public Card draw() {
         if (cards.size() == 0) {
-            throw new ArrayIndexOutOfBoundsException("[ERROR] 덱에 더이상 카드가 없습니다.");
+            throw new ArrayIndexOutOfBoundsException(NOT_EXIST_CARD_IN_DECK);
         }
         return cards.remove(cards.size() - 1);
     }

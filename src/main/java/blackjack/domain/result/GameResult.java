@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameResult {
-
+    private static final String NOT_EXIST_DEALER = "[ERROR] 게임 결과에 딜러가 존재하지 않습니다.";
     private final Map<Player, List<ResultType>> gameResult;
 
     private GameResult(Map<Player, List<ResultType>> gameResult) {
@@ -26,7 +26,7 @@ public class GameResult {
             .stream()
             .filter(player -> player.getName().equals("딜러"))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 게임 결과에 딜러가 존재하지 않습니다."));
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER));
         return gameResult.get(dealer);
     }
 

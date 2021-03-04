@@ -13,7 +13,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
     private OutputView() {
     }
 
@@ -44,9 +43,9 @@ public class OutputView {
     }
 
     private static String cardToString(Card card) {
-        final String demomination = card.getDenomination().getName();
+        final String denomination = card.getDenomination().getName();
         final String shape = card.getShape().getName();
-        return demomination + shape;
+        return denomination + shape;
     }
 
     private static String playerInfoToString(Player player) {
