@@ -8,7 +8,7 @@ public enum Suit {
 
     private final String suit;
 
-    Suit(String suit) {
+    Suit(final String suit) {
         this.suit = suit;
     }
 

@@ -12,7 +12,6 @@ public class Card {
     private static final List<Card> cached;
 
     static {
-        // flatMap에 대한 이해가 필요.
         cached = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Face.values()).map(face -> new Card(suit, face)))
                 .collect(Collectors.toList());
@@ -20,7 +19,6 @@ public class Card {
     }
 
     public Card(final Suit suit, final Face face) {
-        //private vs public
         this.suit = suit;
         this.face = face;
     }

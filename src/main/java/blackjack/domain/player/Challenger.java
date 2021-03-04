@@ -7,11 +7,9 @@ import blackjack.domain.result.Result;
 import java.util.List;
 
 public class Challenger extends Player {
-    //private boolean isBust;
 
     public Challenger(final Cards cards, final Name name) {
         super(cards, name);
-        //this.isBust = false;
     }
 
     public Result getChallengerResult(final Dealer dealer) {

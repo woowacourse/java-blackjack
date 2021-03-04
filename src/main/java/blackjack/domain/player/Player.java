@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 public abstract class Player {
-    protected Cards cards;
+    protected final Cards cards;
     private final Name name;
 
     public Player(final Cards cards, final Name name) {
@@ -20,7 +20,7 @@ public abstract class Player {
         cards.add(card);
     }
 
-    public List<Card> getCards(){
+    public List<Card> getCards() {
         return cards.getList();
     }
 
@@ -32,7 +32,7 @@ public abstract class Player {
         return this.cards.getScore();
     }
 
-    public String getName(){
+    public String getName() {
         return name.value();
     }
 }

@@ -26,7 +26,6 @@ public class BlackJackController {
     }
 
     private void summary() {
-//        public ResultStatistics(final Challengers challengers, final Dealer dealer)
         ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
         OutputView.printSummary(resultStatistics);
     }
@@ -48,12 +47,12 @@ public class BlackJackController {
             receiveChallengerMoreCard((Challenger) player);
         }
 
-        if (player instanceof Dealer){
+        if (player instanceof Dealer) {
             receiveDealerMoreCard((Dealer) player);
         }
     }
 
-    private void receiveDealerMoreCard(Dealer dealer) {
+    private void receiveDealerMoreCard(final Dealer dealer) {
         while (!dealer.isBust() && !dealer.isEnoughScore()) {
             blackJackService.receiveMoreCard(dealer);
             OutputView.printDealerReceiveMessage();

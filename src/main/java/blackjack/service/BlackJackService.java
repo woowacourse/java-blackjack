@@ -32,11 +32,6 @@ public class BlackJackService {
         return players;
     }
 
-    private Cards getInitCards() {
-        List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(), Card.of()));
-        return new Cards(cards);
-    }
-
     public Dealer getDealer() {
         return this.dealer;
     }
@@ -45,7 +40,12 @@ public class BlackJackService {
         return this.challengers;
     }
 
-    public void receiveMoreCard(final Player player){
+    public void receiveMoreCard(final Player player) {
         player.receiveMoreCard(Card.of());
+    }
+
+    private Cards getInitCards() {
+        List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(), Card.of()));
+        return new Cards(cards);
     }
 }

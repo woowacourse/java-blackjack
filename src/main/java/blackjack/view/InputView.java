@@ -30,7 +30,7 @@ public class InputView {
         }
     }
 
-    public static void validateYesOrNo(String yesOrNo) {
+    private static void validateYesOrNo(String yesOrNo) {
         yesOrNo = yesOrNo.trim().toLowerCase();
         if (!("y".equals(yesOrNo) || "n".equals(yesOrNo))) {
             throw new IllegalArgumentException("y 혹은 n 으로만 입력해주세요.");

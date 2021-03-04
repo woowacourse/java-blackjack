@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ResultStatistics {
 
-    private Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
+    private final Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
 
     public ResultStatistics(final Challengers challengers, final Dealer dealer) {
         challengers.getList()
@@ -19,10 +19,6 @@ public class ResultStatistics {
 
     public Map<Challenger, Result> getResultStatistics() {
         return resultStatistics;
-    }
-
-    public int calculateDealerResult(final Result result) {
-        return Collections.frequency(resultStatistics.values(), result);
     }
 
     public int getDealerWins() {
@@ -35,5 +31,9 @@ public class ResultStatistics {
 
     public int getDealerLoses() {
         return calculateDealerResult(Result.WIN);
+    }
+
+    private int calculateDealerResult(final Result result) {
+        return Collections.frequency(resultStatistics.values(), result);
     }
 }

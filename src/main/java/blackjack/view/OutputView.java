@@ -41,25 +41,14 @@ public class OutputView {
         System.out.print(String.join(", ", challengersCards));
     }
 
-    public static void printNewLine(){
+    public static void printNewLine() {
         System.out.print(NEW_LINE);
     }
 
-    private static void printChallengersInitCards(final Challengers challengers) {
-        challengers.getList().forEach(OutputView::printPlayerCards);
-        printNewLine();
-    }
-
-    private static void printDealerInitCard(final Dealer dealer) {
-        System.out.print(DEALER_PREFIX);
-        List<Card> dealerCards = dealer.getInitCards();
-        dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
-    }
-
     public static void printResult(final List<Player> players) {
-        for(Player player : players){
+        for (Player player : players) {
             printPlayerCards(player);
-            System.out.println( " - 결과: " + player.getScore());
+            System.out.println(" - 결과: " + player.getScore());
         }
         printNewLine();
     }
@@ -72,5 +61,16 @@ public class OutputView {
 
         resultStatistics.getResultStatistics()
                 .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
+    }
+
+    private static void printChallengersInitCards(final Challengers challengers) {
+        challengers.getList().forEach(OutputView::printPlayerCards);
+        printNewLine();
+    }
+
+    private static void printDealerInitCard(final Dealer dealer) {
+        System.out.print(DEALER_PREFIX);
+        List<Card> dealerCards = dealer.getInitCards();
+        dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
     }
 }

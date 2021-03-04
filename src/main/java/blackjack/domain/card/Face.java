@@ -15,7 +15,7 @@ public enum Face {
     QUEEN(10),
     KING(10);
 
-    private int value;
+    private final int value;
 
     Face(final int value) {
         this.value = value;
