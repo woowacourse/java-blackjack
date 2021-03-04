@@ -69,7 +69,7 @@ class DealerTest {
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
-        List<ScoreResultDto> playerResults = dealer.decideWinOrLose(players);
+        List<ScoreResultDto> playerResults = dealer.decideWinOrLoseResults(players);
 
         //then
         assertAll(
@@ -93,7 +93,7 @@ class DealerTest {
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
-        List<ScoreResultDto> playerResults = dealer.decideWinOrLose(players);
+        List<ScoreResultDto> playerResults = dealer.decideWinOrLoseResults(players);
 
         //then
         assertAll(
@@ -117,7 +117,7 @@ class DealerTest {
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
-        List<ScoreResultDto> playerResults = dealer.decideWinOrLose(players);
+        List<ScoreResultDto> playerResults = dealer.decideWinOrLoseResults(players);
 
         //then
         assertAll(

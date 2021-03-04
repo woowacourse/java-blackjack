@@ -3,8 +3,8 @@ package blackjack.dto;
 import blackjack.domain.GameResult;
 
 public class ScoreResultDto {
-    private final String name;
-    private final GameResult gameResult;
+    private String name;
+    private GameResult gameResult;
 
     public ScoreResultDto(String name, GameResult gameResult) {
         this.name = name;

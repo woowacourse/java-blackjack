@@ -1,22 +1,63 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-
 public enum GameResult {
-    WIN, LOSE, DRAW;
+    WIN("승"), LOSE("패"), DRAW("무");
 
-    public static GameResult get(Player player, int dealerScore) {
-        int playerScore = player.sumTotalScore();
+    private static final int SCORE_LIMIT = 21;
 
-        if (playerScore < dealerScore || playerScore > Dealer.SCORE_LIMIT) {
+    private final String value;
+
+    GameResult(String value) {
+        this.value = value;
+    }
+
+    public static GameResult valueOf(int playerScore, int dealerScore) {
+        if (isDealerWin(playerScore, dealerScore)) {
             return GameResult.LOSE;
         }
 
-        if (playerScore > dealerScore) {
+        if (isPlayerWin(playerScore, dealerScore)) {
             return GameResult.WIN;
         }
 
+        return GameResult.DRAW;
+    }
+
+    private static boolean isPlayerWin(int playerScore, int dealerScore) {
+        if (playerScore > SCORE_LIMIT) {
+            return false;
+        }
+
+        if (dealerScore > SCORE_LIMIT || dealerScore < playerScore) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static boolean isDealerWin(int playerScore, int dealerScore) {
+        if (playerScore > SCORE_LIMIT) {
+            return true;
+        }
+
+        if (dealerScore > SCORE_LIMIT || dealerScore <= playerScore) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public GameResult reverse() {
+        if (this == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        if (this == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
         return GameResult.DRAW;
     }
 }

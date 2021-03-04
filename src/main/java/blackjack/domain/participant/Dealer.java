@@ -3,14 +3,13 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
+import blackjack.dto.DealerResultDto;
 import blackjack.dto.ScoreResultDto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Dealer implements Participant {
-    public static final int SCORE_LIMIT = 21;
     private static final int FROM = 0;
     private static final int TO = 1;
     private static final int DRAW_BOUND_SCORE = 16;
@@ -57,17 +56,30 @@ public class Dealer implements Participant {
         return name;
     }
 
-    public List<ScoreResultDto> decideWinOrLose(List<Player> players) {
-        int dealerTotalSum = sumTotalScore();
+    public DealerResultDto getDealerResult(List<Player> players) {
+        List<ScoreResultDto> scoreResultDtos = decideWinOrLoseResults(players);
+        Map<GameResult, Long> dealerResult = statisticsDealerResult(scoreResultDtos);
 
-        if (dealerTotalSum > SCORE_LIMIT) {
-            return players.stream()
-                    .map(player -> new ScoreResultDto(player.getName(), GameResult.WIN))
-                    .collect(Collectors.toList());
-        }
+        Arrays.stream(GameResult.values())
+                .forEach(gameResult -> dealerResult.putIfAbsent(gameResult, 0L));
+        return new DealerResultDto(name, dealerResult);
+    }
 
+    public List<ScoreResultDto> decideWinOrLoseResults(List<Player> players) {
         return players.stream()
-                .map(player -> new ScoreResultDto(player.getName(), GameResult.get(player, dealerTotalSum)))
+                .map(player -> new ScoreResultDto(player.getName(), this.judgeResult(player)))
                 .collect(Collectors.toList());
+    }
+
+    private Map<GameResult, Long> statisticsDealerResult(List<ScoreResultDto> scoreResultDtos) {
+        return scoreResultDtos.stream()
+                .map(scoreResultDto -> scoreResultDto.getGameResult())
+                .collect(Collectors.groupingBy(GameResult::reverse,
+                        () -> new EnumMap<>(GameResult.class),
+                        Collectors.counting()));
+    }
+
+    private GameResult judgeResult(Player player) {
+        return GameResult.valueOf(player.sumTotalScore(), sumTotalScore());
     }
 }
