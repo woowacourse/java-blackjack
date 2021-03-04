@@ -11,7 +11,7 @@ import java.util.Set;
 public class Hand {
 
     private static final int DEFAULT_SCORE = 0;
-    private static final int BUST = 22;
+    public static final int BUST = 22;
     private final Set<Card> hand;
 
     public Hand(List<Card> cards) {
@@ -42,15 +42,15 @@ public class Hand {
             .orElse(calculateScore(cardsTail, currentScore + Collections.min(scores)));
     }
 
-    public boolean isBust() {
-        return getScore() >= BUST;
-    }
-
     public void addCard(Card card) {
         hand.add(card);
     }
 
     public List<Card> unwrap() {
         return new ArrayList<>(hand);
+    }
+
+    public boolean isBust() {
+        return getScore() >= BUST;
     }
 }

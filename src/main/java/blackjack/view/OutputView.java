@@ -46,7 +46,7 @@ public class OutputView {
 
     private static String getScoreMessage(BlackJackParticipant participant) {
         String scoreMessage = " - 결과: " + participant.getScore();
-        if (participant.getHand().isBust()) {
+        if (participant.isBust()) {
             scoreMessage = " - 결과: BUST";
         }
         return scoreMessage;

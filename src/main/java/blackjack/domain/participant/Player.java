@@ -13,7 +13,7 @@ public class Player extends BlackJackParticipant {
     @Override
     public void drawCard(Deck deck) {
         getHand().addCard(deck.draw());
-        if (getHand().isBust()) {
+        if (isBust()) {
             cannotDraw();
         }
     }
@@ -27,10 +27,10 @@ public class Player extends BlackJackParticipant {
     }
 
     public ResultType match(Dealer dealer) {
-        if (getHand().isBust()) {
+        if (isBust()) {
             return ResultType.LOSE;
         }
-        if (dealer.getHand().isBust()) {
+        if (dealer.isBust()) {
             return ResultType.WIN;
         }
         return ResultType.getResultType(getScore() - dealer.getScore());

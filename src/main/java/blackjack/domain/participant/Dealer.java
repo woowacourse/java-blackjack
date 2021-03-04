@@ -20,6 +20,6 @@ public class Dealer extends BlackJackParticipant {
     }
 
     private boolean isOverLimit() {
-        return getHand().getScore() > DEALER_LIMIT;
+        return getScore() > DEALER_LIMIT;
     }
 }
