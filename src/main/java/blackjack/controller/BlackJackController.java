@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import blackjack.domain.GameResult;
+import blackjack.domain.participant.BlackJackParticipant;
+import blackjack.domain.participant.Player;
 import blackjack.util.GameInitializer;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
@@ -7,32 +10,56 @@ import blackjack.domain.participant.Dealer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class BlackJackController {
 
     public static void play() {
-        OutputView.printInputNames();
         Deck deck = GameInitializer.initializeDeck();
+        OutputView.printInputNames();
         Players players = GameInitializer.initializePlayers(InputView.inputString(), deck);
         Dealer dealer = GameInitializer.initializeDealer(deck);
-//        blackJackGame.prepare();
-//        OutputView.printGameInitializeMessage(blackJackGame.getDealer(), blackJackGame.getPlayers(),
-//            BlackJackGame.STARTING_CARD_COUNT);
-//        while (!blackJackGame.isPrepared()) {
-//            Player player = blackJackGame.nextPlayer();
-//            while (player.isContinue()) {
-//                OutputView.willDrawCard(player);
-//                player.willContinue(InputView.inputString(), blackJackGame.getDeck());
-//                OutputView.printParticipantStatus(player, false);
-//            }
-//        }
-//
-//        while (blackJackGame.getDealer().isContinue()) {
-//            blackJackGame.getDealer().drawCard(blackJackGame.getDeck());
-//            OutputView.printDealerDrawCard(blackJackGame.getDealer());
-//        }
-//
-//        OutputView.printParticipantsStatus(blackJackGame.getParticipants());
-//        OutputView.printResult(blackJackGame.getGameResult());
+        List<BlackJackParticipant> participants = getBlackJackParticipants(players, dealer);
+        OutputView.printGameInitializeMessage(participants, GameInitializer.STARTING_CARD_COUNT);
+
+        playersDrawStage(deck, players);
+        dealerDrawStage(deck, dealer);
+        showGameResult(players, dealer, participants);
+    }
+
+    private static List<BlackJackParticipant> getBlackJackParticipants(Players players, Dealer dealer) {
+        List<BlackJackParticipant> participants = new ArrayList<>(Collections.singletonList(dealer));
+        participants.addAll(players.unwrap());
+        return participants;
+    }
+
+    private static void playerDrawStage(Deck deck, Player player) {
+        while (player.isContinue()) {
+            OutputView.willDrawCard(player);
+            player.willContinue(InputView.inputString(), deck);
+            OutputView.printParticipantStatus(player, false);
+        }
+    }
+
+    private static void playersDrawStage(Deck deck, Players players) {
+        for (Player player : players.unwrap()) {
+            playerDrawStage(deck, player);
+        }
+    }
+
+    private static void dealerDrawStage(Deck deck, Dealer dealer) {
+        while(dealer.isContinue()) {
+            dealer.drawCard(deck);
+            OutputView.printDealerDrawCard(dealer);
+        }
+    }
+
+    private static void showGameResult(Players players, Dealer dealer, List<BlackJackParticipant> participants) {
+        OutputView.printParticipantsStatus(participants);
+        OutputView.printResult(players.match(dealer));
     }
 }
 

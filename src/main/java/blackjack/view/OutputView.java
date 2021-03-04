@@ -6,8 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.BlackJackParticipant;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,37 +19,37 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printGameInitializeMessage(Dealer dealer, List<Player> players,
-        int startingCardCount) {
-        List<BlackJackParticipant> participants = new ArrayList(Arrays.asList(dealer));
-        participants.addAll(players);
-        String participantNames = String.join(NAME_DELIMITER,
-            participants.stream()
+    public static void printGameInitializeMessage(List<BlackJackParticipant> participants, int startingCardCount) {
+        String participantNames = participants.stream()
                 .map(BlackJackParticipant::getName)
-                .collect(Collectors.toList()));
+                .collect(Collectors.joining(NAME_DELIMITER));
         System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
-        participants.stream().forEach(player -> printParticipantStatus(player, false));
+        participants.forEach(player -> printParticipantStatus(player, false));
         System.out.println();
     }
 
     public static void printParticipantsStatus(List<BlackJackParticipant> participants) {
-        participants.stream().forEach(participant -> printParticipantStatus(participant, true));
+        participants.forEach(participant -> printParticipantStatus(participant, true));
     }
 
     public static void printParticipantStatus(BlackJackParticipant participant, boolean withScore) {
-        String cardNames = String.join(NAME_DELIMITER,
-            participant.getHand().unwrap().stream()
+        String cardNames = participant.getHand().unwrap().stream()
                 .map(Card::getCardName)
-                .collect(Collectors.toList()));
+                .collect(Collectors.joining(NAME_DELIMITER));
 
-        String scoreMessage = "";
         if (withScore) {
-            scoreMessage = " - 결과: " + participant.getScore();
-            if (participant.getHand().isBust()) {
-                scoreMessage = " - 결과: BUST";
-            }
+            System.out.println(participant.getName() + "카드: " + cardNames + getScoreMessage(participant));
+            return;
         }
-        System.out.println(participant.getName() + "카드: " + cardNames + scoreMessage);
+        System.out.println(participant.getName() + "카드: " + cardNames);
+    }
+
+    private static String getScoreMessage(BlackJackParticipant participant) {
+        String scoreMessage = " - 결과: " + participant.getScore();
+        if (participant.getHand().isBust()) {
+            scoreMessage = " - 결과: BUST";
+        }
+        return scoreMessage;
     }
 
     public static void willDrawCard(Player player) {
@@ -58,21 +57,26 @@ public class OutputView {
     }
 
     public static void printDealerDrawCard(Dealer dealer) {
-        System.out
-            .println("\n" + dealer.getName() + "는 " + Dealer.DEALER_LIMIT + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n" + dealer.getName() + "는 " + Dealer.DEALER_LIMIT + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printResult(GameResult gameResult) {
-        Map<ResultType, Integer> statistics = gameResult.getStatistics();
         System.out.print("\n## 최종 승패\n딜러: ");
+        printDealerResult(gameResult);
+        printPlayersResult(gameResult);
+    }
+
+    private static void printDealerResult(GameResult gameResult) {
+        Map<ResultType, Integer> statistics = gameResult.getStatistics();
         for (ResultType resultType : statistics.keySet()) {
             System.out.print(statistics.get(resultType) + resultType.opposite().getName() + " ");
         }
         System.out.println();
+    }
 
+    private static void printPlayersResult(GameResult gameResult) {
         Map<Player, ResultType> unwrappedResult = gameResult.unwrap();
-        unwrappedResult.keySet().stream()
-            .forEach(player -> System.out
-                .println(player.getName() + ": " + unwrappedResult.get(player).getName()));
+        unwrappedResult.keySet().forEach(player ->
+                System.out.println(player.getName() + ": " + unwrappedResult.get(player).getName()));
     }
 }

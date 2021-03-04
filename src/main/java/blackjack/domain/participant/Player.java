@@ -30,11 +30,9 @@ public class Player extends BlackJackParticipant {
         if (getHand().isBust()) {
             return ResultType.LOSE;
         }
-        int myScore = getScore();
-        int dealerScore = dealer.getScore();
-
-        return ResultType.getResultType(myScore - dealerScore);
+        if (dealer.getHand().isBust()) {
+            return ResultType.WIN;
+        }
+        return ResultType.getResultType(getScore() - dealer.getScore());
     }
-
-
 }

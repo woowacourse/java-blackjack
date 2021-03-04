@@ -14,12 +14,8 @@ import java.util.stream.Collectors;
 public class Players {
 
     private static final String DELIMITER = ",";
-//    private final Queue<Player> playersList;
     private final List<Player> playersList;
 
-//    public Players(List<Player> players) {
-//        this.players = new LinkedList<>(players);
-//    }
     public Players(List<Player> players) {
         this.playersList = new ArrayList<>(players);
     }
@@ -43,18 +39,6 @@ public class Players {
         playersList.forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);
-    }
-
-//    public Player pop() {
-//        return playersList.poll();
-//    }
-//
-//    public void push(Player player) {
-//        playersList.add(player);
-//    }
-
-    public boolean isEmpty() {
-        return playersList.isEmpty();
     }
 
     public List<Player> unwrap() {
