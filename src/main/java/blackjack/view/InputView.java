@@ -19,7 +19,6 @@ public class InputView {
     private InputView() {
     }
 
-    //TODO: rawNames == null check
     public static List<String> inputPlayerNames() {
         OutputView.printMessage(INPUT_PLAYER_NAMES_MESSAGE);
         String rawNames = inputString();

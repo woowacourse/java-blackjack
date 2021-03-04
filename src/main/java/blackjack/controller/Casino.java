@@ -12,52 +12,61 @@ public class Casino {
 
     public static final String BURST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
-    public static final String DEALER_NO_MORE_DRAW_MESSAGE = "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
+
+    private final Game game;
 
     public Casino() {
+        game = Game.of(InputView.inputPlayerNames());
     }
 
-    public void start() {
-        Game game = Game.of(InputView.inputPlayerNames());
+    public void blackJack() {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
 
-        game.setUpTwoCards();
-        OutputView.printSetup(dealer, players);
-
-        playerTurn(game);
-        doDealerTurn(game);
-
-        OutputView.printFinalCardInfo(dealer, players);
-        game.fightPlayers();
-        OutputView.printWinOrLoseResult(dealer, players);
+        setUpTwoCards(dealer, players);
+        playerTurn();
+        dealerTurn();
+        closingStage(dealer, players);
     }
 
-    private void playerTurn(Game game) {
+    private void setUpTwoCards(Dealer dealer, List<Player> players) {
+        game.setUpTwoCards();
+        OutputView.printSetup(dealer, players);
+    }
+
+    private void playerTurn() {
         for (Player player : game.getPlayers()) {
-            doPlayerTurn(player, game);
+            doPlayerTurn(player);
         }
     }
 
-    private void doPlayerTurn(Player player, Game game) {
+    private void doPlayerTurn(Player player) {
         while (InputView.inputYesOrNo(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);
             OutputView.printMessage("");
             if (player.isBlackJack()) {
                 OutputView.printMessage(BLACKJACK_MESSAGE);
+                OutputView.lineFeed();
                 break;
             }
             if (player.isBurst()) {
                 OutputView.printMessage(BURST_MESSAGE);
+                OutputView.lineFeed();
                 break;
             }
         }
     }
 
-    private void doDealerTurn(Game game) {
+    private void dealerTurn() {
         int dealerDrawCount = game.playDealerTurn();
-        OutputView.printDealerDrawMessage(dealerDrawCount);
-        OutputView.printMessage(DEALER_NO_MORE_DRAW_MESSAGE);
+        OutputView.printDealerDraw(dealerDrawCount);
+        OutputView.printDealerNoMoreDraw();
+    }
+
+    private void closingStage(Dealer dealer, List<Player> players) {
+        OutputView.printParticipantFinalCardInfo(dealer, players);
+        game.fightPlayers();
+        OutputView.printWinOrLoseResult(dealer, players);
     }
 }

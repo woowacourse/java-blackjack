@@ -13,6 +13,7 @@ public class OutputView {
     public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
     public static final String CARD_INFO_MESSAGE = "%s카드: %s";
     public static final String SET_UP_MESSAGE = "%s와 %s에게 2장의 나누었습니다." + LINE_SEPARATOR;
+    public static final String DEALER_NO_MORE_DRAW_MESSAGE = "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
     public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String RESULT_PREFIX = " - 결과 : %d" + LINE_SEPARATOR;
     public static final String NAME_PREFIX = "%s: ";
@@ -24,14 +25,16 @@ public class OutputView {
         String playerNames = players.stream()
                                     .map(Player::getName)
                                     .collect(Collectors.joining(", "));
+        lineFeed();
         System.out.printf(SET_UP_MESSAGE, dealer.getName(), playerNames);
 
         printCardInfo(dealer);
         printMessage("");
         for (Player player : players) {
             printCardInfo(player);
-            printMessage("");
+            lineFeed();
         }
+        lineFeed();
     }
 
     public static void printCardInfo(Participant participant) {
@@ -43,20 +46,26 @@ public class OutputView {
         System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
     }
 
-    public static void printDealerDrawMessage(int dealerDrawCount) {
+    public static void printDealerDraw(int dealerDrawCount) {
         for (int i = 0; i < dealerDrawCount; i++) {
             System.out.println(DEALER_DRAW_MESSAGE);
         }
     }
 
-    public static void printFinalCardInfo(Dealer dealer, List<Player> players) {
-        printFinalCardInfo(dealer);
-        for (Player player : players) {
-            printFinalCardInfo(player);
-        }
+    public static void printDealerNoMoreDraw() {
+        System.out.println(DEALER_NO_MORE_DRAW_MESSAGE);
+        lineFeed();
     }
 
-    private static void printFinalCardInfo(Participant participant) {
+    public static void printParticipantFinalCardInfo(Dealer dealer, List<Player> players) {
+        printEachParticipantFinalCardInfo(dealer);
+        for (Player player : players) {
+            printEachParticipantFinalCardInfo(player);
+        }
+        lineFeed();
+    }
+
+    private static void printEachParticipantFinalCardInfo(Participant participant) {
         printCardInfo(participant);
         System.out.printf(RESULT_PREFIX, participant.calculateResult());
     }
@@ -84,6 +93,10 @@ public class OutputView {
 
     public static void printMessage(String s) {
         System.out.println(s);
+    }
+
+    public static void lineFeed() {
+        System.out.println();
     }
 
 }
