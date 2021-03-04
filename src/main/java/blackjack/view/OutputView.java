@@ -57,7 +57,7 @@ public class OutputView {
         printPlayersGameResults(players);
     }
 
-    private static void printDealerGameResult(Dealer dealer){
+    private static void printDealerGameResult(Dealer dealer) {
         System.out.print(dealer.getName() + " ");
         if (dealer.getResultCount(Result.WIN) > 0) {
             System.out.print(dealer.getResultCount(Result.WIN) + "승 ");
@@ -70,7 +70,7 @@ public class OutputView {
         }
     }
 
-    private static void printPlayersGameResults(List<Player> players){
+    private static void printPlayersGameResults(List<Player> players) {
         for (Player player : players) {
             System.out.println(player.getName() + NAME_SEPARATOR + player.getResult().getName());
         }

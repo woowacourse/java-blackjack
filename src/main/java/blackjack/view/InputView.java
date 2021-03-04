@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public static boolean getWhetherDrawCard(String name) {
-        System.out.println("\n" +name + "은 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
+        System.out.println("\n" + name + "은 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         String input = SCANNER.nextLine();
         if (input.equals("y")) {
             return true;

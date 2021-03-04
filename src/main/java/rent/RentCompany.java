@@ -1,15 +1,13 @@
 package rent;
 
-import rent.car.Car;
-
 import java.util.ArrayList;
 import java.util.List;
+import rent.car.Car;
 
 public class RentCompany {
 
-    private static final String NEWLINE = System.getProperty("line.separator");
     public static final String SEPARATOR = " : ";
-
+    private static final String NEWLINE = System.getProperty("line.separator");
     private static List<Car> cars;
 
     private RentCompany() {
@@ -26,8 +24,10 @@ public class RentCompany {
 
     public String generateReport() {
         StringBuilder report = new StringBuilder();
-        for(Car car : cars) {
-            report.append(String.format("%s%s%d%s%s", car.getName(), SEPARATOR, (int) car.getChargeQuantity(), "리터", NEWLINE));
+        for (Car car : cars) {
+            report.append(String
+                .format("%s%s%d%s%s", car.getName(), SEPARATOR, (int) car.getChargeQuantity(), "리터",
+                    NEWLINE));
         }
         return report.toString();
     }

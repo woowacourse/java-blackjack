@@ -16,6 +16,11 @@ public class Cards {
         this.cards = cards;
     }
 
+    private static boolean containAceCard(List<Card> cards) {
+        return cards.stream()
+            .anyMatch(Card::isAce);
+    }
+
     public Result compare(Cards cards) {
         if (getScore() < cards.getScore()) {
             return Result.WIN;
@@ -30,7 +35,7 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return getScore() == 21 && cards.size() == 2;
     }
 
@@ -58,11 +63,6 @@ public class Cards {
         return cards.stream()
             .mapToInt(Card::value)
             .sum() + bonusScore;
-    }
-
-    private static boolean containAceCard(List<Card> cards) {
-        return cards.stream()
-            .anyMatch(Card::isAce);
     }
 
     public void add(Card card) {
