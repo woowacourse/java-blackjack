@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.function.BiPredicate;
 
 import static blackjack.domain.Round.GAME_OVER_SCORE;
@@ -9,25 +8,30 @@ import static blackjack.domain.Round.GAME_OVER_SCORE;
 public enum Outcome {
     WIN("승", (a, b) -> a > b),
     LOSE("패", (a, b) -> a < b),
-    DRAW("무", (a, b) -> a == b);
+    DRAW("무", (a, b) -> a == b),
+    NOT_FOUND("", null);
 
     private final String name;
-    private final BiPredicate<Integer, Integer> biPredicate;
+    private final BiPredicate<Integer, Integer> compareFunction;
 
-    Outcome(String name, BiPredicate<Integer, Integer> biPredicate) {
+    Outcome(String name, BiPredicate<Integer, Integer> compareFunction) {
         this.name = name;
-        this.biPredicate = biPredicate;
+        this.compareFunction = compareFunction;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public static Outcome findOutcome(int dealerScore, int playerScore) {
         Outcome outcome = getOutcomeWhenBuster(dealerScore, playerScore);
-        if (!Objects.isNull(outcome)) {
+        if (outcome != NOT_FOUND) {
             return outcome;
         }
         return Arrays.stream(values())
-                .filter(o -> o.biPredicate.test(dealerScore, playerScore))
+                .filter(value -> value.compareFunction.test(dealerScore, playerScore))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체크할수 없습!!"));
+                .orElseThrow(() -> new IllegalArgumentException("체크할수 없습니다!!"));
     }
 
     private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {
@@ -42,7 +46,7 @@ public enum Outcome {
         if (playerScore > GAME_OVER_SCORE) {
             return WIN;
         }
-        return null;
+        return NOT_FOUND;
     }
 
     public static Outcome reverseResult(Outcome outcome) {
@@ -55,10 +59,6 @@ public enum Outcome {
         }
 
         return DRAW;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public static boolean isWin(Outcome outcome) {
