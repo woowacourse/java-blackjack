@@ -58,4 +58,8 @@ public class OutputView {
     public static void printPlayerCards(Player player) {
         System.out.println(player.getName() + "카드: " + player.getCards());
     }
+
+    public static void printErrorMessage(IllegalArgumentException exception) {
+        System.out.println("[ERROR] " + exception.getMessage());
+    }
 }

@@ -11,7 +11,14 @@ public class Player implements User {
 
     public Player(String name) {
         this.cards = new Cards();
-        this.name = name.trim();
+        this.name = validateName(name);
+    }
+
+    private String validateName(String name) {
+        if(name.trim().length() < 1) {
+            throw new IllegalArgumentException("이름은 1자 이상이어야 합니다.");
+        }
+        return name.trim();
     }
 
     @Override
