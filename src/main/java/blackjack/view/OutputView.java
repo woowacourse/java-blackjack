@@ -35,6 +35,15 @@ public class OutputView {
         showCards(dealer, players);
     }
 
+    private static void showName(Players players) {
+        List<String> playerNames = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            playerNames.add(player.getName());
+        }
+        String nameCollect = String.join(STRING_DELIMITER, playerNames);
+        System.out.printf(INITIAL_CARD_MESSAGE + NEWLINE, nameCollect);
+    }
+
     private static void showCards(Dealer dealer, Players players) {
         String dealerCard = dealer.getUserDeck()
             .getUserCards()
@@ -44,15 +53,6 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             showPlayerCard(player);
         }
-    }
-
-    private static void showName(Players players) {
-        List<String> playerNames = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerNames.add(player.getName());
-        }
-        String nameCollect = String.join(STRING_DELIMITER, playerNames);
-        System.out.printf(INITIAL_CARD_MESSAGE + NEWLINE, nameCollect);
     }
 
     public static void showPlayerCard(Player player) {
@@ -78,18 +78,18 @@ public class OutputView {
         showPlayersEntireCard(players);
     }
 
+    private static void showDealerEntireCard(Dealer dealer) {
+        String dealerCards = String.format(DEALER_CARD, combineAllCard(dealer)) + SCORE_RESULT +
+            getConventionScore(dealer);
+        System.out.println(dealerCards);
+    }
+
     private static void showPlayersEntireCard(Players players) {
         for (Player player : players.getPlayers()) {
             String dealerCards = String.format(PLAYER_CARD, player.getName(),
                 combineAllCard(player)) + SCORE_RESULT + getConventionScore(player);
             System.out.println(dealerCards);
         }
-    }
-
-    private static void showDealerEntireCard(Dealer dealer) {
-        String dealerCards = String.format(DEALER_CARD, combineAllCard(dealer)) + SCORE_RESULT +
-            getConventionScore(dealer);
-        System.out.println(dealerCards);
     }
 
     private static String getConventionScore(User user) {
