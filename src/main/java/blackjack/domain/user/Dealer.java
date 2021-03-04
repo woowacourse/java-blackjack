@@ -13,16 +13,16 @@ public class Dealer {
 
     private final List<Card> cards = new ArrayList<>();
 
+    public static String getName() {
+        return name;
+    }
+
     public void addFirstCards(List<Card> cards) {
         this.cards.addAll(cards);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    public static String getName() {
-        return name;
     }
 
     public boolean isGameOver(int gameOverScore) {
