@@ -11,11 +11,15 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        Players players = new Players(InputView.enterNames(), dealer);
-
-        dealTwoCard(players, deck);
-        dealWantCard(players, deck);
-        printMatchResult(players);
+        try {
+            Players players = new Players(InputView.enterNames(), dealer);
+            dealTwoCard(players, deck);
+            dealWantCard(players, deck);
+            printMatchResult(players);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            run();
+        }
     }
 
     private void printMatchResult(Players players) {
