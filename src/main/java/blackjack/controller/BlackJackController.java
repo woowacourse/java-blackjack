@@ -26,7 +26,7 @@ public class BlackJackController {
 
     public void run() {
         if (dealer.isBlackJack()) {
-            OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
+            OutputView.printResult(users.generateResultsMapAgainstDealer());
             return;
         }
         users.getPlayers()
@@ -36,7 +36,7 @@ public class BlackJackController {
             OutputView.printDealerGetNewCardsMessage();
         }
         OutputView.printCardsOfPlayersWithScore(users);
-        OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
+        OutputView.printResult(users.generateResultsMapAgainstDealer());
     }
 
 

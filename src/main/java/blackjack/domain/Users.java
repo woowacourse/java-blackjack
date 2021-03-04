@@ -34,9 +34,10 @@ public class Users {
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
     }
 
-    public Map<User, ResultType> checkWinOrLose(int score) {
+    public Map<User, ResultType> generateResultsMapAgainstDealer() {
+        int dealerScore = getDealer().getScore();
         return users.stream()
                 .filter(user -> user instanceof Player)
-                .collect(Collectors.toMap(player -> player, player -> ((Player) player).generateResultAgainst(score)));
+                .collect(Collectors.toMap(player -> player, player -> ((Player) player).generateResultAgainst(dealerScore)));
     }
 }
