@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.Player.THRESHOLD_OF_BURST;
+
 public abstract class Gamer {
     public static final String COMMA_DELIMITER = ",";
     private static final int COUNT_OF_DEALER_OPENING_CARDS = 1;
@@ -59,6 +61,10 @@ public abstract class Gamer {
         receiveCard(Deck.dealCard());
     }
 
+    public boolean isBurst() {
+        return calculateMaximumPoint() > THRESHOLD_OF_BURST;
+    }
+    
     public abstract boolean canReceiveCard();
 
     public abstract Boolean continueDraw(String draw);

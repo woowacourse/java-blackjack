@@ -18,4 +18,16 @@ public class Dealer extends Gamer {
         this.receiveCard(Deck.dealCard());
         return true;
     }
+
+    public boolean isSmallerThan(int playerMaximum) {
+        return this.calculateMaximumPoint() < playerMaximum;
+    }
+
+    public boolean isBiggerThan(int playerMaximum) {
+        return this.calculateMaximumPoint() > playerMaximum;
+    }
+
+    public boolean isSameThan(int playerMaximum) {
+        return this.calculateMaximumPoint() == playerMaximum;
+    }
 }

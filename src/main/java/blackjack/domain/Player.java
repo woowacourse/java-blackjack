@@ -1,10 +1,10 @@
 package blackjack.domain;
 
 public class Player extends Gamer {
+    public static final int THRESHOLD_OF_BURST = 21;
     private static final String ERROR_MESSAGE_OF_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";
-    private static final int THRESHOLD_OF_BURST = 21;
 
-    private String result;
+    private WinnerFlag result;
 
     public Player(String name) {
         super(name);
@@ -28,11 +28,11 @@ public class Player extends Gamer {
         return draw.equals("y");
     }
 
-    public void matchResult(String result) {
+    public void matchResult(WinnerFlag result) {
         this.result = result;
     }
 
-    public String getResult() {
+    public WinnerFlag getResult() {
         return result;
     }
 }

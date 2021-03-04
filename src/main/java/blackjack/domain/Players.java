@@ -36,6 +36,16 @@ public class Players {
         }
     }
 
+    public void makeEachPlayerResult() {
+        for (Player player : players) {
+            System.out.println(player.getName() + COLON_DELIMITER + player.getResult().getFlagOutput());
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public String getDealerName() {
         return dealer.getName();
     }
@@ -55,43 +65,5 @@ public class Players {
     @Override
     public int hashCode() {
         return Objects.hash(players, dealer);
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public Map<String, Integer> calculateResult() {
-        Map<String, Integer> result = new HashMap<>();
-        result.put("win", 0);
-        result.put("lose", 0);
-        result.put("draw", 0);
-        int dealerValue = dealer.calculateJudgingPoint();
-        for (Player gamer : players) {
-            if (gamer.calculateJudgingPoint() > 21) {
-                gamer.matchResult("패");
-                result.put("win", result.get("win") + 1);
-                continue;
-            }
-            if (gamer.calculateJudgingPoint() > dealerValue || dealerValue > 21) {
-                gamer.matchResult("승");
-                result.put("lose", result.get("lose") + 1);
-                continue;
-            }
-            if (gamer.calculateJudgingPoint() < dealerValue) {
-                gamer.matchResult("패");
-                result.put("win", result.get("win") + 1);
-                continue;
-            }
-            result.put("draw", result.get("draw") + 1);
-            gamer.matchResult("무");
-        }
-        return result;
-    }
-
-    public void makeEachPlayerResult() {
-        for (Player player : players) {
-            System.out.println(player.getName() + COLON_DELIMITER + player.getResult());
-        }
     }
 }
