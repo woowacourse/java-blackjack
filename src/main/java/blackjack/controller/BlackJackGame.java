@@ -14,41 +14,21 @@ public class BlackJackGame {
         Players players = registerPlayers();
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
-
         cardDeck.shuffleCard();
-        for (int i = 0; i < 2; i++) {
-            dealer.receiveCard(cardDeck.drawCard());
-            for (Player player : players.getPlayers()) {
-                player.receiveCard(cardDeck.drawCard());
-            }
-        }
 
-        OutputView.distributeCardMessage(players);
-        OutputView.showDealerFirstCard(dealer);
-        for (Player player : players.getPlayers()) {
-            OutputView.showCards(player);
-        }
+        firstDraw(players, dealer, cardDeck);
+        playerTurn(players, cardDeck);
+        dealerTurn(dealer, cardDeck);
+        showResult(players, dealer);
+    }
 
-        for (Player player : players.getPlayers()) {
-            while (player.canDraw()) {
-                try {
-                    OutputView.askOneMoreCard(player);
-                    String answer = InputView.inputAnswer();
-                    if (answer.equals("n")) {
-                        OutputView.showCards(player);
-                        break;
-                    }
-                    player.receiveCard(cardDeck.drawCard());
-                    OutputView.showCards(player);
-                } catch (IllegalArgumentException e) {
-                    OutputView.printError(e.getMessage());
-                } catch (IllegalStateException e) {
-                    OutputView.printError(e.getMessage());
-                    break;
-                }
-            }
-        }
+    private void showResult(Players players, Dealer dealer) {
+        OutputView.showAllCards(players, dealer);
+        BlackJackResult blackJackResult = new BlackJackResult(players, dealer);
+        OutputView.showFinalResult(blackJackResult);
+    }
 
+    private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canDraw()) {
             try {
                 dealer.receiveCard(cardDeck.drawCard());
@@ -58,10 +38,51 @@ public class BlackJackGame {
                 break;
             }
         }
+    }
 
-        OutputView.showAllCards(players, dealer);
-        BlackJackResult blackJackResult = new BlackJackResult(players, dealer);
-        OutputView.showFinalResult(blackJackResult);
+    private void playerTurn(Players players, CardDeck cardDeck) {
+        for (Player player : players.getPlayers()) {
+            askDraw(player, cardDeck);
+        }
+    }
+
+    private void askDraw(Player player, CardDeck cardDeck) {
+        while (player.canDraw()) {
+            try {
+                OutputView.askOneMoreCard(player);
+                String answer = InputView.inputAnswer();
+                if (answer.equals("n")) {
+                    OutputView.showCards(player);
+                    break;
+                }
+                player.receiveCard(cardDeck.drawCard());
+                OutputView.showCards(player);
+            } catch (IllegalArgumentException e) {
+                OutputView.printError(e.getMessage());
+                askDraw(player, cardDeck);
+            } catch (IllegalStateException e) {
+                OutputView.printError(e.getMessage());
+                break;
+            }
+        }
+    }
+
+    private void firstDraw(Players players, Dealer dealer, CardDeck cardDeck) {
+        eachDrawTwoCards(players, dealer, cardDeck);
+        OutputView.distributeCardMessage(players);
+        OutputView.showDealerFirstCard(dealer);
+        for (Player player : players.getPlayers()) {
+            OutputView.showCards(player);
+        }
+    }
+
+    private void eachDrawTwoCards(Players players, Dealer dealer, CardDeck cardDeck) {
+        for (int i = 0; i < 2; i++) {
+            dealer.receiveCard(cardDeck.drawCard());
+            for (Player player : players.getPlayers()) {
+                player.receiveCard(cardDeck.drawCard());
+            }
+        }
     }
 
     private Players registerPlayers() {
