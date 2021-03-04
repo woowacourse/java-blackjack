@@ -23,7 +23,7 @@ public class OutputView {
         List<String> playerNames = players.stream()
             .map(Player::getName)
             .collect(Collectors.toList());
-        System.out.println("딜러와 " + playerNames + "에게 2장의 카드를 나누었습니다.");
+        System.out.println("딜러와 " + String.join(",", playerNames) + "에게 2장의 카드를 나누었습니다.");
     }
 
     public static void showCards(Dealer dealer, List<Player> players) {
@@ -47,7 +47,7 @@ public class OutputView {
         Map<Player, Status> result) {
         System.out.println("## 최종 승패");
 
-        System.out.println("딜러: " + matchResult.indexOf(2) + "승" + matchResult.indexOf(1) + "무" + matchResult.indexOf(0) + "패");
+        System.out.println("딜러: " + matchResult.get(2) + "승" + matchResult.get(1) + "무" + matchResult.get(0) + "패");
         result.forEach((player, status) -> System.out.println(player.getName() + ": " + status.toString()));
     }
 
