@@ -26,6 +26,6 @@ class UserGameResultTest {
         UserGameResult userGameResult = new UserGameResult(resultCards, "유저",WinOrLose.WIN);
 
         //then
-        assertThat(userGameResult.calculateScore()).isEqualTo(20);
+        assertThat(userGameResult.getScore()).isEqualTo(20);
     }
 }

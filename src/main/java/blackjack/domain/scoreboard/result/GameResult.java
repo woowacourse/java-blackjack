@@ -6,23 +6,34 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class GameResult {
-    private final List<Card> resultCards;
+public class GameResult implements Resultable {
+    private final List<Card> cards;
     private final String name;
 
-    public GameResult(List<Card> resultCards, String name) {
-        this.resultCards = resultCards;
+    public GameResult(List<Card> cards, String name) {
+        this.cards = cards;
         this.name = name;
     }
 
-    public List<Card> getResultCards() {
-        return Collections.unmodifiableList(resultCards);
-    }
-
-    public int calculateScore() {
-        return resultCards.stream()
+    private int calculateScore() {
+        return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getScore() {
+        return calculateScore();
     }
 
     @Override
@@ -30,11 +41,11 @@ public class GameResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameResult that = (GameResult) o;
-        return Objects.equals(resultCards, that.resultCards);
+        return Objects.equals(cards, that.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(resultCards);
+        return Objects.hash(cards);
     }
 }

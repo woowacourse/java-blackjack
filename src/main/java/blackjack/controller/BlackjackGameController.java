@@ -73,6 +73,6 @@ public class BlackjackGameController {
     }
 
     private static void createResultAndPrint(BlackjackGame blackjackGame) {
-        OutputView.printScoreBoard(blackjackGame.createScoreBoard(), blackjackGame.getDealer());
+        OutputView.printScoreBoard(blackjackGame.createScoreBoard());
     }
 }

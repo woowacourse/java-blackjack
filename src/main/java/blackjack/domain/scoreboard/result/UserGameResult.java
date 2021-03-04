@@ -6,7 +6,7 @@ import blackjack.domain.scoreboard.WinOrLose;
 import java.util.List;
 import java.util.Objects;
 
-public class UserGameResult {
+public class UserGameResult implements Resultable {
     private final GameResult gameResult;
     private final WinOrLose winOrLose;
 
@@ -15,16 +15,23 @@ public class UserGameResult {
         this.winOrLose = winOrLose;
     }
 
-    public int calculateScore() {
-        return gameResult.calculateScore();
-    }
-
-    public List<Card> getResultCards() {
-        return gameResult.getResultCards();
-    }
-
-    public WinOrLose getWinOrLose(){
+    public WinOrLose getWinOrLose() {
         return winOrLose;
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return gameResult.getCards();
+    }
+
+    @Override
+    public String getName() {
+        return gameResult.getName();
+    }
+
+    @Override
+    public int getScore() {
+        return gameResult.getScore();
     }
 
     @Override
