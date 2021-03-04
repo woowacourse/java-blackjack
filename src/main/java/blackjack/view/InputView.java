@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static final String ASK_MORE_CARDS = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    public static final String ASK_MORE_CARDS = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> getNames() {

@@ -27,27 +27,39 @@ public class OutputView {
     }
 
     public static void printDealerReceiveMessage() {
-        System.out.print(NEW_LINE);
+        printNewLine();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printPlayerCards(final Player player) {
         System.out.print(player.getName() + "카드: ");
         List<String> challengersCards = player
-                .getInitCards()
+                .getCards()
                 .stream()
                 .map(card -> card.getFaceValue() + card.getSuit()).collect(Collectors.toList());
-        System.out.println(String.join(", ", challengersCards));
+        System.out.print(String.join(", ", challengersCards));
+    }
+
+    public static void printNewLine(){
+        System.out.print(NEW_LINE);
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {
         challengers.getList().forEach(OutputView::printPlayerCards);
-        System.out.print(NEW_LINE);
+        printNewLine();
     }
 
     private static void printDealerInitCard(final Dealer dealer) {
         System.out.print("딜러: ");
         List<Card> dealerCards = dealer.getInitCards();
         dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
+    }
+
+    public static void printResult(final List<Player> players) {
+        for(Player player : players){
+            printPlayerCards(player);
+            System.out.println( " - 결과: " + player.getScore());
+        }
+        printNewLine();
     }
 }

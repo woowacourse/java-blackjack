@@ -20,6 +20,15 @@ public class BlackJackController {
     public void run() {
         initSetting();
         play();
+        result();
+        summary();
+    }
+
+    private void summary() {
+    }
+
+    private void result() {
+        OutputView.printResult(blackJackService.getPlayers());
     }
 
     private void play() {
@@ -44,6 +53,7 @@ public class BlackJackController {
         while (!dealer.isBust() && !dealer.isEnoughScore()) {
             blackJackService.receiveMoreCard(dealer);
             OutputView.printDealerReceiveMessage();
+            OutputView.printNewLine();
         }
     }
 

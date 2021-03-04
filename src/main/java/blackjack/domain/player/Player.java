@@ -20,6 +20,10 @@ public abstract class Player {
         cards.add(card);
     }
 
+    public List<Card> getCards(){
+        return cards.getList();
+    }
+
     public boolean isBust() {
         return cards.isBust();
     }
