@@ -6,7 +6,7 @@ import blackjack.domain.card.UserDeck;
 public class User {
 
     private final UserDeck userDeck;
-    int DRAWABLE_NUMBER;
+    protected int DRAWABLE_NUMBER;
 
     public User(UserDeck userDeck) {
         this.userDeck = userDeck;
