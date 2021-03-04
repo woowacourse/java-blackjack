@@ -1,5 +1,6 @@
 package blakcjack.domain;
 
+import blakcjack.View.OutputView;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
@@ -33,17 +34,17 @@ public class BlackjackGame {
 		}
 	}
 
-	public void distributeOneCard(final Participant participant) {
+	public void distributeOneCardTo(final Participant participant) {
 		participant.receiveCard(deck.drawCard());
 	}
 
 	public void initializeHands() {
 		for (Player player : players) {
-			distributeOneCard(player);
-			distributeOneCard(player);
+			distributeOneCardTo(player);
+			distributeOneCardTo(player);
 		}
-		distributeOneCard(dealer);
-		distributeOneCard(dealer);
+		distributeOneCardTo(dealer);
+		distributeOneCardTo(dealer);
 	}
 
 	public List<Player> getPlayers() {
@@ -63,4 +64,11 @@ public class BlackjackGame {
 		}
 		return playersOutcome;
 	}
+
+//	public void drawDealerCardForMaximumCapability() {
+//		while (dealer.isScoreLowerThanMaximumDrawingCriterion()) {
+//			distributeOneCardTo(dealer);
+//			OutputView.printDealerAdditionalCardMessage();
+//		}
+//	}
 }

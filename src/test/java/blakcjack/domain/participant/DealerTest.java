@@ -34,9 +34,9 @@ public class DealerTest {
 		final Dealer dealer = new Dealer();
 		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.TEN));
 		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.SIX));
-		assertThat(dealer.isScoreLowerThanMaximumDrawingCriterion()).isTrue();
+		assertThat(dealer.isScoreLowerThanMaximumDrawCriterion()).isTrue();
 
 		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
-		assertThat(dealer.isScoreLowerThanMaximumDrawingCriterion()).isFalse();
+		assertThat(dealer.isScoreLowerThanMaximumDrawCriterion()).isFalse();
 	}
 }

@@ -1,6 +1,7 @@
 package blakcjack.View;
 
 
+import blakcjack.domain.BlackjackGame;
 import blakcjack.domain.Outcome;
 import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
@@ -15,13 +16,27 @@ import java.util.stream.Collectors;
 import static blakcjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {
-	public static void printInitialHands(final Dealer dealer, final List<Player> players) {
+//	public static void printInitialHands(final Dealer dealer, final List<Player> players) {
+//		final StringBuilder stringBuilder = new StringBuilder();
+//		stringBuilder.append(makeCardDistributionMessage(dealer, players));
+//
+//		stringBuilder.append(makeCardSummary(dealer));
+//		for (final Participant participant : players) {
+//			stringBuilder.append(makeCardSummary(participant));
+//		}
+//		System.out.println(stringBuilder.toString());
+//	}
+
+	public static void printInitialHands(final BlackjackGame blackjackGame) {
+		Dealer dealer = blackjackGame.getDealer();
+		List<Player> players = blackjackGame.getPlayers();
+
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeCardDistributionMessage(dealer, players));
 
 		stringBuilder.append(makeCardSummary(dealer));
-		for (final Participant participant : players) {
-			stringBuilder.append(makeCardSummary(participant));
+		for (final Player player : players) {
+			stringBuilder.append(makeCardSummary(player));
 		}
 		System.out.println(stringBuilder.toString());
 	}
@@ -65,7 +80,10 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printFinalHandsSummary(final Dealer dealer, final List<Player> players) {
+	public static void printFinalHandsSummary(final BlackjackGame blackjackGame) {
+		Dealer dealer = blackjackGame.getDealer();
+		List<Player> players = blackjackGame.getPlayers();
+
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeFinalSummary(dealer));
 

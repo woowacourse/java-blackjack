@@ -21,24 +21,26 @@ public class BlackJackController {
 		final List<String> playerNames = takePlayerNamesInput();
 		final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
 		blackjackGame.initializeHands();
+		printInitialHands(blackjackGame);
 
-		final List<Player> players = blackjackGame.getPlayers();
-		final Dealer dealer = blackjackGame.getDealer();
-		printInitialHands(dealer, players);
+		letPlayersDraw(blackjackGame);
+		drawDealerCardForMaximumCapability(blackjackGame);
 
-		for (final Participant player : players) {
-			drawForMaximumCapability(blackjackGame, player);
-		}
-		drawForMaximumCapability(blackjackGame, dealer);
-
-		OutputView.printFinalHandsSummary(dealer, players);
+		OutputView.printFinalHandsSummary(blackjackGame);
 		OutcomeStatistics outcomeStatistics = new OutcomeStatistics(blackjackGame);
 		OutputView.printFinalOutcomeSummary(outcomeStatistics);
 	}
 
-	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
+	private void letPlayersDraw(final BlackjackGame blackjackGame) {
+		final List<Player> players = blackjackGame.getPlayers();
+		for (final Participant player : players) {
+			decideToDraw(blackjackGame, player);
+		}
+	}
+
+	private void decideToDraw(final BlackjackGame blackjackGame, final Participant player) {
 		while (player.isScoreLowerThanBlackJackValue() && isYes(player)) {
-			blackjackGame.distributeOneCard(player);
+			blackjackGame.distributeOneCardTo(player);
 			OutputView.printPlayerHand(player);
 		}
 	}
@@ -48,9 +50,10 @@ public class BlackJackController {
 		return YES.equals(yesOrNo);
 	}
 
-	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
-		while (dealer.isScoreLowerThanMaximumDrawingCriterion()) {
-			blackjackGame.distributeOneCard(dealer);
+	private void drawDealerCardForMaximumCapability(final BlackjackGame blackjackGame) {
+		Dealer dealer = blackjackGame.getDealer();
+		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
+			blackjackGame.distributeOneCardTo(dealer);
 			OutputView.printDealerAdditionalCardMessage();
 		}
 	}

@@ -53,7 +53,7 @@ class BlackjackGameTest {
 		final Participant expected = new Player(new Name("pobi"));
 		expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
 
-		blackjackGame.distributeOneCard(pobi);
+		blackjackGame.distributeOneCardTo(pobi);
 		assertThat(pobi).isEqualTo(expected);
 	}
 
