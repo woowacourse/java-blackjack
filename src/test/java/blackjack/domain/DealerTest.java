@@ -20,7 +20,7 @@ public class DealerTest {
     @Test
     public void distributeTwoCards() {
         Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
+        dealer.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
@@ -32,36 +32,36 @@ public class DealerTest {
     @Test
     public void isDrawableTrue() {
         Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
+        dealer.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.TWO),
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(dealer.isDrawable()).isTrue();
+        assertThat(dealer.isNotBust()).isTrue();
     }
 
     @DisplayName("카드 합계가 17 이상인지 확인한다. - 카드를 더 받을 수 없다.")
     @Test
     public void isDrawableFalse() {
         Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
+        dealer.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.TWO),
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.SPACE, Value.QUEEN)
         )));
 
-        assertThat(dealer.isDrawable()).isFalse();
+        assertThat(dealer.isNotBust()).isFalse();
     }
 
     @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
     @Test
     void draw() {
         Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
+        dealer.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        dealer.draw();
+        dealer.hit();
         Cards cards = dealer.cards;
         assertThat(cards.cards().size()).isEqualTo(3);
     }
@@ -70,7 +70,7 @@ public class DealerTest {
     @Test
     void show() {
         Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
+        dealer.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));

@@ -6,7 +6,7 @@ public enum Shape {
     HEART("하트"),
     CLOVER("클로버");
 
-    private String shape;
+    private final String shape;
 
     Shape(String shape) {
         this.shape = shape;

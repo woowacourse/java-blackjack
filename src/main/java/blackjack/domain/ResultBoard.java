@@ -4,15 +4,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ResultBoard {
-    private final Map<User, Result> resultBoard;
+    private final Map<Player, Result> resultBoard;
 
-    public ResultBoard(Dealer dealer, Users users) {
+    public ResultBoard(Dealer dealer, Players players) {
         this.resultBoard = new HashMap<>();
-        putResultByUser(dealer, users);
+        putResultByUser(dealer, players);
     }
 
-    private void putResultByUser(Dealer dealer, Users users) {
-        users.users()
+    private void putResultByUser(Dealer dealer, Players players) {
+        players.players()
                 .forEach(user -> {
                     this.resultBoard.put(user, Result.decide(dealer, user));
                 });
@@ -28,7 +28,7 @@ public class ResultBoard {
                 .collect(Collectors.toList());
     }
 
-    public Map<User, Result> userResultBoard() {
+    public Map<Player, Result> userResultBoard() {
         return Collections.unmodifiableMap(this.resultBoard);
     }
 }

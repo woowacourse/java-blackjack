@@ -16,7 +16,7 @@ public enum Value {
     QUEEN(10),
     JACK(10);
 
-    private int value;
+    private final int value;
 
     Value(int value) {
         this.value = value;

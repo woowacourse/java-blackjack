@@ -26,13 +26,13 @@ public class Cards implements Comparable<Cards> {
         int totalValue = cards.stream()
                 .mapToInt(Card::value)
                 .sum();
-        if (this.containAce() && totalValue > BUST) {
+        if (this.isSoftHand() && totalValue > BUST) {
             totalValue -= 10;
         }
         return totalValue;
     }
 
-    public boolean containAce() {
+    public boolean isSoftHand() {
         return cards.stream().anyMatch(c -> Value.ACE.getValue() == c.value());
     }
 

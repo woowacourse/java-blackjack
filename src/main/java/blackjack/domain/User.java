@@ -1,14 +1,39 @@
 package blackjack.domain;
 
-public class User extends Participant {
-    private static final int STANDARD = 21;
+import java.util.ArrayList;
+
+public abstract class User {
+    private static final int BUST_VALUE = 21;
+
+    protected final Cards cards;
+    protected final Name name;
 
     public User(String name) {
-        super(new Name(name));
+        this(new Name(name));
     }
 
-    @Override
-    public boolean isDrawable() {
-        return cards.calculateTotalValue() <= STANDARD;
+    public User(Name name) {
+        this.cards = new Cards(new ArrayList<>());
+        this.name = name;
+    }
+
+    public void receiveCards(Cards cards) {
+        this.cards.combine(cards);
+    }
+
+    public boolean isNotBust() {
+        return cards.calculateTotalValue() <= BUST_VALUE;
+    }
+
+    public void hit() {
+        this.cards.combine(Deck.popOne());
+    }
+
+    public Cards showCards() {
+        return this.cards;
+    }
+
+    public String getName() {
+        return this.name.getName();
     }
 }

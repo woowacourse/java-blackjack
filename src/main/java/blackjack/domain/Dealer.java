@@ -1,16 +1,15 @@
 package blackjack.domain;
 
-public class Dealer extends Participant {
+public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
-    private static final int STANDARD = 16;
+    private static final int MAX_HIT_VALUE = 16;
 
     public Dealer() {
         super(DEALER_NAME);
     }
 
-    @Override
-    public boolean isDrawable() {
-        return cards.calculateTotalValue() <= STANDARD;
+    public boolean isAbleHit() {
+        return cards.calculateTotalValue() <= MAX_HIT_VALUE;
     }
 
     public Card showOneCard() {

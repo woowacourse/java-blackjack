@@ -51,7 +51,7 @@ public class CardsTest {
         Cards cards = new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.QUEEN),
                 new Card(Shape.SPACE, Value.ACE)));
-        assertThat(cards.containAce()).isTrue();
+        assertThat(cards.isSoftHand()).isTrue();
     }
 
     @DisplayName("카드들을 하나의 객체로 합친다.")

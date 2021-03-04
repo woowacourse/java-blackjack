@@ -6,32 +6,32 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class DrawAnswerTest {
+public class AnswerTest {
     @DisplayName("y 객체를 생성한다.")
     @Test
     void createDrawAnswerY() {
-        DrawAnswer drawAnswer = DrawAnswer.of("y");
-        assertThat(drawAnswer).isEqualTo(DrawAnswer.YES);
+        Answer answer = Answer.of("y");
+        assertThat(answer).isEqualTo(Answer.YES);
     }
 
     @DisplayName("n 객체를 생성한다.")
     @Test
     void createDrawAnswerN() {
-        DrawAnswer drawAnswer = DrawAnswer.of("n");
-        assertThat(drawAnswer).isEqualTo(DrawAnswer.NO);
+        Answer answer = Answer.of("n");
+        assertThat(answer).isEqualTo(Answer.NO);
     }
 
     @DisplayName("예외가 발생하는지 확인한다.")
     @Test
     void createDrawAnswerException() {
         assertThatThrownBy(() -> {
-            DrawAnswer.of("q");
+            Answer.of("q");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("y가 입력되는 되는 경우를 확인한다.")
     @Test
     void isYes() {
-        assertThat(DrawAnswer.isYes(DrawAnswer.of("y"))).isTrue();
+        assertThat(Answer.isYes(Answer.of("y"))).isTrue();
     }
 }
