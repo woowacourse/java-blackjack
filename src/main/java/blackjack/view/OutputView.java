@@ -16,9 +16,6 @@ public class OutputView {
 
     public static void printInitialComment(Users users) {
         System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createUsersCardStringFormat(users.getPlayers()));
-        for (User user : users.gerUsers()) {
-            System.out.println(makeCardsStringFormat(user));
-        }
     }
 
     public static void printCardsOfUsersWithScore(Users users) {

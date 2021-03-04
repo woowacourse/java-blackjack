@@ -23,6 +23,7 @@ public class BlackJackController {
     public void run() {
         initialHits(users);
         OutputView.printInitialComment(users);
+        OutputView.printCardsOfUsersWithScore(users);
 
         if (dealer.isBlackJack()) {
             OutputView.printResult(users.generateResultsMapAgainstDealer());
