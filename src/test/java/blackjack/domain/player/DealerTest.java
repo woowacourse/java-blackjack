@@ -5,7 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Result;
 import blackjack.domain.card.Type;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
@@ -26,8 +25,9 @@ class DealerTest {
                 new Card(Type.CLUB, Denomination.FOUR)
             )
         );
+        dealer.matchCards(cards);
 
-        assertThat(dealer.matchCards(cards)).isEqualTo(Result.WIN);
+        assertThat(dealer.getWinCount()).isEqualTo(1);
     }
 
     @DisplayName("카드 뭉치를 비교했을때 딜러는 무승부가 된다.")
@@ -43,8 +43,8 @@ class DealerTest {
                 new Card(Type.CLUB, Denomination.FOUR)
             )
         );
-
-        assertThat(dealer.matchCards(cards)).isEqualTo(Result.DRAW);
+        dealer.matchCards(cards);
+        assertThat(dealer.getDrawCount()).isEqualTo(1);
     }
 
     @DisplayName("카드 뭉치를 비교했을때 딜러는 패배한다.")
@@ -60,8 +60,8 @@ class DealerTest {
                 new Card(Type.CLUB, Denomination.TEN)
             )
         );
-
-        assertThat(dealer.matchCards(cards)).isEqualTo(Result.LOSE);
+        dealer.matchCards(cards);
+        assertThat(dealer.getLoseCount()).isEqualTo(1);
     }
 
     @DisplayName("딜러는 카드 점수 합이 16이하면 추가로 카드를 드로우 할 수 있다.")

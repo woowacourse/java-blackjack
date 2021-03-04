@@ -1,3 +1,5 @@
+package rent;
+
 import org.junit.jupiter.api.Test;
 import rent.RentCompany;
 import rent.car.Avante;

@@ -26,8 +26,8 @@ class PlayerTest {
                 new Card(Type.CLUB, Denomination.FOUR)
             )
         );
-
-        assertThat(player.matchCards(cards)).isEqualTo(Result.WIN);
+        player.matchCards(cards);
+        assertThat(player.getResult()).isEqualTo(Result.WIN);
     }
 
     @DisplayName("카드 뭉치를 비교했을때 플레이어는 무승부가 된다.")
@@ -43,8 +43,9 @@ class PlayerTest {
                 new Card(Type.CLUB, Denomination.FOUR)
             )
         );
+        player.matchCards(cards);
 
-        assertThat(player.matchCards(cards)).isEqualTo(Result.DRAW);
+        assertThat(player.getResult()).isEqualTo(Result.DRAW);
     }
 
     @DisplayName("카드 뭉치를 비교했을때 플레이어는 패배한다.")
@@ -60,8 +61,9 @@ class PlayerTest {
                 new Card(Type.CLUB, Denomination.TEN)
             )
         );
+        player.matchCards(cards);
 
-        assertThat(player.matchCards(cards)).isEqualTo(Result.LOSE);
+        assertThat(player.getResult()).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이는 카드 점수 합이 21미만이면 추가로 카드를 드로우 할 수 있다.")
