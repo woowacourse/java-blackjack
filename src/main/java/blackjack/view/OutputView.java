@@ -5,7 +5,11 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ResultType;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -26,6 +30,7 @@ public class OutputView {
         for (Gamer gamer : gamers) {
             printPlayerCardInfo(gamer);
         }
+        System.out.println();
     }
 
     private static void printDealerCardInfo(Dealer dealer) {
@@ -57,13 +62,28 @@ public class OutputView {
     }
 
     public static void printPlayersScoreInfo(Dealer dealer, List<Gamer> gamers) {
+        System.out.println();
         System.out.printf("%s - 결과: %d\n", playerInfoToString(dealer), dealer.calculateScore());
         gamers.stream()
             .forEach(gamer -> System.out.printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.calculateScore()));
     }
 
     public static void printGameResult(GameResult gameResult) {
+        System.out.println();
         System.out.println("## 최종 승패");
+        List<ResultType> dealerResult = gameResult.getDealerResult();
+        System.out.println("딜러: " + resultStatisticToString(dealerResult));
+        for (Entry<Player, ResultType> result : gameResult.getGamersResult().entrySet()) {
+            System.out.printf("%s: %s\n", result.getKey().getName(), result.getValue().getValue());
+        }
+    }
 
+    private static String resultStatisticToString(List<ResultType> resultTypes) {
+        Map<String, Long> result = resultTypes.stream()
+            .collect(Collectors.groupingBy(ResultType::getValue, Collectors.counting()));
+        return Arrays.stream(ResultType.values())
+            .filter(resultType -> result.containsKey(resultType.getValue()))
+            .map(key -> result.get(key.getValue())+key.getValue())
+            .collect(Collectors.joining(" "));
     }
 }

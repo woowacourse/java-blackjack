@@ -6,6 +6,7 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ResultType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class Dealer extends Player {
     }
 
     public GameResult judgeGameResultWithGamers(List<Gamer> gamers) {
-        Map<Player, List<ResultType>> result = new HashMap<>();
+        Map<Player, List<ResultType>> result = new LinkedHashMap<>();
         result.put(this, new ArrayList<>());
         for (Gamer gamer : gamers) {
             result.put(gamer, new ArrayList<>());

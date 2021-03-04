@@ -50,4 +50,8 @@ public enum ResultType {
         }
         return result;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
