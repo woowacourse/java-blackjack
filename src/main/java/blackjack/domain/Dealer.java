@@ -20,7 +20,6 @@ public class Dealer extends User {
         cards.add(card);
     }
 
-    @Override
     public boolean isStay() {
         return getScore() > 16;
     }

@@ -21,8 +21,6 @@ public abstract class User {
 
     public abstract void hit(Card card);
 
-    public abstract boolean isStay();
-
     public int getScore() {
         if (this.isBlackJack()) {
             return Card.BLACKJACK_SCORE;

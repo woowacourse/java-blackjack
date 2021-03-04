@@ -38,11 +38,11 @@ public class Player extends User {
         cards.add(card);
     }
 
-    @Override
     public boolean isStay() {
-        if (this.isStay || getScore() == Card.BUST) {
-            return true;
-        }
-        return false;
+        return this.isStay;
+    }
+
+    public boolean isBust() {
+        return this.getScore() == Card.BUST;
     }
 }

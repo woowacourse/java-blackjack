@@ -23,9 +23,9 @@ class DealerTest {
         assertThat(dealer.getCards()).hasSize(1);
     }
 
-    @DisplayName("isStay - 딜러는 16이하일 때 스테이 할 수 없다.")
+    @DisplayName("isStay - 딜러는 점수가 17 미만일 때 카드를 뽑아야 한다.")
     @Test
-    void check16() {
+    void dealerHasToDrawACardWhenUnder17Score() {
         Dealer dealer = new Dealer();
 
         Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
@@ -34,12 +34,12 @@ class DealerTest {
         dealer.hit(card1);
         dealer.hit(card2);
 
-        assertFalse(dealer.isStay());
+        assertTrue(dealer.hasToDrawACard());
     }
 
-    @DisplayName("isStay - 딜러는 17 이상일 때 스테이한다.")
+    @DisplayName("isStay - 딜러는 점수가 16 초과일 때 카드를 뽑지 않는다.")
     @Test
-    void check17() {
+    void dealerCannotDrawACardWhenOver16Score() {
         Dealer dealer = new Dealer();
 
         Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
@@ -48,7 +48,7 @@ class DealerTest {
         dealer.hit(card1);
         dealer.hit(card2);
 
-        assertTrue(dealer.isStay());
+        assertFalse(dealer.hasToDrawACard());
     }
 
 }
