@@ -18,7 +18,7 @@ public class Dealer extends Participant {
         }
         getHand().addCard(deck.draw());
         if (isOverLimit()) {
-            cannotDraw();
+            cannotContinue();
         }
     }
 

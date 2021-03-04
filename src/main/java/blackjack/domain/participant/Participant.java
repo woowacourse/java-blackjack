@@ -42,14 +42,16 @@ public abstract class Participant {
         return hit;
     }
 
-    public boolean isBust() {return hand.isBust();}
+    protected void cannotContinue() {
+        this.hit = false;
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 
     public String getName() {
         return name;
-    }
-
-    protected void cannotDraw() {
-        this.hit = false;
     }
 
     @Override

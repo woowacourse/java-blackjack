@@ -17,13 +17,13 @@ public class Player extends Participant {
         }
         getHand().addCard(deck.draw());
         if (isBust()) {
-            cannotDraw();
+            cannotContinue();
         }
     }
 
     public void willContinue(Response response, Deck deck) {
         if (!response.getHitStatus()) {
-            cannotDraw();
+            cannotContinue();
         }
     }
 

@@ -17,4 +17,10 @@ public class CardTest {
         assertThat(Card.valueOf(Shape.DIAMOND, CardValue.ACE))
             .isSameAs((Card.valueOf(Shape.DIAMOND, CardValue.ACE)));
     }
+
+    @Test
+    @DisplayName("모든 카드가 존재하는지 테스트")
+    void getAllCards() {
+        assertThat(Card.getAllCards().size()).isEqualTo(52);
+    }
 }

@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
@@ -21,5 +23,19 @@ public class DealerTest {
         Dealer dealer = new Dealer(deck);
 
         assertThat(dealer.isContinue()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수가 16 초과일 경우 계속 드로우 하려고 하는 경우 예외처리")
+    void drawCard() {
+        Deck deck = new Deck(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+            Card.valueOf(Shape.SPADE, CardValue.SEVEN),
+            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+        Dealer dealer = new Dealer(deck);
+
+        assertThatIllegalStateException().isThrownBy(() ->
+            dealer.drawCard(deck))
+            .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 }

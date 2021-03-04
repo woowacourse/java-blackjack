@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+
     private Deck deck;
 
     @BeforeEach
@@ -54,6 +56,22 @@ public class PlayerTest {
             new Hand(Arrays.asList(Card.valueOf(Shape.DIAMOND, CardValue.TEN),
                 Card.valueOf(Shape.SPADE, CardValue.EIGHT),
                 Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
+    }
+
+    @Test
+    @DisplayName("버스트 경우 계속 드로우 하려고 하는 경우 예외처리")
+    void drawCardOverSix() {
+        Deck deck = new Deck(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+            Card.valueOf(Shape.SPADE, CardValue.SEVEN),
+            Card.valueOf(Shape.SPADE, CardValue.FIVE),
+            Card.valueOf(Shape.SPADE, CardValue.TWO)));
+        Player root = new Player("root", deck);
+        root.drawCard(deck);
+
+        assertThatIllegalStateException().isThrownBy(() ->
+            root.drawCard(deck))
+            .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 
     @Test
