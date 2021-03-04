@@ -1,9 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
 import java.util.LinkedHashMap;
