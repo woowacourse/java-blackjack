@@ -62,13 +62,13 @@ public class BlackjackGame {
 		for (final Player player : players) {
 			final Outcome playerOutcome = Outcome.of(player, dealer);
 			playersOutcome.put(player.getName(), playerOutcome);
-			updateDealerOutcome(dealerOutcome, playerOutcome);
+			updateDealerOutcome(dealerOutcome, playerOutcome.getDealerOutcome());
 		}
 		return new OutcomeStatistics(dealerOutcome, playersOutcome);
 	}
 
-	private void updateDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final Outcome playerOutcome) {
-		dealerOutcome.computeIfPresent(playerOutcome.getDealerOutcome(), (outcome, count) -> count + 1);
+	private void updateDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final Outcome outcomeToUpdate) {
+		dealerOutcome.computeIfPresent(outcomeToUpdate, (outcome, count) -> count + 1);
 	}
 
 	private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
