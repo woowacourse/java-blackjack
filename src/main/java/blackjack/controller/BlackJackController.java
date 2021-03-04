@@ -25,13 +25,15 @@ public class BlackJackController {
         summary();
     }
 
-    private void summary() {
-        ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
-        OutputView.printSummary(resultStatistics);
+    private void initSetting() {
+        blackJackService.initChallengers(requestNames());
+        blackJackService.initDealer();
+        OutputView.printInitSetting(blackJackService.getPlayers());
+        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
     }
 
-    private void result() {
-        OutputView.printResult(blackJackService.getPlayers());
+    private List<String> requestNames() {
+        return InputView.getNames();
     }
 
     private void play() {
@@ -52,6 +54,13 @@ public class BlackJackController {
         }
     }
 
+    private void receiveChallengerMoreCard(final Challenger challenger) {
+        while (!challenger.isBust() && InputView.wantMoreCard(challenger)) {
+            blackJackService.receiveMoreCard(challenger);
+            OutputView.printPlayerCards(challenger);
+        }
+    }
+
     private void receiveDealerMoreCard(final Dealer dealer) {
         while (!dealer.isBust() && !dealer.isEnoughScore()) {
             blackJackService.receiveMoreCard(dealer);
@@ -60,21 +69,12 @@ public class BlackJackController {
         }
     }
 
-    private void receiveChallengerMoreCard(final Challenger challenger) {
-        while (!challenger.isBust() && InputView.wantMoreCard(challenger)) {
-            blackJackService.receiveMoreCard(challenger);
-            OutputView.printPlayerCards(challenger);
-        }
+    private void result() {
+        OutputView.printResult(blackJackService.getPlayers());
     }
 
-    private void initSetting() {
-        blackJackService.initChallengers(requestNames());
-        blackJackService.initDealer();
-        OutputView.printInitSetting(blackJackService.getPlayers());
-        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
-    }
-
-    private List<String> requestNames() {
-        return InputView.getNames();
+    private void summary() {
+        ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
+        OutputView.printSummary(resultStatistics);
     }
 }
