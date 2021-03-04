@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Result {
-
     private final Map<Player, Status> result;
 
     public Result() {

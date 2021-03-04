@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Cards {
-
     private final List<Card> cards;
 
     public Cards(List<Card> deck) {

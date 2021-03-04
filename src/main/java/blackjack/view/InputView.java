@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
+    public static final String HIT_VALUE_ERROR_MESSAGE = "Y 또는 N을 입력해 주세요.";
 
     private InputView() {
     }
@@ -24,7 +25,7 @@ public class InputView {
     private static void validateHitValue(String value) {
         List<String> hitValues = Arrays.asList("Y", "N");
         if (!hitValues.contains(value)) {
-            throw new IllegalArgumentException("Y 또는 N을 입력해 주세요.");
+            throw new IllegalArgumentException(HIT_VALUE_ERROR_MESSAGE);
         }
     }
 }

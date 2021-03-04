@@ -4,8 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Player implements User {
-
     private static final int BLACKJACK_UPPER_BOUND = 21;
+    public static final String NAME_INPUT_ERROR_MESSAGE = "이름은 1자 이상이어야 합니다.";
+
     private final Cards cards;
     private final String name;
 
@@ -14,9 +15,13 @@ public class Player implements User {
         this.name = validateName(name);
     }
 
+    public boolean isNotBust() {
+        return cards.getScore() <= BLACKJACK_UPPER_BOUND;
+    }
+
     private String validateName(String name) {
         if (name.trim().length() < 1) {
-            throw new IllegalArgumentException("이름은 1자 이상이어야 합니다.");
+            throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
         }
         return name.trim();
     }
@@ -39,9 +44,5 @@ public class Player implements User {
     @Override
     public int getScore() {
         return cards.getScore();
-    }
-
-    public boolean isNotBust() {
-        return cards.getScore() <= BLACKJACK_UPPER_BOUND;
     }
 }

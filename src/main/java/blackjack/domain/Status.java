@@ -5,6 +5,7 @@ public enum Status {
     DRAW("무"),
     LOSE("패");
 
+    public static final int BLACK_JACK_SCORE = 21;
     private final String status;
 
     Status(String status) {
@@ -12,7 +13,7 @@ public enum Status {
     }
 
     public static Status compare(int dealerScore, int playerScore) {
-        if (dealerScore > 21 || (playerScore > dealerScore && playerScore <= 21)) {
+        if (dealerScore > BLACK_JACK_SCORE || (playerScore > dealerScore && playerScore <= BLACK_JACK_SCORE)) {
             return WIN;
         }
         if (playerScore == dealerScore) {

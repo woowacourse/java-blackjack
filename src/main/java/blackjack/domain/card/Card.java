@@ -31,26 +31,7 @@ public class Card {
         return denomination.getScore();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return denomination == card.denomination &&
-                Objects.equals(suit, card.suit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(suit, denomination);
-    }
-
     private static class CardCache {
-
         static final List<Card> CARD_CACHE = new ArrayList<>();
 
         static {
@@ -67,5 +48,23 @@ public class Card {
             return Stream.of(Suit.values())
                     .map(suit -> new Card(denomination, suit));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return denomination == card.denomination &&
+                Objects.equals(suit, card.suit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, denomination);
     }
 }

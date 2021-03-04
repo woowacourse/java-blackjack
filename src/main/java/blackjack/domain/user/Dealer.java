@@ -7,10 +7,9 @@ import blackjack.domain.card.Cards;
 import java.util.*;
 
 public class Dealer implements User {
-
-
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_HIT_THRESHOLD = 16;
+    public static final String COMMA = ", ";
 
     private final Cards cards;
 
@@ -27,6 +26,10 @@ public class Dealer implements User {
         Arrays.stream(Status.values())
                 .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
         return winnings;
+    }
+
+    public String getFirstCard() {
+        return Arrays.stream(getCards().split(COMMA)).findFirst().get();
     }
 
     @Override
@@ -47,9 +50,5 @@ public class Dealer implements User {
     @Override
     public int getScore() {
         return cards.getScore();
-    }
-
-    public String getFirstCard() {
-        return Arrays.stream(getCards().split(", ")).findFirst().get();
     }
 }
