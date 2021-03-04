@@ -1,7 +1,7 @@
 package blackjack.domain.scoreboard;
 
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Status;
+import blackjack.domain.user.status.Status;
 import blackjack.domain.user.User;
 
 import java.util.Arrays;

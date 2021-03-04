@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.card.painting;
 
 import java.util.Arrays;
 import java.util.List;

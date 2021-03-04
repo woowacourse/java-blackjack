@@ -1,8 +1,9 @@
 package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.painting.Suit;
+import blackjack.domain.card.painting.Value;
+import blackjack.domain.scoreboard.result.UserGameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

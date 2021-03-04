@@ -1,5 +1,7 @@
 package blackjack.domain.scoreboard;
 
+import blackjack.domain.scoreboard.result.GameResult;
+import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.User;
 
 import java.util.Collections;

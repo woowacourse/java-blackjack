@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.user.status;
 
 import java.util.Arrays;
 import java.util.function.IntPredicate;

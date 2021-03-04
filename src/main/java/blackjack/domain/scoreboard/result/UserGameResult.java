@@ -1,6 +1,7 @@
-package blackjack.domain.scoreboard;
+package blackjack.domain.scoreboard.result;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.scoreboard.WinOrLose;
 
 import java.util.List;
 import java.util.Objects;

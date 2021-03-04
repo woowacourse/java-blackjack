@@ -1,6 +1,8 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.status.Hand;
+import blackjack.domain.user.status.Status;
 
 import java.util.List;
 

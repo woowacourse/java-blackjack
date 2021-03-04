@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.painting.Suit;
+import blackjack.domain.card.painting.Value;
+
 import java.util.Objects;
 
 public class Card {

@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.user.status.Status;
+
 public class User extends Participant{
     public User(String name) {
         super(name);
