@@ -10,7 +10,7 @@ public class ResultTest {
     @DisplayName("결과 출력 테스트")
     void scoreTest() {
         Players players = new Players("pobi,jason", new Dealer());
-        players.giveCards(new Deck());
+        players.giveCards();
         GameResult.getPlayersCardsAndResult(new Dealer(), players);
     }
 

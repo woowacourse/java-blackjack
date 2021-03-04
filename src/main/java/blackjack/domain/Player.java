@@ -12,12 +12,12 @@ public class Player extends Gamer {
         return this.calculateJudgingPoint() < 21;
     }
 
-    public void playEachPlayer(Deck deck) {
-        receiveCard(deck.dealCard());
+    public void playEachPlayer() {
+        receiveCard(Deck.dealCard());
     }
 
     @Override
-    public Boolean continueDraw(Deck deck, String draw) {
+    public Boolean continueDraw(String draw) {
         return isDrawCard(draw);
     }
 

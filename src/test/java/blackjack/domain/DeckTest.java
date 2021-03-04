@@ -9,24 +9,22 @@ public class DeckTest {
     @Test
     @DisplayName("카드 분배 확인")
     void checkDealCards() {
-        Deck deck = new Deck();
-        Card card = deck.choiceCard(0);
-        assertEquals(deck.dealCard(), card);
+        Card card = Deck.choiceCard(0);
+        assertEquals(Deck.dealCard(), card);
     }
 
     @Test
-    @DisplayName("카드 삭제 확인")
+    @DisplayName("제일 앞 카드 주는지 확인")
     void checkRemoveCard() {
-        Deck deck = new Deck();
-        deck.dealCard();
-        assertEquals(deck.getSize(), 51);
+        Card card = Deck.choiceCard(0);
+        assertEquals(Deck.dealCard(), card);
     }
 
     @Test
+    @DisplayName("카드 주고 나면 두번째 카드가 앞으로 오는지 확인")
     void checkIndex() {
-        Deck deck = new Deck();
-        Card card = deck.choiceCard(1);
-        deck.dealCard();
-        assertEquals(card, deck.choiceCard(0));
+        Card card = Deck.choiceCard(1);
+        Deck.dealCard();
+        assertEquals(card, Deck.choiceCard(0));
     }
 }

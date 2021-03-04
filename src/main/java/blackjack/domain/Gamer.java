@@ -49,7 +49,7 @@ public abstract class Gamer {
 
     public abstract boolean canReceiveCard();
 
-    public abstract Boolean continueDraw(Deck deck, String draw);
+    public abstract Boolean continueDraw(String draw);
 
     public String getName() {
         return name;
@@ -81,5 +81,4 @@ public abstract class Gamer {
     public int hashCode() {
         return Objects.hash(name, cards);
     }
-
 }

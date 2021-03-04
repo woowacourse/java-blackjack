@@ -26,10 +26,10 @@ public class Players {
         return splitPlayers;
     }
 
-    public void giveCards(Deck deck) {
-        dealer.receiveCard(deck.dealCard());
+    public void giveCards() {
+        dealer.receiveCard(Deck.dealCard());
         for (Gamer gamer : players) {
-            gamer.receiveCard(deck.dealCard());
+            gamer.receiveCard(Deck.dealCard());
         }
     }
 
