@@ -40,13 +40,13 @@ public class OutputView {
     }
 
     public static void distributeCardMessage(Players players) {
-        String playerName = players.getPlayers().stream().map(Person::getName).collect(Collectors.joining(","));
+        String playerName = players.getPlayers().stream().map(Person::getName).collect(Collectors.joining(", "));
         System.out.printf(DISTRIBUTE_MESSAGE_FORM + "%n", playerName);
     }
 
     public static void showDealerFirstCard(Dealer dealer) {
         Card card = dealer.getTakenCards().peekCard();
-        System.out.printf(CURRENT_CARD_FORM, dealer.getName(), cardForm(card));
+        System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName(), cardForm(card));
     }
 
     private static String cardForm(Card card) {
@@ -64,6 +64,7 @@ public class OutputView {
     }
 
     public static void dealerReceiveOneCard() {
+        System.out.println();
         System.out.println(DEALER_DRAW_ONE_CARD);
     }
 
@@ -75,11 +76,12 @@ public class OutputView {
     }
 
     private static String getCardsMessageForm(Person person) {
-        String cardsName = person.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
+        String cardsName = person.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(", "));
         return String.format(CURRENT_CARD_FORM, person.getName(), cardsName);
     }
 
     public static void showFinalResult(BlackJackResult blackJackResult) {
+        System.out.println();
         System.out.println(FINAL_RESULT_TITLE);
 
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
