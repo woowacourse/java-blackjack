@@ -1,9 +1,6 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -43,32 +40,23 @@ public class Participants {
         Playable dealer = participants.stream().filter(playable -> playable instanceof Dealer).findFirst().orElse(null);
         List<Playable> players = participants.stream().filter(playable -> playable instanceof Player).collect(Collectors.toList());
         final Map<String, String> results = new LinkedHashMap<>();
-        int win = 0;
-        int lose = 0;
-        int draw = 0;
+        results.put(dealer.getName(), summarizeDealerOutcome(dealer, players));
         for (Playable player : players) {
-            if (dealer.result(player.sumCardsForResult()) == 1) {
-                win += 1;
-            }
-            if (dealer.result(player.sumCardsForResult()) == -1) {
-                lose += 1;
-            }
-            if (dealer.result(player.sumCardsForResult()) == 0) {
-                draw += 1;
-            }
-        }
-        results.put(dealer.getName(), win + "승 " + lose + "패 " + draw + "무");
-        for (Playable player : players) {
-            if (player.result(dealer.sumCardsForResult()) == 1) {
-                results.put(player.getName(), "승");
-            }
-            if (player.result(dealer.sumCardsForResult()) == -1) {
-                results.put(player.getName(), "패");
-            }
-            if (player.result(dealer.sumCardsForResult()) == 0) {
-                results.put(player.getName(), "무");
-            }
+            Outcome outcome = Outcome.getInstance(player.result(dealer.sumCardsForResult()));
+            results.put(player.getName(), outcome.getWord());
         }
         return results;
+    }
+
+    private String summarizeDealerOutcome(Playable dealer, List<Playable> players) {
+        Map<Outcome, Integer> results = new EnumMap(Outcome.class);
+        Arrays.stream(Outcome.values()).forEach(outcome -> results.put(outcome, 0));
+
+        for (Playable player : players) {
+            Outcome outcome = Outcome.getInstance(dealer.result(player.sumCardsForResult()));
+            results.put(outcome, results.get(outcome) + 1);
+        }
+
+        return results.get(Outcome.WIN) + "승 " + results.get(Outcome.LOSE) + "패 " + results.get(Outcome.DRAW) + "무";
     }
 }
