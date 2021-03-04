@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.dto.ParticipantsDto;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.Response;
@@ -39,12 +40,12 @@ public class BlackJackController {
     }
 
     private static void printGameStatus(Dealer dealer, Players players) {
-        OutputView.printGameInitializeMessage(dealer, players, Participant.STARTING_CARD_COUNT);
-        OutputView.printParticipantsStatus(dealer, players, false);
+        OutputView.printGameInitializeMessage(ParticipantsDto.valueOf(dealer, players), Participant.STARTING_CARD_COUNT);
+        OutputView.printParticipantsStatus(ParticipantsDto.valueOf(dealer, players), false);
     }
 
     private static void printGameResult(Dealer dealer, Players players) {
-        OutputView.printParticipantsStatus(dealer, players, true);
+        OutputView.printParticipantsStatus(ParticipantsDto.valueOf(dealer, players), true);
         OutputView.printResult(players.match(dealer));
     }
 

@@ -1,15 +1,12 @@
 package blackjack.view;
 
+import blackjack.dto.ParticipantsDto;
 import blackjack.domain.GameResult;
-import blackjack.domain.Players;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,24 +18,15 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    private static List<Participant> concatenateParticipants(Dealer dealer, Players players) {
-        List<Participant> participants = new ArrayList<>(Collections.singletonList(dealer));
-        participants.addAll(players.unwrap());
-        return participants;
-    }
-
-    public static void printGameInitializeMessage(Dealer dealer, Players players,
-        int startingCardCount) {
-        List<Participant> participants = concatenateParticipants(dealer, players);
-        String participantNames = participants.stream()
+    public static void printGameInitializeMessage(ParticipantsDto participantsDto, int startingCardCount) {
+        String participantNames = participantsDto.unwrap().stream()
             .map(Participant::getName)
             .collect(Collectors.joining(NAME_DELIMITER));
         System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
     }
 
-    public static void printParticipantsStatus(Dealer dealer, Players players, boolean withScore) {
-        List<Participant> participants = concatenateParticipants(dealer, players);
-        participants.forEach(participant -> printParticipantStatus(participant, withScore));
+    public static void printParticipantsStatus(ParticipantsDto participantsDto, boolean withScore) {
+        participantsDto.unwrap().forEach(participant -> printParticipantStatus(participant, withScore));
         System.out.println();
     }
 
