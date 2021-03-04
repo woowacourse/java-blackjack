@@ -12,6 +12,14 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
     public boolean isAce() {
         return denomination == Denomination.ACE;
     }
