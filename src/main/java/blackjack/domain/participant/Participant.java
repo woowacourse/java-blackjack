@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-
     private static final String INVALID_PARTICIPANT_NAME = "플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.";
     private static final int INVALID_NAME_LENGTH = 0;
 
@@ -29,12 +28,14 @@ public abstract class Participant {
         }
     }
 
-    public String getName() {
-        return name;
+    public abstract boolean isAbleToReceiveCard();
+
+    public void receiveCard(Card card) {
+        cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public void receiveCards(Cards receivedCards) {
+        cards.add(receivedCards);
     }
 
     public int calculateFinalScore() {
@@ -45,13 +46,11 @@ public abstract class Participant {
         return cards.calculateScoreWhenAceIsMinimum();
     }
 
-    public void receiveCard(Card card) {
-        cards.add(card);
+    public String getName() {
+        return name;
     }
 
-    public void receiveCards(Cards receivedCards) {
-        cards.add(receivedCards);
+    public List<Card> getCards() {
+        return cards.getCards();
     }
-
-    public abstract boolean isAbleToReceiveCard();
 }
