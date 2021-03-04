@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.MatchResult;
-import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
@@ -26,9 +25,7 @@ public class OutputView {
     private static final String FINAL_RESULT_TITLE = "## 최종 승패";
     private static final String DEALER_DRAW_ONE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-
     private OutputView() {
-
     }
 
     public static void printError(String errorMessage) {
@@ -69,9 +66,9 @@ public class OutputView {
     }
 
     public static void showAllCards(Players players, Dealer dealer) {
-        System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), Score.calculatorScore(dealer.getTakenCards()));
+        System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), dealer.getTakenCards().calculateScore());
         for (Player player : players.getPlayers()) {
-            System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), Score.calculatorScore(player.getTakenCards()));
+            System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), player.getTakenCards().calculateScore());
         }
     }
 

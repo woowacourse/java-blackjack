@@ -6,8 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
+
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
+    private static final int REMAIN_ACE_COUNT = 10;
     private final List<Card> cards;
 
     private static final List<Card> CACHE;
@@ -60,5 +63,25 @@ public class Cards {
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public int calculateScore() {
+        int score = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+        long aceCount = cards.stream()
+                .filter(Card::isAce)
+                .count();
+        for (int i = 0; i < aceCount; i++) {
+            score = plusRemainAceScore(score);
+        }
+        return score;
+    }
+
+    private int plusRemainAceScore(int score) {
+        if (score + REMAIN_ACE_COUNT <= BLACKJACK_NUMBER) {
+            score += REMAIN_ACE_COUNT;
+        }
+        return score;
     }
 }

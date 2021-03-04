@@ -1,11 +1,11 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.MatchResult;
-import blackjack.domain.Score;
 import blackjack.domain.card.Cards;
 
 public class Dealer extends Person {
     public static final String DEALER_NAME = "딜러";
+    private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
         super.name = DEALER_NAME;
@@ -13,12 +13,12 @@ public class Dealer extends Person {
     }
 
     public MatchResult matchGame(Player player) {
-        return MatchResult.getPlayerMatchResult(Score.calculatorScore(player.cards), Score.calculatorScore(cards));
+        return MatchResult.getPlayerMatchResult(player.cards.calculateScore(), cards.calculateScore());
     }
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(cards) <= 16;
+        return this.cards.calculateScore() <= DEALER_DRAW_CONDITION;
     }
 }
 

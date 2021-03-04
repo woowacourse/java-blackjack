@@ -1,6 +1,5 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.Score;
 import blackjack.domain.card.Cards;
 
 import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
@@ -22,6 +21,6 @@ public class Player extends Person {
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(cards) < BLACKJACK_NUMBER;
+        return this.cards.calculateScore() < BLACKJACK_NUMBER;
     }
 }

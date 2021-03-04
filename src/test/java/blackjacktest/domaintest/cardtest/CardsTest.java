@@ -61,4 +61,29 @@ public class CardsTest {
     void removeCardFail() {
         assertThatThrownBy(() -> cards.removeCard()).isInstanceOf(IndexOutOfBoundsException.class);
     }
+
+    @Test
+    @DisplayName("Cards 점수 계산")
+    void calculatorScore() {
+        Cards cards1 = new Cards(Arrays.asList(
+                new Card(Shape.SPADE, Denomination.ACE),
+                new Card(Shape.SPADE, Denomination.TWO),
+                new Card(Shape.HEART, Denomination.ACE)
+        ));
+
+        Cards cards2 = new Cards(Arrays.asList(
+                new Card(Shape.SPADE, Denomination.ACE),
+                new Card(Shape.SPADE, Denomination.JACK)
+        ));
+
+        Cards cards3 = new Cards(Arrays.asList(
+                new Card(Shape.SPADE, Denomination.ACE),
+                new Card(Shape.SPADE, Denomination.EIGHT),
+                new Card(Shape.HEART, Denomination.ACE)
+        ));
+
+        assertThat(cards1.calculateScore()).isEqualTo(14);
+        assertThat(cards2.calculateScore()).isEqualTo(21);
+        assertThat(cards3.calculateScore()).isEqualTo(20);
+    }
 }
