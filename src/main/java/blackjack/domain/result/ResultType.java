@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,40 +17,37 @@ public enum ResultType {
         this.value = value;
     }
 
-    public static Map<Player, ResultType> judgeGameResult(Player p1, Player p2) {
+    public static Map<Player, ResultType> judgeGameResult(Dealer dealer, Gamer gamer) {
         Map<Player, ResultType> result = new HashMap<>();
-        int p1Score = p1.calculateScore();
-        int p2Score = p2.calculateScore();
-
-        if (p1Score > 21 && p2Score > 21) {
-            result.put(p1, DRAW);
-            result.put(p2, DRAW);
+        if (dealer.isBust()) {
+            putResult(result, dealer, gamer, LOSE, WIN);
             return result;
         }
-        if (p1Score > 21) {
-            result.put(p1, LOSE);
-            result.put(p2, WIN);
+        if (gamer.isBust()) {
+            putResult(result, dealer, gamer, WIN, LOSE);
             return result;
         }
-        if (p2Score > 21) {
-            result.put(p1, WIN);
-            result.put(p2, LOSE);
-            return result;
-        }
-
-        if (p1Score > p2Score) {
-            result.put(p1, WIN);
-            result.put(p2, LOSE);
-        }
-        if (p1Score == p2Score) {
-            result.put(p1, DRAW);
-            result.put(p2, DRAW);
-        }
-        if (p1Score < p2Score) {
-            result.put(p1, LOSE);
-            result.put(p2, WIN);
-        }
+        judgeNotBustGameResult(dealer, gamer, result);
         return result;
+    }
+
+    private static void judgeNotBustGameResult(Dealer dealer, Gamer gamer, Map<Player, ResultType> result) {
+        int dealerScore = dealer.calculateScore();
+        int gamerScore = gamer.calculateScore();
+        if (dealerScore > gamerScore) {
+            putResult(result, dealer, gamer, WIN, LOSE);
+        }
+        if (dealerScore == gamerScore) {
+            putResult(result, dealer, gamer, DRAW, DRAW);
+        }
+        if (dealerScore < gamerScore) {
+            putResult(result, dealer, gamer, LOSE, WIN);
+        }
+    }
+
+    private static void putResult(Map<Player, ResultType> result, Dealer dealer, Gamer gamer, ResultType dealerResult, ResultType gamerResult) {
+        result.put(dealer, dealerResult);
+        result.put(gamer, gamerResult);
     }
 
     public String getValue() {

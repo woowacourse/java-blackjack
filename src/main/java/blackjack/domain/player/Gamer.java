@@ -23,4 +23,9 @@ public class Gamer extends Player {
     public boolean canDraw() {
         return calculateScore() < CAN_DRAW_MAXIMUM_SCORE;
     }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
+    }
 }

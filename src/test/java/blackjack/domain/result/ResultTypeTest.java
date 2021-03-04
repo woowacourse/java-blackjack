@@ -9,6 +9,10 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +34,7 @@ class ResultTypeTest {
         ));
 
         // when
-        Map<Player, ResultType> result = ResultType.judgeGameResult(gamer, dealer);
+        Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
 
         // then
         assertThat(result.get(gamer)).isSameAs(ResultType.LOSE);
@@ -52,7 +56,7 @@ class ResultTypeTest {
         ));
 
         // when
-        Map<Player, ResultType> result = ResultType.judgeGameResult(gamer, dealer);
+        Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
 
         // then
         assertThat(result.get(gamer)).isSameAs(ResultType.WIN);
@@ -74,10 +78,56 @@ class ResultTypeTest {
         ));
 
         // when
-        Map<Player, ResultType> result = ResultType.judgeGameResult(gamer, dealer);
+        Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
 
         // then
         assertThat(result.get(gamer)).isSameAs(ResultType.DRAW);
         assertThat(result.get(dealer)).isSameAs(ResultType.DRAW);
+    }
+
+    @DisplayName("딜러가 버스트일 때 테스트")
+    @Test
+    void 딜러_버스트_테스트() {
+        // given
+        Gamer gamer = new Gamer("pobi", Cards.of(
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.KING, Shape.CLUBS)
+        ));
+
+        Dealer dealer = new Dealer(Cards.of(
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.KING, Shape.CLUBS)
+        ));
+
+        // when
+        Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
+
+        // then
+        assertThat(result.get(gamer)).isSameAs(ResultType.WIN);
+        assertThat(result.get(dealer)).isSameAs(ResultType.LOSE);
+    }
+
+    @DisplayName("딜러는 버스트가 아니며 게이머가 버스트일 때 테스트")
+    @Test
+    void 게이머_버스트_테스트() {
+        // given
+        Gamer gamer = new Gamer("pobi", Cards.of(
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.KING, Shape.CLUBS)
+        ));
+
+        Dealer dealer = new Dealer(Cards.of(
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.KING, Shape.CLUBS)
+        ));
+
+        // when
+        Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
+
+        // then
+        assertThat(result.get(gamer)).isSameAs(ResultType.LOSE);
+        assertThat(result.get(dealer)).isSameAs(ResultType.WIN);
     }
 }

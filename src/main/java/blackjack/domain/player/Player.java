@@ -17,6 +17,8 @@ public abstract class Player {
 
     abstract boolean canDraw();
 
+    abstract boolean isBust();
+
     public int calculateScore() {
         return cards.calculateScore();
     }

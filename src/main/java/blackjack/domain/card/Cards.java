@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-
+    private static final int BUST_SCORE = 21;
     private final List<Card> cards;
 
     private Cards(List<Card> cards) {
@@ -45,6 +45,10 @@ public class Cards {
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BUST_SCORE;
     }
 
     public List<Card> getCards() {
