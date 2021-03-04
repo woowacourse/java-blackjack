@@ -54,9 +54,9 @@ public class BlackjackController {
     }
 
     private void showDistributedCard(final List<Player> players, final Dealer dealer) {
-        OutputView.showDealerCard(dealer.getName(), dealer.getMyCards().get(0));
+        OutputView.showDealerCard(dealer.getName(), dealer.getPlayerCards().get(0));
         for (final Player player : players) {
-            OutputView.showPlayerCard(player.getName(), player.getMyCards());
+            OutputView.showPlayerCard(player.getName(), player.getPlayerCards());
         }
     }
 
@@ -68,11 +68,11 @@ public class BlackjackController {
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
         if (END_GAME_MARK.equals(askPlayerMoreCard(player))) {
-            OutputView.showPlayerCard(player.getName(), player.getMyCards());
+            OutputView.showPlayerCard(player.getName(), player.getPlayerCards());
             return;
         }
         player.receiveCard(cardDeck.distribute());
-        OutputView.showPlayerCard(player.getName(), player.getMyCards());
+        OutputView.showPlayerCard(player.getName(), player.getPlayerCards());
         if (isBust(player)) {
             return;
         }
@@ -113,9 +113,9 @@ public class BlackjackController {
 
     private void showFinalCardResult(final List<Player> players, final Dealer dealer) {
         OutputView.displayNewLine();
-        OutputView.showCardResult(dealer.getName(), dealer.getMyCards(), dealer.calculate());
+        OutputView.showCardResult(dealer.getName(), dealer.getPlayerCards(), dealer.calculate());
         for (final Player player : players) {
-            OutputView.showCardResult(player.getName(), player.getMyCards(), player.calculate());
+            OutputView.showCardResult(player.getName(), player.getPlayerCards(), player.calculate());
         }
     }
 
