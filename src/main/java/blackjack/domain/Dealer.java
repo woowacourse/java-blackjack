@@ -1,13 +1,11 @@
 package blackjack.domain;
 
-import java.util.Collections;
-import java.util.List;
-
 public class Dealer extends Participant {
+    private static final String DEALER_NAME = "딜러";
     private static final int STANDARD = 16;
-    private static final int FIRST_CARD = 0;
 
     public Dealer() {
+        super(DEALER_NAME);
     }
 
     @Override
@@ -15,8 +13,7 @@ public class Dealer extends Participant {
         return cards.calculateTotalValue() <= STANDARD;
     }
 
-    @Override
-    public List<Card> show() {
-        return Collections.singletonList(cards.cards().get(FIRST_CARD));
+    public Card showOneCard() {
+        return cards.oneCard();
     }
 }

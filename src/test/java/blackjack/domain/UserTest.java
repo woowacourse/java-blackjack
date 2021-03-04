@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,7 +32,7 @@ public class UserTest {
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
     public void isDrawableTrue() {
-        User user = new User(new Name("amazzi"));
+        User user = new User("amazzi");
         user.distribute(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.TWO),
                 new Card(Shape.DIAMOND, Value.JACK)
@@ -76,7 +75,7 @@ public class UserTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        List<Card> cards = user.show();
-        assertThat(cards.size()).isEqualTo(2);
+        Cards cards = user.showCards();
+        assertThat(cards.cards().size()).isEqualTo(2);
     }
 }

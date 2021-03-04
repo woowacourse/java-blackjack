@@ -1,23 +1,37 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Participant {
-    protected Cards cards = new Cards(new ArrayList<>());
+    protected final Cards cards;
+    protected final Name name;
 
-    public Participant() {
+    public Participant(String name){
+        this(new Name(name));
+    }
+
+    public Participant(Name name) {
+        this.cards = new Cards(new ArrayList<>());
+        this.name = name;
     }
 
     public void distribute(Cards cards) {
-        this.cards = cards;
+        this.cards.combine(cards);
     }
 
     public abstract boolean isDrawable();
 
     public void draw(){
-        cards.combine(Deck.popOne());
+        this.cards.combine(Deck.popOne());
     }
 
-    public abstract List<Card> show();
+    public Cards showCards(){
+        return this.cards;
+    }
+
+    public String getName() {
+        return this.name.getName();
+    }
+
+
 }
