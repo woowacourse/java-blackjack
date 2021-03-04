@@ -4,10 +4,12 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
+import static blackjack.domain.Round.GAME_OVER_SCORE;
+
 public enum Outcome {
-    WIN("승", (a, b) -> a>b),
-    LOSE("패", (a, b) -> a<b),
-    DRAW("무", (a,b) -> a==b);
+    WIN("승", (a, b) -> a > b),
+    LOSE("패", (a, b) -> a < b),
+    DRAW("무", (a, b) -> a == b);
 
     private final String name;
     private final BiPredicate<Integer, Integer> biPredicate;
@@ -29,15 +31,15 @@ public enum Outcome {
     }
 
     private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {
-        if (dealerScore > 21 && playerScore > 21) {
+        if (dealerScore > GAME_OVER_SCORE && playerScore > GAME_OVER_SCORE) {
             return WIN;
         }
 
-        if (dealerScore > 21) {
+        if (dealerScore > GAME_OVER_SCORE) {
             return LOSE;
         }
 
-        if (playerScore > 21) {
+        if (playerScore > GAME_OVER_SCORE) {
             return WIN;
         }
         return null;

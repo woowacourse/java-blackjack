@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Round {
+    public static final int GAME_OVER_SCORE = 21;
     private final List<Card> shuffledCards;
     private final Dealer dealer;
     private final List<Player> players;
@@ -45,7 +46,7 @@ public class Round {
     }
 
     public boolean addDealerCard() {
-        if (!dealer.isGameOver(21)) {
+        if (!dealer.isGameOver(GAME_OVER_SCORE)) {
             dealer.addCard(makeOneCard());
             return true;
         }

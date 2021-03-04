@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class Card {
     private static final List<Card> CARDS = new ArrayList<>();
-
     private final Symbol symbol;
     private final Number number;
 
