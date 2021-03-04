@@ -3,15 +3,14 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
 
-public abstract class User {
+public class User {
 
     private final UserDeck userDeck;
+    int DRAWABLE_NUMBER;
 
     public User(UserDeck userDeck) {
         this.userDeck = userDeck;
     }
-
-    abstract boolean isAvailableDraw();
 
     public void draw(Card card) {
         userDeck.add(card);
@@ -19,6 +18,10 @@ public abstract class User {
 
     public boolean isBustCondition() {
         return this.getScore() == UserDeck.BUST_CONDITION;
+    }
+
+    public boolean isAvailableDraw() {
+        return !this.isBustCondition() && this.getScore() < DRAWABLE_NUMBER;
     }
 
     public UserDeck getUserDeck() {

@@ -4,14 +4,10 @@ import blackjack.domain.card.UserDeck;
 
 public class Dealer extends User {
 
-    private final int DEALER_CRITERIA = 16;
+    private static final int DEALER_LIMIT_NUMBER = 17;
 
     public Dealer(UserDeck userDeck) {
         super(userDeck);
-    }
-
-    @Override
-    public boolean isAvailableDraw() {
-        return !super.isBustCondition() && super.getScore() <= DEALER_CRITERIA;
+        super.DRAWABLE_NUMBER = DEALER_LIMIT_NUMBER;
     }
 }
