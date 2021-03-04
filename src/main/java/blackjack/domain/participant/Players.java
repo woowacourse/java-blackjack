@@ -13,11 +13,6 @@ public class Players {
     private final List<Player> players;
     private final Gamer dealer;
 
-    public Players(List<Player> players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
-    }
-
     public Players(String value, Dealer dealer) {
         this.players = splitPlayers(value);
         this.dealer = dealer;

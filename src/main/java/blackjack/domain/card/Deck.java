@@ -24,8 +24,4 @@ public class Deck {
     public static Card dealCard() {
         return DECK.remove(FIRST_INDEX);
     }
-
-    public static Card choiceCard(int index) {
-        return DECK.get(index);
-    }   //TODO: 테스트만을 위한 메서드 처리
 }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -43,13 +43,6 @@ public class DealerTest {
     void dealerImpossibleReceiveCard() {
         dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
         assertFalse(dealer.canReceiveCard());
-    }
-
-    @Test
-    @DisplayName("딜러가 카드를 받을 수 있어서 받았는지 확인")
-    void dealerContinueDraw() {
-        dealer.continueDraw("");
-        assertEquals(dealer.toList().size(), 2);
     }
 
     @Test
