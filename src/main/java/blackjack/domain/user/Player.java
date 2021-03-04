@@ -7,6 +7,7 @@ public class Player implements User {
 
     private static final int BLACKJACK_UPPER_BOUND = 21;
     private static final String INVALID_PLAYER_NAME_LENGTH_ERROR_MESSAGE = "이름은 1자 이상이어야 합니다.";
+
     private final Cards cards;
     private final String name;
 
