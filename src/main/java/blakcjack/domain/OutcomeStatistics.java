@@ -16,7 +16,7 @@ public class OutcomeStatistics {
 		aggregateDealerOutcome();
 	}
 
-	public void aggregateDealerOutcome() {
+	private void aggregateDealerOutcome() {
 		for (final String playerName : playersOutcome.keySet()) {
 			final Outcome playerOutcome = playersOutcome.get(playerName);
 			dealerOutcome.computeIfPresent(playerOutcome.getDealerOutcome(), (outcome, count) -> count + 1);
