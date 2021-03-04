@@ -6,7 +6,8 @@ public class Result {
     private static final String TIE = "무";
     private static final String LOSE = "패";
 
-    private Result() {}
+    private Result() {
+    }
 
     public static String getResult(User targetUser, User compareUser) {
         if (targetUser.isBustCondition() && compareUser.isBustCondition()) {

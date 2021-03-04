@@ -77,7 +77,8 @@ public class OutputView {
     private static void showPlayersEntireCard(Players players) {
         for (Player player : players.getPlayers()) {
             String dealerCards =
-                String.format(PLAYER_RESULT, player.getName(), combineAllCard(player)) + SCORE_RESULT
+                String.format(PLAYER_RESULT, player.getName(), combineAllCard(player))
+                    + SCORE_RESULT
                     + getConventionScore(player);
             System.out.println(dealerCards);
         }
@@ -85,7 +86,8 @@ public class OutputView {
 
     private static void showDealerEntireCard(Dealer dealer) {
         String dealerCards =
-            String.format(DEALER_RESULT, combineAllCard(dealer)) + SCORE_RESULT + getConventionScore(
+            String.format(DEALER_RESULT, combineAllCard(dealer)) + SCORE_RESULT
+                + getConventionScore(
                 dealer);
         System.out.println(dealerCards);
     }
