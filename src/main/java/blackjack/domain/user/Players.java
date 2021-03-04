@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.UserDeck;
 import blackjack.exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,8 @@ public class Players {
     public Players(CardDeck cardDeck, String input) {
         List<String> playerNames = makePlayerName(input);
         for (String playerName : playerNames) {
-            players.add(new Player(playerName, cardDeck.generateUserDeck()));
+            UserDeck initialRandomUserDeck = cardDeck.generateInitialUserDeck();
+            players.add(new Player(playerName, initialRandomUserDeck));
         }
     }
 

@@ -12,7 +12,7 @@ public class BlackJackController {
 
     public void play() {
         CardDeck entireCardDeck = new CardDeck();
-        Dealer dealer = new Dealer(entireCardDeck.generateUserDeck());
+        Dealer dealer = new Dealer(entireCardDeck.generateInitialUserDeck());
         Players players = new Players(entireCardDeck, InputView.requestPlayers());
         OutputView.showInitiate(dealer, players);
         processPlayers(entireCardDeck, players);

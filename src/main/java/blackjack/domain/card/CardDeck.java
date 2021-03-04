@@ -33,7 +33,7 @@ public class CardDeck {
         }
     }
 
-    public synchronized UserDeck generateUserDeck() {
+    public synchronized UserDeck generateInitialUserDeck() {
         UserDeck userDeck = new UserDeck();
         userDeck.add(this.draw());
         userDeck.add(this.draw());
