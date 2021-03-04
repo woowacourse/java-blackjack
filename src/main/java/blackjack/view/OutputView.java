@@ -13,21 +13,20 @@ import java.util.Map;
 public class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
-    public static final String STRING_DELIMITER = ", ";
-    public static final String INITIAL_CARD_MESSAGE = "딜러와 %s에게 카드를 2장씩 나누었습니다.";
-    public static final String DEALER = "딜러: %s";
-    public static final String PLAYER = "%s: %s";
-    public static final String CARD = "카드";
-    public static final String SCORE_RESULT = " - 결과: ";
-    public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String FINAL_RESULT = "## 최종 승패";
-    public static final String BURST_MESSAGE = "BURST";
+    private static final String STRING_DELIMITER = ", ";
+    private static final String INITIAL_CARD_MESSAGE = "딜러와 %s에게 카드를 2장씩 나누었습니다.";
+    private static final String DEALER_CARD = "딜러 카드: %s";
+    private static final String PLAYER_CARD = "%s 카드: %s";
+    private static final String DEALER_RESULT = "딜러: %s";
+    private static final String PLAYER_RESULT = "%s: %s";
+    private static final String SCORE_RESULT = " - 결과: ";
+    private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String FINAL_RESULT = "## 최종 승패";
+    private static final String BURST_MESSAGE = "BURST";
 
 
     private OutputView() {
     }
-
-    ;
 
     public static void showInitiate(Dealer dealer, Players players) {
         showName(players);
@@ -36,7 +35,7 @@ public class OutputView {
 
     private static void showCards(Dealer dealer, Players players) {
         String dealerCard = dealer.getUserDeck().getUserCards().get(1).getCard();
-        System.out.printf(DEALER + NEWLINE, dealerCard);
+        System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getPlayers()) {
             showPlayerCard(player);
         }
@@ -53,7 +52,7 @@ public class OutputView {
 
     public static void showPlayerCard(Player player) {
         String cards = combineAllCard(player);
-        System.out.printf(PLAYER + CARD + NEWLINE, player.getName(), cards);
+        System.out.printf(PLAYER_CARD + NEWLINE, player.getName(), cards);
     }
 
     private static String combineAllCard(User user) {
@@ -76,14 +75,14 @@ public class OutputView {
 
     private static void showPlayersEntireCard(Players players) {
         for (Player player : players.getPlayers()) {
-            String dealerCards = String.format(PLAYER + CARD, player.getName(),
+            String dealerCards = String.format(PLAYER_CARD, player.getName(),
                 combineAllCard(player)) + SCORE_RESULT + getConventionScore(player);
             System.out.println(dealerCards);
         }
     }
 
     private static void showDealerEntireCard(Dealer dealer) {
-        String dealerCards = String.format(DEALER + CARD, combineAllCard(dealer)) + SCORE_RESULT +
+        String dealerCards = String.format(DEALER_CARD, combineAllCard(dealer)) + SCORE_RESULT +
             getConventionScore(dealer);
         System.out.println(dealerCards);
     }
@@ -99,7 +98,7 @@ public class OutputView {
     public static void showDealerTable(DealerResult dealerResult) {
         System.out.println(NEWLINE + FINAL_RESULT);
         String conventionResult = getDealerResult(dealerResult);
-        String conventionResultMessage = String.format(DEALER, conventionResult);
+        String conventionResultMessage = String.format(DEALER_RESULT, conventionResult);
         System.out.println(conventionResultMessage);
     }
 
@@ -123,7 +122,7 @@ public class OutputView {
             String playerName = player.getName();
             String gameIndividualResult = player.betResult(dealer);
             String individualResultMessage = String
-                .format(PLAYER, playerName, gameIndividualResult);
+                .format(PLAYER_RESULT, playerName, gameIndividualResult);
             System.out.println(individualResultMessage);
         }
     }
