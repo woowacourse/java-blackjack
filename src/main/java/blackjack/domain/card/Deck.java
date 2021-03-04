@@ -1,11 +1,11 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class Deck {
 
-    private List<Card> cards;
+    private Stack<Card> cards;
 
     public Deck() {
         cards = CardFactory.create();
@@ -15,7 +15,8 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public Card getCard(int i) {
-        return cards.get(i);
+    public Card draw() {
+        return cards.pop();
     }
+
 }
