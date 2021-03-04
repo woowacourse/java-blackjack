@@ -141,7 +141,7 @@ class DealerTest {
 
     @DisplayName("딜러의 게임 결과를 계산한다.")
     @Test
-    void testDealerGameResult() {
+    void dealerGameResult() {
         Player player1 = new Player();
         Player player2 = new Player();
         Player player3 = new Player();
@@ -174,7 +174,7 @@ class DealerTest {
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면, 딜러가 이긴다.")
     @Test
-    void testDealerPlayerBothBurst() {
+    void dealerPlayerBothBurst() {
         Player player = new Player();
 
         dealer.draw(deck, 9);
@@ -192,7 +192,7 @@ class DealerTest {
 
     @DisplayName("딜러만 버스트다.")
     @Test
-    void testDealerBurst() {
+    void dealerBurst() {
         Player player = new Player();
 
         dealer.draw(deck, 9);
@@ -209,7 +209,7 @@ class DealerTest {
 
     @DisplayName("플레이어만 버스트다.")
     @Test
-    void testPlayerBurst() {
+    void playerBurst() {
         Player player = new Player();
 
         dealer.draw(deck, 9);

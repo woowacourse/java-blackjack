@@ -16,7 +16,7 @@ public class DeckTest {
 
     @DisplayName("덱에서 카드를 1장 가져온다.")
     @Test
-    void getCardTest() {
+    void getCard() {
         Deck deck = new Deck();
         assertThat(deck.getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
         assertThat(deck.getCard(51)).isEqualTo(new Card(Type.CLUB, Denomination.KING));
