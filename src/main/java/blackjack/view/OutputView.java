@@ -6,6 +6,8 @@ import blackjack.domain.User;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -70,19 +72,18 @@ public class OutputView {
     }
 
     private static void printDealerResult(Map<User, ResultType> checkWinOrLose) {
-        long loseCount = checkWinOrLose.values().stream()
-                .filter(item -> item == ResultType.WIN)
-                .count();
+        Map<ResultType, Integer> countMap = new HashMap<>();
+        Arrays.stream(ResultType.values())
+                .forEach(value -> countMap.put(value, 0));
+        
+        checkWinOrLose.values()
+                .forEach( value -> countMap.put(value, countMap.get(value) + 1));
 
-        long winCount = checkWinOrLose.values().stream()
-                .filter(item -> item == ResultType.LOSE)
-                .count();
-
-        long drawCount = checkWinOrLose.values().stream()
-                .filter(item -> item == ResultType.DRAW)
-                .count();
-
-        System.out.printf("딜러: %d승 %d무 %d패 \n", winCount, drawCount, loseCount);
+        System.out.printf("딜러: %d승 %d무 %d패 \n",
+                countMap.get(ResultType.LOSE),
+                countMap.get(ResultType.DRAW),
+                countMap.get(ResultType.WIN)
+        );
     }
 
 
