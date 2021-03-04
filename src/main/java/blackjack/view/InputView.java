@@ -16,6 +16,15 @@ public class InputView {
     }
 
     public static String getHitValue() {
-        return scanner.nextLine().toUpperCase();
+        String value = scanner.nextLine().toUpperCase();
+        validateHitValue(value);
+        return value;
+    }
+
+    private static void validateHitValue(String value) {
+        List<String> hitValues = Arrays.asList("Y", "N");
+        if (!hitValues.contains(value)) {
+            throw new IllegalArgumentException("Y 또는 N을 입력해 주세요.");
+        }
     }
 }
