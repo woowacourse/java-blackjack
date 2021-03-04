@@ -24,7 +24,7 @@ public class Casino {
         List<Player> players = game.getPlayers();
 
         setUpTwoCards(dealer, players);
-        playerTurn();
+        playersTurn(players);
         dealerTurn();
         closingStage(dealer, players);
     }
@@ -34,28 +34,40 @@ public class Casino {
         OutputView.printSetup(dealer, players);
     }
 
-    private void playerTurn() {
-        for (Player player : game.getPlayers()) {
-            doPlayerTurn(player);
+    private void playersTurn(List<Player> players) {
+        for (Player player : players) {
+            eachPlayerTurn(player);
         }
     }
 
-    private void doPlayerTurn(Player player) {
-        while (InputView.inputYesOrNo(player)) {
+    private void eachPlayerTurn(Player player) {
+        while (canDrawMore(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);
-            OutputView.printMessage("");
-            if (player.isBlackJack()) {
-                OutputView.printMessage(BLACKJACK_MESSAGE);
-                OutputView.lineFeed();
-                break;
-            }
-            if (player.isBurst()) {
-                OutputView.printMessage(BURST_MESSAGE);
-                OutputView.lineFeed();
-                break;
-            }
+            OutputView.lineFeed();
         }
+    }
+
+    private boolean canDrawMore(Player player) {
+        return !isBlackJack(player) && !isBurst(player) && InputView.inputYesOrNo(player);
+    }
+
+    private boolean isBlackJack(Player player) {
+        if (player.isBlackJack()) {
+            OutputView.printMessage(BLACKJACK_MESSAGE);
+            OutputView.lineFeed();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isBurst(Player player) {
+        if (player.isBurst()) {
+            OutputView.printMessage(BURST_MESSAGE);
+            OutputView.lineFeed();
+            return true;
+        }
+        return false;
     }
 
     private void dealerTurn() {

@@ -29,10 +29,10 @@ public class InputView {
 
     public static boolean inputYesOrNo(Player player) {
         OutputView.printMessage(String.format(INPUT_YES_OR_NO_MESSAGE, player.getName()));
-        return method(inputString());
+        return isKeepDraw(inputString());
     }
 
-    private static boolean method(String answer) {
+    private static boolean isKeepDraw(String answer) {
         if (YES_REPLY.equals(answer)) {
             return true;
         }

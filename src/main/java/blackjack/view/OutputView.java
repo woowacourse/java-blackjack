@@ -29,7 +29,7 @@ public class OutputView {
         System.out.printf(SET_UP_MESSAGE, dealer.getName(), playerNames);
 
         printCardInfo(dealer);
-        printMessage("");
+        lineFeed();
         for (Player player : players) {
             printCardInfo(player);
             lineFeed();
