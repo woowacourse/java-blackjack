@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class Cards {
         cards.add(card);
     }
 
-    protected int calculateJudgingPoint() {
+    public int calculateJudgingPoint() {
         int point = 0;
         for (Card card : cards) {
             point = card.addPoint(point);

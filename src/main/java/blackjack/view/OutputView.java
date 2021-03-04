@@ -1,14 +1,19 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.WinnerFlag;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Gamer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.Dealer.MAX_OF_RECEIVE_MORE_CARD;
-import static blackjack.domain.Dealer.NAME_OF_DEALER;
-import static blackjack.domain.GameManager.INITIAL_DRAWING_COUNT;
-import static blackjack.domain.Gamer.COMMA_DELIMITER;
+import static blackjack.domain.participant.Dealer.MAX_OF_RECEIVE_MORE_CARD;
+import static blackjack.domain.participant.Dealer.NAME_OF_DEALER;
+import static blackjack.domain.game.GameManager.INITIAL_DRAWING_COUNT;
+import static blackjack.domain.participant.Gamer.COMMA_DELIMITER;
 
 public class OutputView {
     public static final String COLON_DELIMITER = ": ";

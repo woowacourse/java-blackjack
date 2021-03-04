@@ -1,18 +1,21 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import java.util.ArrayList;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+
 import java.util.List;
 import java.util.Objects;
 
-import static blackjack.domain.Player.THRESHOLD_OF_BURST;
+import static blackjack.domain.participant.Player.THRESHOLD_OF_BURST;
 
 public abstract class Gamer {
     public static final String COMMA_DELIMITER = ",";
     private static final String ERROR_MESSAGE_WITH_SPACE = "이름에 공백이 포함됩니다.";
     private static final String SPACE = " ";
 
-    private final String name;
     protected final Cards cards;
+    private final String name;
 
     protected Gamer(String name) {
         validateSpace(name);
@@ -38,10 +41,6 @@ public abstract class Gamer {
         return cards.calculateMaximumPoint() > THRESHOLD_OF_BURST;
     }
 
-    public abstract boolean canReceiveCard();
-
-    public abstract Boolean continueDraw(String draw);
-
     public int makeJudgingPoint() {
         return cards.calculateJudgingPoint();
     }
@@ -49,6 +48,10 @@ public abstract class Gamer {
     public int makeMaximumPoint() {
         return cards.calculateMaximumPoint();
     }
+
+    public abstract boolean canReceiveCard();
+
+    public abstract Boolean continueDraw(String draw);
 
     public String getName() {
         return name;

@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.game;
+
+import blackjack.domain.participant.Players;
 
 public class GameManager {
     public static final int INITIAL_DRAWING_COUNT = 2;

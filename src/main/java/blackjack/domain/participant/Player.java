@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.game.WinnerFlag;
 
 public class Player extends Gamer {
     public static final int THRESHOLD_OF_BURST = 21;
@@ -19,10 +21,10 @@ public class Player extends Gamer {
 
     @Override
     public Boolean continueDraw(String draw) {
-        if(draw.equals(AGREE)){
+        if (draw.equals(AGREE)) {
             return true;
         }
-        if(draw.equals(DISAGREE)){
+        if (draw.equals(DISAGREE)) {
             return false;
         }
         throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);

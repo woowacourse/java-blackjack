@@ -1,11 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.Gamer.COMMA_DELIMITER;
+import static blackjack.domain.participant.Gamer.COMMA_DELIMITER;
 
 public class Players {
     private final List<Player> players;

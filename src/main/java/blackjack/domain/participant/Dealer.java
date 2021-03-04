@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Deck;
 
 public class Dealer extends Gamer {
     public static final String NAME_OF_DEALER = "딜러";
