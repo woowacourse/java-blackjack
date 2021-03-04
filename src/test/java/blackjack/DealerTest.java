@@ -24,7 +24,7 @@ public class DealerTest {
     @DisplayName("딜러가 잘 생성되었는지 확인")
     void create() {
         assertThatCode(() -> new Dealer("딜러"))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @Test

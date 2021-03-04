@@ -26,7 +26,7 @@ public class PlayerTest {
     @DisplayName("참가자가 잘 생성되는지 확인")
     void create() {
         assertThatCode(() -> new Player("bada"))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @Test
