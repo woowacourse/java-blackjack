@@ -22,7 +22,7 @@ public class OutputView {
     private static final String SCORE_RESULT = " - 결과: ";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_RESULT = "## 최종 승패";
-    private static final String BURST_MESSAGE = "BURST";
+    private static final String BUST_MESSAGE = "BUST";
 
 
     private OutputView() {
@@ -92,7 +92,7 @@ public class OutputView {
     private static String getConventionScore(User user) {
         int userScore = user.getPoint();
         if (userScore == 0) {
-            return BURST_MESSAGE;
+            return BUST_MESSAGE;
         }
         return Integer.toString(userScore);
     }

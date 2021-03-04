@@ -17,8 +17,8 @@ public abstract class User {
         userDeck.add(card);
     }
 
-    public boolean isBurstCondition() {
-        return this.getPoint() == UserDeck.BURST_CONDITION;
+    public boolean isBustCondition() {
+        return this.getPoint() == UserDeck.BUST_CONDITION;
     }
 
     public UserDeck getUserDeck() {
