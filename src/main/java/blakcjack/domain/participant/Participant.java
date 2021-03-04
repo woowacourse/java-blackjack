@@ -65,6 +65,10 @@ public abstract class Participant {
 		return calculateScore() < BLACKJACK_VALUE;
 	}
 
+	public boolean isBust() {
+		return BLACKJACK_VALUE < calculateScore();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

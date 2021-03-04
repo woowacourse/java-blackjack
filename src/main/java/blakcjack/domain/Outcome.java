@@ -1,28 +1,27 @@
 package blakcjack.domain;
 
-import java.util.Objects;
+import blakcjack.domain.participant.Dealer;
+import blakcjack.domain.participant.Player;
 
-public class Outcome {
-	private final int winCount;
-	private final int drawCount;
-	private final int loseCount;
+public enum Outcome {
+	WIN, DRAW, LOSE;
 
-	public Outcome(final int winCount, final int drawCount, final int loseCount) {
-		this.winCount = winCount;
-		this.drawCount = drawCount;
-		this.loseCount = loseCount;
+	public static Outcome of(final Player player, final Dealer dealer) {
+		if (player.isBust()) {
+			return LOSE;
+		} else if (dealer.isBust()) {
+			return WIN;
+		}
+		return calculate(player.calculateScore(), dealer.calculateScore());
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Outcome outcome = (Outcome) o;
-		return winCount == outcome.winCount && drawCount == outcome.drawCount && loseCount == outcome.loseCount;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(winCount, drawCount, loseCount);
+	private static Outcome calculate(final int playerScore, final int dealerScore) {
+		if (playerScore > dealerScore) {
+			return WIN;
+		}
+		if (playerScore < dealerScore) {
+			return LOSE;
+		}
+		return DRAW;
 	}
 }
