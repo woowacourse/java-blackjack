@@ -20,12 +20,12 @@ public enum Denomination {
     private final String denomination;
     private int score;
 
-    private Denomination(String denomination, int score) {
+    private Denomination(final String denomination, final int score) {
         this.denomination = denomination;
         this.score = score;
     }
 
-    public static Denomination of(String denomination){
+    public static Denomination of(final String denomination){
         return Arrays.stream(Denomination.values())
                 .filter(den -> den.denomination.equals(denomination))
                 .findAny()

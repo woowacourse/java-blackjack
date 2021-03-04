@@ -12,17 +12,18 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private final Deck deck = new Deck();
+    private final Deck deck;
     private Dealer dealer;
 
     public BlackJackGame(){
+        deck = new Deck();
+        dealer = new Dealer();
     }
 
-    public Players createPlayers(String allName){
+    public Players createPlayers(final String allName){
         List<String> names = Arrays.asList(allName.split(","));
         List<Player> players = new ArrayList<>();
 
-        dealer = new Dealer();
         players.add(dealer);
         players.addAll(names.stream()
                 .map(Name::new)
@@ -31,13 +32,13 @@ public class BlackJackGame {
         return new Players(players);
     }
 
-    public void initPlayerCards(Players players){
+    public void initPlayerCards(final Players players){
         for(Player player : players){
             player.initializeCards(deck);
         }
     }
 
-    public void giveCard(Player player) {
+    public void giveCard(final Player player) {
         player.drawCard(deck);
     }
 
@@ -49,7 +50,7 @@ public class BlackJackGame {
         return dealer.ableToDraw();
     }
 
-    public Result getResult(Players players){
+    public Result getResult(final Players players){
         Result result = new Result(dealer.getCards());
         for(Player player : players){
             addGamblerResult(result, player);
@@ -57,7 +58,7 @@ public class BlackJackGame {
         return result;
     }
 
-    private void addGamblerResult(Result result, Player player){
+    private void addGamblerResult(final Result result, final Player player){
         WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
         result.add(player, winOrLose);
     }

@@ -15,20 +15,16 @@ public class Result {
     private final Map<Player, WinOrLose> gamblerResults = new LinkedHashMap<>();
     private final Cards dealerCards;
 
-    public Result(Cards dealerCards){
+    public Result(final Cards dealerCards){
         this.dealerCards = dealerCards;
     }
 
-    public void add(Player player, WinOrLose winOrLose){
+    public void add(final Player player, final WinOrLose winOrLose){
         if(!(player instanceof Gambler)){
             return;
         }
 
         gamblerResults.put(player, winOrLose);
-    }
-
-    public int countPlayers(){
-        return gamblerResults.size();
     }
 
     public int countDealerWin(){

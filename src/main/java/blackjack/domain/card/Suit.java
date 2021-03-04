@@ -10,16 +10,21 @@ public enum Suit {
 
     private final String suit;
 
-    Suit(String suit) {
+    Suit(final String suit) {
         this.suit = suit;
     }
 
-    static Suit of(String suit){
+    static Suit of(final String value){
         return Arrays.stream(Suit.values())
-                .filter(s -> s.suit.equals(suit))
+                .filter(suit -> suit.isMatch(value))
                 .findFirst()
                 .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 Suit입니다."));
     }
+
+    private boolean isMatch(final String suit){
+        return this.suit.equals(suit);
+    }
+
 
     public String suit() {
         return suit;

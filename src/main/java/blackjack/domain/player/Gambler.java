@@ -11,20 +11,20 @@ public class Gambler implements Player{
     private final Name name;
     private final Cards cards;
 
-    public Gambler(Name name){
+    public Gambler(final Name name){
         this.name= name;
         this.cards = new Cards();
     }
 
     @Override
-    public void initializeCards(Deck deck){
+    public void initializeCards(final Deck deck){
         for(int i=0; i<NUMBER_OF_INITIAL_CARDS; i++){
             cards.add(deck.draw());
         }
     }
 
     @Override
-    public void drawCard(Deck deck) {
+    public void drawCard(final Deck deck) {
         cards.add(deck.draw());
     }
 

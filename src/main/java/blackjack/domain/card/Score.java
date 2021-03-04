@@ -3,41 +3,40 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Score {
-    private final static int BLACK_JACK = 21;
+    public final static int BLACK_JACK = 21;
 
-    private final int value;
+    private final int score;
 
-    public Score(int value){
+    public Score(final int value){
         if(value < 0){
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
 
-        this.value = value;
+        this.score = value;
     }
 
     public boolean isBust() {
-        return value > BLACK_JACK;
+        return score > BLACK_JACK;
     }
 
     public boolean isBlackJack(){
-        return value == BLACK_JACK;
+        return score == BLACK_JACK;
     }
 
-    public boolean isBelow(int score) {
-        return value <= score;
+    public boolean isBelow(final int score) {
+        return this.score <= score;
     }
 
     public boolean isBiggerThan(Score target){
-        return value > target.value;
+        return score > target.score;
     }
 
     public boolean isLessThan(Score target){
-        return value < target.value;
+        return score < target.score;
     }
 
-
     public int score(){
-        return value;
+        return score;
     }
 
     @Override
@@ -45,11 +44,11 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;
-        return value == score.value;
+        return this.score == score.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(score);
     }
 }
