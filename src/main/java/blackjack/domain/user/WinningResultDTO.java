@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 public class WinningResultDTO {
-
     private final String name;
     private final MatchResult result;
 

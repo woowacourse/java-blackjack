@@ -15,6 +15,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
 
+    @DisplayName("카드 추가 메소드 테스트")
+    @Test
+    public void addCard() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Denomination.ACE, Suit.CLUBS));
+        cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
+        Hand hand = new Hand(cards);
+
+        hand.addCard(new Card(Denomination.ACE, Suit.HEARTS));
+        assertThat(hand.getScore()).isEqualTo(19);
+        assertThat(hand.getStatus()).isEqualTo(HandStatus.HIT);
+    }
+
     @DisplayName("Hand 에 들고 있는 카드 점수 계산 : ACE 없는 경우")
     @Test
     public void calculateHandScore() {
@@ -37,19 +50,6 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateHandScore()).isEqualTo(21);
-    }
-
-    @DisplayName("카드 추가 메소드 테스트")
-    @Test
-    public void addCard() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.ACE, Suit.CLUBS));
-        cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
-        Hand hand = new Hand(cards);
-
-        hand.addCard(new Card(Denomination.ACE, Suit.HEARTS));
-        assertThat(hand.getScore()).isEqualTo(19);
-        assertThat(hand.getStatus()).isEqualTo(HandStatus.HIT);
     }
 
     @DisplayName("카드 추가 메소드 테스트 : 추가 후 BUST")

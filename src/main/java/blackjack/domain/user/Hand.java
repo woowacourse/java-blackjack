@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-
 import java.util.List;
 
 public class Hand {
@@ -26,7 +25,7 @@ public class Hand {
 
     public int calculateHandScore() {
         int currentScore = calculateMaxScore();
-        if(isUnderBustScore(currentScore)) {
+        if (isUnderBustScore(currentScore)) {
             return currentScore;
         }
 
@@ -45,7 +44,7 @@ public class Hand {
 
     private int recalculateAce(int currentScore) {
         int countAce = countAce();
-        if(countAce <= 0) {
+        if (countAce <= 0) {
             return currentScore;
         }
         return convertAceToOne(countAce, currentScore);
@@ -58,7 +57,7 @@ public class Hand {
     }
 
     private int convertAceToOne(int countAce, int sum) {
-        while(countAce > 0 && !isUnderBustScore(sum)) {
+        while (countAce > 0 && !isUnderBustScore(sum)) {
             sum -= 10;
             countAce--;
         }

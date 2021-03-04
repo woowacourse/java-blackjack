@@ -51,11 +51,11 @@ public enum MatchResult {
     }
 
     public String getReverseName() {
-        if(this == MatchResult.WIN) {
+        if (this == MatchResult.WIN) {
             return "패";
         }
 
-        if(this == MatchResult.LOSE) {
+        if (this == MatchResult.LOSE) {
             return "승";
         }
 

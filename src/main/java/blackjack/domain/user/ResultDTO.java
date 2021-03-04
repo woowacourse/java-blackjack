@@ -5,9 +5,9 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class ResultDTO {
-    private String name;
-    private List<Card> cards;
-    private int score;
+    private final String name;
+    private final List<Card> cards;
+    private final int score;
 
     public ResultDTO(String name, List<Card> cards, int score) {
         this.name = name;
