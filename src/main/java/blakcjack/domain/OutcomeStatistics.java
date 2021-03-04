@@ -1,15 +1,32 @@
 package blakcjack.domain;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class OutcomeStatistics {
-	private final Map<Outcome, Integer> dealerOutcome;
-	private final Map<String, Outcome> playersOutcome;
+import static blakcjack.domain.BlackjackGame.INITIAL_VALUE;
 
-	public OutcomeStatistics(final Map<Outcome, Integer> dealerOutcome, final Map<String, Outcome> playersOutcome) {
-		this.dealerOutcome = dealerOutcome;
-		this.playersOutcome = playersOutcome;
+public class OutcomeStatistics {
+	private final Map<String, Outcome> playersOutcome;
+	private final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
+
+	public OutcomeStatistics(BlackjackGame blackjackGame) {
+		this.playersOutcome = blackjackGame.getPlayersOutcome();
+		initializeDealerOutcome(dealerOutcome);
+		aggregateDealerOutcome();
+	}
+
+	public void aggregateDealerOutcome() {
+		for (final String playerName : playersOutcome.keySet()) {
+			final Outcome playerOutcome = playersOutcome.get(playerName);
+			dealerOutcome.computeIfPresent(playerOutcome.getDealerOutcome(), (outcome, count) -> count + 1);
+		}
+	}
+
+	private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
+		for (Outcome outcome : Outcome.values()) {
+			dealerOutcome.put(outcome, INITIAL_VALUE);
+		}
 	}
 
 	public Map<String, Outcome> getPlayersOutcome() {

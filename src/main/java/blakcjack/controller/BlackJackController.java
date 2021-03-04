@@ -3,6 +3,7 @@ package blakcjack.controller;
 import blakcjack.View.InputView;
 import blakcjack.View.OutputView;
 import blakcjack.domain.BlackjackGame;
+import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
@@ -28,10 +29,11 @@ public class BlackJackController {
 		for (final Participant player : players) {
 			drawForMaximumCapability(blackjackGame, player);
 		}
-
 		drawForMaximumCapability(blackjackGame, dealer);
+
 		OutputView.printFinalHandsSummary(dealer, players);
-		OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome());
+		OutcomeStatistics outcomeStatistics = new OutcomeStatistics(blackjackGame);
+		OutputView.printFinalOutcomeSummary(outcomeStatistics);
 	}
 
 	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {

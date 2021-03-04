@@ -54,26 +54,13 @@ public class BlackjackGame {
 		return dealer;
 	}
 
-	public OutcomeStatistics judgeOutcome() {
+	public Map<String, Outcome> getPlayersOutcome() {
 		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
-		final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
-		initializeDealerOutcome(dealerOutcome);
 
 		for (final Player player : players) {
 			final Outcome playerOutcome = Outcome.of(player, dealer);
 			playersOutcome.put(player.getName(), playerOutcome);
-			updateDealerOutcome(dealerOutcome, playerOutcome.getDealerOutcome());
 		}
-		return new OutcomeStatistics(dealerOutcome, playersOutcome);
-	}
-
-	private void updateDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final Outcome outcomeToUpdate) {
-		dealerOutcome.computeIfPresent(outcomeToUpdate, (outcome, count) -> count + 1);
-	}
-
-	private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
-		for (Outcome outcome : Outcome.values()) {
-			dealerOutcome.put(outcome, INITIAL_VALUE);
-		}
+		return playersOutcome;
 	}
 }
