@@ -3,16 +3,13 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static blackjack.domain.Player.THRESHOLD_OF_BURST;
 
 public abstract class Gamer {
     public static final String COMMA_DELIMITER = ",";
-    private static final int COUNT_OF_DEALER_OPENING_CARDS = 1;
     private static final int MAXIMUM_TO_ACE_IS_ELEVEN = 11;
     private static final int MAKING_ACE_ELEVEN = 10;
-    private static final String COMMA_DELIMITER_TO_PRINT = ", ";
     private static final String ERROR_MESSAGE_WITH_SPACE = "이름에 공백이 포함됩니다.";
     private static final String SPACE = " ";
 
@@ -73,17 +70,8 @@ public abstract class Gamer {
         return name;
     }
 
-    public String getCards() {
-        return cards.stream()
-                .map(Card::getPatternAndNumber)
-                .collect(Collectors.joining(COMMA_DELIMITER_TO_PRINT));
-    }
-
-    public String getDealerCards() {
-        return cards.stream()
-                .limit(COUNT_OF_DEALER_OPENING_CARDS)
-                .map(Card::getPatternAndNumber)
-                .collect(Collectors.joining(COMMA_DELIMITER));
+    public List<Card> getCards() {
+        return cards;
     }
 
     @Override
