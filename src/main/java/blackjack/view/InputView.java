@@ -24,6 +24,6 @@ public class InputView {
     }
 
     private static void askShouldDrawAnotherCard(String playerName) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", playerName, YES, NO);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)\n", playerName, YES, NO);
     }
 }

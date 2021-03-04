@@ -17,7 +17,7 @@ public class Dealer extends Participant {
         this.deck = Deck.createShuffledDeck();
     }
 
-    public void drawBaseCard() {
+    public void setBaseCard() {
         cardHand.add(drawCard());
         cardHand.add(drawCard());
     }
@@ -30,7 +30,7 @@ public class Dealer extends Participant {
         return cardHand.dealerSum() <= DEALER_THRESHOLD;
     }
 
-    public void setPlayerBaseCard(List<Player> players) {
+    public void setPlayersBaseCard(List<Player> players) {
         for (Player player: players) {
             player.receiveCard(drawCard());
             player.receiveCard(drawCard());
@@ -43,7 +43,6 @@ public class Dealer extends Participant {
     }
 
     private Card drawCard() {
-        // 덱에서 카드 뽑아서 리턴
         return deck.drawCard();
     }
 
@@ -51,10 +50,4 @@ public class Dealer extends Participant {
     public int getCardSum() {
         return cardHand.dealerSum();
     }
-
-//### 딜러
-//- [ ] 카드 패를 가짐
-//- [ ] 시작하면 카드 두 장을 받고 한 장만 공개한다
-//- [ ] 모든 플레이어의 턴이 끝나고 딜러의 턴이 진행된다
-//- [ ] 딜러는 패의 합계가 16 이하면 계속해서 뽑는다
 }

@@ -1,9 +1,10 @@
 package blackjack;
 
-import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.BlackJackInitializer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ResultCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -15,12 +16,18 @@ public class BlackJackApplication {
     public static void main(String[] args) {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
+
+        BlackJackInitializer blackJackInitializer = new BlackJackInitializer(dealer, players);
+        blackJackInitializer.setBaseCardToPlayers();
+
+        OutputView.printPlayersCardHandStatus(dealer, players);
 
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
 
-        GameResult result = blackJackGame.start();
+        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
+        GameResult result = resultCalculator.getResult();
+
         OutputView.printResult(result);
     }
 
@@ -42,7 +49,7 @@ public class BlackJackApplication {
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            if (player.lowerThanThreshold() && InputView.wantsReceive(player)) {
+            if (!player.isBust() && InputView.wantsReceive(player)) {
                 dealer.deal(player);
                 OutputView.printCardHandStatus(player);
             }

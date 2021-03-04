@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final List<Card> deck;
+    private final ArrayDeque<Card> deck;
 
     private Deck(List<Card> deck) {
-        this.deck = new ArrayList<>(deck);
+        this.deck = new ArrayDeque<>(deck);
     }
 
     public Card drawCard() {
-        return deck.remove(0);
+        return deck.pop();
     }
 
     public static Deck createShuffledDeck() {
