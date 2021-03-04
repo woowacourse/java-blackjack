@@ -31,6 +31,24 @@ public class Cards {
             .collect(Collectors.joining(", "));
     }
 
+    public int getScore() {
+        int total = cards.stream().mapToInt(Card::getScore).sum();
+        return addIfAceExist(total);
+    }
+
+    private int addIfAceExist(int total) {
+        int aceCount = countAce();
+        while (total + 10 <= 21 && aceCount != 0) {
+            total += 10;
+            aceCount--;
+        }
+        return total;
+    }
+
+    private int countAce() {
+        return Math.toIntExact(cards.stream().filter(Card::isAce).count());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,9 +64,5 @@ public class Cards {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
-    }
-
-    public int getScore() {
-        return cards.stream().mapToInt(Card::getScore).sum();
     }
 }
