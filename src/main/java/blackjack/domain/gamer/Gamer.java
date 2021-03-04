@@ -24,8 +24,8 @@ public abstract class Gamer {
         return name;
     }
 
-    public Hands getHands() {
-        return hands;
+    public boolean containsAce() {
+        return hands.containsAce();
     }
 
     public int getPoint() {

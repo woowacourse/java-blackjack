@@ -1,9 +1,11 @@
 package blackjack.view;
 
+import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -18,8 +20,12 @@ public class OutputView {
                 .collect(Collectors.toList());
         final String name = String.join(", ", names);
         System.out.printf(START_MSG, name);
-
+        printNewLine();
         gamersOpenCards(gamers);
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 
     public static void allCards(Gamer gamer) {
@@ -39,6 +45,7 @@ public class OutputView {
     private static void gamersOpenCards(Gamers gamers) {
         openCards(gamers.dealer());
         gamers.players().forEach(OutputView::openCards);
+        printNewLine();
     }
 
     private static void openCards(Gamer gamer) {
@@ -53,5 +60,22 @@ public class OutputView {
 
     public static void dealerHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printResultTitle() {
+        printNewLine();
+        System.out.println("## 최종 승패");
+    }
+
+    public static void dealerResult(Map<ResultType, Integer> resultWithCount) {
+        System.out.printf("딜러 : %d승 %d패 %d무" + NEWLINE, resultWithCount.get(ResultType.WIN),
+                resultWithCount.get(ResultType.LOSE),
+                resultWithCount.get(ResultType.DRAW));
+    }
+
+    public static void playersResult(Map<String, ResultType> resultWithName) {
+        for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue().getName());
+        }
     }
 }

@@ -17,12 +17,17 @@ public class BlackjackController {
             hitOrStand(deck, gamer);
         }
 
-        if (gamers.dealer().checkBoundary()) { // 16이하이면
+        if (gamers.dealer().checkBoundary()) {
             gamers.dealer().receiveCard(deck.giveCard());
             OutputView.dealerHit();
         }
 
         OutputView.gamersAllCards(gamers);
+
+
+        OutputView.printResultTitle();
+        OutputView.dealerResult(gamers.resultWithCount());
+        OutputView.playersResult(gamers.resultWithName());
     }
 
     private void hitOrStand(Deck deck, Gamer gamer) {

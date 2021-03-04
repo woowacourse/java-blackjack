@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 
 public class Hands {
 
+    private static final int WINNING_BASELINE = 21;
+
     private final List<Card> cards;
 
     public Hands(final List<Card> cards) {
@@ -18,24 +20,38 @@ public class Hands {
     }
 
     public int calculate() {
-        int point = sum();
-        while (containsAce() && point > 21) {
-            point -= 10;
+        int sum = sumWithoutAce();
+        for (int i = 0; i < countAce(); ++i) {
+            sum += properAce(sum);
         }
-        return point;
+        return sum;
     }
 
-    private int sum() {
-        return cards.stream()
-                .map(Card::getValue)
-                .reduce(Integer::sum)
-                .get();
+    private int properAce(int sum) {
+        if (sum + CardValue.ACE.getValue() > WINNING_BASELINE) {
+            return 1;
+        }
+        return CardValue.ACE.getValue();
     }
 
     public boolean containsAce() {
         return cards.stream()
                 .map(Card::getCardValue)
                 .anyMatch(CardValue::isAce);
+    }
+
+    private int sumWithoutAce() {
+        return cards.stream()
+                .filter(card -> !CardValue.isAce(card.getCardValue()))
+                .map(Card::getValue)
+                .reduce(Integer::sum)
+                .get();
+    }
+
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(card -> CardValue.isAce(card.getCardValue()))
+                .count();
     }
 
     public List<Card> toList() {
