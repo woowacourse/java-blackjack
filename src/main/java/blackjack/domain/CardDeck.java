@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 public class CardDeck {
 
     private static final int GAP_WITH_SIZE_AND_INDEX = 1;
+    private static final int DEFAULT_CARD_DRAW_COUNTS = 2;
+
     private final List<Card> cardDeck;
 
     public CardDeck() {
@@ -25,7 +27,7 @@ public class CardDeck {
                      .map(shape -> new Card(symbol, shape));
     }
 
-    public int size() {
+    int size() {
         return cardDeck.size();
     }
 
@@ -36,8 +38,9 @@ public class CardDeck {
 
     public Cards drawDefaultCards() {
         List<Card> cards = new ArrayList<>();
-        cards.add(draw());
-        cards.add(draw());
+        for (int i = 0; i < DEFAULT_CARD_DRAW_COUNTS; i++) {
+            cards.add(draw());
+        }
         return new Cards(cards);
     }
 }
