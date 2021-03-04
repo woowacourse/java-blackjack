@@ -91,4 +91,22 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
         AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"13:true", "21:false"}, delimiter = ':')
+    @DisplayName("딜러의 승패를 확인")
+    void isWinner(final int playerResult, final boolean expected) {
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
+        assertThat(dealer.isWinner(playerResult)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트가 되는 경우 패배가 되는지 확인")
+    void isWinnerWhenDealerIsBust() {
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.SPADE));
+        assertThat(dealer.isWinner(1)).isEqualTo(false);
+    }
 }
