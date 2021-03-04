@@ -13,7 +13,7 @@ public abstract class Person {
         this.cards = cards.addCard(card);
     }
 
-    public Cards getTakenCards() {
+    public Cards getCurrentCards() {
         return cards;
     }
 

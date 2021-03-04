@@ -23,17 +23,17 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    private void validatePlayerCount(List<Player> player) {
-        if (player.size() < MIN_PLAYER_COUNT || player.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
-        }
-    }
-
     private List<Player> splitInput(String players) {
         return Arrays.stream(players.split(DELIMITER))
                 .map(s -> s.replaceAll(BLANK, EMPTY))
                 .map(Player::new)
                 .collect(toList());
+    }
+
+    private void validatePlayerCount(List<Player> player) {
+        if (player.size() < MIN_PLAYER_COUNT || player.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
+        }
     }
 
     public Map<Player, MatchResult> verifyResultByCompareScore(Dealer dealer) {

@@ -11,6 +11,7 @@ import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
     private static final int REMAIN_ACE_COUNT = 10;
+    private static final int TOP_CARD = 0;
     private static final List<Card> CACHE;
 
     private final List<Card> cards;
@@ -45,7 +46,7 @@ public class Cards {
     }
 
     public Card peekCard() {
-        return cards.get(0);
+        return cards.get(TOP_CARD);
     }
 
     public Cards removeCard() {
@@ -53,7 +54,7 @@ public class Cards {
             throw new IndexOutOfBoundsException(NO_REMAIN_CARD_ERROR_MESSAGE);
         }
         List<Card> newCards = new ArrayList<>(cards);
-        newCards.remove(0);
+        newCards.remove(TOP_CARD);
         return new Cards(newCards);
     }
 

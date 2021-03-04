@@ -38,7 +38,7 @@ public class PlayerTest {
     @DisplayName("플레이어 카드 추가 성공")
     void receiveCard() {
         player.receiveCard(new Card(Shape.SPADE, Denomination.FOUR));
-        Cards cards = player.getTakenCards();
+        Cards cards = player.getCurrentCards();
         assertThat(cards.peekCard()).isEqualTo(new Card(Shape.SPADE, Denomination.FOUR));
     }
 
@@ -49,7 +49,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.CLOVER, Denomination.THREE));
         player.receiveCard(new Card(Shape.HEART, Denomination.ACE));
 
-        Cards cards = player.getTakenCards();
+        Cards cards = player.getCurrentCards();
         assertTrue(cards.getCards().containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
                 new Card(Shape.CLOVER, Denomination.THREE),
                 new Card(Shape.HEART, Denomination.ACE))));

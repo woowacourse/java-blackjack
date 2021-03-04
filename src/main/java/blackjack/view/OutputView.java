@@ -45,7 +45,7 @@ public class OutputView {
     }
 
     public static void showDealerFirstCard(Dealer dealer) {
-        Card card = dealer.getTakenCards().peekCard();
+        Card card = dealer.getCurrentCards().peekCard();
         System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName(), cardForm(card));
     }
 
@@ -68,16 +68,16 @@ public class OutputView {
     }
 
     public static void showAllCards(Players players, Dealer dealer) {
-        int dealerScore = dealer.getTakenCards().calculateScore();
+        int dealerScore = dealer.getCurrentCards().calculateScore();
         System.out.printf(CARD_AND_SCORE_RESULT + "%n", getCardsMessageForm(dealer), dealerScore);
         for (Player player : players.getPlayers()) {
-            int playerScore = player.getTakenCards().calculateScore();
+            int playerScore = player.getCurrentCards().calculateScore();
             System.out.printf(CARD_AND_SCORE_RESULT + "%n", getCardsMessageForm(player), playerScore);
         }
     }
 
     private static String getCardsMessageForm(Person person) {
-        String allCards = person.getTakenCards().getCards().stream()
+        String allCards = person.getCurrentCards().getCards().stream()
                 .map(OutputView::cardForm)
                 .collect(Collectors.joining(DELIMITER));
         return String.format(CURRENT_CARD_FORM, person.getName(), allCards);
