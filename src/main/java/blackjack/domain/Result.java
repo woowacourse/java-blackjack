@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public enum Result {
     WIN("승", 1),
-    DRAW("무", 0),
+    STANDOFF("무", 0),
     LOSE("패", -1);
 
     private final String result;
@@ -18,18 +18,18 @@ public enum Result {
         this.compareResult = compareResult;
     }
 
-    public static Result decide(Dealer dealer, User user) {
-        if (dealer.cards.isBust() && !user.cards.isBust()) {
+    public static Result decide(Dealer dealer, Player player) {
+        if (dealer.cards.isBust() && !player.cards.isBust()) {
             return WIN;
         }
-        if (dealer.cards.isBust() && user.cards.isBust()) {
-            return DRAW;
+        if (dealer.cards.isBust() && player.cards.isBust()) {
+            return STANDOFF;
         }
-        if (!dealer.cards.isBust() && user.cards.isBust()) {
+        if (!dealer.cards.isBust() && player.cards.isBust()) {
             return LOSE;
         }
         return Arrays.stream(values())
-                .filter(value -> value.compareResult == user.cards.compareTo(dealer.cards))
+                .filter(value -> value.compareResult == player.cards.compareTo(dealer.cards))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

@@ -10,56 +10,56 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         Dealer dealer = new Dealer();
-        Users users = participateUsers();
-        List<Participant> participants = setUpParticipants(dealer, users);
-        distributeToParticipants(dealer, users);
-        showParticipantsCards(dealer, users);
-        askToUsers(users);
+        Players players = participatePlayers();
+        List<User> users = setUpUsers(dealer, players);
+        distributeToUsers(dealer, players);
+        showUsersCards(dealer, players);
+        askToPlayers(players);
         isDealerDrawable(dealer);
-        OutputView.printResults(participants);
-        OutputView.printResultBoard(dealer, new ResultBoard(dealer, users));
+        OutputView.printResults(users);
+        OutputView.printResultBoard(dealer, new ResultBoard(dealer, players));
     }
 
-    private Users participateUsers() {
+    private Players participatePlayers() {
         OutputView.printInputNames();
         List<String> names = InputView.inputNames();
-        return new Users(names);
+        return new Players(names);
     }
 
-    private List<Participant> setUpParticipants(Dealer dealer, Users users) {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(users.users());
-        return participants;
+    private List<User> setUpUsers(Dealer dealer, Players players) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players.players());
+        return users;
     }
 
-    private void distributeToParticipants(Dealer dealer, Users users) {
+    private void distributeToUsers(Dealer dealer, Players players) {
         dealer.distribute(Deck.popTwo());
-        users.distributeToEachUser();
+        players.distributeToEachPlayer();
     }
 
-    private void showParticipantsCards(Dealer dealer, Users users) {
-        OutputView.printDistribute(dealer, users);
+    private void showUsersCards(Dealer dealer, Players players) {
+        OutputView.printDistribute(dealer, players);
         OutputView.printDealerCard(dealer);
-        OutputView.printUsersCards(users);
+        OutputView.printPlayersCards(players);
     }
 
-    private void askToUsers(Users users) {
-        for (User user : users.users()) {
-            askForDraw(user);
+    private void askToPlayers(Players players) {
+        for (Player player : players.players()) {
+            askForDraw(player);
         }
     }
 
-    private void askForDraw(User user) {
-        while (isDrawable(user) && DrawAnswer.isYes(DrawAnswer.of(InputView.inputDrawAnswer()))) {
-            user.draw();
-            OutputView.printUserCards(user);
+    private void askForDraw(Player player) {
+        while (isDrawable(player) && DrawAnswer.isYes(DrawAnswer.of(InputView.inputDrawAnswer()))) {
+            player.draw();
+            OutputView.printPlayerCards(player);
         }
     }
 
-    private boolean isDrawable(User user) {
-        if (user.isDrawable()) {
-            OutputView.printMoreDraw(user);
+    private boolean isDrawable(Player player) {
+        if (player.isDrawable()) {
+            OutputView.printMoreDraw(player);
             return true;
         }
         return false;

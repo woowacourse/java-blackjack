@@ -11,54 +11,54 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResultTest {
     @DisplayName("버스트를 확인한다. - 사용자 승")
     @Test
-    public void decideBustUserWin() {
+    public void decideBustPlayerWin() {
         Dealer dealer = new Dealer();
-        User user = new User("amazzi");
+        Player player = new Player("amazzi");
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
-        user.distribute(new Cards(Arrays.asList(
+        player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        assertThat(Result.decide(dealer, user)).isEqualTo(Result.WIN);
+        assertThat(Result.decide(dealer, player)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("버스트를 확인한다. - 무승부")
     @Test
     public void decideBustDraw() {
         Dealer dealer = new Dealer();
-        User user = new User("amazzi");
+        Player player = new Player("amazzi");
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
-        user.distribute(new Cards(Arrays.asList(
+        player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
-        assertThat(Result.decide(dealer, user)).isEqualTo(Result.DRAW);
+        assertThat(Result.decide(dealer, player)).isEqualTo(Result.STANDOFF);
     }
 
     @DisplayName("버스트를 확인한다. - 사용자 패")
     @Test
-    public void decideBustUserLose() {
+    public void decideBustPlayerLose() {
         Dealer dealer = new Dealer();
-        User user = new User("amazzi");
+        Player player = new Player("amazzi");
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        user.distribute(new Cards(Arrays.asList(
+        player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
-        assertThat(Result.decide(dealer, user)).isEqualTo(Result.LOSE);
+        assertThat(Result.decide(dealer, player)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("결과를 뒤집는다. (ex. 승을 패로, 패를 승으로)")
@@ -73,7 +73,7 @@ public class ResultTest {
     @Test
     public void count() {
         Result win = Result.WIN;
-        List<Result> results = Arrays.asList(Result.WIN, Result.WIN, Result.DRAW, Result.LOSE);
+        List<Result> results = Arrays.asList(Result.WIN, Result.WIN, Result.STANDOFF, Result.LOSE);
 
         assertThat(win.count(results)).isEqualTo(2);
     }
