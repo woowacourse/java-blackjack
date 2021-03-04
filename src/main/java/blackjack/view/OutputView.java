@@ -4,11 +4,11 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Players;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,28 +23,26 @@ public class OutputView {
 
     public static void printGameInitializeMessage(Dealer dealer, Players players,
         int startingCardCount) {
-        List<Participant> participants = new ArrayList(Arrays.asList(dealer));
+        List<Participant> participants = new ArrayList<>(Collections.singletonList(dealer));
         participants.addAll(players.unwrap());
-        String participantNames = String.join(NAME_DELIMITER,
-            participants.stream()
-                .map(Participant::getName)
-                .collect(Collectors.toList()));
+        String participantNames = participants.stream()
+            .map(Participant::getName)
+            .collect(Collectors.joining(NAME_DELIMITER));
         System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
-        participants.stream().forEach(player -> printParticipantStatus(player, false));
+        participants.forEach(player -> printParticipantStatus(player, false));
         System.out.println();
     }
 
     public static void printParticipantsStatus(Dealer dealer, Players players) {
-        List<Participant> participants = new ArrayList(Arrays.asList(dealer));
+        List<Participant> participants = new ArrayList<>(Collections.singletonList(dealer));
         participants.addAll(players.unwrap());
-        participants.stream().forEach(participant -> printParticipantStatus(participant, true));
+        participants.forEach(participant -> printParticipantStatus(participant, true));
     }
 
     public static void printParticipantStatus(Participant participant, boolean withScore) {
-        String cardNames = String.join(NAME_DELIMITER,
-            participant.getHand().unwrap().stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toList()));
+        String cardNames = participant.getHand().unwrap().stream()
+            .map(Card::getCardName)
+            .collect(Collectors.joining(NAME_DELIMITER));
 
         String scoreMessage = "";
         if (withScore) {
@@ -74,7 +72,7 @@ public class OutputView {
         System.out.println();
 
         Map<Player, ResultType> unwrappedResult = gameResult.unwrap();
-        unwrappedResult.keySet().stream()
+        unwrappedResult.keySet()
             .forEach(player -> System.out
                 .println(player.getName() + ": " + unwrappedResult.get(player).getName()));
     }
