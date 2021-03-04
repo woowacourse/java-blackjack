@@ -1,5 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +53,7 @@ public class Round {
     }
 
     public String getDealerName() {
-        return dealer.getName();
+        return Dealer.getName();
     }
 
     public List<String> getDealerCardStatus() {

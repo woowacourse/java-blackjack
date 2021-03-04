@@ -1,46 +1,34 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class Player {
-    private static final Pattern PATTERN = Pattern.compile("^[가-힣a-zA-Z]*$");
+public class Dealer {
+    public static final int TURN_OVER_COUNT = 16;
+    private static final String name = "딜러";
+
     private final List<Card> cards = new ArrayList<>();
-    private final String name;
 
-    public Player(String name) {
-        validate(name);
-        this.name = name;
-    }
-
-    private void validate(String name) {
-        if (!PATTERN.matcher(name).matches()) {
-            throw new IllegalArgumentException(String.format("이름을 잘못 입력하였습니다. (입력값 : %s)", name));
-        }
+    public void addFirstCards(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public void addFirstCards(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
-    public void removeAll() {
-        cards.clear();
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
+    public static String getName() {
+        return name;
     }
 
     public boolean isGameOver(int gameOverScore) {
         int score = calculateScore(gameOverScore);
-        return (score > gameOverScore);
+
+        return (score > TURN_OVER_COUNT);
     }
 
     public int calculateScore(int gameOverScore) {
@@ -68,8 +56,8 @@ public class Player {
                 .count();
     }
 
-    public String getName() {
-        return name;
+    public void addCard(Card makeOneCard) {
+        cards.add(makeOneCard);
     }
 
     public List<String> getCardsStatus() {

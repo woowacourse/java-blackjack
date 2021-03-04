@@ -1,7 +1,7 @@
 package fuel;
 
 public class Avante implements Car {
-    private int amount;
+    private final int amount;
     private static final int DISTANCE_PER_LITER = 15;
     private static final String NAME = "Avante";
 

@@ -1,9 +1,9 @@
 package blackjack.controller;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
 import blackjack.domain.Round;
+import blackjack.domain.card.Card;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerStatusDto;

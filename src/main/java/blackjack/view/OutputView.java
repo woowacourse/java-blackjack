@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
