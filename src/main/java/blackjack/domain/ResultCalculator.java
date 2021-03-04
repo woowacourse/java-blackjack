@@ -14,39 +14,46 @@ public class ResultCalculator {
         if (player.getPoint() > MAX_WINNING_POINT) {
             return ResultType.LOSE;
         }
-
         if (dealer.getPoint() > MAX_WINNING_POINT) {
             return ResultType.WIN;
         }
-
         return findWinner(player, dealer);
     }
 
     private static ResultType findWinner(Player player, Dealer dealer) {
-        if (player.getPoint() < MAX_WINNING_POINT &&
-                dealer.getPoint() < MAX_WINNING_POINT) {
+        if (bothUnderWinningPoint(player, dealer)) {
             return compare(player, dealer);
         }
-
-        if (player.getPoint() == MAX_WINNING_POINT && dealer.getPoint() == MAX_WINNING_POINT) {
+        if (bothWinningPoint(player, dealer)) {
             return checkAce(player, dealer);
         }
+        return confirmPlayerWinningPoint(player);
+    }
 
+    private static ResultType confirmPlayerWinningPoint(Player player) {
         if (player.getPoint() == MAX_WINNING_POINT) {
             return ResultType.WIN;
         }
         return ResultType.LOSE;
     }
 
+    private static boolean bothWinningPoint(Player player, Dealer dealer) {
+        return player.getPoint() == MAX_WINNING_POINT && dealer.getPoint() == MAX_WINNING_POINT;
+    }
+
+    private static boolean bothUnderWinningPoint(Player player, Dealer dealer) {
+        return player.getPoint() < MAX_WINNING_POINT &&
+                dealer.getPoint() < MAX_WINNING_POINT;
+    }
+
     private static ResultType checkAce(Player player, Dealer dealer) {
-        if (player.containsAce()) {
-            if (dealer.containsAce()) {
-                return ResultType.DRAW;
-            }
+        if (player.hasBlackjack() && dealer.hasBlackjack()) {
+            return ResultType.DRAW;
+        }
+        if (player.hasBlackjack()){
             return ResultType.WIN;
         }
-
-        if (dealer.containsAce()) {
+        if (dealer.hasBlackjack()) {
             return ResultType.LOSE;
         }
         return ResultType.DRAW;
@@ -54,10 +61,7 @@ public class ResultCalculator {
 
 
     private static ResultType compare(Player player, Dealer dealer) {
-        int playerScore = player.getPoint();
-        int dealerScore = dealer.getPoint();
-
-        int compare = Integer.compare(playerScore, dealerScore);
+        int compare = Integer.compare(player.getPoint(), dealer.getPoint());
         if (compare < 0) {
             return ResultType.LOSE;
         }

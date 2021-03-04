@@ -10,9 +10,15 @@ public class Hands {
     private static final int WINNING_BASELINE = 21;
 
     private final List<Card> cards;
+    private final boolean isBlackjack;
 
     public Hands(final List<Card> cards) {
         this.cards = cards;
+        isBlackjack = validateBlackjack();
+    }
+
+    private boolean validateBlackjack() {
+        return calculate() == WINNING_BASELINE;
     }
 
     public void addCard(Card card) {
@@ -44,8 +50,7 @@ public class Hands {
         return cards.stream()
                 .filter(card -> !CardValue.isAce(card.getCardValue()))
                 .map(Card::getValue)
-                .reduce(Integer::sum)
-                .get();
+                .reduce(0, Integer::sum);
     }
 
     private int countAce() {
@@ -62,5 +67,9 @@ public class Hands {
         return IntStream.range(0, number)
                 .mapToObj(cards::get)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isBlackjack() {
+        return isBlackjack;
     }
 }

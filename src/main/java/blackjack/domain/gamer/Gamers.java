@@ -21,8 +21,8 @@ public class Gamers {
     public Map<ResultType, Integer> resultWithCount() {
         Map<ResultType, Integer> result = new EnumMap<>(ResultType.class);
         for (Player player : players) {
-            ResultType resultType = ResultCalculator.decideWinner(player, dealer);
-            result.put(resultType, result.getOrDefault(resultType, 0) + 1);
+            ResultType switchedResult = ResultCalculator.decideWinner(player, dealer).switchPosition();
+            result.put(switchedResult, result.getOrDefault(switchedResult, 0) + 1);
         }
         return result;
     }
@@ -31,7 +31,7 @@ public class Gamers {
         Map<String, ResultType> result = new HashMap<>();
         for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);
-            result.put(player.getName(), resultType.switchPosition());
+            result.put(player.getName(), resultType);
         }
         return result;
     }

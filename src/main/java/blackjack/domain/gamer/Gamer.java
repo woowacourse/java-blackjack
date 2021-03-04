@@ -32,6 +32,10 @@ public abstract class Gamer {
         return hands.calculate();
     }
 
+    public boolean hasBlackjack() {
+        return hands.isBlackjack();
+    }
+
     public void receiveCard(Card card) {
         hands.addCard(card);
     }
