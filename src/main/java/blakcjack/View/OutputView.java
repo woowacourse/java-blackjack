@@ -101,10 +101,10 @@ public class OutputView {
 		return participant.getName() + "카드: " + concatenateCardsInformation(participant.getCards());
 	}
 
-	public static void printFinalOutcomeSummary(final OutcomeStatistics judgeOutcome) {
+	public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics) {
 		System.out.println("## 최종 승패");
-		printDealerOutcome(judgeOutcome.getDealerOutcome());
-		printPlayersOutcome(judgeOutcome.getPlayersOutcome());
+		printDealerOutcome(outcomeStatistics.getDealerOutcome());
+		printPlayersOutcome(outcomeStatistics.getPlayersOutcome());
 	}
 
 	private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
