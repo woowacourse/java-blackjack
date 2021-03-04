@@ -8,11 +8,12 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 
 public class Players {
-    private static final String EXCEED_MAXIMUM_PLAYER_ERROR_MESSAGE = "최대 플레이어 인원 수는 8명입니다.";
+    private static final String PLAYER_NUMBER_ERROR_MESSAGE = "인원 수는 2 ~ 8명입니다.";
     private static final String DELIMITER = ",";
     private static final String BLANK = " ";
     private static final String EMPTY = "";
-    private static final int MAX_COUNT = 8;
+    private static final int MIN_PLAYER_COUNT = 2;
+    private static final int MAX_PLAYER_COUNT = 8;
 
     private final List<Player> players;
 
@@ -23,8 +24,8 @@ public class Players {
     }
 
     private void validatePlayerCount(List<Player> player) {
-        if (player.size() > MAX_COUNT) {
-            throw new IllegalArgumentException(EXCEED_MAXIMUM_PLAYER_ERROR_MESSAGE);
+        if (player.size() < MIN_PLAYER_COUNT || player.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
         }
     }
 
