@@ -2,8 +2,10 @@ package blackjack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Player implements Playable {
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z|A-Z]+");
     private final String name;
     private final Cards cards;
 
@@ -12,8 +14,16 @@ public class Player implements Playable {
     }
 
     public Player(String name, List<Card> cards) {
+        name = name.trim();
+        validateWord(name);
         this.name = name;
         this.cards = new Cards(cards);
+    }
+
+    private static void validateWord(String number) {
+        if (!NAME_PATTERN.matcher(number).matches()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getName() {
