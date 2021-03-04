@@ -10,10 +10,14 @@ public class Card {
     }
 
     public String getPatternAndNumber() {
-        return number.name() + pattern.name();
+        return number.getNumber() + pattern.getName();
     }
 
     public int addPoint(int point) {
         return number.addNumber(point);
+    }
+
+    public boolean isAce() {
+        return number.equals(CardNumber.ACE);
     }
 }

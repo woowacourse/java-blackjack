@@ -28,6 +28,12 @@ public class Application {
 
         while(players.startTurn(deck))
         System.out.println();
+
+        GameResult.getPlayersCardsAndResult(players);
+
+        System.out.println();
+        System.out.println("## 최종 승패");
+        GameResult.getResult(players);
     }
 
 }

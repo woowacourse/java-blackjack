@@ -7,7 +7,7 @@ public class Player extends Gamer{
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateMinimumPoint() < 21;
+        return this.calculateJudgingPoint() < 21;
     }
 
     public Boolean continueDraw(Deck deck) {

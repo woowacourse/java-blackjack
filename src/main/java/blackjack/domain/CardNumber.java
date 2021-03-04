@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 public enum CardNumber {
-    ACE("1", 1),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -25,5 +25,9 @@ public enum CardNumber {
 
     public int addNumber(int point) {
         return this.number;
+    }
+
+    public String getNumber() {
+        return this.name;
     }
 }

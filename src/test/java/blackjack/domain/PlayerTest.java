@@ -4,10 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,10 +26,11 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어 점수 계산")
     void checkReceiveCard() {
         Card card = new Card(CardPattern.CLOVER, CardNumber.TEN);
         player.receiveCard(card);
-        assertEquals(player.calculateMinimumPoint(), 10);
+        assertEquals(player.calculateJudgingPoint(), 10);
     }
 
 
@@ -54,4 +51,20 @@ public class PlayerTest {
         assertFalse(player.canReceiveCard());
     }
 
+    @Test
+    @DisplayName("에이스가 11이어야할 때")
+    void aceCardScoring() {
+        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
+        assertEquals(player.calculateMaximumPoint(), 21);
+    }
+
+    @Test
+    @DisplayName("에이스가 1이어야할 때")
+    void aceCardBoundary() {
+        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
+        assertEquals(player.calculateMaximumPoint(), 21);
+    }
 }
