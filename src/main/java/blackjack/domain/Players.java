@@ -38,7 +38,7 @@ public class Players {
             if (!gamer.canReceiveCard()) {
                 continue;
             }
-            if (gamer.continueDraw(deck)){
+            if (gamer.continueDraw(deck)) {
                 continueTurn = true;
             }
         }

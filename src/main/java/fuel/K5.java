@@ -1,6 +1,6 @@
 package fuel;
 
-public class K5 extends Car{
+public class K5 extends Car {
     private final double distancePerLiter;
     private final String name;
 

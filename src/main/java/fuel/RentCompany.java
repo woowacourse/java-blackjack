@@ -22,7 +22,7 @@ public class RentCompany {
 
     public String generateReport() {
         StringBuilder carReport = new StringBuilder();
-        for(Car car : cars) {
+        for (Car car : cars) {
             carReport.append(car.getName())
                     .append(" : ")
                     .append((int) car.getChargeQuantity())

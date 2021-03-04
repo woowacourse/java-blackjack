@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public class Dealer extends Gamer{
+public class Dealer extends Gamer {
     public Dealer() {
         super("딜러");
     }
@@ -16,7 +16,7 @@ public class Dealer extends Gamer{
 
     @Override
     public String getInfo() {
-        return getName()+": "+ getDealerCards();
+        return getName() + ": " + getDealerCards();
     }
 
     @Override

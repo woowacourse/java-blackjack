@@ -22,7 +22,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러가 받은 카드 계산")
-   void dealerDealCard() {
+    void dealerDealCard() {
         dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         assertEquals(dealer.calculateJudgingPoint(), 1);
     }

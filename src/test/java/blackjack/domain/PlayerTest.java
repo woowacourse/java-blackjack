@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
     private Player player;
+
     @BeforeEach
     void setUp() {
         player = new Player("pobi");

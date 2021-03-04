@@ -1,6 +1,6 @@
 package fuel;
 
-public class Sonata extends Car{
+public class Sonata extends Car {
     private final double distancePerLiter;
     private final String name;
 

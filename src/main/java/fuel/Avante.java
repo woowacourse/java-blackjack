@@ -1,6 +1,6 @@
 package fuel;
 
-public class Avante extends Car{
+public class Avante extends Car {
     private final double distancePerLiter;
     private final String name;
 
