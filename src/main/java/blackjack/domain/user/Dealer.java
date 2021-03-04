@@ -3,11 +3,8 @@ package blackjack.domain.user;
 import blackjack.domain.Status;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class Dealer implements User {
 
@@ -25,10 +22,10 @@ public class Dealer implements User {
         return getScore() <= DEALER_HIT_THRESHOLD;
     }
 
-    public List<Integer> calculateMatchResult(Map<Player, Status> result){
+    public List<Integer> calculateMatchResult(Map<Player, Status> result) {
         List<Integer> winnings = new ArrayList<>();
         Arrays.stream(Status.values())
-            .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
+                .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
         return winnings;
     }
 

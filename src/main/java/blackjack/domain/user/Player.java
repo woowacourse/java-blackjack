@@ -15,7 +15,7 @@ public class Player implements User {
     }
 
     private String validateName(String name) {
-        if(name.trim().length() < 1) {
+        if (name.trim().length() < 1) {
             throw new IllegalArgumentException("이름은 1자 이상이어야 합니다.");
         }
         return name.trim();

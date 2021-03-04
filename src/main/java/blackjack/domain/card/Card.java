@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Card {
-
     private final Denomination denomination;
     private final Suit suit;
 
@@ -42,7 +41,7 @@ public class Card {
         }
         Card card = (Card) o;
         return denomination == card.denomination &&
-            Objects.equals(suit, card.suit);
+                Objects.equals(suit, card.suit);
     }
 
     @Override
@@ -60,15 +59,13 @@ public class Card {
 
         static List<Card> generateCards() {
             return Stream.of(Denomination.values())
-                .flatMap(CardCache::generateCardsBySymbol)
-                .collect(Collectors.toList());
+                    .flatMap(CardCache::generateCardsBySymbol)
+                    .collect(Collectors.toList());
         }
 
         static Stream<Card> generateCardsBySymbol(Denomination denomination) {
             return Stream.of(Suit.values())
-                .map(suit -> new Card(denomination, suit));
+                    .map(suit -> new Card(denomination, suit));
         }
-
-
     }
 }

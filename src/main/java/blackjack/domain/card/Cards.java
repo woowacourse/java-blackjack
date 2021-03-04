@@ -27,8 +27,8 @@ public class Cards {
 
     public String getCards() {
         return cards.stream()
-            .map(Card::getName)
-            .collect(Collectors.joining(", "));
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
     }
 
     public int getScore() {
