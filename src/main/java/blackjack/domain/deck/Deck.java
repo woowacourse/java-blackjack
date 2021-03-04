@@ -1,6 +1,7 @@
 package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,5 +26,9 @@ public class Deck {
             .map(i -> draw())
             .limit(2)
             .collect(Collectors.toList());
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 }
