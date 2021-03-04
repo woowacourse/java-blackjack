@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public static String askMoreCard(final String name) {
-        System.out.printf(MORE_CARD_MESSAGE + NEWLINE, name);
+        System.out.printf(NEWLINE + MORE_CARD_MESSAGE + NEWLINE, name);
         return scanner.nextLine().toLowerCase(Locale.ROOT);
     }
 }

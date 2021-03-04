@@ -111,6 +111,7 @@ public class BlackjackController {
     }
 
     private void showFinalCardResult(final List<Player> players, final Dealer dealer) {
+        OutputView.displayNewLine();
         OutputView.showCardResult(dealer.getName(), dealer.getMyCards(), dealer.calculate());
         for (Player player : players) {
             OutputView.showCardResult(player.getName(), player.getMyCards(), player.calculate());

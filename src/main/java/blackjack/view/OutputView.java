@@ -59,10 +59,14 @@ public class OutputView {
     }
 
     public static void dealerMoreCard() {
-        System.out.println(DEALER_MORE_CARD_MESSAGE);
+        System.out.println(NEWLINE + DEALER_MORE_CARD_MESSAGE);
     }
 
     public static void getErrorMessage(final String message) {
         System.out.println(ERROR_MARK + message);
+    }
+
+    public static void displayNewLine() {
+        System.out.println();
     }
 }
