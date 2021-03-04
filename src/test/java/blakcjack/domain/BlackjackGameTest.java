@@ -80,4 +80,29 @@ class BlackjackGameTest {
 		}
 		return expectedPlayers;
 	}
+
+	@DisplayName("플레이어들의 결과 반환 성공")
+	@Test
+	void getPlayersOutcome() {
+		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.TWO)); // lose
+		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.THREE));
+
+		blackjackGame.getPlayers().get(1).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING)); // draw
+		blackjackGame.getPlayers().get(1).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+
+		blackjackGame.getPlayers().get(2).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.FOUR)); // lose
+		blackjackGame.getPlayers().get(2).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.FIVE));
+
+		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
+		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
+
+		Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+		playersOutcome.put("pobi", Outcome.LOSE);
+		playersOutcome.put("sakjung", Outcome.DRAW);
+		playersOutcome.put("mediumBear", Outcome.LOSE);
+
+		assertThat(blackjackGame.getPlayersOutcome()).isEqualTo(playersOutcome);
+
+	}
 }
