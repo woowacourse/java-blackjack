@@ -23,6 +23,7 @@ public class BlackjackController {
         for (User user : users.users()) {
             askForDraw(user);
         }
+        isDealerDrawable(dealer);
     }
 
     private void askForDraw(User user) {
@@ -38,5 +39,14 @@ public class BlackjackController {
             return true;
         }
         return false;
+    }
+
+    private void isDealerDrawable(Dealer dealer) {
+        if (dealer.isDrawable()) {
+            dealer.draw();
+            OutputView.printDealerDrawable();
+            return;
+        }
+        OutputView.printDealerNotDrawable();
     }
 }
