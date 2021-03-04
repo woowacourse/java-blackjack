@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,31 +33,22 @@ public class Players {
         }
     }
 
-    public Boolean startTurn(Deck deck) {
-        boolean continueTurn = false;
-        for (Gamer gamer : players) {
-            if (!gamer.canReceiveCard()) {
-                continue;
-            }
-            if (gamer.continueDraw(deck)) {
-                continueTurn = true;
-            }
-        }
-        if (dealer.canReceiveCard()) {
-            continueTurn = true;
-            dealer.continueDraw(deck);
-        }
-        return continueTurn;
-    }
-
-    public String getPlayersCards() {
-        StringBuilder playerInfo = new StringBuilder();
-        playerInfo.append(dealer.getInfo()).append("\n");
-        for (Gamer gamer : players) {
-            playerInfo.append(gamer.getInfo()).append("\n");
-        }
-        return playerInfo.toString();
-    }
+//    public Boolean startTurn(Deck deck) {
+//        boolean continueTurn = false;
+//        for (Gamer gamer : players) {
+//            if (!gamer.canReceiveCard()) {
+//                continue;
+//            }
+//            if (gamer.continueDraw(deck)) {
+//                continueTurn = true;
+//            }
+//        }
+//        if (dealer.canReceiveCard()) {
+//            continueTurn = true;
+//            dealer.continueDraw(deck);
+//        }
+//        return continueTurn;
+//    }
 
     public String getDealerName() {
         return dealer.getName();
@@ -81,11 +71,8 @@ public class Players {
         return Objects.hash(players, dealer);
     }
 
-    public List<Gamer> getPlayers() {
-        List<Gamer> allPlayers = new ArrayList<>();
-        allPlayers.add(dealer);
-        allPlayers.addAll(this.players);
-        return allPlayers;
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public Map<String, Integer> calculateResult() {

@@ -20,13 +20,13 @@ public abstract class Gamer {
         }
     }
 
-    protected void receiveCard(Card card) {
+    public void receiveCard(Card card) {
         cards.add(card);
     }
 
     protected int calculateJudgingPoint() {
         int point = 0;
-        for(Card card : cards) {
+        for (Card card : cards) {
             point += card.givePoint();
         }
         return point;
@@ -49,9 +49,9 @@ public abstract class Gamer {
 
     public abstract boolean canReceiveCard();
 
-    public abstract Boolean continueDraw(Deck deck);
+    public abstract Boolean continueDraw(Deck deck, String draw);
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 

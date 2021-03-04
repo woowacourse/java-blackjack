@@ -11,7 +11,7 @@ public class ResultTest {
     void scoreTest() {
         Players players = new Players("pobi,jason", new Dealer());
         players.giveCards(new Deck());
-        GameResult.getPlayersCardsAndResult(players);
+        GameResult.getPlayersCardsAndResult(new Dealer(), players);
     }
 
     @Test

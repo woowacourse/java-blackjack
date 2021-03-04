@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.view.InputView;
-
 public class Player extends Gamer {
     private String result;
 
@@ -14,15 +12,13 @@ public class Player extends Gamer {
         return this.calculateJudgingPoint() < 21;
     }
 
-    public Boolean continueDraw(Deck deck) {
-        System.out.println(getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        String draw = InputView.isContinueDraw();
-        if (isDrawCard(draw)) {
-            receiveCard(deck.dealCard());
-            System.out.println(getInfo());
-            return true;
-        }
-        return false;
+    public void playEachPlayer(Deck deck) {
+        receiveCard(deck.dealCard());
+    }
+
+    @Override
+    public Boolean continueDraw(Deck deck, String draw) {
+        return isDrawCard(draw);
     }
 
     private Boolean isDrawCard(String draw) {

@@ -3,8 +3,11 @@ package blackjack.domain;
 import java.util.Map;
 
 public class GameResult {
-    public static void getPlayersCardsAndResult(Players players) {
-
+    public static void getPlayersCardsAndResult(Dealer dealer, Players players) {
+        System.out.println(dealer.getInfo() + " - 결과: " + dealer.calculateMaximumPoint());
+        for (Gamer gamer : players.getPlayers()) {
+            System.out.println(gamer.getInfo() + " - 결과: " + gamer.calculateMaximumPoint());
+        }
     }
 
     public static void getResult(Players players) {

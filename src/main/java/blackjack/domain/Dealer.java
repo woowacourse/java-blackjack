@@ -16,9 +16,12 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public Boolean continueDraw(Deck deck) {
+    public Boolean continueDraw(Deck deck, String draw) {
         this.receiveCard(deck.dealCard());
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         return true;
+    }
+
+    public void keepDrawing(Deck deck) {
+        receiveCard(deck.dealCard());
     }
 }
