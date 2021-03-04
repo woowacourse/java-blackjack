@@ -20,7 +20,8 @@ public class BlackjackController {
 
     public BlackjackController() {
         List<Card> wholeCards = Arrays.stream(Denomination.values())
-            .flatMap(denomination -> Arrays.stream(Shape.values()).map(shape -> Card.of(denomination, shape)))
+            .flatMap(denomination -> Arrays.stream(Shape.values())
+                .map(shape -> Card.of(denomination, shape)))
             .collect(Collectors.toList());
         deck = new Deck(wholeCards);
         deck.shuffle();

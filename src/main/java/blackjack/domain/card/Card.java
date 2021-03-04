@@ -24,11 +24,13 @@ public class Card {
     }
 
     private static class CardCache {
+
         static final List<Card> cache;
 
         static {
             cache = Arrays.stream(Denomination.values())
-                .flatMap(denomination -> Arrays.stream(Shape.values()).map(shape -> new Card(denomination, shape)))
+                .flatMap(denomination -> Arrays.stream(Shape.values())
+                    .map(shape -> new Card(denomination, shape)))
                 .collect(Collectors.toList());
         }
     }

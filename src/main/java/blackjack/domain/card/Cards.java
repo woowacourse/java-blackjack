@@ -29,7 +29,7 @@ public class Cards {
         for (Card card : cards) {
             if (card.isAce()) {
                 aceCards.add(card);
-            }else {
+            } else {
                 result += card.getScore();
             }
         }
@@ -37,7 +37,7 @@ public class Cards {
         for (Card card : aceCards) {
             if (result < 11) {
                 result += 11;
-            }else {
+            } else {
                 result += card.getScore();
             }
         }

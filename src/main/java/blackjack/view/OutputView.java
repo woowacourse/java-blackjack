@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private OutputView() {}
+    private OutputView() {
+    }
 
     public static void println(String value) {
         System.out.println(value);
@@ -65,7 +66,8 @@ public class OutputView {
         System.out.println();
         System.out.printf("%s - 결과: %d\n", playerInfoToString(dealer), dealer.calculateScore());
         gamers.stream()
-            .forEach(gamer -> System.out.printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.calculateScore()));
+            .forEach(gamer -> System.out
+                .printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.calculateScore()));
     }
 
     public static void printGameResult(GameResult gameResult) {
@@ -83,7 +85,7 @@ public class OutputView {
             .collect(Collectors.groupingBy(ResultType::getValue, Collectors.counting()));
         return Arrays.stream(ResultType.values())
             .filter(resultType -> result.containsKey(resultType.getValue()))
-            .map(key -> result.get(key.getValue())+key.getValue())
+            .map(key -> result.get(key.getValue()) + key.getValue())
             .collect(Collectors.joining(" "));
     }
 }

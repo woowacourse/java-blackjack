@@ -22,7 +22,7 @@ public class Deck {
     }
 
     public List<Card> drawTwoStartCards() {
-        return Stream.iterate(0, i -> i+1)
+        return Stream.iterate(0, i -> i + 1)
             .map(i -> draw())
             .limit(2)
             .collect(Collectors.toList());
