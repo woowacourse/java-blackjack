@@ -4,6 +4,8 @@ import blackjack.domain.Result;
 
 public class Player extends Participant {
 
+    private static final int LIMIT_SCORE = 21;
+
     private Result result;
 
     public Player() {
@@ -23,6 +25,6 @@ public class Player extends Participant {
     }
 
     public boolean canDrawOneMore(int score){
-        return score <= 21;
+        return score <= LIMIT_SCORE;
     }
 }

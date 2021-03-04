@@ -5,6 +5,10 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int EMPTY_SCORE = 0;
+    private static final int BONUS_SCORE = 10;
+    private static final int LIMIT_SCORE = 21;
+
     private List<Card> cards;
 
     public Cards() {
@@ -19,10 +23,10 @@ public class Cards {
         int score = 0;
 
         if (containAceCard(cards)) {
-            score = calculate(10);
+            score = calculate(BONUS_SCORE);
         }
 
-        if (score != 0 && score <= 21) {
+        if (score != EMPTY_SCORE && score <= LIMIT_SCORE) {
             return score;
         }
 
