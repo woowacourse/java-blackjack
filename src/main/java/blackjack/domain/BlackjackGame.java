@@ -7,7 +7,6 @@ import blackjack.domain.scoreboard.GameResult;
 import blackjack.domain.scoreboard.ScoreBoard;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Status;
 import blackjack.domain.user.User;
 
 import java.util.*;
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
+    private static final String NO_MORE_PLAYING_USER_ERROR_MSG = "플레이 가능한 유저가 없습니다.";
     private final Deck deck = Deck.createDeck();
     //todo : 일급컬렉션 생성
     private final List<User> users;
@@ -45,10 +45,10 @@ public class BlackjackGame {
         return dealer.handSize();
     }
 
-    public Optional<User> findFirstUserByStatus(Status status){
+    public User findFirstCanPlayUser(){
         return users.stream()
-                .filter(user -> user.isSameStatus(status))
-                .findFirst();
+                .filter(User::canContinueGame)
+                .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
     }
 
     public Card draw(){
@@ -78,8 +78,8 @@ public class BlackjackGame {
         return new DealerGameResult(dealer.getCards());
     }
 
-    public boolean isExistPlayingUser(){
-        return findFirstUserByStatus(Status.PLAYING).isPresent();
+    public boolean existCanContinueUser(){
+        return users.stream().anyMatch(User::canContinueGame);
     }
 
     private GameResult createGameResult(User user) {

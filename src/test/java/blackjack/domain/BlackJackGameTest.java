@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.user.Status;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,11 +31,11 @@ public class BlackJackGameTest {
         //when
         BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(firstUser,secondUser,thirdUser));
         //then
-        assertThat(blackJackGame.findFirstUserByStatus(Status.PLAYING).get()).isEqualTo(firstUser);
+        assertThat(blackJackGame.findFirstCanPlayUser()).isEqualTo(firstUser);
 
         //when
         firstUser.stopUser();
         //then
-        assertThat(blackJackGame.findFirstUserByStatus(Status.PLAYING).get()).isEqualTo(secondUser);
+        assertThat(blackJackGame.findFirstCanPlayUser()).isEqualTo(secondUser);
     }
 }

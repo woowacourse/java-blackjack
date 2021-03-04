@@ -8,8 +8,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.user.Status.PLAYING;
-
 public class BlackjackGameController {
     private static final int DEALER_MINIMUM_SCORE = 16;
 
@@ -48,8 +46,8 @@ public class BlackjackGameController {
     }
 
     private static void processUserRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.isExistPlayingUser()) {
-            User currentUser = blackjackGame.findFirstUserByStatus(PLAYING).get();
+        while (blackjackGame.existCanContinueUser()) {
+            User currentUser = blackjackGame.findFirstCanPlayUser();
             userDrawOrStop(blackjackGame, currentUser, InputView.askMoreDraw(currentUser.getName()));
             printUserCurrentCards(currentUser);
         }
