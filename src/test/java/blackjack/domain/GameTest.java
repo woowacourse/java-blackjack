@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;

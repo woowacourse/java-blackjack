@@ -3,7 +3,7 @@ package blackjack.view;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.GameResult;
+import blackjack.domain.GameResult;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.PlayerDto;
 import java.util.List;
