@@ -36,4 +36,14 @@ public class DealerTest {
         dealer.drawCard(sevenCard);
         assertThat(dealer.isCanDraw()).isFalse();
     }
+
+    @DisplayName("카드 반환 개수 전략패턴 테스트")
+    @Test
+    void cardOpenStrategy() {
+        Dealer dealer = new Dealer();
+        dealer.drawRandomTwoCards();
+        assertThat(dealer.getCards().size()).isEqualTo(1);
+        dealer.setCardOpen(new AllCardsOpenStrategy());
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+    }
 }
