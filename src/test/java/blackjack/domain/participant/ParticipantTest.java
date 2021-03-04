@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Number;
+import blackjack.domain.card.GameNumber;
 import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,10 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParticipantTest {
-    private static final Card TWO_DIAMOND = new Card(Number.TWO, Shape.DIAMOND);
-    private static final Card JACK_SPADE = new Card(Number.JACK, Shape.SPADE);
-    private static final Card THREE_HEART = new Card(Number.THREE, Shape.HEART);
-    private static final Card ACE_CLOVER = new Card(Number.ACE, Shape.CLOVER);
+    private static final Card TWO_DIAMOND = new Card(GameNumber.TWO, Shape.DIAMOND);
+    private static final Card JACK_SPADE = new Card(GameNumber.JACK, Shape.SPADE);
+    private static final Card THREE_HEART = new Card(GameNumber.THREE, Shape.HEART);
+    private static final Card ACE_CLOVER = new Card(GameNumber.ACE, Shape.CLOVER);
     private Participant participant;
 
     private static Stream<Arguments> provideCardsAndExpectedResult() {

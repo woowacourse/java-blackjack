@@ -1,24 +1,24 @@
 package blackjack.domain.card;
 
 public class Card {
-    private final Number number;
+    private final GameNumber gameNumber;
     private final Shape shape;
 
-    public Card(Number number, Shape shape) {
-        this.number = number;
+    public Card(GameNumber gameNumber, Shape shape) {
+        this.gameNumber = gameNumber;
         this.shape = shape;
     }
 
     public boolean isAce() {
-        return Number.ACE.equals(number);
+        return GameNumber.ACE.equals(gameNumber);
     }
 
     public int getValue() {
-        return number.getValue();
+        return gameNumber.getValue();
     }
 
     public String getNumber() {
-        return number.getNumber();
+        return gameNumber.getNumber();
     }
 
     public String getShape() {
