@@ -15,15 +15,17 @@ import java.util.stream.Collectors;
 public class Players {
 
     private static final String DELIMITER = ",";
-    private final Queue<Player> players;
+    private final List<Player> players;
+    private int preparingIndex;
 
     public Players(List<Player> players) {
-        this.players = new LinkedList<>(players);
+        this.players = new ArrayList<>(players);
+        preparingIndex = 0;
     }
 
-    public static Players valueOf(String unParsedNames) {
+    public static Players valueOf(String unParsedNames, Deck deck) {
         List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER))
-            .map(Player::new)
+            .map(name -> new Player(name, deck))
             .collect(Collectors.toList());
         validateDuplication(parsedPlayers);
         return new Players(parsedPlayers);
@@ -42,16 +44,15 @@ public class Players {
         return new GameResult(result);
     }
 
-    public Player pop() {
-        return players.poll();
+    public Player nextPlayerToPrepare() {
+        if (isPrepared()) {
+            throw new IllegalStateException("이미 모든 플레이어가 준비가 되었습니다.");
+        }
+        return players.get(preparingIndex++);
     }
 
-    public void push(Player player) {
-        players.add(player);
-    }
-
-    public boolean isEmpty() {
-        return players.isEmpty();
+    public boolean isPrepared() {
+        return preparingIndex >= players.size();
     }
 
     public List<Player> unwrap() {

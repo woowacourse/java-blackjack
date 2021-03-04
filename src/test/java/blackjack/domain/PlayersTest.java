@@ -11,27 +11,16 @@ import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
+    private Deck deck;
 
-    @Test
-    @DisplayName("플레이어 이름 중복 검증")
-    void validateDuplication() {
-        assertThatThrownBy(() -> Players.valueOf("a,b,a"))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("중복된 이름은 사용할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("승패 결과")
-    void match() {
-        Player pobi = new Player("pobi");
-        Player jason = new Player("jason");
-        Player root = new Player("root");
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(Arrays.asList(
+    @BeforeEach
+    void setUp() {
+        deck = new Deck(Arrays.asList(
             Card.valueOf(Shape.DIAMOND, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT),
             Card.valueOf(Shape.DIAMOND, CardValue.ACE),
@@ -40,18 +29,23 @@ public class PlayersTest {
             Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
             Card.valueOf(Shape.CLOVER, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
+    }
 
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+    @Test
+    @DisplayName("플레이어 이름 중복 검증")
+    void validateDuplication() {
+        assertThatThrownBy(() -> Players.valueOf("a,b,a", deck))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("중복된 이름은 사용할 수 없습니다.");
+    }
 
-        pobi.drawCard(deck);
-        pobi.drawCard(deck);
-
-        jason.drawCard(deck);
-        jason.drawCard(deck);
-
-        root.drawCard(deck);
-        root.drawCard(deck);
+    @Test
+    @DisplayName("승패 결과")
+    void match() {
+        Dealer dealer = new Dealer(deck);
+        Player pobi = new Player("pobi", deck);
+        Player jason = new Player("jason", deck);
+        Player root = new Player("root", deck);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);

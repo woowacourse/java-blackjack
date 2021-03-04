@@ -16,10 +16,6 @@ public class GameResultTest {
 
     @Test
     void name() {
-        Player pobi = new Player("pobi");
-        Player jason = new Player("jason");
-        Player root = new Player("root");
-        Dealer dealer = new Dealer();
         Deck deck = new Deck(Arrays.asList(
             Card.valueOf(Shape.DIAMOND, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT),
@@ -29,18 +25,10 @@ public class GameResultTest {
             Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
             Card.valueOf(Shape.CLOVER, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
-
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
-
-        pobi.drawCard(deck);
-        pobi.drawCard(deck);
-
-        jason.drawCard(deck);
-        jason.drawCard(deck);
-
-        root.drawCard(deck);
-        root.drawCard(deck);
+        Dealer dealer = new Dealer(deck);
+        Player pobi = new Player("pobi", deck);
+        Player jason = new Player("jason", deck);
+        Player root = new Player("root", deck);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);

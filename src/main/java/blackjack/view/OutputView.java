@@ -1,9 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Players;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.BlackJackParticipant;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
@@ -20,24 +21,26 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printGameInitializeMessage(Dealer dealer, List<Player> players,
+    public static void printGameInitializeMessage(Dealer dealer, Players players,
         int startingCardCount) {
-        List<BlackJackParticipant> participants = new ArrayList(Arrays.asList(dealer));
-        participants.addAll(players);
+        List<Participant> participants = new ArrayList(Arrays.asList(dealer));
+        participants.addAll(players.unwrap());
         String participantNames = String.join(NAME_DELIMITER,
             participants.stream()
-                .map(BlackJackParticipant::getName)
+                .map(Participant::getName)
                 .collect(Collectors.toList()));
         System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
         participants.stream().forEach(player -> printParticipantStatus(player, false));
         System.out.println();
     }
 
-    public static void printParticipantsStatus(List<BlackJackParticipant> participants) {
+    public static void printParticipantsStatus(Dealer dealer, Players players) {
+        List<Participant> participants = new ArrayList(Arrays.asList(dealer));
+        participants.addAll(players.unwrap());
         participants.stream().forEach(participant -> printParticipantStatus(participant, true));
     }
 
-    public static void printParticipantStatus(BlackJackParticipant participant, boolean withScore) {
+    public static void printParticipantStatus(Participant participant, boolean withScore) {
         String cardNames = String.join(NAME_DELIMITER,
             participant.getHand().unwrap().stream()
                 .map(Card::getCardName)

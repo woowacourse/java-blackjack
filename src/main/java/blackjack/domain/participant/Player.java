@@ -4,10 +4,10 @@ import blackjack.domain.Deck;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 
-public class Player extends BlackJackParticipant {
+public class Player extends Participant {
 
-    public Player(String name) {
-        super(name);
+    public Player(String name, Deck deck) {
+        super(name, deck);
     }
 
     @Override
@@ -18,8 +18,8 @@ public class Player extends BlackJackParticipant {
         }
     }
 
-    public void willContinue(String input, Deck deck) {
-        if (!Response.getHitStatus(input)) {
+    public void willContinue(Response response, Deck deck) {
+        if (!response.getHitStatus()) {
             cannotDraw();
             return;
         }
