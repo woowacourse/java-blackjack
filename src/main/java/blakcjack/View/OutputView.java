@@ -57,6 +57,24 @@ public class OutputView {
 	}
 
 	public static void printDealerAdditionalCardMessage() {
-		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+	}
+
+	public static void printResult(final Dealer dealer, final List<Participant> players) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(makeFinalSummary(dealer));
+
+		for (Participant player : players) {
+			stringBuilder.append(makeFinalSummary(player));
+		}
+		System.out.println(stringBuilder.toString());
+	}
+
+	private static String makeFinalSummary(final Participant participant) {
+		return String.format("%s - 결과: %d%n",makeFinalCardSummary(participant), participant.calculateScore());
+	}
+
+	private static String makeFinalCardSummary(final Participant participant) {
+		return participant.getName() + "카드: " + concatenateCardsInformation(participant.getCards());
 	}
 }
