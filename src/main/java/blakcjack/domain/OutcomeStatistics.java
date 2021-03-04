@@ -28,6 +28,10 @@ public class OutcomeStatistics {
 		return playersOutcome;
 	}
 
+	public Map<Outcome, Integer> getDealerOutcome() {
+		return dealerOutcome;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;

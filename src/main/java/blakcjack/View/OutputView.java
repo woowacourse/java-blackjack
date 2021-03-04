@@ -1,11 +1,14 @@
 package blakcjack.View;
 
 
+import blakcjack.domain.Outcome;
+import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -70,10 +73,45 @@ public class OutputView {
 	}
 
 	private static String makeFinalSummary(final Participant participant) {
-		return String.format("%s - 결과: %d%n",makeFinalCardSummary(participant), participant.calculateScore());
+		return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.calculateScore());
 	}
 
 	private static String makeFinalCardSummary(final Participant participant) {
 		return participant.getName() + "카드: " + concatenateCardsInformation(participant.getCards());
+	}
+
+	public static void printFinalOutcomeSummary(final OutcomeStatistics judgeOutcome, final String dealerName) {
+		System.out.println("## 최종 승패");
+		printDealerOutcome(judgeOutcome.getDealerOutcome(), dealerName);
+		printPlayersOutcome(judgeOutcome.getPlayersOutcome());
+	}
+
+	private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final String dealerName) {
+		final StringBuilder stringBuilder = new StringBuilder()
+				.append(dealerName)
+				.append(":");
+
+		for (final Outcome outcome : dealerOutcome.keySet()) {
+			final int count = dealerOutcome.get(outcome);
+			stringBuilder.append(convertCountToString(count, outcome));
+		}
+
+		System.out.println(stringBuilder.toString());
+	}
+
+	private static String convertCountToString(final int count, final Outcome outcome) {
+		if (count == 0) {
+			return "";
+		}
+		return " " + count + outcome.toKorean();
+	}
+
+	private static void printPlayersOutcome(final Map<String, Outcome> playersOutcome) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		for (final String name : playersOutcome.keySet()) {
+			final Outcome outcome = playersOutcome.get(name);
+			stringBuilder.append(name).append(": ").append(outcome.toKorean()).append(System.lineSeparator());
+		}
+		System.out.println(stringBuilder.toString());
 	}
 }
