@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.user.MatchResult;
+import blackjack.domain.user.PlayerDto;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
 import blackjack.domain.user.WinningResultDTO;
@@ -45,6 +46,12 @@ public class OutputView {
         String cardString = makeCardString(player.getCards());
 
         System.out.printf("%s의 카드: %s%n", player.getName(), cardString);
+    }
+
+    public static void printPlayerCardV2(PlayerDto playerDto) {
+        String cardString = makeCardString(playerDto.getCards());
+
+        System.out.printf("%s의 카드: %s%n", playerDto.getName(), cardString);
     }
 
     private static String makeCardString(List<Card> cards) {
