@@ -1,11 +1,11 @@
 package oilinjection;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import oilinjection.car.Avante;
 import oilinjection.car.K5;
 import oilinjection.car.Sonata;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RentCompanyTest {
 

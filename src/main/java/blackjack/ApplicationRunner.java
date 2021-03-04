@@ -7,6 +7,9 @@ import blackjack.domain.card.Cards;
 public class ApplicationRunner {
 
     public static void main(String[] args) {
-        new BlackjackController(new Cards(CardFactory.getNormalCards())).run();
+        Cards cards = new Cards(CardFactory.getNormalCards());
+        cards.shuffle();
+        new BlackjackController(cards).run();
     }
+
 }

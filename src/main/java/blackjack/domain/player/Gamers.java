@@ -1,14 +1,15 @@
 package blackjack.domain.player;
 
-import static java.util.stream.Collectors.toList;
-
 import blackjack.domain.card.Cards;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class Gamers {
 

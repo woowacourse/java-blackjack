@@ -1,15 +1,16 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-
 import blackjack.GameResult;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.PlayerDto;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 
 public class OutputView {
 

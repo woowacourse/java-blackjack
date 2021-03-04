@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.exception.CardDuplicateException;
 import blackjack.util.ScoreCalculator;
+
 import java.util.List;
 
 public abstract class Player {

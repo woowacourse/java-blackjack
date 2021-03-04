@@ -1,34 +1,33 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-
 import blackjack.GameResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+
 public class Game {
 
     private static final int CARD_INIT_COUNT = 2;
-    private final Cards cards;
+    private final Cards shuffledCards;
     private final Player dealer;
     private final Gamers gamers;
 
-    public Game(Cards cards, Player dealer, Gamers gamers) {
-        initialize(cards, dealer, gamers);
+    public Game(Cards shuffledCards, Player dealer, Gamers gamers) {
+        initialize(shuffledCards, dealer, gamers);
 
-        this.cards = cards;
+        this.shuffledCards = shuffledCards;
         this.dealer = dealer;
         this.gamers = gamers;
     }
 
     private void initialize(Cards cards, Player dealer, Gamers gamers) {
-        cards.shuffle();
-
         for (int i = 0; i < CARD_INIT_COUNT; i++) {
             dealer.addCardToDeck(cards.next());
             gamers.drawToGamers(cards);
@@ -38,14 +37,14 @@ public class Game {
     public boolean drawCardToGamer(String name) {
         Player gamer = findGamerByName(name);
 
-        gamer.addCardToDeck(cards.next());
+        gamer.addCardToDeck(shuffledCards.next());
 
         return gamer.getStatus() == Status.HIT;
     }
 
     public boolean drawCardToDealer() {
         if (dealer.isDrawable()) {
-            dealer.addCardToDeck(cards.next());
+            dealer.addCardToDeck(shuffledCards.next());
             return true;
         }
 

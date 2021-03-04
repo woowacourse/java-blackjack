@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static java.util.stream.Collectors.toList;
-
 import blackjack.domain.Game;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
@@ -11,9 +9,12 @@ import blackjack.util.DtoAssembler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerDto;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class BlackjackController {
 
