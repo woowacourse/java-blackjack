@@ -66,7 +66,7 @@ public class BlackjackController {
     }
 
     private void singlePlayerGameProgress(CardDeck cardDeck, Player player) {
-        if (END_GAME_MARK.equals(InputView.askMoreCard(player.getName()))) {
+        if (END_GAME_MARK.equals(askPlayerMoreCard(player))) {
             OutputView.showPlayerCard(player.getName(), player.getMyCards());
             return;
         }
@@ -76,6 +76,23 @@ public class BlackjackController {
             return;
         }
         singlePlayerGameProgress(cardDeck, player);
+    }
+
+    private String askPlayerMoreCard(Player player) {
+        try {
+            String userInput = InputView.askMoreCard(player.getName());
+            return validateMoreCardOption(userInput);
+        } catch (IllegalArgumentException e) {
+            OutputView.getErrorMessage(e.getMessage());
+            return askPlayerMoreCard(player);
+        }
+    }
+
+    private String validateMoreCardOption(String userInput) {
+        if ("y".equals(userInput) || "n".equals(userInput)) {
+            return userInput;
+        }
+        throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
     }
 
     private boolean isBust(Player player) {

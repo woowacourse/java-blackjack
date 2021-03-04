@@ -17,6 +17,7 @@ public class OutputView {
     private static final String GAME_RESULT_FORMAT = "%s: %d승 %d패";
     private static final String WIN_MESSAGE = ": 승";
     private static final String LOSE_MESSAGE = ": 패";
+    public static final String ERROR_MARK = "[Error] ";
 
     public static void distributeMessage(final String players) {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, players);
@@ -59,5 +60,9 @@ public class OutputView {
 
     public static void dealerMoreCard() {
         System.out.println(DEALER_MORE_CARD_MESSAGE);
+    }
+
+    public static void getErrorMessage(final String message) {
+        System.out.println(ERROR_MARK + message);
     }
 }
