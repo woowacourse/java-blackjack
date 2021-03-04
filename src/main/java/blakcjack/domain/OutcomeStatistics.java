@@ -27,4 +27,9 @@ public class OutcomeStatistics {
 		final OutcomeStatistics that = (OutcomeStatistics) o;
 		return Objects.equals(dealerOutcome, that.dealerOutcome) && Objects.equals(playersOutcome, that.playersOutcome);
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dealerOutcome, playersOutcome);
+	}
 }

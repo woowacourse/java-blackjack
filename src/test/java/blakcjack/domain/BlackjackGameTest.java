@@ -48,7 +48,7 @@ class BlackjackGameTest {
 	@Test
 	void distributeOneCard() {
 		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
-		final List<Participant> players = blackjackGame.getPlayers();
+		final List<Player> players = blackjackGame.getPlayers();
 		final Participant pobi = players.get(0);
 		final Participant expected = new Player(new Name("pobi"));
 		expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
@@ -63,7 +63,7 @@ class BlackjackGameTest {
 		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
 		blackjackGame.initializeHands();
 
-		final List<Participant> players = blackjackGame.getPlayers();
+		final List<Player> players = blackjackGame.getPlayers();
 		List<Participant> expectedPlayers = createExpectedPlayers();
 		assertThat(players).isEqualTo(expectedPlayers);
 	}

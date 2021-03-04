@@ -6,13 +6,14 @@ import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
+import blakcjack.domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-	public static void printInitialHands(final Dealer dealer, final List<Participant> players) {
+	public static void printInitialHands(final Dealer dealer, final List<Player> players) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeCardDistributionMessage(dealer, players));
 
@@ -23,7 +24,7 @@ public class OutputView {
 		System.out.println(stringBuilder.toString());
 	}
 
-	private static String makeCardDistributionMessage(Dealer dealer, List<Participant> players) {
+	private static String makeCardDistributionMessage(Dealer dealer, List<Player> players) {
 		return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), concatenatePlayerNames(players));
 	}
 
@@ -31,7 +32,7 @@ public class OutputView {
 		System.out.println(makeCardSummary(participant));
 	}
 
-	private static String concatenatePlayerNames(List<Participant> players) {
+	private static String concatenatePlayerNames(List<Player> players) {
 		return players.stream().map(Participant::getName)
 				.collect(Collectors.joining(", "));
 	}
@@ -62,7 +63,7 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public static void printFinalHandsSummary(final Dealer dealer, final List<Participant> players) {
+	public static void printFinalHandsSummary(final Dealer dealer, final List<Player> players) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeFinalSummary(dealer));
 

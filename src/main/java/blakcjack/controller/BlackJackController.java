@@ -6,6 +6,7 @@ import blakcjack.domain.BlackjackGame;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
+import blakcjack.domain.participant.Player;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class BlackJackController {
 		final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
 		blackjackGame.initializeHands();
 
-		final List<Participant> players = blackjackGame.getPlayers();
+		final List<Player> players = blackjackGame.getPlayers();
 		final Dealer dealer = blackjackGame.getDealer();
 		printInitialHands(dealer, players);
 

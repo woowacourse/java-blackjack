@@ -10,9 +10,10 @@ import java.util.*;
 
 public class BlackjackGame {
 	public static final String DUPLICATE_NAME_ERROR = "중복된 이름이 입력 되었습니다.";
+	public static final int INITIAL_VALUE = 0;
 	private final Deck deck;
-	private final Participant dealer;
-	private final List<Participant> players = new ArrayList<>();
+	private final Dealer dealer;
+	private final List<Player> players = new ArrayList<>();
 
 	public BlackjackGame(final Deck deck, final List<String> names) {
 		this.deck = deck;
@@ -32,12 +33,12 @@ public class BlackjackGame {
 		}
 	}
 
-	public void distributeOneCard(final Participant player) {
-		player.receiveCard(deck.drawCard());
+	public void distributeOneCard(final Participant participant) {
+		participant.receiveCard(deck.drawCard());
 	}
 
 	public void initializeHands() {
-		for (Participant player : players) {
+		for (Player player : players) {
 			distributeOneCard(player);
 			distributeOneCard(player);
 		}
@@ -45,12 +46,12 @@ public class BlackjackGame {
 		distributeOneCard(dealer);
 	}
 
-	public List<Participant> getPlayers() {
+	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
 
 	public Dealer getDealer() {
-		return (Dealer) dealer;
+		return dealer;
 	}
 
 	public OutcomeStatistics judgeOutcome() {
@@ -58,8 +59,8 @@ public class BlackjackGame {
 		final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 		initializeDealerOutcome(dealerOutcome);
 
-		for (final Participant player : players) {
-			final Outcome playerOutcome = Outcome.of((Player) player, (Dealer) dealer);
+		for (final Player player : players) {
+			final Outcome playerOutcome = Outcome.of(player, dealer);
 			playersOutcome.put(player.getName(), playerOutcome);
 			updateDealerOutcome(dealerOutcome, playerOutcome);
 		}
@@ -71,8 +72,8 @@ public class BlackjackGame {
 	}
 
 	private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
-		dealerOutcome.put(Outcome.WIN, 0);
-		dealerOutcome.put(Outcome.DRAW, 0);
-		dealerOutcome.put(Outcome.LOSE, 0);
+		for (Outcome outcome : Outcome.values()) {
+			dealerOutcome.put(outcome, INITIAL_VALUE);
+		}
 	}
 }
