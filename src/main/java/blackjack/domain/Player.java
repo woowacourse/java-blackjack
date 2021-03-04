@@ -50,15 +50,11 @@ public class Player implements Playable {
     @Override
     public int sumCardsForResult() {
         List<Card> cardValues = cards.getUnmodifiableList();
-        int sum = cardValues.stream().mapToInt(Card::getScore).sum();
         int aceCount = (int) cardValues.stream().filter(Card::isAce).count();
-        sum += aceCount * 10;
-        for (int i = 0; i < aceCount; i++) {
-            if (sum > 21) {
-                sum -= 10;
-                continue;
-            }
-            break;
+        int sum = cardValues.stream().mapToInt(Card::getScore).sum() + aceCount * 10;
+        while(sum>21 &&  aceCount > 0 ){
+            sum -= 10;
+            aceCount--;
         }
         return sum;
     }
