@@ -16,11 +16,11 @@ public class BlackJackController {
         Users users = new Users(InputView.getUsersName());
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
-        OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDto(dealer));
+        OutputView.printGiveTwoCardsMessage(getUserDtos(users), new PlayerDto(dealer));
         dealer.setCardOpen(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
-        OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDto(dealer));
+        OutputView.printFinalCardsMessage(getUserDtos(users), new PlayerDto(dealer));
         OutputView.printResultMessage(users.getResult(dealer));
     }
 
@@ -29,7 +29,7 @@ public class BlackJackController {
         users.getUsers().forEach(Player::drawRandomTwoCards);
     }
 
-    private List<PlayerDto> getUserDTOs(Users users) {
+    private List<PlayerDto> getUserDtos(Users users) {
         return users.getUsers().stream()
             .map(PlayerDto::new)
             .collect(Collectors.toList());
