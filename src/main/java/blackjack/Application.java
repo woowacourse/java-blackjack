@@ -11,17 +11,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Application {
-
     private static final String AGREE = "y";
     private static final String DECLINE = "n";
 
     public static void main(String[] args) {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
-        List<Player> players = InputView.inputPlayerNames()
-                .stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        List<Player> players = generatePlayers();
         Participants participants = Participants.of(dealer, players);
 
         participants.receiveDefaultCards(cardDeck);
@@ -31,6 +27,13 @@ public class Application {
 
         OutputView.printFinalCardsAndScore(participants);
         OutputView.printFinalResult(dealer, players);
+    }
+
+    private static List<Player> generatePlayers() {
+        return InputView.inputPlayerNames()
+                .stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
