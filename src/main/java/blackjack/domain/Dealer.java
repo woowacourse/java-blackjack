@@ -15,11 +15,6 @@ public class Dealer extends User {
         return this.getScore() < DEALER_REDRAW_STANDARD && this.getScore() != Card.BUST;
     }
 
-    @Override
-    public void hit(Card card) {
-        cards.add(card);
-    }
-
     public boolean isStay() {
         return getScore() > 16;
     }

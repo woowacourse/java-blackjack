@@ -20,7 +20,9 @@ public abstract class User {
         this.cards = new ArrayList<>();
     }
 
-    public abstract void hit(Card card);
+    public void hit(Card card) {
+        cards.add(card);
+    }
 
     public boolean isBlackJack() {
         if (this.cards.stream().anyMatch(card -> card.getScore() == ACE_SCORE) && this.cards.size() == BLACKJACK_SIZE_CONDITION) {

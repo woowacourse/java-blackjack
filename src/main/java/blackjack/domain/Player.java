@@ -33,11 +33,6 @@ public class Player extends User {
         this.isStay = true;
     }
 
-    @Override
-    public void hit(Card card) {
-        cards.add(card);
-    }
-
     public boolean isStay() {
         return this.isStay;
     }
