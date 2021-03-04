@@ -7,8 +7,10 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import com.sun.tools.internal.ws.wsdl.document.Output;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,22 @@ public class BlackjackController {
         List<Gamer> gamers = initGamers(gamerNames);
         Dealer dealer = initDealer();
         OutputView.printGameStartMessage(dealer, gamers);
+
+        for (Gamer gamer : gamers) {
+            while (gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
+                gamer.addCard(deck.draw());
+                OutputView.printPlayerCardInfo(gamer);
+            }
+        }
+
+        while (dealer.canDraw()) {
+            dealer.addCard(deck.draw());
+            OutputView.printDealerOnemoreDrawMessage();
+        }
+
+        OutputView.printPlayersScoreInfo(dealer, gamers);
+        GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
+        OutputView.printGameResult(gameResult);
     }
 
     private List<Gamer> initGamers(String[] gamerNames) {

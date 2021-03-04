@@ -15,6 +15,8 @@ public abstract class Player {
 
     abstract void addCard(Card card);
 
+    abstract boolean canDraw();
+
     public int calculateScore() {
         return cards.calculateScore();
     }

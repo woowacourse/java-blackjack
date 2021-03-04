@@ -16,7 +16,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    void addCard(Card card) {
+    public void addCard(Card card) {
         if (calculateScore() > 16) {
             throw new IllegalArgumentException("[ERROR] 딜러의 점수가 16을 초과하여 카드를 추가할 수 없습니다.");
         }
@@ -33,5 +33,10 @@ public class Dealer extends Player {
             result.get(this).add(resultPerGamer.get(this));
         }
         return GameResult.of(result);
+    }
+
+    @Override
+    public boolean canDraw() {
+        return calculateScore() <= 16;
     }
 }
