@@ -12,18 +12,11 @@ public class Card {
 
     public boolean isAce() {
         CardNumber aceNumber = CardNumber.from("A");
-        if (cardNumber.equals(aceNumber)) {
-            return true;
-        }
-        return false;
+        return cardNumber.equals(aceNumber);
     }
 
     public int getPoint() {
         return this.cardNumber.getValue();
-    }
-
-    public CardNumber getCardNumber() {
-        return cardNumber;
     }
 
     public String getCard() {
