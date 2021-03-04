@@ -11,16 +11,15 @@ public class InputView {
     private static final String EMPTY_NAME_ERROR_MSG = "빈 값은 입력될 수 없습니다.";
     // todo: 도메인에서 검증 여부
     private static final String DEALER_NAME = "딜러";
-    public static final String MORE_DRAW_MSG_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
-    public static final String YES = "y";
-    public static final String NO = "n";
-    public static final String ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT = "%s 또는 %s 로 입력해주세요.";
+    private static final String MORE_DRAW_MSG_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
+    private static final String YES = "y";
+    private static final String NO = "n";
+    private static final String ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT = "%s 또는 %s 로 입력해주세요.";
 
     public static List<String> askPlayersName() {
         System.out.println(ASK_PLAYERS_NAME_MSG);
         List<String> splitNames = trimNames(splitNames(SCANNER.nextLine()));
         validateNames(splitNames);
-        System.out.println(splitNames);
         return splitNames;
     }
 
@@ -57,7 +56,7 @@ public class InputView {
         }
     }
 
-    private static Boolean askMoreDraw(String userName){
+    public static Boolean askMoreDraw(String userName){
         System.out.printf(MORE_DRAW_MSG_FORMAT, userName);
         String yesOrNo = SCANNER.nextLine();
         validateYesOrNo(yesOrNo);
