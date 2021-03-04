@@ -1,6 +1,8 @@
 ## 할 일
 - Controller 구현
 - View 구현
+    - Dealer, Users 이름 함께 출력하기
+    - 추상 클래스에 name 추가하기 
 - 리팩토링
 
 <br/>

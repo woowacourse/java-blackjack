@@ -16,6 +16,15 @@ public class CardsTest {
         assertThat(cards).isInstanceOf(Cards.class);
     }
 
+    @DisplayName("Card 객체 하나를 보여준다.")
+    @Test
+    public void oneCard() {
+        Cards cards = Deck.popTwo();
+        Card card = cards.oneCard();
+
+        assertThat(card).isInstanceOf(Card.class);
+    }
+
     @DisplayName("카드 합계를 구한다.")
     @Test
     public void calculateTotalCards() {

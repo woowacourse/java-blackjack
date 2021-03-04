@@ -1,8 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.User;
-import blackjack.domain.Users;
+import blackjack.domain.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +18,9 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(COMMA, users.showNames()) + "에게 2장의 카드를 나누었습니다.");
     }
 
-    public static void printDealerCard(List<Card> card) {
+    public static void printDealerCard(Card card) {
         System.out.print("딜러" + COLON);
-        printCards(card);
+        System.out.println(card.toString());
     }
 
     public static void printUsersCards(Users users) {
@@ -32,11 +30,12 @@ public class OutputView {
 
     public static void printUserCards(User user) {
         System.out.print(user.getName() + "카드" + COLON);
-        printCards(user.show());
+        printCards(user.showCards());
     }
 
-    private static void printCards(List<Card> cards) {
-        String cardsGroup = cards.stream()
+    private static void printCards(Cards cards) {
+        String cardsGroup = cards.cards()
+                .stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
         System.out.println(cardsGroup);
@@ -47,10 +46,25 @@ public class OutputView {
     }
 
     public static void printDealerDrawable() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public static void printDealerNotDrawable() {
-        System.out.println("\n딜러는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.");
+        System.out.println("\n딜러는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
     }
+
+    public static void printResults(List<Participant> participants) {
+        for (Participant participant : participants) {
+            System.out.println(participant.showCards().cards()
+                    .stream()
+                    .map(Card::toString)
+                    .collect(Collectors.joining(COMMA_WITH_BLANK)) +
+                    " - 결과: " +
+                    participant.showCards().calculateTotalValue());
+        }
+    }
+
+    public static void printResultBoard() {
+    }
+
 }

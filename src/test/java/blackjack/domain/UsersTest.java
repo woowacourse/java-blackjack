@@ -44,8 +44,8 @@ public class UsersTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Users users = new Users(names);
         users.distributeToEachUser();
-        List<List<Card>> cardsGroup = users.showCardsByUsers();
-        assertThat(cardsGroup.stream().allMatch(cards -> cards.size() == 2)).isTrue();
+        List<Cards> cardsGroup = users.showCardsByUsers();
+        assertThat(cardsGroup.stream().allMatch(cards -> cards.cards().size() == 2)).isTrue();
     }
 
     @DisplayName("사용자 이름들을 확인한다.")

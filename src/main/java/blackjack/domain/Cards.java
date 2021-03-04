@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards implements Comparable<Cards> {
+    private static final int FIRST_CARD = 0;
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -13,6 +15,10 @@ public class Cards implements Comparable<Cards> {
 
     public List<Card> cards(){
         return Collections.unmodifiableList(cards);
+    }
+
+    public Card oneCard() {
+        return cards.get(FIRST_CARD);
     }
 
     public int calculateTotalValue() {

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -76,7 +75,7 @@ public class UserTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        List<Card> cards = user.show();
-        assertThat(cards.size()).isEqualTo(2);
+        Cards cards = user.showCards();
+        assertThat(cards.cards().size()).isEqualTo(2);
     }
 }

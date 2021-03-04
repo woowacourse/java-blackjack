@@ -21,9 +21,9 @@ public class Users {
         users.forEach(user -> user.distribute(Deck.popTwo()));
     }
 
-    public List<List<Card>> showCardsByUsers() {
+    public List<Cards> showCardsByUsers() {
         return users.stream()
-                .map(User::show)
+                .map(User::showCards)
                 .collect(Collectors.toList());
     }
 

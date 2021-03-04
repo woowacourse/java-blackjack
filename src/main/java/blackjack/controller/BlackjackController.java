@@ -4,6 +4,7 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -17,13 +18,18 @@ public class BlackjackController {
         users.distributeToEachUser();
 
         OutputView.printDistribute(users);
-        OutputView.printDealerCard(dealer.show());
+        OutputView.printDealerCard(dealer.showOneCard());
         OutputView.printUsersCards(users);
 
         for (User user : users.users()) {
             askForDraw(user);
         }
         isDealerDrawable(dealer);
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(users.users());
+        OutputView.printResults(participants);
+        OutputView.printResultBoard();
     }
 
     private void askForDraw(User user) {
