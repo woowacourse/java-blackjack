@@ -5,46 +5,47 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardHand {
-
-    public static final int THRESHOLD = 21;
-
+    
+    private static final int MAXIMUM_THRESHOLD = 21;
+    private static final int DIFF_OF_ACE_VALUES = 10;
+    
     private final List<Card> cards;
-
+    
     public CardHand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
-
+    
     public boolean lowerThanThreshold() {
         return cards.stream()
-                .mapToInt(Card::getRankValue)
-                .sum() > THRESHOLD;
+                    .mapToInt(Card::getRankValue)
+                    .sum() > MAXIMUM_THRESHOLD;
     }
-
+    
     public void add(Card card) {
         cards.add(card);
     }
-
+    
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
-    public int playerSum() {
-        int result = 0;
-        for (Card card : cards) {
-            result += card.getRankValue();
+    
+    public int sum() {
+        int sum = cards.stream()
+                       .mapToInt(Card::getRankValue)
+                       .sum();
+        
+        if (hasAce() && canChangeAceValueToEleven(sum)) {
+            sum += DIFF_OF_ACE_VALUES;
         }
-        return result;
+        
+        return sum;
     }
-
-    public int dealerSum() {
-        int result = 0;
-        for (Card card : cards) {
-            if (card.isAce()) {
-                result += 11;
-                continue;
-            }
-            result += card.getRankValue();
-        }
-        return result;
+    
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+    
+    private boolean canChangeAceValueToEleven(int sum) {
+        return sum + DIFF_OF_ACE_VALUES <= MAXIMUM_THRESHOLD;
     }
 }
