@@ -5,8 +5,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,7 +65,7 @@ public class DealerTest {
     void calculateMyCardSumWhenAceIsOne() {
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        Assertions.assertThat(dealer.calculate()).isEqualTo(13);
+        assertThat(dealer.calculate()).isEqualTo(13);
     }
 
     @ParameterizedTest
@@ -79,7 +77,7 @@ public class DealerTest {
             final CardNumber cardNumber = CardNumber.valueOf(number);
             dealer.receiveCard(new Card(cardNumber, CardType.CLOVER));
         }
-        Assertions.assertThat(dealer.calculate()).isEqualTo(expected);
+        assertThat(dealer.calculate()).isEqualTo(expected);
     }
 
     @Test
@@ -88,6 +86,15 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"19:true", "21:false"}, delimiter = ':')
+    @DisplayName("딜러가 승패계산을 잘 하는지 확인")
+    void isWinner(final int playerResult, final boolean expected) {
+        dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.NINE, CardType.CLOVER));
+        assertThat(dealer.isWinner(playerResult)).isEqualTo(expected);
     }
 }
