@@ -44,7 +44,7 @@ class DealerTest {
         Player player = new Player();
 
         dealer.draw(deck, 0); // A 스페이드
-        dealer.draw(deck, 49); // J 클로
+        dealer.draw(deck, 49); // J 클로버
 
         player.draw(deck, 26); // A 하트
         player.draw(deck, 46); // 8 클로버
@@ -61,10 +61,10 @@ class DealerTest {
         Player player = new Player();
 
         dealer.draw(deck, 0); // A 스페이드
-        dealer.draw(deck, 49); // J 클로
+        dealer.draw(deck, 49); // J 클로버
 
-        player.draw(deck, 13); // A 다이아몬
-        player.draw(deck, 48); // 10 클로
+        player.draw(deck, 13); // A 다이아몬드
+        player.draw(deck, 48); // 10 클로버
 
         assertThat(dealer.compare(player)).isEqualTo(Result.DRAW);
     }
@@ -81,7 +81,7 @@ class DealerTest {
         dealer.draw(deck, 40); // 2 클로버
 
         player.draw(deck, 0); // A 스페이드
-        player.draw(deck, 49); // J 클로
+        player.draw(deck, 49); // J 클로버
 
         assertThat(dealer.compare(player)).isEqualTo(Result.BLACKJACK_WIN);
     }
