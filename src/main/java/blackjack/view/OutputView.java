@@ -87,4 +87,8 @@ public class OutputView {
             .map(key -> result.get(key.getValue()) + key.getValue())
             .collect(Collectors.joining(" "));
     }
+
+    public static void printExceptionMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
