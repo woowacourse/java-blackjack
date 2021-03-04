@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 public class Player extends User {
     private static final String YES = "y";
@@ -22,6 +23,15 @@ public class Player extends User {
         }
     }
 
+    public void askDraw(String askIfMoreCard, Deck deck) { 
+        if (YES.equals(askIfMoreCard)) {
+            draw(deck.pickSingleCard());
+            return;
+        }
+
+        hand.convertStatusToStay();
+    }
+
     @Override
     public boolean isHit() {
         return hand.getStatus() == HandStatus.HIT;
@@ -30,14 +40,5 @@ public class Player extends User {
     @Override
     public String getName() {
         return name;
-    }
-
-    public void askDraw(String askIfMoreCard, Card card) {
-        if(YES.equals(askIfMoreCard)) {
-            draw(card);
-            return;
-        }
-
-        hand.convertStatusToStay();
     }
 }

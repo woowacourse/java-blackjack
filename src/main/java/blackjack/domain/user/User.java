@@ -28,8 +28,15 @@ public abstract class User {
         return hand.getCards();
     }
 
+    public int getScore() {
+        return hand.getScore();
+    }
+
+    public HandStatus getStatus() {
+        return hand.getStatus();
+    }
+
     public abstract String getName();
 
     public abstract boolean isHit();
-
 }

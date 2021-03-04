@@ -1,10 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.ResultDTO;
-import blackjack.domain.user.User;
+import blackjack.domain.user.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -58,5 +55,11 @@ public class Game {
         players.forEach(player -> resultDTOS.add(player.getResultDTO()));
 
         return resultDTOS;
+    }
+
+    public List<WinningResultDTO> getWinningResultDTOs() {
+        return players.stream().map(player ->
+            new WinningResultDTO(player.getName(), MatchResult.calculateResult(player, dealer)))
+            .collect(Collectors.toList());
     }
 }

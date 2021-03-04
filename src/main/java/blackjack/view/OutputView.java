@@ -1,11 +1,17 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.MatchResult;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
+import blackjack.domain.user.WinningResultDTO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class OutputView {
     private static final String NAME_DELIMITER = ", ";
@@ -64,5 +70,27 @@ public class OutputView {
             resultDTO.getName(),
             makeCardString(resultDTO.getCards()),
             resultDTO.getScore()));
+    }
+
+    public static void printWinningResult(List<WinningResultDTO> winningResultDTOs) {
+        System.out.println("\n## 최종 승패");
+        System.out.println("딜러 : " + calculateDealerResult(winningResultDTOs));
+        winningResultDTOs.forEach(winningResultDto ->
+            System.out.printf("%s: %s%n", winningResultDto.getName(), winningResultDto.getResult().getName()));
+    }
+
+    private static String calculateDealerResult(List<WinningResultDTO> winningResultDTOs) {
+        Map<MatchResult, Long> calculate = calculateMathResultCount(winningResultDTOs);
+
+        return calculate.keySet().stream()
+            .filter(matchResult -> calculate.get(matchResult) > 0)
+            .map(matchResult -> String.format("%d%s", calculate.get(matchResult), matchResult.getReverseName()))
+            .collect(Collectors.joining(" "));
+    }
+
+    public static Map<MatchResult, Long> calculateMathResultCount(List<WinningResultDTO> winningResultDTOs) {
+        return winningResultDTOs.stream()
+            .map(WinningResultDTO::getResult)
+            .collect(groupingBy(Function.identity(), counting()));
     }
 }
