@@ -1,4 +1,6 @@
-package blackjack.domain.user;
+package blackjack.domain.result;
+
+import blackjack.domain.user.User;
 
 public class Result {
 

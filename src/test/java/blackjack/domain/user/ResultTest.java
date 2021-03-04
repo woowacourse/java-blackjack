@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
