@@ -40,7 +40,7 @@ public class Application {
         if (!player.isAbleToReceiveCard()) {
             return;
         }
-        String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
+        String answer = InputView.inputAnswerForAdditionalCardDraw(player);
         if (answer.equals(AGREE)) {
             player.receiveCard(cardDeck.draw());
         }
