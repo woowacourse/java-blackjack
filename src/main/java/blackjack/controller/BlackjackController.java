@@ -14,29 +14,40 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         Players players = new Players(InputView.getPlayerNames());
 
-        BlackjackManager.initGame(players, dealer);
-        OutputView.printInitGame(players.toList());
-        OutputView.printDealerHand(dealer);
-        OutputView.printPlayersHand(players.toList());
-
-        for (Player player : players.toList()) {
-            while (player.isNotBust() && InputView.getHitOrStay(player.getName())) {
-                player.receiveCard(dealer.giveCard());
-                OutputView.printCards(player);
-            }
-            if (!player.isNotBust()) {
-                OutputView.printPlayerBurst(player.getName());
-            }
-            OutputView.printCards(player);
-        }
-
-        while (dealer.getTotalScore() < 17) {
-            dealer.receiveCard(dealer.giveCard());
-            OutputView.printDealerHit();
-        }
+        initGame(dealer, players);
+        playBlackjack(dealer, players);
 
         OutputView.printHandResult(players.toList(), dealer);
         GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
         OutputView.printGameResult(gameResultDto);
+    }
+
+    private void initGame(Dealer dealer, Players players) {
+        BlackjackManager.initGame(players, dealer);
+        OutputView.printInitGame(players.toList());
+        OutputView.printDealerHand(dealer);
+        OutputView.printPlayersHand(players.toList());
+    }
+
+    private void playBlackjack(Dealer dealer, Players players) {
+        for (Player player : players.toList()) {
+            playHit(player, dealer);
+        }
+
+        while (!dealer.isOverLimitScore()) {
+            dealer.receiveCard(dealer.giveCard());
+            OutputView.printDealerHit();
+        }
+    }
+
+    private void playHit(Player player, Dealer dealer) {
+        while (!player.isOverLimitScore() && InputView.getHitOrStay(player.getName())) {
+            player.receiveCard(dealer.giveCard());
+            OutputView.printCards(player);
+        }
+        if (player.isOverLimitScore()) {
+            OutputView.printPlayerBurst(player.getName());
+        }
+        OutputView.printCards(player);
     }
 }
