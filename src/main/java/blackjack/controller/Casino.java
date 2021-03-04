@@ -26,12 +26,8 @@ public class Casino {
         doDealerTurn(game);
 
         OutputView.printFinalCardInfo(dealer, players);
-
-
-
-        OutputView.printWinOrLoseResult(game.getDealerResult(), players.stream()
-                                                                       .map(Player::getGameResult)
-                                                                       .collect(Collectors.toList()));
+        game.fightPlayers();
+        OutputView.printWinOrLoseResult(dealer,players);
     }
 
     private void playerTurn(Game game) {

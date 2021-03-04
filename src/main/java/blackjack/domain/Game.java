@@ -52,12 +52,10 @@ public class Game {
         return cnt;
     }
 
-    public GameResult getDealerResult() {
-        GameResult totalPlayerResult = new GameResult();
+    public void fightPlayers() {
         for (Player player : players) {
-            totalPlayerResult.plus(player.getGameResult());
+            player.fight(dealer);
         }
-        return totalPlayerResult.reverse();
     }
 
     public List<Player> getPlayers() {
