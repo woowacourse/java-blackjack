@@ -38,7 +38,7 @@ public class BlackjackController {
         BlackjackScoreCalculator scoreCalculator = new BlackjackScoreCalculator();
         Dealer dealer = new Dealer(scoreCalculator);
         Gamers gamers = new Gamers(InputView.getGamerNamesFromUser(), scoreCalculator);
-        Game game = new Game(cards, dealer, gamers);
+        Game game = Game.of(cards, dealer, gamers);
 
         List<PlayerDto> playerDtos = DtoAssembler.createPlayerDtos(game.getGamersAsList());
         PlayerDto dealerDto = DtoAssembler.createPlayerDto(dealer);
@@ -55,24 +55,20 @@ public class BlackjackController {
     }
 
     private void drawCardToGamers(Game game) {
-        List<String> names = game.getGamerNames();
-        for (String gamerName : names) {
-            drawCardToGamer(game, gamerName);
-        }
+        game.getGamersAsList()
+            .forEach(gamer -> drawCardToGamer(game, gamer));
     }
 
-    private void drawCardToGamer(Game game, String gamerName) {
-        while (InputView.getYesOrNo(gamerName) && game.drawCardToGamer(gamerName)) {
-            OutputView.printPlayersDeckState(
-                DtoAssembler.createPlayerDto(
-                    game.findGamerByName(gamerName)
-                )
-            );
+    private void drawCardToGamer(Game game, Player player) {
+        while (InputView.getYesOrNo(player.getName()) && game.isPlayerDrawable(player)) {
+            game.drawCardToPlayer(player);
+            OutputView.printPlayersDeckState(DtoAssembler.createPlayerDto(player));
         }
     }
 
     private void drawCardToDealer(Game game) {
-        if (game.drawCardToDealer()) {
+        if (game.isPlayerDrawable(game.getDealer())) {
+            game.drawCardToPlayer(game.getDealer());
             OutputView.dealerDrawsCard();
         }
     }

@@ -18,15 +18,22 @@ public class Game {
     private final Player dealer;
     private final Gamers gamers;
 
-    public Game(Cards cards, Player dealer, Gamers gamers) {
-        initialize(cards, dealer, gamers);
-
+    private Game(Cards cards, Player dealer, Gamers gamers) {
         this.cards = cards;
         this.dealer = dealer;
         this.gamers = gamers;
     }
 
-    private void initialize(Cards cards, Player dealer, Gamers gamers) {
+    public static Game of(Cards cards, Player dealer, Gamers gamers) {
+        initialize(cards, dealer, gamers);
+        return new Game(cards, dealer, gamers);
+    }
+
+    public static Game ofTest(Cards cards, Player dealer, Gamers gamers) {
+        return new Game(cards, dealer, gamers);
+    }
+
+    private static void initialize(Cards cards, Player dealer, Gamers gamers) {
         cards.shuffle();
 
         for (int i = 0; i < CARD_INIT_COUNT; i++) {
@@ -35,21 +42,12 @@ public class Game {
         }
     }
 
-    public boolean drawCardToGamer(String name) {
-        Player gamer = findGamerByName(name);
-
-        gamer.addCardToDeck(cards.next());
-
-        return gamer.getStatus() == Status.HIT;
+    public void drawCardToPlayer(Player player) {
+        player.addCardToDeck(cards.next());
     }
 
-    public boolean drawCardToDealer() {
-        if (dealer.isDrawable()) {
-            dealer.addCardToDeck(cards.next());
-            return true;
-        }
-
-        return false;
+    public boolean isPlayerDrawable(Player player) {
+        return player.isDrawable();
     }
 
     public Map<String, GameResult> getGamerResult() {
@@ -77,9 +75,5 @@ public class Game {
 
     public List<Player> getGamersAsList() {
         return Collections.unmodifiableList(gamers.getGamers());
-    }
-
-    public List<String> getGamerNames() {
-        return gamers.getGamerNames();
     }
 }

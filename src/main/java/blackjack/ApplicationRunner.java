@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
+import blackjack.util.CardFactory;
 
 public class ApplicationRunner {
 
