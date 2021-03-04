@@ -24,6 +24,7 @@ public class OutputView {
         for (User user : users.gerUsers()) {
             System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getScore()) + "\n");
         }
+        System.out.println();
     }
 
     private static String makeResultComment(int score) {
