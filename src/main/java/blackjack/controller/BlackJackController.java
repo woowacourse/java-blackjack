@@ -59,7 +59,7 @@ public class BlackJackController {
         }
     }
 
-    private void playEachPlayer(Player player) {//TODO: y/n 객체화
+    private void playEachPlayer(Player player) {
         while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player))) {
             player.receiveOneCard();
             OutputView.noticePlayerCards(player);

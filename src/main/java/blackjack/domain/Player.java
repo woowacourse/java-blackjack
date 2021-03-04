@@ -3,6 +3,8 @@ package blackjack.domain;
 public class Player extends Gamer {
     public static final int THRESHOLD_OF_BURST = 21;
     private static final String ERROR_MESSAGE_OF_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";
+    private static final String AGREE = "y";
+    private static final String DISAGREE = "n";
 
     private WinnerFlag result;
 
@@ -15,18 +17,15 @@ public class Player extends Gamer {
         return this.calculateJudgingPoint() < THRESHOLD_OF_BURST;
     }
 
-    //TODO: getCards하면 card들만 나오고 여기서 처리
     @Override
     public Boolean continueDraw(String draw) {
-        return isDrawCard(draw);
-    }
-
-    private Boolean isDrawCard(String draw) {
-        String pattern = "[yn]";
-        if (!draw.matches(pattern)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);
+        if(draw.equals(AGREE)){
+            return true;
         }
-        return draw.equals("y");
+        if(draw.equals(DISAGREE)){
+            return false;
+        }
+        throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);
     }
 
     public void matchResult(WinnerFlag result) {
