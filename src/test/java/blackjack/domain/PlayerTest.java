@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,36 +61,25 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("승패 결과")
+    @DisplayName("버스트가 없는 경우 승패 결과")
     void match() {
-        Player pobi = new Player("pobi");
-        Player jason = new Player("jason");
-        Player root = new Player("root");
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.EIGHT),
-                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-                Card.valueOf(Shape.HEART, CardValue.EIGHT),
-                Card.valueOf(Shape.SPADE, CardValue.TEN),
-                Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
-                Card.valueOf(Shape.CLOVER, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
+        assertThat(TestSetUp.WINNER.match(TestSetUp.DEALER)).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.TIE_PLAYER.match(TestSetUp.DEALER)).isEqualTo(ResultType.TIE);
+        assertThat(TestSetUp.LOSER.match(TestSetUp.DEALER)).isEqualTo(ResultType.LOSE);
+    }
 
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+    @Test
+    @DisplayName("버스트인 경우 승패 결과")
+    void matchWithBust() {
+        assertThat(TestSetUp.BUST_PLAYER.match(TestSetUp.DEALER)).isEqualTo(ResultType.LOSE);
+        assertThat(TestSetUp.BUST_PLAYER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.LOSE);
+    }
 
-        pobi.drawCard(deck);
-        pobi.drawCard(deck);
-
-        jason.drawCard(deck);
-        jason.drawCard(deck);
-
-        root.drawCard(deck);
-        root.drawCard(deck);
-
-        assertThat(pobi.match(dealer)).isEqualTo(ResultType.WIN);
-        assertThat(jason.match(dealer)).isEqualTo(ResultType.TIE);
-        assertThat(root.match(dealer)).isEqualTo(ResultType.LOSE);
+    @Test
+    @DisplayName("딜러가 버스트인 경우 승패 결과")
+    void matchWithDealerBust() {
+        assertThat(TestSetUp.WINNER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.LOSER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.BUST_PLAYER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.LOSE);
     }
 }

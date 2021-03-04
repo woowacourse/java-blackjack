@@ -13,8 +13,12 @@ public abstract class BlackJackParticipant {
     private boolean hit;
 
     public BlackJackParticipant(String name) {
+        this(name, new Hand(new ArrayList<>()));
+    }
+
+    public BlackJackParticipant(String name, Hand hand) {
         validateName(name);
-        this.hand = new Hand(new ArrayList<>());
+        this.hand = hand;
         this.hit = true;
         this.name = name;
     }

@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,39 +24,13 @@ public class PlayersTest {
     @Test
     @DisplayName("승패 결과")
     void match() {
-        Player pobi = new Player("pobi");
-        Player jason = new Player("jason");
-        Player root = new Player("root");
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.EIGHT),
-                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-                Card.valueOf(Shape.HEART, CardValue.EIGHT),
-                Card.valueOf(Shape.SPADE, CardValue.TEN),
-                Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
-                Card.valueOf(Shape.CLOVER, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
-
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
-
-        pobi.drawCard(deck);
-        pobi.drawCard(deck);
-
-        jason.drawCard(deck);
-        jason.drawCard(deck);
-
-        root.drawCard(deck);
-        root.drawCard(deck);
-
-        Players players = new Players(Arrays.asList(pobi, jason, root));
-        GameResult gameResult = players.match(dealer);
+        Players players = new Players(Arrays.asList(TestSetUp.WINNER, TestSetUp.LOSER, TestSetUp.TIE_PLAYER));
+        GameResult gameResult = players.match(TestSetUp.DEALER);
 
         Map<Player, ResultType> expected = new HashMap<>();
-        expected.put(pobi, ResultType.WIN);
-        expected.put(jason, ResultType.TIE);
-        expected.put(root, ResultType.LOSE);
+        expected.put(TestSetUp.WINNER, ResultType.WIN);
+        expected.put(TestSetUp.TIE_PLAYER, ResultType.TIE);
+        expected.put(TestSetUp.LOSER, ResultType.LOSE);
 
         assertThat(gameResult).isEqualTo(new GameResult(expected));
     }

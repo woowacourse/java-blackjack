@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
+import blackjack.domain.Hand;
 
 public class Dealer extends BlackJackParticipant {
 
@@ -9,6 +10,9 @@ public class Dealer extends BlackJackParticipant {
 
     public Dealer() {
         super(DEALER_NAME);
+    }
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     @Override

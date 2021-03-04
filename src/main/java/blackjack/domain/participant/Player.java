@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
+import blackjack.domain.Hand;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 
@@ -8,6 +9,9 @@ public class Player extends BlackJackParticipant {
 
     public Player(String name) {
         super(name);
+    }
+    public Player(String name, Hand hand) {
+        super(name, hand);
     }
 
     @Override

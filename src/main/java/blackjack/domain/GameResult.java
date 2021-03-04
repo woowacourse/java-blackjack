@@ -16,11 +16,11 @@ public class GameResult {
 
 
     public Map<ResultType, Integer> getStatistics() {
-        Map<ResultType, Integer> result = new HashMap<>();
-        results.values()
-                .forEach(resultType -> result.put(resultType, result.getOrDefault(resultType, 0) + 1));
+        Map<ResultType, Integer> resultStatistics = new HashMap<>();
+        this.results.values()
+                .forEach(resultType -> resultStatistics.put(resultType, resultStatistics.getOrDefault(resultType, 0) + 1));
 
-        return result;
+        return resultStatistics;
     }
 
     public Map<Player, ResultType> unwrap() {
