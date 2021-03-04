@@ -2,12 +2,13 @@ package blackjack;
 
 public class Player implements User {
 
+    private static final int BLACKJACK_UPPER_BOUND = 21;
     private final Cards cards;
     private final String name;
 
     public Player(String name) {
         this.cards = new Cards();
-        this.name = name;
+        this.name = name.trim();
     }
 
     @Override
@@ -16,8 +17,8 @@ public class Player implements User {
     }
 
     @Override
-    public String showCards() {
-        return this.cards.showCards();
+    public String getCards() {
+        return this.cards.getCards();
     }
 
     @Override
@@ -28,5 +29,9 @@ public class Player implements User {
     @Override
     public int getScore() {
         return cards.getScore();
+    }
+
+    public boolean isNotBust() {
+        return cards.getScore() <= BLACKJACK_UPPER_BOUND;
     }
 }
