@@ -1,34 +1,21 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
 
-    private Cards cards;
-    private List<Result> record;
+    private List<Result> results;
 
     public Dealer() {
-        this.cards = new Cards();
-        this.record = new ArrayList<>();
+        this("null");
     }
 
-    public int draw(Deck deck, int index) {
-        cards.add(deck.getCard(index++));
-        return index;
-    }
-
-    public int initializeDraw(Deck deck, int index) {
-        draw(deck, index++);
-        return draw(deck, index);
-    }
-
-    public Cards cards() {
-        return cards;
+    public Dealer(String name) {
+        super(name);
+        this.results = new ArrayList<>();
     }
 
     public Result compare(Player player) {
@@ -38,31 +25,38 @@ public class Dealer {
             return result;
         }
 
-        result = Result.of(this.cards.getScore(), player.getScore());
-        addRecord(result);
+        result = Result.of(getCards().getScore(), player.getScore());
+        addResult(result);
 
         return result;
     }
 
-    private void addRecord(Result playerResult) {
+    private void addResult(Result playerResult) {
         if (playerResult == Result.DRAW) {
-            record.add(Result.DRAW);
+            results.add(Result.DRAW);
         }
 
         if (playerResult == Result.LOSE) {
-            record.add(Result.WIN);
+            results.add(Result.WIN);
         }
 
-        if (playerResult == Result.WIN) {
-            record.add(Result.LOSE);
+        if (playerResult == Result.WIN || playerResult == Result.BLACKJACK_WIN) {
+            results.add(Result.LOSE);
         }
     }
 
-    public boolean isBlackjack(){
-        return cards.size() == 2 && cards.getScore() == 21;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public List<Result> getRecord(){
-        return record;
+    public boolean canDrawOneMore(int score) {
+        return score <= 16;
     }
+
+    public int findResultCount(Result result) {
+        return (int) results.stream()
+                .filter(r -> r == result)
+                .count();
+    }
+
 }

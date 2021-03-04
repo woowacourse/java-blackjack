@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class DealerTest {
     @Test
     void drawCard() {
         dealer.draw(deck, 0);
-        assertThat(dealer.cards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        assertThat(dealer.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
     }
 
     @DisplayName("승패를 결정한다.")
@@ -170,7 +169,7 @@ class DealerTest {
         dealer.compare(player2);
         dealer.compare(player3);
 
-        assertThat(dealer.getRecord()).isEqualTo(Arrays.asList(Result.LOSE, Result.LOSE, Result.WIN));
+        assertThat(dealer.getResults()).isEqualTo(Arrays.asList(Result.LOSE, Result.LOSE, Result.WIN));
     }
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면, 딜러가 이긴다.")
@@ -188,7 +187,7 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getRecord()).isEqualTo(Collections.singletonList(Result.WIN));
+        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.WIN));
     }
 
     @DisplayName("딜러만 버스트다.")
@@ -205,7 +204,7 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getRecord()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.LOSE));
     }
 
     @DisplayName("플레이어만 버스트다.")
@@ -222,6 +221,6 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getRecord()).isEqualTo(Collections.singletonList(Result.WIN));
+        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.WIN));
     }
 }

@@ -1,35 +1,28 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.Result;
 
-public class Player {
+public class Player extends Participant {
 
-    private Cards cards;
+    private Result result;
 
     public Player() {
-        this.cards = new Cards();
+        this("null");
     }
 
-    public int draw(Deck deck, int index) {
-        cards.add(deck.getCard(index++));
-        return index;
+    public Player(String name) {
+        super(name);
     }
 
-    public int initializeDraw(Deck deck, int index) {
-        draw(deck, index++);
-        return draw(deck, index);
+    public void compareWithDealer(Dealer dealer) {
+        result = dealer.compare(this);
     }
 
-    public Cards cards() {
-        return cards;
+    public Result getResult() {
+        return result;
     }
 
-    public boolean isBlackjack(){
-        return cards.size() == 2 && cards.getScore() == 21;
-    }
-
-    public int getScore() {
-        return cards.getScore();
+    public boolean canDrawOneMore(int score){
+        return score <= 21;
     }
 }

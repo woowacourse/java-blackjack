@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
@@ -25,7 +23,7 @@ class PlayerTest {
     void draw() {
         player.draw(deck, 0);
 
-        assertThat(player.cards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
     }
 
     @DisplayName("게임 시작 시 받은 패를 확인한다.")
@@ -33,7 +31,7 @@ class PlayerTest {
     void initializeDraw() {
         player.initializeDraw(deck, 0);
 
-        assertThat(player.cards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
-        assertThat(player.cards().getCard(1)).isEqualTo(new Card(Type.SPADE, Denomination.TWO));
+        assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        assertThat(player.getCards().getCard(1)).isEqualTo(new Card(Type.SPADE, Denomination.TWO));
     }
 }
