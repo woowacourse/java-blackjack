@@ -13,7 +13,7 @@ public class Application {
         try {
             runBlackjack(blackjackController);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("\n" + e.getMessage());
             runApplication(blackjackController);
         }
     }

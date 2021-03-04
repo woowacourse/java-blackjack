@@ -33,8 +33,4 @@ public class Deck {
     public Card pickSingleCard() {
         return cards.pop();
     }
-
-    public List<Card> getCards() {
-        return cards;
-    }
 }

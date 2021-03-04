@@ -17,26 +17,26 @@ public class BlackjackController {
         printResults(game);
     }
 
-    private void printResults(Game game) {
-        OutputView.printUserResult(game.getResultDTOs());
-        OutputView.printWinningResult(game.getWinningResultDTOs());
+    private void initCards(Deck deck, Game game) {
+        game.drawInitialCards(deck);
+        OutputView.printInitialCards(game.getDealer(), game.getPlayers());
     }
 
     private void drawCards(Deck deck, Game game) {
         game.getPlayers().forEach(player -> getAdditionalCard((Player) player, deck));
-        OutputView.printDealerDraw(game.askDrawToDealer(deck));
-    }
-
-    private void initCards(Deck deck, Game game) {
-        game.initialCards(deck);
-        OutputView.printInitialCards(game.getDealer(), game.getPlayers());
+        OutputView.printDealerDraw(game.addCardToDealer(deck));
     }
 
     private void getAdditionalCard(Player player, Deck deck) {
-        while(player.isHit()) {
+        while (player.isHit()) {
             player.askDraw(InputView.askIfMoreCard(player), deck);
             OutputView.printPlayerCard(player);
         }
+    }
+
+    private void printResults(Game game) {
+        OutputView.printUserResult(game.getResultDTOs());
+        OutputView.printWinningResult(game.getWinningResultDTOs());
     }
 }
 

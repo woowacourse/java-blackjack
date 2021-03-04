@@ -17,11 +17,7 @@ public abstract class User {
     }
 
     public ResultDTO getResultDTO() {
-        String name = getName();
-        List<Card> cards = hand.getCards();
-        int score = hand.getScore();
-
-        return new ResultDTO(name, cards, score);
+        return new ResultDTO(getName(), getCards(), getScore());
     }
 
     public List<Card> getCards() {

@@ -2,10 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.*;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
-import javax.xml.transform.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,28 +22,20 @@ public class Game {
             .collect(Collectors.toList());
     }
 
-    public void initialCards(Deck deck) {
+    public void drawInitialCards(Deck deck) {
         dealer.initialHands(deck.pickInitialCards());
         players.forEach(player -> player.initialHands(deck.pickInitialCards()));
     }
 
-    public boolean askDrawToDealer(Deck deck) {
-        if(!dealer.isHit()) {
+    public boolean addCardToDealer(Deck deck) {
+        if (!dealer.isHit()) {
             return false;
         }
 
-        while(dealer.isHit()) {
+        while (dealer.isHit()) {
             dealer.draw(deck.pickSingleCard());
         }
         return true;
-    }
-
-    public User getDealer() {
-        return dealer;
-    }
-
-    public List<User> getPlayers() {
-        return players;
     }
 
     public List<ResultDTO> getResultDTOs() {
@@ -61,5 +50,13 @@ public class Game {
         return players.stream().map(player ->
             new WinningResultDTO(player.getName(), MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
+    }
+
+    public User getDealer() {
+        return dealer;
+    }
+
+    public List<User> getPlayers() {
+        return players;
     }
 }

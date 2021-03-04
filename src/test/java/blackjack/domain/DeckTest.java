@@ -8,10 +8,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckTest {
 
-    @DisplayName("카드 덱 52개 생성 성공")
+    @DisplayName("카드 덱 2개 뽑기")
     @Test
-    public void new_deckCreate_valid() {
+    public void pickInitialCards() {
         Deck deck = new Deck();
-        assertThat(deck.getCards().size()).isEqualTo(52);
+        assertThat(deck.pickInitialCards().size()).isEqualTo(2);
+    }
+
+    @DisplayName("카드 덱 1개 뽑기")
+    @Test
+    public void pickSingleCard() {
+        Deck deck = new Deck();
+        assertThat(deck.pickSingleCard()).isNotNull();
     }
 }

@@ -6,6 +6,7 @@ import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
 import blackjack.domain.user.WinningResultDTO;
 
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -14,19 +15,19 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.*;
 
 public class OutputView {
-    private static final String NAME_DELIMITER = ", ";
+    private static final String COMMA = ", ";
     public static final int DEALER_OPEN_CARD_INDEX = 0;
 
     public static void printInitialCards(User dealer, List<User> players) {
         printIntroMessage(dealer, players);
         printUserCard(dealer, players);
-        printLine();
+        System.out.println("");
     }
 
     private static void printIntroMessage(User dealer, List<User> players) {
         String playerNames = players.stream()
             .map(User::getName)
-            .collect(Collectors.joining(NAME_DELIMITER));
+            .collect(Collectors.joining(COMMA));
         System.out.printf("%n%s와 %s에게 2장의 나누었습니다.%n", dealer.getName(), playerNames);
     }
 
@@ -43,14 +44,13 @@ public class OutputView {
 
     public static void printPlayerCard(User player) {
         String cardString = makeCardString(player.getCards());
-
         System.out.printf("%s의 카드: %s%n", player.getName(), cardString);
     }
 
     private static String makeCardString(List<Card> cards) {
         return cards.stream()
             .map(card -> String.format("%s%s", card.getDenomination().getName(), card.getSuit().getName()))
-            .collect(Collectors.joining(NAME_DELIMITER));
+            .collect(Collectors.joining(COMMA));
     }
 
     public static void printDealerDraw(boolean hasDrawn) {
@@ -62,15 +62,15 @@ public class OutputView {
         System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.\n");
     }
 
-    public static void printLine() {
-        System.out.println();
+    public static void printUserResult(List<ResultDTO> resultDTOS) {
+        resultDTOS.forEach(OutputView::printResultDto);
     }
 
-    public static void printUserResult(List<ResultDTO> resultDTOS) {
-        resultDTOS.forEach(resultDTO -> System.out.printf("%s 카드 : %s - 결과: %d%n",
+    private static PrintStream printResultDto(ResultDTO resultDTO) {
+        return System.out.printf("%s 카드 : %s - 결과: %d%n",
             resultDTO.getName(),
             makeCardString(resultDTO.getCards()),
-            resultDTO.getScore()));
+            resultDTO.getScore());
     }
 
     public static void printWinningResult(List<WinningResultDTO> winningResultDTOs) {
@@ -81,7 +81,7 @@ public class OutputView {
     }
 
     private static String calculateDealerResult(List<WinningResultDTO> winningResultDTOs) {
-        Map<MatchResult, Long> calculate = calculateMathResultCount(winningResultDTOs);
+        Map<MatchResult, Long> calculate = countEachResults(winningResultDTOs);
 
         return calculate.keySet().stream()
             .filter(matchResult -> calculate.get(matchResult) > 0)
@@ -89,7 +89,7 @@ public class OutputView {
             .collect(Collectors.joining(" "));
     }
 
-    public static Map<MatchResult, Long> calculateMathResultCount(List<WinningResultDTO> winningResultDTOs) {
+    public static Map<MatchResult, Long> countEachResults(List<WinningResultDTO> winningResultDTOs) {
         return winningResultDTOs.stream()
             .map(WinningResultDTO::getResult)
             .collect(groupingBy(Function.identity(), counting()));
