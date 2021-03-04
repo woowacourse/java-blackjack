@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -15,10 +14,14 @@ import java.util.stream.Collectors;
 public class Players {
 
     private static final String DELIMITER = ",";
-    private final Queue<Player> players;
+//    private final Queue<Player> playersList;
+    private final List<Player> playersList;
 
+//    public Players(List<Player> players) {
+//        this.players = new LinkedList<>(players);
+//    }
     public Players(List<Player> players) {
-        this.players = new LinkedList<>(players);
+        this.playersList = new ArrayList<>(players);
     }
 
     public static Players valueOf(String unParsedNames) {
@@ -37,24 +40,24 @@ public class Players {
 
     public GameResult match(Dealer dealer) {
         Map<Player, ResultType> result = new HashMap<>();
-        players.stream().forEach(player -> result.put(player, player.match(dealer)));
+        playersList.forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);
     }
 
-    public Player pop() {
-        return players.poll();
-    }
-
-    public void push(Player player) {
-        players.add(player);
-    }
+//    public Player pop() {
+//        return playersList.poll();
+//    }
+//
+//    public void push(Player player) {
+//        playersList.add(player);
+//    }
 
     public boolean isEmpty() {
-        return players.isEmpty();
+        return playersList.isEmpty();
     }
 
     public List<Player> unwrap() {
-        return new ArrayList<>(players);
+        return new ArrayList<>(playersList);
     }
 }
