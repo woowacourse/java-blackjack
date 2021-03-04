@@ -12,7 +12,6 @@ public class CardTest {
         Card card2 = Card.of(Denomination.FIVE, Shape.CLUBS);
 
         assertThat(card1).isEqualTo(card2);
-        assertThat(card1).isSameAs(card2);
     }
 
 }

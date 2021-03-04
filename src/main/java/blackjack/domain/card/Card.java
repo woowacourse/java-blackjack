@@ -18,23 +18,7 @@ public class Card {
     }
 
     public static Card of(Denomination denomination, Shape shape) {
-        return CardCache.cache
-            .stream()
-            .filter(card -> card.denomination == denomination && card.shape == shape)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 카드입니다."));
-    }
-
-    private static class CardCache {
-
-        static final List<Card> cache;
-
-        static {
-            cache = Arrays.stream(Denomination.values())
-                .flatMap(denomination -> Arrays.stream(Shape.values())
-                    .map(shape -> new Card(denomination, shape)))
-                .collect(Collectors.toList());
-        }
+        return new Card(denomination, shape);
     }
 
     public int getScore() {
