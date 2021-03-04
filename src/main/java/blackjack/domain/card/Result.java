@@ -30,14 +30,22 @@ public enum Result {
     }
 
     public static Result of(int dealerScore, int playerScore) {
-        if (dealerScore < playerScore) {
+        if (isBurst(dealerScore) && !isBurst(playerScore)) {
             return Result.WIN;
+        }
+
+        if (dealerScore > playerScore || isBurst(playerScore)) {
+            return Result.LOSE;
         }
 
         if (dealerScore == playerScore) {
             return Result.DRAW;
         }
 
-        return Result.LOSE;
+        return Result.WIN;
+    }
+
+    public static boolean isBurst(int score) {
+        return score > 21;
     }
 }

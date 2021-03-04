@@ -48,7 +48,9 @@ public class Dealer {
             record.add(Result.WIN);
         }
 
-        record.add(Result.LOSE);
+        if (playerResult == Result.WIN) {
+            record.add(Result.LOSE);
+        }
     }
 
     public boolean isBlackjack(){
