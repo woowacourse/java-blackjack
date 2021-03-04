@@ -11,18 +11,17 @@ import java.util.stream.Collectors;
 public class OutputView {
 	public static void printInitialHands(final Dealer dealer, final List<Participant> players) {
 		final StringBuilder stringBuilder = new StringBuilder();
-
-		stringBuilder.append(dealer.getName())
-				.append("와 ")
-				.append(concatenatePlayerNames(players))
-				.append("에게 2장의 카드를 나누었습니다.")
-				.append(System.lineSeparator());
+		stringBuilder.append(makeCardDistributionMessage(dealer, players));
 
 		stringBuilder.append(makeCardSummary(dealer));
 		for (final Participant participant : players) {
 			stringBuilder.append(makeCardSummary(participant));
 		}
 		System.out.println(stringBuilder.toString());
+	}
+
+	private static String makeCardDistributionMessage(Dealer dealer, List<Participant> players) {
+		return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), concatenatePlayerNames(players));
 	}
 
 	public static void printPlayerHand(final Participant participant) {
