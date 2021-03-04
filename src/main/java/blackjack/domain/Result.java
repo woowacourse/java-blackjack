@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain;
 
 public enum Result {
     NONE("None"),
