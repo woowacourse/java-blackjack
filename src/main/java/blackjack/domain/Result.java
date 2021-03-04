@@ -11,11 +11,11 @@ public enum Result {
     LOSE("패", -1);
 
     private final String result;
-    private final int compareResult;
+    private final int compareValue;
 
-    Result(String result, int compareResult) {
+    Result(String result, int compareValue) {
         this.result = result;
-        this.compareResult = compareResult;
+        this.compareValue = compareValue;
     }
 
     public static Result decide(Dealer dealer, Player player) {
@@ -29,7 +29,7 @@ public enum Result {
             return LOSE;
         }
         return Arrays.stream(values())
-                .filter(value -> value.compareResult == player.cards.compareTo(dealer.cards))
+                .filter(value -> value.compareValue == player.cards.compareTo(dealer.cards))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
