@@ -4,6 +4,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
+import blackjack.dto.DealerResultDto;
 import blackjack.dto.ScoreResultDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -127,6 +128,29 @@ class DealerTest {
                 () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.LOSE),
                 () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
                 () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.WIN)
+        );
+    }
+
+    @DisplayName("Dealer의 승패 결과를 반환한다")
+    @Test
+    void test_get_dealer_result() {
+        //given
+        List<Player> players = Arrays.asList(
+                new Player("pobi", cards -> 21),
+                new Player("woni", cards -> 18),
+                new Player("brown", cards -> 20)
+        );
+        Dealer dealer = new Dealer(cards -> 20);
+
+        //when
+        DealerResultDto dealerResult = dealer.getDealerResult(players);
+
+        //then
+        assertAll(
+                () -> assertThat(dealerResult.getName()).isEqualTo(dealer.getName()),
+                () -> assertThat(dealerResult.getResult().get(GameResult.WIN)).isEqualTo(1L),
+                () -> assertThat(dealerResult.getResult().get(GameResult.LOSE)).isEqualTo(1L),
+                () -> assertThat(dealerResult.getResult().get(GameResult.DRAW)).isEqualTo(1L)
         );
     }
 }
