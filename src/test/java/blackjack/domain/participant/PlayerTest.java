@@ -47,53 +47,68 @@ public class PlayerTest {
         );
     }
 
-    @ParameterizedTest(name = "{displayName}")
     @DisplayName("ACE를 1로 했을 때 카드 합이 21 미만일 경우 true, 그 이상인 경우 false를 반환한다.")
+    @ParameterizedTest(name = "{displayName}")
     @MethodSource("generateData")
     public void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
         Cards cards = new Cards(inputCards);
         Player player = new Player("jason");
+
         player.receiveCards(cards);
-        assertThat(player.isAbleToReceiveCard()).isEqualTo(result);
+        boolean isAbleToReceiveCard = player.isAbleToReceiveCard();
+
+        assertThat(isAbleToReceiveCard).isEqualTo(result);
     }
 
-    @Test
     @DisplayName("둘 다 21을 초과하지 않을 경우, 플레이어가 딜러보다 점가 높아야 이긴다.")
+    @Test
     public void judgeResult_PlayerAndDealerScoreUnder21_PlayerWin() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
+
         player.receiveCards(new Cards(CARDS_SCORE_20));
         dealer.receiveCards(new Cards(CARDS_SCORE_19));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
+        Result result = player.judgeResult(dealer);
+
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
-    @Test
     @DisplayName("둘 다 21을 초과하지 않을 경우, 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다.")
+    @Test
     public void judgeResult_PlayerAndDealerScoreUnder21_PlayerLose() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
+
         player.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+        Result result = player.judgeResult(dealer);
+
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
-    @Test
     @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하면 플레이어 패배")
+    @Test
     public void judgeResult_PlayerAndDealerScoreOver21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
+
         player.receiveCards(new Cards(CARDS_SCORE_22));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+        Result result = player.judgeResult(dealer);
+
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
-    @Test
     @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하지 않으면 플레이어 승")
+    @Test
     public void judgeResult_DealerScoreOver21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
+
         player.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
+        Result result = player.judgeResult(dealer);
+
+        assertThat(result).isEqualTo(Result.WIN);
     }
 }
