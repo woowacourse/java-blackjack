@@ -14,7 +14,7 @@ public class PlayerTest {
     @DisplayName("플레이어 카드 뽑기")
     void drawCard() {
         Player player = Player.from("pobi");
-        Card card = new Card(Suit.CLOVER, Rank.ONE);
+        Card card = new Card(Suit.CLOVER, Rank.ACE);
 
         player.receiveCard(card);
 
