@@ -37,7 +37,7 @@ public class DealerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(dealer.isNotBust()).isTrue();
+        assertThat(dealer.isAbleToHit()).isTrue();
     }
 
     @DisplayName("카드 합계가 17 이상인지 확인한다. - 카드를 더 받을 수 없다.")
@@ -50,7 +50,7 @@ public class DealerTest {
                 new Card(Shape.SPACE, Value.QUEEN)
         )));
 
-        assertThat(dealer.isNotBust()).isFalse();
+        assertThat(dealer.isAbleToHit()).isFalse();
     }
 
     @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")

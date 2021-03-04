@@ -3,8 +3,6 @@ package blackjack.domain;
 import java.util.ArrayList;
 
 public abstract class User {
-    private static final int BUST_VALUE = 21;
-
     protected final Cards cards;
     protected final Name name;
 
@@ -21,8 +19,8 @@ public abstract class User {
         this.cards.combine(cards);
     }
 
-    public boolean isNotBust() {
-        return cards.calculateTotalValue() <= BUST_VALUE;
+    public boolean isAbleToHit() {
+        return !cards.isBust();
     }
 
     public void hit() {

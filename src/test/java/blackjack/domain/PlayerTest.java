@@ -38,7 +38,7 @@ public class PlayerTest {
                 new Card(Shape.DIAMOND, Value.JACK)
         )));
 
-        assertThat(player.isNotBust()).isTrue();
+        assertThat(player.isAbleToHit()).isTrue();
     }
 
     @DisplayName("카드 합계가 21 초과인지 확인한다. - 카드를 더 받을 수 없다.")
@@ -51,7 +51,7 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.QUEEN)
         )));
 
-        assertThat(player.isNotBust()).isFalse();
+        assertThat(player.isAbleToHit()).isFalse();
     }
 
     @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")

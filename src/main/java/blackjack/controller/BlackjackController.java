@@ -58,7 +58,7 @@ public class BlackjackController {
     }
 
     private boolean isAbleToAskHit(Player player) {
-        if (player.isNotBust()) {
+        if (player.isAbleToHit()) {
             OutputView.printWantHit(player);
             return true;
         }
