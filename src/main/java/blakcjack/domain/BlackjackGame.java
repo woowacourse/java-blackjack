@@ -1,6 +1,5 @@
 package blakcjack.domain;
 
-import blakcjack.View.OutputView;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;

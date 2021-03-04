@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Dealer extends Participant {
+	public static final String DEALER_NAME = "딜러";
 	private static final int DEALER_MAXIMUM_DRAW_CRITERION = 17;
 	private static final int FIRST_CARD_POSITION = 0;
-	public static final String DEALER_NAME = "딜러";
 
 	public Dealer() {
 		super(new Name(DEALER_NAME));

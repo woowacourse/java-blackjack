@@ -11,12 +11,11 @@ import blakcjack.domain.participant.Player;
 
 import java.util.List;
 
+import static blakcjack.View.InputView.YES;
 import static blakcjack.View.InputView.takePlayerNamesInput;
 import static blakcjack.View.OutputView.printInitialHands;
 
 public class BlackJackController {
-	private static final String YES = "y";
-
 	public void run() {
 		final List<String> playerNames = takePlayerNamesInput();
 		final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
