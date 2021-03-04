@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.player.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.PlayerDto;
+import blackjack.domain.player.PlayerDTO;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
 import blackjack.view.InputView;
@@ -16,11 +16,11 @@ public class BlackJackController {
         Users users = new Users(InputView.getUsersName());
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
-        OutputView.printGiveTwoCardsMessage(getUserDtos(users), new PlayerDto(dealer));
+        OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
         dealer.setCardOpen(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
-        OutputView.printFinalCardsMessage(getUserDtos(users), new PlayerDto(dealer));
+        OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
         OutputView.printResultMessage(users.getResult(dealer));
     }
 
@@ -29,9 +29,9 @@ public class BlackJackController {
         users.getUsers().forEach(Player::drawRandomTwoCards);
     }
 
-    private List<PlayerDto> getUserDtos(Users users) {
+    private List<PlayerDTO> getUserDTOs(Users users) {
         return users.getUsers().stream()
-            .map(PlayerDto::new)
+            .map(PlayerDTO::new)
             .collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public class BlackJackController {
     }
 
     private void askDrawContinue(User user) {
-        String yesOrNo = InputView.getYesOrNo(new PlayerDto(user));
+        String yesOrNo = InputView.getYesOrNo(new PlayerDTO(user));
         if (user.isDrawContinue(yesOrNo)) {
             user.drawRandomOneCard();
         }
@@ -51,7 +51,7 @@ public class BlackJackController {
 
     private void printCardsWhenDraw(User user) {
         if (!user.isDrawStop()) {
-            OutputView.printUserInitialCards(new PlayerDto(user));
+            OutputView.printUserInitialCards(new PlayerDTO(user));
         }
     }
 

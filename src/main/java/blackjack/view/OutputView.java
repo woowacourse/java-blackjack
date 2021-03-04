@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
-import blackjack.domain.player.PlayerDto;
+import blackjack.domain.player.PlayerDTO;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,37 +12,37 @@ public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String DELIMITER = ", ";
 
-    private static void printUserCards(PlayerDto playerDto) {
-        System.out.print(playerDto.getName() + "카드: ");
+    private static void printUserCards(PlayerDTO playerDTO) {
+        System.out.print(playerDTO.getName() + "카드: ");
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        playerDto.getCards().forEach(card -> stringJoiner.add(card.toString()));
+        playerDTO.getCards().forEach(card -> stringJoiner.add(card.toString()));
         System.out.print(stringJoiner.toString());
     }
 
-    public static void printUserInitialCards(PlayerDto playerDto) {
-        printUserCards(playerDto);
+    public static void printUserInitialCards(PlayerDTO playerDTO) {
+        printUserCards(playerDTO);
         System.out.println();
     }
 
-    public static void printGiveTwoCardsMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printGiveTwoCardsMessage(List<PlayerDTO> playerDTOs, PlayerDTO dealerDTO) {
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        playerDtos.forEach(playerDto -> stringJoiner.add(playerDto.getName()));
+        playerDTOs.forEach(playerDTO -> stringJoiner.add(playerDTO.getName()));
         System.out.println("딜러와 " + stringJoiner.toString() + "에게 2장을 나누었습니다.");
-        printUserInitialCards(dealerDto);
-        playerDtos.forEach(OutputView::printUserInitialCards);
+        printUserInitialCards(dealerDTO);
+        playerDTOs.forEach(OutputView::printUserInitialCards);
         System.out.println();
     }
 
-    private static void printUserFinalCards(PlayerDto playerDto) {
-        printUserCards(playerDto);
-        System.out.println(" - 결과: " + playerDto.getValue());
+    private static void printUserFinalCards(PlayerDTO playerDTO) {
+        printUserCards(playerDTO);
+        System.out.println(" - 결과: " + playerDTO.getValue());
     }
 
-    public static void printFinalCardsMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+    public static void printFinalCardsMessage(List<PlayerDTO> playerDTOs, PlayerDTO dealerDTO) {
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        playerDtos.forEach(playerDto -> stringJoiner.add(playerDto.getName()));
-        printUserFinalCards(dealerDto);
-        playerDtos.forEach(OutputView::printUserFinalCards);
+        playerDTOs.forEach(playerDTO -> stringJoiner.add(playerDTO.getName()));
+        printUserFinalCards(dealerDTO);
+        playerDTOs.forEach(OutputView::printUserFinalCards);
         System.out.println();
     }
 
