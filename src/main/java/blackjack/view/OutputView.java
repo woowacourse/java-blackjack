@@ -1,10 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -41,5 +43,10 @@ public class OutputView {
         String dealerStatus = String.format(PARTICIPANT_STATUS_MESSAGE, dealerName, dealerCardStatus.stream().collect(Collectors.joining(",")));
         System.out.println(dealerStatus);
         playerStatusDto.forEach(dto -> System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, dto.getPlayerName(), dto.getPlayerCardStatus().stream().collect(Collectors.joining(", ")))));
+    }
+
+    public static void showOutComes(Map<String, List<Outcome>> outcomes) {
+        System.out.println("## 최종 승패");
+        outcomes.keySet().forEach(name -> System.out.println(String.format("%s : %s", name, outcomes.get(name))));
     }
 }

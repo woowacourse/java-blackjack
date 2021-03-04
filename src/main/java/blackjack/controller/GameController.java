@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Result;
 import blackjack.domain.Round;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
@@ -33,6 +34,7 @@ public class GameController {
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
         OutputView.showFinalStatus(new RoundStatusDto(round.getDealerName(), round.getDealerCardStatus(), round.getPlayers().stream().map(this::getPlayerStatusDto).collect(Collectors.toList()), round.getDealer().calculateScore(21)));
+        OutputView.showOutComes(Result.finishGame(round.getDealer(), round.getPlayers()));
     }
 
     private PlayerStatusDto getPlayerStatusDto(Player player) {

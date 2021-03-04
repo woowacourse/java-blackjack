@@ -41,7 +41,7 @@ class ResultTest {
         players.addAll(Arrays.asList(player, player2));
     }
 
-    @DisplayName("Result객체 정상 생성 테스트")
+    @DisplayName("Result 객체 정상 생성 테스트")
     @Test
     void result_generate_test() {
         Result result = new Result();
@@ -53,6 +53,5 @@ class ResultTest {
 
         Assertions.assertThat(outcomes).containsExactly(Outcome.WIN);
         Assertions.assertThat(secondOutcomes).containsExactly(Outcome.LOOSE);
-
     }
 }
