@@ -4,21 +4,16 @@ import blackjack.domain.Card;
 import blackjack.domain.Denominations;
 import blackjack.domain.Suits;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class FixedCardDeck implements CardDeck {
     private final Queue<Card> cards;
 
     public FixedCardDeck() {
         cards = new LinkedList<>();
-        for (Suits suit : Suits.values()) {
-            for (Denominations denomination : Denominations.values()) {
-                cards.offer(Card.from(denomination.getName() + suit.getName()));
-            }
-        }
+        Arrays.stream(Suits.values())
+                .forEach(suit -> Arrays.stream(Denominations.values())
+                        .forEach(denomination -> cards.offer(Card.from(denomination.getName() + suit.getName()))));
     }
 
     @Override

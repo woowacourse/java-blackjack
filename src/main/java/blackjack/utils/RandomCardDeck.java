@@ -11,11 +11,9 @@ public class RandomCardDeck implements CardDeck {
 
     public RandomCardDeck() {
         LinkedList<Card> cardsValue = new LinkedList<>();
-        for (Suits suit : Suits.values()) {
-            for (Denominations denomination : Denominations.values()) {
-                cardsValue.add(Card.from(denomination.getName() + suit.getName()));
-            }
-        }
+        Arrays.stream(Suits.values())
+                .forEach(suit -> Arrays.stream(Denominations.values())
+                    .forEach(denomination -> cardsValue.add(Card.from(denomination.getName() + suit.getName()))));
         Collections.shuffle(cardsValue);
         this.cards = cardsValue;
     }

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +15,12 @@ public class Card {
 
     static {
         cards = new HashMap<>(CARDS_CAPACITY);
-        for (Suits suit : Suits.values()) {
-            for (Denominations denomination : Denominations.values()) {
-                String key = denomination.getName() + suit.getName();
-                cards.put(key, new Card(suit, denomination));
-            }
-        }
+        Arrays.stream(Suits.values())
+                .forEach(suit -> Arrays.stream(Denominations.values())
+                        .forEach(denomination -> {
+                            String key = denomination.getName() + suit.getName();
+                            cards.put(key, new Card(suit, denomination));
+                        }));
     }
 
     private Card(Suits suit, Denominations denomination) {
