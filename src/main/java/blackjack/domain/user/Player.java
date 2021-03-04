@@ -13,7 +13,7 @@ public class Player extends User {
 
     @Override
     public boolean isAvailableDraw() {
-        return !super.isBurstCondition() && super.getPoint() < UserDeck.BLACK_JACK_NUMBER;
+        return super.checkDrawRule(UserDeck.BLACK_JACK_NUMBER);
     }
 
     public OneGameResult betResult(Dealer dealer) {

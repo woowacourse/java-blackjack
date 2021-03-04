@@ -17,6 +17,10 @@ public abstract class User {
         userDeck.add(card);
     }
 
+    public boolean checkDrawRule(int userCriteria) {
+        return !isBurstCondition() && (getPoint() <= userCriteria);
+    }
+
     public boolean isBurstCondition() {
         return this.getPoint() == UserDeck.BURST_CONDITION;
     }
