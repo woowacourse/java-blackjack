@@ -17,8 +17,12 @@ public class BlackJackController {
         OutputView.showInitiate(dealer, players);
         processPlayers(entireCardDeck, players);
         processDealer(entireCardDeck, dealer);
-        OutputView.showScoreResult(dealer, players);
+        terminateGame(dealer, players);
+    }
+
+    private void terminateGame(Dealer dealer, Players players) {
         DealerResult dealerResult = new DealerResult(dealer, players.getPlayers());
+        OutputView.showScoreResult(dealer, players);
         OutputView.showDealerTable(dealerResult);
         OutputView.showIndividualTable(dealer, players);
     }

@@ -24,6 +24,7 @@ public class OutputView {
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_RESULT = "## 최종 승패";
     private static final String BURST_MESSAGE = "BURST";
+    private static final int DEALER_SHOW_CARD_INDEX = 1;
 
 
     private OutputView() {
@@ -35,7 +36,10 @@ public class OutputView {
     }
 
     private static void showCards(Dealer dealer, Players players) {
-        String dealerCard = dealer.getUserDeck().getUserCards().get(1).getCard();
+        String dealerCard = dealer.getUserDeck()
+            .getUserCards()
+            .get(DEALER_SHOW_CARD_INDEX)
+            .getCard();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getPlayers()) {
             showPlayerCard(player);
