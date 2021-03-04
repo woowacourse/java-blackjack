@@ -31,7 +31,7 @@ public class PlayerTest {
     void checkReceiveCard() {
         Card card = new Card(CardPattern.CLOVER, CardNumber.TEN);
         player.receiveCard(card);
-        assertEquals(player.calculateJudgingPoint(), 10);
+        assertEquals(player.makeJudgingPoint(), 10);
     }
 
 
@@ -57,7 +57,7 @@ public class PlayerTest {
     void aceCardScoring() {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
-        assertEquals(player.calculateMaximumPoint(), 21);
+        assertEquals(player.makeMaximumPoint(), 21);
     }
 
     @Test
@@ -66,6 +66,6 @@ public class PlayerTest {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
-        assertEquals(player.calculateMaximumPoint(), 21);
+        assertEquals(player.makeMaximumPoint(), 21);
     }
 }

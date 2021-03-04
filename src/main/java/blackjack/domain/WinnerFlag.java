@@ -12,7 +12,7 @@ public enum WinnerFlag {
     }
 
     public static void calculateResult(Dealer dealer, Player player) {
-        int playerResult = player.calculateMaximumPoint();
+        int playerResult = player.makeMaximumPoint();
         if (dealer.isBurst() && player.isBurst() || dealer.isSameThan(playerResult)) {
             player.matchResult(DRAW);
         }

@@ -8,17 +8,16 @@ import static blackjack.domain.Player.THRESHOLD_OF_BURST;
 
 public abstract class Gamer {
     public static final String COMMA_DELIMITER = ",";
-    private static final int MAXIMUM_TO_ACE_IS_ELEVEN = 11;
-    private static final int MAKING_ACE_ELEVEN = 10;
     private static final String ERROR_MESSAGE_WITH_SPACE = "이름에 공백이 포함됩니다.";
     private static final String SPACE = " ";
 
     private final String name;
-    private final List<Card> cards = new ArrayList<>();//TODO: cards 분리
+    protected final Cards cards;
 
     protected Gamer(String name) {
         validateSpace(name);
         this.name = name;
+        cards = new Cards();
     }
 
     private void validateSpace(String name) {
@@ -28,30 +27,7 @@ public abstract class Gamer {
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
-    }
-
-    protected int calculateJudgingPoint() {
-        int point = 0;
-        for (Card card : cards) {
-            point = card.addPoint(point);
-        }
-        return point;
-    }
-
-    public int calculateMaximumPoint() {
-        int point = 0;
-        boolean havingAce = false;
-        for (Card card : cards) {
-            point = card.addPoint(point);
-            if (card.isAce()) {
-                havingAce = true;
-            }
-        }
-        if (point <= MAXIMUM_TO_ACE_IS_ELEVEN && havingAce) {
-            point += MAKING_ACE_ELEVEN;
-        }
-        return point;
+        cards.addNewCard(card);
     }
 
     public void receiveOneCard() {
@@ -59,19 +35,27 @@ public abstract class Gamer {
     }
 
     public boolean isBurst() {
-        return calculateMaximumPoint() > THRESHOLD_OF_BURST;
+        return cards.calculateMaximumPoint() > THRESHOLD_OF_BURST;
     }
 
     public abstract boolean canReceiveCard();
 
     public abstract Boolean continueDraw(String draw);
 
+    public int makeJudgingPoint() {
+        return cards.calculateJudgingPoint();
+    }
+
+    public int makeMaximumPoint() {
+        return cards.calculateMaximumPoint();
+    }
+
     public String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> toList() {
+        return cards.getCards();
     }
 
     @Override

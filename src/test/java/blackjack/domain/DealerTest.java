@@ -24,7 +24,7 @@ public class DealerTest {
     @DisplayName("딜러가 받은 카드 계산")
     void dealerDealCard() {
         dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        assertEquals(dealer.calculateJudgingPoint(), 1);
+        assertEquals(dealer.makeJudgingPoint(), 1);
     }
 
     @Test

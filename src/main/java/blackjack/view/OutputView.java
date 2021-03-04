@@ -35,22 +35,22 @@ public class OutputView {
 
     public static void noticePlayersPoint(Dealer dealer, Players players) {
         System.out.println();
-        System.out.println(dealer.getName() + COLON_DELIMITER + makePlayerCardNames(dealer) + RESULT_DELIMITER + dealer.calculateMaximumPoint());
+        System.out.println(dealer.getName() + COLON_DELIMITER + makePlayerCardNames(dealer) + RESULT_DELIMITER + dealer.makeMaximumPoint());
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + CARD_DELIMITER + makePlayerCardNames(player)
-                    + RESULT_DELIMITER + player.calculateMaximumPoint());
+                    + RESULT_DELIMITER + player.makeMaximumPoint());
             WinnerFlag.calculateResult(dealer, player);
         }
     }
 
     private static String makePlayerCardNames(Gamer player) {
-        return player.getCards().stream()
+        return player.toList().stream()
                 .map(Card::getPatternAndNumber)
                 .collect(Collectors.joining(COMMA_DELIMITER_TO_PRINT));
     }
 
     private static String makeDealerCardNames(Dealer dealer) {
-        return dealer.getCards().stream()
+        return dealer.toList().stream()
                 .limit(COUNT_OF_DEALER_OPENING_CARDS)
                 .map(Card::getPatternAndNumber)
                 .collect(Collectors.joining(COMMA_DELIMITER));

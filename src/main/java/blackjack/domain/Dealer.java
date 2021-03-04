@@ -10,7 +10,7 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() <= MAX_OF_RECEIVE_MORE_CARD;
+        return this.makeJudgingPoint() <= MAX_OF_RECEIVE_MORE_CARD;
     }
 
     @Override
@@ -20,14 +20,14 @@ public class Dealer extends Gamer {
     }
 
     public boolean isSmallerThan(int playerMaximum) {
-        return this.calculateMaximumPoint() < playerMaximum;
+        return this.makeMaximumPoint() < playerMaximum;
     }
 
     public boolean isBiggerThan(int playerMaximum) {
-        return this.calculateMaximumPoint() > playerMaximum;
+        return this.makeMaximumPoint() > playerMaximum;
     }
 
     public boolean isSameThan(int playerMaximum) {
-        return this.calculateMaximumPoint() == playerMaximum;
+        return this.makeMaximumPoint() == playerMaximum;
     }
 }

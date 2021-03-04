@@ -14,7 +14,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() < THRESHOLD_OF_BURST;
+        return this.makeJudgingPoint() < THRESHOLD_OF_BURST;
     }
 
     @Override
