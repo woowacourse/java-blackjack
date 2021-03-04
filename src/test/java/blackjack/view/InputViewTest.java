@@ -36,7 +36,7 @@ class InputViewTest {
 
     @DisplayName("보장된 이름 (특수문자를 제외한, 대소문자의 문자)이 아니면 에러가 발생한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"#pobi" ,"br own", "!jason"})
+    @ValueSource(strings = {"#pobi", "br own", "!jason"})
     void player_name_input_exception_test(String inputText) {
         //given
         InputView inputView = getInputView(inputText);

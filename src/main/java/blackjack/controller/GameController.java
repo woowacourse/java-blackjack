@@ -7,7 +7,6 @@ import blackjack.domain.Round;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerStatusDto;
-import blackjack.view.dto.RoundStatusDto2;
 import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class GameController {
 
     public void start() {
         Round round = initializeGame();
-        RoundStatusDto roundStatusDto = new RoundStatusDto(round.getDealerName(), round.getDealerCardStatus(), round.getPlayers().stream().map(this::getPlayerStatusDto).collect(Collectors.toList()));
+        RoundStatusDto roundStatusDto = new RoundStatusDto(round.getDealerName(), round.getDealerCardStatus(), round.getPlayers().stream().map(this::getPlayerStatusDto).collect(Collectors.toList()), round.getDealer().calculateScore(21));
         OutputView.showInitialStatus(roundStatusDto);
 
         List<Player> players = round.getPlayers();
@@ -33,11 +32,11 @@ public class GameController {
         if (round.addDealerCard()) {
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
-        OutputView.showFinalStatus(new RoundStatusDto2(round.getDealer(), round.getPlayers()));
+        OutputView.showFinalStatus(new RoundStatusDto(round.getDealerName(), round.getDealerCardStatus(), round.getPlayers().stream().map(this::getPlayerStatusDto).collect(Collectors.toList()), round.getDealer().calculateScore(21)));
     }
 
     private PlayerStatusDto getPlayerStatusDto(Player player) {
-        return new PlayerStatusDto(player.getName(), player.getCardsStatus());
+        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(21));
     }
 
     private void addCardOrPass(Round round, Player player) {
