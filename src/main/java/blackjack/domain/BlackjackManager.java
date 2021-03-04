@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -36,7 +35,8 @@ public class BlackjackManager {
         Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
         Arrays.asList(GameResult.values()).forEach(value -> dealerResult.put(value, 0));
         playerResult.values()
-            .forEach(result -> dealerResult.computeIfPresent(GameResult.reverseResult(result), ((gameResult, count) -> ++count)));
+            .forEach(result -> dealerResult.computeIfPresent(GameResult.reverseResult(result),
+                ((gameResult, count) -> ++count)));
         return dealerResult;
     }
 }

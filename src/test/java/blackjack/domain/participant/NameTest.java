@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class NameTest {
+
     @Test
     @DisplayName("이름 생성된다.")
     void testCreateName() {

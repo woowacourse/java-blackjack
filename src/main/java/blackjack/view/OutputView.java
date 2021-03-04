@@ -105,7 +105,7 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
         gameResultDto.getDealerResult().entrySet().forEach(entry ->
-           System.out.print(entry.getValue() + entry.getKey().getName() + BLANK));
+            System.out.print(entry.getValue() + entry.getKey().getName() + BLANK));
         System.out.print(NEW_LINE);
         gameResultDto.getPlayerResult().entrySet().forEach(entry ->
             System.out.println(entry.getKey() + ": " + entry.getValue().getName()));
