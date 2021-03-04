@@ -12,6 +12,7 @@ public class Casino {
 
     public static final String BURST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
+    public static final String DEALER_NO_MORE_DRAW_MESSAGE = "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
 
     public Casino() {
     }
@@ -54,9 +55,9 @@ public class Casino {
         }
     }
 
-    //TODO:: 0개를 뽑을 때, 메세지 추가가
     private void doDealerTurn(Game game) {
         int dealerDrawCount = game.playDealerTurn();
         OutputView.printDealerDrawMessage(dealerDrawCount);
+        OutputView.printMessage(DEALER_NO_MORE_DRAW_MESSAGE);
     }
 }
