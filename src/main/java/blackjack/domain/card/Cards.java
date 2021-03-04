@@ -6,10 +6,6 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int ACE_BONUS_SCORE = 10;
-    private static final int BOUND_OF_CHANGE_ACE_VALUE = 11;
-    private static final int NO_BONUS_SCORE = 0;
-
     private final List<Card> cards;
 
     public Cards() {
@@ -17,15 +13,22 @@ public class Cards {
     }
 
     public Cards(List<Card> cards) {
-        this.cards = new ArrayList(cards);
+        this.cards = cards;
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public void add(Cards targetCards) {
         cards.addAll(targetCards.cards);
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public int calculateFinalScore() {
+        int score = calculateScoreWhenAceIsMinimum();
+        int aceCounts = calculateAceCounts();
+        int aceBonusScore = Symbol.ACE.calculateAceBonusScore(score, aceCounts);
+        return score + aceBonusScore;
     }
 
     public int calculateScoreWhenAceIsMinimum() {
@@ -34,26 +37,10 @@ public class Cards {
                 .sum();
     }
 
-    public int calculateFinalScore() {
-        int aceCounts = getAceCounts();
-        int score = calculateScoreWhenAceIsMinimum();
-        for (int i = 0; i < aceCounts; i++) {
-            score += plusBonusAceScore(score);
-        }
-        return score;
-    }
-
-    private int getAceCounts() {
+    private int calculateAceCounts() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    private int plusBonusAceScore(int sum) {
-        if (sum <= BOUND_OF_CHANGE_ACE_VALUE) {
-            return ACE_BONUS_SCORE;
-        }
-        return NO_BONUS_SCORE;
     }
 
     public List<Card> getCards() {

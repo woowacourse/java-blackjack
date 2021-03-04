@@ -30,7 +30,9 @@ class CardsTest {
         List<Card> cardList = Arrays.asList(new Card(Symbol.EIGHT, Shape.CLOVER),
                 new Card(Symbol.QUEEN, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
+
         int score = cards.calculateFinalScore();
+
         assertThat(score).isEqualTo(18);
     }
 
@@ -40,7 +42,9 @@ class CardsTest {
         List<Card> cardList = Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER),
                 new Card(Symbol.JACK, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
+
         int score = cards.calculateFinalScore();
+
         assertThat(score).isEqualTo(21);
     }
 
@@ -49,7 +53,9 @@ class CardsTest {
     @MethodSource("getCardOverMaximum")
     void calculateScoreWhenAceIsOver(List<Card> cardList, int targetScore) {
         Cards cards = new Cards(cardList);
+
         int score = cards.calculateFinalScore();
+
         assertThat(score).isEqualTo(targetScore);
     }
 
@@ -61,7 +67,9 @@ class CardsTest {
                 new Card(Symbol.ACE, Shape.DIAMOND),
                 new Card(Symbol.ACE, Shape.CLOVER));
         Cards cards = new Cards(cardList);
+
         int score = cards.calculateFinalScore();
+
         assertThat(score).isEqualTo(13);
     }
 
@@ -72,7 +80,9 @@ class CardsTest {
                 new Card(Symbol.QUEEN, Shape.CLOVER),
                 new Card(Symbol.ACE, Shape.DIAMOND));
         Cards cards = new Cards(cardList);
+
         int minimumScore = cards.calculateScoreWhenAceIsMinimum();
+
         assertThat(minimumScore).isEqualTo(11);
     }
 }
