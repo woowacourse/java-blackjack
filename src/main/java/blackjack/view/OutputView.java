@@ -12,6 +12,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String INIT_GAME_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String HAND_FORMAT = " 카드: ";
+    private static final int DEALER_HIT_LIMIT = 16;
     private static final String SCORE_FORMAT = " - 결과: ";
 
     public static void printInitGame(final List<Player> players) {
@@ -25,14 +26,16 @@ public class OutputView {
             .collect(Collectors.joining(DELIMITER));
     }
 
-    public static void printCards(final List<Player> players) {
+    public static void printPlayers(final List<Player> players) {
+        players.forEach(OutputView::printCards);
+    }
+
+    public static void printCards(final Player player) {
         StringBuilder sb = new StringBuilder();
-        players.forEach(player ->
             sb.append(player.getName())
                 .append(HAND_FORMAT)
                 .append(joinCards(player.getHand()))
-                .append(NEW_LINE)
-        );
+                .append(NEW_LINE);
         System.out.print(sb);
     }
 
@@ -42,5 +45,10 @@ public class OutputView {
             cardStrings.add(card.getNumberName() + card.getPatternName());
         }
         return String.join(DELIMITER, cardStrings);
+    }
+
+    public static void printDealerHit() {
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_HIT_LIMIT);
+        System.out.print(NEW_LINE);
     }
 }
