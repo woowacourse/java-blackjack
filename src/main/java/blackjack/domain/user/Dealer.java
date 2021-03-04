@@ -21,15 +21,12 @@ public class Dealer implements User {
         return getScore() <= DEALER_HIT_THRESHOLD;
     }
 
-    public List<Integer> calculateMatchResult(Map<Player, Status> result) {
-        List<Integer> winnings = new ArrayList<>();
-        Arrays.stream(Status.values())
-                .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
-        return winnings;
-    }
-
     public String getFirstCard() {
         return Arrays.stream(getCards().split(COMMA)).findFirst().get();
+    }
+
+    public Status compare(Player player) {
+        return Status.getStatus(this.cards.getScore(), player.getScore());
     }
 
     @Override
