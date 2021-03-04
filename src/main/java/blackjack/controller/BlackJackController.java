@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Users;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -28,8 +29,9 @@ public class BlackJackController {
         }
         users.getPlayers()
                 .forEach(player -> playGameForEachPlayer(player, cardDeck));
-        while (dealer.getScore() < DEALER_REDRAW_STANDARD) {
+        while (dealer.getScore() < DEALER_REDRAW_STANDARD && dealer.getScore() != Card.BUST) {
             dealer.hit(cardDeck.drawCard());
+            OutputView.printDealerGetNewCardsMessage();
         }
         OutputView.printCardsOfPlayersWithScore(users);
         OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
