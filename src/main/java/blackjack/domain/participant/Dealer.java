@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Dealer extends Player {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;

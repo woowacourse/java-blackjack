@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,7 +19,7 @@ public class BlackjackController {
         final List<Player> players = playerSetUp();
 
         distributeCard(players, dealer, cardDeck);
-        showDistributeStatus(players);
+        showPlayerName(players);
         showDistributedCard(players, dealer);
         playerGameProgress(players, cardDeck);
         dealerGameProgress(dealer, cardDeck);
@@ -45,7 +45,7 @@ public class BlackjackController {
         dealer.receiveCard(cardDeck.distribute());
     }
 
-    private void showDistributeStatus(final List<Player> players) {
+    private void showPlayerName(final List<Player> players) {
         final String status = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
