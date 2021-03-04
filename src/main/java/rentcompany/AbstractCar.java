@@ -33,6 +33,6 @@ public abstract class AbstractCar implements Car {
 
     @Override
     public String generateReport() {
-        return getName() + " : " + (int)getChargeQuantity() + "리터" + NEW_LINE;
+        return getName() + " : " + (int) getChargeQuantity() + "리터" + NEW_LINE;
     }
 }
