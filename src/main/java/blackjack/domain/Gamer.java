@@ -15,7 +15,7 @@ public abstract class Gamer {
     }
 
     private static void validateSpace(String name) {
-        if(name.contains(" ")) {
+        if (name.contains(" ")) {
             throw new IllegalArgumentException("이름에 공백이 포함됩니다.");
         }
     }
@@ -27,7 +27,7 @@ public abstract class Gamer {
     protected int calculateJudgingPoint() {
         int point = 0;
         for(Card card : cards) {
-            point = card.addPoint(point);
+            point += card.givePoint();
         }
         return point;
     }
@@ -36,7 +36,7 @@ public abstract class Gamer {
         int point = 0;
         boolean havingAce = false;
         for (Card card : cards) {
-            point += card.addPoint(point);
+            point += card.givePoint();
             if (card.isAce()) {
                 havingAce = true;
             }
@@ -70,7 +70,16 @@ public abstract class Gamer {
     public abstract String getInfo();
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gamer gamer = (Gamer) o;
+        return Objects.equals(name, gamer.name) && Objects.equals(cards, gamer.cards);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(name, cards);
     }
+
 }

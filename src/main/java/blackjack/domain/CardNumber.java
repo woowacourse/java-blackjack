@@ -23,7 +23,7 @@ public enum CardNumber {
         this.number = number;
     }
 
-    public int addNumber(int point) {
+    public int giveNumber() {
         return this.number;
     }
 

@@ -5,10 +5,6 @@ public class Dealer extends Gamer {
         super("딜러");
     }
 
-    private Dealer(String name) {
-        super(name);
-    }
-
     @Override
     public boolean canReceiveCard() {
         return this.calculateJudgingPoint() <= 16;

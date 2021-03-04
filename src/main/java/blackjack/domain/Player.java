@@ -1,6 +1,10 @@
 package blackjack.domain;
 
-public class Player extends Gamer{
+import blackjack.view.InputView;
+
+public class Player extends Gamer {
+    private String result;
+
     public Player(String name) {
         super(name);
     }
