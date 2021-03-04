@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.card.CardDeck;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +9,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Users {
+    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
+
     private final List<User> users = new ArrayList<>();
 
     public Users(Dealer dealer, List<String> players) {
@@ -14,6 +18,13 @@ public class Users {
         this.users.addAll(players.stream()
                 .map(Player::new)
                 .collect(Collectors.toList()));
+    }
+
+    public void initialHit(CardDeck cardDeck) {
+        for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
+            gerUsers()
+                    .forEach(user -> user.hit(cardDeck.drawCard()));
+        }
     }
 
     public List<Player> getPlayers() {

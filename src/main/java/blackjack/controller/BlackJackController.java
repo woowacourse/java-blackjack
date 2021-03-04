@@ -9,7 +9,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
     private static final int DEALER_REDRAW_STANDARD = 17;
 
     private final Users users;
@@ -20,7 +19,7 @@ public class BlackJackController {
         this.dealer = new Dealer();
         this.cardDeck = CardDeck.createDeck();
         this.users = new Users(dealer, InputView.scanPlayerNames());
-        initialHit(users);
+        users.initialHit(cardDeck);
         OutputView.printInitialComment(users);
     }
 
@@ -37,14 +36,6 @@ public class BlackJackController {
         }
         OutputView.printCardsOfPlayersWithScore(users);
         OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
-    }
-
-
-    private void initialHit(Users users) {
-        for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            users.gerUsers()
-                    .forEach(user -> user.hit(cardDeck.drawCard()));
-        }
     }
 
     private void playGameForEachPlayer(Player player) {
