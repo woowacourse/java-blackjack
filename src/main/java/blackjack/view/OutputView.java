@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     public static void showCards(Dealer dealer, List<Player> players) {
-        System.out.println(dealer.getFirstCard());
+        System.out.println(dealer.getName() +"카드: " + dealer.getFirstCard());
         players
             .forEach(player -> System.out.println(player.getName() + "카드: " + player.getCards()));
     }
@@ -43,15 +43,19 @@ public class OutputView {
             player.getName() + " 카드: " + player.getCards() + "- 결과: " + player.getScore()));
     }
 
-    public static void printResult(Map<Player, Status> result) {
+    public static void printResult(List<Integer> matchResult,
+        Map<Player, Status> result) {
         System.out.println("## 최종 승패");
-        List<Integer> winnings = new ArrayList<>();
-        result.values()
-            .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
-        System.out.println("딜러 ");
+
+        System.out.println("딜러: " + matchResult.indexOf(2) + "승" + matchResult.indexOf(1) + "무" + matchResult.indexOf(0) + "패");
+        result.forEach((player, status) -> System.out.println(player.getName() + ": " + status.toString()));
     }
 
     public static void printHitGuideMessage(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y,아니오는 n)");
+    }
+
+    public static void printPlayerCards(Player player) {
+        System.out.println(player.getName() + "카드: " + player.getCards());
     }
 }
