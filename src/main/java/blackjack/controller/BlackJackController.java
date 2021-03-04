@@ -35,7 +35,7 @@ public class BlackJackController {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
-        OutputView.printCardsOfPlayersWithScore(users);
+        OutputView.printCardsOfUsersWithScore(users);
         OutputView.printResult(users.generateResultsMapAgainstDealer());
     }
 
@@ -56,7 +56,7 @@ public class BlackJackController {
     private void requestHitOrNot(Player player) {
         if (InputView.isHit(player.getName())) {
             player.hit(cardDeck.drawCard());
-            OutputView.printCardsOfPlayer(player);
+            OutputView.printCardsOfUser(player);
             return;
         }
         player.stay();

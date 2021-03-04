@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Player;
 import blackjack.domain.ResultType;
 import blackjack.domain.User;
 import blackjack.domain.Users;
@@ -16,13 +15,13 @@ public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
 
     public static void printInitialComment(Users users) {
-        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createPlayersCardStringFormat(users.getPlayers()));
+        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createUsersCardStringFormat(users.getPlayers()));
         for (User user : users.gerUsers()) {
             System.out.println(makeCardsStringFormat(user));
         }
     }
 
-    public static void printCardsOfPlayersWithScore(Users users) {
+    public static void printCardsOfUsersWithScore(Users users) {
         for (User user : users.gerUsers()) {
             System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getScore()) + "\n");
         }
@@ -39,8 +38,8 @@ public class OutputView {
         return Integer.toString(score);
     }
 
-    public static void printCardsOfPlayer(Player player) {
-        System.out.println(makeCardsStringFormat(player));
+    public static void printCardsOfUser(User user) {
+        System.out.println(makeCardsStringFormat(user));
     }
 
 
@@ -54,8 +53,8 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    private static String createPlayersCardStringFormat(List<Player> players) {
-        return players.stream()
+    private static String createUsersCardStringFormat(List<? extends User> users) {
+        return users.stream()
                 .map(User::getName)
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
