@@ -39,7 +39,7 @@ class BlackjackGameTest {
 	@DisplayName("중복 이름 검증")
 	@Test
 	void validateDuplicateNames() {
-		assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi","pobi")))
+		assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(DUPLICATE_NAME_ERROR);
 	}
@@ -90,7 +90,7 @@ class BlackjackGameTest {
 		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.SEVEN));
 
 		final OutcomeStatistics expectedOutcomeStatistics = getExpectedOutcomeStatistics();
-		final OutcomeStatistics outcomeStatistics =  blackjackGame.judgeOutcome();
+		final OutcomeStatistics outcomeStatistics = blackjackGame.judgeOutcome();
 
 		assertThat(outcomeStatistics).isEqualTo(expectedOutcomeStatistics);
 	}
