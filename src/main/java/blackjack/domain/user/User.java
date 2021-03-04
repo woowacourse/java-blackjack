@@ -1,11 +1,9 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-
 import java.util.List;
 
 public abstract class User {
-
     protected Hand hand;
 
     public void initialHands(List<Card> cards) {
@@ -16,12 +14,8 @@ public abstract class User {
         hand.addCard(card);
     }
 
-    public ResultDTO getResultDTO() {
-        String name = getName();
-        List<Card> cards = hand.getCards();
-        int score = hand.getScore();
-
-        return new ResultDTO(name, cards, score);
+    public void setStatusToStay() {
+        hand.convertStatusToStay();
     }
 
     public List<Card> getCards() {
@@ -34,6 +28,14 @@ public abstract class User {
 
     public HandStatus getStatus() {
         return hand.getStatus();
+    }
+
+    public ResultDTO getResultDTO() {
+        String name = getName();
+        List<Card> cards = hand.getCards();
+        int score = hand.getScore();
+
+        return new ResultDTO(name, cards, score);
     }
 
     public abstract String getName();

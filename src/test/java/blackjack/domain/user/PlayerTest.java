@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 
-    @DisplayName("y 입력시 카드 추가 후 HIT")
+    @DisplayName("draw시 정상적으로 카드가 추가되는지")
     @Test
     public void askDraw_additionalCard() {
         Deck deck = new Deck();
@@ -22,23 +22,10 @@ class PlayerTest {
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
         Player player = Player.create("pobi");
-        player.initialHands(cards);
 
-        player.askDraw("y", deck);
+        player.initialHands(cards);
+        player.draw(deck.pickSingleCard());
+
         assertThat(player.getCards().size()).isEqualTo(3);
-    }
-
-    @DisplayName("n 입력시 HandStatus.STAY 로 번경")
-    @Test
-    public void askDraw_convertToStay() {
-        Deck deck = new Deck();
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
-        cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = Player.create("pobi");
-        player.initialHands(cards);
-
-        player.askDraw("n", deck);
-        assertThat(player.getCards().size()).isEqualTo(2);
     }
 }
