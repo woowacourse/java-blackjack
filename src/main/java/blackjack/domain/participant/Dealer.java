@@ -2,10 +2,14 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
+import blackjack.domain.card.CompeteResult;
 import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Dealer extends Participant {
     
@@ -45,9 +49,30 @@ public class Dealer extends Participant {
         return cards.subList(SECOND_CARD_INDEX_FOR_EXCEPT_FIRST_CARD, cards.size());
     }
     
-    //### 딜러
-    //- [ ] 카드 패를 가짐
-    //- [ ] 시작하면 카드 두 장을 받고 한 장만 공개한다
-    //- [ ] 모든 플레이어의 턴이 끝나고 딜러의 턴이 진행된다
-    //- [ ] 딜러는 패의 합계가 16 이하면 계속해서 뽑는다
+    public EnumMap<CompeteResult, Long> competeResultMap(List<Player> players) {
+        return players.stream()
+                      .map(this::compete)
+                      .collect(Collectors.groupingBy(Function.identity(), () -> new EnumMap<>(CompeteResult.class),
+                              Collectors.counting()));
+    }
+    
+    private CompeteResult compete(Player player) {
+        if (isDealerWin(player)) {
+            return CompeteResult.WIN;
+        }
+        
+        if (isDealerDefeat(player)) {
+            return CompeteResult.DEFEAT;
+        }
+        
+        return CompeteResult.DRAW;
+    }
+    
+    private boolean isDealerWin(Player player) {
+        return (sumCardHand() > player.sumCardHand()) || player.isBurst();
+    }
+    
+    private boolean isDealerDefeat(Player player) {
+        return (sumCardHand() < player.sumCardHand()) && !player.isBurst();
+    }
 }

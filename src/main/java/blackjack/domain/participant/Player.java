@@ -30,10 +30,14 @@ public class Player extends Participant {
     }
     
     private boolean isPlayerWin(Dealer dealer) {
-        return sumCardHand() > dealer.sumCardHand();
+        return (sumCardHand() > dealer.sumCardHand()) && !isBurst();
+    }
+    
+    public boolean isBurst() {
+        return sumCardHand() > MAXIMUM_THRESHOLD;
     }
     
     private boolean isPlayerDefeat(Dealer dealer) {
-        return sumCardHand() < dealer.sumCardHand();
+        return sumCardHand() < dealer.sumCardHand() || isBurst();
     }
 }
