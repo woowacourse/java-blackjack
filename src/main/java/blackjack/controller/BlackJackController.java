@@ -14,7 +14,7 @@ public class BlackJackController {
         try {
             Players players = new Players(InputView.enterNames(), dealer);
             dealTwoCard(players, deck);
-            dealWantCard(players, deck);
+            dealCard(players, deck);
             printMatchResult(players);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception);
@@ -27,7 +27,7 @@ public class BlackJackController {
         OutputView.noticeResult(players);
     }
 
-    private void dealWantCard(Players players, Deck deck) {
+    private void dealCard(Players players, Deck deck) {
         while (players.startTurn(deck)) {
             OutputView.noticePlayersCards(players);
         }

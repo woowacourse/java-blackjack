@@ -43,20 +43,24 @@ public class Players {
     }
 
     public Boolean startTurn(Deck deck) {
-        boolean continueTurn = false;
+        int numDeck = deck.getSize();
         for (Gamer gamer : players) {
-            if (!gamer.canReceiveCard()) {
-                continue;
-            }
-            if (gamer.continueDraw(deck)) {
-                continueTurn = true;
-            }
+            checkDrawCard(gamer, deck);
         }
         if (dealer.canReceiveCard()) {
-            continueTurn = true;
             dealer.continueDraw(deck);
         }
-        return continueTurn;
+        return isUseDeck(numDeck, deck);
+    }
+
+    private Boolean isUseDeck(int numDeck, Deck deck) {
+        return !(numDeck == deck.getSize());
+    }
+
+    private void checkDrawCard(Gamer gamer, Deck deck) {
+        if (gamer.canReceiveCard()) {
+            gamer.continueDraw(deck);
+        }
     }
 
     public String getPlayersCards() {
