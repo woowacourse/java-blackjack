@@ -17,8 +17,7 @@ public class Result {
                 .collect(Collectors.toList());
         results.put(Dealer.getName(), new ArrayList<>(dealerResults));
         players.forEach(player ->
-                results.put(player.getName(), Collections.singletonList(Outcome.reverseResult(dealerResults.remove(0))))
-        );
+                results.put(player.getName(), Collections.singletonList(Outcome.reverseResult(dealerResults.remove(0)))));
         return results;
     }
 }

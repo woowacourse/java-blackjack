@@ -19,7 +19,6 @@ import static blackjack.domain.Round.GAME_OVER_SCORE;
 public class GameController {
     public static final String NO = "n";
     public static final String YES = "y";
-
     private final InputView inputView = new InputView(new Scanner(System.in));
 
     public void start() {
