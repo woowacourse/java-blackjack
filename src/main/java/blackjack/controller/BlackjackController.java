@@ -11,13 +11,25 @@ public class BlackjackController {
     public void run() {
         Deck deck = new Deck();
         Game game = new Game(InputView.receivePlayerNames());
-        game.initialCards(deck);
-        OutputView.printInitialCards(game.getDealer(), game.getPlayers());
-        OutputView.printLine();
-        game.getPlayers().forEach(player -> getAdditionalCard((Player) player, deck));
-        OutputView.printDealerDraw(game.askDrawToDealer(deck));
+
+        initCards(deck, game);
+        drawCards(deck, game);
+        printResults(game);
+    }
+
+    private void printResults(Game game) {
         OutputView.printUserResult(game.getResultDTOs());
         OutputView.printWinningResult(game.getWinningResultDTOs());
+    }
+
+    private void drawCards(Deck deck, Game game) {
+        game.getPlayers().forEach(player -> getAdditionalCard((Player) player, deck));
+        OutputView.printDealerDraw(game.askDrawToDealer(deck));
+    }
+
+    private void initCards(Deck deck, Game game) {
+        game.initialCards(deck);
+        OutputView.printInitialCards(game.getDealer(), game.getPlayers());
     }
 
     private void getAdditionalCard(Player player, Deck deck) {

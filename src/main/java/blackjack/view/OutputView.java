@@ -20,6 +20,7 @@ public class OutputView {
     public static void printInitialCards(User dealer, List<User> players) {
         printIntroMessage(dealer, players);
         printUserCard(dealer, players);
+        printLine();
     }
 
     private static void printIntroMessage(User dealer, List<User> players) {

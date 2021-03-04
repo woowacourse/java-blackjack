@@ -23,7 +23,7 @@ public class Player extends User {
         }
     }
 
-    public void askDraw(String askIfMoreCard, Deck deck) { 
+    public void askDraw(String askIfMoreCard, Deck deck) {
         if (YES.equals(askIfMoreCard)) {
             draw(deck.pickSingleCard());
             return;
