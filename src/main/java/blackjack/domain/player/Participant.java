@@ -2,8 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Result;
 
 public abstract class Participant {
 
@@ -35,9 +33,7 @@ public abstract class Participant {
             && cards.getScore() == BLACKJACK_NUMBER;
     }
 
-    public Result matchCards(Cards dealerCards) {
-        return dealerCards.compare(cards);
-    }
+    public abstract void matchCards(Cards cards);
 
     public abstract boolean canDraw();
 }
