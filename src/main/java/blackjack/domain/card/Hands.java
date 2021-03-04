@@ -13,6 +13,9 @@ public class Hands {
     private final boolean isBlackjack;
 
     public Hands(final List<Card> cards) {
+        if (cards.size() != 2) {
+            throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
+        }
         this.cards = cards;
         isBlackjack = validateBlackjack();
     }
@@ -28,9 +31,19 @@ public class Hands {
     public int calculate() {
         int sum = sumWithoutAce();
         for (int i = 0; i < countAce(); ++i) {
-            sum += properAce(sum);
+            sum += CardValue.ACE.getValue();
+        }
+        if (containsAce()) {
+            sum = properSum(sum);
         }
         return sum;
+    }
+
+    private int properSum(int sum) {
+        if (sum + 10 > WINNING_BASELINE) {
+            return sum;
+        }
+        return sum + 10;
     }
 
     private int properAce(int sum) {

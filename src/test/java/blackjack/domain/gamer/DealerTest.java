@@ -19,14 +19,14 @@ class DealerTest {
     @Test
     void checkBoundary() {
         List<Card> lowerCards = new ArrayList<>();
+        lowerCards.add(Card.create(CardSymbol.HEART, CardValue.EIGHT));
+        lowerCards.add(Card.create(CardSymbol.CLUB, CardValue.EIGHT));
         Hands lowerHands = new Hands(lowerCards);
-        lowerHands.addCard(Card.create(CardSymbol.HEART, CardValue.EIGHT));
-        lowerHands.addCard(Card.create(CardSymbol.CLUB, CardValue.EIGHT));
 
         List<Card> higherCards = new ArrayList<>();
+        higherCards.add(Card.create(CardSymbol.HEART, CardValue.EIGHT));
+        higherCards.add(Card.create(CardSymbol.CLUB, CardValue.NINE));
         Hands higherHands = new Hands(higherCards);
-        higherHands.addCard(Card.create(CardSymbol.HEART, CardValue.EIGHT));
-        higherHands.addCard(Card.create(CardSymbol.CLUB, CardValue.NINE));
 
         final Dealer higherDealer = new Dealer(higherHands);
         final Dealer lowerDealer = new Dealer(lowerHands);
