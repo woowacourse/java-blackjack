@@ -53,9 +53,9 @@ public class Dealer extends Participant {
         return score <= 16;
     }
 
-    public int findResultCount(Result result) {
+    public int findResultCount(Result targetResult) {
         return (int) results.stream()
-                .filter(r -> r == result)
+                .filter(result -> result == targetResult)
                 .count();
     }
 }
