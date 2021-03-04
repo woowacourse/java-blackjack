@@ -24,12 +24,12 @@ class GameResultTest {
 
     private static Stream<Arguments> test_value_of() {
         return Stream.of(
-                Arguments.of(20,21,GameResult.LOSE),
-                Arguments.of(21,20,GameResult.WIN),
-                Arguments.of(20,20,GameResult.DRAW),
-                Arguments.of(22,20,GameResult.LOSE),
-                Arguments.of(20,22,GameResult.WIN),
-                Arguments.of(22,22,GameResult.LOSE)
+                Arguments.of(20, 21, GameResult.LOSE),
+                Arguments.of(21, 20, GameResult.WIN),
+                Arguments.of(20, 20, GameResult.DRAW),
+                Arguments.of(22, 20, GameResult.LOSE),
+                Arguments.of(20, 22, GameResult.WIN),
+                Arguments.of(22, 22, GameResult.LOSE)
         );
     }
 
