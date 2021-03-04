@@ -18,6 +18,8 @@ public abstract class Participant {
         return cardHand.getCards();
     }
 
+    public abstract int getCardSum();
+
     public String getName() {
         return name;
     }

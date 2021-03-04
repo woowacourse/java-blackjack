@@ -47,6 +47,11 @@ public class Dealer extends Participant {
         return deck.drawCard();
     }
 
+    @Override
+    public int getCardSum() {
+        return cardHand.dealerSum();
+    }
+
 //### 딜러
 //- [ ] 카드 패를 가짐
 //- [ ] 시작하면 카드 두 장을 받고 한 장만 공개한다

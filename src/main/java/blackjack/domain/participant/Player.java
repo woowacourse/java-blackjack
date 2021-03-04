@@ -26,7 +26,11 @@ public class Player extends Participant {
         return name;
     }
 
-    //### 플레이어
+    @Override
+    public int getCardSum() {
+        return cardHand.playerSum();
+    }
+//### 플레이어
 //- [ ] 이름을 가짐
 //- [ ] 카드 패를 가짐
 //- [ ] 시작하면 카드 두 장을 받는다
