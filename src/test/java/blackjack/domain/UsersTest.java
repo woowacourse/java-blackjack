@@ -13,8 +13,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PlayersTest {
-    Players players;
+class UsersTest {
+    Users users;
     Player player;
     Player player2;
     Card jack = new Card(Suit.CLUB, CardNumber.JACK);
@@ -23,9 +23,9 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        players = new Players(Arrays.asList("youngE", "kimkim"));
-        player = players.getPlayers().get(0);
-        player2 = players.getPlayers().get(1);
+        users = new Users(new Dealer(), Arrays.asList("youngE", "kimkim"));
+        player = users.getPlayers().get(0);
+        player2 = users.getPlayers().get(1);
         player.hit(ace);
         player.hit(jack);
         player2.hit(ace);
@@ -34,8 +34,8 @@ class PlayersTest {
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭일 때")
     @Test
-    void checkWinOrLoseWhenDealerHasBlackJackTest(){
-        Map<User,ResultType> resultMap = players.checkWinOrLose(Card.BLACKJACK_SCORE);
+    void checkWinOrLoseWhenDealerHasBlackJackTest() {
+        Map<User, ResultType> resultMap = users.checkWinOrLose(Card.BLACKJACK_SCORE);
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
                 put(player, ResultType.DRAW);
@@ -46,8 +46,8 @@ class PlayersTest {
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭이 아니었을 때")
     @Test
-    void checkWinOrLoseTest(){
-        Map<User,ResultType> resultMap = players.checkWinOrLose(21);
+    void checkWinOrLoseTest() {
+        Map<User, ResultType> resultMap = users.checkWinOrLose(21);
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
                 put(player, ResultType.WIN);
