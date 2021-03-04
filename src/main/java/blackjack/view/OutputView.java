@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
 
+    private OutputView() {
+    }
+
     public static void printInitialComment(Users users) {
         System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createPlayersCardStringFormat(users.getPlayers()));
         for (User user : users.gerUsers()) {
