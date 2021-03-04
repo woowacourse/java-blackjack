@@ -48,6 +48,6 @@ public class Users {
     public Map<User, ResultType> checkWinOrLose(int score) {
         return users.stream()
                 .filter(user -> user instanceof Player)
-                .collect(Collectors.toMap(player -> player, player -> ((Player) player).decisionResult(score)));
+                .collect(Collectors.toMap(player -> player, player -> ((Player) player).decisionGameWinOrLose(score)));
     }
 }

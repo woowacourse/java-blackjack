@@ -18,12 +18,12 @@ public class Player extends User {
         }
     }
 
-    public ResultType decisionResult(int score) {
-        if (this.getScore() > score) {
+    public ResultType decisionGameWinOrLose(int dealerScore) {
+        if (this.getScore() > dealerScore) {
             return ResultType.WIN;
         }
 
-        if (this.getScore() < score) {
+        if (this.getScore() < dealerScore || this.getScore() == Card.BUST) {
             return ResultType.LOSE;
         }
 
