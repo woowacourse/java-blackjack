@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
 import blackjack.dto.ScoreResultDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,14 +14,15 @@ public class Dealer implements Participant {
     private static final int FROM = 0;
     private static final int TO = 1;
     private static final int DRAW_BOUND_SCORE = 16;
+    private static final String DEALER_NAME = "딜러";
 
     private final String name;
     private final List<Card> cards;
     private final ScoreRule scoreRule;
 
-    public Dealer(String name, List<Card> cards, ScoreRule scoreRule) {
-        this.name = name;
-        this.cards = cards;
+    public Dealer(ScoreRule scoreRule) {
+        this.name = DEALER_NAME;
+        this.cards = new ArrayList<>();
         this.scoreRule = scoreRule;
     }
 
@@ -48,6 +50,11 @@ public class Dealer implements Participant {
     @Override
     public int sumTotalScore() {
         return scoreRule.sumTotalScore(cards);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     public List<ScoreResultDto> decideWinOrLose(List<Player> players) {

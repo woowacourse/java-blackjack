@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.ArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
@@ -18,7 +16,7 @@ class PlayerTest {
     @Test
     @DisplayName("카드를 받는다.")
     void test_receive_card() {
-        Participant player = new Player("pobi", new ArrayList<>(), cards -> 0);
+        Participant player = new Player("pobi", cards -> 0);
         Card card = new Card(CardType.DIAMOND, CardValue.TEN);
         player.receiveCard(card);
         Assertions.assertThat(player.showCards().contains(card)).isTrue();
@@ -31,7 +29,7 @@ class PlayerTest {
     }, delimiter = ':')
     void test_player_is_receive_card(int totalScore, boolean actual) {
         //given
-        Participant player = new Player("pobi", new ArrayList<>(), cards -> totalScore);
+        Participant player = new Player("pobi", cards -> totalScore);
 
         //when
         boolean isReceived = player.isReceiveCard();

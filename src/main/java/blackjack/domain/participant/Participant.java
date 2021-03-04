@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-interface Participant {
+public interface Participant {
     void receiveCard(Card card);
 
     List<Card> showInitCards();
@@ -14,4 +14,6 @@ interface Participant {
     boolean isReceiveCard();
 
     int sumTotalScore();
+
+    String getName();
 }

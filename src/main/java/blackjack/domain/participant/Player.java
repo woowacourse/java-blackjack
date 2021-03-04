@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Participant {
@@ -14,9 +15,9 @@ public class Player implements Participant {
     private List<Card> cards;
     private ScoreRule scoreRule;
 
-    public Player(String name, List<Card> cards, ScoreRule scoreRule) {
+    public Player(String name, ScoreRule scoreRule) {
         this.name = name;
-        this.cards = cards;
+        this.cards = new ArrayList<>();
         this.scoreRule = scoreRule;
     }
 
@@ -46,6 +47,7 @@ public class Player implements Participant {
         return scoreRule.sumTotalScore(cards);
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,9 +18,9 @@ class ParticipantsTest {
     @BeforeEach
     void setUp() {
         participantGroup = Arrays.asList(
-                new Dealer("pobi", Collections.EMPTY_LIST, cards -> 0),
-                new Player("suri", Collections.EMPTY_LIST, cards -> 0),
-                new Player("roki", Collections.EMPTY_LIST, cards -> 0)
+                new Dealer(cards -> 0),
+                new Player("suri", cards -> 0),
+                new Player("roki", cards -> 0)
         );
     }
 
@@ -53,8 +52,8 @@ class ParticipantsTest {
     void test_extract_dealer_if_dealer_is_not_exist() {
         //given
         List<Participant> participantGroup = Arrays.asList(
-                new Player("suri", Collections.EMPTY_LIST, cards -> 0),
-                new Player("roki", Collections.EMPTY_LIST, cards -> 0)
+                new Player("suri", cards -> 0),
+                new Player("roki", cards -> 0)
         );
         Participants participants = new Participants(participantGroup);
 

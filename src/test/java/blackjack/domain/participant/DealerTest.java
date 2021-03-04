@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +21,7 @@ class DealerTest {
     @Test
     @DisplayName("카드를 받는다.")
     void test_receive_card() {
-        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 0);
+        Participant dealer = new Dealer(cards -> 0);
         Card card = new Card(CardType.DIAMOND, CardValue.TEN);
         dealer.receiveCard(card);
         assertThat(dealer.showCards().contains(card)).isTrue();
@@ -32,7 +31,7 @@ class DealerTest {
     @DisplayName("딜러는 한장의 카드만 보여준다.")
     void test_dealer_show_card() {
         //given
-        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> 0);
+        Participant dealer = new Dealer(cards -> 0);
         dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.TEN));
         dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.ACE));
 
@@ -50,7 +49,7 @@ class DealerTest {
     }, delimiter = ':')
     void test_dealer_is_receive_card(int totalScore, boolean actual) {
         //given
-        Participant dealer = new Dealer("pobi", new ArrayList<>(), cards -> totalScore);
+        Participant dealer = new Dealer(cards -> totalScore);
 
         //when
         boolean isReceived = dealer.isReceiveCard();
@@ -63,10 +62,10 @@ class DealerTest {
     @Test
     void test_decide_win_or_lose() {
         //given
-        Dealer dealer = new Dealer("pobi", new ArrayList<>(), cards -> 16);
-        Player firstPlayer = new Player("roki", new ArrayList<>(), cards -> 15);
-        Player secondPlayer = new Player("suri", new ArrayList<>(), cards -> 17);
-        Player thirdPlayer = new Player("brown", new ArrayList<>(), cards -> 16);
+        Dealer dealer = new Dealer(cards -> 16);
+        Player firstPlayer = new Player("roki", cards -> 15);
+        Player secondPlayer = new Player("suri", cards -> 17);
+        Player thirdPlayer = new Player("brown", cards -> 16);
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
@@ -87,10 +86,10 @@ class DealerTest {
     @Test
     void test_decide_win_or_lose_if_dealer_score_over() {
         //given
-        Dealer dealer = new Dealer("pobi", new ArrayList<>(), cards -> 22);
-        Player firstPlayer = new Player("roki", new ArrayList<>(), cards -> 0);
-        Player secondPlayer = new Player("suri", new ArrayList<>(), cards -> 17);
-        Player thirdPlayer = new Player("brown", new ArrayList<>(), cards -> 16);
+        Dealer dealer = new Dealer(cards -> 22);
+        Player firstPlayer = new Player("roki", cards -> 0);
+        Player secondPlayer = new Player("suri", cards -> 17);
+        Player thirdPlayer = new Player("brown", cards -> 16);
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
@@ -111,10 +110,10 @@ class DealerTest {
     @Test
     void test_decide_win_or_lose_if_player_score_over() {
         //given
-        Dealer dealer = new Dealer("pobi", new ArrayList<>(), cards -> 15);
-        Player firstPlayer = new Player("roki", new ArrayList<>(), cards -> 22);
-        Player secondPlayer = new Player("suri", new ArrayList<>(), cards -> 24);
-        Player thirdPlayer = new Player("brown", new ArrayList<>(), cards -> 16);
+        Dealer dealer = new Dealer(cards -> 15);
+        Player firstPlayer = new Player("roki", cards -> 22);
+        Player secondPlayer = new Player("suri", cards -> 24);
+        Player thirdPlayer = new Player("brown", cards -> 16);
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
