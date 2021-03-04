@@ -25,21 +25,21 @@ public class Casino {
         game.setUpTwoCards();
         OutputView.printSetup(dealer, players);
 
-        playerTurn(game);
+        askPlayersDrawCard(game);
         doDealerTurn(game);
 
         OutputView.printFinalCardInfo(dealer, players);
-        game.fightPlayers();
+        game.comparePlayersCardsWithDealer();
         OutputView.printWinOrLoseResult(dealer, players);
     }
 
-    private void playerTurn(Game game) {
+    private void askPlayersDrawCard(Game game) {
         for (Player player : game.getPlayers()) {
-            doPlayerTurn(player, game);
+            askDrawCard(player, game);
         }
     }
 
-    private void doPlayerTurn(Player player, Game game) {
+    private void askDrawCard(Player player, Game game) {
         while (InputView.inputYesOrNo(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);

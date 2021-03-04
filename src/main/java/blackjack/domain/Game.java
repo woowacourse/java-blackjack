@@ -51,7 +51,7 @@ public class Game {
         return cnt;
     }
 
-    public void fightPlayers() {
+    public void comparePlayersCardsWithDealer() {
         for (Player player : players) {
             player.fight(dealer);
         }
