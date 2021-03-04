@@ -66,6 +66,4 @@ public class ResultCalculator {
         }
         return ResultType.DRAW;
     }
-
-
 }

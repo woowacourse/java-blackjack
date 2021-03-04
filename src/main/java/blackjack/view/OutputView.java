@@ -68,9 +68,11 @@ public class OutputView {
     }
 
     public static void dealerResult(Map<ResultType, Integer> resultWithCount) {
-        System.out.printf("딜러 : %d승 %d패 %d무" + NEWLINE, resultWithCount.get(ResultType.WIN),
-                resultWithCount.get(ResultType.LOSE),
-                resultWithCount.get(ResultType.DRAW));
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
+            sb.append(entry.getValue() + entry.getKey().getName() + " ");
+        }
+        System.out.println("딜러 : " + sb.toString());
     }
 
     public static void playersResult(Map<String, ResultType> resultWithName) {

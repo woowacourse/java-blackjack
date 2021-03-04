@@ -20,14 +20,9 @@ public class Gamers {
 
     public Map<ResultType, Integer> resultWithCount() {
         Map<ResultType, Integer> result = new EnumMap<>(ResultType.class);
-
-        result.put(ResultType.WIN, 0);
-        result.put(ResultType.DRAW, 0);
-        result.put(ResultType.LOSE, 0);
-
         for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);
-            result.put(resultType, result.get(resultType) + 1);
+            result.put(resultType, result.getOrDefault(resultType, 0) + 1);
         }
         return result;
     }

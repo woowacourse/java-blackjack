@@ -9,7 +9,7 @@ public abstract class Gamer {
     protected final Hands hands;
     private String name;
 
-    public Gamer(String name, Hands hands) {
+    protected Gamer(String name, Hands hands) {
         this.name = name;
         this.hands = hands;
     }
