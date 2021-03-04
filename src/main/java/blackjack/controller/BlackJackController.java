@@ -4,6 +4,8 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Map;
+
 public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
@@ -14,8 +16,18 @@ public class BlackJackController {
         drawCards(players, dealer);
         drawUntilPossible(dealer, players);
 
+        WinnerCount winnerCount = new WinnerCount();
+
         OutputView.noticePlayersPoint(dealer, players);
-        OutputView.noticeResult(players);
+        OutputView.noticeResult();
+        OutputView.printResult(winnerCount.calculateTotalWinnings(players));
+        printEachPlayerResult(players);
+    }
+
+    private void printEachPlayerResult(Players players) {
+        for (Player player : players.getPlayers()) {
+            OutputView.printPlayerResult(player);
+        }
     }
 
     private void drawCards(Players players, Dealer dealer) {

@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.view.OutputView;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,12 +35,6 @@ public class Players {
         dealer.receiveCard(Deck.dealCard());
         for (Gamer gamer : players) {
             gamer.receiveCard(Deck.dealCard());
-        }
-    }
-
-    public void makeEachPlayerResult() {
-        for (Player player : players) {
-            System.out.println(player.getName() + COLON_DELIMITER + player.getResult().getFlagOutput());
         }
     }
 

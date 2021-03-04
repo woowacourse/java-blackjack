@@ -42,7 +42,7 @@ public abstract class Gamer {
         return point;
     }
 
-    protected int calculateMaximumPoint() {
+    public int calculateMaximumPoint() {
         int point = 0;
         boolean havingAce = false;
         for (Card card : cards) {
