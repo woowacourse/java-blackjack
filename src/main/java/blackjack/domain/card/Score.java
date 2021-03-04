@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Score {
     private final static int BLACK_JACK = 21;
+    public final static Score ZERO_SCORE = new Score(0);
 
     private final int value;
 
@@ -35,6 +36,17 @@ public class Score {
         return value < target.value;
     }
 
+    public Score useAceAsEleven(){
+        return new Score(value + 10);
+    }
+
+    public Score addScore(Score score){
+        return new Score(score.value + this.value);
+    }
+
+    public boolean isBellowThanBlackJack(){
+        return value <= BLACK_JACK;
+    }
 
     public int score(){
         return value;

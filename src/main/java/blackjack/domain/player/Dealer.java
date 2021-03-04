@@ -22,7 +22,7 @@ public class Dealer implements Player {
         return cards.getScore().isBelow(LIMIT_SCORE_TO_HIT);
     }
 
-    public WinOrLose calculateGamblerWinOrNot(Player player) {
+    public WinOrLose calculateGamblerWinOrNot(final Player player) {
         if (player.getScore().isBust()) {
             return WinOrLose.LOSE;
         }
@@ -39,14 +39,14 @@ public class Dealer implements Player {
     }
 
     @Override
-    public void initializeCards(Deck deck) {
+    public void initializeCards(final Deck deck) {
         for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
             cards.add(deck.draw());
         }
     }
 
     @Override
-    public void drawCard(Deck deck) {
+    public void drawCard(final Deck deck) {
         cards.add(deck.draw());
     }
 

@@ -12,35 +12,26 @@ public class Cards {
         cards = new ArrayList<>();
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
     public Score getScore() {
-        int score = 0;
+        Score score = Score.ZERO_SCORE;
         for (Card card : cards) {
-            score += card.getDenomination().getScore();
+            score = score.addScore(card.getDenomination().getScore());
         }
 
-        if(countAce() == 0){
-            return new Score(score);
+        if (countAce() != 0 && score.useAceAsEleven().isBellowThanBlackJack()) {
+            score = score.useAceAsEleven();
         }
-
-        if (score + 10 <= 21) {
-            score += 10;
-        }
-
-        return new Score(score);
+        return score;
     }
 
     public int countAce() {
         return (int) cards.stream()
                 .filter(card -> card.isAce())
                 .count();
-    }
-
-    public boolean isBust(){
-        return getScore().isBust();
     }
 
     public List<Card> cards(){

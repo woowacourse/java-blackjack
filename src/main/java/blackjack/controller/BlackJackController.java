@@ -29,12 +29,9 @@ public class BlackJackController {
         OutputView.printMessage("");
         Result result = blackJackGame.getResult(players);
         OutputView.printResult(result);
-
-
-
     }
 
-    private static void giveGamblerCard(Player player) {
+    private static void giveGamblerCard(final Player player) {
         if (!(player instanceof Gambler)) {
             return;
         }

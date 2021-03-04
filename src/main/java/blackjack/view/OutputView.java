@@ -50,20 +50,20 @@ public class OutputView {
         printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResult(Result result) {
+    public static void printResult(final Result result) {
 
         printCardsAndScore(result);
         printFinalWinningResult(result);
     }
 
-    private static void printCardsAndScore(Result result) {
+    private static void printCardsAndScore(final Result result) {
         printDealerResult(result);
         for (Player player : result.getGamblerMap().keySet()) {
             printMessageByFormat(RESULT_INFORMATION, player.getName().name(), getCardInfo(player), player.getScore().score());
         }
     }
 
-    private static void printDealerResult(Result result) {
+    private static void printDealerResult(final Result result) {
         Cards cards = result.getDealerCards();
         String dealerCardInfo = cards.cards().stream()
                 .map(card -> card.getDenomination().denomination() + card.getSuit().suit())
@@ -73,7 +73,7 @@ public class OutputView {
 
     }
 
-    private static void printFinalWinningResult(Result result) {
+    private static void printFinalWinningResult(final Result result) {
         OutputView.printMessage(
                 "딜러:" + result.countDealerWin() + "승 "
                         + result.countDealerDraw() + "무 "

@@ -8,7 +8,7 @@ public class Deck {
     private final LinkedList<Card> deck;
 
     public Deck(){
-        deck = Card.getCards();
+        deck = Card.getCachingCards();
         Collections.shuffle(deck);
     }
 
