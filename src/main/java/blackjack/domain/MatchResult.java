@@ -1,22 +1,25 @@
 package blackjack.domain;
 
+import static blackjack.domain.Score.maxScore;
+
 public enum MatchResult {
+
     WIN("승") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore <= 21 && dealerScore > 21) || ((playerScore > dealerScore) && playerScore <= 21);
+            return (playerScore <= maxScore && dealerScore > maxScore) || ((playerScore > dealerScore) && playerScore <= maxScore);
         }
     },
     LOSE("패") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore > 21 && dealerScore <= 21) || ((playerScore < dealerScore) && dealerScore <= 21);
+            return (playerScore > maxScore && dealerScore <= maxScore) || ((playerScore < dealerScore) && dealerScore <= maxScore);
         }
     },
     DRAW("무") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore > 21 && dealerScore > 21) || (playerScore == dealerScore);
+            return (playerScore > maxScore && dealerScore > maxScore) || (playerScore == dealerScore);
         }
     };
 
@@ -38,10 +41,10 @@ public enum MatchResult {
     }
 
     public static MatchResult getDealerMatchResultByPlayer(MatchResult matchResult) {
-        if(matchResult.equals(MatchResult.WIN)){
+        if (matchResult.equals(MatchResult.WIN)) {
             return MatchResult.LOSE;
         }
-        if(matchResult.equals(MatchResult.LOSE)){
+        if (matchResult.equals(MatchResult.LOSE)) {
             return MatchResult.WIN;
         }
         return MatchResult.DRAW;

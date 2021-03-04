@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String YES = "y";
+    private static final String NO = "n";
+
 
     private InputView() {
 
@@ -15,7 +18,7 @@ public class InputView {
 
     public static String inputAnswer() {
         String answer = scanner.nextLine();
-        if(!answer.equals("y") && !answer.equals("n")){
+        if (!answer.equals(YES) && !answer.equals(NO)) {
             throw new IllegalArgumentException("유효한 대답이 아닙니다.");
         }
         return answer;

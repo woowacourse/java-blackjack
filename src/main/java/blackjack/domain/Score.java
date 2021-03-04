@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Score {
 
+    public static final int maxScore = 21;
     private Score() {
     }
 
@@ -24,20 +25,10 @@ public class Score {
     }
 
     private static int calculator(List<Card> cards) {
-//        int totalScore = cards.stream()
-//                .filter(card -> card.getDenomination() != Denomination.ACE)
-//                .mapToInt(card -> card.getDenomination().getScore())
-//                .reduce(0, Integer::sum);
-//
-//        int a = cards.stream()
-//                .filter(card -> card.getDenomination() == Denomination.ACE)
-//                .mapToInt(card -> card.getDenomination().getScore())
-//                .reduce(0, (score1, score2) -> aceCalculator(totalScore) + totalScore);
-
         int score = 0;
         for (Card card : cards) {
             if (card.getDenomination() == Denomination.ACE) {
-                if (score + 11 > 21) {
+                if (score + 11 > maxScore) {
                     score += card.getDenomination().getScore();
                 } else {
                     score += 11;
@@ -47,31 +38,4 @@ public class Score {
         }
         return score;
     }
-
-//    private static int aceCalculator(int totalScore) {
-//        if (totalScore < 11) {
-//            return 11;
-//        }
-//        return 1;
-//    }
-
-
-//    private static int calculator1(List<Card> cards) {
-//        int score = cards.stream()
-//                .map(Card::getDenomination)
-//                .mapToInt(Denomination::getScore)
-//                .sum();
-//
-//        int notIncludeAceScore = cards.stream()
-//                .filter(card -> !card.isAce())
-//                .map(Card::getDenomination)
-//                .mapToInt(Denomination::getScore)
-//                .sum();
-//
-//        int onlyAceScore = cards.stream()
-//                .filter(Card::isAce)
-//                .map(Card::getDenomination)
-//                .mapToInt(Denomination::getScore)
-//                .sum();
-//    }
 }

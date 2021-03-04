@@ -6,6 +6,7 @@ import blackjack.domain.card.Cards;
 
 public class Dealer extends Person {
 
+    private static final int DEALER_MAX_SCORE = 16;
     public Dealer() {
         super.name = "딜러";
         super.cards = new Cards();
@@ -17,7 +18,7 @@ public class Dealer extends Person {
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(cards) <= 16;
+        return Score.calculatorScore(cards) <= DEALER_MAX_SCORE;
     }
 }
 

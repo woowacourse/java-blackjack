@@ -20,7 +20,6 @@ public class OutputView {
     private static final String CURRENT_CARD_FORM = "%s카드 : %s";
     private static final String ASK_DRAW_CARD_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String CARD_AND_SCORE_RESULT = "%s - 결과 : %d";
-    private static final String DEALER_RESULT_FORM = "딜러: %d승 %d패 %d무";
     private static final String PLAYER_RESULT_FORM = "%s: %s";
 
 
@@ -71,12 +70,6 @@ public class OutputView {
         }
     }
 
-    private static String getCardsMessageForm(Person person) {
-        String cardsName = person.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
-
-        return String.format(CURRENT_CARD_FORM, person.getName(), cardsName);
-    }
-
     public static void showFinalResult(BlackJackResult blackJackResult) {
         System.out.println("## 최종 승패");
 
@@ -89,5 +82,11 @@ public class OutputView {
         System.out.println();
         blackJackResult.getResult()
                 .forEach((key, value) -> System.out.printf((PLAYER_RESULT_FORM) + "%n", key.getName(), value.getResult()));
+    }
+
+    private static String getCardsMessageForm(Person person) {
+        String cardsName = person.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
+
+        return String.format(CURRENT_CARD_FORM, person.getName(), cardsName);
     }
 }

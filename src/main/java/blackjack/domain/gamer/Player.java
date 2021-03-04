@@ -5,6 +5,8 @@ import blackjack.domain.card.Cards;
 
 public class Player extends Person {
 
+    private static final int MIN_NAME_LENGTH = 1;
+
     public Player(String name) {
         validateNameLength(name);
         super.name = name;
@@ -12,13 +14,13 @@ public class Player extends Person {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() < 1) {
+        if (name.length() < MIN_NAME_LENGTH) {
             throw new IllegalArgumentException("유효하지 않은 플레이어 이름입니다.");
         }
     }
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(cards) < 21;
+        return Score.calculatorScore(cards) < Score.maxScore;
     }
 }
