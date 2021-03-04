@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
 
@@ -17,8 +18,9 @@ public abstract class Participant {
     }
 
     private void validateName(String name) {
-        int trimNameLength = name.trim()
-                                 .length();
+        int trimNameLength = Objects.requireNonNull(name)
+                                    .trim()
+                                    .length();
         if (trimNameLength == INVALID_NAME_LENGTH) {
             throw new IllegalArgumentException(INVALID_PARTICIPANT_NAME);
         }
@@ -32,7 +34,7 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    public int getFinalScore() {
+    public int calculateFinalScore() {
         return cards.calculateFinalScore();
     }
 

@@ -71,7 +71,8 @@ public class OutputView {
     private static void printParticipantCardWithScore(Participant participant) {
         String cards = getCardsInformation(participant.getCards());
         System.out.println(
-            participant.getName() + " 카드: " + cards + " - 결과: " + participant.getFinalScore());
+            participant.getName() + " 카드: " + cards + " - 결과: "
+                + participant.calculateFinalScore());
     }
 
     public static void printFinalResult(Dealer dealer, List<Player> players) {
