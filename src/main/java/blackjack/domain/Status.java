@@ -6,20 +6,29 @@ public enum Status {
     LOSE("패");
 
     private static final int BLACK_JACK_SCORE = 21;
+
     private final String status;
 
     Status(String status) {
         this.status = status;
     }
 
-    public static Status compare(int dealerScore, int playerScore) {
-        if (dealerScore > BLACK_JACK_SCORE || (playerScore > dealerScore && playerScore <= BLACK_JACK_SCORE)) {
+    public static Status getStatus(int dealerScore, int playerScore) {
+        if (isDealerBusted(dealerScore) || (playerScore > dealerScore && isPlayerNotBusted(playerScore))) {
             return WIN;
         }
         if (playerScore == dealerScore) {
             return DRAW;
         }
         return LOSE;
+    }
+
+    private static boolean isDealerBusted(int dealerScore) {
+        return dealerScore > BLACK_JACK_SCORE;
+    }
+
+    private static boolean isPlayerNotBusted(int playerScore) {
+        return playerScore <= BLACK_JACK_SCORE;
     }
 
     @Override
