@@ -44,4 +44,8 @@ public class BlackJackService {
     public Challengers getChallengers() {
         return this.challengers;
     }
+
+    public void receiveMoreCard(final Player player){
+        player.receiveMoreCard(Card.of());
+    }
 }

@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     public static String NEW_LINE = System.lineSeparator();
-    public static String INIT_RESULT_MSG = NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.";
+    public static String INIT_RESULT_MESSAGE = NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.";
 
     public static void printInitSetting(final List<Player> players) {
         List<String> challengerNames = players.stream().filter(player -> player instanceof Challenger)
                 .map(player -> (Challenger) player)
                 .map(Challenger::getName)
                 .collect(Collectors.toList());
-        System.out.println(String.format(INIT_RESULT_MSG, String.join(", ", challengerNames)));
+        System.out.println(String.format(INIT_RESULT_MESSAGE, String.join(", ", challengerNames)));
     }
 
     public static void printInitCards(final Dealer dealer, final Challengers challengers) {
@@ -26,24 +26,28 @@ public class OutputView {
         printChallengersInitCards(challengers);
     }
 
-    private static void printChallengersInitCards(final Challengers challengers) {
-        challengers.getList().forEach(OutputView::printChallengerCards);
+    public static void printDealerReceiveMessage() {
+        System.out.print(NEW_LINE);
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    private static void printChallengerCards(final Challenger challenger) {
-        System.out.print(challenger.getName() + "카드: ");
-        List<String> challengersCards = challenger
+    public static void printPlayerCards(final Player player) {
+        System.out.print(player.getName() + "카드: ");
+        List<String> challengersCards = player
                 .getInitCards()
                 .stream()
                 .map(card -> card.getFaceValue() + card.getSuit()).collect(Collectors.toList());
         System.out.println(String.join(", ", challengersCards));
     }
 
+    private static void printChallengersInitCards(final Challengers challengers) {
+        challengers.getList().forEach(OutputView::printPlayerCards);
+        System.out.print(NEW_LINE);
+    }
+
     private static void printDealerInitCard(final Dealer dealer) {
         System.out.print("딜러: ");
         List<Card> dealerCards = dealer.getInitCards();
         dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
-
-
     }
 }
