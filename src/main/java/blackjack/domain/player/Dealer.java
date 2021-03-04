@@ -1,6 +1,11 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Dealer extends Player {
 
@@ -9,8 +14,13 @@ public class Dealer extends Player {
     public Dealer(Cards cards) {
         super(cards);
     }
-    
-    public boolean isEnoughScore(){
+
+    @Override
+    public List<Card> getInitCards() {//singletonList가 뭐인지?
+        return new ArrayList<>(Arrays.asList(cards.getFirstCard()));
+    }
+
+    public boolean isEnoughScore() {
         return getScore() > DEALER_SCORE_PIVOT;
     }
 }

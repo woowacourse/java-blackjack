@@ -38,4 +38,8 @@ public class Card {
     public int getFaceValue() {
         return this.face.getValue();
     }
+
+    public String getSuit() {
+        return this.suit.getSuit();
+    }
 }

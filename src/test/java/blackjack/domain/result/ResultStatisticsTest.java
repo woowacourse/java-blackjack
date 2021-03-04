@@ -25,8 +25,8 @@ public class ResultStatisticsTest {
     @BeforeEach
     void setUp() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(Suit.다이아몬드, Face.JACK));
-        cardList.add(new Card(Suit.다이아몬드, Face.KING));
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.DIAMOND, Face.KING));
         dealer = new Dealer(new Cards(cardList));
     }
 
@@ -35,8 +35,8 @@ public class ResultStatisticsTest {
     void winner() {
         List<Card> cardList = new ArrayList<>();
 
-        cardList.add(new Card(Suit.다이아몬드, Face.ACE));
-        cardList.add(new Card(Suit.다이아몬드, Face.KING));
+        cardList.add(new Card(Suit.DIAMOND, Face.ACE));
+        cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         List<Challenger> challengers = new ArrayList<>();
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
@@ -53,8 +53,8 @@ public class ResultStatisticsTest {
     @DisplayName("챌린저가 딜러보다 점수가 같으면, 무승부가 발생한다.")
     void drawer() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(Suit.다이아몬드, Face.JACK));
-        cardList.add(new Card(Suit.다이아몬드, Face.KING));
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         List<Challenger> challengers = new ArrayList<>();
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
@@ -72,8 +72,8 @@ public class ResultStatisticsTest {
     @DisplayName("챌린저가 딜러보다 점수가 낮으면, 패배한다.")
     void loser() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(Suit.다이아몬드, Face.JACK));
-        cardList.add(new Card(Suit.다이아몬드, Face.TWO));
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.DIAMOND, Face.TWO));
 
         List<Challenger> challengers = new ArrayList<>();
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));

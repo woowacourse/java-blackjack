@@ -10,7 +10,7 @@ public class Challengers {
         this.challengers = new ArrayList<>(challengers);
     }
 
-    public List<Challenger> getPlayers() {
+    public List<Challenger> getList() {
         return new ArrayList<>(challengers);
     }
 }

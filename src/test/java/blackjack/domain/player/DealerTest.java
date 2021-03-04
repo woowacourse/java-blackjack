@@ -20,8 +20,8 @@ class DealerTest {
     @BeforeEach
     void setUp() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(Suit.다이아몬드, Face.JACK));
-        cardList.add(new Card(Suit.다이아몬드, Face.KING));
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.DIAMOND, Face.KING));
         dealer = new Dealer(new Cards(cardList));
     }
 
@@ -30,8 +30,8 @@ class DealerTest {
     void getChallengerResultIsWinner() {
         List<Card> cardList = new ArrayList<>();
 
-        cardList.add(new Card(Suit.다이아몬드, Face.ACE));
-        cardList.add(new Card(Suit.다이아몬드, Face.KING));
+        cardList.add(new Card(Suit.DIAMOND, Face.ACE));
+        cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.WIN);
@@ -42,8 +42,8 @@ class DealerTest {
     void getChallengerResultIsDrawer() {
         List<Card> cardList = new ArrayList<>();
 
-        cardList.add(new Card(Suit.다이아몬드, Face.QUEEN));
-        cardList.add(new Card(Suit.다이아몬드, Face.KING));
+        cardList.add(new Card(Suit.DIAMOND, Face.QUEEN));
+        cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.DRAW);
@@ -54,8 +54,8 @@ class DealerTest {
     void getChallengerResultIsLoser() {
         List<Card> cardList = new ArrayList<>();
 
-        cardList.add(new Card(Suit.다이아몬드, Face.ACE));
-        cardList.add(new Card(Suit.다이아몬드, Face.ACE));
+        cardList.add(new Card(Suit.DIAMOND, Face.ACE));
+        cardList.add(new Card(Suit.DIAMOND, Face.ACE));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.LOSE);

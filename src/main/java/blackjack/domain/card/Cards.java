@@ -21,6 +21,10 @@ public class Cards {
         return new ArrayList<>(cards);
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public int getScore() {
         boolean hasAce = hasAce();
         int sum = cards.stream().mapToInt(Card::getFaceValue).sum();

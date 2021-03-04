@@ -13,6 +13,10 @@ public class Name {
         this.name = name;
     }
 
+    public String value() {
+        return name;
+    }
+
     private void validateNull(final String name) {
         Objects.requireNonNull(name, "이름은 null일 수 없습니다.");
     }

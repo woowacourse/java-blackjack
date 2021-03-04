@@ -14,7 +14,7 @@ public class CardsTest {
 
     @BeforeEach
     void setUp() {
-        cards = new Cards(Arrays.asList(new Card(Suit.하트, Face.ACE), new Card(Suit.클로버, Face.ACE)));
+        cards = new Cards(Arrays.asList(new Card(Suit.HEART, Face.ACE), new Card(Suit.CLOVER, Face.ACE)));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 두장 넣고 한장 추가하면, 사이즈가 3이 나온다.")
     void add() {
-        cards.add(new Card(Suit.클로버, Face.NINE));
+        cards.add(new Card(Suit.CLOVER, Face.NINE));
 
         assertThat(cards.getList().size()).isEqualTo(3);
     }
@@ -41,8 +41,8 @@ public class CardsTest {
     @Test
     @DisplayName("22점이 나오는경우, Bust가 발생한다.")
     void bust() {
-        cards.add(new Card(Suit.다이아몬드, Face.JACK));
-        cards.add(new Card(Suit.다이아몬드, Face.KING));
+        cards.add(new Card(Suit.DIAMOND, Face.JACK));
+        cards.add(new Card(Suit.DIAMOND, Face.KING));
 
         assertThat(cards.isBust()).isTrue();
     }

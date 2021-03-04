@@ -1,7 +1,10 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.result.Result;
+
+import java.util.List;
 
 public class Challenger extends Player {
     private final Name name;
@@ -21,5 +24,14 @@ public class Challenger extends Player {
             return Result.LOSE;
         }
         return Result.DRAW;
+    }
+
+    public String getName() {
+        return name.value();
+    }
+
+    @Override
+    public List<Card> getInitCards() {
+        return cards.getList();
     }
 }
