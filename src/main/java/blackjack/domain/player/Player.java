@@ -21,6 +21,10 @@ public abstract class Player {
         return cards.calculateScore();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public String getName() {
         return name;
     }

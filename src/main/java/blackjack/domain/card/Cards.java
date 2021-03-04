@@ -9,6 +9,7 @@ import javax.smartcardio.CardChannel;
 
 public class Cards {
 
+    private static final int BUST = 21;
     private final List<Card> cards;
 
     private Cards(List<Card> cards) {
@@ -50,6 +51,10 @@ public class Cards {
             sum += aceScore;
         }
         return sum;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BUST;
     }
 
     public List<Card> getCards() {

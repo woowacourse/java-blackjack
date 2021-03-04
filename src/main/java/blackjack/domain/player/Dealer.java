@@ -30,7 +30,7 @@ public class Dealer extends Player {
         result.put(this, new ArrayList<>());
         for (Gamer gamer : gamers) {
             result.put(gamer, new ArrayList<>());
-            Map<Player, ResultType> resultPerGamer = ResultType.judgeGameResult(gamer, this);
+            Map<Player, ResultType> resultPerGamer = ResultType.judgeGameResult(this, gamer);
             result.get(gamer).add(resultPerGamer.get(gamer));
             result.get(this).add(resultPerGamer.get(this));
         }
