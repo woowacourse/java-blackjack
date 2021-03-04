@@ -10,14 +10,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static final String TWO_CARDS_DEAL_OUT_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
-    public static final String PARTICIPANT_STATUS_MESSAGE = "%s: %s";
-    public static final String DELIMITER = ", ";
-    public static final String DEALER_CARD_ADD_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
-    public static final String GAME_RESULT_MESSAGE = "%s카드 : %s - 결과: %d";
-    public static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %d패 %d무";
-    public static final String DEALER = "딜러";
-    public static final String RESULT_MESSAGE = "## 최종 승패";
+    private static final String TWO_CARDS_DEAL_OUT_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
+    private static final String PARTICIPANT_STATUS_MESSAGE = "%s: %s";
+    private static final String DELIMITER = ", ";
+    private static final String DEALER_CARD_ADD_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String GAME_RESULT_MESSAGE = "%s카드 : %s - 결과: %d";
+    private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %d패 %d무";
+    private static final String DEALER = "딜러";
+    private static final String RESULT_MESSAGE = "## 최종 승패";
 
     public static void showPlayCardStatus(String name, List<Card> cards) {
         String text = String.format(PARTICIPANT_STATUS_MESSAGE, name, cards.stream()
