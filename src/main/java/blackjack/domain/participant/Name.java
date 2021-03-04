@@ -8,7 +8,7 @@ public class Name {
 
     public Name(String name) {
         if (StringUtils.isBlank(name)) {
-            throw new IllegalArgumentException("잘못된 형식의 이름입니다");
+            throw new IllegalArgumentException("공백이 들어와서는 안됩니다.");
         }
         this.name = name;
     }

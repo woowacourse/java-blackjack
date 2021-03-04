@@ -5,6 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +18,13 @@ public class Game {
 
     private Game(List<Player> players) {
         this.dealer = new Dealer();
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     public static Game of(List<String> playerNames) {
+        if (playerNames.size() == 0) {
+            throw new IllegalArgumentException("최소 1명 이상은 게임에 참여해야 합니다.");
+        }
         return new Game(playerNames.stream()
                                    .map(Player::new)
                                    .collect(Collectors.toList()));

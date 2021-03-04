@@ -39,7 +39,7 @@ public class InputView {
         if (NO_REPLY.equals(answer)) {
             return false;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(String.format("y/n 으로만 입력해야 합니다. 입력된 값 : %s", answer));
     }
 
     private static String inputString() {
