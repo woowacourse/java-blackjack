@@ -60,16 +60,6 @@ class GameTest {
     }
 
     @Test
-    @DisplayName("게이머에게 카드를 한장 준 뒤 HIT인지 아닌지 반환")
-    void drawCardToGamer() {
-        for(int i=0; i<3; i++) {
-            assertThat(game.drawCardToGamer("nabom")).isTrue();
-        }
-
-        assertThat(game.drawCardToGamer("nabom")).isFalse();
-    }
-
-    @Test
     @DisplayName("딜러에게 카드를 한장 준다.")
     void drawCardToDealer() {
         game.drawCardToDealer();

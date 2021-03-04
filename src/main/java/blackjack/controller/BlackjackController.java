@@ -61,11 +61,13 @@ public class BlackjackController {
     }
 
     private void drawCardToGamer(Game game, String gamerName) {
-        while (InputView.getYesOrNo(gamerName) && game.drawCardToGamer(gamerName)) {
+        while (InputView.getYesOrNo(gamerName) && game.isGamerDrawable(gamerName)) {
+            game.drawCardToGamer(gamerName);
+
             OutputView.printPlayersDeckState(
-                DtoAssembler.createPlayerDto(
-                    game.findGamerByName(gamerName)
-                )
+                    DtoAssembler.createPlayerDto(
+                            game.findGamerByName(gamerName)
+                    )
             );
         }
     }
@@ -81,9 +83,9 @@ public class BlackjackController {
         allPlayers.addAll(gamers);
 
         OutputView.printCurrentDeckAndScore(
-            allPlayers.stream()
-                .map(DtoAssembler::createPlayerDto)
-                .collect(toList())
+                allPlayers.stream()
+                        .map(DtoAssembler::createPlayerDto)
+                        .collect(toList())
         );
     }
 

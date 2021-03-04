@@ -13,7 +13,6 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class PlayerTest {
 
@@ -94,21 +93,22 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("게이머는 예외 발생, 딜러는 자신의 덱을 보고 상태 boolean 반환")
+    @DisplayName("자신의 덱을 보고 상태 boolean 반환")
     void isDrawable() {
         Player player = new Gamer("pobi");
 
-        Player finalPlayer = player;
-        assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(finalPlayer::isDrawable);
+        player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.EIGHT));
+        assertThat(player.isDrawable()).isTrue();
+
+        player.addCardToDeck(new Card(Symbol.HEART, CardNumber.KING));
+        player.addCardToDeck(new Card(Symbol.HEART, CardNumber.QUEEN));
+        assertThat(player.isDrawable()).isFalse();
 
         player = new Dealer();
         player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.EIGHT));
-
         assertThat(player.isDrawable()).isTrue();
 
         player.addCardToDeck(new Card(Symbol.HEART, CardNumber.EIGHT));
-
         assertThat(player.isDrawable()).isFalse();
 
     }

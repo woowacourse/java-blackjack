@@ -34,12 +34,14 @@ public class Game {
         }
     }
 
-    public boolean drawCardToGamer(String name) {
+    public void drawCardToGamer(String name) {
         Player gamer = findGamerByName(name);
 
         gamer.addCardToDeck(shuffledCards.next());
+    }
 
-        return gamer.getStatus() == Status.HIT;
+    public boolean isGamerDrawable(String name) {
+        return findGamerByName(name).isDrawable();
     }
 
     public boolean drawCardToDealer() {

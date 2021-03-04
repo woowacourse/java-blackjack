@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Status;
 import blackjack.util.BlackjackScoreCalculator;
 import blackjack.util.ScoreCalculator;
 
@@ -15,8 +16,7 @@ public class Gamer extends Player {
 
     @Override
     public boolean isDrawable() {
-        throw new UnsupportedOperationException();
+        return getStatus() == Status.HIT;
     }
-
 
 }
