@@ -9,7 +9,7 @@ public class Player extends User {
     public Player(String name) {
         super();
         validate(name);
-        this.name = name;
+        this.name = StringUtil.deleteWhiteSpaces(name);
     }
 
     private static void validate(String name) {

@@ -1,7 +1,7 @@
 package blackjack.util;
 
 public class StringUtil {
-    private static String deleteWhiteSpaces(String string) {
+    public static String deleteWhiteSpaces(String string) {
         return string.replaceAll("\\s+", "");
     }
 

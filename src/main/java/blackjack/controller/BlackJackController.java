@@ -28,7 +28,7 @@ public class BlackJackController {
         }
         users.getPlayers()
                 .forEach(player -> playGameForEachPlayer(player, cardDeck));
-        if (dealer.getScore() < DEALER_REDRAW_STANDARD) {
+        while (dealer.getScore() < DEALER_REDRAW_STANDARD) {
             dealer.hit(cardDeck.drawCard());
         }
         OutputView.printCardsOfPlayersWithScore(users);
@@ -37,7 +37,7 @@ public class BlackJackController {
 
     private void initialHit(Users users, CardDeck cardDeck) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            users.getPlayers()
+            users.gerUsers()
                     .forEach(user -> user.hit(cardDeck.drawCard()));
         }
     }
