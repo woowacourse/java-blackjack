@@ -36,7 +36,7 @@ public class BlackJackController {
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (!player.isStay()) {
+        while (!player.isStay() && !player.isBlackJack()) {
             requestHitOrNot(player);
         }
     }
