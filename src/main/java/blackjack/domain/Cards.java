@@ -26,7 +26,7 @@ public class Cards implements Comparable<Cards> {
         int totalValue = cards.stream()
                 .mapToInt(Card::value)
                 .sum();
-        if (this.containAce() && this.isBust()) {
+        if (this.containAce() && totalValue > BUST) {
             totalValue -= 10;
         }
         return totalValue;

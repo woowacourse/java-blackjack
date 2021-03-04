@@ -10,27 +10,44 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         Dealer dealer = new Dealer();
+        Users users = participateUsers();
+        List<Participant> participants = setUpParticipants(dealer, users);
+        distributeToParticipants(dealer, users);
+        showParticipantsCards(dealer, users);
+        askToUsers(users);
+        isDealerDrawable(dealer);
+        OutputView.printResults(participants);
+        OutputView.printResultBoard(dealer, new ResultBoard(dealer, users));
+    }
+
+    private Users participateUsers() {
         OutputView.printInputNames();
         List<String> names = InputView.inputNames();
-        Users users = new Users(names);
+        return new Users(names);
+    }
 
-        dealer.distribute(Deck.popTwo());
-        users.distributeToEachUser();
-
-        OutputView.printDistribute(dealer, users);
-        OutputView.printDealerCard(dealer);
-        OutputView.printUsersCards(users);
-
-        for (User user : users.users()) {
-            askForDraw(user);
-        }
-        isDealerDrawable(dealer);
+    private List<Participant> setUpParticipants(Dealer dealer, Users users) {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(users.users());
-        OutputView.printResults(participants);
-        ResultBoard resultBoard = new ResultBoard(dealer, users);
-        OutputView.printResultBoard(dealer, resultBoard);
+        return participants;
+    }
+
+    private void distributeToParticipants(Dealer dealer, Users users) {
+        dealer.distribute(Deck.popTwo());
+        users.distributeToEachUser();
+    }
+
+    private void showParticipantsCards(Dealer dealer, Users users) {
+        OutputView.printDistribute(dealer, users);
+        OutputView.printDealerCard(dealer);
+        OutputView.printUsersCards(users);
+    }
+
+    private void askToUsers(Users users) {
+        for (User user : users.users()) {
+            askForDraw(user);
+        }
     }
 
     private void askForDraw(User user) {
