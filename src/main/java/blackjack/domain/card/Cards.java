@@ -44,6 +44,14 @@ public class Cards {
         return result;
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

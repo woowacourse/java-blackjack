@@ -41,6 +41,14 @@ public class Card {
         return denomination.getName().equals("A");
     }
 
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
