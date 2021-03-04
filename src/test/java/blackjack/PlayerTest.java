@@ -73,4 +73,12 @@ public class PlayerTest {
         player.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
         assertThat(player.isBust()).isTrue();
     }
+
+    @Test
+    @DisplayName("플레이어가 승리했는지 확인")
+    void winTest() {
+        assertThat(player.getWin()).isTrue();
+        player.lose();
+        assertThat(player.getWin()).isFalse();
+    }
 }

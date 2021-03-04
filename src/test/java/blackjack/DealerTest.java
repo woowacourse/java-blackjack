@@ -68,7 +68,7 @@ public class DealerTest {
     void calculateMyCardSumWhenAceIsOne() {
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        Assertions.assertThat(dealer.calculate()).isEqualTo(13);
+        assertThat(dealer.calculate()).isEqualTo(13);
     }
 
     @ParameterizedTest
@@ -80,7 +80,7 @@ public class DealerTest {
             final CardNumber cardNumber = CardNumber.valueOf(number);
             dealer.receiveCard(new Card(cardNumber, CardType.CLOVER));
         }
-        Assertions.assertThat(dealer.calculate()).isEqualTo(expected);
+        assertThat(dealer.calculate()).isEqualTo(expected);
     }
 
     @Test
@@ -89,6 +89,21 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 승자인지 확인")
+    void isWinner() {
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
+        assertThat(dealer.isWinner(10)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 몇 판 이겼는지 확인")
+    void calculateWinCount() {
+        dealer.winSinglePlayer();
+        assertThat(dealer.getWinCount()).isEqualTo(1);
     }
 }
