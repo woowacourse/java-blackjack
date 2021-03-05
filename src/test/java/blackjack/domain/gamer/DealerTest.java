@@ -21,15 +21,16 @@ class DealerTest {
         List<Card> lowerCards = new ArrayList<>();
         lowerCards.add(Card.create(Suit.HEART, Denomination.EIGHT));
         lowerCards.add(Card.create(Suit.CLUB, Denomination.EIGHT));
-        Hands lowerHands = new Hands(lowerCards);
 
         List<Card> higherCards = new ArrayList<>();
         higherCards.add(Card.create(Suit.HEART, Denomination.EIGHT));
         higherCards.add(Card.create(Suit.CLUB, Denomination.NINE));
-        Hands higherHands = new Hands(higherCards);
 
-        final Dealer higherDealer = new Dealer(higherHands);
-        final Dealer lowerDealer = new Dealer(lowerHands);
+        final Dealer higherDealer = new Dealer();
+        final Dealer lowerDealer = new Dealer();
+
+        higherDealer.initHands(higherCards);
+        lowerDealer.initHands(lowerCards);
 
         assertAll(
                 () -> assertTrue(lowerDealer.checkBoundary()),

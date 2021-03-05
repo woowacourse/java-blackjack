@@ -6,14 +6,15 @@ import java.util.List;
 
 public class Dealer extends Gamer {
 
+    private static final String FIXED_DEALER_NAME = "딜러";
     private static final int ADD_CARD_BOUNDARY = 17;
 
-    public Dealer(Hands hands) {
-        this("딜러", hands);
+    private Dealer(String name) {
+        super(name);
     }
 
-    private Dealer(String name, Hands hands) {
-        super(name, hands);
+    public Dealer() {
+        this(FIXED_DEALER_NAME);
     }
 
     public boolean checkBoundary() {
