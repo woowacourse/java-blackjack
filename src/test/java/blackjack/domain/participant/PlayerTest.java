@@ -26,7 +26,7 @@ public class PlayerTest {
 
         player.receiveCard(card);
 
-        assertThat(player.getCardHand()).containsExactly(card);
+        assertThat(player.getCards()).containsExactly(card);
     }
 
     @ParameterizedTest(name = "플레이어 카드 합계 산출")
@@ -59,7 +59,8 @@ public class PlayerTest {
                 Arguments.of(createCards(Rank.TWO, Rank.KING), false),
                 Arguments.of(createCards(Rank.KING, Rank.KING), false),
                 Arguments.of(createCards(Rank.KING, Rank.KING, Rank.TWO), true),
-                Arguments.of(createCards(Rank.NINE, Rank.KING, Rank.TWO), false)
+                Arguments.of(createCards(Rank.NINE, Rank.KING, Rank.TWO), false),
+                Arguments.of(createCards(Rank.ACE, Rank.ACE, Rank.SIX), false)
         );
     }
 

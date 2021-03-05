@@ -10,11 +10,12 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int DEALER_THRESHOLD = 16;
+    private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
 
     public Dealer() {
-        super("딜러", Hand.createEmptyHand());
+        super(DEALER_NAME, Hand.createEmptyHand());
         this.deck = Deck.createShuffledDeck();
     }
 
@@ -54,5 +55,9 @@ public class Dealer extends Participant {
     @Override
     public int sumCard() {
         return cardHand.sumAceToEleven();
+    }
+
+    public Card getBaseCard() {
+        return cardHand.getCards().get(0);
     }
 }

@@ -20,7 +20,7 @@ public class BlackJackApplication {
         BlackJackInitializer blackJackInitializer = new BlackJackInitializer(dealer, players);
         blackJackInitializer.setBaseCardToPlayers();
 
-        OutputView.printPlayersCardHandStatus(dealer, players);
+        OutputView.printPlayersHandStatus(dealer, players);
 
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
@@ -49,9 +49,9 @@ public class BlackJackApplication {
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            if (!player.isBust() && InputView.wantsReceive(player.getName())) {
+            while (!player.isBust() && InputView.wantsReceive(player.getName())) {
                 dealer.deal(player);
-                OutputView.printCardHandStatus(player);
+                OutputView.printHandStatus(player);
             }
         }
     }

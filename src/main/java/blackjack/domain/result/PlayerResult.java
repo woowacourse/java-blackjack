@@ -21,7 +21,7 @@ public class PlayerResult {
     public static PlayerResult from(Player player, WinOrLose winOrLose) {
         return new PlayerResult(
                 player.getName(),
-                player.getCardHand(),
+                player.getCards(),
                 player.sumCard(),
                 winOrLose);
     }

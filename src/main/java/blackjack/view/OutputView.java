@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printPlayersCardHandStatus(Dealer dealer, List<Player> players) {
+    public static void printPlayersHandStatus(Dealer dealer, List<Player> players) {
         printNotice(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.", getPlayerNames(players)));
 
-        printCardHandStatus(dealer);
+        printDealerBaseHandStatus(dealer);
         for (Player player : players) {
-            printCardHandStatus(player);
+            printHandStatus(player);
         }
         System.out.println();
     }
@@ -67,10 +67,16 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d패 %d무\n", win, lose, tie);
     }
 
-    public static void printCardHandStatus(Participant participant) {
+    public static void printHandStatus(Participant participant) {
         System.out.printf("%s 카드: %s\n",
                 participant.getName(),
-                cardsToString(participant.getCardHand()));
+                cardsToString(participant.getCards()));
+    }
+
+    public static void printDealerBaseHandStatus(Dealer dealer) {
+        System.out.printf("%s 카드: %s\n",
+                dealer.getName(),
+                cardToString(dealer.getBaseCard()));
     }
 
     private static void printPlayerCardResult(PlayerResult playerResult) {

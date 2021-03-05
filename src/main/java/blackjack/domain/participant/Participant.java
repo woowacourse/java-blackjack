@@ -14,7 +14,7 @@ public abstract class Participant {
         this.cardHand = cardHand;
     }
 
-    public List<Card> getCardHand() {
+    public List<Card> getCards() {
         return cardHand.getCards();
     }
 

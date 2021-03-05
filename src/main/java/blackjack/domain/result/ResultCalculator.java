@@ -30,6 +30,6 @@ public class ResultCalculator {
             dealerResult.add(winOrLose.reverse());
         }
 
-        return new GameResult(dealer.getCardHand(), dealerCardSum, dealerResult, playersResults);
+        return new GameResult(dealer.getCards(), dealerCardSum, dealerResult, playersResults);
     }
 }
