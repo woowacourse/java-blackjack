@@ -7,10 +7,14 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<String> names) {
-        this.players = names.stream()
+    public Players(List<Player> players) {
+        this.players = players;
+    }
+
+    public static Players of(List<String> names) {
+        return new Players(names.stream()
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Player> players() {

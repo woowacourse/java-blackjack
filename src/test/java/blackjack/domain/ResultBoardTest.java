@@ -12,8 +12,8 @@ public class ResultBoardTest {
     @Test
     public void createResultBoard() {
         Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("amazzi", "dani", "brown"));
-        ResultBoard resultBoard = new ResultBoard(players, dealer);
+        Players players = Players.of(Arrays.asList("amazzi", "dani", "brown"));
+        ResultBoard resultBoard = ResultBoard.of(players, dealer);
 
         assertThat(resultBoard).isInstanceOf(ResultBoard.class);
     }

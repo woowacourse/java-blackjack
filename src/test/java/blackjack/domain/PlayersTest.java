@@ -13,7 +13,7 @@ public class PlayersTest {
     @Test
     void createUsers() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        Players players = new Players(names);
+        Players players = Players.of(names);
 
         assertThat(players).isInstanceOf(Players.class);
     }
@@ -22,7 +22,7 @@ public class PlayersTest {
     @Test
     void users() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        Players players = new Players(names);
+        Players players = Players.of(names);
 
         assertThat(players.players().size()).isEqualTo(3);
     }
@@ -31,16 +31,16 @@ public class PlayersTest {
     @Test
     void DistributeToEachUser() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        Players players = new Players(names);
+        Players players = Players.of(names);
         players.distributeToEachUser();
         assertThat(players.players().stream().allMatch(user -> user.cards.cards().size() == 2)).isTrue();
     }
 
     @DisplayName("각 사용자들의 모든 카드를 보여준다.")
     @Test
-    void showCardsByUsers(){
+    void showCardsByUsers() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        Players players = new Players(names);
+        Players players = Players.of(names);
         players.distributeToEachUser();
         List<Cards> cardsGroup = players.showCardsByUsers();
         assertThat(cardsGroup.stream().allMatch(cards -> cards.cards().size() == 2)).isTrue();

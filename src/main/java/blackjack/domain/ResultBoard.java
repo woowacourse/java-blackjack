@@ -8,11 +8,15 @@ import java.util.stream.Collectors;
 public class ResultBoard {
     private final Map<Player, Result> resultBoard;
 
-    public ResultBoard(Players players, Dealer dealer) {
-        this.resultBoard = resultByUser(players, dealer);
+    public ResultBoard(Map<Player, Result> resultBoard) {
+        this.resultBoard = resultBoard;
     }
 
-    private Map<Player, Result> resultByUser(Players players, Dealer dealer) {
+    public static ResultBoard of(Players players, Dealer dealer) {
+        return new ResultBoard(resultByUser(players, dealer));
+    }
+
+    private static Map<Player, Result> resultByUser(Players players, Dealer dealer) {
         return players.players()
                 .stream()
                 .collect(Collectors.toMap(

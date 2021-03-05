@@ -17,13 +17,13 @@ public class BlackjackController {
         proceedPlayersRound(players);
         proceedDealerRound(dealer);
         OutputView.printCardsWithTotalValue(users);
-        OutputView.printResults(dealer, new ResultBoard(players, dealer));
+        OutputView.printResults(dealer, ResultBoard.of(players, dealer));
     }
 
     private Players participatePlayers() {
         OutputView.printInputNames();
         List<String> playersNames = InputView.inputNames();
-        return new Players(playersNames);
+        return Players.of(playersNames);
     }
 
     private List<User> setUpUsers(Dealer dealer, Players players) {
