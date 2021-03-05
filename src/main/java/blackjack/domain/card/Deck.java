@@ -4,8 +4,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Deck {
-    private final LinkedList<Card> deck;
     private static final String NO_MORE_CARD_ERROR_MSG = "덱에 더 이상 남은 카드가 없습니다.";
+
+    private final LinkedList<Card> deck;
 
     private Deck(List<Card> deck) {
         this.deck = new LinkedList<>(deck);
@@ -22,8 +23,7 @@ public class Deck {
     }
 
     private static List<Card> iterateValues(Suit suit) {
-        return Arrays.stream(Value.values())
-                .filter(value -> value != Value.ACE_OF_ONE)
+        return Value.of().stream()
                 .map(value -> new Card(suit, value))
                 .collect(Collectors.toList());
     }
