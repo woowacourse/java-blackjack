@@ -9,16 +9,21 @@ public class Name {
 	private final String name;
 
 	public Name(final String name) {
-		validate(name);
+		validateNull(name);
+		validateEmpty(name);
 		this.name = name;
 	}
 
-	private void validate(final String name) {
-		if (Objects.isNull(name)) {
-			throw new IllegalPlayerNameException(NULL_NAME_ERROR);
-		}
+	// TODO
+	private void validateEmpty(final String name) {
 		if (name.isEmpty()) {
 			throw new IllegalPlayerNameException(EMPTY_NAME_ERROR);
+		}
+	}
+
+	private void validateNull(final String name) {
+		if (Objects.isNull(name)) {
+			throw new IllegalPlayerNameException(NULL_NAME_ERROR);
 		}
 	}
 

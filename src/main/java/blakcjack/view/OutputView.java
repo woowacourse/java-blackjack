@@ -1,4 +1,4 @@
-package blakcjack.View;
+package blakcjack.view;
 
 
 import blakcjack.domain.BlackjackGame;
