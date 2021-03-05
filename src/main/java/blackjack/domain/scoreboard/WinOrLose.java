@@ -31,7 +31,7 @@ public enum WinOrLose {
     }
 
     private static WinOrLose decideWinOrLoseWhenDealerIsNotBurst(User user, Dealer dealer) {
-        if (user.isSameStatus(Status.BURST)) {
+        if (user.isSameStatus(Status.BURST) || user.calculateScore() < dealer.calculateScore()) {
             return LOSE;
         }
 
