@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static blakcjack.domain.card.Deck.NO_CARD_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class DeckTest {
@@ -19,7 +18,7 @@ class DeckTest {
 
 		assertThatCode(() -> consumeAllCards(deck))
 				.doesNotThrowAnyException();
-		assertThatThrownBy(deck::drawCard).isInstanceOf(RuntimeException.class).hasMessage(NO_CARD_ERROR);
+		assertThatThrownBy(deck::drawCard).isInstanceOf(RuntimeException.class);
 	}
 
 	private void consumeAllCards(final Deck deck) {

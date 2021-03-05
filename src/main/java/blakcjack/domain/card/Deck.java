@@ -5,7 +5,6 @@ import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 import java.util.Stack;
 
 public class Deck {
-	public static final String NO_CARD_ERROR = "카드가 없습니다.";
 	private final Stack<Card> cards = new Stack<>();
 
 	public Deck(final ShuffleStrategy shuffleStrategy) {
@@ -23,7 +22,7 @@ public class Deck {
 
 	public Card drawCard() {
 		if (cards.empty()) {
-			throw new EmptyDeckException(NO_CARD_ERROR);
+			throw new EmptyDeckException();
 		}
 		return cards.pop();
 	}
