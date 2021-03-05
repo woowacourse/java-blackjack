@@ -19,7 +19,7 @@ public class ResultCalculator {
         List<PlayerResult> playersResults = new ArrayList<>();
         List<WinOrLose> dealerResult = new ArrayList<>();
 
-        int dealerCardSum = dealer.getCardSum();
+        int dealerCardSum = dealer.sumCard();
 
         for (Player player : players) {
             WinOrLose winOrLose = WinOrLose.match(player, dealerCardSum);

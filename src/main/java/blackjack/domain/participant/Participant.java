@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.game.Rule.THRESHOLD;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.List;
@@ -20,13 +18,11 @@ public abstract class Participant {
         return cardHand.getCards();
     }
 
-    public abstract int getCardSum();
-
     public String getName() {
         return name;
     }
 
-    public boolean isBust() {
-        return getCardSum() > THRESHOLD;
-    }
+    public abstract int sumCard();
+
+    public abstract boolean isBust();
 }

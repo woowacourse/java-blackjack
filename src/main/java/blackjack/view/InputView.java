@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Player;
 import java.util.Scanner;
 
 public class InputView {
@@ -15,8 +14,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static boolean wantsReceive(Player player) {
-        askShouldDrawAnotherCard(player.getName());
+    public static boolean wantsReceive(String playerName) {
+        askShouldDrawAnotherCard(playerName);
 
         //TODO n 이외의 값이 와도 false? n 이외의 값이면 어떻게 처리할지 고민
         String input = SCANNER.nextLine();

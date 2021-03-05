@@ -24,23 +24,22 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public int playerSum() {
-        int result = 0;
-        for (Card card : cards) {
-            result += card.getRankValue();
-        }
-        return result;
+    public int sumAceToOne() {
+        return cards.stream()
+                .mapToInt(Card::getRankValue)
+                .sum();
     }
 
-    public int dealerSum() {
-        int result = 0;
-        for (Card card : cards) {
-            if (card.isAce()) {
-                result += 11;
-                continue;
-            }
-            result += card.getRankValue();
+    public int sumAceToEleven() {
+        return cards.stream()
+                .mapToInt(this::addResult)
+                .sum();
+    }
+
+    private int addResult(Card card) {
+        if (card.isAce()) {
+            return 11;
         }
-        return result;
+        return card.getRankValue();
     }
 }

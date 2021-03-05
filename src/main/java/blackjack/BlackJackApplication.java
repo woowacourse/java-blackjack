@@ -49,7 +49,7 @@ public class BlackJackApplication {
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            if (!player.isBust() && InputView.wantsReceive(player)) {
+            if (!player.isBust() && InputView.wantsReceive(player.getName())) {
                 dealer.deal(player);
                 OutputView.printCardHandStatus(player);
             }

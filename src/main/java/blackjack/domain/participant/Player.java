@@ -1,11 +1,13 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.game.Rule.THRESHOLD;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
 public class Player extends Participant {
 
-    private Player(String name, Hand cardHand) {
+    public Player(String name, Hand cardHand) {
         super(name, cardHand);
     }
 
@@ -17,15 +19,31 @@ public class Player extends Participant {
         cardHand.add(card);
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public boolean isBust() {
+        return cardHand.sumAceToOne() > THRESHOLD;
     }
 
     @Override
-    public int getCardSum() {
-        //TODO 에이스
-        // 카드 뽑을 때
-        // 11로 계산해서 21이면
-        return cardHand.playerSum();
+    public int sumCard() {
+        // todo ACE 두장 => 12 반환 필요 (현재는 2반환)
+        int resultByOne = cardHand.sumAceToOne();
+        int resultByEleven = cardHand.sumAceToEleven();
+
+        // 21에 딱 맞음
+        if (resultByOne == THRESHOLD) {
+            return resultByOne;
+        }
+        if (resultByEleven == THRESHOLD) {
+            return resultByEleven;
+        }
+
+        // 둘다 21을 넘지 않는다면 큰 수 리턴
+        if (resultByEleven < THRESHOLD && resultByOne < THRESHOLD) {
+            return Math.max(resultByEleven, resultByOne);
+        }
+
+        // 하나 or 둘이 21 넘음
+        return Math.min(resultByEleven, resultByOne);
     }
 }

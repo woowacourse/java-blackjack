@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.game.Rule.THRESHOLD;
+
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -41,11 +43,16 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldReceive() {
-        return cardHand.dealerSum() <= DEALER_THRESHOLD;
+        return cardHand.sumAceToEleven() <= DEALER_THRESHOLD;
     }
 
     @Override
-    public int getCardSum() {
-        return cardHand.dealerSum();
+    public boolean isBust() {
+        return cardHand.sumAceToOne() > THRESHOLD;
+    }
+
+    @Override
+    public int sumCard() {
+        return cardHand.sumAceToEleven();
     }
 }
