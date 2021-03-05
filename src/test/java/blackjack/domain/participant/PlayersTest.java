@@ -34,7 +34,7 @@ class PlayersTest {
 
     @DisplayName("참가자들의 이름은 중복이 없어야 한다.")
     @Test
-    public void validateOverlappedNames() {
+    void validateOverlappedNames() {
         List<String> duplicatedPlayers = Arrays.asList("jason", "jason");
 
         assertThatCode(() -> {
@@ -45,7 +45,7 @@ class PlayersTest {
 
     @DisplayName("플레이어들이 카드를 2장씩 받는다.")
     @Test
-    public void receiveDefaultCards() {
+    void receiveDefaultCards() {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Players players = Players.from(Arrays.asList("jason"));
         Participant jason = players.toList()

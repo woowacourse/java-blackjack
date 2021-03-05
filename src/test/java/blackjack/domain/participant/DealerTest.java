@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DealerTest {
+class DealerTest {
 
     static Stream<Arguments> generateData() {
         return Stream.of(
@@ -43,7 +43,7 @@ public class DealerTest {
     @DisplayName("딜러는 ace를 11로 계산하고, 카드의 합계가 16이하일 때 1장 더 받을 수 있다.")
     @ParameterizedTest
     @MethodSource("generateData")
-    public void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
+    void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
         Cards cards = new Cards(inputCards);
         Dealer dealer = new Dealer();
 
@@ -56,7 +56,7 @@ public class DealerTest {
     @DisplayName("딜러와 플레이어의 점수를 비교하고 결과를 반환한다.")
     @ParameterizedTest
     @MethodSource("generateCardAndResult")
-    public void getStatisticResult(Symbol symbol, Result result) {
+    void getStatisticResult(Symbol symbol, Result result) {
         Dealer dealer = new Dealer();
         List<Player> players = Arrays.asList(new Player("jason"));
 

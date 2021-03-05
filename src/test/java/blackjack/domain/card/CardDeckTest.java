@@ -8,7 +8,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class CardDeckTest {
+class CardDeckTest {
     private static final int INIT_CARD_DECK_SIZE = Shape.values().length * Symbol.values().length;
 
     @DisplayName("52장의 카드가 아닌 카드를 입력받는 경우 생성 예외 발생")
@@ -38,9 +38,7 @@ public class CardDeckTest {
             cardDeck.draw();
         }
 
-        assertThatCode(() -> {
-            cardDeck.draw();
-        }).isInstanceOf(IllegalStateException.class)
+        assertThatCode(cardDeck::draw).isInstanceOf(IllegalStateException.class)
                 .hasMessage("더 이상 카드를 뽑을 수 없습니다.");
     }
 }

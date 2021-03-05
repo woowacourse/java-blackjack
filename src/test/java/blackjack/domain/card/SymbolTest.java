@@ -22,7 +22,7 @@ class SymbolTest {
     @DisplayName("각각의 카드 심볼은 고유한 점수를 가지고 있다.")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("getSymbolAndScore")
-    public void compareScore(Symbol symbol, int score) {
+    void compareScore(Symbol symbol, int score) {
         int symbolScore = symbol.getScore();
 
         assertThat(symbolScore).isEqualTo(score);
@@ -30,7 +30,7 @@ class SymbolTest {
 
     @DisplayName("심볼이 에이스면 true를 반환한다.")
     @Test
-    public void isAce_True() {
+    void isAce_True() {
         boolean isAce = Symbol.ACE.isAce();
 
         assertThat(isAce).isTrue();
@@ -38,7 +38,7 @@ class SymbolTest {
 
     @DisplayName("심볼이 에이스가 아니면 false를 반환한다.")
     @Test
-    public void isAce_False() {
+    void isAce_False() {
         boolean isAce = Symbol.KING.isAce();
 
         assertThat(isAce).isFalse();
@@ -46,7 +46,7 @@ class SymbolTest {
 
     @DisplayName("점수가 11점일 때 에이스가 1개 있으면 보너스 +10점 추가")
     @Test
-    public void calculateAceBonusScore_10() {
+    void calculateAceBonusScore_10() {
         int bonusScore = Symbol.ACE.calculateAceBonusScore(11, 1);
 
         assertThat(bonusScore).isEqualTo(10);
@@ -54,7 +54,7 @@ class SymbolTest {
 
     @DisplayName("점수가 12점일 때 에이스가 1개 있으면 보너스 점수는 0점")
     @Test
-    public void calculateAceBonusScore_0() {
+    void calculateAceBonusScore_0() {
         int bonusScore = Symbol.ACE.calculateAceBonusScore(12, 1);
 
         assertThat(bonusScore).isZero();
@@ -62,7 +62,7 @@ class SymbolTest {
 
     @DisplayName("점수가 2점일 때 에이스가 2개 있으면 보너스 +10점 추가")
     @Test
-    public void calculateAceBonusScoreWhenAceIsTwo() {
+    void calculateAceBonusScoreWhenAceIsTwo() {
         int bonusScore = Symbol.ACE.calculateAceBonusScore(2, 2);
 
         assertThat(bonusScore).isEqualTo(10);
