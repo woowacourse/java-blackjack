@@ -13,6 +13,9 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String SEPARATOR = ": ";
 
+    private OutputView() {
+    }
+
     public static void printParticipate(List<String> names) {
         System.out.println("딜러와 " + String.join(DELIMITER, names) + "에게 2장을 나누었습니다.");
     }
