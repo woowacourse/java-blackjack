@@ -46,6 +46,14 @@ public abstract class Participant {
         return cards.calculateScoreWhenAceIsMinimum();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public String getName() {
         return name;
     }
