@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 public class Players {
 
     private static final String DELIMITER = ",";
+    private static final int MINIMUM_PLAYERS = 2;
+    private static final int MAXIMUM_PLAYERS = 8;
     private final List<Player> playersList;
 
     public Players(List<Player> players) {
@@ -20,12 +22,19 @@ public class Players {
                 .map(Player::new)
                 .collect(Collectors.toList());
         validateDuplication(parsedPlayers);
+        validatePlayersCount(parsedPlayers);
         return new Players(parsedPlayers);
     }
 
     private static void validateDuplication(List<Player> players) {
         if (players.size() != new HashSet<>(players).size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
+        }
+    }
+
+    private static void validatePlayersCount(List<Player> parsedPlayers) {
+        if (parsedPlayers.size() < MINIMUM_PLAYERS || parsedPlayers.size() > MAXIMUM_PLAYERS) {
+            throw new IllegalArgumentException(String.format("플레이어 수는 %d명 이상, %d명 이하여합니다.", MINIMUM_PLAYERS, MAXIMUM_PLAYERS));
         }
     }
 
