@@ -30,7 +30,7 @@ public class Casino {
 
         OutputView.printFinalCardInfo(dealer, players);
         game.comparePlayersCardsWithDealer();
-        OutputView.printWinOrLoseResult(dealer, players);
+        printWinOrLoseResult(game);
     }
 
     private void askPlayersDrawCard(Game game) {
@@ -59,5 +59,14 @@ public class Casino {
         int dealerDrawCount = game.playDealerTurn();
         OutputView.printDealerDrawMessage(dealerDrawCount);
         OutputView.printMessage(DEALER_NO_MORE_DRAW_MESSAGE);
+    }
+
+    private void printWinOrLoseResult(Game game) {
+        Dealer dealer = game.getDealer();
+        List<Player> players = game.getPlayers();
+        OutputView.printWinOrLoseResult(dealer, game.getDealerResult());
+        for (Player player : players) {
+            OutputView.printWinOrLoseResult(player, player.getGameResult());
+        }
     }
 }

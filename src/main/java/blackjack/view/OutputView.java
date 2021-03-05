@@ -61,15 +61,7 @@ public class OutputView {
         System.out.printf(RESULT_PREFIX, participant.calculateResult());
     }
 
-    public static void printWinOrLoseResult(Dealer dealer, List<Player> players) {
-        printWinOrLoseResult(dealer);
-        for (Player player : players) {
-            printWinOrLoseResult(player);
-        }
-    }
-
-    private static void printWinOrLoseResult(Participant participant) {
-        GameResult gameResult = participant.getGameResult();
+    public static void printWinOrLoseResult(Participant participant, GameResult gameResult) {
         String result = gameResultToString(gameResult);
         System.out.printf(NAME_PREFIX + result, participant.getName());
     }

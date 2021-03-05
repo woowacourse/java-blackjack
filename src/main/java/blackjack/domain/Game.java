@@ -2,9 +2,11 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +60,14 @@ public class Game {
         for (Player player : players) {
             player.fight(dealer);
         }
+    }
+
+    public GameResult getDealerResult() {
+        GameResult totalPlayerResult = new GameResult();
+        for (Player player : players) {
+            totalPlayerResult.plus(player.getGameResult());
+        }
+        return totalPlayerResult.reverse();
     }
 
     public List<Player> getPlayers() {
