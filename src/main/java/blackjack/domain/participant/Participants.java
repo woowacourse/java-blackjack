@@ -12,7 +12,7 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    public Participants(List<Participant> participants) {
+    private Participants(List<Participant> participants) {
         validateNameDuplication(participants);
         this.participants = participants;
     }
