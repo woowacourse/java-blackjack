@@ -6,10 +6,10 @@ import java.util.List;
 
 public abstract class Participant {
     protected final Hand hand;
-    protected final String name;
+    protected final Name name;
     protected Status status;
 
-    public Participant(String name) {
+    public Participant(Name name) {
         this.hand = Hand.createEmptyHand();
         this.name = name;
     }
@@ -44,6 +44,6 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 }

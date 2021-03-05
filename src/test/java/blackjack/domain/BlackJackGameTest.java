@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class BlackJackGameTest {
     @Test
     void testStartGame() {
         //given
-        User user = new User("욘");
+        User user = new User(Name.from("욘"));
         //when
         BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(user));
         //then
@@ -25,9 +26,9 @@ public class BlackJackGameTest {
     @Test
     void testFindPlayingUser(){
         //given
-        User firstUser = new User("욘");
-        User secondUser = new User("웨지");
-        User thirdUser = new User("포비");
+        User firstUser = new User(Name.from("욘"));
+        User secondUser = new User(Name.from("웨지"));
+        User thirdUser = new User(Name.from("포비"));
         //when
         BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(Arrays.asList(firstUser,secondUser,thirdUser));
         //then

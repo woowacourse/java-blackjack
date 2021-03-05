@@ -14,7 +14,7 @@ class UserTest {
     @Test
     void testDrawCard(){
         //given
-        User user = new User("욘");
+        User user = new User(Name.from("욘"));
 
         //when
         user.drawCard(new Card(Suit.DIAMOND, Value.ACE));

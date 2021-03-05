@@ -3,8 +3,8 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 public class Dealer extends Participant{
-    private static final int NO_MORE_DRAW_NUMBER = 16;
-    public static final String DEALER_NAME = "딜러";
+    private static final int DEALER_MINIMUM_SCORE = 16;
+    public static final Name DEALER_NAME = Name.from("딜러");
 
     public Dealer() {
         super(DEALER_NAME);
@@ -15,6 +15,6 @@ public class Dealer extends Participant{
     }
 
     public boolean isUnderSixteen() {
-        return hand.calculateScore() < NO_MORE_DRAW_NUMBER;
+        return hand.calculateScore() < DEALER_MINIMUM_SCORE;
     }
 }
