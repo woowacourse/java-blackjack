@@ -23,7 +23,7 @@ public class Cards {
         int score = 0;
 
         if (containAceCard(cards)) {
-            score = calculate(BONUS_SCORE);
+            score = calculateContainAce();
         }
 
         if (score != EMPTY_SCORE && score <= LIMIT_SCORE) {
@@ -39,10 +39,8 @@ public class Cards {
                 .sum();
     }
 
-    private int calculate(int bonusScore) {
-        return cards.stream()
-                .mapToInt(Card::value)
-                .sum() + bonusScore;
+    private int calculateContainAce() {
+        return calculate() + BONUS_SCORE;
     }
 
     private static boolean containAceCard(List<Card> cards) {
