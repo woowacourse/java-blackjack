@@ -32,11 +32,11 @@ public enum Result {
     }
 
     public static Result of(int dealerScore, int playerScore) {
-        if (isBurst(dealerScore) && !isBurst(playerScore)) {
+        if (isBust(dealerScore) && !isBust(playerScore)) {
             return Result.WIN;
         }
 
-        if (dealerScore > playerScore || isBurst(playerScore)) {
+        if (dealerScore > playerScore || isBust(playerScore)) {
             return Result.LOSE;
         }
 
@@ -47,7 +47,7 @@ public enum Result {
         return Result.WIN;
     }
 
-    public static boolean isBurst(int score) {
+    public static boolean isBust(int score) {
         return score > BLACKJACK_VALUE;
     }
 

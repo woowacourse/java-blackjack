@@ -22,7 +22,7 @@ public class Cards {
     public int getScore() {
         int score = 0;
 
-        if (containAceCard(cards)) {
+        if (isContainAce(cards)) {
             score = calculateContainAce();
         }
 
@@ -43,7 +43,7 @@ public class Cards {
         return calculate() + BONUS_SCORE;
     }
 
-    private static boolean containAceCard(List<Card> cards) {
+    private static boolean isContainAce(List<Card> cards) {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
