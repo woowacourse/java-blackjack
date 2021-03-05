@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum Result {
+public enum GameResult {
 
     NONE("NONE"),
     DRAW("무승부"),
@@ -9,11 +9,12 @@ public enum Result {
 
     private final String name;
 
-    Result(String name) {
+    GameResult(String name) {
         this.name = name;
     }
 
     public String getName() {
         return name;
     }
+
 }
