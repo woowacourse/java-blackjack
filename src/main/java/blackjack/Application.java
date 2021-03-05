@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -15,7 +16,7 @@ public class Application {
     private static final String DECLINE = "n";
 
     public static void main(String[] args) {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Dealer dealer = new Dealer();
         List<Player> players = generatePlayers();
         Participants participants = Participants.of(dealer, players);

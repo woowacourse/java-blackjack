@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardsGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어들이 카드를 2장씩 받는다.")
     @Test
     public void receiveDefaultCards() {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Participants participants = Participants.of(dealer, participantGroup);
         Participant jason = participants.toList()
                 .get(0);

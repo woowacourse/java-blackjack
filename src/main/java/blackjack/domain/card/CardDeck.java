@@ -1,6 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -9,17 +12,9 @@ public class CardDeck {
 
     private final Deque<Card> cardDeck;
 
-    public CardDeck() {
-        List<Card> cards = Arrays.stream(Symbol.values())
-                .flatMap(this::generateCard)
-                .collect(Collectors.toList());
+    public CardDeck(List<Card> cards) {
         Collections.shuffle(cards);
         this.cardDeck = new ArrayDeque<>(cards);
-    }
-
-    private Stream<Card> generateCard(Symbol symbol) {
-        return Arrays.stream(Shape.values())
-                .map(shape -> new Card(symbol, shape));
     }
 
     public Cards drawDefaultCards() {
