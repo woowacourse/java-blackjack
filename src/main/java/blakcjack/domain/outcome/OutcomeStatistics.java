@@ -12,8 +12,8 @@ public class OutcomeStatistics {
 	private final Map<String, Outcome> playersOutcome;
 	private final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 
-	public OutcomeStatistics(BlackjackGame blackjackGame) {
-		this.playersOutcome = blackjackGame.getPlayersOutcome();
+	public OutcomeStatistics(final Map<String, Outcome> playersOutcome) {
+		this.playersOutcome = playersOutcome;
 		initializeDealerOutcome(dealerOutcome);
 		aggregateDealerOutcome();
 	}
