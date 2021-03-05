@@ -11,29 +11,29 @@ import java.util.stream.Collectors;
 public class InputView {
     public static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String INPUT_YES_OR_NO_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-
-    private static final Scanner scanner = new Scanner(System.in);
     public static final String YES_REPLY = "y";
     public static final String NO_REPLY = "n";
+    public static final String NAME_DELIMITER = ",";
+
+    private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
     }
 
-    //TODO: rawNames == null check
     public static List<String> inputPlayerNames() {
         OutputView.printMessage(INPUT_PLAYER_NAMES_MESSAGE);
         String rawNames = inputString();
-        return Arrays.stream(rawNames.split(","))
+        return Arrays.stream(rawNames.split(NAME_DELIMITER))
                      .map(String::trim)
                      .collect(Collectors.toList());
     }
 
     public static boolean inputYesOrNo(Player player) {
         OutputView.printMessage(String.format(INPUT_YES_OR_NO_MESSAGE, player.getName()));
-        return method(inputString());
+        return convertReplyToBoolean(inputString());
     }
 
-    private static boolean method(String answer) {
+    private static boolean convertReplyToBoolean(String answer) {
         if (YES_REPLY.equals(answer)) {
             return true;
         }
