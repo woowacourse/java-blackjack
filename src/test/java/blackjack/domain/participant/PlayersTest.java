@@ -25,7 +25,7 @@ class PlayersTest {
         List<Integer> dummyBettingMoneys = new ArrayList<>();
         for (int i = 0; i < playerCounts; i++) {
             playerNames.add("test" + i);
-            dummyBettingMoneys.add(i);
+            dummyBettingMoneys.add(10);
         }
 
         assertThatCode(() -> {

@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Cards {
+    private static final int BLACKJACK_CARD_COUNTS = 2;
+    private static final int BLACKJACK_CARD_SCORE = 21;
     private static final String DUPLICATION_CARDS = "중복된 카드는 보유할 수 없습니다.";
 
     private final List<Card> cards;
@@ -58,6 +60,10 @@ public class Cards {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACKJACK_CARD_COUNTS && calculateFinalScore() == BLACKJACK_CARD_SCORE;
     }
 
     public List<Card> getCards() {

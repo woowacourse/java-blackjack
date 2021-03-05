@@ -122,4 +122,21 @@ class CardsTest {
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 카드는 보유할 수 없습니다.");
     }
+
+    @DisplayName("카드가 2장이고 두 장의 합이 21이면 블랙잭이다.")
+    @Test
+    void isBlackJack_True() {
+        Cards cards = new Cards(Arrays.asList(new Card(Symbol.ACE, Shape.HEART), new Card(Symbol.KING, Shape.CLOVER)));
+
+        assertThat(cards.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("카드의 합이 21이더라도 2장이 아니면 블랙잭이 아니다.")
+    @Test
+    void isBlackJack_False() {
+        Cards cards = new Cards(Arrays.asList(new Card(Symbol.ACE, Shape.HEART), new Card(Symbol.KING, Shape.CLOVER),
+                new Card(Symbol.KING, Shape.DIAMOND)));
+
+        assertThat(cards.isBlackJack()).isFalse();
+    }
 }
