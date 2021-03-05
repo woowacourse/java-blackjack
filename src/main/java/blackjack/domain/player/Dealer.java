@@ -25,7 +25,7 @@ public class Dealer extends Participant {
             return result;
         }
 
-        result = Result.of(getCards().getScore(), player.getScore());
+        result = Result.of(getScore(), player.getScore());
         addResult(result);
 
         return result;
