@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,8 +16,16 @@ public abstract class User {
     protected String name;
     protected List<Card> cards;
 
-    protected User() {
+    protected User(String name) {
+        validate(name);
+        this.name = StringUtil.deleteWhiteSpaces(name);
         this.cards = new ArrayList<>();
+    }
+
+    private static void validate(String name) {
+        if (StringUtil.isBlank(name)) {
+            throw new IllegalArgumentException("빈 값을 입력하셨습니다. 플레이어의 이름을 입력해주세요.");
+        }
     }
 
     public void hit(Card card) {

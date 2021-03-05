@@ -7,8 +7,7 @@ public class Dealer extends User {
     private static final int DEALER_REDRAW_STANDARD = 17;
 
     public Dealer() {
-        super();
-        this.name = DEALER_NAME;
+        super(DEALER_NAME);
     }
 
     public boolean isDealerDrawScore() {
