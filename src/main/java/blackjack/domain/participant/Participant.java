@@ -35,7 +35,7 @@ public abstract class Participant {
     }
 
     public void receiveCards(Cards receivedCards) {
-        cards.add(receivedCards);
+        cards.addAll(receivedCards);
     }
 
     public int calculateFinalScore() {
