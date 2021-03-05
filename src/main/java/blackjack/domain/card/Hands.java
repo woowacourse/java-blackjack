@@ -31,7 +31,7 @@ public class Hands {
     public int calculate() {
         int sum = sumWithoutAce();
         for (int i = 0; i < countAce(); ++i) {
-            sum += CardValue.ACE.getValue();
+            sum += Denomination.ACE.getValue();
         }
         if (containsAce()) {
             sum = properSum(sum);
@@ -49,19 +49,19 @@ public class Hands {
     public boolean containsAce() {
         return cards.stream()
                 .map(Card::getCardValue)
-                .anyMatch(CardValue::isAce);
+                .anyMatch(Denomination::isAce);
     }
 
     private int sumWithoutAce() {
         return cards.stream()
-                .filter(card -> !CardValue.isAce(card.getCardValue()))
+                .filter(card -> !Denomination.isAce(card.getCardValue()))
                 .map(Card::getValue)
                 .reduce(0, Integer::sum);
     }
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> CardValue.isAce(card.getCardValue()))
+                .filter(card -> Denomination.isAce(card.getCardValue()))
                 .count();
     }
 

@@ -3,8 +3,8 @@ package blackjack.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardSymbol;
-import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hands;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -27,24 +27,24 @@ class ResultCalculatorTest {
 
     private Hands createValidPlayerHands() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.SPADE, CardValue.ACE));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.ACE));
+        cards.add(Card.create(Suit.SPADE, Denomination.ACE));
+        cards.add(Card.create(Suit.CLUB, Denomination.ACE));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.HEART, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.QUEEN)); //13
+        hands.addCard(Card.create(Suit.HEART, Denomination.ACE));
+        hands.addCard(Card.create(Suit.CLUB, Denomination.QUEEN)); //13
         System.out.println(hands.calculate());
         return hands;
     }
 
     private Hands createValidDealerHands() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.TEN));
-        cards.add(Card.create(CardSymbol.HEART, CardValue.THREE));
+        cards.add(Card.create(Suit.HEART, Denomination.TEN));
+        cards.add(Card.create(Suit.HEART, Denomination.THREE));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.SPADE, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.HEART, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.QUEEN)); //26
+        hands.addCard(Card.create(Suit.SPADE, Denomination.ACE));
+        hands.addCard(Card.create(Suit.CLUB, Denomination.ACE));
+        hands.addCard(Card.create(Suit.HEART, Denomination.ACE));
+        hands.addCard(Card.create(Suit.CLUB, Denomination.QUEEN)); //26
         System.out.println(hands.calculate());
         return hands;
     }

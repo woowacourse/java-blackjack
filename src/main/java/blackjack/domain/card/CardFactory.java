@@ -7,15 +7,15 @@ public class CardFactory {
     private static final Stack<Card> cards = new Stack<>();
 
     public static Stack<Card> generate() {
-        for (CardSymbol cardSymbol : CardSymbol.values()) {
-            addCardValue(cardSymbol);
+        for (Suit suit : Suit.values()) {
+            addCardValue(suit);
         }
         return cards;
     }
 
-    private static void addCardValue(CardSymbol cardSymbol) {
-        for (CardValue cardValue : CardValue.values()) {
-            cards.add(Card.create(cardSymbol, cardValue));
+    private static void addCardValue(Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(Card.create(suit, denomination));
         }
     }
 }

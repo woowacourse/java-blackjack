@@ -3,14 +3,14 @@ package blackjack.domain.card;
 public class Card {
 
     private final String name;
-    private final CardValue value;
+    private final Denomination value;
 
-    private Card(final CardSymbol symbol, final CardValue value) {
+    private Card(final Suit symbol, final Denomination value) {
         this.value = value;
         this.name = value.getName() + symbol.getSymbol();
     }
 
-    public static Card create(final CardSymbol symbol, final CardValue value) {
+    public static Card create(final Suit symbol, final Denomination value) {
         return new Card(symbol, value);
     }
 
@@ -22,7 +22,7 @@ public class Card {
         return value.getValue();
     }
 
-    public CardValue getCardValue() {
+    public Denomination getCardValue() {
         return value;
     }
 }
