@@ -20,7 +20,7 @@ class SymbolTest {
     }
 
     @DisplayName("각각의 카드 심볼은 고유한 점수를 가지고 있다.")
-    @ParameterizedTest(name = "{displayName}")
+    @ParameterizedTest
     @MethodSource("getSymbolAndScore")
     void compareScore(Symbol symbol, int score) {
         int symbolScore = symbol.getScore();
