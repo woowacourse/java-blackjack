@@ -33,10 +33,7 @@ public class OutputView {
     }
 
     public static void printDealerFirstCard(Card card) {
-        String suit = card.getSuit().getLetter();
-        String value = card.getValue().getLetter();
-
-        String dealerFirstCard = value + suit;
+        String dealerFirstCard = card.getLetterOfValueAndSuit();
 
         System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME.getName(), dealerFirstCard);
     }
@@ -44,7 +41,7 @@ public class OutputView {
     public static void printCardList(Participant participant) {
         String cards = participant.getCards()
                 .stream()
-                .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
+                .map(Card::getLetterOfValueAndSuit)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, participant.getName(), cards);
@@ -53,7 +50,7 @@ public class OutputView {
     public static void printCardListAndScore(Participant participant){
         String cards = participant.getCards()
                 .stream()
-                .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
+                .map(Card::getLetterOfValueAndSuit)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, participant.getName(), cards, participant.calculateScore());
@@ -66,12 +63,13 @@ public class OutputView {
     }
 
     public static void printScoreBoard(ScoreBoard scoreBoard, Dealer dealer){
-        Map<User, UserGameResult> userResults = scoreBoard.getUserResults();
-        Set<User> users = userResults.keySet();
+        Set<User> users = scoreBoard.getUserResults().keySet();
+
         printCardListAndScore(dealer);
         printCardListAndScore(users);
         println();
-        printFinalWinOrLose(scoreBoard, userResults, users);
+
+        printFinalWinOrLose(scoreBoard, scoreBoard.getUserResults(), users);
     }
 
     private static void printCardListAndScore(Set<User> users) {

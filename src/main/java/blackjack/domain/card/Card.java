@@ -19,6 +19,10 @@ public class Card {
         return value;
     }
 
+    public String getLetterOfValueAndSuit() {
+        return value.getLetter() + suit.getLetter();
+    }
+
     public int getScore() {
         return value.getScore();
     }
