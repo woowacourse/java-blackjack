@@ -13,7 +13,7 @@ public class InputView {
     private static final Pattern PATTERN = Pattern.compile("^[가-힣a-zA-Z]*$");
     private final Scanner scanner;
 
-    public InputView(Scanner scanner) {
+    public InputView(final Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -33,13 +33,13 @@ public class InputView {
         return playerNameGroup;
     }
 
-    private void validatePlayerName(String name) {
+    private void validatePlayerName(final String name) {
         if (!PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
         }
     }
 
-    public String getCardOrPass(String playerName) {
+    public String getCardOrPass(final String playerName) {
         System.out.println(String.format(PLAYER_ADD_CARD_MESSAGE, playerName));
         return getNextLine();
     }

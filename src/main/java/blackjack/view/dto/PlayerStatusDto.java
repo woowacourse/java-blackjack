@@ -7,7 +7,7 @@ public class PlayerStatusDto {
     private final List<String> playerCardStatus;
     private final int playerScore;
 
-    public PlayerStatusDto(String playerName, List<String> playerCardStatus, int playerScore) {
+    public PlayerStatusDto(final String playerName, final List<String> playerCardStatus, final int playerScore) {
         this.playerName = playerName;
         this.playerCardStatus = playerCardStatus;
         this.playerScore = playerScore;

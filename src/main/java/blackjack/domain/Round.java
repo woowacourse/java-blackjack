@@ -18,7 +18,7 @@ public class Round {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Round(List<Card> cards, Dealer dealer, List<Player> players) {
+    public Round(final List<Card> cards, final Dealer dealer, final List<Player> players) {
         this.shuffledCards = new ArrayList<>(cards);
         this.dealer = dealer;
         this.players = new ArrayList<>(players);

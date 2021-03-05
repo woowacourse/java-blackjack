@@ -14,12 +14,12 @@ public enum Outcome {
     private final String name;
     private final BiPredicate<Integer, Integer> biPredicate;
 
-    Outcome(String name, BiPredicate<Integer, Integer> biPredicate) {
+    Outcome(final String name, final BiPredicate<Integer, Integer> biPredicate) {
         this.name = name;
         this.biPredicate = biPredicate;
     }
 
-    public static Outcome findOutcome(int dealerScore, int playerScore) {
+    public static Outcome findOutcome(final int dealerScore, final int playerScore) {
         Outcome outcome = getOutcomeWhenBuster(dealerScore, playerScore);
         if (!Objects.isNull(outcome)) {
             return outcome;
@@ -30,7 +30,7 @@ public enum Outcome {
                 .orElseThrow(() -> new IllegalArgumentException("체크할수 없습!!"));
     }
 
-    private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {
+    private static Outcome getOutcomeWhenBuster(final int dealerScore, final int playerScore) {
         if (dealerScore > GAME_OVER_SCORE && playerScore > GAME_OVER_SCORE) {
             return WIN;
         }
@@ -45,7 +45,7 @@ public enum Outcome {
         return null;
     }
 
-    public static Outcome reverseResult(Outcome outcome) {
+    public static Outcome reverseResult(final Outcome outcome) {
         if (outcome == WIN) {
             return LOSE;
         }
@@ -61,15 +61,15 @@ public enum Outcome {
         return name;
     }
 
-    public static boolean isWin(Outcome outcome) {
+    public static boolean isWin(final Outcome outcome) {
         return outcome == WIN;
     }
 
-    public static boolean isLose(Outcome outcome) {
+    public static boolean isLose(final Outcome outcome) {
         return outcome == LOSE;
     }
 
-    public static boolean isDraw(Outcome outcome) {
+    public static boolean isDraw(final Outcome outcome) {
         return outcome == DRAW;
     }
 }

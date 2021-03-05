@@ -32,17 +32,17 @@ public enum Number {
     private final int score;
     private final int secondScore;
 
-    Number(String name, int score, int secondScore) {
+    Number(final String name, final int score, final int secondScore) {
         this.name = name;
         this.score = score;
         this.secondScore = secondScore;
     }
 
-    Number(String name, int score) {
+    Number(final String name, final int score) {
         this(name, score, 0);
     }
 
-    public static Number from(String name) {
+    public static Number from(final String name) {
         Number number = NUMBERS.get(name);
         if (Objects.isNull(number)) {
             throw new IllegalArgumentException(String.format(WRONG_NUMBER_EXCEPTION_MESSAGE, name));
@@ -62,7 +62,7 @@ public enum Number {
         return this.equals(ACE);
     }
 
-    public int useSecondScore(int score) {
+    public int useSecondScore(final int score) {
         return score - this.score + secondScore;
     }
 }

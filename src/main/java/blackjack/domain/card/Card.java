@@ -18,12 +18,12 @@ public class Card {
         }
     }
 
-    private Card(Symbol symbol, Number number) {
+    private Card(final Symbol symbol, final Number number) {
         this.symbol = symbol;
         this.number = number;
     }
 
-    public static Card of(String symbolName, String numberName) {
+    public static Card of(final String symbolName, final String numberName) {
         Symbol symbol = Symbol.from(symbolName);
         Number number = Number.from(numberName);
 

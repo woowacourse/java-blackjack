@@ -16,12 +16,12 @@ public class Player {
     private final List<Card> cards = new ArrayList<>();
     private final String name;
 
-    public Player(String name) {
+    public Player(final String name) {
         validate(name);
         this.name = name;
     }
 
-    private void validate(String name) {
+    private void validate(final String name) {
         if (!PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
         }
@@ -31,7 +31,7 @@ public class Player {
         return Collections.unmodifiableList(cards);
     }
 
-    public void addFirstCards(List<Card> cards) {
+    public void addFirstCards(final List<Card> cards) {
         this.cards.addAll(cards);
     }
 
@@ -39,16 +39,16 @@ public class Player {
         cards.clear();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
-    public boolean isGameOver(int gameOverScore) {
+    public boolean isGameOver(final int gameOverScore) {
         int score = calculateScore(gameOverScore);
         return (score > gameOverScore);
     }
 
-    public int calculateScore(int gameOverScore) {
+    public int calculateScore(final int gameOverScore) {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -63,11 +63,11 @@ public class Player {
         return score;
     }
 
-    private boolean belowScore(int score, int gameOverScore) {
+    private boolean belowScore(final int score, final int gameOverScore) {
         return score <= gameOverScore;
     }
 
-    private boolean emptyAceCard(int aceCount) {
+    private boolean emptyAceCard(final int aceCount) {
         return aceCount > 0;
     }
 

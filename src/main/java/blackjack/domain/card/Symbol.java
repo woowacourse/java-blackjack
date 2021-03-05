@@ -21,11 +21,11 @@ public enum Symbol {
 
     private final String name;
 
-    Symbol(String name) {
+    Symbol(final String name) {
         this.name = name;
     }
 
-    public static Symbol from(String name) {
+    public static Symbol from(final String name) {
         Symbol symbol = SYMBOLS.get(name);
         if (Objects.isNull(symbol)) {
             throw new IllegalArgumentException(String.format(WRONG_SYMBOL_EXCEPTION_MESSAGE, name));

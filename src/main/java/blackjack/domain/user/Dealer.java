@@ -17,7 +17,7 @@ public class Dealer {
         return name;
     }
 
-    public void addFirstCards(List<Card> cards) {
+    public void addFirstCards(final List<Card> cards) {
         this.cards.addAll(cards);
     }
 
@@ -25,13 +25,13 @@ public class Dealer {
         return Collections.unmodifiableList(cards);
     }
 
-    public boolean isGameOver(int gameOverScore) {
+    public boolean isGameOver(final int gameOverScore) {
         int score = calculateScore(gameOverScore);
 
         return (score > TURN_OVER_COUNT);
     }
 
-    public int calculateScore(int gameOverScore) {
+    public int calculateScore(final int gameOverScore) {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -46,11 +46,11 @@ public class Dealer {
         return score;
     }
 
-    private boolean belowScore(int score, int gameOverScore) {
+    private boolean belowScore(final int score, final int gameOverScore) {
         return score <= gameOverScore;
     }
 
-    private boolean emptyAceCard(int aceCount) {
+    private boolean emptyAceCard(final int aceCount) {
         return aceCount > 0;
     }
 
@@ -60,7 +60,7 @@ public class Dealer {
                 .count();
     }
 
-    public void addCard(Card makeOneCard) {
+    public void addCard(final Card makeOneCard) {
         cards.add(makeOneCard);
     }
 

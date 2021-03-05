@@ -8,7 +8,7 @@ public class RoundStatusDto {
     private final List<PlayerStatusDto> playerStatusDto;
     private final int dealerScore;
 
-    public RoundStatusDto(String dealerName, List<String> dealerCardStatus, List<PlayerStatusDto> playerStatusDto, int dealerScore) {
+    public RoundStatusDto(final String dealerName, final List<String> dealerCardStatus, final List<PlayerStatusDto> playerStatusDto, final int dealerScore) {
         this.dealerName = dealerName;
         this.dealerCardStatus = dealerCardStatus;
         this.playerStatusDto = playerStatusDto;

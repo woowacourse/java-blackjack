@@ -32,7 +32,7 @@ public class GameController {
         OutputView.showOutComes(Result.finishGame(round.getDealer(), round.getPlayers()));
     }
 
-    private void showFinalStatus(Round round) {
+    private void showFinalStatus(final Round round) {
         OutputView.showFinalStatus(new RoundStatusDto(round.getDealerName(),
                 round.getDealerCardStatus(),
                 round.getPlayers().stream()
@@ -41,7 +41,7 @@ public class GameController {
                 round.getDealer().calculateScore(GAME_OVER_SCORE)));
     }
 
-    private RoundStatusDto getRoundStatusDto(Round round) {
+    private RoundStatusDto getRoundStatusDto(final Round round) {
         RoundStatusDto roundStatusDto = new RoundStatusDto(round.getDealerName(),
                 round.getDealerCardStatus(),
                 round.getPlayers()
@@ -52,24 +52,24 @@ public class GameController {
         return roundStatusDto;
     }
 
-    private void addDealerCard(Round round) {
+    private void addDealerCard(final Round round) {
         if (round.addDealerCard()) {
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
     }
 
-    private void addPlayersCardOrPass(Round round) {
+    private void addPlayersCardOrPass(final Round round) {
         List<Player> players = round.getPlayers();
         for (Player player : players) {
             addCardOrPass(round, player);
         }
     }
 
-    private PlayerStatusDto getPlayerStatusDto(Player player) {
+    private PlayerStatusDto getPlayerStatusDto(final Player player) {
         return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE));
     }
 
-    private void addCardOrPass(Round round, Player player) {
+    private void addCardOrPass(final Round round, final Player player) {
         String answer = "";
         while (!player.isGameOver(GAME_OVER_SCORE) && !answer.equals(NO)) {
             answer = inputView.getCardOrPass(player.getName());
@@ -77,7 +77,7 @@ public class GameController {
         }
     }
 
-    private void addCardOrPassByInput(Round round, Player player, String answer) {
+    private void addCardOrPassByInput(final Round round, final Player player, final String answer) {
         if (answer.equals(YES)) {
             player.addCard(round.makeOneCard());
             OutputView.showPlayCardStatus(player.getName(), player.getCards());
