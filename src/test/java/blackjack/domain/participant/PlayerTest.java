@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class PlayerTest {
-
+    private static final int BETTING_MONEY = 1000;
     private static final List<Card> CARDS_SCORE_19 = Arrays.asList(
             new Card(Symbol.ACE, Shape.HEART),
             new Card(Symbol.KING, Shape.HEART),
@@ -52,6 +52,19 @@ class PlayerTest {
         );
     }
 
+    @DisplayName("더 받을 수 있는가 : ACE를 1로 했을 때 카드 합이 21 미만일 경우 true, 그 이상인 경우 false를 반환한다.")
+    @ParameterizedTest
+    @MethodSource("generateData")
+    void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
+        Cards cards = new Cards(inputCards);
+        Player player = new Player("jason", 100);
+
+        player.receiveCards(cards);
+        boolean isAbleToReceiveCard = player.isAbleToReceiveCard();
+
+        assertThat(isAbleToReceiveCard).isEqualTo(result);
+    }
+
     @DisplayName("플레이어의 배팅 금액은 양의 정수여야한다.")
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
@@ -62,128 +75,75 @@ class PlayerTest {
                 .hasMessage("배팅 금액은 양의 정수여야합니다.");
     }
 
-    @DisplayName("ACE를 1로 했을 때 카드 합이 21 미만일 경우 true, 그 이상인 경우 false를 반환한다.")
-    @ParameterizedTest(name = "{displayName}")
-    @MethodSource("generateData")
-    void isAbleToReceiveCard(List<Card> inputCards, boolean result) {
-        Cards cards = new Cards(inputCards);
-        Player player = new Player("jason");
-
-        player.receiveCards(cards);
-        boolean isAbleToReceiveCard = player.isAbleToReceiveCard();
-
-        assertThat(isAbleToReceiveCard).isEqualTo(result);
+    private int calculateProfitMoney(List<Card> playerCards, List<Card> dealerCards) {
+        Player player = new Player("json", BETTING_MONEY);
+        player.receiveCards(new Cards(playerCards));
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(dealerCards));
+        return player.calculateProfitMoney(dealer);
     }
 
     @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트면 해당 플레이어는 배팅 금액을 잃는다")
     @Test
     void loseBettingMoney_BothBust() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_BUST));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BUST));
+        int profitMoney = calculateProfitMoney(CARDS_BUST, CARDS_BUST);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
     }
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 배팅 금액 원금을 는다")
+    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 배팅 금액 원금을 얻는다")
     @Test
     void earnProfitMoney_DealerBust() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_BLACKJACK));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BUST));
+        int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BUST);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(bettingMoney);
+        assertThat(profitMoney).isEqualTo(BETTING_MONEY);
     }
 
     @DisplayName("딜러가 블랙일 때 : 플레이어가 블랙잭이면 배팅 금액 원금을 얻는다")
     @Test
     void earnProfitMoney_DealerBlackJack() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_BLACKJACK));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BLACKJACK));
+        int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BLACKJACK);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(bettingMoney);
+        assertThat(profitMoney).isEqualTo(BETTING_MONEY);
     }
 
     @DisplayName("딜러가 블랙일 때 : 플레이어가 21점이더라도 배팅 금액을 무조건 잃는다")
     @Test
     void loseBettingMoney_DealerBlackJack() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_SCORE_21));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BLACKJACK));
+        int profitMoney = calculateProfitMoney(CARDS_SCORE_21, CARDS_BLACKJACK);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
     }
 
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 버스트면 배팅 금액을 잃는다")
     @Test
     void loseBettingMoney_PlayerBust() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_BUST));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
+        int profitMoney = calculateProfitMoney(CARDS_BUST, CARDS_SCORE_19);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
     }
 
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 낮다면 배팅 금액을 잃는다")
     @Test
     void loseBettingMoney_PlayerLessScore() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_SCORE_19));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_20));
+        int profitMoney = calculateProfitMoney(CARDS_SCORE_19, CARDS_SCORE_20);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
     }
 
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 블랙잭이면 배팅 금액의 1.5배를 얻는다")
     @Test
     void earnBettingMoney_PlayerBlackJack() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_BLACKJACK));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
+        int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_SCORE_19);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo((int) (1.5 * bettingMoney));
+        assertThat(profitMoney).isEqualTo((int) (1.5 * BETTING_MONEY));
     }
 
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 높으 배팅 금액 원금만큼 얻는다")
     @Test
     void earnBettingMoney_PlayerMoreScore() {
-        int bettingMoney = 1000;
-        Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_SCORE_21));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
+        int profitMoney = calculateProfitMoney(CARDS_SCORE_21, CARDS_SCORE_19);
 
-        int profitMoney = player.calculateProfitMoney(dealer);
-
-        assertThat(profitMoney).isEqualTo(bettingMoney);
+        assertThat(profitMoney).isEqualTo(BETTING_MONEY);
     }
 }

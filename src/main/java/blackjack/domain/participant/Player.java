@@ -9,11 +9,6 @@ public class Player extends Participant {
 
     private final int bettingMoney;
 
-    public Player(String name) {
-        super(name);
-        this.bettingMoney = 0;
-    }
-
     public Player(String name, int bettingMoney) {
         super(name);
         validateBettingMoney(bettingMoney);

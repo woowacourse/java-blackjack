@@ -22,7 +22,7 @@ class ParticipantTest {
     @ValueSource(strings = {"   ", " ", ""})
     void validateParticipantName(String name) {
         assertThatCode(() -> {
-            new Player(name);
+            new Player(name, 100);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.");
     }
@@ -31,14 +31,14 @@ class ParticipantTest {
     @Test
     void validateParticipantNameWhenNull() {
         assertThatCode(() -> {
-            new Player(null);
+            new Player(null, 100);
         }).isInstanceOf(NullPointerException.class);
     }
 
     @DisplayName("게임 참가자는 1장의 카드를 뽑을 수 있다.")
     @Test
     void drawCard() {
-        Participant participant = new Player("jason");
+        Participant participant = new Player("jason", 100);
         Card card = new Card(Symbol.EIGHT, Shape.CLOVER);
 
         participant.receiveCard(card);
@@ -50,7 +50,7 @@ class ParticipantTest {
     @DisplayName("게임 참가자는 복수장의 카드를 뽑을 수 있다.")
     @Test
     void drawCards() {
-        Participant participant = new Player("jason");
+        Participant participant = new Player("jason", 100);
         List<Card> cardList = Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND), new Card(Symbol.FIVE, Shape.HEART));
         Cards cards = new Cards(cardList);
 
