@@ -35,7 +35,7 @@ public class OutputView {
         for (Card card : cardList) {
             output.add(card.toString());
         }
-        System.out.println(name + "카드: " + String.join(DELIMITER, output) + " - 결과: " + cards.getScore());
+        System.out.println(name + "카드: " + String.join(DELIMITER, output) + " - 결과: " + cards.calculateScore());
     }
 
     public static void printOneMoreCard() {

@@ -20,6 +20,6 @@ class CardsTest {
 
         Cards cards = new Cards(playerCards);
 
-        assertThat(cards.getScore()).isEqualTo(13);
+        assertThat(cards.calculateScore()).isEqualTo(13);
     }
 }

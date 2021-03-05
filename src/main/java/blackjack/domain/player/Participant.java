@@ -29,11 +29,11 @@ public abstract class Participant {
     public abstract boolean canDrawOneMore(int score);
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_COUNT && cards.getScore() == BLACKJACK_VALUE;
+        return cards.size() == BLACKJACK_CARD_COUNT && cards.calculateScore() == BLACKJACK_VALUE;
     }
 
     public int getScore() {
-        return cards.getScore();
+        return cards.calculateScore();
     }
 
     public Cards getCards() {

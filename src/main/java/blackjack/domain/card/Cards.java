@@ -19,7 +19,7 @@ public class Cards {
         this.cards = cards;
     }
 
-    public int getScore() {
+    public int calculateScore() {
         int score = 0;
 
         if (isContainAce(cards)) {
