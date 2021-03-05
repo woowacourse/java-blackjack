@@ -3,35 +3,27 @@ package blackjack.domain;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 public enum Result {
-    WIN("승", 1),
-    STAND_OFF("무", 0),
-    LOSE("패", -1);
+    WIN("승", (playerScore, dealerScore) -> playerScore > dealerScore),
+    STAND_OFF("무", Integer::equals),
+    LOSE("패", (playerScore, dealerScore) -> playerScore < dealerScore);
 
     private final String result;
-    private final int compareValue;
+    private final BiPredicate<Integer, Integer> scoreComparePredicate;
 
-    Result(String result, int compareValue) {
+    Result(String result, BiPredicate<Integer, Integer> scoreComparePredicate) {
         this.result = result;
-        this.compareValue = compareValue;
+        this.scoreComparePredicate = scoreComparePredicate;
     }
 
-    public static Result decide(Dealer dealer, Player player) {
-        if (dealer.cards.isBust() && !player.cards.isBust()) {
-            return WIN;
-        }
-        if (dealer.cards.isBust() && player.cards.isBust()) {
-            return STAND_OFF;
-        }
-        if (!dealer.cards.isBust() && player.cards.isBust()) {
-            return LOSE;
-        }
+    public static Result decide(int playerScore, int dealerScore) {
         return Arrays.stream(values())
-                .filter(value -> value.compareValue == player.cards.compareTo(dealer.cards))
+                .filter(value -> value.scoreComparePredicate.test(playerScore, dealerScore))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("승패 결과 조건에 매치되지 않습니다."));
     }
 
     public static Map<Result, Integer> countByResults(List<Result> results) {

@@ -27,6 +27,10 @@ public abstract class User {
         this.cards.combine(Deck.popOne());
     }
 
+    public int score() {
+        return cards.calculateTotalValue();
+    }
+
     public Cards showCards() {
         return this.cards;
     }

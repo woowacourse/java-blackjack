@@ -17,7 +17,7 @@ public class ResultBoard {
     private void putResultByUser(Dealer dealer, Players players) {
         players.players()
                 .forEach(user -> {
-                    this.resultBoard.put(user, Result.decide(dealer, user));
+                    this.resultBoard.put(user, Result.decide(user.score(), dealer.score()));
                 });
     }
 

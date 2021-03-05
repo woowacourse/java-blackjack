@@ -79,9 +79,9 @@ public class PlayerTest {
         assertThat(cards.cards().size()).isEqualTo(2);
     }
 
-    @DisplayName("플레이어의 결과를 산출한다.")
+    @DisplayName("플레이어의 결과를 산출한다. - 버스트여서 패")
     @Test
-    public void decideBustUserLose() {
+    public void decideBustUserLose1() {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
         dealer.receiveCards(new Cards(Arrays.asList(
@@ -94,5 +94,37 @@ public class PlayerTest {
                 new Card(Shape.HEART, Value.QUEEN)
         )));
         assertThat(player.produceResult(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("플레이어의 결과를 산출한다. - 버스트 아니고 패")
+    @Test
+    public void decideBustUserLose2() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("amazzi");
+        dealer.receiveCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        player.receiveCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO)
+        )));
+        assertThat(player.produceResult(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("플레이어의 결과를 산출한다. - 무승부")
+    @Test
+    public void decideBustUserStandOff() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("amazzi");
+        dealer.receiveCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        player.receiveCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        assertThat(player.produceResult(dealer)).isEqualTo(Result.STAND_OFF);
     }
 }
