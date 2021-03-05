@@ -28,10 +28,16 @@ public class Cards {
     }
 
     public void add(Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException(DUPLICATION_CARDS);
+        }
         cards.add(card);
     }
 
     public void addAll(Cards targetCards) {
+        if (cards.containsAll(targetCards.cards)) {
+            throw new IllegalArgumentException(DUPLICATION_CARDS);
+        }
         cards.addAll(targetCards.cards);
     }
 

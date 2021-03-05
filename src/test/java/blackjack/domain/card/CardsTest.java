@@ -98,4 +98,28 @@ class CardsTest {
 
         assertThat(minimumScore).isEqualTo(11);
     }
+
+    @DisplayName("카드를 1장 추가할 때 중복이 존재하는 경우 예외 발생")
+    @Test
+    void addDuplicationCard() {
+        Cards cards = new Cards();
+        cards.add(new Card(Symbol.ACE, Shape.HEART));
+
+        assertThatCode(() -> {
+            cards.add(new Card(Symbol.ACE, Shape.HEART));
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 카드는 보유할 수 없습니다.");
+    }
+
+    @DisplayName("카드를 여러 장 추가할 때 중복이 존재하는 경우 예외 발생")
+    @Test
+    void addDuplicationCards() {
+        Cards targetCards = new Cards(CardsGenerator.generateCards());
+        Cards cards = new Cards(Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER)));
+
+        assertThatCode(() -> {
+            targetCards.addAll(cards);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 카드는 보유할 수 없습니다.");
+    }
 }
