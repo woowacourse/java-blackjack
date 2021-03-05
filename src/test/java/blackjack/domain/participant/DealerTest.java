@@ -62,7 +62,7 @@ public class DealerTest {
 
         dealer.receiveCard(new Card(Symbol.FIVE, Shape.CLOVER));
         players.get(0).receiveCard(new Card(symbol, Shape.CLOVER));
-        Map<Result, Long> resultMap = dealer.getStatisticsResult(players);
+        Map<Result, Long> resultMap = dealer.aggregateResultStatistics(players);
         long resultCounts = resultMap.get(result);
 
         assertThat(resultCounts).isEqualTo(1L);

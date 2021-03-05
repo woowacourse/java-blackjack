@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.vo.Result;
 
 public class Player extends Participant {
-    private static final int MAXIMUM_SCORE_LIMIT = 21;
+    private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 21;
 
     public Player(String name) {
         super(name);
@@ -12,7 +12,7 @@ public class Player extends Participant {
     @Override
     public boolean isAbleToReceiveCard() {
         int minimumScore = calculateScoreWhenAceIsMinimum();
-        return minimumScore < MAXIMUM_SCORE_LIMIT;
+        return minimumScore < MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 
     public Result judgeResult(Dealer dealer) {

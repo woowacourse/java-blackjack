@@ -78,7 +78,7 @@ public class OutputView {
     public static void printFinalResult(Dealer dealer, List<Player> players) {
         printNewLine();
         System.out.println("## 최종 승패");
-        Map<Result, Long> map = dealer.getStatisticsResult(players);
+        Map<Result, Long> map = dealer.aggregateResultStatistics(players);
         long winCounts = map.get(Result.WIN);
         long lossCounts = map.get(Result.LOSE);
         long drawCounts = map.get(Result.DRAW);

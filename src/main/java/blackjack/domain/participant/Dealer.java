@@ -23,13 +23,12 @@ public class Dealer extends Participant {
         return score <= MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 
-    public Map<Result, Long> getStatisticsResult(List<Player> players) {
-        Map<Result, Long> statisticsResult = players.stream()
+    public Map<Result, Long> aggregateResultStatistics(List<Player> players) {
+        Map<Result, Long> resultStatistics = players.stream()
                 .map(player -> player.judgeResult(this))
                 .collect(Collectors.groupingBy(this::replaceWinWithLose, () -> new EnumMap<>(Result.class), Collectors.counting()));
-        Arrays.stream(Result.values())
-                .forEach(result -> statisticsResult.putIfAbsent(result, DEFAULT_VALUE));
-        return statisticsResult;
+        initializeWhenKeyIsEmpty(resultStatistics);
+        return resultStatistics;
     }
 
     private Result replaceWinWithLose(Result result) {
@@ -40,5 +39,10 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
         return Result.DRAW;
+    }
+
+    private void initializeWhenKeyIsEmpty(Map<Result, Long> resultStatistics) {
+        Arrays.stream(Result.values())
+                .forEach(result -> resultStatistics.putIfAbsent(result, DEFAULT_VALUE));
     }
 }
