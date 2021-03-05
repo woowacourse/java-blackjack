@@ -18,7 +18,7 @@ class CardTest {
         Card card = new Card(suit, value);
 
         //then
-        assertThat(card.getSuit()).isEqualTo(suit);
-        assertThat(card.getValue()).isEqualTo(value);
+        assertThat(card.isSameSuit(suit)).isTrue();
+        assertThat(card.isSameValue(value)).isTrue();
     }
 }

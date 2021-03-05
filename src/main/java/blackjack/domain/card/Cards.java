@@ -1,12 +1,11 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.painting.Value;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.stream.IntStream;
+import java.util.Optional;
+import java.util.function.Consumer;
+
+import static blackjack.domain.card.painting.Value.ACE;
 
 public class Cards extends ArrayList<Card> {
     private static final int BLACK_JACK = 21;
@@ -19,12 +18,15 @@ public class Cards extends ArrayList<Card> {
         int score = sumScore();
 
         while (score > BLACK_JACK && hasAce()) {
-            OptionalInt indexOfAce = getIndexOfAce();
-            indexOfAce.ifPresent(i -> this.set(i, new Card(this.get(i).getSuit(), Value.ACE_OF_ONE)));
+            getAce().ifPresent(changeAceToAceOfOne());
             score = sumScore();
         }
 
         return score;
+    }
+
+    private Consumer<Card> changeAceToAceOfOne() {
+        return card -> this.set(indexOf(card), card.toAceOfOne());
     }
 
     private int sumScore() {
@@ -35,14 +37,12 @@ public class Cards extends ArrayList<Card> {
 
     private boolean hasAce() {
         return this.stream()
-                .map(Card::getValue)
-                .anyMatch(value -> value == Value.ACE);
+                .anyMatch(value -> value.isSameValue(ACE));
     }
 
-    private OptionalInt getIndexOfAce() {
-        return IntStream.range(0, this.size())
-                .filter(i -> this.get(i).isAce())
+    private Optional<Card> getAce() {
+        return this.stream()
+                .filter(Card::isAce)
                 .findFirst();
     }
-
 }

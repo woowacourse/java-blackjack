@@ -5,7 +5,8 @@ import blackjack.domain.card.painting.Value;
 
 import java.util.Objects;
 
-import static blackjack.domain.card.painting.Value.*;
+import static blackjack.domain.card.painting.Value.ACE;
+import static blackjack.domain.card.painting.Value.ACE_OF_ONE;
 
 public class Card {
     private final Suit suit;
@@ -20,12 +21,24 @@ public class Card {
         return value == ACE;
     }
 
-    public Suit getSuit() {
-        return suit;
+    public Card toAceOfOne() {
+        return new Card(this.suit, ACE_OF_ONE);
     }
 
-    public Value getValue() {
-        return value;
+    public boolean isSameSuit(Suit suit) {
+        return this.suit == suit;
+    }
+
+    public String getSuitLetter() {
+        return suit.getLetter();
+    }
+
+    public boolean isSameValue(Value value) {
+        return this.value == value;
+    }
+
+    public String getValueLetter() {
+        return value.getLetter();
     }
 
     public int getScore() {

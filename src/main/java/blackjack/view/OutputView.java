@@ -4,20 +4,15 @@ import blackjack.domain.card.Card;
 import blackjack.domain.scoreboard.ScoreBoard;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.Resultable;
-import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.Participant;
-import blackjack.domain.user.User;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.joining;
 
 public class OutputView {
     private static final String COMMA_AND_BLANK = ", ";
@@ -40,18 +35,13 @@ public class OutputView {
     }
 
     public static void printDealerFirstCard(Card card) {
-        String suit = card.getSuit().getLetter();
-        String value = card.getValue().getLetter();
-
-        String dealerFirstCard = value + suit;
-
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, dealerFirstCard);
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, card.getSuitLetter() + card.getValueLetter());
     }
 
     public static void printCardList(Participant participant) {
         String cards = participant.getCards()
                 .stream()
-                .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
+                .map(card -> card.getValueLetter() + card.getSuitLetter())
                 .collect(joining(COMMA_AND_BLANK));
 
         System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, participant.getName(), cards);
@@ -60,7 +50,7 @@ public class OutputView {
     public static void printCardListAndScore(Resultable gameResult) {
         String cards = gameResult.getCards()
                 .stream()
-                .map(card -> card.getValue().getLetter() + card.getSuit().getLetter())
+                .map(card -> card.getValueLetter() + card.getSuitLetter())
                 .collect(joining(COMMA_AND_BLANK));
 
         System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, gameResult.getName(), cards, gameResult.getScore());
@@ -76,26 +66,20 @@ public class OutputView {
     }
 
     public static void printScoreBoard(ScoreBoard scoreBoard) {
-        Map<Name, UserGameResult> userAndResult = scoreBoard.getUserResults();
-        Set<Name> users = scoreBoard.getUserResults().keySet();
-
-        List<Resultable> userResults = scoreBoard.getUserResults().keySet().stream()
-                .map(userAndResult::get)
-                .collect(toList());
-
         printCardListAndScore(scoreBoard.getDealerGameResult());
-        printCardListAndScore(userResults);
+        printCardListAndScore(new ArrayList<>(scoreBoard.getUserResults().values()));
         println();
-        printFinalWinOrLose(scoreBoard, userAndResult, users);
+        printFinalWinOrLose(scoreBoard);
     }
 
-    private static void printFinalWinOrLose(ScoreBoard scoreBoard, Map<Name, UserGameResult> userResults, Set<Name> users) {
+    private static void printFinalWinOrLose(ScoreBoard scoreBoard) {
         System.out.println(FINAL_WIN_OR_LOSE_MSG);
         System.out.println(createDealerResultMessage(scoreBoard));
 
-        users.stream()
-                .map(user -> user + COLON + userResults.get(user).getWinOrLose().getCharacter())
-                .forEach(System.out::println);
+        scoreBoard.getUserResults().forEach(
+                (name, userGameResult) ->
+                        System.out.println(name + COLON + userGameResult.getWinOrLose().getCharacter())
+        );
     }
 
     private static String createDealerResultMessage(ScoreBoard scoreBoard) {
