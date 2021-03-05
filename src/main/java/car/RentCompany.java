@@ -20,12 +20,6 @@ public class RentCompany {
         }
         return report.toString();
     }
-
-    //                "Sonata : 15리터" + NEWLINE +
-//            "K5 : 20리터" + NEWLINE +
-//            "Sonata : 12리터" + NEWLINE +
-//            "Avante : 20리터" + NEWLINE +
-//            "K5 : 30리터" + NEWLINE
     public void addCar(final Car car) {
         cars.add(car);
     }
