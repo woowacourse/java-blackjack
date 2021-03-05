@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
-    private static final Deque<Card> DECK = new ArrayDeque<>();
+    private static final Deque<Card> DECK;
     private static final int START_COUNT = 0;
 
     static {
@@ -13,7 +13,7 @@ public class Deck {
         Arrays.stream(Shape.values())
                 .forEach(shape -> cards.addAll(createByShape(shape)));
         shuffle(cards);
-        DECK.addAll(cards);
+        DECK = new ArrayDeque<>(cards);
     }
 
     private static List<Card> createByShape(Shape shape) {
