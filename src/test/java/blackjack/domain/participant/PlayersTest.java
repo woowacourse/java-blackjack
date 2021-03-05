@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardsGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -66,9 +65,8 @@ class PlayersTest {
         Participant jason = players.toList()
                 .get(0);
 
-        List<Card> jasonCards = jason.getCards();
         players.receiveDefaultCards(cardDeck);
 
-        assertThat(jasonCards).hasSize(2);
+        assertThat(jason.getCards()).hasSize(2);
     }
 }

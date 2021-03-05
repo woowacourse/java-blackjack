@@ -37,10 +37,8 @@ public class Cards {
     }
 
     public void addAll(Cards targetCards) {
-        if (cards.containsAll(targetCards.cards)) {
-            throw new IllegalArgumentException(DUPLICATION_CARDS);
-        }
-        cards.addAll(targetCards.cards);
+        targetCards.cards
+                .forEach(this::add);
     }
 
     public int calculateFinalScore() {
