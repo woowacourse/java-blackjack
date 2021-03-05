@@ -43,12 +43,9 @@ public class BlackJackController {
     }
 
     private boolean requestHitOrNot(Player player) {
-        if(player.isBlackJack() || player.isBust()){
+        if (player.isBlackJack() || player.isBust()) {
             return false;
         }
-        if (InputView.isHit(player.getName())) {
-            return true;
-        }
-        return false;
+        return InputView.isHit(player.getName());
     }
 }

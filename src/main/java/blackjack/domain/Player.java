@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.util.StringUtil;
-
 public class Player extends User {
 
     public Player(String name) {
@@ -14,7 +11,7 @@ public class Player extends User {
             return ResultType.WIN;
         }
 
-        if (this.getScore() < dealerScore || this.getScore() == Card.BUST) {
+        if (this.getScore() < dealerScore || this.isBust()) {
             return ResultType.LOSE;
         }
 

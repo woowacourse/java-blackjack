@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.util.BlackJackConstant;
 import blackjack.util.StringUtil;
 
 import java.util.ArrayList;
@@ -8,10 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
-    private static final int BLACKJACK_SIZE_CONDITION = 2;
-    private static final int TEN_SCORE = 10;
-    private static final int ACE_CHECK_SCORE = 11;
-    private static final int BLACKJACK_SCORE = 21;
+
 
     protected String name;
     protected List<Card> cards;
@@ -42,7 +40,7 @@ public abstract class User {
 
     public int getScore() {
         if (this.isBlackJack()) {
-            return Card.BLACKJACK_SCORE;
+            return BlackJackConstant.BLACKJACK_SCORE;
         }
 
         int score = this.cards.stream()
@@ -64,28 +62,28 @@ public abstract class User {
 
     public boolean isBlackJack() {
         if (this.cards.stream().anyMatch(Card::isAce) &&
-                this.cards.size() == BLACKJACK_SIZE_CONDITION) {
+                this.cards.size() == BlackJackConstant.BLACKJACK_SIZE_CONDITION) {
             return cards.stream()
-                    .anyMatch(card -> card.getScore() == TEN_SCORE);
+                    .anyMatch(card -> card.getScore() == BlackJackConstant.TEN_SCORE);
         }
         return false;
     }
 
     public boolean isBust() {
-        return this.getScore() == Card.BUST;
+        return this.getScore() == BlackJackConstant.BUST;
     }
 
     private int checkBust(int score) {
-        if (score > BLACKJACK_SCORE) {
-            return Card.BUST;
+        if (score > BlackJackConstant.BLACKJACK) {
+            return BlackJackConstant.BUST;
         }
         return score;
     }
 
     private int checkAce(int score) {
         if (this.cards.stream()
-                .anyMatch(Card::isAce) && score <= ACE_CHECK_SCORE) {
-            return TEN_SCORE;
+                .anyMatch(Card::isAce) && score <= BlackJackConstant.ACE_CHECK_SCORE) {
+            return BlackJackConstant.TEN_SCORE;
         }
         return 0;
     }

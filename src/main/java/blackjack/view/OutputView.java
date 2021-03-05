@@ -5,6 +5,7 @@ import blackjack.domain.ResultType;
 import blackjack.domain.User;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
+import blackjack.util.BlackJackConstant;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,10 +34,10 @@ public class OutputView {
     }
 
     private static String makeResultComment(int score) {
-        if (score == Card.BLACKJACK_SCORE) {
+        if (score == BlackJackConstant.BLACKJACK_SCORE) {
             return "블랙잭";
         }
-        if (score == Card.BUST) {
+        if (score == BlackJackConstant.BUST) {
             return "버스트";
         }
         return Integer.toString(score);

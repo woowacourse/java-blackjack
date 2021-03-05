@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Suit;
+import blackjack.util.BlackJackConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class UsersTest {
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭일 때")
     @Test
     void checkWinOrLoseWhenDealerHasBlackJackTest() {
-        Map<User, ResultType> resultMap = users.checkWinOrLose(Card.BLACKJACK_SCORE);
+        Map<User, ResultType> resultMap = users.checkWinOrLose(BlackJackConstant.BLACKJACK);
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
                 put(player, ResultType.DRAW);

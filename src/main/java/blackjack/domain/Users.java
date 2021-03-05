@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Users {
-    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
+    private final int INITIAL_DRAW_CARD_NUMBER = 2;
 
     private final List<User> users = new ArrayList<>();
 
