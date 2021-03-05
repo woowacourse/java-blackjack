@@ -86,8 +86,7 @@ public class BlackjackController {
 
     private void calculateBlackJackGameResult(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            dealer.matchCards(player.getCards());
-            player.matchCards(dealer.getCards());
+            player.calculateGameResult(dealer);
         }
     }
 
