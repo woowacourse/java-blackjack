@@ -36,7 +36,7 @@ public class BlackjackController {
         drawDealerCard(dealer);
         OutputView.printPlayersScoreInfo(dealer, gamers);
         GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
-        OutputView.printGameResult(gameResult);
+        OutputView.printGameResult(gameResult, dealer, gamers);
     }
 
     private List<Gamer> initGamers(String[] gamerNames) {
@@ -66,7 +66,7 @@ public class BlackjackController {
     private void drawDealerCard(Dealer dealer) {
         while (dealer.canDraw()) {
             dealer.addCard(deck.draw());
-            OutputView.printDealerOnemoreDrawMessage();
+            OutputView.printDealerOneMoreDrawMessage();
         }
     }
 }

@@ -1,12 +1,13 @@
 package blackjack.domain.result;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameResult {
-    private static final String NOT_EXIST_DEALER = "[ERROR] 게임 결과에 딜러가 존재하지 않습니다.";
     private final Map<Player, List<ResultType>> gameResult;
 
     private GameResult(Map<Player, List<ResultType>> gameResult) {
@@ -21,19 +22,12 @@ public class GameResult {
         return gameResult.get(player);
     }
 
-    public List<ResultType> getDealerResult() {
-        Player dealer = gameResult.keySet()
-            .stream()
-            .filter(player -> player.getName().equals("딜러"))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER));
+    public List<ResultType> getDealerResult(Dealer dealer) {
         return gameResult.get(dealer);
     }
 
-    public Map<Player, ResultType> getGamersResult() {
-        return gameResult.keySet()
-            .stream()
-            .filter(player -> !player.getName().equals("딜러"))
-            .collect(Collectors.toMap(key -> key, key -> gameResult.get(key).get(0)));
+    public Map<Player, ResultType> getGamersResult(List<Gamer> gamers) {
+        return gamers.stream()
+                .collect(Collectors.toMap(gamer -> gamer, gamer -> gameResult.get(gamer).get(0)));
     }
 }
