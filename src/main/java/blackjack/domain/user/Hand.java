@@ -18,15 +18,15 @@ public class Hand {
         this.cards = new ArrayList<>(cards);
     }
 
-    public static Hand createEmptyHand(){
+    public static Hand createEmptyHand() {
         return new Hand(Collections.emptyList());
     }
 
-    public void add(Card card){
+    public void add(Card card) {
         cards.add(card);
     }
 
-    public int size(){
+    public int size() {
         return cards.size();
     }
 
@@ -48,7 +48,7 @@ public class Hand {
                 .findFirst();
     }
 
-    private boolean hasAce(){
+    private boolean hasAce() {
         return cards.stream()
                 .map(Card::getValue)
                 .anyMatch(value -> value == Value.ACE);
@@ -64,7 +64,7 @@ public class Hand {
                 .sum();
     }
 
-    public Card getFirstCard(){
+    public Card getFirstCard() {
         return cards.get(FIRST_INDEX);
     }
 

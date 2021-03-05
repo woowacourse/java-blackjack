@@ -26,7 +26,7 @@ public class BlackJackGameTest {
 
     @DisplayName("아직 게임 중인 user를 찾는다")
     @Test
-    void testFindPlayingUser(){
+    void testFindPlayingUser() {
         //given
         User firstUser = new User(Name.from("욘"));
         User secondUser = new User(Name.from("웨지"));

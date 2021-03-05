@@ -13,6 +13,7 @@ public abstract class Participant {
         this.hand = Hand.createEmptyHand();
         this.name = name;
     }
+
     public void firstDraw(Card first, Card second) {
         drawCard(first);
         drawCard(second);
@@ -31,11 +32,11 @@ public abstract class Participant {
         return hand.size();
     }
 
-    public boolean isSameStatus(Status status){
+    public boolean isSameStatus(Status status) {
         return this.status == status;
     }
 
-    public void changeStatus(){
+    public void changeStatus() {
         status = Status.of(hand.calculateScore());
     }
 

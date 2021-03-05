@@ -22,7 +22,7 @@ class UserGameResultTest {
         );
 
         //when
-        UserGameResult userGameResult = new UserGameResult(resultCards, "유저",WinOrLose.WIN);
+        UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN);
 
         //then
         assertThat(userGameResult.calculateScore()).isEqualTo(20);

@@ -26,7 +26,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Boolean askMoreDraw(String userName){
+    public static Boolean askMoreDraw(String userName) {
         System.out.printf(MORE_DRAW_MSG_FORMAT, userName);
         String yesOrNo = SCANNER.nextLine();
         validateYesOrNo(yesOrNo);
@@ -35,7 +35,7 @@ public class InputView {
 
     private static void validateYesOrNo(String yesOrNo) {
         if (!yesOrNo.equalsIgnoreCase(YES) && !yesOrNo.equalsIgnoreCase(NO)) {
-            throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT,YES, NO));
+            throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
         }
     }
 

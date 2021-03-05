@@ -20,7 +20,6 @@ public class BlackjackGameController {
 
         processUserRound(blackjackGame);
         OutputView.println();
-
         processDealerRound(blackjackGame);
 
         createResultAndPrint(blackjackGame);
@@ -62,7 +61,7 @@ public class BlackjackGameController {
 
     private static void askHitOrStay(BlackjackGame blackjackGame) {
         User currentUser = blackjackGame.findFirstCanPlayUser();
-        try{
+        try {
             userDrawOrStop(blackjackGame, currentUser, InputView.askMoreDraw(currentUser.getName()));
             printUserCurrentCards(currentUser);
         } catch (IllegalArgumentException e) {

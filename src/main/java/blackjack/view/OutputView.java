@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.scoreboard.ScoreBoard;
+import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
@@ -47,7 +47,7 @@ public class OutputView {
         System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, participant.getName(), cards);
     }
 
-    public static void printCardListAndScore(Participant participant){
+    public static void printCardListAndScore(Participant participant) {
         String cards = participant.getCards()
                 .stream()
                 .map(Card::getLetterOfValueAndSuit)
@@ -62,7 +62,7 @@ public class OutputView {
         println();
     }
 
-    public static void printScoreBoard(ScoreBoard scoreBoard, Dealer dealer){
+    public static void printScoreBoard(ScoreBoard scoreBoard, Dealer dealer) {
         Set<User> users = scoreBoard.getUserResults().keySet();
 
         printCardListAndScore(dealer);

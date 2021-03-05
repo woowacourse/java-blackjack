@@ -29,7 +29,7 @@ public class ScoreBoardTest {
                 Arrays.asList(
                         new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
                         new Card(Suit.HEART, Value.ACE))
-                ,first.getName(), WinOrLose.DRAW); //15
+                , first.getName(), WinOrLose.DRAW); //15
 
         UserGameResult secondUserGameResult = new UserGameResult(
                 Arrays.asList(
@@ -39,7 +39,7 @@ public class ScoreBoardTest {
 
         UserGameResult thirdUserGameResult = new UserGameResult(
                 Arrays.asList(new Card(Suit.CLOVER, Value.TWO), new Card(Suit.HEART, Value.TWO)),
-                third.getName(),WinOrLose.LOSE);
+                third.getName(), WinOrLose.LOSE);
 
         UserGameResult fourthUserGameResult = new UserGameResult(
                 Arrays.asList(new Card(Suit.DIAMOND, Value.TWO), new Card(Suit.SPADE, Value.TWO)),

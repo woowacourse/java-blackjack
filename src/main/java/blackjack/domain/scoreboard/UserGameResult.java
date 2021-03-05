@@ -22,7 +22,7 @@ public class UserGameResult {
         return gameResult.getResultCards();
     }
 
-    public WinOrLose getWinOrLose(){
+    public WinOrLose getWinOrLose() {
         return winOrLose;
     }
 

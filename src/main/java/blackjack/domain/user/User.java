@@ -15,7 +15,7 @@ public class User extends Participant {
         }
     }
 
-    public void stopUser(){
+    public void stopUser() {
         status = Status.STOP;
     }
 

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CardTest {
     @DisplayName("suit와 value를 주어 Card를 생성한다")
     @ParameterizedTest
-    @CsvSource({"SPADE,TWO","CLOVER,THREE","HEART,ACE","DIAMOND,JACK"})
+    @CsvSource({"SPADE,TWO", "CLOVER,THREE", "HEART,ACE", "DIAMOND,JACK"})
     void cardTest(Suit suit, Value value) {
         //given
         //when

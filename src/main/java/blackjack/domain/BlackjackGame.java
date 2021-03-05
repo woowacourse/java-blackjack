@@ -51,13 +51,13 @@ public class BlackjackGame {
         return dealer.getFirstCard();
     }
 
-    public User findFirstCanPlayUser(){
+    public User findFirstCanPlayUser() {
         return users.toList().stream()
                 .filter(User::canContinueGame)
                 .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
     }
 
-    public Card draw(){
+    public Card draw() {
         return deck.draw();
     }
 
@@ -65,18 +65,18 @@ public class BlackjackGame {
         return Collections.unmodifiableList(users.toList());
     }
 
-    public List<String> getUserNames(){
+    public List<String> getUserNames() {
         return users.toList().stream()
                 .map(User::getName)
                 .collect(Collectors.toList());
     }
 
-    public ScoreBoard createScoreBoard(){
+    public ScoreBoard createScoreBoard() {
         return new ScoreBoard(
                 users.toList().stream()
-                .collect(
-                        toMap(Function.identity(), this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
-                )
+                        .collect(
+                                toMap(Function.identity(), this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
+                        )
                 , createDealerGameResult());
     }
 
@@ -84,7 +84,7 @@ public class BlackjackGame {
         return new GameResult(dealer.getCards(), dealer.getName());
     }
 
-    public boolean existCanContinueUser(){
+    public boolean existCanContinueUser() {
         return users.toList().stream()
                 .anyMatch(User::canContinueGame);
     }

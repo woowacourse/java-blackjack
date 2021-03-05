@@ -13,20 +13,20 @@ public class ScoreBoard {
     private final Map<User, UserGameResult> userResults;
     private final GameResult gameResult;
 
-    public ScoreBoard(Map<User, UserGameResult> userResults, GameResult gameResult){
+    public ScoreBoard(Map<User, UserGameResult> userResults, GameResult gameResult) {
         this.userResults = userResults;
         this.gameResult = gameResult;
     }
 
-    public Map<User, UserGameResult> getUserResults(){
+    public Map<User, UserGameResult> getUserResults() {
         return Collections.unmodifiableMap(userResults);
     }
 
-    public GameResult getDealerGameResult(){
+    public GameResult getDealerGameResult() {
         return gameResult;
     }
 
-    public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
+    public Map<WinOrLose, Long> dealerWinOrLoseCounts() {
         return userResults.keySet().stream()
                 .map(userResults::get)
                 .map(UserGameResult::getWinOrLose)
