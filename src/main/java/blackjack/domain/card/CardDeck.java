@@ -1,9 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,7 +19,7 @@ public class CardDeck {
     }
 
     private void validateCardCounts(List<Card> cards) {
-        int cardCounts = cards.size();
+        int cardCounts = new HashSet<>(cards).size();
         if (cardCounts != VALID_CARD_COUNTS) {
             throw new IllegalArgumentException(INVALID_CARD_COUNTS);
         }
