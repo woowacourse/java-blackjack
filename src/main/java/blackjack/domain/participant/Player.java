@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.game.ProfitWeight;
 import blackjack.domain.vo.Result;
 
 public class Player extends Participant {
@@ -33,41 +34,8 @@ public class Player extends Participant {
     }
 
     public int calculateProfitMoney(Dealer dealer) {
-        if (dealer.isBust()) {
-            return calculateProfitMoneyWhenDealerBust();
-        }
-        if (dealer.isBlackJack()) {
-            return calculateProfitMoneyWhenDealerBlackJack();
-        }
-        return calculateProfitMoneyWhenNormalSituation(dealer);
-
-    }
-
-    private int calculateProfitMoneyWhenDealerBust() {
-        if (isBust()) {
-            return -1 * bettingMoney;
-        }
-        return bettingMoney;
-    }
-
-    private int calculateProfitMoneyWhenDealerBlackJack() {
-        if (isBlackJack()) {
-            return bettingMoney;
-        }
-        return -1 * bettingMoney;
-    }
-
-    private int calculateProfitMoneyWhenNormalSituation(Dealer dealer) {
-        if (isBust()) {
-            return -1 * bettingMoney;
-        }
-        if (isBlackJack()) {
-            return (int) (1.5 * bettingMoney);
-        }
-        if (this.calculateFinalScore() > dealer.calculateFinalScore()) {
-            return bettingMoney;
-        }
-        return -1 * bettingMoney;
+        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, this);
+        return (int) (bettingMoney * profitWeight.getWeight());
     }
 
     public Result judgeResult(Dealer dealer) {

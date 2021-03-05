@@ -142,7 +142,7 @@ class PlayerTest {
         assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
     }
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 배팅 금액 원금을 얻는다")
+    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 배팅 금액 원금을 는다")
     @Test
     void earnProfitMoney_DealerBust() {
         int bettingMoney = 1000;
