@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.util.StringUtil;
 
 public class Player extends User {
-    boolean isStay = false;
 
     public Player(String name) {
         super(name);
@@ -20,14 +19,5 @@ public class Player extends User {
         }
 
         return ResultType.DRAW;
-    }
-
-    public void stay() {
-        this.isStay = true;
-    }
-
-    @Override
-    public boolean isStay() {
-        return this.isStay || getScore() == Card.BUST;
     }
 }

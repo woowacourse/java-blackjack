@@ -36,17 +36,19 @@ public class BlackJackController {
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (!player.isStay() && !player.isBlackJack()) {
-            requestHitOrNot(player);
+        while (requestHitOrNot(player)) {
+            player.hit(cardDeck.drawCard());
+            OutputView.printCardsOfPlayer(player);
         }
     }
 
-    private void requestHitOrNot(Player player) {
-        if (InputView.isHit(player.getName())) {
-            player.hit(cardDeck.drawCard());
-            OutputView.printCardsOfPlayer(player);
-            return;
+    private boolean requestHitOrNot(Player player) {
+        if(player.isBlackJack() || player.isBust()){
+            return false;
         }
-        player.stay();
+        if (InputView.isHit(player.getName())) {
+            return true;
+        }
+        return false;
     }
 }

@@ -32,8 +32,6 @@ public abstract class User {
         cards.add(card);
     }
 
-    public abstract boolean isStay();
-
     public boolean isPlayer() {
         return this instanceof Player;
     }
@@ -71,6 +69,10 @@ public abstract class User {
                     .anyMatch(card -> card.getScore() == TEN_SCORE);
         }
         return false;
+    }
+
+    public boolean isBust() {
+        return this.getScore() == Card.BUST;
     }
 
     private int checkBust(int score) {
