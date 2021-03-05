@@ -5,6 +5,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.PlayerStatusDto;
 
 import java.util.List;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class GameController {
     private void addCardOrPassByInput(final Round round, final Player player, final String answer) {
         if (answer.equals(YES)) {
             player.addCard(round.makeOneCard());
-            OutputView.showPlayCardStatus(player.getName(), player.getCards());
+            OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE)));
         }
     }
 
