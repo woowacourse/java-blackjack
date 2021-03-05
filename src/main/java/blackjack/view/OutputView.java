@@ -38,7 +38,7 @@ public class OutputView {
 
         String dealerFirstCard = value + suit;
 
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, dealerFirstCard);
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME.getName(), dealerFirstCard);
     }
 
     public static void printCardList(Participant participant) {
@@ -88,7 +88,7 @@ public class OutputView {
     }
 
     private static String createDealerResultMessage(ScoreBoard scoreBoard) {
-        return Dealer.DEALER_NAME + COLON + Arrays.stream(WinOrLose.values())
+        return Dealer.DEALER_NAME.getName() + COLON + Arrays.stream(WinOrLose.values())
                 .map(winOrLose -> scoreBoard.dealerWinOrLoseCounts()
                         .getOrDefault(winOrLose, DEFAULT_COUNT) + winOrLose.getCharacter())
                 .collect(Collectors.joining(BLANK));
@@ -96,6 +96,10 @@ public class OutputView {
 
     public static void println() {
         System.out.println();
+    }
+
+    public static void printMessage(String message) {
+        System.out.println(message);
     }
 
 }
