@@ -26,7 +26,7 @@ public class PlayerTest {
         )));
         Cards cards = player.cards;
 
-        assertThat(cards.cards().size()).isEqualTo(2);
+        assertThat(cards.cards()).hasSize(2);
     }
 
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
@@ -64,7 +64,7 @@ public class PlayerTest {
         )));
         player.draw();
         Cards cards = player.cards;
-        assertThat(cards.cards().size()).isEqualTo(3);
+        assertThat(cards.cards()).hasSize(3);
     }
 
     @DisplayName("카드 두장을 공개한다.")
@@ -76,6 +76,6 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
         Cards cards = player.showCards();
-        assertThat(cards.cards().size()).isEqualTo(2);
+        assertThat(cards.cards()).hasSize(2);
     }
 }

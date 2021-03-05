@@ -24,7 +24,7 @@ public class PlayersTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = new Players(names);
 
-        assertThat(players.players().size()).isEqualTo(3);
+        assertThat(players.players()).hasSize(3);
     }
 
     @DisplayName("각 사용자에게 초기에 카드 두장을 배분한다.")
@@ -38,7 +38,7 @@ public class PlayersTest {
 
     @DisplayName("각 사용자들의 모든 카드를 보여준다.")
     @Test
-    void showCardsByPlayers(){
+    void showCardsByPlayers() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = new Players(names);
         players.distributeToEachPlayer();
