@@ -66,6 +66,10 @@ public class Cards {
         return cards.size() == BLACKJACK_CARD_COUNTS && calculateFinalScore() == BLACKJACK_CARD_SCORE;
     }
 
+    public boolean isBust() {
+        return calculateFinalScore() > BLACKJACK_CARD_SCORE;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

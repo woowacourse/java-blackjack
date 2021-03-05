@@ -15,6 +15,17 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 class CardsTest {
 
+    private static final List<Card> CARDS_SCORE_21 = Arrays.asList(
+            new Card(Symbol.ACE, Shape.HEART),
+            new Card(Symbol.KING, Shape.HEART),
+            new Card(Symbol.TEN, Shape.HEART)
+    );
+    private static final List<Card> CARDS_SCORE_22 = Arrays.asList(
+            new Card(Symbol.JACK, Shape.HEART),
+            new Card(Symbol.TEN, Shape.HEART),
+            new Card(Symbol.TWO, Shape.HEART)
+    );
+
     private static Stream<Arguments> getCardOverMaximum() {
         return Stream.of(Arguments.of(Arrays.asList(new Card(Symbol.ACE, Shape.CLOVER),
                 new Card(Symbol.JACK, Shape.DIAMOND),
@@ -138,5 +149,21 @@ class CardsTest {
                 new Card(Symbol.KING, Shape.DIAMOND)));
 
         assertThat(cards.isBlackJack()).isFalse();
+    }
+
+    @DisplayName("카드의 합이 21을 초과하면 버스트이다")
+    @Test
+    void isBust_True() {
+        Cards cards = new Cards(CARDS_SCORE_22);
+
+        assertThat(cards.isBust()).isTrue();
+    }
+
+    @DisplayName("카드의 합이 21을 초과하지 않으면 버스트가 아니다")
+    @Test
+    void isBust_False() {
+        Cards cards = new Cards(CARDS_SCORE_21);
+
+        assertThat(cards.isBust()).isFalse();
     }
 }
