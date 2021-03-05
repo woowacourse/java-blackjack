@@ -32,6 +32,21 @@ public class Player extends Participant {
         return minimumScore < MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 
+    public int calculateProfitMoney(Dealer dealer) {
+        if (dealer.isBust()) {
+            return calculateProfitMoneyWhenDealerBust();
+        }
+        return 0;
+
+    }
+
+    private int calculateProfitMoneyWhenDealerBust() {
+        if (isBust()) {
+            return -1 * bettingMoney;
+        }
+        return bettingMoney;
+    }
+
     public Result judgeResult(Dealer dealer) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = calculateFinalScore();
