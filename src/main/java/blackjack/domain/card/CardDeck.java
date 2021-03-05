@@ -11,6 +11,7 @@ public class CardDeck {
     private static final int VALID_CARD_COUNTS = Symbol.values().length * Shape.values().length;
     private static final int DEFAULT_CARD_DRAW_COUNTS = 2;
     private static final String INVALID_CARD_COUNTS = "카드덱 생성에 필요한 카드의 숫자가 유효하지 않습니다.";
+    private static final String CANNOT_DRAW_CARD = "더 이상 카드를 뽑을 수 없습니다.";
 
     private final Deque<Card> cardDeck;
 
@@ -35,6 +36,9 @@ public class CardDeck {
     }
 
     public Card draw() {
+        if (cardDeck.isEmpty()) {
+            throw new IllegalStateException(CANNOT_DRAW_CARD);
+        }
         return cardDeck.pop();
     }
 

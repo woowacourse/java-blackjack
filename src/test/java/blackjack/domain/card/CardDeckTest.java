@@ -51,4 +51,18 @@ public class CardDeckTest {
 
         assertThat(cardSize).isEqualTo(2);
     }
+
+    @DisplayName("카드 덱이 비어있는 경우 추가로 카드를 뽑으려고 시도하면 예외 발생")
+    @Test
+    void cannotDrawCard() {
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
+        for (int i = 0; i < INIT_CARD_DECK_SIZE; i++) {
+            cardDeck.draw();
+        }
+
+        assertThatCode(() -> {
+            cardDeck.draw();
+        }).isInstanceOf(IllegalStateException.class)
+                .hasMessage("더 이상 카드를 뽑을 수 없습니다.");
+    }
 }
