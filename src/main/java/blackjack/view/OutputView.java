@@ -57,7 +57,7 @@ public class OutputView {
         return playerName + " 카드: " + playerCardInfo;
     }
 
-    public static void printDealerOnemoreDrawMessage() {
+    public static void printDealerOneMoreDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -69,12 +69,12 @@ public class OutputView {
                 .printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.calculateScore()));
     }
 
-    public static void printGameResult(GameResult gameResult) {
+    public static void printGameResult(GameResult gameResult, Dealer dealer, List<Gamer> gamers) {
         System.out.println();
         System.out.println("## 최종 승패");
-        List<ResultType> dealerResult = gameResult.getDealerResult();
+        List<ResultType> dealerResult = gameResult.getDealerResult(dealer);
         System.out.println("딜러: " + resultStatisticToString(dealerResult));
-        for (Entry<Player, ResultType> result : gameResult.getGamersResult().entrySet()) {
+        for (Entry<Player, ResultType> result : gameResult.getGamersResult(gamers).entrySet()) {
             System.out.printf("%s: %s\n", result.getKey().getName(), result.getValue().getValue());
         }
     }
