@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    @DisplayName("플레이어가 버스트면 플레이어는 패배한다.")
+    @DisplayName("플레이어가 버스트면, 플레이어는 패배하고 딜러는 승리한다.")
     @Test
     void testPlayerBustLose() {
         Player player = new Player("플레이어");
@@ -26,9 +26,10 @@ class PlayerTest {
 
         player.calculateGameResult(dealer);
         assertThat(player.getResult()).isEqualTo(GameResult.LOSE);
+        assertThat(dealer.getResultCount(GameResult.WIN)).isEqualTo(1);
     }
 
-    @DisplayName("딜러만 버스트면 플레이어는 승리한다.")
+    @DisplayName("딜러만 버스트면, 플레이어는 승리하고 딜러는 패배한다.")
     @Test
     void testDealerBustWin() {
         Player player = new Player("플레이어");
@@ -42,9 +43,10 @@ class PlayerTest {
 
         player.calculateGameResult(dealer);
         assertThat(player.getResult()).isEqualTo(GameResult.WIN);
+        assertThat(dealer.getResultCount(GameResult.LOSE)).isEqualTo(1);
     }
 
-    @DisplayName("플레이어 카드 점수가 높으면, 승리한다.")
+    @DisplayName("플레이어 카드 점수가 높으면, 플레이어는 승리하고 딜러는 패배한다.")
     @Test
     void testScoreWin() {
         Player player = new Player("플레이어");
@@ -57,9 +59,10 @@ class PlayerTest {
 
         player.calculateGameResult(dealer);
         assertThat(player.getResult()).isEqualTo(GameResult.WIN);
+        assertThat(dealer.getResultCount(GameResult.LOSE)).isEqualTo(1);
     }
 
-    @DisplayName("플레이어 카드 점수가 낮으면, 패배한다.")
+    @DisplayName("플레이어 카드 점수가 낮으면, 플레이어는 패배하고 딜러는 승리한다.")
     @Test
     void testScoreLose() {
         Player player = new Player("플레이어");
@@ -72,9 +75,10 @@ class PlayerTest {
 
         player.calculateGameResult(dealer);
         assertThat(player.getResult()).isEqualTo(GameResult.LOSE);
+        assertThat(dealer.getResultCount(GameResult.WIN)).isEqualTo(1);
     }
 
-    @DisplayName("딜러와 플레이어의 카드점수가 같으면, 무승부다.")
+    @DisplayName("딜러와 플레이어의 카드점수가 같으면, 플레이어와 딜러는 무승부다.")
     @Test
     void testScoreDraw() {
         Player player = new Player("플레이어");
@@ -87,6 +91,7 @@ class PlayerTest {
 
         player.calculateGameResult(dealer);
         assertThat(player.getResult()).isEqualTo(GameResult.DRAW);
+        assertThat(dealer.getResultCount(GameResult.DRAW)).isEqualTo(1);
     }
 
 }
