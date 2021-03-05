@@ -11,7 +11,11 @@ public abstract class User {
     }
 
     public User(Name name) {
-        this.cards = new Cards(new ArrayList<>());
+        this(new Cards(new ArrayList<>()), name);
+    }
+
+    public User(Cards cards, Name name) {
+        this.cards = cards;
         this.name = name;
     }
 
