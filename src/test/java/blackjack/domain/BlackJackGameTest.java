@@ -24,13 +24,13 @@ public class BlackJackGameTest {
 
     @DisplayName("아직 게임 중인 user를 찾는다")
     @Test
-    void testFindPlayingUser(){
+    void testFindPlayingUser() {
         //given
         User firstUser = new User("욘");
         User secondUser = new User("웨지");
         User thirdUser = new User("포비");
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(new Users(Arrays.asList(firstUser,secondUser,thirdUser)));
+        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(new Users(Arrays.asList(firstUser, secondUser, thirdUser)));
         //then
         assertThat(blackJackGame.findFirstCanPlayUser()).isEqualTo(firstUser);
 

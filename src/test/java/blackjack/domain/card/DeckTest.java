@@ -33,7 +33,7 @@ public class DeckTest {
         //given
         Deck deck = Deck.createDeck();
         //when
-        for(int i = 0 ; i < DECK_SIZE; i++){
+        for (int i = 0; i < DECK_SIZE; i++) {
             deck.draw();
         }
         //then

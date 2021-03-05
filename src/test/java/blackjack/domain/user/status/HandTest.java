@@ -1,9 +1,8 @@
-package blackjack.domain.user;
+package blackjack.domain.user.status;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Value;
-import blackjack.domain.user.status.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
-    private Hand hand;
-
     @BeforeEach
     void setUp() {
         hand = new Hand(Arrays.asList(
@@ -48,6 +45,8 @@ class HandTest {
         //then
         assertThat(score).isEqualTo(expectedScore);
     }
+
+    private Hand hand;
 
     private static Stream<Arguments> testCalculateScore() {
         return Stream.of(

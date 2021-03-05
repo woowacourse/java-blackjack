@@ -9,10 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserTest {
-
     @DisplayName("유저의 카드 뽑기 테스트")
     @Test
-    void testDrawCard(){
+    void testDrawCard() {
         //given
         User user = new User("욘");
 
