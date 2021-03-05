@@ -35,10 +35,7 @@ public class Hands {
     }
 
     public int calculate() {
-        int sum = sumWithoutAce();
-        for (int i = 0; i < countAce(); ++i) {
-            sum += Denomination.ACE.getPoint();
-        }
+        int sum = sumWithoutAce() + Denomination.ACE.getPoint() * countAce();
         if (containsAce()) {
             sum = properSum(sum);
         }
