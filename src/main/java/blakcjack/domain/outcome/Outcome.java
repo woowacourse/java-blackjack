@@ -20,7 +20,7 @@ public enum Outcome {
 		if (hasAnyBust(player, dealer)) {
 			return judgeOutcomeByBust(player);
 		}
-		return judgeOutcomeByScore(player.calculateScore(), dealer.calculateScore());
+		return judgeOutcomeByScore(player, dealer);
 	}
 
 	private static boolean hasAnyBust(final Player player, final Dealer dealer) {
@@ -34,7 +34,10 @@ public enum Outcome {
 		return WIN;
 	}
 
-	private static Outcome judgeOutcomeByScore(final int playerScore, final int dealerScore) {
+	private static Outcome judgeOutcomeByScore(final Player player, final Dealer dealer) {
+		int playerScore = player.calculateScore();
+		int dealerScore = dealer.calculateScore();
+
 		if (playerScore > dealerScore) {
 			return WIN;
 		}
