@@ -5,9 +5,6 @@ import blackjack.domain.card.Cards;
 
 public abstract class Participant {
 
-    private static final int BLACKJACK_CARD_COUNT = 2;
-    private static final int BLACKJACK_NUMBER = 21;
-
     protected String name;
     protected Cards cards;
 
@@ -29,8 +26,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return cards.getSize() == BLACKJACK_CARD_COUNT
-            && cards.getScore() == BLACKJACK_NUMBER;
+        return cards.isBlackJack();
     }
 
     public abstract void matchCards(Cards cards);

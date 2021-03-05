@@ -6,7 +6,9 @@ import java.util.List;
 
 public class Cards {
 
-    private List<Card> cards;
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private final List<Card> cards;
 
     public Cards() {
         this(new ArrayList<>());
@@ -36,7 +38,8 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return getScore() == 21 && cards.size() == 2;
+        return getScore() == BLACKJACK_NUMBER
+            && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public int getScore() {
@@ -67,10 +70,6 @@ public class Cards {
 
     public void add(Card card) {
         cards.add(card);
-    }
-
-    public int getSize() {
-        return cards.size();
     }
 
 }
