@@ -16,7 +16,7 @@ public enum Answer {
         return Arrays.stream(values())
                 .filter(value -> value.answer.equals(answer))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new IllegalArgumentException("y, n로만 대답할 수 있습니다."));
     }
 
     public static boolean isYes(Answer answer) {
