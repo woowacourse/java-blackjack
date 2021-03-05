@@ -1,9 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.dto.CardDto;
+import blackjack.dto.UserCardsDto;
+import blackjack.service.BlackjackGameService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -11,71 +13,59 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackGameController {
-    private static final int DEALER_MINIMUM_SCORE = 16;
+
+    private BlackjackGameService blackjackGameService;
 
     public void start() {
-        BlackjackGame blackjackGame = startGameAndFirstDraw();
-        printFirstDrawInformation(blackjackGame);
-        OutputView.println();
+        blackjackGameService = BlackjackGameService.createByUsers(inputUsers());
+        blackjackGameService.firstDraw();
 
-        processUserRound(blackjackGame);
-        OutputView.println();
+        printFirstDrawInformation(blackjackGameService.getUserNameList());
+        printFirstDrawCards(blackjackGameService.getDealerOpenedCard(), blackjackGameService.getAllUserCurrentCards());
 
-        processDealerRound(blackjackGame);
+        processUserRound();
 
-        createResultAndPrint(blackjackGame);
+        processDealerRound();
+
+        createResultAndPrint();
     }
 
-    private static void printFirstDrawInformation(BlackjackGame blackjackGame) {
-        OutputView.printDrawMessage(blackjackGame.getUserNames());
+    private void printFirstDrawInformation(List<Name> userNames) {
+        OutputView.printDrawMessage(userNames);
         OutputView.println();
-
-        printFirstDrawCards(blackjackGame);
     }
 
-    private static BlackjackGame startGameAndFirstDraw() {
-        List<User> users = InputView.askPlayersName()
+    private void printFirstDrawCards(CardDto openedDealerCard, UserCardsDto userCardsDto) {
+        OutputView.printDealerFirstCard(openedDealerCard);
+        OutputView.printCardList(userCardsDto);
+        OutputView.println();
+    }
+
+    private Users inputUsers() {
+        return InputView.askPlayersName()
                 .stream()
                 .map(Name::new)
                 .map(User::new)
-                .collect(Collectors.toList());
-
-        return BlackjackGame.createAndFirstDraw(new Users(users));
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Users::new));
     }
 
-    private static void printFirstDrawCards(BlackjackGame blackjackGame) {
-        OutputView.printDealerFirstCard(blackjackGame.getDealer().getFirstCard());
-        blackjackGame.getUsers().forEach(OutputView::printCardList);
-    }
-
-    private static void processUserRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.existCanContinueUser()) {
-            User currentUser = blackjackGame.findFirstCanPlayUser();
-            userDrawOrStop(blackjackGame, currentUser, InputView.askMoreDraw(currentUser.getName()));
-            printUserCurrentCards(currentUser);
+    private void processUserRound() {
+        while (blackjackGameService.existCanContinueUser()) {
+            Boolean isContinue = InputView.askMoreDraw(blackjackGameService.getCurrentUserName());
+            OutputView.printCardList(blackjackGameService.progressTurnAndGetResult(isContinue));
         }
+        OutputView.println();
     }
 
-    private static void printUserCurrentCards(User currentUser) {
-        OutputView.printCardList(currentUser);
-    }
 
-    private static void userDrawOrStop(BlackjackGame blackjackGame, User currentUser, Boolean isContinue) {
-        if (isContinue) {
-            currentUser.drawCard(blackjackGame.draw());
-            return;
-        }
-        currentUser.stopUser();
-    }
-
-    private static void processDealerRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.getDealer().calculateScore() <= DEALER_MINIMUM_SCORE) {
-            blackjackGame.getDealer().drawCard(blackjackGame.draw());
+    private void processDealerRound() {
+        while (blackjackGameService.canDealerMoreDraw()) {
+            blackjackGameService.drawCardToDealer();
             OutputView.printDealerMoreDrawMessage();
         }
     }
 
-    private static void createResultAndPrint(BlackjackGame blackjackGame) {
-        OutputView.printScoreBoard(blackjackGame.createScoreBoard());
+    private void createResultAndPrint() {
+        OutputView.printScoreBoard(blackjackGameService.createScoreBoard());
     }
 }

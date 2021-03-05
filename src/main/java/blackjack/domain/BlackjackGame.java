@@ -7,16 +7,12 @@ import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Name;
 import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -30,23 +26,17 @@ public class BlackjackGame {
         this.users = users;
     }
 
-    public static BlackjackGame createAndFirstDraw(Users users) {
-        BlackjackGame blackjackGame = new BlackjackGame(users);
-        blackjackGame.firstDraw();
-        return blackjackGame;
+    public static BlackjackGame create(Users users) {
+        return new BlackjackGame(users);
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    private void firstDraw() {
+    public void firstDraw() {
         dealer.firstDraw(deck.draw(), deck.draw());
         users.forEach(user -> user.firstDraw(deck.draw(), deck.draw()));
     }
 
-    public int getDealerHandSize() {
-        return dealer.handSize();
+    public boolean existCanContinueUser(){
+        return users.stream().anyMatch(User::canContinueGame);
     }
 
     public User findFirstCanPlayUser(){
@@ -55,18 +45,12 @@ public class BlackjackGame {
                 .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
     }
 
-    public Card draw(){
+    public Card draw() {
         return deck.draw();
     }
 
-    public Users getUsers() {
-        return users;
-    }
-
-    public List<Name> getUserNames(){
-        return users.stream()
-                .map(User::getName)
-                .collect(Collectors.toList());
+    public void drawToDealer() {
+        dealer.drawCard(deck.draw());
     }
 
     public ScoreBoard createScoreBoard(){
@@ -80,13 +64,21 @@ public class BlackjackGame {
 
     private GameResult createDealerGameResult() {
         return new GameResult(dealer.getCards(), dealer.getName());
-    }
-
-    public boolean existCanContinueUser(){
-        return users.stream().anyMatch(User::canContinueGame);
-    }
+}
 
     private UserGameResult createGameResult(User user) {
         return new UserGameResult(user.getCards(), user.getName(), WinOrLose.decideWinOrLose(user, dealer));
+    }
+
+    public int getDealerHandSize() {
+        return dealer.handSize();
+    }
+
+    public Stream<User> getUsersStream() {
+        return users.stream();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

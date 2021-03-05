@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.scoreboard.ScoreBoard;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.Resultable;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
-import blackjack.domain.user.Participant;
+import blackjack.dto.CardDto;
+import blackjack.dto.UserCardsDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,23 +34,26 @@ public class OutputView {
         System.out.println(firstDrawMessage);
     }
 
-    public static void printDealerFirstCard(Card card) {
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, card.getSuitLetter() + card.getValueLetter());
+    public static void printDealerFirstCard(CardDto cardDto) {
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, cardDto.getSuit() + cardDto.getValue());
     }
 
-    public static void printCardList(Participant participant) {
-        String cards = participant.getCards()
-                .stream()
-                .map(card -> card.getValueLetter() + card.getSuitLetter())
-                .collect(joining(COMMA_AND_BLANK));
+    public static void printCardList(UserCardsDto userCardsDto) {
+        userCardsDto.getUserNameAndCards()
+                .forEach(OutputView::printCard);
+    }
 
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, participant.getName(), cards);
+    public static void printCard(String userName, List<CardDto> cardDtos) {
+        String cardSignature = cardDtos.stream()
+                .map(cardDto -> cardDto.getSuit() + cardDto.getValue())
+                .collect(joining(COMMA_AND_BLANK));
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, userName, cardSignature);
     }
 
     public static void printCardListAndScore(Resultable gameResult) {
         String cards = gameResult.getCards()
                 .stream()
-                .map(card -> card.getValueLetter() + card.getSuitLetter())
+                .map(card -> card.getSuitLetter() + card.getValueLetter())
                 .collect(joining(COMMA_AND_BLANK));
 
         System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, gameResult.getName(), cards, gameResult.getScore());

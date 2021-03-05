@@ -17,7 +17,8 @@ public class BlackJackGameTest {
         //given
         User user = new User(new Name("욘"));
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(new Users(Arrays.asList(user)));
+        BlackjackGame blackJackGame = BlackjackGame.create(new Users(Arrays.asList(user)));
+        blackJackGame.firstDraw();
         //then
         assertThat(blackJackGame.getDealerHandSize()).isEqualTo(2);
         assertThat(user.handSize()).isEqualTo(2);
@@ -31,7 +32,8 @@ public class BlackJackGameTest {
         User secondUser = new User(new Name("웨지"));
         User thirdUser = new User(new Name("포비"));
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(new Users(Arrays.asList(firstUser, secondUser, thirdUser)));
+        BlackjackGame blackJackGame = BlackjackGame.create(new Users(Arrays.asList(firstUser, secondUser, thirdUser)));
+        blackJackGame.firstDraw();
         //then
         assertThat(blackJackGame.findFirstCanPlayUser()).isEqualTo(firstUser);
 
