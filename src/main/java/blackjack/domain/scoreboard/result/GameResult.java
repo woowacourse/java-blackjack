@@ -1,6 +1,7 @@
 package blackjack.domain.scoreboard.result;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.user.Name;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,9 +9,9 @@ import java.util.Objects;
 
 public class GameResult implements Resultable {
     private final List<Card> cards;
-    private final String name;
+    private final Name name;
 
-    public GameResult(List<Card> cards, String name) {
+    public GameResult(List<Card> cards, Name name) {
         this.cards = cards;
         this.name = name;
     }
@@ -27,7 +28,7 @@ public class GameResult implements Resultable {
     }
 
     @Override
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

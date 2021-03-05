@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Name;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -31,7 +32,7 @@ public class InputView {
         return splitNames.stream().map(String::trim).collect(Collectors.toList());
     }
 
-    public static Boolean askMoreDraw(String userName) {
+    public static Boolean askMoreDraw(Name userName) {
         System.out.printf(MORE_DRAW_MSG_FORMAT, userName);
         String yesOrNo = SCANNER.nextLine();
         validateYesOrNo(yesOrNo);

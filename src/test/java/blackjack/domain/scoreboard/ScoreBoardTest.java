@@ -47,16 +47,16 @@ public class ScoreBoardTest {
                 Arrays.asList(new Card(Suit.DIAMOND, Value.TWO), new Card(Suit.SPADE, Value.TWO)),
                 fourth.getName(), WinOrLose.LOSE);
 
-        Map<User, UserGameResult> temp = new HashMap<>();
-        temp.put(first, firstUserGameResult);
-        temp.put(second, secondUserGameResult);
-        temp.put(third, thirdUserGameResult);
-        temp.put(fourth, fourthUserGameResult);
+        Map<Name, UserGameResult> temp = new HashMap<>();
+        temp.put(first.getName(), firstUserGameResult);
+        temp.put(second.getName(), secondUserGameResult);
+        temp.put(third.getName(), thirdUserGameResult);
+        temp.put(fourth.getName(), fourthUserGameResult);
 
         GameResult gameResult = new GameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                        new Card(Suit.HEART, Value.ACE)), Dealer.DEALER_NAME.getName()
+                        new Card(Suit.HEART, Value.ACE)), Dealer.DEALER_NAME
         );
 
         ScoreBoard scoreBoard = new ScoreBoard(temp, gameResult);

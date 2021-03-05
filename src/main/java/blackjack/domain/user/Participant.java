@@ -51,8 +51,8 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     @Override
