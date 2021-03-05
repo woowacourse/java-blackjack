@@ -41,15 +41,18 @@ class ProfitWeightTest {
             new Card(Symbol.ACE, Shape.DIAMOND)
     );
 
+    private ProfitWeight findProfitWeight(List<Card> playerCards, List<Card> dealerCards) {
+        Player player = new Player("json", BETTING_MONEY);
+        player.receiveCards(new Cards(playerCards));
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(dealerCards));
+        return ProfitWeight.findProfitWeight(dealer, player);
+    }
+
     @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트면 해당 플레이어는 손실 가중치를 얻는다")
     @Test
     void lossProfitWeight_BothBust() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_BUST));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BUST));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_BUST, CARDS_BUST);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.LOSS_WEIGHT);
     }
@@ -57,12 +60,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 이익 가중치를 얻는다")
     @Test
     void earnProfitWeight_DealerBust() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_BLACKJACK));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BUST));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_BLACKJACK, CARDS_BUST);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.NORMAL_PROFIT_WEIGHT);
     }
@@ -70,12 +68,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 블랙일 때 : 플레이어가 블랙잭이면 이익 가중치를 얻는다.")
     @Test
     void earnProfitWeight_DealerBlackJack() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_BLACKJACK));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BLACKJACK));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_BLACKJACK, CARDS_BLACKJACK);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.NORMAL_PROFIT_WEIGHT);
     }
@@ -83,12 +76,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 블랙일 때 : 플레이어가 21점이더라도 무조건 손실 가중치를 얻는다")
     @Test
     void lossProfitWeight_DealerBlackJack() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_SCORE_21));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_BLACKJACK));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_SCORE_21, CARDS_BLACKJACK);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.LOSS_WEIGHT);
     }
@@ -96,12 +84,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 버스트면 무조건 손실 가중치를 얻는다")
     @Test
     void lossProfitWeight_PlayerBust() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_BUST));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_BUST, CARDS_SCORE_19);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.LOSS_WEIGHT);
     }
@@ -109,12 +92,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 낮다면 손실 가중치를 얻는다")
     @Test
     void lossProfitWeight_PlayerLessScore() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_SCORE_19));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_20));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_SCORE_19, CARDS_SCORE_20);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.LOSS_WEIGHT);
     }
@@ -122,12 +100,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 블랙잭이면 블랙잭 이익 가중치를 얻는다")
     @Test
     void earnBettingMoney_PlayerBlackJack() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_BLACKJACK));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_BLACKJACK, CARDS_SCORE_19);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.BLACKJACK_PROFIT_WEIGHT);
     }
@@ -135,12 +108,7 @@ class ProfitWeightTest {
     @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 높으면 이익 가중치를 얻는다.")
     @Test
     void earnBettingMoney_PlayerMoreScore() {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(CARDS_SCORE_21));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
-
-        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, player);
+        ProfitWeight profitWeight = findProfitWeight(CARDS_SCORE_21, CARDS_SCORE_19);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.NORMAL_PROFIT_WEIGHT);
     }
