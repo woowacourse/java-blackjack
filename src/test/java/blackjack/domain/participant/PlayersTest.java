@@ -17,19 +17,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class PlayersTest {
 
-    private final List<Player> playerList = Arrays.asList(new Player("jason"));
-
     @DisplayName("플레이어는 최소 1명 최대 7명은 있어야 한다.")
     @ParameterizedTest
     @ValueSource(ints = {0, 8})
     void cannotMakePlayers(int playerCounts) {
-        List<Player> players = new ArrayList<>();
+        List<String> playerNames = new ArrayList<>();
         for (int i = 0; i < playerCounts; i++) {
-            players.add(new Player("test" + i));
+            playerNames.add("test" + i);
         }
 
         assertThatCode(() -> {
-            new Players(players);
+            Players.from(playerNames);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 참가자의 수는 딜러 제외 최소 1명 최대 7명입니다.");
     }
@@ -37,10 +35,10 @@ class PlayersTest {
     @DisplayName("참가자들의 이름은 중복이 없어야 한다.")
     @Test
     public void validateOverlappedNames() {
-        List<Player> duplicatedPlayers = Arrays.asList(new Player("jason"), new Player("jason"));
+        List<String> duplicatedPlayers = Arrays.asList("jason", "jason");
 
         assertThatCode(() -> {
-            new Players(duplicatedPlayers);
+            Players.from(duplicatedPlayers);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자들의 이름은 중복이 없어야 합니다.");
     }
@@ -49,7 +47,7 @@ class PlayersTest {
     @Test
     public void receiveDefaultCards() {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
-        Players players = new Players(playerList);
+        Players players = Players.from(Arrays.asList("jason"));
         Participant jason = players.toList()
                 .get(0);
 

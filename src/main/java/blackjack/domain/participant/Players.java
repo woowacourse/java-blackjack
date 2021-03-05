@@ -4,6 +4,7 @@ import blackjack.domain.card.CardDeck;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
     private static final int MAXIMUM_PLAYER_COUNTS = 7;
@@ -11,10 +12,17 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         validatePlayerCounts(players);
         validateNameDuplication(players);
         this.players = players;
+    }
+
+    public static Players from(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
+        return new Players(players);
     }
 
     private void validatePlayerCounts(List<Player> players) {
