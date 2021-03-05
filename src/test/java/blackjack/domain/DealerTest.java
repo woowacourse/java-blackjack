@@ -25,6 +25,7 @@ public class DealerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
         Cards cards = dealer.cards;
+
         assertThat(cards.cards()).hasSize(2);
     }
 
@@ -63,6 +64,7 @@ public class DealerTest {
         )));
         dealer.draw();
         Cards cards = dealer.cards;
+
         assertThat(cards.cards()).hasSize(3);
     }
 
@@ -74,6 +76,7 @@ public class DealerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
+
         assertThat(dealer.showOneCard()).isInstanceOf(Card.class);
     }
 }

@@ -11,6 +11,7 @@ public class NameTest {
     @Test
     void name() {
         Name name = new Name("amazzi");
+
         assertThat(name).isInstanceOf(Name.class);
     }
 

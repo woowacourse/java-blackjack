@@ -64,6 +64,7 @@ public class PlayerTest {
         )));
         player.draw();
         Cards cards = player.cards;
+
         assertThat(cards.cards()).hasSize(3);
     }
 
@@ -76,6 +77,7 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
         Cards cards = player.showCards();
+
         assertThat(cards.cards()).hasSize(2);
     }
 }

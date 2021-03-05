@@ -33,7 +33,10 @@ public class PlayersTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = new Players(names);
         players.distributeToEachPlayer();
-        assertThat(players.players().stream().allMatch(user -> user.cards.cards().size() == 2)).isTrue();
+
+        assertThat(players.players()
+                .stream()
+                .allMatch(user -> user.cards.cards().size() == 2)).isTrue();
     }
 
     @DisplayName("각 사용자들의 모든 카드를 보여준다.")
@@ -43,7 +46,9 @@ public class PlayersTest {
         Players players = new Players(names);
         players.distributeToEachPlayer();
         List<Cards> cardsGroup = players.showCardsByPlayers();
-        assertThat(cardsGroup.stream().allMatch(cards -> cards.cards().size() == 2)).isTrue();
+
+        assertThat(cardsGroup.stream()
+                .allMatch(cards -> cards.cards().size() == 2)).isTrue();
     }
 
     @DisplayName("사용자 이름들을 확인한다.")
@@ -52,6 +57,7 @@ public class PlayersTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = new Players(names);
         List<String> namesGroup = players.showNames();
+
         assertThat(namesGroup).isEqualTo(Arrays.asList("amazzi", "dani", "pobi"));
     }
 }

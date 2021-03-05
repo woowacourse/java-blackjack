@@ -11,6 +11,7 @@ public class DrawAnswerTest {
     @Test
     void createDrawAnswerY() {
         DrawAnswer drawAnswer = DrawAnswer.of("y");
+
         assertThat(drawAnswer).isEqualTo(DrawAnswer.YES);
     }
 
@@ -18,6 +19,7 @@ public class DrawAnswerTest {
     @Test
     void createDrawAnswerN() {
         DrawAnswer drawAnswer = DrawAnswer.of("n");
+
         assertThat(drawAnswer).isEqualTo(DrawAnswer.NO);
     }
 

@@ -32,6 +32,7 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         ));
+
         assertThat(cards.calculateTotalValue()).isEqualTo(18);
     }
 
@@ -42,6 +43,7 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.SPACE, Value.ACE),
                 new Card(Shape.CLOVER, Value.KING)));
+
         assertThat(cards.calculateTotalValue()).isEqualTo(19);
     }
 
@@ -51,6 +53,7 @@ public class CardsTest {
         Cards cards = new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.QUEEN),
                 new Card(Shape.SPACE, Value.ACE)));
+
         assertThat(cards.containAce()).isTrue();
     }
 

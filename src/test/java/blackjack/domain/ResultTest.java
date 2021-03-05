@@ -23,6 +23,7 @@ public class ResultTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
+
         assertThat(Result.decide(dealer, player)).isEqualTo(Result.WIN);
     }
 
@@ -41,6 +42,7 @@ public class ResultTest {
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
+
         assertThat(Result.decide(dealer, player)).isEqualTo(Result.STANDOFF);
     }
 
@@ -58,6 +60,7 @@ public class ResultTest {
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
+
         assertThat(Result.decide(dealer, player)).isEqualTo(Result.LOSE);
     }
 
