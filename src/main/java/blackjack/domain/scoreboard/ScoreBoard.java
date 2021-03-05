@@ -20,19 +20,19 @@ public class ScoreBoard {
         this.gameResult = gameResult;
     }
 
+    public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
+        return userResults.keySet().stream()
+                .map(userResults::get)
+                .map(UserGameResult::getWinOrLose)
+                .collect(groupingBy(WinOrLose::opposite, counting()));
+    }
+
     public Map<User, UserGameResult> getUserResults(){
         return Collections.unmodifiableMap(userResults);
     }
 
     public GameResult getDealerGameResult(){
         return gameResult;
-    }
-
-    public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
-        return userResults.keySet().stream()
-                .map(userResults::get)
-                .map(UserGameResult::getWinOrLose)
-                .collect(groupingBy(WinOrLose::opposite, counting()));
     }
 
     @Override

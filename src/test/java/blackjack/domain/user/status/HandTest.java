@@ -1,6 +1,7 @@
 package blackjack.domain.user.status;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Value;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,9 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HandTest {
     @BeforeEach
     void setUp() {
-        hand = new Hand(Arrays.asList(
+        List<Card> cards = Arrays.asList(
                 new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                new Card(Suit.HEART, Value.ACE)));
+                new Card(Suit.HEART, Value.ACE));
+        hand = new Hand(new Cards(cards));
     }
 
     @DisplayName("손에 들고 있는 카드 목록을 구한다")
@@ -39,7 +41,7 @@ class HandTest {
     @MethodSource
     void testCalculateScore(List<Card> cards, int expectedScore) {
         //given
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand(new Cards(cards));
         //when
         int score = hand.calculateScore();
         //then

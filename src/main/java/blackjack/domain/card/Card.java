@@ -5,6 +5,8 @@ import blackjack.domain.card.painting.Value;
 
 import java.util.Objects;
 
+import static blackjack.domain.card.painting.Value.*;
+
 public class Card {
     private final Suit suit;
     private final Value value;
@@ -12,6 +14,10 @@ public class Card {
     public Card(Suit suit, Value value) {
         this.suit = suit;
         this.value = value;
+    }
+
+    public boolean isAce() {
+        return value == ACE;
     }
 
     public Suit getSuit() {
