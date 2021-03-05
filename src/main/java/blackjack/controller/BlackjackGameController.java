@@ -1,7 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -32,10 +34,10 @@ public class BlackjackGameController {
     }
 
     private static BlackjackGame startGameAndFirstDraw() {
-        List<User> users = InputView.askPlayersName()
-                .stream()
-                .map(User::new)
-                .collect(Collectors.toList());
+        List<Name> names = InputView.askPlayersName().stream()
+                            .map(Name::from)
+                            .collect(Collectors.toList());
+        Users users = Users.from(names);
 
         return BlackjackGame.createAndFirstDraw(users);
     }
