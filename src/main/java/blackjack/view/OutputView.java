@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.vo.Result;
 
@@ -18,7 +17,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printDefaultCardMessage(Dealer dealer, List<Player> players) {
+    public static void printCardDistributionMessage(Dealer dealer, List<Player> players) {
         String playerNames = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
@@ -63,10 +62,11 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printFinalCardsAndScore(Participants participants) {
+
+    public static void printFinalCardsAndScore(Dealer dealer, List<Player> players) {
         printNewLine();
-        participants.toList()
-                .forEach(OutputView::printParticipantCardWithScore);
+        printParticipantCardWithScore(dealer);
+        players.forEach(OutputView::printParticipantCardWithScore);
     }
 
     private static void printParticipantCardWithScore(Participant participant) {

@@ -3,61 +3,51 @@ package blackjack;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Application {
     private static final String AGREE = "y";
-    private static final String DECLINE = "n";
 
     public static void main(String[] args) {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Dealer dealer = new Dealer();
-        List<Player> players = generatePlayers();
-        Participants participants = Participants.of(dealer, players);
+        Players players = Players.from(InputView.inputPlayerNames());
 
-        participants.receiveDefaultCards(cardDeck);
-        OutputView.printDefaultCardMessage(dealer, players);
-        players.forEach(player -> drawMoreCard(player, cardDeck));
-        receiveDealerCard(dealer, cardDeck);
+        distributeDefaultCards(dealer, players, cardDeck);
+        players.toList().forEach(player -> drawMoreCardForPlayer(player, cardDeck));
+        drawMoreCardForDealer(dealer, cardDeck);
 
-        OutputView.printFinalCardsAndScore(participants);
-        OutputView.printFinalResult(dealer, players);
+        OutputView.printFinalCardsAndScore(dealer, players.toList());
+        OutputView.printFinalResult(dealer, players.toList());
     }
 
-    private static List<Player> generatePlayers() {
-        return InputView.inputPlayerNames()
-                .stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+    private static void distributeDefaultCards(Dealer dealer, Players players, CardDeck cardDeck) {
+        dealer.receiveCards(cardDeck.drawDefaultCards());
+        players.receiveDefaultCards(cardDeck);
+        OutputView.printCardDistributionMessage(dealer, players.toList());
     }
 
-    private static void drawMoreCard(Player player, CardDeck cardDeck) {
-        if (!player.isAbleToReceiveCard()) {
-            return;
+    private static void drawMoreCardForPlayer(Player player, CardDeck cardDeck) {
+        String answer = AGREE;
+        while (player.isAbleToReceiveCard() && AGREE.equals(answer)) {
+            answer = InputView.inputAnswerForAdditionalCardDraw(player);
+            drawOneCard(answer, player, cardDeck);
         }
-        String answer = InputView.inputAnswerForAdditionalCardDraw(player);
-        if (answer.equals(AGREE)) {
+    }
+
+    private static void drawOneCard(String answer, Player player, CardDeck cardDeck) {
+        if (AGREE.equals(answer)) {
             player.receiveCard(cardDeck.draw());
         }
-        OutputView.printEachPlayerCards(player);
-        if (answer.equals(DECLINE)) {
-            return;
-        }
-        if (player.isAbleToReceiveCard()) {
-            drawMoreCard(player, cardDeck);
-        }
     }
 
-    private static void receiveDealerCard(Dealer dealer, CardDeck cardDeck) {
-        if (dealer.isAbleToReceiveCard()) {
+    private static void drawMoreCardForDealer(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.isAbleToReceiveCard()) {
             dealer.receiveCard(cardDeck.draw());
-            OutputView.printDealerDrawingMessage(dealer);
         }
+        OutputView.printDealerDrawingMessage(dealer);
     }
 }
