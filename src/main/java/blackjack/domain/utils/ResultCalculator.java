@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.utils;
 
+import blackjack.domain.ResultType;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
