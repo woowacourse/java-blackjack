@@ -1,13 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.vo.Result;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -74,22 +73,12 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printFinalResult(Dealer dealer, List<Player> players) {
+    public static void printFinalProfitResult(ResultStatistics resultStatistics) {
         printNewLine();
-        System.out.println("## 최종 승패");
-        Map<Result, Long> resultStatistics = dealer.aggregateResultStatistics(players);
-        long winCounts = resultStatistics.get(Result.WIN);
-        long lossCounts = resultStatistics.get(Result.LOSE);
-        long drawCounts = resultStatistics.get(Result.DRAW);
-        System.out.printf("%s: %d승 %d무 %d패", dealer.getName(), winCounts, drawCounts, lossCounts);
-        printNewLine();
-        players.forEach(player -> printEachPlayerFinalResult(player, dealer));
-    }
-
-    private static void printEachPlayerFinalResult(Player player, Dealer dealer) {
-        Result result = player.judgeResult(dealer);
-        System.out.printf("%s: %s", player.getName(), result.getName());
-        printNewLine();
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + resultStatistics.calculateDealerProfit());
+        resultStatistics.getProfitResultStatistics()
+                .forEach((playerName, profitMoney) -> System.out.println(playerName + ": " + profitMoney));
     }
 
     private static void printNewLine() {

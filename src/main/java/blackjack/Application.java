@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardsGenerator;
+import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -23,8 +24,9 @@ public class Application {
         playersGroup.forEach(player -> drawMoreCardForPlayer(player, cardDeck));
         drawMoreCardForDealer(dealer, cardDeck);
 
+        ResultStatistics profitResultStatistics = ResultStatistics.of(dealer, players);
         OutputView.printFinalCardsAndScore(dealer, playersGroup);
-        OutputView.printFinalResult(dealer, playersGroup);
+        OutputView.printFinalProfitResult(profitResultStatistics);
     }
 
     private static Players generatePlayers() {
