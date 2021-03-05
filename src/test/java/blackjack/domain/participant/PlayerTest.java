@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class PlayerTest {
 
@@ -45,6 +47,16 @@ class PlayerTest {
                 Arguments.of(CARDS_SCORE_20, true),
                 Arguments.of(CARDS_SCORE_21, false)
         );
+    }
+
+    @DisplayName("플레이어의 배팅 금액은 양의 정수여야한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0})
+    void isValidBettingMoney(int bettingMoney) {
+        assertThatCode(() -> {
+            new Player("jason", bettingMoney);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅 금액은 양의 정수여야합니다.");
     }
 
     @DisplayName("ACE를 1로 했을 때 카드 합이 21 미만일 경우 true, 그 이상인 경우 false를 반환한다.")
