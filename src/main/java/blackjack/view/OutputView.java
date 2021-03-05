@@ -13,12 +13,13 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static void printPlayersCardHandStatus(Dealer dealer, List<Player> players) {
-        System.out.printf("딜러와 %s에게 2장의 카드를 나누었습니다.\n", getPlayerNames(players));
+        printNotice(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.", getPlayerNames(players)));
 
         printCardHandStatus(dealer);
         for (Player player : players) {
             printCardHandStatus(player);
         }
+        System.out.println();
     }
 
     private static String getPlayerNames(List<Player> players) {
