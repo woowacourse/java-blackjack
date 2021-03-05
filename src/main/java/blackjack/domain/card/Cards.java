@@ -18,9 +18,17 @@ public class Cards {
         this.cards = cards;
     }
 
-    private static boolean containAceCard(List<Card> cards) {
-        return cards.stream()
-            .anyMatch(Card::isAce);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return getScore() == BLACKJACK_NUMBER
+            && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public Result compare(Cards cards) {
@@ -33,15 +41,6 @@ public class Cards {
         return Result.DRAW;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public boolean isBlackJack() {
-        return getScore() == BLACKJACK_NUMBER
-            && cards.size() == BLACKJACK_CARD_COUNT;
-    }
-
     public int getScore() {
         int score = 0;
 
@@ -49,11 +48,16 @@ public class Cards {
             score = calculate(10);
         }
 
-        if (score != 0 && score <= 21) {
+        if (score != 0 && score <= BLACKJACK_NUMBER) {
             return score;
         }
 
         return calculate();
+    }
+
+    private static boolean containAceCard(List<Card> cards) {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     private int calculate() {
@@ -68,8 +72,8 @@ public class Cards {
             .sum() + bonusScore;
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public boolean isBurst() {
+        return getScore() > 21;
     }
 
 }
