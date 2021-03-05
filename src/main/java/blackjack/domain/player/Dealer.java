@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private List<Result> results;
+    private final List<Result> results;
 
     public Dealer() {
         this("null");

@@ -9,7 +9,7 @@ public class Cards {
     private static final int BONUS_SCORE = 10;
     private static final int LIMIT_SCORE = 21;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards() {
         this(new ArrayList<>());

@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
-    private Type type;
-    private Denomination denomination;
+    private final Type type;
+    private final Denomination denomination;
 
     public Card(Type type, Denomination denomination) {
         this.type = type;
