@@ -28,7 +28,7 @@ public class Deck {
 
 	public Card drawCard() {
 		if (cards.empty()) {
-			throw new RuntimeException(NO_CARD_ERROR);
+			throw new emptyDeckException(NO_CARD_ERROR);
 		}
 		return cards.pop();
 	}
