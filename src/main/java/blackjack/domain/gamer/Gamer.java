@@ -6,12 +6,11 @@ import java.util.List;
 
 public abstract class Gamer {
 
-    protected final Hands hands;
+    protected final Hands hands = new Hands();
     private String name;
 
-    protected Gamer(String name, Hands hands) {
+    protected Gamer(String name) {
         this.name = name;
-        this.hands = hands;
     }
 
     public abstract List<Card> showOpenHands();
@@ -24,10 +23,6 @@ public abstract class Gamer {
         return name;
     }
 
-    public boolean containsAce() {
-        return hands.containsAce();
-    }
-
     public int getPoint() {
         return hands.calculate();
     }
@@ -38,5 +33,9 @@ public abstract class Gamer {
 
     public void receiveCard(Card card) {
         hands.addCard(card);
+    }
+
+    public void initHands(List<Card> makeInitialHands) {
+        hands.makeWith(makeInitialHands);
     }
 }
