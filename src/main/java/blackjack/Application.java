@@ -16,9 +16,7 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Dealer dealer = new Dealer();
-        List<String> playerNames = InputView.inputPlayerNames();
-        InputView.inputAllPlayersBettingMoney(playerNames);
-        Players players = Players.from(playerNames);
+        Players players = generatePlayers();
         List<Player> playersGroup = players.toList();
 
         distributeDefaultCards(dealer, players, cardDeck);
@@ -27,6 +25,12 @@ public class Application {
 
         OutputView.printFinalCardsAndScore(dealer, playersGroup);
         OutputView.printFinalResult(dealer, playersGroup);
+    }
+
+    private static Players generatePlayers() {
+        List<String> playerNames = InputView.inputPlayerNames();
+        List<Integer> bettingMoneys = InputView.inputAllPlayersBettingMoney(playerNames);
+        return Players.of(playerNames, bettingMoneys);
     }
 
     private static void distributeDefaultCards(Dealer dealer, Players players, CardDeck cardDeck) {

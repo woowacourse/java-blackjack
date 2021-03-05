@@ -5,10 +5,13 @@ import blackjack.domain.card.CardDeck;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
     private static final int MAXIMUM_PLAYER_COUNTS = 7;
+    private static final int START_INDEX = 0;
     private static final String INVALID_PLAYER_COUNTS = "게임 참가자의 수는 딜러 제외 최소 1명 최대 7명입니다.";
+    private static final String INVALID_INPUT_COUNTS_EQUALITY = "입력된 참가자의 이름 개수와 배팅 금액 개수가 일치하지 않습니다.";
 
     private final List<Player> players;
 
@@ -18,11 +21,19 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
+    public static Players of(List<String> playerNames, List<Integer> bettingMoneys) {
+        validateInputCountsEquality(playerNames, bettingMoneys);
+        int playerCounts = playerNames.size();
+        List<Player> players = IntStream.range(START_INDEX, playerCounts)
+                .mapToObj(i -> new Player(playerNames.get(i), bettingMoneys.get(i)))
                 .collect(Collectors.toList());
         return new Players(players);
+    }
+
+    private static void validateInputCountsEquality(List<String> playerNames, List<Integer> bettingMoneys) {
+        if (playerNames.size() != bettingMoneys.size()) {
+            throw new IllegalArgumentException(INVALID_INPUT_COUNTS_EQUALITY);
+        }
     }
 
     private void validatePlayerCounts(List<Player> players) {
