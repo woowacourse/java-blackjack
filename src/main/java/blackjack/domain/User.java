@@ -19,7 +19,9 @@ public abstract class User {
         this.cards = new ArrayList<>();
     }
 
-    public abstract void hit(Card card);
+    public void hit(Card card) {
+        cards.add(card);
+    }
 
     public abstract boolean isStay();
 

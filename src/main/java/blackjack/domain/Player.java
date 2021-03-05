@@ -35,11 +35,6 @@ public class Player extends User {
     }
 
     @Override
-    public void hit(Card card) {
-        cards.add(card);
-    }
-
-    @Override
     public boolean isStay() {
         return this.isStay || getScore() == Card.BUST;
     }
