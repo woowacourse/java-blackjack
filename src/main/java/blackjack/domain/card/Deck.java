@@ -10,14 +10,14 @@ public class Deck {
     private static final List<Card> cards = new ArrayList<>();
 
     static {
-        for (Shape shape : Shape.values()) {
-            cards.addAll(cardsOf(shape));
+        for (Suit suit : Suit.values()) {
+            cards.addAll(cardsOf(suit));
         }
     }
 
-    private static List<Card> cardsOf(Shape shape) {
+    private static List<Card> cardsOf(Suit suit) {
         return Arrays.stream(Number.values())
-                     .map(number -> new Card(number, shape))
+                     .map(number -> new Card(number, suit))
                      .collect(Collectors.toList());
     }
 

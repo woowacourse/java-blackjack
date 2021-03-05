@@ -2,11 +2,11 @@ package blackjack.domain.card;
 
 public class Card {
     private final Number number;
-    private final Shape shape;
+    private final Suit suit;
 
-    public Card(Number number, Shape shape) {
+    public Card(Number number, Suit suit) {
         this.number = number;
-        this.shape = shape;
+        this.suit = suit;
     }
 
     public boolean isAce() {
@@ -22,6 +22,6 @@ public class Card {
     }
 
     public String getShape() {
-        return shape.getName();
+        return suit.getName();
     }
 }

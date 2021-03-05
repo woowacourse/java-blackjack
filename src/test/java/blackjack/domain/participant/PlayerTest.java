@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlayerTest {
-    private static final Card TWO_DIAMOND = new Card(Number.TWO, Shape.DIAMOND);
-    private static final Card JACK_SPADE = new Card(Number.JACK, Shape.SPADE);
-    private static final Card THREE_HEART = new Card(Number.THREE, Shape.HEART);
-    private static final Card ACE_CLOVER = new Card(Number.ACE, Shape.CLOVER);
+    private static final Card TWO_DIAMONDS = new Card(Number.TWO, Suit.DIAMONDS);
+    private static final Card JACK_SPADES = new Card(Number.JACK, Suit.SPADES);
+    private static final Card THREE_HEARTS = new Card(Number.THREE, Suit.HEARTS);
+    private static final Card ACE_CLUBS = new Card(Number.ACE, Suit.CLUBS);
     private Player player;
     private Dealer dealer;
 
@@ -26,26 +26,26 @@ class PlayerTest {
 
     @Test
     void isBlackjack() {
-        player.addCard(ACE_CLOVER);
-        player.addCard(JACK_SPADE);
+        player.addCard(ACE_CLUBS);
+        player.addCard(JACK_SPADES);
         assertTrue(player.isBlackJack());
     }
 
     @Test
     void noneBlackjack() {
-        player.addCard(TWO_DIAMOND);
-        player.addCard(THREE_HEART);
+        player.addCard(TWO_DIAMONDS);
+        player.addCard(THREE_HEARTS);
         assertFalse(player.isBlackJack());
     }
 
     @Test
     void compareWithDealerAndWin() {
-        player.addCard(JACK_SPADE);
-        player.addCard(JACK_SPADE);
+        player.addCard(JACK_SPADES);
+        player.addCard(JACK_SPADES);
 
-        dealer.addCard(TWO_DIAMOND);
-        dealer.addCard(THREE_HEART);
-        dealer.addCard(ACE_CLOVER);
+        dealer.addCard(TWO_DIAMONDS);
+        dealer.addCard(THREE_HEARTS);
+        dealer.addCard(ACE_CLUBS);
 
         player.fight(dealer);
         assertThat(player.getWinCount()).isEqualTo(1);
@@ -53,11 +53,11 @@ class PlayerTest {
 
     @Test
     void compareWithDealerAndLose() {
-        player.addCard(JACK_SPADE);
+        player.addCard(JACK_SPADES);
 
-        dealer.addCard(TWO_DIAMOND);
-        dealer.addCard(THREE_HEART);
-        dealer.addCard(ACE_CLOVER);
+        dealer.addCard(TWO_DIAMONDS);
+        dealer.addCard(THREE_HEARTS);
+        dealer.addCard(ACE_CLUBS);
 
         player.fight(dealer);
         assertThat(player.getLoseCount()).isEqualTo(1);
