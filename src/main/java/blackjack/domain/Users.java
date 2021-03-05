@@ -2,10 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardDeck;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Users {
@@ -49,7 +47,10 @@ public class Users {
         return users.stream()
                 .filter(User::isPlayer)
                 .collect(Collectors.toMap(
-                        player -> player,
-                        player -> ((Player) player).getResult(dealerScore)));
+                        Function.identity(),
+                        player -> ((Player) player).getResult(dealerScore),
+                        (key1, key2) -> key1,
+                        LinkedHashMap::new
+                ));
     }
 }
