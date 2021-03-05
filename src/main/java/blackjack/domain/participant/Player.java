@@ -10,6 +10,7 @@ public class Player extends BlackJackParticipant {
     public Player(String name) {
         super(name);
     }
+
     public Player(String name, Hand hand) {
         super(name, hand);
     }

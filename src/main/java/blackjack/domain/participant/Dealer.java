@@ -11,6 +11,7 @@ public class Dealer extends BlackJackParticipant {
     public Dealer() {
         super(DEALER_NAME);
     }
+
     public Dealer(Hand hand) {
         super(DEALER_NAME, hand);
     }
