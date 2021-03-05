@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 
 class CardTest {
 
-    @DisplayName("카드 생성 테스트")
+    @DisplayName("카드를 생성한다.")
     @Test
     void create() {
         Card card = new Card(Type.DIAMOND, Denomination.FOUR);
         assertThat(card).isEqualTo(new Card(Type.DIAMOND, Denomination.FOUR));
     }
 
+    @DisplayName("카드가 올바른 Type과 Denomination을 가지고 있는지 확인한다.")
     @Test
     void cardInformation() {
         Card card = new Card(Type.DIAMOND, Denomination.FOUR);
