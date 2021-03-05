@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_NUMBER = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
     private final List<Card> cards;
 
@@ -27,18 +27,11 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return getScore() == BLACKJACK_NUMBER
-            && cards.size() == BLACKJACK_CARD_COUNT;
+        return getScore() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
-    public Result compare(Cards cards) {
-        if (getScore() < cards.getScore()) {
-            return Result.WIN;
-        }
-        if (getScore() > cards.getScore()) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
+    public boolean isBurst() {
+        return getScore() > BLACKJACK_NUMBER;
     }
 
     public int getScore() {
@@ -47,12 +40,41 @@ public class Cards {
         if (containAceCard(cards)) {
             score = calculate(10);
         }
-
         if (score != 0 && score <= BLACKJACK_NUMBER) {
             return score;
         }
-
         return calculate();
+    }
+
+    public Result getOtherCardsCompareResult(Cards otherCards) {
+        Result result = getBurstOrBlackjackCompareResult(otherCards);
+        if (result != Result.NONE) {
+            return result;
+        }
+        return getScoreCompareResult(otherCards);
+    }
+
+    private Result getBurstOrBlackjackCompareResult(Cards otherCards) {
+        if (isBothBurst(otherCards) || isBothBlackjack(otherCards)) {
+            return Result.DRAW;
+        }
+        if (otherCards.isBlackJack() || this.isBurst()) {
+            return Result.WIN;
+        }
+        if (otherCards.isBurst() || this.isBlackJack()) {
+            return Result.LOSE;
+        }
+        return Result.NONE;
+    }
+
+    private Result getScoreCompareResult(Cards otherCards) {
+        if (this.getScore() < otherCards.getScore()) {
+            return Result.WIN;
+        }
+        if (this.getScore() > otherCards.getScore()) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 
     private static boolean containAceCard(List<Card> cards) {
@@ -72,8 +94,12 @@ public class Cards {
             .sum() + bonusScore;
     }
 
-    public boolean isBurst() {
-        return getScore() > 21;
+    private boolean isBothBurst(Cards cards) {
+        return this.isBurst() && cards.isBurst();
+    }
+
+    private boolean isBothBlackjack(Cards cards) {
+        return this.isBlackJack() && cards.isBlackJack();
     }
 
 }

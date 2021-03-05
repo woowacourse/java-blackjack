@@ -8,66 +8,149 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
-    @DisplayName("카드 뭉치 두 개를 비교했을때 승리 결과가 나온다.")
+    @DisplayName("카드 뭉치 a, b 둘 다 블랙잭일 경우 비긴다.")
     @Test
-    void testCompareWin() {
-        Cards cards1 = new Cards(
+    void testBothBlackJackDrawResult() {
+        Cards aCards = new Cards(
             Arrays.asList(
-                new Card(Type.CLUB, Denomination.TEN),
-                new Card(Type.CLUB, Denomination.FIVE)
+                new Card(Type.CLUB, Denomination.KING),
+                new Card(Type.CLUB, Denomination.ACE)
             )
         );
 
-        Cards cards2 = new Cards(
+        Cards bCards = new Cards(
+            Arrays.asList(
+                new Card(Type.HEART, Denomination.KING),
+                new Card(Type.HEART, Denomination.ACE)
+            )
+        );
+
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("카드 뭉치 a, b 둘 다 버스트 경우 비긴다.")
+    @Test
+    void testBothBurstDrawResult() {
+        Cards aCards = new Cards(
             Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.NINE),
                 new Card(Type.CLUB, Denomination.SIX)
             )
         );
 
-        assertThat(cards1.compare(cards2)).isEqualTo(Result.WIN);
+        Cards bCards = new Cards(
+            Arrays.asList(
+                new Card(Type.HEART, Denomination.TEN),
+                new Card(Type.HEART, Denomination.NINE),
+                new Card(Type.HEART, Denomination.SIX)
+            )
+        );
+
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.DRAW);
     }
 
-    @DisplayName("카드 뭉치 두 개를 비교했을때 무승부 결과가 나온다.")
+    @DisplayName("카드 뭉치 a, b 중 b만 블랙잭인 경우 b가 이긴다.")
     @Test
-    void testCompareDraw() {
-        Cards cards1 = new Cards(
+    void testBlackJackWinResult() {
+        Cards aCards = new Cards(
             Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN),
-                new Card(Type.CLUB, Denomination.FIVE)
+                new Card(Type.CLUB, Denomination.NINE)
             )
         );
 
-        Cards cards2 = new Cards(
+        Cards bCards = new Cards(
             Arrays.asList(
-                new Card(Type.CLUB, Denomination.TEN),
-                new Card(Type.CLUB, Denomination.FIVE)
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.KING)
             )
         );
 
-        assertThat(cards1.compare(cards2)).isEqualTo(Result.DRAW);
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("카드 뭉치 두 개를 비교했을때 실패 결과가 나온다.")
+    @DisplayName("카드 뭉치 a, b 중 b만 버스트인 경우 b가 진다.")
     @Test
-    void testCompareLose() {
-        Cards cards1 = new Cards(
+    void testBurstLoseResult() {
+        Cards aCards = new Cards(
             Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN),
-                new Card(Type.CLUB, Denomination.FIVE)
+                new Card(Type.CLUB, Denomination.NINE)
             )
         );
 
-        Cards cards2 = new Cards(
+        Cards bCards = new Cards(
             Arrays.asList(
-                new Card(Type.CLUB, Denomination.TEN),
-                new Card(Type.CLUB, Denomination.THREE)
+                new Card(Type.HEART, Denomination.TEN),
+                new Card(Type.HEART, Denomination.FIVE),
+                new Card(Type.SPADE, Denomination.TEN)
             )
         );
 
-        assertThat(cards1.compare(cards2)).isEqualTo(Result.LOSE);
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.LOSE);
     }
 
+    @DisplayName("카드 뭉치 a, b 중 b가 카드 점수가 높아서 이긴다.")
+    @Test
+    void testCardsScoreWinResult() {
+        Cards aCards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.FOUR)
+            )
+        );
+
+        Cards bCards = new Cards(
+            Arrays.asList(
+                new Card(Type.HEART, Denomination.TEN),
+                new Card(Type.HEART, Denomination.FIVE)
+            )
+        );
+
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("카드 뭉치 a, b 카드 점수가 같아서 비긴다.")
+    @Test
+    void testCardsScoreDrawResult() {
+        Cards aCards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.FOUR)
+            )
+        );
+
+        Cards bCards = new Cards(
+            Arrays.asList(
+                new Card(Type.HEART, Denomination.THREE),
+                new Card(Type.HEART, Denomination.FOUR)
+            )
+        );
+
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.DRAW);
+    }
+
+    // 랄랄
+    @DisplayName("카드 뭉치 a, b 중 b가 카드 점수가 낮아서 진다.")
+    @Test
+    void testCardsScoreLoseResult() {
+        Cards aCards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.TEN),
+                new Card(Type.CLUB, Denomination.FOUR)
+            )
+        );
+
+        Cards bCards = new Cards(
+            Arrays.asList(
+                new Card(Type.HEART, Denomination.THREE),
+                new Card(Type.HEART, Denomination.FOUR)
+            )
+        );
+
+        assertThat(aCards.getOtherCardsCompareResult(bCards)).isEqualTo(Result.LOSE);
+    }
 
     @DisplayName("카드 뭉치가 블랙잭인 것을 확인한다.")
     @Test
@@ -95,7 +178,7 @@ class CardsTest {
 
     @DisplayName("카드 뭉치가 버스트인 것을 확인한다.")
     @Test
-    void testCardsIsBurst(){
+    void testCardsIsBurst() {
         Cards cards = new Cards(
             Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN),
@@ -108,7 +191,7 @@ class CardsTest {
 
     @DisplayName("카드 뭉치가 버스트인 것을 확인한다.")
     @Test
-    void testCardsIsNotBurst(){
+    void testCardsIsNotBurst() {
         Cards cards = new Cards(
             Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN),

@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
+
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Result;
 
@@ -12,15 +14,11 @@ public class Player extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.getScore() < 21;
+        return cards.getScore() < BLACKJACK_NUMBER;
     }
 
-    public void matchCards(Cards otherCards) {
-        result = otherCards.compare(cards);
-        if (cards.getScore() > 21) {
-            result = Result.LOSE;
-            return;
-        }
+    public void matchCards(Cards dealerCards) {
+        result = dealerCards.getOtherCardsCompareResult(cards);
     }
 
     public Result getResult() {

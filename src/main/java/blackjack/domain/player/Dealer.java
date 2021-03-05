@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private List<Result> results;
+    private final List<Result> results;
+    private static final int GET_ONE_MORE_CARD_NORM = 16;
 
     public Dealer(String name) {
         super(name);
@@ -15,11 +16,11 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.getScore() <= 16;
+        return cards.getScore() <= GET_ONE_MORE_CARD_NORM;
     }
 
-    public void matchCards(Cards otherCards) {
-        results.add(otherCards.compare(cards));
+    public void matchCards(Cards playerCards) {
+        results.add(playerCards.getOtherCardsCompareResult(cards));
     }
 
     public int getResultCount(Result result) {
