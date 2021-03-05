@@ -1,10 +1,10 @@
 package blakcjack.view;
 
 
-import blakcjack.domain.BlackjackGame;
-import blakcjack.domain.Outcome;
-import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
+import blakcjack.domain.game.BlackjackGame;
+import blakcjack.domain.outcome.Outcome;
+import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;

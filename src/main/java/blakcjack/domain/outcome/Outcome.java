@@ -1,4 +1,4 @@
-package blakcjack.domain;
+package blakcjack.domain.outcome;
 
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;

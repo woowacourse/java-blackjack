@@ -1,14 +1,14 @@
 package blakcjack.controller;
 
-import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
-import blakcjack.view.InputView;
-import blakcjack.view.OutputView;
-import blakcjack.domain.BlackjackGame;
-import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.game.BlackjackGame;
+import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
+import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
+import blakcjack.view.InputView;
+import blakcjack.view.OutputView;
 
 import java.util.List;
 

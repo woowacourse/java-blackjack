@@ -1,4 +1,4 @@
-package blakcjack.domain;
+package blakcjack.domain.outcome;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;

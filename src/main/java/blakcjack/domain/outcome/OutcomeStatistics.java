@@ -1,10 +1,12 @@
-package blakcjack.domain;
+package blakcjack.domain.outcome;
+
+import blakcjack.domain.game.BlackjackGame;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static blakcjack.domain.BlackjackGame.INITIAL_VALUE;
+import static blakcjack.domain.game.BlackjackGame.INITIAL_VALUE;
 
 public class OutcomeStatistics {
 	private final Map<String, Outcome> playersOutcome;

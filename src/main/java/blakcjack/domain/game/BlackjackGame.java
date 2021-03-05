@@ -1,7 +1,8 @@
-package blakcjack.domain;
+package blakcjack.domain.game;
 
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
@@ -29,7 +30,7 @@ public class BlackjackGame {
 	private void validateDuplication(final List<String> names) {
 		Set<String> nameGroup = new HashSet<>(names);
 		if (nameGroup.size() != names.size()) {
-			throw new IllegalArgumentException(DUPLICATE_NAME_ERROR);
+			throw new DuplicatePlayerNamesException();
 		}
 	}
 
@@ -63,11 +64,4 @@ public class BlackjackGame {
 		}
 		return playersOutcome;
 	}
-
-//	public void drawDealerCardForMaximumCapability() {
-//		while (dealer.isScoreLowerThanMaximumDrawingCriterion()) {
-//			distributeOneCardTo(dealer);
-//			OutputView.printDealerAdditionalCardMessage();
-//		}
-//	}
 }

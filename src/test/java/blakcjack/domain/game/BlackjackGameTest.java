@@ -1,10 +1,11 @@
-package blakcjack.domain;
+package blakcjack.domain.game;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static blakcjack.domain.BlackjackGame.DUPLICATE_NAME_ERROR;
+import static blakcjack.domain.game.BlackjackGame.DUPLICATE_NAME_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class BlackjackGameTest {

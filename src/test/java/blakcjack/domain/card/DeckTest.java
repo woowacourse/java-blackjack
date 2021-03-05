@@ -16,9 +16,8 @@ class DeckTest {
 	void create_size_check() {
 		final Deck deck = new Deck(new RandomShuffleStrategy());
 
-		assertThatCode(() -> consumeAllCards(deck))
-				.doesNotThrowAnyException();
-		assertThatThrownBy(deck::drawCard).isInstanceOf(RuntimeException.class);
+		assertThatCode(() -> consumeAllCards(deck)).doesNotThrowAnyException();
+		assertThatThrownBy(deck::drawCard).isInstanceOf(EmptyDeckException.class);
 	}
 
 	private void consumeAllCards(final Deck deck) {
@@ -35,15 +34,10 @@ class DeckTest {
 		final Set<Card> cards = new HashSet<>();
 
 		for (int i = 0; i < cardSize; i++) {
-			try {
-				cards.add(deck.drawCard());
-			} catch (RuntimeException e) {
-				break;
-			}
+			cards.add(deck.drawCard());
 		}
 
-		assertThat(cards.size())
-				.isEqualTo(cardSize);
+		assertThat(cards).hasSize(cardSize);
 	}
 
 	@DisplayName("카드 뽑기 성공")

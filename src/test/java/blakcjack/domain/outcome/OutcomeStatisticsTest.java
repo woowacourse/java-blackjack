@@ -1,9 +1,10 @@
-package blakcjack.domain;
+package blakcjack.domain.outcome;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.game.BlackjackGame;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
