@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,5 +45,18 @@ class ParticipantTest {
         List<Card> playerCards = participant.getCards();
 
         assertThat(playerCards).containsExactly(card);
+    }
+
+    @DisplayName("게임 참가자는 복수장의 카드를 뽑을 수 있다.")
+    @Test
+    void drawCards() {
+        Participant participant = new Player("jason");
+        List<Card> cardList = Arrays.asList(new Card(Symbol.ACE, Shape.DIAMOND), new Card(Symbol.FIVE, Shape.HEART));
+        Cards cards = new Cards(cardList);
+
+        participant.receiveCards(cards);
+        List<Card> playerCards = participant.getCards();
+
+        assertThat(playerCards).hasSize(cardList.size());
     }
 }
