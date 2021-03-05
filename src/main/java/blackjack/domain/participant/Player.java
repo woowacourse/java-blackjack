@@ -25,6 +25,10 @@ public class Player extends Participant {
     }
 
     private void compareValue(Dealer dealer) {
+        if (dealer.isBust()) {
+            gameResult.win();
+            return;
+        }
         if (this.calculateResult() > dealer.calculateResult()) {
             gameResult.win();
             return;
