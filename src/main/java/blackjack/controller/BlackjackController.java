@@ -17,7 +17,7 @@ public class BlackjackController {
         proceedPlayersRound(players);
         proceedDealerRound(dealer);
         OutputView.printCardsWithTotalValue(users);
-        OutputView.printResults(dealer, new ResultBoard(dealer, players));
+        OutputView.printResults(dealer, new ResultBoard(players, dealer));
     }
 
     private Players participatePlayers() {

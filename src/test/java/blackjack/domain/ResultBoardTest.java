@@ -13,7 +13,7 @@ public class ResultBoardTest {
     public void createResultBoard() {
         Dealer dealer = new Dealer();
         Players players = new Players(Arrays.asList("amazzi", "dani", "brown"));
-        ResultBoard resultBoard = new ResultBoard(dealer, players);
+        ResultBoard resultBoard = new ResultBoard(players, dealer);
 
         assertThat(resultBoard).isInstanceOf(ResultBoard.class);
     }
