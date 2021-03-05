@@ -18,16 +18,21 @@ public enum Result {
         this.compareResult = compareResult;
     }
 
-    public static Result decide(Dealer dealer, Player player) {
+    public static boolean isExistBust(Dealer dealer, Player player) {
+        return dealer.cards.isBust() || player.cards.isBust();
+    }
+
+    public static Result decideByBust(Dealer dealer, Player player) {
         if (dealer.cards.isBust() && !player.cards.isBust()) {
             return WIN;
-        }
-        if (dealer.cards.isBust() && player.cards.isBust()) {
-            return STANDOFF;
         }
         if (!dealer.cards.isBust() && player.cards.isBust()) {
             return LOSE;
         }
+        return STANDOFF;
+    }
+
+    public static Result decideByCompare(Dealer dealer, Player player) {
         return Arrays.stream(values())
                 .filter(value -> value.compareResult == player.cards.compareTo(dealer.cards))
                 .findFirst()

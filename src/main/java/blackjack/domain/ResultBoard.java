@@ -14,7 +14,10 @@ public class ResultBoard {
     private void putResultByPlayer(Dealer dealer, Players players) {
         players.players()
                 .forEach(player -> {
-                    this.resultBoard.put(player, Result.decide(dealer, player));
+                    if (Result.isExistBust(dealer, player)) {
+                        this.resultBoard.put(player, Result.decideByBust(dealer, player));
+                    }
+                    this.resultBoard.put(player, Result.decideByCompare(dealer, player));
                 });
     }
 
