@@ -9,10 +9,6 @@ public class Deck {
 	public static final String NO_CARD_ERROR = "카드가 없습니다.";
 	private final Stack<Card> cards = new Stack<>();
 
-	public Deck() {
-		this(new RandomShuffleStrategy());
-	}
-
 	public Deck(final ShuffleStrategy shuffleStrategy) {
 		generateCards();
 		shuffleStrategy.shuffle(cards);

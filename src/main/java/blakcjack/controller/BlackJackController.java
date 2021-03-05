@@ -1,5 +1,6 @@
 package blakcjack.controller;
 
+import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.view.InputView;
 import blakcjack.view.OutputView;
 import blakcjack.domain.BlackjackGame;
@@ -18,7 +19,9 @@ import static blakcjack.view.OutputView.printInitialHands;
 public class BlackJackController {
 	public void run() {
 		final List<String> playerNames = takePlayerNamesInput();
-		final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
+		Deck deck = new Deck(new RandomShuffleStrategy());
+		final BlackjackGame blackjackGame = new BlackjackGame(deck, playerNames);
+		
 		blackjackGame.initializeHands();
 		printInitialHands(blackjackGame);
 
