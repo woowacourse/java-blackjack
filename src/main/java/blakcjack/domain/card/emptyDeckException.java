@@ -1,7 +1,7 @@
 package blakcjack.domain.card;
 
-public class emptyDeckException extends RuntimeException {
-	public emptyDeckException(final String message) {
+public class EmptyDeckException extends RuntimeException {
+	public EmptyDeckException(final String message) {
 		super(message);
 	}
 }
