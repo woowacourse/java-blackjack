@@ -32,6 +32,7 @@ public class Hands {
 
     public void addCard(Card card) {
         cards.add(card);
+        if (isBlackjack) { isBlackjack = false;}
     }
 
     public int calculate() {
