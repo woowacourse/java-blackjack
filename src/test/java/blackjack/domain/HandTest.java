@@ -50,16 +50,10 @@ public class HandTest {
     @DisplayName("버스트 확인 기능")
     @Test
     void isBust() {
-        Hand bustHand = new Hand(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.TWO)));
+        Hand bustHand = TestSetUp.BUST_PLAYER.getHand();
         assertThat(bustHand.isBust()).isTrue();
 
-        Hand validHand = new Hand(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.ACE)));
+        Hand validHand = TestSetUp.WINNER.getHand();
         assertThat(validHand.isBust()).isFalse();
     }
 }

@@ -12,15 +12,15 @@ public abstract class BlackJackParticipant {
     private final String name;
     private boolean hit;
 
-    public BlackJackParticipant(String name) {
-        this(name, new Hand(new ArrayList<>()));
-    }
-
     public BlackJackParticipant(String name, Hand hand) {
         validateName(name);
         this.hand = hand;
         this.hit = true;
         this.name = name;
+    }
+
+    public BlackJackParticipant(String name) {
+        this(name, new Hand(new ArrayList<>()));
     }
 
     abstract public void drawCard(Deck deck);
