@@ -1,32 +1,30 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Result;
+import blackjack.domain.card.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
 
-    private final List<Result> results;
     private static final int GET_ONE_MORE_CARD_NORM = 16;
+    private final List<GameResult> gameResults;
 
     public Dealer(String name) {
         super(name);
-        results = new ArrayList<>();
+        gameResults = new ArrayList<>();
     }
 
     public boolean canDraw() {
         return cards.getScore() <= GET_ONE_MORE_CARD_NORM;
     }
 
-    public void matchCards(Cards playerCards) {
-        results.add(playerCards.getOtherCardsCompareResult(cards));
-    }
-
-    public int getResultCount(Result result) {
-        return (int) results.stream()
-            .filter(it -> it == result)
+    public int getResultCount(GameResult gameResult) {
+        return (int) gameResults.stream()
+            .filter(it -> it == gameResult)
             .count();
     }
 
+    public void addGameResult(GameResult gameResult) {
+        gameResults.add(gameResult);
+    }
 }
