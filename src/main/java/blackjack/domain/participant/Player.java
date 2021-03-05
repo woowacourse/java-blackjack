@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.game.Rule.THRESHOLD;
+import static blackjack.domain.participant.Dealer.THRESHOLD;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;

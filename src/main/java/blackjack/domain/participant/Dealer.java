@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.game.Rule.THRESHOLD;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -9,6 +7,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    public static final int THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
     private static final String DEALER_NAME = "딜러";
 
