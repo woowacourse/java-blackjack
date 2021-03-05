@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 public enum Denomination {
+    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -12,14 +13,13 @@ public enum Denomination {
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
-    ACE(1, "A");
+    KING(10, "K");
 
-    private final int value;
+    private final int point;
     private final String name;
 
-    Denomination(final int value, final String name) {
-        this.value = value;
+    Denomination(final int point, final String name) {
+        this.point = point;
         this.name = name;
     }
 
@@ -31,7 +31,7 @@ public enum Denomination {
         return name;
     }
 
-    public int getValue() {
-        return value;
+    public int getPoint() {
+        return point;
     }
 }

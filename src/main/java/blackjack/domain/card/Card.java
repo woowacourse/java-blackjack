@@ -18,8 +18,8 @@ public class Card {
         return name;
     }
 
-    public int getValue() {
-        return value.getValue();
+    public int getPoint() {
+        return value.getPoint();
     }
 
     public Denomination getCardValue() {
