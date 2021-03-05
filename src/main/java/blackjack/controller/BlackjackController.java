@@ -1,8 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
+import blackjack.domain.utils.HandInitializer;
+import blackjack.domain.utils.ResultMapper;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -10,34 +13,43 @@ public class BlackjackController {
 
     public void run() {
         final Deck deck = Deck.create();
-        final Gamers gamers = deck.initiateGamers(InputView.receiveNames());
-        OutputView.gameStart(gamers);
-
-        for (Gamer gamer : gamers.players()) {
-            hitOrStand(deck, gamer);
-        }
-        dealerHitOrStand(deck, gamers);
-        printResult(gamers);
+        final Dealer dealer = new Dealer();
+        final Players players = Players.of(InputView.receiveNames());
+        initHandsOf(deck, dealer, players);
+        hitOrStand(deck, dealer, players);
+        printResult(dealer, players);
     }
 
-    private void hitOrStand(Deck deck, Gamer gamer) {
-        while (InputView.receiveAnswer(gamer.getName())) {
-            gamer.receiveCard(deck.giveCard());
-            OutputView.allCards(gamer);
+    private void hitOrStand(Deck deck, Dealer dealer, Players players) {
+        for (Player player : players) {
+            hitOrStandForPlayer(deck, player);
+        }
+        hitOrStandForDealer(deck, dealer);
+    }
+
+    private void initHandsOf(Deck deck, Dealer dealer, Players players) {
+        HandInitializer.init(deck, dealer, players);
+        OutputView.printInitialCards(dealer, players);
+    }
+
+    private void hitOrStandForPlayer(Deck deck, Player player) {
+        while (InputView.receiveAnswer(player.getName())) {
+            player.receiveCard(deck.pick());
+            OutputView.allCards(player);
         }
     }
 
-    private void dealerHitOrStand(Deck deck, Gamers gamers) {
-        if (gamers.dealer().checkBoundary()) {
-            gamers.dealer().receiveCard(deck.giveCard());
+    private void hitOrStandForDealer(Deck deck, Dealer dealer) {
+        if (dealer.checkBoundary()) {
+            dealer.receiveCard(deck.pick());
             OutputView.dealerHit();
         }
     }
 
-    private void printResult(Gamers gamers) {
-        OutputView.gamersAllCards(gamers);
+    private void printResult(Dealer dealer, Players players) {
+        OutputView.showAllCards(dealer, players);
         OutputView.printResultTitle();
-        OutputView.dealerResult(gamers.resultWithCount());
-        OutputView.playersResult(gamers.resultWithName());
+        OutputView.dealerResult(ResultMapper.resultOfDealer(dealer, players));
+        OutputView.playersResult(ResultMapper.resultOfPlayers(dealer, players));
     }
 }
