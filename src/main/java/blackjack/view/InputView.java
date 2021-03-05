@@ -9,6 +9,8 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String DELIMITER = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     private InputView() {
     }
@@ -40,11 +42,11 @@ public class InputView {
     }
 
     private static boolean isYes(String input) {
-        if (input.equals("y")) {
+        if (input.equals(YES)) {
             return true;
         }
 
-        if (input.equals("n")) {
+        if (input.equals(NO)) {
             return false;
         }
 
