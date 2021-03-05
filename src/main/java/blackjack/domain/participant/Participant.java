@@ -19,18 +19,18 @@ public abstract class Participant {
 
     public int calculateResult() {
         int currentCardsValue = calculateCards();
-        int possibleLoopCount = countAce();
+        int remainAceCount = countAce();
 
-        while (canLowerCardsValue(currentCardsValue, possibleLoopCount)) {
+        while (canLowerCardsValue(currentCardsValue, remainAceCount)) {
             currentCardsValue = lowerValueOfAce(currentCardsValue);
-            possibleLoopCount--;
+            remainAceCount--;
         }
 
         return currentCardsValue;
     }
 
-    private boolean canLowerCardsValue(int value, int remainLoop) {
-        return value > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
+    private boolean canLowerCardsValue(int value, int aceCount) {
+        return value > Game.BLACKJACK_NUMBER && aceCount > ZERO;
     }
 
     private int lowerValueOfAce(int value) {
