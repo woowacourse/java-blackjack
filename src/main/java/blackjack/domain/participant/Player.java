@@ -39,7 +39,7 @@ public class Player extends Participant {
         if (dealer.isBlackJack()) {
             return calculateProfitMoneyWhenDealerBlackJack();
         }
-        return 0;
+        return calculateProfitMoneyWhenNormalSituation(dealer);
 
     }
 
@@ -52,6 +52,19 @@ public class Player extends Participant {
 
     private int calculateProfitMoneyWhenDealerBlackJack() {
         if (isBlackJack()) {
+            return bettingMoney;
+        }
+        return -1 * bettingMoney;
+    }
+
+    private int calculateProfitMoneyWhenNormalSituation(Dealer dealer) {
+        if (isBust()) {
+            return -1 * bettingMoney;
+        }
+        if (isBlackJack()) {
+            return (int) (1.5 * bettingMoney);
+        }
+        if (this.calculateFinalScore() > dealer.calculateFinalScore()) {
             return bettingMoney;
         }
         return -1 * bettingMoney;

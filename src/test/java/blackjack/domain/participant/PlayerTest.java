@@ -36,7 +36,7 @@ class PlayerTest {
             new Card(Symbol.KING, Shape.HEART),
             new Card(Symbol.TEN, Shape.HEART)
     );
-    private static final List<Card> CARDS_SCORE_22 = Arrays.asList(
+    private static final List<Card> CARDS_BUST = Arrays.asList(
             new Card(Symbol.JACK, Shape.HEART),
             new Card(Symbol.TEN, Shape.HEART),
             new Card(Symbol.TWO, Shape.HEART)
@@ -108,8 +108,8 @@ class PlayerTest {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
 
-        player.receiveCards(new Cards(CARDS_SCORE_22));
-        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+        player.receiveCards(new Cards(CARDS_BUST));
+        dealer.receiveCards(new Cards(CARDS_BUST));
         Result result = player.judgeResult(dealer);
 
         assertThat(result).isEqualTo(Result.LOSE);
@@ -122,7 +122,7 @@ class PlayerTest {
         Dealer dealer = new Dealer();
 
         player.receiveCards(new Cards(CARDS_SCORE_19));
-        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+        dealer.receiveCards(new Cards(CARDS_BUST));
         Result result = player.judgeResult(dealer);
 
         assertThat(result).isEqualTo(Result.WIN);
@@ -133,9 +133,9 @@ class PlayerTest {
     void loseBettingMoney_BothBust() {
         int bettingMoney = 1000;
         Player player = new Player("json", bettingMoney);
-        player.receiveCards(new Cards(CARDS_SCORE_22));
+        player.receiveCards(new Cards(CARDS_BUST));
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+        dealer.receiveCards(new Cards(CARDS_BUST));
 
         int profitMoney = player.calculateProfitMoney(dealer);
 
@@ -149,7 +149,7 @@ class PlayerTest {
         Player player = new Player("json", bettingMoney);
         player.receiveCards(new Cards(CARDS_BLACKJACK));
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+        dealer.receiveCards(new Cards(CARDS_BUST));
 
         int profitMoney = player.calculateProfitMoney(dealer);
 
@@ -182,5 +182,61 @@ class PlayerTest {
         int profitMoney = player.calculateProfitMoney(dealer);
 
         assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+    }
+
+    @DisplayName("딜러가 일반 점수일때 : 플레이어가 버스트면 배팅 금액을 잃는다")
+    @Test
+    void loseBettingMoney_PlayerBust() {
+        int bettingMoney = 1000;
+        Player player = new Player("json", bettingMoney);
+        player.receiveCards(new Cards(CARDS_BUST));
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(CARDS_SCORE_19));
+
+        int profitMoney = player.calculateProfitMoney(dealer);
+
+        assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+    }
+
+    @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 낮다면 배팅 금액을 잃는다")
+    @Test
+    void loseBettingMoney_PlayerLessScore() {
+        int bettingMoney = 1000;
+        Player player = new Player("json", bettingMoney);
+        player.receiveCards(new Cards(CARDS_SCORE_19));
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(CARDS_SCORE_20));
+
+        int profitMoney = player.calculateProfitMoney(dealer);
+
+        assertThat(profitMoney).isEqualTo(-1 * bettingMoney);
+    }
+
+    @DisplayName("딜러가 일반 점수일때 : 플레이어가 블랙잭이면 배팅 금액의 1.5배를 얻는다")
+    @Test
+    void earnBettingMoney_PlayerBlackJack() {
+        int bettingMoney = 1000;
+        Player player = new Player("json", bettingMoney);
+        player.receiveCards(new Cards(CARDS_BLACKJACK));
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(CARDS_SCORE_19));
+
+        int profitMoney = player.calculateProfitMoney(dealer);
+
+        assertThat(profitMoney).isEqualTo((int) (1.5 * bettingMoney));
+    }
+
+    @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 높으 배팅 금액 원금만큼 얻는다")
+    @Test
+    void earnBettingMoney_PlayerMoreScore() {
+        int bettingMoney = 1000;
+        Player player = new Player("json", bettingMoney);
+        player.receiveCards(new Cards(CARDS_SCORE_21));
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(CARDS_SCORE_19));
+
+        int profitMoney = player.calculateProfitMoney(dealer);
+
+        assertThat(profitMoney).isEqualTo(bettingMoney);
     }
 }
