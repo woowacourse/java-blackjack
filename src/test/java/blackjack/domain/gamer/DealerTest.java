@@ -1,17 +1,15 @@
 package blackjack.domain.gamer;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Hands;
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class DealerTest {
 

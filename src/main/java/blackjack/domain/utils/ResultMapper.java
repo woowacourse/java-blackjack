@@ -1,9 +1,9 @@
 package blackjack.domain.utils;
 
-import blackjack.domain.gamer.Players;
 import blackjack.domain.ResultType;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
 import java.util.EnumMap;
 import java.util.HashMap;

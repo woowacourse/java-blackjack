@@ -1,19 +1,18 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Hands;
+import blackjack.domain.card.Suit;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import java.util.ArrayList;
-import java.util.List;
-
 import blackjack.domain.utils.ResultCalculator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ResultCalculatorTest {
 

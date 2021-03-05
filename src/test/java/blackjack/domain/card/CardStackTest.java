@@ -1,16 +1,16 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class CardStackTest {
 
     @Test
     void create() {
-        assertThatCode(() -> CardStack.create()).doesNotThrowAnyException();
+        assertThatCode(CardStack::create).doesNotThrowAnyException();
     }
 
     @DisplayName("CardStack에서 2장의 카드를 반환")

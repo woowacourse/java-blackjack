@@ -1,11 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.gamer.Players;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class OutputView {
 
     private static void printInitialHand(Dealer dealer, Players players) {
         System.out.printf(CARD_INFO_FORMAT, dealer.getName()
-                ,cardToString(dealer.showOpenHands()));
+                , cardToString(dealer.showOpenHands()));
         printNewLine();
         for (Player player : players) {
             System.out.printf(CARD_INFO_FORMAT, player.getName(),
@@ -78,7 +78,7 @@ public class OutputView {
         for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
             sb.append(entry.getValue()).append(entry.getKey().getName()).append(" ");
         }
-        System.out.printf(RESULT, "딜러" ,sb.toString());
+        System.out.printf(RESULT, "딜러", sb.toString());
     }
 
     public static void playersResult(Map<String, ResultType> resultWithName) {

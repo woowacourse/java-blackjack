@@ -22,7 +22,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.QUEEN));
         Hands hands = new Hands();
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> hands.makeWith(cards));
+                .isThrownBy(() -> hands.makeWith(cards));
     }
 
     @DisplayName("Hands 객체 생성")
