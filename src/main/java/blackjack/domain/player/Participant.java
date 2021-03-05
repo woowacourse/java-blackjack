@@ -10,7 +10,7 @@ public abstract class Participant {
 
     public Participant(String name) {
         this.name = name;
-        cards = new Cards();
+        this.cards = new Cards();
     }
 
     public String getName() {
@@ -25,11 +25,18 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public int getScore() {
+        return cards.getScore();
+    }
+
     public boolean isBlackjack() {
         return cards.isBlackJack();
     }
 
-    public abstract void matchCards(Cards cards);
+    public boolean isBust() {
+        return cards.isBurst();
+    }
 
     public abstract boolean canDraw();
+
 }

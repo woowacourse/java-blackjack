@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Result;
+import blackjack.domain.card.GameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class OutputView {
         for (Card card : cards.getCards()) {
             results.add(card.getType().getName() + card.getDenomination().getName());
         }
-        System.out.printf(PRINT_CARDS_SCORE_FORMAT, participantName, String.join(DELIMITER, results),
-            cards.getScore());
+        System.out.printf(PRINT_CARDS_SCORE_FORMAT, participantName,
+            String.join(DELIMITER, results), cards.getScore());
     }
 
     public static void printGameResult(List<Player> players, Dealer dealer) {
@@ -62,14 +62,14 @@ public class OutputView {
 
     private static void printDealerGameResult(Dealer dealer) {
         System.out.print(dealer.getName() + " ");
-        if (dealer.getResultCount(Result.WIN) > 0) {
-            System.out.print(dealer.getResultCount(Result.WIN) + WIN_MESSAGE);
+        if (dealer.getResultCount(GameResult.WIN) > 0) {
+            System.out.print(dealer.getResultCount(GameResult.WIN) + WIN_MESSAGE);
         }
-        if (dealer.getResultCount(Result.DRAW) > 0) {
-            System.out.print(dealer.getResultCount(Result.DRAW) + DRAW_MESSAGE);
+        if (dealer.getResultCount(GameResult.DRAW) > 0) {
+            System.out.print(dealer.getResultCount(GameResult.DRAW) + DRAW_MESSAGE);
         }
-        if (dealer.getResultCount(Result.LOSE) > 0) {
-            System.out.print(dealer.getResultCount(Result.LOSE) + LOSE_MESSAGE);
+        if (dealer.getResultCount(GameResult.LOSE) > 0) {
+            System.out.print(dealer.getResultCount(GameResult.LOSE) + LOSE_MESSAGE);
         }
         System.out.print(NEW_LINE);
     }
