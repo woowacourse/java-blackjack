@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -223,5 +224,37 @@ class DealerTest {
         dealer.compare(player);
 
         assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.WIN));
+    }
+
+    @DisplayName("플레이어가 승리 했을 경우 딜러는 패배기록이 생긴다.")
+    @Test
+    void dealerLose() {
+        Player player = new Player();
+
+        dealer.draw(deck,19);
+        dealer.draw(deck, 25);
+
+        player.draw(deck, 10);
+        player.draw(deck, 11);
+
+        dealer.compare(player);
+
+        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+    }
+
+    @DisplayName("플레이어가 블랙잭을 했을 경우 딜러는 패배기록이 생긴다.")
+    @Test
+    void dealerBlackjackLose() {
+        Player player = new Player();
+
+        dealer.draw(deck,24);
+        dealer.draw(deck, 25);
+
+        player.draw(deck, 0);
+        player.draw(deck, 12);
+
+        dealer.compare(player);
+
+        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.LOSE));
     }
 }

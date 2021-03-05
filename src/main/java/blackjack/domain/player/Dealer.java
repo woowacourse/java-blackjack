@@ -22,6 +22,7 @@ public class Dealer extends Participant {
         Result result = Result.of(this.isBlackjack(), player.isBlackjack());
 
         if (result != Result.NONE) {
+            addResult(result);
             return result;
         }
 
