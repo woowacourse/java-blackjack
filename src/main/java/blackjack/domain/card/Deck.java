@@ -29,8 +29,7 @@ public class Deck {
     }
 
     private static List<Card> iterateValues(Suit suit) {
-        return Arrays.stream(Value.values())
-                .filter(value -> value != Value.ACE_OF_ONE)
+        return Value.of().stream()
                 .map(value -> new Card(suit, value))
                 .collect(Collectors.toList());
     }
