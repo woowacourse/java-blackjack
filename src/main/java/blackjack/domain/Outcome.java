@@ -1,9 +1,8 @@
 package blackjack.domain;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import blackjack.util.GumpCollection;
+
+import java.util.*;
 import java.util.function.BiPredicate;
 
 import static blackjack.domain.Round.GAME_OVER_SCORE;
@@ -32,14 +31,14 @@ public enum Outcome {
                 .orElseThrow(() -> new IllegalArgumentException("체크할수 없습!!"));
     }
 
-    public static List<Outcome> getPlayerOutcomes(final Outcome outcome) {
+    public static Queue<Outcome> getPlayerOutcomes(final Outcome outcome) {
         if (outcome == WIN) {
-            return Collections.singletonList(LOSE);
+            return GumpCollection.asQueue(LOSE);
         }
         if (outcome == LOSE) {
-            return Collections.singletonList(WIN);
+            return GumpCollection.asQueue(WIN);
         }
-        return Collections.singletonList(DRAW);
+        return GumpCollection.asQueue(outcome);
     }
 
     public String getName() {

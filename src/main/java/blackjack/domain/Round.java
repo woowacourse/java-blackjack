@@ -7,10 +7,7 @@ import blackjack.view.dto.PlayerResultDto;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -63,19 +60,19 @@ public class Round {
                 dealer.calculateScore(GAME_OVER_SCORE));
     }
 
-    public List<Outcome> makeRoundOutComes() {
+    public Queue<Outcome> makeRoundOutComes() {
         return players.stream()
                 .map(player -> Outcome.findOutcome(dealer.calculateScore(GAME_OVER_SCORE), player.calculateScore(GAME_OVER_SCORE)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
-    public List<PlayerResultDto> makePlayerResults(List<Outcome> gameOutComes) {
+    public List<PlayerResultDto> makePlayerResults(final Queue<Outcome> gameOutComes) {
         return players.stream()
-                .map(player -> new PlayerResultDto(player.getName(), gameOutComes.remove(FIRST_INDEX)))
+                .map(player -> new PlayerResultDto(player.getName(), gameOutComes.poll()))
                 .collect(Collectors.toList());
     }
 
-    public Map<String, List<Outcome>> finishGame() {
+    public Map<String, Queue<Outcome>> finishGame() {
         return Result.findResults(this);
     }
 

@@ -6,6 +6,7 @@ import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -48,11 +49,11 @@ public class OutputView {
         playerStatusDto.forEach(dto -> System.out.println(makkGameResultMessage(dto.getPlayerName(), dto.getPlayerCardStatus(), dto.getPlayerScore())));
     }
 
-    public static void showOutComes(final Map<String, List<Outcome>> outcomes) {
+    public static void showOutComes(final Map<String, Queue<Outcome>> outcomes) {
         System.out.println(RESULT_MESSAGE);
-        List<Outcome> dealerOutcomes = outcomes.remove(DEALER);
+        Queue<Outcome> dealerOutcomes = outcomes.remove(DEALER);
         System.out.println(String.format(DEALER_RESULT_MESSAGE, findWinCount(dealerOutcomes), findLoseCount(dealerOutcomes), findDrawCount(dealerOutcomes)));
-        outcomes.forEach((key, value) -> System.out.println(String.format(ROUND_RESULT_MESSAGE, key, value.get(0).getName())));
+        outcomes.forEach((key, value) -> System.out.println(String.format(ROUND_RESULT_MESSAGE, key, value.remove().getName())));
     }
 
     private static String makeParticipantStatusMessage(final String name, final List<String> cardStatus) {
@@ -72,19 +73,19 @@ public class OutputView {
         );
     }
 
-    private static int findWinCount(final List<Outcome> dealerOutcomes) {
+    private static int findWinCount(final Queue<Outcome> dealerOutcomes) {
         return (int) dealerOutcomes.stream()
                 .filter(Outcome::isWin)
                 .count();
     }
 
-    private static int findLoseCount(final List<Outcome> dealerOutcomes) {
+    private static int findLoseCount(final Queue<Outcome> dealerOutcomes) {
         return (int) dealerOutcomes.stream()
                 .filter(Outcome::isLose)
                 .count();
     }
 
-    private static int findDrawCount(final List<Outcome> dealerOutcomes) {
+    private static int findDrawCount(final Queue<Outcome> dealerOutcomes) {
         return (int) dealerOutcomes.stream()
                 .filter(Outcome::isDraw)
                 .count();

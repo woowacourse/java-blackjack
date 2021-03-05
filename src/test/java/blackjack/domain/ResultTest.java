@@ -8,10 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class ResultTest {
 
@@ -47,13 +44,13 @@ class ResultTest {
         Result result = new Result();
         Round round = Round.generateWithRandomCards(dealer, players);
 
-        Map<String, List<Outcome>> results = result.findResults(round);
+        Map<String, Queue<Outcome>> results = result.findResults(round);
 
-        List<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
-        List<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
+        Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
+        Queue<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
 
-        Assertions.assertThat(firstPlayerOutcomes).containsExactly(Outcome.WIN);
-        Assertions.assertThat(secondPlayerOutcomes).containsExactly(Outcome.LOSE);
+        Assertions.assertThat(firstPlayerOutcomes.poll()).isEqualTo(Outcome.WIN);
+        Assertions.assertThat(secondPlayerOutcomes.poll()).isEqualTo(Outcome.LOSE);
     }
 
     @DisplayName("딜러가 버스터 일때 승패 체크 테스트")
@@ -66,12 +63,12 @@ class ResultTest {
         players.get(0).addCard(Card.of("스페이드", "9"));
 
 
-        Map<String, List<Outcome>> results = result.findResults(round);
+        Map<String, Queue<Outcome>> results = result.findResults(round);
 
-        List<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
-        List<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
+        Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
+        Queue<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
 
-        Assertions.assertThat(firstPlayerOutcomes).containsExactly(Outcome.LOSE);
-        Assertions.assertThat(secondPlayerOutcomes).containsExactly(Outcome.WIN);
+        Assertions.assertThat(firstPlayerOutcomes.poll()).isEqualTo(Outcome.LOSE);
+        Assertions.assertThat(secondPlayerOutcomes.poll()).isEqualTo(Outcome.WIN);
     }
 }
