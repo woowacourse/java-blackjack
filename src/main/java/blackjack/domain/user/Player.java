@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
+import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.user.User;
 import blackjack.util.StringUtil;
 
 public class Player extends User {

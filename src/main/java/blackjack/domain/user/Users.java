@@ -1,4 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.ResultType;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.Collections;

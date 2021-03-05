@@ -1,8 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
+import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Suit;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
