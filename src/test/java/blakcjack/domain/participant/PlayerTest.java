@@ -49,9 +49,9 @@ public class PlayerTest {
 		final Player player = new Player(new Name("pobi"));
 		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.KING));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
-		assertThat(player.isScoreLowerThanBlackJackValue()).isEqualTo(true);
+		assertThat(player.isScoreLowerThanBlackJackValue()).isTrue();
 
 		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
-		assertThat(player.isScoreLowerThanBlackJackValue()).isEqualTo(false);
+		assertThat(player.isScoreLowerThanBlackJackValue()).isFalse();
 	}
 }
