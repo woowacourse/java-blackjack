@@ -9,14 +9,13 @@ import java.util.Objects;
 public abstract class BlackJackParticipant {
 
     private final Hand hand;
-    private final String name;
+    private final Name name;
     private boolean hit;
 
     public BlackJackParticipant(String name, Hand hand) {
-        validateName(name);
         this.hand = hand;
         this.hit = true;
-        this.name = name;
+        this.name = new Name(name);
     }
 
     public BlackJackParticipant(String name) {
@@ -24,12 +23,6 @@ public abstract class BlackJackParticipant {
     }
 
     abstract public void drawCard(Deck deck);
-
-    private void validateName(String name) {
-        if (name.trim().length() == 0) {
-            throw new IllegalArgumentException("공백은 이름으로 사용할 수 없습니다.");
-        }
-    }
 
     public int getScore() {
         return hand.getScore();
@@ -40,7 +33,7 @@ public abstract class BlackJackParticipant {
     }
 
     public String getName() {
-        return name;
+        return name.value();
     }
 
     protected void cannotDraw() {

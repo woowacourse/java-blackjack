@@ -22,14 +22,6 @@ public class PlayerTest {
         assertThat(root).isEqualTo(new Player("root"));
     }
 
-    @DisplayName("이름이 공백인 경우 검증")
-    @Test
-    void validate() {
-        assertThatThrownBy(() -> new Player(""))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("공백은 이름으로 사용할 수 없습니다.");
-    }
-
     @Test
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() {
