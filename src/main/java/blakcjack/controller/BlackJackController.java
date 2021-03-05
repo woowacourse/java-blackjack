@@ -1,7 +1,7 @@
 package blakcjack.controller;
 
-import blakcjack.View.InputView;
-import blakcjack.View.OutputView;
+import blakcjack.view.InputView;
+import blakcjack.view.OutputView;
 import blakcjack.domain.BlackjackGame;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.participant.Dealer;
@@ -9,8 +9,8 @@ import blakcjack.domain.participant.Participant;
 
 import java.util.List;
 
-import static blakcjack.View.InputView.takePlayerNamesInput;
-import static blakcjack.View.OutputView.printInitialHands;
+import static blakcjack.view.InputView.takePlayerNamesInput;
+import static blakcjack.view.OutputView.printInitialHands;
 
 public class BlackJackController {
 	private static final String YES = "y";
