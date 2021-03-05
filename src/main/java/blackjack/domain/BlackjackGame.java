@@ -29,7 +29,7 @@ public class BlackjackGame {
 
     public static BlackjackGame createAndFirstDraw(Users users) {
         BlackjackGame blackjackGame = new BlackjackGame(users);
-        blackjackGame.init();
+        blackjackGame.firstDraw();
         return blackjackGame;
     }
 
@@ -37,7 +37,7 @@ public class BlackjackGame {
         return dealer;
     }
 
-    private void init() {
+    private void firstDraw() {
         dealer.firstDraw(deck.draw(), deck.draw());
         users.forEach(user -> user.firstDraw(deck.draw(), deck.draw()));
     }
