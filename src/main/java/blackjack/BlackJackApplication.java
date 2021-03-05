@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.game.BlackJackInitializer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
@@ -17,18 +16,20 @@ public class BlackJackApplication {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
 
-        BlackJackInitializer blackJackInitializer = new BlackJackInitializer(dealer, players);
-        blackJackInitializer.setBaseCardToPlayers();
+        initializeParticipants(dealer, players);
 
         OutputView.printPlayersHandStatus(dealer, players);
 
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
 
-        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
-        GameResult result = resultCalculator.getResult();
-
+        GameResult result = getResult(dealer, players);
         OutputView.printResult(result);
+    }
+
+    private static void initializeParticipants(Dealer dealer, List<Player> players) {
+        dealer.setBaseCard();
+        dealer.setPlayersBaseCard(players);
     }
 
     private static List<Player> getPlayers() {
@@ -49,10 +50,14 @@ public class BlackJackApplication {
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            while (!player.isBust() && InputView.wantsReceive(player.getName())) {
-                dealer.deal(player);
-                OutputView.printHandStatus(player);
-            }
+            turn(dealer, player);
+        }
+    }
+
+    private static void turn(Dealer dealer, Player player) {
+        while (!player.isBust() && InputView.wantsReceive(player.getName())) {
+            dealer.deal(player);
+            OutputView.printHandStatus(player);
         }
     }
 
@@ -61,5 +66,10 @@ public class BlackJackApplication {
             OutputView.printDealerDrewMessage();
             dealer.pickAnotherCard();
         }
+    }
+
+    private static GameResult getResult(Dealer dealer, List<Player> players) {
+        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
+        return resultCalculator.getResult();
     }
 }
