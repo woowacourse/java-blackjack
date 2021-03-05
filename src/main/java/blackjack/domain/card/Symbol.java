@@ -28,14 +28,19 @@ public enum Symbol {
     }
 
     public int calculateAceBonusScore(int score, int aceCounts) {
-        int i = ZERO;
-        int aceBonusScore = ZERO;
-        while (i < aceCounts && score <= MAXIMUM_SCORE_FOR_ACE_BONUS_SCORE) {
-            aceBonusScore += ACE_BONUS_SCORE;
-            score += ACE_BONUS_SCORE;
-            i++;
+        int scoreWithAceBonus = score;
+        for (int i = ZERO; i < aceCounts; i++) {
+            int aceBonusScore = findAceBonusScore(scoreWithAceBonus);
+            scoreWithAceBonus += aceBonusScore;
         }
-        return aceBonusScore;
+        return scoreWithAceBonus - score;
+    }
+
+    private int findAceBonusScore(int score) {
+        if (score <= MAXIMUM_SCORE_FOR_ACE_BONUS_SCORE) {
+            return ACE_BONUS_SCORE;
+        }
+        return ZERO;
     }
 
     public boolean isAce() {
