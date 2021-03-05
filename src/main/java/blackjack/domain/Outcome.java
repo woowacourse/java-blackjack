@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -45,16 +47,14 @@ public enum Outcome {
         return null;
     }
 
-    public static Outcome reverseResult(final Outcome outcome) {
+    public static List<Outcome> getPlayerOutcomes(final Outcome outcome) {
         if (outcome == WIN) {
-            return LOSE;
+            return Collections.singletonList(LOSE);
         }
-
         if (outcome == LOSE) {
-            return WIN;
+            return Collections.singletonList(WIN);
         }
-
-        return DRAW;
+        return Collections.singletonList(DRAW);
     }
 
     public String getName() {

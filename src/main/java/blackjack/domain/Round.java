@@ -3,10 +3,14 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.view.dto.PlayerOutComeDto;
+import blackjack.view.dto.PlayerStatusDto;
+import blackjack.view.dto.RoundStatusDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,10 +22,14 @@ public class Round {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Round(final List<Card> cards, final Dealer dealer, final List<Player> players) {
+    private Round(final List<Card> cards, final Dealer dealer, final List<Player> players) {
         this.shuffledCards = new ArrayList<>(cards);
         this.dealer = dealer;
         this.players = new ArrayList<>(players);
+    }
+
+    public static Round generateWithRandomCards(final Dealer dealer, final List<Player> players) {
+        return new Round(Card.getShuffledCards(), dealer, players);
     }
 
     public List<Card> makeTwoCards() {
@@ -39,8 +47,8 @@ public class Round {
         return Collections.unmodifiableList(players);
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public String getDealerName() {
+        return dealer.getName();
     }
 
     public Card makeOneCard() {
@@ -55,11 +63,36 @@ public class Round {
         return false;
     }
 
-    public String getDealerName() {
-        return Dealer.getName();
-    }
-
     public List<String> getDealerCardStatus() {
         return dealer.getCardsStatus();
+    }
+
+    public RoundStatusDto getRoundStatus() {
+        return new RoundStatusDto(dealer.getName(),
+                getDealerCardStatus(),
+                players.stream()
+                        .map(this::getPlayerStatusDto)
+                        .collect(Collectors.toList()),
+                dealer.calculateScore(GAME_OVER_SCORE));
+    }
+
+    private PlayerStatusDto getPlayerStatusDto(final Player player) {
+        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE));
+    }
+
+    public List<Outcome> makeOutComes() {
+        return players.stream()
+                .map(player -> Outcome.findOutcome(dealer.calculateScore(GAME_OVER_SCORE), player.calculateScore(GAME_OVER_SCORE)))
+                .collect(Collectors.toList());
+    }
+
+    public List<PlayerOutComeDto> makePlayerResults(List<Outcome> gameOutComes) {
+        return players.stream()
+                .map(player -> new PlayerOutComeDto(player.getName(), gameOutComes.remove(FIRST_INDEX)))
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, List<Outcome>> finishGame() {
+        return Result.findResults(this);
     }
 }

@@ -45,8 +45,9 @@ class ResultTest {
     @Test
     void result_generate_test() {
         Result result = new Result();
+        Round round = Round.generateWithRandomCards(dealer, players);
 
-        Map<String, List<Outcome>> results = result.finishGame(dealer, players);
+        Map<String, List<Outcome>> results = result.findResults(round);
 
         List<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
         List<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
@@ -59,10 +60,13 @@ class ResultTest {
     @Test
     void result_buster_test() {
         Result result = new Result();
+        Round round = Round.generateWithRandomCards(dealer, players);
+
         dealer.addCard(Card.of("스페이드", "10"));
         players.get(0).addCard(Card.of("스페이드", "9"));
 
-        Map<String, List<Outcome>> results = result.finishGame(dealer, players);
+
+        Map<String, List<Outcome>> results = result.findResults(round);
 
         List<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
         List<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());

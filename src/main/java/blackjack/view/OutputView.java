@@ -19,6 +19,8 @@ public class OutputView {
     private static final String DEALER = "딜러";
     private static final String RESULT_MESSAGE = "## 최종 승패";
 
+    private OutputView(){}
+
     public static void showPlayCardStatus(final String name, final List<Card> cards) {
         String text = String.format(PARTICIPANT_STATUS_MESSAGE, name, cards.stream()
                 .map(card -> card.getCardStatus())

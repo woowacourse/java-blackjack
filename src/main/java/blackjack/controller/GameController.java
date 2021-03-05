@@ -1,14 +1,10 @@
 package blackjack.controller;
 
-import blackjack.domain.Result;
 import blackjack.domain.Round;
-import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.dto.PlayerStatusDto;
-import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
 import java.util.Scanner;
@@ -23,39 +19,23 @@ public class GameController {
     private final InputView inputView = new InputView(new Scanner(System.in));
 
     public void start() {
-        Round round = initializeGame();
-        RoundStatusDto roundStatusDto = getRoundStatusDto(round);
-        OutputView.showInitialStatus(roundStatusDto);
+        Round round = initializeRound();
+        round.initialize();
+        OutputView.showInitialStatus(round.getRoundStatus());
+
         addPlayersCardOrPass(round);
         addDealerCard(round);
-        showFinalStatus(round);
-        OutputView.showOutComes(Result.finishGame(round.getDealer(), round.getPlayers()));
+        OutputView.showFinalStatus(round.getRoundStatus());
+        OutputView.showOutComes(round.finishGame());
     }
 
-    private Round initializeGame() {
+    private Round initializeRound() {
         List<String> playerNames = inputView.getPlayerNames();
         Dealer dealer = new Dealer();
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
-        Round round = new Round(Card.getShuffledCards(), dealer, players);
-        round.initialize();
-        return round;
-    }
-
-    private RoundStatusDto getRoundStatusDto(final Round round) {
-        RoundStatusDto roundStatusDto = new RoundStatusDto(round.getDealerName(),
-                round.getDealerCardStatus(),
-                round.getPlayers()
-                        .stream()
-                        .map(this::getPlayerStatusDto)
-                        .collect(Collectors.toList()),
-                round.getDealer().calculateScore(GAME_OVER_SCORE));
-        return roundStatusDto;
-    }
-
-    private PlayerStatusDto getPlayerStatusDto(final Player player) {
-        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE));
+        return Round.generateWithRandomCards(dealer, players);
     }
 
     private void addPlayersCardOrPass(final Round round) {
@@ -82,14 +62,5 @@ public class GameController {
         if (round.addDealerCard()) {
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
-    }
-
-    private void showFinalStatus(final Round round) {
-        OutputView.showFinalStatus(new RoundStatusDto(round.getDealerName(),
-                round.getDealerCardStatus(),
-                round.getPlayers().stream()
-                        .map(this::getPlayerStatusDto)
-                        .collect(Collectors.toList()),
-                round.getDealer().calculateScore(GAME_OVER_SCORE)));
     }
 }
