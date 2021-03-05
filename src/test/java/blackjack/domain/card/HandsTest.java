@@ -1,32 +1,50 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class HandsTest {
 
-    @DisplayName("Cards 객체 생성")
+    @DisplayName("초기 카드는 2장만 가능합니다.")
+    @Test
+    void limit_2() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(Card.create(Suit.CLUB, Denomination.KING));
+        cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cards.add(Card.create(Suit.HEART, Denomination.QUEEN));
+        Hands hands = new Hands();
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> hands.makeWith(cards));
+    }
+
+    @DisplayName("Hands 객체 생성")
     @Test
     void create() {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.CLUB, Denomination.KING));
         cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        assertThatCode(() -> new Hands(cards)).doesNotThrowAnyException();
+        assertThatCode(() -> {
+            Hands hands = new Hands();
+            hands.makeWith(cards);
+        }).doesNotThrowAnyException();
     }
 
-    @DisplayName("Cards에 Card 객체 추가")
+    @DisplayName("Hands에 Card 객체 추가")
     @Test
     void add() {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.CLUB, Denomination.KING));
         cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
 
         assertThat(hands.toList().size()).isEqualTo(2);
     }
@@ -37,7 +55,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.CLUB, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.KING));
 
         assertThat(hands.calculate()).isEqualTo(13);
@@ -49,7 +68,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.CLUB, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.calculate()).isEqualTo(16);
@@ -61,7 +81,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.HEART, Denomination.TWO));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.calculate()).isEqualTo(7);
@@ -73,7 +94,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.HEART, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.EIGHT));
 
         assertThat(hands.calculate()).isEqualTo(21);
@@ -85,7 +107,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.HEART, Denomination.TEN));
         cards.add(Card.create(Suit.HEART, Denomination.THREE));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.SPADE, Denomination.ACE));
         hands.addCard(Card.create(Suit.CLUB, Denomination.ACE));
         hands.addCard(Card.create(Suit.HEART, Denomination.ACE));
@@ -100,7 +123,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.HEART, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertTrue(hands.containsAce());
@@ -112,7 +136,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.HEART, Denomination.TWO));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.getCardOf(2).size()).isEqualTo(2);
@@ -124,7 +149,8 @@ class HandsTest {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.create(Suit.HEART, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TEN));
-        Hands hands = new Hands(cards);
+        Hands hands = new Hands();
+        hands.makeWith(cards);
 
         assertTrue(hands.isBlackjack());
     }

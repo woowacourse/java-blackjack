@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,15 +9,20 @@ import java.util.stream.IntStream;
 public class Hands {
 
     private static final int WINNING_BASELINE = 21;
+    private static final int ACE_CONVERSION = 10;
 
-    private final List<Card> cards;
-    private final boolean isBlackjack;
+    private final List<Card> cards = new ArrayList<>();
+    private boolean isBlackjack;
 
-    public Hands(final List<Card> cards) {
-        if (cards.size() != 2) {
+    public Hands() {
+
+    }
+
+    public void makeWith(List<Card> initialCards) {
+        if (initialCards.size() != 2) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
         }
-        this.cards = cards;
+        cards.addAll(initialCards);
         isBlackjack = validateBlackjack();
     }
 
@@ -31,7 +37,7 @@ public class Hands {
     public int calculate() {
         int sum = sumWithoutAce();
         for (int i = 0; i < countAce(); ++i) {
-            sum += Denomination.ACE.getValue();
+            sum += Denomination.ACE.getPoint();
         }
         if (containsAce()) {
             sum = properSum(sum);
@@ -40,10 +46,10 @@ public class Hands {
     }
 
     private int properSum(int sum) {
-        if (sum + 10 > WINNING_BASELINE) {
+        if (sum + ACE_CONVERSION > WINNING_BASELINE) {
             return sum;
         }
-        return sum + 10;
+        return sum + ACE_CONVERSION;
     }
 
     public boolean containsAce() {
@@ -55,7 +61,7 @@ public class Hands {
     private int sumWithoutAce() {
         return cards.stream()
                 .filter(card -> !Denomination.isAce(card.getCardValue()))
-                .map(Card::getValue)
+                .map(Card::getPoint)
                 .reduce(0, Integer::sum);
     }
 
