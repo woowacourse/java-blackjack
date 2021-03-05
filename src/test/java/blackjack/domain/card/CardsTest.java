@@ -78,7 +78,7 @@ class CardsTest {
         List<Card> cardList = Arrays.asList(
                 new Card(Symbol.ACE, Shape.CLOVER),
                 new Card(Symbol.ACE, Shape.DIAMOND),
-                new Card(Symbol.ACE, Shape.CLOVER));
+                new Card(Symbol.ACE, Shape.HEART));
         Cards cards = new Cards(cardList);
 
         int score = cards.calculateFinalScore();
