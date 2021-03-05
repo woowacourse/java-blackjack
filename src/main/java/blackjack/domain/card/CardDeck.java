@@ -31,6 +31,10 @@ public class CardDeck {
     }
 
     public Card drawCard() {
+        if(deck.isEmpty()){
+            throw new NoSuchElementException("모든 카드를 소진하였습니다. 더이상 게임을 진행할 수 없습니다.");
+        }
+
         return deck.pop();
     }
 }

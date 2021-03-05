@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
-
-
     protected String name;
     protected List<Card> cards;
 
@@ -20,7 +18,7 @@ public abstract class User {
         this.cards = new ArrayList<>();
     }
 
-    private static void validate(String name) {
+    private void validate(String name) {
         if (StringUtil.isBlank(name)) {
             throw new IllegalArgumentException("빈 값을 입력하셨습니다. 플레이어의 이름을 입력해주세요.");
         }
