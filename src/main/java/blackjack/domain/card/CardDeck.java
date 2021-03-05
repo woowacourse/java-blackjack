@@ -41,8 +41,4 @@ public class CardDeck {
         }
         return cardDeck.pop();
     }
-
-    int size() {
-        return cardDeck.size();
-    }
 }
