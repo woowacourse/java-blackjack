@@ -35,7 +35,7 @@ class DealerTest {
         dealer.hit(card1);
         dealer.hit(card2);
 
-        assertFalse(dealer.isStay());
+        assertFalse(dealer.isDealerDrawScore());
     }
 
     @DisplayName("isStay - 딜러는 17 이상일 때 스테이한다.")
@@ -49,7 +49,7 @@ class DealerTest {
         dealer.hit(card1);
         dealer.hit(card2);
 
-        assertTrue(dealer.isStay());
+        assertTrue(dealer.isDealerDrawScore());
     }
 
 }
