@@ -38,6 +38,10 @@ public class BlackjackGame {
         return dealer;
     }
 
+    public int calculateDealerScore() {
+        return dealer.calculateScore();
+    }
+
     private void init() {
         dealer.firstDraw(deck.draw(), deck.draw());
         users.toList().forEach(user -> user.firstDraw(deck.draw(), deck.draw()));

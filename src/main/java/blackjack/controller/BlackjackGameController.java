@@ -26,20 +26,27 @@ public class BlackjackGameController {
         createResultAndPrint(blackjackGame);
     }
 
+    private static BlackjackGame startGameAndFirstDraw() {
+        try {
+            Users users = Users.from(askUserNames());
+            return BlackjackGame.createAndFirstDraw(users);
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return startGameAndFirstDraw();
+        }
+    }
+
+    private static List<Name> askUserNames() {
+        return InputView.askPlayersName().stream()
+                .map(Name::from)
+                .collect(Collectors.toList());
+    }
+
     private static void printFirstDrawInformation(BlackjackGame blackjackGame) {
         OutputView.printDrawMessage(blackjackGame.getUserNames());
         OutputView.println();
 
         printFirstDrawCards(blackjackGame);
-    }
-
-    private static BlackjackGame startGameAndFirstDraw() {
-        List<Name> names = InputView.askPlayersName().stream()
-                            .map(Name::from)
-                            .collect(Collectors.toList());
-        Users users = Users.from(names);
-
-        return BlackjackGame.createAndFirstDraw(users);
     }
 
     private static void printFirstDrawCards(BlackjackGame blackjackGame) {
@@ -49,14 +56,19 @@ public class BlackjackGameController {
 
     private static void processUserRound(BlackjackGame blackjackGame) {
         while (blackjackGame.existCanContinueUser()) {
-            User currentUser = blackjackGame.findFirstCanPlayUser();
-            userDrawOrStop(blackjackGame, currentUser, InputView.askMoreDraw(currentUser.getName()));
-            printUserCurrentCards(currentUser);
+            askHitOrStay(blackjackGame);
         }
     }
 
-    private static void printUserCurrentCards(User currentUser) {
-        OutputView.printCardList(currentUser);
+    private static void askHitOrStay(BlackjackGame blackjackGame) {
+        User currentUser = blackjackGame.findFirstCanPlayUser();
+        try{
+            userDrawOrStop(blackjackGame, currentUser, InputView.askMoreDraw(currentUser.getName()));
+            printUserCurrentCards(currentUser);
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            processUserRound(blackjackGame);
+        }
     }
 
     private static void userDrawOrStop(BlackjackGame blackjackGame, User currentUser, Boolean isContinue) {
@@ -67,8 +79,12 @@ public class BlackjackGameController {
         currentUser.stopUser();
     }
 
+    private static void printUserCurrentCards(User currentUser) {
+        OutputView.printCardList(currentUser);
+    }
+
     private static void processDealerRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.getDealer().calculateScore() <= DEALER_MINIMUM_SCORE) {
+        while (blackjackGame.calculateDealerScore() <= DEALER_MINIMUM_SCORE) {
             blackjackGame.getDealer().drawCard(blackjackGame.draw());
             OutputView.printDealerMoreDrawMessage();
         }
