@@ -46,13 +46,6 @@ public class Hands {
         return sum + 10;
     }
 
-    private int properAce(int sum) {
-        if (sum + CardValue.ACE.getValue() > WINNING_BASELINE) {
-            return 1;
-        }
-        return CardValue.ACE.getValue();
-    }
-
     public boolean containsAce() {
         return cards.stream()
                 .map(Card::getCardValue)
