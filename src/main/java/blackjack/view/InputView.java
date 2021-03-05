@@ -1,9 +1,10 @@
 package blackjack.view;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final String PLAYER_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -19,13 +20,11 @@ public class InputView {
 
     public List<String> getPlayerNames() {
         System.out.println(PLAYER_INPUT_MESSAGE);
-        String[] split = getNextLine().split(DELIMITER);
-        List<String> playerNameGroup = new ArrayList<>();
-        for (String playerName : split) {
-            String trimName = playerName.trim();
-            validatePlayerName(trimName);
-            playerNameGroup.add(trimName);
-        }
+        List<String> playerNameGroup = Arrays.stream(getNextLine().split(DELIMITER))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        playerNameGroup.forEach(this::validatePlayerName);
+
         return playerNameGroup;
     }
 
