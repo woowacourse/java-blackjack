@@ -18,23 +18,31 @@ public class BlackjackController {
     }
 
     public void start() {
-        Game game = Game.of(InputView.inputPlayerNames());
-
-        game.setUpTwoCards();
-        OutputView.printSetup(game.getDealer(), game.getPlayers());
-
+        Game game = initGame();
+        setUpTwoCards(game);
         askPlayersDrawCard(game);
         makeDealerDrawCard(game);
+        showFinalResult(game);
+    }
 
-        OutputView.printFinalCardInfo(game.getDealer(), game.getPlayers());
-        game.comparePlayersCardsWithDealer();
-        printWinOrLoseResult(game);
+    private Game initGame() {
+        try {
+            return Game.of(InputView.inputPlayerNames());
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return initGame();
+        }
     }
 
     private void askPlayersDrawCard(Game game) {
         for (Player player : game.getPlayers()) {
             askDrawCard(player, game);
         }
+    }
+
+    private void setUpTwoCards(Game game) {
+        game.setUpTwoCards();
+        OutputView.printSetup(game.getDealer(), game.getPlayers());
     }
 
     private void askDrawCard(Player player, Game game) {
@@ -48,6 +56,7 @@ public class BlackjackController {
         try {
             return tryWillDrawCard(player);
         } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
             return willDrawCard(player);
         }
     }
@@ -68,6 +77,12 @@ public class BlackjackController {
         int dealerDrawCount = game.playDealerTurn();
         OutputView.printDealerDrawMessage(dealerDrawCount);
         OutputView.printMessage(DEALER_NO_MORE_DRAW_MESSAGE);
+    }
+
+    private void showFinalResult(Game game) {
+        OutputView.printFinalCardInfo(game.getDealer(), game.getPlayers());
+        game.comparePlayersCardsWithDealer();
+        printWinOrLoseResult(game);
     }
 
     private void printWinOrLoseResult(Game game) {
