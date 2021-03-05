@@ -32,10 +32,10 @@ public enum WinOrLose {
     }
 
     public WinOrLose reverse() {
-        if (this.equals(WIN)) {
+        if (WIN == this) {
             return LOSE;
         }
-        if (this.equals(LOSE)) {
+        if (LOSE == this) {
             return WIN;
         }
         return this;

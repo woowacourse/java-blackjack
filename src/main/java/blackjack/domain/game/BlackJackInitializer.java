@@ -6,8 +6,6 @@ import java.util.List;
 
 public class BlackJackInitializer {
 
-    public static final int THRESHOLD = 21;
-
     private final Dealer dealer;
     private final List<Player> players;
 

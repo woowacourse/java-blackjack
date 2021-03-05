@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardHand {
+public class Hand {
 
     private final List<Card> cards;
 
-    public CardHand(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public static Hand createEmptyHand() {
+        return new Hand(new ArrayList<>());
     }
 
     public void add(Card card) {

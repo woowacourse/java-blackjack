@@ -1,9 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardHand;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -13,7 +12,7 @@ public class Dealer extends Participant {
     private final Deck deck;
 
     public Dealer() {
-        super("딜러", new CardHand(new ArrayList<>()));
+        super("딜러", Hand.createEmptyHand());
         this.deck = Deck.createShuffledDeck();
     }
 
@@ -26,24 +25,23 @@ public class Dealer extends Participant {
         player.receiveCard(drawCard());
     }
 
-    public boolean shouldReceive() {
-        return cardHand.dealerSum() <= DEALER_THRESHOLD;
-    }
-
     public void setPlayersBaseCard(List<Player> players) {
-        for (Player player: players) {
-            player.receiveCard(drawCard());
-            player.receiveCard(drawCard());
+        for (Player player : players) {
+            deal(player);
+            deal(player);
         }
     }
 
     public void pickAnotherCard() {
-        // 뽑은 카드를 자기 패에 놓는다
         cardHand.add(drawCard());
     }
 
     private Card drawCard() {
         return deck.drawCard();
+    }
+
+    public boolean shouldReceive() {
+        return cardHand.dealerSum() <= DEALER_THRESHOLD;
     }
 
     @Override

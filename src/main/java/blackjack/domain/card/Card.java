@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Suit suit;
     private final Rank rank;
@@ -25,7 +25,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return Rank.ACE.equals(rank);
+        return rank == Rank.ACE;
     }
 
     @Override
