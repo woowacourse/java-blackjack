@@ -35,12 +35,12 @@ class DealerTest {
     @Test
     void judgeGameResultWithGamers_1() {
         // given
-        Gamer gamer1 = new Gamer("pobi", Cards.of(
+        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SEVEN, Shape.CLUBS)
         ));
 
-        Gamer gamer2 = new Gamer("jason", Cards.of(
+        Gamer gamer2 = new Gamer(new Name("jason"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.TWO, Shape.CLUBS)
         ));
@@ -66,12 +66,12 @@ class DealerTest {
     @Test
     void judgeGameResultWithGamers_2() {
         // given
-        Gamer gamer1 = new Gamer("pobi", Cards.of(
+        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SIX, Shape.CLUBS)
         ));
 
-        Gamer gamer2 = new Gamer("jason", Cards.of(
+        Gamer gamer2 = new Gamer(new Name("jason"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SIX, Shape.CLUBS)
         ));

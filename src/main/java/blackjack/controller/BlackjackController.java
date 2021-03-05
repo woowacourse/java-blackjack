@@ -7,6 +7,7 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Name;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -52,7 +53,7 @@ public class BlackjackController {
 
     private List<Gamer> initGamers(String[] gamerNames) {
         return Arrays.stream(gamerNames)
-            .map(gamerName -> new Gamer(gamerName, Cards.of(deck.drawTwoStartCards())))
+            .map(gamerName -> new Gamer(new Name(gamerName), Cards.of(deck.drawTwoStartCards())))
             .collect(Collectors.toList());
     }
 

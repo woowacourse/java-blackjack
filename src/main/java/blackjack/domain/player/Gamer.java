@@ -7,7 +7,7 @@ public class Gamer extends Player {
     private static final String PLAYER_SCORE_RANGE_ERROR = "[ERROR] 플레이어의 점수가 21을 초과하여 카드를 추가할 수 없습니다.";
     private static final int CAN_DRAW_MAXIMUM_SCORE = 21;
 
-    public Gamer(String name, Cards cards) {
+    public Gamer(Name name, Cards cards) {
         super(name, cards);
     }
 

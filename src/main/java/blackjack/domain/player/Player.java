@@ -5,10 +5,10 @@ import blackjack.domain.card.Cards;
 
 public abstract class Player {
 
-    protected final String name;
+    protected final Name name;
     protected final Cards cards;
 
-    public Player(String name, Cards cards) {
+    public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -24,7 +24,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public Cards getCards() {

@@ -8,6 +8,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_1() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SEVEN, Shape.CLUBS)
         ));
@@ -45,7 +46,7 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_2() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
         ));
@@ -67,7 +68,7 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_3() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
         ));
@@ -89,7 +90,7 @@ class ResultTypeTest {
     @Test
     void 딜러_버스트_테스트() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.KING, Shape.CLUBS),
                 Card.of(Denomination.KING, Shape.CLUBS)
         ));
@@ -112,7 +113,7 @@ class ResultTypeTest {
     @Test
     void 게이머_버스트_테스트() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.KING, Shape.CLUBS),
                 Card.of(Denomination.KING, Shape.CLUBS),
                 Card.of(Denomination.KING, Shape.CLUBS)

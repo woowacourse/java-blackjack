@@ -15,7 +15,7 @@ public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
     private static final int CAN_DRAW_MAXIMUM_SCORE = 16;
     public Dealer(Cards cards) {
-        super(DEALER_NAME, cards);
+        super(new Name(DEALER_NAME), cards);
     }
 
     @Override
