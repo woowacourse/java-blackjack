@@ -29,7 +29,7 @@ public class Users {
 
     public List<Player> getPlayers() {
         return users.stream()
-                .filter(user -> user instanceof Player)
+                .filter(User::isPlayer)
                 .map(user -> (Player) user)
                 .collect(Collectors.toList());
     }
@@ -38,9 +38,9 @@ public class Users {
         return Collections.unmodifiableList(this.users);
     }
 
-    public Dealer getDealer() {
-        return (Dealer) this.users.stream()
-                .filter(user -> user instanceof Dealer)
+    public User getDealer() {
+        return this.users.stream()
+                .filter(User::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
     }

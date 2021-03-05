@@ -23,6 +23,14 @@ public abstract class User {
 
     public abstract boolean isStay();
 
+    public boolean isPlayer() {
+        return this instanceof Player;
+    }
+
+    public boolean isDealer() {
+        return this instanceof Dealer;
+    }
+
     public int getScore() {
         if (this.isBlackJack()) {
             return Card.BLACKJACK_SCORE;
