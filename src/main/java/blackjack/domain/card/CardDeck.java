@@ -8,13 +8,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CardDeck {
+    private static final int VALID_CARD_COUNTS = Symbol.values().length * Shape.values().length;
     private static final int DEFAULT_CARD_DRAW_COUNTS = 2;
+    private static final String INVALID_CARD_COUNTS = "카드덱 생성에 필요한 카드의 숫자가 유효하지 않습니다.";
 
     private final Deque<Card> cardDeck;
 
     public CardDeck(List<Card> cards) {
+        validateCardCounts(cards);
         Collections.shuffle(cards);
         this.cardDeck = new ArrayDeque<>(cards);
+    }
+
+    private void validateCardCounts(List<Card> cards) {
+        int cardCounts = cards.size();
+        if (cardCounts != VALID_CARD_COUNTS) {
+            throw new IllegalArgumentException(INVALID_CARD_COUNTS);
+        }
     }
 
     public Cards drawDefaultCards() {
