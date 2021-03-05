@@ -12,15 +12,14 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     public static String NEW_LINE = System.lineSeparator();
-    public static String INIT_RESULT_MESSAGE = NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.";
-    public static String DEALER_PREFIX = "딜러: ";
 
     public static void printInitSetting(final List<Player> players) {
         List<String> challengerNames = players.stream().filter(player -> player instanceof Challenger)
                 .map(player -> (Challenger) player)
                 .map(Challenger::getName)
                 .collect(Collectors.toList());
-        System.out.println(String.format(INIT_RESULT_MESSAGE, String.join(", ", challengerNames)));
+        System.out.println(String.format
+                (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", challengerNames)));
     }
 
     public static void printInitCards(final Dealer dealer, final Challengers challengers) {
@@ -55,7 +54,7 @@ public class OutputView {
 
     public static void printSummary(final ResultStatistics resultStatistics) {
         System.out.println("## 최종 승패");
-        System.out.print(DEALER_PREFIX);
+        System.out.print("딜러: ");
         System.out.println(String.format("%d승 %d무 %d패",
                 resultStatistics.getDealerWins(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoses()));
 
@@ -71,7 +70,7 @@ public class OutputView {
     }
 
     private static void printDealerInitCard(final Dealer dealer) {
-        System.out.print(DEALER_PREFIX);
+        System.out.print("딜러: ");
         List<Card> dealerCards = dealer.getInitCards();
         dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
     }

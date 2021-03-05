@@ -10,7 +10,6 @@ import static blackjack.view.OutputView.printNewLine;
 
 public class InputView {
 
-    public static final String ASK_MORE_CARDS = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> getNames() {
@@ -21,7 +20,7 @@ public class InputView {
     public static boolean wantMoreCard(final Challenger challenger) {
         try {
             printNewLine();
-            System.out.println(String.format(ASK_MORE_CARDS, challenger.getName()));
+            System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", challenger.getName()));
             String yesOrNo = scanner.nextLine();
             validateYesOrNo(yesOrNo);
             return "y".equals(yesOrNo);
