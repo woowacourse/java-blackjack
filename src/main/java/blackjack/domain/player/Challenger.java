@@ -13,13 +13,21 @@ public class Challenger extends Player {
     }
 
     public Result getChallengerResult(final Dealer dealer) {
-        if (isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore())) {
+        if (loseCondition(dealer)) {
             return Result.LOSE;
         }
-        if (dealer.isBust() || this.getScore() > dealer.getScore()) {
+        if (winCondition(dealer)) {
             return Result.WIN;
         }
         return Result.DRAW;
+    }
+
+    public boolean loseCondition(Dealer dealer){
+        return isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore());
+    }
+
+    public boolean winCondition(Dealer dealer){
+        return dealer.isBust() || this.getScore() > dealer.getScore();
     }
 
     @Override
