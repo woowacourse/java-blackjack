@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,6 @@ public class ResultStatistics {
     }
 
     public Map<String, Integer> getProfitResultStatistics() {
-        return profitResultStatistics;
+        return Collections.unmodifiableMap(profitResultStatistics);
     }
 }

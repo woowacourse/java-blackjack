@@ -18,7 +18,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultStatisticsTest {
-
     private static final List<Card> CARDS_BLACKJACK = Arrays.asList(
             new Card(Symbol.JACK, Shape.HEART),
             new Card(Symbol.ACE, Shape.DIAMOND)
