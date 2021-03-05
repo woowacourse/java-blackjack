@@ -40,25 +40,28 @@ public class BlackjackController {
     private void askDrawCard(Player player, Game game) {
         while (willDrawCard(player)) {
             game.giveCard(player);
-            OutputView.printCardInfo(player);
-            OutputView.printMessage("");
-            if (player.isBlackJack()) {
-                OutputView.printMessage(BLACKJACK_MESSAGE);
-                break;
-            }
-            if (player.isBust()) {
-                OutputView.printMessage(BUST_MESSAGE);
-                break;
-            }
+            OutputView.printCardInfoWithLineSeparator(player);
         }
     }
 
     private boolean willDrawCard(Player player) {
         try {
-            return InputView.inputYesOrNo(player);
+            return tryWillDrawCard(player);
         } catch (IllegalArgumentException e) {
             return willDrawCard(player);
         }
+    }
+
+    private boolean tryWillDrawCard(Player player) {
+        if (player.isBlackJack()) {
+            OutputView.printMessage(BLACKJACK_MESSAGE);
+            return false;
+        }
+        if (player.isBust()) {
+            OutputView.printMessage(BUST_MESSAGE);
+            return false;
+        }
+        return InputView.inputYesOrNo(player);
     }
 
     private void makeDealerDrawCard(Game game) {

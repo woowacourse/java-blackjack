@@ -43,6 +43,11 @@ public class OutputView {
         System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
     }
 
+    public static void printCardInfoWithLineSeparator(Participant participant) {
+        printCardInfo(participant);
+        System.out.print(LINE_SEPARATOR);
+    }
+
     public static void printDealerDrawMessage(int dealerDrawCount) {
         for (int i = 0; i < dealerDrawCount; i++) {
             System.out.println(DEALER_DRAW_MESSAGE);
