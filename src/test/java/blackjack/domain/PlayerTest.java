@@ -78,4 +78,21 @@ public class PlayerTest {
         Cards cards = player.showCards();
         assertThat(cards.cards().size()).isEqualTo(2);
     }
+
+    @DisplayName("플레이어의 결과를 산출한다.")
+    @Test
+    public void decideBustUserLose() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("amazzi");
+        dealer.receiveCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        player.receiveCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING),
+                new Card(Shape.HEART, Value.QUEEN)
+        )));
+        assertThat(player.produceResult(dealer)).isEqualTo(Result.LOSE);
+    }
 }
