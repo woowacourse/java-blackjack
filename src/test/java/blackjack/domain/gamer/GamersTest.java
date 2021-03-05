@@ -16,10 +16,10 @@ public class GamersTest {
         assertThatCode(() ->
                 new Gamers(
                         Arrays.asList(
-                                new Player("joanne", deck.giveFirstHand()),
-                                new Player("pk", deck.giveFirstHand())
+                                new Player("joanne", deck.makeInitialHands()),
+                                new Player("pk", deck.makeInitialHands())
                         ),
-                        new Dealer(deck.giveFirstHand())
+                        new Dealer(deck.makeInitialHands())
                 )
         ).doesNotThrowAnyException();
     }

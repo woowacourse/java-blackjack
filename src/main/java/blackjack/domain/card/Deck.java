@@ -18,7 +18,7 @@ public class Deck {
         return new Deck(CardStack.create());
     }
 
-    public Hands giveFirstHand() {
+    public Hands makeInitialHands() {
         return new Hands(cards.getTwoCards());
     }
 
@@ -32,8 +32,8 @@ public class Deck {
 
     public Gamers initiateGamers(List<String> names) {
         List<Player> players = names.stream()
-                .map(name -> new Player(name, giveFirstHand()))
+                .map(name -> new Player(name, makeInitialHands()))
                 .collect(Collectors.toList());
-        return new Gamers(players, new Dealer(giveFirstHand()));
+        return new Gamers(players, new Dealer(makeInitialHands()));
     }
 }
