@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Casino {
 
-    public static final String BURST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
+    public static final String BUST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String DEALER_NO_MORE_DRAW_MESSAGE = "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
 
@@ -26,7 +26,7 @@ public class Casino {
         OutputView.printSetup(dealer, players);
 
         askPlayersDrawCard(game);
-        doDealerTurn(game);
+        makeDealerDrawCard(game);
 
         OutputView.printFinalCardInfo(dealer, players);
         game.comparePlayersCardsWithDealer();
@@ -48,14 +48,14 @@ public class Casino {
                 OutputView.printMessage(BLACKJACK_MESSAGE);
                 break;
             }
-            if (player.isBurst()) {
-                OutputView.printMessage(BURST_MESSAGE);
+            if (player.isBust()) {
+                OutputView.printMessage(BUST_MESSAGE);
                 break;
             }
         }
     }
 
-    private void doDealerTurn(Game game) {
+    private void makeDealerDrawCard(Game game) {
         int dealerDrawCount = game.playDealerTurn();
         OutputView.printDealerDrawMessage(dealerDrawCount);
         OutputView.printMessage(DEALER_NO_MORE_DRAW_MESSAGE);

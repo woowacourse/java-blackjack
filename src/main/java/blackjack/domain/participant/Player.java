@@ -19,7 +19,7 @@ public class Player extends Participant {
     }
 
     public void fight(Dealer dealer) {
-        if (isBurst()) {
+        if (isBust()) {
             gameResult.lose();
             return;
         }

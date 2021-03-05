@@ -82,7 +82,7 @@ public class ParticipantTest {
         participant.addCard(JACK_SPADES);
         participant.addCard(JACK_SPADES);
         participant.addCard(ACE_CLUBS);
-        assertFalse(participant.isBurst());
+        assertFalse(participant.isBust());
     }
 
     @Test
@@ -91,6 +91,6 @@ public class ParticipantTest {
         participant.addCard(JACK_SPADES);
         participant.addCard(JACK_SPADES);
         participant.addCard(JACK_SPADES);
-        assertTrue(participant.isBurst());
+        assertTrue(participant.isBust());
     }
 }

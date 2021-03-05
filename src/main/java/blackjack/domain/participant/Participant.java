@@ -49,7 +49,7 @@ public abstract class Participant {
                     .sum();
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateResult() > Game.BLACKJACK_NUMBER;
     }
 
