@@ -30,7 +30,7 @@ class WinOrLoseTest {
         assertThat(WinOrLose.decideWinOrLose(user, dealer)).isEqualTo(expectedResult);
     }
 
-    static Stream<Arguments> winOrLoseCreateTest() {
+    static Stream<Arguments> winOrLoseByStatusTest() {
         return Stream.of(
                 Arguments.of(
                         changeStatus(new User("웨지"), PLAYING), changeStatus(new Dealer(), BURST), WIN
