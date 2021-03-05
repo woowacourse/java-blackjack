@@ -25,13 +25,13 @@ public class OutputView {
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), playerNames);
         printNewLine();
         printDealerDefaultCard(dealer);
-        printPlayerAllDefaultCards(players);
+        printPlayersAllDefaultCards(players);
     }
 
     private static void printDealerDefaultCard(Dealer dealer) {
         List<Card> dealerCards = dealer.getCards();
-        Card firstCardOfDealer = dealerCards.get(FIRST_CARD_INDEX);
-        System.out.printf("%s : %s", dealer.getName(), parseCardInformation(firstCardOfDealer));
+        Card firstCard = dealerCards.get(FIRST_CARD_INDEX);
+        System.out.printf("%s : %s", dealer.getName(), parseCardInformation(firstCard));
         printNewLine();
     }
 
@@ -39,7 +39,7 @@ public class OutputView {
         return card.getSymbol().getName() + card.getShape().getName();
     }
 
-    private static void printPlayerAllDefaultCards(List<Player> players) {
+    private static void printPlayersAllDefaultCards(List<Player> players) {
         players.forEach(OutputView::printEachPlayerCards);
         printNewLine();
     }
@@ -58,10 +58,9 @@ public class OutputView {
 
     public static void printDealerDrawingMessage(Dealer dealer) {
         printNewLine();
-        System.out.printf("%s는 16이하라 한 장의 카드를 더 받았습니다.", dealer.getName());
+        System.out.printf("%s는 16이하라 카드를 더 받았습니다.", dealer.getName());
         printNewLine();
     }
-
 
     public static void printFinalCardsAndScore(Dealer dealer, List<Player> players) {
         printNewLine();
@@ -78,10 +77,10 @@ public class OutputView {
     public static void printFinalResult(Dealer dealer, List<Player> players) {
         printNewLine();
         System.out.println("## 최종 승패");
-        Map<Result, Long> map = dealer.aggregateResultStatistics(players);
-        long winCounts = map.get(Result.WIN);
-        long lossCounts = map.get(Result.LOSE);
-        long drawCounts = map.get(Result.DRAW);
+        Map<Result, Long> resultStatistics = dealer.aggregateResultStatistics(players);
+        long winCounts = resultStatistics.get(Result.WIN);
+        long lossCounts = resultStatistics.get(Result.LOSE);
+        long drawCounts = resultStatistics.get(Result.DRAW);
         System.out.printf("%s: %d승 %d무 %d패", dealer.getName(), winCounts, drawCounts, lossCounts);
         printNewLine();
         players.forEach(player -> printEachPlayerFinalResult(player, dealer));

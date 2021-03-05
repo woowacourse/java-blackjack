@@ -8,6 +8,8 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class Application {
     private static final String AGREE = "y";
 
@@ -15,13 +17,14 @@ public class Application {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Dealer dealer = new Dealer();
         Players players = Players.from(InputView.inputPlayerNames());
+        List<Player> playersGroup = players.toList();
 
         distributeDefaultCards(dealer, players, cardDeck);
-        players.toList().forEach(player -> drawMoreCardForPlayer(player, cardDeck));
+        playersGroup.forEach(player -> drawMoreCardForPlayer(player, cardDeck));
         drawMoreCardForDealer(dealer, cardDeck);
 
-        OutputView.printFinalCardsAndScore(dealer, players.toList());
-        OutputView.printFinalResult(dealer, players.toList());
+        OutputView.printFinalCardsAndScore(dealer, playersGroup);
+        OutputView.printFinalResult(dealer, playersGroup);
     }
 
     private static void distributeDefaultCards(Dealer dealer, Players players, CardDeck cardDeck) {
@@ -41,6 +44,7 @@ public class Application {
     private static void drawOneCard(String answer, Player player, CardDeck cardDeck) {
         if (AGREE.equals(answer)) {
             player.receiveCard(cardDeck.draw());
+            OutputView.printEachPlayerCards(player);
         }
     }
 
