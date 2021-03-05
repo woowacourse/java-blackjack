@@ -50,7 +50,7 @@ public class BlackjackGameController {
     }
 
     private static void printFirstDrawCards(BlackjackGame blackjackGame) {
-        OutputView.printDealerFirstCard(blackjackGame.getDealer().getFirstCard());
+        OutputView.printDealerFirstCard(blackjackGame.openDealerFirstCard());
         blackjackGame.getUsers().forEach(OutputView::printCardList);
     }
 

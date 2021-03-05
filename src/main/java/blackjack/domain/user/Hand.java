@@ -43,7 +43,7 @@ public class Hand {
     }
 
     private OptionalInt getIndexOfAce() {
-        return IntStream.range(0, cards.size())
+        return IntStream.range(FIRST_INDEX, cards.size())
                 .filter(i -> isAce(cards.get(i)))
                 .findFirst();
     }

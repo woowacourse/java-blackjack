@@ -47,8 +47,8 @@ public class BlackjackGame {
         users.toList().forEach(user -> user.firstDraw(deck.draw(), deck.draw()));
     }
 
-    public int getDealerHandSize() {
-        return dealer.handSize();
+    public Card openDealerFirstCard() {
+        return dealer.getFirstCard();
     }
 
     public User findFirstCanPlayUser(){
