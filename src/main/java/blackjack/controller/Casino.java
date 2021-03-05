@@ -19,16 +19,14 @@ public class Casino {
 
     public void start() {
         Game game = Game.of(InputView.inputPlayerNames());
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
 
         game.setUpTwoCards();
-        OutputView.printSetup(dealer, players);
+        OutputView.printSetup(game.getDealer(), game.getPlayers());
 
         askPlayersDrawCard(game);
         makeDealerDrawCard(game);
 
-        OutputView.printFinalCardInfo(dealer, players);
+        OutputView.printFinalCardInfo(game.getDealer(), game.getPlayers());
         game.comparePlayersCardsWithDealer();
         printWinOrLoseResult(game);
     }
@@ -40,7 +38,7 @@ public class Casino {
     }
 
     private void askDrawCard(Player player, Game game) {
-        while (InputView.inputYesOrNo(player)) {
+        while (willDrawCard(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);
             OutputView.printMessage("");
@@ -52,6 +50,14 @@ public class Casino {
                 OutputView.printMessage(BUST_MESSAGE);
                 break;
             }
+        }
+    }
+
+    private boolean willDrawCard(Player player) {
+        try {
+            return InputView.inputYesOrNo(player);
+        } catch (IllegalArgumentException e) {
+            return willDrawCard(player);
         }
     }
 
