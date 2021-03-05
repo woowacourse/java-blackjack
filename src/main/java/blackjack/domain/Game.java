@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class Game {
     public static final int BLACKJACK_NUMBER = 21;
+    public static final String PLAYER_NUMBER_ERROR = "플레이어는 최소 1명 이상이여야 합니다.";
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -24,7 +25,7 @@ public class Game {
 
     public static Game of(List<String> playerNames) {
         if (playerNames.size() == 0) {
-            throw new IllegalArgumentException("플레이어는 최소 1명 이상이여야 합니다.");
+            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR);
         }
         return new Game(playerNames.stream()
                                    .map(Player::new)

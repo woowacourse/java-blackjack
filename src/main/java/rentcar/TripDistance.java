@@ -1,6 +1,7 @@
 package rentcar;
 
 public class TripDistance {
+    public static final String DISTANCE_NON_NEGATIVE_ERROR = "주행 거리는 음수가 되면 안됩니다.";
     private final double distance;
 
     public TripDistance(double distance) {
@@ -10,7 +11,7 @@ public class TripDistance {
 
     private void validateDistance(double distance) {
         if (distance < 0) {
-            throw new IllegalArgumentException("주행 거리는 음수가 되면 안됩니다.");
+            throw new IllegalArgumentException(DISTANCE_NON_NEGATIVE_ERROR);
         }
     }
 
