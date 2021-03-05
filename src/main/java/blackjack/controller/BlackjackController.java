@@ -8,13 +8,13 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 
-public class Casino {
+public class BlackjackController {
 
     public static final String BUST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String DEALER_NO_MORE_DRAW_MESSAGE = "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
 
-    public Casino() {
+    public BlackjackController() {
     }
 
     public void start() {
