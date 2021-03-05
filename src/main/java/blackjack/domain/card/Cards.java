@@ -25,11 +25,11 @@ public class Cards {
     public int calculateScore() {
         int result = 0;
         result += calculateScoreExceptAce();
-        result = calculateScoreAce(result);
+        result = calculateTotalScoreWithAce(result);
         return result;
     }
 
-    private int calculateScoreAce(int result) {
+    private int calculateTotalScoreWithAce(int result) {
         int sum = result;
         List<Card> aceCards = cards.stream()
                 .filter(Card::isAce)

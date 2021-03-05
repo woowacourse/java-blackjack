@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
+    private static final String ACE = "A";
     private static final String NOT_EXIST_CARD_ERROR = "[ERROR] 존재하지 않는 카드입니다.";
 
     private final Denomination denomination;
@@ -48,7 +49,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination.getName().equals("A");
+        return denomination.getName().equals(ACE);
     }
 
     public Denomination getDenomination() {
