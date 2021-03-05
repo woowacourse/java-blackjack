@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-
     private final Deck deck;
 
     public BlackjackController() {
@@ -33,19 +32,8 @@ public class BlackjackController {
         List<Gamer> gamers = initGamers(gamerNames);
         Dealer dealer = initDealer();
         OutputView.printGameStartMessage(dealer, gamers);
-
-        for (Gamer gamer : gamers) {
-            while (gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
-                gamer.addCard(deck.draw());
-                OutputView.printPlayerCardInfo(gamer);
-            }
-        }
-
-        while (dealer.canDraw()) {
-            dealer.addCard(deck.draw());
-            OutputView.printDealerOnemoreDrawMessage();
-        }
-
+        drawGamersCard(gamers);
+        drawDealerCard(dealer);
         OutputView.printPlayersScoreInfo(dealer, gamers);
         GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
         OutputView.printGameResult(gameResult);
@@ -53,12 +41,32 @@ public class BlackjackController {
 
     private List<Gamer> initGamers(String[] gamerNames) {
         return Arrays.stream(gamerNames)
-            .map(gamerName -> new Gamer(new Name(gamerName), Cards.of(deck.drawTwoStartCards())))
-            .collect(Collectors.toList());
+                .map(gamerName -> new Gamer(new Name(gamerName), Cards.of(deck.drawTwoStartCards())))
+                .collect(Collectors.toList());
     }
 
     private Dealer initDealer() {
         return new Dealer(Cards.of(deck.drawTwoStartCards()));
     }
 
+
+    private void drawGamersCard(List<Gamer> gamers) {
+        for (Gamer gamer : gamers) {
+            drawPerGamer(gamer);
+        }
+    }
+
+    private void drawPerGamer(Gamer gamer) {
+        while (gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
+            gamer.addCard(deck.draw());
+            OutputView.printPlayerCardInfo(gamer);
+        }
+    }
+
+    private void drawDealerCard(Dealer dealer) {
+        while (dealer.canDraw()) {
+            dealer.addCard(deck.draw());
+            OutputView.printDealerOnemoreDrawMessage();
+        }
+    }
 }
