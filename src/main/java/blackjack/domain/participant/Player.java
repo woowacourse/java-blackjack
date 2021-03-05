@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Game;
-
 public class Player extends Participant {
     private final Name name;
     private final GameResult gameResult = new GameResult();
@@ -12,10 +10,6 @@ public class Player extends Participant {
 
     private Player(Name name) {
         this.name = name;
-    }
-
-    public boolean isBlackJack() {
-        return calculateResult() == Game.BLACKJACK_NUMBER;
     }
 
     public void fight(Dealer dealer) {
@@ -51,5 +45,4 @@ public class Player extends Participant {
     public String getName() {
         return name.toString();
     }
-
 }

@@ -18,7 +18,7 @@ public abstract class Participant {
     }
 
     public int calculateResult() {
-        int currentCardsValue = calculateCards();
+        int currentCardsValue = sumCardsValue();
         int remainAceCount = countAce();
 
         while (canLowerCardsValue(currentCardsValue, remainAceCount)) {
@@ -43,10 +43,14 @@ public abstract class Participant {
                           .count();
     }
 
-    public int calculateCards() {
+    public int sumCardsValue() {
         return cards.stream()
                     .mapToInt(Card::getValue)
                     .sum();
+    }
+
+    public boolean isBlackJack() {
+        return calculateResult() == Game.BLACKJACK_NUMBER;
     }
 
     public boolean isBust() {

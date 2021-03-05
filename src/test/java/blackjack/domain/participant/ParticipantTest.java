@@ -54,7 +54,7 @@ public class ParticipantTest {
         participant.addCard(JACK_SPADES);
         participant.addCard(THREE_HEARTS);
 
-        assertThat(participant.calculateCards()).isEqualTo(15);
+        assertThat(participant.sumCardsValue()).isEqualTo(15);
     }
 
     @Test
