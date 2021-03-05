@@ -7,10 +7,10 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final int FIRST_CARD_INDEX = 0;
     private static final String DELIMITER = ", ";
 
     private OutputView() {
@@ -28,8 +28,10 @@ public class OutputView {
     }
 
     private static void printDealerDefaultCard(Dealer dealer) {
-        List<Card> dealerCards = dealer.getCards();
-        Card firstCard = dealerCards.get(FIRST_CARD_INDEX);
+        Set<Card> dealerCards = dealer.getCards();
+        Card firstCard = dealerCards.stream()
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
         System.out.printf("%s : %s", dealer.getName(), parseCardInformation(firstCard));
         printNewLine();
     }
@@ -49,7 +51,7 @@ public class OutputView {
         printNewLine();
     }
 
-    private static String parseCardsInformation(List<Card> cards) {
+    private static String parseCardsInformation(Set<Card> cards) {
         return cards.stream()
                 .map(OutputView::parseCardInformation)
                 .collect(Collectors.joining(DELIMITER));

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
@@ -42,7 +43,7 @@ class ParticipantTest {
         Card card = new Card(Symbol.EIGHT, Shape.CLOVER);
 
         participant.receiveCard(card);
-        List<Card> playerCards = participant.getCards();
+        Set<Card> playerCards = participant.getCards();
 
         assertThat(playerCards).containsExactly(card);
     }
@@ -55,7 +56,7 @@ class ParticipantTest {
         Cards cards = new Cards(cardList);
 
         participant.receiveCards(cards);
-        List<Card> playerCards = participant.getCards();
+        Set<Card> playerCards = participant.getCards();
 
         assertThat(playerCards).hasSize(cardList.size());
     }
