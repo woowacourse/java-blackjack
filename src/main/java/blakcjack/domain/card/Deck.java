@@ -1,6 +1,5 @@
 package blakcjack.domain.card;
 
-import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 
 import java.util.Stack;
@@ -24,7 +23,7 @@ public class Deck {
 
 	public Card drawCard() {
 		if (cards.empty()) {
-			throw new emptyDeckException(NO_CARD_ERROR);
+			throw new EmptyDeckException(NO_CARD_ERROR);
 		}
 		return cards.pop();
 	}

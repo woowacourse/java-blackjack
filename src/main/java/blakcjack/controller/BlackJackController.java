@@ -21,7 +21,6 @@ public class BlackJackController {
 		final List<String> playerNames = takePlayerNamesInput();
 		Deck deck = new Deck(new RandomShuffleStrategy());
 		final BlackjackGame blackjackGame = new BlackjackGame(deck, playerNames);
-		
 		blackjackGame.initializeHands();
 		printInitialHands(blackjackGame);
 

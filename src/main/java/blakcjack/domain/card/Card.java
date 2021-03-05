@@ -29,7 +29,7 @@ public class Card {
 	public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber) {
 		final String key = generateKey(cardSymbol, cardNumber);
 		return Optional.ofNullable(cache.get(key))
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(NoSuchCardException::new);
 	}
 
 	private static String generateKey(CardSymbol cardSymbol, CardNumber cardNumber) {
