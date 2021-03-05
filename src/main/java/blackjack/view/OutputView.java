@@ -64,8 +64,10 @@ public class OutputView {
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {
-        challengers.getList().forEach(OutputView::printPlayerCards);
-        printNewLine();
+        for (Challenger challenger : challengers.getList()) {
+            printPlayerCards(challenger);
+            printNewLine();
+        }
     }
 
     private static void printDealerInitCard(final Dealer dealer) {
