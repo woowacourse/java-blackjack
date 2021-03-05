@@ -36,11 +36,11 @@ class UsersTest {
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭일 때")
     @Test
     void checkWinOrLoseWhenDealerHasBlackJackTest() {
-        Map<User, ResultType> resultMap = users.checkWinOrLose(BlackJackConstant.BLACKJACK);
-        assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
+        Map<User, Result> resultMap = users.checkResult(BlackJackConstant.BLACKJACK);
+        assertThat(resultMap).isEqualTo(new HashMap<User, Result>() {
             {
-                put(player, ResultType.DRAW);
-                put(player2, ResultType.LOSE);
+                put(player, Result.DRAW);
+                put(player2, Result.LOSE);
             }
         });
     }
@@ -48,11 +48,11 @@ class UsersTest {
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭이 아니었을 때")
     @Test
     void checkWinOrLoseTest() {
-        Map<User, ResultType> resultMap = users.checkWinOrLose(21);
-        assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
+        Map<User, Result> resultMap = users.checkResult(21);
+        assertThat(resultMap).isEqualTo(new HashMap<User, Result>() {
             {
-                put(player, ResultType.WIN);
-                put(player2, ResultType.LOSE);
+                put(player, Result.WIN);
+                put(player2, Result.LOSE);
             }
         });
     }

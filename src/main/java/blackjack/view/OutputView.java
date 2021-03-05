@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Player;
-import blackjack.domain.ResultType;
+import blackjack.domain.Result;
 import blackjack.domain.User;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
@@ -65,7 +65,7 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    public static void printResult(Map<User, ResultType> checkWinOrLose) {
+    public static void printResult(Map<User, Result> checkWinOrLose) {
         System.out.println("## 최종 승패");
 
         printDealerResult(checkWinOrLose);
@@ -76,18 +76,18 @@ public class OutputView {
         }
     }
 
-    private static void printDealerResult(Map<User, ResultType> checkWinOrLose) {
-        Map<ResultType, Integer> countMap = new HashMap<>();
-        Arrays.stream(ResultType.values())
+    private static void printDealerResult(Map<User, Result> checkWinOrLose) {
+        Map<Result, Integer> countMap = new HashMap<>();
+        Arrays.stream(Result.values())
                 .forEach(value -> countMap.put(value, 0));
 
         checkWinOrLose.values()
                 .forEach(value -> countMap.put(value, countMap.get(value) + 1));
 
         System.out.printf("딜러: %d승 %d무 %d패 \n",
-                countMap.get(ResultType.LOSE),
-                countMap.get(ResultType.DRAW),
-                countMap.get(ResultType.WIN)
+                countMap.get(Result.LOSE),
+                countMap.get(Result.DRAW),
+                countMap.get(Result.WIN)
         );
     }
 

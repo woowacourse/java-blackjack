@@ -22,7 +22,7 @@ public class BlackJackController {
 
     public void run() {
         if (dealer.isBlackJack()) {
-            OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
+            OutputView.printResult(users.checkResult(dealer.getScore()));
             return;
         }
         users.getPlayers().forEach(this::playGameForEachPlayer);
@@ -32,7 +32,7 @@ public class BlackJackController {
             OutputView.printDealerGetNewCardsMessage();
         }
         OutputView.printCardsOfPlayersWithScore(users);
-        OutputView.printResult(users.checkWinOrLose(dealer.getScore()));
+        OutputView.printResult(users.checkResult(dealer.getScore()));
     }
 
     private void playGameForEachPlayer(Player player) {

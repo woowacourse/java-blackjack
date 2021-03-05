@@ -6,15 +6,15 @@ public class Player extends User {
         super(name);
     }
 
-    public ResultType decisionGameWinOrLose(int dealerScore) {
+    public Result getResult(int dealerScore) {
         if (this.getScore() > dealerScore) {
-            return ResultType.WIN;
+            return Result.WIN;
         }
 
         if (this.getScore() < dealerScore || this.isBust()) {
-            return ResultType.LOSE;
+            return Result.LOSE;
         }
 
-        return ResultType.DRAW;
+        return Result.DRAW;
     }
 }
