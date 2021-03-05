@@ -12,7 +12,11 @@ class UsersTest {
     @DisplayName("유저 이름이 중복되면 에러가 검출되는지 확인")
     @Test
     void whenDuplicateNames() {
-        List<User> duplicateUsers = Arrays.asList(new User("욘"), new User("웨지"), new User("포비"), new User("욘"));
+        List<User> duplicateUsers = Arrays.asList(
+                new User(new Name("욘")),
+                new User(new Name("웨지")),
+                new User(new Name("포비")),
+                new User(new Name("욘")));
 
         assertThatThrownBy(() -> new Users(duplicateUsers))
                 .isInstanceOf(IllegalArgumentException.class)

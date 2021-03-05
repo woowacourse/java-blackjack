@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Value;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.status.Status;
@@ -33,13 +34,13 @@ class WinOrLoseTest {
     static Stream<Arguments> winOrLoseByStatusTest() {
         return Stream.of(
                 Arguments.of(
-                        changeStatus(new User("웨지"), PLAYING), changeStatus(new Dealer(), BURST), WIN
+                        changeStatus(new User(new Name("웨지")), PLAYING), changeStatus(new Dealer(), BURST), WIN
                 ),
                 Arguments.of(
-                        changeStatus(new User("웨지"), BURST), changeStatus(new Dealer(), PLAYING), LOSE
+                        changeStatus(new User(new Name("웨지")), BURST), changeStatus(new Dealer(), PLAYING), LOSE
                 ),
                 Arguments.of(
-                        changeStatus(new User("웨지"), BURST), changeStatus(new Dealer(), BURST), DRAW
+                        changeStatus(new User(new Name("웨지")), BURST), changeStatus(new Dealer(), BURST), DRAW
                 )
         );
     }
@@ -74,13 +75,13 @@ class WinOrLoseTest {
     static Stream<Arguments> winOrLoseByScoreTest() {
         return Stream.of(
                 Arguments.of(
-                        setScoreTwenty(new User("웨지")), setScoreEleven(new Dealer()), WIN
+                        setScoreTwenty(new User(new Name("웨지"))), setScoreEleven(new Dealer()), WIN
                 ),
                 Arguments.of(
-                        setScoreEleven(new User("웨지")), setScoreEleven(new Dealer()), DRAW
+                        setScoreEleven(new User(new Name("웨지"))), setScoreEleven(new Dealer()), DRAW
                 ),
                 Arguments.of(
-                        setScoreEleven(new User("웨지")), setScoreTwenty(new Dealer()), LOSE
+                        setScoreEleven(new User(new Name("웨지"))), setScoreTwenty(new Dealer()), LOSE
                 )
         );
     }

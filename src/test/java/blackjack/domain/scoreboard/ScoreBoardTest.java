@@ -6,6 +6,7 @@ import blackjack.domain.card.painting.Value;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,10 @@ public class ScoreBoardTest {
     @Test
     void testDealersWinOrLoses() {
         //given
-        User first = new User("욘");
-        User second = new User("웨지");
-        User third = new User("포비");
-        User fourth = new User("제이슨");
+        User first = new User(new Name("욘"));
+        User second = new User(new Name("웨지"));
+        User third = new User(new Name("포비"));
+        User fourth = new User(new Name("제이슨"));
 
         UserGameResult firstUserGameResult = new UserGameResult(
                 Arrays.asList(
@@ -55,7 +56,7 @@ public class ScoreBoardTest {
         GameResult gameResult = new GameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                        new Card(Suit.HEART, Value.ACE)), Dealer.DEALER_NAME
+                        new Card(Suit.HEART, Value.ACE)), Dealer.DEALER_NAME.getName()
         );
 
         ScoreBoard scoreBoard = new ScoreBoard(temp, gameResult);

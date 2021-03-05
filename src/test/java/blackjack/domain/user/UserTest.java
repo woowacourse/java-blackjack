@@ -14,7 +14,7 @@ class UserTest {
     @Test
     void testDrawCard() {
         //given
-        User user = new User("욘");
+        User user = new User(new Name("욘"));
 
         //when
         user.drawCard(new Card(Suit.DIAMOND, Value.ACE));
@@ -31,20 +31,8 @@ class UserTest {
         String dealerName = "딜러";
         //when
         //then
-        assertThatThrownBy(() -> new User(dealerName))
+        assertThatThrownBy(() -> new User(new Name(dealerName)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("딜러는 이름으로 사용할 수 없습니다.");
-    }
-
-    @DisplayName("유저의 이름이 공백일 때 검증")
-    @Test
-    void whenUserNameEmpty() {
-        //given
-        String empty = "";
-        //when
-        //then
-        assertThatThrownBy(() -> new User(empty))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름이 공백일 수 없습니다.");
     }
 }
