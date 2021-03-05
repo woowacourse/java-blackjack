@@ -36,7 +36,7 @@ class UsersTest {
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭일 때")
     @Test
     void checkWinOrLoseWhenDealerHasBlackJackTest() {
-        Map<User, Result> resultMap = users.checkResult(BlackJackConstant.BLACKJACK);
+        Map<User, Result> resultMap = users.checkResult(BlackJackConstant.BLACKJACK_SCORE);
         assertThat(resultMap).isEqualTo(new HashMap<User, Result>() {
             {
                 put(player, Result.DRAW);

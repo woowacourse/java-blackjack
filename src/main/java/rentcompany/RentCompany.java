@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RentCompany {
-    private static String STRING_FORMAT = "%s : %.0f리터\n";
+    private static String STRING_FORMAT = "%s : %.0f리터" + System.getProperty("line.separator");
 
     private List<Car> cars = new ArrayList<>();
-
-    public static void main(String[] args) {
-
-    }
 
     public static RentCompany create() {
         return new RentCompany();
@@ -23,8 +19,8 @@ public class RentCompany {
     public String generateReport() {
         StringBuilder sb = new StringBuilder();
         cars.stream()
-                .forEach(item -> {
-                    sb.append(String.format(STRING_FORMAT, item.getName(), item.getChargeQuantity()));
+                .forEach(car -> {
+                    sb.append(String.format(STRING_FORMAT, car.getName(), car.getChargeQuantity()));
                 });
         return sb.toString();
     }
