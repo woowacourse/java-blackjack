@@ -16,7 +16,9 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
         Dealer dealer = new Dealer();
-        Players players = Players.from(InputView.inputPlayerNames());
+        List<String> playerNames = InputView.inputPlayerNames();
+        InputView.inputAllPlayersBettingMoney(playerNames);
+        Players players = Players.from(playerNames);
         List<Player> playersGroup = players.toList();
 
         distributeDefaultCards(dealer, players, cardDeck);
