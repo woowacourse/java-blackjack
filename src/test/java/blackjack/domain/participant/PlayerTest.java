@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
-import blackjack.domain.vo.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -74,58 +73,6 @@ class PlayerTest {
         boolean isAbleToReceiveCard = player.isAbleToReceiveCard();
 
         assertThat(isAbleToReceiveCard).isEqualTo(result);
-    }
-
-    @DisplayName("둘 다 21을 초과하지 않을 경우, 플레이어가 딜러보다 점가 높아야 이긴다.")
-    @Test
-    void judgeResult_PlayerAndDealerScoreUnder21_PlayerWin() {
-        Player player = new Player("json");
-        Dealer dealer = new Dealer();
-
-        player.receiveCards(new Cards(CARDS_SCORE_20));
-        dealer.receiveCards(new Cards(CARDS_SCORE_19));
-        Result result = player.judgeResult(dealer);
-
-        assertThat(result).isEqualTo(Result.WIN);
-    }
-
-    @DisplayName("둘 다 21을 초과하지 않을 경우, 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다.")
-    @Test
-    void judgeResult_PlayerAndDealerScoreUnder21_PlayerLose() {
-        Player player = new Player("json");
-        Dealer dealer = new Dealer();
-
-        player.receiveCards(new Cards(CARDS_SCORE_19));
-        dealer.receiveCards(new Cards(CARDS_SCORE_20));
-        Result result = player.judgeResult(dealer);
-
-        assertThat(result).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하면 플레이어 패배")
-    @Test
-    void judgeResult_PlayerAndDealerScoreOver21() {
-        Player player = new Player("json");
-        Dealer dealer = new Dealer();
-
-        player.receiveCards(new Cards(CARDS_BUST));
-        dealer.receiveCards(new Cards(CARDS_BUST));
-        Result result = player.judgeResult(dealer);
-
-        assertThat(result).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하지 않으면 플레이어 승")
-    @Test
-    void judgeResult_DealerScoreOver21() {
-        Player player = new Player("json");
-        Dealer dealer = new Dealer();
-
-        player.receiveCards(new Cards(CARDS_SCORE_19));
-        dealer.receiveCards(new Cards(CARDS_BUST));
-        Result result = player.judgeResult(dealer);
-
-        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트면 해당 플레이어는 배팅 금액을 잃는다")

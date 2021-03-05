@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.game.ProfitWeight;
-import blackjack.domain.vo.Result;
 
 public class Player extends Participant {
     private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 21;
@@ -36,11 +35,5 @@ public class Player extends Participant {
     public int calculateProfitMoney(Dealer dealer) {
         ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, this);
         return (int) (bettingMoney * profitWeight.getWeight());
-    }
-
-    public Result judgeResult(Dealer dealer) {
-        int dealerScore = dealer.calculateFinalScore();
-        int playerScore = calculateFinalScore();
-        return Result.judge(dealerScore, playerScore);
     }
 }
