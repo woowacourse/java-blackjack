@@ -32,21 +32,6 @@ public enum Outcome {
                 .orElseThrow(() -> new IllegalArgumentException("체크할수 없습!!"));
     }
 
-    private static Outcome getOutcomeWhenBuster(final int dealerScore, final int playerScore) {
-        if (dealerScore > GAME_OVER_SCORE && playerScore > GAME_OVER_SCORE) {
-            return WIN;
-        }
-
-        if (dealerScore > GAME_OVER_SCORE) {
-            return LOSE;
-        }
-
-        if (playerScore > GAME_OVER_SCORE) {
-            return WIN;
-        }
-        return null;
-    }
-
     public static List<Outcome> getPlayerOutcomes(final Outcome outcome) {
         if (outcome == WIN) {
             return Collections.singletonList(LOSE);
@@ -71,5 +56,20 @@ public enum Outcome {
 
     public static boolean isDraw(final Outcome outcome) {
         return outcome == DRAW;
+    }
+
+    private static Outcome getOutcomeWhenBuster(final int dealerScore, final int playerScore) {
+        if (dealerScore > GAME_OVER_SCORE && playerScore > GAME_OVER_SCORE) {
+            return WIN;
+        }
+
+        if (dealerScore > GAME_OVER_SCORE) {
+            return LOSE;
+        }
+
+        if (playerScore > GAME_OVER_SCORE) {
+            return WIN;
+        }
+        return null;
     }
 }

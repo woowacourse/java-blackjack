@@ -18,12 +18,14 @@ public class Dealer {
         return name;
     }
 
-    public void addFirstCards(final List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public List<String> getCardsStatus() {
+        return cards.stream()
+                .map(Card::getCardStatus)
+                .collect(Collectors.toList());
     }
 
     public boolean isGameOver(final int gameOverScore) {
@@ -47,6 +49,14 @@ public class Dealer {
         return score;
     }
 
+    public void addFirstCards(final List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
+    public void addCard(final Card makeOneCard) {
+        cards.add(makeOneCard);
+    }
+
     private boolean belowScore(final int score, final int gameOverScore) {
         return score <= gameOverScore;
     }
@@ -59,15 +69,5 @@ public class Dealer {
         return (int) cards.stream()
                 .filter(Card::containAce)
                 .count();
-    }
-
-    public void addCard(final Card makeOneCard) {
-        cards.add(makeOneCard);
-    }
-
-    public List<String> getCardsStatus() {
-        return cards.stream()
-                .map(Card::getCardStatus)
-                .collect(Collectors.toList());
     }
 }

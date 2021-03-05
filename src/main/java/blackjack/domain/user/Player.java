@@ -27,25 +27,12 @@ public class Player {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    public void addFirstCards(final List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
-    public void removeAll() {
-        cards.clear();
-    }
-
-    public void addCard(final Card card) {
-        cards.add(card);
-    }
-
-    public boolean isGameOver(final int gameOverScore) {
-        int score = calculateScore(gameOverScore);
-        return (score > gameOverScore);
     }
 
     public int calculateScore(final int gameOverScore) {
@@ -63,6 +50,29 @@ public class Player {
         return score;
     }
 
+    public List<String> getCardsStatus() {
+        return cards.stream()
+                .map(Card::getCardStatus)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isGameOver(final int gameOverScore) {
+        int score = calculateScore(gameOverScore);
+        return (score > gameOverScore);
+    }
+
+    public void addFirstCards(final List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
+    public void removeAll() {
+        cards.clear();
+    }
+
+    public void addCard(final Card card) {
+        cards.add(card);
+    }
+
     private boolean belowScore(final int score, final int gameOverScore) {
         return score <= gameOverScore;
     }
@@ -75,15 +85,5 @@ public class Player {
         return (int) cards.stream()
                 .filter(Card::containAce)
                 .count();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getCardsStatus() {
-        return cards.stream()
-                .map(Card::getCardStatus)
-                .collect(Collectors.toList());
     }
 }

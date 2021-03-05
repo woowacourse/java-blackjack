@@ -7,8 +7,6 @@ import java.util.Objects;
 
 public class Card {
     private static final List<Card> CARDS = new ArrayList<>();
-    private final Symbol symbol;
-    private final Number number;
 
     static {
         for (Symbol symbol : Symbol.values()) {
@@ -17,6 +15,9 @@ public class Card {
             }
         }
     }
+
+    private final Symbol symbol;
+    private final Number number;
 
     private Card(final Symbol symbol, final Number number) {
         this.symbol = symbol;

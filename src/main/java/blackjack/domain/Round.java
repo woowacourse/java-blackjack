@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.view.dto.PlayerOutComeDto;
+import blackjack.view.dto.PlayerResultDto;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
@@ -38,33 +38,20 @@ public class Round {
                 .collect(Collectors.toList());
     }
 
-    public void initialize() {
-        dealer.addFirstCards(makeTwoCards());
-        players.forEach(player -> player.addFirstCards(makeTwoCards()));
+    public Card makeOneCard() {
+        return shuffledCards.remove(FIRST_INDEX);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public List<String> getDealerCardStatus() {
+        return dealer.getCardsStatus();
     }
 
     public String getDealerName() {
         return dealer.getName();
     }
 
-    public Card makeOneCard() {
-        return shuffledCards.remove(FIRST_INDEX);
-    }
-
-    public boolean addDealerCard() {
-        if (!dealer.isGameOver(GAME_OVER_SCORE)) {
-            dealer.addCard(makeOneCard());
-            return true;
-        }
-        return false;
-    }
-
-    public List<String> getDealerCardStatus() {
-        return dealer.getCardsStatus();
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public RoundStatusDto getRoundStatus() {
@@ -76,23 +63,36 @@ public class Round {
                 dealer.calculateScore(GAME_OVER_SCORE));
     }
 
-    private PlayerStatusDto getPlayerStatusDto(final Player player) {
-        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE));
-    }
-
-    public List<Outcome> makeOutComes() {
+    public List<Outcome> makeRoundOutComes() {
         return players.stream()
                 .map(player -> Outcome.findOutcome(dealer.calculateScore(GAME_OVER_SCORE), player.calculateScore(GAME_OVER_SCORE)))
                 .collect(Collectors.toList());
     }
 
-    public List<PlayerOutComeDto> makePlayerResults(List<Outcome> gameOutComes) {
+    public List<PlayerResultDto> makePlayerResults(List<Outcome> gameOutComes) {
         return players.stream()
-                .map(player -> new PlayerOutComeDto(player.getName(), gameOutComes.remove(FIRST_INDEX)))
+                .map(player -> new PlayerResultDto(player.getName(), gameOutComes.remove(FIRST_INDEX)))
                 .collect(Collectors.toList());
     }
 
     public Map<String, List<Outcome>> finishGame() {
         return Result.findResults(this);
+    }
+
+    public boolean addDealerCard() {
+        if (!dealer.isGameOver(GAME_OVER_SCORE)) {
+            dealer.addCard(makeOneCard());
+            return true;
+        }
+        return false;
+    }
+
+    public void initialize() {
+        dealer.addFirstCards(makeTwoCards());
+        players.forEach(player -> player.addFirstCards(makeTwoCards()));
+    }
+
+    private PlayerStatusDto getPlayerStatusDto(final Player player) {
+        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE));
     }
 }

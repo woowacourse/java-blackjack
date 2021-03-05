@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.view.dto.PlayerOutComeDto;
+import blackjack.view.dto.PlayerResultDto;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,11 +11,11 @@ public class Result {
     private static final Map<String, List<Outcome>> RESULTS = new LinkedHashMap<>();
 
     public static Map<String, List<Outcome>> findResults(Round round) {
-        List<Outcome> gameOutComes = round.makeOutComes();
+        List<Outcome> gameOutComes = round.makeRoundOutComes();
         RESULTS.put(round.getDealerName(), new ArrayList<>(gameOutComes));
 
-        List<PlayerOutComeDto> playerOutComeDtos = round.makePlayerResults(gameOutComes);
-        playerOutComeDtos.forEach(dto ->
+        List<PlayerResultDto> playerResultDtos = round.makePlayerResults(gameOutComes);
+        playerResultDtos.forEach(dto ->
                 RESULTS.put(dto.getPlayerName(), Outcome.getPlayerOutcomes(dto.getOutcome()))
         );
         return new LinkedHashMap<>(RESULTS);

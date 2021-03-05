@@ -2,11 +2,11 @@ package blackjack.view.dto;
 
 import blackjack.domain.Outcome;
 
-public class PlayerOutComeDto {
+public class PlayerResultDto {
     private final String playerName;
     private final Outcome outcome;
 
-    public PlayerOutComeDto(String playerName, Outcome outcome) {
+    public PlayerResultDto(String playerName, Outcome outcome) {
         this.playerName = playerName;
         this.outcome = outcome;
     }
