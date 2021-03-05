@@ -48,7 +48,8 @@ class PlayerTest {
         dealer.addCard(ACE_CLUBS);
 
         player.fight(dealer);
-        assertThat(player.getGameResult().getWinCount()).isEqualTo(1);
+        assertThat(player.getGameResult()
+                         .getWinCount()).isEqualTo(1);
     }
 
     @Test
@@ -60,6 +61,7 @@ class PlayerTest {
         dealer.addCard(ACE_CLUBS);
 
         player.fight(dealer);
-        assertThat(player.getGameResult().getLoseCount()).isEqualTo(1);
+        assertThat(player.getGameResult()
+                         .getLoseCount()).isEqualTo(1);
     }
 }

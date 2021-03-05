@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     public static final String LINE_SEPARATOR = System.lineSeparator();
-    public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
-    public static final String CARD_INFO_MESSAGE = "%s카드: %s";
     public static final String SET_UP_MESSAGE = "%s와 %s에게 2장의 나누었습니다." + LINE_SEPARATOR;
+    public static final String CARD_INFO_MESSAGE = "%s카드: %s";
     public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String RESULT_PREFIX = " - 결과 : %d" + LINE_SEPARATOR;
     public static final String NAME_PREFIX = "%s: ";
+    public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
 
     private OutputView() {
     }

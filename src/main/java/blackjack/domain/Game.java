@@ -6,7 +6,6 @@ import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
