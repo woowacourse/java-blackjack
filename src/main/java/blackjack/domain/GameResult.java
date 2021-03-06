@@ -9,25 +9,18 @@ public class GameResult {
 
     public int calculateDealerWinCount(final Participant dealer, final List<Participant> players) {
         return (int) players.stream()
-            .filter(dealer::isWinner)
+            .filter(player -> dealer.decideWinner(player).isSameResult(Result.WIN))
             .count();
     }
 
-    public Map<String, Result> makePlayerResults(final List<Participant> players, final Participant dealer) {
+    public Map<String, Result> makePlayerResults(final List<Participant> players,
+        final Participant dealer) {
         final Map<String, Result> results = new LinkedHashMap<>();
         for (final Participant player : players) {
-            final Result result = decideWinner(player, dealer);
+            final Result result = player.decideWinner(dealer);
             results.put(player.getName(), result);
         }
         return results;
-    }
-
-    public Result decideWinner(final Participant player, final Participant dealer) {
-        final boolean isPlayerWin = player.isWinner(dealer);
-        if (isPlayerWin) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
     }
 
 }

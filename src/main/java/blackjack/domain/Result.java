@@ -10,6 +10,10 @@ public enum Result {
         this.value = value;
     }
 
+    public boolean isSameResult(final Result result) {
+        return this == result;
+    }
+
     public String getValue() {
         return value;
     }

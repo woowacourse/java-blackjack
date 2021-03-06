@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import java.util.Collections;
 import java.util.List;
@@ -13,11 +14,11 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isWinner(Participant player) {
-        if (player.isBust()) {
-            return true;
+    public Result decideWinner(Participant player) {
+        if (player.isBust() || (player.calculate() <= this.calculate() && !this.isBust())) {
+            return Result.WIN;
         }
-        return player.calculate() <= this.calculate() && !isBust();
+        return Result.LOSE;
     }
 
     @Override

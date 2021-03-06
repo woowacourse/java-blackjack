@@ -3,6 +3,7 @@ package blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
@@ -105,9 +106,9 @@ public class DealerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE,KING:false", "TWO,THREE:true"}, delimiter = ':')
+    @CsvSource(value = {"ACE,KING:LOSE", "TWO,THREE:WIN"}, delimiter = ':')
     @DisplayName("딜러의 승패를 확인")
-    void isWinner(final String input, final boolean expected) {
+    void isWinner(final String input, final Result expected) {
         final String[] inputs = input.split(",");
         final List<CardNumber> cardNumbers = Arrays.stream(inputs)
             .map(CardNumber::valueOf)
@@ -117,7 +118,7 @@ public class DealerTest {
         player.receiveCard(new Card(cardNumbers.get(1), CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
-        assertThat(dealer.isWinner(player)).isEqualTo(expected);
+        assertThat(dealer.decideWinner(player).isSameResult(expected)).isTrue();
     }
 
     @Test
@@ -126,6 +127,6 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.SPADE));
-        assertThat(dealer.isWinner(new Player("j.on"))).isEqualTo(false);
+        assertThat(dealer.decideWinner(new Player("j.on")).isSameResult(Result.LOSE)).isTrue();
     }
 }

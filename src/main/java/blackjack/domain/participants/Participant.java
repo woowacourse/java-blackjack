@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.PlayerCards;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public abstract class Participant {
         return playerCards.calculate();
     }
 
-    public abstract boolean isWinner(final Participant participant);
+    public abstract Result decideWinner(final Participant participant);
 
     public abstract List<Card> showCards();
 
