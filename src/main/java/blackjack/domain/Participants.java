@@ -9,9 +9,13 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    public Participants(List<Participant> participants) {
+    private Participants(List<Participant> participants) {
         validateOverlappedNames(participants);
         this.participants = participants;
+    }
+
+    public static Participants of(List<Participant> participants) {
+        return new Participants(participants);
     }
 
     public static Participants of(Dealer dealer, List<Player> players) {

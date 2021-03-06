@@ -19,7 +19,7 @@ public class ParticipantsTest {
         );
 
         assertThatCode(() -> {
-            new Participants(participantGroup);
+            Participants.of(participantGroup);
         }).isInstanceOf(IllegalArgumentException.class)
           .hasMessage("참가자들의 이름은 중복이 없어야 합니다.");
     }
@@ -28,7 +28,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어들이 카드를 2장씩 받는다.")
     public void receiveDefaultCards() {
         CardDeck cardDeck = new CardDeck();
-        Participants participants = new Participants(Arrays.asList(new Player("jason")));
+        Participants participants = Participants.of(Arrays.asList(new Player("jason")));
         Participant jason = participants.toList()
                                         .get(0);
         List<Card> jasonCards = jason.getCards();
