@@ -39,19 +39,9 @@ public class BlackJackController {
     private void play() {
         Challengers challengers = blackJackService.getChallengers();
         for (Challenger challenger : challengers.getList()) {
-            receiveMoreCard(challenger);
+            receiveChallengerMoreCard(challenger);
         }
-        receiveMoreCard(blackJackService.getDealer());
-    }
-
-    private void receiveMoreCard(final Player player) {
-        if (player instanceof Challenger) {
-            receiveChallengerMoreCard((Challenger) player);
-        }
-
-        if (player instanceof Dealer) {
-            receiveDealerMoreCard((Dealer) player);
-        }
+        receiveDealerMoreCard(blackJackService.getDealer());
     }
 
     private void receiveChallengerMoreCard(final Challenger challenger) {
