@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.function.IntPredicate;
 
 public enum Status {
-    PLAYING(true, i -> 1 < i && i < 21),
-    BLACKJACK(false, i -> i == 21),
-    BURST(false, i -> 21 < i && i < 31),
-    STOP(false, i -> false);
+    PLAYING(true, score -> 1 < score && score < 21),
+    BLACKJACK(false, score -> score == 21),
+    BURST(false, score -> 21 < score && score < 31),
+    STOP(false, score -> false);
 
     private static final String NO_MATCH_CONDITION_ERROR_MSG = "점수 조건에 맞는 Status가 없습니다.";
 
