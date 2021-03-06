@@ -40,12 +40,13 @@ public class OutputView {
         System.out.println(" - 결과: " + playerDTO.getScore());
     }
 
-    public static void printFinalCardsMessage(List<PlayerResultDTO> playerDTOs, PlayerResultDTO dealerDTO) {
+    public static void printFinalCardsMessage(List<PlayerResultDTO> userDTOs,
+        PlayerResultDTO dealerDTO) {
         System.out.println();
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        playerDTOs.forEach(playerDTO -> stringJoiner.add(playerDTO.getName()));
+        userDTOs.forEach(userDTO -> stringJoiner.add(userDTO.getName()));
         printUserFinalCards(dealerDTO);
-        playerDTOs.forEach(OutputView::printUserFinalCards);
+        userDTOs.forEach(OutputView::printUserFinalCards);
     }
 
     public static void printDealerDrawCardMessage() {
