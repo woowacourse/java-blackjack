@@ -11,6 +11,8 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String PLAYERS_NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String DRAW_ONE_MORE_CARD_MESSAGE_FORMAT = "%s은 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)\n";
+    private static final String YES_INPUT = "y";
+    private static final String NO_INPUT = "n";
 
     public static List<String> getPlayerNames() {
         System.out.println(PLAYERS_NAME_INPUT_MESSAGE);
@@ -22,10 +24,10 @@ public class InputView {
     public static boolean getWhetherDrawCard(String name) {
         System.out.printf(DRAW_ONE_MORE_CARD_MESSAGE_FORMAT, name);
         String input = SCANNER.nextLine();
-        if (input.equals("y")) {
+        if (input.equals(YES_INPUT)) {
             return true;
         }
-        if (input.equals("n")) {
+        if (input.equals(NO_INPUT)) {
             return false;
         }
         throw new IllegalArgumentException();
