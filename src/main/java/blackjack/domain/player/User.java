@@ -21,6 +21,10 @@ public class User extends AbstractPlayer {
         return !(isDrawStop() || isOverBlackJack());
     }
 
+    private boolean isOverBlackJack() {
+        return getScore() > BLACKJACK;
+    }
+
     public boolean isDrawContinue(UserDrawContinue userDrawContinue) {
         if (userDrawContinue.isContinue()) {
             return true;
@@ -39,9 +43,5 @@ public class User extends AbstractPlayer {
             return ResultType.DRAW;
         }
         return ResultType.WIN;
-    }
-
-    private boolean isOverBlackJack() {
-        return getScore() > BLACKJACK;
     }
 }
