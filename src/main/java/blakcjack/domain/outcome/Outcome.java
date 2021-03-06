@@ -7,17 +7,17 @@ public enum Outcome {
 
 	private static final int MAXIMUM_INDEX = 2;
 
-	final String korean;
+	private final String message;
 
-	Outcome(final String korean) {
-		this.korean = korean;
+	Outcome(final String message) {
+		this.message = message;
 	}
 
 	public Outcome getDealerOutcome() {
 		return values()[MAXIMUM_INDEX - ordinal()];
 	}
 
-	public String toKorean() {
-		return korean;
+	public String getMessage() {
+		return message;
 	}
 }

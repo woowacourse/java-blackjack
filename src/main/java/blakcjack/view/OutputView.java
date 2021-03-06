@@ -113,14 +113,14 @@ public class OutputView {
 		if (count == 0) {
 			return "";
 		}
-		return " " + count + outcome.toKorean();
+		return " " + count + outcome.getMessage();
 	}
 
 	private static void printPlayersOutcome(final Map<String, Outcome> playersOutcome) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		for (final String name : playersOutcome.keySet()) {
 			final Outcome outcome = playersOutcome.get(name);
-			stringBuilder.append(name).append(": ").append(outcome.toKorean()).append(System.lineSeparator());
+			stringBuilder.append(name).append(": ").append(outcome.getMessage()).append(System.lineSeparator());
 		}
 		System.out.println(stringBuilder.toString());
 	}
