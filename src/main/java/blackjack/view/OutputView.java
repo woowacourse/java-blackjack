@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
+import blackjack.domain.player.dto.GameResultDTO;
 import blackjack.domain.player.dto.PlayerDTO;
 import java.util.HashMap;
 import java.util.List;
@@ -52,20 +53,19 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printResultMessage(Map<Name, ResultType> result) {
+    public static void printResultMessage(GameResultDTO gameResultDTO) {
         System.out.println("## 최종 승패");
         Map<ResultType, Integer> resultCount = new HashMap<>();
-        StringBuilder stringBuilder = new StringBuilder();
-        printPlayersResultMessage(result, stringBuilder);
+        Map<Name, ResultType> result = gameResultDTO.getGameResult();
         for (Name name : result.keySet()) {
             resultCount.put(result.get(name), resultCount.getOrDefault(result.get(name), 0) + 1);
         }
         printDealerResultMessage(resultCount);
-        System.out.print(stringBuilder.toString());
+        System.out.print(getPlayersResultMessage(result));
     }
 
-    private static void printPlayersResultMessage(Map<Name, ResultType> result,
-        StringBuilder stringBuilder) {
+    private static String getPlayersResultMessage(Map<Name, ResultType> result) {
+        StringBuilder stringBuilder = new StringBuilder();
         for (Name name : result.keySet()) {
             stringBuilder
                 .append(name.getName())
@@ -73,6 +73,7 @@ public class OutputView {
                 .append(result.get(name).getResult())
                 .append(NEW_LINE);
         }
+        return stringBuilder.toString();
     }
 
     private static void printDealerResultMessage(Map<ResultType, Integer> resultCount) {
