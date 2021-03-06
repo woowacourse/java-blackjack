@@ -17,19 +17,19 @@ public enum Denomination {
     KING("K", 10);
 
     private final String name;
-    private final int value;
+    private final int number;
 
-    Denomination(String name, int value) {
+    Denomination(String name, int number) {
         this.name = name;
-        this.value = value;
+        this.number = number;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getValue() {
-        return value;
+    public int getNumber() {
+        return number;
     }
 
 }
