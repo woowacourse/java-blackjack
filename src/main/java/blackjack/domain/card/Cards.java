@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 public class Cards {
     private static final int BUST_SCORE = 21;
+    private static final int ACE_SCORE_CRITERIA = 11;
+    private static final int ACE_BONUS_SCORE = 10;
+
     private final List<Card> cards;
 
     private Cards(List<Card> cards) {
@@ -23,28 +26,18 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int result = 0;
-        result += calculateScoreExceptAce();
-        result = calculateTotalScoreWithAce(result);
-        return result;
-    }
-
-    private int calculateTotalScoreWithAce(int result) {
-        int sum = result;
-        List<Card> aceCards = cards.stream()
-                .filter(Card::isAce)
-                .collect(Collectors.toList());
-        for (Card card : aceCards) {
-            sum += card.getAceScore(sum);
-        }
-        return sum;
-    }
-
-    private int calculateScoreExceptAce() {
-        return cards.stream()
-                .filter(card -> !card.isAce())
+        int totalScore = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+        if (hasAce() && totalScore <= ACE_SCORE_CRITERIA) {
+            totalScore += ACE_BONUS_SCORE;
+        }
+        return totalScore;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBust() {

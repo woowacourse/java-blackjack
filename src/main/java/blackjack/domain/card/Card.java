@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
-    private static final String ACE = "A";
     private static final String NOT_EXIST_CARD_ERROR = "[ERROR] 존재하지 않는 카드입니다.";
 
     private final Denomination denomination;
@@ -23,13 +22,6 @@ public class Card {
             .filter(card -> card.denomination == denomination && card.shape == shape)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_CARD_ERROR));
-    }
-
-    public int getAceScore(int sum) {
-        if (isAce() && sum < 11) {
-            return 11;
-        }
-        return getScore();
     }
 
     private static class CardCache {
@@ -49,7 +41,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination.getName().equals(ACE);
+        return denomination == Denomination.ACE;
     }
 
     public Denomination getDenomination() {
