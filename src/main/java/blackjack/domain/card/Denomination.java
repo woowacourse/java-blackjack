@@ -18,7 +18,7 @@ public enum Denomination {
     KING("K", new Score(10));
 
     private final String denomination;
-    private Score score;
+    private final Score score;
 
     Denomination(final String denomination, Score score) {
         this.denomination = denomination;

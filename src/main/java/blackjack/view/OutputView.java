@@ -17,11 +17,11 @@ public class OutputView {
 
     public static void printPlayersCardsInformation(final Players players) {
         for (Player player : players) {
-            printPlayerCardsInformation(player);
+            printPlayerCards(player);
         }
     }
 
-    public static void printPlayerCardsInformation(final Player player) {
+    public static void printPlayerCards(final Player player) {
         printMessageByFormat("%s카드: %s",
                 player.getName().getValue(), makeCardInfo(player.getCards()));
         printLineSeparator();

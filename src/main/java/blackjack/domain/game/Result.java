@@ -16,10 +16,6 @@ public class Result {
     }
 
     public void addGamblerResults(final Player player, WinOrLose winOrLose) {
-        if (!(player instanceof Gambler)) {
-            return;
-        }
-
         gamblerResults.put(player, winOrLose);
     }
 

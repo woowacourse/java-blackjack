@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private final String SEPARATOR_OF_NAME_INPUT = ",";
+
     private final Deck deck = new Deck();
     private final Dealer dealer = new Dealer();
 
@@ -52,16 +53,13 @@ public class BlackJackGame {
         return dealer.ableToDraw();
     }
 
-    public Result getResult(final Players players) {
+    public Result calculateResult(final Players players) {
         Result result = new Result(dealer.getCards());
-        for (Player player : players) {
-            addGamblerResult(result, player);
-        }
-        return result;
-    }
 
-    private void addGamblerResult(final Result result, final Player player) {
-        WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
-        result.addGamblerResults(player, winOrLose);
+        for (Player gambler : players.getGamblers()) {
+            result.addGamblerResults(gambler, dealer.calculateGamblerWinOrNot(gambler));
+        }
+
+        return result;
     }
 }

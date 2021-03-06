@@ -28,7 +28,7 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 카드입니다."));
     }
 
-    public static LinkedList<Card> getCachingCards() {
+    public static List<Card> getCachingCards() {
         return new LinkedList<>(ORIGINAL_CARDS);
     }
 
