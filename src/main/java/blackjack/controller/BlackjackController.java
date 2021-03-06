@@ -1,6 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Deck;
+import blackjack.domain.user.Answer;
+import blackjack.domain.result.ResultBoard;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -51,7 +57,7 @@ public class BlackjackController {
     }
 
     private void askForHit(Player player) {
-        while (isPlayerHit(player) && Hit.isYes(Hit.of(InputView.inputHit()))) {
+        while (isPlayerHit(player) && Answer.isYes(Answer.of(InputView.inputHit()))) {
             player.draw();
             OutputView.printPlayerCards(player);
         }

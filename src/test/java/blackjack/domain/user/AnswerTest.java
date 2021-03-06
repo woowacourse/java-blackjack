@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,34 +6,34 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class HitTest {
+public class AnswerTest {
     @DisplayName("y 객체를 생성한다.")
     @Test
     void createHitY() {
-        Hit hit = Hit.of("y");
+        Answer answer = Answer.of("y");
 
-        assertThat(hit).isEqualTo(Hit.YES);
+        assertThat(answer).isEqualTo(Answer.YES);
     }
 
     @DisplayName("n 객체를 생성한다.")
     @Test
     void createHitN() {
-        Hit hit = Hit.of("n");
+        Answer answer = Answer.of("n");
 
-        assertThat(hit).isEqualTo(Hit.NO);
+        assertThat(answer).isEqualTo(Answer.NO);
     }
 
     @DisplayName("예외가 발생하는지 확인한다.")
     @Test
     void createHitException() {
         assertThatThrownBy(() -> {
-            Hit.of("q");
+            Answer.of("q");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("y가 입력되는 되는 경우를 확인한다.")
     @Test
     void isYes() {
-        assertThat(Hit.isYes(Hit.of("y"))).isTrue();
+        assertThat(Answer.isYes(Answer.of("y"))).isTrue();
     }
 }

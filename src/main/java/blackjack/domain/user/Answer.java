@@ -1,25 +1,25 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import java.util.Arrays;
 
-public enum Hit {
+public enum Answer {
     YES("y"),
     NO("n");
 
     private final String answer;
 
-    Hit(String answer) {
+    Answer(String answer) {
         this.answer = answer;
     }
 
-    public static Hit of(String answer) {
+    public static Answer of(String answer) {
         return Arrays.stream(values())
                 .filter(value -> value.answer.equals(answer))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static boolean isYes(Hit hit) {
-        return YES.equals(hit);
+    public static boolean isYes(Answer answer) {
+        return YES.equals(answer);
     }
 }

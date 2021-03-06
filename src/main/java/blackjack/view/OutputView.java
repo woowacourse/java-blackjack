@@ -1,6 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultBoard;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +36,7 @@ public class OutputView {
 
     public static void printPlayerCards(Player player) {
         System.out.print(player.getName() + "카드" + COLON);
-        printCards(player.showCards());
+        printCards(player.getCards());
     }
 
     private static void printCards(Cards cards) {
@@ -55,12 +62,12 @@ public class OutputView {
     public static void printResults(List<User> users) {
         for (User user : users) {
             System.out.println(user.getName() + "카드: " +
-                    user.showCards()
+                    user.getCards()
                             .cards()
                             .stream()
                             .map(Card::toString)
                             .collect(Collectors.joining(COMMA_WITH_BLANK)) + " - 결과: " +
-                    user.showCards().calculateTotalValue());
+                    user.getCards().calculateTotalValue());
         }
     }
 

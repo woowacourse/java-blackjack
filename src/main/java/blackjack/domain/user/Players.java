@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +26,7 @@ public class Players {
 
     public List<Cards> showCardsByPlayers() {
         return players.stream()
-                .map(Player::showCards)
+                .map(Player::getCards)
                 .collect(Collectors.toList());
     }
 

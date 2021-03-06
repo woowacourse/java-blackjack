@@ -1,6 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
-import java.util.*;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultBoard {
@@ -14,10 +21,10 @@ public class ResultBoard {
     private void putResultByPlayer(Dealer dealer, Players players) {
         players.players()
                 .forEach(player -> {
-                    if (Result.isExistBust(dealer, player)) {
-                        this.resultBoard.put(player, Result.decideByBust(dealer, player));
+                    if (dealer.isBust() || player.isBust()) {
+                        this.resultBoard.put(player, player.decideResultByBust(dealer));
                     }
-                    this.resultBoard.put(player, Result.decideByCompare(dealer, player));
+                    this.resultBoard.put(player, player.decideResultByCompare(dealer));
                 });
     }
 
