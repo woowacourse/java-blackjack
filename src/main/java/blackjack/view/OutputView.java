@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
-import blackjack.domain.player.PlayerDTO;
+import blackjack.domain.player.dto.PlayerDTO;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
