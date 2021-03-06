@@ -7,16 +7,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants {
+public class Players {
     private static final String PLAYER_COUNT_ERROR_MESSAGE = "플레이어 수는 1명 이상이어야 합니다.";
     private static final int MIN_PLAYERS_NUMBER = 1;
 
-    private final List<Participant> participants = new ArrayList<>();
+    private final List<Player> players;
 
-    public Participants(Dealer dealer, List<String> playerNames) {
+    public Players(List<String> playerNames) {
         validateNumberOfPlayer(new ArrayList<>(playerNames));
-        participants.add(dealer);
-        participants.addAll(makePlayers(playerNames));
+        players = makePlayers(playerNames);
     }
 
     private void validateNumberOfPlayer(List<String> playerNames) {
@@ -28,14 +27,14 @@ public class Participants {
     private List<Player> makePlayers(List<String> playerNames) {
         return playerNames.stream()
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void drawAtFirst(Deck deck) {
-        participants.forEach(participant -> participant.drawAtFirst(deck));
+        players.forEach(player -> player.drawAtFirst(deck));
     }
 
-    public List<Participant> getParticipant() {
-        return Collections.unmodifiableList(new ArrayList<>(this.participants));
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(new ArrayList<>(this.players));
     }
 }
