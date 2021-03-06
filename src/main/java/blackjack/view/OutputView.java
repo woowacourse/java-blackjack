@@ -12,15 +12,15 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     public static String NEW_LINE = System.lineSeparator();
-    public static String INIT_RESULT_MESSAGE = NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.";
     public static String DEALER_PREFIX = "딜러: ";
 
-    public static void printInitSetting(final List<Player> players) {
-        List<String> challengerNames = players.stream().filter(player -> player instanceof Challenger)
-                .map(player -> (Challenger) player)
+    public static void printInitSetting(final Challengers challengers) {
+        List<String> challengerNames = challengers.getList()
+                .stream()
                 .map(Challenger::getName)
                 .collect(Collectors.toList());
-        System.out.println(String.format(INIT_RESULT_MESSAGE, String.join(", ", challengerNames)));
+
+        System.out.printf(NEW_LINE + "딜러와 %s 에게 2장의 카드를 나누어주었습니다.%n", String.join(", ", challengerNames));
     }
 
     public static void printInitCards(final Dealer dealer, final Challengers challengers) {

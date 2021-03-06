@@ -54,7 +54,7 @@
   
 ## Refactoring TODO
 - [x] isEnoughScore() 에 의미가 좀더 담기게 네이밍 수정
-- [ ] 필터를 굳이 하지 않아도 되도록 printInitSetting 의 인자 수정
+- [x] 필터를 굳이 하지 않아도 되도록 printInitSetting 의 인자 수정
 - [ ] 카드 캐싱을 Deck에서 이용하게 하도록 수정
 - [ ] 플레이어수가 8명이 초과하지 않도록 수정  
 - [ ] receiveMoreCard 에서 한번더 타고 들어가던 작업을 제거

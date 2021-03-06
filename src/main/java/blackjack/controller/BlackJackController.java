@@ -28,7 +28,7 @@ public class BlackJackController {
     private void initSetting() {
         blackJackService.initChallengers(requestNames());
         blackJackService.initDealer();
-        OutputView.printInitSetting(blackJackService.getPlayers());
+        OutputView.printInitSetting(blackJackService.getChallengers());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
     }
 
