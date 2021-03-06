@@ -6,13 +6,17 @@ public class Card {
     private final CardShape cardShape;
     private final CardNumber cardNumber;
 
-    public Card(final CardShape cardShape, final CardNumber number) {
+    public Card(final CardShape cardShape, final CardNumber cardNumber) {
         this.cardShape = cardShape;
-        this.cardNumber = number;
+        this.cardNumber = cardNumber;
     }
 
     public CardNumber getCardNumber() {
         return cardNumber;
+    }
+
+    public int getCardValue() {
+        return cardNumber.getValue();
     }
 
     @Override
