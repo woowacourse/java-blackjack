@@ -21,7 +21,7 @@ public class InputView {
          throw new IllegalArgumentException("구분자는 콤마로 입력해주세요.");
     }
 
-    public static String inputDrawAnswer() {
+    public static String inputHit() {
         return SCANNER.nextLine();
     }
 

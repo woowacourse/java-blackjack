@@ -31,5 +31,5 @@ public abstract class User {
         return this.name.getName();
     }
 
-    public abstract boolean isDrawable();
+    public abstract boolean isHit();
 }

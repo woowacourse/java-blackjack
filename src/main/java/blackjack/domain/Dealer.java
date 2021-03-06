@@ -13,7 +13,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean isDrawable() {
+    public boolean isHit() {
         return cards.calculateTotalValue() <= HIT;
     }
 }

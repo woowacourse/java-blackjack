@@ -44,7 +44,7 @@ public class ResultTest {
         assertThat(Result.isExistBust(dealer, player)).isFalse();
     }
 
-    @DisplayName("딜러에 버스트가 있고 사용자에 버스트가 없는 경우를 확인한다. - 사용자 승")
+    @DisplayName("딜러에 버스트가 있고 플레이어에 버스트가 없는 경우를 확인한다. - 플레이어 승")
     @Test
     public void decideByBustPlayerWin() {
         Dealer dealer = new Dealer();
@@ -62,7 +62,7 @@ public class ResultTest {
         assertThat(Result.decideByBust(dealer, player)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("딜러에 버스트가 있고 사용자에도 버스트가 있는 경우를 확인한다. - 무승부")
+    @DisplayName("딜러에 버스트가 있고 플레이어에도 버스트가 있는 경우를 확인한다. - 무승부")
     @Test
     public void decideByBustDraw() {
         Dealer dealer = new Dealer();
@@ -81,7 +81,7 @@ public class ResultTest {
         assertThat(Result.decideByBust(dealer, player)).isEqualTo(Result.STANDOFF);
     }
 
-    @DisplayName("딜러에 버스트가 없고 사용자에 버스트가 있는 경우를 확인한다. - 사용자 패")
+    @DisplayName("딜러에 버스트가 없고 플레이어에 버스트가 있는 경우를 확인한다. - 플레이어 패")
     @Test
     public void decideByBustPlayerLose() {
         Dealer dealer = new Dealer();

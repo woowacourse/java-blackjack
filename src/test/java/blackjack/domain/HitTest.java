@@ -6,34 +6,34 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class DrawAnswerTest {
+public class HitTest {
     @DisplayName("y 객체를 생성한다.")
     @Test
-    void createDrawAnswerY() {
-        DrawAnswer drawAnswer = DrawAnswer.of("y");
+    void createHitY() {
+        Hit hit = Hit.of("y");
 
-        assertThat(drawAnswer).isEqualTo(DrawAnswer.YES);
+        assertThat(hit).isEqualTo(Hit.YES);
     }
 
     @DisplayName("n 객체를 생성한다.")
     @Test
-    void createDrawAnswerN() {
-        DrawAnswer drawAnswer = DrawAnswer.of("n");
+    void createHitN() {
+        Hit hit = Hit.of("n");
 
-        assertThat(drawAnswer).isEqualTo(DrawAnswer.NO);
+        assertThat(hit).isEqualTo(Hit.NO);
     }
 
     @DisplayName("예외가 발생하는지 확인한다.")
     @Test
-    void createDrawAnswerException() {
+    void createHitException() {
         assertThatThrownBy(() -> {
-            DrawAnswer.of("q");
+            Hit.of("q");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("y가 입력되는 되는 경우를 확인한다.")
     @Test
     void isYes() {
-        assertThat(DrawAnswer.isYes(DrawAnswer.of("y"))).isTrue();
+        assertThat(Hit.isYes(Hit.of("y"))).isTrue();
     }
 }

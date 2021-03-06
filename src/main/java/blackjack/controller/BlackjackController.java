@@ -15,7 +15,7 @@ public class BlackjackController {
         distributeToUsers(dealer, players);
         showUsersCards(dealer, players);
         askToPlayers(players);
-        isDealerDrawable(dealer);
+        isDealerHit(dealer);
         OutputView.printResults(users);
         OutputView.printResultBoard(dealer, new ResultBoard(dealer, players));
     }
@@ -46,31 +46,31 @@ public class BlackjackController {
 
     private void askToPlayers(Players players) {
         for (Player player : players.players()) {
-            askForDraw(player);
+            askForHit(player);
         }
     }
 
-    private void askForDraw(Player player) {
-        while (isDrawable(player) && DrawAnswer.isYes(DrawAnswer.of(InputView.inputDrawAnswer()))) {
+    private void askForHit(Player player) {
+        while (isPlayerHit(player) && Hit.isYes(Hit.of(InputView.inputHit()))) {
             player.draw();
             OutputView.printPlayerCards(player);
         }
     }
 
-    private boolean isDrawable(Player player) {
-        if (player.isDrawable()) {
-            OutputView.printMoreDraw(player);
+    private boolean isPlayerHit(Player player) {
+        if (player.isHit()) {
+            OutputView.printPlayerHit(player);
             return true;
         }
         return false;
     }
 
-    private void isDealerDrawable(Dealer dealer) {
-        if (dealer.isDrawable()) {
+    private void isDealerHit(Dealer dealer) {
+        if (dealer.isHit()) {
             dealer.draw();
-            OutputView.printDealerDrawable(dealer);
+            OutputView.printDealerHit(dealer);
             return;
         }
-        OutputView.printDealerNotDrawable(dealer);
+        OutputView.printDealerNotHit(dealer);
     }
 }

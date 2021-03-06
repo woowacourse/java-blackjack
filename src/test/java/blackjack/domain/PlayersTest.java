@@ -27,7 +27,7 @@ public class PlayersTest {
         assertThat(players.players()).hasSize(3);
     }
 
-    @DisplayName("각 사용자에게 초기에 카드 두장을 배분한다.")
+    @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
     @Test
     void DistributeToEachPlayer() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
@@ -39,7 +39,7 @@ public class PlayersTest {
                 .allMatch(user -> user.cards.cards().size() == 2)).isTrue();
     }
 
-    @DisplayName("각 사용자들의 모든 카드를 보여준다.")
+    @DisplayName("각 플레이어의 모든 카드를 보여준다.")
     @Test
     void showCardsByPlayers() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
@@ -51,7 +51,7 @@ public class PlayersTest {
                 .allMatch(cards -> cards.cards().size() == 2)).isTrue();
     }
 
-    @DisplayName("사용자 이름들을 확인한다.")
+    @DisplayName("플레이어 이름들을 확인한다.")
     @Test
     void showNames() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");

@@ -8,7 +8,7 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isDrawable() {
+    public boolean isHit() {
         return cards.calculateTotalValue() <= BUST;
     }
 }

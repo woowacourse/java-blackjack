@@ -40,15 +40,15 @@ public class OutputView {
         System.out.println(cardsGroup);
     }
 
-    public static void printMoreDraw(Player player) {
+    public static void printPlayerHit(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDealerDrawable(Dealer dealer) {
+    public static void printDealerHit(Dealer dealer) {
         System.out.println("\n" + dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printDealerNotDrawable(Dealer dealer) {
+    public static void printDealerNotHit(Dealer dealer) {
         System.out.println("\n" + dealer.getName() + "는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
     }
 
