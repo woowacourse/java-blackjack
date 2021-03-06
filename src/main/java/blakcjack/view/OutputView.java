@@ -16,20 +16,9 @@ import java.util.stream.Collectors;
 import static blakcjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {
-//	public static void printInitialHands(final Dealer dealer, final List<Player> players) {
-//		final StringBuilder stringBuilder = new StringBuilder();
-//		stringBuilder.append(makeCardDistributionMessage(dealer, players));
-//
-//		stringBuilder.append(makeCardSummary(dealer));
-//		for (final Participant participant : players) {
-//			stringBuilder.append(makeCardSummary(participant));
-//		}
-//		System.out.println(stringBuilder.toString());
-//	}
-
 	public static void printInitialHands(final BlackjackGame blackjackGame) {
-		Dealer dealer = blackjackGame.getDealer();
-		List<Player> players = blackjackGame.getPlayers();
+		final Dealer dealer = blackjackGame.getDealer();
+		final List<Player> players = blackjackGame.getPlayers();
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeCardDistributionMessage(dealer, players));
@@ -81,8 +70,8 @@ public class OutputView {
 	}
 
 	public static void printFinalHandsSummary(final BlackjackGame blackjackGame) {
-		Dealer dealer = blackjackGame.getDealer();
-		List<Player> players = blackjackGame.getPlayers();
+		final Dealer dealer = blackjackGame.getDealer();
+		final List<Player> players = blackjackGame.getPlayers();
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeFinalSummary(dealer));
