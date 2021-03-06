@@ -8,8 +8,7 @@ public enum Result {
     DRAW("무승부"),
     WIN("승리"),
     BLACKJACK_WIN("블랙잭 승리"),
-    LOSE("패배"),
-    BLACKJACK_LOSE("블랙잭 패배");
+    LOSE("패배");
 
     private static final int BLACKJACK_VALUE = 21;
 
