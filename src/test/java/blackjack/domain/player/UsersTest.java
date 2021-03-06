@@ -41,7 +41,7 @@ public class UsersTest {
         users = new Users(convertUsers);
     }
 
-    @DisplayName("Users 생성자 동일 비교 테스트")
+    @DisplayName("서로다른 Users 생성자가 같은 결과를 가져오는지 테스트")
     @Test
     void constructorsEqual() {
         String usersNames = "pobi,jason,inbi,mungto";
