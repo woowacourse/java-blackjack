@@ -10,7 +10,6 @@ import java.util.List;
 public abstract class AbstractPlayer implements Player {
     protected static final int ACE_DIFF = 10;
     protected static final int BLACKJACK = 21;
-    private static final int FIRST_DRAW_CARDS_COUNT = 2;
 
     private final List<Card> cards;
     private final Name name;
@@ -61,9 +60,8 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public void drawRandomTwoCards() {
         Cards cards = Cards.getCards();
-        for (int i = 0; i < FIRST_DRAW_CARDS_COUNT; i++) {
-            drawCard(cards.draw());
-        }
+        drawCard(cards.draw());
+        drawCard(cards.draw());
     }
 
     @Override
