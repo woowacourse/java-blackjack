@@ -5,8 +5,9 @@ import java.util.*;
 public class Card {
 
     private static final List<Card> ORIGINAL_CARDS = new ArrayList<>();
+
     static {
-        for(Suit suit : Suit.values()){
+        for (Suit suit : Suit.values()) {
             Arrays.stream(Denomination.values())
                     .forEach(denomination -> ORIGINAL_CARDS.add(new Card(suit, denomination)));
         }
@@ -15,7 +16,7 @@ public class Card {
     private final Suit suit;
     private final Denomination denomination;
 
-    private Card(final Suit suit, final Denomination denomination){
+    private Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
@@ -24,10 +25,10 @@ public class Card {
         return ORIGINAL_CARDS.stream()
                 .filter(card -> card.equals(new Card(suit, denomination)))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 카드입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 카드입니다."));
     }
 
-    public static LinkedList<Card> getCachingCards(){
+    public static LinkedList<Card> getCachingCards() {
         return new LinkedList<>(ORIGINAL_CARDS);
     }
 
@@ -39,7 +40,7 @@ public class Card {
         return suit;
     }
 
-    public boolean isAce(){
+    public boolean isAce() {
         return denomination == Denomination.ACE;
     }
 

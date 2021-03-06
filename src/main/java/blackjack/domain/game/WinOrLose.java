@@ -5,11 +5,11 @@ public enum WinOrLose {
 
     private final String symbol;
 
-    WinOrLose(final String symbol){
+    WinOrLose(final String symbol) {
         this.symbol = symbol;
     }
 
-    public String getSymbol(){
+    public String getSymbol() {
         return symbol;
     }
 }

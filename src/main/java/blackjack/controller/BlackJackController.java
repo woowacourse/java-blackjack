@@ -16,13 +16,13 @@ public class BlackJackController {
         OutputView.printResult(blackJackGame.getResult(players));
     }
 
-    private Players initializePlayers(final BlackJackGame blackJackGame){
+    private Players initializePlayers(final BlackJackGame blackJackGame) {
         Players players = blackJackGame.createPlayers(InputView.askPlayerNames());
         OutputView.printPlayersCardsInformation(players);
         return players;
     }
 
-    private void askPlayersDraw(final BlackJackGame blackJackGame, final Players players){
+    private void askPlayersDraw(final BlackJackGame blackJackGame, final Players players) {
         for (Player player : players) {
             giveGamblerCards(blackJackGame, player);
         }
@@ -35,14 +35,14 @@ public class BlackJackController {
             return;
         }
 
-        while (InputView.askDrawOrNot(player).isYes() ) {
+        while (InputView.askDrawOrNot(player).isYes()) {
             blackJackGame.giveCard(player);
             OutputView.printPlayerCardsInformation(player);
         }
     }
 
-    private void giveDealerCards(final BlackJackGame blackJackGame){
-        while(blackJackGame.ableToDraw()){
+    private void giveDealerCards(final BlackJackGame blackJackGame) {
+        while (blackJackGame.isDealerAbleToDraw()) {
             blackJackGame.giveDealerCard();
             OutputView.printGiveDealer();
         }

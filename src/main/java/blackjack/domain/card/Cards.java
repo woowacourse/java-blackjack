@@ -34,7 +34,7 @@ public class Cards {
                 .count();
     }
 
-    public List<Card> cards(){
+    public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }
 }

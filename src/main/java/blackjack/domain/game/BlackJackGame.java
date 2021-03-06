@@ -11,25 +11,24 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
     private final String SEPARATOR_OF_NAME_INPUT = ",";
     private final Deck deck = new Deck();
-    private Dealer dealer;
+    private final Dealer dealer = new Dealer();
 
-    public BlackJackGame(){
+    public BlackJackGame() {
     }
 
-    public Players createPlayers(String nameLine){
+    public Players createPlayers(String nameLine) {
         return initPlayers(splitAndParseToNames(nameLine));
     }
 
-    private List<Name> splitAndParseToNames(String nameLine){
+    private List<Name> splitAndParseToNames(String nameLine) {
         return Arrays.asList(nameLine.split(SEPARATOR_OF_NAME_INPUT))
                 .stream().map(Name::new)
                 .collect(Collectors.toList());
     }
 
-    private Players initPlayers(List<Name> names){
+    private Players initPlayers(List<Name> names) {
         List<Player> players = new ArrayList<>();
 
-        dealer = new Dealer();
         players.add(dealer);
         players.addAll(names.stream()
                 .map(Gambler::new)
@@ -37,7 +36,7 @@ public class BlackJackGame {
 
         players.stream()
                 .forEach(player -> player.initializeCards(deck));
-        
+
         return new Players(players);
     }
 
@@ -45,24 +44,24 @@ public class BlackJackGame {
         player.drawCard(deck.draw());
     }
 
-    public void giveDealerCard(){
+    public void giveDealerCard() {
         dealer.drawCard(deck.draw());
     }
 
-    public boolean ableToDraw(){
+    public boolean isDealerAbleToDraw() {
         return dealer.ableToDraw();
     }
 
-    public Result getResult(final Players players){
+    public Result getResult(final Players players) {
         Result result = new Result(dealer.getCards());
-        for(Player player : players){
+        for (Player player : players) {
             addGamblerResult(result, player);
         }
         return result;
     }
 
-    private void addGamblerResult(final Result result, final Player player){
+    private void addGamblerResult(final Result result, final Player player) {
         WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
-        result.add(player, winOrLose);
+        result.addGamblerResults(player, winOrLose);
     }
 }

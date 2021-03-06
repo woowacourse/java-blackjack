@@ -17,17 +17,17 @@ public class OutputView {
 
     public static void printPlayersCardsInformation(final Players players) {
         for (Player player : players) {
-             printPlayerCardsInformation(player);
+            printPlayerCardsInformation(player);
         }
     }
 
     public static void printPlayerCardsInformation(final Player player) {
-        printMessageByFormat( "%s카드: %s",
+        printMessageByFormat("%s카드: %s",
                 player.getName().getValue(), makeCardInfo(player.getCards()));
         printLineSeparator();
     }
 
-    private static String makeCardInfo(final Cards cards){
+    private static String makeCardInfo(final Cards cards) {
         return cards.cards().stream()
                 .map(card -> card.getDenomination().denomination() + card.getSuit().suit())
                 .collect(Collectors.joining(", "));
@@ -61,22 +61,22 @@ public class OutputView {
         printGamblerWinningResult(result);
     }
 
-    private static void printDealerWinningResult(Result result){
-        String printFormat = "%s : %s 승 %s 무 %s 패" +System.lineSeparator();
+    private static void printDealerWinningResult(Result result) {
+        String printFormat = "%s : %s 승 %s 무 %s 패" + System.lineSeparator();
 
         OutputView.printMessageByFormat(
                 printFormat, "딜러", result.countDealerWin(), result.countDealerDraw(), result.countDealerLose()
         );
     }
 
-    private static void printGamblerWinningResult(Result result){
+    private static void printGamblerWinningResult(Result result) {
         Map<Player, WinOrLose> winningTable = result.getGamblerMap();
         for (Player player : winningTable.keySet()) {
             OutputView.printMessage(player.getName().getValue() + " : " + winningTable.get(player).getSymbol());
         }
     }
 
-    public static void printLineSeparator(){
+    public static void printLineSeparator() {
         System.out.print(System.lineSeparator());
     }
 
@@ -87,5 +87,4 @@ public class OutputView {
     public static void printMessageByFormat(final String format, final Object... message) {
         System.out.printf(format, message);
     }
-
 }

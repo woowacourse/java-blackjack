@@ -25,11 +25,11 @@ public enum Denomination {
         this.score = score;
     }
 
-    public static Denomination of(final String denomination){
+    public static Denomination of(final String denomination) {
         return Arrays.stream(Denomination.values())
-                .filter(den -> den.denomination.equals(denomination))
+                .filter(value -> value.denomination.equals(denomination))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 Denomination입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 Denomination입니다."));
     }
 
     public String denomination() {

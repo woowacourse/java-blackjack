@@ -8,8 +8,8 @@ public class Score {
 
     private final int value;
 
-    public Score(int value){
-        if(value < 0){
+    public Score(int value) {
+        if (value < 0) {
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
 
@@ -20,7 +20,7 @@ public class Score {
         return value > BLACK_JACK;
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return value == BLACK_JACK;
     }
 
@@ -28,27 +28,23 @@ public class Score {
         return value <= score;
     }
 
-    public boolean isBiggerThan(final Score target){
-        return value > target.value;
-    }
-
-    public boolean isLessThan(final Score target){
+    public boolean isLessThan(final Score target) {
         return value < target.value;
     }
 
-    public Score useAceAsEleven(){
+    public Score useAceAsEleven() {
         return new Score(value + 10);
     }
 
-    public Score addScore(final Score score){
+    public Score addScore(final Score score) {
         return new Score(score.value + this.value);
     }
 
-    public boolean isBellowThanBlackJack(){
+    public boolean isBellowThanBlackJack() {
         return value <= BLACK_JACK;
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 
