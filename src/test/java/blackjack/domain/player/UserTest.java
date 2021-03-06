@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class UserTest {
     private static final String TEST_NAME = "pobi";
 
-    @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCardWhen1() {
         User user = new User(TEST_NAME);
@@ -25,7 +25,7 @@ public class UserTest {
         assertThat(user.isCanDraw()).isTrue();
     }
 
-    @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCardWhen21() {
         User user = new User(TEST_NAME);
@@ -36,7 +36,7 @@ public class UserTest {
         assertThat(user.isCanDraw()).isTrue();
     }
 
-    @DisplayName("플레이어는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
     @Test
     void cannotDrawCardWhen22() {
         User user = new User(TEST_NAME);
