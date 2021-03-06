@@ -23,6 +23,7 @@ public class ResultBoard {
                 .forEach(player -> {
                     if (dealer.isBust() || player.isBust()) {
                         this.resultBoard.put(player, player.decideResultByBust(dealer));
+                        return;
                     }
                     this.resultBoard.put(player, player.decideResultByCompare(dealer));
                 });
