@@ -28,7 +28,7 @@ public abstract class AbstractPlayer implements Player {
     abstract public boolean isCanDraw();
 
     @Override
-    public int getValue() {
+    public int getScore() {
         int lowValue = getLowValue();
         int highValue = getHighValue(lowValue);
         if (highValue > BLACKJACK) {

@@ -14,7 +14,7 @@ public interface Player {
 
     List<Card> getCards();
 
-    int getValue();
+    int getScore();
 
     void drawRandomOneCard();
 }

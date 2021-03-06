@@ -16,7 +16,7 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public boolean isCanDraw() {
-        return getValue() <= DRAW_BOUND;
+        return getScore() <= DRAW_BOUND;
     }
 
     public void setCardOpen(CardOpenStrategy cardOpenStrategy) {

@@ -34,8 +34,8 @@ public class User extends AbstractPlayer {
     }
 
     public ResultType getResult(Dealer dealer) {
-        int userValue = getValue();
-        int dealerValue = dealer.getValue();
+        int userValue = getScore();
+        int dealerValue = dealer.getScore();
         if (userValue > BLACKJACK || userValue < dealerValue) {
             return ResultType.LOSS;
         }
@@ -52,6 +52,6 @@ public class User extends AbstractPlayer {
     }
 
     private boolean isOverBlackJack() {
-        return getValue() > BLACKJACK;
+        return getScore() > BLACKJACK;
     }
 }

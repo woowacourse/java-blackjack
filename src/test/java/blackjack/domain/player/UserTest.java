@@ -8,6 +8,7 @@ import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.exception.validateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,7 +62,7 @@ public class UserTest {
     @ValueSource(strings = {"", "  "})
     void invalidNames(String nameInput) {
         assertThatThrownBy(() -> new User(nameInput))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(validateException.class);
     }
 
     @DisplayName("카드 계속해서 뽑기 여부 입력 테스트")
