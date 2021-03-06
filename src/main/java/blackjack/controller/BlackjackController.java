@@ -20,15 +20,15 @@ public class BlackjackController {
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final List<Participant> participants = participantsSetUp();
+        final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
         showParticipantsName(participants);
         showDistributedCard(participants);
-        playerGameProgress(new ArrayList<>(participants.subList(1, participants.size())), cardDeck);
+        playerGameProgress(players, cardDeck);
         dealerGameProgress(participants.get(0), cardDeck);
         showFinalCardResult(participants);
-        showGameResult(participants.get(0),
-            new ArrayList<>(participants.subList(1, participants.size())), new GameResult());
+        showGameResult(participants.get(0), players, new GameResult());
     }
 
     private List<Participant> participantsSetUp() {
