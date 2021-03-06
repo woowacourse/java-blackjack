@@ -61,7 +61,7 @@ public class BlackjackController {
     }
 
     private void drawCardToGamer(Game game, String gamerName) {
-        while (InputView.getYesOrNo(gamerName) && game.isGamerDrawable(gamerName)) {
+        while (game.isGamerDrawable(gamerName) && InputView.getYesOrNo(gamerName)) {
             game.drawCardToPlayer(gamerName);
 
             OutputView.printPlayersDeckState(
