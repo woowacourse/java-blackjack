@@ -1,10 +1,9 @@
-package blackjack.domain.Result;
+package blackjack.domain.result;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 public enum Result {
-    NONE("None"),
     DRAW("무승부"),
     WIN("승리"),
     BLACKJACK_WIN("블랙잭 승리"),
@@ -19,31 +18,26 @@ public enum Result {
     }
 
     public static Result of(Dealer dealer, Player player) {
-        Result result = findResultByBlackjack(dealer.isBlackjack(), player.isBlackjack());
-
-        if (result == Result.NONE) {
-            return findResultByScore(dealer.getScore(), player.getScore());
-        }
-        return result;
+        return findResultByBlackjack(dealer, player);
     }
 
-    public static Result findResultByBlackjack(boolean isDealerBlackjack, boolean isPlayerBlackjack) {
-        if (isDealerBlackjack && !isPlayerBlackjack) {
+    private static Result findResultByBlackjack(Dealer dealer, Player player) {
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
             return Result.LOSE;
         }
 
-        if (isDealerBlackjack) {
+        if (dealer.isBlackjack()) {
             return Result.DRAW;
         }
 
-        if (isPlayerBlackjack) {
+        if (player.isBlackjack()) {
             return Result.BLACKJACK_WIN;
         }
 
-        return Result.NONE;
+        return findResultByScore(dealer.getScore(), player.getScore());
     }
 
-    public static Result findResultByScore(int dealerScore, int playerScore) {
+    private static Result findResultByScore(int dealerScore, int playerScore) {
         if (isBust(dealerScore) && !isBust(playerScore)) {
             return Result.WIN;
         }
