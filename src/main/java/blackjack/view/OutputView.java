@@ -1,7 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -16,8 +18,6 @@ public class OutputView {
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
     private static final String GAME_RESULT_FORMAT = "%s: %d승 %d패";
-    private static final String WIN_MESSAGE = ": 승";
-    private static final String LOSE_MESSAGE = ": 패";
 
     public static void distributeMessage(final String players) {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, players);
@@ -46,12 +46,10 @@ public class OutputView {
         System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name, winCount, loseCount);
     }
 
-    public static void showPlayerGameResult(final String name, final boolean winner) {
-        if (winner) {
-            System.out.println(name + WIN_MESSAGE);
-            return;
-        }
-        System.out.println(name + LOSE_MESSAGE);
+    public static void showPlayerGameResult(final Map<String, Result> results) {
+        results.forEach((name, result) -> {
+            System.out.println(name + ": " + result.getValue());
+        });
     }
 
     public static void bustMessage() {

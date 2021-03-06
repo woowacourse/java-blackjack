@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
+
     private static final int BUST_LIMIT = 22;
 
     private final String name;
@@ -39,7 +40,10 @@ public abstract class Participant {
         return playerCards.calculate();
     }
 
+    public abstract boolean isWinner(final Participant participant);
+
     public abstract List<Card> showCards();
 
     public abstract boolean checkMoreCardAvailable();
+
 }

@@ -62,7 +62,7 @@ public class PlayerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12"}, delimiter = ':')
+    @CsvSource(value = {"ACE,KING:21", "ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12"}, delimiter = ':')
     @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
     void calculateMyCardSumWhenAceIsTwo(final String input, final int expected) {
         final String[] inputs = input.split(",");

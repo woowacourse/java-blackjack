@@ -7,10 +7,17 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
-    private int winCount = 0;
 
     public Dealer(final String name) {
         super(name);
+    }
+
+    @Override
+    public boolean isWinner(Participant player) {
+        if (player.isBust()) {
+            return true;
+        }
+        return player.calculate() <= this.calculate() && !isBust();
     }
 
     @Override
@@ -23,15 +30,4 @@ public class Dealer extends Participant {
         return (calculate() <= MAX_SUM_FOR_MORE_CARD);
     }
 
-    public boolean isWinner(final int playerResult) {
-        return playerResult <= calculate() && !isBust();
-    }
-
-    public void increaseWinCount() {
-        winCount++;
-    }
-
-    public int getWinCount() {
-        return winCount;
-    }
 }

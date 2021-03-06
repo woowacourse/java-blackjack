@@ -8,6 +8,10 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Player;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,21 +104,28 @@ public class DealerTest {
         AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
     }
 
-//    @ParameterizedTest
-//    @CsvSource(value = {"13:true", "21:false"}, delimiter = ':')
-//    @DisplayName("딜러의 승패를 확인")
-//    void isWinner(final int playerResult, final boolean expected) {
-//        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-//        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
-//        assertThat(dealer.isWinner(playerResult)).isEqualTo(expected);
-//    }
-//
-//    @Test
-//    @DisplayName("딜러가 버스트가 되는 경우 패배가 되는지 확인")
-//    void isWinnerWhenDealerIsBust() {
-//        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-//        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
-//        dealer.receiveCard(new Card(CardNumber.TEN, CardType.SPADE));
-//        assertThat(dealer.isWinner(1)).isEqualTo(false);
-//    }
+    @ParameterizedTest
+    @CsvSource(value = {"ACE,KING:false", "TWO,THREE:true"}, delimiter = ':')
+    @DisplayName("딜러의 승패를 확인")
+    void isWinner(final String input, final boolean expected) {
+        final String[] inputs = input.split(",");
+        final List<CardNumber> cardNumbers = Arrays.stream(inputs)
+            .map(CardNumber::valueOf)
+            .collect(Collectors.toList());
+        final Participant player = new Player("j.on");
+        player.receiveCard(new Card(cardNumbers.get(0), CardType.CLOVER));
+        player.receiveCard(new Card(cardNumbers.get(1), CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
+        assertThat(dealer.isWinner(player)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트가 되는 경우 패배가 되는지 확인")
+    void isWinnerWhenDealerIsBust() {
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.SPADE));
+        assertThat(dealer.isWinner(new Player("j.on"))).isEqualTo(false);
+    }
 }

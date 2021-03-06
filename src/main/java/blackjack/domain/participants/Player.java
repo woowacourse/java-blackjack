@@ -6,11 +6,13 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    private static final int BUST_LIMIT = 22;
-    private boolean win = true;
-
     public Player(String name) {
         super(name);
+    }
+
+    @Override
+    public boolean isWinner(Participant dealer) {
+        return !dealer.isWinner(this);
     }
 
     @Override
@@ -23,11 +25,4 @@ public class Player extends Participant {
         return !isBust();
     }
 
-    public void lose() {
-        win = false;
-    }
-
-    public boolean getWin() {
-        return win;
-    }
 }
