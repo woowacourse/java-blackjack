@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +14,6 @@ public class Card {
         cached = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Face.values()).map(face -> new Card(suit, face)))
                 .collect(Collectors.toList());
-        Collections.shuffle(cached);
     }
 
     public Card(final Suit suit, final Face face) {
@@ -24,9 +22,11 @@ public class Card {
     }
 
     public static Card of() {
-        Card card = cached.get(0);
-        cached.remove(0);
-        return card;
+        return cached.get(0);
+    }
+
+    public static Card of(final int cardIndex) {
+        return cached.get(cardIndex);
     }
 
     public boolean isAce() {
