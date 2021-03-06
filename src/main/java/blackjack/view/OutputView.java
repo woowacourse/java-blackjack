@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
@@ -71,9 +72,11 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    public static void printPlayerResult(List<Player> players) {
-        for (Player player : players) {
-            System.out.println(player.getName() + SEPARATOR + player.getResult().getResultName());
+    public static void printPlayerResult(List<Player> players, List<Result> results) {
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(players.get(i).getName()
+                    + SEPARATOR
+                    + results.get(i).getResultName());
         }
     }
 

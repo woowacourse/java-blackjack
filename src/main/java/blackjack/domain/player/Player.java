@@ -1,12 +1,8 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Result;
-
 public class Player extends Participant {
 
     private static final int LIMIT_SCORE = 21;
-
-    private Result result;
 
     public Player() {
         this("null");
@@ -17,11 +13,7 @@ public class Player extends Participant {
     }
 
     public void compareWithDealer(Dealer dealer) {
-        result = dealer.compare(this);
-    }
-
-    public Result getResult() {
-        return result;
+        dealer.compare(this);
     }
 
     public boolean canDrawOneMore(){

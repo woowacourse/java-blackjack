@@ -98,10 +98,10 @@ public class BlackjackController {
         }
 
         OutputView.printDealerResult(
-                dealer.findResultCount(Result.WIN),
-                dealer.findResultCount(Result.DRAW),
-                dealer.findResultCount(Result.LOSE));
+                dealer.countOfResult(Result.WIN),
+                dealer.countOfResult(Result.DRAW),
+                dealer.countOfResult(Result.LOSE));
 
-        OutputView.printPlayerResult(players);
+        OutputView.printPlayerResult(players, dealer.getPlayerResults());
     }
 }
