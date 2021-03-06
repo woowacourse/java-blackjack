@@ -11,33 +11,32 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
     
+    private static final int BASE_CARD_COUNT = 2;
+    
     public void run() {
         List<Player> players = enterPlayers();
         Dealer dealer = Dealer.create();
-    
-        int receiveCount = 2;
-        for (int i = 0; i < receiveCount; i++) {
-            dealer.deal(dealer);
-    
-            for (Player player : players) {
-                dealer.deal(player);
-            }
-        }
-        
-        OutputView.printDealtBaseCards(dealer, players);
-        
+        dealBaseCards(players, dealer);
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
-        
         printResult(dealer, players);
     }
     
     private List<Player> enterPlayers() {
-        String[] playerNames = InputView.getPlayerName().split(",");
+        String[] playerNames = InputView.getPlayerName()
+                                        .split(",");
         
         return Arrays.stream(playerNames)
                      .map(Player::from)
                      .collect(Collectors.toList());
+    }
+    
+    private void dealBaseCards(List<Player> players, Dealer dealer) {
+        for (int i = 0; i < BASE_CARD_COUNT; i++) {
+            dealer.deal(dealer);
+            players.forEach(dealer::deal);
+        }
+        OutputView.printDealtBaseCards(dealer, players);
     }
     
     private void progressPlayersTurn(Dealer dealer, List<Player> players) {
@@ -50,7 +49,7 @@ public class BlackJackController {
     }
     
     private void progressDealerTurn(Dealer dealer) {
-        while (dealer.shouldReceive()) {
+        while (dealer.canReceive()) {
             dealer.deal(dealer);
             OutputView.printDealerDrewMessage();
         }
