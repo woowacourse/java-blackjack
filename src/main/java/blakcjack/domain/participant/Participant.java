@@ -58,11 +58,7 @@ public abstract class Participant {
 				.sum();
 	}
 
-	public boolean isScoreLowerThanBlackJackValue() {
-		return calculateScore() < BLACKJACK_VALUE;
-	}
-
-	protected boolean isBust() {
+	public boolean isBust() {
 		return BLACKJACK_VALUE < calculateScore();
 	}
 

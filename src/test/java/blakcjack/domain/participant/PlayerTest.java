@@ -43,15 +43,15 @@ public class PlayerTest {
 		assertThat(player.calculateScore()).isEqualTo(19);
 	}
 
-	@DisplayName("21점 미만이면 통과")
+	@DisplayName("21점 이하면 버스트 아니고 21점 초과일 시 버스트 처리 해주는지")
 	@Test
-	void isNotBust() {
+	void isBust() {
 		final Player player = new Player(new Name("pobi"));
 		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.KING));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
-		assertThat(player.isScoreLowerThanBlackJackValue()).isTrue();
+		assertThat(player.isBust()).isFalse();
 
-		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
-		assertThat(player.isScoreLowerThanBlackJackValue()).isFalse();
+		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.TWO));
+		assertThat(player.isBust()).isTrue();
 	}
 }

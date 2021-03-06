@@ -45,7 +45,7 @@ public class BlackJackController {
 	}
 
 	private boolean isHit(final Player player) {
-		return player.isScoreLowerThanBlackJackValue() && InputView.isYes(player);
+		return !player.isBust() && InputView.isYes(player);
 	}
 
 	private void letDealerDraw(final BlackjackGame blackjackGame) {
