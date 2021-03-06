@@ -33,24 +33,25 @@ public class Game {
             gamers.drawToGamers(cards);
         }
     }
-
-    public void drawCardToGamer(String name) {
-        Player gamer = findGamerByName(name);
-
-        gamer.addCardToDeck(shuffledCards.next());
-    }
-
     public boolean isGamerDrawable(String name) {
         return findGamerByName(name).isDrawable();
     }
 
-    public boolean drawCardToDealer() {
-        if (dealer.isDrawable()) {
+    public boolean isDealerDrawable() {
+        return dealer.isDrawable();
+    }
+
+    public void drawCardToDealer() {
+        drawCardToPlayer(dealer.getName());
+    }
+
+    public void drawCardToPlayer(String name) {
+        if(dealer.getName().equals(name)) {
             dealer.addCardToDeck(shuffledCards.next());
-            return true;
+            return;
         }
 
-        return false;
+        findGamerByName(name).addCardToDeck(shuffledCards.next());
     }
 
     public Map<String, GameResult> getGamerResult() {
