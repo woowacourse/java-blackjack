@@ -21,9 +21,6 @@ public class OutputView {
     private static final String PLAYER_COMPETE_RESULT_FORMAT = "%s : %s" + LINE_SEPARATOR;
     private static final String CARD_HANDS_DELIMITER = ", ";
     private static final String PLAYER_NAMES_DELIMITER = ", ";
-    private static final String WIN = "승";
-    private static final String DRAW = "무";
-    private static final String DEFEAT = "패";
     
     public static void printDealtBaseCards(Dealer dealer, List<Player> players) {
         String playerNames = joinPlayerNames(players);
@@ -43,7 +40,7 @@ public class OutputView {
     }
     
     public static void printNameAndHandExceptFirstCard(Dealer dealer) {
-        System.out.println(getNameAndHand(dealer, dealer.getCardsExceptFirstCard()));
+        System.out.println(getNameAndHand(dealer, dealer.getSecondCard().getJoinedInitialAndSuit()));
     }
     
     private static String getNameAndHand(Participant participant, List<Card> cards) {
@@ -52,7 +49,7 @@ public class OutputView {
     
     public static String getHand(List<Card> cards) {
         return cards.stream()
-                    .map(card -> card.getRankInitial() + card.getSuitName())
+                    .map(Card::getJoinedInitialAndSuit)
                     .collect(Collectors.joining(CARD_HANDS_DELIMITER));
     }
     
@@ -88,21 +85,8 @@ public class OutputView {
         System.out.printf(DEALER_COMPETE_RESULT_FORMAT, dealer.getName(), winCount, drawCount, defeatCount);
     
         for (Player player : players) {
-            CompeteResult competeResult = player.compete(dealer);
-            String result = competeResultToString(competeResult);
-            System.out.printf(PLAYER_COMPETE_RESULT_FORMAT, player.getName(), result);
+            String competeResult = player.compete(dealer).getCompeteResult();
+            System.out.printf(PLAYER_COMPETE_RESULT_FORMAT, player.getName(), competeResult);
         }
-    }
-    
-    private static String competeResultToString(CompeteResult result) {
-        if (result == CompeteResult.WIN) {
-            return WIN;
-        }
-    
-        if (result == CompeteResult.DRAW) {
-            return DRAW;
-        }
-        
-        return DEFEAT;
     }
 }
