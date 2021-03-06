@@ -42,7 +42,7 @@ public class Player {
 
     public int calculate() {
         final int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
+                .filter(card -> card.getCardValue().isAce())
                 .count();
         if (aceCount == 0) {
             return calculateSingleCase();
@@ -52,15 +52,15 @@ public class Player {
 
     private int calculateSingleCase() {
         return cards.stream()
-                .mapToInt(Card::getCardNumber)
+                .mapToInt(card -> card.getCardValue().getValue())
                 .sum();
     }
 
     private int calculateMultipleCase(final int aceCount) {
         final List<Integer> possibleSum = new ArrayList<>();
         final int sumExceptAce = cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getCardNumber)
+                .filter(card -> !card.getCardValue().isAce())
+                .mapToInt(card -> card.getCardValue().getValue())
                 .sum();
 
         for (final int aceSum : calculateAceSum(aceCount)) {

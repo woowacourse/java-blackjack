@@ -21,9 +21,9 @@ public class CardTest {
     @DisplayName("해당 카드가 ACE 넘버인지 확인")
     void isAce() {
         final Card aceCard = new Card(CardNumber.ACE, CardType.CLOVER);
-        assertThat(aceCard.isAce()).isTrue();
+        assertThat(aceCard.getCardValue().isAce()).isTrue();
 
         final Card notAceCard = new Card(CardNumber.TWO, CardType.CLOVER);
-        assertThat(notAceCard.isAce()).isFalse();
+        assertThat(notAceCard.getCardValue().isAce()).isFalse();
     }
 }
