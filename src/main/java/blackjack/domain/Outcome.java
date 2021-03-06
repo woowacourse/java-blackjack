@@ -9,7 +9,7 @@ public enum Outcome {
     WIN("승", (a, b) -> a > b),
     LOSE("패", (a, b) -> a < b),
     DRAW("무", (a, b) -> a == b),
-    NOT_FOUND("", null);
+    NOT_FOUND("예측되는 승패를 찾을 수 없습니다.", null);
 
     private final String name;
     private final BiPredicate<Integer, Integer> compareFunction;
@@ -31,7 +31,7 @@ public enum Outcome {
         return Arrays.stream(values())
                 .filter(value -> value.compareFunction.test(dealerScore, playerScore))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("예측되는 승패를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND.getName()));
     }
 
     private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {
