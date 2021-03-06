@@ -1,8 +1,10 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class User {
     protected final Cards cards;
@@ -13,7 +15,11 @@ public abstract class User {
     }
 
     public User(Name name) {
-        this(new Cards(new ArrayList<>()), name);
+        this(new ArrayList<>(), name);
+    }
+
+    public User(List<Card> cards, Name name) {
+        this(new Cards(cards), name);
     }
 
     public User(Cards cards, Name name) {
