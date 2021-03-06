@@ -5,9 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
-import blackjack.domain.card.Cards;
-import blackjack.domain.player.strategy.AllCardsOpenStrategy;
-import blackjack.domain.player.strategy.OneCardOpenStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
