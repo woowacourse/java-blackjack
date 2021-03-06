@@ -16,7 +16,7 @@ public class Card {
         return rank.getNumber();
     }
     
-    public String getJoinedInitialAndSuit() {
+    public String combineInitialAndSuit() {
         return rank.getInitial() + suit.getName();
     }
     

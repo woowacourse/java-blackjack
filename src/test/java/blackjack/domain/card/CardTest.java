@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CardTest {
     
     @ParameterizedTest(name = "값 객체 비교")
-    @MethodSource("equals_testcase")
+    @MethodSource("generateCards")
     void equals(Suit suit, Rank rank) {
         Card firstCard = new Card(suit, rank);
         Card secondCard = new Card(suit, rank);
@@ -21,7 +21,7 @@ class CardTest {
         assertThat(firstCard).hasSameHashCodeAs(secondCard);
     }
     
-    private static Stream<Arguments> equals_testcase() {
+    private static Stream<Arguments> generateCards() {
         return Stream.of(
                 Arguments.of(Suit.SPADE, Rank.ACE),
                 Arguments.of(Suit.SPADE, Rank.KING),
@@ -40,5 +40,21 @@ class CardTest {
         Card secondCard = new Card(Suit.SPADE, Rank.TWO);
         
         assertThat(firstCard).isNotEqualTo(secondCard);
+    }
+    
+    @ParameterizedTest(name = "이니셜과 카드 무늬 결합 테스트")
+    @MethodSource("generateStringCombinedInitialAndSuit")
+    void getName(Suit suit, Rank rank, String expected) {
+        Card card = new Card(suit, rank);
+        
+        assertThat(card.combineInitialAndSuit()).isEqualTo(expected);
+    }
+    
+    private static Stream<Arguments> generateStringCombinedInitialAndSuit() {
+        return Stream.of(
+                Arguments.of(Suit.SPADE, Rank.ACE, "A스페이드"),
+                Arguments.of(Suit.SPADE, Rank.KING, "K스페이드"),
+                Arguments.of(Suit.DIAMOND, Rank.JACK, "J다이아몬드")
+        );
     }
 }
