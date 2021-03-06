@@ -25,6 +25,7 @@ public class InputView {
             validateYesOrNo(yesOrNo);
             return "y".equals(yesOrNo);
         } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             return wantMoreCard(challenger);
         }
     }

@@ -45,7 +45,7 @@ public class BlackJackService {
     }
 
     private Cards getInitCards() {
-        List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(), Card.of()));
+        List<Card> cards = Arrays.asList(Card.of(), Card.of());
         return new Cards(cards);
     }
 }
