@@ -10,16 +10,8 @@ public class Card {
         this.cardType = cardType;
     }
 
-    public String getCardSymbol() {
-        return cardNumber.getSymbol();
-    }
-
     public CardNumber getCardNumber() {
         return cardNumber;
-    }
-
-    public CardType getCardType() {
-        return cardType;
     }
 
     public String getCard() {
