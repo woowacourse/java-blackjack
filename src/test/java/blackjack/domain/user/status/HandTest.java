@@ -3,7 +3,7 @@ package blackjack.domain.user.status;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +21,8 @@ class HandTest {
     @BeforeEach
     void setUp() {
         List<Card> cards = Arrays.asList(
-                new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                new Card(Suit.HEART, Value.ACE));
+                new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
+                new Card(Suit.HEART, Symbol.ACE));
         hand = new Hand(new Cards(cards));
     }
 
@@ -53,29 +53,29 @@ class HandTest {
     private static Stream<Arguments> testCalculateScore() {
         return Stream.of(
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                        new Card(Suit.HEART, Value.ACE)), 15),
+                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
+                        new Card(Suit.HEART, Symbol.ACE)), 15),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.TEN),
-                        new Card(Suit.HEART, Value.ACE)), 21),
+                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
+                        new Card(Suit.HEART, Symbol.ACE)), 21),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.TWO), new Card(Suit.DIAMOND, Value.SEVEN),
-                        new Card(Suit.HEART, Value.ACE)), 20),
+                        new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.DIAMOND, Symbol.SEVEN),
+                        new Card(Suit.HEART, Symbol.ACE)), 20),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.KING), new Card(Suit.DIAMOND, Value.SIX),
-                        new Card(Suit.HEART, Value.FOUR)), 20),
+                        new Card(Suit.CLOVER, Symbol.KING), new Card(Suit.DIAMOND, Symbol.SIX),
+                        new Card(Suit.HEART, Symbol.FOUR)), 20),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.NINE), new Card(Suit.DIAMOND, Value.QUEEN),
-                        new Card(Suit.HEART, Value.FIVE)), 24),
+                        new Card(Suit.CLOVER, Symbol.NINE), new Card(Suit.DIAMOND, Symbol.QUEEN),
+                        new Card(Suit.HEART, Symbol.FIVE)), 24),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.NINE), new Card(Suit.HEART, Value.TWO),
-                        new Card(Suit.DIAMOND, Value.QUEEN), new Card(Suit.HEART, Value.ACE)), 22),
+                        new Card(Suit.CLOVER, Symbol.NINE), new Card(Suit.HEART, Symbol.TWO),
+                        new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.HEART, Symbol.ACE)), 22),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.FIVE), new Card(Suit.HEART, Value.ACE),
-                        new Card(Suit.DIAMOND, Value.TEN)), 16),
+                        new Card(Suit.CLOVER, Symbol.FIVE), new Card(Suit.HEART, Symbol.ACE),
+                        new Card(Suit.DIAMOND, Symbol.TEN)), 16),
                 Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Value.ACE), new Card(Suit.HEART, Value.ACE),
-                        new Card(Suit.DIAMOND, Value.ACE), new Card(Suit.SPADE, Value.ACE)), 14)
+                        new Card(Suit.CLOVER, Symbol.ACE), new Card(Suit.HEART, Symbol.ACE),
+                        new Card(Suit.DIAMOND, Symbol.ACE), new Card(Suit.SPADE, Symbol.ACE)), 14)
         );
     }
 }

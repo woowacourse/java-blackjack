@@ -15,7 +15,7 @@ public class StatusTest {
         assertThat(Status.of(score)).isEqualTo(status);
     }
 
-    @DisplayName("점수에 맞는 상태를 반환하는지 확인한다")
+    @DisplayName("점수가 범위에 맞지 않으면 에러를 발생시킨다.")
     @ParameterizedTest
     @CsvSource(value = {"1", "31"})
     void testOfValidation(int score) {

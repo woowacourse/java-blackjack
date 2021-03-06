@@ -2,7 +2,7 @@ package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Name;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +19,8 @@ class UserGameResultTest {
     void testCalculateScore() {
         //given
         List<Card> resultCards = Arrays.asList(
-                new Card(Suit.SPADE, Value.EIGHT), new Card(Suit.HEART, Value.FIVE),
-                new Card(Suit.CLOVER, Value.SEVEN)
+                new Card(Suit.SPADE, Symbol.EIGHT), new Card(Suit.HEART, Symbol.FIVE),
+                new Card(Suit.CLOVER, Symbol.SEVEN)
         );
 
         //when

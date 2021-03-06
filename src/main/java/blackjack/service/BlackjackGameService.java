@@ -40,7 +40,7 @@ public class BlackjackGameService {
 
     public CardDto getDealerOpenedCard() {
         Card dealerFirstCard = blackjackGame.getDealer().getFirstCard();
-        return new CardDto(dealerFirstCard.getSuitLetter(), dealerFirstCard.getValueLetter());
+        return new CardDto(dealerFirstCard.getSuitLetter(), dealerFirstCard.getSymbolLetter());
     }
 
     public UserCardsDto getAllUserCurrentCards() {
@@ -55,7 +55,7 @@ public class BlackjackGameService {
 
     private List<CardDto> createCardDtos(User user) {
         return user.getCards().stream()
-                .map(card -> new CardDto(card.getSuitLetter(), card.getValueLetter()))
+                .map(card -> new CardDto(card.getSuitLetter(), card.getSymbolLetter()))
                 .collect(toList());
     }
 

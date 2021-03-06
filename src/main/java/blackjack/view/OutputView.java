@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public static void printDealerFirstCard(CardDto cardDto) {
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, cardDto.getSuit() + cardDto.getValue());
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, cardDto.getSuit() + cardDto.getSymbol());
     }
 
     public static void printCardList(UserCardsDto userCardsDto) {
@@ -45,7 +45,7 @@ public class OutputView {
 
     public static void printCard(String userName, List<CardDto> cardDtos) {
         String cardSignature = cardDtos.stream()
-                .map(cardDto -> cardDto.getSuit() + cardDto.getValue())
+                .map(cardDto -> cardDto.getSuit() + cardDto.getSymbol())
                 .collect(joining(COMMA_AND_BLANK));
         System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, userName, cardSignature);
     }
@@ -53,7 +53,7 @@ public class OutputView {
     public static void printCardListAndScore(Resultable gameResult) {
         String cards = gameResult.getCards()
                 .stream()
-                .map(card -> card.getSuitLetter() + card.getValueLetter())
+                .map(card -> card.getSuitLetter() + card.getSymbolLetter())
                 .collect(joining(COMMA_AND_BLANK));
 
         System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, gameResult.getName(), cards, gameResult.getScore());

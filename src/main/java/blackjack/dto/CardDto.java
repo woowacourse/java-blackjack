@@ -2,18 +2,18 @@ package blackjack.dto;
 
 public class CardDto {
     private final String suit;
-    private final String value;
+    private final String symbol;
 
-    public CardDto(String suit, String value) {
+    public CardDto(String suit, String symbol) {
         this.suit = suit;
-        this.value = value;
+        this.symbol = symbol;
     }
 
     public String getSuit() {
         return suit;
     }
 
-    public String getValue() {
-        return value;
+    public String getSymbol() {
+        return symbol;
     }
 }

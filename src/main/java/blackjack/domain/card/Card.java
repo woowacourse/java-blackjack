@@ -1,48 +1,43 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 
 import java.util.Objects;
 
-import static blackjack.domain.card.painting.Value.ACE;
-import static blackjack.domain.card.painting.Value.ACE_OF_ONE;
+import static blackjack.domain.card.painting.Symbol.ACE;
 
 public class Card {
     private final Suit suit;
-    private final Value value;
+    private final Symbol symbol;
 
-    public Card(Suit suit, Value value) {
+    public Card(Suit suit, Symbol symbol) {
         this.suit = suit;
-        this.value = value;
+        this.symbol = symbol;
     }
 
     public boolean isAce() {
-        return value == ACE;
-    }
-
-    public Card toAceOfOne() {
-        return new Card(this.suit, ACE_OF_ONE);
+        return symbol == ACE;
     }
 
     public boolean isSameSuit(Suit suit) {
         return this.suit == suit;
     }
 
-    public boolean isSameValue(Value value) {
-        return this.value == value;
+    public boolean isSameSymbol(Symbol symbol) {
+        return this.symbol == symbol;
     }
 
     public String getSuitLetter() {
         return suit.getLetter();
     }
 
-    public String getValueLetter() {
-        return value.getLetter();
+    public String getSymbolLetter() {
+        return symbol.getLetter();
     }
 
     public int getScore() {
-        return value.getScore();
+        return symbol.getScore();
     }
 
     @Override
@@ -50,11 +45,11 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return suit == card.suit && value == card.value;
+        return suit == card.suit && symbol == card.symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit, value);
+        return Objects.hash(suit, symbol);
     }
 }

@@ -2,7 +2,7 @@ package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
@@ -29,22 +29,22 @@ public class ScoreBoardTest {
 
         UserGameResult firstUserGameResult = new UserGameResult(
                 Arrays.asList(
-                        new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                        new Card(Suit.HEART, Value.ACE))
+                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
+                        new Card(Suit.HEART, Symbol.ACE))
                 , first.getName(), WinOrLose.DRAW); //15
 
         UserGameResult secondUserGameResult = new UserGameResult(
                 Arrays.asList(
-                        new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.TEN),
-                        new Card(Suit.HEART, Value.ACE))
+                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
+                        new Card(Suit.HEART, Symbol.ACE))
                 , second.getName(), WinOrLose.WIN); //21
 
         UserGameResult thirdUserGameResult = new UserGameResult(
-                Arrays.asList(new Card(Suit.CLOVER, Value.TWO), new Card(Suit.HEART, Value.TWO)),
+                Arrays.asList(new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.HEART, Symbol.TWO)),
                 third.getName(), WinOrLose.LOSE);
 
         UserGameResult fourthUserGameResult = new UserGameResult(
-                Arrays.asList(new Card(Suit.DIAMOND, Value.TWO), new Card(Suit.SPADE, Value.TWO)),
+                Arrays.asList(new Card(Suit.DIAMOND, Symbol.TWO), new Card(Suit.SPADE, Symbol.TWO)),
                 fourth.getName(), WinOrLose.LOSE);
 
         Map<Name, UserGameResult> temp = new HashMap<>();
@@ -55,8 +55,8 @@ public class ScoreBoardTest {
 
         GameResult gameResult = new GameResult(
                 Arrays.asList(
-                        new Card(Suit.CLOVER, Value.JACK), new Card(Suit.DIAMOND, Value.FOUR),
-                        new Card(Suit.HEART, Value.ACE)), Dealer.DEALER_NAME
+                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
+                        new Card(Suit.HEART, Symbol.ACE)), Dealer.DEALER_NAME
         );
 
         ScoreBoard scoreBoard = new ScoreBoard(temp, gameResult);

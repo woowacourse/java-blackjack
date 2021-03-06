@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class Deck {
 
     public static Deck createDeck() {
         List<Card> deck = Arrays.stream(Suit.values())
-                .flatMap(suit -> iterateValues(suit).stream())
+                .flatMap(suit -> iterateSymbols(suit).stream())
                 .collect(Collectors.toList());
 
         shuffleDeck(deck);
@@ -29,9 +29,9 @@ public class Deck {
         return new Deck(deck);
     }
 
-    private static List<Card> iterateValues(Suit suit) {
-        return Value.of().stream()
-                .map(value -> new Card(suit, value))
+    private static List<Card> iterateSymbols(Suit suit) {
+        return Symbol.of().stream()
+                .map(symbol -> new Card(suit, symbol))
                 .collect(Collectors.toList());
     }
 

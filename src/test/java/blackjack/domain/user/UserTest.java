@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +17,11 @@ class UserTest {
         User user = new User(new Name("욘"));
 
         //when
-        user.drawCard(new Card(Suit.DIAMOND, Value.ACE));
-        user.drawCard(new Card(Suit.CLOVER, Value.FOUR));
+        user.drawCard(new Card(Suit.DIAMOND, Symbol.ACE));
+        user.drawCard(new Card(Suit.CLOVER, Symbol.FOUR));
 
         //then
-        assertThat(user.getCards()).containsExactly(new Card(Suit.DIAMOND, Value.ACE), new Card(Suit.CLOVER, Value.FOUR));
+        assertThat(user.getCards()).containsExactly(new Card(Suit.DIAMOND, Symbol.ACE), new Card(Suit.CLOVER, Symbol.FOUR));
     }
 
     @DisplayName("유저의 이름이 딜러와 같을 때 검증")

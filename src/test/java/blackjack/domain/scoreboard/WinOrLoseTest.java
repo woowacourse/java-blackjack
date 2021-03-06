@@ -2,7 +2,7 @@ package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
-import blackjack.domain.card.painting.Value;
+import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.Participant;
@@ -47,16 +47,16 @@ class WinOrLoseTest {
 
     static Participant changeStatus(Participant participant, Status status) {
         if (status == BURST) {
-            participant.firstDraw(new Card(Suit.DIAMOND, Value.QUEEN), new Card(Suit.DIAMOND, Value.KING));
-            participant.drawCard(new Card(Suit.DIAMOND, Value.TWO));
+            participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.KING));
+            participant.drawCard(new Card(Suit.DIAMOND, Symbol.TWO));
         }
 
         if (status == BLACKJACK) {
-            participant.firstDraw(new Card(Suit.DIAMOND, Value.QUEEN), new Card(Suit.DIAMOND, Value.ACE));
+            participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.ACE));
         }
 
         if (status == PLAYING) {
-            participant.firstDraw(new Card(Suit.DIAMOND, Value.QUEEN), new Card(Suit.DIAMOND, Value.THREE));
+            participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.THREE));
         }
 
         return participant;
@@ -87,12 +87,12 @@ class WinOrLoseTest {
     }
 
     static Participant setScoreTwenty(Participant participant) {
-        participant.firstDraw(new Card(Suit.DIAMOND, Value.QUEEN), new Card(Suit.DIAMOND, Value.JACK));
+        participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.JACK));
         return participant;
     }
 
     static Participant setScoreEleven(Participant participant) {
-        participant.firstDraw(new Card(Suit.DIAMOND, Value.SEVEN), new Card(Suit.DIAMOND, Value.FOUR));
+        participant.firstDraw(new Card(Suit.DIAMOND, Symbol.SEVEN), new Card(Suit.DIAMOND, Symbol.FOUR));
         return participant;
     }
 
