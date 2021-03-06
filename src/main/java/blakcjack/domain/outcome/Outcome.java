@@ -35,8 +35,8 @@ public enum Outcome {
 	}
 
 	private static Outcome judgeOutcomeByScore(final Player player, final Dealer dealer) {
-		int playerScore = player.calculateScore();
-		int dealerScore = dealer.calculateScore();
+		final int playerScore = player.calculateScore();
+		final int dealerScore = dealer.calculateScore();
 
 		if (playerScore > dealerScore) {
 			return WIN;

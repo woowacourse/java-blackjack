@@ -21,9 +21,9 @@ public class InputView {
 
 	public static boolean isYes(Player player) {
 		try {
-			String name = player.getName();
+			final String name = player.getName();
 			System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-			String input = SCANNER.nextLine().trim();
+			final String input = SCANNER.nextLine().trim();
 			validate(input);
 			return YES.equals(input);
 		} catch (IllegalArgumentException e) {
