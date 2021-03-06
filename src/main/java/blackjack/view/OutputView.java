@@ -44,7 +44,7 @@ public class OutputView {
 
     private static void printCardsAndScore(final Result result) {
         printDealerResult(result);
-        for (Player player : result.getGamblerMap().keySet()) {
+        for (Player player : result.getGamblerSet()) {
             printMessageByFormat(RESULT_INFORMATION, player.getName().getValue(), makeCardInfo(player.getCards()), player.getScore().getValue());
         }
     }
@@ -70,9 +70,8 @@ public class OutputView {
     }
 
     private static void printGamblerWinningResult(Result result) {
-        Map<Player, WinOrLose> winningTable = result.getGamblerMap();
-        for (Player player : winningTable.keySet()) {
-            OutputView.printMessage(player.getName().getValue() + " : " + winningTable.get(player).getSymbol());
+        for (Player player : result.getGamblerSet()) {
+            OutputView.printMessage(player.getName().getValue() + " : " + result.findPlayerWinOrLose(player));
         }
     }
 

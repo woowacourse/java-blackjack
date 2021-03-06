@@ -1,11 +1,11 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Result {
     private final Map<Player, WinOrLose> gamblerResults = new LinkedHashMap<>();
@@ -37,8 +37,12 @@ public class Result {
                 .count();
     }
 
-    public Map<Player, WinOrLose> getGamblerMap() {
-        return gamblerResults;
+    public Set<Player> getGamblerSet() {
+        return gamblerResults.keySet();
+    }
+
+    public WinOrLose findPlayerWinOrLose(Player player) {
+        return gamblerResults.get(player);
     }
 
     public Cards getDealerCards() {
