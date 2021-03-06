@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class Dealer {
     public static final int TURN_OVER_COUNT = 16;
-    private static final String name = "딜러";
+    private static final Name name = new Name("딜러");
     private final List<Card> cards = new ArrayList<>();
 
     public static String getName() {
-        return name;
+        return name.getName();
     }
 
     public void addFirstCards(List<Card> cards) {

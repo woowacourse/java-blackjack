@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.Arrays;
 
 public enum Number {
     ACE("A", 11, 1),
