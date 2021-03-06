@@ -40,4 +40,8 @@ public enum CardNumber {
     public int getExtraValue() {
         return extraValue;
     }
+
+    public boolean isAce() {
+        return this == CardNumber.ACE;
+    }
 }

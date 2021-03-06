@@ -10,23 +10,19 @@ public class Card {
         this.cardType = cardType;
     }
 
-    public boolean isAce() {
-        return cardNumber == CardNumber.ACE;
-    }
-
     public String getCardSymbol() {
         return cardNumber.getSymbol();
     }
 
-    public int getCardNumber() {
-        return cardNumber.getValue();
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 
-    public String getCardType() {
-        return cardType.getType();
+    public CardType getCardType() {
+        return cardType;
     }
 
     public String getCard() {
-        return getCardSymbol() + getCardType();
+        return cardNumber.getSymbol() + cardType.getType();
     }
 }
