@@ -17,8 +17,8 @@ public enum Denomination {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final String NOT_EXIST_ERROR = "[ERROR] 존재하지 않는 명칭입니다.";
-    private String name;
+    private static final String NOT_EXIST_ERROR = "[ERROR] 존재하지 않는 명칭입니다. 값: %s";
+    private final String name;
     private int score;
 
     Denomination(String name, int score) {
@@ -30,7 +30,7 @@ public enum Denomination {
         return Arrays.stream(Denomination.values())
             .filter(denomination -> denomination.getName().equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_ERROR));
+            .orElseThrow(() -> new IllegalArgumentException(String.format(NOT_EXIST_ERROR, value)));
     }
 
     public String getName() {
