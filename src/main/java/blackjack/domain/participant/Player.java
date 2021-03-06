@@ -29,11 +29,11 @@ public class Player extends Participant {
             gameResult.win();
             return;
         }
-        if (this.calculateResult() > dealer.calculateResult()) {
+        if (this.cardResult() > dealer.cardResult()) {
             gameResult.win();
             return;
         }
-        if (this.calculateResult() < dealer.calculateResult()) {
+        if (this.cardResult() < dealer.cardResult()) {
             gameResult.lose();
             return;
         }

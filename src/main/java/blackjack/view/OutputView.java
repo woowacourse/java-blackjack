@@ -63,7 +63,7 @@ public class OutputView {
 
     private static void printFinalCardInfo(Participant participant) {
         printCardInfo(participant);
-        System.out.printf(RESULT_PREFIX, participant.calculateResult());
+        System.out.printf(RESULT_PREFIX, participant.cardResult());
     }
 
     public static void printWinOrLoseResult(Participant participant, GameResult gameResult) {

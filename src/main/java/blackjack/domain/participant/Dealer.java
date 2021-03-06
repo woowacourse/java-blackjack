@@ -5,7 +5,7 @@ public class Dealer extends Participant {
     public static final int STAY_THRESHOLD = 17;
 
     public boolean isStay() {
-        return calculateResult() >= STAY_THRESHOLD;
+        return cardResult() >= STAY_THRESHOLD;
     }
 
     @Override
