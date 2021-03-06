@@ -4,6 +4,8 @@ import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 
 import java.util.Stack;
 
+import static blakcjack.domain.card.EmptyDeckException.EMPTY_DECK_ERROR;
+
 public class Deck {
 	private final Stack<Card> cards = new Stack<>();
 
@@ -22,7 +24,7 @@ public class Deck {
 
 	public Card drawCard() {
 		if (cards.empty()) {
-			throw new EmptyDeckException();
+			throw new EmptyDeckException(EMPTY_DECK_ERROR);
 		}
 		return cards.pop();
 	}

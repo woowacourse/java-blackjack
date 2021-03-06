@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
+import static blakcjack.domain.card.EmptyDeckException.EMPTY_DECK_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class DeckTest {
@@ -17,7 +18,8 @@ class DeckTest {
 		final Deck deck = new Deck(new RandomShuffleStrategy());
 
 		assertThatCode(() -> consumeAllCards(deck)).doesNotThrowAnyException();
-		assertThatThrownBy(deck::drawCard).isInstanceOf(EmptyDeckException.class);
+		assertThatThrownBy(deck::drawCard).isInstanceOf(EmptyDeckException.class)
+				.hasMessage(EMPTY_DECK_ERROR);
 	}
 
 	private void consumeAllCards(final Deck deck) {

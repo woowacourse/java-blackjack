@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import static blakcjack.domain.card.NoSuchCardException.NO_SUCH_CARD_ERROR;
+
 public class Card {
 	private static final Map<String, Card> cache = new HashMap<>();
 
@@ -29,7 +31,7 @@ public class Card {
 	public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber) {
 		final String key = generateKey(cardSymbol, cardNumber);
 		return Optional.ofNullable(cache.get(key))
-				.orElseThrow(NoSuchCardException::new);
+				.orElseThrow(() -> new NoSuchCardException(NO_SUCH_CARD_ERROR));
 	}
 
 	private static String generateKey(CardSymbol cardSymbol, CardNumber cardNumber) {

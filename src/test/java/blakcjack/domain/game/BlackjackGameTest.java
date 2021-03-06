@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static blakcjack.domain.game.BlackjackGame.DUPLICATE_NAME_ERROR;
+import static blakcjack.domain.game.DuplicatePlayerNamesException.DUPLICATE_NAME_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class BlackjackGameTest {

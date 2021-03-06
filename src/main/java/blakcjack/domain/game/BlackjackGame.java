@@ -9,9 +9,11 @@ import blakcjack.domain.participant.Player;
 
 import java.util.*;
 
+import static blakcjack.domain.game.DuplicatePlayerNamesException.DUPLICATE_NAME_ERROR;
+
 public class BlackjackGame {
-	public static final String DUPLICATE_NAME_ERROR = "중복된 이름이 입력 되었습니다.";
 	public static final int INITIAL_VALUE = 0;
+
 	private final Deck deck;
 	private final Dealer dealer;
 	private final List<Player> players = new ArrayList<>();
