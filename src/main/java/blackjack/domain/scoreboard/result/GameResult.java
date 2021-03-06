@@ -11,9 +11,9 @@ public class GameResult implements Resultable {
     private final List<Card> cards;
     private final Name name;
 
-    public GameResult(List<Card> cards, Name name) {
+    public GameResult(List<Card> cards, String name) {
         this.cards = cards;
-        this.name = name;
+        this.name = new Name(name);
     }
 
     private int calculateScore() {

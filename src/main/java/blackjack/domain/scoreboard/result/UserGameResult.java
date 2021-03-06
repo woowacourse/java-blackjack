@@ -11,7 +11,7 @@ public class UserGameResult implements Resultable {
     private final GameResult gameResult;
     private final WinOrLose winOrLose;
 
-    public UserGameResult(List<Card> resultCards, Name name, WinOrLose winOrLose) {
+    public UserGameResult(List<Card> resultCards, String name, WinOrLose winOrLose) {
         this.gameResult = new GameResult(resultCards, name);
         this.winOrLose = winOrLose;
     }

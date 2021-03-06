@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.scoreboard.result.UserGameResult;
-import blackjack.domain.user.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ class UserGameResultTest {
         );
 
         //when
-        UserGameResult userGameResult = new UserGameResult(resultCards, new Name("유저"), WinOrLose.WIN);
+        UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN);
 
         //then
         assertThat(userGameResult.getScore()).isEqualTo(20);

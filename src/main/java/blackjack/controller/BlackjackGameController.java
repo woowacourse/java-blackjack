@@ -44,7 +44,6 @@ public class BlackjackGameController {
     private Users inputUsers() {
         return InputView.askPlayersName()
                 .stream()
-                .map(Name::new)
                 .map(User::new)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Users::new));
     }

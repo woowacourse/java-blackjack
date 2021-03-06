@@ -22,30 +22,30 @@ public class ScoreBoardTest {
     @Test
     void testDealersWinOrLoses() {
         //given
-        User first = new User(new Name("욘"));
-        User second = new User(new Name("웨지"));
-        User third = new User(new Name("포비"));
-        User fourth = new User(new Name("제이슨"));
+        User first = new User("욘");
+        User second = new User("웨지");
+        User third = new User("포비");
+        User fourth = new User("제이슨");
 
         UserGameResult firstUserGameResult = new UserGameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
                         new Card(Suit.HEART, Symbol.ACE))
-                , first.getName(), WinOrLose.DRAW); //15
+                , first.getName().toString(), WinOrLose.DRAW); //15
 
         UserGameResult secondUserGameResult = new UserGameResult(
                 Arrays.asList(
                         new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
                         new Card(Suit.HEART, Symbol.ACE))
-                , second.getName(), WinOrLose.WIN); //21
+                , second.getName().toString(), WinOrLose.WIN); //21
 
         UserGameResult thirdUserGameResult = new UserGameResult(
                 Arrays.asList(new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.HEART, Symbol.TWO)),
-                third.getName(), WinOrLose.LOSE);
+                third.getName().toString(), WinOrLose.LOSE);
 
         UserGameResult fourthUserGameResult = new UserGameResult(
                 Arrays.asList(new Card(Suit.DIAMOND, Symbol.TWO), new Card(Suit.SPADE, Symbol.TWO)),
-                fourth.getName(), WinOrLose.LOSE);
+                fourth.getName().toString(), WinOrLose.LOSE);
 
         Map<Name, UserGameResult> temp = new HashMap<>();
         temp.put(first.getName(), firstUserGameResult);

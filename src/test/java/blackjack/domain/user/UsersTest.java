@@ -13,10 +13,10 @@ class UsersTest {
     @Test
     void whenDuplicateNames() {
         List<User> duplicateUsers = Arrays.asList(
-                new User(new Name("욘")),
-                new User(new Name("웨지")),
-                new User(new Name("포비")),
-                new User(new Name("욘")));
+                new User("욘"),
+                new User("웨지"),
+                new User("포비"),
+                new User("욘"));
 
         assertThatThrownBy(() -> new Users(duplicateUsers))
                 .isInstanceOf(IllegalArgumentException.class)

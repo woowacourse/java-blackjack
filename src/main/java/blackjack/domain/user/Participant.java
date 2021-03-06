@@ -12,9 +12,9 @@ public abstract class Participant {
     protected final Name name;
     protected Status status;
 
-    public Participant(Name name) {
+    public Participant(String name) {
         this.hand = Hand.createEmptyHand();
-        this.name = name;
+        this.name = new Name(name);
     }
 
     public void firstDraw(Card first, Card second) {

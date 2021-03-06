@@ -60,11 +60,11 @@ public class BlackjackGame {
     }
 
     private GameResult createDealerGameResult() {
-        return new GameResult(dealer.getCards(), dealer.getName());
+        return new GameResult(dealer.getCards(), dealer.getName().toString());
 }
 
     private UserGameResult createGameResult(User user) {
-        return new UserGameResult(user.getCards(), user.getName(), WinOrLose.decideWinOrLose(user, dealer));
+        return new UserGameResult(user.getCards(), user.getName().toString(), WinOrLose.decideWinOrLose(user, dealer));
     }
 
     public int getDealerHandSize() {
