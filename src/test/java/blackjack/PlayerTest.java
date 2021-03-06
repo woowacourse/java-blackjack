@@ -7,7 +7,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participants.Player;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,11 +37,19 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("참가자가 처음에 카드 두 장을 보여주는지 확인")
+    void showCards() {
+        player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        assertThat(player.showCards().size()).isEqualTo(2);
+    }
+
+    @Test
     @DisplayName("참가자가 갖고 있는 카드의 합을 확인")
     void calculateMyCardSum() {
         player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        Assertions.assertThat(player.calculate()).isEqualTo(12);
+        assertThat(player.calculate()).isEqualTo(12);
     }
 
     @Test
@@ -51,7 +58,7 @@ public class PlayerTest {
         player.receiveCard(new Card(CardNumber.JACK, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.FIVE, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        Assertions.assertThat(player.calculate()).isEqualTo(16);
+        assertThat(player.calculate()).isEqualTo(16);
     }
 
     @ParameterizedTest
@@ -63,7 +70,7 @@ public class PlayerTest {
             final CardNumber cardNumber = CardNumber.valueOf(number);
             player.receiveCard(new Card(cardNumber, CardType.CLOVER));
         }
-        Assertions.assertThat(player.calculate()).isEqualTo(expected);
+        assertThat(player.calculate()).isEqualTo(expected);
     }
 
     @Test

@@ -14,10 +14,11 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<Card> pickCards() {
+    public List<Card> showCards() {
         return Collections.singletonList(getPlayerCards().get(0));
     }
 
+    @Override
     public boolean checkMoreCardAvailable() {
         return (calculate() <= MAX_SUM_FOR_MORE_CARD);
     }

@@ -39,5 +39,7 @@ public abstract class Participant {
         return playerCards.calculate();
     }
 
-    public abstract List<Card> pickCards();
+    public abstract List<Card> showCards();
+
+    public abstract boolean checkMoreCardAvailable();
 }

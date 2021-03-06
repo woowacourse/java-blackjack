@@ -1,10 +1,12 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Participant {
 
+    private static final int BUST_LIMIT = 22;
     private boolean win = true;
 
     public Player(String name) {
@@ -12,8 +14,13 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> pickCards() {
-        return getPlayerCards();
+    public List<Card> showCards() {
+        return new ArrayList<>(getPlayerCards());
+    }
+
+    @Override
+    public boolean checkMoreCardAvailable() {
+        return !isBust();
     }
 
     public void lose() {
