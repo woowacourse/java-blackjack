@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
-    private Type type;
-    private Denomination denomination;
+    private final Type type;
+    private final Denomination denomination;
 
     public Card(Type type, Denomination denomination) {
         this.type = type;
@@ -20,12 +20,20 @@ public class Card {
         return denomination;
     }
 
-    public boolean isAce() {
-        return denomination == Denomination.ACE;
+    public String findTypeName() {
+        return type.getName();
     }
 
-    public int value() {
-        return denomination.getValue();
+    public String findDenominationName() {
+        return denomination.getName();
+    }
+
+    public int findDenominationValue() {
+        return denomination.getNumber();
+    }
+
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
     }
 
     @Override
@@ -45,8 +53,4 @@ public class Card {
         return Objects.hash(type, denomination);
     }
 
-    @Override
-    public String toString() {
-        return denomination.getName() + type.getName();
-    }
 }

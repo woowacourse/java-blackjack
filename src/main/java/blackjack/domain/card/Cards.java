@@ -18,6 +18,11 @@ public class Cards {
         this.cards = cards;
     }
 
+    private static boolean containAceCard(List<Card> cards) {
+        return cards.stream()
+            .anyMatch(Card::isAce);
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -46,20 +51,15 @@ public class Cards {
         return calculate();
     }
 
-    private static boolean containAceCard(List<Card> cards) {
-        return cards.stream()
-            .anyMatch(Card::isAce);
-    }
-
     private int calculate() {
         return cards.stream()
-            .mapToInt(Card::value)
+            .mapToInt(Card::findDenominationValue)
             .sum();
     }
 
     private int calculate(int bonusScore) {
         return cards.stream()
-            .mapToInt(Card::value)
+            .mapToInt(Card::findDenominationValue)
             .sum() + bonusScore;
     }
 
