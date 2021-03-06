@@ -251,7 +251,7 @@ class DealerTest {
         dealer.compare(player2);
         dealer.compare(player3);
 
-        assertThat(dealer.getResults()).isEqualTo(Arrays.asList(Result.LOSE, Result.LOSE, Result.WIN));
+        assertThat(dealer.getDealerResults()).isEqualTo(Arrays.asList(Result.LOSE, Result.LOSE, Result.WIN));
     }
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면, 딜러가 이긴다.")
@@ -278,7 +278,7 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.WIN));
+        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.WIN));
     }
 
     @DisplayName("딜러만 버스트다.")
@@ -303,7 +303,7 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.LOSE));
     }
 
     @DisplayName("플레이어만 버스트다.")
@@ -328,7 +328,7 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.WIN));
+        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.WIN));
     }
 
     @DisplayName("플레이어가 승리 했을 경우 딜러는 패배기록이 생긴다.")
@@ -351,7 +351,7 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.LOSE));
     }
 
     @DisplayName("플레이어가 블랙잭을 했을 경우 딜러는 패배기록이 생긴다.")
@@ -375,6 +375,6 @@ class DealerTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.LOSE));
     }
 }
