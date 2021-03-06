@@ -14,7 +14,6 @@ import blakcjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-import static blakcjack.view.InputView.YES;
 import static blakcjack.view.InputView.takePlayerNamesInput;
 import static blakcjack.view.OutputView.printInitialHands;
 
@@ -36,21 +35,20 @@ public class BlackJackController {
 
 	private void letPlayersDraw(final BlackjackGame blackjackGame) {
 		final List<Player> players = blackjackGame.getPlayers();
-		for (final Participant player : players) {
+		for (final Player player : players) {
 			decideToDraw(blackjackGame, player);
 		}
 	}
 
-	private void decideToDraw(final BlackjackGame blackjackGame, final Participant player) {
-		while (player.isScoreLowerThanBlackJackValue() && isYes(player)) {
+	private void decideToDraw(final BlackjackGame blackjackGame, final Player player) {
+		while (isHit(player)) {
 			blackjackGame.distributeOneCardTo(player);
 			OutputView.printPlayerHand(player);
 		}
 	}
 
-	private boolean isYes(final Participant player) {
-		final String yesOrNo = InputView.takeHitOrStand(player.getName());
-		return YES.equals(yesOrNo);
+	private boolean isHit(final Player player) {
+		return player.isScoreLowerThanBlackJackValue() && InputView.isYes(player);
 	}
 
 	private void letDealerDraw(final BlackjackGame blackjackGame) {

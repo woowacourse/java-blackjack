@@ -1,5 +1,7 @@
 package blakcjack.view;
 
+import blakcjack.domain.participant.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,15 +19,16 @@ public class InputView {
 				.collect(Collectors.toList());
 	}
 
-	public static String takeHitOrStand(String name) {
+	public static boolean isYes(Player player) {
 		try {
+			String name = player.getName();
 			System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 			String input = SCANNER.nextLine().trim();
 			validate(input);
-			return input;
+			return YES.equals(input);
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return takeHitOrStand(name);
+			return isYes(player);
 		}
 	}
 
