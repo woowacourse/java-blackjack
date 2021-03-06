@@ -14,17 +14,26 @@ public class BlackjackController {
 
     public void run() {
         Deck deck = new Deck();
-        deck.shuffle();
         List<Player> players = createPlayers();
         Dealer dealer = new Dealer(DEALER_NAME);
+
+        deck.shuffle();
         turnStart(deck, dealer, players);
+    }
+
+    private List<Player> createPlayers() {
+        List<String> names = InputView.getPlayerNames();
+        return names.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     private void turnStart(Deck deck, Dealer dealer, List<Player> players) {
         handOutCards(deck, dealer, players);
         printHandOutCardsResult(dealer, players);
 
-        drawPhaseStart(deck, players, dealer);
+        startPlayerDrawPhase(deck, players);
+        startDealerDrawPhase(deck, dealer);
         printDealerPlayersScore(players, dealer);
 
         calculateBlackJackGameResult(players, dealer);
@@ -37,53 +46,34 @@ public class BlackjackController {
         players.forEach(player -> player.initialDraw(deck));
     }
 
-    private void printDealerPlayersScore(List<Player> players, Dealer dealer) {
-        OutputView.printParticipantCardsWithScore(dealer.getName(), dealer.getCards());
-        for (Player player : players) {
-            OutputView.printParticipantCardsWithScore(player.getName(), player.getCards());
-        }
+    private void startPlayerDrawPhase(Deck deck, List<Player> players) {
+        players.forEach(player -> {
+            while (player.canDraw() && InputView.getWhetherDrawCard(player.getName())) {
+                player.draw(deck);
+                OutputView.printPlayerCards(player);
+            }
+        });
     }
 
-    private List<Player> createPlayers() {
-        List<String> names = InputView.getPlayerNames();
-        return names.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
-    }
-
-    private void printHandOutCardsResult(Dealer dealer, List<Player> players) {
-        OutputView.printDealerCards(dealer.getName(), dealer.getCards());
-        for (Player player : players) {
-            OutputView.printParticipantCards(player.getName(), player.getCards());
-        }
-    }
-
-    private void playersDrawPhaseStart(Deck deck, Player player) {
-        while (player.canDraw() && InputView.getWhetherDrawCard(player.getName())) {
-            player.draw(deck);
-            OutputView.printParticipantCards(player.getName(), player.getCards());
-        }
-
-    }
-
-    private void dealerDrawPhaseStart(Deck deck, Dealer dealer) {
+    private void startDealerDrawPhase(Deck deck, Dealer dealer) {
         if (dealer.canDraw()) {
             OutputView.printDealerCardDrawMessage();
             dealer.draw(deck);
         }
     }
 
-    private void drawPhaseStart(Deck deck, List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            playersDrawPhaseStart(deck, player);
-        }
-        dealerDrawPhaseStart(deck, dealer);
+    private void printDealerPlayersScore(List<Player> players, Dealer dealer) {
+        OutputView.printParticipantCardsWithScore(dealer);
+        players.forEach(OutputView::printParticipantCardsWithScore);
+    }
+
+    private void printHandOutCardsResult(Dealer dealer, List<Player> players) {
+        OutputView.printDealerCards(dealer.getName(), dealer.getCards());
+        players.forEach(OutputView::printPlayerCards);
     }
 
     private void calculateBlackJackGameResult(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            player.calculateGameResult(dealer);
-        }
+        players.forEach(player -> player.calculateGameResult(dealer));
     }
 
 }
