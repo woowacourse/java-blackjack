@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Outcome;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.view.dto.PlayerStatusDto;
@@ -13,10 +12,7 @@ public class OutputView {
     private static final String TWO_CARDS_DEAL_OUT_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
     private static final String PARTICIPANT_STATUS_MESSAGE = "%s: %s";
     private static final String DELIMITER = ", ";
-    private static final String DEALER_CARD_ADD_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "%s카드 : %s - 결과: %d";
-    private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %d패 %d무";
-    private static final String RESULT_MESSAGE = "\n## 최종 승패";
 
     public static void showPlayCardStatus(String name, List<Card> cards) {
         String text = String.format(PARTICIPANT_STATUS_MESSAGE, name, cards.stream()
@@ -26,7 +22,7 @@ public class OutputView {
     }
 
     public static void showDealerAddCard(int turnOverCount) {
-        System.out.println(String.format(DEALER_CARD_ADD_MESSAGE, turnOverCount));
+        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", turnOverCount));
     }
 
     public static void showFinalStatus(RoundStatusDto statusDto) {
@@ -50,10 +46,12 @@ public class OutputView {
         String playerNames = playerStatusDto.stream()
                 .map(dto -> dto.getPlayerName())
                 .collect(Collectors.joining(DELIMITER));
+
         System.out.println(String.format(TWO_CARDS_DEAL_OUT_MESSAGE, dealerName, playerNames));
         System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
                 dealerName,
                 dealerCardStatus.stream().collect(Collectors.joining(DELIMITER))));
+
         playerStatusDto.forEach(dto ->
                 System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
                         dto.getPlayerName(),
@@ -61,29 +59,10 @@ public class OutputView {
     }
 
     public static void showOutcomes(Result result) {
-        System.out.println(RESULT_MESSAGE);
-        List<Outcome> dealerOutcomes = result.getDealerOutcomes();
-        System.out.println(String.format(DEALER_RESULT_MESSAGE,
-                findWinCount(dealerOutcomes), findLoseCount(dealerOutcomes), findDrawCount(dealerOutcomes)));
+        System.out.println("\n## 최종 승패");
+        System.out.println(String.format("딜러: %d승 %d패 %d무",
+                result.findDealerWinCount(), result.findDealerLoseCount(), result.findDealerDrawCount()));
         result.getPlayerResults().forEach((name, outcome) ->
                 System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, name, outcome.getName())));
-    }
-
-    private static int findWinCount(List<Outcome> dealerOutcomes) {
-        return (int) dealerOutcomes.stream()
-                .filter(Outcome::isWin)
-                .count();
-    }
-
-    private static int findLoseCount(List<Outcome> dealerOutcomes) {
-        return (int) dealerOutcomes.stream()
-                .filter(Outcome::isLose)
-                .count();
-    }
-
-    private static int findDrawCount(List<Outcome> dealerOutcomes) {
-        return (int) dealerOutcomes.stream()
-                .filter(Outcome::isDraw)
-                .count();
     }
 }

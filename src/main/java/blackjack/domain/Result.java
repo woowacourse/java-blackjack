@@ -26,11 +26,25 @@ public class Result {
         }
     }
 
-    public List<Outcome> getDealerOutcomes() {
-        return dealerOutcomes;
-    }
-
     public Map<String, Outcome> getPlayerResults() {
         return playerResults;
+    }
+
+    public int findDealerWinCount() {
+        return (int) dealerOutcomes.stream()
+                .filter(Outcome::isWin)
+                .count();
+    }
+
+    public int findDealerLoseCount() {
+        return (int) dealerOutcomes.stream()
+                .filter(Outcome::isLose)
+                .count();
+    }
+
+    public int findDealerDrawCount() {
+        return (int) dealerOutcomes.stream()
+                .filter(Outcome::isDraw)
+                .count();
     }
 }
