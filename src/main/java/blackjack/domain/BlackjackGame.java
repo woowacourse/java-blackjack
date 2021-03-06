@@ -35,10 +35,6 @@ public class BlackjackGame {
         return blackjackGame;
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public int calculateDealerScore() {
         return dealer.calculateScore();
     }
@@ -58,14 +54,6 @@ public class BlackjackGame {
                 .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
     }
 
-    public Card draw() {
-        return deck.draw();
-    }
-
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users.toList());
-    }
-
     public List<String> getUserNames() {
         return users.toList().stream()
                 .map(User::getName)
@@ -82,8 +70,12 @@ public class BlackjackGame {
         return new ScoreBoard(userResult, createDealerGameResult());
     }
 
-    private GameResult createDealerGameResult() {
-        return new GameResult(dealer.getCards(), dealer.getName());
+    public void drawCardToDealer() {
+        dealer.drawCard(deck.draw());
+    }
+
+    public void drawCardToUser(User currentUser) {
+        currentUser.drawCard(deck.draw());
     }
 
     public boolean existCanContinueUser() {
@@ -91,9 +83,19 @@ public class BlackjackGame {
                 .anyMatch(User::canContinueGame);
     }
 
+    private GameResult createDealerGameResult() {
+        return new GameResult(dealer.getCards(), dealer.getName());
+    }
+
     private UserGameResult createGameResult(User user) {
         return new UserGameResult(user.getCards(), user.getName(), WinOrLose.decideWinOrLose(user, dealer));
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
 
+    public List<User> getUsers() {
+        return Collections.unmodifiableList(users.toList());
+    }
 }

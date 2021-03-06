@@ -72,7 +72,7 @@ public class BlackjackGameController {
 
     private static void userDrawOrStop(BlackjackGame blackjackGame, User currentUser, Boolean isContinue) {
         if (isContinue) {
-            currentUser.drawCard(blackjackGame.draw());
+            blackjackGame.drawCardToUser(currentUser);
             return;
         }
         currentUser.stopUser();
@@ -84,7 +84,7 @@ public class BlackjackGameController {
 
     private static void processDealerRound(BlackjackGame blackjackGame) {
         while (blackjackGame.calculateDealerScore() <= DEALER_MINIMUM_SCORE) {
-            blackjackGame.getDealer().drawCard(blackjackGame.draw());
+            blackjackGame.drawCardToDealer();
             OutputView.printDealerMoreDrawMessage();
         }
     }
