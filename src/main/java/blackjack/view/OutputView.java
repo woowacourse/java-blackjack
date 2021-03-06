@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
+import blackjack.controller.dto.ResultDTO;
 import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
 import java.util.HashMap;
@@ -54,9 +55,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResultMessage(Map<Name, ResultType> result) {
+    public static void printResultMessage(ResultDTO resultDTO) {
         System.out.println();
         System.out.println("## 최종 승패");
+        Map<Name, ResultType> result = resultDTO.getResult();
         Map<ResultType, Integer> resultCount = new HashMap<>();
         StringBuilder stringBuilder = new StringBuilder();
         printPlayersResultMessage(result, stringBuilder);

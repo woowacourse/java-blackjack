@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.controller.dto.ResultDTO;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.type.CardNumberType;
@@ -56,6 +57,18 @@ public class UsersTest {
     @Test
     void result() {
         Map<Name, ResultType> result = users.getResult(dealer);
+        assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
+        assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.LOSS);
+        assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
+        assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
+    }
+
+    @DisplayName("게임 결과 반환 테스트")
+    @Test
+    void resultNew() {
+        ResultDTO resultDTO = new ResultDTO(users.getResult(dealer));
+        Map<Name, ResultType> result = resultDTO.getResult();
+
         assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
         assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.LOSS);
         assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
