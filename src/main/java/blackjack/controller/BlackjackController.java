@@ -2,25 +2,25 @@ package blackjack.controller;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
+
+    private static final int SHOW_INITIAL_DEALER_CARD_COUNT = 1;
 
     private static final String DEALER = "딜러";
 
     public void run() {
         List<Player> players = createPlayers(InputView.inputPlayerNames());
         Dealer dealer = new Dealer(DEALER);
-        Deck deck = new Deck(CardFactory.create());
+        Deck deck = new Deck(CardFactory.createWithShuffle());
 
         initialDrawDealer(deck, dealer);
         initialDrawPlayer(deck, players);
@@ -31,7 +31,7 @@ public class BlackjackController {
         distributeDealer(deck, dealer);
 
         compareAllPlayersWithDealer(dealer, players);
-        OutputView.printCardScore(dealer);
+        OutputView.printCardsWithScore(dealer);
         showResult(dealer, players);
     }
 
@@ -49,11 +49,11 @@ public class BlackjackController {
     }
 
     private void distributePlayer(Deck deck, Player player) {
-        OutputView.printCards(player.getName(), player.getCards());
+        OutputView.printCards(player);
 
         while (player.canDrawOneMore() && InputView.inputDraw(player.getName())) {
             player.draw(deck);
-            OutputView.printCards(player.getName(), player.getCards());
+            OutputView.printCards(player);
         }
     }
 
@@ -68,11 +68,10 @@ public class BlackjackController {
     }
 
     public void showCards(Dealer dealer, List<Player> players) {
-        OutputView.printCards(dealer.getName()
-                , new Cards(Collections.singletonList(dealer.getCards().getCard(0))));
+        OutputView.printCards(dealer, SHOW_INITIAL_DEALER_CARD_COUNT);
 
         for(Player player : players){
-            OutputView.printCards(player.getName(), player.getCards());
+            OutputView.printCards(player);
         }
 
         OutputView.printNewLine();
@@ -95,7 +94,7 @@ public class BlackjackController {
 
     public void showResult(Dealer dealer, List<Player> players) {
         for(Player player : players){
-            OutputView.printCardScore(player);
+            OutputView.printCardsWithScore(player);
         }
 
         OutputView.printDealerResult(

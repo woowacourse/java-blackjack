@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 
@@ -21,16 +20,25 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(DELIMITER, names) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCards(String name, Cards cards) {
-        List<Card> cardList = cards.cards();
+    public static void printCards(Participant participant) {
+        List<Card> cardList = participant.getCards().cards();
         List<String> result = new ArrayList<>();
         for (Card card : cardList) {
             result.add(card.toString());
         }
-        System.out.println(name + "카드: " + String.join(DELIMITER, result));
+        System.out.println(participant.getName() + "카드: " + String.join(DELIMITER, result));
     }
 
-    public static void printCardScore(Participant participant) {
+    public static void printCards(Participant participant, int showCardCount) {
+        List<Card> cardList = participant.getCards().cards(showCardCount);
+        List<String> result = new ArrayList<>();
+        for (Card card : cardList) {
+            result.add(card.toString());
+        }
+        System.out.println(participant.getName() + "카드: " + String.join(DELIMITER, result));
+    }
+
+    public static void printCardsWithScore(Participant participant) {
         List<Card> cardList = participant.getCards().cards();
         List<String> output = new ArrayList<>();
         for (Card card : cardList) {
