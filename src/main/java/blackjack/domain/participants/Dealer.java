@@ -14,7 +14,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    List<Card> pickCards() {
+    public List<Card> pickCards() {
         return Collections.singletonList(getPlayerCards().get(0));
     }
 

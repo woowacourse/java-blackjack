@@ -39,5 +39,5 @@ public abstract class Participant {
         return playerCards.calculate();
     }
 
-    abstract List<Card> pickCards();
+    public abstract List<Card> pickCards();
 }

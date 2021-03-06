@@ -12,7 +12,7 @@ public class Player extends Participant {
     }
 
     @Override
-    List<Card> pickCards() {
+    public List<Card> pickCards() {
         return getPlayerCards();
     }
 
