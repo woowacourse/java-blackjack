@@ -11,7 +11,7 @@ public abstract class Participant {
     private final String name;
     private final Cards cards;
 
-    public Participant(String name) {
+    protected Participant(String name) {
         validateName(name);
         this.name = name.trim();
         this.cards = new Cards();
