@@ -33,7 +33,7 @@ class HandTest {
         //when
         List<Card> cards = hand.getCards();
         //then
-        assertThat(cards.size()).isEqualTo(3);
+        assertThat(cards).hasSize(3);
     }
 
     @DisplayName("손에 들고 있는 카드들의 점수의 합을 구한다")
