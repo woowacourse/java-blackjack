@@ -1,16 +1,27 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static blackjack.domain.card.painting.Symbol.ACE;
 
-public class Cards extends ArrayList<Card> {
+public class Cards {
     private static final int BLACK_JACK = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
-    public Cards(Collection<Card> cards) {
-        this.addAll(cards);
+    private final ArrayList<Card> cards;
+
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
+    public void add(Card card){
+        cards.add(card);
+    }
+
+    public int size(){
+        return cards.size();
     }
 
     public int calculateScore() {
@@ -28,13 +39,17 @@ public class Cards extends ArrayList<Card> {
     }
 
     private int sumScore() {
-        return this.stream()
+        return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
     private boolean hasAce() {
-        return this.stream()
+        return cards.stream()
                 .anyMatch(symbol -> symbol.isSameSymbol(ACE));
+    }
+
+    public List<Card> getCards(){
+        return Collections.unmodifiableList(cards);
     }
 }

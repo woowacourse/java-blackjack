@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
-    private static final String NO_MORE_PLAYING_USER_ERROR_MSG = "플레이 가능한 유저가 없습니다.";
     private final Deck deck = Deck.createDeck();
     private final Users users;
     private final Dealer dealer = new Dealer();
@@ -36,14 +35,12 @@ public class BlackjackGame {
     }
 
     public boolean existCanContinueUser(){
-        return users.stream().anyMatch(User::canContinueGame);
+        return users.existCanContinueUser();
     }
 
     public User findFirstCanPlayUser(){
-        return users.stream()
-                .filter(User::canContinueGame)
-                .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
-    }
+        return users.findFirstCanPlayUser();
+                }
 
     public Card draw() {
         return deck.draw();

@@ -3,7 +3,6 @@ package blackjack.domain.user.status;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,10 +32,10 @@ public class Hand {
     }
 
     public Card getFirstCard() {
-        return cards.get(FIRST_INDEX);
+        return cards.getCards().get(FIRST_INDEX);
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(cards.getCards());
     }
 }
