@@ -3,8 +3,6 @@ package blackjack.domain.user;
 import java.util.Objects;
 
 public class Name {
-    private static final String DELIMITER = ",";
-    private static final String DUPLICATE_NAME_ERROR_MSG = "중복된 이름은 존재할 수 없습니다.";
     private static final String EMPTY_NAME_ERROR_MSG = "빈 값은 입력될 수 없습니다.";
 
     private final String name;

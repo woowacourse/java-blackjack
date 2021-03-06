@@ -13,6 +13,7 @@ import blackjack.domain.user.Users;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -72,12 +73,13 @@ public class BlackjackGame {
     }
 
     public ScoreBoard createScoreBoard() {
-        return new ScoreBoard(
-                users.toList().stream()
-                        .collect(
-                                toMap(Function.identity(), this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
-                        )
-                , createDealerGameResult());
+        Map<User, UserGameResult> userResult = users.toList().stream()
+                .collect(toMap(
+                        Function.identity(),
+                        this::createGameResult,
+                        (exist, newer) -> newer, LinkedHashMap::new));
+
+        return new ScoreBoard(userResult, createDealerGameResult());
     }
 
     private GameResult createDealerGameResult() {

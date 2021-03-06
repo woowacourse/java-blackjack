@@ -20,7 +20,7 @@ public enum Value {
     KING("K", 10),
     ACE("A", 11);
 
-    private static List<Value> values = Arrays.stream(Value.values())
+    private static final List<Value> values = Arrays.stream(Value.values())
             .filter(value -> value != ACE_OF_ONE)
             .collect(Collectors.toList());
 
