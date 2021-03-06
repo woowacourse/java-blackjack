@@ -31,7 +31,6 @@ public class GameResultTest {
     @Test
     @DisplayName("딜러의 승수가 잘 구해지는지 확인")
     void calculateDealerWinCount() {
-        final Participant dealer = new Dealer("딜러");
         final List<Participant> players = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Participant player = new Player(i + "");
