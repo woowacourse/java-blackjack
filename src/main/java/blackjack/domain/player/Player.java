@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 public class Player extends Participant {
 
-    private static final int LIMIT_SCORE = 21;
+    private static final int LIMIT_SCORE = 20;
 
     public Player() {
         this("null");
