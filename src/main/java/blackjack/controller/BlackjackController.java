@@ -35,7 +35,7 @@ public class BlackjackController {
         drawGamersCard(gamers);
         drawDealerCard(dealer);
         OutputView.printPlayersScoreInfo(dealer, gamers);
-        GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
+        GameResult gameResult = GameResult.of(dealer, gamers);
         OutputView.printGameResult(gameResult, dealer, gamers);
     }
 
