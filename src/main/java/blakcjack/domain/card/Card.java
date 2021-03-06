@@ -42,6 +42,18 @@ public class Card {
 		return cardNumber.equals(CardNumber.ACE);
 	}
 
+	public CardNumber getCardNumber() {
+		return cardNumber;
+	}
+
+	public int getCardNumberValue() {
+		return cardNumber.getValue();
+	}
+
+	public CardSymbol getCardSymbol() {
+		return cardSymbol;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -53,17 +65,5 @@ public class Card {
 	@Override
 	public int hashCode() {
 		return Objects.hash(cardSymbol, cardNumber);
-	}
-
-	public CardNumber getCardNumber() {
-		return cardNumber;
-	}
-
-	public int getCardNumberValue() {
-		return cardNumber.getValue();
-	}
-
-	public CardSymbol getCardSymbol() {
-		return cardSymbol;
 	}
 }
