@@ -9,7 +9,6 @@ import blackjack.domain.participants.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -125,14 +124,11 @@ public class BlackjackController {
 
     private void showGameResult(final Participant dealer, final List<Participant> players, final
     GameResult gameResult) {
-        final int dealerWinCount = gameResult.calDealerWinCount(dealer, players);
-        OutputView.showGameResult(dealer.getName(), dealerWinCount, players.size() - dealerWinCount);
+        final int dealerWinCount = gameResult.calculateDealerWinCount(dealer, players);
+        OutputView
+            .showGameResult(dealer.getName(), dealerWinCount, players.size() - dealerWinCount);
 
-        final Map<String, Result> results = new LinkedHashMap<>();
-        for (final Participant player : players) {
-            final Result result = gameResult.decideWinner(player, dealer);
-            results.put(player.getName(), result);
-        }
+        final Map<String, Result> results = gameResult.makePlayerResults(players, dealer);
         OutputView.showPlayerGameResult(results);
     }
 
