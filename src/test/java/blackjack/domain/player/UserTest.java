@@ -99,6 +99,21 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
+    @DisplayName("승패 판단 - 승 (딜러가 21 초과)")
+    @Test
+    void winWhenDealerBust() {
+        Dealer dealer = new Dealer();
+        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SEVEN));
+        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.NINE));
+        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
+
+        User user = new User(TEST_NAME);
+        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
+
+        ResultType resultType = user.getResult(dealer);
+        assertThat(resultType).isEqualTo(ResultType.WIN);
+    }
+
     @DisplayName("승패 판단 - 패")
     @Test
     void loss() {

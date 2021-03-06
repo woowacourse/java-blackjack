@@ -21,19 +21,19 @@ public class UsersTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer();
+        dealer = new Dealer(); // 합 : 7
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
 
-        User user1 = new User("pobi");
+        User user1 = new User("pobi"); // 합 : 8
         user1.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
 
-        User user2 = new User("jason");
+        User user2 = new User("jason"); // 합 : 6
         user2.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SIX));
 
-        User user3 = new User("inbi");
+        User user3 = new User("inbi"); // 합 : 8
         user3.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
 
-        User user4 = new User("mungto");
+        User user4 = new User("mungto"); // 합 : 22
         user4.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
         user4.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
         user4.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TWO));
@@ -58,22 +58,27 @@ public class UsersTest {
     @DisplayName("게임 결과 반환 테스트")
     @Test
     void result() {
-        Map<Name, ResultType> result = users.getResult(dealer);
-        assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
-        assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.LOSS);
-        assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
-        assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
-    }
-
-    @DisplayName("게임 결과 반환 테스트")
-    @Test
-    void resultNew() {
         ResultDTO resultDTO = new ResultDTO(users.getResult(dealer));
         Map<Name, ResultType> result = resultDTO.getResult();
 
         assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
         assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.LOSS);
         assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
+        assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
+    }
+
+    @DisplayName("게임 결과 반환 테스트 - 딜러가 bust일 때")
+    @Test
+    void resultWhenDealerBust() {
+        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.NINE));
+        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
+
+        ResultDTO resultDTO = new ResultDTO(users.getResult(dealer));
+        Map<Name, ResultType> result = resultDTO.getResult();
+
+        assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
+        assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.WIN);
+        assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.WIN);
         assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
     }
 }
