@@ -19,7 +19,7 @@ public class Dealer extends Participant {
 	}
 
 	public List<Card> getFirstCard() {
-		return Collections.singletonList(getCards().get(FIRST_CARD_POSITION));
+		return Collections.singletonList(cards.get(FIRST_CARD_POSITION));
 	}
 
 	public boolean isScoreLowerThanMaximumDrawCriterion() {
