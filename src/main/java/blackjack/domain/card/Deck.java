@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public class Deck {
     
-    private static final int TOP_INDEX = 0;
+    private static final int TOP_CARD_INDEX = 0;
+    
     private static final String ERROR_EMPTY_DECK = "덱에 카드가 존재하지 않습니다.";
     
     private final List<Card> deck;
@@ -35,6 +36,6 @@ public class Deck {
             throw new IllegalArgumentException(ERROR_EMPTY_DECK);
         }
         
-        return deck.remove(TOP_INDEX);
+        return deck.remove(TOP_CARD_INDEX);
     }
 }

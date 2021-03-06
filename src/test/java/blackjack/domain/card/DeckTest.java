@@ -32,13 +32,13 @@ class DeckTest {
     @Test
     @DisplayName("덱에 카드가 존재하지 않을 때 카드를 뽑을 경우 예외 발생")
     void drawCard_DrawAtEmptyDeck_ExceptionThrown() {
-    
+        
         // given
         Deck deck = new Deck(new ArrayList<>());
-    
+        
         // when
         ThrowableAssert.ThrowingCallable callable = deck::drawCard;
-    
+        
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)
                                             .withMessage("덱에 카드가 존재하지 않습니다.");
