@@ -13,7 +13,6 @@ import blackjack.domain.user.Users;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -72,8 +71,8 @@ public class BlackjackGame {
         return dealer.handSize();
     }
 
-    public Stream<User> getUsersStream() {
-        return users.stream();
+    public Users getUsers() {
+        return users;
     }
 
     public Dealer getDealer() {
