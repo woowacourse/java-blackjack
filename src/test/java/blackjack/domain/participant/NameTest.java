@@ -10,7 +10,7 @@ class NameTest {
 
     @DisplayName("이름이 공백인 경우 검증")
     @ParameterizedTest
-    @ValueSource(strings = {" ", "$", "abc!"})
+    @ValueSource(strings = {"", "$", "abc!"})
     void validate(String input) {
         assertThatThrownBy(() -> new Player(input))
                 .isInstanceOf(IllegalArgumentException.class)

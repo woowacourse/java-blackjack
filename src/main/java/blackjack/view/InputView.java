@@ -9,6 +9,6 @@ public class InputView {
     private static final String REPLACEMENT = "";
 
     public static String inputString() {
-        return SCANNER.nextLine().replace(BLANK, REPLACEMENT);
+        return SCANNER.nextLine().trim();
     }
 }

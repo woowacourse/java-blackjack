@@ -14,7 +14,6 @@ public class GameResult {
         this.results = new HashMap<>(results);
     }
 
-
     public Map<ResultType, Integer> getStatistics() {
         Map<ResultType, Integer> resultStatistics = new HashMap<>();
         this.results.values()

@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
-    private static final Pattern VALID_NAME_FORMAT = Pattern.compile("^[0-9가-힣a-zA-Z]*$");
+    private static final Pattern VALID_NAME_FORMAT = Pattern.compile("^[0-9가-힣a-zA-Z\\s]*$");
     private final String value;
 
     public Name(String name) {
