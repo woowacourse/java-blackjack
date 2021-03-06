@@ -14,7 +14,7 @@ public abstract class AbstractPlayer implements Player {
     private final List<Card> cards;
     private final Name name;
 
-    public AbstractPlayer(String name) {
+    protected AbstractPlayer(String name) {
         cards = new ArrayList<>();
         this.name = new Name(name);
     }
