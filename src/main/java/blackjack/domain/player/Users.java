@@ -32,7 +32,7 @@ public class Users {
     }
 
     public void drawRandomTwoCard() {
-        users.forEach(user -> drawRandomTwoCard());
+        users.forEach(user -> user.drawRandomTwoCards());
     }
 
     public List<User> getUsers() {
