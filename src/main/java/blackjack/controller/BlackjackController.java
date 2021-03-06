@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamers;
@@ -18,14 +20,9 @@ import static java.util.stream.Collectors.toList;
 
 public class BlackjackController {
 
-    private final Cards cards;
-
-    public BlackjackController(Cards cards) {
-        this.cards = cards;
-    }
-
     public void run() {
         Game game = gameInitialize();
+        printInitializeResult(game);
 
         drawCardToPlayers(game);
 
@@ -35,17 +32,21 @@ public class BlackjackController {
     }
 
     private Game gameInitialize() {
-        Dealer dealer = new Dealer();
-        Gamers gamers = new Gamers(InputView.getGamerNamesFromUser());
-        Game game = new Game(cards, dealer, gamers);
+        Cards cards = new Cards(CardFactory.getNormalCards());
+        cards.shuffle();
 
+        return new Game(
+                cards,
+                new Dealer(),
+                new Gamers(InputView.getGamerNamesFromUser()));
+    }
+
+    private void printInitializeResult(Game game) {
         List<PlayerDto> playerDtos = DtoAssembler.createPlayerDtos(game.getGamersAsList());
-        PlayerDto dealerDto = DtoAssembler.createPlayerDto(dealer);
+        PlayerDto dealerDto = DtoAssembler.createPlayerDto(game.getDealer());
 
         OutputView.printDrawResult(playerDtos);
         OutputView.printDealerAndPlayersDeckState(dealerDto, playerDtos);
-
-        return game;
     }
 
     private void drawCardToPlayers(Game game) {
