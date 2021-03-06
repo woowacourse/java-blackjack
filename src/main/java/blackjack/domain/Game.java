@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.GameResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
@@ -35,6 +34,7 @@ public class Game {
             gamers.drawToGamers(cards);
         }
     }
+
     public boolean isGamerDrawable(String name) {
         return findGamerByName(name).isDrawable();
     }
@@ -48,7 +48,7 @@ public class Game {
     }
 
     public void drawCardToPlayer(String name) {
-        if(dealer.getName().equals(name)) {
+        if (dealer.getName().equals(name)) {
             dealer.addCardToDeck(shuffledCards.next());
             return;
         }
@@ -56,19 +56,25 @@ public class Game {
         findGamerByName(name).addCardToDeck(shuffledCards.next());
     }
 
-    public Map<String, GameResult> getGamerResult() {
+    private Map<String, GameResult> calculateGamerResult() {
         return gamers.getGamers().stream()
-            .collect(toMap(Player::getName, this::calculateWinning));
+                .collect(toMap(Player::getName, this::calculateWinning));
+    }
+
+    public Map<String, String> getGamerResult() {
+        return calculateGamerResult().entrySet().stream()
+                .collect(toMap(Map.Entry::getKey, e -> e.getValue().getMessage()));
     }
 
     private GameResult calculateWinning(Player player) {
         return GameResult.calculate(dealer, player);
     }
 
-    public List<GameResult> getDealerResult() {
-        return getGamerResult().values().stream()
-            .map(GameResult::reverse)
-            .collect(toList());
+    public List<String> getDealerResult() {
+        return calculateGamerResult().values().stream()
+                .map(GameResult::reverse)
+                .map(GameResult::getMessage)
+                .collect(toList());
     }
 
     public Player findGamerByName(String name) {

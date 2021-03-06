@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.GameResult;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.PlayerDto;
 
@@ -66,23 +65,23 @@ public class OutputView {
         }
     }
 
-    public static void printResult(List<GameResult> dealerResult,
-        Map<String, GameResult> gamerResult) {
+    public static void printResult(List<String> dealerResult,
+        Map<String, String> gamerResult) {
         System.out.println(FINAL_RESULT);
         System.out.println(dealerResultToString(dealerResult));
 
         gamerResult.forEach(
-            (name, result) -> System.out.printf(PLAYER_FINAL_RESULT, name, result.getMessage()));
+            (name, result) -> System.out.printf(PLAYER_FINAL_RESULT, name, result));
     }
 
-    private static String dealerResultToString(List<GameResult> dealerResult) {
-        Map<GameResult, Long> map = dealerResult.stream()
+    private static String dealerResultToString(List<String> dealerResult) {
+        Map<String, Long> map = dealerResult.stream()
             .collect(groupingBy(Function.identity(), Collectors.counting()));
 
         return String.format(
             DEALER_FINAL_RESULT,
-            map.getOrDefault(GameResult.WIN, 0L),
-            map.getOrDefault(GameResult.LOSE, 0L)
+            map.getOrDefault("승", 0L),
+            map.getOrDefault("패", 0L)
         );
     }
 

@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
@@ -69,17 +68,17 @@ class GameTest {
     @Test
     @DisplayName("게임 결과를 반환한다.")
     void getGamerResult() {
-        Map<String, GameResult> gameResult = game.getGamerResult();
+        Map<String, String> gameResult = game.getGamerResult();
 
         assertThat(gameResult.keySet()).isEqualTo(new HashSet<>(Arrays.asList("nabom", "neozal")));
-        assertThat(gameResult.values()).containsExactly(GameResult.LOSE, GameResult.LOSE);
+        assertThat(gameResult.values()).containsExactly(GameResult.LOSE.getMessage(), GameResult.LOSE.getMessage());
 
     }
 
     @Test
     @DisplayName("딜러의 결과를 반환한다.")
     void getDealerResult() {
-        assertThat(game.getDealerResult()).containsExactly(GameResult.WIN, GameResult.WIN);
+        assertThat(game.getDealerResult()).containsExactly(GameResult.WIN.getMessage(), GameResult.WIN.getMessage());
     }
 
     @Test

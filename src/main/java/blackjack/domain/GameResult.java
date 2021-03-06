@@ -1,6 +1,5 @@
-package blackjack;
+package blackjack.domain;
 
-import blackjack.domain.Status;
 import blackjack.domain.player.Player;
 
 public enum GameResult {
