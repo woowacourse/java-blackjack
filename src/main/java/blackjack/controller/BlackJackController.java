@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
 import blackjack.domain.result.ResultStatistics;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
@@ -52,7 +51,7 @@ public class BlackJackController {
     }
 
     private void receiveDealerMoreCard(final Dealer dealer) {
-        while (!dealer.isBust() && !dealer.canDrawMoreCard()) {
+        while (!dealer.isBust() && dealer.canDrawMoreCard()) {
             blackJackService.receiveMoreCard(dealer);
             OutputView.printDealerReceiveMessage();
             OutputView.printNewLine();

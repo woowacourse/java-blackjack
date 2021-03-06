@@ -16,7 +16,7 @@ public class Dealer extends Player {
     }
 
     public boolean canDrawMoreCard() {
-        return getScore() > DEALER_SCORE_PIVOT;
+        return getScore() <= DEALER_SCORE_PIVOT;
     }
 
     @Override

@@ -26,8 +26,8 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 점수가 17 이상이면, true를 반환한다.")
+    @DisplayName("딜러의 점수가 17 이상이면, false를 반환한다.")
     void isEnoughScore() {
-        assertThat(dealer.canDrawMoreCard()).isTrue();
+        assertThat(dealer.canDrawMoreCard()).isFalse();
     }
 }
