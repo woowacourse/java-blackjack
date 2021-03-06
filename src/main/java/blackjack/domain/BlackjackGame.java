@@ -11,6 +11,7 @@ import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.stream.Stream;
 
@@ -30,17 +31,17 @@ public class BlackjackGame {
     }
 
     public void firstDraw() {
-        dealer.firstDraw(deck.draw(), deck.draw());
-        users.forEach(user -> user.firstDraw(deck.draw(), deck.draw()));
+        dealer.drawCard(Arrays.asList(deck.draw(), deck.draw()));
+        users.forEach(user -> user.drawCard(Arrays.asList(deck.draw(), deck.draw())));
     }
 
-    public boolean existCanContinueUser(){
+    public boolean existCanContinueUser() {
         return users.existCanContinueUser();
     }
 
-    public User findFirstCanPlayUser(){
+    public User findFirstCanPlayUser() {
         return users.findFirstCanPlayUser();
-                }
+    }
 
     public Card draw() {
         return deck.draw();
@@ -50,18 +51,18 @@ public class BlackjackGame {
         dealer.drawCard(deck.draw());
     }
 
-    public ScoreBoard createScoreBoard(){
+    public ScoreBoard createScoreBoard() {
         return new ScoreBoard(
                 users.stream()
-                .collect(
-                        toMap(Participant::getName, this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
-                )
+                        .collect(
+                                toMap(Participant::getName, this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
+                        )
                 , createDealerGameResult());
     }
 
     private GameResult createDealerGameResult() {
         return new GameResult(dealer.getCards(), dealer.getName().toString());
-}
+    }
 
     private UserGameResult createGameResult(User user) {
         return new UserGameResult(user.getCards(), user.getName().toString(), WinOrLose.decideWinOrLose(user, dealer));

@@ -17,14 +17,13 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    public void firstDraw(Card first, Card second) {
-        drawCard(first);
-        drawCard(second);
-    }
-
     public void drawCard(Card card) {
         hand.add(card);
         changeStatus();
+    }
+
+    public void drawCard(List<Card> cards) {
+        cards.forEach(this::drawCard);
     }
 
     public List<Card> getCards() {

@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static blackjack.domain.scoreboard.WinOrLose.*;
@@ -46,16 +47,16 @@ class WinOrLoseTest {
 
     static Participant changeStatus(Participant participant, Status status) {
         if (status == BURST) {
-            participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.KING));
+            participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.KING)));
             participant.drawCard(new Card(Suit.DIAMOND, Symbol.TWO));
         }
 
         if (status == BLACKJACK) {
-            participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.ACE));
+            participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.ACE)));
         }
 
         if (status == PLAYING) {
-            participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.THREE));
+            participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.THREE)));
         }
 
         return participant;
@@ -86,12 +87,12 @@ class WinOrLoseTest {
     }
 
     static Participant setScoreTwenty(Participant participant) {
-        participant.firstDraw(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.JACK));
+        participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.JACK)));
         return participant;
     }
 
     static Participant setScoreEleven(Participant participant) {
-        participant.firstDraw(new Card(Suit.DIAMOND, Symbol.SEVEN), new Card(Suit.DIAMOND, Symbol.FOUR));
+        participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.SEVEN), new Card(Suit.DIAMOND, Symbol.FOUR)));
         return participant;
     }
 
