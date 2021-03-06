@@ -20,7 +20,7 @@ public class Cards {
         this(new ArrayList<>());
     }
 
-    public void add(Cards targetCards) {
+    public void addAll(Cards targetCards) {
         cards.addAll(targetCards.cards);
     }
 
