@@ -16,7 +16,6 @@ public class OutputView {
     private static final String DEALER_CARD_ADD_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "%s카드 : %s - 결과: %d";
     private static final String DEALER_RESULT_MESSAGE = "딜러: %d승 %d패 %d무";
-    private static final String DEALER = "딜러";
     private static final String RESULT_MESSAGE = "\n## 최종 승패";
 
     public static void showPlayCardStatus(String name, List<Card> cards) {
