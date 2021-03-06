@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Users {
     private static final String DELIMITER = ",";
@@ -17,9 +18,9 @@ public class Users {
     }
 
     public Users(String usersNames) {
-        users = new ArrayList<>();
-        Arrays.stream(usersNames.split(DELIMITER))
-            .forEach(name -> users.add(new User(name)));
+        users = Arrays.stream(usersNames.split(DELIMITER))
+            .map(User::new)
+            .collect(Collectors.toList());
     }
 
     public Map<Name, ResultType> getResult(Dealer dealer) {
