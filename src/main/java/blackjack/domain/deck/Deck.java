@@ -1,6 +1,7 @@
 package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,14 +22,14 @@ public class Deck {
     }
 
     private void validateCardsSize() {
-        if (cards.size() == 0) {
+        if (cards.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException(NOT_EXIST_CARD_IN_DECK);
         }
     }
 
-    public List<Card> drawTwoStartCards() {
-        return Stream.iterate(0, i -> i + 1)
-            .map(i -> draw())
+    public List<Card> drawFirstCards() {
+        return Stream.iterate(0, count -> count + 1)
+            .map(count -> draw())
             .limit(FIRST_DRAW_CARD_COUNT)
             .collect(Collectors.toList());
     }

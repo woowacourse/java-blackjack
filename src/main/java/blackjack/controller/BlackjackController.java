@@ -41,12 +41,12 @@ public class BlackjackController {
 
     private List<Gamer> initGamers(String[] gamerNames) {
         return Arrays.stream(gamerNames)
-                .map(gamerName -> new Gamer(new Name(gamerName), Cards.of(deck.drawTwoStartCards())))
+                .map(gamerName -> new Gamer(new Name(gamerName), Cards.of(deck.drawFirstCards())))
                 .collect(Collectors.toList());
     }
 
     private Dealer initDealer() {
-        return new Dealer(Cards.of(deck.drawTwoStartCards()));
+        return new Dealer(Cards.of(deck.drawFirstCards()));
     }
 
 
