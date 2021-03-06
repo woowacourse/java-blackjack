@@ -42,11 +42,13 @@ public class UsersTest {
         users = new Users(convertUsers);
     }
 
-    @DisplayName("Users 생성자 동일 비교 테스트")
+    @DisplayName("Users의 다른 생성자들에게 동일한 생성 목적의 매개변수를 넘겨 생성했을 때, "
+        + "Users의 이름들이 모두 같고, 동일한 순서인 상태로 생성되는지 테스트")
     @Test
     void constructorsEqual() {
         String usersNames = "pobi,jason,inbi,mungto";
         Users users2 = new Users(usersNames);
+        assertThat(users.getUsers()).hasSize(users2.getUsers().size());
         for (int i = 0; i < 4; i++) {
             assertThat(users.getUsers().get(i).getName())
                 .isEqualTo(users2.getUsers().get(i).getName());
