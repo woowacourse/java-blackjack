@@ -13,11 +13,13 @@ public abstract class Player {
         this.cards = cards;
     }
 
-    abstract void addCard(Card card);
+    public abstract void addCard(Card card);
 
-    abstract boolean canDraw();
+    public abstract boolean canDraw();
 
-    abstract boolean isBust();
+    public boolean isBust() {
+        return cards.isBust();
+    };
 
     public int calculateScore() {
         return cards.calculateScore();

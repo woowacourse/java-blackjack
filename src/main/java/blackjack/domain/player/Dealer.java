@@ -46,9 +46,4 @@ public class Dealer extends Player {
     public boolean canDraw() {
         return calculateScore() <= DRAW_MAXIMUM_SCORE;
     }
-
-    @Override
-    public boolean isBust() {
-        return cards.isBust();
-    }
 }

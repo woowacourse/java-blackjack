@@ -20,7 +20,7 @@ class GamerTest {
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.ACE, Shape.CLUBS)
         );
-        Player gamer = new Gamer(new Name("테스트 게이머"), cards);
+        Gamer gamer = new Gamer(new Name("테스트 게이머"), cards);
 
         // then
         assertThatIllegalArgumentException().isThrownBy(() -> {

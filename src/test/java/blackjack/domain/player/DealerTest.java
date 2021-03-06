@@ -23,7 +23,7 @@ class DealerTest {
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SEVEN, Shape.CLUBS)
         );
-        Player dealer = new Dealer(cards);
+        Dealer dealer = new Dealer(cards);
 
         // then
         assertThatIllegalArgumentException().isThrownBy(() -> {
