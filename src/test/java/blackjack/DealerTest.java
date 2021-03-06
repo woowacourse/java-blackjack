@@ -19,20 +19,20 @@ public class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
     }
 
     @Test
     @DisplayName("딜러가 잘 생성되었는지 확인")
     void create() {
-        assertThatCode(() -> new Dealer("딜러"))
+        assertThatCode(Dealer::new)
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("딜러가 참가자에게 상속받았는지 확인")
     void extend() {
-        final Player player = new Dealer("딜러");
+        final Player player = new Dealer();
         player.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
         assertThat(player.getCardCount()).isEqualTo(1);
     }

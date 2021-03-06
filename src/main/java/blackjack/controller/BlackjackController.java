@@ -15,7 +15,7 @@ public class BlackjackController {
 
     public void run() {
         final CardDeck cardDeck = new CardDeck();
-        final Dealer dealer = new Dealer("딜러");
+        final Dealer dealer = new Dealer();
         final List<Player> players = playerSetUp();
 
         distributeCard(players, dealer, cardDeck);
