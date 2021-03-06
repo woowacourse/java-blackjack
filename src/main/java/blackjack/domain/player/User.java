@@ -11,17 +11,17 @@ public class User extends AbstractPlayer {
         super(name);
     }
 
+    @Override
+    public boolean isCanDraw() {
+        return !(isDrawStop() || isOverBlackJack());
+    }
+
     public boolean isDrawStop() {
         return isDrawStop;
     }
 
-    private void stopDraw() {
-        isDrawStop = true;
-    }
-
-    @Override
-    public boolean isCanDraw() {
-        return !(isDrawStop() || isOverBlackJack());
+    private boolean isOverBlackJack() {
+        return getScore() > BLACKJACK;
     }
 
     public boolean isDrawContinue(String input) {
@@ -31,6 +31,16 @@ public class User extends AbstractPlayer {
         }
         stopDraw();
         return false;
+    }
+
+    private void drawInputValidate(String value) {
+        if (!(YES.equals(value) || NO.equals(value))) {
+            throw new IllegalArgumentException("입력은 y 또는 n만 가능합니다.");
+        }
+    }
+
+    private void stopDraw() {
+        isDrawStop = true;
     }
 
     public ResultType getResult(Dealer dealer) {
@@ -43,15 +53,5 @@ public class User extends AbstractPlayer {
             return ResultType.DRAW;
         }
         return ResultType.WIN;
-    }
-
-    private void drawInputValidate(String value) {
-        if (!(YES.equals(value) || NO.equals(value))) {
-            throw new IllegalArgumentException("입력은 y 또는 n만 가능합니다.");
-        }
-    }
-
-    private boolean isOverBlackJack() {
-        return getScore() > BLACKJACK;
     }
 }
