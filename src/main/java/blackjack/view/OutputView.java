@@ -31,7 +31,7 @@ public class OutputView {
         System.out.printf(DEALT_BASE_CARDS_FORMAT, dealer.getName(), playerNames);
         
         System.out.printf(NAME_AND_HAND_FORMAT, dealer.getName(), dealer.getCard(SECOND_CARD_INDEX)
-                                                                        .combineInitialAndSuit());
+                                                                        .combineInitialAndSuit() + LINE_SEPARATOR);
         for (Player player : players) {
             printNameAndHand(player);
         }

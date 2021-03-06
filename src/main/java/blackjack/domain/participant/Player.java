@@ -18,10 +18,6 @@ public class Player extends Participant {
     
     @Override
     public boolean canReceive() {
-        return sumCardHand() <= MAXIMUM_THRESHOLD;
-    }
-    
-    public boolean isBurst() {
-        return !canReceive();
+        return sumCardHand() < MAXIMUM_THRESHOLD;
     }
 }
