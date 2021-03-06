@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.exception.validateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,13 +25,13 @@ public class NameTest {
     @ValueSource(strings = {"", "  "})
     void invalidNames(String nameInput) {
         assertThatThrownBy(() -> new Name(nameInput))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(validateException.class);
     }
 
     @DisplayName("이름 유효성 검사 - null 테스트")
     @Test
     void invalidNullName() {
         assertThatThrownBy(() -> new Name(null))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(validateException.class);
     }
 }
