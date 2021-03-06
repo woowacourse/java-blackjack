@@ -10,6 +10,7 @@ public abstract class Participant {
 
     private String name;
     private Cards cards;
+    private int score;
 
     public Participant(String name) {
         this.name = name;
@@ -17,7 +18,7 @@ public abstract class Participant {
     }
 
     public void draw(Deck deck) {
-        cards.add(deck.draw());
+        score = cards.add(deck.draw());
     }
 
     public void initializeDraw(Deck deck) {
@@ -25,14 +26,14 @@ public abstract class Participant {
         draw(deck);
     }
     
-    public abstract boolean canDrawOneMore(int score);
+    public abstract boolean canDrawOneMore();
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_COUNT && cards.calculateScore() == BLACKJACK_VALUE;
+        return cards.size() == BLACKJACK_CARD_COUNT && score == BLACKJACK_VALUE;
     }
 
     public int getScore() {
-        return cards.calculateScore();
+        return score;
     }
 
     public Cards getCards() {

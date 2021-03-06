@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    private static final int DEALER_DRAW_LIMIT = 16;
+
     private final List<Result> results;
 
     public Dealer() {
@@ -50,8 +52,8 @@ public class Dealer extends Participant {
         return results;
     }
 
-    public boolean canDrawOneMore(int score) {
-        return score <= 16;
+    public boolean canDrawOneMore() {
+        return getScore() <= DEALER_DRAW_LIMIT;
     }
 
     public int findResultCount(Result targetResult) {

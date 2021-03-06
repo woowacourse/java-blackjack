@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class OutputView {
     }
 
     public static void printCards(String name, Cards cards) {
-        List<Card> cardList = cards.getCards();
+        List<Card> cardList = cards.cards();
         List<String> result = new ArrayList<>();
         for (Card card : cardList) {
             result.add(card.toString());
@@ -29,13 +30,17 @@ public class OutputView {
         System.out.println(name + "카드: " + String.join(DELIMITER, result));
     }
 
-    public static void printCardScore(String name, Cards cards) {
-        List<Card> cardList = cards.getCards();
+    public static void printCardScore(Participant participant) {
+        List<Card> cardList = participant.getCards().cards();
         List<String> output = new ArrayList<>();
         for (Card card : cardList) {
             output.add(card.toString());
         }
-        System.out.println(name + "카드: " + String.join(DELIMITER, output) + " - 결과: " + cards.calculateScore());
+        System.out.println(participant.getName()
+                + "카드: "
+                + String.join(DELIMITER, output)
+                + " - 결과: "
+                + participant.getScore());
     }
 
     public static void printOneMoreCard() {

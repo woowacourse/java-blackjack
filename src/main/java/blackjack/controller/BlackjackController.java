@@ -31,7 +31,7 @@ public class BlackjackController {
         distributeDealer(deck, dealer);
 
         compareAllPlayersWithDealer(dealer, players);
-        OutputView.printCardScore(dealer.getName(), dealer.getCards());
+        OutputView.printCardScore(dealer);
         showResult(dealer, players);
     }
 
@@ -51,7 +51,7 @@ public class BlackjackController {
     private void distributePlayer(Deck deck, Player player) {
         OutputView.printCards(player.getName(), player.getCards());
 
-        while (player.canDrawOneMore(player.getScore()) && InputView.inputDraw(player.getName())) {
+        while (player.canDrawOneMore() && InputView.inputDraw(player.getName())) {
             player.draw(deck);
             OutputView.printCards(player.getName(), player.getCards());
         }
@@ -79,9 +79,7 @@ public class BlackjackController {
     }
 
     public void distributeDealer(Deck deck, Dealer dealer) {
-        Cards dealerCards = dealer.getCards();
-
-        while (dealer.canDrawOneMore(dealerCards.calculateScore())){
+        while (dealer.canDrawOneMore()){
             OutputView.printOneMoreCard();
             dealer.draw(deck);
         }
@@ -97,7 +95,7 @@ public class BlackjackController {
 
     public void showResult(Dealer dealer, List<Player> players) {
         for(Player player : players){
-            OutputView.printCardScore(player.getName(), player.getCards());
+            OutputView.printCardScore(player);
         }
 
         OutputView.printDealerResult(

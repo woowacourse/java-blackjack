@@ -24,7 +24,7 @@ public class Player extends Participant {
         return result;
     }
 
-    public boolean canDrawOneMore(int score){
-        return score <= LIMIT_SCORE;
+    public boolean canDrawOneMore(){
+        return getScore() <= LIMIT_SCORE;
     }
 }
