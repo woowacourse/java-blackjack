@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,9 +24,7 @@ public class AnswerTest {
     @DisplayName("예외가 발생하는지 확인한다.")
     @Test
     void createDrawAnswerException() {
-        assertThatThrownBy(() -> {
-            Answer.of("q");
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Answer.of("q")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("y가 입력되는 되는 경우를 확인한다.")

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,18 +17,14 @@ public class NameTest {
     @DisplayName("이름이 유효하지 않은 문자일 경우 예외를 발생한다.")
     @Test
     void validateCharacterException() {
-        assertThatThrownBy(() -> {
-            new Name("ㄴㄴㄴ");
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Name("ㄴㄴㄴ")).isInstanceOf(IllegalArgumentException.class);
 
     }
 
     @DisplayName("이름이 공백인 경우 예외를 발생한다.")
     @Test
     void validateEmptyException() {
-        assertThatThrownBy(() -> {
-            new Name("");
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Name("")).isInstanceOf(IllegalArgumentException.class);
 
     }
 }

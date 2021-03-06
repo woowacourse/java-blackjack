@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.result;
+
+import blackjack.domain.user.User;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultBoard;
+import blackjack.domain.user.*;
 
 import java.util.List;
 import java.util.stream.Collectors;

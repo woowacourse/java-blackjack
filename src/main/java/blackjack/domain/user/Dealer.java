@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
 
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
