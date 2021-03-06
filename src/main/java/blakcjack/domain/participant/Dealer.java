@@ -23,7 +23,7 @@ public class Dealer extends Participant {
 	}
 
 	public boolean isScoreLowerThanMaximumDrawCriterion() {
-		return calculateScore() < DEALER_MAXIMUM_DRAW_CRITERION;
+		return cards.calculateScore() < DEALER_MAXIMUM_DRAW_CRITERION;
 	}
 
 	public Outcome judgeOutcomeOf(final Player player) {
@@ -34,8 +34,8 @@ public class Dealer extends Participant {
 	}
 
 	private Outcome judgeOutcomeByScore(final Player player) {
-		final int playerScore = player.calculateScore();
-		final int dealerScore = this.calculateScore();
+		final int playerScore = player.getScore();
+		final int dealerScore = cards.calculateScore();
 
 		if (playerScore > dealerScore) {
 			return WIN;

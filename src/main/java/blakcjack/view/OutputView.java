@@ -83,7 +83,7 @@ public class OutputView {
 	}
 
 	private static String makeFinalSummary(final Participant participant) {
-		return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.calculateScore());
+		return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.getScore());
 	}
 
 	private static String makeFinalCardSummary(final Participant participant) {

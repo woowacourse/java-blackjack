@@ -1,26 +1,24 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Card;
+import blakcjack.domain.card.Cards;
 import blakcjack.domain.name.Name;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Participant {
-	public static final int ACE_ADDITIONAL_VALUE = 10;
-	public static final int BLACKJACK_VALUE = 21;
+import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
 
+public abstract class Participant {
 	protected final Name name;
-	protected final List<Card> cards = new ArrayList<>();
+	protected final Cards cards = new Cards();
 
 	protected Participant(final Name name) {
 		this.name = name;
 	}
 
 	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
+		return cards.toList();
 	}
 
 	public void receiveCard(Card card) {
@@ -31,35 +29,12 @@ public abstract class Participant {
 		return name.getName();
 	}
 
-	public int calculateScore() {
-		int score = calculateMinimumPossibleScore();
-		int aceCount = calculateAceCount();
-
-		while (hasNextPossibleScore(aceCount, score)) {
-			score += ACE_ADDITIONAL_VALUE;
-			aceCount--;
-		}
-		return score;
-	}
-
-	private boolean hasNextPossibleScore(final int aceCount, final int score) {
-		return 0 < aceCount && (score + ACE_ADDITIONAL_VALUE) <= BLACKJACK_VALUE;
-	}
-
-	private int calculateAceCount() {
-		return (int) cards.stream()
-				.filter(Card::isAce)
-				.count();
-	}
-
-	private int calculateMinimumPossibleScore() {
-		return cards.stream()
-				.mapToInt(Card::getCardNumberValue)
-				.sum();
+	public int getScore() {
+		return cards.calculateScore();
 	}
 
 	public boolean isBust() {
-		return BLACKJACK_VALUE < calculateScore();
+		return BLACKJACK_VALUE < cards.calculateScore();
 	}
 
 	protected boolean hasAnyBust(final Participant thisParticipant, final Participant thatParticipant) {

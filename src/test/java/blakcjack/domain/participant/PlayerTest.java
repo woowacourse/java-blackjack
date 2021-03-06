@@ -40,7 +40,7 @@ public class PlayerTest {
 		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.FIVE));
 
-		assertThat(player.calculateScore()).isEqualTo(19);
+		assertThat(player.getScore()).isEqualTo(19);
 	}
 
 	@DisplayName("점수가 21점 이하면 false 21점 초과일 시 true")
