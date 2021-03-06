@@ -9,14 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-    @DisplayName("카드 합이 16 이하이면 반드시 1장의 카드를 추가로 받는다. - 0일 때")
+    @DisplayName("카드를 추가로 받을수 있는지 가능여부 테스트 - 0일 때 true")
     @Test
     void canDrawCardWhen0() {
         Dealer dealer = new Dealer();
         assertThat(dealer.isCanDraw()).isTrue();
     }
 
-    @DisplayName("카드 합이 16 이하이면 반드시 1장의 카드를 추가로 받는다. - 16일 때")
+    @DisplayName("카드를 추가로 받을수 있는지 가능여부 테스트 - 16일 때 true")
     @Test
     void canDrawCardWhen16() {
         Dealer dealer = new Dealer();
@@ -26,7 +26,7 @@ public class DealerTest {
         assertThat(dealer.isCanDraw()).isTrue();
     }
 
-    @DisplayName("카드 합이 17 이상이면 카드를 추가로 받을 수 없다. - 17일 때")
+    @DisplayName("카드를 추가로 받을수 있는지 가능여부 테스트 - 17일 때 false")
     @Test
     void cannotDrawCardWhen17() {
         Dealer dealer = new Dealer();
