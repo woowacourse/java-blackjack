@@ -62,8 +62,12 @@ public abstract class Participant {
 		return calculateScore() < BLACKJACK_VALUE;
 	}
 
-	public boolean isBust() {
+	protected boolean isBust() {
 		return BLACKJACK_VALUE < calculateScore();
+	}
+
+	protected boolean hasAnyBust(final Participant thisParticipant, final Participant thatParticipant) {
+		return thisParticipant.isBust() || thatParticipant.isBust();
 	}
 
 	@Override
