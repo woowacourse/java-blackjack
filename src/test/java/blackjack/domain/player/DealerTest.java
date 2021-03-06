@@ -37,7 +37,7 @@ public class DealerTest {
         assertThat(dealer.isCanDraw()).isFalse();
     }
 
-    @DisplayName("카드 반환 개수 전략패턴 테스트 - 1개")
+    @DisplayName("카드 반환 개수 전략패턴 적용 테스트 - 1개")
     @Test
     void oneCardOpenStrategy() {
         Dealer dealer = new Dealer();
@@ -46,7 +46,7 @@ public class DealerTest {
         assertThat(dealer.getCards()).hasSize(1);
     }
 
-    @DisplayName("카드 반환 개수 전략패턴 테스트 - 2개")
+    @DisplayName("카드 반환 개수 전략패턴 적용 테스트 - 2개")
     @Test
     void twoCardOpenStrategy() {
         Dealer dealer = new Dealer();

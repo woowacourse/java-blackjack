@@ -17,7 +17,7 @@ public class Cards {
         Collections.shuffle(cards);
     }
 
-    public static Cards getCards() {
+    public static Cards getInstance() {
         if (instance == null) {
             instance = new Cards();
         }

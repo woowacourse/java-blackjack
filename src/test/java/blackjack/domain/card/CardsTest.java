@@ -12,8 +12,8 @@ public class CardsTest {
     @DisplayName("동일 객체 테스트")
     @Test
     void create() {
-        Cards cards = Cards.getCards();
-        assertThat(cards).isSameAs(Cards.getCards());
+        Cards cards = Cards.getInstance();
+        assertThat(cards).isSameAs(Cards.getInstance());
     }
 
     @DisplayName("card 뽑기 테스트")
@@ -24,7 +24,7 @@ public class CardsTest {
             .forEach(shape -> Arrays.stream(CardNumber.values())
                 .forEach(number -> cards.add(new Card(shape, number))));
 
-        Card card = Cards.getCards().draw();
+        Card card = Cards.getInstance().draw();
         assertThat(cards).contains(card);
     }
 }
