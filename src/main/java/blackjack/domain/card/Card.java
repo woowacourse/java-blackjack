@@ -36,4 +36,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardShape, cardNumber);
     }
+
+    public int getValue() {
+        return cardNumber.getValue();
+    }
 }
