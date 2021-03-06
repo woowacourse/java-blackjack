@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static Cards instance;
     private final List<Card> cards = new ArrayList<>();
 
     public Cards() {
@@ -23,13 +22,6 @@ public class Cards {
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardShape, cardNumber));
         }
-    }
-
-    public static Cards getCards() {
-        if (instance == null) {
-            instance = new Cards();
-        }
-        return instance;
     }
 
     public Card drawOneCard() {
