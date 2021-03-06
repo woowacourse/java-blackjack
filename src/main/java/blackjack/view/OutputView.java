@@ -22,27 +22,27 @@ public class OutputView {
     }
 
     public static void printCards(Participant participant) {
-        List<Card> cardList = participant.getCards().cards();
+        List<Card>  cards = participant.getCards().cards();
         List<String> result = new ArrayList<>();
-        for (Card card : cardList) {
+        for (Card card : cards) {
             result.add(card.toString());
         }
         System.out.println(participant.getName() + "카드: " + String.join(DELIMITER, result));
     }
 
     public static void printCards(Participant participant, int showCardCount) {
-        List<Card> cardList = participant.getCards().cards(showCardCount);
+        List<Card> cards = participant.getCards().cards(showCardCount);
         List<String> result = new ArrayList<>();
-        for (Card card : cardList) {
+        for (Card card : cards) {
             result.add(card.toString());
         }
         System.out.println(participant.getName() + "카드: " + String.join(DELIMITER, result));
     }
 
     public static void printCardsWithScore(Participant participant) {
-        List<Card> cardList = participant.getCards().cards();
+        List<Card> cards = participant.getCards().cards();
         List<String> output = new ArrayList<>();
-        for (Card card : cardList) {
+        for (Card card : cards) {
             output.add(card.toString());
         }
         System.out.println(participant.getName()
