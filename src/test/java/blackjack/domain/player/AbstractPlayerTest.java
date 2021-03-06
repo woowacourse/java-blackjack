@@ -3,8 +3,8 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.type.CardNumberType;
+import blackjack.domain.card.type.CardShapeType;
 import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class AbstractPlayerTest {
     @Test
     void drawCard() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        Card twoCard = new Card(CardShapeType.DIAMOND, CardNumberType.TWO);
 
         user.drawOneCard(twoCard);
 
@@ -29,8 +29,8 @@ public class AbstractPlayerTest {
     @Test
     void aceLowValue() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
-        Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        Card tenCard = new Card(CardShapeType.DIAMOND, CardNumberType.TEN);
+        Card aceCard = new Card(CardShapeType.DIAMOND, CardNumberType.ACE);
 
         user.drawOneCard(tenCard);
         user.drawOneCard(tenCard);
@@ -43,8 +43,8 @@ public class AbstractPlayerTest {
     @Test
     void aceHighValue() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
-        Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        Card tenCard = new Card(CardShapeType.DIAMOND, CardNumberType.TEN);
+        Card aceCard = new Card(CardShapeType.DIAMOND, CardNumberType.ACE);
 
         user.drawOneCard(tenCard);
         user.drawOneCard(aceCard);
@@ -58,7 +58,7 @@ public class AbstractPlayerTest {
         AbstractPlayer user = new User(TEST_NAME);
         assertThat(user.getCards().isEmpty()).isTrue();
 
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
+        Card tenCard = new Card(CardShapeType.DIAMOND, CardNumberType.TEN);
         user.drawOneCard(tenCard);
         assertThat(user.getCards()).containsExactly(tenCard);
     }

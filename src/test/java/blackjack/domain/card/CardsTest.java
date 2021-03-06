@@ -3,6 +3,8 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.type.CardNumberType;
+import blackjack.domain.card.type.CardShapeType;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -23,8 +25,8 @@ public class CardsTest {
 
         assertThat(notDuplicateCards).hasSize(ALL_CARDS_SIZE);
 
-        for (CardShape cardShape : CardShape.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
+        for (CardShapeType cardShape : CardShapeType.values()) {
+            for (CardNumberType cardNumber : CardNumberType.values()) {
                 assertThat(notDuplicateCards).contains(new Card(cardShape, cardNumber));
             }
         }

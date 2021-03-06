@@ -1,6 +1,6 @@
-package blackjack.domain.card;
+package blackjack.domain.card.type;
 
-public enum CardShape {
+public enum CardShapeType {
     DIAMOND("다이아몬드"),
     HEART("하트"),
     SPADE("스페이드"),
@@ -8,7 +8,7 @@ public enum CardShape {
 
     private final String shape;
 
-    CardShape(String shape) {
+    CardShapeType(String shape) {
         this.shape = shape;
     }
 

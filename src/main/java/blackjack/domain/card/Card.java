@@ -1,17 +1,19 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.type.CardNumberType;
+import blackjack.domain.card.type.CardShapeType;
 import java.util.Objects;
 
 public class Card {
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    private final CardShapeType cardShape;
+    private final CardNumberType cardNumber;
 
-    public Card(final CardShape cardShape, final CardNumber cardNumber) {
+    public Card(final CardShapeType cardShape, final CardNumberType cardNumber) {
         this.cardShape = cardShape;
         this.cardNumber = cardNumber;
     }
 
-    public CardNumber getCardNumber() {
+    public CardNumberType getCardNumber() {
         return cardNumber;
     }
 

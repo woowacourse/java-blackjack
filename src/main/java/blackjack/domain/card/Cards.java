@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.type.CardNumberType;
+import blackjack.domain.card.type.CardShapeType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +15,13 @@ public class Cards {
     }
 
     private void createAllCards() {
-        for (CardShape cardShape : CardShape.values()) {
+        for (CardShapeType cardShape : CardShapeType.values()) {
             createCardsWithShape(cardShape);
         }
     }
 
-    private void createCardsWithShape(CardShape cardShape) {
-        for (CardNumber cardNumber : CardNumber.values()) {
+    private void createCardsWithShape(CardShapeType cardShape) {
+        for (CardNumberType cardNumber : CardNumberType.values()) {
             cards.add(new Card(cardShape, cardNumber));
         }
     }

@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.type.CardNumberType;
+import blackjack.domain.card.type.CardShapeType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,21 +21,21 @@ public class UsersTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        dealer.drawOneCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
 
         User user1 = new User("pobi");
-        user1.drawOneCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
+        user1.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
 
         User user2 = new User("jason");
-        user2.drawOneCard(new Card(CardShape.CLUB, CardNumber.SIX));
+        user2.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SIX));
 
         User user3 = new User("inbi");
-        user3.drawOneCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        user3.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
 
         User user4 = new User("mungto");
-        user4.drawOneCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user4.drawOneCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user4.drawOneCard(new Card(CardShape.CLUB, CardNumber.TWO));
+        user4.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
+        user4.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
+        user4.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TWO));
 
         List<User> convertUsers = new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
         users = new Users(convertUsers);
