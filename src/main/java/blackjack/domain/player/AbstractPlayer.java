@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class AbstractPlayer implements Player {
     protected static final int ACE_DIFF = 10;
     protected static final int BLACKJACK = 21;
-    private static final int FIRST_DRAW_CARDS_COUNT = 2;
+    private static final int TWO_CARDS_SIZE = 2;
 
     private final List<Card> cards;
     private final Name name;
@@ -21,7 +21,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void drawCard(final Card card) {
+    public void drawOneCard(final Card card) {
         cards.add(card);
     }
 
@@ -53,16 +53,14 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void drawRandomOneCard() {
-        Cards cards = Cards.getCards();
-        drawCard(cards.draw());
+    public void drawRandomOneCard(Cards allCards) {
+        drawOneCard(allCards.drawOneCard());
     }
 
     @Override
-    public void drawRandomTwoCards() {
-        Cards cards = Cards.getCards();
-        for (int i = 0; i < FIRST_DRAW_CARDS_COUNT; i++) {
-            drawCard(cards.draw());
+    public void drawRandomTwoCards(Cards allCards) {
+        for (int i = 0; i < TWO_CARDS_SIZE; i++) {
+            drawOneCard(allCards.drawOneCard());
         }
     }
 

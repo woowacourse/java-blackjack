@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +21,10 @@ public class Users {
         users = new ArrayList<>();
         Arrays.stream(usersNames.split(DELIMITER))
             .forEach(name -> users.add(new User(name)));
+    }
+
+    public void drawRandomTwoCards(Cards allCards) {
+        users.forEach(user -> user.drawRandomTwoCards(allCards));
     }
 
     public Map<Name, ResultType> getResult(Dealer dealer) {

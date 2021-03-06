@@ -1,20 +1,21 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 
 public interface Player {
-    void drawCard(final Card card);
+    void drawOneCard(final Card card);
 
     boolean isCanDraw();
 
-    void drawRandomTwoCards();
+    void drawRandomOneCard(Cards allCards);
+
+    void drawRandomTwoCards(Cards allCards);
 
     Name getName();
 
     List<Card> getCards();
 
     int getValue();
-
-    void drawRandomOneCard();
 }

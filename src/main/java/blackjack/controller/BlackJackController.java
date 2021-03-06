@@ -1,8 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.player.AllCardsOpenStrategy;
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerDTO;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
@@ -12,12 +11,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
+    private final Cards cards = new Cards();
+
     public void play() {
         Users users = new Users(InputView.getUsersName());
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
-        dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
         OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
@@ -25,8 +25,8 @@ public class BlackJackController {
     }
 
     private void drawTwoCards(Users users, Dealer dealer) {
-        dealer.drawRandomTwoCards();
-        users.getUsers().forEach(Player::drawRandomTwoCards);
+        dealer.drawRandomTwoCards(cards);
+        users.drawRandomTwoCards(cards);
     }
 
     private List<PlayerDTO> getUserDTOs(Users users) {
@@ -44,7 +44,7 @@ public class BlackJackController {
     private void askDrawContinue(User user) {
         String yesOrNo = InputView.getYesOrNo(new PlayerDTO(user));
         if (user.isDrawContinue(yesOrNo)) {
-            user.drawRandomOneCard();
+            user.drawRandomOneCard(cards);
         }
         printCardsWhenDraw(user);
     }
@@ -58,7 +58,7 @@ public class BlackJackController {
     private void dealerDraw(Dealer dealer) {
         if (dealer.isCanDraw()) {
             OutputView.printDealerDrawCardMessage();
-            dealer.drawRandomOneCard();
+            dealer.drawRandomOneCard(cards);
         }
     }
 }

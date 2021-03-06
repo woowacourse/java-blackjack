@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +22,8 @@ public class DealerTest {
     void canDrawCardWhen16() {
         Dealer dealer = new Dealer();
         Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
-        dealer.drawCard(eightCard);
-        dealer.drawCard(eightCard);
+        dealer.drawOneCard(eightCard);
+        dealer.drawOneCard(eightCard);
         assertThat(dealer.isCanDraw()).isTrue();
     }
 
@@ -32,8 +33,8 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
-        dealer.drawCard(tenCard);
-        dealer.drawCard(sevenCard);
+        dealer.drawOneCard(tenCard);
+        dealer.drawOneCard(sevenCard);
         assertThat(dealer.isCanDraw()).isFalse();
     }
 
@@ -41,7 +42,7 @@ public class DealerTest {
     @Test
     void cardOpenStrategy() {
         Dealer dealer = new Dealer();
-        dealer.drawRandomTwoCards();
+        dealer.drawRandomTwoCards(new Cards());
         assertThat(dealer.getCardsWithStrategy().size()).isEqualTo(1);
         dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
         assertThat(dealer.getCardsWithStrategy().size()).isEqualTo(2);

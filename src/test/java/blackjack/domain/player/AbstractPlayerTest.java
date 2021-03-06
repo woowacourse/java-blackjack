@@ -5,11 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class AbstractPlayerTest {
     private static final String TEST_NAME = "pobi";
+
+    private final Cards cards = new Cards();
 
     @DisplayName("카드 뽑기 테스트")
     @Test
@@ -17,7 +20,7 @@ public class AbstractPlayerTest {
         AbstractPlayer user = new User(TEST_NAME);
         Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
 
-        user.drawCard(twoCard);
+        user.drawOneCard(twoCard);
 
         assertThat(user.getCards()).containsExactly(twoCard);
     }
@@ -29,9 +32,9 @@ public class AbstractPlayerTest {
         Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
         Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
 
-        user.drawCard(tenCard);
-        user.drawCard(tenCard);
-        user.drawCard(aceCard);
+        user.drawOneCard(tenCard);
+        user.drawOneCard(tenCard);
+        user.drawOneCard(aceCard);
 
         assertThat(user.getValue()).isEqualTo(21);
     }
@@ -43,8 +46,8 @@ public class AbstractPlayerTest {
         Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
         Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
 
-        user.drawCard(tenCard);
-        user.drawCard(aceCard);
+        user.drawOneCard(tenCard);
+        user.drawOneCard(aceCard);
 
         assertThat(user.getValue()).isEqualTo(21);
     }
@@ -56,7 +59,7 @@ public class AbstractPlayerTest {
         assertThat(user.getCards().isEmpty()).isTrue();
 
         Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
-        user.drawCard(tenCard);
+        user.drawOneCard(tenCard);
         assertThat(user.getCards()).containsExactly(tenCard);
     }
 
@@ -66,7 +69,7 @@ public class AbstractPlayerTest {
         AbstractPlayer user = new User(TEST_NAME);
         assertThat(user.getCards().size()).isEqualTo(0);
 
-        user.drawRandomOneCard();
+        user.drawRandomOneCard(cards);
         assertThat(user.getCards().size()).isEqualTo(1);
     }
 
@@ -76,7 +79,7 @@ public class AbstractPlayerTest {
         AbstractPlayer user = new User(TEST_NAME);
         assertThat(user.getCards().size()).isEqualTo(0);
 
-        user.drawRandomTwoCards();
+        user.drawRandomTwoCards(cards);
         assertThat(user.getCards().size()).isEqualTo(2);
     }
 

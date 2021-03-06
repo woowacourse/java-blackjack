@@ -1,20 +1,28 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
     private static Cards instance;
-    private final List<Card> cards;
+    private final List<Card> cards = new ArrayList<>();
 
-    private Cards() {
-        cards = new ArrayList<>();
-        Arrays.stream(CardShape.values())
-            .forEach(shape -> Arrays.stream(CardNumber.values())
-                .forEach(number -> cards.add(new Card(shape, number))));
+    public Cards() {
+        createAllCards();
         Collections.shuffle(cards);
+    }
+
+    private void createAllCards() {
+        for (CardShape cardShape : CardShape.values()) {
+            createCardsWithShape(cardShape);
+        }
+    }
+
+    private void createCardsWithShape(CardShape cardShape) {
+        for (CardNumber cardNumber : CardNumber.values()) {
+            cards.add(new Card(cardShape, cardNumber));
+        }
     }
 
     public static Cards getCards() {
@@ -24,7 +32,7 @@ public class Cards {
         return instance;
     }
 
-    public Card draw() {
+    public Card drawOneCard() {
         return cards.remove(cards.size() - 1);
     }
 }

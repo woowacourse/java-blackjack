@@ -21,7 +21,7 @@ public class UserTest {
     void canDrawCardWhen1() {
         User user = new User(TEST_NAME);
         Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
-        user.drawCard(twoCard);
+        user.drawOneCard(twoCard);
         assertThat(user.isCanDraw()).isTrue();
     }
 
@@ -30,9 +30,9 @@ public class UserTest {
     void canDrawCardWhen21() {
         User user = new User(TEST_NAME);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
-        user.drawCard(sevenCard);
-        user.drawCard(sevenCard);
-        user.drawCard(sevenCard);
+        user.drawOneCard(sevenCard);
+        user.drawOneCard(sevenCard);
+        user.drawOneCard(sevenCard);
         assertThat(user.isCanDraw()).isTrue();
     }
 
@@ -41,10 +41,10 @@ public class UserTest {
     void cannotDrawCardWhen22() {
         User user = new User(TEST_NAME);
         Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
-        user.drawCard(sevenCard);
-        user.drawCard(sevenCard);
+        user.drawOneCard(sevenCard);
+        user.drawOneCard(sevenCard);
         Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
-        user.drawCard(eightCard);
+        user.drawOneCard(eightCard);
         assertThat(user.isCanDraw()).isFalse();
     }
 
@@ -86,10 +86,10 @@ public class UserTest {
     @Test
     void win() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawOneCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
+        user.drawOneCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
@@ -99,10 +99,10 @@ public class UserTest {
     @Test
     void loss() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawOneCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.SIX));
+        user.drawOneCard(new Card(CardShape.CLUB, CardNumber.SIX));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
@@ -112,10 +112,10 @@ public class UserTest {
     @Test
     void draw() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawOneCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        user.drawOneCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.DRAW);
@@ -125,12 +125,12 @@ public class UserTest {
     @Test
     void lossOver21() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawOneCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TWO));
+        user.drawOneCard(new Card(CardShape.CLUB, CardNumber.TEN));
+        user.drawOneCard(new Card(CardShape.CLUB, CardNumber.TEN));
+        user.drawOneCard(new Card(CardShape.CLUB, CardNumber.TWO));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
