@@ -39,8 +39,8 @@ public class Players {
 
     public void initTwoCardsByDealer(Dealer dealer) {
         for (Player player : this.players) {
-            player.receiveCard(dealer.giveCard());
-            player.receiveCard(dealer.giveCard());
+            player.receiveCard(dealer.drawCard());
+            player.receiveCard(dealer.drawCard());
         }
     }
 

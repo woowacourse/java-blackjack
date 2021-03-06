@@ -13,7 +13,7 @@ public class Dealer extends Participant {
         this.cardDeck = CardDeck.newShuffledDeck();
     }
 
-    public Card giveCard() {
+    public Card drawCard() {
         return cardDeck.draw();
     }
 

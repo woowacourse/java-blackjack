@@ -13,8 +13,8 @@ public class BlackjackManager {
     }
 
     public static void initGame(Players players, Dealer dealer) {
-        dealer.receiveCard(dealer.giveCard());
-        dealer.receiveCard(dealer.giveCard());
+        dealer.receiveCard(dealer.drawCard());
+        dealer.receiveCard(dealer.drawCard());
         players.initTwoCardsByDealer(dealer);
     }
 

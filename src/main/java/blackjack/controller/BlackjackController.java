@@ -35,14 +35,14 @@ public class BlackjackController {
         }
 
         while (!dealer.isOverLimitScore()) {
-            dealer.receiveCard(dealer.giveCard());
+            dealer.receiveCard(dealer.drawCard());
             OutputView.printDealerHit();
         }
     }
 
     private void playHit(Player player, Dealer dealer) {
         while (!player.isOverLimitScore() && InputView.getHitOrStay(player.getName())) {
-            player.receiveCard(dealer.giveCard());
+            player.receiveCard(dealer.drawCard());
             OutputView.printCards(player);
         }
         if (player.isOverLimitScore()) {
