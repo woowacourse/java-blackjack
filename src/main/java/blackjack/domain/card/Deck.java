@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class Deck {
     private static final String NO_MORE_CARD_ERROR_MSG = "덱에 더 이상 남은 카드가 없습니다.";
+
     private final LinkedList<Card> deck;
 
     private Deck(List<Card> deck) {

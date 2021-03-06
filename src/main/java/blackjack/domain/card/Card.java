@@ -29,12 +29,12 @@ public class Card {
         return this.suit == suit;
     }
 
-    public String getSuitLetter() {
-        return suit.getLetter();
-    }
-
     public boolean isSameValue(Value value) {
         return this.value == value;
+    }
+
+    public String getSuitLetter() {
+        return suit.getLetter();
     }
 
     public String getValueLetter() {

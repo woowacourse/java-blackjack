@@ -88,8 +88,6 @@ public class BlackjackGameService {
         return new UserCardsDto(userNameAndCards);
     }
 
-
-
     private void userDrawOrStop(Boolean isContinue, User playingUser) {
         if (isContinue) {
             playingUser.drawCard(blackjackGame.draw());

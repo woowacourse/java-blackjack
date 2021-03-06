@@ -11,8 +11,8 @@ public enum Status {
 
     private static final String NO_MATCH_CONDITION_ERROR_MSG = "점수 조건에 맞는 Status가 없습니다.";
 
-    private boolean canContinueGame;
-    private IntPredicate condition;
+    private final boolean canContinueGame;
+    private final IntPredicate condition;
 
     Status(boolean canContinueGame, IntPredicate condition) {
         this.canContinueGame = canContinueGame;

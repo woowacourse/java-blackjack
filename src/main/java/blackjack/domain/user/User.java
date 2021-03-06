@@ -5,8 +5,6 @@ import blackjack.domain.user.status.Status;
 import static blackjack.domain.user.Dealer.DEALER_NAME;
 
 public class User extends Participant {
-    private boolean onPlaying = false;
-
     public User(Name name) {
         super(name);
         whenUserNameEqualsDealerName();

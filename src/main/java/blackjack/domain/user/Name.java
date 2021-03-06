@@ -2,8 +2,6 @@ package blackjack.domain.user;
 
 import java.util.Objects;
 
-import static blackjack.domain.user.Dealer.DEALER_NAME;
-
 public class Name {
     private final String name;
 
