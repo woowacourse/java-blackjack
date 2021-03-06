@@ -30,26 +30,13 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public int getValue() {
-        int lowValue = getLowValue();
-        int highValue = getHighValue(lowValue);
-        if (highValue > BLACKJACK) {
-            return lowValue;
-        }
-        return highValue;
-    }
-
-    private int getLowValue() {
-        return cards.stream()
+        int valueSum = cards.stream()
             .mapToInt(Card::getValue)
             .sum();
-    }
-
-    private int getHighValue(int lowValue) {
-        int highValue = lowValue;
-        if (cards.stream().anyMatch(card -> card.getCardNumber() == CardNumber.ACE)) {
-            highValue += ACE_DIFF;
+        if (valueSum + ACE_DIFF <= BLACKJACK) {
+            return valueSum + ACE_DIFF;
         }
-        return highValue;
+        return valueSum;
     }
 
     @Override
