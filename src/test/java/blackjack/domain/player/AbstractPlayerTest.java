@@ -64,20 +64,20 @@ public class AbstractPlayerTest {
     @Test
     void drawRandomOneCard() {
         AbstractPlayer user = new User(TEST_NAME);
-        assertThat(user.getCards().size()).isEqualTo(0);
+        assertThat(user.getCards()).hasSize(0);
 
         user.drawRandomOneCard();
-        assertThat(user.getCards().size()).isEqualTo(1);
+        assertThat(user.getCards()).hasSize(1);
     }
 
     @DisplayName("랜덤 카드 두 개 뽑기 테스트")
     @Test
     void drawRandomTwoCard() {
         AbstractPlayer user = new User(TEST_NAME);
-        assertThat(user.getCards().size()).isEqualTo(0);
+        assertThat(user.getCards()).hasSize(0);
 
         user.drawRandomTwoCards();
-        assertThat(user.getCards().size()).isEqualTo(2);
+        assertThat(user.getCards()).hasSize(2);
     }
 
     @DisplayName("이름 반환 테스트")
