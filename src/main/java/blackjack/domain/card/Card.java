@@ -12,14 +12,6 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
     public String findTypeName() {
         return type.getName();
     }
