@@ -15,7 +15,7 @@ public class Dealer extends Player {
         super(cards, new Name("딜러"));
     }
 
-    public boolean isEnoughScore() {
+    public boolean canDrawMoreCard() {
         return getScore() > DEALER_SCORE_PIVOT;
     }
 
