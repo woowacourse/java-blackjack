@@ -19,6 +19,9 @@ public class OutputView {
     private static final String WIN_MESSAGE = ": 승";
     private static final String LOSE_MESSAGE = ": 패";
 
+    private OutputView() {
+    }
+
     public static void distributeMessage(final String players) {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, players);
     }
