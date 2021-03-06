@@ -1,11 +1,19 @@
 package blackjack.domain.participants;
 
-public class Player extends Participants {
+import blackjack.domain.card.Card;
+import java.util.List;
+
+public class Player extends Participant {
 
     private boolean win = true;
 
     public Player(String name) {
         super(name);
+    }
+
+    @Override
+    List<Card> pickCards() {
+        return getPlayerCards();
     }
 
     public void lose() {

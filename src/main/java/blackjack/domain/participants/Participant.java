@@ -4,13 +4,13 @@ import blackjack.domain.PlayerCards;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-public class Participants {
+public abstract class Participant {
     private static final int BUST_LIMIT = 22;
 
     private final String name;
     private final PlayerCards playerCards;
 
-    public Participants(final String name) {
+    public Participant(final String name) {
         this.name = name;
         this.playerCards = new PlayerCards();
     }
@@ -38,4 +38,6 @@ public class Participants {
     public int calculate() {
         return playerCards.calculate();
     }
+
+    abstract List<Card> pickCards();
 }

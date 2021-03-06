@@ -1,12 +1,21 @@
 package blackjack.domain.participants;
 
-public class Dealer extends Participants {
+import blackjack.domain.card.Card;
+import java.util.Collections;
+import java.util.List;
+
+public class Dealer extends Participant {
 
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
     private int winCount = 0;
 
     public Dealer(final String name) {
         super(name);
+    }
+
+    @Override
+    List<Card> pickCards() {
+        return Collections.singletonList(getPlayerCards().get(0));
     }
 
     public boolean checkMoreCardAvailable() {
