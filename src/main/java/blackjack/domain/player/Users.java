@@ -30,6 +30,10 @@ public class Users {
         return result;
     }
 
+    public void drawRandomTwoCard() {
+        users.forEach(user -> drawRandomTwoCard());
+    }
+
     public List<User> getUsers() {
         return Collections.unmodifiableList(users);
     }

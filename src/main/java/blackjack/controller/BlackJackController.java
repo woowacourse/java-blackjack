@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.player.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerDTO;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
@@ -26,7 +25,7 @@ public class BlackJackController {
 
     private void drawTwoCards(Users users, Dealer dealer) {
         dealer.drawRandomTwoCards();
-        users.getUsers().forEach(Player::drawRandomTwoCards);
+        users.drawRandomTwoCard();
     }
 
     private List<PlayerDTO> getUserDTOs(Users users) {
