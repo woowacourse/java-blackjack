@@ -20,7 +20,7 @@ class CardsTest {
         assertThat(cards.isBlackJack()).isEqualTo(true);
     }
 
-    @DisplayName("카드 뭉치가 블랙잭이 아닌 것 확인한다.")
+    @DisplayName("카드 뭉치가 블랙잭이 아닌 것을 확인한다.")
     @Test
     void testIsNotBlackJack() {
         Cards cards = new Cards(
@@ -45,7 +45,7 @@ class CardsTest {
         assertThat(cards.isBurst()).isEqualTo(true);
     }
 
-    @DisplayName("카드 뭉치가 버스트인 것을 확인한다.")
+    @DisplayName("카드 뭉치가 버스트가 아 것을 확인한다.")
     @Test
     void testCardsIsNotBurst() {
         Cards cards = new Cards(
