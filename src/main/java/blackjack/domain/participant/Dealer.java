@@ -1,10 +1,11 @@
-package blackjack.domain.user;
+package blackjack.domain.participant;
 
 import blackjack.domain.MatchResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
-public class Dealer implements User {
+public class Dealer implements Participant {
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_HIT_THRESHOLD = 16;
 
@@ -44,5 +45,16 @@ public class Dealer implements User {
     @Override
     public int getScore() {
         return cards.getScore();
+    }
+
+    @Override
+    public void drawAtFirst(Deck deck) {
+        hit(deck.pop());
+        hit(deck.pop());
+    }
+
+    @Override
+    public String showCardsAtFirst() {
+        return getFirstCard().getName();
     }
 }

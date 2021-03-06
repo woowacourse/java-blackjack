@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.user.Player;
+import blackjack.domain.participant.Player;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

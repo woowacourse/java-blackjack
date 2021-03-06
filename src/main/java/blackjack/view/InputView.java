@@ -12,7 +12,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> inputPlayers() {
+    public static List<String> getPlayerNameInput() {
         return Arrays.asList(scanner.nextLine().split(COMMA));
     }
 

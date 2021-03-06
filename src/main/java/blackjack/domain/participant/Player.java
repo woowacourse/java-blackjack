@@ -1,9 +1,10 @@
-package blackjack.domain.user;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
-public class Player implements User {
+public class Player implements Participant {
     private static final int BLACK_JACK_SCORE= 21;
     private static final String NAME_INPUT_ERROR_MESSAGE = "이름은 1자 이상이어야 합니다.";
 
@@ -44,5 +45,16 @@ public class Player implements User {
     @Override
     public int getScore() {
         return cards.getScore();
+    }
+
+    @Override
+    public void drawAtFirst(Deck deck) {
+        hit(deck.pop());
+        hit(deck.pop());
+    }
+
+    @Override
+    public String showCardsAtFirst() {
+        return getCards();
     }
 }
