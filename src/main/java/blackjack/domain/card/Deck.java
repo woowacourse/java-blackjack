@@ -1,32 +1,40 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck {
-    private static final List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
-    static {
-        for (Suit suit : Suit.values()) {
-            cards.addAll(cardsOf(suit));
+    public Deck() {
+        this(1);
+    }
+
+    public Deck(int count) {
+        generatePlayingCardOf(count);
+        Collections.shuffle(cards);
+    }
+
+    private void generatePlayingCardOf(int count) {
+        for (int i = 0; i < count; i++) {
+            generatePlayingCard();
         }
     }
 
-    private static List<Card> cardsOf(Suit suit) {
-        return Arrays.stream(Number.values())
-                     .map(number -> new Card(number, suit))
-                     .collect(Collectors.toList());
+    private void generatePlayingCard() {
+        for (Suit suit : Suit.values()) {
+            generateCardsOf(suit);
+        }
     }
 
-    public static Card draw() {
-        Collections.shuffle(cards);
-        return cards.get(0);
+    private void generateCardsOf(Suit suit) {
+        for (Number number : Number.values()) {
+            cards.add(new Card(number, suit));
+        }
     }
 
-    public static List<Card> getCards() {
-        return cards;
+    public Card draw() {
+        return cards.remove(0);
     }
 }

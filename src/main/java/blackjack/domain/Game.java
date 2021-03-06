@@ -13,13 +13,16 @@ import java.util.stream.Collectors;
 public class Game {
     public static final int BLACKJACK_NUMBER = 21;
     public static final String PLAYER_NUMBER_ERROR = "플레이어는 최소 1명 이상이여야 합니다.";
+    public static final int NUMBER_OF_DECK = 4;
 
     private final Dealer dealer;
     private final List<Player> players;
+    private final Deck deck;
 
     private Game(List<Player> players) {
         this.dealer = new Dealer();
         this.players = players;
+        this.deck = new Deck(NUMBER_OF_DECK);
     }
 
     public static Game of(List<String> playerNames) {
@@ -39,12 +42,12 @@ public class Game {
     }
 
     private void addTwoCard(Participant participant) {
-        participant.addCard(Deck.draw());
-        participant.addCard(Deck.draw());
+        participant.addCard(deck.draw());
+        participant.addCard(deck.draw());
     }
 
     public void giveCard(Participant participant) {
-        participant.addCard(Deck.draw());
+        participant.addCard(deck.draw());
     }
 
     public int playDealerTurn() {

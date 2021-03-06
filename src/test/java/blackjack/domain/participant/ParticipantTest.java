@@ -10,16 +10,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParticipantTest {
     private Participant participant;
+    private Deck deck;
 
     @BeforeEach
     void setUp() {
         participant = new Player("wannte");
+        deck = new Deck();
     }
 
     @Test
     @DisplayName("플레이어 카드 추가")
     void addCard() {
-        Card card = Deck.draw();
+        Card card = deck.draw();
         participant.addCard(card);
         assertThat(participant.getCards()).containsExactly(card);
     }
