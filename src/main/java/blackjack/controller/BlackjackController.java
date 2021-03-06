@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
+    private static final String CONTINUE_GAME_MARK = "y";
     private static final String END_GAME_MARK = "n";
 
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final List<Participant> participants = participantsSetUp();
-        final List<Participant> players = new ArrayList<>(
-            participants.subList(1, participants.size()));
+        final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
         showParticipantsName(participants);
@@ -113,7 +113,7 @@ public class BlackjackController {
     }
 
     private String validateMoreCardOption(final String userInput) {
-        if ("y".equals(userInput) || "n".equals(userInput)) {
+        if (CONTINUE_GAME_MARK.equals(userInput) || END_GAME_MARK.equals(userInput)) {
             return userInput;
         }
         throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
