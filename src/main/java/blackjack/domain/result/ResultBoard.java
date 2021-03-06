@@ -4,17 +4,14 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ResultBoard {
     private final Map<Player, Result> resultBoard;
 
     public ResultBoard(Dealer dealer, Players players) {
-        this.resultBoard = new HashMap<>();
+        this.resultBoard = new LinkedHashMap<>();
         putResultByPlayer(dealer, players);
     }
 
