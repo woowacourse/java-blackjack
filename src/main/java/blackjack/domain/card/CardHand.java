@@ -36,7 +36,8 @@ public class CardHand {
     }
     
     private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.stream()
+                    .anyMatch(Card::isAce);
     }
     
     private boolean canChangeAceValueToEleven(int sum) {
