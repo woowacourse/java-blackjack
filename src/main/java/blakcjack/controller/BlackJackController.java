@@ -2,7 +2,6 @@ package blakcjack.controller;
 
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.game.BlackjackGame;
-import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
@@ -11,7 +10,6 @@ import blakcjack.view.InputView;
 import blakcjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 import static blakcjack.view.InputView.takePlayerNamesInput;
 import static blakcjack.view.OutputView.printInitialHands;
@@ -27,7 +25,7 @@ public class BlackJackController {
 		letPlayersDraw(blackjackGame);
 		letDealerDraw(blackjackGame);
 
-		OutcomeStatistics outcomeStatistics = getOutcomeStatistics(blackjackGame);
+		OutcomeStatistics outcomeStatistics = blackjackGame.getOutcomeStatistics();
 		OutputView.printFinalHandsSummary(blackjackGame);
 		OutputView.printFinalOutcomeSummary(outcomeStatistics);
 	}
@@ -56,10 +54,5 @@ public class BlackJackController {
 			blackjackGame.distributeOneCardTo(dealer);
 			OutputView.printDealerAdditionalCardMessage();
 		}
-	}
-
-	private OutcomeStatistics getOutcomeStatistics(final BlackjackGame blackjackGame) {
-		final Map<String, Outcome> playersOutcome = blackjackGame.getPlayersOutcome();
-		return new OutcomeStatistics(playersOutcome);
 	}
 }

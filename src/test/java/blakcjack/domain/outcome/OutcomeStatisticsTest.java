@@ -57,7 +57,7 @@ class OutcomeStatisticsTest {
 		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
 		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
 
-		OutcomeStatistics outcomeStatistics = new OutcomeStatistics(blackjackGame.getPlayersOutcome());
+		OutcomeStatistics outcomeStatistics = blackjackGame.getOutcomeStatistics();
 		assertThat(outcomeStatistics.getDealerOutcome()).isEqualTo(dealerOutcome);
 		assertThat(outcomeStatistics.getPlayersOutcome()).isEqualTo(playersOutcome);
 	}

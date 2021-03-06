@@ -3,6 +3,7 @@ package blakcjack.domain.game;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
+import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
@@ -57,13 +58,13 @@ public class BlackjackGame {
 		return dealer;
 	}
 
-	public Map<String, Outcome> getPlayersOutcome() {
+	public OutcomeStatistics getOutcomeStatistics() {
 		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
 		for (final Player player : players) {
 			final Outcome playerOutcome = Outcome.of(player, dealer);
 			playersOutcome.put(player.getName(), playerOutcome);
 		}
-		return playersOutcome;
+		return new OutcomeStatistics(playersOutcome);
 	}
 }

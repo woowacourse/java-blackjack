@@ -6,6 +6,7 @@ import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
+import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
@@ -103,7 +104,6 @@ class BlackjackGameTest {
 		playersOutcome.put("sakjung", Outcome.DRAW);
 		playersOutcome.put("mediumBear", Outcome.LOSE);
 
-		assertThat(blackjackGame.getPlayersOutcome()).isEqualTo(playersOutcome);
-
+		assertThat(blackjackGame.getOutcomeStatistics()).isEqualTo(new OutcomeStatistics(playersOutcome));
 	}
 }
