@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.UserDrawContinue;
 
 public class User extends AbstractPlayer {
     private static final String YES = "y";
@@ -15,21 +16,16 @@ public class User extends AbstractPlayer {
         return isDrawStop;
     }
 
-    private void stopDraw() {
-        isDrawStop = true;
-    }
-
     @Override
     public boolean isCanDraw() {
         return !(isDrawStop() || isOverBlackJack());
     }
 
-    public boolean isDrawContinue(String input) {
-        drawInputValidate(input);
-        if (YES.equals(input)) {
+    public boolean isDrawContinue(UserDrawContinue userDrawContinue) {
+        if (userDrawContinue.isContinue()) {
             return true;
         }
-        stopDraw();
+        isDrawStop = true;
         return false;
     }
 
@@ -43,12 +39,6 @@ public class User extends AbstractPlayer {
             return ResultType.DRAW;
         }
         return ResultType.WIN;
-    }
-
-    private void drawInputValidate(String value) {
-        if (!(YES.equals(value) || NO.equals(value))) {
-            throw new IllegalArgumentException("입력은 y 또는 n만 가능합니다.");
-        }
     }
 
     private boolean isOverBlackJack() {

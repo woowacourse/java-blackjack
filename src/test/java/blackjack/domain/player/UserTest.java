@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
@@ -68,18 +69,14 @@ public class UserTest {
     @Test
     void isDrawContinue() {
         User user = new User(TEST_NAME);
+        UserDrawContinue userDrawContinue = new UserDrawContinue("y");
+        UserDrawContinue userDrawNotContinue = new UserDrawContinue("n");
 
-        assertThat(user.isDrawContinue("y")).isTrue();
+        assertThat(user.isDrawContinue(userDrawContinue)).isTrue();
         assertThat(user.isDrawStop()).isFalse();
 
-        assertThat(user.isDrawContinue("n")).isFalse();
+        assertThat(user.isDrawContinue(userDrawNotContinue)).isFalse();
         assertThat(user.isDrawStop()).isTrue();
-
-        assertThat(user.isDrawContinue("y")).isTrue();
-        assertThat(user.isDrawStop()).isTrue();
-
-        assertThatThrownBy(() -> user.isDrawContinue("a"))
-            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("승패 판단 - 승")

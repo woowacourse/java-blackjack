@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
+import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.strategy.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
@@ -52,7 +53,7 @@ public class BlackJackController {
 
     private void askDrawContinue(User user) {
         String yesOrNo = InputView.getYesOrNo(new PlayerResultDTO(user));
-        if (user.isDrawContinue(yesOrNo)) {
+        if (user.isDrawContinue(new UserDrawContinue(yesOrNo))) {
             user.drawRandomOneCard(cards);
         }
         printCardsWhenDraw(user);
