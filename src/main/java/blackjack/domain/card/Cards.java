@@ -21,7 +21,9 @@ public class Cards {
     }
 
     private int calculate() {
-        int score = cards.stream().mapToInt(Card::value).sum();
+        int score = cards.stream()
+                .mapToInt(Card::value)
+                .sum();
 
         if (isContainAce() && score <= UPPER_ACE_LIMIT_SCORE) {
             return score + UPPER_ACE_BONUS_SCORE;
