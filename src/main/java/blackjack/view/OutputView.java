@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.GameResult;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,25 +33,28 @@ public class OutputView {
             String.join(DELIMITER, playerNames));
     }
 
-    public static void printParticipantCards(String participantName, Cards cards) {
+    public static void printPlayerCards(Player player) {
+        Cards cards = player.getCards();
         List<String> results = new ArrayList<>();
+
         for (Card card : cards.getCards()) {
             results.add(card.findTypeName() + card.findDenominationName());
         }
-        System.out.printf(PRINT_CARDS_FORMAT, participantName, String.join(DELIMITER, results));
+        System.out.printf(PRINT_CARDS_FORMAT, player.getName(), String.join(DELIMITER, results));
     }
 
     public static void printDealerCardDrawMessage() {
         System.out.print(DEALER_ONE_MORE_DRAW_MESSAGE);
     }
 
-    public static void printParticipantCardsWithScore(String participantName, Cards cards) {
+    public static void printParticipantCardsWithScore(Participant participant) {
+        Cards cards = participant.getCards();
         List<String> results = new ArrayList<>();
 
         for (Card card : cards.getCards()) {
             results.add(card.findTypeName() + card.findDenominationName());
         }
-        System.out.printf(PRINT_CARDS_SCORE_FORMAT, participantName,
+        System.out.printf(PRINT_CARDS_SCORE_FORMAT, participant.getName(),
             String.join(DELIMITER, results), cards.getScore());
     }
 
