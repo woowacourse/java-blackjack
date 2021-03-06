@@ -57,7 +57,7 @@ public class BlackjackController {
 
     private void askWantToHit(Player player) {
         while (isAbleToAskHit(player) &&
-                Answer.isYes(Answer.of(InputView.inputDrawAnswer()))) {
+                Answer.of(InputView.inputDrawAnswer()).isYes()) {
             player.hit();
             OutputView.printPlayerCards(player);
         }

@@ -19,7 +19,7 @@ public enum Answer {
                 .orElseThrow(() -> new IllegalArgumentException("y, n로만 대답할 수 있습니다."));
     }
 
-    public static boolean isYes(Answer answer) {
-        return YES.equals(answer);
+    public boolean isYes() {
+        return YES.equals(this);
     }
 }

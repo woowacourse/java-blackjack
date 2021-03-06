@@ -30,6 +30,6 @@ public class AnswerTest {
     @DisplayName("y가 입력되는 되는 경우를 확인한다.")
     @Test
     void isYes() {
-        assertThat(Answer.isYes(Answer.of("y"))).isTrue();
+        assertThat(Answer.of("y").isYes()).isTrue();
     }
 }
