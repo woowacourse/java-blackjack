@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-    private final Cards cards = new Cards();
+    private Cards cards;
 
     public void play() {
+        cards = new Cards();
         Users users = new Users(InputView.getUsersName());
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
