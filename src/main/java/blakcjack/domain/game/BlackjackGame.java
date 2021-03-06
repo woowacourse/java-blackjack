@@ -30,7 +30,7 @@ public class BlackjackGame {
 	private void validateDuplication(final List<String> names) {
 		Set<String> nameGroup = new HashSet<>(names);
 		if (nameGroup.size() != names.size()) {
-			throw new DuplicatePlayerNamesException();
+			throw new DuplicatePlayerNamesException(DUPLICATE_NAME_ERROR);
 		}
 	}
 

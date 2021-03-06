@@ -41,7 +41,7 @@ class BlackjackGameTest {
 	@Test
 	void validateDuplicateNames() {
 		assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(DuplicatePlayerNamesException.class)
 				.hasMessage(DUPLICATE_NAME_ERROR);
 	}
 
