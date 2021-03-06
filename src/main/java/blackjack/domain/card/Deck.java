@@ -37,8 +37,4 @@ public class Deck {
         
         return deck.remove(TOP_INDEX);
     }
-    
-    public List<Card> getDeck() {
-        return deck;
-    }
 }

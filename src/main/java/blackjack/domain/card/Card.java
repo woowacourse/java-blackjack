@@ -12,16 +12,12 @@ public class Card {
         this.rank = rank;
     }
     
-    public String getRankInitial() {
-        return rank.getInitial();
-    }
-    
     public int getRankValue() {
         return rank.getNumber();
     }
     
-    public String getSuitName() {
-        return suit.getName();
+    public String getJoinedInitialAndSuit() {
+        return rank.getInitial() + suit.getName();
     }
     
     public boolean isAce() {
