@@ -19,8 +19,13 @@ class RoundTest {
         Card spadeCard = Card.of("스페이드", "10");
         Card heartCard = Card.of("하트", "A");
         Card cloverCard = Card.of("클로버", "7");
+        Card spadeCard1 = Card.of("스페이드", "3");
+        Card heartCard1 = Card.of("하트", "5");
+        Card cloverCard1 = Card.of("클로버", "2");
+
         List<Card> cards = Arrays.asList(
-                spadeCard, heartCard, cloverCard
+                spadeCard, heartCard, cloverCard,
+                spadeCard1, heartCard1, cloverCard1
         );
 
         List<Player> players = Arrays.asList(
@@ -28,6 +33,8 @@ class RoundTest {
                 new Player("jason")
         );
         Round round = new Round(cards, new Dealer(), players);
-        assertThat(round.drawCards(2)).containsExactly(spadeCard, heartCard);
+        assertThat(round.getDealerCardStatus()).containsExactly(spadeCard.getCardStatus(), heartCard.getCardStatus());
+        assertThat(round.getPlayers().get(0).getCards()).containsExactly(cloverCard, spadeCard1);
+        assertThat(round.getPlayers().get(1).getCards()).containsExactly(heartCard1, cloverCard1);
     }
 }

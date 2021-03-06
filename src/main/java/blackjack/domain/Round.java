@@ -22,6 +22,7 @@ public class Round {
         this.shuffledCards = new ArrayList<>(cards);
         this.dealer = dealer;
         this.players = new ArrayList<>(players);
+        startRound();
     }
 
     public List<Card> drawCards(int number) {
@@ -30,7 +31,7 @@ public class Round {
                 .collect(Collectors.toList());
     }
 
-    public void initialize() {
+    public void startRound() {
         dealer.addFirstCards(drawCards(FIRST_TWO_CARD));
         players.forEach(player -> player.addFirstCards(drawCards(FIRST_TWO_CARD)));
     }

@@ -91,7 +91,6 @@ public class GameController {
                 .collect(Collectors.toList());
         isDuplicatePlayers(players);
         Round round = new Round(Card.getShuffledCards(), dealer, players);
-        round.initialize();
         return round;
     }
 

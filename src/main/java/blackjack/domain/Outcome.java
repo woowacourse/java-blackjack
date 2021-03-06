@@ -8,8 +8,7 @@ import static blackjack.domain.Round.GAME_OVER_SCORE;
 public enum Outcome {
     WIN("승", (a, b) -> a > b),
     LOSE("패", (a, b) -> a < b),
-    DRAW("무", (a, b) -> a == b),
-    NOT_FOUND("예측되는 승패를 찾을 수 없습니다.", null);
+    DRAW("무", (a, b) -> a == b);
 
     private final String name;
     private final BiPredicate<Integer, Integer> compareFunction;
@@ -25,13 +24,13 @@ public enum Outcome {
 
     public static Outcome findOutcome(int dealerScore, int playerScore) {
         Outcome outcome = getOutcomeWhenBuster(dealerScore, playerScore);
-        if (outcome != NOT_FOUND) {
+        if (outcome != null) {
             return outcome;
         }
         return Arrays.stream(values())
                 .filter(value -> value.compareFunction.test(dealerScore, playerScore))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND.getName()));
+                .orElseThrow(() -> new IllegalArgumentException("예측되는 승패를 찾을 수 없습니다."));
     }
 
     private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {
@@ -46,7 +45,7 @@ public enum Outcome {
         if (playerScore > GAME_OVER_SCORE) {
             return WIN;
         }
-        return NOT_FOUND;
+        return null;
     }
 
     public static Outcome reverseResult(Outcome outcome) {
