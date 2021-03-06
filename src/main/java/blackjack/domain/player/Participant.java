@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 public abstract class Participant {
 
@@ -21,8 +22,17 @@ public abstract class Participant {
         return cards;
     }
 
+    public void draw(Deck deck) {
+        cards.add(deck.draw());
+    }
+
     public void draw(Card card) {
         cards.add(card);
+    }
+
+    public void initialDraw(Deck deck) {
+        cards.add(deck.draw());
+        cards.add(deck.draw());
     }
 
     public int getScore() {

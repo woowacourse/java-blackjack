@@ -23,10 +23,18 @@ public class BlackjackController {
     private void turnStart(Deck deck, Dealer dealer, List<Player> players) {
         handOutCards(deck, dealer, players);
         printHandOutCardsResult(dealer, players);
+
         drawPhaseStart(deck, players, dealer);
         printDealerPlayersScore(players, dealer);
+
         calculateBlackJackGameResult(players, dealer);
         OutputView.printGameResult(players, dealer);
+    }
+
+    private void handOutCards(Deck deck, Dealer dealer, List<Player> players) {
+        OutputView.printHandOutCardsMessage(dealer, players);
+        dealer.initialDraw(deck);
+        players.forEach(player -> player.initialDraw(deck));
     }
 
     private void printDealerPlayersScore(List<Player> players, Dealer dealer) {
@@ -43,18 +51,6 @@ public class BlackjackController {
             .collect(Collectors.toList());
     }
 
-    private void handOutCards(Deck deck, Dealer dealer, List<Player> players) {
-        OutputView.printHandOutCardsMessage(dealer, players);
-
-        dealer.draw(deck.draw());
-        dealer.draw(deck.draw());
-
-        for (Player player : players) {
-            player.draw(deck.draw());
-            player.draw(deck.draw());
-        }
-    }
-
     private void printHandOutCardsResult(Dealer dealer, List<Player> players) {
         OutputView.printDealerCards(dealer.getName(), dealer.getCards());
         for (Player player : players) {
@@ -64,7 +60,7 @@ public class BlackjackController {
 
     private void playersDrawPhaseStart(Deck deck, Player player) {
         while (player.canDraw() && InputView.getWhetherDrawCard(player.getName())) {
-            player.draw(deck.draw());
+            player.draw(deck);
             OutputView.printParticipantCards(player.getName(), player.getCards());
         }
 
@@ -73,7 +69,7 @@ public class BlackjackController {
     private void dealerDrawPhaseStart(Deck deck, Dealer dealer) {
         if (dealer.canDraw()) {
             OutputView.printDealerCardDrawMessage();
-            dealer.draw(deck.draw());
+            dealer.draw(deck);
         }
     }
 
