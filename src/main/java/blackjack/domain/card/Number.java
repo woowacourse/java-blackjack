@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public enum Number {
     ACE("A", 11, 1),
@@ -19,15 +17,6 @@ public enum Number {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final Map<String, Number> NUMBERS = new HashMap<>();
-    private static final String WRONG_NUMBER_EXCEPTION_MESSAGE = "입력된 숫자는 없는 카드 숫자입니다! : %s";
-
-    static {
-        for (Number number : values()) {
-            NUMBERS.put(number.name, number);
-        }
-    }
-
     private final String name;
     private final int score;
     private final int secondScore;
@@ -43,11 +32,14 @@ public enum Number {
     }
 
     public static Number from(String name) {
-        Number number = NUMBERS.get(name);
-        if (Objects.isNull(number)) {
-            throw new IllegalArgumentException(String.format(WRONG_NUMBER_EXCEPTION_MESSAGE, name));
-        }
-        return number;
+        return Arrays.stream(Number.values())
+                .filter(number -> number.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 카드 숫자를 찾을 수 없습니다. (입력 : " + name + ")"));
+    }
+
+    public boolean equals(String name) {
+        return this.name.equals(name);
     }
 
     public String getName() {

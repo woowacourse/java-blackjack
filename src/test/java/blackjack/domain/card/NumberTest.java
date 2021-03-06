@@ -46,7 +46,7 @@ class NumberTest {
     void number_wrong_name_exception_test(String name) {
         assertThatThrownBy(() -> Number.from(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format("입력된 숫자는 없는 카드 숫자입니다! : %s", name));
+                .hasMessage("해당 카드 숫자를 찾을 수 없습니다. (입력 : " + name + ")");
     }
 
     @DisplayName("입력한 문자로 가져온 Number 객체의 name은 입력값과 같아야 한다.")
