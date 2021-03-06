@@ -12,16 +12,16 @@ public class Player {
     private static final int BUST_LIMIT = 22;
 
     private final String name;
-    private final List<Card> myCards;
+    private final List<Card> cards;
     private boolean win = true;
 
     public Player(final String name) {
         this.name = name;
-        this.myCards = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     public void receiveCard(final Card card) {
-        myCards.add(card);
+        cards.add(card);
     }
 
     public String getName() {
@@ -29,11 +29,11 @@ public class Player {
     }
 
     public int getCardCount() {
-        return myCards.size();
+        return cards.size();
     }
 
-    public List<Card> getMyCards() {
-        return Collections.unmodifiableList(myCards);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public boolean isBust() {
@@ -41,7 +41,7 @@ public class Player {
     }
 
     public int calculate() {
-        final int aceCount = (int) myCards.stream()
+        final int aceCount = (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
         if (aceCount == 0) {
@@ -51,14 +51,14 @@ public class Player {
     }
 
     private int calculateSingleCase() {
-        return myCards.stream()
+        return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
     }
 
     private int calculateMultipleCase(final int aceCount) {
         final List<Integer> possibleSum = new ArrayList<>();
-        final int sumExceptAce = myCards.stream()
+        final int sumExceptAce = cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getCardNumber)
                 .sum();

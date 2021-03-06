@@ -37,7 +37,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("참가자가 갖고 있는 카드의 합을 확인")
-    void calculateMyCardSum() {
+    void calculateCardSum() {
         player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         assertThat(player.calculate()).isEqualTo(12);
@@ -45,7 +45,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("에이스 카드가 하나있을 때 합 구하기")
-    void calculateMyCardSumWhenAceIsOne() {
+    void calculateCardSumWhenAceIsOne() {
         player.receiveCard(new Card(CardNumber.JACK, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.FIVE, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
@@ -55,7 +55,7 @@ public class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12"}, delimiter = ':')
     @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
-    void calculateMyCardSumWhenAceIsTwo(final String input, final int expected) {
+    void calculateCardSumWhenAceIsTwo(final String input, final int expected) {
         final String[] inputs = input.split(",");
         for (final String number : inputs) {
             final CardNumber cardNumber = CardNumber.valueOf(number);
