@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardHand;
-import blackjack.domain.card.CompeteResult;
 
 import java.util.ArrayList;
 
@@ -22,27 +21,7 @@ public class Player extends Participant {
         return sumCardHand() <= MAXIMUM_THRESHOLD;
     }
     
-    public CompeteResult compete(Dealer dealer) {
-        if (isPlayerWin(dealer)) {
-            return CompeteResult.WIN;
-        }
-        
-        if (isPlayerDefeat(dealer)) {
-            return CompeteResult.DEFEAT;
-        }
-        
-        return CompeteResult.DRAW;
-    }
-    
-    private boolean isPlayerWin(Dealer dealer) {
-        return (sumCardHand() > dealer.sumCardHand()) && !isBurst();
-    }
-    
     public boolean isBurst() {
-        return sumCardHand() > MAXIMUM_THRESHOLD;
-    }
-    
-    private boolean isPlayerDefeat(Dealer dealer) {
-        return sumCardHand() < dealer.sumCardHand() || isBurst();
+        return !canReceive();
     }
 }
