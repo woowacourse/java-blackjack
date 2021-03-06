@@ -11,7 +11,11 @@ public class Dealer extends AbstractPlayer {
 
     public Dealer() {
         super(DEALER_NAME);
-        cardOpenStrategy = new OneCardOpenStrategy();
+        this.cardOpenStrategy = new OneCardOpenStrategy();
+    }
+
+    public void setCardOpenStrategy(CardOpenStrategy cardOpenStrategy) {
+        this.cardOpenStrategy = cardOpenStrategy;
     }
 
     @Override
@@ -19,11 +23,8 @@ public class Dealer extends AbstractPlayer {
         return getValue() <= DRAW_BOUND;
     }
 
-    public void setCardOpenStrategy(CardOpenStrategy cardOpenStrategy) {
-        this.cardOpenStrategy = cardOpenStrategy;
-    }
-
-    public List<Card> getCardsWithStrategy() {
+    @Override
+    public List<Card> getCards() {
         return cardOpenStrategy.getCardsWithStrategy(super.getCards());
     }
 }
