@@ -7,21 +7,34 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 public enum Result {
-    WIN("승", (playerScore, dealerScore) -> playerScore > dealerScore),
-    STAND_OFF("무", Integer::equals),
-    LOSE("패", (playerScore, dealerScore) -> playerScore < dealerScore);
+    WIN("승", (playerNotBust, dealerNotBust) -> playerNotBust && !dealerNotBust,
+            (playerScore, dealerScore) -> playerScore > dealerScore),
+    STAND_OFF("무", (playerNotBust, dealerNotBust) -> !playerNotBust && !dealerNotBust,
+            Integer::equals),
+    LOSE("패", (playerNotBust, dealerNotBust) -> !playerNotBust && dealerNotBust,
+            (playerScore, dealerScore) -> playerScore < dealerScore);
 
     private final String result;
-    private final BiPredicate<Integer, Integer> scoreComparePredicate;
+    private final BiPredicate<Boolean, Boolean> statusPredicate;
+    private final BiPredicate<Integer, Integer> scorePredicate;
 
-    Result(String result, BiPredicate<Integer, Integer> scoreComparePredicate) {
+    Result(String result, BiPredicate<Boolean, Boolean> statusPredicate,
+           BiPredicate<Integer, Integer> scorePredicate) {
         this.result = result;
-        this.scoreComparePredicate = scoreComparePredicate;
+        this.statusPredicate = statusPredicate;
+        this.scorePredicate = scorePredicate;
     }
 
-    public static Result decide(int playerScore, int dealerScore) {
+    public static Result decide(User player, User dealer) {
         return Arrays.stream(values())
-                .filter(value -> value.scoreComparePredicate.test(playerScore, dealerScore))
+                .filter(value -> value.statusPredicate.test(player.isAbleToHit(), dealer.isAbleToHit()))
+                .findFirst()
+                .orElseGet(() -> decideByScore(player.score(), dealer.score()));
+    }
+
+    private static Result decideByScore(int playerScore, int dealerScore) {
+        return Arrays.stream(values())
+                .filter(value -> value.scorePredicate.test(playerScore, dealerScore))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("승패 결과 조건에 매치되지 않습니다."));
     }
@@ -41,7 +54,7 @@ public enum Result {
         return result;
     }
 
-    public int count(List<Result> results) {
+    private int count(List<Result> results) {
         return (int) results.stream()
                 .filter(this::equals)
                 .count();

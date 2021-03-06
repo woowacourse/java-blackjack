@@ -6,15 +6,6 @@ public class Player extends User {
     }
 
     public Result produceResult(User dealer) {
-        if (this.isAbleToHit() && !dealer.isAbleToHit()) {
-            return Result.WIN;
-        }
-        if (this.isAbleToHit() && !dealer.isAbleToHit()) {
-            return Result.STAND_OFF;
-        }
-        if (!this.isAbleToHit() && dealer.isAbleToHit()) {
-            return Result.LOSE;
-        }
-        return Result.decide(this.score(), dealer.score());
+        return Result.decide(this, dealer);
     }
 }
