@@ -4,10 +4,11 @@ import java.util.Arrays;
 import java.util.function.IntPredicate;
 
 public enum Status {
-    BURST(score -> 21 < score),
-    BLACKJACK(score -> 21 == score),
-    HIT(score -> 21 > score);
+    BURST(score -> Game.WINNING_NUMBER < score),
+    BLACKJACK(score -> Game.WINNING_NUMBER == score),
+    HIT(score -> Game.WINNING_NUMBER > score);
 
+    private static final int  a=  1;
     private final IntPredicate predicate;
 
     Status(IntPredicate predicate) {

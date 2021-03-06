@@ -14,7 +14,9 @@ import static java.util.stream.Collectors.toMap;
 
 public class Game {
 
+    public static final int WINNING_NUMBER = 21;
     private static final int CARD_INIT_COUNT = 2;
+
     private final Cards shuffledCards;
     private final Player dealer;
     private final Gamers gamers;
