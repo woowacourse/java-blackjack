@@ -37,11 +37,11 @@ public class Application {
             return;
         }
         String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
-        if (answer.equals(AGREE)) {
+        if (AGREE.equals(answer)) {
             player.receiveCard(cardDeck.draw());
         }
         OutputView.printEachPlayerCards(player);
-        if (answer.equals(DECLINE)) {
+        if (DECLINE.equals(answer)) {
             return;
         }
         if (player.isAbleToReceiveCard()) {
