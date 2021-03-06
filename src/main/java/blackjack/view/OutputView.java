@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.participants.Name;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,32 +24,32 @@ public class OutputView {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, players);
     }
 
-    public static void showDealerCard(final String name, final Card card) {
-        System.out.printf(DEALER_CARD_STATUS_FORMAT, name, card.getCard() + NEWLINE);
+    public static void showDealerCard(final Name name, final Card card) {
+        System.out.printf(DEALER_CARD_STATUS_FORMAT, name.getValue(), card.getCard() + NEWLINE);
     }
 
-    public static void showPlayerCard(final String name, final List<Card> cards) {
+    public static void showPlayerCard(final Name name, final List<Card> cards) {
         final String cardStatus = cards.stream()
             .map(Card::getCard)
             .collect(Collectors.joining(", "));
-        System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus + NEWLINE);
+        System.out.printf(PLAYER_CARD_STATUS_FORMAT, name.getValue(), cardStatus + NEWLINE);
     }
 
-    public static void showCardResult(final String name, final List<Card> cards, final int result) {
+    public static void showCardResult(final Name name, final List<Card> cards, final int result) {
         final String cardStatus = cards.stream()
             .map(Card::getCard)
             .collect(Collectors.joining(", "));
-        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name, cardStatus, result);
+        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name.getValue(), cardStatus, result);
     }
 
-    public static void showGameResult(final String name, final int winCount, final int loseCount) {
+    public static void showGameResult(final Name name, final int winCount, final int loseCount) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name, winCount, loseCount);
+        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name.getValue(), winCount, loseCount);
     }
 
-    public static void showPlayerGameResult(final Map<String, Result> results) {
+    public static void showPlayerGameResult(final Map<Name, Result> results) {
         results.forEach((name, result) -> {
-            System.out.println(name + ": " + result.getValue());
+            System.out.println(name.getValue() + ": " + result.getValue());
         });
     }
 

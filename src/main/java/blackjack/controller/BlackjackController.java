@@ -4,6 +4,8 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Name;
+import blackjack.domain.participants.Names;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Player;
 import blackjack.view.InputView;
@@ -20,7 +22,8 @@ public class BlackjackController {
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final List<Participant> participants = participantsSetUp();
-        final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
+        final List<Participant> players = new ArrayList<>(
+            participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
         showParticipantsName(participants);
@@ -32,13 +35,29 @@ public class BlackjackController {
     }
 
     private List<Participant> participantsSetUp() {
-        final List<String> names = InputView.requestName();
+        final Names names = requestName();
         final List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
-        for (final String name : names) {
+        for (final Name name : names.toList()) {
             participants.add(new Player(name));
         }
         return new ArrayList<>(participants);
+    }
+
+    private Names requestName() {
+        try {
+            return validateName();
+        } catch (IllegalArgumentException e) {
+            OutputView.getErrorMessage(e.getMessage());
+            return requestName();
+        }
+    }
+
+    private Names validateName() {
+        final List<Name> names = InputView.requestName().stream()
+            .map(Name::new)
+            .collect(Collectors.toList());
+        return new Names(names);
     }
 
     private void distributeCard(final List<Participant> participants, final CardDeck cardDeck) {
@@ -51,7 +70,8 @@ public class BlackjackController {
     private void showParticipantsName(final List<Participant> participants) {
         final String status = participants.stream()
             .map(Participant::getName)
-            .filter(name -> !name.equals("딜러"))
+            .filter(name -> !name.isSameName("딜러"))
+            .map(Name::getValue)
             .collect(Collectors.joining(", "));
         OutputView.distributeMessage(status);
     }
@@ -128,7 +148,7 @@ public class BlackjackController {
         OutputView
             .showGameResult(dealer.getName(), dealerWinCount, players.size() - dealerWinCount);
 
-        final Map<String, Result> results = gameResult.makePlayerResults(players, dealer);
+        final Map<Name, Result> results = gameResult.makePlayerResults(players, dealer);
         OutputView.showPlayerGameResult(results);
     }
 

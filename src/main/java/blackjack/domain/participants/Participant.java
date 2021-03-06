@@ -9,19 +9,23 @@ public abstract class Participant {
 
     private static final int BUST_LIMIT = 22;
 
-    private final String name;
+    private final Name name;
     private final PlayerCards playerCards;
 
-    public Participant(final String name) {
+    public Participant(final Name name) {
         this.name = name;
         this.playerCards = new PlayerCards();
+    }
+
+    public Participant(final String name) {
+        this(new Name(name));
     }
 
     public void receiveCard(final Card card) {
         playerCards.receiveCard(card);
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

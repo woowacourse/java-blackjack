@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participant;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,9 +14,9 @@ public class GameResult {
             .count();
     }
 
-    public Map<String, Result> makePlayerResults(final List<Participant> players,
+    public Map<Name, Result> makePlayerResults(final List<Participant> players,
         final Participant dealer) {
-        final Map<String, Result> results = new LinkedHashMap<>();
+        final Map<Name, Result> results = new LinkedHashMap<>();
         for (final Participant player : players) {
             final Result result = player.decideWinner(dealer);
             results.put(player.getName(), result);

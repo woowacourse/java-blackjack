@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participants.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -20,8 +21,9 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    public static String askMoreCard(final String name) {
-        System.out.printf(NEWLINE + MORE_CARD_MESSAGE + NEWLINE, name);
+    public static String askMoreCard(final Name name) {
+        System.out.printf(NEWLINE + MORE_CARD_MESSAGE + NEWLINE, name.getValue());
         return scanner.nextLine().toLowerCase(Locale.ROOT);
     }
+
 }

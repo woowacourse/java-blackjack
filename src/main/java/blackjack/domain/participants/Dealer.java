@@ -17,6 +17,10 @@ public class Dealer extends Participant {
         super(name);
     }
 
+    public Dealer(final Name name) {
+        super(name);
+    }
+
     @Override
     public Result decideWinner(Participant player) {
         if (player.isBust() || (player.calculate() <= this.calculate() && !this.isBust())) {

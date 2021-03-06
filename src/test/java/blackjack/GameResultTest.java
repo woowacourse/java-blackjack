@@ -22,7 +22,7 @@ public class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
     }
 
