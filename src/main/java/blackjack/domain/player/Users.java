@@ -32,7 +32,7 @@ public class Users {
     }
 
     public void drawRandomTwoCard() {
-        users.forEach(user -> user.drawRandomTwoCards());
+        users.forEach(AbstractPlayer::drawRandomTwoCards);
     }
 
     public List<User> getUsers() {
