@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.exception.NameException;
+
 import java.util.Objects;
 
 public class Name {
@@ -23,7 +25,7 @@ public class Name {
 
     private void validateEmpty(final String name) {
         if (name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
+            throw new NameException("이름은 비어있을 수 없습니다.");
         }
     }
 }
