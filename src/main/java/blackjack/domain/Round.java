@@ -57,7 +57,7 @@ public class Round {
     }
 
     public String getDealerName() {
-        return Dealer.getName();
+        return dealer.getName();
     }
 
     public List<String> getDealerCardStatus() {

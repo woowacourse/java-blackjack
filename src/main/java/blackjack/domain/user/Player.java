@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Player {
+public class Player implements User {
     private final List<Card> cards = new ArrayList<>();
     private final Name name;
 
