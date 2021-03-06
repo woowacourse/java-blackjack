@@ -28,7 +28,7 @@ public abstract class AbstractPlayer implements Player {
     abstract public boolean isCanDraw();
 
     @Override
-    public int getValue() {
+    public int getScore() {
         int valueSum = cards.stream()
             .mapToInt(Card::getValue)
             .sum();

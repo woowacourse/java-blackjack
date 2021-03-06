@@ -14,7 +14,7 @@ public class PlayerResultDTO {
     public PlayerResultDTO(Player player) {
         name = player.getName();
         cards = new ArrayList<>(player.getCards());
-        score = player.getValue();
+        score = player.getScore();
     }
 
     public String getName() {

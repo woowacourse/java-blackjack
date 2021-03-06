@@ -36,7 +36,7 @@ public class AbstractPlayerTest {
         user.drawOneCard(tenCard);
         user.drawOneCard(aceCard);
 
-        assertThat(user.getValue()).isEqualTo(21);
+        assertThat(user.getScore()).isEqualTo(21);
     }
 
     @DisplayName("A highValue 테스트")
@@ -49,7 +49,7 @@ public class AbstractPlayerTest {
         user.drawOneCard(tenCard);
         user.drawOneCard(aceCard);
 
-        assertThat(user.getValue()).isEqualTo(21);
+        assertThat(user.getScore()).isEqualTo(21);
     }
 
     @DisplayName("카드 반환 테스트")
