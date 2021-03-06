@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
-	@DisplayName("카드 객체 생성 성공")
+	@DisplayName("카드 객체 생성 제대로 하는지")
 	@Test
 	void create() {
 		final Card card = Card.of(CardSymbol.HEART, CardNumber.ACE);

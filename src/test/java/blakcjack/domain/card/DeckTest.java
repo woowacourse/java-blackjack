@@ -12,9 +12,9 @@ import static blakcjack.domain.card.EmptyDeckException.EMPTY_DECK_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class DeckTest {
-	@DisplayName("덱 사이즈 체크 성공")
+	@DisplayName("덱 사이즈가 정확 52장이 맞는지 체크")
 	@Test
-	void create_size_check() {
+	void create_deck_sizeShouldBe52() {
 		final Deck deck = new Deck(new RandomShuffleStrategy());
 
 		assertThatCode(() -> consumeAllCards(deck)).doesNotThrowAnyException();
@@ -28,9 +28,9 @@ class DeckTest {
 		}
 	}
 
-	@DisplayName("덱 내 중복 체크 성공")
+	@DisplayName("덱 내 중복되는 카드가 없는지 확인")
 	@Test
-	void create_duplication_check() {
+	void create_deck_noDuplicateCards() {
 		final int cardSize = 52;
 		final Deck deck = new Deck(new RandomShuffleStrategy());
 		final Set<Card> cards = new HashSet<>();
@@ -42,7 +42,7 @@ class DeckTest {
 		assertThat(cards).hasSize(cardSize);
 	}
 
-	@DisplayName("카드 뽑기 성공")
+	@DisplayName("카드를 뽑는 메서드가 제대로 카드를 뽑는지")
 	@Test
 	void draw() {
 		final ShuffleStrategy nonShuffleStrategy = cards -> {

@@ -12,14 +12,14 @@ import java.util.Collections;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
-	@DisplayName("플레이어 객체 생성 성공")
+	@DisplayName("플레이어 객체 생성 제대로 하는지")
 	@Test
 	void create() {
 		final Player player = new Player(new Name("pobi"));
 		assertThat(player).isEqualTo(new Player(new Name("pobi")));
 	}
 
-	@DisplayName("카드 받기 성공")
+	@DisplayName("카드 제대로 받는지")
 	@Test
 	void receiveCard() {
 		final Player player = new Player(new Name("sakjung"));
@@ -29,7 +29,7 @@ public class PlayerTest {
 		assertThat(player.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
 	}
 
-	@DisplayName("점수 계산 성공")
+	@DisplayName("패에 ACE가 여러장 있는 경우에 점수 계산을 제대로 하는지")
 	@Test
 	void score() {
 		Player player = new Player(new Name("pobi"));
@@ -43,7 +43,7 @@ public class PlayerTest {
 		assertThat(player.calculateScore()).isEqualTo(19);
 	}
 
-	@DisplayName("21점 이하면 버스트 아니고 21점 초과일 시 버스트 처리 해주는지")
+	@DisplayName("점수가 21점 이하면 false 21점 초과일 시 true")
 	@Test
 	void isBust() {
 		final Player player = new Player(new Name("pobi"));

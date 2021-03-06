@@ -23,14 +23,14 @@ public class DealerTest {
 		dealer = new Dealer();
 	}
 
-	@DisplayName("딜러 객체 생성 성공")
+	@DisplayName("딜러 객체 생성 제대로 하는지")
 	@Test
 	void create() {
 		final Dealer dealer = new Dealer();
 		assertThat(dealer).isEqualTo(new Dealer());
 	}
 
-	@DisplayName("카드 받기 성공")
+	@DisplayName("카드 제대로 받는지")
 	@Test
 	void receiveCard() {
 		final Dealer dealer = new Dealer();
@@ -40,7 +40,7 @@ public class DealerTest {
 		assertThat(dealer.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
 	}
 
-	@DisplayName("17점 미만이면 통과")
+	@DisplayName("딜러 점수가 17점 미만이면 true 17점 이상이면 false")
 	@Test
 	void isScoreLowerThanSevenTeen() {
 		final Dealer dealer = new Dealer();
@@ -54,7 +54,7 @@ public class DealerTest {
 
 	@DisplayName("플레이어 버스트시 플레이어 패")
 	@Test
-	void judgeOutcome_playerBust() {
+	void judgeOutcome_playerBust_returnLose() {
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.TWO));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
@@ -69,7 +69,7 @@ public class DealerTest {
 
 	@DisplayName("딜러만 버스트시 플레이어 승")
 	@Test
-	void judgeOutcome_onlyDealerBust() {
+	void judgeOutcome_onlyDealerBust_returnWin() {
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
@@ -82,9 +82,9 @@ public class DealerTest {
 		assertThat(outcome).isEqualTo(Outcome.WIN);
 	}
 
-	@DisplayName("둘다 버스트 아닐 시 점수 비교")
+	@DisplayName("둘다 버스트 아닐 시 딜러와 플레이어의 점수 비교로 결과 판단")
 	@Test
-	void judgeOutcome_scoreComparison() {
+	void judgeOutcome_noOneBust_compareScore() {
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
 		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
 
