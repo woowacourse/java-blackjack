@@ -34,7 +34,7 @@ public class BlackjackController {
     private List<Participant> participantsSetUp() {
         final List<String> names = InputView.requestName();
         final List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer("딜러"));
+        participants.add(new Dealer());
         for (final String name : names) {
             participants.add(new Player(name));
         }
