@@ -18,4 +18,5 @@ bin/
 .idea
 *.iws
 *.iml
-*.ipr
+
+todo.md
