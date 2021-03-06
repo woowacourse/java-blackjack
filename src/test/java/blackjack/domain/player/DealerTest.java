@@ -41,10 +41,24 @@ public class DealerTest {
     @DisplayName("카드 반환 개수 전략패턴 테스트")
     @Test
     void cardOpenStrategy() {
+        Cards allCards = new Cards();
         Dealer dealer = new Dealer();
-        dealer.drawRandomTwoCards(new Cards());
-        assertThat(dealer.getCardsWithStrategy().size()).isEqualTo(1);
+
+        dealer.drawRandomTwoCards(allCards);
+        assertThat(dealer.getCards().size()).isEqualTo(1);
+
         dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
-        assertThat(dealer.getCardsWithStrategy().size()).isEqualTo(2);
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+
+        dealer.setCardOpenStrategy(new OneCardOpenStrategy());
+        assertThat(dealer.getCards().size()).isEqualTo(1);
+
+        dealer.drawRandomTwoCards(allCards);
+
+        dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
+        assertThat(dealer.getCards().size()).isEqualTo(4);
+
+        dealer.setCardOpenStrategy(new OneCardOpenStrategy());
+        assertThat(dealer.getCards().size()).isEqualTo(1);
     }
 }
