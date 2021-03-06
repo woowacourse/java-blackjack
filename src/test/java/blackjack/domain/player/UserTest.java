@@ -65,6 +65,13 @@ public class UserTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("이름 유효성 검사 - null 입력")
+    @Test
+    void nullName() {
+        assertThatThrownBy(() -> new User(null))
+            .isInstanceOf(NullPointerException.class);
+    }
+
     @DisplayName("카드 계속해서 뽑기 여부 입력 테스트")
     @Test
     void isDrawContinue() {
