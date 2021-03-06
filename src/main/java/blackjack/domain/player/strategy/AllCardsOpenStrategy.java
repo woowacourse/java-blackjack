@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.player.strategy;
 
 import blackjack.domain.card.Card;
 import java.util.List;

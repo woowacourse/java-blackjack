@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.AllCardsOpenStrategy;
+import blackjack.domain.player.strategy.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;

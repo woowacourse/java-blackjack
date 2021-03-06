@@ -2,6 +2,8 @@ package blackjack.domain.player;
 
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.strategy.CardOpenStrategy;
+import blackjack.domain.player.strategy.OneCardOpenStrategy;
 import java.util.List;
 
 public class Dealer extends AbstractPlayer {
