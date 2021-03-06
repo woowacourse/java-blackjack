@@ -23,7 +23,7 @@ public class Game {
     }
 
     public static Game of(List<String> playerNames) {
-        if (playerNames.size() == 0) {
+        if (playerNames.isEmpty()) {
             throw new IllegalArgumentException(PLAYER_NUMBER_ERROR);
         }
         return new Game(playerNames.stream()
