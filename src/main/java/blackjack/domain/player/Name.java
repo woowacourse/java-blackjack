@@ -11,7 +11,7 @@ public class Name {
     }
 
     private void validate(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("공백인 이름은 사용할 수 없습니다.");
         }
     }
