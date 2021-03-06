@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class Participant {
     
-    public static final int MAXIMUM_THRESHOLD = 21;
-    
     protected final String name;
     protected final CardHand cardHand;
     
@@ -33,7 +31,5 @@ public abstract class Participant {
         cardHand.add(card);
     }
     
-    public boolean canReceive() {
-        return cardHand.sum() < MAXIMUM_THRESHOLD;
-    }
+    public abstract boolean canReceive();
 }

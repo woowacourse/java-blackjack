@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class Dealer extends Participant {
     
     private static final int DEALER_THRESHOLD = 16;
+    
     private static final String NAME = "딜러";
-    private static final String ERROR_CANNOT_RECEIVE = "최고 합이거나 버스트되어 카드를 받을 수 없습니다.";
     
     private final Deck deck;
     
@@ -31,15 +31,12 @@ public class Dealer extends Participant {
     }
     
     public void deal(Participant participant) {
-        if (!participant.canReceive()) {
-            throw new IllegalArgumentException(ERROR_CANNOT_RECEIVE);
-        }
-        
         final Card card = deck.drawCard();
         participant.receive(card);
     }
     
-    public boolean shouldReceive() {
+    @Override
+    public boolean canReceive() {
         return sumCardHand() <= DEALER_THRESHOLD;
     }
     

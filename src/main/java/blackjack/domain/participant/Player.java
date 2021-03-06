@@ -17,6 +17,11 @@ public class Player extends Participant {
         return new Player(name, new CardHand(new ArrayList<>()));
     }
     
+    @Override
+    public boolean canReceive() {
+        return sumCardHand() <= MAXIMUM_THRESHOLD;
+    }
+    
     public CompeteResult compete(Dealer dealer) {
         if (isPlayerWin(dealer)) {
             return CompeteResult.WIN;
