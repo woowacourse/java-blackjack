@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Round {
     public static final int GAME_OVER_SCORE = 21;
-    private static final int FIRST_INDEX = 0;
+    public static final int FIRST_TWO_CARD = 2;
+
     private final List<Card> shuffledCards;
     private final Dealer dealer;
     private final List<Player> players;
@@ -23,15 +24,15 @@ public class Round {
         this.players = new ArrayList<>(players);
     }
 
-    public List<Card> makeTwoCards() {
-        return IntStream.range(0, 2)
-                .mapToObj(count -> shuffledCards.remove(FIRST_INDEX))
+    public List<Card> drawCards(int number) {
+        return Stream.generate(() -> shuffledCards.remove(0))
+                .limit(number)
                 .collect(Collectors.toList());
     }
 
     public void initialize() {
-        dealer.addFirstCards(makeTwoCards());
-        players.forEach(player -> player.addFirstCards(makeTwoCards()));
+        dealer.addFirstCards(drawCards(FIRST_TWO_CARD));
+        players.forEach(player -> player.addFirstCards(drawCards(FIRST_TWO_CARD)));
     }
 
     public List<Player> getPlayers() {
@@ -42,13 +43,13 @@ public class Round {
         return dealer;
     }
 
-    public Card makeOneCard() {
-        return shuffledCards.remove(FIRST_INDEX);
+    public Card drawExtraCard() {
+        return shuffledCards.remove(0);
     }
 
     public boolean addDealerCard() {
         if (!dealer.isGameOver(GAME_OVER_SCORE)) {
-            dealer.addCard(makeOneCard());
+            dealer.addCard(drawExtraCard());
             return true;
         }
         return false;

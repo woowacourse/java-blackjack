@@ -18,8 +18,9 @@ class RoundTest {
     void start_round() {
         Card spadeCard = Card.of("스페이드", "10");
         Card heartCard = Card.of("하트", "A");
+        Card cloverCard = Card.of("클로버", "7");
         List<Card> cards = Arrays.asList(
-                spadeCard, heartCard
+                spadeCard, heartCard, cloverCard
         );
 
         List<Player> players = Arrays.asList(
@@ -27,6 +28,6 @@ class RoundTest {
                 new Player("jason")
         );
         Round round = new Round(cards, new Dealer(), players);
-        assertThat(round.makeTwoCards()).containsExactly(spadeCard, heartCard);
+        assertThat(round.drawCards(2)).containsExactly(spadeCard, heartCard);
     }
 }
