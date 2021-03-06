@@ -16,14 +16,13 @@ public abstract class Participant {
         cards = new Cards();
     }
 
-    public int draw(Deck deck, int index) {
-        cards.add(deck.getCard(index++));
-        return index;
+    public void draw(Deck deck) {
+        cards.add(deck.draw());
     }
 
-    public int initializeDraw(Deck deck, int index) {
-        draw(deck, index++);
-        return draw(deck, index);
+    public void initializeDraw(Deck deck) {
+        draw(deck);
+        draw(deck);
     }
     
     public abstract boolean canDrawOneMore(int score);

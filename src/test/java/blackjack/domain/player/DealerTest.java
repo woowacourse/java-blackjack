@@ -6,27 +6,32 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
     Dealer dealer;
-    Deck deck;
 
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        deck = new Deck();
     }
 
     @DisplayName("카드 받기 테스트")
     @Test
     void drawCard() {
-        dealer.draw(deck, 0);
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.QUEEN)
+        ));
+        Deck deck = new Deck(cards);
+
+        dealer.draw(deck);
         assertThat(dealer.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
     }
 
@@ -34,12 +39,19 @@ class DealerTest {
     @Test
     void calculateResult() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.DIAMOND, Denomination.ACE),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.NINE)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 0); // A 스페이드
-        dealer.draw(deck, 13); // A 다이아몬드
+        dealer.draw(deck); // A 스페이드
+        dealer.draw(deck); // A 다이아몬드
 
-        player.draw(deck, 26); // A 하트
-        player.draw(deck, 47); // 9 클로버
+        player.draw(deck); // A 하트
+        player.draw(deck); // 9 클로버
 
         assertThat(dealer.compare(player)).isEqualTo(Result.WIN);
     }
@@ -48,13 +60,21 @@ class DealerTest {
     @Test
     void loseByBlackjack() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.JACK),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.EIGHT),
+                new Card(Type.CLUB, Denomination.TWO)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 0); // A 스페이드
-        dealer.draw(deck, 49); // J 클로버
+        dealer.draw(deck); // A 스페이드
+        dealer.draw(deck); // J 클로버
 
-        player.draw(deck, 26); // A 하트
-        player.draw(deck, 46); // 8 클로버
-        player.draw(deck, 40); // 2 클로버
+        player.draw(deck); // A 하트
+        player.draw(deck); // 8 클로버
+        player.draw(deck); // 2 클로버
 
         assertThat(dealer.compare(player)).isEqualTo(Result.LOSE);
     }
@@ -63,12 +83,19 @@ class DealerTest {
     @Test
     void drawByBlackjack() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.JACK),
+                new Card(Type.DIAMOND, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.TEN)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 0); // A 스페이드
-        dealer.draw(deck, 49); // J 클로버
+        dealer.draw(deck); // A 스페이드
+        dealer.draw(deck); // J 클로버
 
-        player.draw(deck, 13); // A 다이아몬드
-        player.draw(deck, 48); // 10 클로버
+        player.draw(deck); // A 다이아몬드
+        player.draw(deck); // 10 클로버
 
         assertThat(dealer.compare(player)).isEqualTo(Result.DRAW);
     }
@@ -76,16 +103,22 @@ class DealerTest {
     @DisplayName("플레이어가 블랙잭으로 승리한다.")
     @Test
     void winByBlackjack() {
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.EIGHT),
+                new Card(Type.CLUB, Denomination.TWO),
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.JACK)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 26); // A 하트
-        dealer.draw(deck, 46); // 8 클로버
-        dealer.draw(deck, 40); // 2 클로버
+        dealer.draw(deck); // A 하트
+        dealer.draw(deck); // 8 클로버
+        dealer.draw(deck); // 2 클로버
 
-        player.draw(deck, 0); // A 스페이드
-        player.draw(deck, 49); // J 클로버
+        player.draw(deck); // A 스페이드
+        player.draw(deck); // J 클로버
 
         assertThat(dealer.compare(player)).isEqualTo(Result.BLACKJACK_WIN);
     }
@@ -94,14 +127,23 @@ class DealerTest {
     @Test
     void lose() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.FOUR),
+                new Card(Type.SPADE, Denomination.EIGHT),
+                new Card(Type.DIAMOND, Denomination.FIVE),
+                new Card(Type.DIAMOND, Denomination.THREE),
+                new Card(Type.DIAMOND, Denomination.EIGHT),
+                new Card(Type.DIAMOND, Denomination.FOUR)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 3); // 4 스페이드
-        dealer.draw(deck, 7); // 8 스페이드
-        dealer.draw(deck, 17); // 5 다이아몬드
+        dealer.draw(deck); // 4 스페이드
+        dealer.draw(deck); // 8 스페이드
+        dealer.draw(deck); // 5 다이아몬드
 
-        player.draw(deck, 16); // 3 다이아몬드
-        player.draw(deck, 20); // 8 다이아몬드
-        player.draw(deck, 29); // 4 다이아몬드
+        player.draw(deck); // 3 다이아몬드
+        player.draw(deck); // 8 다이아몬드
+        player.draw(deck); // 4 다이아몬드
 
         assertThat(dealer.compare(player)).isEqualTo(Result.LOSE);
     }
@@ -110,15 +152,25 @@ class DealerTest {
     @Test
     void draw() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.FOUR),
+                new Card(Type.SPADE, Denomination.EIGHT),
+                new Card(Type.DIAMOND, Denomination.FIVE),
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.DIAMOND, Denomination.THREE),
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.HEART, Denomination.FOUR)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 3); // 4 스페이드
-        dealer.draw(deck, 7); // 8 스페이드
-        dealer.draw(deck, 17); // 5 다이아몬드
-        dealer.draw(deck, 0); // A 스페이드
+        dealer.draw(deck); // 4 스페이드
+        dealer.draw(deck); // 8 스페이드
+        dealer.draw(deck); // 5 다이아몬드
+        dealer.draw(deck); // A 스페이드
 
-        player.draw(deck, 15); // 3 다이아몬드
-        player.draw(deck, 39); // A 클로버
-        player.draw(deck, 29); // 4 하트
+        player.draw(deck); // 3 다이아몬드
+        player.draw(deck); // A 클로버
+        player.draw(deck); // 4 하트
 
         assertThat(dealer.compare(player)).isEqualTo(Result.DRAW);
     }
@@ -127,15 +179,25 @@ class DealerTest {
     @Test
     void win() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.NINE),
+                new Card(Type.DIAMOND, Denomination.QUEEN),
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.DIAMOND, Denomination.ACE),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.EIGHT)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 8); // 9 스페이드
-        dealer.draw(deck, 24); // Q 다이아몬드
-        dealer.draw(deck, 39); // A 클로버
+        dealer.draw(deck); // 9 스페이드
+        dealer.draw(deck); // Q 다이아몬드
+        dealer.draw(deck); // A 클로버
 
-        player.draw(deck, 0); // A 스페이드
-        player.draw(deck, 13); // A 다이아몬드
-        player.draw(deck, 26); // A 하트
-        player.draw(deck, 7); // 8 스페이드
+        player.draw(deck); // A 스페이드
+        player.draw(deck); // A 다이아몬드
+        player.draw(deck); // A 하트
+        player.draw(deck); // 8 스페이드
 
         assertThat(dealer.compare(player)).isEqualTo(Result.WIN);
     }
@@ -147,25 +209,43 @@ class DealerTest {
         Player player1 = new Player();
         Player player2 = new Player();
         Player player3 = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.THREE),
+                new Card(Type.DIAMOND, Denomination.QUEEN),
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.DIAMOND, Denomination.ACE),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.EIGHT),
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.HEART, Denomination.EIGHT),
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.DIAMOND, Denomination.TWO),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.EIGHT)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 2); // 3 스페이드
-        dealer.draw(deck, 24); // Q 다이아몬드
-        dealer.draw(deck, 39); // A 클로버
+        dealer.draw(deck); // 3 스페이드
+        dealer.draw(deck); // Q 다이아몬드
+        dealer.draw(deck); // A 클로버
 
-        player1.draw(deck, 0); // A 스페이드
-        player1.draw(deck, 13); // A 다이아몬드
-        player1.draw(deck, 26); // A 하트
-        player1.draw(deck, 7); // 8 스페이드
+        player1.draw(deck); // A 스페이드
+        player1.draw(deck); // A 다이아몬드
+        player1.draw(deck); // A 하트
+        player1.draw(deck); // 8 스페이드
 
-        player2.draw(deck, 0); // A 스페이드
-        player2.draw(deck, 13); // A 다이아몬드
-        player2.draw(deck, 26); // A 하트
-        player2.draw(deck, 7); // 8 스페이드
+        player2.draw(deck); // A 클로버
+        player2.draw(deck); // A 클로버
+        player2.draw(deck); // A 하트
+        player2.draw(deck); // 8 하트
 
-        player3.draw(deck, 0); // A 스페이드
-        player3.draw(deck, 14); // 2 다이아몬드
-        player3.draw(deck, 26); // A 하트
-        player3.draw(deck, 7); // 8 스페이드
+        player3.draw(deck); // A 스페이드
+        player3.draw(deck); // 2 다이아몬드
+        player3.draw(deck); // A 하트
+        player3.draw(deck); // 8 클로버
 
         dealer.compare(player1);
         dealer.compare(player2);
@@ -178,14 +258,23 @@ class DealerTest {
     @Test
     void dealerPlayerBothBurst() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.QUEEN),
+                new Card(Type.DIAMOND, Denomination.QUEEN),
+                new Card(Type.CLUB, Denomination.QUEEN),
+                new Card(Type.HEART, Denomination.SEVEN),
+                new Card(Type.CLUB, Denomination.NINE),
+                new Card(Type.DIAMOND, Denomination.KING)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 9);
-        dealer.draw(deck, 10);
-        dealer.draw(deck, 11);
+        dealer.draw(deck);
+        dealer.draw(deck);
+        dealer.draw(deck);
 
-        player.draw(deck, 9);
-        player.draw(deck, 10);
-        player.draw(deck, 11);
+        player.draw(deck);
+        player.draw(deck);
+        player.draw(deck);
 
         dealer.compare(player);
 
@@ -196,13 +285,21 @@ class DealerTest {
     @Test
     void dealerBurst() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.QUEEN),
+                new Card(Type.DIAMOND, Denomination.QUEEN),
+                new Card(Type.CLUB, Denomination.QUEEN),
+                new Card(Type.HEART, Denomination.SEVEN),
+                new Card(Type.CLUB, Denomination.NINE)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 9);
-        dealer.draw(deck, 10);
-        dealer.draw(deck, 11);
+        dealer.draw(deck);
+        dealer.draw(deck);
+        dealer.draw(deck);
 
-        player.draw(deck, 9);
-        player.draw(deck, 10);
+        player.draw(deck);
+        player.draw(deck);
 
         dealer.compare(player);
 
@@ -213,13 +310,21 @@ class DealerTest {
     @Test
     void playerBurst() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.QUEEN),
+                new Card(Type.DIAMOND, Denomination.QUEEN),
+                new Card(Type.HEART, Denomination.SEVEN),
+                new Card(Type.CLUB, Denomination.NINE),
+                new Card(Type.DIAMOND, Denomination.KING)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck, 9);
-        dealer.draw(deck, 10);
+        dealer.draw(deck);
+        dealer.draw(deck);
 
-        player.draw(deck, 9);
-        player.draw(deck, 10);
-        player.draw(deck, 11);
+        player.draw(deck);
+        player.draw(deck);
+        player.draw(deck);
 
         dealer.compare(player);
 
@@ -230,12 +335,19 @@ class DealerTest {
     @Test
     void dealerLose() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.QUEEN),
+                new Card(Type.DIAMOND, Denomination.TWO),
+                new Card(Type.CLUB, Denomination.NINE),
+                new Card(Type.DIAMOND, Denomination.KING)
+        ));
+        Deck deck = new Deck(cards);
 
-        dealer.draw(deck,19);
-        dealer.draw(deck, 25);
+        dealer.draw(deck);
+        dealer.draw(deck);
 
-        player.draw(deck, 10);
-        player.draw(deck, 11);
+        player.draw(deck);
+        player.draw(deck);
 
         dealer.compare(player);
 
@@ -246,12 +358,20 @@ class DealerTest {
     @Test
     void dealerBlackjackLose() {
         Player player = new Player();
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.QUEEN),
+                new Card(Type.DIAMOND, Denomination.QUEEN),
 
-        dealer.draw(deck,24);
-        dealer.draw(deck, 25);
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.DIAMOND, Denomination.TEN)
+        ));
+        Deck deck = new Deck(cards);
 
-        player.draw(deck, 0);
-        player.draw(deck, 12);
+        dealer.draw(deck);
+        dealer.draw(deck);
+
+        player.draw(deck);
+        player.draw(deck);
 
         dealer.compare(player);
 

@@ -1,15 +1,21 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CardFactory {
 
     private CardFactory() {
     }
 
-    public static List<Card> create() {
-        return iterateType(new ArrayList<>());
+    public static Deque<Card> create() {
+        List<Card> cards = iterateType(new ArrayList<>());
+        return new ArrayDeque<>(cards);
+    }
+
+    public static Deque<Card> createWithShuffle() {
+        List<Card> cards = iterateType(new ArrayList<>());
+        Collections.shuffle(cards);
+        return new ArrayDeque<>(cards);
     }
 
     private static List<Card> iterateType(List<Card> cards) {

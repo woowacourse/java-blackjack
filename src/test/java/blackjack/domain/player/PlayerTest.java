@@ -5,23 +5,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 
     Player player;
-    Deck deck;
 
     @BeforeEach
     void setUp() {
         player = new Player();
-        deck = new Deck();
     }
 
     @DisplayName("카드 받기 테스트")
     @Test
     void draw() {
-        player.draw(deck, 0);
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.QUEEN)
+        ));
+
+        player.draw(new Deck(cards));
 
         assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
     }
@@ -29,7 +36,12 @@ class PlayerTest {
     @DisplayName("게임 시작 시 받은 패를 확인한다.")
     @Test
     void initializeDraw() {
-        player.initializeDraw(deck, 0);
+        Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
+                new Card(Type.SPADE, Denomination.ACE),
+                new Card(Type.SPADE, Denomination.TWO)
+        ));
+
+        player.initializeDraw(new Deck(cards));
 
         assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
         assertThat(player.getCards().getCard(1)).isEqualTo(new Card(Type.SPADE, Denomination.TWO));

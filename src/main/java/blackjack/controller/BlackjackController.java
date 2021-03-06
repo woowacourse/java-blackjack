@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Result;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
@@ -19,17 +20,15 @@ public class BlackjackController {
     public void run() {
         List<Player> players = createPlayers(InputView.inputPlayerNames());
         Dealer dealer = new Dealer(DEALER);
-        Deck deck = new Deck();
-        deck.shuffle();
-        int index = 0;
+        Deck deck = new Deck(CardFactory.create());
 
-        index = initialDrawDealer(deck, dealer, index);
-        index = initialDrawPlayer(deck, players, index);
+        initialDrawDealer(deck, dealer);
+        initialDrawPlayer(deck, players);
 
         showCards(dealer, players);
 
-        index = distributeCards(players, deck, index);
-        distributeDealer(deck, dealer, index);
+        distributeCards(players, deck);
+        distributeDealer(deck, dealer);
 
         compareAllPlayersWithDealer(dealer, players);
         OutputView.printCardScore(dealer.getName(), dealer.getCards());
@@ -43,33 +42,29 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    public int distributeCards(List<Player> players, Deck deck, int index) {
+    public void distributeCards(List<Player> players, Deck deck) {
         for (Player player : players) {
-            distributePlayer(deck, player, index);
+            distributePlayer(deck, player);
         }
-        return index;
     }
 
-    private int distributePlayer(Deck deck, Player player, int index) {
+    private void distributePlayer(Deck deck, Player player) {
         OutputView.printCards(player.getName(), player.getCards());
 
         while (player.canDrawOneMore(player.getScore()) && InputView.inputDraw(player.getName())) {
-            index = player.draw(deck, index);
+            player.draw(deck);
             OutputView.printCards(player.getName(), player.getCards());
         }
-
-        return index;
     }
 
-    public int initialDrawDealer(Deck deck, Dealer dealer, int index) {
-        return dealer.initializeDraw(deck, index);
+    public void initialDrawDealer(Deck deck, Dealer dealer) {
+        dealer.initializeDraw(deck);
     }
 
-    public int initialDrawPlayer(Deck deck, List<Player> players, int index) {
+    public void initialDrawPlayer(Deck deck, List<Player> players) {
         for (Player player : players) {
-            index = player.initializeDraw(deck, index);
+            player.initializeDraw(deck);
         }
-        return index;
     }
 
     public void showCards(Dealer dealer, List<Player> players) {
@@ -83,17 +78,15 @@ public class BlackjackController {
         OutputView.printNewLine();
     }
 
-    public static int distributeDealer(Deck deck, Dealer dealer, int index) {
+    public void distributeDealer(Deck deck, Dealer dealer) {
         Cards dealerCards = dealer.getCards();
 
         while (dealer.canDrawOneMore(dealerCards.calculateScore())){
             OutputView.printOneMoreCard();
-            index = dealer.draw(deck, index);
+            dealer.draw(deck);
         }
 
         OutputView.printNewLine();
-
-        return index;
     }
 
     public void compareAllPlayersWithDealer(Dealer dealer, List<Player> players) {

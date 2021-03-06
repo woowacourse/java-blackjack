@@ -1,21 +1,16 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Deque;
 
 public class Deck {
 
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
-    public Deck() {
-        cards = CardFactory.create();
+    public Deck(Deque<Card> cards) {
+        this.cards = cards;
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
-
-    public Card getCard(int i) {
-        return cards.get(i);
+    public Card draw() {
+        return cards.pop();
     }
 }
