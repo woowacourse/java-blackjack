@@ -21,10 +21,6 @@ public class Card {
         this.face = face;
     }
 
-    public static Card of() {
-        return cached.get(0);
-    }
-
     public static Card of(final int cardIndex) {
         return cached.get(cardIndex);
     }
