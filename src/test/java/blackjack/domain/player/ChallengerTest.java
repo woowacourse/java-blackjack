@@ -61,9 +61,5 @@ class ChallengerTest {
         assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.LOSE);
     }
 
-    @Test
-    @DisplayName("딜러의 점수가 17 이상이면, true를 반환한다.")
-    void isEnoughScore() {
-        assertThat(dealer.canDrawMoreCard()).isTrue();
-    }
+
 }
