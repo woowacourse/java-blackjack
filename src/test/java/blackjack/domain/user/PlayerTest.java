@@ -79,7 +79,7 @@ public class PlayerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        Cards cards = player.showCards();
+        Cards cards = player.getCards();
         assertThat(cards.cards().size()).isEqualTo(2);
     }
 

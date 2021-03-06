@@ -39,7 +39,7 @@ public class OutputView {
 
     public static void printPlayerCards(Player player) {
         System.out.print(player.getName() + "카드" + COLON);
-        printCards(player.showCards());
+        printCards(player.getCards());
     }
 
     private static void printCards(Cards cards) {
@@ -64,12 +64,12 @@ public class OutputView {
     public static void printCardsWithTotalValue(List<User> users) {
         for (User user : users) {
             System.out.printf("%s카드: %s - 결과: %s \n",
-                    user.getName(), cardsByUser(user), user.showCards().calculateTotalValue());
+                    user.getName(), cardsByUser(user), user.getCards().calculateTotalValue());
         }
     }
 
     private static String cardsByUser(User user) {
-        return user.showCards()
+        return user.getCards()
                 .cards()
                 .stream()
                 .map(Card::toString)

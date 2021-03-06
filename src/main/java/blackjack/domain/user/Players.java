@@ -29,7 +29,7 @@ public class Players {
 
     public List<Cards> showCardsByUsers() {
         return players.stream()
-                .map(Player::showCards)
+                .map(Player::getCards)
                 .collect(Collectors.toList());
     }
 }

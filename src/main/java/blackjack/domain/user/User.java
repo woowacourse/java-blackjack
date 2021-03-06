@@ -27,32 +27,32 @@ public abstract class User {
         this.name = name;
     }
 
-    public void receiveCards(Cards cards) {
-        this.cards.combine(cards);
+    public final void receiveCards(Cards cards) {
+        cards.combine(cards);
     }
 
-    public boolean isAbleToHit() {
+    public final boolean isAbleToHit() {
         return !cards.isBust();
     }
 
-    public void hit() {
-        this.cards.combine(Deck.popOne());
+    public final void hit() {
+        cards.combine(Deck.popOne());
     }
 
-    public int score() {
+    public final int score() {
         return cards.calculateTotalValue();
     }
 
-    public Cards showCards() {
-        return this.cards;
+    public final Cards getCards() {
+        return cards;
     }
 
-    public String getName() {
-        return this.name.getName();
+    public final String getName() {
+        return name.getName();
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return name.toString();
     }
 }
