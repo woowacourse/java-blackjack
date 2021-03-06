@@ -16,7 +16,6 @@ public class Dealer extends Participant {
     private static final int DEALER_THRESHOLD = 16;
     private static final String NAME = "딜러";
     private static final String ERROR_CANNOT_RECEIVE = "최고 합이거나 버스트되어 카드를 받을 수 없습니다.";
-    private static final int SECOND_CARD_INDEX_FOR_EXCEPT_FIRST_CARD = 1;
     
     private final Deck deck;
     
@@ -44,9 +43,8 @@ public class Dealer extends Participant {
         return sumCardHand() <= DEALER_THRESHOLD;
     }
     
-    public List<Card> getCardsExceptFirstCard() {
-        List<Card> cards = cardHand.getCards();
-        return cards.subList(SECOND_CARD_INDEX_FOR_EXCEPT_FIRST_CARD, cards.size());
+    public Card getCard(int cardIndex) {
+        return getCards().get(cardIndex);
     }
     
     public EnumMap<CompeteResult, Long> competeResultMap(List<Player> players) {
