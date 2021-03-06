@@ -35,7 +35,7 @@ public class OutputView {
     public static void printParticipantCards(String participantName, Cards cards) {
         List<String> results = new ArrayList<>();
         for (Card card : cards.getCards()) {
-            results.add(card.getType().getName() + card.getDenomination().getName());
+            results.add(card.findTypeName() + card.findDenominationName());
         }
         System.out.printf(PRINT_CARDS_FORMAT, participantName, String.join(DELIMITER, results));
     }
@@ -48,7 +48,7 @@ public class OutputView {
         List<String> results = new ArrayList<>();
 
         for (Card card : cards.getCards()) {
-            results.add(card.getType().getName() + card.getDenomination().getName());
+            results.add(card.findTypeName() + card.findDenominationName());
         }
         System.out.printf(PRINT_CARDS_SCORE_FORMAT, participantName,
             String.join(DELIMITER, results), cards.getScore());
@@ -83,7 +83,7 @@ public class OutputView {
     public static void printDealerCards(String participantName, Cards cards) {
         Card card = cards.getCards().get(0);
         List<String> results = new ArrayList<>();
-        results.add(card.getType().getName() + card.getDenomination().getName());
+        results.add(card.findTypeName() + card.findDenominationName());
         System.out.printf(PRINT_CARDS_FORMAT, participantName, String.join(DELIMITER, results));
     }
 }
