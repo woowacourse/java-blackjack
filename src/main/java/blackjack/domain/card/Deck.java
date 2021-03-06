@@ -5,10 +5,10 @@ import java.util.Stack;
 
 public class Deck {
 
-    private Stack<Card> cards;
+    private final Stack<Card> cards;
 
     public Deck() {
-        cards = CardFactory.create();
+        cards = creatDeck();
     }
 
     public void shuffle() {
@@ -17,6 +17,16 @@ public class Deck {
 
     public Card draw() {
         return cards.pop();
+    }
+
+    public Stack<Card> creatDeck(){
+        Stack<Card> cards = new Stack<>();
+        for (Type type : Type.values()) {
+            for (Denomination denomination : Denomination.values()) {
+                cards.push(new Card(type, denomination));
+            }
+        }
+        return cards;
     }
 
 }
