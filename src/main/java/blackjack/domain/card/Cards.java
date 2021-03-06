@@ -7,14 +7,15 @@ import java.util.stream.Collectors;
 
 public class Cards {
     private static final int FIRST_CARD_INDEX = 0;
+
     private final List<Card> cards;
+
+    public Cards() {
+        this(new ArrayList<>());
+    }
 
     public Cards(List<Card> deck) {
         this.cards = new ArrayList<>(deck);
-    }
-
-    public Cards() {
-        this.cards = new ArrayList<>();
     }
 
     public void addCard(Card card) {
@@ -32,7 +33,9 @@ public class Cards {
     }
 
     public int getScore() {
-        int total = cards.stream().mapToInt(Card::getScore).sum();
+        int total = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
         return addIfAceExist(total);
     }
 
@@ -46,7 +49,11 @@ public class Cards {
     }
 
     private int countAce() {
-        return Math.toIntExact(cards.stream().filter(Card::isAce).count());
+        return Math.toIntExact(
+                cards.stream()
+                        .filter(Card::isAce)
+                        .count()
+        );
     }
 
     public Card getFirstCard() {

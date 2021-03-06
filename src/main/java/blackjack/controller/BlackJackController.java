@@ -5,6 +5,7 @@ import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,15 +14,16 @@ public class BlackJackController {
     private static final int ONE = 1;
 
     public void run() {
+        List<Player> players = new ArrayList<>();
+        OutputView.printPlayersGuideMessage();
         try {
-            OutputView.printPlayersGuideMessage();
-            List<Player> players = makePlayers(InputView.inputPlayers());
+            players = makePlayers(InputView.inputPlayers());
             validatePlayersNumber(players);
-            GameTable gameTable = new GameTable(players);
-            gameTable.playGame();
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception);
         }
+        GameTable gameTable = new GameTable(players);
+        gameTable.playGame();
     }
 
     private void validatePlayersNumber(List<Player> players) {
