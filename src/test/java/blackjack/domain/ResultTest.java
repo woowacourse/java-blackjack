@@ -13,11 +13,12 @@ import java.util.*;
 class ResultTest {
 
     private Dealer dealer;
-    private List<Player> players = new ArrayList<>();
+    private List<Player> players;
 
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
+        players = new ArrayList<>();
 
         dealer.addFirstCards(Arrays.asList(
                 Card.of("스페이드", "10"),
@@ -31,7 +32,7 @@ class ResultTest {
         ));
 
         Player player2 = new Player("jason");
-        player.addFirstCards(Arrays.asList(
+        player2.addFirstCards(Arrays.asList(
                 Card.of("스페이드", "2"),
                 Card.of("하트", "3")
         ));
@@ -57,16 +58,15 @@ class ResultTest {
     @Test
     void result_buster_test() {
         Result result = new Result();
-        Round round = Round.generateWithRandomCards(dealer, players);
 
         dealer.addCard(Card.of("스페이드", "10"));
         players.get(0).addCard(Card.of("스페이드", "9"));
 
-
+        Round round = Round.generateWithRandomCards(dealer, players);
         Map<String, Queue<Outcome>> results = result.findResults(round);
 
-        Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
-        Queue<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
+        Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());      //딜러 24, 플레이어 24, 딜러 승,  플레이어 패
+        Queue<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());    //딜러 24, 플레이어 5, 딜러 패 플레이어 승
 
         Assertions.assertThat(firstPlayerOutcomes.poll()).isEqualTo(Outcome.LOSE);
         Assertions.assertThat(secondPlayerOutcomes.poll()).isEqualTo(Outcome.WIN);

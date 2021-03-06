@@ -1,15 +1,13 @@
 package blackjack.domain;
 
-import blackjack.util.GumpCollection;
-
-import java.util.*;
+import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 import static blackjack.domain.Round.GAME_OVER_SCORE;
 
 public enum Outcome {
-    WIN("승", (a, b) -> a > b),
-    LOSE("패", (a, b) -> a < b),
+    WIN("승", (a, b) -> b > GAME_OVER_SCORE || ((a <= GAME_OVER_SCORE) && a > b)),
+    LOSE("패", (a, b) -> a > GAME_OVER_SCORE || a < b),
     DRAW("무", (a, b) -> a == b);
 
     private final String name;
@@ -21,28 +19,20 @@ public enum Outcome {
     }
 
     public static Outcome findOutcome(final int dealerScore, final int playerScore) {
-        Outcome outcome = getOutcomeWhenBuster(dealerScore, playerScore);
-        if (!Objects.isNull(outcome)) {
-            return outcome;
-        }
         return Arrays.stream(values())
                 .filter(o -> o.biPredicate.test(dealerScore, playerScore))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체크할수 없습!!"));
     }
 
-    public static Queue<Outcome> getPlayerOutcomes(final Outcome outcome) {
+    public static Outcome getPlayerOutcomes(final Outcome outcome) {
         if (outcome == WIN) {
-            return GumpCollection.asQueue(LOSE);
+            return LOSE;
         }
         if (outcome == LOSE) {
-            return GumpCollection.asQueue(WIN);
+            return WIN;
         }
-        return GumpCollection.asQueue(outcome);
-    }
-
-    public String getName() {
-        return name;
+        return outcome;
     }
 
     public static boolean isWin(final Outcome outcome) {
@@ -57,18 +47,7 @@ public enum Outcome {
         return outcome == DRAW;
     }
 
-    private static Outcome getOutcomeWhenBuster(final int dealerScore, final int playerScore) {
-        if (dealerScore > GAME_OVER_SCORE && playerScore > GAME_OVER_SCORE) {
-            return WIN;
-        }
-
-        if (dealerScore > GAME_OVER_SCORE) {
-            return LOSE;
-        }
-
-        if (playerScore > GAME_OVER_SCORE) {
-            return WIN;
-        }
-        return null;
+    public String getName() {
+        return name;
     }
 }

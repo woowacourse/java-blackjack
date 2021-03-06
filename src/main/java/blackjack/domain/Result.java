@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.util.GumpCollection;
 import blackjack.view.dto.PlayerResultDto;
 
 import java.util.*;
@@ -13,7 +14,7 @@ public class Result {
 
         List<PlayerResultDto> playerResultDtos = round.makePlayerResults(gameOutComes);
         playerResultDtos.forEach(dto ->
-                RESULTS.put(dto.getPlayerName(), Outcome.getPlayerOutcomes(dto.getOutcome()))
+                RESULTS.put(dto.getPlayerName(), GumpCollection.asQueue(Outcome.getPlayerOutcomes(dto.getOutcome())))
         );
         return new LinkedHashMap<>(RESULTS);
     }
