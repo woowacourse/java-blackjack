@@ -14,10 +14,11 @@ public class GameResult {
         this.results = new HashMap<>(results);
     }
 
-    public Map<ResultType, Integer> getStatistics() {
+    public Map<ResultType, Integer> getDealerStatistics() {
         Map<ResultType, Integer> resultStatistics = new HashMap<>();
         this.results.values()
-                .forEach(resultType -> resultStatistics.put(resultType, resultStatistics.getOrDefault(resultType, 0) + 1));
+                .forEach(resultType -> resultStatistics.put(
+                        resultType.opposite(), resultStatistics.getOrDefault(resultType.opposite(), 0) + 1));
 
         return resultStatistics;
     }

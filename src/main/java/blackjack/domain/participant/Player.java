@@ -16,7 +16,7 @@ public class Player extends BlackJackParticipant {
     }
 
     @Override
-    public void drawCard(Deck deck) {
+    public void draw(Deck deck) {
         getHand().addCard(deck.draw());
         if (isBust()) {
             cannotDraw();

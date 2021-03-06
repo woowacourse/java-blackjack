@@ -19,7 +19,7 @@ public class Players {
 
     public static Players valueOf(String unParsedNames) {
         List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER))
-                .map(Player::new)
+                .map(name -> new Player(name.trim()))
                 .collect(Collectors.toList());
         validateDuplication(parsedPlayers);
         validatePlayersCount(parsedPlayers);

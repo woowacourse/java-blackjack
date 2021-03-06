@@ -22,7 +22,7 @@ public abstract class BlackJackParticipant {
         this(name, new Hand(new ArrayList<>()));
     }
 
-    abstract public void drawCard(Deck deck);
+    abstract public void draw(Deck deck);
 
     public int getScore() {
         return hand.getScore();

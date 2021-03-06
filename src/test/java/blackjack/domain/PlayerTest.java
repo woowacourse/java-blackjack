@@ -30,7 +30,7 @@ public class PlayerTest {
                 Card.valueOf(Shape.DIAMOND, CardValue.ACE),
                 Card.valueOf(Shape.SPADE, CardValue.ACE)));
 
-        root.drawCard(deck);
+        root.draw(deck);
         assertThat(root.getHand()).isEqualToComparingFieldByField(
                 new Hand(Collections.singletonList(Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
     }

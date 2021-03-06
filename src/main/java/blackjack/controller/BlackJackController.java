@@ -49,14 +49,14 @@ public class BlackJackController {
 
     private static void drawOrStop(Deck deck, Player player) {
         if (player.willContinue(InputView.inputString())) {
-            player.drawCard(deck);
+            player.draw(deck);
             OutputView.printParticipantStatus(player, false);
         }
     }
 
     private static void dealerDrawStage(Deck deck, Dealer dealer) {
         while (dealer.isContinue()) {
-            dealer.drawCard(deck);
+            dealer.draw(deck);
             OutputView.printDealerDrawCard(dealer);
         }
     }

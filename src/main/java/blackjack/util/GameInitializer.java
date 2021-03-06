@@ -24,7 +24,7 @@ public class GameInitializer {
     public static Players initializePlayers(String playersInput, Deck deck) {
         Players players = Players.valueOf(playersInput);
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
-            players.unwrap().forEach(player -> player.drawCard(deck));
+            players.unwrap().forEach(player -> player.draw(deck));
         }
         return players;
     }
@@ -32,7 +32,7 @@ public class GameInitializer {
     public static Dealer initializeDealer(Deck deck) {
         Dealer dealer = new Dealer();
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
-            dealer.drawCard(deck);
+            dealer.draw(deck);
         }
         return dealer;
     }

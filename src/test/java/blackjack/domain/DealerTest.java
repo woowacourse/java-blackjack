@@ -21,8 +21,8 @@ public class DealerTest {
                 Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
                 Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
 
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+        dealer.draw(deck);
+        dealer.draw(deck);
         assertThat(dealer.isContinue()).isFalse();
     }
 }

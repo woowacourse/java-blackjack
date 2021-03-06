@@ -17,7 +17,7 @@ public class Dealer extends BlackJackParticipant {
     }
 
     @Override
-    public void drawCard(Deck deck) {
+    public void draw(Deck deck) {
         getHand().addCard(deck.draw());
         if (isOverLimit()) {
             cannotDraw();

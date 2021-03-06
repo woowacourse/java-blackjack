@@ -67,9 +67,9 @@ public class OutputView {
     }
 
     private static void printDealerResult(GameResult gameResult) {
-        Map<ResultType, Integer> statistics = gameResult.getStatistics();
-        for (ResultType resultType : statistics.keySet()) {
-            System.out.print(statistics.get(resultType) + resultType.opposite().getName() + " ");
+        Map<ResultType, Integer> dealerStatistics = gameResult.getDealerStatistics();
+        for (ResultType resultType : dealerStatistics.keySet()) {
+            System.out.print(dealerStatistics.get(resultType) + resultType.getName() + " ");
         }
         System.out.println();
     }
