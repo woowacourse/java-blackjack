@@ -16,12 +16,12 @@ public class Card {
         return cardNumber.getName() + symbol.getName();
     }
 
-    public int getScore() {
-        return cardNumber.getScore();
+    public int getScore(int accumulatedScore) {
+        return cardNumber.getScore(accumulatedScore);
     }
 
-    public boolean isAce() {
-        return cardNumber == CardNumber.ACE;
+    public int getScore() {
+        return cardNumber.getScore();
     }
 
     @Override

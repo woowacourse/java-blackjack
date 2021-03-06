@@ -2,13 +2,13 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static blackjack.domain.Game.WINNING_NUMBER;
+import static java.util.Comparator.*;
 
 public class Deck {
-
-    private static final int ACE_EXCEPTION_NUMBER = 10;
 
     private final List<Card> deck;
 
@@ -29,22 +29,14 @@ public class Deck {
     }
 
     public int getScore() {
-        int scoreExceptAce = deck.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getScore)
-                .sum();
+        deck.sort(comparing(Card::getScore, reverseOrder()));
 
-        return deck.stream()
-                .filter(Card::isAce)
-                .mapToInt(card -> scoreCalculate(scoreExceptAce, card))
-                .sum() + scoreExceptAce;
-    }
-
-    private int scoreCalculate(int scoreExceptAce, Card card) {
-        if (scoreExceptAce + card.getScore() + ACE_EXCEPTION_NUMBER > WINNING_NUMBER) {
-            return card.getScore();
+        int score = 0;
+        for (Card card : deck) {
+            score += card.getScore(score);
         }
 
-        return card.getScore() + ACE_EXCEPTION_NUMBER;
+        return score;
     }
+
 }
