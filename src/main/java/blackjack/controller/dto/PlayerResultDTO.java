@@ -6,15 +6,15 @@ import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerDTO {
+public class PlayerResultDTO {
     private final Name name;
     private final List<Card> cards;
-    private final int value;
+    private final int score;
 
-    public PlayerDTO(Player player) {
+    public PlayerResultDTO(Player player) {
         name = player.getName();
         cards = new ArrayList<>(player.getCards());
-        value = player.getValue();
+        score = player.getValue();
     }
 
     public String getName() {
@@ -25,7 +25,7 @@ public class PlayerDTO {
         return cards;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 }
