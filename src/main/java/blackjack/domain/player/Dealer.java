@@ -21,14 +21,7 @@ public class Dealer extends Participant {
     }
 
     public Result compare(Player player) {
-        Result result = Result.of(this.isBlackjack(), player.isBlackjack());
-
-        if (result != Result.NONE) {
-            results.addResult(result);
-            return result;
-        }
-
-        result = Result.of(getScore(), player.getScore());
+        Result result = Result.of(this, player);
         results.addResult(result);
 
         return result;
