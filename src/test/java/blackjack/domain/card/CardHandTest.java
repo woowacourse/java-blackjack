@@ -26,7 +26,7 @@ public class CardHandTest {
         int sum = dealer.sumCardHand();
         
         // then
-        assertThat(sum).isEqualTo(19);
+        assertThat(sum).isEqualTo(18);
     }
     
     @Test
