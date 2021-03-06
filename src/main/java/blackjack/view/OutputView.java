@@ -2,11 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.Result;
-import blackjack.domain.game.WinOrLose;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -43,13 +41,17 @@ public class OutputView {
     }
 
     private static void printCardsAndScore(final Result result) {
-        printDealerResult(result);
+        printDealerCardsAndScore(result);
+        printGamblerCardsAndScore(result);
+    }
+
+    private static void printGamblerCardsAndScore(final Result result){
         for (Player player : result.getGamblerSet()) {
             printMessageByFormat(RESULT_INFORMATION, player.getName().getValue(), makeCardInfo(player.getCards()), player.getScore().getValue());
         }
     }
 
-    private static void printDealerResult(final Result result) {
+    private static void printDealerCardsAndScore(final Result result) {
         Cards cards = result.getDealerCards();
         String dealerCardInfo = makeCardInfo(cards);
 
