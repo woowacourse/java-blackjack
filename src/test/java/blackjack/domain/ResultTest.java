@@ -63,4 +63,13 @@ class ResultTest {
         assertThat(playerResults.get("pobi")).isEqualTo(Outcome.LOSE);
         assertThat(playerResults.get("jason")).isEqualTo(Outcome.WIN);
     }
+
+    @DisplayName("딜러의 승패가 제대로 출력되는 지 테스트")
+    @Test
+    void result_test() {
+        Result result = new Result(dealer, players);
+        assertThat(result.findDealerWinCount()).isEqualTo(1);
+        assertThat(result.findDealerLoseCount()).isEqualTo(1);
+        assertThat(result.findDealerDrawCount()).isEqualTo(0);
+    }
 }
