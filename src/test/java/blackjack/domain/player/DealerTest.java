@@ -25,6 +25,6 @@ class DealerTest {
         Deck deck = new Deck(cards);
 
         dealer.draw(deck);
-        assertThat(dealer.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        assertThat(dealer.getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
     }
 }

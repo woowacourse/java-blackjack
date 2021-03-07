@@ -1,7 +1,10 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+
+import java.util.List;
 
 public abstract class Participant {
 
@@ -56,8 +59,16 @@ public abstract class Participant {
         return score;
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> cards() {
+        return cards.cards();
+    }
+
+    public List<Card> cards(int showCount) {
+        return cards.cards(showCount);
+    }
+
+    public Card getCard(int index) {
+        return cards.getCard(index);
     }
 
     public String getName() {

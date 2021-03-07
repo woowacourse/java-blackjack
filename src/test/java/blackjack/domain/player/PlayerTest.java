@@ -30,7 +30,7 @@ class PlayerTest {
 
         player.draw(new Deck(cards));
 
-        assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        assertThat(player.getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
     }
 
     @DisplayName("게임 시작 시 받은 패를 확인한다.")
@@ -43,7 +43,7 @@ class PlayerTest {
 
         player.initializeDraw(new Deck(cards));
 
-        assertThat(player.getCards().getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
-        assertThat(player.getCards().getCard(1)).isEqualTo(new Card(Type.SPADE, Denomination.TWO));
+        assertThat(player.getCard(0)).isEqualTo(new Card(Type.SPADE, Denomination.ACE));
+        assertThat(player.getCard(1)).isEqualTo(new Card(Type.SPADE, Denomination.TWO));
     }
 }

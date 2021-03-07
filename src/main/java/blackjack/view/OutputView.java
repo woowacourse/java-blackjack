@@ -23,7 +23,7 @@ public class OutputView {
     }
 
     public static void printCards(Participant participant) {
-        List<Card>  cards = participant.getCards().cards();
+        List<Card>  cards = participant.cards();
         List<String> result = new ArrayList<>();
         for (Card card : cards) {
             result.add(card.toString());
@@ -32,7 +32,7 @@ public class OutputView {
     }
 
     public static void printCards(Participant participant, int showCardCount) {
-        List<Card> cards = participant.getCards().cards(showCardCount);
+        List<Card> cards = participant.cards(showCardCount);
         List<String> result = new ArrayList<>();
         for (Card card : cards) {
             result.add(card.toString());
@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     public static void printCardsWithScore(Participant participant) {
-        List<Card> cards = participant.getCards().cards();
+        List<Card> cards = participant.cards();
         List<String> output = new ArrayList<>();
         for (Card card : cards) {
             output.add(card.toString());
