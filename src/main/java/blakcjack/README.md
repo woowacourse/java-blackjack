@@ -23,7 +23,8 @@
     - Outcome의 역할 고민 (player와 dealer를 받아 승무패를 얻어내는 로직의 위치)
     - Card 리스트를 가지는 일급컬렉션 생성
     - Player 리스트를 가지는 Players 생성
-
+    - DTO를 만들만한 것 있는지 생각
+  
 ## 1단계 피드백 이후 리팩토링 목록
 
 - [x] 커스텀 예외 추가
@@ -40,3 +41,5 @@
     - [x] OutputView 리팩터링
     - [x] Controller 리팩터링
     - [x] BlackjackGame 리팩터링
+- [ ] 구조 변경
+    - [ ] OutcomeStatistics DTO로 변경
