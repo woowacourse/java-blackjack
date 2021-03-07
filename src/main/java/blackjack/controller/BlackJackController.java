@@ -4,22 +4,27 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Gamer;
 import blackjack.domain.Players;
-import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
 
+    private final Deck deck;
+    private final Dealer dealer;
+    private final Players players;
+
+    public BlackJackController(Deck deck, Dealer dealer, Players players) {
+        this.deck = deck;
+        this.dealer = dealer;
+        this.players = players;
+    }
+
     public void run() {
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck();
         try {
-            Players players = new Players(InputView.enterNames(), dealer);
             dealInitCard(players, deck);
             dealCard(players, deck);
             printMatchResult(players);
         } catch (IllegalArgumentException exception) {
-            OutputView.printExceptionMessage(exception);
-            run();
+
         }
     }
 
