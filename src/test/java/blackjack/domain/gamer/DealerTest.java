@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static blackjack.domain.card.Cards.TOP_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,7 +33,7 @@ public class DealerTest {
     void receiveCard() {
         dealer.receiveCard(new Card(Shape.CLOVER, Denomination.EIGHT));
         Cards cards = dealer.getCurrentCards();
-        assertThat(cards.peekCard()).isEqualTo(new Card(Shape.CLOVER, Denomination.EIGHT));
+        assertThat(cards.getCards().get(TOP_CARD)).isEqualTo(new Card(Shape.CLOVER, Denomination.EIGHT));
     }
 
     @Test

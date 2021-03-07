@@ -10,6 +10,7 @@ import blackjack.domain.gamer.*;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.card.Cards.TOP_CARD;
 import static blackjack.domain.gamer.Dealer.DEALER_NAME;
 
 public class OutputView {
@@ -43,7 +44,7 @@ public class OutputView {
     }
 
     public static void showDealerFirstCard(Dealer dealer) {
-        Card card = dealer.getCurrentCards().peekCard();
+        Card card = dealer.getCurrentCards().getCards().get(TOP_CARD);
         System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName().getName(), cardForm(card));
     }
 

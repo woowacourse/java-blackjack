@@ -15,7 +15,7 @@ public abstract class Participant {
     public abstract boolean canDraw();
 
     public final void receiveCard(Card card) {
-        this.cards = cards.addCard(card);
+        cards.addCard(card);
     }
 
     public final Cards getCurrentCards() {
