@@ -6,10 +6,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Cards {
+    public static final int BLACKJACK_SCORE = 21;
     private static final int FIRST_CARD_INDEX = 0;
     private static final int ZERO = 0;
     private static final int GAP_BETWEEN_ACE_SCORE = 10;
-    public static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
