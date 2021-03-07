@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
-    private static final String END_GAME_MARK = "n";
-
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final Dealer dealer = new Dealer();
@@ -55,7 +53,7 @@ public class BlackjackController {
     }
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
-        if (END_GAME_MARK.equals(askPlayerMoreCard(player))) {
+        if (!InputView.askPlayerMoreCard(player)) {
             OutputView.showPlayerCard(player);
             return;
         }
@@ -65,23 +63,6 @@ public class BlackjackController {
             return;
         }
         singlePlayerGameProgress(cardDeck, player);
-    }
-
-    private String askPlayerMoreCard(final Player player) {
-        try {
-            final String userInput = InputView.askMoreCard(player.getName());
-            return validateMoreCardOption(userInput);
-        } catch (IllegalArgumentException e) {
-            OutputView.getErrorMessage(e.getMessage());
-            return askPlayerMoreCard(player);
-        }
-    }
-
-    private String validateMoreCardOption(final String userInput) {
-        if ("y".equals(userInput) || "n".equals(userInput)) {
-            return userInput;
-        }
-        throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
     }
 
     private boolean isBust(final Player player) {
