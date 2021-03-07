@@ -1,25 +1,25 @@
 package blackjack.domain;
 
-import static blackjack.domain.Score.maxScore;
+import static blackjack.domain.Score.MAX_SCORE;
 
 public enum MatchResult {
 
     WIN("승") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore <= maxScore && dealerScore > maxScore) || ((playerScore > dealerScore) && playerScore <= maxScore);
+            return (playerScore <= MAX_SCORE && dealerScore > MAX_SCORE) || ((playerScore > dealerScore) && playerScore <= MAX_SCORE);
         }
     },
     LOSE("패") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore > maxScore && dealerScore <= maxScore) || ((playerScore < dealerScore) && dealerScore <= maxScore);
+            return (playerScore > MAX_SCORE && dealerScore <= MAX_SCORE) || ((playerScore < dealerScore) && dealerScore <= MAX_SCORE);
         }
     },
     DRAW("무") {
         @Override
         boolean match(int playerScore, int dealerScore) {
-            return (playerScore > maxScore && dealerScore > maxScore) || (playerScore == dealerScore);
+            return (playerScore > MAX_SCORE && dealerScore > MAX_SCORE) || (playerScore == dealerScore);
         }
     };
 

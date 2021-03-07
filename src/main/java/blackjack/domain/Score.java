@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Score {
 
-    public static final int maxScore = 21;
+    public static final int MAX_SCORE = 21;
 
     private Score() {
     }
