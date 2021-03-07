@@ -1,27 +1,27 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Participants {
 
     private final List<Participant> participants;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(List<Participant> participants) {
+    private Participants(Dealer dealer, List<Player> players) {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players);
         validateOverlappedNames(participants);
+        this.dealer = dealer;
+        this.players = players;
         this.participants = participants;
     }
 
-    public static Participants of(List<Participant> participants) {
-        return new Participants(participants);
-    }
-
     public static Participants of(Dealer dealer, List<Player> players) {
-        List<Participant> participants = Stream.concat(Stream.of(dealer), players.stream())
-                                               .collect(Collectors.toList());
-        return new Participants(participants);
+        return new Participants(dealer, players);
     }
 
     private void validateOverlappedNames(List<Participant> participants) {
