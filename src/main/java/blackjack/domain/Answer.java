@@ -1,5 +1,10 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.user.User;
+
+import java.util.Arrays;
+
 public enum Answer {
     YES("y"),
     NO("n");
@@ -10,11 +15,20 @@ public enum Answer {
         this.answer = answer;
     }
 
-    public static boolean isNo(String answer) {
-        return NO.answer.equals(answer);
+    public static Answer of(String value) {
+        return Arrays.stream(Answer.values())
+                .filter(answer -> answer.equals(value))
+                .findAny()
+                .get();
     }
 
-    public static boolean isYes(String answer) {
-        return YES.answer.equals(answer);
+    public boolean equals(String value) {
+        return answer.equals(value);
+    }
+
+    public void executeByAnswer(User user, Deck deck) {
+        if (this.equals(YES)) {
+            user.addCard(deck.drawCard());
+        }
     }
 }
