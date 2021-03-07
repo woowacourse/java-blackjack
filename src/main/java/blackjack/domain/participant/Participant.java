@@ -18,11 +18,11 @@ public abstract class Participant {
         this.hand.addCard(card);
     }
 
-    public int getTotalScore() {
+    public int getScore() {
         return hand.totalScore();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(hand.toList());
     }
 }

@@ -16,6 +16,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isOverLimitScore() {
-        return getTotalScore() > LIMIT_SCORE;
+        return getScore() > LIMIT_SCORE;
     }
 }

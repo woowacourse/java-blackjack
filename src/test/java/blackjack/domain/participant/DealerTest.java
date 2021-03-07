@@ -26,7 +26,7 @@ public class DealerTest {
             while (!dealer.isOverLimitScore()) {
                 dealer.addCard(cardDeck.draw());
             }
-            assertThat(dealer.getTotalScore()).isGreaterThanOrEqualTo(17);
+            assertThat(dealer.getScore()).isGreaterThanOrEqualTo(17);
         }
     }
 }

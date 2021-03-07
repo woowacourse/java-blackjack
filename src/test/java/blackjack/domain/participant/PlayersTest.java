@@ -53,7 +53,7 @@ class PlayersTest {
 
         assertThat(players.toList()
             .stream()
-            .filter(player -> player.getHand().size() == 2)
+            .filter(player -> player.getCards().size() == 2)
             .count())
             .isEqualTo(2);
     }
