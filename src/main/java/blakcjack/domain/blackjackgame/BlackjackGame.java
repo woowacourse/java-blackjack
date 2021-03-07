@@ -1,5 +1,7 @@
-package blakcjack.domain;
+package blakcjack.domain.blackjackgame;
 
+import blakcjack.domain.Outcome;
+import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
