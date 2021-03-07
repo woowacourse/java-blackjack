@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.Rank.ACE_VALUE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,13 +34,13 @@ public class Hand {
 
     public int sumAceToEleven() {
         return cards.stream()
-                .mapToInt(this::addResult)
+                .mapToInt(this::getAceValue)
                 .sum();
     }
 
-    private int addResult(Card card) {
+    private int getAceValue(Card card) {
         if (card.isAce()) {
-            return 11;
+            return ACE_VALUE;
         }
         return card.getRankValue();
     }
