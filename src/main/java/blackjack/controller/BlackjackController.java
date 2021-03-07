@@ -36,11 +36,10 @@ public class BlackjackController {
 
     private List<Participant> participantsSetUp() {
         final Names names = requestName();
-        final List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer());
-        for (final Name name : names.toList()) {
-            participants.add(new Player(name));
-        }
+        final List<Participant> participants = names.toList().stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
+        participants.add(0, new Dealer());
         return new ArrayList<>(participants);
     }
 
