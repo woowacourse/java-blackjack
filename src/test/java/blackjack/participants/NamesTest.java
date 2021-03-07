@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.participants;
 
 import static org.assertj.core.api.Assertions.*;
 
