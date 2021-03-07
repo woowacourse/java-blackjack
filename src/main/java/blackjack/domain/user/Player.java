@@ -14,10 +14,6 @@ public class Player extends User {
         this.name = new Name(name);
     }
 
-    public void removeAll() {    // 문제 있음
-        cards.clear();
-    }
-
     @Override
     public String getName() {
         return name.getName();
@@ -30,8 +26,7 @@ public class Player extends User {
 
     @Override
     public boolean isGameOver(int gameOverScore) {
-        int score = calculateScore(gameOverScore);
-        return (score > gameOverScore);
+        return calculateScore(gameOverScore) > gameOverScore;
     }
 
     @Override

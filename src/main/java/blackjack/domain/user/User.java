@@ -25,7 +25,10 @@ public abstract class User {
         if (score > gameOverScore) {
             aceCount = findAceCount();
         }
+        return changeAceScore(gameOverScore, score, aceCount);
+    }
 
+    private int changeAceScore(int gameOverScore, int score, int aceCount) {
         while (emptyAceCard(aceCount) && !belowScore(score, gameOverScore)) {
             score = Number.ACE.useSecondScore(score);
         }

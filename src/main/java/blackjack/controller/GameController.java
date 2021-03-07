@@ -68,13 +68,13 @@ public class GameController {
         String answer = "";
         while (!player.isGameOver(GAME_OVER_SCORE) && !Answer.NO.equals(answer)) {
             answer = inputView.getCardOrPass(player.getName());
-            Answer.of(answer).executeByAnswer(player, deck);
-            showPlayerCardStatus(player, answer);
+            addPlayerCard(answer, player, deck);
         }
     }
 
-    private void showPlayerCardStatus(Player player, String answer) {
+    private void addPlayerCard(String answer, Player player, Deck deck) {
         if (Answer.YES.equals(answer)) {
+            player.addCard(deck.drawCard());
             OutputView.showPlayCardStatus(player.getName(), player.getCardsStatus());
         }
     }

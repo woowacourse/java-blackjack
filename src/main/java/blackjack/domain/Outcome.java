@@ -6,16 +6,24 @@ import java.util.function.BiPredicate;
 import static blackjack.controller.GameController.GAME_OVER_SCORE;
 
 public enum Outcome {
-    WIN("승", (dealerScore, playerScore) -> dealerScore > playerScore),
-    LOSE("패", (dealerScore, playerScore) -> dealerScore < playerScore),
-    DRAW("무", (dealerScore, playerScore) -> dealerScore == playerScore);
+    WIN("승",
+            (dealerScore, playerScore) -> (playerScore > GAME_OVER_SCORE),
+            (dealerScore, playerScore) -> dealerScore > playerScore),
+    LOSE("패",
+            (dealerScore, playerScore) -> (dealerScore > GAME_OVER_SCORE),
+            (dealerScore, playerScore) -> dealerScore < playerScore),
+    DRAW("무",
+            (dealerScore, playerScore) -> (false),
+            (dealerScore, playerScore) -> dealerScore == playerScore);
 
     private final String name;
-    private final BiPredicate<Integer, Integer> compareFunction;
+    private final BiPredicate<Integer, Integer> compareFunctionWhenBuster;
+    private final BiPredicate<Integer, Integer> compareFunctionNotBuster;
 
-    Outcome(String name, BiPredicate<Integer, Integer> compareFunction) {
+    Outcome(String name, BiPredicate<Integer, Integer> compareFunctionWhenBuster, BiPredicate<Integer, Integer> compareFunctionNotBuster) {
         this.name = name;
-        this.compareFunction = compareFunction;
+        this.compareFunctionWhenBuster = compareFunctionWhenBuster;
+        this.compareFunctionNotBuster = compareFunctionNotBuster;
     }
 
     public String getName() {
@@ -23,29 +31,17 @@ public enum Outcome {
     }
 
     public static Outcome findOutcome(int dealerScore, int playerScore) {
-        Outcome outcome = getOutcomeWhenBuster(dealerScore, playerScore);
-        if (outcome != null) {
-            return outcome;
-        }
         return Arrays.stream(values())
-                .filter(value -> value.compareFunction.test(dealerScore, playerScore))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("예측되는 승패를 찾을 수 없습니다."));
+                .filter(value -> value.compareFunctionWhenBuster.test(dealerScore, playerScore))
+                .findAny()
+                .orElse(findOutcomeNotBuster(dealerScore, playerScore));
     }
 
-    private static Outcome getOutcomeWhenBuster(int dealerScore, int playerScore) {
-        if (dealerScore > GAME_OVER_SCORE && playerScore > GAME_OVER_SCORE) {
-            return WIN;
-        }
-
-        if (dealerScore > GAME_OVER_SCORE) {
-            return LOSE;
-        }
-
-        if (playerScore > GAME_OVER_SCORE) {
-            return WIN;
-        }
-        return null;
+    private static Outcome findOutcomeNotBuster(int dealerScore, int playerScore) {
+        return Arrays.stream(values())
+                .filter(value -> value.compareFunctionNotBuster.test(dealerScore, playerScore))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("예측되는 승패를 찾을 수 없습니다."));
     }
 
     public static Outcome reverseResult(Outcome outcome) {

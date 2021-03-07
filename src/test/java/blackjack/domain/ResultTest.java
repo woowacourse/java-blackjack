@@ -52,7 +52,7 @@ class ResultTest {
     @Test
     void result_generate_test() {
         Result result = new Result(users, GAME_OVER_SCORE);
-        Map<String, Outcome> playerResults = result.getPlayerResults();
+        Map<String, Outcome> playerResults = result.getPlayerOutcomes();
         assertThat(playerResults.get("pobi")).isEqualTo(Outcome.WIN);
         assertThat(playerResults.get("jason")).isEqualTo(Outcome.LOSE);
     }
@@ -64,7 +64,7 @@ class ResultTest {
         users.getPlayers().get(0).addCard(Card.of("스페이드", "9"));
 
         Result result = new Result(users, GAME_OVER_SCORE);
-        Map<String, Outcome> playerResults = result.getPlayerResults();
+        Map<String, Outcome> playerResults = result.getPlayerOutcomes();
 
         assertThat(playerResults.get("pobi")).isEqualTo(Outcome.LOSE);
         assertThat(playerResults.get("jason")).isEqualTo(Outcome.WIN);

@@ -25,11 +25,6 @@ class PlayerTest {
         ));
     }
 
-    @AfterEach
-    void afterEach() {
-        player.removeAll();
-    }
-
     @DisplayName("플레이어가 올바르게 생성되는 지 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"pobi", "brown"})

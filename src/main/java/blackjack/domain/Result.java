@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Result {
     private final List<Outcome> dealerOutcomes;
-    private final Map<String, Outcome> playerResults;
+    private final Map<String, Outcome> playerOutcomes = new LinkedHashMap<>();
 
     public Result(Users users, int gameOverScore) {
         dealerOutcomes = users.getPlayers().stream()
@@ -17,15 +17,13 @@ public class Result {
                         Outcome.findOutcome(users.getDealer().calculateScore(gameOverScore), player.calculateScore(gameOverScore)))
                 .collect(Collectors.toList());
 
-        int playerCount = dealerOutcomes.size();
-        playerResults = new LinkedHashMap<>();
-        for (int i = 0; i < playerCount; i++) {
-            playerResults.put(users.getPlayers().get(i).getName(), Outcome.reverseResult(dealerOutcomes.get(i)));
+        for (int i = 0; i < dealerOutcomes.size(); i++) {
+            playerOutcomes.put(users.getPlayers().get(i).getName(), Outcome.reverseResult(dealerOutcomes.get(i)));
         }
     }
 
-    public Map<String, Outcome> getPlayerResults() {
-        return playerResults;
+    public Map<String, Outcome> getPlayerOutcomes() {
+        return playerOutcomes;
     }
 
     public int findDealerWinCount() {

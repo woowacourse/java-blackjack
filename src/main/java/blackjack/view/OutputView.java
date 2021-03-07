@@ -45,22 +45,29 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println(String.format(TWO_CARDS_DEAL_OUT_MESSAGE, dealerName, playerNames));
-        System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
-                dealerName,
-                dealerCardStatus.stream().collect(Collectors.joining(DELIMITER))));
+        showDealerStatus(dealerName, dealerCardStatus);
+        showPlayersStatus(playerStatusDto);
+        System.out.println();
+    }
 
+    private static void showPlayersStatus(List<PlayerStatusDto> playerStatusDto) {
         playerStatusDto.forEach(dto ->
                 System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
                         dto.getPlayerName(),
                         dto.getPlayerCardStatus().stream().collect(Collectors.joining(DELIMITER)))));
-        System.out.println();
+    }
+
+    private static void showDealerStatus(String dealerName, List<String> dealerCardStatus) {
+        System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
+                dealerName,
+                dealerCardStatus.stream().collect(Collectors.joining(DELIMITER))));
     }
 
     public static void showOutcomes(Result result) {
         System.out.println("## 최종 승패");
         System.out.println(String.format("딜러: %d승 %d패 %d무",
                 result.findDealerWinCount(), result.findDealerLoseCount(), result.findDealerDrawCount()));
-        result.getPlayerResults().forEach((name, outcome) ->
+        result.getPlayerOutcomes().forEach((name, outcome) ->
                 System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, name, outcome.getName())));
     }
 }
