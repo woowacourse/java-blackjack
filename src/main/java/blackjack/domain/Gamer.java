@@ -42,17 +42,6 @@ public abstract class Gamer {
         return cardValue;
     }
 
-    public int calculateMaximumPoint() {
-        int point = cards.stream()
-            .map(Card::givePoint)
-            .reduce(0, Integer::sum);
-
-        if (point <= AVAILABLE_ACE_BONUS && findAce(cards)) {
-            point += ACE_BONUS;
-        }
-        return point;
-    }
-
     private boolean findAce(List<Card> cards) {
         for (Card card : cards) {
             if (card.isAce()) {
@@ -70,7 +59,7 @@ public abstract class Gamer {
         return name;
     }
 
-    public String getCards() {
+    public String getAllCards() {
         return cards.stream()
             .map(Card::getPatternAndNumber)
             .collect(Collectors.joining(COMMA));
@@ -85,8 +74,6 @@ public abstract class Gamer {
             .map(Card::getPatternAndNumber)
             .collect(Collectors.joining(COMMA));
     }
-
-    public abstract String getInfo();
 
     @Override
     public boolean equals(Object o) {

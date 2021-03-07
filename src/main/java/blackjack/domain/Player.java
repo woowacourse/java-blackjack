@@ -34,7 +34,7 @@ public class Player extends Gamer {
         String draw = InputView.isContinueDraw();
         if (isDrawCard(draw)) {
             receiveCard(deck.dealCard());
-            OutputView.printPlayerInfo(getInfo());
+            OutputView.printPlayerInfo(this);
             return true;
         }
         return false;
@@ -49,12 +49,6 @@ public class Player extends Gamer {
 
     public void recordMatchResult(String result) {
         this.result = result;
-    }
-
-
-    @Override
-    public String getInfo() {
-        return getName() + COUPLER + getCards();
     }
 
     public String getResult() {

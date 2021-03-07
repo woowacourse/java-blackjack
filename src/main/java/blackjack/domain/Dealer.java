@@ -21,11 +21,6 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public String getInfo() {
-        return getName() + COUPLER + getDealerCards();
-    }
-
-    @Override
     public Boolean continueDraw(Deck deck) {
         this.receiveCard(deck.dealCard());
         OutputView.noticeDealerGetCard();

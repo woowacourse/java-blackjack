@@ -19,9 +19,10 @@ public class OutputView {
     private static final String SKELETON_NOTICE_DRAW_TWO_CARDS = "%s와 %s에게 %d장씩 나누었습니다.";
     public static final String NOTICE_RESULT = "## 최종 승패";
     public static final String NOTICE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String SKELETON_GAME_RESULT_POINT = "%s - 결과: %d";
+    private static final String SKELETON_GAME_RESULT_POINT = "%s 카드 : %s - 결과: %d";
     private static final String SKELETON_DEALER_RESULT = "딜러: %d%s %d%s %d%s";
     private static final String SKELETON_NOTICE_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String SKELETON_DEALER_INFO = "%s: %s";
 
     public static void noticeDrawTwoCards(Players players) {
         System.out.println();
@@ -56,7 +57,8 @@ public class OutputView {
 
     public static void printGameResultPoint(Gamer gamer) {
         System.out.println(String
-            .format(SKELETON_GAME_RESULT_POINT, gamer.getInfo(), gamer.calcPoint()));
+            .format(SKELETON_GAME_RESULT_POINT, gamer.getName(), gamer.getAllCards(),
+                gamer.calcPoint()));
     }
 
     public static void printDealerResult(Map<String, Integer> result) {
@@ -76,7 +78,12 @@ public class OutputView {
         System.out.println(String.format(SKELETON_NOTICE_GET_MORE_CARD, name));
     }
 
-    public static void printPlayerInfo(String info) {
-        System.out.println(info);
+    public static void printPlayerInfo(Gamer player) {
+        System.out.println(String.format("%s카드: %s", player.getName(), player.getAllCards()));
+    }
+
+    public static void printDealerInfo(Gamer dealer) {
+        System.out.println(
+            String.format(SKELETON_DEALER_INFO, dealer.getName(), dealer.getDealerCards()));
     }
 }

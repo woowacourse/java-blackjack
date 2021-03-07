@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 
+import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,9 +74,9 @@ public class Players {
 
     public String getPlayersCards() {
         StringBuilder playerInfo = new StringBuilder();
-        playerInfo.append(dealer.getInfo()).append(NEW_LINE);
+        OutputView.printDealerInfo(this.dealer);
         for (Gamer gamer : players) {
-            playerInfo.append(gamer.getInfo()).append(NEW_LINE);
+            OutputView.printPlayerInfo(gamer);
         }
         return playerInfo.toString();
     }
