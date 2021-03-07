@@ -19,7 +19,8 @@ public enum Symbol {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final List<Symbol> symbols = Arrays.stream(Symbol.values())
+    public static final int ANOTHER_ACE_SCORE = 11;
+    private static final List<Symbol> SYMBOLS = Arrays.stream(Symbol.values())
             .collect(Collectors.toList());
 
     private final String letter;
@@ -31,7 +32,14 @@ public enum Symbol {
     }
 
     public static List<Symbol> of() {
-        return symbols;
+        return SYMBOLS;
+    }
+
+    public int getBiggerAceScore() {
+        if (this == ACE) {
+            return ANOTHER_ACE_SCORE;
+        }
+        throw new IllegalArgumentException("해당 심볼은 ACE가 아닙니다.");
     }
 
     public int getScore() {

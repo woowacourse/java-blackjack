@@ -5,8 +5,6 @@ import blackjack.domain.card.painting.Symbol;
 
 import java.util.Objects;
 
-import static blackjack.domain.card.painting.Symbol.ACE;
-
 public class Card {
     private final Suit suit;
     private final Symbol symbol;
@@ -14,10 +12,6 @@ public class Card {
     public Card(Suit suit, Symbol symbol) {
         this.suit = suit;
         this.symbol = symbol;
-    }
-
-    public boolean isAce() {
-        return symbol == ACE;
     }
 
     public boolean isSameSuit(Suit suit) {

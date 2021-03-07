@@ -28,7 +28,8 @@ public class Cards {
         int score = sumScore();
 
         if (hasAce() && canAddAceScore(score)) {
-            score += ACE_ADDITIONAL_SCORE;
+            score -= ACE.getScore();
+            score += ACE.getBiggerAceScore();
         }
 
         return score;
@@ -46,7 +47,7 @@ public class Cards {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(symbol -> symbol.isSameSymbol(ACE));
+                .anyMatch(card -> card.isSameSymbol(ACE));
     }
 
     public Card get(int index) {

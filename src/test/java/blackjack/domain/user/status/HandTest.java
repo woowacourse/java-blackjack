@@ -19,6 +19,8 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
+    private Hand hand;
+
     @BeforeEach
     void setUp() {
         List<Card> cards = Arrays.asList(
@@ -39,46 +41,4 @@ class HandTest {
         assertThat(cardList).hasSize(3);
     }
 
-    @DisplayName("손에 들고 있는 카드들의 점수의 합을 구한다")
-    @ParameterizedTest
-    @MethodSource
-    void testCalculateScore(List<Card> cards, int expectedScore) {
-        //given
-        Hand hand = new Hand(new Cards(cards));
-        //when
-        int score = hand.calculateScore();
-        //then
-        assertThat(score).isEqualTo(expectedScore);
-    }
-
-    private Hand hand;
-
-    private static Stream<Arguments> testCalculateScore() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
-                        new Card(Suit.HEART, Symbol.ACE)), 15),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
-                        new Card(Suit.HEART, Symbol.ACE)), 21),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.DIAMOND, Symbol.SEVEN),
-                        new Card(Suit.HEART, Symbol.ACE)), 20),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.KING), new Card(Suit.DIAMOND, Symbol.SIX),
-                        new Card(Suit.HEART, Symbol.FOUR)), 20),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.NINE), new Card(Suit.DIAMOND, Symbol.QUEEN),
-                        new Card(Suit.HEART, Symbol.FIVE)), 24),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.NINE), new Card(Suit.HEART, Symbol.TWO),
-                        new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.HEART, Symbol.ACE)), 22),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.FIVE), new Card(Suit.HEART, Symbol.ACE),
-                        new Card(Suit.DIAMOND, Symbol.TEN)), 16),
-                Arguments.of(Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.ACE), new Card(Suit.HEART, Symbol.ACE),
-                        new Card(Suit.DIAMOND, Symbol.ACE), new Card(Suit.SPADE, Symbol.ACE)), 14)
-        );
-    }
 }
