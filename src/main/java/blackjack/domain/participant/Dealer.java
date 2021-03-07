@@ -19,12 +19,12 @@ public class Dealer extends Participant {
     }
 
     public void setBaseCard() {
-        cardHand.add(drawCard());
-        cardHand.add(drawCard());
+        cardHand.add(draw());
+        cardHand.add(draw());
     }
 
     public void deal(Player player) {
-        player.receiveCard(drawCard());
+        player.receiveCard(draw());
     }
 
     public void setPlayersBaseCard(List<Player> players) {
@@ -35,28 +35,28 @@ public class Dealer extends Participant {
     }
 
     public void pickAnotherCard() {
-        cardHand.add(drawCard());
+        cardHand.add(draw());
     }
 
-    private Card drawCard() {
-        return deck.drawCard();
+    public Card getBaseCard() {
+        return cardHand.getCards().get(0);
     }
 
     public boolean shouldReceive() {
-        return cardHand.sumAceToEleven() <= DEALER_THRESHOLD;
+        return cardHand.sumAceToEleven() <= DEALER_UNDER;
+    }
+
+    private Card draw() {
+        return deck.drawCard();
     }
 
     @Override
     public boolean isBust() {
-        return cardHand.sumAceToOne() > THRESHOLD;
+        return cardHand.sumAceToOne() > BUST_THRESHOLD;
     }
 
     @Override
     public int sumCard() {
         return cardHand.sumAceToEleven();
-    }
-
-    public Card getBaseCard() {
-        return cardHand.getCards().get(0);
     }
 }

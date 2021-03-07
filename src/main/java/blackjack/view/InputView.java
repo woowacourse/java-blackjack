@@ -15,13 +15,13 @@ public class InputView {
     }
 
     public static boolean wantsReceive(String playerName) {
-        askShouldDrawAnotherCard(playerName);
+        askWillDraw(playerName);
 
         String input = SCANNER.nextLine();
         return YES.equals(input);
     }
 
-    private static void askShouldDrawAnotherCard(String playerName) {
+    private static void askWillDraw(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)\n", playerName, YES, NO);
     }
 }
