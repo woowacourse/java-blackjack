@@ -1,7 +1,6 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Card;
-import blakcjack.domain.name.Name;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +10,7 @@ public class Dealer extends Participant {
     private static final int FIRST_CARD_POSITION = 0;
 
     public Dealer() {
-        super(new Name("딜러"));
+        super("딜러");
     }
 
     public List<Card> getFirstCard() {

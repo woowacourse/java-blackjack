@@ -40,7 +40,7 @@ public class BlackJackController {
     }
 
     private boolean isHitSelected(final Participant player) {
-        return InputView.takeHitOrStand(player.getName());
+        return InputView.takeHitOrStand(player.getNameValue());
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
@@ -52,6 +52,6 @@ public class BlackJackController {
 
     private void printFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
         OutputView.printFinalHandsSummary(dealer, players);
-        OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getName());
+        OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getNameValue());
     }
 }

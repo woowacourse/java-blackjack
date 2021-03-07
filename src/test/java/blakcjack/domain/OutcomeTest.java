@@ -3,7 +3,6 @@ package blakcjack.domain;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
-import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +17,7 @@ class OutcomeTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new Name("pobi"));
+        player = new Player("pobi");
         dealer = new Dealer();
     }
 

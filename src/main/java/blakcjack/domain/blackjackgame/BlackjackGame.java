@@ -3,7 +3,6 @@ package blakcjack.domain.blackjackgame;
 import blakcjack.domain.Outcome;
 import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Deck;
-import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
@@ -30,7 +29,7 @@ public class BlackjackGame {
         this.dealer = new Dealer();
 
         for (String name : names) {
-            players.add(new Player(new Name(name)));
+            players.add(new Player(name));
         }
     }
 
@@ -69,7 +68,7 @@ public class BlackjackGame {
 
         for (final Participant player : players) {
             final Outcome playerOutcome = Outcome.of((Player) player, (Dealer) dealer);
-            playersOutcome.put(player.getName(), playerOutcome);
+            playersOutcome.put(player.getNameValue(), playerOutcome);
         }
         return playersOutcome;
     }

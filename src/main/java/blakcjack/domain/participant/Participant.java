@@ -15,22 +15,13 @@ public abstract class Participant {
     protected final Name name;
     protected final List<Card> cards = new ArrayList<>();
 
-    protected Participant(final Name name) {
-        this.name = name;
+    protected Participant(final String name) {
+        this.name = new Name(name);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         cards.add(card);
     }
-
-    public String getName() {
-        return name.getName();
-    }
-
 
     public int calculateScore() {
         int score = calculateMinimumPossibleScore();
@@ -42,7 +33,7 @@ public abstract class Participant {
         return score;
     }
 
-    private int getNextPossibleScore(int sum) {
+    private int getNextPossibleScore(final int sum) {
         if (sum + ACE_ADDITIONAL_VALUE <= BLACKJACK_VALUE) {
             return sum + ACE_ADDITIONAL_VALUE;
         }
@@ -69,16 +60,24 @@ public abstract class Participant {
         return BLACKJACK_VALUE < calculateScore();
     }
 
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public String getNameValue() {
+        return name.getName();
+    }
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Participant that = (Participant) o;
-        return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
+        final Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && Objects.equals(getCards(), that.getCards());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, getCards());
     }
 }

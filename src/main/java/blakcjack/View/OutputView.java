@@ -24,12 +24,12 @@ public class OutputView {
     }
 
     private static String makeCardDistributionMessage(final Dealer dealer, final List<Participant> players) {
-        return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), concatenatePlayerNames(players));
+        return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getNameValue(), concatenatePlayerNames(players));
     }
 
     private static String concatenatePlayerNames(final List<Participant> players) {
         return players.stream()
-                .map(Participant::getName)
+                .map(Participant::getNameValue)
                 .collect(Collectors.joining(", "));
     }
 
@@ -39,7 +39,7 @@ public class OutputView {
 
 
     private static String makeCardSummary(final Participant participant) {
-        return String.format("%s: %s%n", participant.getName(),
+        return String.format("%s: %s%n", participant.getNameValue(),
                 concatenateCardsInformation(getInitialCards(participant)));
     }
 
@@ -80,7 +80,7 @@ public class OutputView {
     }
 
     private static String makeFinalCardSummary(final Participant participant) {
-        return participant.getName() + "카드: " + concatenateCardsInformation(participant.getCards());
+        return participant.getNameValue() + "카드: " + concatenateCardsInformation(participant.getCards());
     }
 
     public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics, final String dealerName) {
