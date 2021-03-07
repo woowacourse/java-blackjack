@@ -16,7 +16,7 @@ public class Dealer extends Participant {
         return this.cards.getFirstCard();
     }
 
-    public MatchResultType compare(Player player) {
+    public MatchResultType compareScore(Player player) {
         return MatchResultType.getStatus(this.cards.calculateScore(), player.calculateScore());
     }
 
