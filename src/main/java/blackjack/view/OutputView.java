@@ -18,21 +18,22 @@ public class OutputView {
     }
 
     public static void showDealerAddCard(int turnOverCount) {
-        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", turnOverCount));
+        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", turnOverCount));
+        nextLine();
     }
 
     public static void showFinalStatus(RoundStatusDto statusDto) {
         List<PlayerStatusDto> playerStatusDto = statusDto.getPlayerStatusDto();
         System.out.println(String.format(GAME_RESULT_MESSAGE,
                 statusDto.getDealerName(),
-                statusDto.getDealerCardStatus().stream().collect(Collectors.joining(DELIMITER)),
+                String.join(DELIMITER, statusDto.getDealerCardStatus()),
                 statusDto.getDealerScore()));
         playerStatusDto.forEach(dto ->
                 System.out.println(String.format(GAME_RESULT_MESSAGE,
                         dto.getPlayerName(),
-                        dto.getPlayerCardStatus().stream().collect(Collectors.joining(DELIMITER)),
+                        String.join(DELIMITER, dto.getPlayerCardStatus()),
                         dto.getPlayerScore())));
-        System.out.println();
+        nextLine();
     }
 
     public static void showInitialStatus(RoundStatusDto roundStatusDto) {
@@ -41,12 +42,16 @@ public class OutputView {
         List<PlayerStatusDto> playerStatusDto = roundStatusDto.getPlayerStatusDto();
 
         String playerNames = playerStatusDto.stream()
-                .map(dto -> dto.getPlayerName())
+                .map(PlayerStatusDto::getPlayerName)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println(String.format(TWO_CARDS_DEAL_OUT_MESSAGE, dealerName, playerNames));
         showDealerStatus(dealerName, dealerCardStatus);
         showPlayersStatus(playerStatusDto);
+        nextLine();
+    }
+
+    private static void nextLine() {
         System.out.println();
     }
 
@@ -54,13 +59,13 @@ public class OutputView {
         playerStatusDto.forEach(dto ->
                 System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
                         dto.getPlayerName(),
-                        dto.getPlayerCardStatus().stream().collect(Collectors.joining(DELIMITER)))));
+                        String.join(DELIMITER, dto.getPlayerCardStatus()))));
     }
 
     private static void showDealerStatus(String dealerName, List<String> dealerCardStatus) {
         System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
                 dealerName,
-                dealerCardStatus.stream().collect(Collectors.joining(DELIMITER))));
+                String.join(DELIMITER, dealerCardStatus)));
     }
 
     public static void showOutcomes(Result result) {

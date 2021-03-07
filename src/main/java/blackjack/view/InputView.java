@@ -17,15 +17,15 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    private String getNextLine() {
+    private String input() {
         return scanner.nextLine();
     }
 
     public List<String> getPlayerNames() {
         System.out.println(PLAYER_INPUT_MESSAGE);
-        String[] split = getNextLine().split(DELIMITER);
+        String[] namesInput = input().split(DELIMITER);
         List<String> playerNameGroup = new ArrayList<>();
-        for (String playerName : split) {
+        for (String playerName : namesInput) {
             String trimName = playerName.trim();
             validatePlayerName(trimName);
             playerNameGroup.add(trimName);
@@ -41,6 +41,6 @@ public class InputView {
 
     public String getCardOrPass(String playerName) {
         System.out.println(String.format(PLAYER_ADD_CARD_MESSAGE, playerName));
-        return getNextLine();
+        return input();
     }
 }
