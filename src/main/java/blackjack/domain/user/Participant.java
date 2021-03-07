@@ -42,6 +42,18 @@ public abstract class Participant {
         return this.status != status;
     }
 
+    public boolean scoreBiggerThan(Participant participant){
+        return this.calculateScore() > participant.calculateScore();
+    }
+
+    public boolean isSameScore(Participant participant){
+        return this.calculateScore() == participant.calculateScore();
+    }
+
+    public boolean scoreSmallerThan(Participant participant){
+        return this.calculateScore() < participant.calculateScore();
+    }
+
     public void changeStatus() {
         status = Status.of(hand.calculateScore());
     }

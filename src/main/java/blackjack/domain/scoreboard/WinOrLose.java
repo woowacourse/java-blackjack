@@ -1,6 +1,7 @@
 package blackjack.domain.scoreboard;
 
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 
 import java.util.Arrays;
@@ -11,21 +12,21 @@ import static blackjack.domain.user.status.Status.BURST;
 public enum WinOrLose {
     WIN("승"
             , (dealer, user) -> dealer.isSameStatus(BURST) && user.isNotStatus(BURST)
-            , (dealerScore, userScore) -> dealerScore < userScore),
+            , Participant::scoreSmallerThan),
     DRAW("무"
             , (dealer, user) -> dealer.isSameStatus(BURST) && user.isSameStatus(BURST)
-            , Integer::equals),
+            , Participant::isSameScore),
     LOSE("패"
             , (dealer, user) -> dealer.isNotStatus(BURST) && user.isSameStatus(BURST)
-            , (dealerScore, userScore) -> dealerScore > userScore);
+            , Participant::scoreBiggerThan);
 
     private static final String NONE_MATCH_CONDITION_ERROR_MSG = "승무패 조건에 없는 경우입니다.";
 
     private final String character;
     private final BiPredicate<Dealer, User> statusCompareCondition;
-    private final BiPredicate<Integer, Integer> scoreCompareCondition;
+    private final BiPredicate<Dealer, User> scoreCompareCondition;
 
-    WinOrLose(String character, BiPredicate<Dealer, User> statusCompareCondition, BiPredicate<Integer, Integer> scoreCompareCondition) {
+    WinOrLose(String character, BiPredicate<Dealer, User> statusCompareCondition, BiPredicate<Dealer, User> scoreCompareCondition) {
         this.character = character;
         this.statusCompareCondition = statusCompareCondition;
         this.scoreCompareCondition = scoreCompareCondition;
@@ -40,7 +41,7 @@ public enum WinOrLose {
 
     private static WinOrLose decideWinOrLoseByScore(User user, Dealer dealer) {
         return Arrays.stream(values())
-                .filter(winOrLose -> winOrLose.scoreCompareCondition.test(dealer.calculateScore(), user.calculateScore()))
+                .filter(winOrLose -> winOrLose.scoreCompareCondition.test(dealer, user))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NONE_MATCH_CONDITION_ERROR_MSG));
     }
