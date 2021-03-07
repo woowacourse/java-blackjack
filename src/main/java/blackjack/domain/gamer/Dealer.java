@@ -3,7 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.MatchResult;
 import blackjack.domain.card.Cards;
 
-public class Dealer extends Person {
+public class Dealer extends Participant {
     public static final Name DEALER_NAME = new Name("딜러");
     private static final int DEALER_DRAW_CONDITION = 16;
 

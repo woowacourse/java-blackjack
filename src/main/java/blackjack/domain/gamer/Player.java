@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards;
 
 import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
 
-public class Player extends Person {
+public class Player extends Participant {
 
     public Player(Name name) {
         super(name, new Cards());

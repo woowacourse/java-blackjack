@@ -36,7 +36,7 @@ public class OutputView {
 
     public static void distributeCardMessage(Players players) {
         String playerName = players.getPlayers().stream()
-                .map(Person::getName)
+                .map(Participant::getName)
                 .map(Name::getName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.printf(DISTRIBUTE_MESSAGE_FORM + "%n", playerName);
@@ -53,8 +53,8 @@ public class OutputView {
         return denomination.getName() + shape.getName();
     }
 
-    public static void showCards(Person person) {
-        System.out.println(getCardsMessageForm(person));
+    public static void showCards(Participant participant) {
+        System.out.println(getCardsMessageForm(participant));
     }
 
     public static void askOneMoreCard(Player player) {
@@ -74,11 +74,11 @@ public class OutputView {
         }
     }
 
-    private static String getCardsMessageForm(Person person) {
-        String allCards = person.getCurrentCards().getCards().stream()
+    private static String getCardsMessageForm(Participant participant) {
+        String allCards = participant.getCurrentCards().getCards().stream()
                 .map(OutputView::cardForm)
                 .collect(Collectors.joining(DELIMITER));
-        return String.format(CURRENT_CARD_FORM, person.getName().getName(), allCards);
+        return String.format(CURRENT_CARD_FORM, participant.getName().getName(), allCards);
     }
 
     public static void showFinalResult(BlackJackResult blackJackResult) {

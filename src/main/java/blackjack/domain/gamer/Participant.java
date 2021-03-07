@@ -3,11 +3,11 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public abstract class Person {
+public abstract class Participant {
     protected Name name;
     protected Cards cards;
 
-    protected Person(Name name, Cards cards) {
+    protected Participant(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
