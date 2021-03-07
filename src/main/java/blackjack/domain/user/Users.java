@@ -38,8 +38,7 @@ public class Users {
     }
 
     public List<ParticipantName> getNameList() {
-        return users
-                .stream()
+        return users.stream()
                 .map(Participant::getName)
                 .collect(toList());
     }

@@ -19,7 +19,7 @@ public enum Symbol {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    public static final int ANOTHER_ACE_SCORE = 11;
+    private static final int ANOTHER_ACE_SCORE = 11;
     private static final List<Symbol> SYMBOLS = Arrays.stream(Symbol.values())
             .collect(Collectors.toList());
 

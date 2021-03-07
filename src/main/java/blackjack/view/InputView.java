@@ -38,7 +38,6 @@ public class InputView {
             return yesOrNo.equalsIgnoreCase(YES);
         }
         throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
-
     }
 
     private static Boolean isValidAnswer(String yesOrNo) {
