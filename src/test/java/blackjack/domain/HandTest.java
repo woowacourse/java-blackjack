@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HandTest {
 
@@ -62,5 +63,29 @@ class HandTest {
 
         hand.addCard(new Card(Denomination.QUEEN, Suit.HEARTS));
         assertThat(hand.getStatus()).isEqualTo(HandStatus.BUST);
+    }
+
+    @DisplayName("플레이어가 Hit 인 경우 테스트 = 21점 이하면 hit")
+    @Test
+    public void isHit_forPlayer() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Denomination.TEN, Suit.CLUBS));
+        cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
+        Hand hand = new Hand(cards, 21);
+
+        assertThat(hand.calculateHandScore()).isEqualTo(17);
+        assertTrue(hand.isHit());
+    }
+
+    @DisplayName("딜러 Hit 인 경우 테스트 = 16점 이하면 hit")
+    @Test
+    public void isHit_forDealer() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Denomination.EIGHT, Suit.CLUBS));
+        cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
+        Hand hand = new Hand(cards, 16);
+
+        assertThat(hand.calculateHandScore()).isEqualTo(15);
+        assertTrue(hand.isHit());
     }
 }

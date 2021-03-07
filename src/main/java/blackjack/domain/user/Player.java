@@ -15,7 +15,7 @@ public class Player extends User {
 
     private void validateNotEmptyName(String name) {
         if (name.isEmpty()) {
-            throw new IllegalArgumentException("빈 이름이 입력되었습니다."); //TODO 테스트 코드 작성
+            throw new IllegalArgumentException("빈 이름이 입력되었습니다.");
         }
     }
 

@@ -31,12 +31,9 @@ public class Game {
     }
 
     public boolean addCardToDealer(Deck deck) {
-        if (!dealer.isHit()) {
-            return false;
-        }
-
-        while (dealer.isHit()) {
+        if (dealer.isHit()) {
             dealer.draw(deck.pickSingleCard());
+            return true;
         }
         return true;
     }
