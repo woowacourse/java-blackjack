@@ -1,13 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InputView {
@@ -29,7 +26,9 @@ public class InputView {
     }
 
     private static List<String> trimNames(List<String> splitNames) {
-        return splitNames.stream().map(String::trim).collect(Collectors.toList());
+        return splitNames.stream()
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     public static Boolean askMoreDraw(Name userName) {

@@ -51,8 +51,7 @@ public class OutputView {
     }
 
     public static void printCardListAndScore(Resultable gameResult) {
-        String cards = gameResult.getCards()
-                .stream()
+        String cards = gameResult.getCards().stream()
                 .map(card -> card.getSuitLetter() + card.getSymbolLetter())
                 .collect(joining(COMMA_AND_BLANK));
 

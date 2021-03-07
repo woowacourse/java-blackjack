@@ -25,7 +25,8 @@ public class Users {
     }
 
     public boolean existCanContinueUser() {
-        return users.stream().anyMatch(User::canContinueGame);
+        return users.stream()
+                .anyMatch(User::canContinueGame);
     }
 
     public User findFirstCanPlayUser() {
