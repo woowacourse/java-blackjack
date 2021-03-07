@@ -28,8 +28,8 @@ public class BlackJackApplication {
     }
 
     private static void initializeParticipants(Dealer dealer, List<Player> players) {
-        dealer.setBaseCard();
-        dealer.setPlayersBaseCard(players);
+        dealer.drawBaseCard();
+        dealer.drawBaseCardToPlayers(players);
     }
 
     private static List<Player> getPlayers() {

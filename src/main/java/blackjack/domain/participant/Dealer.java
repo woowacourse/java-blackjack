@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int BUST_THRESHOLD = 21;
+    public static final String DEALER_NAME = "딜러";
+    public static final int TWENTY_ONE = 21;
     private static final int DEALER_UNDER = 16;
-    private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
 
@@ -18,24 +18,28 @@ public class Dealer extends Participant {
         this.deck = Deck.createShuffledDeck();
     }
 
-    public void setBaseCard() {
+    public void drawBaseCard() {
         cardHand.add(draw());
         cardHand.add(draw());
     }
 
-    public void deal(Player player) {
-        player.receiveCard(draw());
-    }
-
-    public void setPlayersBaseCard(List<Player> players) {
+    public void drawBaseCardToPlayers(List<Player> players) {
         for (Player player : players) {
             deal(player);
             deal(player);
         }
     }
 
+    public void deal(Player player) {
+        player.receiveCard(draw());
+    }
+
     public void pickAnotherCard() {
         cardHand.add(draw());
+    }
+
+    private Card draw() {
+        return deck.drawCard();
     }
 
     public Card getOpenCard() {
@@ -46,17 +50,13 @@ public class Dealer extends Participant {
         return cardHand.sumAceToEleven() <= DEALER_UNDER;
     }
 
-    private Card draw() {
-        return deck.drawCard();
-    }
-
     @Override
     public boolean isBust() {
-        return cardHand.sumAceToOne() > BUST_THRESHOLD;
+        return cardHand.sumAceToOne() > TWENTY_ONE;
     }
 
     @Override
-    public int sumCard() {
+    public int getHandTotal() {
         return cardHand.sumAceToEleven();
     }
 }

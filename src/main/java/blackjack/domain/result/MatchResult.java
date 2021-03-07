@@ -12,15 +12,15 @@ public enum MatchResult {
     }
 
     public static MatchResult match(Player player, int dealerCardSum) {
-        if (player.isBust() || dealerCardSum > player.sumCard()) {
+        if (player.isBust() || dealerCardSum > player.getHandTotal()) {
             return MatchResult.LOSE;
         }
 
-        if (dealerCardSum == player.sumCard()) {
+        if (dealerCardSum == player.getHandTotal()) {
             return MatchResult.TIE;
         }
 
-        if (dealerCardSum < player.sumCard()) {
+        if (dealerCardSum < player.getHandTotal()) {
             return MatchResult.WIN;
         }
 

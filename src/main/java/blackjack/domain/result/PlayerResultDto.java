@@ -22,7 +22,7 @@ public class PlayerResultDto {
         return new PlayerResultDto(
                 player.getName(),
                 player.getCards(),
-                player.sumCard(),
+                player.getHandTotal(),
                 winOrLose);
     }
 

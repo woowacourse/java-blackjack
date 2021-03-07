@@ -21,7 +21,7 @@ public class ResultCalculator {
         List<PlayerResultDto> playersResults = new ArrayList<>();
         Map<MatchResult, Integer> dealerMatchCount = new EnumMap<>(MatchResult.class);
 
-        int dealerCardSum = dealer.sumCard();
+        int dealerCardSum = dealer.getHandTotal();
 
         for (Player player : players) {
             MatchResult winOrLose = MatchResult.match(player, dealerCardSum);

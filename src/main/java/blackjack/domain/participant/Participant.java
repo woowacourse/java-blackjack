@@ -22,7 +22,7 @@ public abstract class Participant {
         return name;
     }
 
-    public abstract int sumCard();
+    public abstract int getHandTotal();
 
     public abstract boolean isBust();
 }

@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.domain.participant.Dealer.DEALER_NAME;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -46,7 +48,7 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResultDto result) {
-        printCardResult("딜러", cardsToString(result.getDealerCards()), result.getDealerSum());
+        printCardResult(DEALER_NAME, cardsToString(result.getDealerCards()), result.getDealerSum());
 
         for (PlayerResultDto playerResult : result.getPlayersResults()) {
             printPlayerCardResult(playerResult);
@@ -75,7 +77,7 @@ public class OutputView {
         int lose = dealerResult.get(MatchResult.LOSE);
         int tie = dealerResult.get(MatchResult.TIE);
 
-        System.out.printf("딜러: %d승 %d패 %d무\n", win, lose, tie);
+        System.out.printf(DEALER_NAME + ": %d승 %d패 %d무\n", win, lose, tie);
     }
 
     public static String cardsToString(List<Card> cards) {
