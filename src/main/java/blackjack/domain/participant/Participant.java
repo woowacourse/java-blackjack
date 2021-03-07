@@ -18,12 +18,12 @@ public abstract class Participant {
         this.hand.addCard(card);
     }
 
-    public int getScore() {
-        return this.hand.totalScore();
-    }
-
     public boolean isBurst() {
         return this.hand.isBurst(getScore());
+    }
+
+    public int getScore() {
+        return this.hand.totalScore();
     }
 
     public List<Card> getCards() {
