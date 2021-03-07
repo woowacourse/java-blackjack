@@ -1,4 +1,4 @@
-package blackjacktest.domaintest;
+package blackjack.domain;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.MatchResult;
