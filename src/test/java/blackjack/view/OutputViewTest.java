@@ -13,5 +13,4 @@ class OutputViewTest {
         Player player = new Player("vkvl");
         OutputView.printShowUsersCardMessage(Collections.singletonList(player));
     }
-
 }

@@ -74,7 +74,7 @@ public class OutputView {
                 DEALER_DRAW), matchResult.get(DEALER_LOSE));
         result.forEach(
             (player, status) -> System.out
-                .println(player.getName() + SEPARATOR + status.toString()));
+                .println(player.getName() + SEPARATOR + status.getStatus()));
     }
 
     private static void printResultTitle() {
