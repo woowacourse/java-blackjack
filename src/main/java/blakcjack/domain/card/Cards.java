@@ -1,9 +1,9 @@
 package blakcjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Cards {
 	public static final int ACE_ADDITIONAL_VALUE = 10;
@@ -43,12 +43,14 @@ public class Cards {
 		cards.add(card);
 	}
 
-	public List<Card> toList() {
-		return Collections.unmodifiableList(cards);
-	}
-
 	public Card getFirstCard() {
 		return cards.get(FIRST_CARD_POSITION);
+	}
+
+	public String getConcatenatedCardsInformation() {
+		return cards.stream()
+				.map(Card::getCardInformation)
+				.collect(Collectors.joining(", "));
 	}
 
 	@Override

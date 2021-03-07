@@ -1,24 +1,26 @@
-package blakcjack.domain.game;
+package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
-import blakcjack.domain.participant.Dealer;
-import blakcjack.domain.participant.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class BlackjackGame {
-	private final Deck deck;
-	private final Dealer dealer;
+public class Players {
 	private final List<Player> players = new ArrayList<>();
 
-	public BlackjackGame(final Deck deck, final Names names) {
-		this.deck = deck;
-		this.dealer = new Dealer();
+	public Players(Names names) {
 		addPlayers(names);
+	}
+
+	public void initializeHandsFrom(final Deck deck) {
+		for (Player player : players) {
+			player.drawOneCardFrom(deck);
+			player.drawOneCardFrom(deck);
+		}
 	}
 
 	private void addPlayers(final Names names) {
@@ -27,28 +29,17 @@ public class BlackjackGame {
 		}
 	}
 
-	public void initializeHands() {
-		for (Player player : players) {
-			player.drawOneCardFrom(deck);
-			player.drawOneCardFrom(deck);
-		}
-		dealer.drawOneCardFrom(deck);
-		dealer.drawOneCardFrom(deck);
-	}
-
-	public Deck getDeck() {
-		return deck;
-	}
-
-	public List<Player> getPlayers() {
+	public List<Player> toList() {
 		return Collections.unmodifiableList(players);
 	}
 
-	public Dealer getDealer() {
-		return dealer;
+	public String getConcatenatedNames() {
+		return players.stream()
+				.map(Participant::getName)
+				.collect(Collectors.joining(", "));
 	}
 
-	public OutcomeStatistics getOutcomeStatistics() {
+	public OutcomeStatistics getOutcomeStatisticsBy(final Dealer dealer) {
 		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
 		for (final Player player : players) {

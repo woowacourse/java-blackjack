@@ -1,15 +1,12 @@
 package blakcjack.controller;
 
 import blakcjack.domain.card.Deck;
-import blakcjack.domain.game.BlackjackGame;
 import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
+import blakcjack.domain.participant.Players;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
-import blakcjack.view.OutputView;
-
-import java.util.List;
 
 import static blakcjack.view.InputView.isYes;
 import static blakcjack.view.InputView.takePlayerNamesInput;
@@ -17,33 +14,33 @@ import static blakcjack.view.OutputView.*;
 
 public class BlackJackController {
 	public void run() {
-		final BlackjackGame blackjackGame = createBlackjackGame();
-		blackjackGame.initializeHands();
-		printInitialHands(blackjackGame);
+		final Players players = createPlayers();
+		final Dealer dealer = new Dealer();
 
-		play(blackjackGame);
+		playGame(players, dealer);
 
-		OutcomeStatistics outcomeStatistics = blackjackGame.getOutcomeStatistics();
-		OutputView.printFinalHandsSummary(blackjackGame);
-		OutputView.printFinalOutcomeSummary(outcomeStatistics);
+		OutcomeStatistics outcomeStatistics = players.getOutcomeStatisticsBy(dealer);
+		printFinalHandsSummaryOf(players, dealer);
+		printFinalOutcomeSummary(outcomeStatistics);
 	}
 
-	private BlackjackGame createBlackjackGame() {
+	private Players createPlayers() {
 		final Names playerNames = new Names(takePlayerNamesInput());
-		final Deck deck = new Deck(new RandomShuffleStrategy());
-		return new BlackjackGame(deck, playerNames);
+		return new Players(playerNames);
 	}
 
-	private void play(final BlackjackGame blackjackGame) {
-		Deck deck = blackjackGame.getDeck();
-		List<Player> players = blackjackGame.getPlayers();
-		Dealer dealer = blackjackGame.getDealer();
+	private void playGame(final Players players, final Dealer dealer) {
+		final Deck deck = new Deck(new RandomShuffleStrategy());
+		players.initializeHandsFrom(deck);
+		dealer.initializeHandFrom(deck);
+		printInitialHandsOf(players, dealer);
+
 		letPlayersDraw(players, deck);
 		letDealerDraw(dealer, deck);
 	}
 
-	private void letPlayersDraw(final List<Player> players, final Deck deck) {
-		for (final Player player : players) {
+	private void letPlayersDraw(final Players players, final Deck deck) {
+		for (final Player player : players.toList()) {
 			letPlayerDraw(player, deck);
 		}
 	}

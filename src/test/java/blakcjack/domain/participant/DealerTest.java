@@ -1,9 +1,6 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.card.Card;
-import blakcjack.domain.card.CardNumber;
-import blakcjack.domain.card.CardSymbol;
-import blakcjack.domain.card.Deck;
+import blakcjack.domain.card.*;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,7 +35,9 @@ public class DealerTest {
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		dealer.drawOneCardFrom(customDeck);
 
-		assertThat(dealer.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
+		Cards cards = new Cards();
+		cards.add(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		assertThat(dealer.getCards()).isEqualTo(cards);
 	}
 
 	@DisplayName("딜러 점수가 17점 미만이면 true 17점 이상이면 false")

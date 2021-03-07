@@ -1,16 +1,12 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.card.Card;
-import blakcjack.domain.card.CardNumber;
-import blakcjack.domain.card.CardSymbol;
-import blakcjack.domain.card.Deck;
+import blakcjack.domain.card.*;
 import blakcjack.domain.name.Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +31,9 @@ public class PlayerTest {
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		player.drawOneCardFrom(customDeck);
 
-		assertThat(player.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
+		Cards cards = new Cards();
+		cards.add(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		assertThat(player.getCards()).isEqualTo(cards);
 	}
 
 	@DisplayName("패에 ACE가 여러장 있는 경우에 점수 계산을 제대로 하는지")

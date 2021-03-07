@@ -1,11 +1,9 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.card.Card;
+import blakcjack.domain.card.Cards;
+import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
-
-import java.util.Collections;
-import java.util.List;
 
 import static blakcjack.domain.outcome.Outcome.*;
 
@@ -17,8 +15,15 @@ public class Dealer extends Participant {
 		super(new Name(DEALER_NAME));
 	}
 
-	public List<Card> getFirstCard() {
-		return Collections.singletonList(cards.getFirstCard());
+	public void initializeHandFrom(final Deck deck) {
+		drawOneCardFrom(deck);
+		drawOneCardFrom(deck);
+	}
+
+	public Cards getInitialHand() {
+		Cards hand = new Cards();
+		hand.add(this.cards.getFirstCard());
+		return hand;
 	}
 
 	public boolean isScoreLowerThanMaximumDrawCriterion() {

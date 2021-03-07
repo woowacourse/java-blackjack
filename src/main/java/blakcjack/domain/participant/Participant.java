@@ -1,11 +1,9 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.card.Card;
 import blakcjack.domain.card.Cards;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 
-import java.util.List;
 import java.util.Objects;
 
 import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
@@ -18,8 +16,8 @@ public abstract class Participant {
 		this.name = name;
 	}
 
-	public List<Card> getCards() {
-		return cards.toList();
+	public Cards getCards() {
+		return cards;
 	}
 
 	public void drawOneCardFrom(Deck deck) {

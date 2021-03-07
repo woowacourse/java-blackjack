@@ -52,6 +52,10 @@ public class Card {
 		return cardSymbol;
 	}
 
+	public String getCardInformation() {
+		return this.cardNumber.getName() + this.cardSymbol.getName();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
