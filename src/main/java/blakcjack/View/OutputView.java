@@ -23,17 +23,17 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    private static String makeCardDistributionMessage(Dealer dealer, List<Participant> players) {
+    private static String makeCardDistributionMessage(final Dealer dealer, final List<Participant> players) {
         return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), concatenatePlayerNames(players));
+    }
+
+    private static String concatenatePlayerNames(final List<Participant> players) {
+        return players.stream().map(Participant::getName)
+                .collect(Collectors.joining(", "));
     }
 
     public static void printPlayerHand(final Participant participant) {
         System.out.println(makeCardSummary(participant));
-    }
-
-    private static String concatenatePlayerNames(List<Participant> players) {
-        return players.stream().map(Participant::getName)
-                .collect(Collectors.joining(", "));
     }
 
     private static String makeCardSummary(final Participant participant) {
