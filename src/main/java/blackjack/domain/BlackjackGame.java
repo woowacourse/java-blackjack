@@ -77,15 +77,15 @@ public class BlackjackGame {
         return users.getNameList();
     }
 
+    public Card getDealerFirstCard(){
+        return dealer.getFirstCard();
+    }
+
     public int getDealerHandSize() {
         return dealer.handSize();
     }
 
     public Users getUsers() {
         return users;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 }

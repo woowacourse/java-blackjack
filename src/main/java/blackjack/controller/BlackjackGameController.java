@@ -51,7 +51,7 @@ public class BlackjackGameController {
     }
 
     private CardDto getDealerOpenedCard() {
-        Card dealerFirstCard = blackjackGame.getDealer().getFirstCard();
+        Card dealerFirstCard = blackjackGame.getDealerFirstCard();
         return new CardDto(dealerFirstCard.getSuitLetter(), dealerFirstCard.getSymbolLetter());
     }
 
