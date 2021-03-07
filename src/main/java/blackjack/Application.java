@@ -4,9 +4,11 @@ import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -27,9 +29,9 @@ public class Application {
         OutputView.printDefaultCardMessage(dealer, players);
         players.forEach(player -> drawMoreCard(player, cardDeck));
         receiveDealerCard(dealer, cardDeck);
-
         OutputView.printFinalCardsAndScore(participants);
-        OutputView.printFinalResult(dealer, players);
+        Map<Result, Long> statisticResult = dealer.getStatisticResult(players);
+        OutputView.printFinalResult(dealer, players, statisticResult);
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {

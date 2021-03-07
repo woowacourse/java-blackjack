@@ -75,13 +75,13 @@ public class OutputView {
                 + participant.calculateFinalScore());
     }
 
-    public static void printFinalResult(Dealer dealer, List<Player> players) {
+    public static void printFinalResult(Dealer dealer, List<Player> players,
+        Map<Result, Long> statisticResult) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        Map<Result, Long> map = dealer.getStatisticResult(players);
-        long winCounts = map.get(Result.WIN);
-        long lossCounts = map.get(Result.LOSE);
-        long drawCounts = map.get(Result.DRAW);
+        long winCounts = statisticResult.get(Result.WIN);
+        long lossCounts = statisticResult.get(Result.LOSE);
+        long drawCounts = statisticResult.get(Result.DRAW);
         System.out.println(
             dealer.getName() + ": " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
         for (Player player : players) {
