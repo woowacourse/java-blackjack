@@ -16,10 +16,6 @@ public class Name {
         }
     }
 
-    public boolean isSameName(final String value) {
-        return this.value.equals(value);
-    }
-
     public String getValue() {
         return value;
     }
