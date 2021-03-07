@@ -3,12 +3,13 @@ package blackjack.domain.card;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final ArrayDeque<Card> deck;
+    private final Deque<Card> deck;
 
     private Deck(List<Card> deck) {
         this.deck = new ArrayDeque<>(deck);

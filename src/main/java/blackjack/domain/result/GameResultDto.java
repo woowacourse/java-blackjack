@@ -11,7 +11,8 @@ public class GameResultDto {
     private final Map<MatchResult, Integer> dealerResult;
     private final List<PlayerResultDto> playersResultMap;
 
-    public GameResultDto(List<Card> dealerCards, int dealerSum, Map<MatchResult, Integer> dealerResult,
+    public GameResultDto(List<Card> dealerCards, int dealerSum,
+            Map<MatchResult, Integer> dealerResult,
             List<PlayerResultDto> playersResults) {
         this.dealerCards = dealerCards;
         this.dealerSum = dealerSum;
