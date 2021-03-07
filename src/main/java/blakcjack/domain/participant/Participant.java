@@ -2,6 +2,7 @@ package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.Cards;
+import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 
 import java.util.List;
@@ -23,6 +24,10 @@ public abstract class Participant {
 
 	public void receiveCard(Card card) {
 		cards.add(card);
+	}
+
+	public void drawOneCardFromDeck(Deck deck) {
+		cards.add(deck.drawCard());
 	}
 
 	public String getName() {

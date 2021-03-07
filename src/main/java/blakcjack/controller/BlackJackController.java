@@ -16,30 +16,40 @@ import static blakcjack.view.OutputView.printInitialHands;
 
 public class BlackJackController {
 	public void run() {
-		final List<String> playerNames = takePlayerNamesInput();
-		final Deck deck = new Deck(new RandomShuffleStrategy());
-		final BlackjackGame blackjackGame = new BlackjackGame(deck, playerNames);
+		final BlackjackGame blackjackGame = createBlackjackGame();
 		blackjackGame.initializeHands();
 		printInitialHands(blackjackGame);
 
-		letPlayersDraw(blackjackGame);
-		letDealerDraw(blackjackGame);
+		playGame(blackjackGame);
 
 		OutcomeStatistics outcomeStatistics = blackjackGame.getOutcomeStatistics();
 		OutputView.printFinalHandsSummary(blackjackGame);
 		OutputView.printFinalOutcomeSummary(outcomeStatistics);
 	}
 
-	private void letPlayersDraw(final BlackjackGame blackjackGame) {
-		final List<Player> players = blackjackGame.getPlayers();
+	private BlackjackGame createBlackjackGame() {
+		final List<String> playerNames = takePlayerNamesInput();
+		final Deck deck = new Deck(new RandomShuffleStrategy());
+		return new BlackjackGame(deck, playerNames);
+	}
+
+	private void playGame(final BlackjackGame blackjackGame) {
+		Deck deck = blackjackGame.getDeck();
+		List<Player> players = blackjackGame.getPlayers();
+		Dealer dealer = blackjackGame.getDealer();
+		letPlayersDraw(players, deck);
+		letDealerDraw(dealer, deck);
+	}
+
+	private void letPlayersDraw(final List<Player> players, final Deck deck) {
 		for (final Player player : players) {
-			decideToDraw(blackjackGame, player);
+			letPlayerDraw(player, deck);
 		}
 	}
 
-	private void decideToDraw(final BlackjackGame blackjackGame, final Player player) {
+	private void letPlayerDraw(final Player player, final Deck deck) {
 		while (isHit(player)) {
-			blackjackGame.distributeOneCardTo(player);
+			player.drawOneCardFromDeck(deck);
 			OutputView.printPlayerHand(player);
 		}
 	}
@@ -48,10 +58,9 @@ public class BlackJackController {
 		return !player.isBust() && InputView.isYes(player);
 	}
 
-	private void letDealerDraw(final BlackjackGame blackjackGame) {
-		final Dealer dealer = blackjackGame.getDealer();
+	private void letDealerDraw(final Dealer dealer, final Deck deck) {
 		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
-			blackjackGame.distributeOneCardTo(dealer);
+			dealer.drawOneCardFromDeck(deck);
 			OutputView.printDealerAdditionalCardMessage();
 		}
 	}

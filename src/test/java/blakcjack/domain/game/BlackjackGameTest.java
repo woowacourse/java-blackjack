@@ -46,19 +46,6 @@ class BlackjackGameTest {
 				.hasMessage(DUPLICATE_NAME_ERROR);
 	}
 
-	@DisplayName("카드 한 장을 나눠주는 메서드가 제대로 작동 하는지")
-	@Test
-	void distributeOneCard() {
-		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
-		final List<Player> players = blackjackGame.getPlayers();
-		final Participant pobi = players.get(0);
-		final Participant expected = new Player(new Name("pobi"));
-		expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
-
-		blackjackGame.distributeOneCardTo(pobi);
-		assertThat(pobi).isEqualTo(expected);
-	}
-
 	@DisplayName("딜러와 모든 플레이어에게 2장씩 카드를 제대로 나눠 주는지")
 	@Test
 	void initializeHands() {

@@ -5,7 +5,6 @@ import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
-import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
 
 import java.util.*;
@@ -37,17 +36,17 @@ public class BlackjackGame {
 		}
 	}
 
-	public void distributeOneCardTo(final Participant participant) {
-		participant.receiveCard(deck.drawCard());
-	}
-
 	public void initializeHands() {
 		for (Player player : players) {
-			distributeOneCardTo(player);
-			distributeOneCardTo(player);
+			player.drawOneCardFromDeck(deck);
+			player.drawOneCardFromDeck(deck);
 		}
-		distributeOneCardTo(dealer);
-		distributeOneCardTo(dealer);
+		dealer.drawOneCardFromDeck(deck);
+		dealer.drawOneCardFromDeck(deck);
+	}
+
+	public Deck getDeck() {
+		return deck;
 	}
 
 	public List<Player> getPlayers() {
