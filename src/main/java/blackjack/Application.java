@@ -33,18 +33,15 @@ public class Application {
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
-        if (!player.isAbleToReceiveCard()) {
-            return;
-        }
-        String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
-        if (AGREE.equals(answer)) {
-            player.receiveCard(cardDeck.draw());
-        }
-        OutputView.printEachPlayerCards(player);
-        if (DECLINE.equals(answer)) {
-            return;
-        }
-        if (player.isAbleToReceiveCard()) {
+        while (player.isAbleToReceiveCard()) {
+            String answer = InputView.inputAnswerToAdditionalCardQuestion(player);
+            if (AGREE.equals(answer)) {
+                player.receiveCard(cardDeck.draw());
+            }
+            OutputView.printEachPlayerCards(player);
+            if (DECLINE.equals(answer)) {
+                return;
+            }
             drawMoreCard(player, cardDeck);
         }
     }
