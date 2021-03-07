@@ -1,24 +1,13 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class Dealer implements User {
+public class Dealer extends AbstractUser {
     public static final int TURN_OVER_COUNT = 16;
 
     private final String name = "딜러";
-    private final List<Card> cards = new ArrayList<>();
 
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public List<Card> getCards() {
-        return cards;
     }
 
     @Override
