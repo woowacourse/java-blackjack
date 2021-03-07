@@ -3,11 +3,15 @@ package blackjack.controller;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
     public static final int BLACKJACK_NUMBER = 21;
@@ -35,11 +39,20 @@ public class BlackJackGame {
     private Players registerPlayers() {
         try {
             OutputView.enterPlayersName();
-            return new Players(InputView.inputName());
+            List<String> allPlayersName = InputView.inputName();
+            List<Player> allPlayer = generatePlayers(allPlayersName);
+            return new Players(allPlayer);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return registerPlayers();
         }
+    }
+
+    private List<Player> generatePlayers(List<String> allPlayersName) {
+        return allPlayersName.stream()
+                .map(Name::new)
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     private void distributeCards(Players players, Dealer dealer, CardDeck cardDeck) {

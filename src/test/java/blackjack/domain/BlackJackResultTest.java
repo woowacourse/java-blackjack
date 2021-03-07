@@ -4,11 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,14 +20,24 @@ public class BlackJackResultTest {
     @Test
     @DisplayName("게임 결과 생성")
     void createBlackJackResult() {
-        BlackJackResult blackJackResult = new BlackJackResult(new Players("pika, air"), new Dealer());
+        BlackJackResult blackJackResult = new BlackJackResult(
+                new Players(Arrays.asList(
+                        new Player(new Name("air")),
+                        new Player(new Name("picka"))
+                )
+                ),
+                new Dealer()
+        );
         assertThat(blackJackResult).isNotNull();
     }
 
     @Test
     @DisplayName("딜러의 승패 결과 확인")
     void getResultSucceed() {
-        Players players = new Players("pika, air");
+        Players players = new Players(Arrays.asList(
+                new Player(new Name("air")),
+                new Player(new Name("picka"))
+        ));
         Dealer dealer = new Dealer();
 
         for (Player player : players.getPlayers()) {
