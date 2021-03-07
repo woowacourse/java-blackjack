@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,15 @@ public class HandTest {
         hand.add(new Card(CardNumber.EIGHT, CardType.CLOVER));
         hand.add(new Card(CardNumber.SEVEN, CardType.CLOVER));
         assertThat(hand.calculateScore()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("에이스 카드가 하나있을 때 합 구하기")
+    void calculateMyCardSumWhenAceIsOne() {
+        hand.add(new Card(CardNumber.JACK, CardType.CLOVER));
+        hand.add(new Card(CardNumber.FIVE, CardType.CLOVER));
+        hand.add(new Card(CardNumber.ACE, CardType.CLOVER));
+        Assertions.assertThat(hand.calculateScore()).isEqualTo(16);
     }
 
     @ParameterizedTest

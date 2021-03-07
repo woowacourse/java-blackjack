@@ -32,14 +32,7 @@ public class DealerTest {
     void extend() {
         final Participant participant = new Dealer();
         participant.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
-        assertThat(participant.getCardCount()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("딜러가 카드를 받았는지 확인")
-    void receiveCard() {
-        dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(dealer.getCardCount()).isEqualTo(1);
+        assertThat(participant.getName()).isEqualTo("딜러");
     }
 
     @Test
@@ -51,54 +44,11 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 갖고 있는 카드의 합을 확인")
-    void calculateMyCardSum() {
-        dealer.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        assertThat(dealer.calculate()).isEqualTo(12);
-    }
-
-    @Test
-    @DisplayName("에이스 카드가 하나있을 때 합 구하기")
-    void calculateMyCardSumWhenAceIsOne() {
-        dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        assertThat(dealer.calculate()).isEqualTo(13);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12"}, delimiter = ':')
-    @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
-    void calculateMyCardSumWhenAceIsTwo(final String input, final int expected) {
-        final String[] inputs = input.split(",");
-        for (final String number : inputs) {
-            final CardNumber cardNumber = CardNumber.valueOf(number);
-            dealer.receiveCard(new Card(cardNumber, CardType.CLOVER));
-        }
-        assertThat(dealer.calculate()).isEqualTo(expected);
-    }
-
-    @Test
     @DisplayName("딜러가 버스트인지 확인")
     void isBust() {
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
         assertThat(dealer.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러가 승자인지 확인")
-    void isWinner() {
-        dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
-        assertThat(dealer.isWinner(10)).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러가 몇 판 이겼는지 확인")
-    void calculateWinCount() {
-        dealer.winSinglePlayer();
-        assertThat(dealer.getWinCount()).isEqualTo(1);
     }
 }
