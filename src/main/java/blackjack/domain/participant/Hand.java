@@ -35,26 +35,26 @@ public class Hand {
     }
 
     private int calculateHardAceScore(int totalScore) {
-        int aceCount = getAceCount();
-        while (isBurst(totalScore) && hasAce(aceCount)) {
+        int aceCount = getSoftAceCount();
+        while (isBurst(totalScore) && hasSoftAce(aceCount)) {
             totalScore -= 10;
             aceCount -= 1;
         }
         return totalScore;
     }
 
-    private int getAceCount() {
+    private int getSoftAceCount() {
         return (int) cards.stream()
             .filter(Card::isAce)
             .count();
     }
 
-    private boolean hasAce(int aceCount) {
-        return aceCount > 0;
+    public boolean isBurst(final int score) {
+        return score > MAX_SCORE;
     }
 
-    private boolean isBurst(final int score) {
-        return score > MAX_SCORE;
+    private boolean hasSoftAce(final int aceCount) {
+        return aceCount > 0;
     }
 
     public List<Card> toList() {

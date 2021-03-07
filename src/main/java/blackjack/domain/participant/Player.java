@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
-    private static final int LIMIT_SCORE = 21;
-
     private final Name name;
 
     public Player(Name name) {
@@ -15,7 +13,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean isOverLimitScore() {
-        return getScore() > LIMIT_SCORE;
+    public boolean isHitable() {
+        return !isBurst();
     }
 }

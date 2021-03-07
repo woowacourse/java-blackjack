@@ -12,17 +12,21 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public abstract boolean isOverLimitScore();
+    public abstract boolean isHitable();
 
     public void addCard(final Card card) {
         this.hand.addCard(card);
     }
 
     public int getScore() {
-        return hand.totalScore();
+        return this.hand.totalScore();
+    }
+
+    public boolean isBurst() {
+        return this.hand.isBurst(getScore());
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(hand.toList());
+        return Collections.unmodifiableList(this.hand.toList());
     }
 }
