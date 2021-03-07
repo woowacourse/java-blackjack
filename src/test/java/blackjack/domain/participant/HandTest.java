@@ -14,7 +14,7 @@ public class HandTest {
     @DisplayName("손패에 카드 추가 테스트")
     void testAddCardInHand() {
         Hand hand = new Hand();
-        hand.addCard(new Card(Pattern.DIAMOND, Number.TWO));
+        hand.addCard(Card.valueOf(Pattern.DIAMOND, Number.TWO));
         assertThat(hand.totalScore()).isEqualTo(2);
     }
 
@@ -22,9 +22,9 @@ public class HandTest {
     @DisplayName("손패 점수 총합 테스트")
     void testHandsTotalScore() {
         Hand hand = new Hand();
-        hand.addCard(new Card(Pattern.CLOVER, Number.EIGHT));
-        hand.addCard(new Card(Pattern.CLOVER, Number.NINE));
-        hand.addCard(new Card(Pattern.CLOVER, Number.QUEEN));
+        hand.addCard(Card.valueOf(Pattern.CLOVER, Number.EIGHT));
+        hand.addCard(Card.valueOf(Pattern.CLOVER, Number.NINE));
+        hand.addCard(Card.valueOf(Pattern.CLOVER, Number.QUEEN));
         assertThat(hand.totalScore()).isEqualTo(27);
     }
 
@@ -32,9 +32,9 @@ public class HandTest {
     @DisplayName("SoftAce에서 HardAce로 자동변환 테스트")
     void testAceAutoChange() {
         Hand hand = new Hand();
-        hand.addCard(new Card(Pattern.DIAMOND, Number.ACE));
-        hand.addCard(new Card(Pattern.CLOVER, Number.ACE));
-        hand.addCard(new Card(Pattern.HEART, Number.ACE));
+        hand.addCard(Card.valueOf(Pattern.DIAMOND, Number.ACE));
+        hand.addCard(Card.valueOf(Pattern.CLOVER, Number.ACE));
+        hand.addCard(Card.valueOf(Pattern.HEART, Number.ACE));
         assertThat(hand.totalScore()).isEqualTo(13);
     }
 }

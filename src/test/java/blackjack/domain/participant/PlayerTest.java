@@ -21,7 +21,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어는 카드를 받는다.")
     void testReceiveCard() {
-        Card card = new Card(Pattern.DIAMOND, Number.EIGHT);
+        Card card = Card.valueOf(Pattern.DIAMOND, Number.EIGHT);
         player.receiveCard(card);
 
         assertThat(player.getTotalScore()).isEqualTo(8);
