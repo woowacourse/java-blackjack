@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class BlackjackGame {
+    public static final int INITIAL_CARD_COUNT = 2;
+
     private final Deck deck;
     private final Participant dealer;
     private final List<Participant> players = new ArrayList<>();
@@ -39,17 +41,46 @@ public class BlackjackGame {
         }
     }
 
-    public void distributeOneCard(final Participant player) {
-        player.receiveCard(deck.drawCard());
-    }
-
     public void initializeHands() {
         for (Participant player : players) {
-            distributeOneCard(player);
-            distributeOneCard(player);
+            distributeInitialHand(player);
         }
-        distributeOneCard(dealer);
-        distributeOneCard(dealer);
+        distributeInitialHand(dealer);
+    }
+
+    private void distributeInitialHand(final Participant participant) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            distributeOneCard(participant);
+        }
+    }
+
+    public void distributeOneCard(final Participant participant) {
+        participant.receiveCard(deck.drawCard());
+    }
+
+    public OutcomeStatistics judgeOutcome() {
+        final Map<String, Outcome> playersOutcome = judgePlayersOutcome();
+        final Map<Outcome, Integer> dealerOutcome = judgeDealerOutcome(playersOutcome);
+        return new OutcomeStatistics(dealerOutcome, playersOutcome);
+    }
+
+    private Map<String, Outcome> judgePlayersOutcome() {
+        final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+
+        for (final Participant player : players) {
+            final Outcome playerOutcome = Outcome.of((Player) player, (Dealer) dealer);
+            playersOutcome.put(player.getName(), playerOutcome);
+        }
+        return playersOutcome;
+    }
+
+    private Map<Outcome, Integer> judgeDealerOutcome(final Map<String, Outcome> playersOutcome) {
+        final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
+
+        dealerOutcome.put(Outcome.WIN, Collections.frequency(playersOutcome.values(), Outcome.LOSE));
+        dealerOutcome.put(Outcome.DRAW, Collections.frequency(playersOutcome.values(), Outcome.DRAW));
+        dealerOutcome.put(Outcome.LOSE, Collections.frequency(playersOutcome.values(), Outcome.WIN));
+        return dealerOutcome;
     }
 
     public List<Participant> getPlayers() {
@@ -58,28 +89,5 @@ public class BlackjackGame {
 
     public Dealer getDealer() {
         return (Dealer) dealer;
-    }
-
-    public OutcomeStatistics judgeOutcome() {
-        final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
-        final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
-        initializeDealerOutcome(dealerOutcome);
-
-        for (final Participant player : players) {
-            final Outcome playerOutcome = Outcome.of((Player) player, (Dealer) dealer);
-            playersOutcome.put(player.getName(), playerOutcome);
-            updateDealerOutcome(dealerOutcome, playerOutcome);
-        }
-        return new OutcomeStatistics(dealerOutcome, playersOutcome);
-    }
-
-    private void updateDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final Outcome playerOutcome) {
-        dealerOutcome.computeIfPresent(playerOutcome.getDealerOutcome(), (outcome, count) -> count + 1);
-    }
-
-    private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
-        dealerOutcome.put(Outcome.WIN, 0);
-        dealerOutcome.put(Outcome.DRAW, 0);
-        dealerOutcome.put(Outcome.LOSE, 0);
     }
 }

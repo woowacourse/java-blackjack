@@ -22,7 +22,7 @@
 - 구조 변경 고민
     - Outcome의 역할 고민 (player와 dealer를 받아 승무패를 얻어내는 로직의 위치)
     - Card 리스트를 가지는 일급컬렉션 생성
-    - Player 리스트를 가지는 Players 생성 
+    - Player 리스트를 가지는 Players 생성
 
 ## 1단계 피드백 이후 리팩토링 목록
 
@@ -39,3 +39,4 @@
 - [ ] 메서드 분리, stream 또는 forEach 사용할 부분 체크
     - [x] OutputView 리팩터링
     - [x] Controller 리팩터링
+    - [x] BlackjackGame 리팩터링
