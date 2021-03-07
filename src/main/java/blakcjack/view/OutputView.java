@@ -1,6 +1,5 @@
 package blakcjack.view;
 
-
 import blakcjack.domain.card.Card;
 import blakcjack.domain.game.BlackjackGame;
 import blakcjack.domain.outcome.Outcome;

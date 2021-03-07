@@ -7,13 +7,13 @@ import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
-import blakcjack.view.InputView;
 import blakcjack.view.OutputView;
 
 import java.util.List;
 
+import static blakcjack.view.InputView.isYes;
 import static blakcjack.view.InputView.takePlayerNamesInput;
-import static blakcjack.view.OutputView.printInitialHands;
+import static blakcjack.view.OutputView.*;
 
 public class BlackJackController {
 	public void run() {
@@ -21,7 +21,7 @@ public class BlackJackController {
 		blackjackGame.initializeHands();
 		printInitialHands(blackjackGame);
 
-		playGame(blackjackGame);
+		play(blackjackGame);
 
 		OutcomeStatistics outcomeStatistics = blackjackGame.getOutcomeStatistics();
 		OutputView.printFinalHandsSummary(blackjackGame);
@@ -34,7 +34,7 @@ public class BlackJackController {
 		return new BlackjackGame(deck, playerNames);
 	}
 
-	private void playGame(final BlackjackGame blackjackGame) {
+	private void play(final BlackjackGame blackjackGame) {
 		Deck deck = blackjackGame.getDeck();
 		List<Player> players = blackjackGame.getPlayers();
 		Dealer dealer = blackjackGame.getDealer();
@@ -51,18 +51,18 @@ public class BlackJackController {
 	private void letPlayerDraw(final Player player, final Deck deck) {
 		while (isHit(player)) {
 			player.drawOneCardFrom(deck);
-			OutputView.printPlayerHand(player);
+			printPlayerHand(player);
 		}
 	}
 
 	private boolean isHit(final Player player) {
-		return !player.isBust() && InputView.isYes(player);
+		return !player.isBust() && isYes(player);
 	}
 
 	private void letDealerDraw(final Dealer dealer, final Deck deck) {
 		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
 			dealer.drawOneCardFrom(deck);
-			OutputView.printDealerAdditionalCardMessage();
+			printDealerAdditionalCardMessage();
 		}
 	}
 }
