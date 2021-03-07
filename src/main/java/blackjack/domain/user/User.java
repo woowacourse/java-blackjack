@@ -16,22 +16,6 @@ public abstract class User {
         hand.addCard(card);
     }
 
-    public ResultDto getResultDTO() {
-        return new ResultDto(getName(), getCards(), getScore());
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    public int getScore() {
-        return hand.getScore();
-    }
-
-    public HandStatus getStatus() {
-        return hand.getStatus();
-    }
-
     public boolean isHit() {
         return hand.isHit();
     }
@@ -46,6 +30,22 @@ public abstract class User {
 
     public void convertToStay() {
         hand.convertStatusToStay();
+    }
+
+    public ResultDto createResultDTO() {
+        return new ResultDto(getName(), getCards(), getScore());
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
+
+    public int getScore() {
+        return hand.getScore();
+    }
+
+    public HandStatus getStatus() {
+        return hand.getStatus();
     }
 
     public abstract String getName();

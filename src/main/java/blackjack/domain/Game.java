@@ -59,8 +59,8 @@ public class Game {
 
     public List<ResultDto> getResultDTOs() {
         List<ResultDto> resultDtos = new ArrayList<>();
-        resultDtos.add(dealer.getResultDTO());
-        players.forEach(player -> resultDtos.add(player.getResultDTO()));
+        resultDtos.add(dealer.createResultDTO());
+        players.forEach(player -> resultDtos.add(player.createResultDTO()));
 
         return resultDtos;
     }
