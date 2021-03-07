@@ -20,7 +20,11 @@ public class BlackJackResult {
         Map<MatchResult, Integer> dealerResult = new EnumMap<MatchResult, Integer>(MatchResult.class);
 
         for (MatchResult matchResult : MatchResult.values()) {
-            dealerResult.put(matchResult, (int) result.values().stream().filter(result -> result.equals(MatchResult.getDealerMatchResultByPlayer(matchResult))).count());
+            dealerResult.put(matchResult,
+                    (int) result.values()
+                                .stream()
+                                .filter(result -> result.equals(MatchResult.getDealerMatchResultByPlayer(matchResult)))
+                                .count());
         }
 
         return dealerResult;
