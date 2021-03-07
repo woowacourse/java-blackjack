@@ -1,6 +1,8 @@
 package blakcjack.domain.card;
 
 import blakcjack.exception.FailedCacheHitException;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -11,11 +13,11 @@ public class Card {
 
     static {
         for (final CardSymbol cardSymbol : CardSymbol.values()) {
-            for (final CardNumber cardNumber : CardNumber.values()) {
-                final String key = generateKey(cardSymbol, cardNumber);
-                final Card card = new Card(cardSymbol, cardNumber);
-                cache.put(key, card);
-            }
+            Arrays.stream(CardNumber.values())
+                    .forEach(cardNumber -> cache.put(
+                            generateKey(cardSymbol, cardNumber), new Card(cardSymbol, cardNumber)
+                            )
+                    );
         }
     }
 
