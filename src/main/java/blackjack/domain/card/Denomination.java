@@ -43,7 +43,7 @@ public enum Denomination {
         return ACE.equals(denomination);
     }
 
-    public static int getScore(Denomination denomination){
+    public static int score(Denomination denomination){
         return denomination.score;
     }
 }

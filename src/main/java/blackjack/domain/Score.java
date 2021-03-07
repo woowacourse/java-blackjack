@@ -4,8 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Score {
@@ -26,7 +24,7 @@ public class Score {
     private static int noneAceCardScore(List<Card> cards) {
         return cards.stream()
                 .filter(card -> !Denomination.isAce(card.getDenomination()))
-                .mapToInt(card -> Denomination.getScore(card.getDenomination()))
+                .mapToInt(card -> Denomination.score(card.getDenomination()))
                 .sum();
     }
 
