@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -11,8 +9,8 @@ import java.util.Map;
 public class BlackJackResult {
     private final Map<Player, MatchResult> result;
 
-    public BlackJackResult(Players players, Dealer dealer) {
-        result = players.verifyResultByCompareScore(dealer);
+    public BlackJackResult(Map<Player, MatchResult> result) {
+        this.result = result;
     }
 
     public Map<MatchResult, Integer> getDealerResult() {

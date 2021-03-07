@@ -20,14 +20,12 @@ public class BlackJackResultTest {
     @Test
     @DisplayName("게임 결과 생성")
     void createBlackJackResult() {
-        BlackJackResult blackJackResult = new BlackJackResult(
-                new Players(Arrays.asList(
-                        new Player(new Name("air")),
-                        new Player(new Name("picka"))
-                )
-                ),
-                new Dealer()
-        );
+        Players players = new Players(Arrays.asList(
+                new Player(new Name("air")),
+                new Player(new Name("picka"))
+        ));
+        Dealer dealer = new Dealer();
+        BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
         assertThat(blackJackResult).isNotNull();
     }
 
@@ -48,7 +46,7 @@ public class BlackJackResultTest {
         dealer.receiveCard(new Card(Shape.SPADE, Denomination.FIVE));
         dealer.receiveCard(new Card(Shape.SPADE, Denomination.ACE));
 
-        BlackJackResult blackJackResult = new BlackJackResult(players, dealer);
+        BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
 
         assertThat(dealerResult.get(MatchResult.WIN)).isEqualTo(0);
