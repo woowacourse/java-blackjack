@@ -14,21 +14,22 @@ import static blakcjack.view.OutputView.printInitialHands;
 
 public class BlackJackController {
     public void run() {
-        final List<String> playerNames = takePlayerNamesInput();
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), takePlayerNamesInput());
         blackjackGame.initializeHands();
 
         final List<Participant> players = blackjackGame.getPlayers();
         final Dealer dealer = blackjackGame.getDealer();
         printInitialHands(dealer, players);
 
+        drawForMaximumCapability(blackjackGame, players);
+        drawForMaximumCapability(blackjackGame, dealer);
+        printFinalSummary(blackjackGame, players, dealer);
+    }
+
+    private void drawForMaximumCapability(final BlackjackGame blackjackGame, final List<Participant> players) {
         for (final Participant player : players) {
             drawForMaximumCapability(blackjackGame, player);
         }
-
-        drawForMaximumCapability(blackjackGame, dealer);
-        OutputView.printFinalHandsSummary(dealer, players);
-        OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getName());
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
@@ -47,5 +48,10 @@ public class BlackJackController {
             blackjackGame.distributeOneCard(dealer);
             OutputView.printDealerAdditionalCardMessage();
         }
+    }
+
+    private void printFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
+        OutputView.printFinalHandsSummary(dealer, players);
+        OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getName());
     }
 }
