@@ -14,10 +14,9 @@ public class BlackjackController {
 
     public void run() {
         Deck deck = new Deck();
-        List<Player> players = createPlayers();
         Dealer dealer = new Dealer(DEALER_NAME);
+        List<Player> players = createPlayers();
 
-        deck.shuffle();
         turnStart(deck, dealer, players);
     }
 
@@ -34,10 +33,10 @@ public class BlackjackController {
 
         startPlayerDrawPhase(deck, players);
         startDealerDrawPhase(deck, dealer);
-        printDealerPlayersScore(players, dealer);
+        printDealerPlayersScore(dealer, players);
 
-        calculateBlackJackGameResult(players, dealer);
-        OutputView.printGameResult(players, dealer);
+        calculateBlackJackGameResult(dealer, players);
+        printGameResult(dealer, players);
     }
 
     private void handOutCards(Deck deck, Dealer dealer, List<Player> players) {
@@ -62,7 +61,11 @@ public class BlackjackController {
         }
     }
 
-    private void printDealerPlayersScore(List<Player> players, Dealer dealer) {
+    private void calculateBlackJackGameResult(Dealer dealer, List<Player> players) {
+        players.forEach(player -> player.calculateGameResult(dealer));
+    }
+
+    private void printDealerPlayersScore(Dealer dealer, List<Player> players) {
         OutputView.printParticipantCardsWithScore(dealer);
         players.forEach(OutputView::printParticipantCardsWithScore);
     }
@@ -72,8 +75,12 @@ public class BlackjackController {
         players.forEach(OutputView::printPlayerCards);
     }
 
-    private void calculateBlackJackGameResult(List<Player> players, Dealer dealer) {
-        players.forEach(player -> player.calculateGameResult(dealer));
+    private void printGameResult(Dealer dealer, List<Player> players) {
+        OutputView.printGameResult(players, dealer);
     }
 
 }
+
+
+
+
