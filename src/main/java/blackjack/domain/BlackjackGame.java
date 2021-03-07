@@ -7,12 +7,12 @@ import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -54,7 +54,7 @@ public class BlackjackGame {
         return new ScoreBoard(
                 users.stream()
                         .collect(
-                                toMap(Participant::getName, this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
+                                toMap(Function.identity(), this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
                         )
                 , createDealerGameResult());
     }

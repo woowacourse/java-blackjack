@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
@@ -31,9 +32,11 @@ class HandTest {
     void testGetCards() {
         //given
         //when
-        List<Card> cards = hand.getCards();
+        Cards cards = hand.getCards();
         //then
-        assertThat(cards).hasSize(3);
+        List<Card> cardList = cards.stream()
+                .collect(toList());
+        assertThat(cardList).hasSize(3);
     }
 
     @DisplayName("손에 들고 있는 카드들의 점수의 합을 구한다")

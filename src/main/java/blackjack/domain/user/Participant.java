@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.user.status.Hand;
 import blackjack.domain.user.status.Status;
 
@@ -26,7 +27,7 @@ public abstract class Participant {
         cards.forEach(this::drawCard);
     }
 
-    public List<Card> getCards() {
+    public Cards getCards() {
         return hand.getCards();
     }
 

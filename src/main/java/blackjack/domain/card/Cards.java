@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static blackjack.domain.card.painting.Symbol.ACE;
 
@@ -16,11 +16,11 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public void add(Card card){
+    public void add(Card card) {
         cards.add(card);
     }
 
-    public int size(){
+    public int size() {
         return cards.size();
     }
 
@@ -49,7 +49,11 @@ public class Cards {
                 .anyMatch(symbol -> symbol.isSameSymbol(ACE));
     }
 
-    public List<Card> getCards(){
-        return Collections.unmodifiableList(cards);
+    public Card get(int index) {
+        return cards.get(index);
+    }
+
+    public Stream<Card> stream() {
+        return cards.stream();
     }
 }

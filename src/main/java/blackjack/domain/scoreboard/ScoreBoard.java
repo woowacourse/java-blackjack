@@ -2,7 +2,6 @@ package blackjack.domain.scoreboard;
 
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
-import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 
 import java.util.Collections;
@@ -13,12 +12,12 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ScoreBoard {
-    private final Map<Name, UserGameResult> userResults;
-    private final GameResult gameResult;
+    private final Map<User, UserGameResult> userResults;
+    private final GameResult dealerGameResult;
 
-    public ScoreBoard(Map<Name, UserGameResult> userResults, GameResult gameResult){
+    public ScoreBoard(Map<User, UserGameResult> userResults, GameResult dealerGameResult){
         this.userResults = userResults;
-        this.gameResult = gameResult;
+        this.dealerGameResult = dealerGameResult;
     }
 
     public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
@@ -28,12 +27,12 @@ public class ScoreBoard {
                 .collect(groupingBy(WinOrLose::opposite, counting()));
     }
 
-    public Map<Name, UserGameResult> getUserResults(){
+    public Map<User, UserGameResult> getUserResults(){
         return Collections.unmodifiableMap(userResults);
     }
 
     public GameResult getDealerGameResult(){
-        return gameResult;
+        return dealerGameResult;
     }
 
     @Override
@@ -41,11 +40,11 @@ public class ScoreBoard {
         if (this == o) return true;
         if (!(o instanceof ScoreBoard)) return false;
         ScoreBoard that = (ScoreBoard) o;
-        return Objects.equals(getUserResults(), that.getUserResults()) && Objects.equals(gameResult, that.gameResult);
+        return Objects.equals(getUserResults(), that.getUserResults()) && Objects.equals(dealerGameResult, that.dealerGameResult);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserResults(), gameResult);
+        return Objects.hash(getUserResults(), dealerGameResult);
     }
 }

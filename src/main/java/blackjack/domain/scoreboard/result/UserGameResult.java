@@ -1,17 +1,16 @@
 package blackjack.domain.scoreboard.result;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Name;
 
-import java.util.List;
 import java.util.Objects;
 
 public class UserGameResult implements Resultable {
     private final GameResult gameResult;
     private final WinOrLose winOrLose;
 
-    public UserGameResult(List<Card> resultCards, String name, WinOrLose winOrLose) {
+    public UserGameResult(Cards resultCards, String name, WinOrLose winOrLose) {
         this.gameResult = new GameResult(resultCards, name);
         this.winOrLose = winOrLose;
     }
@@ -21,7 +20,7 @@ public class UserGameResult implements Resultable {
     }
 
     @Override
-    public List<Card> getCards() {
+    public Cards getCards() {
         return gameResult.getCards();
     }
 

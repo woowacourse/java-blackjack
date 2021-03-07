@@ -80,8 +80,8 @@ public class OutputView {
         System.out.println(createDealerResultMessage(scoreBoard));
 
         scoreBoard.getUserResults().forEach(
-                (name, userGameResult) ->
-                        System.out.println(name + COLON + userGameResult.getWinOrLose().getCharacter())
+                (user, userGameResult) ->
+                        System.out.println(user.getName().toString() + COLON + userGameResult.getWinOrLose().getCharacter())
         );
     }
 

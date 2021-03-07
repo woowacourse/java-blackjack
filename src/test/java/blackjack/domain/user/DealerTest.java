@@ -6,6 +6,9 @@ import blackjack.domain.card.painting.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -17,7 +20,9 @@ public class DealerTest {
         dealer.drawCard(new Card(Suit.SPADE, Symbol.EIGHT));
         dealer.drawCard(new Card(Suit.HEART, Symbol.SIX));
 
-        assertThat(dealer.getCards())
+        List<Card> cards = dealer.getCards().stream()
+                .collect(toList());
+        assertThat(cards)
                 .containsExactly(new Card(Suit.SPADE, Symbol.EIGHT), new Card(Suit.HEART, Symbol.SIX));
     }
 

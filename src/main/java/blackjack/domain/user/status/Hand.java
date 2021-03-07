@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Hand {
     private static final int FIRST_INDEX = 0;
@@ -32,10 +31,10 @@ public class Hand {
     }
 
     public Card getFirstCard() {
-        return cards.getCards().get(FIRST_INDEX);
+        return cards.get(FIRST_INDEX);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+    public Cards getCards() {
+        return cards;
     }
 }

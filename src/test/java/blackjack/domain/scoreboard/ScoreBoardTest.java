@@ -1,12 +1,12 @@
 package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,35 +28,45 @@ public class ScoreBoardTest {
         User fourth = new User("제이슨");
 
         UserGameResult firstUserGameResult = new UserGameResult(
-                Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
-                        new Card(Suit.HEART, Symbol.ACE))
+                new Cards(
+                        Arrays.asList(
+                                new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
+                                new Card(Suit.HEART, Symbol.ACE))
+                )
                 , first.getName().toString(), WinOrLose.DRAW); //15
 
         UserGameResult secondUserGameResult = new UserGameResult(
-                Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
-                        new Card(Suit.HEART, Symbol.ACE))
+                new Cards(
+                        Arrays.asList(
+                                new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
+                                new Card(Suit.HEART, Symbol.ACE))
+                )
                 , second.getName().toString(), WinOrLose.WIN); //21
 
         UserGameResult thirdUserGameResult = new UserGameResult(
-                Arrays.asList(new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.HEART, Symbol.TWO)),
+                new Cards(
+                        Arrays.asList(new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.HEART, Symbol.TWO))
+                ),
                 third.getName().toString(), WinOrLose.LOSE);
 
         UserGameResult fourthUserGameResult = new UserGameResult(
-                Arrays.asList(new Card(Suit.DIAMOND, Symbol.TWO), new Card(Suit.SPADE, Symbol.TWO)),
+                new Cards(
+                        Arrays.asList(new Card(Suit.DIAMOND, Symbol.TWO), new Card(Suit.SPADE, Symbol.TWO))
+                ),
                 fourth.getName().toString(), WinOrLose.LOSE);
 
-        Map<Name, UserGameResult> temp = new HashMap<>();
-        temp.put(first.getName(), firstUserGameResult);
-        temp.put(second.getName(), secondUserGameResult);
-        temp.put(third.getName(), thirdUserGameResult);
-        temp.put(fourth.getName(), fourthUserGameResult);
+        Map<User, UserGameResult> temp = new HashMap<>();
+        temp.put(first, firstUserGameResult);
+        temp.put(second, secondUserGameResult);
+        temp.put(third, thirdUserGameResult);
+        temp.put(fourth, fourthUserGameResult);
 
         GameResult gameResult = new GameResult(
-                Arrays.asList(
-                        new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
-                        new Card(Suit.HEART, Symbol.ACE)), Dealer.DEALER_NAME
+                new Cards(
+                        Arrays.asList(
+                                new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
+                                new Card(Suit.HEART, Symbol.ACE))
+                ), Dealer.DEALER_NAME
         );
 
         ScoreBoard scoreBoard = new ScoreBoard(temp, gameResult);

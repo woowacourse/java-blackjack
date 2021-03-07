@@ -1,30 +1,26 @@
 package blackjack.domain.scoreboard.result;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.user.Name;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public class GameResult implements Resultable {
-    private final List<Card> cards;
+    private final Cards cards;
     private final Name name;
 
-    public GameResult(List<Card> cards, String name) {
+    public GameResult(Cards cards, String name) {
         this.cards = cards;
         this.name = new Name(name);
     }
 
     private int calculateScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+        return cards.calculateScore();
     }
 
     @Override
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public Cards getCards() {
+        return cards;
     }
 
     @Override

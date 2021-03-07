@@ -1,6 +1,7 @@
 package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.scoreboard.result.UserGameResult;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,10 +17,10 @@ class UserGameResultTest {
     @Test
     void testCalculateScore() {
         //given
-        List<Card> resultCards = Arrays.asList(
+        Cards resultCards = new Cards(Arrays.asList(
                 new Card(Suit.SPADE, Symbol.EIGHT), new Card(Suit.HEART, Symbol.FIVE),
                 new Card(Suit.CLOVER, Symbol.SEVEN)
-        );
+        ));
 
         //when
         UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN);

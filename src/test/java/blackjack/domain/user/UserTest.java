@@ -6,6 +6,9 @@ import blackjack.domain.card.painting.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -21,7 +24,9 @@ class UserTest {
         user.drawCard(new Card(Suit.CLOVER, Symbol.FOUR));
 
         //then
-        assertThat(user.getCards()).containsExactly(new Card(Suit.DIAMOND, Symbol.ACE), new Card(Suit.CLOVER, Symbol.FOUR));
+        List<Card> userCards = user.getCards().stream()
+                .collect(toList());
+        assertThat(userCards).containsExactly(new Card(Suit.DIAMOND, Symbol.ACE), new Card(Suit.CLOVER, Symbol.FOUR));
     }
 
     @DisplayName("유저의 이름이 딜러와 같을 때 검증")
