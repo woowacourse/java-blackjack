@@ -20,8 +20,4 @@ public class Card {
     public String getCardType() {
         return cardType.getType();
     }
-
-    public String getCard() {
-        return getCardSymbol() + getCardType();
-    }
 }

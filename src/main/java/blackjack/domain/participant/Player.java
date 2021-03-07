@@ -12,12 +12,17 @@ public class Player {
     private static final int BUST_LIMIT = 22;
 
     private final String name;
-    private final List<Card> cards;
+    protected final List<Card> cards;
     private boolean win = true;
 
     public Player(final String name) {
-        this.name = name;
+        this.name = validateName(name);
         this.cards = new ArrayList<>();
+    }
+
+    private String validateName(String name) {
+
+        return name;
     }
 
     public void receiveCard(final Card card) {

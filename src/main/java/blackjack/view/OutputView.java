@@ -1,6 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,26 +21,45 @@ public class OutputView {
     private static final String WIN_MESSAGE = ": 승";
     private static final String LOSE_MESSAGE = ": 패";
 
-    public static void distributeMessage(final String players) {
-        System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, players);
-    }
-
-    public static void showDealerCard(final String name, final Card card) {
-        System.out.printf(DEALER_CARD_STATUS_FORMAT, name, card.getCard() + NEWLINE);
-    }
-
-    public static void showPlayerCard(final String name, final List<Card> cards) {
-        final String cardStatus = cards.stream()
-                .map(Card::getCard)
+    public static void distributeMessage(final List<Player> players) {
+        final String names = players.stream()
+                .map(Player::getName)
                 .collect(Collectors.joining(", "));
-        System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus + NEWLINE);
+        System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, names);
     }
 
-    public static void showCardResult(final String name, final List<Card> cards, final int result) {
-        final String cardStatus = cards.stream()
-                .map(Card::getCard)
+    public static void showDealerCard(final Dealer dealer) {
+        System.out.printf(DEALER_CARD_STATUS_FORMAT + NEWLINE, dealer.getName(), cardFormat(dealer.firstCard()));
+    }
+
+    private static String cardFormat(Card card) {
+        return card.getCardSymbol() + card.getCardType();
+    }
+
+    public static void showPlayersCard(final List<Player> players) {
+        for (final Player player : players) {
+            showPlayerCard(player);
+        }
+    }
+
+    public static void showPlayerCard(final Player player) {
+        final String cardStatus = player.getCards().stream()
+                .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
-        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name, cardStatus, result);
+        System.out.printf(PLAYER_CARD_STATUS_FORMAT, player.getName(), cardStatus + NEWLINE);
+    }
+
+    public static void showCardsResult(final List<Player> players) {
+        for (final Player player: players) {
+            showCardResult(player);
+        }
+    }
+
+    public static void showCardResult(final Player player) {
+        final String cardStatus = player.getCards().stream()
+                .map(OutputView::cardFormat)
+                .collect(Collectors.joining(", "));
+        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, player.getName(), cardStatus, player.calculate());
     }
 
     public static void showGameResult(final String name, final int winCount, final int loseCount) {
@@ -46,7 +67,13 @@ public class OutputView {
         System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name, winCount, loseCount);
     }
 
-    public static void showPlayerGameResult(final String name, final boolean winner) {
+    public static void showPlayersGameResult(final List<Player> players) {
+        for (final Player player: players) {
+            showPlayerGameResult(player.getName(), player.getWin());
+        }
+    }
+
+    private static void showPlayerGameResult(final String name, final boolean winner) {
         if (winner) {
             System.out.println(name + WIN_MESSAGE);
             return;

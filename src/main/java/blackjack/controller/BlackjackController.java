@@ -8,7 +8,6 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static final String END_GAME_MARK = "n";
@@ -44,18 +43,9 @@ public class BlackjackController {
     }
 
     private void showDistributedCard(final List<Player> players, final Dealer dealer) {
-        showParticipantsName(players);
-        OutputView.showDealerCard(dealer.getName(), dealer.getCards().get(0));
-        for (final Player player : players) {
-            OutputView.showPlayerCard(player.getName(), player.getCards());
-        }
-    }
-
-    private void showParticipantsName(final List<Player> players) {
-        final String status = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
-        OutputView.distributeMessage(status);
+        OutputView.distributeMessage(players);
+        OutputView.showDealerCard(dealer);
+        OutputView.showPlayersCard(players);
     }
 
     private void playerGameProgress(final List<Player> players, final CardDeck cardDeck) {
@@ -66,11 +56,11 @@ public class BlackjackController {
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
         if (END_GAME_MARK.equals(askPlayerMoreCard(player))) {
-            OutputView.showPlayerCard(player.getName(), player.getCards());
+            OutputView.showPlayerCard(player);
             return;
         }
         player.receiveCard(cardDeck.distribute());
-        OutputView.showPlayerCard(player.getName(), player.getCards());
+        OutputView.showPlayerCard(player);
         if (isBust(player)) {
             return;
         }
@@ -115,17 +105,13 @@ public class BlackjackController {
             decideWinner(dealer, player);
         }
         OutputView.showGameResult(dealer.getName(), dealer.getWinCount(), players.size() - dealer.getWinCount());
-        for (final Player player : players) {
-            OutputView.showPlayerGameResult(player.getName(), player.getWin());
-        }
+        OutputView.showPlayersGameResult(players);
     }
 
     private void showFinalCardResult(final List<Player> players, final Dealer dealer) {
         OutputView.displayNewLine();
-        OutputView.showCardResult(dealer.getName(), dealer.getCards(), dealer.calculate());
-        for (final Player player : players) {
-            OutputView.showCardResult(player.getName(), player.getCards(), player.calculate());
-        }
+        OutputView.showCardResult(dealer);
+        OutputView.showCardsResult(players);
     }
 
     private void decideWinner(final Dealer dealer, final Player player) {
