@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -22,8 +24,24 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String askMoreCard(final String name) {
-        System.out.printf(NEWLINE + MORE_CARD_MESSAGE + NEWLINE, name);
-        return scanner.nextLine().toLowerCase(Locale.ROOT);
+    public static boolean askMoreCard(final Player player) {
+        System.out.printf(NEWLINE + MORE_CARD_MESSAGE + NEWLINE, player.getName());
+        final String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
+        try {
+            return validateMoreCardInput(userInput);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return askMoreCard(player);
+        }
+    }
+
+    private static boolean validateMoreCardInput(final String userInput) {
+        if ("y".equals(userInput)) {
+            return true;
+        }
+        if ("n".equals(userInput)) {
+            return false;
+        }
+        throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
     }
 }
