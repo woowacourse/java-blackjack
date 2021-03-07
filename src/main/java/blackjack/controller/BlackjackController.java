@@ -71,9 +71,7 @@ public class BlackjackController {
     }
 
     private void showDistributedCard(final List<Participant> participants) {
-        for (final Participant participant : participants) {
-            OutputView.showPlayerCard(participant.getName(), participant.showCards());
-        }
+        OutputView.showParticipantsCard(participants);
     }
 
     private void playerGameProgress(final List<Participant> participants,
@@ -85,11 +83,11 @@ public class BlackjackController {
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
         if (END_GAME_MARK.equals(askPlayerMoreCard(participant))) {
-            OutputView.showPlayerCard(participant.getName(), participant.getPlayerCards());
+            OutputView.showParticipantCard(participant);
             return;
         }
         participant.receiveCard(cardDeck.distribute());
-        OutputView.showPlayerCard(participant.getName(), participant.getPlayerCards());
+        OutputView.showParticipantCard(participant);
         if (isBust(participant)) {
             return;
         }

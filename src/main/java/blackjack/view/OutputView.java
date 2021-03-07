@@ -2,8 +2,11 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardType;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,18 +32,34 @@ public class OutputView {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, status);
     }
 
-    public static void showPlayerCard(final Name name, final List<Card> cards) {
-        final String cardStatus = cards.stream()
-            .map(Card::getCard)
-            .collect(Collectors.joining(", "));
+    public static void showParticipantsCard(final List<Participant> participants) {
+        for (final Participant participant : participants) {
+            showParticipantCard(participant);
+        }
+    }
+
+    public static void showParticipantCard(final Participant participant) {
+        final List<Card> cards = participant.getPlayerCards();
+        final Name name = participant.getName();
+        final List<String> cardStatuses = getCardInfo(cards);
+        final String cardStatus = String.join(", ", cardStatuses);
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, name.getValue(), cardStatus + NEWLINE);
     }
 
     public static void showCardResult(final Name name, final List<Card> cards, final int result) {
-        final String cardStatus = cards.stream()
-            .map(Card::getCard)
-            .collect(Collectors.joining(", "));
+        final List<String> cardStatuses = getCardInfo(cards);
+        final String cardStatus = String.join(", ", cardStatuses);
         System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name.getValue(), cardStatus, result);
+    }
+
+    private static List<String> getCardInfo(final List<Card> cards) {
+        final List<String> cardStatuses = new ArrayList<>();
+        for (final Card card : cards) {
+            final CardNumber cardNumber = card.getCardNumber();
+            final CardType cardType = card.getCardType();
+            cardStatuses.add(cardNumber.getValue() + cardType.getType());
+        }
+        return cardStatuses;
     }
 
     public static void showGameResult(final Name name, final int winCount, final int loseCount) {
