@@ -54,13 +54,13 @@ public class PlayerCards {
             .mapToInt(CardNumber::getValue)
             .sum();
 
-        for (final int aceSum : calculateAceSum(aceCount)) {
+        for (final int aceSum : calculateAceSums(aceCount)) {
             possibleSum.add(sumExceptAce + aceSum);
         }
         return findMaxPossibleValue(possibleSum);
     }
 
-    private List<Integer> calculateAceSum(final int aceCount) {
+    private List<Integer> calculateAceSums(final int aceCount) {
         int oneNormalRestExtra = CardNumber.ACE.getValue();
         int allExtra = CardNumber.ACE.getExtraValue();
 
