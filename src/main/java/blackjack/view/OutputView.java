@@ -8,6 +8,7 @@ import blackjack.domain.result.GameResultDto;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.PlayerResultDto;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -69,21 +70,12 @@ public class OutputView {
         System.out.printf("%s 카드: %s - 결과: %d\n", name, cards, result);
     }
 
-    private static void printDealerResult(List<MatchResult> dealerResult) {
-        int win = 0;
-        int lose = 0;
-        int tie = 0;
-        for (MatchResult winOrLose : dealerResult) {
-            if (MatchResult.WIN.equals(winOrLose)) {
-                win++;
-            }
-            if (MatchResult.LOSE.equals(winOrLose)) {
-                lose++;
-            }
-            if (MatchResult.TIE.equals(winOrLose)) {
-                tie++;
-            }
-        }
+    private static void printDealerResult(Map<MatchResult, Integer> dealerResult) {
+        int win = dealerResult.get(MatchResult.WIN);
+        int lose = dealerResult.get(MatchResult.LOSE);
+        int tie = dealerResult.get(MatchResult.TIE);
+
+        System.out.printf("딜러: %d승 %d패 %d무\n", win, lose, tie);
     }
 
     public static String cardsToString(List<Card> cards) {

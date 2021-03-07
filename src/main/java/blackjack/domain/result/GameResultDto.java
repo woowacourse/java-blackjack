@@ -2,15 +2,16 @@ package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import java.util.List;
+import java.util.Map;
 
 public class GameResultDto {
 
     private final List<Card> dealerCards;
     private final int dealerSum;
-    private final List<MatchResult> dealerResult;
+    private final Map<MatchResult, Integer> dealerResult;
     private final List<PlayerResultDto> playersResultMap;
 
-    public GameResultDto(List<Card> dealerCards, int dealerSum, List<MatchResult> dealerResult,
+    public GameResultDto(List<Card> dealerCards, int dealerSum, Map<MatchResult, Integer> dealerResult,
             List<PlayerResultDto> playersResults) {
         this.dealerCards = dealerCards;
         this.dealerSum = dealerSum;
@@ -26,7 +27,7 @@ public class GameResultDto {
         return dealerSum;
     }
 
-    public List<MatchResult> getDealerResult() {
+    public Map<MatchResult, Integer> getDealerResult() {
         return dealerResult;
     }
 

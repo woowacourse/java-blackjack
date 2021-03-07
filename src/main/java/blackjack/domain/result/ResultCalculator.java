@@ -3,7 +3,9 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResultCalculator {
 
@@ -17,7 +19,7 @@ public class ResultCalculator {
 
     public GameResultDto getResult() {
         List<PlayerResultDto> playersResults = new ArrayList<>();
-        List<MatchResult> dealerResult = new ArrayList<>();
+        Map<MatchResult, Integer> dealerMatchCount = new EnumMap<>(MatchResult.class);
 
         int dealerCardSum = dealer.sumCard();
 
@@ -27,9 +29,12 @@ public class ResultCalculator {
             PlayerResultDto playerResult = PlayerResultDto.from(player, winOrLose);
 
             playersResults.add(playerResult);
-            dealerResult.add(winOrLose.reverse());
+
+            MatchResult dealerMatch = winOrLose.reverse();
+            dealerMatchCount.put(dealerMatch, dealerMatchCount.getOrDefault(dealerMatch, 0) + 1);
         }
 
-        return new GameResultDto(dealer.getCards(), dealerCardSum, dealerResult, playersResults);
+        return new GameResultDto(dealer.getCards(), dealerCardSum, dealerMatchCount,
+                playersResults);
     }
 }
