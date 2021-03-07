@@ -14,15 +14,15 @@ public abstract class Person {
 
     public abstract boolean canDraw();
 
-    public void receiveCard(Card card) {
+    public final void receiveCard(Card card) {
         this.cards = cards.addCard(card);
     }
 
-    public Cards getCurrentCards() {
+    public final Cards getCurrentCards() {
         return cards;
     }
 
-    public Name getName() {
+    public final Name getName() {
         return name;
     }
 }
