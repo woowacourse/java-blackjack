@@ -14,6 +14,6 @@ public enum Pattern {
     }
 
     public String getPattern() {
-        return pattern;
+        return this.pattern;
     }
 }

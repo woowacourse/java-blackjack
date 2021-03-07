@@ -28,7 +28,7 @@ public enum Number {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public boolean isAce() {

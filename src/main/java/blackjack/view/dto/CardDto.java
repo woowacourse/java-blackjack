@@ -9,6 +9,6 @@ public class CardDto {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 }

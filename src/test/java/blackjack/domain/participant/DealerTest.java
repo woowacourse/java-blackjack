@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
@@ -40,18 +40,18 @@ public class DealerTest {
 
         this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.FIVE));  // 5
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.THREE));    // 3
-        assertThat(this.dealer.judge(player)).isEqualTo(GameResult.LOSE);
+        assertThat(this.dealer.judge(player)).isEqualTo(Result.LOSE);
 
         this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.THREE)); // 8
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.FIVE));     // 8
-        assertThat(this.dealer.judge(player)).isEqualTo(GameResult.DRAW);
+        assertThat(this.dealer.judge(player)).isEqualTo(Result.DRAW);
 
         this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.SIX));   // 14
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.SEVEN));    // 15
-        assertThat(this.dealer.judge(player)).isEqualTo(GameResult.WIN);
+        assertThat(this.dealer.judge(player)).isEqualTo(Result.WIN);
 
         this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.KING));  // Burst
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.KING));     // Burst
-        assertThat(this.dealer.judge(player)).isEqualTo(GameResult.LOSE);
+        assertThat(this.dealer.judge(player)).isEqualTo(Result.LOSE);
     }
 }

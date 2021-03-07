@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 
 public class Dealer extends Participant {
 
@@ -9,21 +9,21 @@ public class Dealer extends Participant {
     public Dealer() {
     }
 
-    public GameResult judge(final Player player) {
+    public Result judge(final Player player) {
         if (isDealerWinThePlayer(player)) {
-            return GameResult.LOSE;
+            return Result.LOSE;
         }
         if (isDealerLoseThePlayer(player)) {
-            return GameResult.WIN;
+            return Result.WIN;
         }
-        return GameResult.DRAW;
+        return Result.DRAW;
     }
 
-    private boolean isDealerWinThePlayer(Player player) {
+    private boolean isDealerWinThePlayer(final Player player) {
         return player.isBurst() || getScore() > player.getScore();
     }
 
-    private boolean isDealerLoseThePlayer(Player player) {
+    private boolean isDealerLoseThePlayer(final Player player) {
         return getScore() < player.getScore();
     }
 

@@ -1,18 +1,18 @@
 package blackjack.domain;
 
-public enum GameResult {
+public enum Result {
 
     WIN("승"),
     LOSE("패"),
     DRAW("무");
 
-    private final String name;
+    private final String result;
 
-    GameResult(final String name) {
-        this.name = name;
+    Result(final String result) {
+        this.result = result;
     }
 
-    public GameResult reverseResult() {
+    public Result reverse() {
         if (this == WIN) {
             return LOSE;
         }
@@ -22,7 +22,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public String getName() {
-        return name;
+    public String getResult() {
+        return this.result;
     }
 }

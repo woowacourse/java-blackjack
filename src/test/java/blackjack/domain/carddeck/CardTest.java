@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 
     @Test
-    @DisplayName("카드생성 테스트")
+    @DisplayName("카드캐싱 테스트")
     void testCreateCard() {
         Card card = Card.valueOf(Pattern.CLOVER, Number.ACE);
 

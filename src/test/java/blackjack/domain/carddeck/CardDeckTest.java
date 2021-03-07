@@ -16,22 +16,22 @@ public class CardDeckTest {
 
     @BeforeEach
     void setUp() {
-        cardDeck = CardDeck.newShuffledDeck();
+        this.cardDeck = CardDeck.newShuffledDeck();
     }
 
     @Test
     @DisplayName("카드를 한장 뽑는다.")
     void testCardDeckDraw() {
-        assertThat(cardDeck.draw()).isInstanceOf(Card.class);
+        assertThat(this.cardDeck.draw()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("카드는 52장이다.")
     void testCardDeckSize() {
         for (int i = 0; i < 52; i++) {
-            cardDeck.draw();
+            this.cardDeck.draw();
         }
-        assertThatThrownBy(cardDeck::draw)
+        assertThatThrownBy(this.cardDeck::draw)
             .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -40,7 +40,7 @@ public class CardDeckTest {
     void testCardDuplicate() {
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(cardDeck.draw());
+            cards.add(this.cardDeck.draw());
         }
         assertThat(cards).hasSize(52);
     }
@@ -54,7 +54,7 @@ public class CardDeckTest {
         Set<Card> diamondCards = new HashSet<>();
 
         for (int i = 0; i < 52; i++) {
-            Card card = cardDeck.draw();
+            Card card = this.cardDeck.draw();
             compareCardPattern(cloverCards, card, Pattern.CLOVER);
             compareCardPattern(spadeCards, card, Pattern.SPADE);
             compareCardPattern(heartCards, card, Pattern.HEART);

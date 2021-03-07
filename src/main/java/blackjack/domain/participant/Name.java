@@ -13,13 +13,13 @@ public class Name {
         validateBlank(this.value);
     }
 
-    private void validateNull(String name) {
+    private void validateNull(final String name) {
         Objects.requireNonNull(name, "이름은 null 일수 없습니다.");
     }
 
-    private void validateBlank(String name) {
+    private void validateBlank(final String name) {
         if (name.isEmpty() || name.contains(BLANK)) {
-            throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
+            throw new IllegalArgumentException("이름은 공백을 포함할 수 없습니다.");
         }
     }
 

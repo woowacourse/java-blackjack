@@ -11,7 +11,7 @@ import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class GameResultTest {
+public class ResultTest {
 
     @Test
     @DisplayName("플레이어의 승패에 따라 딜러 승패가 잘 결정되는지 테스트")
@@ -21,17 +21,17 @@ public class GameResultTest {
 
         dealer.addCard(Card.valueOf(Pattern.HEART, Number.THREE));   // 3
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.TEN));   // 10
-        GameResult playerWin = dealer.judge(player);
+        Result playerWin = dealer.judge(player);
 
         dealer.addCard(Card.valueOf(Pattern.HEART, Number.TEN));     // 13
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.TWO));   // 12
-        GameResult playerLose = dealer.judge(player);
+        Result playerLose = dealer.judge(player);
 
         player.addCard(Card.valueOf(Pattern.DIAMOND, Number.ACE));   // 23->13
-        GameResult playerDraw = dealer.judge(player);
+        Result playerDraw = dealer.judge(player);
 
-        assertThat(playerWin.reverseResult()).isEqualTo(GameResult.LOSE);
-        assertThat(playerLose.reverseResult()).isEqualTo(GameResult.WIN);
-        assertThat(playerDraw.reverseResult()).isEqualTo(GameResult.DRAW);
+        assertThat(playerWin.reverse()).isEqualTo(Result.LOSE);
+        assertThat(playerLose.reverse()).isEqualTo(Result.WIN);
+        assertThat(playerDraw.reverse()).isEqualTo(Result.DRAW);
     }
 }

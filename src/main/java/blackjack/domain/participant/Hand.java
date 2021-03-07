@@ -17,7 +17,7 @@ public class Hand {
     }
 
     public void addCard(final Card card) {
-        cards.add(card);
+        this.cards.add(card);
     }
 
     public int totalScore() {
@@ -29,7 +29,8 @@ public class Hand {
     }
 
     private int calculateScore() {
-        return cards.stream()
+        return this.cards
+            .stream()
             .mapToInt(Card::getScore)
             .sum();
     }
@@ -44,7 +45,8 @@ public class Hand {
     }
 
     private int getSoftAceCount() {
-        return (int) cards.stream()
+        return (int) this.cards
+            .stream()
             .filter(Card::isAce)
             .count();
     }
@@ -58,6 +60,6 @@ public class Hand {
     }
 
     public List<Card> toList() {
-        return new ArrayList<>(cards);
+        return new ArrayList<>(this.cards);
     }
 }
