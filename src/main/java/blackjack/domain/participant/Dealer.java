@@ -38,7 +38,7 @@ public class Dealer extends Participant {
         cardHand.add(draw());
     }
 
-    public Card getBaseCard() {
+    public Card getOpenCard() {
         return cardHand.getCards().get(0);
     }
 

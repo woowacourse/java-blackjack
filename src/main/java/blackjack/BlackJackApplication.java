@@ -24,7 +24,7 @@ public class BlackJackApplication {
         progressDealerTurn(dealer);
 
         GameResultDto result = getResult(dealer, players);
-        OutputView.printResult(result);
+        OutputView.printGameResult(result);
     }
 
     private static void initializeParticipants(Dealer dealer, List<Player> players) {
@@ -57,7 +57,7 @@ public class BlackJackApplication {
     private static void turn(Dealer dealer, Player player) {
         while (!player.isBust() && InputView.wantsReceive(player.getName())) {
             dealer.deal(player);
-            OutputView.printHandStatus(player);
+            OutputView.printHand(player);
         }
     }
 
