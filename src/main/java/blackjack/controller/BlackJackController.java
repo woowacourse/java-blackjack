@@ -6,7 +6,6 @@ import blackjack.domain.Gamer;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.stream.IntStream;
 
 public class BlackJackController {
 
@@ -37,7 +36,10 @@ public class BlackJackController {
 
     private void dealInitCard(Players players, Deck deck) {
         OutputView.noticeDrawTwoCards(players);
-        IntStream.range(0, Gamer.NUM_INIT_CARD).mapToObj(i -> deck).forEach(players::giveCards);
+        int bound = Gamer.NUM_INIT_CARD;
+        for (int i = 0; i < bound; i++) {
+            players.giveCards(deck);
+        }
         OutputView.noticePlayersCards(players);
     }
 }
