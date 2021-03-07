@@ -102,7 +102,7 @@ public class Players {
 
     public Map<String, Integer> calculateResult() {
         Map<String, Integer> result = new HashMap<>();
-        int dealerValue = dealer.calculateJudgingPoint();
+        int dealerValue = dealer.calcPoint();
 
         resultInit(result);
 

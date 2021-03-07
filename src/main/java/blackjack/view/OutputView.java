@@ -56,7 +56,7 @@ public class OutputView {
 
     public static void printGameResultPoint(Gamer gamer) {
         System.out.println(String
-            .format(SKELETON_GAME_RESULT_POINT, gamer.getInfo(), gamer.calculateMaximumPoint()));
+            .format(SKELETON_GAME_RESULT_POINT, gamer.getInfo(), gamer.calcPoint()));
     }
 
     public static void printDealerResult(Map<String, Integer> result) {

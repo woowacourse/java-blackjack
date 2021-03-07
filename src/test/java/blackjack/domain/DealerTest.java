@@ -1,10 +1,12 @@
 package blackjack.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class DealerTest {
     private Dealer dealer;
@@ -24,7 +26,7 @@ public class DealerTest {
     @DisplayName("딜러가 받은 카드 계산")
     void dealerDealCard() {
         dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        assertEquals(dealer.calculateJudgingPoint(), 1);
+        assertEquals(dealer.calcPoint(), 11);
     }
 
     @Test

@@ -14,7 +14,10 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() <= POINT_BOUNDARY_VALUE;
+        Integer cardValue = cards.stream()
+            .map(Card::givePoint)
+            .reduce(0, Integer::sum);
+        return cardValue <= POINT_BOUNDARY_VALUE;
     }
 
     @Override

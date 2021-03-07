@@ -26,7 +26,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calculateJudgingPoint() < HIGHEST_POINT;
+        return this.calcPoint() < HIGHEST_POINT;
     }
 
     public Boolean continueDraw(Deck deck) {
@@ -62,7 +62,7 @@ public class Player extends Gamer {
     }
 
     public void judgeVictory(Map<String, Integer> dealerHistory, int dealerPoint) {
-        int playerPoint = calculateJudgingPoint();
+        int playerPoint = calcPoint();
 
         if (isDraw(playerPoint, dealerPoint)) {
             inputMatchResult(dealerHistory, DRAW);

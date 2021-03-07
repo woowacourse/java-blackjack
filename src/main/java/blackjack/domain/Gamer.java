@@ -15,7 +15,7 @@ public abstract class Gamer {
     public static final int HIGHEST_POINT = 21;
     private static final String COMMA = ", ";
     private final String name;
-    private final List<Card> cards = new ArrayList<>();
+    protected final List<Card> cards = new ArrayList<>();
 
     protected Gamer(String name) {
         validateSpace(name);
@@ -32,10 +32,14 @@ public abstract class Gamer {
         cards.add(card);
     }
 
-    protected int calculateJudgingPoint() {
-        return cards.stream()
+    public int calcPoint() {
+        Integer cardValue = cards.stream()
             .map(Card::givePoint)
             .reduce(0, Integer::sum);
+        if (findAce(cards) && cardValue + ACE_BONUS <= HIGHEST_POINT) {
+            return cardValue + ACE_BONUS;
+        }
+        return cardValue;
     }
 
     public int calculateMaximumPoint() {
