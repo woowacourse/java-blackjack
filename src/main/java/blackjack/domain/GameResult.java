@@ -4,7 +4,7 @@ public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
-    TIE("무");
+    DRAW("무");
 
     private final String name;
 
@@ -12,24 +12,14 @@ public enum GameResult {
         this.name = name;
     }
 
-    public static GameResult judgeHand(final int dealerScore, final int playerScore) {
-        if (playerScore > 21 || dealerScore > playerScore) {
+    public GameResult reverseResult() {
+        if (this == WIN) {
             return LOSE;
         }
-        if (dealerScore < playerScore) {
+        if (this == LOSE) {
             return WIN;
         }
-        return TIE;
-    }
-
-    public static GameResult reverseResult(final GameResult gameResult) {
-        if (gameResult == WIN) {
-            return LOSE;
-        }
-        if (gameResult == LOSE) {
-            return WIN;
-        }
-        return TIE;
+        return DRAW;
     }
 
     public String getName() {
