@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int UPPER_ACE_ADDABLE_VALUE = 10;
+    private static final int UPPER_ACE_ADDABLE_VALUE = 11;
 
     private final List<Card> cards;
 
@@ -34,7 +34,7 @@ public class Cards {
 
     private boolean canAddAceUpperValue(int score) {
         return cards.stream()
-                .anyMatch(Card::isAce) && score < UPPER_ACE_ADDABLE_VALUE;
+                .anyMatch(Card::isAce) && score <= UPPER_ACE_ADDABLE_VALUE;
     }
 
     public int add(Card card) {
