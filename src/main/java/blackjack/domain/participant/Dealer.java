@@ -2,10 +2,12 @@ package blackjack.domain.participant;
 
 public class Dealer extends Participant {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
+    private static final String DEALER_NAME = "딜러";
+
     private int winCount;
 
-    public Dealer(final String name) {
-        super(name);
+    public Dealer() {
+        super(DEALER_NAME);
         this.winCount = 0;
     }
 
