@@ -12,53 +12,39 @@ public enum MatchResult {
     }
 
     public static MatchResult calculateResult(User player, User dealer) {
-        if (player.getStatus() == HandStatus.BUST) {
+        if (player.isBust()) {
             return MatchResult.LOSE;
         }
-
-        if (player.getStatus() == HandStatus.BLACK_JACK) {
-            return isDealerBlackJack(dealer.getStatus());
-        }
-
-        if (dealer.getStatus() == HandStatus.BUST) {
+        if (dealer.isBust()) {
             return MatchResult.WIN;
         }
-
-        return compareScore(player.getScore(), dealer.getScore());
-    }
-
-    private static MatchResult isDealerBlackJack(HandStatus dealerStatus) {
-        if (dealerStatus == HandStatus.BLACK_JACK) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
             return MatchResult.DRAW;
         }
-        return MatchResult.WIN;
+        return compareScore(player.getScore(), dealer.getScore());
     }
 
     private static MatchResult compareScore(int playerScore, int dealerScore) {
         if (playerScore < dealerScore) {
             return MatchResult.LOSE;
         }
-
         if (playerScore == dealerScore) {
             return MatchResult.DRAW;
         }
-
         return MatchResult.WIN;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getReverseName() {
         if(this == MatchResult.WIN) {
-            return "패";
+            return LOSE.name;
         }
-
         if(this == MatchResult.LOSE) {
-            return "승";
+            return WIN.name;
         }
+        return DRAW.name;
+    }
 
-        return "무";
+    public String getName() {
+        return name;
     }
 }

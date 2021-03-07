@@ -42,7 +42,8 @@
 - [x] DTO 카멜 케이스로 변경 / 뷰로 위치 수정
 - [ ] get 들어간 네이밍 고민
     - [x] 컨트롤러에 getAdditionalCard
-- [ ] MatchResult reverseName() 하드코딩 제거
+- [x] MatchResult reverseName() 하드코딩 제거
+- [x] 승패 결과 구현 변경 
 - [ ] 딜러와 플레이어 참가자 객체로 포장 고민
 
 ## 패키지 구조 

@@ -36,6 +36,14 @@ public abstract class User {
         return hand.isHit();
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public void convertToStay() {
         hand.convertStatusToStay();
     }
