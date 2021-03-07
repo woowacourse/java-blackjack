@@ -15,19 +15,23 @@ public enum Number {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private final int number;
+    private final int score;
     private final String name;
 
-    Number(final int number, final String name) {
-        this.number = number;
+    Number(final int score, final String name) {
+        this.score = score;
         this.name = name;
     }
 
-    public int getNumber() {
-        return this.number;
+    public int getScore() {
+        return this.score;
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isAce() {
+        return this.score == ACE.score;
     }
 }
