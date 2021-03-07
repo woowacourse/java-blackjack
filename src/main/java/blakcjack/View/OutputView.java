@@ -28,7 +28,8 @@ public class OutputView {
     }
 
     private static String concatenatePlayerNames(final List<Participant> players) {
-        return players.stream().map(Participant::getName)
+        return players.stream()
+                .map(Participant::getName)
                 .collect(Collectors.joining(", "));
     }
 
@@ -36,8 +37,16 @@ public class OutputView {
         System.out.println(makeCardSummary(participant));
     }
 
+
     private static String makeCardSummary(final Participant participant) {
-        return participant.getName() + ": " + concatenateCardsInformation(getInitialCards(participant)) + System.lineSeparator();
+        return String.format("%s: %s%n", participant.getName(),
+                concatenateCardsInformation(getInitialCards(participant)));
+    }
+
+    private static String concatenateCardsInformation(final List<Card> cards) {
+        return cards.stream()
+                .map(OutputView::getCardInformation)
+                .collect(Collectors.joining(", "));
     }
 
     private static List<Card> getInitialCards(final Participant participant) {
@@ -46,12 +55,6 @@ public class OutputView {
             return dealer.getFirstCard();
         }
         return participant.getCards();
-    }
-
-    private static String concatenateCardsInformation(final List<Card> cards) {
-        return cards.stream()
-                .map(OutputView::getCardInformation)
-                .collect(Collectors.joining(", "));
     }
 
     private static String getCardInformation(final Card card) {
@@ -66,7 +69,7 @@ public class OutputView {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(makeFinalSummary(dealer));
 
-        for (Participant player : players) {
+        for (final Participant player : players) {
             stringBuilder.append(makeFinalSummary(player));
         }
         System.out.println(stringBuilder.toString());
@@ -80,22 +83,18 @@ public class OutputView {
         return participant.getName() + "카드: " + concatenateCardsInformation(participant.getCards());
     }
 
-    public static void printFinalOutcomeSummary(final OutcomeStatistics judgeOutcome, final String dealerName) {
+    public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics, final String dealerName) {
         System.out.println("## 최종 승패");
-        printDealerOutcome(judgeOutcome.getDealerOutcome(), dealerName);
-        printPlayersOutcome(judgeOutcome.getPlayersOutcome());
+        printDealerOutcome(outcomeStatistics.getDealerOutcome(), dealerName);
+        printPlayersOutcome(outcomeStatistics.getPlayersOutcome());
     }
 
     private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final String dealerName) {
-        final StringBuilder stringBuilder = new StringBuilder()
-                .append(dealerName)
+        final StringBuilder stringBuilder = new StringBuilder(dealerName)
                 .append(":");
-
-        for (final Outcome outcome : dealerOutcome.keySet()) {
-            final int count = dealerOutcome.get(outcome);
-            stringBuilder.append(convertCountToString(count, outcome));
-        }
-
+        dealerOutcome.forEach((outcome, count) ->
+                stringBuilder.append(convertCountToString(count, outcome))
+        );
         System.out.println(stringBuilder.toString());
     }
 
@@ -108,10 +107,13 @@ public class OutputView {
 
     private static void printPlayersOutcome(final Map<String, Outcome> playersOutcome) {
         final StringBuilder stringBuilder = new StringBuilder();
-        for (final String name : playersOutcome.keySet()) {
-            final Outcome outcome = playersOutcome.get(name);
-            stringBuilder.append(name).append(": ").append(outcome.toKorean()).append(System.lineSeparator());
-        }
+        playersOutcome.forEach((name, outcome) ->
+                stringBuilder.append(makePlayerOutcomeMessage(name, outcome))
+        );
         System.out.println(stringBuilder.toString());
+    }
+
+    private static String makePlayerOutcomeMessage(final String name, final Outcome outcome) {
+        return String.format("%s: %s%n", name, outcome.toKorean());
     }
 }
