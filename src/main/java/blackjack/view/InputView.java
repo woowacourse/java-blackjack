@@ -1,19 +1,22 @@
 package blackjack.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String YES = "y";
     private static final String NO = "n";
-
+    private static final String COMMA = ",";
 
     private InputView() {
 
     }
 
-    public static String inputName() {
-        return scanner.nextLine();
+    public static List<String> inputName() {
+        return Arrays.stream(scanner.nextLine().split(COMMA)).collect(Collectors.toList());
     }
 
     public static String inputAnswer() {

@@ -48,7 +48,7 @@ public class BlackJackGame {
         for (int i = 0; i < INIT_DRAW_COUNT; i++) {
             dealer.receiveCard(cardDeck.drawCard());
             players.getPlayers()
-                   .forEach(player -> player.receiveCard(cardDeck.drawCard()));
+                    .forEach(player -> player.receiveCard(cardDeck.drawCard()));
         }
     }
 
