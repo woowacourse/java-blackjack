@@ -1,32 +1,36 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.List;
 
 public class Deck {
 
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck() {
         cards = creatDeck();
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 
     public Card draw() {
         return cards.pop();
     }
 
-    public Stack<Card> creatDeck(){
-        Stack<Card> cards = new Stack<>();
+    private Deque<Card> creatDeck() {
+        List<Card> cards = new ArrayList<>();
         for (Type type : Type.values()) {
-            for (Denomination denomination : Denomination.values()) {
-                cards.push(new Card(type, denomination));
-            }
+            makeCard(type, cards);
         }
-        return cards;
+        Collections.shuffle(cards);
+        return new ArrayDeque<>(cards);
+    }
+
+    private void makeCard(Type type, List<Card> cards) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(type, denomination));
+        }
     }
 
 }
