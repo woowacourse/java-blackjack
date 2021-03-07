@@ -33,8 +33,10 @@
 - [x] isHit() 부모 클래스에서 구현 
   - [x] hand에 메세지 보내기
 - [x] Dealer, Game, MatchResult, Player, User 테스트 코드 추가 
-- [ ] 테스트 코드에 hasSize() 사용
-- [ ] stack 대신 Deque 사용
+- [x] 테스트 코드에 hasSize() 사용
+- [x] stack 대신 Deque 사용
+  - [x] initial card 뽑을 때 Stream.generate 사용
+  - [x] 처음 카드 덱 생성시 foreach 2번 쓰는 부분 메소드 추출  
 - [ ] 컨트롤러에서 Player 형변환 없이 구현
 - [ ] 딜러와 플레이어 한 리스트에서 구현 고민
 
