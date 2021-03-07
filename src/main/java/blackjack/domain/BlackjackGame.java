@@ -30,8 +30,8 @@ public class BlackjackGame {
     }
 
     public void firstDraw() {
-        dealer.drawCard(Arrays.asList(deck.draw(), deck.draw()));
-        users.forEach(user -> user.drawCard(Arrays.asList(deck.draw(), deck.draw())));
+        dealer.drawCards(Arrays.asList(deck.draw(), deck.draw()));
+        users.forEach(user -> user.drawCards(Arrays.asList(deck.draw(), deck.draw())));
     }
 
     public boolean existCanContinueUser() {

@@ -47,16 +47,16 @@ class WinOrLoseTest {
 
     static Participant changeStatus(Participant participant, Status status) {
         if (status == BURST) {
-            participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.KING)));
+            participant.drawCards(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.KING)));
             participant.drawCard(new Card(Suit.DIAMOND, Symbol.TWO));
         }
 
         if (status == BLACKJACK) {
-            participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.ACE)));
+            participant.drawCards(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.ACE)));
         }
 
         if (status == PLAYING) {
-            participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.THREE)));
+            participant.drawCards(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.THREE)));
         }
 
         return participant;
@@ -87,12 +87,12 @@ class WinOrLoseTest {
     }
 
     static Participant setScoreTwenty(Participant participant) {
-        participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.JACK)));
+        participant.drawCards(Arrays.asList(new Card(Suit.DIAMOND, Symbol.QUEEN), new Card(Suit.DIAMOND, Symbol.JACK)));
         return participant;
     }
 
     static Participant setScoreEleven(Participant participant) {
-        participant.drawCard(Arrays.asList(new Card(Suit.DIAMOND, Symbol.SEVEN), new Card(Suit.DIAMOND, Symbol.FOUR)));
+        participant.drawCards(Arrays.asList(new Card(Suit.DIAMOND, Symbol.SEVEN), new Card(Suit.DIAMOND, Symbol.FOUR)));
         return participant;
     }
 

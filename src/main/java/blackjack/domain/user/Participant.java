@@ -23,7 +23,7 @@ public abstract class Participant {
         changeStatus();
     }
 
-    public void drawCard(List<Card> cards) {
+    public void drawCards(List<Card> cards) {
         cards.forEach(this::drawCard);
     }
 
