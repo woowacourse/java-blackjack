@@ -11,7 +11,7 @@ class AdditionalCardReplyTest {
     @Test
     void create_success() {
         assertThat(AdditionalCardReply.from("y"))
-                .isEqualTo(AdditionalCardReply.GO);
+                .isEqualTo(AdditionalCardReply.HIT);
 
         assertThat(AdditionalCardReply.from("Y"))
                 .isEqualTo(AdditionalCardReply.STOP);

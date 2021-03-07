@@ -13,8 +13,6 @@ import static blakcjack.view.InputView.takePlayerNamesInput;
 import static blakcjack.view.OutputView.printInitialHands;
 
 public class BlackJackController {
-    private static final String YES = "y";
-
     public void run() {
         final List<String> playerNames = takePlayerNamesInput();
         final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
@@ -34,15 +32,14 @@ public class BlackJackController {
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
-        while (player.isScoreLowerThanBlackJackValue() && isYes(player)) {
+        while (player.isScoreLowerThanBlackJackValue() && isHitSelected(player)) {
             blackjackGame.distributeOneCard(player);
             OutputView.printPlayerHand(player);
         }
     }
 
-    private boolean isYes(final Participant player) {
-        final String yesOrNo = InputView.takeHitOrStand(player.getName());
-        return YES.equals(yesOrNo);
+    private boolean isHitSelected(final Participant player) {
+        return InputView.takeHitOrStand(player.getName());
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {

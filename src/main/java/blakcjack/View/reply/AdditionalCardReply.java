@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public enum AdditionalCardReply {
-    GO("y"),
-    STOP("n");
+    HIT("y"),
+    STAND("n");
 
     String value;
 
@@ -23,5 +23,13 @@ public enum AdditionalCardReply {
                 .filter(reply -> Objects.equals(reply.value, lowerCaseValue))
                 .findAny()
                 .orElseThrow(InvalidReplyException::new);
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public boolean isHit() {
+        return equals(HIT);
     }
 }

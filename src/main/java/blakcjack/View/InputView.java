@@ -1,13 +1,14 @@
 package blakcjack.view;
 
+import blakcjack.view.reply.AdditionalCardReply;
+import blakcjack.view.reply.InvalidReplyException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
-    public static final String YES = "y";
-    public static final String NO = "n";
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> takePlayerNamesInput() {
@@ -17,21 +18,22 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String takeHitOrStand(String name) {
+    public static boolean takeHitOrStand(final String name) {
         try {
-            System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-            String input = SCANNER.nextLine().trim();
-            validate(input);
-            return input;
-        } catch (IllegalArgumentException e) {
+            final AdditionalCardReply additionalCardReply = inputAdditionalCardReply(name);
+            return additionalCardReply.isHit();
+        } catch (InvalidReplyException e) {
             System.out.println(e.getMessage());
             return takeHitOrStand(name);
         }
     }
 
-    private static void validate(final String input) {
-        if (!YES.equals(input) && !NO.equals(input)) {
-            throw new IllegalArgumentException(YES + "나 " + NO + "만 입력해주세요.");
-        }
+    private static AdditionalCardReply inputAdditionalCardReply(final String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name,
+                AdditionalCardReply.HIT.getValue(),
+                AdditionalCardReply.STAND.getValue());
+
+        String input = SCANNER.nextLine().trim();
+        return AdditionalCardReply.from(input);
     }
 }
