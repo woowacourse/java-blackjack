@@ -1,15 +1,15 @@
 package blackjack.controller;
 
-import blackjack.domain.MatchResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.result.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.*;
+import java.util.List;
 
 public class BlackJackController {
     private static final String YES = "Y";
@@ -26,14 +26,15 @@ public class BlackJackController {
         OutputView.printPlayerNameInputGuideMessage();
         try {
             return new Players(InputView.getPlayerNameInput());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
             return getPlayerNames();
         }
     }
 
     private void playGame(Dealer dealer, Deck deck, Players players) {
         drawAtFirst(dealer, players, deck);
+        OutputView.printAfterDrawAtFirstGuideMessage(players);
         OutputView.printParticipantsCardAtFirst(dealer, players);
         askPlayersToHit(players, deck);
         drawMoreCardToDealer(dealer, deck);
@@ -75,26 +76,8 @@ public class BlackJackController {
 
     private void showResult(Dealer dealer, Players players) {
         OutputView.printCardsAndScore(dealer, players);
-        Map<Player, MatchResultType> matchResult = calculateMatchResult(dealer, players);
-        List<Integer> matchResultCount = countMatchResultTypes(matchResult);
+        MatchResult matchResult = new MatchResult(dealer, players);
+        List<Integer> matchResultCount = matchResult.getMatchResultTypeCount();
         OutputView.printMatchTypeResult(matchResultCount, matchResult);
-    }
-
-    private Map<Player, MatchResultType> calculateMatchResult(Dealer dealer, Players players) {
-        Map<Player, MatchResultType> matchResult = new LinkedHashMap<>();
-
-        for (Player player : players.getPlayers()) {
-            matchResult.put(player, dealer.compareScore(player));
-        }
-        return matchResult;
-    }
-
-    private List<Integer> countMatchResultTypes(Map<Player, MatchResultType> matchResult) {
-        List<Integer> matchResultCount = new ArrayList<>();
-
-        for (MatchResultType type : MatchResultType.values()) {
-            matchResultCount.add(Collections.frequency(matchResult.values(), type));
-        }
-        return matchResultCount;
     }
 }
