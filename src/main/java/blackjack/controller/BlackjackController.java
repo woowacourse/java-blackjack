@@ -21,7 +21,7 @@ public class BlackjackController {
 
     private void drawCards(Game game) {
         while (game.hasHitPlayer()) {
-            addNewCard(game, game.getHitPlayer());
+            addNewCard(game, game.bringHitPlayer());
         }
         OutputView.printDealerDraw(game.giveCardToDealer());
     }

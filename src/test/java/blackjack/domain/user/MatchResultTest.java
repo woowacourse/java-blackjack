@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MatchResultTest {
 
@@ -39,7 +40,7 @@ class MatchResultTest {
     public void calculateResult_Win() {
         player.initialHands(getPlayerCards(), 21);
         dealer.initialHands(getDealerLosingCards(), 16);
-        assertEquals(MatchResult.WIN, MatchResult.calculateResult(player, dealer)) ;
+        assertEquals(MatchResult.WIN, MatchResult.calculateResult(player, dealer));
     }
 
     @DisplayName("플레이어 결과 테스트 : 플레이어가 진 경우")

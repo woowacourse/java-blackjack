@@ -38,7 +38,7 @@ public class Game {
             .anyMatch(User::isHit);
     }
 
-    public User getHitPlayer() {
+    public User bringHitPlayer() {
         return players.stream()
             .filter(User::isHit)
             .findFirst()

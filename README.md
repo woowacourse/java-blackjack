@@ -40,12 +40,12 @@
 - [x] 컨트롤러에서 Player 형변환 없이 구현 -> 사용자 입력 물어보는 부분 구현 변경 고민
 - [x] 에이스 점수 변환 부분 수정
 - [x] DTO 카멜 케이스로 변경 / 뷰로 위치 수정
-- [ ] get 들어간 네이밍 고민
+- [x] get 들어간 네이밍 고민
     - [x] 컨트롤러에 getAdditionalCard
 - [x] MatchResult reverseName() 하드코딩 제거
 - [x] 승패 결과 구현 변경 
 - [ ] 딜러와 플레이어 참가자 객체로 포장 고민
-- [ ] DTO 만들 때 Getter 지양 고민 
+- [x] DTO 만들 때 Getter 지양 고민 
 
 ## 패키지 구조 
 1. domain 
