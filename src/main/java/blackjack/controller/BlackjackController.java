@@ -21,9 +21,7 @@ public class BlackjackController {
         participants.distributeCard(cardDeck);
         OutputView.showNameAndCardInfo(participants);
 
-        playerGameProgress(participants.getPlayers(), cardDeck);
-        dealerGameProgress(participants.getDealer(), cardDeck);
-
+        gameProgress(participants.getPlayers(), participants.getDealer(), cardDeck);
         OutputView.showCardsResult(participants.getParticipantGroup());
         showGameResult(participants.getDealer(), participants.getPlayers());
     }
@@ -44,11 +42,12 @@ public class BlackjackController {
         return new Names(names);
     }
 
-    private void playerGameProgress(final List<Participant> participants,
+    private void gameProgress(final List<Participant> participants, final Participant dealer,
         final CardDeck cardDeck) {
         for (final Participant participant : participants) {
             singlePlayerGameProgress(cardDeck, participant);
         }
+        dealerGameProgress(dealer, cardDeck);
     }
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
