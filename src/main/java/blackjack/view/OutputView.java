@@ -4,7 +4,7 @@ import blackjack.domain.scoreboard.ScoreBoard;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.Resultable;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.ParticipantName;
 import blackjack.dto.CardDto;
 import blackjack.dto.UserCardsDto;
 
@@ -26,7 +26,7 @@ public class OutputView {
     private static final String DEALER_MORE_DRAW_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final long DEFAULT_COUNT = 0L;
 
-    public static void printDrawMessage(List<Name> userNames) {
+    public static void printDrawMessage(List<ParticipantName> userNames) {
         String names = userNames.stream()
                 .map(Object::toString)
                 .collect(joining(COMMA_AND_BLANK));

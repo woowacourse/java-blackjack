@@ -7,11 +7,13 @@ import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.ParticipantName;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
@@ -65,6 +67,10 @@ public class BlackjackGame {
 
     private UserGameResult createGameResult(User user) {
         return new UserGameResult(user.getCards(), user.getName().toString(), WinOrLose.decideWinOrLose(user, dealer));
+    }
+
+    public List<ParticipantName> getUserNames() {
+        return users.getNameList();
     }
 
     public int getDealerHandSize() {

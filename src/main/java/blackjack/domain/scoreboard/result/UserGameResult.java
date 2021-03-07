@@ -2,7 +2,7 @@ package blackjack.domain.scoreboard.result;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.scoreboard.WinOrLose;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.ParticipantName;
 
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class UserGameResult implements Resultable {
     }
 
     @Override
-    public Name getName() {
+    public ParticipantName getName() {
         return gameResult.getName();
     }
 

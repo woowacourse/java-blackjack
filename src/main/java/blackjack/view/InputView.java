@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.user.Name;
+import blackjack.domain.user.ParticipantName;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Boolean askMoreDraw(Name userName) {
+    public static Boolean askMoreDraw(ParticipantName userName) {
         System.out.printf(MORE_DRAW_MSG_FORMAT, userName);
         String yesOrNo = SCANNER.nextLine();
         validateYesOrNo(yesOrNo);

@@ -2,10 +2,10 @@ package blackjack.domain.user;
 
 import java.util.Objects;
 
-public class Name {
+public class ParticipantName {
     private final String name;
 
-    public Name(String name) {
+    public ParticipantName(String name) {
         this.name = name;
         whenUserNameEmpty();
     }
@@ -23,9 +23,9 @@ public class Name {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Name)) return false;
-        Name name1 = (Name) o;
-        return Objects.equals(getName(), name1.getName());
+        if (!(o instanceof ParticipantName)) return false;
+        ParticipantName participantName1 = (ParticipantName) o;
+        return Objects.equals(getName(), participantName1.getName());
     }
 
     @Override

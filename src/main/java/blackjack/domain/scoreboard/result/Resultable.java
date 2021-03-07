@@ -1,10 +1,10 @@
 package blackjack.domain.scoreboard.result;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.ParticipantName;
 
 public interface Resultable {
     Cards getCards();
-    Name getName();
+    ParticipantName getName();
     int getScore();
 }

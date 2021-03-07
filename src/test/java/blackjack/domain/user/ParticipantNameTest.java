@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class NameTest {
+class ParticipantNameTest {
     @DisplayName("유저의 이름이 공백일 때 검증")
     @Test
     void whenUserNameEmpty() {

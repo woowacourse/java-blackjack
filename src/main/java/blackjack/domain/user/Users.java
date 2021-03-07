@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class Users {
     private static final String DUPLICATE_NAME_ERROR_MSG = "중복된 이름은 존재할 수 없습니다.";
     private static final String NO_MORE_PLAYING_USER_ERROR_MSG = "플레이 가능한 유저가 없습니다.";
@@ -35,7 +37,14 @@ public class Users {
                 .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
     }
 
-    public Stream<User> stream(){
+    public List<ParticipantName> getNameList() {
+        return users
+                .stream()
+                .map(Participant::getName)
+                .collect(toList());
+    }
+
+    public Stream<User> stream() {
         return users.stream();
     }
 }

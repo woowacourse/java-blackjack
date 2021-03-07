@@ -2,8 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Card;
-import blackjack.domain.user.Name;
-import blackjack.domain.user.Participant;
+import blackjack.domain.user.ParticipantName;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.dto.CardDto;
@@ -15,8 +14,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-
 public class BlackjackGameController {
     private static final int DEALER_MINIMUM_SCORE = 16;
 
@@ -26,7 +23,7 @@ public class BlackjackGameController {
         blackjackGame = BlackjackGame.create(inputUsers());
         blackjackGame.firstDraw();
 
-        printFirstDrawInformation(getUserNameList());
+        printFirstDrawInformation(blackjackGame.getUserNames());
         printFirstDrawCards(getDealerOpenedCard(), DtoMapper.createUsersCardDto(blackjackGame.getUsers()));
 
         processUserRound();
@@ -36,7 +33,7 @@ public class BlackjackGameController {
         createResultAndPrint();
     }
 
-    private void printFirstDrawInformation(List<Name> userNames) {
+    private void printFirstDrawInformation(List<ParticipantName> userNames) {
         OutputView.printDrawMessage(userNames);
         OutputView.println();
     }
@@ -52,13 +49,6 @@ public class BlackjackGameController {
                 .stream()
                 .map(User::new)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Users::new));
-    }
-
-    private List<Name> getUserNameList() {
-        return blackjackGame.getUsers()
-                .stream()
-                .map(Participant::getName)
-                .collect(toList());
     }
 
     private CardDto getDealerOpenedCard() {

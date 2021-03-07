@@ -10,12 +10,12 @@ import java.util.Objects;
 
 public abstract class Participant {
     protected final Hand hand;
-    protected final Name name;
+    protected final ParticipantName participantName;
     protected Status status;
 
     public Participant(String name) {
         this.hand = Hand.createEmptyHand();
-        this.name = new Name(name);
+        this.participantName = new ParticipantName(name);
     }
 
     public void drawCard(Card card) {
@@ -63,8 +63,8 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public Name getName() {
-        return name;
+    public ParticipantName getName() {
+        return participantName;
     }
 
     @Override

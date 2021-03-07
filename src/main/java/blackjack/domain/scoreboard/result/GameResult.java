@@ -1,17 +1,17 @@
 package blackjack.domain.scoreboard.result;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.user.Name;
+import blackjack.domain.user.ParticipantName;
 
 import java.util.Objects;
 
 public class GameResult implements Resultable {
     private final Cards cards;
-    private final Name name;
+    private final ParticipantName participantName;
 
     public GameResult(Cards cards, String name) {
         this.cards = cards;
-        this.name = new Name(name);
+        this.participantName = new ParticipantName(name);
     }
 
     private int calculateScore() {
@@ -24,8 +24,8 @@ public class GameResult implements Resultable {
     }
 
     @Override
-    public Name getName() {
-        return name;
+    public ParticipantName getName() {
+        return participantName;
     }
 
     @Override
