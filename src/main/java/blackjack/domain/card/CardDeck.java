@@ -20,11 +20,11 @@ public class CardDeck {
         Collections.shuffle(cards);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public Card distribute() {
         return cards.remove(0);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -43,14 +44,14 @@ public class OutputView {
 
     public static void showDealerCard(final Dealer dealer) {
         final String name = dealer.getName();
-        final Card card = dealer.getHand().getHand().get(0);
+        final Card card = dealer.getHand().getCards().get(0);
         System.out.printf(DEALER_CARD_STATUS_FORMAT, name, cardPrintForm(card));
         showNewLine();
     }
 
     public static void showPlayerCard(final Player player) {
         final String name = player.getName();
-        final List<Card> cards = player.getHand().getHand();
+        final List<Card> cards = player.getHand().getCards();
         final String cardStatus = cards.stream()
                 .map(OutputView::cardPrintForm)
                 .collect(Collectors.joining(", "));
@@ -60,7 +61,7 @@ public class OutputView {
 
     public static void showCardResult(final Participant participant) {
         final String name = participant.getName();
-        final List<Card> cards = participant.getHand().getHand();
+        final List<Card> cards = participant.getHand().getCards();
         final int result = participant.getHand().calculateScore();
         final String cardStatus = cards.stream()
                 .map(OutputView::cardPrintForm)
@@ -77,9 +78,9 @@ public class OutputView {
         showNewLine();
         System.out.println(GAME_RESULT_MESSAGE);
         System.out.printf(DEALER_GAME_RESULT_FORMAT,
-                dealerResult.getOrDefault("승", 0),
-                dealerResult.getOrDefault("무", 0),
-                dealerResult.getOrDefault("패", 0));
+                dealerResult.getOrDefault(Result.WIN, 0),
+                dealerResult.getOrDefault(Result.DRAW, 0),
+                dealerResult.getOrDefault(Result.LOSE, 0));
         showNewLine();
     }
 
