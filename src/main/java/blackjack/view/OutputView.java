@@ -14,11 +14,8 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String GAME_RESULT_MESSAGE = "%s카드 : %s - 결과: %d";
 
-    public static void showPlayCardStatus(String name, List<Card> cards) {
-        String text = String.format(PARTICIPANT_STATUS_MESSAGE, name, cards.stream()
-                .map(card -> card.getCardStatus())
-                .collect(Collectors.joining(DELIMITER)));
-        System.out.println(text);
+    public static void showPlayCardStatus(String name, List<String> cards) {
+        System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, name, String.join(DELIMITER, cards)));
     }
 
     public static void showDealerAddCard(int turnOverCount) {

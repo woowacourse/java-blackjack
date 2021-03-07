@@ -79,7 +79,7 @@ public class GameController {
     private void addCardOrPassByInput(Round round, Player player, String answer) {
         if (answer.equals(YES)) {
             player.addCard(round.drawExtraCard());
-            OutputView.showPlayCardStatus(player.getName(), player.getCards());
+            OutputView.showPlayCardStatus(player.getName(), player.getCardsStatus());
         }
     }
 

@@ -34,7 +34,7 @@ class RoundTest {
         );
         Round round = new Round(cards, new Dealer(), players);
         assertThat(round.getDealerCardStatus()).containsExactly(spadeCard.getCardStatus(), heartCard.getCardStatus());
-        assertThat(round.getPlayers().get(0).getCards()).containsExactly(cloverCard, spadeCard1);
-        assertThat(round.getPlayers().get(1).getCards()).containsExactly(heartCard1, cloverCard1);
+        assertThat(round.getPlayers().get(0).getCardsStatus()).containsExactly(cloverCard.getCardStatus(), spadeCard1.getCardStatus());
+        assertThat(round.getPlayers().get(1).getCardsStatus()).containsExactly(heartCard1.getCardStatus(), cloverCard1.getCardStatus());
     }
 }

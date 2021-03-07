@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer implements User {
+public class Dealer extends User {
     public static final int TURN_OVER_COUNT = 16;
     private static final Name name = new Name("딜러");
     protected final List<Card> cards = new ArrayList<>();
@@ -16,7 +16,7 @@ public class Dealer implements User {
     }
 
     @Override
-    public List<Card> getCards() {
+    protected List<Card> getCards() {
         return cards;
     }
 
