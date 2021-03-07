@@ -10,6 +10,6 @@ public class Player extends Person {
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(cards) < Score.MAX_SCORE;
+        return Score.calculatorScore(this.getTakenCards()) < Score.MAX_SCORE;
     }
 }

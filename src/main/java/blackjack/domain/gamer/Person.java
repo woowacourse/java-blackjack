@@ -7,8 +7,8 @@ public abstract class Person {
 
     private static final int MIN_NAME_LENGTH = 1;
 
-    protected Cards cards;
-    protected String name;
+    private Cards cards;
+    private final String name;
 
     public Person(String name) {
         validateNameLength(name);
