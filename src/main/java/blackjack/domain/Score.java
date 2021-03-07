@@ -25,8 +25,8 @@ public class Score {
 
     private static int noneAceCardScore(List<Card> cards) {
         return cards.stream()
-                .filter(card -> card.getDenomination() != Denomination.ACE)
-                .mapToInt(card -> card.getDenomination().getScore())
+                .filter(card -> !Denomination.isAce(card.getDenomination()))
+                .mapToInt(card -> Denomination.getScore(card.getDenomination()))
                 .sum();
     }
 
