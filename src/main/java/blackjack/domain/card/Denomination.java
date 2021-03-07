@@ -42,4 +42,8 @@ public enum Denomination {
         }
         return ACE_MAX_SCORE;
     }
+
+    public static boolean isAce(Denomination denomination) {
+        return ACE.equals(denomination);
+    }
 }
