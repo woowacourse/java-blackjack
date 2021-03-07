@@ -17,7 +17,6 @@ public class InputView {
     public static boolean wantsReceive(String playerName) {
         askShouldDrawAnotherCard(playerName);
 
-        //TODO n 이외의 값이 와도 false? n 이외의 값이면 어떻게 처리할지 고민
         String input = SCANNER.nextLine();
         return YES.equals(input);
     }
