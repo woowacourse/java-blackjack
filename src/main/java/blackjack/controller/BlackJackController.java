@@ -82,8 +82,10 @@ public class BlackJackController {
 
     private Map<Player, MatchResultType> calculateMatchResult(Dealer dealer, Players players) {
         Map<Player, MatchResultType> matchResult = new LinkedHashMap<>();
-        players.getPlayers()
-                .forEach(player -> matchResult.put(player, dealer.compareScore(player)));
+
+        for (Player player : players.getPlayers()) {
+            matchResult.put(player, dealer.compareScore(player));
+        }
         return matchResult;
     }
 
