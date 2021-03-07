@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.Result;
-import blackjack.domain.Select;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
@@ -21,7 +20,8 @@ public class BlackjackController {
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final List<Participant> participants = participantsSetUp();
-        final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
+        final List<Participant> players = new ArrayList<>(
+            participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
         showNameAndCardInfo(players, participants);
@@ -77,7 +77,7 @@ public class BlackjackController {
     }
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
-        if (askPlayerMoreCard(participant)) {
+        if (!InputView.askMoreCard(participant.getName())) {
             OutputView.showParticipantCard(participant);
             return;
         }
@@ -87,20 +87,6 @@ public class BlackjackController {
             return;
         }
         singlePlayerGameProgress(cardDeck, participant);
-    }
-
-    private boolean askPlayerMoreCard(final Participant participant) {
-        try {
-            final String userInput = InputView.askMoreCard(participant.getName());
-            return validateMoreCardOption(userInput);
-        } catch (IllegalArgumentException e) {
-            OutputView.getErrorMessage(e.getMessage());
-            return askPlayerMoreCard(participant);
-        }
-    }
-
-    private boolean validateMoreCardOption(final String userInput) {
-        return new Select(userInput).getIsMoreCard();
     }
 
     private boolean isBust(final Participant participant) {
