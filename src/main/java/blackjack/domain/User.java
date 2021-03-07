@@ -11,6 +11,7 @@ import java.util.List;
 public abstract class User {
     protected String name;
     protected List<Card> cards;
+    protected BettingMoney bettingMoney;
 
     protected User(String name) {
         validate(name);
@@ -84,5 +85,13 @@ public abstract class User {
             return BlackJackConstant.TEN_SCORE;
         }
         return 0;
+    }
+
+    public void bettingMoney(int bettingMoney){
+        this.bettingMoney = new BettingMoney(bettingMoney);
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getBettingMoney();
     }
 }

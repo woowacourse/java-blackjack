@@ -1,9 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Player;
-import blackjack.domain.Result;
-import blackjack.domain.User;
-import blackjack.domain.Users;
+import blackjack.domain.*;
 import blackjack.domain.card.Card;
 import blackjack.util.BlackJackConstant;
 
@@ -24,6 +21,7 @@ public class OutputView {
         for (User user : users.gerUsers()) {
             System.out.println(makeCardsStringFormat(user));
         }
+        System.out.println();
     }
 
     public static void printCardsOfPlayersWithScore(Users users) {
@@ -65,33 +63,44 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    public static void printResult(Map<User, Result> checkWinOrLose) {
-        System.out.println("## 최종 승패");
+    public static void printResult(Map<User, Result> playerResult, Dealer dealer) {
+        System.out.println("## 최종 수익");
 
-        printDealerResult(checkWinOrLose);
+        printDealerResult(playerResult, dealer);
 
-        for (User user : checkWinOrLose.keySet()) {
-            String temp = checkWinOrLose.get(user).getName();
-            System.out.printf("%s: %s\n", user.getName(), temp);
+        for(User user : playerResult.keySet()){
+            if(playerResult.get(user) == Result.TWENTY_ONE) {
+                System.out.printf("%s : %d\n", user.getName(), (user.getBettingMoney()*1.5));
+            }
+
+            if(playerResult.get(user) == Result.WIN || playerResult.get(user) == Result.DRAW) {
+                System.out.printf("%s : %d\n", user.getName(), user.getBettingMoney());
+            }
+
+            if(playerResult.get(user) == Result.LOSE) {
+                System.out.printf("%s : %d\n", user.getName(), -user.getBettingMoney());
+            }
         }
     }
 
-    private static void printDealerResult(Map<User, Result> checkWinOrLose) {
-        Map<Result, Integer> countMap = new HashMap<>();
-        Arrays.stream(Result.values())
-                .forEach(value -> countMap.put(value, 0));
+    private static void printDealerResult(Map<User, Result> playerResult, Dealer dealer) {
+        int dealerTotalMoney = dealer.getBettingMoney();
 
-        checkWinOrLose.values()
-                .forEach(value -> countMap.put(value, countMap.get(value) + 1));
+        for(User user : playerResult.keySet()){
+            if(playerResult.get(user) == Result.TWENTY_ONE) {
+                dealerTotalMoney -= user.getBettingMoney() * 1.5;
+            }
 
-        System.out.printf("딜러: %d승 %d무 %d패 \n",
-                countMap.get(Result.LOSE),
-                countMap.get(Result.DRAW),
-                countMap.get(Result.WIN)
-        );
+            if(playerResult.get(user) == Result.WIN || playerResult.get(user) == Result.DRAW) {
+                dealerTotalMoney -= user.getBettingMoney();
+            }
+        }
+
+        System.out.printf("딜러: %d \n", dealerTotalMoney);
     }
 
     public static void printDealerGetNewCardsMessage() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+        System.out.println();
     }
 }

@@ -1,14 +1,19 @@
 package blackjack.domain;
 
-public class Player extends User {
+import blackjack.util.BlackJackConstant;
 
-    private BettingMoney bettingMoney;
+public class Player extends User {
 
     public Player(String name) {
         super(name);
     }
 
     public Result getResult(int dealerScore) {
+        if (dealerScore != BlackJackConstant.BLACKJACK &&
+                this.getScore() == BlackJackConstant.BLACKJACK){
+            return Result.TWENTY_ONE;
+        }
+
         if (this.getScore() > dealerScore) {
             return Result.WIN;
         }
@@ -20,7 +25,5 @@ public class Player extends User {
         return Result.DRAW;
     }
 
-    public void bettingMoney(int bettingMoney){
-        this.bettingMoney = new BettingMoney(bettingMoney);
-    }
+
 }

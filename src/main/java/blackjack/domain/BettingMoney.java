@@ -15,6 +15,10 @@ public class BettingMoney {
         }
     }
 
+    public int getBettingMoney() {
+        return bettingMoney;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
