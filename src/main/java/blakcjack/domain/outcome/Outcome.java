@@ -13,7 +13,7 @@ public enum Outcome {
 		this.message = message;
 	}
 
-	public Outcome getDealerOutcome() {
+	public Outcome getCounterpartOutcome() {
 		return values()[MAXIMUM_INDEX - ordinal()];
 	}
 

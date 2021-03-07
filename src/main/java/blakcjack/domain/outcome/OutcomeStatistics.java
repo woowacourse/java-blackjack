@@ -19,7 +19,7 @@ public class OutcomeStatistics {
 	private void aggregateDealerOutcome() {
 		for (final String playerName : playersOutcome.keySet()) {
 			final Outcome playerOutcome = playersOutcome.get(playerName);
-			dealerOutcome.computeIfPresent(playerOutcome.getDealerOutcome(), (outcome, count) -> count + 1);
+			dealerOutcome.computeIfPresent(playerOutcome.getCounterpartOutcome(), (outcome, count) -> count + 1);
 		}
 	}
 
