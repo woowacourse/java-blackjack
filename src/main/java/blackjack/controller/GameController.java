@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Answer;
 import blackjack.domain.Result;
 import blackjack.domain.Round;
 import blackjack.domain.card.Card;
@@ -17,8 +18,6 @@ import java.util.stream.Collectors;
 import static blackjack.domain.Round.GAME_OVER_SCORE;
 
 public class GameController {
-    public static final String NO = "n";
-    public static final String YES = "y";
     private final InputView inputView = new InputView(new Scanner(System.in));
 
     public void start() {
@@ -70,14 +69,14 @@ public class GameController {
 
     private void addCardOrPass(Round round, Player player) {
         String answer = "";
-        while (!player.isGameOver(GAME_OVER_SCORE) && !answer.equals(NO)) {
+        while (!player.isGameOver(GAME_OVER_SCORE) && !Answer.isNo(answer)) {
             answer = inputView.getCardOrPass(player.getName());
             addCardOrPassByInput(round, player, answer);
         }
     }
 
     private void addCardOrPassByInput(Round round, Player player, String answer) {
-        if (answer.equals(YES)) {
+        if (Answer.isYes(answer)) {
             player.addCard(round.drawExtraCard());
             OutputView.showPlayCardStatus(player.getName(), player.getCardsStatus());
         }
