@@ -96,12 +96,7 @@ public class BlackjackController {
         for(Player player : players){
             OutputView.printCardsWithScore(player);
         }
-
-        OutputView.printDealerResult(
-                dealer.countOfResult(Result.WIN),
-                dealer.countOfResult(Result.DRAW),
-                dealer.countOfResult(Result.LOSE));
-
+        OutputView.printDealerResult(dealer);
         OutputView.printPlayerResult(players, dealer.getPlayerResults());
     }
 }

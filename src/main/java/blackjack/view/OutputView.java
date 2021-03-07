@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.Result;
@@ -56,18 +57,19 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerResult(int winCount, int drawCount, int loseCount) {
+    public static void printDealerResult(Dealer dealer) {
         System.out.print(NEW_LINE);
         System.out.println("## 최종 승패");
         System.out.print("딜러" + SEPARATOR);
-        if (winCount > 0) {
-            System.out.print(winCount + "승 ");
+
+        if (dealer.countOfResult(Result.WIN) > 0) {
+            System.out.print(dealer.countOfResult(Result.WIN) + "승 ");
         }
-        if (drawCount > 0) {
-            System.out.print(drawCount + "무 ");
+        if (dealer.countOfResult(Result.DRAW) > 0) {
+            System.out.print(dealer.countOfResult(Result.DRAW) + "무 ");
         }
-        if (loseCount > 0) {
-            System.out.print(loseCount + "패 ");
+        if (dealer.countOfResult(Result.LOSE) > 0) {
+            System.out.print(dealer.countOfResult(Result.LOSE) + "패 ");
         }
         System.out.print(NEW_LINE);
     }
