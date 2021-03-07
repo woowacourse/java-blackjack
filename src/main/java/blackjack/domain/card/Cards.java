@@ -7,14 +7,16 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
+    private static final int BLACKJACK = 21;
+    private static final int GAP_BETWEEN_ACE_MAX_AND_MIN = 10;
     private final List<Card> cards;
-
-    public Cards(List<Card> deck) {
-        this.cards = new ArrayList<>(deck);
-    }
 
     public Cards() {
         this.cards = new ArrayList<>();
+    }
+
+    public void addCards(List<Card> cards){
+        this.cards.addAll(cards);
     }
 
     public void addCard(Card card) {
@@ -38,8 +40,8 @@ public class Cards {
 
     private int addIfAceExist(int total) {
         int aceCount = countAce();
-        while (total + 10 <= 21 && aceCount != 0) {
-            total += 10;
+        while (total + GAP_BETWEEN_ACE_MAX_AND_MIN <= BLACKJACK && aceCount != 0) {
+            total += GAP_BETWEEN_ACE_MAX_AND_MIN;
             aceCount--;
         }
         return total;
