@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static blakcjack.domain.game.BlackjackGame.INITIAL_VALUE;
-
 public class OutcomeStatistics {
+	public static final int INITIAL_VALUE = 0;
+
 	private final Map<String, Outcome> playersOutcome;
 	private final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 

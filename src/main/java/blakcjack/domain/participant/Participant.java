@@ -26,7 +26,7 @@ public abstract class Participant {
 		cards.add(card);
 	}
 
-	public void drawOneCardFromDeck(Deck deck) {
+	public void drawOneCardFrom(Deck deck) {
 		cards.add(deck.drawCard());
 	}
 

@@ -2,6 +2,7 @@ package blakcjack.controller;
 
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.game.BlackjackGame;
+import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
@@ -28,7 +29,7 @@ public class BlackJackController {
 	}
 
 	private BlackjackGame createBlackjackGame() {
-		final List<String> playerNames = takePlayerNamesInput();
+		final Names playerNames = new Names(takePlayerNamesInput());
 		final Deck deck = new Deck(new RandomShuffleStrategy());
 		return new BlackjackGame(deck, playerNames);
 	}
@@ -49,7 +50,7 @@ public class BlackJackController {
 
 	private void letPlayerDraw(final Player player, final Deck deck) {
 		while (isHit(player)) {
-			player.drawOneCardFromDeck(deck);
+			player.drawOneCardFrom(deck);
 			OutputView.printPlayerHand(player);
 		}
 	}
@@ -60,7 +61,7 @@ public class BlackJackController {
 
 	private void letDealerDraw(final Dealer dealer, final Deck deck) {
 		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
-			dealer.drawOneCardFromDeck(deck);
+			dealer.drawOneCardFrom(deck);
 			OutputView.printDealerAdditionalCardMessage();
 		}
 	}

@@ -4,7 +4,9 @@ import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.name.DuplicatePlayerNamesException;
 import blakcjack.domain.name.Name;
+import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Participant;
@@ -16,18 +18,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static blakcjack.domain.game.DuplicatePlayerNamesException.DUPLICATE_NAME_ERROR;
+import static blakcjack.domain.name.DuplicatePlayerNamesException.DUPLICATE_NAME_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class BlackjackGameTest {
-	private List<String> names;
+	private Names names;
 	private Deck deck;
 
 	@BeforeEach
 	void setUp() {
 		final ShuffleStrategy nonShuffleStrategy = (cards) -> {
 		};
-		names = Arrays.asList("pobi", "sakjung", "mediumBear");
+		names = new Names(Arrays.asList("pobi", "sakjung", "mediumBear"));
 		deck = new Deck(nonShuffleStrategy);
 	}
 
@@ -41,7 +43,7 @@ class BlackjackGameTest {
 	@DisplayName("중복 이름 검증 제대로 하는지")
 	@Test
 	void validateDuplicateNames_duplicatePlayerNames_throwError() {
-		assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
+		assertThatThrownBy(() -> new BlackjackGame(deck, new Names(Arrays.asList("pobi", "pobi"))))
 				.isInstanceOf(DuplicatePlayerNamesException.class)
 				.hasMessage(DUPLICATE_NAME_ERROR);
 	}
@@ -61,8 +63,8 @@ class BlackjackGameTest {
 		final Deck deck = new Deck((cards) -> {
 		});
 		final List<Participant> expectedPlayers = new ArrayList<>();
-		for (String name : names) {
-			final Player player = new Player(new Name(name));
+		for (Name name : names.toList()) {
+			final Player player = new Player(name);
 			player.receiveCard(deck.drawCard());
 			player.receiveCard(deck.drawCard());
 			expectedPlayers.add(player);
