@@ -7,6 +7,8 @@ import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackJackController {
     private final Users users;
     private final Dealer dealer;
@@ -16,6 +18,7 @@ public class BlackJackController {
         this.dealer = new Dealer();
         this.cardDeck = CardDeck.createDeck();
         this.users = new Users(dealer, InputView.scanPlayerNames());
+        playersBetting(users.getPlayers());
         users.initialHit(cardDeck);
         OutputView.printInitialComment(users);
     }
@@ -33,6 +36,12 @@ public class BlackJackController {
         }
         OutputView.printCardsOfPlayersWithScore(users);
         OutputView.printResult(users.checkResult(dealer.getScore()));
+    }
+
+    private void playersBetting(List<Player> players) {
+        for (Player player : players) {
+            player.bettingMoney(InputView.inputBettingMoney(player));
+        }
     }
 
     private void playGameForEachPlayer(Player player) {

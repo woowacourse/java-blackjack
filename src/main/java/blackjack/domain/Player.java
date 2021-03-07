@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Player extends User {
 
+    private BettingMoney bettingMoney;
+
     public Player(String name) {
         super(name);
     }
@@ -16,5 +18,9 @@ public class Player extends User {
         }
 
         return Result.DRAW;
+    }
+
+    public void bettingMoney(int bettingMoney){
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 }
