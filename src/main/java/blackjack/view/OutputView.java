@@ -7,6 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Participants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,12 @@ public class OutputView {
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
     private static final String GAME_RESULT_FORMAT = "%s: %d승 %d무 %d패";
 
-    public static void distributeMessage(final List<Participant> players) {
+    public static void showNameAndCardInfo(final Participants participants) {
+        distributeMessage(participants.getPlayers());
+        showParticipantsCard(participants.getParticipantGroup());
+    }
+
+    private static void distributeMessage(final List<Participant> players) {
         final String status = players.stream()
             .map(Participant::getName)
             .map(Name::getValue)
@@ -33,7 +39,7 @@ public class OutputView {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, status);
     }
 
-    public static void showParticipantsCard(final List<Participant> participants) {
+    private static void showParticipantsCard(final List<Participant> participants) {
         for (final Participant participant : participants) {
             showParticipantCard(participant);
         }

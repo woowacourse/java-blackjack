@@ -18,12 +18,13 @@ public class BlackjackController {
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final Participants participants = new Participants(requestName());
-
         participants.distributeCard(cardDeck);
-        showNameAndCardInfo(participants);
+        OutputView.showNameAndCardInfo(participants);
+
         playerGameProgress(participants.getPlayers(), cardDeck);
         dealerGameProgress(participants.getDealer(), cardDeck);
-        showFinalCardResult(participants.getParticipantGroup());
+
+        OutputView.showCardsResult(participants.getParticipantGroup());
         showGameResult(participants.getDealer(), participants.getPlayers());
     }
 
@@ -41,11 +42,6 @@ public class BlackjackController {
             .map(Name::new)
             .collect(Collectors.toList());
         return new Names(names);
-    }
-
-    private void showNameAndCardInfo(final Participants participants) {
-        OutputView.distributeMessage(participants.getPlayers());
-        OutputView.showParticipantsCard(participants.getParticipantGroup());
     }
 
     private void playerGameProgress(final List<Participant> participants,
@@ -81,11 +77,6 @@ public class BlackjackController {
             OutputView.dealerMoreCard();
             dealer.receiveCard(cardDeck.distribute());
         }
-    }
-
-    private void showFinalCardResult(final List<Participant> participants) {
-        OutputView.displayNewLine();
-        OutputView.showCardsResult(participants);
     }
 
     private void showGameResult(final Participant dealer, final List<Participant> players) {
