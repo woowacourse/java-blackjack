@@ -54,28 +54,35 @@ public class BlackjackGameController {
     }
 
     private static void processUserRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.existCanContinueUser()) {
-            askHitOrStay(blackjackGame);
+        List<User> users = blackjackGame.getUsers();
+        for (User user : users) { // 각 유저별로 확인
+            decideHitOrStay(blackjackGame, user);
         }
     }
 
-    private static void askHitOrStay(BlackjackGame blackjackGame) {
-        User currentUser = blackjackGame.findFirstCanPlayUser();
+    private static void decideHitOrStay(BlackjackGame blackjackGame, User user) {
+        while (user.canContinueGame()) {  // 유저가 카드를 더 받을 수 있는 상태라면 물어봄
+            askHitOrStay2(user, blackjackGame);
+        }
+    }
+
+    private static void askHitOrStay2(User user, BlackjackGame blackjackGame) {
         try {
-            userDrawOrStop(blackjackGame, currentUser, InputView.askMoreDraw(currentUser.getName()));
-            printUserCurrentCards(currentUser);
+            boolean hitOrStay = InputView.askMoreDraw(user.getName());
+            userDrawOrStop2(user, hitOrStay, blackjackGame);
+            printUserCurrentCards(user);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            processUserRound(blackjackGame);
+            askHitOrStay2(user, blackjackGame);
         }
     }
 
-    private static void userDrawOrStop(BlackjackGame blackjackGame, User currentUser, Boolean isContinue) {
-        if (isContinue) {
-            blackjackGame.drawCardToUser(currentUser);
+    private static void userDrawOrStop2(User user, boolean hitOrStay, BlackjackGame blackjackGame) {
+        if (hitOrStay) {
+            blackjackGame.drawCardToUser(user);
             return;
         }
-        currentUser.stopUser();
+        user.stopUser();
     }
 
     private static void printUserCurrentCards(User currentUser) {

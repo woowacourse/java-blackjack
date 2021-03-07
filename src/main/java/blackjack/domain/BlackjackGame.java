@@ -78,11 +78,6 @@ public class BlackjackGame {
         currentUser.drawCard(deck.draw());
     }
 
-    public boolean existCanContinueUser() {
-        return users.toList().stream()
-                .anyMatch(User::canContinueGame);
-    }
-
     private GameResult createDealerGameResult() {
         return new GameResult(dealer.getCards(), dealer.getName());
     }
