@@ -45,6 +45,7 @@
 - [x] MatchResult reverseName() 하드코딩 제거
 - [x] 승패 결과 구현 변경 
 - [ ] 딜러와 플레이어 참가자 객체로 포장 고민
+- [ ] DTO 만들 때 Getter 지양 고민 
 
 ## 패키지 구조 
 1. domain 

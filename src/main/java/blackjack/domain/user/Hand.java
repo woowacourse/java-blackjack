@@ -27,7 +27,7 @@ public class Hand {
 
     public int calculateHandScore() {
         int score = calculateScore();
-        if(score <= ACE_CONVERSION_LIMIT) {
+        if(score <= ACE_CONVERSION_LIMIT && hasAce()) {
             score += ACE_DIFFERENCE;
         }
         return score;
@@ -37,6 +37,11 @@ public class Hand {
         return cards.stream()
             .mapToInt(card -> card.getDenomination().getScore())
             .sum();
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     private HandStatus calculateStatus(int score) {

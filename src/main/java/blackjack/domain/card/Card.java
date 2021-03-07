@@ -9,6 +9,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }
