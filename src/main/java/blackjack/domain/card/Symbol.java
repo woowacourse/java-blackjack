@@ -11,7 +11,6 @@ public enum Symbol {
     private static final String WRONG_SYMBOL_EXCEPTION_MESSAGE = "입력된 문양은 없는 카드문양입니다! : %s";
     private final String name;
 
-
     Symbol(String name) {
         this.name = name;
     }
@@ -30,4 +29,5 @@ public enum Symbol {
     private boolean equals(String name) {
         return this.name.equals(name);
     }
+
 }

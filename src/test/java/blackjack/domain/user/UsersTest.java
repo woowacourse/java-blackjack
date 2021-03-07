@@ -15,7 +15,7 @@ class UsersTest {
 
     @BeforeEach
     void setUp() {
-        names = Arrays.asList("pobi", "brown", "jason");
+        names = new ArrayList<>(Arrays.asList("pobi", "brown", "jason"));
     }
 
     @DisplayName("Users가 정상적으로 생성되는 지 테스트")
@@ -37,7 +37,7 @@ class UsersTest {
     @DisplayName("Player가 중복된 이름을 가지는 경우 예외처리해준다.")
     @Test
     void duplicate_players_test() {
-        names = Arrays.asList("pobi", "brown", "brown", "jason");
+        names = new ArrayList<>(Arrays.asList("pobi", "brown", "brown", "jason"));
         assertThatThrownBy(() -> Users.of(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저 이름이 중복됩니다!");

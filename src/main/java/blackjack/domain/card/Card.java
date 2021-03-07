@@ -27,11 +27,10 @@ public class Card {
         Symbol symbol = Symbol.from(symbolName);
         Number number = Number.from(numberName);
 
-        Card findCard = CARDS.stream()
+        return CARDS.stream()
                 .filter(card -> card.symbol == symbol && card.number == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("없는 카드임!"));
-        return findCard;
     }
 
     public static List<Card> getShuffledCards() {
