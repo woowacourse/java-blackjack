@@ -86,7 +86,7 @@ public class BlackJackGame {
 
     private void showResult(Players players, Dealer dealer) {
         OutputView.showAllCards(players, dealer);
-        BlackJackResult blackJackResult = new BlackJackResult(players, dealer);
+        BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
         OutputView.showFinalResult(blackJackResult);
     }
 }

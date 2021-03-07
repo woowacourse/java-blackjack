@@ -12,8 +12,9 @@ import java.util.Map;
 public class BlackJackResult {
     private final Map<Player, MatchResult> result;
 
-    public BlackJackResult(Players players, Dealer dealer) {
-        result = players.verifyResultByCompareScore(dealer);
+    public BlackJackResult(Map<Player, MatchResult> result) {
+        this.result = result;
+//                players.verifyResultByCompareScore(dealer);
     }
 
     public Map<MatchResult, Integer> getDealerResult() {
