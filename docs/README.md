@@ -22,13 +22,17 @@
 - [ ] Dealer와 Player의 중복코드 해결
 
 ### 리팩토링 중점 사안
-- [ ] 게임 결과를 관리하는 domain 클래스 만들기
-- [ ] player/dealer를 불변 객체로 만들기
+- [x] 게임 결과를 관리하는 domain 클래스 만들기
 - [ ] controller 내의 view 로직 제거하기
 - [ ] domain 내의 view 로직 제거하기
 - [ ] 메서드명에 알맞게 return 타입 수정하기
 - [ ] return 타입에 알맞게 메서드명 수정하기
 - [ ] 주석보다는 코드로 의도 나타내기
-- [ ] List<Card>를 일급 컬렉션으로 관리하기
+- [x] List<Card>를 일급 컬렉션으로 관리하기
 - [x] dealer의 이름 고정시키기
-- [ ] 게임 결과를 구하는 로직 간소화
+- [ ] 패의 점수 결과를 구하는 로직 간소화
+- [ ] player 이름 중복되지 않게 관리
+- [ ] player 이름이 null이면 예외처리
+
+### 궁금한 사안
+- Players를 만들어서 getPlayers를 쓰기 VS controller에서 List<Player>로 쓰기
