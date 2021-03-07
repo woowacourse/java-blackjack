@@ -7,17 +7,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BlackJackGame {
+
     private final String SEPARATOR_OF_NAME_INPUT = ",";
+    private final int NUMBER_OF_INITIAL_CARDS = 2;
+
     private final Deck deck = new Deck();
     private final Dealer dealer = new Dealer();
+    private final Gamblers gamblers;
 
-    public BlackJackGame() {
-    }
-
-    public Players createPlayers(String nameLine) {
-        return initPlayers(splitAndParseToNames(nameLine));
+    public BlackJackGame(String nameLine) {
+        gamblers = initGamblerWithNames(splitAndParseToNames(nameLine));
+        giveInitialCards();
     }
 
     private List<Name> splitAndParseToNames(String nameLine) {
@@ -26,35 +29,32 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private Players initPlayers(List<Name> names) {
-        List<Player> players = new ArrayList<>();
-
-        players.add(dealer);
-        players.addAll(names.stream()
+    private Gamblers initGamblerWithNames(List<Name> names) {
+        List<Gambler> gamblers = names.stream()
                 .map(Gambler::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        return new Gamblers(gamblers);
+    }
 
-        players.stream()
-                .forEach(player -> player.initializeCards(deck));
-
-        return new Players(players);
+    private void giveInitialCards() {
+        giveCard(dealer, NUMBER_OF_INITIAL_CARDS);
+        for (Gambler gambler : gamblers) {
+            giveCard(gambler, NUMBER_OF_INITIAL_CARDS);
+        }
     }
 
     public void giveCard(final Player player) {
-        player.drawCard(deck.draw());
+        player.receiveCard(deck.draw());
     }
 
-    public void giveDealerCard() {
-        dealer.drawCard(deck.draw());
+    public void giveCard(final Player player, int numberOfCards) {
+        IntStream.range(0, numberOfCards)
+                .forEach(i -> giveCard(player));
     }
 
-    public boolean isDealerAbleToDraw() {
-        return dealer.ableToDraw();
-    }
-
-    public Result getResult(final Players players) {
+    public Result getResult() {
         Result result = new Result(dealer.getCards());
-        for (Player player : players) {
+        for (Player player : gamblers) {
             addGamblerResult(result, player);
         }
         return result;
@@ -64,4 +64,13 @@ public class BlackJackGame {
         WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
         result.addGamblerResults(player, winOrLose);
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Gamblers getGamblers() {
+        return gamblers;
+    }
+
 }

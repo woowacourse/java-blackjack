@@ -1,50 +1,42 @@
 package blackjack.controller;
 
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class BlackJackController {
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame();
-        Players players = initializePlayers(blackJackGame);
-        askPlayersDraw(blackJackGame, players);
-        OutputView.printResult(blackJackGame.getResult(players));
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.askPlayerNames());
+        OutputView.printInitialCards(blackJackGame.getDealer(), blackJackGame.getGamblers());
+        drawAdditionalCards(blackJackGame);
+        OutputView.printResult(blackJackGame.getResult());
     }
 
-    private Players initializePlayers(final BlackJackGame blackJackGame) {
-        Players players = blackJackGame.createPlayers(InputView.askPlayerNames());
-        OutputView.printPlayersCardsInformation(players);
-        return players;
-    }
-
-    private void askPlayersDraw(final BlackJackGame blackJackGame, final Players players) {
-        for (Player player : players) {
-            giveGamblerCards(blackJackGame, player);
+    private void drawAdditionalCards(final BlackJackGame blackJackGame) {
+        for (Player gambler : blackJackGame.getGamblers()) {
+            askGamblerDraw(blackJackGame, gambler);
         }
         giveDealerCards(blackJackGame);
-        OutputView.printLineSeparator();
     }
 
-    private void giveGamblerCards(final BlackJackGame blackJackGame, final Player player) {
-        if (!(player instanceof Gambler)) {
-            return;
-        }
-
-        while (InputView.askDrawOrNot(player).isYes()) {
-            blackJackGame.giveCard(player);
-            OutputView.printPlayerCardsInformation(player);
+    private void askGamblerDraw(final BlackJackGame blackJackGame, final Player gambler) {
+        while (InputView.askDrawOrNot(gambler).isYes()) {
+            blackJackGame.giveCard(gambler);
+            OutputView.printPlayerCardsInformation(gambler);
         }
     }
 
     private void giveDealerCards(final BlackJackGame blackJackGame) {
-        while (blackJackGame.isDealerAbleToDraw()) {
-            blackJackGame.giveDealerCard();
-            OutputView.printGiveDealer();
+        Dealer dealer = blackJackGame.getDealer();
+        while (dealer.ableToDraw()) {
+            blackJackGame.giveCard(dealer);
+            OutputView.informDealerReceived();
         }
     }
 }

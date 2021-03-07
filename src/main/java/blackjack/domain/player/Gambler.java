@@ -25,7 +25,7 @@ public class Gambler implements Player {
     }
 
     @Override
-    public void drawCard(final Card card) {
+    public void receiveCard(final Card card) {
         cards.add(card);
     }
 

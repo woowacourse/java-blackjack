@@ -9,7 +9,7 @@ public interface Player {
 
     void initializeCards(Deck deck);
 
-    void drawCard(Card card);
+    void receiveCard(Card card);
 
     Name getName();
 
