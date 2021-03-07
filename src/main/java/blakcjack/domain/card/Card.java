@@ -32,7 +32,7 @@ public class Card {
     public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber) {
         final String key = generateKey(cardSymbol, cardNumber);
         return Optional.ofNullable(cache.get(key))
-                .orElseThrow(FailedCacheHitException::new);
+                .orElseThrow(() -> new FailedCacheHitException(cardSymbol, cardNumber));
     }
 
     private static String generateKey(CardSymbol cardSymbol, CardNumber cardNumber) {
