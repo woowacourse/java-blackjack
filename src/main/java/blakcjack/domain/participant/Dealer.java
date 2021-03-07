@@ -34,7 +34,7 @@ public class Dealer extends Participant {
 
 	private Outcome judgeOutcomeByScore(final Player player) {
 		final int playerScore = player.getScore();
-		final int dealerScore = cards.calculateScore();
+		final int dealerScore = this.getScore();
 
 		if (playerScore > dealerScore) {
 			return WIN;
