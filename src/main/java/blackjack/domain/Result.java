@@ -11,7 +11,7 @@ public class Result {
     private final Map<Player, Status> result;
 
     public Result(Dealer dealer, List<Player> players) {
-        this.result = makeResult(dealer,players);
+        this.result = makeResult(dealer, players);
     }
 
     private Map<Player, Status> makeResult(Dealer dealer, List<Player> players) {
@@ -23,7 +23,7 @@ public class Result {
         return Status.compare(dealer.getScore(), player.getScore());
     }
 
-    public Map<Player, Status> getResult(){
+    public Map<Player, Status> getResult() {
         return new LinkedHashMap<>(result);
     }
 }

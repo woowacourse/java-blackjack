@@ -27,7 +27,9 @@ public class BlackJackController {
     }
 
     private List<Player> makePlayers(List<String> inputPlayers) {
-        return inputPlayers.stream().map(Player::new).collect(Collectors.toList());
+        return inputPlayers.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     private void validatePlayersNumber(List<Player> players) {
@@ -35,5 +37,4 @@ public class BlackJackController {
             throw new IllegalArgumentException(INVALID_PLAYERS_COUNT_ERROR_MESSAGE);
         }
     }
-
 }

@@ -20,7 +20,7 @@ public class CardsTest {
     private Cards cards;
 
     @BeforeEach
-    void init(){
+    void init() {
         deck = new ArrayList<>(Arrays.asList(
             new Card(Denomination.THREE, Suit.SPADE),
             new Card(Denomination.SEVEN, Suit.DIAMOND)

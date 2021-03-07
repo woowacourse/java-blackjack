@@ -15,7 +15,7 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void addCards(List<Card> cards){
+    public void addCards(List<Card> cards) {
         this.cards.addAll(cards);
     }
 

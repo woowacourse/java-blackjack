@@ -68,7 +68,5 @@ public class Card {
             return Stream.of(Suit.values())
                 .map(suit -> new Card(denomination, suit));
         }
-
-
     }
 }
