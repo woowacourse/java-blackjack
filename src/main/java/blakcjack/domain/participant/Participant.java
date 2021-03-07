@@ -40,6 +40,12 @@ public abstract class Participant {
 		return thisParticipant.isBust() || thatParticipant.isBust();
 	}
 
+	public String getHandInformation() {
+		return cards.getConcatenatedCardsInformation();
+	}
+
+	public abstract String getInitialHandInformation();
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

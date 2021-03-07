@@ -20,10 +20,11 @@ public class Dealer extends Participant {
 		drawOneCardFrom(deck);
 	}
 
-	public Cards getInitialHand() {
+	@Override
+	public String getInitialHandInformation() {
 		Cards hand = new Cards();
 		hand.add(this.cards.getFirstCard());
-		return hand;
+		return hand.getConcatenatedCardsInformation();
 	}
 
 	public boolean isScoreLowerThanMaximumDrawCriterion() {

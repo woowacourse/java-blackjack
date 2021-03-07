@@ -1,6 +1,5 @@
 package blakcjack.view;
 
-import blakcjack.domain.card.Cards;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
@@ -17,32 +16,23 @@ public class OutputView {
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeCardDistributionMessage(players, dealer));
 
-		stringBuilder.append(makeCardSummary(dealer));
+		stringBuilder.append(makeHandSummaryOf(dealer));
 		for (final Player player : players.toList()) {
-			stringBuilder.append(makeCardSummary(player));
+			stringBuilder.append(makeHandSummaryOf(player));
 		}
 		System.out.println(stringBuilder.toString());
 	}
 
-	public static void printPlayerHand(final Participant participant) {
-		System.out.println(makeCardSummary(participant));
+	public static void printHandOf(final Participant participant) {
+		System.out.println(makeHandSummaryOf(participant));
 	}
 
 	private static String makeCardDistributionMessage(final Players players, final Dealer dealer) {
 		return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), players.getConcatenatedNames());
 	}
 
-	private static String makeCardSummary(final Participant participant) {
-		Cards initialCards = getInitialCards(participant);
-		return participant.getName() + ": " + initialCards.getConcatenatedCardsInformation() + System.lineSeparator();
-	}
-
-	private static Cards getInitialCards(final Participant participant) {
-		if (participant instanceof Dealer) {
-			final Dealer dealer = (Dealer) participant;
-			return dealer.getInitialHand();
-		}
-		return participant.getCards();
+	private static String makeHandSummaryOf(final Participant participant) {
+		return participant.getName() + ": " + participant.getInitialHandInformation() + System.lineSeparator();
 	}
 
 	public static void printDealerAdditionalCardMessage() {
@@ -51,21 +41,20 @@ public class OutputView {
 
 	public static void printFinalHandsSummaryOf(final Players players, final Dealer dealer) {
 		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(makeFinalSummary(dealer));
+		stringBuilder.append(makeFinalSummaryOf(dealer));
 
 		for (Participant player : players.toList()) {
-			stringBuilder.append(makeFinalSummary(player));
+			stringBuilder.append(makeFinalSummaryOf(player));
 		}
 		System.out.println(stringBuilder.toString());
 	}
 
-	private static String makeFinalSummary(final Participant participant) {
-		return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.getScore());
+	private static String makeFinalSummaryOf(final Participant participant) {
+		return String.format("%s - 결과: %d%n", makeFinalCardSummaryOf(participant), participant.getScore());
 	}
 
-	private static String makeFinalCardSummary(final Participant participant) {
-		Cards cards = participant.getCards();
-		return participant.getName() + "카드: " + cards.getConcatenatedCardsInformation();
+	private static String makeFinalCardSummaryOf(final Participant participant) {
+		return participant.getName() + "카드: " + participant.getHandInformation();
 	}
 
 	public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics) {
