@@ -6,6 +6,10 @@ import blackjack.domain.participant.Player;
 import java.util.*;
 
 public class Result {
+    public static final String WIN = "승";
+    public static final String DRAW = "무";
+    public static final String LOSE = "패";
+
     private final List<Player> players;
     private final Dealer dealer;
 
