@@ -1,12 +1,12 @@
 package blackjack.domain.carddeck;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
 
-    private static final Deque<Card> CACHE_DECK = new ArrayDeque<>();
+    private static final List<Card> CACHE_DECK = new ArrayList<>();
 
     static {
         for (Pattern pattern : Pattern.values()) {
@@ -34,6 +34,10 @@ public class Card {
             throw new IllegalArgumentException("해당 카드가 존재하지 않습니다.");
         }
         return card;
+    }
+
+    public static List<Card> generate() {
+        return new ArrayList<>(CACHE_DECK);
     }
 
     private boolean hasNumber(final Number number) {
