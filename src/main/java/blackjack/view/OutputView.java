@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.participants.Name;
+import blackjack.domain.participants.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,12 +21,12 @@ public class OutputView {
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
     private static final String GAME_RESULT_FORMAT = "%s: %d승 %d패";
 
-    public static void distributeMessage(final String players) {
-        System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, players);
-    }
-
-    public static void showDealerCard(final Name name, final Card card) {
-        System.out.printf(DEALER_CARD_STATUS_FORMAT, name.getValue(), card.getCard() + NEWLINE);
+    public static void distributeMessage(final List<Participant> players) {
+        final String status = players.stream()
+            .map(Participant::getName)
+            .map(Name::getValue)
+            .collect(Collectors.joining(", "));
+        System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, status);
     }
 
     public static void showPlayerCard(final Name name, final List<Card> cards) {

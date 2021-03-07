@@ -26,7 +26,7 @@ public class BlackjackController {
         final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
-        showParticipantsName(participants);
+        showParticipantsName(players);
         showDistributedCard(participants);
         playerGameProgress(players, cardDeck);
         dealerGameProgress(participants.get(0), cardDeck);
@@ -67,13 +67,8 @@ public class BlackjackController {
         }
     }
 
-    private void showParticipantsName(final List<Participant> participants) {
-        final String status = participants.stream()
-            .map(Participant::getName)
-            .filter(name -> !name.isSameName("딜러"))
-            .map(Name::getValue)
-            .collect(Collectors.joining(", "));
-        OutputView.distributeMessage(status);
+    private void showParticipantsName(final List<Participant> players) {
+        OutputView.distributeMessage(players);
     }
 
     private void showDistributedCard(final List<Participant> participants) {
