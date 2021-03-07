@@ -36,6 +36,7 @@ class PlayerTest {
     void create_player_test(String name) {
         assertThatCode(() -> new Player(name))
                 .doesNotThrowAnyException();
+        assertThat(new Player(name)).isEqualTo(new Player(name));
     }
 
     @DisplayName("플레이어가 잘못 생성되는 경우 에러가 발생한다.")

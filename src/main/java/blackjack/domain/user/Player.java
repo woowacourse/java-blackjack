@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends User {
     protected final List<Card> cards = new ArrayList<>();
@@ -11,6 +12,10 @@ public class Player extends User {
 
     public Player(String name) {
         this.name = new Name(name);
+    }
+
+    public void removeAll() {    // 문제 있음
+        cards.clear();
     }
 
     @Override
@@ -29,7 +34,16 @@ public class Player extends User {
         return (score > gameOverScore);
     }
 
-    public void removeAll() {    // 문제 있음
-        cards.clear();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

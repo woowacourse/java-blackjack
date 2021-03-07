@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -13,7 +14,7 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"pobi", "brown", "jason", "woni"})
     void name_gerate_test(String name) {
-        assertDoesNotThrow(() -> new Name(name));
+        assertThat(new Name(name)).isEqualTo(new Name(name));
     }
 
     @DisplayName("이름 비정상 입력 테스트(한글, 영문 이외의 문자)")
