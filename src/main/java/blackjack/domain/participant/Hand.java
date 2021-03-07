@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardLetter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class Hand {
 
     private int calculateSingleCase() {
         return cards.stream()
-                .mapToInt(card -> card.getCardNumber().getValue())
+                .mapToInt(card -> card.getCardLetter().getValue())
                 .sum();
     }
 
@@ -42,7 +42,7 @@ public class Hand {
         final List<Integer> possibleSum = new ArrayList<>();
         final int sumExceptAce = cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(card -> card.getCardNumber().getValue())
+                .mapToInt(card -> card.getCardLetter().getValue())
                 .sum();
 
         for (final int aceSum : calculateAceSum(aceCount)) {
@@ -52,12 +52,12 @@ public class Hand {
     }
 
     private List<Integer> calculateAceSum(final int aceCount) {
-        int oneNormalRestExtra = CardNumber.ACE.getValue();
-        int allExtra = CardNumber.ACE.getExtraValue();
+        int oneNormalRestExtra = CardLetter.ACE.getValue();
+        int allExtra = CardLetter.ACE.getExtraValue();
 
         for (int i = 1; i < aceCount; i++) {
-            oneNormalRestExtra += CardNumber.ACE.getExtraValue();
-            allExtra += CardNumber.ACE.getExtraValue();
+            oneNormalRestExtra += CardLetter.ACE.getExtraValue();
+            allExtra += CardLetter.ACE.getExtraValue();
         }
 
         return new ArrayList<>(Arrays.asList(oneNormalRestExtra, allExtra));

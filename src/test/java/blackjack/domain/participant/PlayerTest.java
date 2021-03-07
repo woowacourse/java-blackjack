@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardSuit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,9 +28,9 @@ public class PlayerTest {
     @Test
     @DisplayName("참가자가 버스트인지 확인")
     void isBust() {
-        player.receiveAdditionalCard(new Card(CardNumber.TEN, CardSuit.CLOVER));
-        player.receiveAdditionalCard(new Card(CardNumber.NINE, CardSuit.HEART));
-        player.receiveAdditionalCard(new Card(CardNumber.EIGHT, CardSuit.HEART));
+        player.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+        player.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.HEART));
+        player.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
         assertThat(player.isBust()).isTrue();
     }
 }

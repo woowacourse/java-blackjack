@@ -14,7 +14,7 @@ public class CardDeck {
 
     private void initialize() {
         for (final CardSuit type : CardSuit.values()) {
-            Arrays.stream(CardNumber.values())
+            Arrays.stream(CardLetter.values())
                     .forEach(number -> cards.add(new Card(number, type)));
         }
         Collections.shuffle(cards);

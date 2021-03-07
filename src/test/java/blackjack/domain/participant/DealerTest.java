@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardSuit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,24 +29,24 @@ public class DealerTest {
     @DisplayName("딜러가 Participant로 부터 상속받았는지 확인")
     void extend() {
         final Participant participant = new Dealer();
-        participant.receiveAdditionalCard(new Card(CardNumber.ACE, CardSuit.HEART));
+        participant.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.HEART));
         assertThat(participant.getName()).isEqualTo("딜러");
     }
 
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인")
     void checkMoreCardAvailable() {
-        dealer.receiveAdditionalCard(new Card(CardNumber.TWO, CardSuit.CLOVER));
-        dealer.receiveAdditionalCard(new Card(CardNumber.TEN, CardSuit.CLOVER));
+        dealer.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
+        dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
         assertThat(dealer.checkMoreCardAvailable()).isTrue();
     }
 
     @Test
     @DisplayName("딜러가 버스트인지 확인")
     void isBust() {
-        dealer.receiveAdditionalCard(new Card(CardNumber.TEN, CardSuit.CLOVER));
-        dealer.receiveAdditionalCard(new Card(CardNumber.NINE, CardSuit.HEART));
-        dealer.receiveAdditionalCard(new Card(CardNumber.EIGHT, CardSuit.HEART));
+        dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+        dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.HEART));
+        dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
         assertThat(dealer.isBust()).isTrue();
     }
 }
