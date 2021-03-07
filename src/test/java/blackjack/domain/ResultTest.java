@@ -45,7 +45,7 @@ class ResultTest {
         Result result = new Result();
         Round round = Round.generateWithRandomCards(dealer, players);
 
-        Map<String, Queue<Outcome>> results = result.findResults(round);
+        Map<String, Queue<Outcome>> results = Result.findResults(round);
 
         Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());
         Queue<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());
@@ -63,7 +63,7 @@ class ResultTest {
         players.get(0).addCard(Card.of("스페이드", "9"));
 
         Round round = Round.generateWithRandomCards(dealer, players);
-        Map<String, Queue<Outcome>> results = result.findResults(round);
+        Map<String, Queue<Outcome>> results = Result.findResults(round);
 
         Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());      //딜러 24, 플레이어 24, 딜러 승,  플레이어 패
         Queue<Outcome> secondPlayerOutcomes = results.get(players.get(1).getName());    //딜러 24, 플레이어 5, 딜러 패 플레이어 승

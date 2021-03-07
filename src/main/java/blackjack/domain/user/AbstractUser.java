@@ -41,10 +41,6 @@ public abstract class AbstractUser {
         cards.add(card);
     }
 
-    public final void removeAllCards() {
-        cards.clear();
-    }
-
     public final boolean containAceCount() {
         return cards.stream()
                 .anyMatch(Card::containAce);

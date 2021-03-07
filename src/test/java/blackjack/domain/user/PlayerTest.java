@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,11 +22,6 @@ class PlayerTest {
                 Card.of("스페이드", "10"),
                 Card.of("하트", "J")
         ));
-    }
-
-    @AfterEach
-    void afterEach() {
-        player.removeAllCards();
     }
 
     @DisplayName("플레이어가 올바르게 생성되는 지 테스트")
