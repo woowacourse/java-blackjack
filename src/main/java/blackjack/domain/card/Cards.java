@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public Card getFirstCard() {
