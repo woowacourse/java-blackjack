@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,9 +13,10 @@ public class Users {
     }
 
     public static Users of(List<String> playerNames) {
-        List<User> users = new ArrayList<>();
-        users.add(new Dealer());
+        Dealer dealer = new Dealer();
+        playerNames.add(dealer.getName());
         isDuplicatePlayers(playerNames);
+        List<User> users = new ArrayList<>(Arrays.asList(dealer));
         playerNames.stream().forEach(name -> users.add(new Player(name)));
         return new Users(users);
     }
@@ -32,7 +34,7 @@ public class Users {
 
     private static void isDuplicatePlayers(List<String> players) {
         if (players.stream().distinct().count() != players.size()) {
-            throw new IllegalArgumentException("플레이어 이름이 중복됩니다!");
+            throw new IllegalArgumentException("유저 이름이 중복됩니다!");
         }
     }
 }

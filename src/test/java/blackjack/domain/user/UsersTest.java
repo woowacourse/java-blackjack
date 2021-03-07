@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +40,17 @@ class UsersTest {
         names = Arrays.asList("pobi", "brown", "brown", "jason");
         assertThatThrownBy(() -> Users.of(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어 이름이 중복됩니다!");
+                .hasMessage("유저 이름이 중복됩니다!");
+
+    }
+
+    @DisplayName("Player 이름이 '딜러'인 경우 예외처리해준다.")
+    @Test
+    void duplicate_players_test2() {
+        names = new ArrayList<>(Arrays.asList("pobi", "brown", "딜러", "jason"));
+        assertThatThrownBy(() -> Users.of(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("유저 이름이 중복됩니다!");
 
     }
 }
