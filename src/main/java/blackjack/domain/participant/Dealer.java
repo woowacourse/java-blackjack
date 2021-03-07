@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.MatchResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.result.MatchResultType;
 
 
 public class Dealer extends Participant {
