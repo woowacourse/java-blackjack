@@ -1,8 +1,21 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Card {
+    private static final List<Card> CACHE;
+
+    static {
+        CACHE = Arrays.stream(Denomination.values())
+                .flatMap(denomination -> Arrays.stream(Shape.values())
+                        .map(shape -> new Card(shape, denomination)))
+                .collect(Collectors.toList());
+    }
+
     private final Shape shape;
     private final Denomination denomination;
 
@@ -17,6 +30,10 @@ public class Card {
 
     public int score() {
         return this.denomination.getScore();
+    }
+
+    public static List<Card> values() {
+        return Collections.unmodifiableList(CACHE);
     }
 
     public Denomination getDenomination() {

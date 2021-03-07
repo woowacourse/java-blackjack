@@ -3,8 +3,8 @@ package blackjack.domain.card;
 public class CardDeck {
     private Cards deck;
 
-    public CardDeck() {
-        deck = new Cards(Cards.values());
+    public CardDeck(Cards deck) {
+        this.deck = deck;
     }
 
     public Card drawCard() {
