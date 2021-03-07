@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
 import static blackjack.domain.card.painting.Symbol.ACE;
 
 public class Cards {
-    private static final int BLACK_JACK = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
     private final ArrayList<Card> cards;
@@ -36,7 +36,7 @@ public class Cards {
     }
 
     private boolean canAddAceScore(int score) {
-        return score + ACE_ADDITIONAL_SCORE <= BLACK_JACK;
+        return score + ACE_ADDITIONAL_SCORE <= BLACKJACK_NUMBER;
     }
 
     private int sumScore() {

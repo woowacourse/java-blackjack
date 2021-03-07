@@ -19,6 +19,8 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
+    public static final int BLACKJACK_NUMBER = 21;
+
     private final Deck deck = Deck.createDeck();
     private final Users users;
     private final Dealer dealer = new Dealer();

@@ -3,10 +3,12 @@ package blackjack.domain.user.status;
 import java.util.Arrays;
 import java.util.function.IntPredicate;
 
+import static blackjack.domain.BlackjackGame.BLACKJACK_NUMBER;
+
 public enum Status {
-    PLAYING(true, score -> 1 < score && score < 21),
-    BLACKJACK(false, score -> score == 21),
-    BURST(false, score -> 21 < score && score < 31),
+    PLAYING(true, score -> 1 < score && score < BLACKJACK_NUMBER),
+    BLACKJACK(false, score -> score == BLACKJACK_NUMBER),
+    BURST(false, score -> BLACKJACK_NUMBER < score && score < 31),
     STOP(false, score -> false);
 
     private static final String NO_MATCH_CONDITION_ERROR_MSG = "점수 조건에 맞는 Status가 없습니다.";
