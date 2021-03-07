@@ -83,7 +83,7 @@ class BlackjackGameTest {
 
 	@DisplayName("최종 승패 판단 성공")
 	@Test
-	void winOrlose() {
+	void judgeOutcome() {
 		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
 		blackjackGame.initializeHands();
 		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
