@@ -23,7 +23,8 @@ public class BlackjackManagerTest {
     @Test
     @DisplayName("각 플레이어가 초기 2장씩 소지한다.")
     void testAllPlayersGetTwoCards() {
-        BlackjackManager.initGame(players, dealer);
+        BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
+        blackjackManager.initDrawCards();
 
         assertThat(players.toList()
             .stream()
@@ -35,7 +36,8 @@ public class BlackjackManagerTest {
     @Test
     @DisplayName("게임 플레이 결과 DTO 생성")
     void testCreateResultDto() {
-        BlackjackManager.initGame(players, dealer);
+        BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
+        blackjackManager.initDrawCards();
         GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
 
         assertThat(gameResultDto).isInstanceOf(GameResultDto.class);

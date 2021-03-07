@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
 import java.util.Arrays;
@@ -9,13 +10,27 @@ import java.util.Map;
 
 public class BlackjackManager {
 
-    private BlackjackManager() {
+    private static final int INIT_CARD_COUNT = 2;
+
+    private final CardDeck cardDeck;
+    private final Dealer dealer;
+    private final Players players;
+
+    public BlackjackManager(final Dealer dealer, final Players players) {
+        this(CardDeck.newShuffledDeck(), dealer, players);
     }
 
-    public static void initGame(Players players, Dealer dealer) {
-        dealer.receiveCard(dealer.giveCard());
-        dealer.receiveCard(dealer.giveCard());
-        players.initTwoCardsByDealer(dealer);
+    private BlackjackManager(final CardDeck cardDeck, final Dealer dealer, final Players players) {
+        this.cardDeck = cardDeck;
+        this.dealer = dealer;
+        this.players = players;
+    }
+
+    public void initDrawCards() {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            this.dealer.addCard(cardDeck.draw());
+            this.players.drawCards(cardDeck);
+        }
     }
 
     public static GameResultDto getGameResult(Dealer dealer, Players players) {

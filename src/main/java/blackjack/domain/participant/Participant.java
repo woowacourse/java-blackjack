@@ -14,7 +14,7 @@ public abstract class Participant {
 
     public abstract boolean isOverLimitScore();
 
-    public void receiveCard(final Card card) {
+    public void addCard(final Card card) {
         this.hand.addCard(card);
     }
 

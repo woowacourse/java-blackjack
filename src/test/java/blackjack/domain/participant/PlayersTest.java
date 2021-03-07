@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.BlackjackManager;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -45,9 +46,11 @@ class PlayersTest {
     @DisplayName("각 플레이어가 초기 2장씩 소지한다.")
     void testAllPlayersGetTwoCards() {
         List<String> names = Arrays.asList("pobi", "jason");
-        Players players = new Players(names);
         Dealer dealer = new Dealer();
-        players.initTwoCardsByDealer(dealer);
+        Players players = new Players(names);
+        BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
+        blackjackManager.initDrawCards();
+
         assertThat(players.toList()
             .stream()
             .filter(player -> player.getHand().size() == 2)

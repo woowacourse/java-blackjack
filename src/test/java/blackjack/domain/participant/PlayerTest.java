@@ -22,7 +22,7 @@ public class PlayerTest {
     @DisplayName("플레이어는 카드를 받는다.")
     void testReceiveCard() {
         Card card = Card.valueOf(Pattern.DIAMOND, Number.EIGHT);
-        player.receiveCard(card);
+        player.addCard(card);
 
         assertThat(player.getTotalScore()).isEqualTo(8);
     }

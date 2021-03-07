@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.carddeck.CardDeck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -37,10 +38,9 @@ public class Players {
         }
     }
 
-    public void initTwoCardsByDealer(Dealer dealer) {
+    public void drawCards(final CardDeck cardDeck) {
         for (Player player : this.players) {
-            player.receiveCard(dealer.giveCard());
-            player.receiveCard(dealer.giveCard());
+            player.addCard(cardDeck.draw());
         }
     }
 
