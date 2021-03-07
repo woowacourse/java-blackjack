@@ -4,7 +4,6 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
