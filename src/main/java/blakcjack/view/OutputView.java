@@ -17,32 +17,24 @@ public class OutputView {
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(makeCardDistributionMessage(players, dealer));
 
-		stringBuilder.append(makeCardSummary(dealer));
+		stringBuilder.append(makeHandSummaryOf(dealer));
 		for (final Player player : players.toList()) {
-			stringBuilder.append(makeCardSummary(player));
+			stringBuilder.append(makeHandSummaryOf(player));
 		}
 		System.out.println(stringBuilder.toString());
 	}
 
-	public static void printPlayerHand(final Participant participant) {
-		System.out.println(makeCardSummary(participant));
+	public static void printHandOf(final Participant participant) {
+		System.out.println(makeHandSummaryOf(participant));
 	}
 
 	private static String makeCardDistributionMessage(final Players players, final Dealer dealer) {
 		return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), players.getConcatenatedNames());
 	}
 
-	private static String makeCardSummary(final Participant participant) {
-		Cards initialCards = getInitialCards(participant);
+	private static String makeHandSummaryOf(final Participant participant) {
+		Cards initialCards = participant.getInitialHand();
 		return participant.getName() + ": " + initialCards.getConcatenatedCardsInformation() + System.lineSeparator();
-	}
-
-	private static Cards getInitialCards(final Participant participant) {
-		if (participant instanceof Dealer) {
-			final Dealer dealer = (Dealer) participant;
-			return dealer.getInitialHand();
-		}
-		return participant.getCards();
 	}
 
 	public static void printDealerAdditionalCardMessage() {

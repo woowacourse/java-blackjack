@@ -48,7 +48,7 @@ public class BlackJackController {
 	private void letPlayerDraw(final Player player, final Deck deck) {
 		while (isHit(player)) {
 			player.drawOneCardFrom(deck);
-			printPlayerHand(player);
+			printHandOf(player);
 		}
 	}
 

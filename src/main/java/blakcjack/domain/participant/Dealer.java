@@ -20,6 +20,7 @@ public class Dealer extends Participant {
 		drawOneCardFrom(deck);
 	}
 
+	@Override
 	public Cards getInitialHand() {
 		Cards hand = new Cards();
 		hand.add(this.cards.getFirstCard());
