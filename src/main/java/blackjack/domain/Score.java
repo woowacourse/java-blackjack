@@ -16,13 +16,7 @@ public class Score {
     }
 
     public static int calculatorScore(Cards cards) {
-        return calculator(sortCards(cards));
-    }
-
-    private static List<Card> sortCards(Cards cards) {
-        List<Card> result = new ArrayList<>(cards.getCards());
-        Collections.sort(result);
-        return result;
+        return calculator(cards.getCards());
     }
 
     private static int calculator(List<Card> cards) {

@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class Card implements Comparable<Card> {
+public class Card {
     private final Shape shape;
     private final Denomination denomination;
 
@@ -35,10 +35,5 @@ public class Card implements Comparable<Card> {
         int result = shape != null ? shape.hashCode() : 0;
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public int compareTo(Card card) {
-        return card.denomination.getScore() - this.denomination.getScore();
     }
 }
