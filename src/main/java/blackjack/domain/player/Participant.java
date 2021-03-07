@@ -32,6 +32,26 @@ public abstract class Participant {
         return cards.size() == BLACKJACK_CARD_COUNT && score == BLACKJACK_VALUE;
     }
 
+    public boolean isNotBlackjack() {
+        return cards.size() != BLACKJACK_CARD_COUNT || score != BLACKJACK_VALUE;
+    }
+
+    public boolean isBust() {
+        return score > BLACKJACK_VALUE;
+    }
+
+    public boolean isNotBust() {
+        return score <= BLACKJACK_VALUE;
+    }
+
+    public boolean isBiggerScoreThan(Participant participant) {
+        return score > participant.getScore();
+    }
+
+    public boolean isEqualScore(Participant participant) {
+        return score == participant.getScore();
+    }
+
     public int getScore() {
         return score;
     }

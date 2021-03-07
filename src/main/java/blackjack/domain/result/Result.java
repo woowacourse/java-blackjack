@@ -22,7 +22,7 @@ public enum Result {
     }
 
     private static Result findResultByBlackjack(Dealer dealer, Player player) {
-        if (dealer.isBlackjack() && !player.isBlackjack()) {
+        if (dealer.isBlackjack() && player.isNotBlackjack()) {
             return Result.LOSE;
         }
 
@@ -34,27 +34,23 @@ public enum Result {
             return Result.BLACKJACK_WIN;
         }
 
-        return findResultByScore(dealer.getScore(), player.getScore());
+        return findResultByScore(dealer, player);
     }
 
-    private static Result findResultByScore(int dealerScore, int playerScore) {
-        if (isBust(dealerScore) && !isBust(playerScore)) {
+    private static Result findResultByScore(Dealer dealer, Player player) {
+        if (dealer.isBust() && player.isNotBust()) {
             return Result.WIN;
         }
 
-        if (dealerScore > playerScore || isBust(playerScore)) {
+        if (dealer.isBiggerScoreThan(player) || player.isBust()) {
             return Result.LOSE;
         }
 
-        if (dealerScore == playerScore) {
+        if (dealer.isEqualScore(player)) {
             return Result.DRAW;
         }
 
         return Result.WIN;
-    }
-
-    public static boolean isBust(int score) {
-        return score > BLACKJACK_VALUE;
     }
 
     public String getResultName() {
