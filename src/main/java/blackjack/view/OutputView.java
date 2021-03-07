@@ -46,9 +46,17 @@ public class OutputView {
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, name.getValue(), cardStatus + NEWLINE);
     }
 
-    public static void showCardResult(final Name name, final List<Card> cards, final int result) {
-        final List<String> cardStatuses = getCardInfo(cards);
+    public static void showCardsResult(final List<Participant> participants) {
+        for (final Participant participant : participants) {
+            showCardResult(participant);
+        }
+    }
+
+    public static void showCardResult(final Participant participant) {
+        final List<String> cardStatuses = getCardInfo(participant.getPlayerCards());
         final String cardStatus = String.join(", ", cardStatuses);
+        final Name name = participant.getName();
+        final int result = participant.calculate();
         System.out.printf(CARD_RESULT_FORMAT + NEWLINE, name.getValue(), cardStatus, result);
     }
 
