@@ -1,15 +1,37 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
-public interface User {
+public abstract class User {
 
-    void hit(Card card);
+    private static final String DEALER_NAME = "딜러";
 
-    String getCards();
+    protected final Cards cards;
+    protected String name;
 
-    String getName();
+    public User(){
+        this(DEALER_NAME);
+    }
 
-    int getScore();
+    public User(String name){
+        this.cards = new Cards();
+        this.name = name;
+    }
 
+    public void hit(Card card) {
+        cards.addCard(card);
+    }
+
+    public String getCards() {
+        return cards.getCards();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    int getScore() {
+        return cards.getScore();
+    }
 }

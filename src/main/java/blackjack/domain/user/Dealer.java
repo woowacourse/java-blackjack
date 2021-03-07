@@ -1,25 +1,20 @@
 package blackjack.domain.user;
 
 import blackjack.domain.Status;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class Dealer implements User {
+public class Dealer extends User {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final String DELIMITER = ", ";
     private static final String NO_DEALER_CARD_ERROR_MESSAGE = "카드가 없습니다.";
 
-    private final Cards cards;
-
     public Dealer() {
-        this.cards = new Cards();
+        super();
     }
 
     public boolean canHit() {
@@ -38,25 +33,5 @@ public class Dealer implements User {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
                 NO_DEALER_CARD_ERROR_MESSAGE));
-    }
-
-    @Override
-    public void hit(Card card) {
-        this.cards.addCard(card);
-    }
-
-    @Override
-    public String getCards() {
-        return this.cards.getCards();
-    }
-
-    @Override
-    public String getName() {
-        return DEALER_NAME;
-    }
-
-    @Override
-    public int getScore() {
-        return cards.getScore();
     }
 }
