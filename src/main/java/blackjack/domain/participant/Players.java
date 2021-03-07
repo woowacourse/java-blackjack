@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.carddeck.CardDeck;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> names) {
+    public Players(final List<String> names) {
         this.players = convertToPlayers(names);
         validatePlayerCount(names);
         validateDuplicate(names);
@@ -26,13 +25,13 @@ public class Players {
         return players;
     }
 
-    private void validatePlayerCount(List<String> names) {
+    private void validatePlayerCount(final List<String> names) {
         if (names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("최대 참여 플레이어는 7명입니다.");
+            throw new IllegalArgumentException("최대 참여 플레이어는 " + MAX_PLAYER + "명입니다.");
         }
     }
 
-    private void validateDuplicate(List<String> names) {
+    private void validateDuplicate(final List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
@@ -44,7 +43,15 @@ public class Players {
         }
     }
 
+    public Player findPlayerByName(final Name name) {
+        return this.players
+            .stream()
+            .filter(player -> player.equalsName(name))
+            .findAny()
+            .get();
+    }
+
     public List<Player> toList() {
-        return Collections.unmodifiableList(new ArrayList<>(this.players));
+        return new ArrayList<>(this.players);
     }
 }

@@ -57,4 +57,17 @@ class PlayersTest {
             .count())
             .isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("원하는 플레이어를 찾아낸다.")
+    void testFindPlayer() {
+        List<String> names = Arrays.asList("pobi", "jason", "미립");
+        Players players = new Players(names);
+
+        assertThat(players.findPlayerByName(new Name("pobi")))
+            .isEqualTo(new Player(new Name("pobi")));
+
+        assertThat(players.findPlayerByName(new Name("미립")))
+            .isEqualTo(new Player(new Name("미립")));
+    }
 }
