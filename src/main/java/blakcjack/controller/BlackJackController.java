@@ -44,7 +44,7 @@ public class BlackJackController {
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
-        while (dealer.isScoreLowerThanSevenTeen()) {
+        while (dealer.needsAdditionalCard()) {
             blackjackGame.distributeOneCard(dealer);
             OutputView.printDealerAdditionalCardMessage();
         }
