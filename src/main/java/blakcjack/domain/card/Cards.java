@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Cards {
 	public static final int ACE_ADDITIONAL_VALUE = 10;
 	public static final int BLACKJACK_VALUE = 21;
+	private static final int FIRST_CARD_POSITION = 0;
 
 	private final List<Card> cards = new ArrayList<>();
 
@@ -46,8 +47,8 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public Card get(int index) {
-		return cards.get(index);
+	public Card getFirstCard() {
+		return cards.get(FIRST_CARD_POSITION);
 	}
 
 	@Override
