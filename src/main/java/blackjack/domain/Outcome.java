@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 import static blackjack.domain.Round.GAME_OVER_SCORE;
 
 public enum Outcome {
-    WIN("승",  (a, b) -> b > GAME_OVER_SCORE, (a, b) -> ((a <= GAME_OVER_SCORE) && a > b)),
+    WIN("승", (a, b) -> b > GAME_OVER_SCORE, (a, b) -> ((a <= GAME_OVER_SCORE) && a > b)),
     LOSE("패", (a, b) -> a > GAME_OVER_SCORE, (a, b) -> a < b),
     DRAW("무", (a, b) -> false, (a, b) -> a == b);
 

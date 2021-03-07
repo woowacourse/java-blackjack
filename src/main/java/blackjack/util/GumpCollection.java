@@ -20,7 +20,6 @@ public class GumpCollection {
 
         private Object[] q;
 
-
         ArrayDeque(E[] array) {
             q = Objects.requireNonNull(array);
         }

@@ -27,7 +27,7 @@ class PlayerTest {
 
     @AfterEach
     void afterEach() {
-        player.removeAll();
+        player.removeAllCards();
     }
 
     @DisplayName("플레이어가 올바르게 생성되는 지 테스트")
@@ -76,7 +76,7 @@ class PlayerTest {
         ));
 
         assertThat(player.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
-        assertThat(player.calculateScore(GAME_OVER_SCORE)).isEqualTo(12);
+        assertThat(player.getScore()).isEqualTo(12);
     }
 
     @DisplayName("플레이어의 추가 카드 포함한 점수가 21점 초과이고, A를 21 이하일때까지 A를 1로 계산한다.")
@@ -89,7 +89,7 @@ class PlayerTest {
         ));
         player.addCard(Card.of("클로버", "A"));
         assertThat(player.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
-        assertThat(player.calculateScore(GAME_OVER_SCORE)).isEqualTo(13);
+        assertThat(player.getScore()).isEqualTo(13);
     }
 
     @DisplayName("A가 없고, 카드의 숫자가 21점 초과이면 플레이어의 게임이 끝난다.")

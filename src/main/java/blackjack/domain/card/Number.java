@@ -39,7 +39,7 @@ public enum Number {
     }
 
     Number(final String name, final int score) {
-        this(name, score, 0);
+        this(name, score, score);
     }
 
     public static Number from(final String name) {

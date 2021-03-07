@@ -57,12 +57,12 @@ public class Round {
                 players.stream()
                         .map(this::getPlayerStatusDto)
                         .collect(Collectors.toList()),
-                dealer.calculateScore(GAME_OVER_SCORE));
+                dealer.getScore());
     }
 
     public Queue<Outcome> makeRoundOutComes() {
         return players.stream()
-                .map(player -> Outcome.findOutcome(dealer.calculateScore(GAME_OVER_SCORE), player.calculateScore(GAME_OVER_SCORE)))
+                .map(player -> Outcome.findOutcome(dealer.getScore(), player.getScore()))
                 .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
@@ -90,6 +90,6 @@ public class Round {
     }
 
     private PlayerStatusDto getPlayerStatusDto(final Player player) {
-        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.calculateScore(GAME_OVER_SCORE));
+        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.getScore());
     }
 }

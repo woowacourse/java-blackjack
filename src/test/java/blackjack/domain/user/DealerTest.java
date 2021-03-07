@@ -43,7 +43,7 @@ class DealerTest {
 
         //then
         assertThat(dealer.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
-        assertThat(dealer.calculateScore(GAME_OVER_SCORE)).isEqualTo(12);
+        assertThat(dealer.getScore()).isEqualTo(12);
     }
 
     @DisplayName("딜러의 첫 카드가 17점 이상인 경우 경우 딜러의 턴은 끝난다. ")
@@ -60,6 +60,6 @@ class DealerTest {
 
         //then
         assertThat(dealer.isGameOver(GAME_OVER_SCORE)).isEqualTo(true);
-        assertThat(dealer.calculateScore(GAME_OVER_SCORE)).isEqualTo(17);
+        assertThat(dealer.getScore()).isEqualTo(17);
     }
 }
