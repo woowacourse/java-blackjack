@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.GameResultDto;
 import blackjack.domain.result.ResultCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,7 +23,7 @@ public class BlackJackApplication {
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
 
-        GameResult result = getResult(dealer, players);
+        GameResultDto result = getResult(dealer, players);
         OutputView.printResult(result);
     }
 
@@ -68,7 +68,7 @@ public class BlackJackApplication {
         }
     }
 
-    private static GameResult getResult(Dealer dealer, List<Player> players) {
+    private static GameResultDto getResult(Dealer dealer, List<Player> players) {
         ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
         return resultCalculator.getResult();
     }

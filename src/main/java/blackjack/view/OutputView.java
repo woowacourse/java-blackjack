@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.WinOrLose;
+import blackjack.domain.result.GameResultDto;
+import blackjack.domain.result.PlayerResultDto;
+import blackjack.domain.result.MatchResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,34 +32,34 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResult(GameResult result) {
+    public static void printResult(GameResultDto result) {
         printNotice(String.format("딜러 카드: %s - 결과 %d",
                 cardsToString(result.getDealerCards()),
                 result.getDealerSum()));
 
-        for (PlayerResult playerResult : result.getPlayersResults()) {
+        for (PlayerResultDto playerResult : result.getPlayersResults()) {
             printPlayerCardResult(playerResult);
         }
 
         printNotice("## 최종 승패");
         printDealerResult(result.getDealerResult());
-        for (PlayerResult playersResult : result.getPlayersResults()) {
+        for (PlayerResultDto playersResult : result.getPlayersResults()) {
             System.out.printf("%s: %s\n", playersResult.getName(), playersResult.getWinOrLose());
         }
     }
 
-    private static void printDealerResult(List<WinOrLose> dealerResult) {
+    private static void printDealerResult(List<MatchResult> dealerResult) {
         int win = 0;
         int lose = 0;
         int tie = 0;
-        for (WinOrLose winOrLose : dealerResult) {
-            if (WinOrLose.WIN.equals(winOrLose)) {
+        for (MatchResult winOrLose : dealerResult) {
+            if (MatchResult.WIN.equals(winOrLose)) {
                 win++;
             }
-            if (WinOrLose.LOSE.equals(winOrLose)) {
+            if (MatchResult.LOSE.equals(winOrLose)) {
                 lose++;
             }
-            if (WinOrLose.TIE.equals(winOrLose)) {
+            if (MatchResult.TIE.equals(winOrLose)) {
                 tie++;
             }
         }
@@ -79,7 +79,7 @@ public class OutputView {
                 cardToString(dealer.getBaseCard()));
     }
 
-    private static void printPlayerCardResult(PlayerResult playerResult) {
+    private static void printPlayerCardResult(PlayerResultDto playerResult) {
         System.out.printf("%s 카드: %s - 결과: %d\n",
                 playerResult.getName(),
                 cardsToString(playerResult.getCards()),

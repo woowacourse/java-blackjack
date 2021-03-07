@@ -15,21 +15,21 @@ public class ResultCalculator {
         this.players = players;
     }
 
-    public GameResult getResult() {
-        List<PlayerResult> playersResults = new ArrayList<>();
-        List<WinOrLose> dealerResult = new ArrayList<>();
+    public GameResultDto getResult() {
+        List<PlayerResultDto> playersResults = new ArrayList<>();
+        List<MatchResult> dealerResult = new ArrayList<>();
 
         int dealerCardSum = dealer.sumCard();
 
         for (Player player : players) {
-            WinOrLose winOrLose = WinOrLose.match(player, dealerCardSum);
+            MatchResult winOrLose = MatchResult.match(player, dealerCardSum);
 
-            PlayerResult playerResult = PlayerResult.from(player, winOrLose);
+            PlayerResultDto playerResult = PlayerResultDto.from(player, winOrLose);
 
             playersResults.add(playerResult);
             dealerResult.add(winOrLose.reverse());
         }
 
-        return new GameResult(dealer.getCards(), dealerCardSum, dealerResult, playersResults);
+        return new GameResultDto(dealer.getCards(), dealerCardSum, dealerResult, playersResults);
     }
 }

@@ -4,22 +4,22 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
 import java.util.List;
 
-public class PlayerResult {
+public class PlayerResultDto {
 
     private final String name;
     private final List<Card> cards;
     private final int sum;
-    private final WinOrLose winOrLose;
+    private final MatchResult winOrLose;
 
-    public PlayerResult(String name, List<Card> cards, int sum, WinOrLose winOrLose) {
+    public PlayerResultDto(String name, List<Card> cards, int sum, MatchResult winOrLose) {
         this.name = name;
         this.cards = cards;
         this.sum = sum;
         this.winOrLose = winOrLose;
     }
 
-    public static PlayerResult from(Player player, WinOrLose winOrLose) {
-        return new PlayerResult(
+    public static PlayerResultDto from(Player player, MatchResult winOrLose) {
+        return new PlayerResultDto(
                 player.getName(),
                 player.getCards(),
                 player.sumCard(),

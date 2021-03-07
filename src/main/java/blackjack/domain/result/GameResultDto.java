@@ -3,15 +3,15 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-public class GameResult {
+public class GameResultDto {
 
     private final List<Card> dealerCards;
     private final int dealerSum;
-    private final List<WinOrLose> dealerResult;
-    private final List<PlayerResult> playersResultMap;
+    private final List<MatchResult> dealerResult;
+    private final List<PlayerResultDto> playersResultMap;
 
-    public GameResult(List<Card> dealerCards, int dealerSum, List<WinOrLose> dealerResult,
-            List<PlayerResult> playersResults) {
+    public GameResultDto(List<Card> dealerCards, int dealerSum, List<MatchResult> dealerResult,
+            List<PlayerResultDto> playersResults) {
         this.dealerCards = dealerCards;
         this.dealerSum = dealerSum;
         this.dealerResult = dealerResult;
@@ -26,11 +26,11 @@ public class GameResult {
         return dealerSum;
     }
 
-    public List<WinOrLose> getDealerResult() {
+    public List<MatchResult> getDealerResult() {
         return dealerResult;
     }
 
-    public List<PlayerResult> getPlayersResults() {
+    public List<PlayerResultDto> getPlayersResults() {
         return playersResultMap;
     }
 }
