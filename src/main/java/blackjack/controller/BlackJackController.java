@@ -75,22 +75,24 @@ public class BlackJackController {
 
     private void showResult(Dealer dealer, Players players) {
         OutputView.printCardsAndScore(dealer, players);
-        Map<Player, MatchResultType> result = calculateMatchResult(dealer, players);
-        List<Integer> matchResultCount = countMatchResultType(result);
-        OutputView.printMatchTypeResult(matchResultCount, result);
+        Map<Player, MatchResultType> matchResult = calculateMatchResult(dealer, players);
+        List<Integer> matchResultCount = countMatchResultTypes(matchResult);
+        OutputView.printMatchTypeResult(matchResultCount, matchResult);
     }
 
     private Map<Player, MatchResultType> calculateMatchResult(Dealer dealer, Players players) {
-        Map<Player, MatchResultType> result = new LinkedHashMap<>();
+        Map<Player, MatchResultType> matchResult = new LinkedHashMap<>();
         players.getPlayers()
-                .forEach(player -> result.put(player, dealer.compare(player)));
-        return result;
+                .forEach(player -> matchResult.put(player, dealer.compareScore(player)));
+        return matchResult;
     }
 
-    private List<Integer> countMatchResultType(Map<Player, MatchResultType> result) {
+    private List<Integer> countMatchResultTypes(Map<Player, MatchResultType> matchResult) {
         List<Integer> matchResultCount = new ArrayList<>();
-        Arrays.stream(MatchResultType.values())
-                .forEach(matchResultType -> matchResultCount.add(Collections.frequency(result.values(), matchResultType)));
+
+        for (MatchResultType type : MatchResultType.values()) {
+            matchResultCount.add(Collections.frequency(matchResult.values(), type));
+        }
         return matchResultCount;
     }
 }
