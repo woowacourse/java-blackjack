@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +19,11 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    public static String askIfMoreCard(Player player) {
+    public static boolean askIfMoreCard(User player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
         String input = SCANNER.nextLine();
         validateYOrN(input.toLowerCase());
-        return input;
+        return "y".equalsIgnoreCase(input);
     }
 
     private static void validateYOrN(String input) {

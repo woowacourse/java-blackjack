@@ -1,41 +1,38 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
-import blackjack.domain.card.Deck;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
 
     public void run() {
-        Deck deck = new Deck();
         Game game = new Game(InputView.receivePlayerNames());
 
-        initCards(deck, game);
-        drawCards(deck, game);
+        initCards(game);
+        drawCards(game);
         printResults(game);
     }
 
-    private void initCards(Deck deck, Game game) {
-        game.drawInitialCards(deck);
+    private void initCards(Game game) {
         OutputView.printInitialCards(game.getDealer(), game.getPlayers());
     }
 
-    private void drawCards(Deck deck, Game game) {
-        game.getPlayers().forEach(player -> getAdditionalCard((Player) player, deck));
-        OutputView.printDealerDraw(game.addCardToDealer(deck));
+    private void drawCards(Game game) {
+        while (game.hasHitPlayer()) {
+            addNewCard(game, game.getHitPlayer());
+        }
+        OutputView.printDealerDraw(game.giveCardToDealer());
     }
 
-    private void getAdditionalCard(Player player, Deck deck) {
-        while (player.isHit() && "y".equals(InputView.askIfMoreCard(player))) {
-            player.draw(deck.pickSingleCard());
+    private void addNewCard(Game game, User player) {
+        if (InputView.askIfMoreCard(player)) {
+            game.giveCardToPlayer(player);
             OutputView.printPlayerCard(player);
+            return;
         }
-
-        if ("n".equals(InputView.askIfMoreCard(player))) {
-            player.convertToStay();
-        }
+         player.convertToStay();
     }
 
     private void printResults(Game game) {

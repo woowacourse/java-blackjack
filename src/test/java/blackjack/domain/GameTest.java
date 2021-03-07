@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,10 +22,7 @@ class GameTest {
             .build()
             .collect(Collectors.toList());
 
-        Deck deck = new Deck();
-
         this.game = new Game(names);
-        game.drawInitialCards(deck);
     }
 
     @DisplayName("게임 생성 : 플레이어 및 딜러 생성")

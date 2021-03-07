@@ -13,10 +13,13 @@ public class Game {
     private static final int DEALER_STAY_LIMIT = 16;
     private final User dealer;
     private final List<User> players;
+    private final Deck deck;
 
     public Game(List<String> names) {
         dealer = new Dealer();
         players = createPlayer(names);
+        deck = new Deck();
+        drawInitialCards();
     }
 
     private List<User> createPlayer(List<String> names) {
@@ -25,17 +28,33 @@ public class Game {
             .collect(Collectors.toList());
     }
 
-    public void drawInitialCards(Deck deck) {
+    private void drawInitialCards() {
         dealer.initialHands(deck.pickInitialCards(), DEALER_STAY_LIMIT);
         players.forEach(player -> player.initialHands(deck.pickInitialCards(), PLAYER_STAY_LIMIT));
     }
 
-    public boolean addCardToDealer(Deck deck) {
+    public boolean hasHitPlayer() {
+        return players.stream()
+            .anyMatch(User::isHit);
+    }
+
+    public User getHitPlayer() {
+        return players.stream()
+            .filter(User::isHit)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public void giveCardToPlayer(User player) {
+        player.draw(deck.pickSingleCard());
+    }
+
+    public boolean giveCardToDealer() {
         if (dealer.isHit()) {
             dealer.draw(deck.pickSingleCard());
             return true;
         }
-        return true;
+        return false;
     }
 
     public List<ResultDTO> getResultDTOs() {

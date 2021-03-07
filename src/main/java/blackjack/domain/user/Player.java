@@ -19,10 +19,6 @@ public class Player extends User {
         }
     }
 
-    public void convertToStay() {
-        hand.convertStatusToStay();
-    }
-
     @Override
     public String getName() {
         return name;

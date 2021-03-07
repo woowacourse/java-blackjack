@@ -36,5 +36,9 @@ public abstract class User {
         return hand.isHit();
     }
 
+    public void convertToStay() {
+        hand.convertStatusToStay();
+    }
+
     public abstract String getName();
 }
