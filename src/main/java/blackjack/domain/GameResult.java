@@ -8,9 +8,10 @@ import java.util.Map;
 
 public class GameResult {
 
-    public int calculateDealerWinCount(final Participant dealer, final List<Participant> players) {
+    public int calculateDealerResult(final Participant dealer, final List<Participant> players,
+        final Result result) {
         return (int) players.stream()
-            .filter(player -> dealer.decideWinner(player).isSameResult(Result.WIN))
+            .filter(player -> dealer.decideWinner(player).isSameResult(result))
             .count();
     }
 

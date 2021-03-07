@@ -2,6 +2,7 @@ package blackjack.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.InstanceOfAssertFactories.comparable;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
@@ -128,5 +129,14 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.SPADE));
         assertThat(dealer.decideWinner(new Player("j.on")).isSameResult(Result.LOSE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러의 결과가 무승부가 되는지 확인")
+    void isWinner() {
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        final Participant player = new Player("j.on");
+        player.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        assertThat(dealer.decideWinner(player)).isEqualTo(Result.DRAW);
     }
 }

@@ -3,6 +3,7 @@ package blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
@@ -35,7 +36,7 @@ public class GameResultTest {
             player.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
             players.add(player);
         }
-        assertThat(gameResult.calculateDealerWinCount(dealer, players)).isEqualTo(3);
+        assertThat(gameResult.calculateDealerResult(dealer, players, Result.WIN)).isEqualTo(3);
     }
 
 }

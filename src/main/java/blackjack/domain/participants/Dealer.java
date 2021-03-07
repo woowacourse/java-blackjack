@@ -23,7 +23,10 @@ public class Dealer extends Participant {
 
     @Override
     public Result decideWinner(Participant player) {
-        if (player.isBust() || (player.calculate() <= this.calculate() && !this.isBust())) {
+        if (this.calculate() == player.calculate()) {
+            return Result.DRAW;
+        }
+        if (player.isBust() || (player.calculate() < this.calculate() && !this.isBust())) {
             return Result.WIN;
         }
         return Result.LOSE;

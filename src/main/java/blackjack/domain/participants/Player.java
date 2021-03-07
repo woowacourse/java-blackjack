@@ -17,7 +17,10 @@ public class Player extends Participant {
 
     @Override
     public Result decideWinner(Participant participant) {
-        if (this.isBust() || participant.calculate() >= this.calculate()) {
+        if (this.calculate() == participant.calculate() || (this.isBust() && participant.isBust())) {
+            return Result.DRAW;
+        }
+        if (this.isBust() || (!participant.isBust() && participant.calculate() > this.calculate())) {
             return Result.LOSE;
         }
         return Result.WIN;

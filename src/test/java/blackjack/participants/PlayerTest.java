@@ -3,10 +3,13 @@ package blackjack.participants;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
+import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Player;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,5 +83,14 @@ public class PlayerTest {
         player.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         player.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
         assertThat(player.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("참가자의 결과가 무승부가 되는지 확인")
+    void isWinner() {
+        player.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        final Participant dealer = new Player("딜러");
+        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        Assertions.assertThat(player.decideWinner(dealer)).isEqualTo(Result.DRAW);
     }
 }

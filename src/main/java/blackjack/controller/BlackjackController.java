@@ -23,7 +23,8 @@ public class BlackjackController {
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final List<Participant> participants = participantsSetUp();
-        final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
+        final List<Participant> players = new ArrayList<>(
+            participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
         showParticipantsName(players);
@@ -131,12 +132,9 @@ public class BlackjackController {
         OutputView.showCardsResult(participants);
     }
 
-    private void showGameResult(final Participant dealer, final List<Participant> players, final
-    GameResult gameResult) {
-        final int dealerWinCount = gameResult.calculateDealerWinCount(dealer, players);
-        OutputView
-            .showGameResult(dealer.getName(), dealerWinCount, players.size() - dealerWinCount);
-
+    private void showGameResult(final Participant dealer, final List<Participant> players,
+        final GameResult gameResult) {
+        OutputView.showGameResult(dealer, players, gameResult);
         final Map<Name, Result> results = gameResult.makePlayerResults(players, dealer);
         OutputView.showPlayerGameResult(results);
     }

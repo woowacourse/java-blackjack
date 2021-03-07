@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -7,6 +8,7 @@ import blackjack.domain.card.CardType;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,11 +20,10 @@ public class OutputView {
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
     private static final String DEALER_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DISTRIBUTE_MESSAGE = "딜러와 %s에게 2장의 카드를 나누어주었습니다.";
-    private static final String DEALER_CARD_STATUS_FORMAT = "%s: %s";
     private static final String PLAYER_CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
-    private static final String GAME_RESULT_FORMAT = "%s: %d승 %d패";
+    private static final String GAME_RESULT_FORMAT = "%s: %d승 %d무 %d패";
 
     public static void distributeMessage(final List<Participant> players) {
         final String status = players.stream()
@@ -70,9 +71,18 @@ public class OutputView {
         return cardStatuses;
     }
 
-    public static void showGameResult(final Name name, final int winCount, final int loseCount) {
+    public static void showGameResult(final Participant dealer, final List<Participant> players,
+        final GameResult gameResult) {
+        final List<Result> dealerResults = Arrays.stream(Result.values())
+            .collect(Collectors.toList());
+        final List<Integer> counts = dealerResults.stream()
+            .map(result -> gameResult.calculateDealerResult(dealer, players, result))
+            .collect(Collectors.toList());
+
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name.getValue(), winCount, loseCount);
+        System.out
+            .printf(GAME_RESULT_FORMAT + NEWLINE, dealer.getName().getValue(), counts.get(0),
+                counts.get(1), counts.get(2));
     }
 
     public static void showPlayerGameResult(final Map<Name, Result> results) {
