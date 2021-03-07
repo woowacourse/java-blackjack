@@ -24,7 +24,6 @@ public abstract class Participant {
         this.cards.addCard(card);
     }
 
-
     public String getCards() {
         return this.cards.getCards();
     }
@@ -32,5 +31,4 @@ public abstract class Participant {
     public int calculateScore() {
         return cards.calculateScore();
     }
-
 }
