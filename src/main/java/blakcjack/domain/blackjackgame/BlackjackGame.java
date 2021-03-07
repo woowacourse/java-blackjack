@@ -17,23 +17,25 @@ import java.util.Map;
 import java.util.Set;
 
 public class BlackjackGame {
-    public static final String DUPLICATE_NAME_ERROR = "중복된 이름이 입력 되었습니다.";
-
     private final Deck deck;
     private final Participant dealer;
     private final List<Participant> players = new ArrayList<>();
 
     public BlackjackGame(final Deck deck, final List<String> names) {
+        validate(names);
+
         this.deck = deck;
         this.dealer = new Dealer();
 
-        Set<String> nameGroup = new HashSet<>(names);
-        if (nameGroup.size() != names.size()) {
-            throw new IllegalArgumentException(DUPLICATE_NAME_ERROR);
-        }
-
         for (String name : names) {
             players.add(new Player(new Name(name)));
+        }
+    }
+
+    private void validate(final List<String> names) {
+        Set<String> nameGroup = new HashSet<>(names);
+        if (nameGroup.size() != names.size()) {
+            throw new GameInitializationFailureException();
         }
     }
 

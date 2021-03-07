@@ -29,8 +29,8 @@
     - [x] 카드 생성 실패 (Card)
         - Card의 필드가 enum(Symbol, Number)이라 컴파일 시 체크할 수 있다고 생각하여 해당 예외를 만들지 않음
         - 대신 FailedCacheHitException을 만듦 (현재 프로그램에서는 Cache 초기화 실수한 경우에만 예외 발생할 듯)
-    - [x] 덱에 카드가 없는 경우 EmptyDeckException 발생(Deck)
-    - [ ] 플레이어 중복 (BlackjackGame)
+    - [x] 덱에 카드가 없는 경우 EmptyDeckException 발생 (Deck)
+    - [x] 플레이어 중복시 GameInitializationFailureException 발생 (BlackjackGame)
 - [ ] 예외에 따라 뷰에 안내가 필요한 경우 추가
     - [ ] 카드가 없을 시 뷰에 안내 메시지를 출력하고 게임 종료
 - [ ] 사용자 응답 (y,n)을 담을 enum 생성 (AdditionalCardReply ,view package)

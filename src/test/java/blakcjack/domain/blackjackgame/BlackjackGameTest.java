@@ -2,7 +2,6 @@ package blakcjack.domain.blackjackgame;
 
 import blakcjack.domain.Outcome;
 import blakcjack.domain.OutcomeStatistics;
-import blakcjack.domain.blackjackgame.BlackjackGame;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
@@ -15,10 +14,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import static blakcjack.domain.blackjackgame.BlackjackGame.DUPLICATE_NAME_ERROR;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlackjackGameTest {
     private List<String> names;
@@ -43,8 +47,7 @@ class BlackjackGameTest {
     @Test
     void validateDuplicateNames() {
         assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(DUPLICATE_NAME_ERROR);
+                .isInstanceOf(GameInitializationFailureException.class);
     }
 
     @DisplayName("카드 한 장 나눠주기 성공")
