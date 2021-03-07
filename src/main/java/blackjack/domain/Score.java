@@ -37,7 +37,10 @@ public class Score {
     }
 
     private static int aceCardScore(List<Card> cards, int score) {
-        int aceCount = (int) cards.stream().filter(card -> card.getDenomination() == Denomination.ACE).count();
+        int aceCount = (int) cards
+                .stream()
+                .filter(card -> card.getDenomination() == Denomination.ACE)
+                .count();
         for (int i = 0; i < aceCount; i++) {
             score += Denomination.selectAceScore(score);
         }
