@@ -52,13 +52,13 @@ public class CardsTest {
     @DisplayName("카드 꾸러미에서 카드 뽑기 성공")
     void removeCardSucceed() {
         cards = cards.addCard(new Card(Shape.SPADE, Denomination.FIVE));
-        cards = cards.removeCard();
+        cards.drawCard();
         assertThat(cards.getCards().size()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("카드 꾸러미에서 카드 뽑기 실패")
     void removeCardFail() {
-        assertThatThrownBy(() -> cards.removeCard()).isInstanceOf(IndexOutOfBoundsException.class);
+        assertThatThrownBy(() -> cards.drawCard()).isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

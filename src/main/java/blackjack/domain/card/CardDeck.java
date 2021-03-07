@@ -16,9 +16,7 @@ public class CardDeck {
     }
 
     public Card drawCard() {
-        Card drawCard = deck.peekCard();
-        this.deck = deck.removeCard();
-        return drawCard;
+        return deck.drawCard();
     }
 
     public void shuffleCard() {
