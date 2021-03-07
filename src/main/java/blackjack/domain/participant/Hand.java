@@ -34,7 +34,7 @@ public class Hand {
 
     private int calculateSingleCase() {
         return hand.stream()
-                .mapToInt(Card::getCardValue)
+                .mapToInt(card -> card.getCardNumber().getValue())
                 .sum();
     }
 
@@ -42,7 +42,7 @@ public class Hand {
         final List<Integer> possibleSum = new ArrayList<>();
         final int sumExceptAce = hand.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(Card::getCardValue)
+                .mapToInt(card -> card.getCardNumber().getValue())
                 .sum();
 
         for (final int aceSum : calculateAceSum(aceCount)) {
