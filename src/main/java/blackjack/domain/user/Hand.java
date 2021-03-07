@@ -6,7 +6,6 @@ import blackjack.domain.card.Value;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 public class Hand {
@@ -34,18 +33,21 @@ public class Hand {
         int score = sumScore();
 
         while (score > BLACK_JACK && hasAce()) {
-            OptionalInt indexOfAce = getIndexOfAce();
-            indexOfAce.ifPresent(i -> cards.set(i, new Card(cards.get(i).getSuit(), Value.ACE_OF_ONE)));
+            decideCardValue();
             score = sumScore();
         }
 
         return score;
     }
 
-    private OptionalInt getIndexOfAce() {
-        return IntStream.range(FIRST_INDEX, cards.size())
+    private void decideCardValue() {
+        IntStream.range(FIRST_INDEX, cards.size())
                 .filter(i -> isAce(cards.get(i)))
-                .findFirst();
+                .forEach(this::decideAceValue);
+    }
+
+    private Card decideAceValue(int i) {
+        return cards.set(i, new Card(cards.get(i).getSuit(), cards.get(i).selectValue(sumScore())));
     }
 
     private boolean hasAce() {
