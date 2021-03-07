@@ -37,8 +37,14 @@
 - [x] stack 대신 Deque 사용
   - [x] initial card 뽑을 때 Stream.generate 사용
   - [x] 처음 카드 덱 생성시 foreach 2번 쓰는 부분 메소드 추출  
-- [ ] 컨트롤러에서 Player 형변환 없이 구현
+- [ ] 컨트롤러에서 Player 형변환 없이 구현 -> 사용자 입력 물어보는 부분 구현 변경 고민
 - [ ] 딜러와 플레이어 한 리스트에서 구현 고민
+- [ ] 에이스 점수 변환 부분 수정
+- [ ] Game 객체에 딜러 플레이어 주입 고려
+- [ ] DTO 카멜 케이스로 변경 / 뷰로 위치 수정
+- [ ] get 들어간 네이밍 고민
+    - [ ] 컨트롤러에 getAdditionalCard
+- [ ] MatchResult reverseName() 하드코딩 제거
 
 ## 패키지 구조 
 1. domain 
