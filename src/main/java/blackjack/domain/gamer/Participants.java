@@ -3,14 +3,14 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public abstract class Person {
+public abstract class Participants {
 
     private static final int MIN_NAME_LENGTH = 1;
 
     private Cards cards;
     private final String name;
 
-    public Person(String name) {
+    public Participants(String name) {
         validateNameLength(name);
         this.name = name;
         this.cards = new Cards();

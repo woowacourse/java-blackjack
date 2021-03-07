@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Person;
+import blackjack.domain.gamer.Participants;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 
@@ -36,7 +36,7 @@ public class OutputView {
     }
 
     public static void distributeCardMessage(Players players) {
-        String playerName = players.getPlayers().stream().map(Person::getName).collect(Collectors.joining(","));
+        String playerName = players.getPlayers().stream().map(Participants::getName).collect(Collectors.joining(","));
         System.out.printf((DISTRIBUTE_MESSAGE_FORM) + "%n", playerName);
     }
 
@@ -51,8 +51,8 @@ public class OutputView {
         return denomination.getName() + shape.getName();
     }
 
-    public static void showCards(Person person) {
-        System.out.println(getCardsMessageForm(person));
+    public static void showCards(Participants participants) {
+        System.out.println(getCardsMessageForm(participants));
     }
 
     public static void askOneMoreCard(Player player) {
@@ -84,9 +84,9 @@ public class OutputView {
                 .forEach((key, value) -> System.out.printf((PLAYER_RESULT_FORM) + "%n", key.getName(), value.getResult()));
     }
 
-    private static String getCardsMessageForm(Person person) {
-        String cardsName = person.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
+    private static String getCardsMessageForm(Participants participants) {
+        String cardsName = participants.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
 
-        return String.format(CURRENT_CARD_FORM, person.getName(), cardsName);
+        return String.format(CURRENT_CARD_FORM, participants.getName(), cardsName);
     }
 }

@@ -2,7 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.Score;
 
-public class Player extends Person {
+public class Player extends Participants {
 
     public Player(String name) {
         super(name);

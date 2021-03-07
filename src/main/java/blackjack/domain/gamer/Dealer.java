@@ -3,7 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.MatchResult;
 import blackjack.domain.Score;
 
-public class Dealer extends Person {
+public class Dealer extends Participants {
 
     private static final int DEALER_MAX_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
