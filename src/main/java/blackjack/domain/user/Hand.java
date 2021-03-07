@@ -6,80 +6,49 @@ import java.util.List;
 
 public class Hand {
     public static final int MAX_SCORE = 21;
+    public static final int ACE_CONVERSION_LIMIT = 11;
+    public static final int ACE_DIFFERENCE = 10;
     public static final int BLACK_JACK_CARD_SIZE = 2;
 
-    private List<Card> cards;
-    private int score;
-    private HandStatus status;
     private final int hitLimit;
+    private List<Card> cards;
+    private HandStatus status;
 
     public Hand(List<Card> cards, int hitLimit) {
         this.cards = cards;
         this.hitLimit = hitLimit;
-        this.score = calculateHandScore();
-        this.status = calculateStatus();
+        this.status = calculateStatus(calculateHandScore());
     }
 
     public void addCard(Card card) {
         cards.add(card);
-        score = calculateHandScore();
-        status = calculateStatus();
+        status = calculateStatus(calculateHandScore());
     }
 
     public int calculateHandScore() {
-        int currentScore = calculateMaxScore();
-        if(isUnderBustScore(currentScore)) {
-            return currentScore;
+        int score = calculateScore();
+        if(score < ACE_CONVERSION_LIMIT) {
+            score += ACE_DIFFERENCE;
         }
-
-        return recalculateAce(currentScore);
+        return score;
     }
 
-    private int calculateMaxScore() {
+    private int calculateScore() {
         return cards.stream()
             .mapToInt(card -> card.getDenomination().getScore())
             .sum();
     }
 
-    private boolean isUnderBustScore(int sum) {
-        return sum <= MAX_SCORE;
-    }
-
-    private int recalculateAce(int currentScore) {
-        int countAce = countAce();
-        if(countAce <= 0) {
-            return currentScore;
-        }
-        return convertAceToOne(countAce, currentScore);
-    }
-
-    private int countAce() {
-        return (int) cards.stream()
-            .filter(card -> card.getDenomination().isAce())
-            .count();
-    }
-
-    private int convertAceToOne(int countAce, int sum) {
-        while(countAce > 0 && !isUnderBustScore(sum)) {
-            sum -= 10;
-            countAce--;
-        }
-        return sum;
-    }
-
-    private HandStatus calculateStatus() {
+    private HandStatus calculateStatus(int score) {
         if (score == MAX_SCORE && cards.size() == BLACK_JACK_CARD_SIZE) {
             return HandStatus.BLACK_JACK;
         }
-
         if (score > MAX_SCORE) {
             return HandStatus.BUST;
         }
-
-        if (score > hitLimit) { //TODO 메소드 라인 수 줄이기
+        if (score > hitLimit) {
             return HandStatus.STAY;
         }
-
         return HandStatus.HIT;
     }
 
@@ -91,12 +60,12 @@ public class Hand {
         return status == HandStatus.HIT;
     }
 
-    public HandStatus getStatus() {
-        return status;
+    public int getScore() {
+        return calculateHandScore();
     }
 
-    public int getScore() {
-        return score;
+    public HandStatus getStatus() {
+        return status;
     }
 
     public List<Card> getCards() {
