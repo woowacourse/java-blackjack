@@ -9,8 +9,6 @@ public enum Result {
     BLACKJACK_WIN("블랙잭 승리"),
     LOSE("패배");
 
-    private static final int BLACKJACK_VALUE = 21;
-
     private final String resultName;
 
     Result(String resultName) {
