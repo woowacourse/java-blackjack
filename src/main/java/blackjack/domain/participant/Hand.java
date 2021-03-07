@@ -31,7 +31,7 @@ public class Hand {
     private int calculateScore() {
         return cards.stream()
             .mapToInt(Card::getScore)
-            .reduce(0, Integer::sum);
+            .sum();
     }
 
     private int calculateHardAceScore(int totalScore) {
