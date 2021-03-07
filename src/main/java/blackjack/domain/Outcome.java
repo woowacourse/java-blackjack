@@ -37,15 +37,15 @@ public enum Outcome {
         return outcome;
     }
 
-    public static boolean isWin(final Outcome outcome) {
+    public boolean isWin(final Outcome outcome) {
         return outcome == WIN;
     }
 
-    public static boolean isLose(final Outcome outcome) {
+    public boolean isLose(final Outcome outcome) {
         return outcome == LOSE;
     }
 
-    public static boolean isDraw(final Outcome outcome) {
+    public boolean isDraw(final Outcome outcome) {
         return outcome == DRAW;
     }
 

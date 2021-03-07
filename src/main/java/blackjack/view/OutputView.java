@@ -75,19 +75,19 @@ public class OutputView {
 
     private static int findWinCount(final Queue<Outcome> dealerOutcomes) {
         return (int) dealerOutcomes.stream()
-                .filter(Outcome::isWin)
+                .filter(q -> q.isWin(q))
                 .count();
     }
 
     private static int findLoseCount(final Queue<Outcome> dealerOutcomes) {
         return (int) dealerOutcomes.stream()
-                .filter(Outcome::isLose)
+                .filter(q -> q.isLose(q))
                 .count();
     }
 
     private static int findDrawCount(final Queue<Outcome> dealerOutcomes) {
         return (int) dealerOutcomes.stream()
-                .filter(Outcome::isDraw)
+                .filter(q -> q.isDraw(q))
                 .count();
     }
 }
