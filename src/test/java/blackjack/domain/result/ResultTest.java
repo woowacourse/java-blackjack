@@ -42,17 +42,17 @@ public class ResultTest {
     @DisplayName("딜러의 승/무/패 횟수를 정상적으로 반환하는지 확인")
     void dealerResultTest() {
         //Given
-        player1.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        player1.receiveCard(new Card(CardNumber.JACK, CardType.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardNumber.JACK, CardType.CLOVER));
 
-        player2.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        player2.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
+        player2.receiveAdditionalCard(new Card(CardNumber.EIGHT, CardType.HEART));
+        player2.receiveAdditionalCard(new Card(CardNumber.NINE, CardType.HEART));
 
-        player3.receiveCard(new Card(CardNumber.TWO, CardType.DIAMOND));
-        player3.receiveCard(new Card(CardNumber.THREE, CardType.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardNumber.TWO, CardType.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardNumber.THREE, CardType.DIAMOND));
 
-        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.SPADE));
-        dealer.receiveCard(new Card(CardNumber.NINE, CardType.SPADE));
+        dealer.receiveAdditionalCard(new Card(CardNumber.EIGHT, CardType.SPADE));
+        dealer.receiveAdditionalCard(new Card(CardNumber.NINE, CardType.SPADE));
         //When
         final Result result = new Result(Arrays.asList(player1, player2, player3), dealer);
         //Then
@@ -66,17 +66,17 @@ public class ResultTest {
     @DisplayName("플레이어의 승/무/패 현황을 정상적으로 반환하는지 확인")
     void playerResultTest() {
         //Given
-        player1.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        player1.receiveCard(new Card(CardNumber.JACK, CardType.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardNumber.JACK, CardType.CLOVER));
 
-        player2.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        player2.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
+        player2.receiveAdditionalCard(new Card(CardNumber.EIGHT, CardType.HEART));
+        player2.receiveAdditionalCard(new Card(CardNumber.NINE, CardType.HEART));
 
-        player3.receiveCard(new Card(CardNumber.TWO, CardType.DIAMOND));
-        player3.receiveCard(new Card(CardNumber.THREE, CardType.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardNumber.TWO, CardType.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardNumber.THREE, CardType.DIAMOND));
 
-        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.SPADE));
-        dealer.receiveCard(new Card(CardNumber.NINE, CardType.SPADE));
+        dealer.receiveAdditionalCard(new Card(CardNumber.EIGHT, CardType.SPADE));
+        dealer.receiveAdditionalCard(new Card(CardNumber.NINE, CardType.SPADE));
         //When
         final Result result = new Result(Arrays.asList(player1, player2, player3), dealer);
         //Then
