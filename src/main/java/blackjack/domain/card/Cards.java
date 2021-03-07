@@ -64,7 +64,7 @@ public class Cards {
 
     public int calculateScore() {
         int score = cards.stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::score)
                 .sum();
         long aceCount = cards.stream()
                 .filter(Card::isAce)

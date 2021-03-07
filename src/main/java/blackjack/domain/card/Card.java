@@ -15,7 +15,7 @@ public class Card {
         return this.denomination.equals(Denomination.ACE);
     }
 
-    public int getScore() {
+    public int score() {
         return this.denomination.getScore();
     }
 
