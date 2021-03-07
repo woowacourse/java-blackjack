@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Dealer.THRESHOLD;
+import static blackjack.domain.participant.Dealer.BUST_THRESHOLD;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
@@ -21,7 +21,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isBust() {
-        return cardHand.sumAceToOne() > THRESHOLD;
+        return cardHand.sumAceToOne() > BUST_THRESHOLD;
     }
 
     @Override
@@ -31,15 +31,15 @@ public class Player extends Participant {
         int resultByEleven = cardHand.sumAceToEleven();
 
         // 21에 딱 맞음
-        if (resultByOne == THRESHOLD) {
+        if (resultByOne == BUST_THRESHOLD) {
             return resultByOne;
         }
-        if (resultByEleven == THRESHOLD) {
+        if (resultByEleven == BUST_THRESHOLD) {
             return resultByEleven;
         }
 
         // 둘다 21을 넘지 않는다면 큰 수 리턴
-        if (resultByEleven < THRESHOLD && resultByOne < THRESHOLD) {
+        if (resultByEleven < BUST_THRESHOLD && resultByOne < BUST_THRESHOLD) {
             return Math.max(resultByEleven, resultByOne);
         }
 

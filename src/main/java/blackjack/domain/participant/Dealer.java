@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int THRESHOLD = 21;
-    private static final int DEALER_THRESHOLD = 16;
+    public static final int BUST_THRESHOLD = 21;
+    private static final int DEALER_UNDER = 16;
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
