@@ -44,7 +44,6 @@ public class Application {
             if (DECLINE.equals(answer)) {
                 return;
             }
-            drawMoreCard(player, cardDeck);
         }
     }
 
