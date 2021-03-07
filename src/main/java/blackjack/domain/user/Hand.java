@@ -11,11 +11,13 @@ public class Hand {
     private List<Card> cards;
     private int score;
     private HandStatus status;
+    private final int stayLimit;
 
-    public Hand(List<Card> cards) {
+    public Hand(List<Card> cards, int stayLimit) {
         this.cards = cards;
         this.score = calculateHandScore();
         this.status = calculateStatus();
+        this.stayLimit = stayLimit;
     }
 
     public void addCard(Card card) {
@@ -74,11 +76,19 @@ public class Hand {
             return HandStatus.BUST;
         }
 
+        if (score > stayLimit) { //TODO 메소드 라인 수 줄이기
+            return HandStatus.STAY;
+        }
+
         return HandStatus.HIT;
     }
 
     public void convertStatusToStay() {
         status = HandStatus.STAY;
+    }
+
+    public boolean isHit() {
+        return status == HandStatus.HIT;
     }
 
     public HandStatus getStatus() {

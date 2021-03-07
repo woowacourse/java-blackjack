@@ -1,9 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Deck;
-
 public class Player extends User {
-    private static final String YES = "y";
 
     private final String name;
 
@@ -18,22 +15,12 @@ public class Player extends User {
 
     private void validateNotEmptyName(String name) {
         if (name.isEmpty()) {
-            throw new IllegalArgumentException("빈 이름이 입력되었습니다.");
+            throw new IllegalArgumentException("빈 이름이 입력되었습니다."); //TODO 테스트 코드 작성
         }
     }
 
-    public void askDraw(String askIfMoreCard, Deck deck) {
-        if (YES.equals(askIfMoreCard)) {
-            draw(deck.pickSingleCard());
-            return;
-        }
-
+    public void convertToStay() {
         hand.convertStatusToStay();
-    }
-
-    @Override
-    public boolean isHit() {
-        return hand.getStatus() == HandStatus.HIT;
     }
 
     @Override

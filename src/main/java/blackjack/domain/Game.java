@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
+
+    private static final int PLAYER_STAY_LIMIT = 21;
+    private static final int DEALER_STAY_LIMIT = 16;
     private final User dealer;
     private final List<User> players;
 
@@ -23,8 +26,8 @@ public class Game {
     }
 
     public void drawInitialCards(Deck deck) {
-        dealer.initialHands(deck.pickInitialCards());
-        players.forEach(player -> player.initialHands(deck.pickInitialCards()));
+        dealer.initialHands(deck.pickInitialCards(), DEALER_STAY_LIMIT);
+        players.forEach(player -> player.initialHands(deck.pickInitialCards(), PLAYER_STAY_LIMIT));
     }
 
     public boolean addCardToDealer(Deck deck) {

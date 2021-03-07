@@ -30,8 +30,8 @@
 - [ ] 플레이어 참여 인원 제한
 
 ## 피드백 적용
-- [ ] isHit() 부모 클래스에서 구현 
-  - [ ] hand에 메세지 보내기 
+- [x] isHit() 부모 클래스에서 구현 
+  - [x] hand에 메세지 보내기
 - [ ] Dealer, Game, MatchResult Player, User 테스트 코드 추가 
 - [ ] 테스트 코드에 hasSize() 사용
 - [ ] stack 대신 Deque 사용

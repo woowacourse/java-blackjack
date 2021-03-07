@@ -8,8 +8,8 @@ public abstract class User {
 
     protected Hand hand;
 
-    public void initialHands(List<Card> cards) {
-        this.hand = new Hand(cards);
+    public void initialHands(List<Card> cards, int stayLimit) {
+        this.hand = new Hand(cards, stayLimit);
     }
 
     public void draw(Card card) {
@@ -32,7 +32,9 @@ public abstract class User {
         return hand.getStatus();
     }
 
-    public abstract String getName();
+    public boolean isHit() {
+        return hand.isHit();
+    }
 
-    public abstract boolean isHit();
+    public abstract String getName();
 }

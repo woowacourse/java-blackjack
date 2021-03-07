@@ -28,9 +28,13 @@ public class BlackjackController {
     }
 
     private void getAdditionalCard(Player player, Deck deck) {
-        while (player.isHit()) {
-            player.askDraw(InputView.askIfMoreCard(player), deck);
+        while (player.isHit() && "y".equals(InputView.askIfMoreCard(player))) {
+            player.draw(deck.pickSingleCard());
             OutputView.printPlayerCard(player);
+        }
+
+        if ("n".equals(InputView.askIfMoreCard(player))) {
+            player.convertToStay();
         }
     }
 
