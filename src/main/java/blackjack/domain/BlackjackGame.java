@@ -69,6 +69,10 @@ public class BlackjackGame {
         return new UserGameResult(user.getCards(), user.getName().toString(), WinOrLose.decideWinOrLose(user, dealer));
     }
 
+    public boolean canDealerMoreDraw() {
+        return dealer.canDealerMoreDraw();
+    }
+
     public List<ParticipantName> getUserNames() {
         return users.getNameList();
     }

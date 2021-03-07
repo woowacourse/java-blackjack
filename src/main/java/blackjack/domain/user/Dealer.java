@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
 
-    private static final int NO_MORE_DRAW_NUMBER = 16;
+    private static final int DEALER_MINIMUM_SCORE = 16;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -15,7 +15,7 @@ public class Dealer extends Participant {
         return hand.getFirstCard();
     }
 
-    public boolean isUnderSixteen() {
-        return hand.calculateScore() < NO_MORE_DRAW_NUMBER;
+    public boolean canDealerMoreDraw() {
+        return hand.calculateScore() <= DEALER_MINIMUM_SCORE;
     }
 }

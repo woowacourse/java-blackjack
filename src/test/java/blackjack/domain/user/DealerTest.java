@@ -26,9 +26,9 @@ public class DealerTest {
                 .containsExactly(new Card(Suit.SPADE, Symbol.EIGHT), new Card(Suit.HEART, Symbol.SIX));
     }
 
-    @DisplayName("딜러가 지닌 카드의 합이 16이하인 경우 카드를 한 장 더 뽑는지 테스트")
+    @DisplayName("딜러가 지닌 카드의 합이 16이하인 경우 확인 가능한지 테스트")
     @Test
-    void testIsUnderSixteen() {
+    void testCanDealerMoreDraw() {
         //given
         Dealer dealer = new Dealer();
 
@@ -37,7 +37,7 @@ public class DealerTest {
         dealer.drawCard(new Card(Suit.HEART, Symbol.SIX));
 
         //then
-        assertThat(dealer.isUnderSixteen()).isTrue();
+        assertThat(dealer.canDealerMoreDraw()).isTrue();
     }
 
     @DisplayName("딜러가 최초로 받은 한 장을 공개 테스트")
