@@ -1,12 +1,13 @@
 package blackjack.domain;
 
+import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+import blackjack.view.dto.CardDto;
+import blackjack.view.dto.ParticipantDto;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackManager {
 
@@ -33,25 +34,23 @@ public class BlackjackManager {
         }
     }
 
-    public static GameResultDto getGameResult(Dealer dealer, Players players) {
-        Map<String, GameResult> playerResult = getPlayersResult(dealer, players);
-        return new GameResultDto(playerResult, getDealerResult(playerResult));
+    public ParticipantDto createDealerDto() {
+        return new ParticipantDto(createCardDtos(dealer.getCards()), dealer.getScore());
     }
 
-    private static Map<String, GameResult> getPlayersResult(Dealer dealer, Players players) {
-        Map<String, GameResult> playersResult = new HashMap<>();
-        players.toList()
-            .forEach(player -> playersResult.put(player.getName(), GameResult.judgeHand(
-                dealer.getTotalScore(), player.getTotalScore())));
-        return playersResult;
+    public List<ParticipantDto> createPlayerDtos() {
+        return players.toList()
+            .stream()
+            .map(player -> new ParticipantDto(
+                player.getName(),
+                createCardDtos(player.getCards()),
+                player.getScore()
+            )).collect(Collectors.toList());
     }
 
-    private static Map<GameResult, Integer> getDealerResult(Map<String, GameResult> playerResult) {
-        Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
-        Arrays.asList(GameResult.values()).forEach(value -> dealerResult.put(value, 0));
-        playerResult.values()
-            .forEach(result -> dealerResult.computeIfPresent(GameResult.reverseResult(result),
-                ((gameResult, count) -> ++count)));
-        return dealerResult;
+    private List<CardDto> createCardDtos(final List<Card> cards) {
+        return cards.stream()
+            .map(card -> new CardDto(card.getNumberName() + card.getPatternName()))
+            .collect(Collectors.toList());
     }
 }
