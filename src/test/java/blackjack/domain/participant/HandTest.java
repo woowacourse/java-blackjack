@@ -32,7 +32,7 @@ public class HandTest {
     @DisplayName("Hand에 새로운 카드가 추가되는지 확인")
     void receiveCardTest() {
         hand.add(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        assertThat(hand.getHand()).hasSize(1);
+        assertThat(hand.getCards()).hasSize(1);
     }
 
     @Test

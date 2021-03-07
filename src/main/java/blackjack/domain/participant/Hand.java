@@ -11,18 +11,18 @@ import java.util.List;
 public class Hand {
     private static final int BUST_LIMIT = 22;
 
-    private final List<Card> hand;
+    private final List<Card> cards;
 
     public Hand() {
-        this.hand = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     public void add(final Card card) {
-        hand.add(card);
+        cards.add(card);
     }
 
     public int calculateScore() {
-        final int aceCount = (int) hand.stream()
+        final int aceCount = (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
 
@@ -33,14 +33,14 @@ public class Hand {
     }
 
     private int calculateSingleCase() {
-        return hand.stream()
+        return cards.stream()
                 .mapToInt(card -> card.getCardNumber().getValue())
                 .sum();
     }
 
     private int calculateMultipleCase(final int aceCount) {
         final List<Integer> possibleSum = new ArrayList<>();
-        final int sumExceptAce = hand.stream()
+        final int sumExceptAce = cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(card -> card.getCardNumber().getValue())
                 .sum();
@@ -75,7 +75,7 @@ public class Hand {
         return calculateScore() >= BUST_LIMIT;
     }
 
-    public List<Card> getHand() {
-        return Collections.unmodifiableList(hand);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
