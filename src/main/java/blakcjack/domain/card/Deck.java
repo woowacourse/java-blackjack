@@ -14,17 +14,21 @@ public class Deck {
 	}
 
 	public Deck(final ShuffleStrategy shuffleStrategy) {
-		generateCards();
+        addCards();
 		shuffleStrategy.shuffle(cards);
 	}
 
-	protected void generateCards() {
-		for (final CardSymbol cardSymbol : CardSymbol.values()) {
-			for (final CardNumber cardNumber : CardNumber.values()) {
-				cards.add(Card.of(cardSymbol, cardNumber));
-			}
-		}
-	}
+    private void addCards() {
+        for (final CardSymbol cardSymbol : CardSymbol.values()) {
+            addSameSymbolCards(cardSymbol);
+        }
+    }
+
+    private void addSameSymbolCards(final CardSymbol cardSymbol) {
+        for (final CardNumber cardNumber : CardNumber.values()) {
+            cards.add(Card.of(cardSymbol, cardNumber));
+        }
+    }
 
 	public Card drawCard() {
 		if (cards.empty()) {
