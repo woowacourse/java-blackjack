@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.result.Result;
+
 public class Dealer extends Participant {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
     private static final String FIXED_DEALER_NAME = "딜러";
@@ -9,24 +11,17 @@ public class Dealer extends Participant {
     }
 
     public boolean checkMoreCardAvailable() {
-        return (hand.calculateScore() <= MAX_SUM_FOR_MORE_CARD);
+        return hand.calculateScore() <= MAX_SUM_FOR_MORE_CARD;
     }
 
-    public String checkResult(final Player player) {
-        if (player.isBust()) {
-            return "승";
+    @Override
+    public String checkResult(final Participant participant) {
+        if (participant.isBust()) {
+            return Result.WIN;
         }
         if (this.isBust()) {
-            return "패";
+            return Result.LOSE;
         }
-        final int dealerScore = this.hand.calculateScore();
-        final int playerScore = player.hand.calculateScore();
-        if (dealerScore > playerScore) {
-            return "승";
-        } else if (dealerScore == playerScore) {
-            return "무";
-        } else {
-            return "패";
-        }
+        return checkResultByScore(participant);
     }
 }

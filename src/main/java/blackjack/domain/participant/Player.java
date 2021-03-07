@@ -1,25 +1,20 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.result.Result;
+
 public class Player extends Participant {
     public Player(final String name) {
         super(name);
     }
 
-    public String checkResult(final Dealer dealer) {
+    @Override
+    public String checkResult(Participant participant) {
         if (this.isBust()) {
-            return "패";
+            return Result.LOSE;
         }
-        if (dealer.isBust()) {
-            return "승";
+        if (participant.isBust()) {
+            return Result.WIN;
         }
-        final int playerScore = this.hand.calculateScore();
-        final int dealerScore = dealer.hand.calculateScore();
-        if (playerScore > dealerScore) {
-            return "승";
-        } else if (playerScore == dealerScore) {
-            return "무";
-        } else {
-            return "패";
-        }
+        return checkResultByScore(participant);
     }
 }
