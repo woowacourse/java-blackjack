@@ -2,8 +2,6 @@ package blakcjack.domain.name;
 
 import java.util.*;
 
-import static blakcjack.domain.name.DuplicatePlayerNamesException.DUPLICATE_NAME_ERROR;
-
 public class Names {
 	private final List<Name> names = new ArrayList<>();
 
@@ -15,7 +13,7 @@ public class Names {
 	private void validateDuplication(final List<String> names) {
 		final Set<String> nameGroup = new HashSet<>(names);
 		if (nameGroup.size() != names.size()) {
-			throw new DuplicatePlayerNamesException(DUPLICATE_NAME_ERROR);
+			throw new DuplicatePlayerNamesException();
 		}
 	}
 

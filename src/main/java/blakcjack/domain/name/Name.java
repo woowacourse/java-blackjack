@@ -2,8 +2,6 @@ package blakcjack.domain.name;
 
 import java.util.Objects;
 
-import static blakcjack.domain.name.IllegalPlayerNameException.ILLEGAL_NAME_ERROR;
-
 public class Name {
 	private final String name;
 
@@ -14,10 +12,10 @@ public class Name {
 
 	private void validateNullOrEmpty(final String name) {
 		if (Objects.isNull(name)) {
-			throw new IllegalPlayerNameException(ILLEGAL_NAME_ERROR);
+			throw new IllegalPlayerNameException();
 		}
 		if (name.isEmpty()) {
-			throw new IllegalPlayerNameException(ILLEGAL_NAME_ERROR);
+			throw new IllegalPlayerNameException();
 		}
 	}
 

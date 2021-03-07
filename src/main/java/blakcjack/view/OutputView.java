@@ -104,7 +104,6 @@ public class OutputView {
 			final int count = dealerOutcome.get(outcome);
 			stringBuilder.append(convertCountToString(count, outcome));
 		}
-
 		System.out.println(stringBuilder.toString());
 	}
 
