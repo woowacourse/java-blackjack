@@ -34,13 +34,14 @@ public class InputView {
     public static Boolean askMoreDraw(ParticipantName userName) {
         System.out.printf(MORE_DRAW_MSG_FORMAT, userName);
         String yesOrNo = SCANNER.nextLine();
-        validateYesOrNo(yesOrNo);
-        return yesOrNo.equalsIgnoreCase(YES);
+        if (isValidAnswer(yesOrNo)) {
+            return yesOrNo.equalsIgnoreCase(YES);
+        }
+        throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
+
     }
 
-    private static void validateYesOrNo(String yesOrNo) {
-        if (!yesOrNo.equalsIgnoreCase(YES) && !yesOrNo.equalsIgnoreCase(NO)) {
-            throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
-        }
+    private static Boolean isValidAnswer(String yesOrNo) {
+        return yesOrNo.equalsIgnoreCase(YES) || yesOrNo.equalsIgnoreCase(NO);
     }
 }
