@@ -55,12 +55,12 @@ public class BlackjackGame {
     }
 
     public ScoreBoard createScoreBoard() {
-        return new ScoreBoard(
-                users.stream()
-                        .collect(
-                                toMap(Function.identity(), this::createGameResult, (exist, newer) -> newer, LinkedHashMap::new)
-                        )
-                , createDealerGameResult());
+        LinkedHashMap<User, UserGameResult> userAndGameResults = users.stream()
+                .collect(toMap(
+                        Function.identity(),
+                        this::createGameResult,
+                        (exist, newer) -> newer, LinkedHashMap::new));
+        return new ScoreBoard(userAndGameResults, createDealerGameResult());
     }
 
     private GameResult createDealerGameResult() {
@@ -79,7 +79,7 @@ public class BlackjackGame {
         return users.getNameList();
     }
 
-    public Card getDealerFirstCard(){
+    public Card getDealerFirstCard() {
         return dealer.getFirstCard();
     }
 
