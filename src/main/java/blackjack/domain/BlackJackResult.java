@@ -14,7 +14,6 @@ public class BlackJackResult {
 
     public BlackJackResult(Map<Player, MatchResult> result) {
         this.result = result;
-//                players.verifyResultByCompareScore(dealer);
     }
 
     public Map<MatchResult, Integer> getDealerResult() {
