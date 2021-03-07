@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.Result;
+import blackjack.domain.Select;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
@@ -16,9 +17,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-
-    private static final String CONTINUE_GAME_MARK = "y";
-    private static final String END_GAME_MARK = "n";
 
     public void run() {
         final CardDeck cardDeck = new CardDeck();
@@ -83,7 +81,7 @@ public class BlackjackController {
     }
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
-        if (END_GAME_MARK.equals(askPlayerMoreCard(participant))) {
+        if (askPlayerMoreCard(participant)) {
             OutputView.showParticipantCard(participant);
             return;
         }
@@ -95,7 +93,7 @@ public class BlackjackController {
         singlePlayerGameProgress(cardDeck, participant);
     }
 
-    private String askPlayerMoreCard(final Participant participant) {
+    private boolean askPlayerMoreCard(final Participant participant) {
         try {
             final String userInput = InputView.askMoreCard(participant.getName());
             return validateMoreCardOption(userInput);
@@ -105,11 +103,8 @@ public class BlackjackController {
         }
     }
 
-    private String validateMoreCardOption(final String userInput) {
-        if (CONTINUE_GAME_MARK.equals(userInput) || END_GAME_MARK.equals(userInput)) {
-            return userInput;
-        }
-        throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
+    private boolean validateMoreCardOption(final String userInput) {
+        return new Select(userInput).getIsMoreCard();
     }
 
     private boolean isBust(final Participant participant) {
