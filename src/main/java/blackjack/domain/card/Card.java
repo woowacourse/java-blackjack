@@ -2,22 +2,22 @@ package blackjack.domain.card;
 
 public class Card {
     private final CardNumber cardNumber;
-    private final CardType cardType;
+    private final CardSuit cardSuit;
 
-    public Card(final CardNumber cardNumber, final CardType cardType) {
+    public Card(final CardNumber cardNumber, final CardSuit cardSuit) {
         this.cardNumber = cardNumber;
-        this.cardType = cardType;
+        this.cardSuit = cardSuit;
     }
 
     public boolean isAce() {
-        return (this.cardNumber == CardNumber.ACE);
+        return this.cardNumber == CardNumber.ACE;
     }
 
     public CardNumber getCardNumber() {
         return this.cardNumber;
     }
 
-    public CardType getCardType() {
-        return this.cardType;
+    public CardSuit getCardSuit() {
+        return this.cardSuit;
     }
 }

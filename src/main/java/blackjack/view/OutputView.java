@@ -71,7 +71,7 @@ public class OutputView {
     }
 
     private static String cardPrintForm(final Card card) {
-        return card.getCardNumber().getSymbol() + card.getCardType().getType();
+        return card.getCardNumber().getSymbol() + card.getCardSuit().getType();
     }
 
     public static void showDealerGameResult(final Map<String, Integer> dealerResult) {

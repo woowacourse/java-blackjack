@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardType;
+import blackjack.domain.card.CardSuit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,24 +31,24 @@ public class HandTest {
     @Test
     @DisplayName("Hand에 새로운 카드가 추가되는지 확인")
     void receiveCardTest() {
-        hand.add(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        hand.add(new Card(CardNumber.EIGHT, CardSuit.CLOVER));
         assertThat(hand.getCards()).hasSize(1);
     }
 
     @Test
     @DisplayName("Hand에 추가된 카드들의 합을 확인")
     void calculateScoreTest() {
-        hand.add(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        hand.add(new Card(CardNumber.SEVEN, CardType.CLOVER));
+        hand.add(new Card(CardNumber.EIGHT, CardSuit.CLOVER));
+        hand.add(new Card(CardNumber.SEVEN, CardSuit.CLOVER));
         assertThat(hand.calculateScore()).isEqualTo(15);
     }
 
     @Test
     @DisplayName("에이스 카드가 하나있을 때 합 구하기")
     void calculateMyCardSumWhenAceIsOne() {
-        hand.add(new Card(CardNumber.JACK, CardType.CLOVER));
-        hand.add(new Card(CardNumber.FIVE, CardType.CLOVER));
-        hand.add(new Card(CardNumber.ACE, CardType.CLOVER));
+        hand.add(new Card(CardNumber.JACK, CardSuit.CLOVER));
+        hand.add(new Card(CardNumber.FIVE, CardSuit.CLOVER));
+        hand.add(new Card(CardNumber.ACE, CardSuit.CLOVER));
         Assertions.assertThat(hand.calculateScore()).isEqualTo(16);
     }
 
@@ -59,7 +59,7 @@ public class HandTest {
         final String[] cardNumbers = cards.split(",");
         for (final String number : cardNumbers) {
             final CardNumber cardNumber = CardNumber.valueOf(number);
-            hand.add(new Card(cardNumber, CardType.CLOVER));
+            hand.add(new Card(cardNumber, CardSuit.CLOVER));
         }
         assertThat(hand.calculateScore()).isEqualTo(expectedScore);
     }
