@@ -16,8 +16,8 @@ public abstract class User {
         hand.addCard(card);
     }
 
-    public ResultDTO getResultDTO() {
-        return new ResultDTO(getName(), getCards(), getScore());
+    public ResultDto getResultDTO() {
+        return new ResultDto(getName(), getCards(), getScore());
     }
 
     public List<Card> getCards() {

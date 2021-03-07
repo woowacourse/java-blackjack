@@ -1,11 +1,11 @@
 package blackjack.domain.user;
 
-public class WinningResultDTO {
+public class WinningResultDto {
 
     private final String name;
     private final MatchResult result;
 
-    public WinningResultDTO(String name, MatchResult matchResult) {
+    public WinningResultDto(String name, MatchResult matchResult) {
         this.result = matchResult;
         this.name = name;
     }

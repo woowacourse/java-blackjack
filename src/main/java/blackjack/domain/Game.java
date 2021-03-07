@@ -57,17 +57,17 @@ public class Game {
         return false;
     }
 
-    public List<ResultDTO> getResultDTOs() {
-        List<ResultDTO> resultDTOS = new ArrayList<>();
-        resultDTOS.add(dealer.getResultDTO());
-        players.forEach(player -> resultDTOS.add(player.getResultDTO()));
+    public List<ResultDto> getResultDTOs() {
+        List<ResultDto> resultDtos = new ArrayList<>();
+        resultDtos.add(dealer.getResultDTO());
+        players.forEach(player -> resultDtos.add(player.getResultDTO()));
 
-        return resultDTOS;
+        return resultDtos;
     }
 
-    public List<WinningResultDTO> getWinningResultDTOs() {
+    public List<WinningResultDto> getWinningResultDTOs() {
         return players.stream().map(player ->
-            new WinningResultDTO(player.getName(), MatchResult.calculateResult(player, dealer)))
+            new WinningResultDto(player.getName(), MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
     }
 

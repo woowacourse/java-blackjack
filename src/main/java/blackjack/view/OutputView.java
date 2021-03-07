@@ -2,9 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.user.MatchResult;
-import blackjack.domain.user.ResultDTO;
+import blackjack.domain.user.ResultDto;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResultDTO;
+import blackjack.domain.user.WinningResultDto;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -21,7 +21,7 @@ public class OutputView {
     public static void printInitialCards(User dealer, List<User> players) {
         printIntroMessage(dealer, players);
         printUserCard(dealer, players);
-        System.out.println("");
+        System.out.println();
     }
 
     private static void printIntroMessage(User dealer, List<User> players) {
@@ -62,26 +62,26 @@ public class OutputView {
         System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.\n");
     }
 
-    public static void printUserResult(List<ResultDTO> resultDTOS) {
-        resultDTOS.forEach(OutputView::printResultDto);
+    public static void printUserResult(List<ResultDto> resultDtos) {
+        resultDtos.forEach(OutputView::printResultDto);
     }
 
-    private static PrintStream printResultDto(ResultDTO resultDTO) {
+    private static PrintStream printResultDto(ResultDto resultDTO) {
         return System.out.printf("%s 카드 : %s - 결과: %d%n",
             resultDTO.getName(),
             makeCardString(resultDTO.getCards()),
             resultDTO.getScore());
     }
 
-    public static void printWinningResult(List<WinningResultDTO> winningResultDTOs) {
+    public static void printWinningResult(List<WinningResultDto> winningResultDtos) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러 : " + calculateDealerResult(winningResultDTOs));
-        winningResultDTOs.forEach(winningResultDto ->
+        System.out.println("딜러 : " + calculateDealerResult(winningResultDtos));
+        winningResultDtos.forEach(winningResultDto ->
             System.out.printf("%s: %s%n", winningResultDto.getName(), winningResultDto.getResult().getName()));
     }
 
-    private static String calculateDealerResult(List<WinningResultDTO> winningResultDTOs) {
-        Map<MatchResult, Long> calculate = countEachResults(winningResultDTOs);
+    private static String calculateDealerResult(List<WinningResultDto> winningResultDtos) {
+        Map<MatchResult, Long> calculate = countEachResults(winningResultDtos);
 
         return calculate.keySet().stream()
             .filter(matchResult -> calculate.get(matchResult) > 0)
@@ -89,9 +89,9 @@ public class OutputView {
             .collect(Collectors.joining(" "));
     }
 
-    public static Map<MatchResult, Long> countEachResults(List<WinningResultDTO> winningResultDTOs) {
-        return winningResultDTOs.stream()
-            .map(WinningResultDTO::getResult)
+    public static Map<MatchResult, Long> countEachResults(List<WinningResultDto> winningResultDtos) {
+        return winningResultDtos.stream()
+            .map(WinningResultDto::getResult)
             .collect(groupingBy(Function.identity(), counting()));
     }
 }
