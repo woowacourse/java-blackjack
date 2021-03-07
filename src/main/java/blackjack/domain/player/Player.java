@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 
 public abstract class Player {
 
-    protected final Name name;
+    private final Name name;
     protected final Cards cards;
 
     protected Player(Name name, Cards cards) {
