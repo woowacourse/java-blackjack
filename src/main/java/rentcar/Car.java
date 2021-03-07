@@ -1,25 +1,25 @@
 package rentcar;
 
 public abstract class Car {
-	protected final double tripDistance;
+    protected final double tripDistance;
 
-	protected Car(final double tripDistance) {
-		this.tripDistance = tripDistance;
-	}
+    protected Car(final double tripDistance) {
+        this.tripDistance = tripDistance;
+    }
 
-	abstract double getDistancePerLiter();
+    abstract double getDistancePerLiter();
 
-	abstract String getName();
+    abstract String getName();
 
-	protected double getTripDistance() {
-		return this.tripDistance;
-	}
+    protected double getTripDistance() {
+        return this.tripDistance;
+    }
 
-	public double getChargeQuantity() {
-		return getTripDistance() / getDistancePerLiter();
-	}
+    public double getChargeQuantity() {
+        return getTripDistance() / getDistancePerLiter();
+    }
 
-	public String getSummary() {
-		return getName() + " : " + Math.round(getChargeQuantity()) + "리터";
-	}
+    public String getSummary() {
+        return getName() + " : " + Math.round(getChargeQuantity()) + "리터";
+    }
 }

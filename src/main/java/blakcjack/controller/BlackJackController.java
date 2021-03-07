@@ -13,42 +13,42 @@ import static blakcjack.view.InputView.takePlayerNamesInput;
 import static blakcjack.view.OutputView.printInitialHands;
 
 public class BlackJackController {
-	private static final String YES = "y";
+    private static final String YES = "y";
 
-	public void run() {
-		final List<String> playerNames = takePlayerNamesInput();
-		final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
-		blackjackGame.initializeHands();
+    public void run() {
+        final List<String> playerNames = takePlayerNamesInput();
+        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), playerNames);
+        blackjackGame.initializeHands();
 
-		final List<Participant> players = blackjackGame.getPlayers();
-		final Dealer dealer = blackjackGame.getDealer();
-		printInitialHands(dealer, players);
+        final List<Participant> players = blackjackGame.getPlayers();
+        final Dealer dealer = blackjackGame.getDealer();
+        printInitialHands(dealer, players);
 
-		for (final Participant player : players) {
-			drawForMaximumCapability(blackjackGame, player);
-		}
+        for (final Participant player : players) {
+            drawForMaximumCapability(blackjackGame, player);
+        }
 
-		drawForMaximumCapability(blackjackGame, dealer);
-		OutputView.printFinalHandsSummary(dealer, players);
-		OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getName());
-	}
+        drawForMaximumCapability(blackjackGame, dealer);
+        OutputView.printFinalHandsSummary(dealer, players);
+        OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getName());
+    }
 
-	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
-		while (player.isScoreLowerThanBlackJackValue() && isYes(player)) {
-			blackjackGame.distributeOneCard(player);
-			OutputView.printPlayerHand(player);
-		}
-	}
+    private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
+        while (player.isScoreLowerThanBlackJackValue() && isYes(player)) {
+            blackjackGame.distributeOneCard(player);
+            OutputView.printPlayerHand(player);
+        }
+    }
 
-	private boolean isYes(final Participant player) {
-		final String yesOrNo = InputView.takeHitOrStand(player.getName());
-		return YES.equals(yesOrNo);
-	}
+    private boolean isYes(final Participant player) {
+        final String yesOrNo = InputView.takeHitOrStand(player.getName());
+        return YES.equals(yesOrNo);
+    }
 
-	private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
-		while (dealer.isScoreLowerThanSevenTeen()) {
-			blackjackGame.distributeOneCard(dealer);
-			OutputView.printDealerAdditionalCardMessage();
-		}
-	}
+    private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
+        while (dealer.isScoreLowerThanSevenTeen()) {
+            blackjackGame.distributeOneCard(dealer);
+            OutputView.printDealerAdditionalCardMessage();
+        }
+    }
 }

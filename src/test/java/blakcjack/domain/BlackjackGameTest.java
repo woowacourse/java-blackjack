@@ -18,95 +18,95 @@ import static blakcjack.domain.BlackjackGame.DUPLICATE_NAME_ERROR;
 import static org.assertj.core.api.Assertions.*;
 
 class BlackjackGameTest {
-	private List<String> names;
-	private Deck deck;
+    private List<String> names;
+    private Deck deck;
 
-	@BeforeEach
-	void setUp() {
-		final ShuffleStrategy nonShuffleStrategy = (cards) -> {
-		};
-		names = Arrays.asList("pobi", "sakjung", "mediumBear");
-		deck = new Deck(nonShuffleStrategy);
-	}
+    @BeforeEach
+    void setUp() {
+        final ShuffleStrategy nonShuffleStrategy = (cards) -> {
+        };
+        names = Arrays.asList("pobi", "sakjung", "mediumBear");
+        deck = new Deck(nonShuffleStrategy);
+    }
 
-	@DisplayName("객체 생성 성공")
-	@Test
-	void create() {
-		assertThatCode(() -> new BlackjackGame(deck, names))
-				.doesNotThrowAnyException();
-	}
+    @DisplayName("객체 생성 성공")
+    @Test
+    void create() {
+        assertThatCode(() -> new BlackjackGame(deck, names))
+                .doesNotThrowAnyException();
+    }
 
-	@DisplayName("중복 이름 검증")
-	@Test
-	void validateDuplicateNames() {
-		assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage(DUPLICATE_NAME_ERROR);
-	}
+    @DisplayName("중복 이름 검증")
+    @Test
+    void validateDuplicateNames() {
+        assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(DUPLICATE_NAME_ERROR);
+    }
 
-	@DisplayName("카드 한 장 나눠주기 성공")
-	@Test
-	void distributeOneCard() {
-		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
-		final List<Participant> players = blackjackGame.getPlayers();
-		final Participant pobi = players.get(0);
-		final Participant expected = new Player(new Name("pobi"));
-		expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
+    @DisplayName("카드 한 장 나눠주기 성공")
+    @Test
+    void distributeOneCard() {
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+        final List<Participant> players = blackjackGame.getPlayers();
+        final Participant pobi = players.get(0);
+        final Participant expected = new Player(new Name("pobi"));
+        expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
 
-		blackjackGame.distributeOneCard(pobi);
-		assertThat(pobi).isEqualTo(expected);
-	}
+        blackjackGame.distributeOneCard(pobi);
+        assertThat(pobi).isEqualTo(expected);
+    }
 
-	@DisplayName("딜러와 모든 플레이어에게 2장씩 카드 나눠주기 성공")
-	@Test
-	void initializeHands() {
-		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
-		blackjackGame.initializeHands();
+    @DisplayName("딜러와 모든 플레이어에게 2장씩 카드 나눠주기 성공")
+    @Test
+    void initializeHands() {
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+        blackjackGame.initializeHands();
 
-		final List<Participant> players = blackjackGame.getPlayers();
-		List<Participant> expectedPlayers = createExpectedPlayers();
-		assertThat(players).isEqualTo(expectedPlayers);
-	}
+        final List<Participant> players = blackjackGame.getPlayers();
+        List<Participant> expectedPlayers = createExpectedPlayers();
+        assertThat(players).isEqualTo(expectedPlayers);
+    }
 
-	private List<Participant> createExpectedPlayers() {
-		final Deck deck = new Deck((cards) -> {
-		});
-		final List<Participant> expectedPlayers = new ArrayList<>();
-		for (String name : names) {
-			Player player = new Player(new Name(name));
-			player.receiveCard(deck.drawCard());
-			player.receiveCard(deck.drawCard());
-			expectedPlayers.add(player);
-		}
-		return expectedPlayers;
-	}
+    private List<Participant> createExpectedPlayers() {
+        final Deck deck = new Deck((cards) -> {
+        });
+        final List<Participant> expectedPlayers = new ArrayList<>();
+        for (String name : names) {
+            Player player = new Player(new Name(name));
+            player.receiveCard(deck.drawCard());
+            player.receiveCard(deck.drawCard());
+            expectedPlayers.add(player);
+        }
+        return expectedPlayers;
+    }
 
-	@DisplayName("최종 승패 판단 성공")
-	@Test
-	void judgeOutcome() {
-		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
-		blackjackGame.initializeHands();
-		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
-		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.SEVEN));
+    @DisplayName("최종 승패 판단 성공")
+    @Test
+    void judgeOutcome() {
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+        blackjackGame.initializeHands();
+        blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
+        blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.SEVEN));
 
-		final OutcomeStatistics expectedOutcomeStatistics = getExpectedOutcomeStatistics();
-		final OutcomeStatistics outcomeStatistics = blackjackGame.judgeOutcome();
+        final OutcomeStatistics expectedOutcomeStatistics = getExpectedOutcomeStatistics();
+        final OutcomeStatistics outcomeStatistics = blackjackGame.judgeOutcome();
 
-		assertThat(outcomeStatistics).isEqualTo(expectedOutcomeStatistics);
-	}
+        assertThat(outcomeStatistics).isEqualTo(expectedOutcomeStatistics);
+    }
 
-	private OutcomeStatistics getExpectedOutcomeStatistics() {
-		Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
-		Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+    private OutcomeStatistics getExpectedOutcomeStatistics() {
+        Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
+        Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
-		dealerOutcome.put(Outcome.WIN, 2);
-		dealerOutcome.put(Outcome.DRAW, 1);
-		dealerOutcome.put(Outcome.LOSE, 0);
+        dealerOutcome.put(Outcome.WIN, 2);
+        dealerOutcome.put(Outcome.DRAW, 1);
+        dealerOutcome.put(Outcome.LOSE, 0);
 
-		playersOutcome.put("pobi", Outcome.LOSE);
-		playersOutcome.put("sakjung", Outcome.DRAW);
-		playersOutcome.put("mediumBear", Outcome.LOSE);
+        playersOutcome.put("pobi", Outcome.LOSE);
+        playersOutcome.put("sakjung", Outcome.DRAW);
+        playersOutcome.put("mediumBear", Outcome.LOSE);
 
-		return new OutcomeStatistics(dealerOutcome, playersOutcome);
-	}
+        return new OutcomeStatistics(dealerOutcome, playersOutcome);
+    }
 }

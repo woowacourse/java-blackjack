@@ -6,17 +6,17 @@ import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 import java.util.Stack;
 
 public class Deck {
-	public static final String NO_CARD_ERROR = "카드가 없습니다.";
-	private final Stack<Card> cards = new Stack<>();
+    public static final String NO_CARD_ERROR = "카드가 없습니다.";
+    private final Stack<Card> cards = new Stack<>();
 
-	public Deck() {
-		this(new RandomShuffleStrategy());
-	}
+    public Deck() {
+        this(new RandomShuffleStrategy());
+    }
 
-	public Deck(final ShuffleStrategy shuffleStrategy) {
+    public Deck(final ShuffleStrategy shuffleStrategy) {
         addCards();
-		shuffleStrategy.shuffle(cards);
-	}
+        shuffleStrategy.shuffle(cards);
+    }
 
     private void addCards() {
         for (final CardSymbol cardSymbol : CardSymbol.values()) {
@@ -30,10 +30,10 @@ public class Deck {
         }
     }
 
-	public Card drawCard() {
-		if (cards.empty()) {
-			throw new RuntimeException(NO_CARD_ERROR);
-		}
-		return cards.pop();
-	}
+    public Card drawCard() {
+        if (cards.empty()) {
+            throw new RuntimeException(NO_CARD_ERROR);
+        }
+        return cards.pop();
+    }
 }
