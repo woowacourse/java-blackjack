@@ -4,8 +4,8 @@ import blackjack.domain.MatchResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,33 +15,45 @@ public class BlackJackController {
     private static final String YES = "Y";
 
     public void run() {
-        OutputView.printPlayerNameInputGuideMessage();
         Dealer dealer = new Dealer();
-        Participants participants = new Participants(dealer, InputView.getPlayerNameInput());
         Deck deck = new Deck(Card.values());
-        drawAtFirst(participants, deck);
-        OutputView.printParticipantsCard(participants);
-        askPlayersToHit(participants, deck);
-        dealerToHit(dealer, deck);
-        OutputView.printCardsAndScore(participants);
-        finish(dealer, participants);
+        Players players = getPlayerNames();
+        playGame(dealer, deck, players);
+        showResult(dealer, players);
     }
 
-    private void dealerToHit(Dealer dealer, Deck deck) {
+    private Players getPlayerNames() {
+        OutputView.printPlayerNameInputGuideMessage();
+        try {
+            return new Players(InputView.getPlayerNameInput());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getPlayerNames();
+        }
+    }
+
+    private void playGame(Dealer dealer, Deck deck, Players players) {
+        drawAtFirst(dealer, players, deck);
+        OutputView.printParticipantsCardAtFirst(dealer, players);
+        askPlayersToHit(players, deck);
+        drawMoreCardToDealer(dealer, deck);
+    }
+
+    private void drawAtFirst(Dealer dealer, Players players, Deck deck) {
+        dealer.drawAtFirst(deck);
+        players.drawAtFirst(deck);
+    }
+
+    private void askPlayersToHit(Players players, Deck deck) {
+        players.getPlayers()
+                .forEach(player -> askHit(player, deck));
+    }
+
+    private void drawMoreCardToDealer(Dealer dealer, Deck deck) {
         while (dealer.canHit()) {
             dealer.hit(deck.pop());
             OutputView.printDealerHitMessage();
         }
-    }
-
-    private void drawAtFirst(Participants participants, Deck deck) {
-        participants.drawAtFirst(deck);
-    }
-
-    private void askPlayersToHit(Participants participants, Deck deck) {
-        participants.getParticipant().stream()
-                .filter(participant -> participant instanceof Player)
-                .forEach(player -> askHit((Player) player, deck));
     }
 
     private void askHit(Player player, Deck deck) {
@@ -61,21 +73,21 @@ public class BlackJackController {
         }
     }
 
-    private void finish(Dealer dealer, Participants participants) {
-        Map<Player, MatchResultType> result = getMatchResult(dealer, participants);
-        List<Integer> matchResultCount = getMatchResultCount(result);
-        OutputView.printResult(matchResultCount, result);
+    private void showResult(Dealer dealer, Players players) {
+        OutputView.printCardsAndScore(dealer, players);
+        Map<Player, MatchResultType> result = calculateMatchResult(dealer, players);
+        List<Integer> matchResultCount = countMatchResultType(result);
+        OutputView.printMatchTypeResult(matchResultCount, result);
     }
 
-    private Map<Player, MatchResultType> getMatchResult(Dealer dealer, Participants participants) {
+    private Map<Player, MatchResultType> calculateMatchResult(Dealer dealer, Players players) {
         Map<Player, MatchResultType> result = new LinkedHashMap<>();
-        participants.getParticipant().stream()
-                .filter(participant -> participant instanceof Player)
-                .forEach(player -> result.put((Player) player, dealer.compare((Player) player)));
+        players.getPlayers()
+                .forEach(player -> result.put(player, dealer.compare(player)));
         return result;
     }
 
-    private List<Integer> getMatchResultCount(Map<Player, MatchResultType> result) {
+    private List<Integer> countMatchResultType(Map<Player, MatchResultType> result) {
         List<Integer> matchResultCount = new ArrayList<>();
         Arrays.stream(MatchResultType.values())
                 .forEach(matchResultType -> matchResultCount.add(Collections.frequency(result.values(), matchResultType)));

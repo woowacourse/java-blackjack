@@ -27,7 +27,7 @@ public enum Denomination {
     }
 
     public boolean isAce() {
-        return this == ACE;
+        return this.equals(ACE);
     }
 
     public String getDenomination() {

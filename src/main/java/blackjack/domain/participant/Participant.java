@@ -5,7 +5,15 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
 public abstract class Participant {
-    private Cards cards;
+    protected final Cards cards;
+
+    public Participant() {
+        cards = new Cards();
+    }
+
+    public abstract String showCardsAtFirst();
+
+    public abstract String getName();
 
     public void drawAtFirst(Deck deck) {
         hit(deck.pop());
@@ -16,15 +24,13 @@ public abstract class Participant {
         this.cards.addCard(card);
     }
 
-    String getCards() {
+
+    public String getCards() {
         return this.cards.getCards();
     }
 
-    int getScore() {
-        return cards.getScore();
+    public int calculateScore() {
+        return cards.calculateScore();
     }
 
-    abstract String showCardsAtFirst();
-
-    abstract String getName();
 }

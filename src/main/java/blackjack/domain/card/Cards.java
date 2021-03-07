@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 public class Cards {
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int ZERO = 0;
+    private static final int GAP_BETWEEN_ACE_SCORE = 10;
+    public static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -26,38 +29,41 @@ public class Cards {
         return cards.isEmpty();
     }
 
+    public Card getFirstCard() {
+        return this.cards.get(FIRST_CARD_INDEX);
+    }
+
     public String getCards() {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
 
-    public int getScore() {
-        int total = cards.stream()
+    public int calculateScore() {
+        int totalScore = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        return addIfAceExist(total);
+        return calculateIncludingAce(totalScore);
     }
 
-    private int addIfAceExist(int total) {
-        int aceCount = countAce();
-        while (total + 10 <= 21 && aceCount != 0) {
-            total += 10;
+    private int calculateIncludingAce(int totalScore) {
+        int aceCount = countNumberOfAce();
+        totalScore = calculateFinalScore(totalScore, aceCount);
+        return totalScore;
+    }
+
+    private int countNumberOfAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int calculateFinalScore(int totalScore, int aceCount) {
+        while (aceCount != ZERO && totalScore + GAP_BETWEEN_ACE_SCORE <= BLACKJACK_SCORE) {
+            totalScore += GAP_BETWEEN_ACE_SCORE;
             aceCount--;
         }
-        return total;
-    }
-
-    private int countAce() {
-        return Math.toIntExact(
-                cards.stream()
-                        .filter(Card::isAce)
-                        .count()
-        );
-    }
-
-    public Card getFirstCard() {
-        return this.cards.get(FIRST_CARD_INDEX);
+        return totalScore;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class CardsTest {
         Cards cards = new Cards();
         cards.addCard(new Card(Denomination.SIX, Suit.CLOVER));
         cards.addCard(new Card(Denomination.QUEEN, Suit.SPADE));
-        assertThat(cards.getScore()).isEqualTo(16);
+        assertThat(cards.calculateScore()).isEqualTo(16);
     }
 
 

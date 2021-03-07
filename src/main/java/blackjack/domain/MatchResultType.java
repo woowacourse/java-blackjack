@@ -1,11 +1,11 @@
 package blackjack.domain;
 
+import static blackjack.domain.card.Cards.BLACKJACK_SCORE;
+
 public enum MatchResultType {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
-
-    private static final int BLACK_JACK_SCORE = 21;
 
     private final String status;
 
@@ -24,11 +24,11 @@ public enum MatchResultType {
     }
 
     private static boolean isDealerBusted(int dealerScore) {
-        return dealerScore > BLACK_JACK_SCORE;
+        return dealerScore > BLACKJACK_SCORE;
     }
 
     private static boolean isPlayerNotBusted(int playerScore) {
-        return playerScore <= BLACK_JACK_SCORE;
+        return playerScore <= BLACKJACK_SCORE;
     }
 
     @Override
