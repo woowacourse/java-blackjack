@@ -42,6 +42,6 @@ public class InputView {
     }
 
     private static Boolean isValidAnswer(String yesOrNo) {
-        return yesOrNo.equalsIgnoreCase(YES) || yesOrNo.equalsIgnoreCase(NO);
+        return YES.equalsIgnoreCase(yesOrNo) || NO.equalsIgnoreCase(yesOrNo);
     }
 }
