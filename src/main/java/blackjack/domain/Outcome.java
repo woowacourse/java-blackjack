@@ -3,12 +3,12 @@ package blackjack.domain;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import static blackjack.domain.Round.GAME_OVER_SCORE;
+import static blackjack.controller.GameController.GAME_OVER_SCORE;
 
 public enum Outcome {
-    WIN("승", (a, b) -> a > b),
-    LOSE("패", (a, b) -> a < b),
-    DRAW("무", (a, b) -> a == b);
+    WIN("승", (dealerScore, playerScore) -> dealerScore > playerScore),
+    LOSE("패", (dealerScore, playerScore) -> dealerScore < playerScore),
+    DRAW("무", (dealerScore, playerScore) -> dealerScore == playerScore);
 
     private final String name;
     private final BiPredicate<Integer, Integer> compareFunction;

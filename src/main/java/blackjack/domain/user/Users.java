@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Users {
-    private final List<User> users = new ArrayList<>();
+    private final List<User> users;
 
-    public Users(List<String> playerNames) {
+    public Users(List<User> users) {
+        this.users = new ArrayList<>(users);
+    }
+
+    public static Users of(List<String> playerNames) {
+        List<User> users = new ArrayList<>();
         users.add(new Dealer());
         isDuplicatePlayers(playerNames);
-        playerNames.stream()
-                .forEach(name -> users.add(new Player(name)));
+        playerNames.stream().forEach(name -> users.add(new Player(name)));
+        return new Users(users);
     }
 
     public Dealer getDealer() {
@@ -25,9 +30,9 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    private void isDuplicatePlayers(List<String> players) {
+    private static void isDuplicatePlayers(List<String> players) {
         if (players.stream().distinct().count() != players.size()) {
-            throw new IllegalArgumentException("플레이어가 중복됩니다!");
+            throw new IllegalArgumentException("플레이어 이름이 중복됩니다!");
         }
     }
 }

@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.Result;
-import blackjack.domain.card.Card;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
@@ -19,7 +18,7 @@ public class OutputView {
     }
 
     public static void showDealerAddCard(int turnOverCount) {
-        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", turnOverCount));
+        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", turnOverCount));
     }
 
     public static void showFinalStatus(RoundStatusDto statusDto) {
@@ -33,6 +32,7 @@ public class OutputView {
                         dto.getPlayerName(),
                         dto.getPlayerCardStatus().stream().collect(Collectors.joining(DELIMITER)),
                         dto.getPlayerScore())));
+        System.out.println();
     }
 
     public static void showInitialStatus(RoundStatusDto roundStatusDto) {
@@ -53,10 +53,11 @@ public class OutputView {
                 System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE,
                         dto.getPlayerName(),
                         dto.getPlayerCardStatus().stream().collect(Collectors.joining(DELIMITER)))));
+        System.out.println();
     }
 
     public static void showOutcomes(Result result) {
-        System.out.println("\n## 최종 승패");
+        System.out.println("## 최종 승패");
         System.out.println(String.format("딜러: %d승 %d패 %d무",
                 result.findDealerWinCount(), result.findDealerLoseCount(), result.findDealerDrawCount()));
         result.getPlayerResults().forEach((name, outcome) ->

@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 class UsersTest {
     private List<String> names;
@@ -21,16 +20,26 @@ class UsersTest {
     @DisplayName("Users가 정상적으로 생성되는 지 테스트")
     @Test
     void generate_test() {
-        assertThatCode(() -> new Users(names)).doesNotThrowAnyException();
+        assertThatCode(() -> Users.of(names)).doesNotThrowAnyException();
     }
 
     @DisplayName("Users 내부 필드로 딜러와 플레이어를 가진다.")
     @Test
     void generate_test2() {
-        Users users = new Users(names);
+        Users users = Users.of(names);
         assertThat(users.getDealer()).isEqualTo(new Dealer());
         for (String name : names) {
             assertThat(users.getPlayers()).contains(new Player(name));
         }
+    }
+
+    @DisplayName("Player가 중복된 이름을 가지는 경우 예외처리해준다.")
+    @Test
+    void duplicate_players_test() {
+        names = Arrays.asList("pobi", "brown", "brown", "jason");
+        assertThatThrownBy(() -> Users.of(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어 이름이 중복됩니다!");
+
     }
 }
