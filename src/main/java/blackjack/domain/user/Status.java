@@ -12,8 +12,8 @@ public enum Status {
     private static class Constants {
         public static final String NO_MATCH_CONDITION_ERROR_MSG = "점수 조건에 맞는 Status가 없습니다.";
         public static final int BLACKJACK = 21;
-
     }
+
     private boolean canContinueGame;
 
     private IntPredicate condition;
