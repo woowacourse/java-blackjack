@@ -2,20 +2,21 @@ package blackjack.domain;
 
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Result {
 
     private final Map<Player, Status> result;
 
-    public Result(Dealer dealer, List<Player> players) {
+    public Result(Dealer dealer, Players players) {
         this.result = makeResult(dealer, players);
     }
 
-    private Map<Player, Status> makeResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> result.put(player, compareWithDealer(dealer, player)));
+    private Map<Player, Status> makeResult(Dealer dealer, Players players) {
+        players.getPlayers()
+            .forEach(player -> result.put(player, compareWithDealer(dealer, player)));
         return new LinkedHashMap<>(result);
     }
 

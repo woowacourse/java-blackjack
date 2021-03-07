@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.User;
+import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -15,11 +15,11 @@ public class GameTableController {
     private static final String HIT_CONTINUE = "Y";
 
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
     public GameTableController(List<Player> players) {
         this.dealer = new Dealer();
-        this.players = players;
+        this.players = new Players(players);
     }
 
     public void playGame() {
@@ -32,11 +32,11 @@ public class GameTableController {
     private void start(Deck deck) {
         drawAtFirst(deck);
         OutputView.printShowUsersCardMessage(players);
-        OutputView.showCards(dealer, players);
+        OutputView.showUsersCards(dealer, players);
     }
 
     private void play(Deck deck) {
-        players.forEach(player -> askHit(player, deck));
+        tryHit(deck);
         while (dealer.canHit()) {
             dealer.hit(deck.pop());
             OutputView.printDealerHitMessage();
@@ -48,6 +48,11 @@ public class GameTableController {
         Result result = new Result(dealer, players);
         List<Integer> matchResult = dealer.calculateMatchResult(result.getResult());
         OutputView.printResult(matchResult, result.getResult());
+    }
+
+    public void tryHit(Deck deck) {
+        players.getPlayers()
+            .forEach(player -> askHit(player, deck));
     }
 
     private void askHit(Player player, Deck deck) {
@@ -64,14 +69,7 @@ public class GameTableController {
     }
 
     private void drawAtFirst(Deck deck) {
-        players.forEach(player -> {
-            hitTwoCards(player, deck);
-        });
-        hitTwoCards(dealer, deck);
-    }
-
-    private void hitTwoCards(User user, Deck deck) {
-        user.hit(deck.pop());
-        user.hit(deck.pop());
+        players.drawAtFirst(deck);
+        dealer.hitTwoCards(deck);
     }
 }

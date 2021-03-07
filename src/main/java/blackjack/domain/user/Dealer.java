@@ -28,8 +28,12 @@ public class Dealer extends User {
         return winnings;
     }
 
+    public String showFirstCard() {
+        return name + CARDS_GUIDE_MESSAGE + this.getFirstCard();
+    }
+
     public String getFirstCard() {
-        return Arrays.stream(getCards().split(DELIMITER))
+        return Arrays.stream(showCards().split(DELIMITER))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
                 NO_DEALER_CARD_ERROR_MESSAGE));
