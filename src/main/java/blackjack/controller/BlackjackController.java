@@ -21,12 +21,10 @@ public class BlackjackController {
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final List<Participant> participants = participantsSetUp();
-        final List<Participant> players = new ArrayList<>(
-            participants.subList(1, participants.size()));
+        final List<Participant> players = new ArrayList<>(participants.subList(1, participants.size()));
 
         distributeCard(participants, cardDeck);
-        showParticipantsName(players);
-        showDistributedCard(participants);
+        showNameAndCardInfo(players, participants);
         playerGameProgress(players, cardDeck);
         dealerGameProgress(participants.get(0), cardDeck);
         showFinalCardResult(participants);
@@ -65,11 +63,9 @@ public class BlackjackController {
         }
     }
 
-    private void showParticipantsName(final List<Participant> players) {
+    private void showNameAndCardInfo(final List<Participant> players,
+        List<Participant> participants) {
         OutputView.distributeMessage(players);
-    }
-
-    private void showDistributedCard(final List<Participant> participants) {
         OutputView.showParticipantsCard(participants);
     }
 
