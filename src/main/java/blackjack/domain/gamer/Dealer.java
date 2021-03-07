@@ -8,8 +8,7 @@ public class Dealer extends Person {
     private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
-        super.name = DEALER_NAME;
-        super.cards = new Cards();
+        super(DEALER_NAME, new Cards());
     }
 
     public MatchResult matchGame(Player player) {

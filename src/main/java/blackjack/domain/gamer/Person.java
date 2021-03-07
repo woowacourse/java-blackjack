@@ -4,8 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public abstract class Person {
-    protected Cards cards;
     protected Name name;
+    protected Cards cards;
+
+    protected Person(Name name, Cards cards) {
+        this.name = name;
+        this.cards = cards;
+    }
 
     public abstract boolean canDraw();
 

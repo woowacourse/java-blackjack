@@ -7,8 +7,7 @@ import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
 public class Player extends Person {
 
     public Player(Name name) {
-        super.name = name;
-        super.cards = new Cards();
+        super(name, new Cards());
     }
 
     @Override
