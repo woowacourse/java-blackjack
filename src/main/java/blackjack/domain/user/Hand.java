@@ -5,10 +5,8 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Hand {
-    public static final int MAX_SCORE = 21;
     public static final int ACE_CONVERSION_LIMIT = 11;
     public static final int ACE_DIFFERENCE = 10;
-    public static final int BLACK_JACK_CARD_SIZE = 2;
 
     private final int hitLimit;
     private List<Card> cards;
@@ -45,16 +43,7 @@ public class Hand {
     }
 
     private HandStatus calculateStatus(int score) {
-        if (score == MAX_SCORE && cards.size() == BLACK_JACK_CARD_SIZE) {
-            return HandStatus.BLACK_JACK;
-        }
-        if (score > MAX_SCORE) {
-            return HandStatus.BUST;
-        }
-        if (score > hitLimit) {
-            return HandStatus.STAY;
-        }
-        return HandStatus.HIT;
+        return HandStatus.calculateStatus(score, hitLimit, cards.size());
     }
 
     public void convertStatusToStay() {
