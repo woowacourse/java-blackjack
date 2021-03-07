@@ -70,7 +70,7 @@ public class BlackJackGame {
             return false;
         }
         OutputView.askOneMoreCard(player);
-        if (InputView.inputAnswer().equals(YES)) {
+        if (YES.equals(InputView.inputAnswer())) {
             return true;
         }
         OutputView.showCards(player);
