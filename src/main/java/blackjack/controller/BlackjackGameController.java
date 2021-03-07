@@ -58,18 +58,18 @@ public class BlackjackGameController {
     private void processUserRound() {
         while (blackjackGame.existCanContinueUser()) {
             User currentUser = blackjackGame.findFirstCanPlayUser();
-            Boolean isContinue = InputView.askMoreDraw(currentUser.getName());
+            boolean isContinue = InputView.askMoreDraw(currentUser.getName());
             OutputView.printCardList(progressTurnAndGetResult(currentUser, isContinue));
         }
         OutputView.println();
     }
 
-    private UserCardsDto progressTurnAndGetResult(User currentUser, Boolean isContinue) {
+    private UserCardsDto progressTurnAndGetResult(User currentUser, boolean isContinue) {
         userDrawOrStop(isContinue, currentUser);
         return DtoMapper.createUserCardsDto(currentUser);
     }
 
-    private void userDrawOrStop(Boolean isContinue, User playingUser) {
+    private void userDrawOrStop(boolean isContinue, User playingUser) {
         if (isContinue) {
             playingUser.drawCard(blackjackGame.draw());
             return;
