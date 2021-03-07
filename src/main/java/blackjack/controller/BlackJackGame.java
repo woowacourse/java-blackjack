@@ -8,6 +8,9 @@ import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BlackJackGame {
 
     private static final int INIT_DRAW_COUNT = 2;
@@ -28,11 +31,19 @@ public class BlackJackGame {
     private Players registerPlayers() {
         try {
             OutputView.enterPlayersName();
-            return new Players(InputView.inputName());
+            List<String> playersNames = InputView.inputName();
+            return new Players(generatePlayer(playersNames));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return registerPlayers();
         }
+    }
+
+    private List<Player> generatePlayer(List<String> playerNames) {
+        return playerNames
+                .stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     private void firstDraw(Players players, Dealer dealer, CardDeck cardDeck) {

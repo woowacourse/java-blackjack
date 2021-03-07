@@ -23,7 +23,7 @@ public class BlackJackResultTest {
     @Test
     @DisplayName("게임 결과 생성")
     void createBlackJackResult() {
-        Players players = new Players(Arrays.asList("pika", "air"));
+        Players players = new Players(Arrays.asList(new Player("pika"), new Player("air")));
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(new Dealer()));
         assertThat(blackJackResult).isNotNull();
     }
@@ -31,7 +31,7 @@ public class BlackJackResultTest {
     @Test
     @DisplayName("딜러의 승패 결과 확인")
     void getResultSucceed() {
-        Players players = new Players(Collections.singletonList("pika"));
+        Players players = new Players(Collections.singletonList(new Player("pika")));
         Dealer dealer = new Dealer();
 
 

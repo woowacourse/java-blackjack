@@ -13,22 +13,15 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validatePlayerCount(playerNames);
-        this.players = createPlayers(playerNames);
+    public Players(List<Player> players) {
+        validatePlayerCount(players);
+        this.players = new ArrayList<>(players);
     }
 
-    private void validatePlayerCount(List<String> player) {
+    private void validatePlayerCount(List<Player> player) {
         if (player.size() > MAX_COUNT || player.size() < MIN_COUNT) {
             throw new IllegalArgumentException("플레이어 인원 수는 1명 이상 8명 이하 입니다.");
         }
-    }
-
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(playerName -> playerName.replaceAll(" ", ""))
-                .map(Player::new)
-                .collect(toList());
     }
 
     public List<Player> getPlayers() {

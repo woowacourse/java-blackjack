@@ -17,7 +17,7 @@ public abstract class Participants {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() < MIN_NAME_LENGTH) {
+        if (name.trim().length() < MIN_NAME_LENGTH) {
             throw new IllegalArgumentException("유효하지 않은 이름입니다.");
         }
     }
