@@ -7,8 +7,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int UPPER_ACE_BONUS_SCORE = 10;
-    private static final int UPPER_ACE_LIMIT_SCORE = 11;
+    private static final int UPPER_ACE_ADDABLE_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -25,16 +24,17 @@ public class Cards {
                 .mapToInt(Card::value)
                 .sum();
 
-        if (isContainAce() && score <= UPPER_ACE_LIMIT_SCORE) {
-            return score + UPPER_ACE_BONUS_SCORE;
+        if (canAddAceUpperValue(score)) {
+            score -= Denomination.ACE.getValue();
+            score += Denomination.ACE.getUpperValue();
         }
 
         return score;
     }
 
-    private boolean isContainAce() {
+    private boolean canAddAceUpperValue(int score) {
         return cards.stream()
-                .anyMatch(Card::isAce);
+                .anyMatch(Card::isAce) && score < UPPER_ACE_ADDABLE_VALUE;
     }
 
     public int add(Card card) {
