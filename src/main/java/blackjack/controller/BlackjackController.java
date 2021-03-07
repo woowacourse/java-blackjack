@@ -3,12 +3,13 @@ package blackjack.controller;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class BlackjackController {
     private static final String END_GAME_MARK = "n";
@@ -38,24 +39,19 @@ public class BlackjackController {
 
     private void distributeCard(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
         for (final Player player : players) {
-            player.receiveCard(cardDeck.distribute());
-            player.receiveCard(cardDeck.distribute());
+            player.receiveInitialCard(cardDeck);
         }
-        dealer.receiveCard(cardDeck.distribute());
-        dealer.receiveCard(cardDeck.distribute());
+        dealer.receiveInitialCard(cardDeck);
     }
 
     private void showPlayerName(final List<Player> players) {
-        final String status = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
-        OutputView.distributeMessage(status);
+        OutputView.distributeMessage(players);
     }
 
     private void showDistributedCard(final List<Player> players, final Dealer dealer) {
-        OutputView.showDealerCard(dealer.getName(), dealer.getMyCards().get(0));
+        OutputView.showDealerCard(dealer);
         for (final Player player : players) {
-            OutputView.showPlayerCard(player.getName(), player.getMyCards());
+            OutputView.showPlayerCard(player);
         }
     }
 
@@ -67,11 +63,11 @@ public class BlackjackController {
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
         if (END_GAME_MARK.equals(askPlayerMoreCard(player))) {
-            OutputView.showPlayerCard(player.getName(), player.getMyCards());
+            OutputView.showPlayerCard(player);
             return;
         }
         player.receiveCard(cardDeck.distribute());
-        OutputView.showPlayerCard(player.getName(), player.getMyCards());
+        OutputView.showPlayerCard(player);
         if (isBust(player)) {
             return;
         }
@@ -112,26 +108,19 @@ public class BlackjackController {
 
     private void showFinalCardResult(final List<Player> players, final Dealer dealer) {
         OutputView.displayNewLine();
-        OutputView.showCardResult(dealer.getName(), dealer.getMyCards(), dealer.calculate());
+        OutputView.showCardResult(dealer);
         for (final Player player : players) {
-            OutputView.showCardResult(player.getName(), player.getMyCards(), player.calculate());
+            OutputView.showCardResult(player);
         }
     }
 
     private void showGameResult(final List<Player> players, final Dealer dealer) {
-        for (final Player player : players) {
-            decideWinner(dealer, player);
-        }
-        OutputView.showGameResult(dealer.getName(), dealer.getWinCount(), players.size() - dealer.getWinCount());
-        for (final Player player : players) {
-            OutputView.showPlayerGameResult(player.getName(), player.getWin());
-        }
-    }
-
-    private void decideWinner(final Dealer dealer, final Player player) {
-        if (dealer.isWinner(player.calculate()) || player.isBust()) {
-            player.lose();
-            dealer.winSinglePlayer();
-        }
+        final Result result = new Result(players, dealer);
+        final Map<String, Integer> dealerResult = result.checkDealerResult();
+        System.out.println("dealerResult = " + dealerResult);
+        final Map<Player, String> playerResult = result.checkPlayerResult();
+        System.out.println("playerResult = " + playerResult);
+        OutputView.showDealerGameResult(dealerResult);
+        OutputView.showPlayerGameResult(playerResult);
     }
 }
