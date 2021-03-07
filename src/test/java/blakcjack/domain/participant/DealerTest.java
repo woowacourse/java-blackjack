@@ -32,9 +32,9 @@ public class DealerTest {
 		assertThat(dealer).isEqualTo(new Dealer());
 	}
 
-	@DisplayName("카드 제대로 받는지")
+	@DisplayName("카드 제대로 뽑는지")
 	@Test
-	void receiveCard() {
+	void drawCard_deck_drawOneCardFromDeck() {
 		final Dealer dealer = new Dealer();
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		dealer.drawOneCardFrom(customDeck);

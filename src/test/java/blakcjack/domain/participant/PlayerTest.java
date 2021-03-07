@@ -29,9 +29,9 @@ public class PlayerTest {
 		assertThat(player).isEqualTo(new Player(new Name("pobi")));
 	}
 
-	@DisplayName("카드 제대로 받는지")
+	@DisplayName("카드 제대로 뽑는지")
 	@Test
-	void receiveCard() {
+	void drawCard_deck_drawOneCardFromDeck() {
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		player.drawOneCardFrom(customDeck);
 
