@@ -65,8 +65,8 @@ class BlackjackGameTest {
 		final List<Participant> expectedPlayers = new ArrayList<>();
 		for (Name name : names.toList()) {
 			final Player player = new Player(name);
-			player.receiveCard(deck.drawCard());
-			player.receiveCard(deck.drawCard());
+			player.drawOneCardFrom(deck);
+			player.drawOneCardFrom(deck);
 			expectedPlayers.add(player);
 		}
 		return expectedPlayers;
@@ -75,18 +75,22 @@ class BlackjackGameTest {
 	@DisplayName("플레이어들의 결과를 토대로 결과 통계를 올바르게 생성해 내는지")
 	@Test
 	void getPlayersOutcome_giveCardsToPlayersAndDealer_createCorrespondingOutcomeStatistics() {
-		final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
-		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.TWO)); // lose
-		blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.THREE));
+		Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.HEART, CardNumber.JACK), // dealer
+				Card.of(CardSymbol.HEART, CardNumber.ACE),
 
-		blackjackGame.getPlayers().get(1).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING)); // draw
-		blackjackGame.getPlayers().get(1).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+				Card.of(CardSymbol.SPADE, CardNumber.FIVE), // medium bear - lose
+				Card.of(CardSymbol.SPADE, CardNumber.FOUR),
 
-		blackjackGame.getPlayers().get(2).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.FOUR)); // lose
-		blackjackGame.getPlayers().get(2).receiveCard(Card.of(CardSymbol.SPADE, CardNumber.FIVE));
+				Card.of(CardSymbol.SPADE, CardNumber.ACE), // sakjung - draw
+				Card.of(CardSymbol.SPADE, CardNumber.KING),
 
-		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
-		blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
+				Card.of(CardSymbol.SPADE, CardNumber.THREE), // pobi - lose
+				Card.of(CardSymbol.SPADE, CardNumber.TWO)
+		);
+
+		final BlackjackGame blackjackGame = new BlackjackGame(customDeck, names);
+		blackjackGame.initializeHands();
 
 		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 		playersOutcome.put("pobi", Outcome.LOSE);
@@ -94,5 +98,9 @@ class BlackjackGameTest {
 		playersOutcome.put("mediumBear", Outcome.LOSE);
 
 		assertThat(blackjackGame.getOutcomeStatistics()).isEqualTo(new OutcomeStatistics(playersOutcome));
+	}
+
+	private Deck createCustomDeck(final Card... cards) {
+		return new Deck(Arrays.asList(cards));
 	}
 }

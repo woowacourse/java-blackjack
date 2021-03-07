@@ -2,6 +2,7 @@ package blakcjack.domain.card;
 
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 
+import java.util.List;
 import java.util.Stack;
 
 import static blakcjack.domain.card.EmptyDeckException.EMPTY_DECK_ERROR;
@@ -12,6 +13,10 @@ public class Deck {
 	public Deck(final ShuffleStrategy shuffleStrategy) {
 		generateCards();
 		shuffleStrategy.shuffle(cards);
+	}
+
+	public Deck(List<Card> cards) {
+		this.cards.addAll(cards);
 	}
 
 	protected void generateCards() {

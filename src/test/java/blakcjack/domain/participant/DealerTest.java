@@ -3,12 +3,14 @@ package blakcjack.domain.participant;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
+import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,8 +36,8 @@ public class DealerTest {
 	@Test
 	void receiveCard() {
 		final Dealer dealer = new Dealer();
-		final Card card = Card.of(CardSymbol.CLUB, CardNumber.ACE);
-		dealer.receiveCard(card);
+		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		dealer.drawOneCardFrom(customDeck);
 
 		assertThat(dealer.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
 	}
@@ -44,24 +46,37 @@ public class DealerTest {
 	@Test
 	void isScoreLowerThanSevenTeen() {
 		final Dealer dealer = new Dealer();
-		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.TEN));
-		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.SIX));
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.CLUB, CardNumber.ACE),
+				Card.of(CardSymbol.CLUB, CardNumber.SIX),
+				Card.of(CardSymbol.CLUB, CardNumber.TEN));
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
 		assertThat(dealer.isScoreLowerThanMaximumDrawCriterion()).isTrue();
 
-		dealer.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
+		dealer.drawOneCardFrom(customDeck);
 		assertThat(dealer.isScoreLowerThanMaximumDrawCriterion()).isFalse();
 	}
 
 	@DisplayName("플레이어 버스트시 플레이어 패")
 	@Test
 	void judgeOutcome_playerBust_returnLose() {
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.TWO));
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.HEART, CardNumber.QUEEN),
+				Card.of(CardSymbol.HEART, CardNumber.JACK),
+				Card.of(CardSymbol.HEART, CardNumber.TWO),
 
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.QUEEN));
+				Card.of(CardSymbol.SPADE, CardNumber.QUEEN),
+				Card.of(CardSymbol.SPADE, CardNumber.JACK),
+				Card.of(CardSymbol.SPADE, CardNumber.TWO));
+
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
 
 		Outcome outcome = dealer.judgeOutcomeOf(player);
 		assertThat(outcome).isEqualTo(Outcome.LOSE);
@@ -70,13 +85,21 @@ public class DealerTest {
 	@DisplayName("딜러만 버스트시 플레이어 승")
 	@Test
 	void judgeOutcome_onlyDealerBust_returnWin() {
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.HEART, CardNumber.QUEEN),
+				Card.of(CardSymbol.HEART, CardNumber.JACK),
+				Card.of(CardSymbol.HEART, CardNumber.TWO),
+				Card.of(CardSymbol.SPADE, CardNumber.QUEEN),
+				Card.of(CardSymbol.SPADE, CardNumber.JACK),
+				Card.of(CardSymbol.SPADE, CardNumber.ACE)
+		);
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
 
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.QUEEN));
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
 
 		Outcome outcome = dealer.judgeOutcomeOf(player);
 		assertThat(outcome).isEqualTo(Outcome.WIN);
@@ -85,14 +108,25 @@ public class DealerTest {
 	@DisplayName("둘다 버스트 아닐 시 딜러와 플레이어의 점수 비교로 결과 판단")
 	@Test
 	void judgeOutcome_noOneBust_compareScore() {
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
-		player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.HEART, CardNumber.QUEEN),
+				Card.of(CardSymbol.HEART, CardNumber.JACK),
+				Card.of(CardSymbol.HEART, CardNumber.ACE),
+				Card.of(CardSymbol.SPADE, CardNumber.QUEEN),
+				Card.of(CardSymbol.SPADE, CardNumber.JACK)
+		);
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
 
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
-		dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.QUEEN));
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
 
 		Outcome outcome = dealer.judgeOutcomeOf(player);
 		assertThat(outcome).isEqualTo(Outcome.LOSE);
+	}
+
+	private Deck createCustomDeck(final Card... cards) {
+		return new Deck(Arrays.asList(cards));
 	}
 }

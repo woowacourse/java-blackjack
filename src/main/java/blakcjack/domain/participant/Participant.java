@@ -22,10 +22,6 @@ public abstract class Participant {
 		return cards.toList();
 	}
 
-	public void receiveCard(Card card) {
-		cards.add(card);
-	}
-
 	public void drawOneCardFrom(Deck deck) {
 		cards.add(deck.drawCard());
 	}
