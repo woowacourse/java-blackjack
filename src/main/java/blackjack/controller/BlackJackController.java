@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.GameTable;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,8 +18,8 @@ public class BlackJackController {
             OutputView.printPlayersGuideMessage();
             List<Player> players = makePlayers(InputView.inputPlayers());
             validatePlayersNumber(players);
-            GameTable gameTable = new GameTable(players);
-            gameTable.playGame();
+            GameTableController gameTableController = new GameTableController(players);
+            gameTableController.playGame();
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception);
         }

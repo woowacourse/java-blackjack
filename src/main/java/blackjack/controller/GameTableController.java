@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.controller;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
@@ -9,14 +10,14 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class GameTable {
+public class GameTableController {
 
     private static final String HIT_CONTINUE = "Y";
 
     private final Dealer dealer;
     private final List<Player> players;
 
-    public GameTable(List<Player> players) {
+    public GameTableController(List<Player> players) {
         this.dealer = new Dealer();
         this.players = players;
     }
