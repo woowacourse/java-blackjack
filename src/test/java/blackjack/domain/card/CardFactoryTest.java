@@ -10,6 +10,6 @@ public class CardFactoryTest {
     @DisplayName("덱 생성 테스트")
     @Test
     void create() {
-        assertThat(CardFactory.create().size()).isEqualTo(52);
+        assertThat(CardFactory.create()).hasSize(52);
     }
 }
