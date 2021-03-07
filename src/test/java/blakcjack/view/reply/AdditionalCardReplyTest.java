@@ -14,7 +14,7 @@ class AdditionalCardReplyTest {
                 .isEqualTo(AdditionalCardReply.HIT);
 
         assertThat(AdditionalCardReply.from("Y"))
-                .isEqualTo(AdditionalCardReply.STOP);
+                .isEqualTo(AdditionalCardReply.HIT);
     }
 
     @DisplayName("카드 객체 생성 실패")
