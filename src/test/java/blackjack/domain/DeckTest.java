@@ -1,10 +1,10 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckTest {
 
@@ -12,6 +12,9 @@ class DeckTest {
     @Test
     public void new_deckCreate_valid() {
         Deck deck = new Deck();
-        assertThat(deck.getCards().size()).isEqualTo(52);
+        deck.getCards().forEach(card -> {
+            System.out.println(card.getDenomination().getName() + card.getSuit().getName());
+        });
+        assertThat(deck.getCards()).hasSize(52);
     }
 }
