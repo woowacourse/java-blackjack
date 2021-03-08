@@ -7,7 +7,7 @@ public class User extends AbstractPlayer {
     private static final String NO = "n";
 
     private boolean isDrawStop = false;
-
+    private BetAmount betAmount;
 
     public User(String name) {
         super(name);
@@ -45,13 +45,24 @@ public class User extends AbstractPlayer {
         isDrawStop = true;
     }
 
+    public void setBetAmount(String betAmount) {
+        this.betAmount = new BetAmount(betAmount);
+    }
+
+    public int profit(Dealer dealer) {
+        return getResult(dealer).profit(betAmount.getAmount());
+    }
+
     public ResultType getResult(Dealer dealer) {
         int userScore = getScore();
         int dealerScore = dealer.getScore();
+        if (isBlackJack() && !dealer.isBlackJack()) {
+            return ResultType.BLACKJACK;
+        }
         if (userScore > BLACKJACK || userScore < dealerScore) {
             return ResultType.LOSS;
         }
-        if (userScore == dealerScore && userScore != BLACKJACK) {
+        if (userScore == dealerScore) {
             return ResultType.DRAW;
         }
         return ResultType.WIN;
