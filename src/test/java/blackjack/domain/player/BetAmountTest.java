@@ -30,4 +30,10 @@ public class BetAmountTest {
         assertThatThrownBy(() -> new BetAmount(null))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("get 테스트")
+    @Test
+    void getAmount() {
+        assertThat(new BetAmount("5800").getAmount()).isEqualTo(5800);
+    }
 }
