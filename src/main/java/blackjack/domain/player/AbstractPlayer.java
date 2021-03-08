@@ -3,19 +3,19 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
-import java.util.Collections;
+import blackjack.domain.card.PlayerCards;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
-    protected static final int ACE_DIFF = 10;
+    private static final int ACE_DIFF = 10;
     protected static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
-    private final List<Card> cards;
+    private final PlayerCards cards;
     private final Name name;
 
     protected AbstractPlayer(String name) {
-        cards = new ArrayList<>();
+        cards = new PlayerCards();
         this.name = new Name(name);
     }
 
@@ -38,14 +38,14 @@ public abstract class AbstractPlayer implements Player {
     }
 
     private int getLowValue() {
-        return cards.stream()
+        return cards.getCards().stream()
             .mapToInt(Card::getCardValue)
             .sum();
     }
 
     private int getHighValue(int lowValue) {
         int highValue = lowValue;
-        if (cards.stream().anyMatch(card -> card.getNumber().isAce())) {
+        if (cards.isContains(CardNumber.ACE)) {
             highValue += ACE_DIFF;
         }
         return highValue;
@@ -64,6 +64,10 @@ public abstract class AbstractPlayer implements Player {
         drawCard(cards.draw());
     }
 
+    protected boolean isBlackJack() {
+        return getScore() == BLACKJACK && cards.size() == BLACKJACK_CARD_SIZE;
+    }
+
     @Override
     public Name getName() {
         return name;
@@ -71,6 +75,6 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 }
