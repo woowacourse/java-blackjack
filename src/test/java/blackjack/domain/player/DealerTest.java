@@ -20,10 +20,10 @@ class DealerTest {
         assertThat(dealer.canDraw()).isEqualTo(true);
     }
 
-    @DisplayName("딜러는 카드 점수 합이 16초과 카드를 드로우 할 수 없다.")
+    @DisplayName("딜러는 카드 점수 합이 16초과시 카드를 드로우 할 수 없다.")
     @Test
     void testCanNotDraw() {
-        Dealer dealer = new Dealer("딜");
+        Dealer dealer = new Dealer("딜러");
         dealer.draw(new Card(Type.CLUB, Denomination.TEN));
         dealer.draw(new Card(Type.CLUB, Denomination.SEVEN));
 

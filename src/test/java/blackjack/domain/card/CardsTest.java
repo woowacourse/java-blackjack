@@ -13,7 +13,7 @@ class CardsTest {
     void testIsBlackJack() {
         Cards cards = new Cards(
             Arrays.asList(
-                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.ACE_ELEVEN),
                 new Card(Type.CLUB, Denomination.TEN)
             )
         );
