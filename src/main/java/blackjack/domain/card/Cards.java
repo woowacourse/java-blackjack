@@ -9,7 +9,8 @@ import java.util.List;
 public class Cards {
     private final List<Card> cards = new ArrayList<>();
 
-    private Cards() {}
+    private Cards() {
+    }
 
     public static Cards createAllShuffledCards() {
         Cards cards = new Cards();
