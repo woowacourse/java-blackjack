@@ -41,45 +41,42 @@ public class GameResult {
         int dealerProfit = 0;
         //딜러가 블랙잭인지 체크
         for (Gamer gamer : gamers) {
-            if (isDealerWin(dealer, gamer)) {
-                result.put(gamer, gamer.getBettingMoney() * (-1));
-                dealerProfit += gamer.getBettingMoney();
-            }
-            if (isGamerWin(dealer, gamer)) {
-                result.put(gamer, gamer.getBettingMoney());
-                dealerProfit -= gamer.getBettingMoney();
-            }
-            if (isGamerWinWithBlackjack(dealer, gamer)) {
-                result.put(gamer, (int)(gamer.getBettingMoney() * 1.5));
-                dealerProfit -= (int)(gamer.getBettingMoney() * 1.5);
-            }
-            if (isDraw(dealer, gamer)) {
-                result.put(gamer, 0);
-            }
+            double profitRatio = calculateProfitRatio(dealer, gamer);
+            result.put(gamer, (int)(gamer.getBettingMoney() * profitRatio));
+            dealerProfit -= (int)(gamer.getBettingMoney() * profitRatio);
         }
         result.put(dealer, dealerProfit);
         return new GameResult(null, result);
     }
 
-    private static boolean isDraw(Dealer dealer, Gamer gamer) {
-        return (dealer.isBlackjack() && gamer.isBlackjack())
-                || ((((!gamer.isBlackjack() && !dealer.isBlackjack()) && !gamer.isBust()) && !dealer.isBust()) && gamer.calculateScore() == dealer.calculateScore());
+    private static double calculateProfitRatio(Dealer dealer, Gamer gamer) {
+        if (!dealer.isBlackjack() && gamer.isBlackjack()) {
+            return 1.5;
+        }
+        if (dealer.isBlackjack() && gamer.isBlackjack()) {
+            return 0;
+        }
+        if (dealer.isBlackjack() && !gamer.isBlackjack()) {
+            return -1.0;
+        }
+        return calculateExcept(dealer, gamer);
     }
 
-    private static boolean isGamerWinWithBlackjack(Dealer dealer, Gamer gamer) {
-        return gamer.isBlackjack() && !dealer.isBlackjack();
+    private static double calculateExcept(Dealer dealer, Gamer gamer) {
+        if (gamer.isBust()) {
+            return -1.0;
+        }
+        if (!gamer.isBust() && dealer.isBust()) {
+            return 1.0;
+        }
+        if (gamer.calculateScore() > dealer.calculateScore()) {
+            return 1.0;
+        }
+        if (gamer.calculateScore() == dealer.calculateScore()) {
+            return 0;
+        }
+        return -1.0;
     }
-
-    private static boolean isGamerWin(Dealer dealer, Gamer gamer) {
-        return (((!gamer.isBlackjack() && !dealer.isBlackjack()) && !gamer.isBust()) && dealer.isBust())
-                || ((((!gamer.isBlackjack() && !dealer.isBlackjack()) && !gamer.isBust()) && !dealer.isBust()) && gamer.calculateScore() > dealer.calculateScore());
-    }
-
-    private static boolean isDealerWin(Dealer dealer, Gamer gamer) {
-        return (!gamer.isBlackjack() && dealer.isBlackjack()) || ((!gamer.isBlackjack() && !dealer.isBlackjack()) && gamer.isBust())
-                || ((((!gamer.isBlackjack() && !dealer.isBlackjack()) && !gamer.isBust()) && !dealer.isBust()) && gamer.calculateScore() < dealer.calculateScore());
-    }
-
 
     public List<ResultType> findByPlayer(Player player) {
         return gameResult.get(player);
