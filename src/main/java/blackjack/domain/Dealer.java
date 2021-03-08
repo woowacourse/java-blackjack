@@ -1,8 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
-public class Dealer extends Playable {
+public class Dealer extends Participant {
     private static final int MAX_AVAILABLE_TO_GET_CARD = 16;
 
     public Dealer(List<Card> cards){
@@ -28,21 +29,21 @@ public class Dealer extends Playable {
         return Outcome.DRAW;
     }
 
-    private boolean lose(int counterpart, int playerSum) {
-        if (counterpart <= Cards.BLACK_JACK && playerSum > Cards.BLACK_JACK) {
+    private boolean lose(int playerResult, int dealerResult) {
+        if (playerResult <= Cards.BLACK_JACK && dealerResult > Cards.BLACK_JACK) {
             return true;
         }
-        if (counterpart <= Cards.BLACK_JACK && counterpart > playerSum) {
+        if (playerResult <= Cards.BLACK_JACK && playerResult > dealerResult) {
             return true;
         }
         return false;
     }
 
-    private boolean win(int counterpart, int playerSum) {
-        if (counterpart > Cards.BLACK_JACK && playerSum <= Cards.BLACK_JACK) {
+    private boolean win(int playerResult, int dealerResult) {
+        if (playerResult > Cards.BLACK_JACK && dealerResult <= Cards.BLACK_JACK) {
             return true;
         }
-        if (playerSum <= Cards.BLACK_JACK && counterpart < playerSum) {
+        if (dealerResult <= Cards.BLACK_JACK && playerResult < dealerResult) {
             return true;
         }
         return false;

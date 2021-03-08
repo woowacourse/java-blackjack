@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public enum Suits {
     CLOVER("클로버"),

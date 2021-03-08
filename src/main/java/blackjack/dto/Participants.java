@@ -3,7 +3,7 @@ package blackjack.dto;
 import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.Outcome;
-import blackjack.domain.Playable;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import java.util.*;
@@ -19,7 +19,7 @@ public class Participants {
     }
 
     public String names() {
-        return players.getUnmodifiableList().stream().map(Playable::getName)
+        return players.getUnmodifiableList().stream().map(Participant::getName)
             .collect(Collectors.joining(", "));
     }
 

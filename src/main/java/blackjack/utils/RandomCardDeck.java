@@ -1,8 +1,8 @@
 package blackjack.utils;
 
-import blackjack.domain.Card;
-import blackjack.domain.Denominations;
-import blackjack.domain.Suits;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denominations;
+import blackjack.domain.card.Suits;
 
 import java.util.*;
 

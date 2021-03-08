@@ -1,43 +1,29 @@
 package blackjack;
 
-import blackjack.domain.Dealer;
-import blackjack.dto.Participants;
+import blackjack.domain.Game;
 import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.utils.CardDeck;
-import blackjack.utils.RandomCardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        final CardDeck cardDeck = new RandomCardDeck();
-        final Dealer dealer = new Dealer(cardDeck.initCards());
-        final Players players = new Players(InputView.getNames(), cardDeck);
-        final Participants participants = new Participants(players, dealer);
+        final Game game = new Game(InputView.getNames());
+        OutputView.printParticipantsCards(game.getParticipants());
 
-        OutputView.printParticipantsCards(participants);
-
-        simulate(cardDeck, dealer, players);
-
-        OutputView.printResult(participants);
+        simulate(game);
+        OutputView.printResult(game.getParticipants());
     }
 
-    private static void simulate(CardDeck cardDeck, Dealer dealer, Players players) {
-        for (Player player : players.getUnmodifiableList()) {
-            turnForPlayer(cardDeck, player);
+    private static void simulate(Game game) {
+        for (Player player : game.getPlayers()) {
+            final Player playerResult = game
+                .turnForPlayer(player, InputView.requestOneMoreCard(player.getName()));
+            OutputView.printCards(playerResult);
         }
 
-        if (dealer.isAvailableToTake()) {
-            dealer.takeCard(cardDeck.pop());
-            OutputView.printDealerGetCard();
-        }
+        game.turnForDealer();
+        OutputView.printDealerGetCard();
     }
 
-    private static void turnForPlayer(CardDeck cardDeck, Player player) {
-        while (player.isAvailableToTake() && InputView.requestOneMoreCard(player.getName())) {
-            player.takeCard(cardDeck.pop());
-            OutputView.printCards(player);
-        }
-    }
+
 }

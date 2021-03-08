@@ -22,6 +22,6 @@ public class InputView {
         if ("n".equals(answer)) {
             return false;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("y 또는 n을 입력해주세요.");
     }
 }

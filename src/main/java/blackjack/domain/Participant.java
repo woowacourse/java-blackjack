@@ -1,12 +1,13 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
-public abstract class Playable {
+public abstract class Participant {
     private final String name;
     private final Cards cards;
 
-    public Playable(String name, List<Card> cards) {
+    public Participant(String name, List<Card> cards) {
         this.name = name;
         this.cards = new Cards(cards);
     }

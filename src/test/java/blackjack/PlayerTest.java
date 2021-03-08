@@ -1,7 +1,7 @@
 package blackjack;
 
-import blackjack.domain.Card;
-import blackjack.domain.Playable;
+import blackjack.domain.card.Card;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.utils.CardDeck;
 import blackjack.utils.FixedCardDeck;
@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerTest {
     @Test
     void create() {
-        Playable player = new Player("john", new FixedCardDeck());
+        Participant player = new Player("john", new FixedCardDeck());
         assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
     void create2() {
-        Playable player = new Player("sarah", new FixedCardDeck());
+        Participant player = new Player("sarah", new FixedCardDeck());
         assertThat(player.getName()).isEqualTo("sarah");
     }
 
@@ -31,7 +31,7 @@ public class PlayerTest {
     void create3() {
         final CardDeck cardDeck = new FixedCardDeck();
         List<Card> cards = cardDeck.initCards();
-        Playable player = new Player("sarah", cards);
+        Participant player = new Player("sarah", cards);
 
         List<Card> playerCards = player.getUnmodifiableCards();
         assertThat(playerCards).contains(Card.from("A클로버"), Card.from("2클로버"));
@@ -42,7 +42,7 @@ public class PlayerTest {
     void add_card() {
         final CardDeck cardDeck = new FixedCardDeck();
         List<Card> cards = cardDeck.initCards();
-        Playable player = new Player("sarah", cards);
+        Participant player = new Player("sarah", cards);
         player.takeCard(cardDeck.pop());
         assertThat(player.getUnmodifiableCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
     }
@@ -52,7 +52,7 @@ public class PlayerTest {
     void sum_cards() {
         final CardDeck cardDeck = new FixedCardDeck();
         List<Card> cards = cardDeck.initCards();
-        Playable player = new Player("sarah", cards);
+        Participant player = new Player("sarah", cards);
         int score = player.sumCards();
         assertThat(score).isEqualTo(3);
     }
@@ -61,7 +61,7 @@ public class PlayerTest {
     @DisplayName("결과를 위한 플레이어에게 지급된 카드 합계")
     void sum_cards_for_result() {
         List<Card> cards = Arrays.asList(Card.from("A다이아몬드"), Card.from("6다이아몬드"));
-        Playable player = new Player("john", cards);
+        Participant player = new Player("john", cards);
         int score = player.sumCardsForResult();
         assertThat(score).isEqualTo(17);
     }
@@ -71,7 +71,7 @@ public class PlayerTest {
     void sum_cards_for_result1() {
         List<Card> cards = Arrays.asList(Card.from("A다이아몬드"),
                 Card.from("A다이아몬드"));
-        Playable player = new Player("john", cards);
+        Participant player = new Player("john", cards);
         player.takeCard(Card.from("A다이아몬드"));
         player.takeCard(Card.from("A다이아몬드"));
 

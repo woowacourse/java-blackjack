@@ -26,7 +26,7 @@ src/main/java/blackjack/domain/Participants.java
 
 src/main/java/blackjack/Application.java
 - [ ] takeCard 관리부분:  deck을 관리하는 객체를 만들어 player에게 카드를 줄지 말지 판단할 수 있도록 설계해볼 수도 있다
-- [ ] view로 인한 controller 역할 커짐: Controller에 있는 로직을 최대한 더 Model로 뽑을 수 있는 여지는 없을까? 
+- [x] view로 인한 controller 역할 커짐: Controller에 있는 로직을 최대한 더 Model로 뽑을 수 있는 여지는 없을까? 
 
 src/main/java/blackjack/utils/RandomCardDeck.java
 - [ ] 카드뭉치 생성의 책임과 카드 Queue를 분리?   
