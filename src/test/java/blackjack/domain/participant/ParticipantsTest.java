@@ -4,6 +4,9 @@ import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParticipantsTest {
 
-    private List<Participant> participantGroup;
-
+    private List<Player> players;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        participantGroup = Arrays.asList(
-                new Dealer(cards -> 0),
+        dealer = new Dealer(cards -> 0);
+        players = Arrays.asList(
                 new Player("suri", cards -> 0),
                 new Player("roki", cards -> 0)
         );
@@ -29,17 +32,37 @@ class ParticipantsTest {
     @Test
     void test_instance_participants() {
         //when
-        Participants participants = new Participants(participantGroup);
+        Participants participants = new Participants(players, dealer);
 
         //then
         assertThat(participants).isNotNull();
     }
 
+    @DisplayName("Participants에 딜러가 존재하지 않으면 예외를 발생시킨다")
+    @ParameterizedTest
+    @NullSource
+    void test_extract_dealer_if_dealer_is_not_exist(Dealer dealer) {
+        //when //then
+        assertThatThrownBy(() -> new Participants(players, dealer))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("Participants에 딜러가 존재하지 않으면 예외를 발생시킨다")
+    @ParameterizedTest
+    @NullSource
+    @EmptySource
+    void test_extract_dealer_if_dealer_is_not_exist(List<Player> players) {
+        //when //then
+        assertThatThrownBy(() -> new Participants(players, dealer))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+
     @DisplayName("딜러를 뽑아낸다.")
     @Test
     void test_extract_dealer() {
         //given
-        Participants participants = new Participants(participantGroup);
+        Participants participants = new Participants(players, dealer);
 
         //when
         Dealer dealer = participants.extractDealer();
@@ -48,26 +71,11 @@ class ParticipantsTest {
         assertThat(dealer).isNotNull();
     }
 
-    @DisplayName("딜러가 없는 Participants에서 딜러를 뽑아내면 예외를 발생시킨다")
-    @Test
-    void test_extract_dealer_if_dealer_is_not_exist() {
-        //given
-        List<Participant> participantGroup = Arrays.asList(
-                new Player("suri", cards -> 0),
-                new Player("roki", cards -> 0)
-        );
-        Participants participants = new Participants(participantGroup);
-
-        //when //then
-        assertThatThrownBy(() -> participants.extractDealer())
-                .isExactlyInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("플레이어들를 뽑아낸다")
     @Test
     void test_extract_players() {
         //given
-        Participants participants = new Participants(participantGroup);
+        Participants participants = new Participants(players, dealer);
 
         //when
         List<Player> players = participants.extractPlayers();
@@ -80,11 +88,7 @@ class ParticipantsTest {
     @Test
     void test_deal_cards_all_participants() {
         //given
-        List<Participant> participantGroup = Arrays.asList(new Dealer(cards -> 16),
-                new Player("pobi", cards -> 18),
-                new Player("jason", cards -> 15));
-
-        Participants participants = new Participants(participantGroup);
+        Participants participants = new Participants(players, dealer);
         Deck deck = Deck.generate();
 
         //when

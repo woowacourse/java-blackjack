@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.rule.BlackJackScoreRule;
@@ -16,7 +15,8 @@ public class BlackJackController {
 
     public void play() {
         Deck deck = Deck.generate();
-        Participants participants = getParticipants(InputView.inputNames());
+        Participants participants = new Participants(
+                getPlayers(InputView.inputNames()), new Dealer(new BlackJackScoreRule()));
         participants.dealCardsAllParticipants(deck);
 
         OutputView.printInitialCardStatus(participants);
@@ -51,11 +51,9 @@ public class BlackJackController {
         }
     }
 
-    private Participants getParticipants(List<String> names) {
-        List<Participant> participants = names.stream()
+    private List<Player> getPlayers(List<String> names) {
+        return names.stream()
                 .map(name -> new Player(name, new BlackJackScoreRule()))
                 .collect(Collectors.toList());
-        participants.add(0, new Dealer(new BlackJackScoreRule()));
-        return new Participants(participants);
     }
 }
