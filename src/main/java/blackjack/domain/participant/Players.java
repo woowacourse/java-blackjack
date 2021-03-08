@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -37,10 +38,9 @@ public class Players {
         }
     }
 
-    public void initTwoCardsByDealer(Dealer dealer) {
+    public void initHandByDealer(Dealer dealer, int receiveCount) {
         for (Player player : this.players) {
-            player.receiveCard(dealer.drawCard());
-            player.receiveCard(dealer.drawCard());
+            IntStream.range(0, receiveCount).forEach(i -> player.receiveCard(dealer.drawCard()));
         }
     }
 

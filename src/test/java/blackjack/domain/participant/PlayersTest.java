@@ -47,7 +47,7 @@ class PlayersTest {
         List<String> names = Arrays.asList("pobi", "jason");
         Players players = new Players(names);
         Dealer dealer = new Dealer();
-        players.initTwoCardsByDealer(dealer);
+        players.initHandByDealer(dealer, 2);
         assertThat(players.toList()
             .stream()
             .filter(player -> player.getHand().size() == 2)
