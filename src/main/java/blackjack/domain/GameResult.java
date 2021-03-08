@@ -13,14 +13,14 @@ public enum GameResult {
     }
 
     public static GameResult calculate(Player dealer, Player gamer) {
-        if (isOnlyDealerBursted(dealer, gamer) || hasPlayerHigherScoreThanDealer(dealer, gamer)) {
+        if (isOnlyDealerBurst(dealer, gamer) || hasPlayerHigherScoreThanDealer(dealer, gamer)) {
             return GameResult.WIN;
         }
 
         return GameResult.LOSE;
     }
 
-    private static boolean isOnlyDealerBursted(Player dealer, Player gamer) {
+    private static boolean isOnlyDealerBurst(Player dealer, Player gamer) {
         return dealer.getStatus() == Status.BURST &&
             gamer.getStatus() != Status.BURST;
     }
