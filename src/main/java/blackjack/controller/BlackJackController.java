@@ -30,7 +30,7 @@ public class BlackJackController {
             blackJackService.initChallengers(requestNames());
             blackJackService.initDealer();
             return;
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             initSetting();
         }
