@@ -10,21 +10,20 @@ public enum Result {
 
     WIN("승",
             (challenger, dealer) -> challenger.isBlackJack() && !dealer.isBlackJack(),
-            (challenger, dealer) -> dealer.isBust() && !challenger.isBust() ||
-                    !challenger.isBust() && scoreBiggerThan(challenger, dealer)),
+            (challenger, dealer) -> winCondition(challenger, dealer)),
     LOSE("패",
             (challenger, dealer) -> !challenger.isBlackJack() && dealer.isBlackJack(),
-            (challenger, dealer) -> challenger.isBust() || (!dealer.isBust() && scoreSmallerThan(challenger, dealer))),
+            (challenger, dealer) -> lossCondition(challenger, dealer)),
     DRAW("무",
             (challenger, dealer) -> challenger.isBlackJack() && dealer.isBlackJack(),
-            (challenger, dealer) -> scoreEquals(challenger, dealer));
+            (challenger, dealer) -> drawCondition(challenger, dealer));
 
     private final String result;
     private final BiPredicate<Challenger, Dealer> blackJackCheck;
     private final BiPredicate<Challenger, Dealer> scoreCheck;
 
     Result(final String result,
-           BiPredicate<Challenger, Dealer> blackJackCheck, BiPredicate<Challenger, Dealer> scoreCheck) {
+           final BiPredicate<Challenger, Dealer> blackJackCheck, final BiPredicate<Challenger, Dealer> scoreCheck) {
         this.result = result;
         this.blackJackCheck = blackJackCheck;
         this.scoreCheck = scoreCheck;
@@ -38,19 +37,29 @@ public enum Result {
                         Arrays.stream(Result.values())
                                 .filter(result -> result.scoreCheck.test(challenger, dealer))
                                 .findAny()
-                                .orElseThrow(() -> new IllegalArgumentException("승패 못가림"))
+                                .orElseThrow(() -> new RuntimeException("승패를 가리지 못합니다."))
                 );
     }
 
-    public static boolean scoreBiggerThan(Challenger challenger, Dealer dealer) {
+    private static boolean winCondition(final Challenger challenger, final Dealer dealer) {
+        return dealer.isBust() && !challenger.isBust() ||
+                !challenger.isBust() && scoreBiggerThan(challenger, dealer);
+    }
+
+    private static boolean lossCondition(final Challenger challenger, final Dealer dealer) {
+        return challenger.isBust() ||
+                (!dealer.isBust() && scoreSmallerThan(challenger, dealer));
+    }
+
+    private static boolean drawCondition(final Challenger challenger, final Dealer dealer) {
+        return challenger.getScore() == dealer.getScore();
+    }
+
+    private static boolean scoreBiggerThan(final Challenger challenger, final Dealer dealer) {
         return challenger.getScore() > dealer.getScore();
     }
 
-    public static boolean scoreSmallerThan(Challenger challenger, Dealer dealer) {
+    private static boolean scoreSmallerThan(final Challenger challenger, final Dealer dealer) {
         return challenger.getScore() < dealer.getScore();
-    }
-
-    public static boolean scoreEquals(Challenger challenger, Dealer dealer) {
-        return challenger.getScore() == dealer.getScore();
     }
 }
