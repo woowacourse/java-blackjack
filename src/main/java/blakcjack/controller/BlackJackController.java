@@ -53,7 +53,7 @@ public class BlackJackController {
 	}
 
 	private boolean isHit(final Player player) {
-		return !player.isBust() && isYes(player);
+		return player.hasAffordableScoreForHit() && isYes(player);
 	}
 
 	private void letDealerDraw(final Dealer dealer, final Deck deck) {
