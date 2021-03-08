@@ -14,7 +14,7 @@ class DeckTest {
     @DisplayName("덱에서 1장의 카드를 뽑으면, 1장의 카드가 나온다.")
     void drawCardFromDeck() {
         Deck deck = new Deck();
-        assertThat(deck.drawCard()).isInstanceOf(Card.class);
+        assertThat(deck.draw()).isInstanceOf(Card.class);
     }
 
     @Test
@@ -23,7 +23,7 @@ class DeckTest {
         Deck deck = new Deck();
         List<Card> cards = new ArrayList<>();
         for (int i = 1; i <= 52; ++i) {
-            cards.add(deck.drawCard());
+            cards.add(deck.draw());
         }
         assertThat(cards).doesNotHaveDuplicates();
     }
@@ -33,7 +33,7 @@ class DeckTest {
     void draw1000CardsFromDeck() {
         Deck deck = new Deck();
         for (int i = 1; i <= 1000; ++i) {
-            deck.drawCard();
+            deck.draw();
         }
     }
 }

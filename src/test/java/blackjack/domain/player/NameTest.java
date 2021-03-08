@@ -19,7 +19,7 @@ class NameTest {
     @ParameterizedTest
     @DisplayName("빈 이름으로 생성하려고하면, 예외가 발생한다.")
     @EmptySource
-    void EmptyThrowException(String name) {
+    void emptyThrowException(String name) {
         assertThatThrownBy(() -> new Name(name)).isInstanceOf(NameException.class);
     }
 }

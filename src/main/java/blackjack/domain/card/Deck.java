@@ -20,7 +20,7 @@ public class Deck {
         shuffleCards();
     }
 
-    public Card drawCard() {
+    public Card draw() {
         if (usedCardCount == CARD_MAX_COUNT) {
             shuffleCards();
             usedCardCount = 0;

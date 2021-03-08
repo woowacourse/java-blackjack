@@ -51,7 +51,7 @@ public class BlackJackController {
     }
 
     private void receiveDealerMoreCard(final Dealer dealer) {
-        while (!dealer.isBust() && dealer.canDrawMoreCard()) {
+        while (!dealer.isBust() && dealer.canDraw()) {
             blackJackService.receiveMoreCard(dealer);
             OutputView.printDealerReceiveMessage();
             OutputView.printNewLine();

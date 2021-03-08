@@ -35,7 +35,7 @@ public class OutputView {
     public static void printPlayerCards(final Player player) {
         System.out.print(player.getName() + "카드: ");
         List<String> challengersCards = player
-                .getCards()
+                .getHand()
                 .stream()
                 .map(card -> card.getFaceValue() + card.getSuit()).collect(Collectors.toList());
         System.out.print(String.join(", ", challengersCards));
