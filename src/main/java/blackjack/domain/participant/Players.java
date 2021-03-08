@@ -9,7 +9,10 @@ import java.util.stream.Collectors;
 public class Players {
     private List<Player> players;
 
-    private Players(final List<Player> players) {
+    public Players(final List<Player> players) {
+        validateDuplicate(players.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList()));
         this.players = players;
     }
 
@@ -34,16 +37,7 @@ public class Players {
         }
     }
 
-    public Map<Result, Integer> checkDealerResult(final Dealer dealer) {
-        final Map<Result, Integer> dealerResult = new HashMap<>();
-        for (Player player : players) {
-            Result result = dealer.checkResult(player);
-            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-        }
-        return Collections.unmodifiableMap(dealerResult);
-    }
-
-    public Map<Player, Result> checkAllPlayerResult(final Dealer dealer) {
+    public Map<Player, Result> checkEveryPlayerResult(final Dealer dealer) {
         final Map<Player, Result> playerResult = new LinkedHashMap<>();
         for (Player player : players) {
             playerResult.put(player, player.checkResult(dealer));
