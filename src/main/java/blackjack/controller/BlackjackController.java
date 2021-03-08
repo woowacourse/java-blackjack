@@ -18,6 +18,8 @@ public class BlackjackController {
 
     public void run() {
         List<Player> players = createPlayers(InputView.inputPlayerNames());
+        OutputView.printParticipate(players);
+
         Dealer dealer = new Dealer(DEALER);
         Deck deck = new Deck(CardFactory.createWithShuffle());
 
@@ -35,9 +37,8 @@ public class BlackjackController {
     }
 
     public List<Player> createPlayers(List<String> names) {
-        OutputView.printParticipate(names);
         return names.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, InputView.inputBetMoney(name)))
                 .collect(Collectors.toList());
     }
 

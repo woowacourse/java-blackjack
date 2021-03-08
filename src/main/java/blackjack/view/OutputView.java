@@ -8,6 +8,7 @@ import blackjack.domain.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -18,8 +19,11 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printParticipate(List<String> names) {
-        System.out.println("딜러와 " + String.join(DELIMITER, names) + "에게 2장을 나누었습니다.");
+    public static void printParticipate(List<Player> players) {
+        String playerLine = players.stream()
+                .map(Participant::getName)
+                .collect(Collectors.joining(DELIMITER));
+        System.out.println("딜러와 " + playerLine + "에게 2장을 나누었습니다.");
     }
 
     public static void printCards(Participant participant) {

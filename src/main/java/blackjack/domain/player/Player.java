@@ -3,13 +3,17 @@ package blackjack.domain.player;
 public class Player extends Participant {
 
     private static final int LIMIT_SCORE = 20;
+    private static final int DEFAULT_BET_MONEY = 1000;
+
+    private final BetMoney betMoney;
 
     public Player() {
-        this("null");
+        this("null", DEFAULT_BET_MONEY);
     }
 
-    public Player(String name) {
+    public Player(String name, long betMoney) {
         super(name);
+        this.betMoney = new BetMoney(betMoney);
     }
 
     public void compareWithDealer(Dealer dealer) {
