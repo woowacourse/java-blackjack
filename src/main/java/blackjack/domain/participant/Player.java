@@ -14,11 +14,13 @@ public class Player implements Participant {
     private String name;
     private List<Card> cards;
     private ScoreRule scoreRule;
+    private boolean isContinue;
 
     public Player(String name, ScoreRule scoreRule) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.scoreRule = scoreRule;
+        this.isContinue = true;
     }
 
     @Override
@@ -50,5 +52,13 @@ public class Player implements Participant {
     @Override
     public String getName() {
         return name;
+    }
+
+    public boolean isContinue() {
+        return isContinue;
+    }
+
+    public void endOwnTurn() {
+        isContinue = false;
     }
 }

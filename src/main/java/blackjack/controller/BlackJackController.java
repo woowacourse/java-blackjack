@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.blackjack.BlackJackGame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
@@ -14,46 +15,31 @@ import java.util.stream.Collectors;
 public class BlackJackController {
 
     public void play() {
-        Deck deck = Deck.generate();
-        Participants participants = new Participants(
-                getPlayers(InputView.inputNames()), new Dealer(new BlackJackScoreRule()));
-        participants.dealCardsAllParticipants(deck);
+        BlackJackGame blackJackGame = new BlackJackGame(Deck.generate(), writeValueAsParticipants(InputView.inputNames()));
+        blackJackGame.handInitCards();
 
-        OutputView.printInitialCardStatus(participants);
+        OutputView.printInitialCardStatus(blackJackGame.getParticipants());
 
-        List<Player> players = startPlayerTurns(deck, participants);
-        Dealer dealer = startDealerTurn(deck, participants);
+        playPlayersTurn(blackJackGame);
+        blackJackGame.playDealerTurn();
 
-        OutputView.printAllParticipantsCards(participants);
-        OutputView.printScoreResults(dealer.getDealerResult(players), dealer.decideWinOrLoseResults(players));
+        OutputView.printAllParticipantsCards(blackJackGame.getParticipants());
+        OutputView.printScoreResults(blackJackGame.getDealerResult(), blackJackGame.getPlayersResults());
     }
 
-    private List<Player> startPlayerTurns(Deck deck, Participants participants) {
-        List<Player> players = participants.extractPlayers();
-        for (Player player : players) {
-            startPlayerTurn(deck, player);
-        }
-        return players;
-    }
-
-    private Dealer startDealerTurn(Deck deck, Participants participants) {
-        Dealer dealer = participants.extractDealer();
-        if (dealer.isReceiveCard()) {
-            dealer.receiveCard(deck.draw());
-        }
-        return dealer;
-    }
-
-    private void startPlayerTurn(Deck deck, Player player) {
-        while (player.isReceiveCard() && InputView.inputAskMoreCard(player)) {
-            player.receiveCard(deck.draw());
-            OutputView.printParticipantCards(player);
+    private void playPlayersTurn(final BlackJackGame blackJackGame) {
+        while (blackJackGame.isExistWaitingPlayer()) {
+            Player currentPlayer = blackJackGame.findCurrentTurnPlayer();
+            blackJackGame.askMoreCard(InputView.inputAskMoreCard(currentPlayer));
+            OutputView.printParticipantCards(currentPlayer);
         }
     }
 
-    private List<Player> getPlayers(List<String> names) {
-        return names.stream()
+    private Participants writeValueAsParticipants(List<String> names) {
+        List<Player> players = names.stream()
                 .map(name -> new Player(name, new BlackJackScoreRule()))
                 .collect(Collectors.toList());
+
+        return new Participants(players, new Dealer(new BlackJackScoreRule()));
     }
 }
