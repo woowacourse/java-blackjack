@@ -51,15 +51,15 @@ public class BlackjackController {
     }
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
-        while(!participant.isBust() && InputView.askMoreCard(participant.getName())) {
+        while (!participant.isBust() && InputView.askMoreCard(participant.getName())) {
             participant.receiveCard(cardDeck.distribute());
-            OutputView.showParticipantCard(participant);
+            OutputView.showParticipantCard(participant, participant.getPlayerCards());
         }
         if (participant.isBust()) {
             OutputView.bustMessage();
             return;
         }
-        OutputView.showParticipantCard(participant);
+        OutputView.showParticipantCard(participant, participant.getPlayerCards());
     }
 
     private void dealerGameProgress(final Participant dealer, final CardDeck cardDeck) {

@@ -28,7 +28,8 @@ public class OutputView {
 
     public static void showNameAndCardInfo(final Participants participants) {
         distributeMessage(participants.getPlayers());
-        showParticipantsCard(participants.getParticipantGroup());
+        participants.getParticipantGroup()
+            .forEach(participant -> showParticipantCard(participant, participant.showCards()));
     }
 
     private static void distributeMessage(final List<Participant> players) {
@@ -39,14 +40,7 @@ public class OutputView {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, status);
     }
 
-    private static void showParticipantsCard(final List<Participant> participants) {
-        for (final Participant participant : participants) {
-            showParticipantCard(participant);
-        }
-    }
-
-    public static void showParticipantCard(final Participant participant) {
-        final List<Card> cards = participant.showCards();
+    public static void showParticipantCard(final Participant participant, final List<Card> cards) {
         final Name name = participant.getName();
         final List<String> cardStatuses = getCardInfo(cards);
         final String cardStatus = String.join(", ", cardStatuses);
