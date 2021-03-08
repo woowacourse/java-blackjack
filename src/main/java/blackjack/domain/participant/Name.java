@@ -3,13 +3,15 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 public class Name {
+    private static final String DEALER_NAME = "딜러";
 
     private final String value;
 
     public Name(final String value) {
+        validateNull(value);
         this.value = value.trim();
-        validateNull(this.value);
         validateEmpty(this.value);
+        validateName(this.value);
     }
 
     private void validateNull(String name) {
@@ -19,6 +21,12 @@ public class Name {
     private void validateEmpty(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("이름은 빈값 일 수 없습니다.");
+        }
+    }
+
+    private void validateName(String name) {
+        if (DEALER_NAME.equals(name)) {
+            throw new IllegalArgumentException("이름으로 \"딜러\" 는 사용할 수 없습니다.");
         }
     }
 
