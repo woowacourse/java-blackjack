@@ -26,7 +26,7 @@ public class Cards {
 
         if (canAddAceUpperValue(score)) {
             score -= Denomination.ACE.getValue();
-            score += Denomination.ACE.getUpperValue();
+            score += Denomination.ACE.getAceUpperValue();
         }
 
         return score;
