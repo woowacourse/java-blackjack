@@ -29,7 +29,7 @@ public class BlackJackController {
         showGameResult(players, dealer, participants);
     }
 
-    private static Players initializePlayers(Deck deck){
+    private static Players initializePlayers(Deck deck) {
         try {
             OutputView.printInputNames();
             return GameInitializer.initializePlayers(InputView.inputString(), deck);
