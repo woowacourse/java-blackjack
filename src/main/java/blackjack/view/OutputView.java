@@ -54,6 +54,7 @@ public class OutputView {
     }
 
     public static void showCardsResult(final List<Participant> participants) {
+        System.out.println();
         for (final Participant participant : participants) {
             showCardResult(participant);
         }
@@ -107,9 +108,5 @@ public class OutputView {
 
     public static void getErrorMessage(final String message) {
         System.out.println(ERROR_MARK + message);
-    }
-
-    public static void displayNewLine() {
-        System.out.println();
     }
 }
