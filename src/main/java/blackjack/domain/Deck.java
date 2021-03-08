@@ -2,13 +2,14 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class Deck {
 
-    private final Queue<Card> cards;
+    private Queue<Card> cards;
 
     public Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
@@ -16,6 +17,12 @@ public class Deck {
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
+    }
+
+    public void shuffle() {
+        LinkedList<Card> newCards = new LinkedList<>(cards);
+        Collections.shuffle(newCards);
+        cards = newCards;
     }
 
     public Card draw() {

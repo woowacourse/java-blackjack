@@ -10,8 +10,6 @@ import blackjack.domain.participant.Player;
 import blackjack.dto.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.Collections;
-import java.util.List;
 
 public class BlackJackController {
 
@@ -32,9 +30,9 @@ public class BlackJackController {
     }
 
     private static Deck prepareDeck() {
-        List<Card> cards = Card.getAllCards();
-        Collections.shuffle(cards);
-        return new Deck(cards);
+        Deck deck = new Deck(Card.getAllCards());
+        deck.shuffle();
+        return deck;
     }
 
     private static Players joinPlayers(Deck deck) {
