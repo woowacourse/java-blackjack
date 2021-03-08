@@ -12,15 +12,4 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RoundTest {
 
-    @DisplayName("라운드 시작 시 랜덤 생성된 카드를 받고, 두장의 카드를 뽑는다.")
-    @Test
-    void start_round() {
-        List<Player> players = Arrays.asList(
-                new Player("pobi"),
-                new Player("jason")
-        );
-
-        Round round = Round.generateWithRandomCards(new Dealer(), players);
-        assertThat(round.makeTwoCards()).hasSize(2);
-    }
 }

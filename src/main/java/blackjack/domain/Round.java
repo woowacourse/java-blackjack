@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.dto.PlayerResultDto;
@@ -9,38 +9,23 @@ import blackjack.view.dto.RoundStatusDto;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Round {
     public static final int GAME_OVER_SCORE = 21;
-    private static final int FIRST_INDEX = 0;
 
-    private final List<Card> shuffledCards;
+    private final Deck deck;
     private final Dealer dealer;
     private final List<Player> players;
 
-    private Round(final List<Card> cards, final Dealer dealer, final List<Player> players) {
-        this.shuffledCards = new ArrayList<>(cards);
+    public Round(final Deck deck, final Dealer dealer, final List<Player> players) {
+        this.deck = deck;
         this.dealer = dealer;
         this.players = new ArrayList<>(players);
     }
 
-    public static Round generateWithRandomCards(final Dealer dealer, final List<Player> players) {
-        return new Round(Card.getShuffledCards(), dealer, players);
-    }
-
-    public List<Card> makeTwoCards() {
-        return IntStream.range(0, 2)
-                .mapToObj(count -> shuffledCards.remove(FIRST_INDEX))
-                .collect(Collectors.toList());
-    }
-
-    public Card makeOneCard() {
-        return shuffledCards.remove(FIRST_INDEX);
-    }
-
-    public List<String> getDealerCardStatus() {
-        return dealer.getCardsStatus();
+    public void initialize() {
+        dealer.addFirstCards(deck.makeTwoCards());
+        players.forEach(player -> player.addFirstCards(deck.makeTwoCards()));
     }
 
     public String getDealerName() {
@@ -78,15 +63,22 @@ public class Round {
 
     public boolean addDealerCard() {
         if (!dealer.isGameOver(GAME_OVER_SCORE)) {
-            dealer.addCard(makeOneCard());
+            dealer.addCard(deck.makeOneCard());
             return true;
         }
         return false;
     }
 
-    public void initialize() {
-        dealer.addFirstCards(makeTwoCards());
-        players.forEach(player -> player.addFirstCards(makeTwoCards()));
+    public void addPlayerCard(Player player) {
+        Player findPlayer = players.stream()
+                .filter(p -> p.equals(player))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
+        findPlayer.addCard(deck.makeOneCard());
+    }
+
+    private List<String> getDealerCardStatus() {
+        return dealer.getCardsStatus();
     }
 
     private PlayerStatusDto getPlayerStatusDto(final Player player) {

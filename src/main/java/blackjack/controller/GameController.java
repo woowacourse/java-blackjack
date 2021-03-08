@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Round;
+import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
@@ -36,7 +37,8 @@ public class GameController {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
-        return Round.generateWithRandomCards(dealer, players);
+        Deck deck = Deck.generateByRandomCard();
+        return new Round(deck, dealer, players);
     }
 
     private void addPlayersCardOrPass(final Round round) {
@@ -54,7 +56,7 @@ public class GameController {
 
     private void addCardOrPassByInput(final Round round, final Player player, final String answer) {
         if (answer.equals(YES)) {
-            player.addCard(round.makeOneCard());
+            round.addPlayerCard(player);
             OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.getScore()));
         }
     }

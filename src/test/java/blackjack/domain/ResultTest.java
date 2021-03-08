@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.assertj.core.api.Assertions;
@@ -39,11 +40,11 @@ class ResultTest {
         players.addAll(Arrays.asList(player, player2));
     }
 
-    @DisplayName("Result 객체 정상 생성 테스트")
+    @DisplayName("승패 결과 테스트")
     @Test
     void result_generate_test() {
-        Result result = new Result();
-        Round round = Round.generateWithRandomCards(dealer, players);
+        Deck deck = Deck.generateByRandomCard();
+        Round round = new Round(deck, dealer, players);
 
         Map<String, Queue<Outcome>> results = Result.findResults(round);
 
@@ -57,12 +58,11 @@ class ResultTest {
     @DisplayName("딜러가 버스터 일때 승패 체크 테스트")
     @Test
     void result_buster_test() {
-        Result result = new Result();
-
         dealer.addCard(Card.of("스페이드", "10"));
         players.get(0).addCard(Card.of("스페이드", "9"));
 
-        Round round = Round.generateWithRandomCards(dealer, players);
+        Deck deck = Deck.generateByRandomCard();
+        Round round = new Round(deck, dealer, players);
         Map<String, Queue<Outcome>> results = Result.findResults(round);
 
         Queue<Outcome> firstPlayerOutcomes = results.get(players.get(0).getName());      //딜러 24, 플레이어 24, 딜러 승,  플레이어 패
