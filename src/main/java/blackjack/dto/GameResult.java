@@ -14,7 +14,6 @@ public class GameResult {
         this.results = new LinkedHashMap<>(results);
     }
 
-
     public Map<ResultType, Integer> getStatistics() {
         Map<ResultType, Integer> result = new LinkedHashMap<>();
         results.values()

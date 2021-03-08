@@ -15,6 +15,9 @@ import java.util.List;
 
 public class BlackJackController {
 
+    private BlackJackController() {
+    }
+
     public static void play() {
         Deck deck = prepareDeck();
         Dealer dealer = new Dealer(deck);
