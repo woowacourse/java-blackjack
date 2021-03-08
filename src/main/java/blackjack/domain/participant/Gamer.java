@@ -24,10 +24,6 @@ public abstract class Gamer {
         cards.addCard(card);
     }
 
-    public void receiveOneCard(Deck deck) {
-        receiveCard(deck.dealCard());
-    }
-
     public boolean isBurst() {
         return cards.calculateMaximumPoint() > THRESHOLD_OF_BURST;
     }

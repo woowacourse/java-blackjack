@@ -50,7 +50,7 @@ public class BlackJackController {
             askKeepDrawing(player, deck);
         }
         while (dealer.canReceiveCard()) {
-            dealer.receiveOneCard(deck);
+            dealer.receiveCard(deck.dealCard());
             OutputView.noticeDealerReceiveCard();
         }
     }
@@ -66,7 +66,7 @@ public class BlackJackController {
 
     private void playEachPlayer(Player player, Deck deck) {
         while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player), deck)) {
-            player.receiveOneCard(deck);
+            player.receiveCard(deck.dealCard());
             OutputView.noticePlayerCards(player);
         }
     }
