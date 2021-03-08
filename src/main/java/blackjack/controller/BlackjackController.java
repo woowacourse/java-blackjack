@@ -6,11 +6,15 @@ import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
+
+    public static final String SAME_NAME_ERROR = "중복된 이름을 사용할 수 없습니다.";
+
     public void run() {
         final CardDeck cardDeck = new CardDeck();
         final Dealer dealer = new Dealer();
@@ -24,16 +28,26 @@ public class BlackjackController {
 
     private List<Player> playerSetUp() {
         final List<String> names = InputView.requestName();
-        List<Player> players = new ArrayList<>();
         try {
-            players = names.stream()
-                    .map(Player::new)
-                    .collect(Collectors.toList());
+            validateSameName(names);
+            return changeStringToPlayer(names);
         } catch (IllegalArgumentException e) {
             OutputView.showErrorMessage(e.getMessage());
-            playerSetUp();
+            return playerSetUp();
         }
-        return players;
+    }
+
+    private void validateSameName(final List<String> names) {
+        final Set<String> changedNames = new HashSet<>(names);
+        if (names.size() != changedNames.size()) {
+            throw new IllegalArgumentException(SAME_NAME_ERROR);
+        }
+    }
+
+    private List<Player> changeStringToPlayer(List<String> names) {
+        return names.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     private void distributeCard(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
