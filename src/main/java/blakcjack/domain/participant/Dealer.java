@@ -1,7 +1,6 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Cards;
-import blakcjack.domain.card.Deck;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
