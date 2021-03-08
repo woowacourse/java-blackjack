@@ -8,11 +8,18 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
+    private Deck deck;
+    private Cards cards;
+
+    public void setUp() {
+        deck = new Deck();
+        cards = deck.popTwo();
+    }
+
     @DisplayName("Cards 객체를 생성한다.")
     @Test
     public void createCards() {
-        Deck deck = new Deck();
-        Cards cards = deck.popTwo();
+        setUp();
 
         assertThat(cards).isInstanceOf(Cards.class);
     }
@@ -20,11 +27,9 @@ public class CardsTest {
     @DisplayName("Card 객체 하나를 보여준다.")
     @Test
     public void oneCard() {
-        Deck deck = new Deck();
-        Cards cards = deck.popTwo();
-        Card card = cards.oneCard();
+        setUp();
 
-        assertThat(card).isInstanceOf(Card.class);
+        assertThat(cards.oneCard()).isInstanceOf(Card.class);
     }
 
     @DisplayName("카드 합계를 구한다.")
@@ -62,10 +67,8 @@ public class CardsTest {
     @DisplayName("카드들을 하나의 객체로 합친다.")
     @Test
     void combineCards() {
-        Deck deck = new Deck();
-        Cards cards = deck.popTwo();
-        Cards otherCards = deck.popTwo();
-        cards.combine(otherCards);
+        setUp();
+        cards.combine(deck.popTwo());
 
         assertThat(cards.getCards()).hasSize(4);
     }
