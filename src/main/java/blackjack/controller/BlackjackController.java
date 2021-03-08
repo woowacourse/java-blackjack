@@ -23,7 +23,7 @@ public class BlackjackController {
     private void drawCardsV2(Game game) {
         while (game.isAnyPlayerHit()) {
             PlayerDto hitPlayerDto = game.getAnyHitPlayerDto();
-            game.drawCard(hitPlayerDto, InputView.askIfMoreCardV2(hitPlayerDto));
+            game.askDrawToPlayer(hitPlayerDto, InputView.askIfMoreCardV2(hitPlayerDto));
             OutputView.printPlayerCardV2(hitPlayerDto);
         }
         OutputView.printDealerDraw(game.askDrawToDealer());

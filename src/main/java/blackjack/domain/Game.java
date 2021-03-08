@@ -1,8 +1,13 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.*;
-
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.MatchResult;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.PlayerDto;
+import blackjack.domain.user.ResultDTO;
+import blackjack.domain.user.User;
+import blackjack.domain.user.WinningResultDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,14 +37,14 @@ public class Game {
         players.forEach(player -> player.initialHands(deck.pickInitialCards()));
     }
 
-    public void drawCard(PlayerDto playerDto, String askIfMoreCard) {
+    public void askDrawToPlayer(PlayerDto playerDto, String askIfMoreCard) {
         players.stream()
             .filter(player -> player.getName().equals(playerDto.getName()))
-            .forEach(player -> addCardOrChangeStatus(askIfMoreCard, player));
+            .forEach(player -> drawCardOrChangeStatus(askIfMoreCard, player));
     }
 
-    private void addCardOrChangeStatus(String askIfMoreCard, User player) {
-        if(askIfMoreCard.equals(ANSWER_YES)) {
+    private void drawCardOrChangeStatus(String askIfMoreCard, User player) {
+        if (askIfMoreCard.equals(ANSWER_YES)) {
             player.draw(deck.pickSingleCard());
             return;
         }
@@ -47,13 +52,17 @@ public class Game {
     }
 
     public boolean askDrawToDealer() {
-        if(!dealer.isHit()) {
+        if (!dealer.isHit()) {
             return false;
         }
-        while(dealer.isHit()) {
+        drawDealerHand();
+        return true;
+    }
+
+    public void drawDealerHand() {
+        while (dealer.isHit()) {
             dealer.draw(deck.pickSingleCard());
         }
-        return true;
     }
 
     public User getDealer() {
@@ -69,8 +78,10 @@ public class Game {
     }
 
     public PlayerDto getAnyHitPlayerDto() {
-        Optional<User> first = players.stream().filter(User::isHit).findFirst();
-        if(!first.isPresent()) {
+        Optional<User> first = players.stream()
+            .filter(User::isHit)
+            .findFirst();
+        if (!first.isPresent()) {
             throw new IllegalArgumentException("Hit 이면서 주어진 이름과 같은 플레이어가 존재하지 않습니다.");
         }
         return new PlayerDto(first.get());
