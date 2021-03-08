@@ -11,20 +11,15 @@ public class Player extends Participant {
     }
 
     @Override
-    public void drawCard(Deck deck) {
-        if (!isContinue()) {
-            throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
-        }
-        addCard(deck.draw());
+    protected ParticipantStatus updateStatus(ParticipantStatus currentStatus) {
         if (isBust()) {
-            cannotContinue();
+            return ParticipantStatus.BUST;
         }
+        return currentStatus;
     }
 
-    public void willContinue(Response response) {
-        if (!response.getHitStatus()) {
-            cannotContinue();
-        }
+    public void updateStatusByResponse(Response response) {
+        setStatus(response.getPlayerStatus());
     }
 
     public ResultType match(Dealer dealer) {

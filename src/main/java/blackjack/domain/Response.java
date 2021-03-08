@@ -1,17 +1,18 @@
 package blackjack.domain;
 
+import blackjack.domain.participants.ParticipantStatus;
 import java.util.Arrays;
 
 public enum Response {
-    POSITIVE("y", true),
-    NEGATIVE("n", false);
+    POSITIVE("y", ParticipantStatus.HIT),
+    NEGATIVE("n", ParticipantStatus.STAY);
 
     private final String input;
-    private final boolean hit;
+    private final ParticipantStatus participantStatus;
 
-    Response(String input, boolean hit) {
+    Response(String input, ParticipantStatus participantStatus) {
         this.input = input;
-        this.hit = hit;
+        this.participantStatus = participantStatus;
     }
 
     public static Response getResponse(String input) {
@@ -21,7 +22,7 @@ public enum Response {
             .orElseThrow(() -> new IllegalArgumentException("불가능한 입력 입니다."));
     }
 
-    public boolean getHitStatus() {
-        return this.hit;
+    public ParticipantStatus getPlayerStatus() {
+        return participantStatus;
     }
 }

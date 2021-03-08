@@ -72,14 +72,14 @@ public class PlayerTest {
     void willContinue() {
         Player root = new Player("root", deck);
 
-        root.willContinue(Response.getResponse("y"));
+        root.updateStatusByResponse(Response.getResponse("y"));
         assertThat(root.isContinue()).isTrue();
 
-        root.willContinue(Response.getResponse("n"));
+        root.updateStatusByResponse(Response.getResponse("n"));
         assertThat(root.isContinue()).isFalse();
 
         assertThatThrownBy(() ->
-            root.willContinue(Response.getResponse("x")))
+            root.updateStatusByResponse(Response.getResponse("x")))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("불가능한 입력 입니다.");
     }

@@ -12,14 +12,14 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void drawCard(Deck deck) {
-        if (!isContinue()) {
-            throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
+    protected ParticipantStatus updateStatus(ParticipantStatus currentStatus) {
+        if (isBust()) {
+            return ParticipantStatus.BUST;
         }
-        addCard(deck.draw());
         if (isOverLimit()) {
-            cannotContinue();
+            return ParticipantStatus.STAY;
         }
+        return currentStatus;
     }
 
     private boolean isOverLimit() {

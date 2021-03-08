@@ -14,17 +14,29 @@ public abstract class Participant {
 
     private final Hand hand;
     private final Name name;
-    private boolean hit;
+    private ParticipantStatus status;
 
     public Participant(String name, Deck deck) {
         this.hand = new Hand(new ArrayList<>());
-        this.hit = true;
         this.name = new Name(name);
+        this.status = ParticipantStatus.HIT;
 
         IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> drawCard(deck));
     }
 
-    abstract public void drawCard(Deck deck);
+    public void drawCard(Deck deck) {
+        if (!isContinue()) {
+            throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
+        }
+        addCard(deck.draw());
+        status = updateStatus(status);
+    }
+
+    protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
+
+    protected void setStatus(ParticipantStatus status) {
+        this.status = status;
+    }
 
     protected void addCard(Card card) {
         hand.addCard(card);
@@ -34,24 +46,20 @@ public abstract class Participant {
         return hand.getScore();
     }
 
+    public String getName() {
+        return name.unwrap();
+    }
+
     public List<Card> getHand() {
         return hand.unwrap();
     }
 
     public boolean isContinue() {
-        return hit;
-    }
-
-    protected void cannotContinue() {
-        this.hit = false;
+        return status == ParticipantStatus.HIT;
     }
 
     public boolean isBust() {
         return hand.isBust();
-    }
-
-    public String getName() {
-        return name.unwrap();
     }
 
     @Override
