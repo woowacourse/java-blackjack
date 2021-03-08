@@ -6,6 +6,7 @@ import static blackjack.domain.participant.Dealer.TWENTY_ONE;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.ToIntFunction;
 
 public class Hand {
 
@@ -31,17 +32,17 @@ public class Hand {
         return sumAceToOne() > TWENTY_ONE;
     }
 
-    //todo 리팩터링 필요
     private int sumAceToOne() {
-        return cards.stream()
-                .mapToInt(Card::getRankValue)
-                .sum();
+        return getTotalByMapper(Card::getRankValue);
     }
 
-    //todo 리팩터링 필요
-    public int sumAceToEleven() {
+    public int getDealerTotal() {
+        return getTotalByMapper(this::getAceValue);
+    }
+
+    private int getTotalByMapper(ToIntFunction<Card> mapper) {
         return cards.stream()
-                .mapToInt(this::getAceValue)
+                .mapToInt(mapper)
                 .sum();
     }
 
@@ -52,16 +53,29 @@ public class Hand {
         return card.getRankValue();
     }
 
-    public int sumTotalExceptAce() {
+
+    public int getPlayerTotal() {
+        int aceCount = getCountOfAce();
+        int result = (aceCount * ACE_VALUE) + getTotalExceptAce();
+
+        while (aceCount >= 0 && TWENTY_ONE < result) {
+            result -= 10;
+            aceCount--;
+        }
+
+        return result;
+    }
+
+    private int getCountOfAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int getTotalExceptAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getRankValue)
                 .sum();
-    }
-
-    public int getCountOfAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
     }
 }

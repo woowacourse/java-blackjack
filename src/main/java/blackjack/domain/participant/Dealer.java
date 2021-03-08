@@ -47,11 +47,11 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldReceive() {
-        return cardHand.sumAceToEleven() <= DEALER_UNDER;
+        return cardHand.getDealerTotal() <= DEALER_UNDER;
     }
 
     @Override
     public int getHandTotal() {
-        return cardHand.sumAceToEleven();
+        return cardHand.getDealerTotal();
     }
 }
