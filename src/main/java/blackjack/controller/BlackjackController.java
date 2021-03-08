@@ -12,8 +12,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
-    private static final String YES = "y";
-
     private final BlackjackGame blackjackGame;
 
     public BlackjackController(BlackjackGame blackjackGame) {
@@ -57,7 +55,7 @@ public class BlackjackController {
     }
 
     private void askToPlayerForHit(Player player, Deck deck) {
-        while (isPlayerHit(player) && isYes(InputView.inputHit())) {
+        while (isPlayerHit(player) && InputView.inputHitYes()) {
             player.draw(deck);
             OutputView.printPlayerCards(player);
         }
@@ -69,10 +67,6 @@ public class BlackjackController {
             return true;
         }
         return false;
-    }
-
-    private boolean isYes(String answer) {
-        return answer.equals(YES);
     }
 
     private void isDealerHit() {

@@ -23,10 +23,10 @@ public class InputView {
          throw new IllegalArgumentException("구분자는 콤마로 입력해주세요.");
     }
 
-    public static String inputHit() {
+    public static boolean inputHitYes() {
         String input = deleteWhiteSpaces(SCANNER.nextLine());
-        if (input.equals(YES) || input.equals(NO)) {
-            return input;
+        if (YES.equals(input) || NO.equals(input)) {
+            return YES.equals(input);
         }
         throw new IllegalArgumentException("y 또는 n으로 입력해주세요.");
     }
