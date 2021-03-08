@@ -1,11 +1,14 @@
 package blakcjack.controller;
 
 import blakcjack.domain.blackjackgame.BlackjackGame;
+import blakcjack.domain.blackjackgame.GameInitializationFailureException;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.card.EmptyDeckException;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
+import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
+
 import blakcjack.view.OutputView;
 
 import java.util.List;
@@ -16,7 +19,7 @@ import static blakcjack.view.OutputView.printInitialHands;
 
 public class BlackJackController {
     public void run() {
-        final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), takePlayerNamesInput());
+        final BlackjackGame blackjackGame = initializeGame();
         final List<Participant> players = blackjackGame.getPlayers();
         final Dealer dealer = (Dealer) blackjackGame.getDealer();
 
@@ -28,12 +31,21 @@ public class BlackJackController {
         notifyFinalSummary(blackjackGame, players, dealer);
     }
 
+    private BlackjackGame initializeGame() {
+        try {
+            return new BlackjackGame(new Deck(), takePlayerNamesInput());
+        } catch (GameInitializationFailureException e) {
+            printGameClosing(e.getMessage());
+            throw new GameTerminationException();
+        }
+    }
+
     private void drawInitialCards(final BlackjackGame blackjackGame) {
         try {
             blackjackGame.initializeHands();
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
-            System.exit(0);
+            throw new GameTerminationException();
         }
     }
 
@@ -44,7 +56,7 @@ public class BlackJackController {
             drawForMaximumCapability(blackjackGame, dealer);
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
-            System.exit(0);
+            throw new GameTerminationException();
         }
     }
 
