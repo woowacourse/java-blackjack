@@ -8,20 +8,23 @@ import java.util.stream.Collectors;
 public class Deck {
     private static final int FIRST_INDEX = 0;
 
-    private static final List<Card> DECK;
+    private final List<Card> deck;
 
-    static {
-        DECK = Arrays.stream(CardPattern.values())
+    public Deck() {
+        this.deck = Arrays.stream(CardPattern.values())
                 .flatMap(cardPattern -> Arrays.stream(CardNumber.values())
                         .map(cardNumber -> new Card(cardPattern, cardNumber)))
                 .collect(Collectors.toList());
     }
 
-    public static void shuffleCards() {
-        Collections.shuffle(DECK);
+    public void shuffleCards() {
+        Collections.shuffle(deck);
     }
 
-    public static Card dealCard() {
-        return DECK.remove(FIRST_INDEX);
+    public Card dealCard() {
+        if (deck.isEmpty()) {
+            throw new IllegalArgumentException("덱이 모두 소진되었습니다. 새로운 게임을 시작해주세요.");
+        }
+        return deck.remove(FIRST_INDEX);
     }
 }

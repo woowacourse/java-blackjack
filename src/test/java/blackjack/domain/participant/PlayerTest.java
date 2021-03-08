@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -87,13 +88,13 @@ public class PlayerTest {
     @DisplayName("다시 받을 때 올바른 입력 확인")
     @CsvSource(value = {"y:true", "n:false"}, delimiter = ':')
     void playerContinueDraw(String value, boolean expected) {
-        assertEquals(player.continueDraw(value), expected);
+        assertEquals(player.continueDraw(value, new Deck()), expected);
     }
 
     @Test
     @DisplayName("다시 받을 때 예외 처리")
     void playerStopDraw() {
-        assertThatThrownBy(() -> player.continueDraw("l")).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> player.continueDraw("l", new Deck())).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("y");
     }
 }

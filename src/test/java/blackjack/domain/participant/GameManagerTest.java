@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.GameManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class GameManagerTest {
         List<String> input = Arrays.asList("pobi", "jason");
         Players players = new Players(input, new Dealer());
         GameManager gameManager = new GameManager(players);
-        gameManager.giveCards();
+        gameManager.giveCards(new Deck());
         for (Player player : players.getPlayers()) {
             assertEquals(player.toList().size(), 2);
         }

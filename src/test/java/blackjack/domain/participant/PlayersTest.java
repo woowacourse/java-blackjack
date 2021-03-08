@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class PlayersTest {
     @Test
     @DisplayName("카드 한장씩 분배 확인")
     void playerReceiveCards() {
-        players.giveCards();
+        players.giveCards(new Deck());
         assertEquals((int) players.getPlayers().stream().filter(player -> player.toList().size() == 1).count(), 2);
     }
 }

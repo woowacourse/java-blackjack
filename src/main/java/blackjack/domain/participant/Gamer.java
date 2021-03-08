@@ -24,8 +24,8 @@ public abstract class Gamer {
         cards.addCard(card);
     }
 
-    public void receiveOneCard() {
-        receiveCard(Deck.dealCard());
+    public void receiveOneCard(Deck deck) {
+        receiveCard(deck.dealCard());
     }
 
     public boolean isBurst() {
@@ -42,7 +42,7 @@ public abstract class Gamer {
 
     public abstract boolean canReceiveCard();
 
-    public abstract Boolean continueDraw(String draw);
+    public abstract Boolean continueDraw(String draw, Deck deck);
 
     public String getName() {
         return name.getName();

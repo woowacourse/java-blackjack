@@ -13,10 +13,11 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = askPlayers(dealer);
+        Deck deck = new Deck();
 
-        Deck.shuffleCards();
-        drawCards(players, dealer);
-        drawUntilPossible(dealer, players);
+        deck.shuffleCards();
+        drawCards(dealer, players, deck);
+        drawUntilPossible(dealer, players, deck);
 
         OutputView.noticePlayersPoint(dealer, players);
         OutputView.printResult(new WinnerCount().calculateTotalWinnings(players));
@@ -38,34 +39,34 @@ public class BlackJackController {
         }
     }
 
-    private void drawCards(Players players, Dealer dealer) {
+    private void drawCards(Dealer dealer, Players players, Deck deck) {
         OutputView.noticeDrawTwoCards(players);
-        new GameManager(players).giveCards();
+        new GameManager(players).giveCards(deck);
         OutputView.noticePlayersCards(dealer, players);
     }
 
-    private void drawUntilPossible(Dealer dealer, Players players) {
+    private void drawUntilPossible(Dealer dealer, Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            askKeepDrawing(player);
+            askKeepDrawing(player, deck);
         }
         while (dealer.canReceiveCard()) {
-            dealer.receiveOneCard();
+            dealer.receiveOneCard(deck);
             OutputView.noticeDealerReceiveCard();
         }
     }
 
-    private void askKeepDrawing(Player player) {
+    private void askKeepDrawing(Player player, Deck deck) {
         try {
-            playEachPlayer(player);
+            playEachPlayer(player, deck);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            playEachPlayer(player);
+            playEachPlayer(player, deck);
         }
     }
 
-    private void playEachPlayer(Player player) {
-        while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player))) {
-            player.receiveOneCard();
+    private void playEachPlayer(Player player, Deck deck) {
+        while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player), deck)) {
+            player.receiveOneCard(deck);
             OutputView.noticePlayerCards(player);
         }
     }

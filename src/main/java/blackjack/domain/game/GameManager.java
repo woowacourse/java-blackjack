@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Players;
 
 public class GameManager {
@@ -11,9 +12,9 @@ public class GameManager {
         this.players = players;
     }
 
-    public void giveCards() {
+    public void giveCards(Deck deck) {
         for (int i = 0; i < INITIAL_DRAWING_COUNT; i++) {
-            players.giveCards();
+            players.giveCards(deck);
         }
     }
 }

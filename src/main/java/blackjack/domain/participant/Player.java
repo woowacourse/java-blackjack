@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.WinnerFlag;
 
 public class Player extends Gamer {
@@ -20,7 +21,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public Boolean continueDraw(String draw) {
+    public Boolean continueDraw(String draw, Deck deck) {
         if (draw.equals(AGREE)) {
             return true;
         }
