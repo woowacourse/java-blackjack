@@ -86,7 +86,7 @@ public class BlackjackGame {
         return Collections.unmodifiableList(players);
     }
 
-    public Dealer getDealer() {
-        return (Dealer) dealer;
+    public Participant getDealer() {
+        return dealer;
     }
 }

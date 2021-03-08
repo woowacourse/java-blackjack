@@ -18,7 +18,7 @@ public class BlackJackController {
     public void run() {
         final BlackjackGame blackjackGame = new BlackjackGame(new Deck(), takePlayerNamesInput());
         final List<Participant> players = blackjackGame.getPlayers();
-        final Dealer dealer = blackjackGame.getDealer();
+        final Dealer dealer = (Dealer) blackjackGame.getDealer();
 
         drawInitialCards(blackjackGame);
         printInitialHands(dealer, players);
