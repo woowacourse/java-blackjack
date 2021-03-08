@@ -31,12 +31,14 @@ public class Hand {
         return sumAceToOne() > TWENTY_ONE;
     }
 
+    //todo 리팩터링 필요
     private int sumAceToOne() {
         return cards.stream()
                 .mapToInt(Card::getRankValue)
                 .sum();
     }
 
+    //todo 리팩터링 필요
     public int sumAceToEleven() {
         return cards.stream()
                 .mapToInt(this::getAceValue)

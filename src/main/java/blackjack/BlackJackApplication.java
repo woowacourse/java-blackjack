@@ -72,7 +72,7 @@ public class BlackJackApplication {
     private static void progressDealerTurn(Dealer dealer) {
         while (dealer.shouldReceive()) {
             OutputView.printDealerDrawMessage();
-            dealer.pickAnotherCard();
+            dealer.selfDraw();
         }
     }
 

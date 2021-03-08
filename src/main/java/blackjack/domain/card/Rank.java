@@ -9,16 +9,16 @@ public enum Rank {
 
     public static final int ACE_VALUE = 11;
 
-    private final int number;
+    private final int value;
     private final String initial;
 
-    Rank(int number, String initial) {
-        this.number = number;
+    Rank(int value, String initial) {
+        this.value = value;
         this.initial = initial;
     }
 
-    public int getNumber() {
-        return number;
+    public int getValue() {
+        return value;
     }
 
     public String getInitial() {

@@ -19,8 +19,8 @@ public class Dealer extends Participant {
     }
 
     public void drawBaseCard() {
-        cardHand.add(draw());
-        cardHand.add(draw());
+        selfDraw();
+        selfDraw();
     }
 
     public void drawBaseCardToPlayers(List<Player> players) {
@@ -34,7 +34,7 @@ public class Dealer extends Participant {
         player.receiveCard(draw());
     }
 
-    public void pickAnotherCard() {
+    public void selfDraw() {
         cardHand.add(draw());
     }
 

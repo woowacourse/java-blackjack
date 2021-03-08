@@ -21,20 +21,18 @@ public class ResultCalculator {
         List<PlayerResultDto> playersResults = new ArrayList<>();
         Map<MatchResult, Integer> dealerMatchCount = new EnumMap<>(MatchResult.class);
 
-        int dealerCardSum = dealer.getHandTotal();
+        int dealerTotal = dealer.getHandTotal();
 
         for (Player player : players) {
-            MatchResult winOrLose = MatchResult.match(player, dealerCardSum);
+            MatchResult matchResult = player.getMatchResult(dealerTotal);
 
-            PlayerResultDto playerResult = PlayerResultDto.from(player, winOrLose);
+            playersResults.add(PlayerResultDto.from(player, matchResult));
 
-            playersResults.add(playerResult);
-
-            MatchResult dealerMatch = winOrLose.reverse();
+            MatchResult dealerMatch = matchResult.reverse();
             dealerMatchCount.put(dealerMatch, dealerMatchCount.getOrDefault(dealerMatch, 0) + 1);
         }
 
-        return new GameResultDto(dealer.getCards(), dealerCardSum, dealerMatchCount,
+        return new GameResultDto(dealer.getCards(), dealerTotal, dealerMatchCount,
                 playersResults);
     }
 }

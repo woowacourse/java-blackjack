@@ -17,7 +17,7 @@ public final class Card {
     }
 
     public int getRankValue() {
-        return rank.getNumber();
+        return rank.getValue();
     }
 
     public String getSuitName() {
