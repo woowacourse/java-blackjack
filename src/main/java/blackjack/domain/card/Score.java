@@ -32,16 +32,20 @@ public class Score {
         return value < target.value;
     }
 
+    public boolean isNotBustAndHigh(final Score target) {
+        if (!this.isBust() && value > target.value) {
+            return true;
+        }
+
+        return false;
+    }
+
     public Score useAceAsEleven() {
         return new Score(value + 10);
     }
 
     public Score addScore(final Score score) {
         return new Score(score.value + this.value);
-    }
-
-    public boolean isBellowThanBlackJack() {
-        return value <= BLACK_JACK;
     }
 
     public int getValue() {

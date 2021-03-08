@@ -36,16 +36,16 @@ public class Card {
         return denomination.getScore();
     }
 
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }
 
     public Suit getSuit() {
         return suit;
-    }
-
-    public boolean isAce() {
-        return denomination == Denomination.ACE;
     }
 
     @Override

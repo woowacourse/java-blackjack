@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.WinOrLose;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,10 +27,25 @@ public class Cards {
     }
 
     private Score decideAceScore(Score score) {
-        if (hasAce() && isNotBust(score.useAceAsEleven())) {
+        if (hasAce() && !isBust(score.useAceAsEleven())) {
             return score.useAceAsEleven();
         }
         return score;
+    }
+
+    public WinOrLose compareCardsScore(Cards other) {
+        Score thisScore = calculateScore();
+        Score otherScore = other.calculateScore();
+
+        if (thisScore.isNotBustAndHigh(otherScore)) {
+            return WinOrLose.WIN;
+        }
+
+        if (otherScore.isNotBustAndHigh(thisScore)) {
+            return WinOrLose.LOSE;
+        }
+
+        return WinOrLose.DRAW;
     }
 
     private boolean hasAce() {
@@ -38,8 +55,16 @@ public class Cards {
                 .isPresent();
     }
 
-    private boolean isNotBust(Score score) {
-        return score.isBellowThanBlackJack();
+    public boolean isBust(Score score) {
+        return score.isBust();
+    }
+
+    public boolean isBust() {
+        return isBust(calculateScore());
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore().isBlackJack();
     }
 
     public List<Card> cards() {

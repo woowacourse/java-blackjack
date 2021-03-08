@@ -13,4 +13,8 @@ public interface Player {
     Score getScore();
 
     Cards getCards();
+
+    boolean hasBlackJack();
+
+    boolean isBust();
 }

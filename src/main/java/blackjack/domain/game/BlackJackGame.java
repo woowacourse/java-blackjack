@@ -3,7 +3,6 @@ package blackjack.domain.game;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,32 +36,94 @@ public class BlackJackGame {
     }
 
     private void giveInitialCards() {
-        giveCard(dealer, NUMBER_OF_INITIAL_CARDS);
+        giveCards(dealer, NUMBER_OF_INITIAL_CARDS);
         for (Gambler gambler : gamblers) {
-            giveCard(gambler, NUMBER_OF_INITIAL_CARDS);
+            giveCards(gambler, NUMBER_OF_INITIAL_CARDS);
         }
+    }
+
+    private void giveCards(final Player player, int numberOfCards) {
+        IntStream.range(0, numberOfCards)
+                .forEach(i -> giveCard(player));
     }
 
     public void giveCard(final Player player) {
         player.receiveCard(deck.draw());
     }
 
-    public void giveCard(final Player player, int numberOfCards) {
-        IntStream.range(0, numberOfCards)
-                .forEach(i -> giveCard(player));
+    public void bet(Gambler gambler, int money) {
+        dealer.takeMoney(gambler, new Money(money));
     }
 
-    public Result getResult() {
-        Result result = new Result(dealer.getCards());
+    public void checkBlackJack() {
+        // TODO :: 정리 -> Gamblers로 넘기기
+        for (Gambler gambler : gamblers) {
+            if (!gambler.hasBlackJack()) {
+                continue;
+            }
+
+            if (dealer.hasBlackJack()) {
+                dealer.giveBackBettingMoney(gambler);
+            }
+
+            dealer.giveMoneyByBlackJack(gambler);
+        }
+    }
+
+    public void calculateMoney() {
+        if (dealer.isBust()) {
+            calculateBettingMoneyWhenDealerBust();
+        }
+
+        if (!dealer.isBust()) {
+            calculateBettingMoneyWhenDealerNotBust();
+        }
+    }
+
+    private void calculateBettingMoneyWhenDealerBust() {
+        // TODO :: 정리 -> Gamblers로 넘기기
+        for (Gambler gambler : gamblers) {
+            if (gambler.hasBlackJack()) {
+                continue;
+            }
+
+            if (gambler.isBust()) {
+                dealer.giveBackBettingMoney(gambler);
+                continue;
+            }
+            dealer.giveWinningMoney(gambler);
+        }
+    }
+
+    private void calculateBettingMoneyWhenDealerNotBust() {
+        // TODO :: 정리 -> Gamblers로 넘기기
+        for (Gambler gambler : gamblers) {
+            // TODO :: dealer.isWin(player)로 고치기
+            if (gambler.hasBlackJack()) {
+                continue;
+            }
+
+            if (dealer.calculateGamblerWinOrNot(gambler).equals(WinOrLose.WIN)) {
+                dealer.giveWinningMoney(gambler);
+            }
+
+            if (dealer.calculateGamblerWinOrNot(gambler).equals(WinOrLose.DRAW)) {
+                dealer.giveBackBettingMoney(gambler);
+            }
+        }
+    }
+
+    public WinningResult calculateWinningResult() {
+        WinningResult result = new WinningResult(dealer.getCards());
         for (Player player : gamblers) {
             addGamblerResult(result, player);
         }
         return result;
     }
 
-    private void addGamblerResult(final Result result, final Player player) {
+    private void addGamblerResult(final WinningResult winningResult, final Player player) {
         WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
-        result.addGamblerResults(player, winOrLose);
+        winningResult.addGamblerResults(player, winOrLose);
     }
 
     public Dealer getDealer() {
@@ -71,9 +132,5 @@ public class BlackJackGame {
 
     public Gamblers getGamblers() {
         return gamblers;
-    }
-
-    public void bet(Gambler gambler, int money) {
-        gambler.bet(money);
     }
 }
