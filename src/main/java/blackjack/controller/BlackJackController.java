@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.GameTable;
+import blackjack.domain.HitStay;
 import blackjack.domain.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -10,7 +11,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
-    private static final String HIT_CONTINUE = "Y";
 
     public void run() {
         try {
@@ -56,8 +56,8 @@ public class BlackJackController {
 
     private boolean wantCard(Player player) {
         OutputView.printHitGuideMessage(player);
-        String hitValue = InputView.getHitValue();
-        return HIT_CONTINUE.equals(hitValue);
+        HitStay hitValue = HitStay.of(InputView.getHitValue());
+        return hitValue.isHit();
     }
     private void drawDealer(GameTable gameTable, Dealer dealer) {
         while (dealer.canHit()) {
