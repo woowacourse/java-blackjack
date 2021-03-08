@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class ParticipantTest {
@@ -19,6 +20,23 @@ public class ParticipantTest {
         player = new Player("joel");
         dealer = new Dealer();
     }
+
+    @Test
+    @DisplayName("이름으로 null이 들어온 경우 예외 발생시키는지 테스트")
+    void nameNullException() {
+        assertThatThrownBy(() -> new Player(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름으로 최소 한 글자가 입력되어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("이름으로 빈 문자열이 들어온 경우 예외 발생시키는지 테스트")
+    void nameEmptyException() {
+        assertThatThrownBy(() -> new Player(""))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름으로 최소 한 글자가 입력되어야 합니다.");
+    }
+
 
     @Test
     @DisplayName("블랙잭 게임을 위해 최초 2장을 받는지 테스트")

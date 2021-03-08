@@ -32,7 +32,7 @@
 - [x] dealer의 이름 고정시키기
 - [x] 패의 점수 결과를 구하는 로직 간소화
 - [ ] player 이름 중복되지 않게 관리
-- [ ] player 이름이 null이면 예외처리
+- [x] player 이름이 null이거나 빈 문자열이면 예외처리
 - [ ] 두 번의 getHand getter 수정하기
 
 ### 궁금한 사안

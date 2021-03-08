@@ -4,13 +4,22 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.Result;
 
+import java.util.Objects;
+
 public abstract class Participant {
     protected final Hand hand;
     private final String name;
 
     public Participant(final String name) {
+        validateName(name);
         this.name = name;
         this.hand = new Hand();
+    }
+
+    private void validateName(final String name) {
+        if (Objects.isNull(name) || name.length() == 0) {
+            throw new IllegalArgumentException("이름으로 최소 한 글자가 입력되어야 합니다.");
+        }
     }
 
     public void receiveInitialCard(final CardDeck cardDeck) {
