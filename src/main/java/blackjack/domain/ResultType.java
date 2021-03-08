@@ -35,9 +35,5 @@ public enum ResultType {
         this.result = result;
     }
 
-    public String getResult() {
-        return result;
-    }
-
     abstract public int profit(int betAmount);
 }
