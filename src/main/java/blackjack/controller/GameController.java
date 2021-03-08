@@ -58,7 +58,7 @@ public class GameController {
 
     private void addUsersCardOrPass(Users users, Deck deck) {
         users.getPlayers().forEach(player -> askAddCardOrPass(player, deck));
-        if (users.getDealer().isGameOver(GAME_OVER_SCORE)) {
+        while (!users.getDealer().isGameOver(GAME_OVER_SCORE)) {
             users.getDealer().addCard(deck.drawCard());
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
