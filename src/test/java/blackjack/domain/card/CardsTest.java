@@ -30,8 +30,13 @@ public class CardsTest {
                 new Card(Shape.SPADE, Denomination.ACE),
                 new Card(Shape.HEART, Denomination.FIVE)
         ));
-        assertThat(cards1).isNotNull();
-        assertThat(cards2).isNotNull();
+        assertThat(cards1).isEqualTo(new Cards(Collections.singletonList(
+                new Card(Shape.CLOVER, Denomination.FOUR)
+        )));
+        assertThat(cards2).isEqualTo(new Cards(Arrays.asList(
+                new Card(Shape.SPADE, Denomination.ACE),
+                new Card(Shape.HEART, Denomination.FIVE)
+        )));
     }
 
     @Test

@@ -11,6 +11,6 @@ public class CardTest {
     @DisplayName("카드 생성 성공")
     void createCard() {
         Card card = new Card(Shape.SPADE, Denomination.ACE);
-        assertThat(card).isNotNull();
+        assertThat(card).isEqualTo(new Card(Shape.SPADE, Denomination.ACE));
     }
 }

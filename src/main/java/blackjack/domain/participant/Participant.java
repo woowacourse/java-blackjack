@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
+import java.util.Objects;
+
 public abstract class Participant {
     protected Name name;
     protected Cards cards;
@@ -24,5 +26,18 @@ public abstract class Participant {
 
     public final Name getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cards);
     }
 }

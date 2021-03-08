@@ -47,18 +47,13 @@ public class Card {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Card)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-
-        if (!Objects.equals(shape, card.shape)) return false;
-        return Objects.equals(denomination, card.denomination);
+        return shape == card.shape && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        int result = shape != null ? shape.hashCode() : 0;
-        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        return result;
+        return Objects.hash(shape, denomination);
     }
 }

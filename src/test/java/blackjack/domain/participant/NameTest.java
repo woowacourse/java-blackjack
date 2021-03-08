@@ -12,11 +12,11 @@ public class NameTest {
     @DisplayName("생성 테스트")
     void createName() {
         Name name = new Name("air");
-        assertThat(name).isNotNull();
+        assertThat(name).isEqualTo(new Name("air"));
     }
 
     @Test
-    @DisplayName("이름 글자수 검사")
+    @DisplayName("생성 실패 - 이름 글자수 검사")
     void checkNameLength() {
         assertThatThrownBy(() -> new Name(""))
                 .isInstanceOf(IllegalArgumentException.class);

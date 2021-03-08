@@ -11,6 +11,6 @@ public class ShapeTest {
     @DisplayName("문양 생성 성공")
     void createShape() {
         Shape shape = Shape.valueOf("SPADE");
-        assertThat(shape).isNotNull();
+        assertThat(shape).isEqualTo(Shape.SPADE);
     }
 }

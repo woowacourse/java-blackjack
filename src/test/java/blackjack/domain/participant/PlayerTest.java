@@ -25,7 +25,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 생성 성공")
     void createPlayerSucceed() {
-        assertThat(player).isNotNull();
+        assertThat(player).isEqualTo(new Player(new Name("pika")));
     }
 
     @Test

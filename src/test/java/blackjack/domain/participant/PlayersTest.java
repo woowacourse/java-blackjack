@@ -21,9 +21,11 @@ public class PlayersTest {
                 new Player(new Name("air")),
                 new Player(new Name("picka"))
         ));
-        List<Player> participants = players.getPlayers();
 
-        assertThat(participants).isNotNull();
+        assertThat(players).isEqualTo(new Players(Arrays.asList(
+                new Player(new Name("air")),
+                new Player(new Name("picka"))
+        )));
     }
 
     @ParameterizedTest

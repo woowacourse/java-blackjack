@@ -12,7 +12,7 @@ public class DenominationTest {
     @DisplayName("카드 숫자 생성 성공")
     void createDenomination() {
         Denomination denomination = Denomination.valueOf("ACE");
-        assertThat(denomination).isNotNull();
+        assertThat(denomination).isEqualTo(Denomination.ACE);
     }
 
     @Test

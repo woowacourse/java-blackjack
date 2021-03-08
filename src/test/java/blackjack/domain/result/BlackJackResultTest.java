@@ -26,7 +26,7 @@ public class BlackJackResultTest {
         ));
         Dealer dealer = new Dealer();
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
-        assertThat(blackJackResult).isNotNull();
+        assertThat(blackJackResult).isEqualTo(new BlackJackResult(players.verifyResultByCompareScore(dealer)));
     }
 
     @Test
