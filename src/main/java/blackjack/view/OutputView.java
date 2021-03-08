@@ -84,7 +84,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러")
             .append(HAND_FORMAT)
-            .append(joinCards(dealer.getHand()))
+            .append(formatsCardName(dealer.getHand().get(0)))
             .append(NEW_LINE);
         System.out.print(sb);
     }
@@ -92,9 +92,13 @@ public class OutputView {
     private static String joinCards(final List<Card> cards) {
         List<String> cardStrings = new ArrayList<>();
         for (Card card : cards) {
-            cardStrings.add(card.getNumberName() + card.getPatternName());
+            cardStrings.add(formatsCardName(card));
         }
         return String.join(DELIMITER, cardStrings);
+    }
+
+    private static String formatsCardName(Card card) {
+        return card.getNumberName() + card.getPatternName();
     }
 
     public static void printDealerHit() {
