@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Dealer extends Gamer {
 
-    private static final String FIXED_DEALER_NAME = "딜러";
+    private static final String NAME = "딜러";
     private static final int ADD_CARD_BOUNDARY = 17;
 
     private Dealer(String name) {
@@ -14,7 +14,7 @@ public class Dealer extends Gamer {
     }
 
     public Dealer() {
-        this(FIXED_DEALER_NAME);
+        this(NAME);
     }
 
     public boolean checkBoundary() {
