@@ -63,4 +63,10 @@ public class PlayersTest {
     void create11() {
         assertThatThrownBy(() -> new Players("111,boni,gram", new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("중복된 이름일 때 예외 발생 확인")
+    void create12() {
+        assertThatThrownBy(() -> new Players("boni,boni,gram", new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
+    }
 }
