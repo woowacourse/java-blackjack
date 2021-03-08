@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.WinnerFlag;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -21,8 +20,7 @@ public class BlackJackController {
         drawUntilPossible(dealer, players, deck);
 
         OutputView.noticePlayersPoint(dealer, players);
-        players.toList().forEach(player -> WinnerFlag.calculateResult(dealer, player));
-        OutputView.printDealerResult(players.calculateTotalWinnings());
+        OutputView.printDealerResult(players.calculateTotalWinnings(dealer));
         printEachPlayerResult(players);
     }
 

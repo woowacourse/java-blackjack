@@ -29,10 +29,10 @@ public class Players {
         }
     }
 
-    public Map<WinnerFlag, Integer> calculateTotalWinnings() {
+    public Map<WinnerFlag, Integer> calculateTotalWinnings(Dealer dealer) {
         Map<WinnerFlag, Integer> winnerCount = new EnumMap<>(WinnerFlag.class);
         for (Player player : players) {
-            winnerCount.put(player.getResult(), winnerCount.getOrDefault(player.getResult(), 0) + 1);
+            winnerCount.put(player.calculateResult(dealer), winnerCount.getOrDefault(player.getResult(), 0) + 1);
         }
         return winnerCount;
     }

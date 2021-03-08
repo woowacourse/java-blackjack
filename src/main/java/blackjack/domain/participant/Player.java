@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.WinnerFlag;
 
+import static blackjack.domain.game.WinnerFlag.*;
+
 public class Player extends Gamer {
     public static final int THRESHOLD_OF_BURST = 21;
     private static final String ERROR_MESSAGE_OF_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";
@@ -29,6 +31,21 @@ public class Player extends Gamer {
             return false;
         }
         throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);
+    }
+
+    public WinnerFlag calculateResult(Dealer dealer) {
+        int playerPoints = makeFinalPoint();
+        int dealerPoints = dealer.makeFinalPoint();
+        if (dealer.isBurst(dealerPoints) && isBurst(playerPoints) || dealer.isSameThan(playerPoints)) {
+            matchResult(DRAW);
+        }
+        if (isBurst(playerPoints) || (!dealer.isBurst(dealerPoints) && dealer.isBiggerThan(playerPoints))) {
+            matchResult(LOSE);
+        }
+        if ((dealer.isSmallerThan(playerPoints) && !isBurst(playerPoints)) || dealer.isBurst(dealerPoints)) {
+            matchResult(WIN);
+        }
+        return result;
     }
 
     public void matchResult(WinnerFlag result) {

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.WinnerFlag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -96,5 +97,16 @@ public class PlayerTest {
     void playerStopDraw() {
         assertThatThrownBy(() -> player.continueDraw("l", new Deck())).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("y");
+    }
+
+    @Test
+    @DisplayName("결과 매칭 테스트")
+    void matchResult() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("pobi");
+        dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.NINE));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
+        player.calculateResult(dealer);
+        assertEquals(WinnerFlag.LOSE, player.getResult());
     }
 }

@@ -33,10 +33,8 @@ public class PlayersTest {
     @DisplayName("우승자 계산 확인")
     void calculateResult() {
         List<String> input = Arrays.asList("pobi", "jason", "cu");
-        Players players = new Players(input, new Dealer());
-        for (Player player : players.toList()) {
-            player.matchResult(WinnerFlag.LOSE);
-        }
-        assertEquals(3, players.calculateTotalWinnings().get(WinnerFlag.LOSE));
+        Dealer dealer = new Dealer();
+        Players players = new Players(input, dealer);
+        assertEquals(3, players.calculateTotalWinnings(dealer).get(WinnerFlag.DRAW));
     }
 }
