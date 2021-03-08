@@ -23,7 +23,7 @@ public class OutputView {
     }
 
     public static void printDistribute(Dealer dealer, Players players) {
-        System.out.println("\n" + dealer.getName() + "와 " + String.join(COMMA, players.showNames()) + "에게 2장의 카드를 나누었습니다.");
+        System.out.println("\n" + dealer.getName() + "와 " + String.join(COMMA, players.getNames()) + "에게 2장의 카드를 나누었습니다.");
     }
 
     public static void printDealerCard(Dealer dealer) {

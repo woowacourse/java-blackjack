@@ -25,12 +25,6 @@ public class PlayersTest {
         assertThat(players).isInstanceOf(Players.class);
     }
 
-    @DisplayName("Players 일급 컬렉션을 반환한다.")
-    @Test
-    void players() {
-        assertThat(players.getPlayers()).hasSize(3);
-    }
-
     @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
     @Test
     void DistributeToEachPlayer() {
@@ -55,9 +49,15 @@ public class PlayersTest {
 
     @DisplayName("플레이어 이름들을 확인한다.")
     @Test
-    void showNames() {
-        List<String> namesGroup = players.showNames();
+    void getNames() {
+        List<String> namesGroup = players.getNames();
 
         assertThat(namesGroup).isEqualTo(Arrays.asList("amazzi", "dani", "pobi"));
+    }
+
+    @DisplayName("Players 일급 컬렉션을 반환한다.")
+    @Test
+    void getPlayers() {
+        assertThat(players.getPlayers()).hasSize(3);
     }
 }

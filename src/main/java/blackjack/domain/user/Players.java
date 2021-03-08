@@ -18,22 +18,22 @@ public class Players {
     }
 
     public void distributeToEachPlayer(Deck deck) {
-        players.forEach(player -> player.distribute(deck.popTwo()));
+        this.players.forEach(player -> player.distribute(deck.popTwo()));
     }
 
     public List<Cards> showCardsByPlayers() {
-        return players.stream()
+        return this.players.stream()
                 .map(Player::getCards)
                 .collect(toList());
     }
 
-    public List<String> showNames() {
-        return Collections.unmodifiableList(players.stream()
+    public List<String> getNames() {
+        return Collections.unmodifiableList(this.players.stream()
                 .map(Player::getName)
                 .collect(toList()));
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return Collections.unmodifiableList(this.players);
     }
 }
