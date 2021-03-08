@@ -35,6 +35,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return denomination.getName() + type.getName();
+        return denomination.getName() + type.getIcon();
     }
 }
