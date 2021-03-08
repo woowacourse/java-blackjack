@@ -13,7 +13,10 @@ public enum Status {
     }
 
     public static Status compare(int dealerScore, int playerScore) {
-        if (dealerScore > BLACKJACK || (playerScore > dealerScore && playerScore <= BLACKJACK)) {
+        if(playerScore > BLACKJACK){
+            return LOSE;
+        }
+        if (dealerScore > BLACKJACK || playerScore > dealerScore) {
             return WIN;
         }
         if (playerScore == dealerScore) {
