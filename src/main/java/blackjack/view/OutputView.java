@@ -1,17 +1,12 @@
 package blackjack.view;
 
 import static blackjack.domain.Players.COUPLER_COMMA_SPACE;
-import static blackjack.domain.Players.DRAW;
-import static blackjack.domain.Players.LOSE;
-import static blackjack.domain.Players.RESULT_DRAW;
-import static blackjack.domain.Players.RESULT_LOSE;
-import static blackjack.domain.Players.RESULT_WIN;
-import static blackjack.domain.Players.WIN;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.Result;
 import java.util.Map;
 
 public class OutputView {
@@ -64,8 +59,10 @@ public class OutputView {
     public static void printDealerResult(Map<String, Integer> result) {
 
         System.out.println(
-            String.format(SKELETON_DEALER_RESULT, result.get(WIN), RESULT_WIN, result.get(DRAW),
-                RESULT_DRAW, result.get(LOSE), RESULT_LOSE));
+            String.format(SKELETON_DEALER_RESULT,
+                result.get(Result.WIN.name()), Result.WIN.getMessage(),
+                result.get(Result.DRAW.name()), Result.DRAW.getMessage(),
+                result.get(Result.LOSE.name()), Result.LOSE.getMessage()));
     }
 
     public static void printPlayerResult(Players players) {

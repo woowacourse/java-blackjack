@@ -14,7 +14,6 @@ public class Players {
 
     public static final String RESULT_DRAW = "무";
     private static final String NAME_SPLITTER = ",";
-    public static final String NEW_LINE = "\n";
     public static final String COUPLER_COMMA_SPACE = ", ";
     public static final String WIN = "win";
     public static final String LOSE = "lose";
@@ -102,21 +101,22 @@ public class Players {
     }
 
     public Map<String, Integer> calculateResult() {
-        Map<String, Integer> result = new HashMap<>();
+        Map<String, Integer> matchResult = new HashMap<>();
         int dealerValue = dealer.getPoint();
 
-        resultInit(result);
+        resultInit(matchResult);
 
         for (Player gamer : players) {
-            gamer.judgeVictory(result, dealerValue);
+            gamer.judgeVictory(matchResult, dealerValue);
         }
-        return result;
+        return matchResult;
     }
 
     private void resultInit(Map<String, Integer> result) {
-        result.put(WIN, 0);
-        result.put(LOSE, 0);
-        result.put(DRAW, 0);
+
+        result.put(Result.WIN.name(), 0);
+        result.put(Result.LOSE.name(), 0);
+        result.put(Result.DRAW.name(), 0);
     }
 
     @Override
