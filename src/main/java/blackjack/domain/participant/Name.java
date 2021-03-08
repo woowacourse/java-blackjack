@@ -4,23 +4,26 @@ import java.util.Objects;
 
 public class Name {
 
-    private static final String BLANK = " ";
     private final String value;
 
     public Name(final String value) {
-        this.value = value;
+        this.value = value.trim();
         validateNull(this.value);
-        validateBlank(this.value);
+        validateEmpty(this.value);
     }
 
     private void validateNull(String name) {
-        Objects.requireNonNull(name, "이름은 null 일수 없습니다.");
+        Objects.requireNonNull(name, "이름은 null 일 수 없습니다.");
     }
 
-    private void validateBlank(String name) {
-        if (name.isEmpty() || name.contains(BLANK)) {
-            throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
+    private void validateEmpty(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("이름은 빈값 일 수 없습니다.");
         }
+    }
+
+    public String getValue() {
+        return this.value;
     }
 
     @Override
@@ -38,9 +41,5 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public String getValue() {
-        return this.value;
     }
 }
