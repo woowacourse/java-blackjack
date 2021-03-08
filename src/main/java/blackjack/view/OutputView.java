@@ -57,14 +57,14 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    public static void printResult(Map<User, ResultType> checkWinOrLose) {
+    public static void printResult(Map<User, ResultType> resultMap) {
         System.out.println("## 최종 승패");
 
-        printDealerResult(checkWinOrLose);
+        printDealerResult(resultMap);
 
-        for (User user : checkWinOrLose.keySet()) {
-            String temp = checkWinOrLose.get(user).getName();
-            System.out.printf("%s: %s\n", user.getName(), temp);
+        for (User user : resultMap.keySet()) {
+            String result = resultMap.get(user).getName();
+            System.out.printf("%s: %s\n", user.getName(), result);
         }
     }
 
