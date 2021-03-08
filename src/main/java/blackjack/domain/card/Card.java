@@ -11,8 +11,8 @@ public class Card {
     private final Face face;
     private final Suit suit;
 
-    private static int currentCardCount = 52;
-    private static int totalCardCount = 52;
+    private static int CURRENT_CARD_COUNT = 52;
+    private static final int TOTAL_CARD_COUNT = 52;
     private static final List<Card> cached;
 
     static {
@@ -36,13 +36,13 @@ public class Card {
     }
 
     public static void updateCardCount() {
-        currentCardCount--;
+        CURRENT_CARD_COUNT--;
     }
 
     public static void shuffleWhenAllUsed() {
-        if (currentCardCount == 0) {
+        if (CURRENT_CARD_COUNT == 0) {
             Collections.shuffle(cached);
-            currentCardCount = totalCardCount;
+            CURRENT_CARD_COUNT = TOTAL_CARD_COUNT;
         }
     }
 
