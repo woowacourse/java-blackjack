@@ -13,7 +13,7 @@ public class CardTest {
     @DisplayName("52장의 카드가 매번 다른 것이 나온다.")
     void cardNotHaveDuplicate() {
         List<Card> cards = new ArrayList<>();
-        for(int i = 1; i <= 52; i++){
+        for (int i = 1; i <= 52; i++) {
             cards.add(Card.pullOutCachedCard());
         }
         Assertions.assertThat(cards).doesNotHaveDuplicates();

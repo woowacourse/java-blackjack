@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
+
     private final Face face;
     private final Suit suit;
 

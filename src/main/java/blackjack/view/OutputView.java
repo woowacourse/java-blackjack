@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
     public static String NEW_LINE = System.lineSeparator();
 
     public static void printInitSetting(final List<Player> players) {

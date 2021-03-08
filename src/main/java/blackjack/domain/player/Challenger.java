@@ -22,11 +22,11 @@ public class Challenger extends Player {
         return Result.DRAW;
     }
 
-    public boolean isLossCondition(Dealer dealer){
+    public boolean isLossCondition(Dealer dealer) {
         return isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore());
     }
 
-    public boolean isWinCondition(Dealer dealer){
+    public boolean isWinCondition(Dealer dealer) {
         return dealer.isBust() || this.getScore() > dealer.getScore();
     }
 

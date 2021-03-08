@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
     public static final int BLACK_JACK_SCORE = 21;
     public static final int ACE_PIVOT = 11;
     public static final int ACE_CONVERSION = 10;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {

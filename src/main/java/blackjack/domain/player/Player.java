@@ -6,6 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 public abstract class Player {
+
     protected final Cards cards;
     private final Name name;
 
