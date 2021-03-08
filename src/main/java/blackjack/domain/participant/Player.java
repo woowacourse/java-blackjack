@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
+import blackjack.domain.card.Card;
 
 public class Player extends BlackJackParticipant {
 
@@ -15,9 +15,17 @@ public class Player extends BlackJackParticipant {
         super(name, hand);
     }
 
+//    @Override
+//    public void draw(Deck deck) {
+//        getHand().addCard(deck.draw());
+//        if (isBust()) {
+//            cannotDraw();
+//        }
+//    }
+
     @Override
-    public void draw(Deck deck) {
-        getHand().addCard(deck.draw());
+    public void draw(Card card) {
+        getHand().addCard(card);
         if (isBust()) {
             cannotDraw();
         }

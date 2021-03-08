@@ -7,7 +7,6 @@ import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,11 +25,8 @@ public class PlayerTest {
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() {
         Player root = new Player("root");
-        Deck deck = new Deck(Arrays.asList(
-                Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-                Card.valueOf(Shape.SPADE, CardValue.ACE)));
 
-        root.draw(deck);
+        root.draw(Card.valueOf(Shape.DIAMOND, CardValue.ACE));
         assertThat(root.getHand()).isEqualToComparingFieldByField(
                 new Hand(Collections.singletonList(Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
     }

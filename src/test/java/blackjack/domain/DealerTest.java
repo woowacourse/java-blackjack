@@ -7,7 +7,9 @@ import blackjack.domain.participant.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,12 +19,13 @@ public class DealerTest {
     @DisplayName("점수가 16 초과일 경우 카드를 뽑지 않는 기능")
     void isContinue() {
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(Arrays.asList(
+        List<Card> cardDeck = new ArrayList<>(Arrays.asList(
                 Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
                 Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
 
-        dealer.draw(deck);
-        dealer.draw(deck);
+        for (Card card : cardDeck) {
+            dealer.draw(card);
+        }
         assertThat(dealer.isContinue()).isFalse();
     }
 }

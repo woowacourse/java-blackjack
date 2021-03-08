@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
 
 public class Dealer extends BlackJackParticipant {
 
@@ -16,9 +16,17 @@ public class Dealer extends BlackJackParticipant {
         super(DEALER_NAME, hand);
     }
 
+//    @Override
+//    public void draw(Deck deck) {
+//        getHand().addCard(deck.draw());
+//        if (isOverLimit()) {
+//            cannotDraw();
+//        }
+//    }
+
     @Override
-    public void draw(Deck deck) {
-        getHand().addCard(deck.draw());
+    public void draw(Card card) {
+        getHand().addCard(card);
         if (isOverLimit()) {
             cannotDraw();
         }

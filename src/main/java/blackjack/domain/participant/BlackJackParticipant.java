@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,7 +22,9 @@ public abstract class BlackJackParticipant {
         this(name, new Hand(new ArrayList<>()));
     }
 
-    abstract public void draw(Deck deck);
+//    abstract public void draw(Deck deck);
+
+    abstract public void draw(Card card);
 
     public int getScore() {
         return hand.getScore();
