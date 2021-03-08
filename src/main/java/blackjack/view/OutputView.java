@@ -48,12 +48,12 @@ public class OutputView {
     }
 
     public static void printDealerHitMessage() {
-        System.out.println(DEALER_HIT_MESSAGE);
+        System.out.println(System.lineSeparator() + DEALER_HIT_MESSAGE);
     }
 
     public static void printCardsAndScore(Dealer dealer, Players players) {
         System.out
-            .println(dealer.showCards() + printScore(dealer));
+            .println(System.lineSeparator() + dealer.showCards() + printScore(dealer));
         players.getPlayers().forEach(
             player -> System.out.println(player.showCards() + printScore(player)));
     }
@@ -75,7 +75,7 @@ public class OutputView {
     }
 
     private static void printResultTitle() {
-        System.out.println(RESULT_TITLE_MESSAGE);
+        System.out.println(System.lineSeparator() + RESULT_TITLE_MESSAGE);
     }
 
     public static void printHitGuideMessage(Player player) {
