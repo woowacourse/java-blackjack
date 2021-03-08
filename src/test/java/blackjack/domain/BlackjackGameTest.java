@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
+import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -79,5 +80,14 @@ public class BlackjackGameTest {
 
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         assertThat(blackjackGame.getUsers().size()).isEqualTo(4);
+    }
+
+    @Test
+    @DisplayName("결과 보드 만들기 확인")
+    void generateResultBoard() {
+        Dealer dealer = new Dealer();
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        assertThat(blackjackGame.generateResultBoard()).isInstanceOf(ResultBoard.class);
     }
 }

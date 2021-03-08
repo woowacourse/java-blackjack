@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
@@ -35,6 +36,10 @@ public class BlackjackGame {
 
     public void hit(User user) {
         user.receiveCards(Deck.popOne());
+    }
+
+    public ResultBoard generateResultBoard() {
+        return ResultBoard.of(players, dealer);
     }
 
     public Dealer getDealer() {
