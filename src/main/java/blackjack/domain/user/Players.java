@@ -6,11 +6,19 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Players {
+    private static final String INVALID_PLAYERS_COUNT_ERROR_MESSAGE = "플레이어 수는 1명 이상이어야 합니다.";
 
     private final List<Player> players;
 
     public Players(List<Player> players) {
+        validatePlayersNumber(players);
         this.players = players;
+    }
+
+    private void validatePlayersNumber(List<Player> players) {
+        if (players.size() < 1) {
+            throw new IllegalArgumentException(INVALID_PLAYERS_COUNT_ERROR_MESSAGE);
+        }
     }
 
     public void drawAtFirst(Deck deck) {

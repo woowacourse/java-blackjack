@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.Result;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -17,9 +16,9 @@ public class GameTableController {
     private final Dealer dealer;
     private final Players players;
 
-    public GameTableController(List<Player> players) {
+    public GameTableController(Players players) {
         this.dealer = new Dealer();
-        this.players = new Players(players);
+        this.players = players;
     }
 
     public void playGame() {

@@ -9,10 +9,12 @@ import java.util.Map;
 
 public class Dealer extends User {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int FIRST_CARD_INDEX = 0;
 
     public Dealer() {
+        super(DEALER_NAME);
     }
 
     public boolean canHit() {
@@ -27,7 +29,7 @@ public class Dealer extends User {
     }
 
     public String showFirstCard() {
-        return name + CARDS_GUIDE_MESSAGE + this.getFirstCard();
+        return name.getName() + CARDS_GUIDE_MESSAGE + this.getFirstCard();
     }
 
     public String getFirstCard() {
