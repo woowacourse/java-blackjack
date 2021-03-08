@@ -22,7 +22,7 @@ class DealerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
         Dealer dealer = new Dealer(new Cards(cardList));
 
-        assertThat(dealer.isEnoughScore()).isTrue();
+        assertThat(dealer.scoreGreaterThanSixteen()).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ class DealerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.THREE));
         Dealer dealer = new Dealer(new Cards(cardList));
 
-        assertThat(dealer.isEnoughScore()).isFalse();
+        assertThat(dealer.scoreGreaterThanSixteen()).isFalse();
     }
 }
