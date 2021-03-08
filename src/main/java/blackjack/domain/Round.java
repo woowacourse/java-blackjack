@@ -3,9 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.view.dto.PlayerResultDto;
-import blackjack.view.dto.PlayerStatusDto;
-import blackjack.view.dto.RoundStatusDto;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +25,10 @@ public class Round {
         players.forEach(player -> player.addFirstCards(deck.makeTwoCards()));
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
     public String getDealerName() {
         return dealer.getName();
     }
@@ -36,29 +37,15 @@ public class Round {
         return Collections.unmodifiableList(players);
     }
 
-    public RoundStatusDto getRoundStatus() {
-        return new RoundStatusDto(dealer.getName(),
-                getDealerCardStatus(),
-                players.stream()
-                        .map(this::getPlayerStatusDto)
-                        .collect(Collectors.toList()),
-                dealer.getScore());
-    }
+    public Map<String, Queue<Outcome>> findResults() {
+        Map<String, Queue<Outcome>> results = new LinkedHashMap<>();
+        Queue<Outcome> gameOutComes = makeRoundOutComes();
+        results.put(dealer.getName(), new ArrayDeque<>(gameOutComes));
 
-    public Queue<Outcome> makeRoundOutComes() {
-        return players.stream()
-                .map(player -> Outcome.findOutcome(dealer.getScore(), player.getScore()))
-                .collect(Collectors.toCollection(ArrayDeque::new));
-    }
+        players.forEach(player -> results.put(player.getName(),
+                new ArrayDeque<>(Collections.singletonList(Outcome.getPlayerOutcomes(gameOutComes.poll())))));
 
-    public List<PlayerResultDto> makePlayerResults(final Queue<Outcome> gameOutComes) {
-        return players.stream()
-                .map(player -> new PlayerResultDto(player.getName(), gameOutComes.poll()))
-                .collect(Collectors.toList());
-    }
-
-    public Map<String, Queue<Outcome>> finishGame() {
-        return Result.findResults(this);
+        return results;
     }
 
     public boolean addDealerCard() {
@@ -77,11 +64,9 @@ public class Round {
         findPlayer.addCard(deck.makeOneCard());
     }
 
-    private List<String> getDealerCardStatus() {
-        return dealer.getCardsStatus();
-    }
-
-    private PlayerStatusDto getPlayerStatusDto(final Player player) {
-        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.getScore());
+    private Queue<Outcome> makeRoundOutComes() {
+        return players.stream()
+                .map(player -> Outcome.findOutcome(dealer.getScore(), player.getScore()))
+                .collect(Collectors.toCollection(ArrayDeque::new));
     }
 }

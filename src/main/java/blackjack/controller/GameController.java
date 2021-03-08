@@ -7,6 +7,7 @@ import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerStatusDto;
+import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
 import java.util.Scanner;
@@ -23,12 +24,12 @@ public class GameController {
     public void start() {
         Round round = initializeRound();
         round.initialize();
-        OutputView.showInitialStatus(round.getRoundStatus());
+        OutputView.showInitialStatus(RoundStatusDto.toDto(round));
 
         addPlayersCardOrPass(round);
         addDealerCard(round);
-        OutputView.showFinalStatus(round.getRoundStatus());
-        OutputView.showOutComes(round.finishGame());
+        OutputView.showFinalStatus(RoundStatusDto.toDto(round));
+        OutputView.showOutComes(round.findResults());
     }
 
     private Round initializeRound() {
