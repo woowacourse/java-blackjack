@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ public class PlayerTest {
     void extend() {
         final Participant participant = new Player("bada");
         participant.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
-        Assertions.assertThat(participant.cardCount()).isEqualTo(1);
+        assertThat(participant.cardCount()).isEqualTo(1);
     }
 
     @Test

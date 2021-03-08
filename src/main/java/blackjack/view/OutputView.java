@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String ERROR_MARK = "[Error] ";
+    private static final String ERROR_MARK = "[ERROR] ";
     private static final String NEWLINE = System.getProperty("line.separator");
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
     private static final String DEALER_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";

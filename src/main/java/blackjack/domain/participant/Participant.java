@@ -10,12 +10,20 @@ import java.util.List;
 
 public abstract class Participant {
     private static final int BUST_LIMIT = 22;
+    public static final String EMPTY_NAME_ERROR = "이름에 빈 값을 사용할 수 없습니다.";
     protected final List<Card> cards;
     private final String name;
 
     public Participant(final String name) {
+        validateEmptyName(name);
         this.name = name;
         this.cards = new ArrayList<>();
+    }
+
+    private void validateEmptyName(String name) {
+        if ("".equals(name)) {
+            throw new IllegalArgumentException(EMPTY_NAME_ERROR);
+        }
     }
 
     public void receiveCard(final Card card) {

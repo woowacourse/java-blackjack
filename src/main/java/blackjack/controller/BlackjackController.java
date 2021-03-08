@@ -8,6 +8,7 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     public void run() {
@@ -24,9 +25,14 @@ public class BlackjackController {
 
     private List<Player> playerSetUp() {
         final List<String> names = InputView.requestName();
-        final List<Player> players = new ArrayList<>();
-        for (final String name : names) {
-            players.add(new Player(name));
+        List<Player> players = new ArrayList<>();
+        try {
+             players = names.stream()
+                    .map(Player::new)
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            OutputView.getErrorMessage(e.getMessage());
+            playerSetUp();
         }
         return players;
     }
