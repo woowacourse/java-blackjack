@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.ResultType;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

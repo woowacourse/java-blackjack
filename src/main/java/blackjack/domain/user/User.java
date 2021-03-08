@@ -3,8 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-import java.util.List;
-
 public abstract class User {
     private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BUST_CONDITION = 21;
