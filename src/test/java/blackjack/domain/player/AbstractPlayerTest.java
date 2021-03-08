@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class AbstractPlayerTest {
     private static final String TEST_NAME = "pobi";
 
-    private final Cards cards = new Cards();
+    private final Cards cards = Cards.createAllShuffledCards();
 
     @DisplayName("카드 뽑기 테스트")
     @Test

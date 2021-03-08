@@ -16,8 +16,8 @@ public class Cards {
         return cards;
     }
 
-    private void shuffle() {
-        Collections.shuffle(cards);
+    public static Cards createEmptyCards() {
+        return new Cards();
     }
 
     private void createAllCards() {
@@ -30,6 +30,10 @@ public class Cards {
         for (CardNumberType cardNumber : CardNumberType.values()) {
             cards.add(new Card(cardShape, cardNumber));
         }
+    }
+
+    private void shuffle() {
+        Collections.shuffle(cards);
     }
 
     public Card drawOneCard() {

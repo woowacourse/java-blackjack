@@ -11,7 +11,7 @@ class AllCardsOpenStrategyTest {
     @DisplayName("카드 반환 개수 전략패턴 테스트 - 모든 카드 반환")
     @Test
     void allCardsOpenStrategy() {
-        Cards allCards = new Cards();
+        Cards allCards = Cards.createAllShuffledCards();
         Dealer dealer = new Dealer();
 
         dealer.drawRandomTwoCards(allCards);

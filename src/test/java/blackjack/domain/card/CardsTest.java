@@ -34,4 +34,13 @@ public class CardsTest {
         assertThatThrownBy(cards::drawOneCard)
             .isInstanceOf(IndexOutOfBoundsException.class);
     }
+
+    @DisplayName("비어있는 Cards 생성 테스트")
+    @Test
+    void createEmptyCards() {
+        Cards cards = Cards.createEmptyCards();
+
+        assertThatThrownBy(cards::drawOneCard)
+            .isInstanceOf(IndexOutOfBoundsException.class);
+    }
 }

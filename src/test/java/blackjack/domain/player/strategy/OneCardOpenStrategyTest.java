@@ -11,7 +11,7 @@ class OneCardOpenStrategyTest {
     @DisplayName("카드 반환 개수 전략패턴 테스트 - 1개만 반환(기본 설정 )")
     @Test
     void oneCardOpenStrategyDefaultSetting() {
-        Cards allCards = new Cards();
+        Cards allCards = Cards.createAllShuffledCards();
         Dealer dealer = new Dealer();
 
         dealer.drawRandomTwoCards(allCards);
@@ -24,7 +24,7 @@ class OneCardOpenStrategyTest {
     @DisplayName("카드 반환 개수 전략패턴 테스트 - 1개만 반환(수동 설정)")
     @Test
     void oneCardOpenStrategyManualSetting() {
-        Cards allCards = new Cards();
+        Cards allCards = Cards.createAllShuffledCards();
         Dealer dealer = new Dealer();
 
         dealer.drawRandomTwoCards(allCards);
