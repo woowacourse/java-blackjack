@@ -32,4 +32,8 @@ public abstract class Player {
     public Cards getCards() {
         return cards;
     }
+
+    public boolean isBlackjack() {
+        return calculateScore() == 21 && cards.size() == 2;
+    }
 }
