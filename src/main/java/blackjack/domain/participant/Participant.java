@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    public static final int ZERO = 0;
-    public static final int DIFFERENCE_OF_ACE_VALUE = 10;
+    private static final int ZERO = 0;
+    private static final int DIFFERENCE_OF_ACE_VALUE = 10;
 
     protected final List<Card> cards = new ArrayList<>();
 
@@ -19,23 +19,15 @@ public abstract class Participant {
     }
 
     public int calculateResult() {
-        int currentCardsValue = calculateCards();
+        int currentCardsScore = calculateCards();
         int possibleLoopCount = countAce();
 
-        while (canLowerCardsValue(currentCardsValue, possibleLoopCount)) {
-            currentCardsValue = lowerValueOfAce(currentCardsValue);
+        while (canLowerCardsValue(currentCardsScore, possibleLoopCount)) {
+            currentCardsScore = lowerValueOfAce(currentCardsScore);
             possibleLoopCount--;
         }
 
-        return currentCardsValue;
-    }
-
-    private boolean canLowerCardsValue(int value, int remainLoop) {
-        return value > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
-    }
-
-    private int lowerValueOfAce(int value) {
-        return value - DIFFERENCE_OF_ACE_VALUE;
+        return currentCardsScore;
     }
 
     public int countAce() {
@@ -50,11 +42,17 @@ public abstract class Participant {
                 .sum();
     }
 
+    private boolean canLowerCardsValue(int score, int remainLoop) {
+        return score > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
+    }
+
+    private int lowerValueOfAce(int value) {
+        return value - DIFFERENCE_OF_ACE_VALUE;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
     public abstract String getName();
 }
-
-

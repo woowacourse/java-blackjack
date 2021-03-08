@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
