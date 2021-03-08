@@ -7,13 +7,14 @@ import java.util.stream.IntStream;
 
 public class Hands {
 
+    private static final int INITIAL_SIZE = 2;
     private static final int WINNING_BASELINE = 21;
 
     private final List<Card> cards;
     private final boolean isBlackjack;
 
     public Hands(final List<Card> cards) {
-        if (cards.size() != 2) {
+        if (cards.size() != INITIAL_SIZE) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
         }
         this.cards = cards;
@@ -29,10 +30,7 @@ public class Hands {
     }
 
     public int calculate() {
-        int sum = sumWithoutAce();
-        for (int i = 0; i < countAce(); ++i) {
-            sum += CardValue.ACE.getValue();
-        }
+        int sum = sumWithoutAce() + CardValue.ACE.getValue() * countAce();
         if (containsAce()) {
             sum = properSum(sum);
         }
@@ -44,13 +42,6 @@ public class Hands {
             return sum;
         }
         return sum + 10;
-    }
-
-    private int properAce(int sum) {
-        if (sum + CardValue.ACE.getValue() > WINNING_BASELINE) {
-            return 1;
-        }
-        return CardValue.ACE.getValue();
     }
 
     public boolean containsAce() {

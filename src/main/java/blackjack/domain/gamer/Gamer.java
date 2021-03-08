@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Gamer {
 
     protected final Hands hands;
-    private String name;
+    private final String name;
 
     protected Gamer(String name, Hands hands) {
         this.name = name;
