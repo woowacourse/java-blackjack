@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.GameNumber;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlayerTest {
-    private static final Card TWO_DIAMOND = new Card(GameNumber.TWO, Shape.DIAMOND);
-    private static final Card JACK_SPADE = new Card(GameNumber.JACK, Shape.SPADE);
-    private static final Card THREE_HEART = new Card(GameNumber.THREE, Shape.HEART);
-    private static final Card ACE_CLOVER = new Card(GameNumber.ACE, Shape.CLOVER);
+    private static final Card TWO_DIAMOND = new Card(CardNumber.TWO, Shape.DIAMOND);
+    private static final Card JACK_SPADE = new Card(CardNumber.JACK, Shape.SPADE);
+    private static final Card THREE_HEART = new Card(CardNumber.THREE, Shape.HEART);
+    private static final Card ACE_CLOVER = new Card(CardNumber.ACE, Shape.CLOVER);
     private Player player;
     private Dealer dealer;
 

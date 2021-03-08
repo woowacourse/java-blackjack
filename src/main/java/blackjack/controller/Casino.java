@@ -24,9 +24,9 @@ public class Casino {
         List<Player> players = game.getPlayers();
 
         setUpTwoCards(dealer, players);
-        playersTurn(players);
-        dealerTurn();
-        closingStage(dealer, players);
+        doPlayersTurn(players);
+        doDealerTurn();
+        closeStage(dealer, players);
     }
 
     private void setUpTwoCards(Dealer dealer, List<Player> players) {
@@ -34,13 +34,13 @@ public class Casino {
         OutputView.printSetup(dealer, players);
     }
 
-    private void playersTurn(List<Player> players) {
+    private void doPlayersTurn(List<Player> players) {
         for (Player player : players) {
-            eachPlayerTurn(player);
+            doEachPlayerTurn(player);
         }
     }
 
-    private void eachPlayerTurn(Player player) {
+    private void doEachPlayerTurn(Player player) {
         while (canDrawMore(player)) {
             game.giveCard(player);
             OutputView.printCardInfo(player);
@@ -70,13 +70,13 @@ public class Casino {
         return false;
     }
 
-    private void dealerTurn() {
+    private void doDealerTurn() {
         int dealerDrawCount = game.playDealerTurn();
         OutputView.printDealerDraw(dealerDrawCount);
         OutputView.printDealerNoMoreDraw();
     }
 
-    private void closingStage(Dealer dealer, List<Player> players) {
+    private void closeStage(Dealer dealer, List<Player> players) {
         OutputView.printParticipantFinalCardInfo(dealer, players);
         game.fightPlayers();
         OutputView.printWinOrLoseResult(dealer, players);

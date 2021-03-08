@@ -22,7 +22,7 @@ public class Game {
     }
 
     public static Game of(List<String> playerNames) {
-        if (playerNames.size() == 0) {
+        if (playerNames.isEmpty()) {
             throw new IllegalArgumentException("최소 1명 이상은 게임에 참여해야 합니다.");
         }
         return new Game(playerNames.stream()

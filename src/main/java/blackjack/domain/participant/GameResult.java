@@ -21,9 +21,9 @@ public class GameResult {
     }
 
     public void plus(GameResult gameResult) {
-        winCount += gameResult.getWinCount();
-        drawCount += gameResult.getDrawCount();
-        loseCount += gameResult.getLoseCount();
+        winCount += gameResult.winCount;
+        drawCount += gameResult.drawCount;
+        loseCount += gameResult.loseCount;
     }
 
     public GameResult reverse() {

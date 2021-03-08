@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 public class Dealer extends Participant {
-    public static final String DEALER = "딜러";
-    public static final int STAY_THRESHOLD = 17;
+    private static final Name name = new Name("딜러");
+    private static final int STAY_THRESHOLD = 17;
 
     public boolean isStay() {
         return calculateResult() >= STAY_THRESHOLD;
@@ -10,6 +10,6 @@ public class Dealer extends Participant {
 
     @Override
     public String getName() {
-        return DEALER;
+        return name.toString();
     }
 }
