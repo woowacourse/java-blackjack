@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.controller.dto.ResultDTO;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
 import java.util.ArrayList;
@@ -80,5 +81,15 @@ public class UsersTest {
         assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.WIN);
         assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.WIN);
         assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
+    }
+
+    @DisplayName("모든 유저들 랜덤카드 2개 뽑기 테스트")
+    @Test
+    void usersDrawRandomTwoCards() {
+        Users users1 = new Users("pobi,jason,inbi,");
+        users1.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(0));
+
+        users1.drawRandomTwoCards(Cards.createAllShuffledCards());
+        users1.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(2));
     }
 }
