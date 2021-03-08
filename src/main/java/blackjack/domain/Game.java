@@ -18,6 +18,7 @@ public class Game {
     private final Dealer dealer;
     private final List<Player> players;
     private final Deck deck;
+    private int playerIndex = 0;
 
     private Game(List<Player> players) {
         this.dealer = new Dealer();
@@ -44,6 +45,23 @@ public class Game {
     private void addTwoCard(Participant participant) {
         participant.addCard(deck.draw());
         participant.addCard(deck.draw());
+    }
+
+    public Player getCurrentPlayer() {
+        return players.get(playerIndex);
+    }
+
+    public void next(boolean willDraw) {
+        Player player = getCurrentPlayer();
+        if (willDraw) {
+            giveCard(player);
+            return;
+        }
+        playerIndex += 1;
+    }
+
+    public boolean isNotEnd() {
+        return playerIndex < players.size();
     }
 
     public void giveCard(Participant participant) {

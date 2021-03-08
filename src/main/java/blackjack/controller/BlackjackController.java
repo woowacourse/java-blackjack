@@ -10,8 +10,6 @@ import java.util.List;
 
 public class BlackjackController {
 
-    public static final String BUST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
-    public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String DEALER_NO_MORE_DRAW_MESSAGE = "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
 
     public BlackjackController() {
@@ -34,43 +32,27 @@ public class BlackjackController {
         }
     }
 
-    private void askPlayersDrawCard(Game game) {
-        for (Player player : game.getPlayers()) {
-            askDrawCard(player, game);
-        }
-    }
-
     private void setUpTwoCards(Game game) {
         game.setUpTwoCards();
         OutputView.printSetup(game.getDealer(), game.getPlayers());
     }
 
-    private void askDrawCard(Player player, Game game) {
-        while (willDrawCard(player)) {
-            game.giveCard(player);
+    private void askPlayersDrawCard(Game game) {
+        while (game.isNotEnd()) {
+            Player player = game.getCurrentPlayer();
+            boolean willDraw = askWillDrawCard(player);
+            game.next(willDraw);
             OutputView.printCardInfoWithLineSeparator(player);
         }
     }
 
-    private boolean willDrawCard(Player player) {
+    private boolean askWillDrawCard(Player player) {
         try {
-            return tryWillDrawCard(player);
+            return InputView.inputYesOrNo(player);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            return willDrawCard(player);
+            return askWillDrawCard(player);
         }
-    }
-
-    private boolean tryWillDrawCard(Player player) {
-        if (player.isBlackJack()) {
-            OutputView.printMessage(BLACKJACK_MESSAGE);
-            return false;
-        }
-        if (player.isBust()) {
-            OutputView.printMessage(BUST_MESSAGE);
-            return false;
-        }
-        return InputView.inputYesOrNo(player);
     }
 
     private void makeDealerDrawCard(Game game) {
