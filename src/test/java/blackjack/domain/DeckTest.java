@@ -12,9 +12,6 @@ class DeckTest {
     @Test
     public void new_deckCreate_valid() {
         Deck deck = new Deck();
-        deck.getCards().forEach(card -> {
-            System.out.println(card.getDenomination().getName() + card.getSuit().getName());
-        });
         assertThat(deck.getCards()).hasSize(52);
     }
 }
