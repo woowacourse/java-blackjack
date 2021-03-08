@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,7 +26,12 @@ public abstract class Participant {
         }
     }
 
-    public void receiveCard(final Card card) {
+    public void receiveInitialCards(final CardDeck cardDeck) {
+        cards.add(cardDeck.distribute());
+        cards.add(cardDeck.distribute());
+    }
+
+    public void receiveOneCard(final Card card) {
         cards.add(card);
     }
 
@@ -43,55 +48,32 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculate() >= BUST_LIMIT;
+        return calculateScore() >= BUST_LIMIT;
     }
 
-    public int calculate() {
-        final int aceCount = (int) cards.stream()
-                .filter(card -> card.getCardValue().isAce())
-                .count();
-        if (aceCount == 0) {
-            return calculateSingleCase();
+    public abstract List<Card> showInitialCards();
+
+    public abstract boolean checkMoreCardAvailable();
+
+    public int calculateScore() {
+        final int sumOfCards = cards.stream().mapToInt(card -> card.getCardValue().getValue()).sum();
+        if (sumOfCards >= BUST_LIMIT && howManyAce() > 0) {
+            return calculateScoreWithAce(sumOfCards);
         }
-        return calculateMultipleCase(aceCount);
+        return sumOfCards;
     }
 
-    private int calculateSingleCase() {
-        return cards.stream()
-                .mapToInt(card -> card.getCardValue().getValue())
-                .sum();
-    }
-
-    private int calculateMultipleCase(final int aceCount) {
-        final List<Integer> possibleSum = new ArrayList<>();
-        final int sumExceptAce = cards.stream()
-                .filter(card -> !card.getCardValue().isAce())
-                .mapToInt(card -> card.getCardValue().getValue())
-                .sum();
-
-        for (final int aceSum : calculateAceSum(aceCount)) {
-            possibleSum.add(sumExceptAce + aceSum);
+    private int calculateScoreWithAce(final int sum) {
+        int aceCount = howManyAce();
+        int changedSum = sum;
+        while (aceCount-- > 0 && changedSum >= BUST_LIMIT) {
+            changedSum = changedSum - CardNumber.ACE.getValue() + CardNumber.ACE.getExtraValue();
         }
-        return findMaxPossibleValue(possibleSum);
+        return changedSum;
     }
 
-    private List<Integer> calculateAceSum(final int aceCount) {
-        int oneNormalRestExtra = CardNumber.ACE.getValue();
-        int allExtra = CardNumber.ACE.getExtraValue();
-
-        for (int i = 1; i < aceCount; i++) {
-            oneNormalRestExtra += CardNumber.ACE.getExtraValue();
-            allExtra += CardNumber.ACE.getExtraValue();
-        }
-
-        return new ArrayList<>(Arrays.asList(oneNormalRestExtra, allExtra));
-    }
-
-    private int findMaxPossibleValue(final List<Integer> possibleSum) {
-        return possibleSum.stream()
-                .filter(aceSum -> aceSum < BUST_LIMIT)
-                .mapToInt(Integer::intValue)
-                .max()
-                .orElse(BUST_LIMIT);
+    private int howManyAce() {
+        return (int) cards.stream().
+                        filter(card -> card.getCardValue().isAce()).count();
     }
 }

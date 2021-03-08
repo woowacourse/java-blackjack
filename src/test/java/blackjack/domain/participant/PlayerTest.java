@@ -3,8 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,32 +31,32 @@ public class PlayerTest {
     @DisplayName("플레이어가 Participant에게 상속받았는지 확인")
     void extend() {
         final Participant participant = new Player("bada");
-        participant.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        participant.receiveOneCard(new Card(CardNumber.ACE, CardType.HEART));
         assertThat(participant.cardCount()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("참가자가 카드를 받았는지 확인")
     void receiveCard() {
-        player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        player.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
         assertThat(player.cardCount()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("참가자가 갖고 있는 카드의 합을 확인")
     void calculateCardSum() {
-        player.receiveCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        assertThat(player.calculate()).isEqualTo(12);
+        player.receiveOneCard(new Card(CardNumber.TWO, CardType.CLOVER));
+        player.receiveOneCard(new Card(CardNumber.TEN, CardType.CLOVER));
+        assertThat(player.calculateScore()).isEqualTo(12);
     }
 
     @Test
     @DisplayName("에이스 카드가 하나있을 때 합 구하기")
     void calculateCardSumWhenAceIsOne() {
-        player.receiveCard(new Card(CardNumber.JACK, CardType.CLOVER));
-        player.receiveCard(new Card(CardNumber.FIVE, CardType.CLOVER));
-        player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(player.calculate()).isEqualTo(16);
+        player.receiveOneCard(new Card(CardNumber.JACK, CardType.CLOVER));
+        player.receiveOneCard(new Card(CardNumber.FIVE, CardType.CLOVER));
+        player.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        assertThat(player.calculateScore()).isEqualTo(16);
     }
 
     @ParameterizedTest
@@ -68,17 +66,17 @@ public class PlayerTest {
         final String[] inputs = input.split(",");
         for (final String number : inputs) {
             final CardNumber cardNumber = CardNumber.valueOf(number);
-            player.receiveCard(new Card(cardNumber, CardType.CLOVER));
+            player.receiveOneCard(new Card(cardNumber, CardType.CLOVER));
         }
-        assertThat(player.calculate()).isEqualTo(expected);
+        assertThat(player.calculateScore()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("참가자가 버스트인지 확인")
     void isBust() {
-        player.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        player.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
-        player.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
+        player.receiveOneCard(new Card(CardNumber.TEN, CardType.CLOVER));
+        player.receiveOneCard(new Card(CardNumber.NINE, CardType.HEART));
+        player.receiveOneCard(new Card(CardNumber.EIGHT, CardType.HEART));
         assertThat(player.isBust()).isTrue();
     }
 }

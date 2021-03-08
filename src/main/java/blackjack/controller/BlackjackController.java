@@ -30,7 +30,7 @@ public class BlackjackController {
         final List<String> names = InputView.requestName();
         try {
             validateSameName(names);
-            return changeStringToPlayer(names);
+            return generatePlayers(names);
         } catch (IllegalArgumentException e) {
             OutputView.showErrorMessage(e.getMessage());
             return playerSetUp();
@@ -44,7 +44,7 @@ public class BlackjackController {
         }
     }
 
-    private List<Player> changeStringToPlayer(List<String> names) {
+    private List<Player> generatePlayers(List<String> names) {
         return names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
@@ -52,11 +52,9 @@ public class BlackjackController {
 
     private void distributeCard(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
         for (final Player player : players) {
-            player.receiveCard(cardDeck.distribute());
-            player.receiveCard(cardDeck.distribute());
+            player.receiveInitialCards(cardDeck);
         }
-        dealer.receiveCard(cardDeck.distribute());
-        dealer.receiveCard(cardDeck.distribute());
+        dealer.receiveInitialCards(cardDeck);
         OutputView.showDistributedCard(players, dealer);
     }
 
@@ -68,7 +66,7 @@ public class BlackjackController {
 
     private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
         while (!player.isBust() && InputView.askPlayerMoreCard(player)) {
-            player.receiveCard(cardDeck.distribute());
+            player.receiveOneCard(cardDeck.distribute());
             OutputView.showPlayerCard(player);
         }
         if (player.isBust()) {
@@ -81,7 +79,7 @@ public class BlackjackController {
     private void dealerGameProgress(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.checkMoreCardAvailable()) {
             OutputView.dealerMoreCard();
-            dealer.receiveCard(cardDeck.distribute());
+            dealer.receiveOneCard(cardDeck.distribute());
         }
     }
 
@@ -95,7 +93,7 @@ public class BlackjackController {
     }
 
     private void decideWinner(final Dealer dealer, final Player player) {
-        if (dealer.isWinner(player.calculate()) || player.isBust()) {
+        if (dealer.isWinner(player.calculateScore()) || player.isBust()) {
             player.lose();
             dealer.increaseWinCount();
         }

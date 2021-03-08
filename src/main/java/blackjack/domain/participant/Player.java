@@ -1,5 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+
+import java.util.List;
+
 public class Player extends Participant {
     private boolean win = true;
 
@@ -13,5 +17,15 @@ public class Player extends Participant {
 
     public boolean getWin() {
         return win;
+    }
+
+    @Override
+    public List<Card> showInitialCards() {
+        return cards.subList(0, 2);
+    }
+
+    @Override
+    public boolean checkMoreCardAvailable() {
+        return !isBust();
     }
 }

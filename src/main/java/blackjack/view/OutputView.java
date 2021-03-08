@@ -24,7 +24,7 @@ public class OutputView {
 
     public static void showDistributedCard(final List<Player> players, final Dealer dealer) {
         distributeMessage(players);
-        showDealerCard(dealer);
+        showInitialCard(dealer);
         showPlayersCard(players);
     }
 
@@ -35,17 +35,16 @@ public class OutputView {
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, names);
     }
 
-    private static void showDealerCard(final Dealer dealer) {
-        System.out.printf(DEALER_CARD_STATUS_FORMAT + NEWLINE, dealer.getName(), cardFormat(dealer.firstCard()));
-    }
-
-    private static String cardFormat(Card card) {
-        return card.getCardSymbol() + card.getCardType();
+    public static void showInitialCard(final Participant participant) {
+        final String cardStatus = participant.showInitialCards().stream()
+                .map(OutputView::cardFormat)
+                .collect(Collectors.joining(", "));
+        System.out.printf(PLAYER_CARD_STATUS_FORMAT, participant.getName(), cardStatus + NEWLINE);
     }
 
     private static void showPlayersCard(final List<Player> players) {
         for (final Player player : players) {
-            showPlayerCard(player);
+            showInitialCard(player);
         }
     }
 
@@ -54,6 +53,10 @@ public class OutputView {
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, player.getName(), cardStatus + NEWLINE);
+    }
+
+    private static String cardFormat(Card card) {
+        return card.getCardSymbol() + card.getCardType();
     }
 
     public static void showFinalCardResult(final List<Player> players, final Dealer dealer) {
@@ -66,7 +69,7 @@ public class OutputView {
         final String cardStatus = participant.getCards().stream()
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
-        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, participant.getName(), cardStatus, participant.calculate());
+        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, participant.getName(), cardStatus, participant.calculateScore());
     }
 
     private static void showCardsResult(final List<Player> players) {

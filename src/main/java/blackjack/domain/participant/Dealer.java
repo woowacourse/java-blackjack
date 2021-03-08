@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 
+import java.util.List;
+
 public class Dealer extends Participant {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
     private static final String name = "딜러";
@@ -11,12 +13,8 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public boolean checkMoreCardAvailable() {
-        return (calculate() <= MAX_SUM_FOR_MORE_CARD);
-    }
-
     public boolean isWinner(final int playerResult) {
-        return (playerResult <= calculate() && !isBust());
+        return (playerResult <= calculateScore() && !isBust());
     }
 
     public void increaseWinCount() {
@@ -27,7 +25,13 @@ public class Dealer extends Participant {
         return winCount;
     }
 
-    public Card firstCard() {
-        return this.cards.get(0);
+    @Override
+    public List<Card> showInitialCards() {
+        return cards.subList(0,1);
+    }
+
+    @Override
+    public boolean checkMoreCardAvailable() {
+        return calculateScore() <= MAX_SUM_FOR_MORE_CARD;
     }
 }
