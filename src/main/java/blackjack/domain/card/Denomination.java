@@ -45,11 +45,11 @@ public enum Denomination {
         return this.equals(ACE);
     }
 
-    public String getName() {
-        return this.name;
+    public int addScore(int score) {
+        return this.score + score;
     }
 
-    public int getScore() {
-        return this.score;
+    public String getName() {
+        return this.name;
     }
 }

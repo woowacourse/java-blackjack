@@ -35,13 +35,19 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int score = cards.stream()
-                .mapToInt(Card::score)
-                .sum();
+        int score = calculateTotalScore();
         long aceCount = cards.stream()
                 .filter(Card::isAce)
                 .count();
         return Denomination.plusRemainAceScore(score, aceCount);
+    }
+
+    public int calculateTotalScore() {
+        int score = 0;
+        for (Card card : cards) {
+            score = card.addScore(score);
+        }
+        return score;
     }
 
     public List<Card> getCards() {

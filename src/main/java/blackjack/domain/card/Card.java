@@ -28,8 +28,8 @@ public class Card {
         return this.denomination.isAce();
     }
 
-    public int score() {
-        return this.denomination.getScore();
+    public int addScore(int score) {
+        return denomination.addScore(score);
     }
 
     public static List<Card> values() {
