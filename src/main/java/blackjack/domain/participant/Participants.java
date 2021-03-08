@@ -17,14 +17,14 @@ public class Participants {
 
     public Dealer extractDealer() {
         return (Dealer) participants.stream()
-                .filter(participant -> participant instanceof Dealer)
+                .filter(Participant::isDealer)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Dealer가 존재하지 않습니다!"));
     }
 
     public List<Player> extractPlayers() {
         return participants.stream()
-                .filter(participant -> participant instanceof Player)
+                .filter(participant -> !participant.isDealer())
                 .map(Player.class::cast)
                 .collect(Collectors.toList());
     }

@@ -51,4 +51,9 @@ public class Player implements Participant {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }

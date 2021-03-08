@@ -56,6 +56,11 @@ public class Dealer implements Participant {
         return name;
     }
 
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+
     public DealerResultDto getDealerResult(List<Player> players) {
         List<ScoreResultDto> scoreResultDtos = decideWinOrLoseResults(players);
         Map<GameResult, Long> dealerResult = statisticsDealerResult(scoreResultDtos);
