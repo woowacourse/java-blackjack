@@ -18,6 +18,10 @@ public class Card {
         this.shape = shape;
     }
 
+    public static Card of(Card card) {
+        return new Card(card.getDenomination(), card.getShape());
+    }
+
     public static Card of(Denomination denomination, Shape shape) {
         return new Card(denomination, shape);
     }
