@@ -66,6 +66,12 @@ public class Players {
         return profitStatistics;
     }
 
+    public Map<Player, Integer> aggregateProfitMoneyByPlayer2(Dealer dealer) {
+        Map<Player, Integer> profitStatistics = new LinkedHashMap<>();
+        players.forEach(player -> profitStatistics.put(player, player.calculateProfitMoney(dealer)));
+        return profitStatistics;
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

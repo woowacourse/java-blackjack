@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.profit.ProfitStatistics;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.profit.ProfitStatistics;
 
 import java.util.List;
 import java.util.Set;
@@ -80,7 +80,7 @@ public class OutputView {
         System.out.println("## 최종 수익");
         System.out.println("딜러: " + profitStatistics.calculateDealerProfitMoney());
         profitStatistics.getProfitStatistics()
-                .forEach((playerName, profitMoney) -> System.out.println(playerName + ": " + profitMoney));
+                .forEach((playerName, profitMoney) -> System.out.println(playerName.getName() + ": " + profitMoney));
     }
 
     private static void printNewLine() {

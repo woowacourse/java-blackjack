@@ -1,5 +1,7 @@
 package blackjack.domain.profit;
 
+import blackjack.domain.participant.Player;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,9 +9,9 @@ import java.util.Map;
 public class ProfitStatistics {
     private static final int NEGATIVE_NUMBER_INDEX = -1;
 
-    private final Map<String, Integer> profitStatistics;
+    private final Map<Player, Integer> profitStatistics;
 
-    public ProfitStatistics(Map<String, Integer> profitStatistics) {
+    public ProfitStatistics(Map<Player, Integer> profitStatistics) {
         this.profitStatistics = new LinkedHashMap<>(profitStatistics);
     }
 
@@ -24,7 +26,7 @@ public class ProfitStatistics {
                 .sum();
     }
 
-    public Map<String, Integer> getProfitStatistics() {
+    public Map<Player, Integer> getProfitStatistics() {
         return Collections.unmodifiableMap(profitStatistics);
     }
 }

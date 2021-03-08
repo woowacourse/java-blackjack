@@ -87,13 +87,15 @@ class PlayersTest {
         Players players = Players.of(Arrays.asList("pobi", "jason"), Arrays.asList(1000, 2000));
         Dealer dealer = new Dealer();
         List<Player> playerList = players.getPlayers();
+        Player pobi = playerList.get(0);
+        Player jason = playerList.get(1);
 
-        playerList.get(0).receiveCards(new Cards(CARDS_BLACKJACK));
-        playerList.get(1).receiveCards(new Cards(CARDS_SCORE_19));
+        pobi.receiveCards(new Cards(CARDS_BLACKJACK));
+        jason.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));
-        Map<String, Integer> profitStatistics = players.aggregateProfitMoneyByPlayer(dealer);
+        Map<Player, Integer> profitStatistics = players.aggregateProfitMoneyByPlayer2(dealer);
 
-        assertThat(profitStatistics.keySet()).containsExactly("pobi", "jason");
+        assertThat(profitStatistics.keySet()).containsExactly(pobi, jason);
         assertThat(profitStatistics.values()).containsExactly(1500, -2000);
     }
 }

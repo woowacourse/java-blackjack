@@ -2,10 +2,10 @@ package blackjack;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardsGenerator;
-import blackjack.domain.profit.ProfitStatistics;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.profit.ProfitStatistics;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -24,7 +24,7 @@ public class Application {
         playersGroup.forEach(player -> drawMoreCardForPlayer(player, cardDeck));
         drawMoreCardForDealer(dealer, cardDeck);
 
-        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer2(dealer));
         OutputView.printFinalCardsAndScore(dealer, playersGroup);
         OutputView.printFinalProfitMoney(profitStatistics);
     }

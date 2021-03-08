@@ -50,18 +50,20 @@ class ProfitStatisticsTest {
     @DisplayName("Player의 이름을 Key로, 각각의 이익금액을 value로 하는 Map을 생성")
     @Test
     void createGameResult() {
-        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer2(dealer));
+        Player pobi = players.getPlayers().get(0);
+        Player jason = players.getPlayers().get(1);
 
-        Map<String, Integer> map = profitStatistics.getProfitStatistics();
+        Map<Player, Integer> map = profitStatistics.getProfitStatistics();
 
-        assertThat(map.keySet()).containsExactly("pobi", "jason");
+        assertThat(map.keySet()).containsExactly(pobi, jason);
         assertThat(map.values()).containsExactly(1500, -2000);
     }
 
     @DisplayName("딜러의 손익은 플레이어 손익의 합 * -1과 같다.")
     @Test
     void calculateDealerProfitMoney() {
-        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer2(dealer));
         Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
 
