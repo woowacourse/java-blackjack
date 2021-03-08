@@ -13,7 +13,10 @@ public class Participants {
     }
 
     public String names() {
-        return participants.stream().filter(playable -> playable instanceof Player).map(Playable::getName).collect(Collectors.joining(", "));
+        return participants.stream()
+                .filter(playable -> playable instanceof Player)
+                .map(Playable::getName)
+                .collect(Collectors.joining(", "));
     }
 
     public List<String> cards() {
@@ -33,12 +36,19 @@ public class Participants {
     }
 
     private String cardsToString(List<Card> cards) {
-        return cards.stream().map(Card::getName).collect(Collectors.joining(", ", "카드: ", ""));
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", ", "카드: ", ""));
     }
 
     public Map<String, String> finalResult() {
-        Playable dealer = participants.stream().filter(playable -> playable instanceof Dealer).findFirst().orElse(null);
-        List<Playable> players = participants.stream().filter(playable -> playable instanceof Player).collect(Collectors.toList());
+        Playable dealer = participants.stream()
+                .filter(playable -> playable instanceof Dealer)
+                .findFirst()
+                .orElse(null);
+        List<Playable> players = participants.stream()
+                .filter(playable -> playable instanceof Player)
+                .collect(Collectors.toList());
         final Map<String, String> results = new LinkedHashMap<>();
         results.put(dealer.getName(), summarizeDealerOutcome(dealer, players));
         for (Playable player : players) {

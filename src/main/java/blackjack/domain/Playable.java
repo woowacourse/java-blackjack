@@ -63,13 +63,19 @@ public abstract class Playable {
 
     public int sumCards() {
         List<Card> cardValues = cards.getUnmodifiableList();
-        return cardValues.stream().mapToInt(Card::getScore).sum();
+        return cardValues.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public int sumCardsForResult() {
         List<Card> cardValues = cards.getUnmodifiableList();
-        int aceCount = (int) cardValues.stream().filter(Card::isAce).count();
-        int sum = cardValues.stream().mapToInt(Card::getScore).sum() + aceCount * ACE_DIFFERENCE;
+        int aceCount = (int) cardValues.stream()
+                .filter(Card::isAce)
+                .count();
+        int sum = cardValues.stream()
+                .mapToInt(Card::getScore)
+                .sum() + aceCount * ACE_DIFFERENCE;
         while (sum > BLACKJACK && aceCount > 0) {
             sum -= ACE_DIFFERENCE;
             aceCount--;
