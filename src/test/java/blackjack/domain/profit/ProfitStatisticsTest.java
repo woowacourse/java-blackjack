@@ -49,7 +49,7 @@ class ProfitStatisticsTest {
     @DisplayName("Player의 이름을 Key로, 각각의 이익금액을 value로 하는 Map을 생성")
     @Test
     void createGameResult() {
-        ProfitStatistics profitStatistics = ProfitStatistics.of(dealer, players);
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayerName(dealer));
 
         Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
@@ -60,7 +60,7 @@ class ProfitStatisticsTest {
     @DisplayName("딜러의 손익은 플레이어 손익의 합 * -1과 같다.")
     @Test
     void calculateDealerProfit() {
-        ProfitStatistics profitStatistics = ProfitStatistics.of(dealer, players);
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayerName(dealer));
         Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
 

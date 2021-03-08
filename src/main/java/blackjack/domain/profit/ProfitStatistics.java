@@ -12,15 +12,8 @@ public class ProfitStatistics {
 
     private final Map<String, Integer> profitStatistics;
 
-    private ProfitStatistics(Map<String, Integer> profitStatistics) {
-        this.profitStatistics = profitStatistics;
-    }
-
-    public static ProfitStatistics of(Dealer dealer, Players players) {
-        Map<String, Integer> profitResultStatistics = new LinkedHashMap<>();
-        players.getPlayers()
-                .forEach(player -> profitResultStatistics.put(player.getName(), player.calculateProfitMoney(dealer)));
-        return new ProfitStatistics(profitResultStatistics);
+    public ProfitStatistics(Map<String, Integer> profitStatistics) {
+        this.profitStatistics = new LinkedHashMap<>(profitStatistics);
     }
 
     public int calculateDealerProfit() {
