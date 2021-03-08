@@ -44,6 +44,10 @@ public class BlackJackService {
         player.receiveMoreCard(Card.pullOutCachedCard());
     }
 
+    public boolean isDealerBlackJack() {
+        return this.dealer.isBlackJack();
+    }
+
     private Cards getInitCards() {
         List<Card> cards = Arrays.asList(Card.pullOutCachedCard(), Card.pullOutCachedCard());
         return new Cards(cards);

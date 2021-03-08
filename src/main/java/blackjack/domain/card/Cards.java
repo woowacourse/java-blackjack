@@ -41,6 +41,10 @@ public class Cards {
         return getScore() > BLACK_JACK_SCORE;
     }
 
+    public int size(){
+        return cards.size();
+    }
+
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }

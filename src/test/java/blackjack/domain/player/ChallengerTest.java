@@ -36,7 +36,7 @@ public class ChallengerTest {
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
 
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.getPlayerResult(challenger, dealer)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ChallengerTest {
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
 
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.DRAW);
+        assertThat(Result.getPlayerResult(challenger, dealer)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ChallengerTest {
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
 
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.getPlayerResult(challenger, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ChallengerTest {
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
 
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.getPlayerResult(challenger, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -91,6 +91,6 @@ public class ChallengerTest {
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
 
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.getPlayerResult(challenger, dealer)).isEqualTo(Result.WIN);
     }
 }

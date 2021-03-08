@@ -10,6 +10,9 @@ public abstract class Player {
     protected final Cards hand;
     private final Name name;
 
+    private final static int BLACK_JACK_SCORE = 21;
+    private final static int TWO_CARDS = 2;
+
     public Player(final Cards cards, final Name name) {
         this.hand = new Cards(cards.getCardsAsList());
         this.name = new Name(name.getName());
@@ -35,5 +38,9 @@ public abstract class Player {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.getScore() == BLACK_JACK_SCORE && hand.size() == TWO_CARDS;
     }
 }
