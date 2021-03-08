@@ -1,0 +1,33 @@
+package blakcjack.domain.name;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static blakcjack.domain.name.IllegalPlayerNameException.ILLEGAL_NAME_ERROR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class NameTest {
+	@DisplayName("정상적인 이름 입력시 객체 생성 제대로 하는지")
+	@Test
+	void create() {
+		final Name name = new Name("pobi");
+		assertThat(name).isEqualTo(new Name("pobi"));
+	}
+
+	@DisplayName("null이 입력되면 예외 발생하는지")
+	@Test
+	void create_null_throwError() {
+		assertThatThrownBy(() -> new Name(null))
+				.isInstanceOf(IllegalPlayerNameException.class)
+				.hasMessage(ILLEGAL_NAME_ERROR);
+	}
+
+	@DisplayName("빈 문자열이 입력되면 예외 발생하는지")
+	@Test
+	void create_empty_throwError() {
+		assertThatThrownBy(() -> new Name(""))
+				.isInstanceOf(IllegalPlayerNameException.class)
+				.hasMessage(ILLEGAL_NAME_ERROR);
+	}
+}
