@@ -6,11 +6,11 @@ public abstract class Playable {
     public static final int BLACKJACK = 21;
     public static final int ACE_DIFFERENCE = 10;
     private final String name;
-    private final Cards cards;
+    private final Hand hand;
 
     public Playable(String name, List<Card> cards) {
         this.name = name;
-        this.cards = new Cards(cards);
+        this.hand = new Hand(cards);
     }
 
     public String getName() {
@@ -20,7 +20,7 @@ public abstract class Playable {
     public abstract boolean isAvailableToTake();
 
     public List<Card> getUnmodifiableCards() {
-        return cards.getUnmodifiableList();
+        return hand.getUnmodifiableList();
     }
 
     public Outcome result(int counterpart) {
@@ -52,18 +52,18 @@ public abstract class Playable {
     }
 
     public void takeCard(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int sumCards() {
-        List<Card> cardValues = cards.getUnmodifiableList();
+        List<Card> cardValues = hand.getUnmodifiableList();
         return cardValues.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
     public int sumCardsForResult() {
-        List<Card> cardValues = cards.getUnmodifiableList();
+        List<Card> cardValues = hand.getUnmodifiableList();
         int aceCount = (int) cardValues.stream()
                 .filter(Card::isAce)
                 .count();
