@@ -1,13 +1,17 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.scoreboard.ScoreBoard;
+import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGameController {
@@ -16,13 +20,19 @@ public class BlackjackGameController {
     public void start() {
         BlackjackGame blackjackGame = startGameAndFirstDraw();
         printFirstDrawInformation(blackjackGame);
-        OutputView.println();
 
+        playGame(blackjackGame);
+
+        ScoreBoard scoreBoard = blackjackGame.createScoreBoard();
+        Map<User, UserGameResult> userResult = scoreBoard.getUserResults();
+
+        printParticipantsCardsAndScore(blackjackGame.getDealer(), userResult);
+        printFinalWinOrLose(scoreBoard, userResult);
+    }
+
+    private void playGame(BlackjackGame blackjackGame) {
         processUserRound(blackjackGame);
-        OutputView.println();
         processDealerRound(blackjackGame);
-
-        createResultAndPrint(blackjackGame);
     }
 
     private static BlackjackGame startGameAndFirstDraw() {
@@ -46,10 +56,11 @@ public class BlackjackGameController {
         OutputView.println();
 
         printFirstDrawCards(blackjackGame);
+        OutputView.println();
     }
 
     private static void printFirstDrawCards(BlackjackGame blackjackGame) {
-        OutputView.printDealerFirstCard(blackjackGame.openDealerFirstCard());
+        OutputView.printDealerFirstCard(blackjackGame.getDealer());
         blackjackGame.getUsers().forEach(OutputView::printCardList);
     }
 
@@ -58,6 +69,7 @@ public class BlackjackGameController {
         for (User user : users) { // 각 유저별로 확인
             decideHitOrStay(blackjackGame, user);
         }
+        OutputView.println();
     }
 
     private static void decideHitOrStay(BlackjackGame blackjackGame, User user) {
@@ -96,7 +108,15 @@ public class BlackjackGameController {
         }
     }
 
-    private static void createResultAndPrint(BlackjackGame blackjackGame) {
-        OutputView.printScoreBoard(blackjackGame.createScoreBoard(), blackjackGame.getDealer());
+    private void printParticipantsCardsAndScore(Participant dealer, Map<User, UserGameResult> userResult) {
+        OutputView.printCardListAndScore(dealer);
+
+
+        userResult.keySet().forEach(OutputView::printCardListAndScore);
+        OutputView.println();
+    }
+
+    private void printFinalWinOrLose(ScoreBoard scoreBoard, Map<User, UserGameResult> userResult) {
+        OutputView.printFinalWinOrLose(scoreBoard, userResult);
     }
 }

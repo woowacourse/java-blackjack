@@ -10,6 +10,8 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ScoreBoard {
+    private static final long DEFAULT_COUNT = 0L;
+
     private final Map<User, UserGameResult> userResults;
     private final GameResult gameResult;
 
@@ -22,15 +24,15 @@ public class ScoreBoard {
         return Collections.unmodifiableMap(userResults);
     }
 
-    public GameResult getDealerGameResult() {
-        return gameResult;
-    }
-
-    public Map<WinOrLose, Long> dealerWinOrLoseCounts() {
+    private Map<WinOrLose, Long> makeDealerWinOrLoseMap() {
         return userResults.keySet().stream()
                 .map(userResults::get)
                 .map(UserGameResult::getWinOrLose)
                 .collect(groupingBy(WinOrLose::opposite, counting()));
+    }
+
+    public Long countDealerWinOrLose(WinOrLose winOrLose) {
+        return makeDealerWinOrLoseMap().getOrDefault(winOrLose, DEFAULT_COUNT);
     }
 
     @Override

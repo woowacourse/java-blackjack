@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Users {
-    public static final String DUPLICATE_NAME_ERROR_MSG = "중복되는 이름은 존재할 수 없습니다.";
+    private static final String DUPLICATE_NAME_ERROR_MSG = "중복되는 이름은 존재할 수 없습니다.";
     private final List<User> users;
 
     public Users(List<User> users) {

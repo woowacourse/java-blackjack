@@ -26,6 +26,10 @@ public class UserGameResult {
         return winOrLose;
     }
 
+    public String getStringWinOrLose() {
+        return winOrLose.getCharacter();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

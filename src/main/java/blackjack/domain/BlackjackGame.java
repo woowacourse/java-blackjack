@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.scoreboard.GameResult;
 import blackjack.domain.scoreboard.ScoreBoard;
@@ -21,6 +20,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
     private static final String NO_MORE_PLAYING_USER_ERROR_MSG = "플레이 가능한 유저가 없습니다.";
+
     private final Deck deck = Deck.createDeck();
     private final Users users;
     private final Dealer dealer = new Dealer();
@@ -42,10 +42,6 @@ public class BlackjackGame {
     private void init() {
         dealer.firstDraw(deck.draw(), deck.draw());
         users.toList().forEach(user -> user.firstDraw(deck.draw(), deck.draw()));
-    }
-
-    public Card openDealerFirstCard() {
-        return dealer.getFirstCard();
     }
 
     public User findFirstCanPlayUser() {
@@ -78,7 +74,7 @@ public class BlackjackGame {
         currentUser.drawCard(deck.draw());
     }
 
-    private GameResult createDealerGameResult() {
+    public GameResult createDealerGameResult() {
         return new GameResult(dealer.getCards(), dealer.getName());
     }
 
