@@ -8,6 +8,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.util.BlackjackScoreCalculator;
+import blackjack.util.CardFactory;
 import blackjack.util.DtoAssembler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,12 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class BlackjackController {
-
-    private final Cards cards;
-
-    public BlackjackController(Cards cards) {
-        this.cards = cards;
-    }
 
     public void run() {
         Game game = gameInitialize();
@@ -38,6 +33,7 @@ public class BlackjackController {
         BlackjackScoreCalculator scoreCalculator = new BlackjackScoreCalculator();
         Dealer dealer = new Dealer(scoreCalculator);
         Gamers gamers = new Gamers(InputView.getGamerNamesFromUser(), scoreCalculator);
+        Cards cards = new Cards(CardFactory.getNormalCards());
         Game game = Game.of(cards, dealer, gamers);
 
         List<PlayerDto> playerDtos = DtoAssembler.createPlayerDtos(game.getGamersAsList());
@@ -60,7 +56,7 @@ public class BlackjackController {
     }
 
     private void drawCardToGamer(Game game, Player player) {
-        while (InputView.getYesOrNo(player.getName()) && game.isPlayerDrawable(player)) {
+        while (game.isPlayerDrawable(player) && InputView.getYesOrNo(player.getName())) {
             game.drawCardToPlayer(player);
             OutputView.printPlayersDeckState(DtoAssembler.createPlayerDto(player));
         }

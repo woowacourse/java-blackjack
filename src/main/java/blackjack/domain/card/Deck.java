@@ -20,6 +20,18 @@ public class Deck {
         deck.add(card);
     }
 
+    public long countOfAce() {
+        return deck.stream()
+            .filter(Card::isAce)
+            .count();
+    }
+
+    public int totalScore() {
+        return deck.stream()
+            .mapToInt(Card::getScore)
+            .sum();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(deck);
     }
