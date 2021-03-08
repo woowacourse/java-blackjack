@@ -1,13 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.ResultType;
-import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
-import blackjack.domain.player.dto.GameResultDTO;
-import blackjack.domain.player.dto.PlayerDTO;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
+import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
+import blackjack.domain.player.dto.GameResultDTO;
+import blackjack.domain.player.dto.PlayerDTO;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -17,15 +16,30 @@ import java.util.stream.Collectors;
 public class BlackJackController {
     public void play() {
         Users users = new Users(InputView.getUsersName());
+        usersBetAmount(users);
         Dealer dealer = new Dealer();
+        drawCards(users, dealer);
+        printResultMessage(users, dealer);
+    }
+
+    private void drawCards(Users users, Dealer dealer) {
         drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
         dealer.setCardOpen(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
+    }
+
+    private void printResultMessage(Users users, Dealer dealer) {
         OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
-        Map<Name, ResultType> usersResult = users.getResult(dealer);
+        Map<Name, Integer> usersResult = users.getResult(dealer);
         OutputView.printResultMessage(new GameResultDTO(usersResult, dealer.getResult(usersResult)));
+    }
+
+    private void usersBetAmount(Users users) {
+        for (User user : users.getUsers()) {
+            user.setBetAmount(InputView.getUserBetAmount(new PlayerDTO(user)));
+        }
     }
 
     private void drawTwoCards(Users users, Dealer dealer) {
