@@ -20,7 +20,7 @@ public class Player extends User {
 
     @Override
     public boolean isHit() {
-        return hand.getStatus() == HandStatus.HIT;
+        return hand.isSameStatus(HandStatus.HIT);
     }
 
     @Override

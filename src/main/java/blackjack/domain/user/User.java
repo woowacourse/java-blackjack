@@ -14,20 +14,28 @@ public abstract class User {
         hand.addCard(card);
     }
 
-    public void setStatusToStay() {
-        hand.convertStatusToStay();
+    public boolean isSameStatus(HandStatus handStatus) {
+        return hand.isSameStatus(handStatus);
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public boolean isLessScoreThan(User user) {
+        return hand.isLessScoreThan(user.getScore());
+    }
+
+    public boolean isSameScore(User user) {
+        return hand.isSameScore(user.getScore());
     }
 
     public int getScore() {
         return hand.getScore();
     }
 
-    public HandStatus getStatus() {
-        return hand.getStatus();
+    public void setStatusToStay() {
+        hand.convertStatusToStay();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public ResultDTO getResultDTO() {

@@ -76,6 +76,22 @@ public class Hand {
         return HandStatus.HIT;
     }
 
+    public boolean isSameStatus(HandStatus handStatus) {
+        return status == handStatus;
+    }
+
+    public boolean isGreaterScoreThan(int score) {
+        return this.score > score;
+    }
+
+    public boolean isLessScoreThan(int score) {
+        return this.score > score;
+    }
+
+    public boolean isSameScore(int score) {
+        return this.score == score;
+    }
+
     public void convertStatusToStay() {
         status = HandStatus.STAY;
     }

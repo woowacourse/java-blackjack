@@ -5,7 +5,7 @@ public class Dealer extends User {
     private static final int DRAW_LIMIT = 16;
 
     private void checkIfStay() {
-        if (hand.getScore() > DRAW_LIMIT && hand.getStatus() == HandStatus.HIT) {
+        if (hand.isGreaterScoreThan(DRAW_LIMIT) && hand.isSameStatus(HandStatus.HIT)) {
             hand.convertStatusToStay();
         }
     }
@@ -13,7 +13,7 @@ public class Dealer extends User {
     @Override
     public boolean isHit() {
         checkIfStay();
-        return hand.getStatus() == HandStatus.HIT;
+        return hand.isSameStatus(HandStatus.HIT);
     }
 
     @Override

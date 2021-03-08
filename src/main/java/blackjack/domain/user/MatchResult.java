@@ -12,34 +12,34 @@ public enum MatchResult {
     }
 
     public static MatchResult calculateResult(User player, User dealer) {
-        if (player.getStatus() == HandStatus.BUST) {
+        if (player.isSameStatus(HandStatus.BUST)) {
             return MatchResult.LOSE;
         }
 
-        if (player.getStatus() == HandStatus.BLACK_JACK) {
-            return isDealerBlackJack(dealer.getStatus());
+        if (player.isSameStatus(HandStatus.BLACK_JACK)) {
+            return isDealerBlackJack(dealer);
         }
 
-        if (dealer.getStatus() == HandStatus.BUST) {
+        if (dealer.isSameStatus(HandStatus.BUST)) {
             return MatchResult.WIN;
         }
 
-        return compareScore(player.getScore(), dealer.getScore());
+        return compareScore(player, dealer);
     }
 
-    private static MatchResult isDealerBlackJack(HandStatus dealerStatus) {
-        if (dealerStatus == HandStatus.BLACK_JACK) {
+    private static MatchResult isDealerBlackJack(User dealer) {
+        if (dealer.isSameStatus(HandStatus.BLACK_JACK)) {
             return MatchResult.DRAW;
         }
         return MatchResult.WIN;
     }
 
-    private static MatchResult compareScore(int playerScore, int dealerScore) {
-        if (playerScore < dealerScore) {
+    private static MatchResult compareScore(User player, User dealer) {
+        if (player.isLessScoreThan(dealer)) {
             return MatchResult.LOSE;
         }
 
-        if (playerScore == dealerScore) {
+        if (player.isSameScore(dealer)) {
             return MatchResult.DRAW;
         }
 
