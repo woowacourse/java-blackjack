@@ -14,4 +14,12 @@ public class MatchResultTest {
         assertThat(MatchResult.getPlayerMatchResult(22, 8)).isEqualTo(MatchResult.LOSE);
         assertThat(MatchResult.getPlayerMatchResult(10, 10)).isEqualTo(MatchResult.DRAW);
     }
+
+    @Test
+    @DisplayName("플레이어 결과에 따른 딜러 결과")
+    void checkDealerMatchResult() {
+        assertThat(MatchResult.getDealerMatchResultByPlayer(MatchResult.WIN)).isEqualTo(MatchResult.LOSE);
+        assertThat(MatchResult.getDealerMatchResultByPlayer(MatchResult.LOSE)).isEqualTo(MatchResult.WIN);
+        assertThat(MatchResult.getDealerMatchResultByPlayer(MatchResult.DRAW)).isEqualTo(MatchResult.DRAW);
+    }
 }

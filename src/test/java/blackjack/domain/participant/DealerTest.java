@@ -55,7 +55,7 @@ public class DealerTest {
     void canDraw() {
         dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.ACE));
         dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.THREE));
-        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.ACE));
+        dealer.receiveCard(new Card(Shape.HEART, Denomination.ACE));
         assertTrue(dealer.canDraw());
     }
 

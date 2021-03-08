@@ -41,9 +41,33 @@ public class PlayersTest {
 
     @Test
     @DisplayName("참가자 8명 초과 시 에러 발생")
-    void checkPlayersCount() {
+    void checkPlayersMaximumCount() {
         assertThatThrownBy(() -> {
             List<Player> allPlayers = Arrays.stream("pika, air, a, b, c, d, e, f, g".split(","))
+                    .map(s -> s.replaceAll(" ", ""))
+                    .map(Nickname::new)
+                    .map(Player::new)
+                    .collect(Collectors.toList());
+            new Players(allPlayers);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("중복된 참가자 에러 발생")
+    void checkDuplicatePlayer() {
+        assertThatThrownBy(() -> {
+            new Players(Arrays.asList(
+                    new Player(new Nickname("air")),
+                    new Player(new Nickname("air"))
+            ));
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("참가자 2명 미만 시 에러 발생")
+    void checkPlayersMinimumCount() {
+        assertThatThrownBy(() -> {
+            List<Player> allPlayers = Arrays.stream("air".split(","))
                     .map(s -> s.replaceAll(" ", ""))
                     .map(Nickname::new)
                     .map(Player::new)

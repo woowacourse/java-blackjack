@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
+    private static final String DUPLICATE_CARD_ERROR_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
     public static final int TOP_CARD = 0;
 
     private final List<Card> cards;
@@ -20,6 +21,9 @@ public class Cards {
     }
 
     public void addCard(Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalStateException(DUPLICATE_CARD_ERROR_MESSAGE);
+        }
         cards.add(card);
     }
 

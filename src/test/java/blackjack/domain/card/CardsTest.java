@@ -47,6 +47,15 @@ public class CardsTest {
     }
 
     @Test
+    @DisplayName("중복된 카드는 추가될 수 없습니다.")
+    void duplicateCard() {
+        cards.addCard(new Card(Shape.SPADE, Denomination.FIVE));
+        assertThatThrownBy(() ->
+                cards.addCard(new Card(Shape.SPADE, Denomination.FIVE))
+        ).isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
     @DisplayName("카드 꾸러미에서 맨 위에 있는 카드 확인")
     void peekCardTest() {
         cards.addCard(new Card(Shape.SPADE, Denomination.FIVE));
@@ -64,7 +73,9 @@ public class CardsTest {
     @Test
     @DisplayName("카드 꾸러미에서 카드 뽑기 실패")
     void removeCardFail() {
-        assertThatThrownBy(() -> cards.draw()).isInstanceOf(IndexOutOfBoundsException.class);
+        assertThatThrownBy(() ->
+                cards.draw()
+        ).isInstanceOf(IndexOutOfBoundsException.class);
     }
 
     @Test

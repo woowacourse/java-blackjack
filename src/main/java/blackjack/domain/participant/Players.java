@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class Players {
     private static final String PLAYER_NUMBER_ERROR_MESSAGE = "인원 수는 2 ~ 8명입니다.";
+    private static final String PLAYER_DUPLICATE_ERROR_MESSAGE = "중복된 닉네임을 사용할 수 없습니다.";
     private static final int MIN_PLAYER_COUNT = 2;
     private static final int MAX_PLAYER_COUNT = 8;
 
@@ -19,12 +20,22 @@ public class Players {
 
     public Players(List<Player> players) {
         validatePlayerCount(players);
+        validateDuplicate(players);
         this.players = players;
     }
 
     private void validatePlayerCount(List<Player> player) {
         if (player.size() < MIN_PLAYER_COUNT || player.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
+        }
+    }
+
+    private void validateDuplicate(List<Player> players) {
+        boolean isDuplicate = players.stream()
+                .distinct()
+                .count() != players.size();
+        if (isDuplicate) {
+            throw new IllegalArgumentException(PLAYER_DUPLICATE_ERROR_MESSAGE);
         }
     }
 
