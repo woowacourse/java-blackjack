@@ -44,9 +44,9 @@ public class Participants {
 	}
 
 	public List<Participant> getParticipantsInDrawOrder() {
-		List<Participant> participantsInGameOrder = new ArrayList<>(participants);
-		Collections.rotate(participantsInGameOrder, participantsInGameOrder.size() - 1);
-		return Collections.unmodifiableList(participantsInGameOrder);
+		List<Participant> participantsInDrawOrder = new ArrayList<>(participants);
+		Collections.rotate(participantsInDrawOrder, participantsInDrawOrder.size() - 1);
+		return Collections.unmodifiableList(participantsInDrawOrder);
 	}
 
 	public OutcomeStatistics getOutcomeStatistics() {
