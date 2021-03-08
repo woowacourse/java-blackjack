@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -74,83 +75,103 @@ class PlayerTest {
                 .hasMessage("배팅 금액은 양의 정수여야합니다.");
     }
 
-    private int calculateProfitMoney(List<Card> playerCards, List<Card> dealerCards) {
-        Player player = new Player("json", BETTING_MONEY);
-        player.receiveCards(new Cards(playerCards));
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(dealerCards));
-        return player.calculateProfitMoney(dealer);
-    }
+    @DisplayName("calculateProfitMoney 메서드는")
+    @Nested
+    class Describe_CalculateProfitMoney {
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트면 해당 플레이어는 배팅 금액을 잃는다")
-    @Test
-    void loseBettingMoney_BothBust() {
-        int profitMoney = calculateProfitMoney(CARDS_BUST, CARDS_BUST);
+        private int calculateProfitMoney(List<Card> playerCards, List<Card> dealerCards) {
+            Player player = new Player("json", BETTING_MONEY);
+            player.receiveCards(new Cards(playerCards));
+            Dealer dealer = new Dealer();
+            dealer.receiveCards(new Cards(dealerCards));
+            return player.calculateProfitMoney(dealer);
+        }
 
-        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
-    }
+        @DisplayName("딜러가 블랙잭일 때")
+        @Nested
+        class Context_With_Dealer_BlackJack {
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 블랙잭이라면 배팅 금액의 1.5배를 얻는다")
-    @Test
-    void earnProfitMoney_DealerBustAndPlayerBlackJack() {
-        int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BUST);
+            @DisplayName("플레이어가 블랙잭이면 배팅 금액 원금을 얻는다")
+            @Test
+            void earnProfitMoney_PlayerBlackJack() {
+                int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BLACKJACK);
 
-        assertThat(profitMoney).isEqualTo((int) (BETTING_MONEY * 1.5));
-    }
+                assertThat(profitMoney).isEqualTo(BETTING_MONEY);
+            }
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 1~21 일반 점수라면 배팅 원금을 얻는다")
-    @Test
-    void earnProfitMoney_DealerBustAndPlayerNormalScore() {
-        int profitMoney = calculateProfitMoney(CARDS_SCORE_19, CARDS_BUST);
+            @DisplayName("플레이어가 21점이더라도 배팅 금액을 무조건 잃는다")
+            @Test
+            void loseBettingMoney_PlayerHighestScore() {
+                int profitMoney = calculateProfitMoney(CARDS_SCORE_21, CARDS_BLACKJACK);
 
-        assertThat(profitMoney).isEqualTo(BETTING_MONEY);
-    }
+                assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
+            }
+        }
 
-    @DisplayName("딜러가 블랙일 때 : 플레이어가 블랙잭이면 배팅 금액 원금을 얻는다")
-    @Test
-    void earnProfitMoney_DealerBlackJack() {
-        int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BLACKJACK);
+        @DisplayName("딜러가 버스트일 때")
+        @Nested
+        class Context_With_Dealer_Bust {
 
-        assertThat(profitMoney).isEqualTo(BETTING_MONEY);
-    }
+            @DisplayName("플레이어가 버스트면 배팅 금액을 잃는다")
+            @Test
+            void loseBettingMoney_PlayerBust() {
+                int profitMoney = calculateProfitMoney(CARDS_BUST, CARDS_BUST);
 
-    @DisplayName("딜러가 블랙일 때 : 플레이어가 21점이더라도 배팅 금액을 무조건 잃는다")
-    @Test
-    void loseBettingMoney_DealerBlackJack() {
-        int profitMoney = calculateProfitMoney(CARDS_SCORE_21, CARDS_BLACKJACK);
+                assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
+            }
 
-        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
-    }
+            @DisplayName("플레이어가 블랙잭이라면 배팅 금액의 1.5배를 얻는다")
+            @Test
+            void earnProfitMoney_PlayerBlackJack() {
+                int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BUST);
 
-    @DisplayName("딜러가 일반 점수일때 : 플레이어가 버스트면 배팅 금액을 잃는다")
-    @Test
-    void loseBettingMoney_PlayerBust() {
-        int profitMoney = calculateProfitMoney(CARDS_BUST, CARDS_SCORE_19);
+                assertThat(profitMoney).isEqualTo((int) (BETTING_MONEY * 1.5));
+            }
 
-        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
-    }
+            @DisplayName("플레이어가 1~21 일반 점수라면 배팅 원금을 얻는다")
+            @Test
+            void earnProfitMoney_PlayerNormalScore() {
+                int profitMoney = calculateProfitMoney(CARDS_SCORE_19, CARDS_BUST);
 
-    @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 낮다면 배팅 금액을 잃는다")
-    @Test
-    void loseBettingMoney_PlayerLessScore() {
-        int profitMoney = calculateProfitMoney(CARDS_SCORE_19, CARDS_SCORE_20);
+                assertThat(profitMoney).isEqualTo(BETTING_MONEY);
+            }
+        }
 
-        assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
-    }
+        @DisplayName("딜러가 일반 점수(1~21)일 때")
+        @Nested
+        class Context_With_Dealer_Normal {
 
-    @DisplayName("딜러가 일반 점수일때 : 플레이어가 블랙잭이면 배팅 금액의 1.5배를 얻는다")
-    @Test
-    void earnBettingMoney_PlayerBlackJack() {
-        int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_SCORE_19);
+            @DisplayName("플레이어가 버스트면 배팅 금액을 잃는다")
+            @Test
+            void loseBettingMoney_PlayerBust() {
+                int profitMoney = calculateProfitMoney(CARDS_BUST, CARDS_SCORE_19);
 
-        assertThat(profitMoney).isEqualTo((int) (1.5 * BETTING_MONEY));
-    }
+                assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
+            }
 
-    @DisplayName("딜러가 일반 점수일때 : 플레이어가 딜러보다 점수가 높으 배팅 금액 원금만큼 얻는다")
-    @Test
-    void earnBettingMoney_PlayerMoreScore() {
-        int profitMoney = calculateProfitMoney(CARDS_SCORE_21, CARDS_SCORE_19);
+            @DisplayName("플레이어가 딜러보다 점수가 낮다면 배팅 금액을 잃는다")
+            @Test
+            void loseBettingMoney_PlayerLessScore() {
+                int profitMoney = calculateProfitMoney(CARDS_SCORE_19, CARDS_SCORE_20);
 
-        assertThat(profitMoney).isEqualTo(BETTING_MONEY);
+                assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
+            }
+
+            @DisplayName("플레이어가 블랙잭이면 배팅 금액의 1.5배를 얻는다")
+            @Test
+            void earnBettingMoney_PlayerBlackJack() {
+                int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_SCORE_19);
+
+                assertThat(profitMoney).isEqualTo((int) (1.5 * BETTING_MONEY));
+            }
+
+            @DisplayName("플레이어가 딜러보다 점수가 높으면 배팅 금액 원금만큼 얻는다")
+            @Test
+            void earnBettingMoney_PlayerMoreScore() {
+                int profitMoney = calculateProfitMoney(CARDS_SCORE_21, CARDS_SCORE_19);
+
+                assertThat(profitMoney).isEqualTo(BETTING_MONEY);
+            }
+        }
     }
 }
