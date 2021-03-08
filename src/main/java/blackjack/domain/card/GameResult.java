@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 public enum GameResult {
 
-    NONE("NONE"),
     DRAW("무승부"),
     WIN("승리"),
     LOSE("패배");
