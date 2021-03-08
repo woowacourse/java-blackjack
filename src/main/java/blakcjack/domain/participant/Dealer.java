@@ -15,11 +15,6 @@ public class Dealer extends Participant {
 		super(new Name(DEALER_NAME));
 	}
 
-	public void initializeHandFrom(final Deck deck) {
-		drawOneCardFrom(deck);
-		drawOneCardFrom(deck);
-	}
-
 	@Override
 	public String getInitialHand() {
 		Cards hand = new Cards();

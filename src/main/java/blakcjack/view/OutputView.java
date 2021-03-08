@@ -2,10 +2,8 @@ package blakcjack.view;
 
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
-import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
-import blakcjack.domain.participant.Player;
-import blakcjack.domain.participant.Players;
+import blakcjack.domain.participant.Participants;
 
 import java.util.Map;
 
@@ -15,37 +13,34 @@ public class OutputView {
 	public static final String DELIMITER = ", ";
 	public static final String EMPTY_STRING = "";
 
-	public static void printInitialHandsOf(final Players players, final Dealer dealer) {
-		System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), players.getConcatenatedNames());
-		System.out.println(makeHandSummaryOf(dealer));
-		for (final Player player : players.toList()) {
-			System.out.println(makeHandSummaryOf(player));
+	public static void printInitialHandsOf(final Participants participants) {
+		System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", DEALER_NAME, participants.getConcatenatedPlayerNames());
+		printHandSummaryOf(participants);
+	}
+
+	private static void printHandSummaryOf(final Participants participants) {
+		for (final Participant participant : participants.toList()) {
+			System.out.printf("%s: %s%n", participant.getName(), participant.getInitialHand());
 		}
-		System.out.println();
 	}
 
 	public static void printHandOf(final Participant participant) {
 		System.out.println(makeHandSummaryOf(participant));
 	}
 
-	private static String makeHandSummaryOf(final Participant participant) {
-		return String.format("%s: %s", participant.getName(), participant.getInitialHand());
-	}
-
 	public static void printDealerAdditionalCardMessage() {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
 	}
 
-	public static void printFinalHandsSummaryOf(final Players players, final Dealer dealer) {
-		System.out.println(makeFinalCardSummaryOf(dealer));
-		for (Participant player : players.toList()) {
-			System.out.println(makeFinalCardSummaryOf(player));
+	public static void printFinalHandsSummaryOf(final Participants participants) {
+		for (Participant participant : participants.toList()) {
+			System.out.printf("%s - 결과: %d%n", makeHandSummaryOf(participant), participant.getScore());
 		}
 		System.out.println();
 	}
 
-	private static String makeFinalCardSummaryOf(final Participant participant) {
-		return String.format("%s 카드: %s - 결과: %d", participant.getName(), participant.getHand(), participant.getScore());
+	private static String makeHandSummaryOf(final Participant participant) {
+		return String.format("%s카드: %s", participant.getName(), participant.getHand());
 	}
 
 	public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics) {

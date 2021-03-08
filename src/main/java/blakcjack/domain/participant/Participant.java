@@ -46,6 +46,10 @@ public abstract class Participant {
 
 	public abstract String getInitialHand();
 
+	public boolean isDealer() {
+		return this instanceof Dealer;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
