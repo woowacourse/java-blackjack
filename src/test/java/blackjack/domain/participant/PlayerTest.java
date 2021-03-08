@@ -91,10 +91,18 @@ class PlayerTest {
         assertThat(profitMoney).isEqualTo(-1 * BETTING_MONEY);
     }
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 배팅 금액 원금을 얻는다")
+    @DisplayName("딜러가 버스트일 때 : 플레이어가 블랙잭이라면 배팅 금액의 1.5배를 얻는다")
     @Test
-    void earnProfitMoney_DealerBust() {
+    void earnProfitMoney_DealerBustAndPlayerBlackJack() {
         int profitMoney = calculateProfitMoney(CARDS_BLACKJACK, CARDS_BUST);
+
+        assertThat(profitMoney).isEqualTo((int) (BETTING_MONEY * 1.5));
+    }
+
+    @DisplayName("딜러가 버스트일 때 : 플레이어가 1~21 일반 점수라면 배팅 원금을 얻는다")
+    @Test
+    void earnProfitMoney_DealerBustAndPlayerNormalScore() {
+        int profitMoney = calculateProfitMoney(CARDS_SCORE_19, CARDS_BUST);
 
         assertThat(profitMoney).isEqualTo(BETTING_MONEY);
     }

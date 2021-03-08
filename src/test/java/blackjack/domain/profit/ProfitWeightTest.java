@@ -57,10 +57,18 @@ class ProfitWeightTest {
         assertThat(profitWeight).isEqualTo(ProfitWeight.LOSS_WEIGHT);
     }
 
-    @DisplayName("딜러가 버스트일 때 : 플레이어가 버스트가 아니면 패에 상관없이(블랙잭이더라도) 이익 가중치를 얻는다")
+    @DisplayName("딜러가 버스트일 때 : 플레이어가 블랙잭이면 블랙잭 이익 가중치를 얻는다")
     @Test
-    void earnProfitWeight_DealerBust() {
+    void earnProfitWeight_DealerBustAndPlayerBlackJack() {
         ProfitWeight profitWeight = findProfitWeight(CARDS_BLACKJACK, CARDS_BUST);
+
+        assertThat(profitWeight).isEqualTo(ProfitWeight.BLACKJACK_PROFIT_WEIGHT);
+    }
+
+    @DisplayName("딜러가 버스트일 때 : 플레이어가 1~21 일반 점수면 일반 이익 가중치를 얻는다")
+    @Test
+    void earnProfitWeight_DealerBustAndPlayerNormalScore() {
+        ProfitWeight profitWeight = findProfitWeight(CARDS_SCORE_19, CARDS_BUST);
 
         assertThat(profitWeight).isEqualTo(ProfitWeight.NORMAL_PROFIT_WEIGHT);
     }

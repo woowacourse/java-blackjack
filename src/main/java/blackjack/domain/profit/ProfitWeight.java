@@ -29,6 +29,9 @@ public enum ProfitWeight {
         if (player.isBust()) {
             return LOSS_WEIGHT;
         }
+        if (player.isBlackJack()) {
+            return BLACKJACK_PROFIT_WEIGHT;
+        }
         return NORMAL_PROFIT_WEIGHT;
     }
 
