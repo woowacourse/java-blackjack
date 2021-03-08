@@ -14,9 +14,10 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String NAME_DELIMITER = ", ";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static void printInputNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        System.out.println(LINE_SEPARATOR + "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
     public static void printGameInitializeMessage(List<BlackJackParticipant> participants, int startingCardCount) {
@@ -39,6 +40,7 @@ public class OutputView {
     }
 
     public static void printParticipantsStatusWithScore(List<BlackJackParticipant> participants) {
+        System.out.println(LINE_SEPARATOR);
         participants.forEach(OutputView::printParticipantStatusWithScore);
     }
 
@@ -59,11 +61,11 @@ public class OutputView {
     }
 
     public static void printDealerDrawCard(Dealer dealer) {
-        System.out.println("\n" + dealer.getName() + "는 " + Dealer.DEALER_LIMIT + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(LINE_SEPARATOR + dealer.getName() + "는 " + Dealer.DEALER_LIMIT + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printResult(GameResult gameResult) {
-        System.out.print("\n## 최종 승패\n딜러: ");
+        System.out.print(LINE_SEPARATOR + "## 최종 승패" + LINE_SEPARATOR + "딜러: ");
         printDealerResult(gameResult);
         printPlayersResult(gameResult);
     }
