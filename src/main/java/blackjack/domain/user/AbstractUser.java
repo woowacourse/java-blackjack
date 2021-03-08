@@ -6,7 +6,6 @@ import blackjack.domain.card.Number;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static blackjack.domain.Round.GAME_OVER_SCORE;
 
@@ -16,12 +15,6 @@ public abstract class AbstractUser {
     public final List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
-/*    public final List<String> getCardsStatus() {
-        return cards.stream()
-                .map(Card::getCardStatus)
-                .collect(Collectors.toList());
-    }*/
 
     public final int getScore() {
         int score = cards.stream()

@@ -8,20 +8,20 @@ import java.util.stream.Collectors;
 
 public class RoundStatusDto {
     private final String dealerName;
-    private final List<String> dealerCardStatus;
+    private final List<Card> dealerCards;
     private final List<PlayerStatusDto> playerStatusDto;
     private final int dealerScore;
 
-    private RoundStatusDto(final String dealerName, final List<String> dealerCardStatus, final List<PlayerStatusDto> playerStatusDto, final int dealerScore) {
+    private RoundStatusDto(final String dealerName, final List<Card> dealerCards, final List<PlayerStatusDto> playerStatusDto, final int dealerScore) {
         this.dealerName = dealerName;
-        this.dealerCardStatus = dealerCardStatus;
+        this.dealerCards = dealerCards;
         this.playerStatusDto = playerStatusDto;
         this.dealerScore = dealerScore;
     }
 
     public static RoundStatusDto toDto(Round round) {
         return new RoundStatusDto(round.getDealerName(),
-                cardsToString(round.getDealer().getCards()),
+                round.getDealer().getCards(),
                 round.getPlayers().stream()
                         .map(player -> new PlayerStatusDto(player.getName(), player.getCards(), player.getScore()))
                         .collect(Collectors.toList()),
@@ -36,17 +36,11 @@ public class RoundStatusDto {
         return dealerName;
     }
 
-    public List<String> getDealerCardStatus() {
-        return dealerCardStatus;
+    public List<Card> getDealerCards() {
+        return dealerCards;
     }
 
     public List<PlayerStatusDto> getPlayerStatusDto() {
         return playerStatusDto;
-    }
-
-    private static List<String> cardsToString(final List<Card> cards) {
-        return cards.stream()
-                .map(playerCard -> playerCard.symbolName() + playerCard.numberScore())
-                .collect(Collectors.toList());
     }
 }
