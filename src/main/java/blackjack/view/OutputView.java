@@ -36,7 +36,7 @@ public class OutputView {
     }
 
     public static void printParticipantStatus(Participant participant, boolean withScore) {
-        String cardNames = participant.getHand().unwrap().stream()
+        String cardNames = participant.getHand().stream()
             .map(Card::getCardName)
             .collect(Collectors.joining(NAME_DELIMITER));
 

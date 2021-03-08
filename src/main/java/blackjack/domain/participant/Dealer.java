@@ -16,7 +16,7 @@ public class Dealer extends Participant {
         if (!isContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
-        getHand().addCard(deck.draw());
+        addCard(deck.draw());
         if (isOverLimit()) {
             cannotContinue();
         }

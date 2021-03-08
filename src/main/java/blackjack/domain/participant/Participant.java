@@ -2,7 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -24,12 +26,16 @@ public abstract class Participant {
 
     abstract public void drawCard(Deck deck);
 
+    protected void addCard(Card card) {
+        hand.addCard(card);
+    }
+
     public int getScore() {
         return hand.getScore();
     }
 
-    public Hand getHand() {
-        return hand;
+    public List<Card> getHand() {
+        return hand.unwrap();
     }
 
     public boolean isContinue() {

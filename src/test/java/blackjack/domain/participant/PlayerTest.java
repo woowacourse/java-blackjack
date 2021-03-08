@@ -46,10 +46,10 @@ public class PlayerTest {
         Player root = new Player("root", deck);
 
         root.drawCard(deck);
-        assertThat(root.getHand()).isEqualToComparingFieldByField(
-            new Hand(Arrays.asList(Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-                Card.valueOf(Shape.SPADE, CardValue.EIGHT),
-                Card.valueOf(Shape.DIAMOND, CardValue.ACE))));
+        assertThat(root.getHand()).containsExactly(
+            Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+            Card.valueOf(Shape.SPADE, CardValue.EIGHT),
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE));
     }
 
     @Test
