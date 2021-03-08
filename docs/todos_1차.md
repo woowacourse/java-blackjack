@@ -29,7 +29,7 @@ src/main/java/blackjack/Application.java
 - [x] view로 인한 controller 역할 커짐: Controller에 있는 로직을 최대한 더 Model로 뽑을 수 있는 여지는 없을까? 
 
 src/main/java/blackjack/utils/RandomCardDeck.java
-- [ ] 카드뭉치 생성의 책임과 카드 Queue를 분리?   
+- [x] 카드뭉치 생성의 책임과 카드 Queue를 분리?   
   (카드묶음을 생성하는 객체를 인터페이스로 추상화해서 지금처럼 shuffle 유무를 나누도록 하고,
   카드 Queue를 가지고 있는 객체는 정말 Deck으로만 기능하도록 생성 시에 외부에서 카드 묶음을 받도록 하면, 테스트에서도 원하는 테스트를 위해 별도의 가공 과정을 거치지 않아도 될 것 같아요)
 

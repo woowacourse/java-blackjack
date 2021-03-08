@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.GameTable;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denominations;
 import blackjack.domain.card.Suits;
@@ -17,63 +18,64 @@ public class CardDeckTest {
     @Test
     @DisplayName("카트 뽑기")
     void pop() {
-        CardDeck cardDeck = new FixedCardDeck();
-        Card card = cardDeck.pop();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
+        Card card = gameTable.pop();
         assertThat(card).isEqualTo(Card.from(Suits.CLOVER, Denominations.ACE));
     }
 
     @Test
     @DisplayName("연속 카트 뽑기")
     void pop2() {
-        CardDeck cardDeck = new FixedCardDeck();
-        Card card = cardDeck.pop();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
+        Card card = gameTable.pop();
         assertThat(card).isEqualTo(Card.from(Suits.CLOVER, Denominations.ACE));
-        card = cardDeck.pop();
+        card = gameTable.pop();
         assertThat(card).isEqualTo(Card.from(Suits.CLOVER, Denominations.TWO));
     }
 
     @Test
     @DisplayName("52번 pop empty 확인")
     void size() {
-        CardDeck cardDeck = new FixedCardDeck();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
 
         for (int i = 0; i < 52; i++) {
-            cardDeck.pop();
+            gameTable.pop();
         }
 
-        assertThat(cardDeck.isEmpty()).isEqualTo(true);
+        assertThat(gameTable.isEmpty()).isEqualTo(true);
     }
 
     @Test
     @DisplayName("51번 pop notEmpty 확인")
     void size2() {
-        CardDeck cardDeck = new FixedCardDeck();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
+
 
         for (int i = 0; i < 51; i++) {
-            cardDeck.pop();
+            gameTable.pop();
         }
 
-        assertThat(cardDeck.isEmpty()).isEqualTo(false);
+        assertThat(gameTable.isEmpty()).isEqualTo(false);
     }
 
     @Test
     @DisplayName("53번 pop exception 확인")
     void size3() {
-        CardDeck cardDeck = new FixedCardDeck();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
 
         for (int i = 0; i < 52; i++) {
-            cardDeck.pop();
+            gameTable.pop();
         }
 
-        assertThatThrownBy(cardDeck::pop).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(gameTable::pop).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("초기 2장 확인")
     void initCards() {
-        CardDeck cardDeck = new FixedCardDeck();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
 
-        List<Card> cards = cardDeck.initCards();
+        List<Card> cards = gameTable.initCards();
 
         assertThat(cards.size()).isEqualTo(2);
     }
@@ -81,9 +83,9 @@ public class CardDeckTest {
     @Test
     @DisplayName("초기 2장 확인 일치")
     void initCards2() {
-        CardDeck cardDeck = new FixedCardDeck();
+        GameTable gameTable = new GameTable(new FixedCardDeck());
 
-        List<Card> cards = cardDeck.initCards();
+        List<Card> cards = gameTable.initCards();
 
         assertThat(cards).contains(Card.from(Suits.CLOVER, Denominations.ACE), Card.from(Suits.CLOVER, Denominations.TWO));
     }

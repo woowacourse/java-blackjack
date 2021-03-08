@@ -18,31 +18,15 @@ public class RandomCardDeck implements CardDeck {
         this.cards = cardsValue;
     }
 
-    private void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit) {
+    @Override
+    public void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit) {
         for (Denominations denomination : Denominations.values()) {
             cardsValue.add(Card.from(denomination.getName() + suit.getName()));
         }
     }
 
-    @Override
-    public Card pop() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        return cards.poll();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return cards.isEmpty();
-    }
-
-    @Override
-    public List<Card> initCards() {
-        List<Card> cardsValue = new ArrayList<>();
-        cardsValue.add(pop());
-        cardsValue.add(pop());
-        return cardsValue;
+    public Queue<Card> getCards() {
+        return cards;
     }
 
 }

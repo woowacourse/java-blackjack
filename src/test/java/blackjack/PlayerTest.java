@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.GameTable;
 import blackjack.domain.card.Card;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
@@ -16,21 +17,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerTest {
     @Test
     void create() {
-        Participant player = new Player("john", new FixedCardDeck());
+        final GameTable gameTable = new GameTable(new FixedCardDeck());
+        Participant player = new Player("john", gameTable);
         assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
     void create2() {
-        Participant player = new Player("sarah", new FixedCardDeck());
+        final GameTable gameTable = new GameTable(new FixedCardDeck());
+        Participant player = new Player("sarah", gameTable);
         assertThat(player.getName()).isEqualTo("sarah");
     }
 
     @Test
     @DisplayName("플레이어가 초기에 카드 두장을 갖고 있는지 확인")
     void create3() {
-        final CardDeck cardDeck = new FixedCardDeck();
-        List<Card> cards = cardDeck.initCards();
+        final GameTable gameTable = new GameTable(new FixedCardDeck());
+        List<Card> cards = gameTable.initCards();
         Participant player = new Player("sarah", cards);
 
         List<Card> playerCards = player.getUnmodifiableCards();
@@ -40,18 +43,18 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어에게 카드 추가 지급")
     void add_card() {
-        final CardDeck cardDeck = new FixedCardDeck();
-        List<Card> cards = cardDeck.initCards();
+        final GameTable gameTable = new GameTable(new FixedCardDeck());
+        List<Card> cards = gameTable.initCards();
         Participant player = new Player("sarah", cards);
-        player.takeCard(cardDeck.pop());
+        player.takeCard(gameTable.pop());
         assertThat(player.getUnmodifiableCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
     }
 
     @Test
     @DisplayName("플레이어에게 지급된 카드 합계")
     void sum_cards() {
-        final CardDeck cardDeck = new FixedCardDeck();
-        List<Card> cards = cardDeck.initCards();
+        final GameTable gameTable = new GameTable(new FixedCardDeck());
+        List<Card> cards = gameTable.initCards();
         Participant player = new Player("sarah", cards);
         int score = player.sumCards();
         assertThat(score).isEqualTo(3);

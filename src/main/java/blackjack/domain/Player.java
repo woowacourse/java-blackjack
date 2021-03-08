@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 public class Player extends Participant {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z|A-Z]+");
 
-    public Player(String name, CardDeck cardDeck) {
-        this(name, cardDeck.initCards());
+    public Player(String name, GameTable gameTable) {
+        this(name, gameTable.initCards());
     }
 
     public Player(String name, List<Card> cards) {

@@ -16,14 +16,18 @@ public class Application {
 
     private static void simulate(Game game) {
         for (Player player : game.getPlayers()) {
-            final Player playerResult = game
-                .turnForPlayer(player, InputView.requestOneMoreCard(player.getName()));
-            OutputView.printCards(playerResult);
+            turnForPlayer(game, player);
         }
 
         game.turnForDealer();
         OutputView.printDealerGetCard();
     }
 
+    private static void turnForPlayer(Game game, Player player) {
+        while (player.isAvailableToTake() && InputView.requestOneMoreCard(player.getName())) {
+            final Player playerResult = game.turnForPlayer(player);
+            OutputView.printCards(playerResult);
+        }
+    }
 
 }

@@ -10,37 +10,25 @@ public class FixedCardDeck implements CardDeck {
     private final Queue<Card> cards;
 
     public FixedCardDeck() {
-        cards = new LinkedList<>();
+        LinkedList<Card> cardsValue = new LinkedList<>();
 
         for (Suits suit : Suits.values()) {
-            assembleWithDenominations(suit);
+            assembleWithDenominations(cardsValue, suit);
         }
+
+        this.cards = cardsValue;
     }
 
-    private void assembleWithDenominations(Suits suit) {
+    @Override
+    public void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit) {
         for (Denominations denomination : Denominations.values()) {
-            cards.offer(Card.from(denomination.getName() + suit.getName()));
+            cardsValue.offer(Card.from(denomination.getName() + suit.getName()));
         }
     }
 
     @Override
-    public Card pop() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        return cards.poll();
+    public Queue<Card> getCards() {
+        return cards;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return cards.isEmpty();
-    }
-
-    @Override
-    public List<Card> initCards() {
-        List<Card> cardsValue = new ArrayList<>();
-        cardsValue.add(pop());
-        cardsValue.add(pop());
-        return cardsValue;
-    }
 }
