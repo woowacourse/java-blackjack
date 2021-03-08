@@ -22,8 +22,8 @@ public abstract class User {
         this.cards.combine(cards);
     }
 
-    public void draw(){
-        this.cards.combine(Deck.popOne());
+    public void draw(Deck deck){
+        this.cards.combine(deck.popOne());
     }
 
     public boolean isBust() {

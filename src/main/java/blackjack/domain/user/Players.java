@@ -21,8 +21,8 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public void distributeToEachPlayer() {
-        players.forEach(player -> player.distribute(Deck.popTwo()));
+    public void distributeToEachPlayer(Deck deck) {
+        players.forEach(player -> player.distribute(deck.popTwo()));
     }
 
     public List<Cards> showCardsByPlayers() {

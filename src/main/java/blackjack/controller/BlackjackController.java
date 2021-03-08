@@ -16,13 +16,14 @@ public class BlackjackController {
     private static final String YES = "y";
 
     public void run() {
+        Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Players players = participatePlayers();
         List<User> users = setUpUsers(dealer, players);
-        distributeToUsers(dealer, players);
+        distributeToUsers(dealer, players, deck);
         showUsersCards(dealer, players);
-        askToPlayers(players);
-        isDealerHit(dealer);
+        askToPlayers(players, deck);
+        isDealerHit(dealer, deck);
         OutputView.printResults(users);
         OutputView.printResultBoard(dealer, new ResultBoard(dealer, players));
     }
@@ -40,9 +41,9 @@ public class BlackjackController {
         return users;
     }
 
-    private void distributeToUsers(Dealer dealer, Players players) {
-        dealer.distribute(Deck.popTwo());
-        players.distributeToEachPlayer();
+    private void distributeToUsers(Dealer dealer, Players players, Deck deck) {
+        dealer.distribute(deck.popTwo());
+        players.distributeToEachPlayer(deck);
     }
 
     private void showUsersCards(Dealer dealer, Players players) {
@@ -51,15 +52,15 @@ public class BlackjackController {
         OutputView.printPlayersCards(players);
     }
 
-    private void askToPlayers(Players players) {
+    private void askToPlayers(Players players, Deck deck) {
         for (Player player : players.players()) {
-            askForHit(player);
+            askForHit(player, deck);
         }
     }
 
-    private void askForHit(Player player) {
+    private void askForHit(Player player, Deck deck) {
         while (isPlayerHit(player) && isYes(InputView.inputHit())) {
-            player.draw();
+            player.draw(deck);
             OutputView.printPlayerCards(player);
         }
     }
@@ -76,9 +77,9 @@ public class BlackjackController {
         return answer.equals(YES);
     }
 
-    private void isDealerHit(Dealer dealer) {
+    private void isDealerHit(Dealer dealer, Deck deck) {
         if (dealer.isHit()) {
-            dealer.draw();
+            dealer.draw(deck);
             OutputView.printDealerHit(dealer);
             return;
         }

@@ -3,38 +3,42 @@ package blackjack.domain.card;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class Deck {
-    private static final Deque<Card> DECK = new ArrayDeque<>();
+    private final Deque<Card> deck;
 
-    static {
-        List<Card> cards = new ArrayList<>();
-        Arrays.stream(Shape.values())
-                .forEach(shape -> cards.addAll(createByShape(shape)));
-        shuffle(cards);
-        DECK.addAll(cards);
+    public Deck() {
+        this.deck = new ArrayDeque<>();
+        deck.addAll(setUpDeck());
     }
 
-    private static List<Card> createByShape(Shape shape) {
+    private List<Card> setUpDeck() {
+        List<Card> cards = new ArrayList<>();
+        Arrays.stream(Shape.values())
+                .forEach(shape -> cards.addAll(setUpCards(shape)));
+        shuffle(cards);
+        return cards;
+    }
+
+    private List<Card> setUpCards(Shape shape) {
         return Arrays.stream(Value.values())
-                .map(value->new Card(shape, value))
+                .map(value -> new Card(shape, value))
                 .collect(toList());
     }
 
-    private static void shuffle(List<Card> cards) {
+    private void shuffle(List<Card> cards) {
         Collections.shuffle(cards);
     }
 
-    public static Cards popTwo() {
-        return Stream.generate(DECK::pop)
+    public Cards popTwo() {
+        return Stream.generate(deck::pop)
                 .limit(2)
                 .collect(collectingAndThen(toList(), Cards::new));
     }
 
-    public static Cards popOne() {
-        return Stream.generate(DECK::pop)
+    public Cards popOne() {
+        return Stream.generate(deck::pop)
                 .limit(1)
                 .collect(collectingAndThen(toList(), Cards::new));
     }

@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +32,10 @@ public class PlayersTest {
     @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
     @Test
     void DistributeToEachPlayer() {
+        Deck deck = new Deck();
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = new Players(names);
-        players.distributeToEachPlayer();
+        players.distributeToEachPlayer(deck);
 
         assertThat(players.players()
                 .stream()
@@ -43,9 +45,10 @@ public class PlayersTest {
     @DisplayName("각 플레이어의 모든 카드를 보여준다.")
     @Test
     void showCardsByPlayers() {
+        Deck deck = new Deck();
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = new Players(names);
-        players.distributeToEachPlayer();
+        players.distributeToEachPlayer(deck);
         List<Cards> cardsGroup = players.showCardsByPlayers();
 
         assertThat(cardsGroup.stream()

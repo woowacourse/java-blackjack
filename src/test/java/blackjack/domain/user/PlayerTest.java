@@ -1,9 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.*;
 import blackjack.domain.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,12 +59,13 @@ public class PlayerTest {
     @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
     @Test
     void draw() {
+        Deck deck = new Deck();
         Player player = new Player("amazzi");
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        player.draw();
+        player.draw(deck);
         Cards cards = player.cards;
 
         assertThat(cards.cards()).hasSize(3);
