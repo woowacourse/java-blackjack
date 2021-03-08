@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
     private static final String NO_MORE_PLAYING_USER_ERROR_MSG = "플레이 가능한 유저가 없습니다.";
+    private static final int DEALER_MINIMUM_SCORE = 16;
 
     private final Deck deck = Deck.createDeck();
     private final Users users;
@@ -35,8 +36,8 @@ public class BlackjackGame {
         return blackjackGame;
     }
 
-    public int calculateDealerScore() {
-        return dealer.calculateScore();
+    public boolean dealerScoreUnderSixTeen() {
+        return dealer.calculateScore() < DEALER_MINIMUM_SCORE;
     }
 
     private void init() {

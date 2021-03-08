@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGameController {
-    private static final int DEALER_MINIMUM_SCORE = 16;
 
     public void start() {
         BlackjackGame blackjackGame = startGameAndFirstDraw();
@@ -102,7 +101,7 @@ public class BlackjackGameController {
     }
 
     private static void processDealerRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.calculateDealerScore() <= DEALER_MINIMUM_SCORE) {
+        while (blackjackGame.dealerScoreUnderSixTeen()) {
             blackjackGame.drawCardToDealer();
             OutputView.printDealerMoreDrawMessage();
         }
