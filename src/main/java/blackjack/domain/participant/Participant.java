@@ -20,7 +20,7 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
-    private void validateEmptyName(String name) {
+    private void validateEmptyName(final String name) {
         if ("".equals(name)) {
             throw new IllegalArgumentException(EMPTY_NAME_ERROR);
         }
@@ -51,10 +51,6 @@ public abstract class Participant {
         return calculateScore() >= BUST_LIMIT;
     }
 
-    public abstract List<Card> showInitialCards();
-
-    public abstract boolean checkMoreCardAvailable();
-
     public int calculateScore() {
         final int sumOfCards = cards.stream().mapToInt(card -> card.getCardValue().getValue()).sum();
         if (sumOfCards >= BUST_LIMIT && howManyAce() > 0) {
@@ -76,4 +72,8 @@ public abstract class Participant {
         return (int) cards.stream().
                         filter(card -> card.getCardValue().isAce()).count();
     }
+
+    public abstract List<Card> showInitialCards();
+
+    public abstract boolean checkMoreCardAvailable();
 }

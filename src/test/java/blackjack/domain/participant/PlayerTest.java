@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -36,47 +36,10 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("참가자가 카드를 받았는지 확인")
-    void receiveCard() {
-        player.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(player.cardCount()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("참가자가 갖고 있는 카드의 합을 확인")
-    void calculateCardSum() {
-        player.receiveOneCard(new Card(CardNumber.TWO, CardType.CLOVER));
-        player.receiveOneCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        assertThat(player.calculateScore()).isEqualTo(12);
-    }
-
-    @Test
-    @DisplayName("에이스 카드가 하나있을 때 합 구하기")
-    void calculateCardSumWhenAceIsOne() {
-        player.receiveOneCard(new Card(CardNumber.JACK, CardType.CLOVER));
-        player.receiveOneCard(new Card(CardNumber.FIVE, CardType.CLOVER));
-        player.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(player.calculateScore()).isEqualTo(16);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12"}, delimiter = ':')
-    @DisplayName("에이스 카드가 여러 개일 때 합 구하기")
-    void calculateCardSumWhenAceIsTwo(final String input, final int expected) {
-        final String[] inputs = input.split(",");
-        for (final String number : inputs) {
-            final CardNumber cardNumber = CardNumber.valueOf(number);
-            player.receiveOneCard(new Card(cardNumber, CardType.CLOVER));
-        }
-        assertThat(player.calculateScore()).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("참가자가 버스트인지 확인")
-    void isBust() {
-        player.receiveOneCard(new Card(CardNumber.TEN, CardType.CLOVER));
-        player.receiveOneCard(new Card(CardNumber.NINE, CardType.HEART));
-        player.receiveOneCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        assertThat(player.isBust()).isTrue();
+    @DisplayName("플레이어의 초기 카드 출력이 두 장 다 되는지 확인")
+    void showInitialCards() {
+        CardDeck cardDeck = new CardDeck();
+        player.receiveInitialCards(cardDeck);
+        Assertions.assertThat(player.showInitialCards().size()).isEqualTo(2);
     }
 }
