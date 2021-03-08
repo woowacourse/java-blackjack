@@ -21,7 +21,7 @@ public class RandomCardDeck implements CardDeck {
     @Override
     public Card pop() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalStateException();
         }
         return cards.poll();
     }
