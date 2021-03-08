@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.WinnerFlag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,5 +27,16 @@ public class PlayersTest {
         assertEquals(2, (int) players.toList().stream()
                 .filter(player -> player.getCards().size() == 1)
                 .count());
+    }
+
+    @Test
+    @DisplayName("우승자 계산 확인")
+    void calculateResult() {
+        List<String> input = Arrays.asList("pobi", "jason", "cu");
+        Players players = new Players(input, new Dealer());
+        for (Player player : players.toList()) {
+            player.matchResult(WinnerFlag.LOSE);
+        }
+        assertEquals(3, players.calculateTotalWinnings().get(WinnerFlag.LOSE));
     }
 }

@@ -7,8 +7,6 @@ import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -81,9 +79,9 @@ public class OutputView {
         System.out.println();
         System.out.println(NOTICE_FINAL_RESULT);
         System.out.println(NAME_OF_DEALER + COLON_DELIMITER
-                + result.get(WinnerFlag.LOSE) + WinnerFlag.WIN.getFlagOutput()
-                + result.get(WinnerFlag.DRAW) + WinnerFlag.DRAW.getFlagOutput()
-                + result.get(WinnerFlag.WIN) + WinnerFlag.LOSE.getFlagOutput());
+                + result.getOrDefault(WinnerFlag.LOSE, 0) + WinnerFlag.WIN.getFlagOutput()
+                + result.getOrDefault(WinnerFlag.DRAW, 0) + WinnerFlag.DRAW.getFlagOutput()
+                + result.getOrDefault(WinnerFlag.WIN, 0) + WinnerFlag.LOSE.getFlagOutput());
     }
 
     public static void printPlayerResult(Player player) {

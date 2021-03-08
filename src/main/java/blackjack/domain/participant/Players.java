@@ -1,11 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.WinnerFlag;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Players {
     private final List<Player> players;
@@ -29,6 +27,14 @@ public class Players {
         for (Gamer gamer : players) {
             gamer.receiveCard(deck.dealCard());
         }
+    }
+
+    public Map<WinnerFlag, Integer> calculateTotalWinnings() {
+        Map<WinnerFlag, Integer> winnerCount = new EnumMap<>(WinnerFlag.class);
+        for (Player player : players) {
+            winnerCount.put(player.getResult(), winnerCount.getOrDefault(player.getResult(), 0) + 1);
+        }
+        return winnerCount;
     }
 
     public List<Player> toList() {
