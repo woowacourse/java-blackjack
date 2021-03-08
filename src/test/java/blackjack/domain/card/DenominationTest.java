@@ -28,4 +28,14 @@ public class DenominationTest {
             Denomination.of("1");
         });
     }
+
+    @DisplayName("에이스 비교 테스트")
+    @Test
+    void isAce() {
+        // given, when
+        Denomination denomination1 = Denomination.of("A");
+
+        // then
+        assertThat(denomination1).isSameAs(Denomination.ACE);
+    }
 }

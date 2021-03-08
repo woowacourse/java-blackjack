@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final String ACE = "A";
     private static final int ACE_MAX = 11;
     private static final int ACE_MIN = 1;
 
@@ -28,7 +27,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination.getName().equals(ACE);
+        return denomination.isAce();
     }
 
     public Denomination getDenomination() {
