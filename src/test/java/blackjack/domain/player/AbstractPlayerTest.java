@@ -100,7 +100,7 @@ public class AbstractPlayerTest {
         assertThat(user.isBust()).isFalse();
     }
 
-    @DisplayName("A가 없을 때 총 점수 계산테스트 - 총 합: 11 / 블랙잭 false")
+    @DisplayName("A가 없을 때 총 점수 계산 테스트 - 총 합: 11 / 블랙잭 false")
     @Test
     void getScoreNotContainsAce11OrMore() {
         AbstractPlayer user = new User(TEST_NAME);
