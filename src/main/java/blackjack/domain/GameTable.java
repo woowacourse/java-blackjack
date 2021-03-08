@@ -28,7 +28,7 @@ public class GameTable {
                 drawPlayers(players);
             });
         OutputView.printShowUsersCardMessage(players);
-        OutputView.showUsersCards(dealer, players);
+        OutputView.printUsersFirstDrawCards(dealer, players);
     }
 
     public void draw(User user) {

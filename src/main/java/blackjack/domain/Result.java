@@ -15,9 +15,10 @@ public class Result {
     }
 
     private Map<Player, Status> makeResult(Dealer dealer, Players players) {
+        Map<Player,Status> record = new LinkedHashMap<>();
         players.getPlayers()
-            .forEach(player -> result.put(player, compareWithDealer(dealer, player)));
-        return new LinkedHashMap<>(result);
+            .forEach(player -> record.put(player, compareWithDealer(dealer, player)));
+        return record;
     }
 
     private Status compareWithDealer(Dealer dealer, Player player) {

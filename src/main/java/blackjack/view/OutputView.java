@@ -33,13 +33,14 @@ public class OutputView {
     }
 
     public static void printShowUsersCardMessage(Players players) {
-        System.out.printf(FIRST_CARD_DRAW_MESSAGE, players.getPlayersName());
+        System.out.printf(System.lineSeparator() + FIRST_CARD_DRAW_MESSAGE, players.getPlayersName());
     }
 
-    public static void showUsersCards(Dealer dealer, Players players) {
+    public static void printUsersFirstDrawCards(Dealer dealer, Players players) {
         System.out.println(dealer.showFirstCard());
         players.getPlayers()
             .forEach(OutputView::printUserCards);
+        System.out.println();
     }
 
     public static void printUserCards(User user) {
