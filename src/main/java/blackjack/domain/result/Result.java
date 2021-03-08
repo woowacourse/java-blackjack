@@ -34,14 +34,14 @@ public enum Result {
         this.result = result;
     }
 
-    abstract boolean condition(final int score, final int opponentScore);
-
     public static Result checkResult(final int score, final int opponentScore) {
         return Stream.of(values())
                 .filter(resultEnum -> resultEnum.condition(score, opponentScore))
                 .findAny()
                 .orElse(FAILURE);
     }
+
+    abstract boolean condition(final int score, final int opponentScore);
 
     public String getResult() {
         return result;
