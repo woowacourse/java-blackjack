@@ -8,6 +8,10 @@ public class Dealer extends Participant {
         return calculateResult() >= STAY_THRESHOLD;
     }
 
+    public String getFirstCardInfo() {
+        return cards.get(0).toString();
+    }
+
     @Override
     public String getName() {
         return name.toString();

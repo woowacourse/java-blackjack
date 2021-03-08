@@ -24,4 +24,9 @@ public class Card {
     public String getShape() {
         return shape.getName();
     }
+
+    @Override
+    public String toString() {
+        return cardNumber.getNumber() + shape.getName();
+    }
 }

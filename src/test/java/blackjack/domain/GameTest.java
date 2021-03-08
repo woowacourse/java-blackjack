@@ -1,8 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ public class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = Game.of(names);
+        game = Game.of(new Players(names));
     }
 
     @Test
@@ -43,10 +43,10 @@ public class GameTest {
 
     @Test
     void giveCardToParticipant() {
-        Participant participant = game.getPlayers()
+        Player player = game.getPlayers()
                 .get(0);
-        game.giveCard(participant);
-        assertThat(participant.getCards()
+        game.giveCardToPlayer(player);
+        assertThat(player.getCards()
                 .size()).isEqualTo(1);
     }
 

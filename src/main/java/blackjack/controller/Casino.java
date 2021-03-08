@@ -1,27 +1,24 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
-
 public class Casino {
-
-    public static final String BURST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
-    public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
 
     public void blackJack() {
         Game game = initializeGame();
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
 
-        doPlayersTurn(players);
-        doDealerTurn();
-        closeStage(dealer, players);
+        printInitialCardInformation(game);
+        doPlayersTurn(game);
+        doDealerTurn(game);
+        printGameResult(game);
+    }
+
+    private void printInitialCardInformation(Game game) {
+        OutputView.printSetup(game.getDealer(), game.getPlayers());
     }
 
     private Game initializeGame() {
@@ -29,51 +26,30 @@ public class Casino {
         return Game.of(players);
     }
 
-    private void doPlayersTurn(List<Player> players) {
-        for (Player player : players) {
-            doEachPlayerTurn(player);
+    private void doPlayersTurn(Game game) {
+        for (Player player : game.getPlayers()) {
+            doEachPlayerTurn(game, player);
         }
     }
 
-    private void doEachPlayerTurn(Player player) {
-        while (canDrawMore(player)) {
-            game.giveCard(player);
+    private void doEachPlayerTurn(Game game, Player player) {
+        while (game.isPlayerDrawable(player) && InputView.inputYesOrNo(player)) {
+            game.giveCardToPlayer(player);
             OutputView.printCardInfo(player);
-            OutputView.lineFeed();
         }
     }
 
-    private boolean canDrawMore(Player player) {
-        return !isBlackJack(player) && !isBurst(player) && InputView.inputYesOrNo(player);
-    }
-
-    private boolean isBlackJack(Player player) {
-        if (player.isBlackJack()) {
-            OutputView.printMessage(BLACKJACK_MESSAGE);
-            OutputView.lineFeed();
-            return true;
+    private void doDealerTurn(Game game) {
+        while (game.isDealerDrawable()) {
+            game.giveCardToDealer();
+            OutputView.printDealerDraw();
         }
-        return false;
-    }
-
-    private boolean isBurst(Player player) {
-        if (player.isBurst()) {
-            OutputView.printMessage(BURST_MESSAGE);
-            OutputView.lineFeed();
-            return true;
-        }
-        return false;
-    }
-
-    private void doDealerTurn() {
-        int dealerDrawCount = game.playDealerTurn();
-        OutputView.printDealerDraw(dealerDrawCount);
         OutputView.printDealerNoMoreDraw();
     }
 
-    private void closeStage(Dealer dealer, List<Player> players) {
-        OutputView.printParticipantFinalCardInfo(dealer, players);
+    private void printGameResult(Game game) {
+        OutputView.printParticipantFinalCardInfo(game.getDealer(), game.getPlayers());
         game.fightPlayers();
-        OutputView.printWinOrLoseResult(dealer, players);
+        OutputView.printWinOrLoseResult(game.getDealer(), game.getPlayers());
     }
 }

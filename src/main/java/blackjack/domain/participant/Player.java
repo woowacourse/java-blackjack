@@ -27,6 +27,10 @@ public class Player extends Participant {
         compareValue(dealer);
     }
 
+    public boolean isBurst() {
+        return calculateResult() > Game.BLACKJACK_NUMBER;
+    }
+
     private void compareValue(Dealer dealer) {
         if (this.calculateResult() > dealer.calculateResult()) {
             gameResult.win();

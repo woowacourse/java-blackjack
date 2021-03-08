@@ -12,7 +12,7 @@ public abstract class Participant {
     public static final int ZERO = 0;
     public static final int DIFFERENCE_OF_ACE_VALUE = 10;
 
-    private final List<Card> cards = new ArrayList<>();
+    protected final List<Card> cards = new ArrayList<>();
     protected GameResult gameResult = new GameResult();
 
     public void addCard() {
@@ -49,10 +49,6 @@ public abstract class Participant {
         return cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
-    }
-
-    public boolean isBurst() {
-        return calculateResult() > Game.BLACKJACK_NUMBER;
     }
 
     public List<Card> getCards() {
