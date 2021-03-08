@@ -41,4 +41,32 @@ class UsersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("인원수는 딜러포함 %d명 이상 %d이여하야 합니다. 현재 인원수: %d", minUserSize, maxUserSize, DUMMY_EIGHT_PLAYERS.size()));
     }
+
+    @DisplayName("중복되지 않은 이름이면 객 정상 생성된다.")
+    @Test
+    void userDuplicateTest() {
+        //given
+        AbstractUser dealer = new Dealer();
+
+        //when
+        DUMMY_EIGHT_PLAYERS.remove(0);
+        DUMMY_EIGHT_PLAYERS.add(dealer);
+
+        assertThatCode(() -> new Users(DUMMY_EIGHT_PLAYERS))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("중복된 이름이면 에러가 발생한다.")
+    @Test
+    void userDuplicateExceptionTest() {
+        //given
+        AbstractUser dealer = new Dealer();
+
+        //when
+        List<AbstractUser> users = Arrays.asList(dealer, new Player("pobi"), new Player("pobi"));
+
+        assertThatThrownBy(() -> new Users(users))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(String.format("이름을 중복될 수 없습니다."));
+    }
 }
