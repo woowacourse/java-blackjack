@@ -20,4 +20,9 @@ public class Dealer extends Participant {
     public boolean needsAdditionalCard() {
         return calculateScore() < DEALER_MAXIMUM_DRAWING_CRITERION;
     }
+
+    @Override
+    public boolean supports(final ParticipantType participantType) {
+        return ParticipantType.DEALER.equals(participantType);
+    }
 }

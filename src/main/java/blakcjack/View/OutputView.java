@@ -6,6 +6,7 @@ import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
+import blakcjack.domain.participant.ParticipantType;
 
 import java.util.List;
 import java.util.Map;
@@ -50,11 +51,8 @@ public class OutputView {
     }
 
     private static List<Card> getInitialCards(final Participant participant) {
-        if (participant instanceof Dealer) {
-            final Dealer dealer = (Dealer) participant;
-            return dealer.getFirstCard();
-        }
-        return participant.getCards();
+        return participant.supports(ParticipantType.DEALER) ?
+                ((Dealer) participant).getFirstCard() : participant.getCards();
     }
 
     private static String getCardInformation(final Card card) {

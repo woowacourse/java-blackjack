@@ -37,6 +37,7 @@
 - [ ] 예외에 따라 뷰에 안내가 필요한 경우 추가
     - [x] 카드가 없을 시 뷰에 안내 메시지를 출력하고 게임 종료
 - [x] 사용자 응답 (y,n)을 담을 enum 생성 (AdditionalCardReply ,view package)
+- [x] Participant의 종류를 표현할 ParticipantType enum 생성
 - [ ] 메서드 분리, stream 또는 forEach 사용할 부분 체크
     - [x] OutputView 리팩터링
     - [x] Controller 리팩터링

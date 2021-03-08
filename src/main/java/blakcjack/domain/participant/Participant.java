@@ -19,6 +19,8 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
+    public abstract boolean supports(ParticipantType participantType);
+
     public void receiveCard(final Card card) {
         cards.add(card);
     }
