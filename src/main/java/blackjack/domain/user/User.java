@@ -4,11 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public abstract class User {
-    private static final int BLACKJACK_SIZE_CONDITION = 2;
-    private static final int BUST_CONDITION = 21;
-    private static final int ACE_SCORE = 1;
-    private static final int TEN_SCORE = 10;
-
     protected String name;
     protected Cards cards;
 
