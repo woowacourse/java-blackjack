@@ -5,11 +5,13 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.user.AbstractUser;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -36,12 +38,16 @@ public class GameController {
     private Round initializeRound() {
         List<String> playerNames = inputView.getPlayerNames();
 
-        AbstractUser dealer = new Dealer();
+        List<AbstractUser> users = new ArrayList<>();
+        users.add(new Dealer());
+
         List<AbstractUser> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+        users.addAll(players);
+
         Deck deck = Deck.generateByRandomCard();
-        return new Round(deck, dealer, players);
+        return new Round(deck, new Users(users));
     }
 
     private void addPlayersCardOrPass(final Round round) {

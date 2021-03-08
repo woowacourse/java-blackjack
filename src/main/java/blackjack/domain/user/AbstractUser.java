@@ -36,7 +36,7 @@ public abstract class AbstractUser {
     }
 
     public final int getAceCount() {
-        return (int)cards.stream()
+        return (int) cards.stream()
                 .filter(Card::containAce)
                 .count();
     }

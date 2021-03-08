@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.AbstractUser;
+import blackjack.domain.user.Users;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,49 +11,46 @@ public class Round {
     public static final int GAME_OVER_SCORE = 21;
 
     private final Deck deck;
-    private final AbstractUser dealer;
-    private final List<AbstractUser> players;
+    private final Users users;
 
-    public Round(final Deck deck, final AbstractUser dealer, final List<AbstractUser> players) {
+    public Round(Deck deck, Users users) {
         this.deck = deck;
-        this.dealer = dealer;
-        this.players = new ArrayList<>(players);
+        this.users = users;
     }
 
     public void initialize() {
-        dealer.addFirstCards(deck.makeTwoCards());
-        players.forEach(player -> player.addFirstCards(deck.makeTwoCards()));
+        users.addFirstCards(deck);
     }
 
     public AbstractUser getDealer() {
-        return dealer;
+        return users.getDealer();
     }
 
     public String getDealerName() {
-        return dealer.getName();
+        return getDealer().getName();
     }
 
     public List<AbstractUser> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return Collections.unmodifiableList(users.getPlayers());
     }
 
     public Map<String, Queue<Outcome>> findResults() {
         Map<String, Queue<Outcome>> results = new LinkedHashMap<>();
         Queue<Outcome> gameOutComes = makeRoundOutComes();
-        results.put(dealer.getName(), new ArrayDeque<>(gameOutComes));
+        results.put(getDealer().getName(), new ArrayDeque<>(gameOutComes));
 
-        players.forEach(player -> results.put(player.getName(),
+        getPlayers().forEach(player -> results.put(player.getName(),
                 new ArrayDeque<>(Collections.singletonList(Outcome.getPlayerOutcome(gameOutComes.poll())))));
 
         return results;
     }
 
     public void addDealerCard() {
-        dealer.addCard(deck.makeOneCard());
+        getDealer().addCard(deck.makeOneCard());
     }
 
     public void addPlayerCard(AbstractUser player) {
-        AbstractUser findPlayer = players.stream()
+        AbstractUser findPlayer = getPlayers().stream()
                 .filter(p -> p.equals(player))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
@@ -60,12 +58,12 @@ public class Round {
     }
 
     private Queue<Outcome> makeRoundOutComes() {
-        return players.stream()
-                .map(player -> Outcome.findOutcome(dealer.getScore(), player.getScore()))
+        return getPlayers().stream()
+                .map(player -> Outcome.findOutcome(getDealer().getScore(), player.getScore()))
                 .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
     public boolean isDealerGameOver() {
-        return dealer.isGameOver(GAME_OVER_SCORE);
+        return getDealer().isGameOver(GAME_OVER_SCORE);
     }
 }
