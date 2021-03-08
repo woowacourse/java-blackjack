@@ -23,7 +23,10 @@ public class Participants {
     }
 
     public void distributeCard(final CardDeck cardDeck) {
-        participantGroup.forEach(participant -> participant.receiveCard(cardDeck.distribute()));
+        participantGroup.forEach(participant -> {
+            participant.receiveCard(cardDeck.distribute());
+            participant.receiveCard(cardDeck.distribute());
+        });
     }
 
     public Participant getDealer() {
