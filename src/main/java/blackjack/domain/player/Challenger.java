@@ -23,11 +23,19 @@ public class Challenger extends Player {
     }
 
     public boolean isLossCondition(Dealer dealer) {
-        return isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore());
+        return this.isBust() || scoreLessThanDealer(dealer);
     }
 
     public boolean isWinCondition(Dealer dealer) {
-        return dealer.isBust() || this.getScore() > dealer.getScore();
+        return dealer.isBust() || scoreGreaterThanDealer(dealer);
+    }
+
+    public boolean scoreLessThanDealer(Dealer dealer) {
+        return (!dealer.isBust() && this.getScore() < dealer.getScore());
+    }
+
+    public boolean scoreGreaterThanDealer(Dealer dealer) {
+        return this.getScore() > dealer.getScore();
     }
 
     @Override
