@@ -39,7 +39,7 @@ public abstract class AbstractPlayer implements Player {
 
     private int getLowValue() {
         return cards.stream()
-            .mapToInt(card -> card.getCardValue())
+            .mapToInt(Card::getCardValue)
             .sum();
     }
 
