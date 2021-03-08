@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardsGenerator;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,11 +9,26 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class PlayersTest {
+    private static final List<Card> CARDS_BLACKJACK = Arrays.asList(
+            new Card(Symbol.JACK, Shape.HEART),
+            new Card(Symbol.ACE, Shape.DIAMOND)
+    );
+    private static final List<Card> CARDS_SCORE_20 = Arrays.asList(
+            new Card(Symbol.ACE, Shape.HEART),
+            new Card(Symbol.KING, Shape.HEART),
+            new Card(Symbol.NINE, Shape.HEART)
+    );
+    private static final List<Card> CARDS_SCORE_19 = Arrays.asList(
+            new Card(Symbol.ACE, Shape.HEART),
+            new Card(Symbol.KING, Shape.HEART),
+            new Card(Symbol.EIGHT, Shape.HEART)
+    );
 
     @DisplayName("플레이어는 최소 1명 최대 7명은 있어야 한다.")
     @ParameterizedTest
@@ -68,5 +82,21 @@ class PlayersTest {
         players.receiveDefaultCards(cardDeck);
 
         assertThat(jason.getCards()).hasSize(2);
+    }
+
+    @DisplayName("참가자들과 딜러의 점수를 비교하고 각 참가자 이름별로 수익(손실)금액을 Map에 집계한다")
+    @Test
+    void aggregateProfitMoneyByPlayerName() {
+        Players players = Players.of(Arrays.asList("pobi", "jason"), Arrays.asList(1000, 2000));
+        Dealer dealer = new Dealer();
+        List<Player> playerList = players.getPlayers();
+        playerList.get(0).receiveCards(new Cards(CARDS_BLACKJACK));
+        playerList.get(1).receiveCards(new Cards(CARDS_SCORE_19));
+        dealer.receiveCards(new Cards(CARDS_SCORE_20));
+
+        Map<String, Integer> profitResultStatistics = players.aggregateProfitMoneyByPlayerName(dealer);
+
+        assertThat(profitResultStatistics.keySet()).containsExactly("pobi", "jason");
+        assertThat(profitResultStatistics.values()).containsExactly(1500, -2000);
     }
 }

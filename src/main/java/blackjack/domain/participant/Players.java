@@ -3,7 +3,9 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardDeck;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -56,6 +58,12 @@ public class Players {
 
     public void receiveDefaultCards(CardDeck cardDeck) {
         players.forEach(player -> player.receiveCards(cardDeck.drawDefaultCards()));
+    }
+
+    public Map<String, Integer> aggregateProfitMoneyByPlayerName(Dealer dealer) {
+        Map<String, Integer> profitResultStatistics = new LinkedHashMap<>();
+        players.forEach(player -> profitResultStatistics.put(player.getName(), player.calculateProfitMoney(dealer)));
+        return profitResultStatistics;
     }
 
     public List<Player> getPlayers() {
