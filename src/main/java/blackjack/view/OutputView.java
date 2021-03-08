@@ -36,7 +36,7 @@ public class OutputView {
 
     private static void printUserFinalCards(PlayerDTO playerDTO) {
         printUserCards(playerDTO);
-        System.out.println(" - 결과: " + playerDTO.getValue());
+        System.out.println(" - 결과: " + playerDTO.getScore());
     }
 
     public static void printFinalCardsMessage(List<PlayerDTO> playerDTOs, PlayerDTO dealerDTO) {

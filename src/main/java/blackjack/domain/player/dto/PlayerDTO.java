@@ -9,12 +9,12 @@ import java.util.List;
 public class PlayerDTO {
     private final Name name;
     private final List<Card> cards;
-    private final int value;
+    private final int score;
 
     public PlayerDTO(Player player) {
         name = player.getName();
         cards = new ArrayList<>(player.getCards());
-        value = player.getScore();
+        score = player.getScore();
     }
 
     public String getName() {
@@ -25,7 +25,7 @@ public class PlayerDTO {
         return cards;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 }
