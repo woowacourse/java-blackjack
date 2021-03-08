@@ -12,15 +12,6 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
-    @DisplayName("Cards 객체를 생성한다.")
-    @Test
-    public void createCards() {
-        Deck deck = new Deck();
-        Cards cards = deck.popTwo();
-
-        assertThat(cards).isInstanceOf(Cards.class);
-    }
-
     @DisplayName("Card 객체 하나를 보여준다.")
     @Test
     public void oneCard() {
