@@ -3,7 +3,8 @@ package blackjack.domain.result;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public enum Result {
     WIN("승", 1),
@@ -30,7 +31,7 @@ public enum Result {
 
     public static Map<Result, Integer> countByResults(List<Result> results) {
         return Arrays.stream(values())
-                .collect(Collectors.toMap(result -> result, result -> result.count(results)));
+                .collect(toMap(result -> result, result -> result.count(results)));
     }
 
     public int count(List<Result> results) {

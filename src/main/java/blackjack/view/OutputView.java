@@ -10,7 +10,8 @@ import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class OutputView {
     private static final String COLON = ": ";
@@ -43,7 +44,7 @@ public class OutputView {
         String cardsGroup = cards.cards()
                 .stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(COMMA_WITH_BLANK));
+                .collect(joining(COMMA_WITH_BLANK));
         System.out.println(cardsGroup);
     }
 
@@ -66,7 +67,7 @@ public class OutputView {
                             .cards()
                             .stream()
                             .map(Card::toString)
-                            .collect(Collectors.joining(COMMA_WITH_BLANK)) + " - 결과: " +
+                            .collect(joining(COMMA_WITH_BLANK)) + " - 결과: " +
                     user.getCards().calculateTotalValue());
         }
     }

@@ -5,7 +5,8 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class ResultBoard {
     private final Map<Player, Result> resultBoard;
@@ -33,7 +34,7 @@ public class ResultBoard {
     private List<Result> groupResult() {
         return resultBoard.values().stream()
                 .map(value -> value.reverse(value))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public Map<Player, Result> playerResultBoard() {

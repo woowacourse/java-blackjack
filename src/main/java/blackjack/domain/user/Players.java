@@ -5,7 +5,8 @@ import blackjack.domain.card.Deck;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class Players {
     private final List<Player> players;
@@ -13,7 +14,7 @@ public class Players {
     public Players(List<String> names) {
         this.players = names.stream()
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public List<Player> players() {
@@ -27,12 +28,12 @@ public class Players {
     public List<Cards> showCardsByPlayers() {
         return players.stream()
                 .map(Player::getCards)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public List<String> showNames() {
         return Collections.unmodifiableList(players.stream()
                 .map(Player::getName)
-                .collect(Collectors.toList()));
+                .collect(toList()));
     }
 }
