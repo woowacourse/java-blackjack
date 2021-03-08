@@ -19,8 +19,12 @@ public class Card {
         return number.equals(CardNumber.ACE);
     }
 
-    public String getPatternAndNumber() {
-        return number.getNumber() + pattern.getName();
+    public String getPatternName() {
+        return pattern.getName();
+    }
+
+    public String getNumberName() {
+        return number.getNumber();
     }
 
     @Override

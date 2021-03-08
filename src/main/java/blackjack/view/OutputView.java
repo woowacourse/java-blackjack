@@ -49,16 +49,20 @@ public class OutputView {
     }
 
     private static String makePlayerCardNames(Gamer player) {
-        return player.toList().stream()
-                .map(Card::getPatternAndNumber)
+        return player.getCards().stream()
+                .map(OutputView::makeCardInfo)
                 .collect(Collectors.joining(COMMA_DELIMITER_TO_PRINT));
     }
 
-    private static String makeDealerCardNames(Dealer dealer) {
-        return dealer.toList().stream()
+    private static String makeDealerCardNames(Gamer dealer) {
+        return dealer.getCards().stream()
                 .limit(COUNT_OF_DEALER_OPENING_CARDS)
-                .map(Card::getPatternAndNumber)
+                .map(OutputView::makeCardInfo)
                 .collect(Collectors.joining(COMMA_DELIMITER));
+    }
+
+    private static String makeCardInfo(Card card) {
+        return card.getNumberName() + card.getPatternName();
     }
 
     public static void noticeDealerReceiveCard() {

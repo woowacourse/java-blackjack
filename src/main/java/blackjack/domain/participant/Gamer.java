@@ -44,7 +44,7 @@ public abstract class Gamer {
         return name.getName();
     }
 
-    public List<Card> toList() {
+    public List<Card> getCards() {
         return cards.getCards();
     }
 
