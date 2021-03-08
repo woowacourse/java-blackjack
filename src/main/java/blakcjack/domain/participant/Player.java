@@ -1,6 +1,5 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.card.Cards;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
@@ -14,7 +13,8 @@ public class Player extends Participant {
 
 	@Override
 	public String getInitialHandInformation() {
-		return super.getCards().getConcatenatedCardsInformation();
+		return super.getCards()
+				.getConcatenatedCardsInformation();
 	}
 
 	public Outcome judgeOutcomeByBust() {
