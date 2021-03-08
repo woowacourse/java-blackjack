@@ -4,11 +4,11 @@ import java.util.*;
 
 public class CardStack {
 
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
-    private CardStack(Stack<Card> cards) {
+    private CardStack(List<Card> cards) {
         Collections.shuffle(cards);
-        this.cards = cards;
+        this.cards = new ArrayDeque<>(cards);
     }
 
     public static CardStack create() {

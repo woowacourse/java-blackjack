@@ -20,16 +20,16 @@ public class BlackjackController {
         printResult(dealer, players);
     }
 
+    private void initHandsOf(Deck deck, Dealer dealer, Players players) {
+        HandInitializer.init(deck, dealer, players);
+        OutputView.printInitialCards(dealer, players);
+    }
+
     private void hitOrStand(Deck deck, Dealer dealer, Players players) {
         for (Player player : players) {
             hitOrStandForPlayer(deck, player);
         }
         hitOrStandForDealer(deck, dealer);
-    }
-
-    private void initHandsOf(Deck deck, Dealer dealer, Players players) {
-        HandInitializer.init(deck, dealer, players);
-        OutputView.printInitialCards(dealer, players);
     }
 
     private void hitOrStandForPlayer(Deck deck, Player player) {

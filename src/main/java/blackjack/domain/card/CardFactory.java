@@ -1,10 +1,11 @@
 package blackjack.domain.card;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardFactory {
 
-    private static final Stack<Card> CARDS = new Stack<>();
+    private static final List<Card> CARDS = new ArrayList<>();
 
     static {
         for (Suit suit : Suit.values()) {
@@ -22,7 +23,7 @@ public class CardFactory {
         }
     }
 
-    public static Stack<Card> create() {
-        return CARDS;
+    public static List<Card> create() {
+        return new ArrayList<>(CARDS);
     }
 }
