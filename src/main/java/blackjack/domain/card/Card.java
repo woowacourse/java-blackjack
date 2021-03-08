@@ -15,7 +15,8 @@ public class Card {
         Arrays.stream(CardShape.values())
             .forEach(shape -> Arrays.stream(CardNumber.values())
                 .forEach(number ->
-                    cards[shape.getValue() * shapeSize + number.getValue() - 1] = new Card(shape, number)
+                    cards[shape.getValue() * shapeSize + number.getValue() - 1]
+                        = new Card(shape, number)
                 ));
     }
 
