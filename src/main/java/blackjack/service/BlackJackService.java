@@ -2,6 +2,7 @@ package blackjack.service;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.player.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class BlackJackService {
 
+    private Deck deck = new Deck();
     private Challengers challengers;
     private Dealer dealer;
 
@@ -41,7 +43,7 @@ public class BlackJackService {
     }
 
     public void receiveMoreCard(final Player player) {
-        player.receiveMoreCard(Card.pullOutCachedCard());
+        player.receiveMoreCard(deck.draw());
     }
 
     public boolean isDealerBlackJack() {
@@ -49,7 +51,7 @@ public class BlackJackService {
     }
 
     private Cards getInitCards() {
-        List<Card> cards = Arrays.asList(Card.pullOutCachedCard(), Card.pullOutCachedCard());
+        List<Card> cards = Arrays.asList(deck.draw());
         return new Cards(cards);
     }
 }

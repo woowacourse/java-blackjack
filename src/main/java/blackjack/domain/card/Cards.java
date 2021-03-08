@@ -41,7 +41,7 @@ public class Cards {
         return getScore() > BLACK_JACK_SCORE;
     }
 
-    public int size(){
+    public int size() {
         return cards.size();
     }
 
