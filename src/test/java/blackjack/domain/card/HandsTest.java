@@ -15,8 +15,8 @@ class HandsTest {
     @Test
     void create() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.KING));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.QUEEN));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.KING));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.QUEEN));
         assertThatCode(() -> new Hands(cards)).doesNotThrowAnyException();
     }
 
@@ -24,8 +24,8 @@ class HandsTest {
     @Test
     void add() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.KING));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.QUEEN));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.KING));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.QUEEN));
         Hands hands = new Hands(cards);
 
         assertThat(hands.toList().size()).isEqualTo(2);
@@ -35,10 +35,10 @@ class HandsTest {
     @Test
     void calculate_containsA_maxExceed() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.ACE));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.ACE));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TWO));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.KING));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.KING));
 
         assertThat(hands.calculate()).isEqualTo(13);
     }
@@ -47,10 +47,10 @@ class HandsTest {
     @Test
     void calculate_containsA_maxNotExceed() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.ACE));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.ACE));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TWO));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.THREE));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.THREE));
 
         assertThat(hands.calculate()).isEqualTo(16);
     }
@@ -59,10 +59,10 @@ class HandsTest {
     @Test
     void calculate_excludeA() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.TWO));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TWO));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.THREE));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.THREE));
 
         assertThat(hands.calculate()).isEqualTo(7);
     }
@@ -71,10 +71,10 @@ class HandsTest {
     @Test
     void calculate_with_A_2_8() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.ACE));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.ACE));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TWO));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.EIGHT));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.EIGHT));
 
         assertThat(hands.calculate()).isEqualTo(21);
     }
@@ -83,13 +83,13 @@ class HandsTest {
     @Test
     void calculate_with_10_3_A_A_A_Q() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.TEN));
-        cards.add(Card.create(CardSymbol.HEART, CardValue.THREE));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.TEN));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.THREE));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.SPADE, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.HEART, CardValue.ACE));
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.QUEEN));
+        hands.addCard(Card.of(CardSymbol.SPADE, CardValue.ACE));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.ACE));
+        hands.addCard(Card.of(CardSymbol.HEART, CardValue.ACE));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.QUEEN));
 
         assertThat(hands.calculate()).isEqualTo(26);
     }
@@ -98,10 +98,10 @@ class HandsTest {
     @Test
     void containsAce() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.ACE));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.ACE));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TWO));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.THREE));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.THREE));
 
         assertTrue(hands.containsAce());
     }
@@ -110,10 +110,10 @@ class HandsTest {
     @Test
     void getCardOf() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.TWO));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.TWO));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TWO));
         Hands hands = new Hands(cards);
-        hands.addCard(Card.create(CardSymbol.CLUB, CardValue.THREE));
+        hands.addCard(Card.of(CardSymbol.CLUB, CardValue.THREE));
 
         assertThat(hands.getCardOf(2).size()).isEqualTo(2);
     }
@@ -122,8 +122,8 @@ class HandsTest {
     @Test
     void isBlackjack() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(CardSymbol.HEART, CardValue.ACE));
-        cards.add(Card.create(CardSymbol.CLUB, CardValue.TEN));
+        cards.add(Card.of(CardSymbol.HEART, CardValue.ACE));
+        cards.add(Card.of(CardSymbol.CLUB, CardValue.TEN));
         Hands hands = new Hands(cards);
 
         assertTrue(hands.isBlackjack());
