@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.*;
 import blackjack.domain.result.Result;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,18 +11,22 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
+    private Player player;
+
+    @BeforeEach
+    public void setUp() {
+        player = new Player("amazzi");
+    }
+
     @DisplayName("Player 객체를 생성한다.")
     @Test
     public void createPlayer() {
-        Player player = new Player("amazzi");
-
         assertThat(player).isInstanceOf(Player.class);
     }
 
     @DisplayName("카드를 두장 분배받는다.")
     @Test
     public void distributeTwoCards() {
-        Player player = new Player("amazzi");
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.NINE),
                 new Card(Shape.DIAMOND, Value.JACK)
@@ -34,7 +39,6 @@ public class PlayerTest {
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
     public void isHitTrue() {
-        Player player = new Player("amazzi");
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.TWO),
                 new Card(Shape.DIAMOND, Value.JACK)
@@ -46,7 +50,6 @@ public class PlayerTest {
     @DisplayName("카드 합계가 21 초과인지 확인한다. - 카드를 더 받을 수 없다.")
     @Test
     public void isHitFalse() {
-        Player player = new Player("amazzi");
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.TWO),
                 new Card(Shape.DIAMOND, Value.JACK),
@@ -60,7 +63,6 @@ public class PlayerTest {
     @Test
     void draw() {
         Deck deck = new Deck();
-        Player player = new Player("amazzi");
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
@@ -74,7 +76,6 @@ public class PlayerTest {
     @DisplayName("카드 두장을 공개한다.")
     @Test
     void show() {
-        Player player = new Player("amazzi");
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
@@ -88,7 +89,6 @@ public class PlayerTest {
     @Test
     public void decideResultByBustPlayerWin() {
         Dealer dealer = new Dealer();
-        Player player = new Player("amazzi");
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING),
@@ -106,7 +106,6 @@ public class PlayerTest {
     @Test
     public void decideResultByBustStandoff() {
         Dealer dealer = new Dealer();
-        Player player = new Player("amazzi");
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING),
@@ -125,7 +124,6 @@ public class PlayerTest {
     @Test
     public void decideResultByBustPlayerLose() {
         Dealer dealer = new Dealer();
-        Player player = new Player("amazzi");
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
