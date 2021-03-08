@@ -35,17 +35,6 @@ public class Card {
         return card;
     }
 
-    public static void updateCardCount() {
-        CURRENT_CARD_COUNT--;
-    }
-
-    public static void shuffleWhenAllUsed() {
-        if (CURRENT_CARD_COUNT == 0) {
-            Collections.shuffle(cached);
-            CURRENT_CARD_COUNT = TOTAL_CARD_COUNT;
-        }
-    }
-
     public int getFaceValueAsInt() {
         return this.face.getValue();
     }
@@ -56,6 +45,17 @@ public class Card {
 
     public boolean isAce() {
         return this.face.equals(Face.ACE);
+    }
+
+    private static void updateCardCount() {
+        CURRENT_CARD_COUNT--;
+    }
+
+    private static void shuffleWhenAllUsed() {
+        if (CURRENT_CARD_COUNT == 0) {
+            Collections.shuffle(cached);
+            CURRENT_CARD_COUNT = TOTAL_CARD_COUNT;
+        }
     }
 
     @Override
