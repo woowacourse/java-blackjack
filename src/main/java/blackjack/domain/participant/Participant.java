@@ -11,7 +11,12 @@ public abstract class Participant {
     private static final int ZERO = 0;
     private static final int DIFFERENCE_OF_ACE_VALUE = 10;
 
+    protected final Name name;
     protected final List<Card> cards = new ArrayList<>();
+
+    protected Participant(String inputName) {
+        this.name = new Name(inputName);
+    }
 
     public void addCard(Card card) {
         cards.add(card);

@@ -3,8 +3,11 @@ package blackjack.domain.participant;
 import java.util.Map;
 
 public class Dealer extends Participant {
-    private static final Name name = new Name("딜러");
     private static final int STAY_THRESHOLD = 17;
+
+    public Dealer() {
+        super("딜러");
+    }
 
     public boolean isStay() {
         return calculateCardsScoreResult() >= STAY_THRESHOLD;

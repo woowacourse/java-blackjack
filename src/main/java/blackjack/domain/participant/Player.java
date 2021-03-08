@@ -3,10 +3,9 @@ package blackjack.domain.participant;
 import blackjack.domain.Game;
 
 public class Player extends Participant {
-    private final Name name;
 
     public Player(String inputName) {
-        name = new Name(inputName);
+        super(inputName);
     }
 
     public boolean isBlackJack() {
