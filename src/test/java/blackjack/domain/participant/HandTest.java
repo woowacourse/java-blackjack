@@ -30,9 +30,20 @@ public class HandTest {
 
     @Test
     @DisplayName("Hand에 새로운 카드가 추가되는지 확인")
-    void receiveCardTest() {
+    void addTest() {
         hand.add(new Card(CardLetter.EIGHT, CardSuit.CLOVER));
         assertThat(hand.getCards()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("Hand에 BUST_LIMIT을 넘어가도록 카드가 추가되면 isBust에 대해 참을 반환")
+    void isBustTest() {
+        hand.add(new Card(CardLetter.EIGHT, CardSuit.CLOVER));
+        hand.add(new Card(CardLetter.TEN, CardSuit.CLOVER));
+        assertThat(hand.isBust()).isFalse();
+
+        hand.add(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
+        assertThat(hand.isBust()).isTrue();
     }
 
     @Test
@@ -53,7 +64,7 @@ public class HandTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE,ACE: 12", "ACE,ACE,ACE:13", "ACE,ACE,TEN: 12"}, delimiter = ':')
+    @CsvSource(value = {"ACE,ACE:12", "ACE,ACE,ACE:13", "ACE,ACE,TEN:12", "ACE,ACE,ACE,JACK,QUEEN:23"}, delimiter = ':')
     @DisplayName("여러개의 에이스 카드가 추가되었을 때 알맞은 합 구하기")
     void calculateScoreWithAceTest(final String cards, final int expectedScore) {
         final String[] cardNumbers = cards.split(",");
