@@ -11,11 +11,17 @@ public class RandomCardDeck implements CardDeck {
 
     public RandomCardDeck() {
         LinkedList<Card> cardsValue = new LinkedList<>();
-        Arrays.stream(Suits.values())
-                .forEach(suit -> Arrays.stream(Denominations.values())
-                    .forEach(denomination -> cardsValue.add(Card.from(denomination.getName() + suit.getName()))));
+        for (Suits suit : Suits.values()) {
+            assembleWithDenominations(cardsValue, suit);
+        }
         Collections.shuffle(cardsValue);
         this.cards = cardsValue;
+    }
+
+    private void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit) {
+        for (Denominations denomination : Denominations.values()) {
+            cardsValue.add(Card.from(denomination.getName() + suit.getName()));
+        }
     }
 
     @Override
@@ -38,4 +44,5 @@ public class RandomCardDeck implements CardDeck {
         cardsValue.add(pop());
         return cardsValue;
     }
+
 }

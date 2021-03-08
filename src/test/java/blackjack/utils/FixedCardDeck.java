@@ -11,9 +11,16 @@ public class FixedCardDeck implements CardDeck {
 
     public FixedCardDeck() {
         cards = new LinkedList<>();
-        Arrays.stream(Suits.values())
-                .forEach(suit -> Arrays.stream(Denominations.values())
-                        .forEach(denomination -> cards.offer(Card.from(denomination.getName() + suit.getName()))));
+
+        for (Suits suit : Suits.values()) {
+            assembleWithDenominations(suit);
+        }
+    }
+
+    private void assembleWithDenominations(Suits suit) {
+        for (Denominations denomination : Denominations.values()) {
+            cards.offer(Card.from(denomination.getName() + suit.getName()));
+        }
     }
 
     @Override

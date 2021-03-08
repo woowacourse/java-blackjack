@@ -3,7 +3,7 @@
 ## 리팩토링 리스트
 
 src/main/java/blackjack/utils/RandomCardDeck.java
-- [ ] forEach가 중첩되어서 가독성이 많이 떨어지는데요, flatMap을 사용하거나, 아니면 하나씩 순차적으로 반복문
+- [x] forEach가 중첩되어서 가독성이 많이 떨어지는데요, flatMap을 사용하거나, 아니면 하나씩 순차적으로 반복문
 
 src/main/java/blackjack/domain/Card.java
 - [x] static 필드는 상수로 관리
