@@ -26,7 +26,6 @@ src/main/java/blackjack/domain/Participants.java
 
 src/main/java/blackjack/Application.java
 - [x] takeCard 관리부분:  deck을 관리하는 객체를 만들어 player에게 카드를 줄지 말지 판단할 수 있도록 설계해볼 수도 있다
-- [ ] 테스트 코드 수정
 - [x] view로 인한 controller 역할 커짐: Controller에 있는 로직을 최대한 더 Model로 뽑을 수 있는 여지는 없을까? 
 
 src/main/java/blackjack/utils/RandomCardDeck.java
@@ -35,4 +34,4 @@ src/main/java/blackjack/utils/RandomCardDeck.java
   카드 Queue를 가지고 있는 객체는 정말 Deck으로만 기능하도록 생성 시에 외부에서 카드 묶음을 받도록 하면, 테스트에서도 원하는 테스트를 위해 별도의 가공 과정을 거치지 않아도 될 것 같아요)
 
 ## 추가 self 리팩토링
-- [ ] domain의 testCoverage 100% 만들기
+- [x] domain의 testCoverage 90%이상

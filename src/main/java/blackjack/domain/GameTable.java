@@ -16,21 +16,22 @@ public class GameTable implements Playable {
 
     @Override
     public void giveCard(Participant participant) {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드가 소진되었습니다.");
-        }
+        validateRestCards();
         if(participant.isAvailableToTake()){
             participant.takeCard(cards.poll());
         }
     }
 
-    //todo : 삭제
     @Override
     public Card pop() {
+        validateRestCards();
+        return cards.poll();
+    }
+
+    private void validateRestCards() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("카드가 소진되었습니다.");
         }
-        return cards.poll();
     }
 
     @Override
