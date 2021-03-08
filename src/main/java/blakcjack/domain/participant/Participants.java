@@ -14,9 +14,9 @@ import static blakcjack.view.OutputView.DELIMITER;
 public class Participants {
 	private final List<Participant> participants = new ArrayList<>();
 
-	public Participants(final Names names) {
-		participants.add(new Dealer());
-		addPlayers(names);
+	public Participants(final Dealer dealer, final List<Player> players) {
+		participants.add(dealer);
+		participants.addAll(players);
 	}
 
 	private void addPlayers(final Names names) {

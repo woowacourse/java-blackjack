@@ -1,6 +1,7 @@
 package blakcjack.controller;
 
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.name.Name;
 import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Dealer;
@@ -9,6 +10,7 @@ import blakcjack.domain.participant.Participants;
 import blakcjack.domain.participant.Player;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static blakcjack.view.InputView.isYes;
@@ -27,9 +29,18 @@ public class BlackJackController {
 	}
 
 	private Participants createParticipants() {
-		final List<String> namesInput = takePlayerNamesInput();
-		final Names playerNames = new Names(namesInput);
-		return new Participants(playerNames);
+		final List<Player> players = createPlayers();
+		Dealer dealer = new Dealer();
+		return new Participants(dealer, players);
+	}
+
+	private List<Player> createPlayers() {
+		final Names playerNames = new Names(takePlayerNamesInput());
+		final List<Player> players = new ArrayList<>();
+		for (Name name : playerNames.toList()) {
+			players.add(new Player(name));
+		}
+		return players;
 	}
 
 	private void playGame(final Participants participants) {

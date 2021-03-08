@@ -9,9 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static blakcjack.domain.card.EmptyDeckException.EMPTY_DECK_ERROR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +21,11 @@ class ParticipantsTest {
 	@BeforeEach
 	void setUp() {
 		final Names names = new Names(Arrays.asList("pobi", "sakjung", "mediumBear"));
-		participants = new Participants(names);
+		List<Player> players = new ArrayList<>();
+		for (Name name : names.toList()) {
+			players.add(new Player(name));
+		}
+		participants = new Participants(new Dealer(), players);
 	}
 
 	@DisplayName("딜러와 플레이어들을 정상적으로 잘 생성하는지")
