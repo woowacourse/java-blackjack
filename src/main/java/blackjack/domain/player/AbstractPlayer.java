@@ -45,7 +45,7 @@ public abstract class AbstractPlayer implements Player {
 
     private int getHighValue(int lowValue) {
         int highValue = lowValue;
-        if (cards.stream().anyMatch(card -> card.getCardNumber() == CardNumber.ACE)) {
+        if (cards.stream().anyMatch(card -> card.getNumber() == CardNumber.ACE)) {
             highValue += ACE_DIFF;
         }
         return highValue;

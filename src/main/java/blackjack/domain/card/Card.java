@@ -3,25 +3,25 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    private final CardShape shape;
+    private final CardNumber number;
 
-    public Card(final CardShape cardShape, final CardNumber cardNumber) {
-        this.cardShape = cardShape;
-        this.cardNumber = cardNumber;
+    public Card(final CardShape shape, final CardNumber cardNumber) {
+        this.shape = shape;
+        this.number = cardNumber;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public CardNumber getNumber() {
+        return number;
     }
 
     public int getCardValue() {
-        return cardNumber.getValue();
+        return number.getValue();
     }
 
     @Override
     public String toString() {
-        return cardNumber.getNumber() + cardShape.getShape();
+        return number.getNumber() + shape.getShape();
     }
 
     @Override
@@ -33,11 +33,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardShape == card.cardShape && cardNumber == card.cardNumber;
+        return shape == card.shape && number == card.number;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
+        return Objects.hash(shape, number);
     }
 }
