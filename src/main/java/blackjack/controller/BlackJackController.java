@@ -8,7 +8,6 @@ import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackController {
     private static final String HIT_CONTINUE = "Y";
@@ -17,18 +16,12 @@ public class BlackJackController {
         try {
             OutputView.printPlayersGuideMessage();
             Dealer dealer = new Dealer();
-            Players players = makePlayers(InputView.inputPlayers());
+            Players players = new Players(InputView.inputPlayers());
             playGame(dealer,players);
             revealResult(dealer,players);
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception);
         }
-    }
-
-    private Players makePlayers(List<String> inputPlayers) {
-        return new Players(inputPlayers.stream()
-            .map(Player::new)
-            .collect(Collectors.toList()));
     }
 
     private void playGame(Dealer dealer, Players players) {

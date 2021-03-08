@@ -9,9 +9,15 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    public Players(List<String> playersName) {
+        this.players = makePlayers(playersName);
         validatePlayersNumber(players);
-        this.players = players;
+    }
+
+    private List<Player> makePlayers(List<String> inputPlayers) {
+        return inputPlayers.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     private void validatePlayersNumber(List<Player> players) {
