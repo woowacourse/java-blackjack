@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participants.Participant;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -17,7 +17,8 @@ public enum ResultType {
         this.name = name;
     }
 
-    public static ResultType getResultTypeByScore(Participant participant1, Participant participant2) {
+    public static ResultType getResultTypeByScore(Participant participant1,
+        Participant participant2) {
         return Arrays.stream(ResultType.values())
             .filter(resultType -> resultType.matcher.apply(participant1.getScore() - participant2
                 .getScore()))

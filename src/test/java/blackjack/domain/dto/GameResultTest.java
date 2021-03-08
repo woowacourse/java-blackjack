@@ -2,14 +2,14 @@ package blackjack.domain.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Deck;
-import blackjack.domain.Players;
 import blackjack.domain.ResultType;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.CardValue;
+import blackjack.domain.cards.Deck;
+import blackjack.domain.cards.Shape;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.Players;
 import blackjack.dto.GameResult;
 import java.util.Arrays;
 import java.util.HashMap;

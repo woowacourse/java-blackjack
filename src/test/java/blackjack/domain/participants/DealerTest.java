@@ -1,12 +1,12 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-import blackjack.domain.Deck;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Shape;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.CardValue;
+import blackjack.domain.cards.Deck;
+import blackjack.domain.cards.Shape;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

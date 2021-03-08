@@ -1,8 +1,8 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
+import blackjack.domain.cards.Deck;
 
 public class Player extends Participant {
 

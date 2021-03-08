@@ -2,10 +2,11 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardValue;
-import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Player;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.CardValue;
+import blackjack.domain.cards.Deck;
+import blackjack.domain.cards.Shape;
+import blackjack.domain.participants.Player;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,8 @@ public class ResultTypeTest {
         Player anotherEighteen = new Player("anotherEighteen", deck);
 
         assertThat(ResultType.getResultTypeByScore(nineteen, eighteen)).isEqualTo(ResultType.WIN);
-        assertThat(ResultType.getResultTypeByScore(eighteen, anotherEighteen)).isEqualTo(ResultType.TIE);
+        assertThat(ResultType.getResultTypeByScore(eighteen, anotherEighteen))
+            .isEqualTo(ResultType.TIE);
         assertThat(ResultType.getResultTypeByScore(seventeen, eighteen)).isEqualTo(ResultType.LOSE);
     }
 }
