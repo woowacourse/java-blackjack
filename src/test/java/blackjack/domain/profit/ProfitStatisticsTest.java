@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.profit;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ResultStatisticsTest {
+class ProfitStatisticsTest {
     private static final List<Card> CARDS_BLACKJACK = Arrays.asList(
             new Card(Symbol.JACK, Shape.HEART),
             new Card(Symbol.ACE, Shape.DIAMOND)
@@ -49,9 +49,9 @@ class ResultStatisticsTest {
     @DisplayName("Player의 이름을 Key로, 각각의 이익금액을 value로 하는 Map을 생성")
     @Test
     void createGameResult() {
-        ResultStatistics resultStatistics = ResultStatistics.of(dealer, players);
+        ProfitStatistics profitStatistics = ProfitStatistics.of(dealer, players);
 
-        Collection<Integer> values = resultStatistics.getProfitResultStatistics()
+        Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
 
         assertThat(values).containsExactly(1500, -2000);
@@ -60,12 +60,12 @@ class ResultStatisticsTest {
     @DisplayName("딜러의 손익은 플레이어 손익의 합 * -1과 같다.")
     @Test
     void calculateDealerProfit() {
-        ResultStatistics resultStatistics = ResultStatistics.of(dealer, players);
-        Collection<Integer> values = resultStatistics.getProfitResultStatistics()
+        ProfitStatistics profitStatistics = ProfitStatistics.of(dealer, players);
+        Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
 
         int playerProfitTotal = values.stream().mapToInt(t -> t).sum();
-        int dealerProfit = resultStatistics.calculateDealerProfit();
+        int dealerProfit = profitStatistics.calculateDealerProfit();
 
         assertThat(dealerProfit).isEqualTo(playerProfitTotal * -1);
     }

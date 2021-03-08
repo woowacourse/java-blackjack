@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.game.ProfitWeight;
+import blackjack.domain.profit.ProfitWeight;
 
 public class Player extends Participant {
     private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 21;

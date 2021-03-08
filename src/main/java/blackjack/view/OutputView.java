@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.ResultStatistics;
+import blackjack.domain.profit.ProfitStatistics;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -75,11 +75,11 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printFinalProfitResult(ResultStatistics resultStatistics) {
+    public static void printFinalProfitResult(ProfitStatistics profitStatistics) {
         printNewLine();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + resultStatistics.calculateDealerProfit());
-        resultStatistics.getProfitResultStatistics()
+        System.out.println("딜러: " + profitStatistics.calculateDealerProfit());
+        profitStatistics.getProfitStatistics()
                 .forEach((playerName, profitMoney) -> System.out.println(playerName + ": " + profitMoney));
     }
 

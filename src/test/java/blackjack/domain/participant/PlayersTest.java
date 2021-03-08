@@ -94,9 +94,9 @@ class PlayersTest {
         playerList.get(1).receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));
 
-        Map<String, Integer> profitResultStatistics = players.aggregateProfitMoneyByPlayerName(dealer);
+        Map<String, Integer> profitStatistics = players.aggregateProfitMoneyByPlayerName(dealer);
 
-        assertThat(profitResultStatistics.keySet()).containsExactly("pobi", "jason");
-        assertThat(profitResultStatistics.values()).containsExactly(1500, -2000);
+        assertThat(profitStatistics.keySet()).containsExactly("pobi", "jason");
+        assertThat(profitStatistics.values()).containsExactly(1500, -2000);
     }
 }

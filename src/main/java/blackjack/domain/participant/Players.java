@@ -61,9 +61,9 @@ public class Players {
     }
 
     public Map<String, Integer> aggregateProfitMoneyByPlayerName(Dealer dealer) {
-        Map<String, Integer> profitResultStatistics = new LinkedHashMap<>();
-        players.forEach(player -> profitResultStatistics.put(player.getName(), player.calculateProfitMoney(dealer)));
-        return profitResultStatistics;
+        Map<String, Integer> profitStatistics = new LinkedHashMap<>();
+        players.forEach(player -> profitStatistics.put(player.getName(), player.calculateProfitMoney(dealer)));
+        return profitStatistics;
     }
 
     public List<Player> getPlayers() {
