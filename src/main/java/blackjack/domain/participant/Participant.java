@@ -38,9 +38,9 @@ public abstract class Participant {
     abstract public Result checkResult(final Participant participant);
 
     protected Result checkResultByScore(final Participant participant) {
-        final int myScore = this.hand.calculateScore();
+        final int score = this.hand.calculateScore();
         final int opponentScore = participant.hand.calculateScore();
-        return Result.checkResult(myScore, opponentScore);
+        return Result.checkResult(score, opponentScore);
     }
 
     public String getName() {

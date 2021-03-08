@@ -16,10 +16,9 @@ public class BlackjackController {
         final Players players = playerSetUp();
 
         distributeInitialCard(players, dealer, cardDeck);
-        playerGameProgress(players, cardDeck);
-        dealerGameProgress(dealer, cardDeck);
-        showFinalCardResult(players, dealer);
-        showGameResult(players, dealer);
+        progressEveryPlayerGame(players, cardDeck);
+        progressDealerGame(dealer, cardDeck);
+        showFinalResult(players, dealer);
     }
 
     private Players playerSetUp() {
@@ -37,16 +36,16 @@ public class BlackjackController {
         players.receiveInitialCard(cardDeck);
         OutputView.showDistributionMessage(dealer, players);
         OutputView.showDealerCard(dealer);
-        OutputView.showAllPlayerCard(players);
+        OutputView.showEveryPlayerCard(players);
     }
 
-    private void playerGameProgress(final Players players, final CardDeck cardDeck) {
+    private void progressEveryPlayerGame(final Players players, final CardDeck cardDeck) {
         for (final Player player : players.getPlayers()) {
-            singlePlayerGameProgress(cardDeck, player);
+            progressSinglePlayerGame(cardDeck, player);
         }
     }
 
-    private void singlePlayerGameProgress(final CardDeck cardDeck, final Player player) {
+    private void progressSinglePlayerGame(final CardDeck cardDeck, final Player player) {
         while (!player.isBust() && InputView.requestMoreCard(player)) {
             player.receiveAdditionalCard(cardDeck.distribute());
             OutputView.showPlayerCard(player);
@@ -58,21 +57,18 @@ public class BlackjackController {
         OutputView.showPlayerCard(player);
     }
 
-    private void dealerGameProgress(final Dealer dealer, final CardDeck cardDeck) {
+    private void progressDealerGame(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.checkMoreCardAvailable()) {
             OutputView.showDealerGotMoreCard(dealer);
             dealer.receiveAdditionalCard(cardDeck.distribute());
         }
     }
 
-    private void showFinalCardResult(final Players players, final Dealer dealer) {
+    private void showFinalResult(final Players players, final Dealer dealer) {
         OutputView.showNewLine();
         OutputView.showCardResult(dealer);
-        OutputView.showAllPlayerCardResult(players);
-    }
-
-    private void showGameResult(final Players players, final Dealer dealer) {
-        OutputView.showDealerGameResult(dealer, players.checkDealerResult(dealer));
-        OutputView.showPlayerGameResult(players.checkAllPlayerResult(dealer));
+        OutputView.showEveryPlayerCardResult(players);
+        OutputView.showDealerGameResult(dealer, dealer.checkEveryResult(players));
+        OutputView.showPlayerGameResult(players.checkEveryPlayerResult(dealer));
     }
 }

@@ -51,24 +51,9 @@ public class OutputView {
         showNewLine();
     }
 
-    public static void showAllPlayerCard(final Players players) {
+    public static void showEveryPlayerCard(final Players players) {
         players.getPlayers()
                 .forEach(OutputView::showPlayerCard);
-    }
-
-    public static void showPlayerCard(final Player player) {
-        final String name = player.getName();
-        final List<Card> cards = player.getHand().getCards();
-        final String cardStatus = cards.stream()
-                .map(OutputView::cardPrintForm)
-                .collect(Collectors.joining(", "));
-        System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus);
-        showNewLine();
-    }
-
-    public static void showAllPlayerCardResult(final Players players) {
-        players.getPlayers()
-                .forEach(OutputView::showCardResult);
     }
 
     public static void showCardResult(final Participant participant) {
@@ -79,6 +64,21 @@ public class OutputView {
                 .map(OutputView::cardPrintForm)
                 .collect(Collectors.joining(", "));
         System.out.printf(CARD_RESULT_FORMAT, name, cardStatus, result);
+        showNewLine();
+    }
+
+    public static void showEveryPlayerCardResult(final Players players) {
+        players.getPlayers()
+                .forEach(OutputView::showCardResult);
+    }
+
+    public static void showPlayerCard(final Player player) {
+        final String name = player.getName();
+        final List<Card> cards = player.getHand().getCards();
+        final String cardStatus = cards.stream()
+                .map(OutputView::cardPrintForm)
+                .collect(Collectors.joining(", "));
+        System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus);
         showNewLine();
     }
 
