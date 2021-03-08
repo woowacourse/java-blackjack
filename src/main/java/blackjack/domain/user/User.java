@@ -2,13 +2,22 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.util.StringUtil;
 
 public abstract class User {
     protected String name;
     protected Cards cards;
 
-    public User() {
+    public User(String name) {
+        validate(name);
+        this.name = StringUtil.deleteWhiteSpaces(name);
         this.cards = new Cards();
+    }
+
+    private static void validate(String name) {
+        if (StringUtil.isBlank(name)) {
+            throw new IllegalArgumentException("빈 값을 입력하셨습니다. 이름을 입력해주세요.");
+        }
     }
 
     public void addCard(Card card) {

@@ -5,8 +5,7 @@ public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super();
-        this.name = DEALER_NAME;
+        super(DEALER_NAME);
     }
 
     public boolean hasToDrawACard() {
