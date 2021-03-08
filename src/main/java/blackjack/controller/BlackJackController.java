@@ -34,7 +34,7 @@ public class BlackJackController {
     }
 
     private void printEachPlayerResult(Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.toList()) {
             OutputView.printPlayerResult(player);
         }
     }
@@ -46,7 +46,7 @@ public class BlackJackController {
     }
 
     private void drawUntilPossible(Dealer dealer, Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.toList()) {
             askKeepDrawing(player, deck);
         }
         while (dealer.canReceiveCard()) {

@@ -22,10 +22,10 @@ public class Player extends Gamer {
 
     @Override
     public Boolean continueDraw(String draw, Deck deck) {
-        if (draw.equals(AGREE)) {
+        if (AGREE.equals(draw)) {
             return true;
         }
-        if (draw.equals(DISAGREE)) {
+        if (DISAGREE.equals(draw)) {
             return false;
         }
         throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);

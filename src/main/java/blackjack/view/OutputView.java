@@ -32,7 +32,7 @@ public class OutputView {
 
     public static void noticePlayersCards(Dealer dealer, Players players) {
         System.out.println(dealer.getName() + COLON_DELIMITER + makeDealerCardNames(dealer));
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.toList()) {
             noticePlayerCards(player);
         }
         System.out.println();
@@ -41,7 +41,7 @@ public class OutputView {
     public static void noticePlayersPoint(Dealer dealer, Players players) {
         System.out.println();
         System.out.println(dealer.getName() + COLON_DELIMITER + makePlayerCardNames(dealer) + RESULT_DELIMITER + dealer.makeMaximumPoint());
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.toList()) {
             System.out.println(player.getName() + CARD_DELIMITER + makePlayerCardNames(player)
                     + RESULT_DELIMITER + player.makeMaximumPoint());
             WinnerFlag.calculateResult(dealer, player);

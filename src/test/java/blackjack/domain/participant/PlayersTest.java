@@ -23,6 +23,6 @@ public class PlayersTest {
     @DisplayName("카드 한장씩 분배 확인")
     void playerReceiveCards() {
         players.giveCards(new Deck());
-        assertEquals((int) players.getPlayers().stream().filter(player -> player.toList().size() == 1).count(), 2);
+        assertEquals((int) players.toList().stream().filter(player -> player.toList().size() == 1).count(), 2);
     }
 }

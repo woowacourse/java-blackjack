@@ -18,7 +18,7 @@ public class WinnerCountTest {
         WinnerCount winnerCount = new WinnerCount();
         List<String> input = Arrays.asList("pobi", "jason", "cu");
         Players players = new Players(input, new Dealer());
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.toList()) {
             player.matchResult(WinnerFlag.LOSE);
         }
         assertEquals(winnerCount.calculateTotalWinnings(players).get(WinnerFlag.LOSE), 3);

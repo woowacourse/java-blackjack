@@ -17,7 +17,7 @@ public class WinnerCount {
     }
 
     public Map<WinnerFlag, Integer> calculateTotalWinnings(Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.toList()) {
             winnerCount.computeIfPresent(player.getResult(), (WinnerFlag, i) -> ++i);
         }
         return winnerCount;

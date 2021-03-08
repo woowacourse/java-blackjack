@@ -31,7 +31,7 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> toList() {
         return players;
     }
 
