@@ -25,7 +25,6 @@ public class DealerTest {
         assertThat(playerCards).contains(Card.from("A클로버"), Card.from("2클로버"));
     }
 
-    //todo: 이상
     @Test
     @DisplayName("dealer 카드 추가 지급")
     void add_card() {
