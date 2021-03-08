@@ -10,13 +10,11 @@ public abstract class Gamer {
     public static final int NUM_INIT_CARD = 2;
     private static final String SPACE = " ";
     private static final String ERROR_NAME_SPACE = "이름에 공백이 포함됩니다.";
-    private static final int ACE_BONUS = 10;
-    private static final int AVAILABLE_ACE_BONUS = 11;
-    public static final int HIGHEST_POINT = 21;
+
     private static final String COMMA = ", ";
     public static final String ERROR_NAME_LENGTH = "이름이 공백일 수는 없습니다.";
     private final String name;
-    protected final List<Card> cards = new ArrayList<>();
+    protected final Cards cards = new Cards();
 
     protected Gamer(String name) {
         validateSpace(name);
@@ -40,23 +38,8 @@ public abstract class Gamer {
         cards.add(card);
     }
 
-    public int calcPoint() {
-        Integer cardValue = cards.stream()
-            .map(Card::givePoint)
-            .reduce(0, Integer::sum);
-        if (findAce(cards) && cardValue + ACE_BONUS <= HIGHEST_POINT) {
-            return cardValue + ACE_BONUS;
-        }
-        return cardValue;
-    }
-
-    private boolean findAce(List<Card> cards) {
-        for (Card card : cards) {
-            if (card.isAce()) {
-                return true;
-            }
-        }
-        return false;
+    public int getPoint() {
+        return cards.getPoint(Cards.HIGHEST_POINT);
     }
 
     public abstract boolean canReceiveCard();
@@ -68,7 +51,8 @@ public abstract class Gamer {
     }
 
     public String getAllCards() {
-        return cards.stream()
+        return cards.getCards().
+            stream()
             .map(Card::getPatternAndNumber)
             .collect(Collectors.joining(COMMA));
     }
@@ -92,12 +76,12 @@ public abstract class Gamer {
             return false;
         }
         Gamer gamer = (Gamer) o;
-        return Objects.equals(name, gamer.name) && Objects.equals(cards, gamer.cards);
+        return Objects.equals(name, gamer.name) &&
+            Objects.equals(cards, gamer.cards);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name, cards);
     }
-
 }

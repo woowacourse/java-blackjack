@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.Cards.HIGHEST_POINT;
 import static blackjack.domain.Players.DRAW;
 import static blackjack.domain.Players.LOSE;
 import static blackjack.domain.Players.RESULT_DRAW;
@@ -26,7 +27,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return this.calcPoint() < HIGHEST_POINT;
+        return this.getPoint() < HIGHEST_POINT;
     }
 
     public Boolean continueDraw(Deck deck) {
@@ -56,7 +57,7 @@ public class Player extends Gamer {
     }
 
     public void judgeVictory(Map<String, Integer> dealerHistory, int dealerPoint) {
-        int playerPoint = calcPoint();
+        int playerPoint = getPoint();
 
         if (isDraw(playerPoint, dealerPoint)) {
             inputMatchResult(dealerHistory, DRAW);
@@ -75,15 +76,15 @@ public class Player extends Gamer {
     }
 
     private boolean idLose(int playerPoint, int dealerPoint) {
-        return (playerPoint > Gamer.HIGHEST_POINT) || (playerPoint < dealerPoint);
+        return (playerPoint > cards.HIGHEST_POINT) || (playerPoint < dealerPoint);
     }
 
     private boolean isWin(int playerPoint, int dealerValue) {
-        return (dealerValue > Gamer.HIGHEST_POINT) || (playerPoint > dealerValue);
+        return (dealerValue > cards.HIGHEST_POINT) || (playerPoint > dealerValue);
     }
 
     private boolean isDraw(int playerPoint, int dealerValue) {
-        return (playerPoint > Gamer.HIGHEST_POINT && dealerValue > Gamer.HIGHEST_POINT) || (
+        return (playerPoint > cards.HIGHEST_POINT && dealerValue > cards.HIGHEST_POINT) || (
             playerPoint == dealerValue);
     }
 }

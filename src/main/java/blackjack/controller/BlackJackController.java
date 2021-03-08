@@ -17,7 +17,6 @@ public class BlackJackController {
         dealInitCard(players, deck);
         dealCard(players, deck);
         printMatchResult(players);
-
     }
 
     private void printMatchResult(Players players) {

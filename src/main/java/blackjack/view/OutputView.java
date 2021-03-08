@@ -58,7 +58,7 @@ public class OutputView {
     public static void printGameResultPoint(Gamer gamer) {
         System.out.println(String
             .format(SKELETON_GAME_RESULT_POINT, gamer.getName(), gamer.getAllCards(),
-                gamer.calcPoint()));
+                gamer.getPoint()));
     }
 
     public static void printDealerResult(Map<String, Integer> result) {

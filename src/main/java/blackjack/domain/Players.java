@@ -103,7 +103,7 @@ public class Players {
 
     public Map<String, Integer> calculateResult() {
         Map<String, Integer> result = new HashMap<>();
-        int dealerValue = dealer.calcPoint();
+        int dealerValue = dealer.getPoint();
 
         resultInit(result);
 
@@ -128,12 +128,12 @@ public class Players {
             return false;
         }
         Players players1 = (Players) o;
-        return Objects.equals(players, players1.players) && Objects.equals(dealer, players1.dealer);
+        return Objects.equals(players, players1.players) &&
+            Objects.equals(dealer, players1.dealer);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(players, dealer);
     }
-
 }
