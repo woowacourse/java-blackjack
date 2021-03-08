@@ -61,44 +61,19 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerResult(Dealer dealer) {
-        System.out.print(NEW_LINE);
-        System.out.println("## 최종 승패");
-        System.out.print("딜러" + SEPARATOR);
-
-        if (dealer.countOfResult(Result.WIN) > 0) {
-            System.out.print(dealer.countOfResult(Result.WIN) + "승 ");
-        }
-        if (dealer.countOfResult(Result.DRAW) > 0) {
-            System.out.print(dealer.countOfResult(Result.DRAW) + "무 ");
-        }
-        if (dealer.countOfResult(Result.LOSE) > 0) {
-            System.out.print(dealer.countOfResult(Result.LOSE) + "패 ");
-        }
-        System.out.print(NEW_LINE);
-    }
-
-    public static void printPlayerResult(List<Player> players, List<Result> results) {
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println(players.get(i).getName()
-                    + SEPARATOR
-                    + results.get(i).getResultName());
-        }
-    }
-
     public static void printProfit() {
         System.out.print(NEW_LINE);
         System.out.println("## 최종 수익");
     }
 
     public static void printProfitDealer(Dealer dealer, List<Player> players) {
-        System.out.println("딜러: " + dealer.profit(players));
+        System.out.println(dealer.getName() + SEPARATOR + dealer.profit(players));
     }
 
     public static void printProfitPlayers(Dealer dealer, List<Player> players) {
         for (int i = 0; i < players.size(); i++) {
             System.out.println(players.get(i).getName()
-                    + ": "
+                    + SEPARATOR
                     + players.get(i).profit(dealer.getPlayerResult(i)));
         }
     }
