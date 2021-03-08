@@ -44,12 +44,12 @@ public class User extends AbstractPlayer {
     }
 
     public ResultType getResult(Dealer dealer) {
-        int userValue = getScore();
-        int dealerValue = dealer.getScore();
-        if (userValue > BLACKJACK || userValue < dealerValue) {
+        int userScore = getScore();
+        int dealerScore = dealer.getScore();
+        if (userScore > BLACKJACK || userScore < dealerScore) {
             return ResultType.LOSS;
         }
-        if (userValue == dealerValue) {
+        if (userScore == dealerScore && userScore != BLACKJACK) {
             return ResultType.DRAW;
         }
         return ResultType.WIN;
