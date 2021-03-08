@@ -61,4 +61,12 @@ public class Cards {
             .anyMatch(Card::isAce);
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
+    public int cardsSize() {
+        return cards.size();
+    }
+
 }

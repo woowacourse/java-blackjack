@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.GameResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +27,9 @@ public class Dealer extends Participant {
 
     public void addGameResult(GameResult gameResult) {
         gameResults.add(gameResult);
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirstCard();
     }
 }
