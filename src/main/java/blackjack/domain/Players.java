@@ -45,7 +45,7 @@ public class Players {
     }
 
     public GameResult match(Dealer dealer) {
-        Map<Player, ResultType> result = new HashMap<>();
+        Map<Player, ResultType> result = new LinkedHashMap<>();
         playersList.forEach(player -> result.put(player, player.match(dealer)));
 
         return new GameResult(result);

@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Player;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class GameResult {
     private final Map<Player, ResultType> results;
 
     public GameResult(Map<Player, ResultType> results) {
-        this.results = new HashMap<>(results);
+        this.results = new LinkedHashMap<>(results);
     }
 
     public Map<ResultType, Integer> getDealerStatistics() {
@@ -24,7 +25,7 @@ public class GameResult {
     }
 
     public Map<Player, ResultType> unwrap() {
-        return new HashMap<>(results);
+        return new LinkedHashMap<>(results);
     }
 
     @Override
