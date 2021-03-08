@@ -20,7 +20,7 @@ public class PlayerName {
     }
 
     private void validateEmpty(String name) {
-        if(name.equals(EMPTY)) {
+        if (name.equals(EMPTY)) {
             throw new IllegalArgumentException("올바르지 않은 이름입니다.");
         }
     }

@@ -6,6 +6,9 @@ import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WinnerCountTest {
@@ -13,7 +16,8 @@ public class WinnerCountTest {
     @DisplayName("우승자 계산 확인")
     void calculateResult() {
         WinnerCount winnerCount = new WinnerCount();
-        Players players = new Players("pobi,jason,cu", new Dealer());
+        List<String> input = Arrays.asList("pobi", "jason", "cu");
+        Players players = new Players(input, new Dealer());
         for (Player player : players.getPlayers()) {
             player.matchResult(WinnerFlag.LOSE);
         }

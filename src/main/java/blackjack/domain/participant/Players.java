@@ -7,22 +7,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.participant.Gamer.COMMA_DELIMITER;
-
 public class Players {
     private final List<Player> players;
     private final Gamer dealer;
 
-    public Players(String value, Dealer dealer) {
-        this.players = splitPlayers(value);
+    public Players(List<String> value, Dealer dealer) {
+        this.players = createPlayers(value);
         this.dealer = dealer;
     }
 
-    private List<Player> splitPlayers(String value) {
+    private List<Player> createPlayers(List<String> value) {
         List<Player> splitPlayers = new ArrayList<>();
-        for (String name : value.split(COMMA_DELIMITER)) {
-            Player player = new Player(name);
-            splitPlayers.add(player);
+        for (String name : value) {
+            splitPlayers.add(new Player(name));
         }
         return splitPlayers;
     }

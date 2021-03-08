@@ -4,6 +4,9 @@ import blackjack.domain.game.GameManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,7 +14,8 @@ public class GameManagerTest {
     @Test
     @DisplayName("모든 플레이어에게 카드 주는지 확인")
     void giveAllPlayersCard() {
-        Players players = new Players("pobi,jason", new Dealer());
+        List<String> input = Arrays.asList("pobi", "jason");
+        Players players = new Players(input, new Dealer());
         GameManager gameManager = new GameManager(players);
         gameManager.giveCards();
         for (Player player : players.getPlayers()) {
