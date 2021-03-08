@@ -11,10 +11,15 @@ public class Dealer implements Player {
 
     private final Name name;
     private final Cards cards;
+    private int betMoney;
 
     public Dealer() {
         name = new Name("딜러");
         cards = new Cards();
+    }
+
+    public void bet(int money) {
+        betMoney = money;
     }
 
     public boolean ableToDraw() {
@@ -34,11 +39,6 @@ public class Dealer implements Player {
         }
 
         return WinOrLose.LOSE;
-    }
-
-    @Override
-    public void initializeCards(final Deck deck) {
-        cards.add(deck.draw());
     }
 
     @Override

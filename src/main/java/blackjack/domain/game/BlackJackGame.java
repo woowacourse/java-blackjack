@@ -73,4 +73,7 @@ public class BlackJackGame {
         return gamblers;
     }
 
+    public void bet(Gambler gambler, int money) {
+        gambler.bet(money);
+    }
 }

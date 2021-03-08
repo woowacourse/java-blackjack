@@ -6,9 +6,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 public interface Player {
-
-    void initializeCards(Deck deck);
-
     void receiveCard(Card card);
 
     Name getName();
