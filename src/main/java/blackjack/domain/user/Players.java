@@ -18,7 +18,7 @@ public class Players {
 
     private List<String> makePlayerName(String input) {
         List<String> playerNames = new ArrayList<>();
-        for (String value : input.split(DELIMITER, -1)) {
+        for (String value : input.split(DELIMITER)) {
             value = value.trim();
             validateDuplicate(playerNames, value);
             playerNames.add(value);
