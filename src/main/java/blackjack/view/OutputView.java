@@ -18,10 +18,12 @@ public class OutputView {
     private static final String SCORE_FORMAT = " - 결과: ";
     private static final String BLANK = " ";
 
-    public static void printInitGame(final List<Player> players) {
+    public static void printInitGame(final List<Player> players, Dealer dealer) {
         System.out.print(NEW_LINE);
         System.out.printf(INIT_GAME_FORMAT, joinPlayerNames(players));
         System.out.print(NEW_LINE);
+        OutputView.printDealerHand(dealer);
+        OutputView.printPlayersHand(players);
     }
 
     private static String joinPlayerNames(final List<Player> players) {
@@ -84,7 +86,7 @@ public class OutputView {
             .append(HAND_FORMAT)
             .append(joinCards(dealer.getHand()))
             .append(NEW_LINE);
-        System.out.print(sb);
+        System.out.println(sb);
     }
 
     private static String joinCards(final List<Card> cards) {
@@ -98,7 +100,7 @@ public class OutputView {
     public static void printDealerHit() {
         System.out.print(NEW_LINE);
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_HIT_LIMIT);
-        System.out.println(NEW_LINE);
+        System.out.print(NEW_LINE);
     }
 
     public static void printGameResult(GameResultDto gameResultDto) {

@@ -24,16 +24,13 @@ public class BlackjackController {
 
     private void initGame(Dealer dealer, Players players) {
         BlackjackManager.initGame(players, dealer);
-        OutputView.printInitGame(players.toList());
-        OutputView.printDealerHand(dealer);
-        OutputView.printPlayersHand(players.toList());
+        OutputView.printInitGame(players.toList(), dealer);
     }
 
     private void playBlackjack(Dealer dealer, Players players) {
         for (Player player : players.toList()) {
             playHit(player, dealer);
         }
-
         while (!dealer.isOverLimitScore()) {
             dealer.receiveCard(dealer.drawCard());
             OutputView.printDealerHit();
