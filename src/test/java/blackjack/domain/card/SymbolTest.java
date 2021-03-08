@@ -44,7 +44,7 @@ class SymbolTest {
         assertThat(isAce).isFalse();
     }
 
-    @DisplayName("점수가 11점일 때 에이스가 1개 있으면 보너스 +10점 추가")
+    @DisplayName("점수가 11점 이하일 때 에이스가 1개 있으면 보너스 +10점 추가")
     @Test
     void calculateAceBonusScore_10() {
         int bonusScore = Symbol.ACE.calculateAceBonusScore(11, 1);
@@ -52,7 +52,7 @@ class SymbolTest {
         assertThat(bonusScore).isEqualTo(10);
     }
 
-    @DisplayName("점수가 12점일 때 에이스가 1개 있으면 보너스 점수는 0점")
+    @DisplayName("점수가 12점 이상일 때 에이스가 1개 있으면 보너스 점수는 0점")
     @Test
     void calculateAceBonusScore_0() {
         int bonusScore = Symbol.ACE.calculateAceBonusScore(12, 1);

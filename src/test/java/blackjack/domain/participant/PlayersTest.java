@@ -41,9 +41,8 @@ class PlayersTest {
             dummyBettingMoneys.add(10);
         }
 
-        assertThatCode(() -> {
-            Players.of(playerNames, dummyBettingMoneys);
-        }).isInstanceOf(IllegalArgumentException.class)
+        assertThatCode(() -> Players.of(playerNames, dummyBettingMoneys))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 참가자의 수는 딜러 제외 최소 1명 최대 7명입니다.");
     }
 
@@ -53,9 +52,8 @@ class PlayersTest {
         List<String> playerNames = Arrays.asList("a1", "a2");
         List<Integer> bettingMoneys = Arrays.asList(1, 2, 3);
 
-        assertThatCode(() -> {
-            Players.of(playerNames, bettingMoneys);
-        }).isInstanceOf(IllegalArgumentException.class)
+        assertThatCode(() -> Players.of(playerNames, bettingMoneys))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력된 참가자의 이름 개수와 배팅 금액 개수가 일치하지 않습니다.");
     }
 
@@ -65,9 +63,8 @@ class PlayersTest {
         List<String> duplicatedPlayers = Arrays.asList("jason", "jason");
         List<Integer> dummyBettingMoneys = Arrays.asList(1, 2);
 
-        assertThatCode(() -> {
-            Players.of(duplicatedPlayers, dummyBettingMoneys);
-        }).isInstanceOf(IllegalArgumentException.class)
+        assertThatCode(() -> Players.of(duplicatedPlayers, dummyBettingMoneys))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자들의 이름은 중복이 없어야 합니다.");
     }
 
@@ -90,10 +87,10 @@ class PlayersTest {
         Players players = Players.of(Arrays.asList("pobi", "jason"), Arrays.asList(1000, 2000));
         Dealer dealer = new Dealer();
         List<Player> playerList = players.getPlayers();
+
         playerList.get(0).receiveCards(new Cards(CARDS_BLACKJACK));
         playerList.get(1).receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));
-
         Map<String, Integer> profitStatistics = players.aggregateProfitMoneyByPlayer(dealer);
 
         assertThat(profitStatistics.keySet()).containsExactly("pobi", "jason");

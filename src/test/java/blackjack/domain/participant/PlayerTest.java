@@ -69,9 +69,8 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
     void isValidBettingMoney(int bettingMoney) {
-        assertThatCode(() -> {
-            new Player("jason", bettingMoney);
-        }).isInstanceOf(IllegalArgumentException.class)
+        assertThatCode(() -> new Player("jason", bettingMoney))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액은 양의 정수여야합니다.");
     }
 

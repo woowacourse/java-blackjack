@@ -21,16 +21,14 @@ class DealerTest {
         return Stream.of(
                 Arguments.of(Arrays.asList(
                         new Card(Symbol.ACE, Shape.HEART),
-                        new Card(Symbol.FIVE, Shape.HEART)
-                ), true), // 합 : 16
+                        new Card(Symbol.FIVE, Shape.HEART)), true), // 합 : 16
                 Arguments.of(Arrays.asList(
                         new Card(Symbol.ACE, Shape.HEART),
-                        new Card(Symbol.SIX, Shape.HEART)
-                ), false) // 합 : 17
+                        new Card(Symbol.SIX, Shape.HEART)), false) // 합 : 17
         );
     }
 
-    @DisplayName("딜러는 ace를 11로 계산하고, 카드의 합계가 16이하일 때 1장 더 받을 수 있다.")
+    @DisplayName("딜러는 ace를 11로 계산하고, 카드의 합계가 16이하일 때 추가로 카드를 받을 수 있다.")
     @ParameterizedTest
     @MethodSource("generateData")
     void isAbleToReceiveCard(List<Card> inputCards, boolean result) {

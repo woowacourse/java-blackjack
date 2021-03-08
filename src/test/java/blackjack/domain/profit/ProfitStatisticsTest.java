@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,10 +52,10 @@ class ProfitStatisticsTest {
     void createGameResult() {
         ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
 
-        Collection<Integer> values = profitStatistics.getProfitStatistics()
-                .values();
+        Map<String, Integer> map = profitStatistics.getProfitStatistics();
 
-        assertThat(values).containsExactly(1500, -2000);
+        assertThat(map.keySet()).containsExactly("pobi", "jason");
+        assertThat(map.values()).containsExactly(1500, -2000);
     }
 
     @DisplayName("딜러의 손익은 플레이어 손익의 합 * -1과 같다.")
