@@ -5,7 +5,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dealer extends Playable {
+public class Dealer extends Participant {
     public static final int DEALER_HIT = 16;
 
     public Dealer(List<Card> cards) {
@@ -21,7 +21,7 @@ public class Dealer extends Playable {
         Map<Outcome, Integer> outcomes = new EnumMap<>(Outcome.class);
         Arrays.stream(Outcome.values())
                 .forEach(outcome -> outcomes.put(outcome, 0));
-        for (Playable player : players.values()) {
+        for (Player player : players.values()) {
             Outcome outcome = result(player.sumCardsForResult());
             outcomes.put(outcome, outcomes.get(outcome) + 1);
         }

@@ -2,13 +2,13 @@ package blackjack.domain;
 
 import java.util.List;
 
-public abstract class Playable {
+public abstract class Participant {
     public static final int BLACKJACK = 21;
     public static final int ACE_DIFFERENCE = 10;
     private final String name;
     private final Hand hand;
 
-    public Playable(String name, List<Card> cards) {
+    public Participant(String name, List<Card> cards) {
         this.name = name;
         this.hand = new Hand(cards);
     }

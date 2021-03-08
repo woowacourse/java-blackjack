@@ -13,7 +13,7 @@ public class RandomCardDeck implements CardDeck {
         LinkedList<Card> cardsValue = new LinkedList<>();
         Arrays.stream(Suits.values())
                 .forEach(suit -> Arrays.stream(Denominations.values())
-                    .forEach(denomination -> cardsValue.add(Card.from(denomination.getName() + suit.getName()))));
+                        .forEach(denomination -> cardsValue.add(Card.from(denomination.getName() + suit.getName()))));
         Collections.shuffle(cardsValue);
         this.cards = cardsValue;
     }

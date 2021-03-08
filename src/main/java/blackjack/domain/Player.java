@@ -5,7 +5,7 @@ import blackjack.utils.CardDeck;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Player extends Playable {
+public class Player extends Participant {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z|A-Z]+");
 
     public Player(String name, CardDeck cardDeck) {

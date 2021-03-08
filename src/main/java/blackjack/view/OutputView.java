@@ -22,8 +22,8 @@ public class OutputView {
         }
     }
 
-    private static String cardsOf(Playable playable) {
-        return playable.getName() + cardsToString(playable.getUnmodifiableCards());
+    private static String cardsOf(Participant participant) {
+        return participant.getName() + cardsToString(participant.getUnmodifiableCards());
     }
 
     private static String cardsToString(List<Card> cards) {
@@ -34,7 +34,7 @@ public class OutputView {
 
     private static String playerNames(Players players) {
         return players.values().stream()
-                .map(Playable::getName)
+                .map(Participant::getName)
                 .collect(Collectors.joining(", "));
     }
 
@@ -66,7 +66,7 @@ public class OutputView {
         }
     }
 
-    private static String resultOf(Playable playable) {
-        return cardsOf(playable) + " - 결과: " + playable.sumCardsForResult();
+    private static String resultOf(Participant participant) {
+        return cardsOf(participant) + " - 결과: " + participant.sumCardsForResult();
     }
 }
