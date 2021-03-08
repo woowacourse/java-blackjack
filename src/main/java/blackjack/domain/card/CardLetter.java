@@ -29,6 +29,10 @@ public enum CardLetter {
         this(letter, value, value);
     }
 
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
+
     public String getLetter() {
         return this.letter;
     }
@@ -39,9 +43,5 @@ public enum CardLetter {
 
     public int getExtraValue() {
         return this.extraValue;
-    }
-
-    public boolean isAce() {
-        return this.equals(ACE);
     }
 }

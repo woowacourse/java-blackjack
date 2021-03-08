@@ -22,7 +22,7 @@ public class Players {
     public static Players of(final List<String> playerName) {
         validateDuplicate(playerName);
         final List<Player> players = playerName.stream()
-                .map(name -> new Player(name))
+                .map(Player::new)
                 .collect(Collectors.toList());
         return new Players(players);
     }
