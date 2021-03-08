@@ -41,20 +41,14 @@ public abstract class Playable {
         if (counterpart <= BLACKJACK && playerSum > BLACKJACK) {
             return true;
         }
-        if (counterpart <= BLACKJACK && counterpart > playerSum) {
-            return true;
-        }
-        return false;
+        return counterpart <= BLACKJACK && counterpart > playerSum;
     }
 
     private boolean win(int counterpart, int playerSum) {
         if (counterpart > BLACKJACK && playerSum <= BLACKJACK) {
             return true;
         }
-        if (playerSum <= BLACKJACK && counterpart < playerSum) {
-            return true;
-        }
-        return false;
+        return playerSum <= BLACKJACK && counterpart < playerSum;
     }
 
     public void takeCard(Card card) {
