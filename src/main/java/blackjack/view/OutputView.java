@@ -32,7 +32,7 @@ public class OutputView {
                 .map(dto -> dto.getPlayerName())
                 .collect(Collectors.joining(DELIMITER));
         System.out.println(String.format(TWO_CARDS_DEAL_OUT_MESSAGE, dealerName, playerNames));
-        System.out.println(makeParticipantStatusMessage(dealerName, roundStatusDto.getDealerCards()));
+        System.out.println(makeParticipantStatusMessage(dealerName, roundStatusDto.getSingleDealerCards()));
         playerStatusDto.forEach(dto -> System.out.println(makeParticipantStatusMessage(dto.getPlayerName(), dto.getPlayerCards())));
     }
 

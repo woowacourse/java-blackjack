@@ -3,6 +3,7 @@ package blackjack.view.dto;
 import blackjack.domain.Round;
 import blackjack.domain.card.Card;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,4 +44,9 @@ public class RoundStatusDto {
     public List<PlayerStatusDto> getPlayerStatusDto() {
         return playerStatusDto;
     }
+
+    public List<Card> getSingleDealerCards() {
+        return Collections.singletonList(dealerCards.get(0));
+    }
+
 }
