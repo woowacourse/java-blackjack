@@ -11,12 +11,7 @@ import java.util.stream.Collectors;
 public class Application {
 
     public static void main(String[] args) {
-        List<Card> wholeCards = Arrays.stream(Denomination.values())
-            .flatMap(denomination -> Arrays.stream(Shape.values())
-                .map(shape -> Card.of(denomination, shape)))
-            .collect(Collectors.toList());
-
-        BlackjackController blackjackController = new BlackjackController(wholeCards);
+        BlackjackController blackjackController = new BlackjackController();
         blackjackController.play();
     }
 
