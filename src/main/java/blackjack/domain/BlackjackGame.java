@@ -29,8 +29,8 @@ public class BlackjackGame {
                 .forEach(player -> player.receiveCards(Deck.popTwo()));
     }
 
-    public boolean isNotGameOver(Player player) {
-        return player.isAbleToHit();
+    public boolean isNotGameOver(User user) {
+        return user.isAbleToHit();
     }
 
     public void hit(User user) {
