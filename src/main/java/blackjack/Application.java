@@ -1,10 +1,15 @@
 package blackjack;
 
-import blackjack.controller.GameController;
+import blackjack.controller.BlackJackController;
+import blackjack.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        new GameController().run();
+        try {
+            new BlackJackController().run();
+        } catch (IllegalArgumentException exception) {
+            OutputView.printExceptionMessage(exception);
+        }
     }
 }
