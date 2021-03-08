@@ -9,6 +9,8 @@ import blakcjack.domain.outcome.OutcomeStatistics;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static blakcjack.view.OutputView.DELIMITER;
+
 public class Players {
 	private final List<Player> players = new ArrayList<>();
 
@@ -33,12 +35,6 @@ public class Players {
 		return Collections.unmodifiableList(players);
 	}
 
-	public String getConcatenatedNames() {
-		return players.stream()
-				.map(Participant::getName)
-				.collect(Collectors.joining(", "));
-	}
-
 	public OutcomeStatistics getOutcomeStatisticsBy(final Dealer dealer) {
 		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
@@ -47,5 +43,11 @@ public class Players {
 			playersOutcome.put(player.getName(), playerOutcome);
 		}
 		return new OutcomeStatistics(playersOutcome);
+	}
+
+	public String getConcatenatedNames() {
+		return players.stream()
+				.map(Participant::getName)
+				.collect(Collectors.joining(DELIMITER));
 	}
 }

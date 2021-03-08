@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static blakcjack.view.OutputView.DELIMITER;
+
 public class Cards {
 	public static final int ACE_ADDITIONAL_VALUE = 10;
 	public static final int BLACKJACK_VALUE = 21;
@@ -47,10 +49,10 @@ public class Cards {
 		return cards.get(FIRST_CARD_POSITION);
 	}
 
-	public String getConcatenatedCardsInformation() {
+	public String getConcatenatedCards() {
 		return cards.stream()
 				.map(Card::getCardInformation)
-				.collect(Collectors.joining(", "));
+				.collect(Collectors.joining(DELIMITER));
 	}
 
 	@Override

@@ -12,9 +12,8 @@ public class Player extends Participant {
 	}
 
 	@Override
-	public String getInitialHandInformation() {
-		return super.getCards()
-				.getConcatenatedCardsInformation();
+	public String getInitialHand() {
+		return cards.getConcatenatedCards();
 	}
 
 	public Outcome judgeOutcomeByBust() {
