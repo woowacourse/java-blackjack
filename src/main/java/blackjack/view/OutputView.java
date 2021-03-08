@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String ERROR_MARK = "[Error] ";
     private static final String NEWLINE = System.getProperty("line.separator");
-    private static final String DISTRIBUTE_MESSAGE = "딜러와 %s에게 2장의 카드를 나누어주었습니다.";
+    private static final String DISTRIBUTE_MESSAGE = "%s와 %s에게 2장의 카드를 나누어주었습니다.";
     private static final String DEALER_CARD_STATUS_FORMAT = "%s: %s";
     private static final String PLAYER_CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
-    private static final String DEALER_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_MORE_CARD_MESSAGE = "%s는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_GAME_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
+    private static final String DEALER_GAME_RESULT_FORMAT = "%s: %d승 %d무 %d패";
 
     private OutputView() {
     }
@@ -33,12 +33,12 @@ public class OutputView {
         System.out.print(NEWLINE);
     }
 
-    public static void showDistributionMessage(final List<Player> players) {
-        final String playerStatus = players.stream()
+    public static void showDistributionMessage(final Dealer dealer, final List<Player> players) {
+        final String playerNames = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         showNewLine();
-        System.out.printf(DISTRIBUTE_MESSAGE, playerStatus);
+        System.out.printf(DISTRIBUTE_MESSAGE, dealer.getName(), playerNames);
         showNewLine();
     }
 
@@ -74,10 +74,10 @@ public class OutputView {
         return card.getCardLetter().getLetter() + card.getCardSuit().getType();
     }
 
-    public static void showDealerGameResult(final Map<String, Integer> dealerResult) {
+    public static void showDealerGameResult(final Dealer dealer, final Map<String, Integer> dealerResult) {
         showNewLine();
         System.out.println(GAME_RESULT_MESSAGE);
-        System.out.printf(DEALER_GAME_RESULT_FORMAT,
+        System.out.printf(DEALER_GAME_RESULT_FORMAT, dealer.getName(),
                 dealerResult.getOrDefault(Result.WIN, 0),
                 dealerResult.getOrDefault(Result.DRAW, 0),
                 dealerResult.getOrDefault(Result.LOSE, 0));
@@ -94,8 +94,8 @@ public class OutputView {
         System.out.println(BUST_MESSAGE);
     }
 
-    public static void showDealerGotMoreCard() {
+    public static void showDealerGotMoreCard(final Dealer dealer) {
         showNewLine();
-        System.out.println(DEALER_MORE_CARD_MESSAGE);
+        System.out.printf(DEALER_MORE_CARD_MESSAGE, dealer.getName());
     }
 }

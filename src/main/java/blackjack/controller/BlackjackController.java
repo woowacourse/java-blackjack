@@ -37,7 +37,7 @@ public class BlackjackController {
         for (final Player player : players) {
             player.receiveInitialCard(cardDeck);
         }
-        OutputView.showDistributionMessage(players);
+        OutputView.showDistributionMessage(dealer, players);
         OutputView.showDealerCard(dealer);
         for (final Player player : players) {
             OutputView.showPlayerCard(player);
@@ -64,7 +64,7 @@ public class BlackjackController {
 
     private void dealerGameProgress(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.checkMoreCardAvailable()) {
-            OutputView.showDealerGotMoreCard();
+            OutputView.showDealerGotMoreCard(dealer);
             dealer.receiveAdditionalCard(cardDeck.distribute());
         }
     }
@@ -81,7 +81,7 @@ public class BlackjackController {
         final Result result = new Result(players, dealer);
         final Map<String, Integer> dealerResult = result.checkDealerResult();
         final Map<Player, String> playerResult = result.checkPlayerResult();
-        OutputView.showDealerGameResult(dealerResult);
+        OutputView.showDealerGameResult(dealer, dealerResult);
         OutputView.showPlayerGameResult(playerResult);
     }
 }

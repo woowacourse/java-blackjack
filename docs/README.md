@@ -25,8 +25,8 @@
 - [x] 게임 결과를 관리하는 domain 클래스 만들기
 - [x] controller 내의 view 로직 제거하기
 - [x] domain 내의 view 로직 제거하기
-- [ ] 메서드명에 알맞게 return 타입 수정하기
-- [ ] return 타입에 알맞게 메서드명 수정하기
+- [x] 메서드명에 알맞게 return 타입 수정하기
+- [x] return 타입에 알맞게 메서드명 수정하기
 - [x] 주석보다는 코드로 의도 나타내기
 - [x] List<Card>를 일급 컬렉션으로 관리하기
 - [x] dealer의 이름 고정시키기
