@@ -6,6 +6,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Symbol;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
+import blackjack.util.Pair;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ class GamersTest {
     @BeforeEach
     void init() {
         gamers = new Gamers(Stream.of("pobi", "json")
-                .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                .map(name -> new Pair<>(name, 1))
                 .collect(toList()));
     }
 
@@ -34,7 +35,7 @@ class GamersTest {
     void createGamers_GamerDuplicateException() {
         Assertions.assertThatThrownBy(
                 () -> new Gamers(Stream.of("nabom", "nabom")
-                        .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                        .map(name -> new Pair<>(name, 1))
                         .collect(toList()))
         ).isInstanceOf(GamerDuplicateException.class);
     }
@@ -42,7 +43,7 @@ class GamersTest {
     @Test
     void createGamers() {
         Gamers gamers = new Gamers(Stream.of("nabom", "neozal")
-                .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                .map(name -> new Pair<>(name, 1))
                 .collect(toList()));
         assertThat(gamers.getGamers().size()).isEqualTo(2);
     }

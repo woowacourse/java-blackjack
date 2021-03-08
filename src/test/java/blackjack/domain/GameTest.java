@@ -8,6 +8,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.exception.PlayerNotFoundException;
+import blackjack.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class GameTest {
                 new Cards(cards),
                 dealer,
                 new Gamers(Stream.of("nabom", "neozal")
-                        .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                        .map(name -> new Pair<>(name, 1))
                         .collect(toList()))
         );
     }
@@ -72,17 +73,20 @@ class GameTest {
     @Test
     @DisplayName("게임 결과를 반환한다.")
     void getGamerResult() {
-        Map<String, String> gameResult = game.getGamerResult();
+        Map<String, Pair<String, Integer>> gameResult = game.getGamerResult();
 
         assertThat(gameResult.keySet()).isEqualTo(new HashSet<>(Arrays.asList("nabom", "neozal")));
-        assertThat(gameResult.values()).containsExactly(GameResult.LOSE.getMessage(), GameResult.LOSE.getMessage());
+        assertThat(gameResult.values()).containsExactly(
+                new Pair<>(GameResult.LOSE.getMessage(), -1),
+                new Pair<>(GameResult.LOSE.getMessage(), -1)
+        );
 
     }
 
     @Test
     @DisplayName("딜러의 결과를 반환한다.")
     void getDealerResult() {
-        assertThat(game.getDealerResult()).containsExactly(GameResult.WIN.getMessage(), GameResult.WIN.getMessage());
+        assertThat(game.getDealerResult().getKey()).containsExactly(GameResult.WIN.getMessage(), GameResult.WIN.getMessage());
     }
 
     @Test

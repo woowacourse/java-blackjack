@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.util.Pair;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.PlayerDto;
 
@@ -65,10 +66,10 @@ public class OutputView {
         }
     }
 
-    public static void printResult(List<String> dealerResult,
-        Map<String, String> gamerResult) {
+    public static void printResult(Pair<List<String>, Integer> dealerResult,
+        Map<String, Pair<String, Integer>> gamerResult) {
         System.out.println(FINAL_RESULT);
-        System.out.println(dealerResultToString(dealerResult));
+        System.out.println(dealerResultToString(dealerResult.getKey()));
 
         gamerResult.forEach(
             (name, result) -> System.out.printf(PLAYER_FINAL_RESULT, name, result));

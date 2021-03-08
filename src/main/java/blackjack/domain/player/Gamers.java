@@ -3,41 +3,21 @@ package blackjack.domain.player;
 import blackjack.domain.card.Cards;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
+import blackjack.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 public class Gamers {
 
-    public static class NameAndBettingMoney {
-
-        private final String name;
-        private final int bettingMoney;
-
-        public NameAndBettingMoney(String nmae, int bettingMoney) {
-            this.name = nmae;
-            this.bettingMoney = bettingMoney;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getBettingMoney() {
-            return bettingMoney;
-        }
-
-    }
-
     private final List<Player> gamers;
 
-    public Gamers(List<NameAndBettingMoney> nameAndBettingMonies) {
+    public Gamers(List<Pair<String, Integer>> nameAndBettingMonies) {
         validateDuplicate(nameAndBettingMonies.stream()
-                .map(NameAndBettingMoney::getName)
+                .map(Pair::getKey)
                 .collect(toList()));
 
         this.gamers = nameAndBettingMoneyToGamer(nameAndBettingMonies);
@@ -49,10 +29,10 @@ public class Gamers {
         }
     }
 
-    private List<Player> nameAndBettingMoneyToGamer(List<NameAndBettingMoney> nameAndBettingMonies) {
+    private List<Player> nameAndBettingMoneyToGamer(List<Pair<String, Integer>> nameAndBettingMonies) {
         return nameAndBettingMonies.stream()
-                .map(nameAndBettingMoney -> new Gamer(nameAndBettingMoney.getName(),
-                        nameAndBettingMoney.getBettingMoney()))
+                .map(nameAndBettingMoney -> new Gamer(nameAndBettingMoney.getKey(),
+                        nameAndBettingMoney.getValue()))
                 .collect(Collectors.toList());
     }
 

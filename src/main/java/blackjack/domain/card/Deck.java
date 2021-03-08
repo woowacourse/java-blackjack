@@ -2,11 +2,10 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import static blackjack.domain.Game.WINNING_NUMBER;
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 
 public class Deck {
 

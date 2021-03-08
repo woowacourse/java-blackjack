@@ -43,6 +43,10 @@ public abstract class Player {
         return name;
     }
 
+    public int getBettingMoney() {
+        return bettingMoney;
+    }
+
     public boolean isSameName(String name) {
         return getName().equals(name);
     }

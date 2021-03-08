@@ -7,6 +7,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.util.DtoAssembler;
+import blackjack.util.Pair;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerDto;
@@ -41,9 +42,9 @@ public class BlackjackController {
         );
     }
 
-    private List<Gamers.NameAndBettingMoney> getPlayerInformationFromUser() {
+    private List<Pair<String, Integer>> getPlayerInformationFromUser() {
         return InputView.getGamerNamesFromUser().stream()
-                .map(name -> new Gamers.NameAndBettingMoney(name, InputView.getBettingMoneyFromUser(name)))
+                .map(name -> new Pair<>(name, InputView.getBettingMoneyFromUser(name)))
                 .collect(toList());
     }
 
