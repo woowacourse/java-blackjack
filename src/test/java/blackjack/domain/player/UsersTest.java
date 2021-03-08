@@ -86,7 +86,7 @@ public class UsersTest {
     @DisplayName("모든 유저들 랜덤카드 2개 뽑기 테스트")
     @Test
     void usersDrawRandomTwoCards() {
-        Users users1 = new Users("pobi,jason,inbi,");
+        Users users1 = new Users("pobi,jason,inbi");
         users1.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(0));
 
         users1.drawRandomTwoCards(Cards.createAllShuffledCards());
