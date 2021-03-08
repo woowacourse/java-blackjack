@@ -10,11 +10,11 @@ public enum GameResult {
         this.resultMessage = resultMessage;
     }
 
-    public static String getWinLoseResult(Player player, Dealer dealer) {
-        int playerScore = player.calculateResult();
-        int dealerScore = dealer.calculateResult();
+    public static String getPlayerGameResultAgainstDealer(Player player, Dealer dealer) {
+        int playerScore = player.calculateCardsScoreResult();
+        int dealerScore = dealer.calculateCardsScoreResult();
 
-        if (player.isBurst() || dealerScore >= playerScore) {
+        if (player.isBurst() || (!dealer.isBurst() && dealerScore >= playerScore)) {
             return GameResult.LOSE.resultMessage;
         }
 

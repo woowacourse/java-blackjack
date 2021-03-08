@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -24,19 +25,19 @@ public class Game {
         return new Game(players);
     }
 
-    public void setUpTwoCards() {
+    private void setUpTwoCards() {
         for (int i = 0; i < SET_UP_CARD_COUNT; i++) {
             players.addCardToPlayer();
-            dealer.addCard();
+            dealer.addCard(Deck.draw());
         }
     }
 
     public void giveCardToPlayer(Player player) {
-        player.addCard();
+        player.addCard(Deck.draw());
     }
 
     public void giveCardToDealer() {
-        dealer.addCard();
+        dealer.addCard(Deck.draw());
     }
 
     public boolean isPlayerDrawable(Player player) {

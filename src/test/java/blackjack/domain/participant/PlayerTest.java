@@ -15,12 +15,10 @@ class PlayerTest {
     private static final Card THREE_HEART = new Card(CardNumber.THREE, Shape.HEART);
     private static final Card ACE_CLOVER = new Card(CardNumber.ACE, Shape.CLOVER);
     private Player player;
-    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         player = new Player("bob");
-        dealer = new Dealer();
     }
 
     @Test
@@ -35,30 +33,5 @@ class PlayerTest {
         player.addCard(TWO_DIAMOND);
         player.addCard(THREE_HEART);
         assertFalse(player.isBlackJack());
-    }
-
-    @Test
-    void compareWithDealerAndWin() {
-        player.addCard(JACK_SPADE);
-        player.addCard(JACK_SPADE);
-
-        dealer.addCard(TWO_DIAMOND);
-        dealer.addCard(THREE_HEART);
-        dealer.addCard(ACE_CLOVER);
-
-        player.fight(dealer);
-        assertThat(player.getWinCount()).isEqualTo(1);
-    }
-
-    @Test
-    void compareWithDealerAndLose() {
-        player.addCard(JACK_SPADE);
-
-        dealer.addCard(TWO_DIAMOND);
-        dealer.addCard(THREE_HEART);
-        dealer.addCard(ACE_CLOVER);
-
-        player.fight(dealer);
-        assertThat(player.getLoseCount()).isEqualTo(1);
     }
 }

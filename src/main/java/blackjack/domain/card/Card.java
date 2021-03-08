@@ -13,7 +13,7 @@ public class Card {
         return CardNumber.ACE.equals(cardNumber);
     }
 
-    public int getValue() {
+    public int getScore() {
         return cardNumber.getScore();
     }
 

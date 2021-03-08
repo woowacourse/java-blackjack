@@ -10,11 +10,7 @@ public class Player extends Participant {
     }
 
     public boolean isBlackJack() {
-        return calculateResult() == Game.BLACKJACK_NUMBER;
-    }
-
-    public boolean isBurst() {
-        return calculateResult() > Game.BLACKJACK_NUMBER;
+        return calculateCardsScoreResult() == Game.BLACKJACK_NUMBER;
     }
 
     @Override

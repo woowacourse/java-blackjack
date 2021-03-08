@@ -71,7 +71,7 @@ public class OutputView {
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(", "));
-        System.out.printf(FINISHED_CARD_INFO_FORMAT, participant.getName(), cardInfo, participant.calculateResult());
+        System.out.printf(FINISHED_CARD_INFO_FORMAT, participant.getName(), cardInfo, participant.calculateCardsScoreResult());
     }
 
     public static void printPlayerGameResult(String dealerGameResult,

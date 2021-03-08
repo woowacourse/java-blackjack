@@ -7,7 +7,7 @@ public class Dealer extends Participant {
     private static final int STAY_THRESHOLD = 17;
 
     public boolean isStay() {
-        return calculateResult() >= STAY_THRESHOLD;
+        return calculateCardsScoreResult() >= STAY_THRESHOLD;
     }
 
     public String getGameResult(Map<String, String> playersGameResult) {

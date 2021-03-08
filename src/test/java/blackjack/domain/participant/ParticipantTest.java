@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParticipantTest {
     private static final Card TWO_DIAMOND = new Card(CardNumber.TWO, Shape.DIAMOND);
@@ -47,15 +49,6 @@ public class ParticipantTest {
     }
 
     @Test
-    void calculateCardsTest() {
-        participant.addCard(TWO_DIAMOND);
-        participant.addCard(JACK_SPADE);
-        participant.addCard(THREE_HEART);
-
-        assertThat(participant.calculateCards()).isEqualTo(15);
-    }
-
-    @Test
     @DisplayName("ACE 개수 세기")
     void countAce() {
         participant.addCard(ACE_CLOVER);
@@ -65,13 +58,14 @@ public class ParticipantTest {
     }
 
     @ParameterizedTest
+    @DisplayName("주어진 카드들 점수 합 확인")
     @MethodSource("provideCardsAndExpectedResult")
     void calculateResultTest(List<Card> cards, int expectedResult) {
         for (Card card : cards) {
             participant.addCard(card);
         }
 
-        assertThat(participant.calculateResult()).isEqualTo(expectedResult);
+        assertThat(participant.calculateCardsScoreResult()).isEqualTo(expectedResult);
     }
 
     @Test

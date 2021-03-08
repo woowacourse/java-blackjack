@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,13 +19,13 @@ public class Players {
 
     public void addCardToPlayer() {
         for (Player player : players) {
-            player.addCard();
+            player.addCard(Deck.draw());
         }
     }
 
     public Map<String, String> getGameResults(final Dealer dealer) {
         return players.stream()
-                .collect(toMap(Player::getName, player -> GameResult.getWinLoseResult(player, dealer)));
+                .collect(toMap(Player::getName, player -> GameResult.getPlayerGameResultAgainstDealer(player, dealer)));
     }
 
     public List<Player> getPlayers() {

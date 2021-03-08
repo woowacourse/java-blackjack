@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameTest {
     final List<String> names = Arrays.asList("wannte", "bepoz");
@@ -29,31 +28,28 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("카드 두장 셋업")
+    @DisplayName("카드 두 장 세팅됐는지 확인")
     void setUpTwoCards() {
-        game.setUpTwoCards();
         for (Player player : game.getPlayers()) {
-            assertThat(player.getCards()
-                    .size()).isEqualTo(2);
+            assertThat(player.getCards().size()).isEqualTo(2);
         }
         Dealer dealer = game.getDealer();
-        assertThat(dealer.getCards()
-                .size()).isEqualTo(2);
+        assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
     @Test
-    void giveCardToParticipant() {
-        Player player = game.getPlayers()
-                .get(0);
+    @DisplayName("플레이어에게 카드 지급 확인")
+    void giveCardToPlayerTest() {
+        Player player = game.getPlayers().get(0);
         game.giveCardToPlayer(player);
-        assertThat(player.getCards()
-                .size()).isEqualTo(1);
+        assertThat(player.getCards().size()).isEqualTo(3);
     }
 
     @Test
-    void dealerHitUntilStay() {
-        game.playDealerTurn();
-        assertTrue(game.getDealer()
-                .isStay());
+    @DisplayName("딜러에게 카드 지급 확인")
+    void giveCardToDealerTest() {
+        Dealer dealer = game.getDealer();
+        game.giveCardToDealer();
+        assertThat(dealer.getCards().size()).isEqualTo(3);
     }
 }

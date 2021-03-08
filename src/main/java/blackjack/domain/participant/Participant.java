@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Game;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,12 +13,12 @@ public abstract class Participant {
 
     protected final List<Card> cards = new ArrayList<>();
 
-    public void addCard() {
-        cards.add(Deck.draw());
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
-    public int calculateResult() {
-        int currentCardsScore = calculateCards();
+    public int calculateCardsScoreResult() {
+        int currentCardsScore = calculateCardsScore();
         int possibleLoopCount = countAce();
 
         while (canLowerCardsValue(currentCardsScore, possibleLoopCount)) {
@@ -36,14 +35,18 @@ public abstract class Participant {
                 .count();
     }
 
-    public int calculateCards() {
+    private int calculateCardsScore() {
         return cards.stream()
-                .mapToInt(Card::getValue)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
     private boolean canLowerCardsValue(int score, int remainLoop) {
         return score > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
+    }
+
+    public boolean isBurst() {
+        return calculateCardsScoreResult() > Game.BLACKJACK_NUMBER;
     }
 
     private int lowerValueOfAce(int value) {
