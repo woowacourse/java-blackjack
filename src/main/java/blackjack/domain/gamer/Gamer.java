@@ -28,13 +28,11 @@ public abstract class Gamer {
         return hands.calculate();
     }
 
-    public void isPossibleForPick() {
-        if (hands.isSumNotInLimit()) {
-            throw new IllegalArgumentException("[ERROR] 총 합이 21을 넘으므로 더 이상 뽑을 수 없습니다.");
-        }
+    public boolean canDraw() {
+        return !hands.isBust();
     }
 
-    public boolean hasBlackjack() {
+    public boolean isBlackjack() {
         return hands.isBlackjack();
     }
 

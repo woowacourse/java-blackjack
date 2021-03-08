@@ -26,16 +26,9 @@ public class ResultCalculator {
             return compare(player, dealer);
         }
         if (bothWinningPoint(player, dealer)) {
-            return checkAce(player, dealer);
+            return checkBlackjack(player, dealer);
         }
         return confirmPlayerWinningPoint(player);
-    }
-
-    private static ResultType confirmPlayerWinningPoint(Player player) {
-        if (player.getPoint() == MAX_WINNING_POINT) {
-            return ResultType.WIN;
-        }
-        return ResultType.LOSE;
     }
 
     private static boolean bothWinningPoint(Player player, Dealer dealer) {
@@ -47,20 +40,6 @@ public class ResultCalculator {
                 dealer.getPoint() < MAX_WINNING_POINT;
     }
 
-    private static ResultType checkAce(Player player, Dealer dealer) {
-        if (player.hasBlackjack() && dealer.hasBlackjack()) {
-            return ResultType.DRAW;
-        }
-        if (player.hasBlackjack()) {
-            return ResultType.WIN;
-        }
-        if (dealer.hasBlackjack()) {
-            return ResultType.LOSE;
-        }
-        return ResultType.DRAW;
-    }
-
-
     private static ResultType compare(Player player, Dealer dealer) {
         int compare = Integer.compare(player.getPoint(), dealer.getPoint());
         if (compare < 0) {
@@ -70,5 +49,25 @@ public class ResultCalculator {
             return ResultType.WIN;
         }
         return ResultType.DRAW;
+    }
+
+    private static ResultType checkBlackjack(Player player, Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return ResultType.DRAW;
+        }
+        if (player.isBlackjack()) {
+            return ResultType.WIN;
+        }
+        if (dealer.isBlackjack()) {
+            return ResultType.LOSE;
+        }
+        return ResultType.DRAW;
+    }
+
+    private static ResultType confirmPlayerWinningPoint(Player player) {
+        if (player.getPoint() == MAX_WINNING_POINT) {
+            return ResultType.WIN;
+        }
+        return ResultType.LOSE;
     }
 }

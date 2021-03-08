@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public class Hands {
 
-    private static final int SCORE_LIMIT = 21;
+    private static final int POINT_LIMIT = 21;
     private static final int ACE_CONVERSION = 10;
     public static final int INITIAL_HANDS_SIZE = 2;
 
@@ -28,7 +28,7 @@ public class Hands {
     }
 
     private boolean validateBlackjack() {
-        return calculate() == SCORE_LIMIT;
+        return calculate() == POINT_LIMIT;
     }
 
     public void addCard(Card card) {
@@ -37,7 +37,7 @@ public class Hands {
     }
 
     public int calculate() {
-        int sum = sumWithoutAce() + Denomination.ACE.getPoint() * countAce();
+        int sum = sumWithoutAce() + (Denomination.ACE.getPoint() * countAce());
         if (containsAce()) {
             sum = properSum(sum);
         }
@@ -45,7 +45,7 @@ public class Hands {
     }
 
     private int properSum(int sum) {
-        if (sum + ACE_CONVERSION > SCORE_LIMIT) {
+        if (sum + ACE_CONVERSION > POINT_LIMIT) {
             return sum;
         }
         return sum + ACE_CONVERSION;
@@ -84,7 +84,7 @@ public class Hands {
         return isBlackjack;
     }
 
-    public boolean isSumNotInLimit() {
-        return calculate() > SCORE_LIMIT;
+    public boolean isBust() {
+        return calculate() > POINT_LIMIT;
     }
 }
