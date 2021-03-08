@@ -62,7 +62,7 @@ class PlayersTest {
     void receiveDefaultCards() {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
         Players players = Players.of(Arrays.asList("jason"), Arrays.asList(1000));
-        Participant jason = players.toList()
+        Participant jason = players.getPlayers()
                 .get(0);
 
         players.receiveDefaultCards(cardDeck);

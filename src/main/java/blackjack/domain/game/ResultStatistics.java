@@ -4,7 +4,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class ResultStatistics {
 
     public static ResultStatistics of(Dealer dealer, Players players) {
         Map<String, Integer> profitResultStatistics = new LinkedHashMap<>();
-        players.toList()
+        players.getPlayers()
                 .forEach(player -> profitResultStatistics.put(player.getName(), player.calculateProfitMoney(dealer)));
         return new ResultStatistics(profitResultStatistics);
     }

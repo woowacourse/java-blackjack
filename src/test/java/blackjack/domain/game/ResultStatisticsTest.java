@@ -40,7 +40,7 @@ class ResultStatisticsTest {
     void setup() {
         players = Players.of(Arrays.asList("pobi", "jason"), Arrays.asList(1000, 2000));
         dealer = new Dealer();
-        List<Player> playerList = players.toList();
+        List<Player> playerList = players.getPlayers();
         playerList.get(0).receiveCards(new Cards(CARDS_BLACKJACK));
         playerList.get(1).receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));

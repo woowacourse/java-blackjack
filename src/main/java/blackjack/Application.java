@@ -18,7 +18,7 @@ public class Application {
         CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
         Dealer dealer = new Dealer();
         Players players = generatePlayers();
-        List<Player> playersGroup = players.toList();
+        List<Player> playersGroup = players.getPlayers();
 
         distributeDefaultCards(dealer, players, cardDeck);
         playersGroup.forEach(player -> drawMoreCardForPlayer(player, cardDeck));
@@ -38,7 +38,7 @@ public class Application {
     private static void distributeDefaultCards(Dealer dealer, Players players, CardDeck cardDeck) {
         dealer.receiveCards(cardDeck.drawDefaultCards());
         players.receiveDefaultCards(cardDeck);
-        OutputView.printCardDistributionMessage(dealer, players.toList());
+        OutputView.printCardDistributionMessage(dealer, players.getPlayers());
     }
 
     private static void drawMoreCardForPlayer(Player player, CardDeck cardDeck) {

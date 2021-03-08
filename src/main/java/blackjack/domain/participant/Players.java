@@ -58,7 +58,7 @@ public class Players {
         players.forEach(player -> player.receiveCards(cardDeck.drawDefaultCards()));
     }
 
-    public List<Player> toList() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }
