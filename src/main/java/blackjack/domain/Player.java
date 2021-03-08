@@ -27,4 +27,8 @@ public class Player extends Playable {
     public boolean isAvailableToTake() {
         return sumCards() <= BLACKJACK;
     }
+
+    public Outcome calculateOutcome(Dealer dealer) {
+        return result(dealer.sumCardsForResult());
+    }
 }
