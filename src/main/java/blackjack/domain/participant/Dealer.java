@@ -14,7 +14,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> showInitialCards() {
-        return cards.subList(0,1);
+        return cards.subList(0, 1);
     }
 
     @Override

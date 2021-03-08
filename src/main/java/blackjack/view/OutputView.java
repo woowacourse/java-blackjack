@@ -82,9 +82,9 @@ public class OutputView {
 
     private static void showDealerGameResult(final Dealer dealer, final List<Integer> resultCounts) {
         System.out.printf("%s: %d%s %d%s %d%s" + NEWLINE, dealer.getName(),
-                            resultCounts.get(0), Result.WIN.getValue(),
-                            resultCounts.get(1), Result.LOSE.getValue(),
-                            resultCounts.get(2), Result.DRAW.getValue());
+                resultCounts.get(0), Result.WIN.getValue(),
+                resultCounts.get(1), Result.LOSE.getValue(),
+                resultCounts.get(2), Result.DRAW.getValue());
     }
 
     public static void showPlayersGameResult(final List<Player> players, final List<Result> playersResult) {

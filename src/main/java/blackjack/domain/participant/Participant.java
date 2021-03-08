@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    private static final int BUST_LIMIT = 22;
     public static final String EMPTY_NAME_ERROR = "이름에 빈 값을 사용할 수 없습니다.";
+    private static final int BUST_LIMIT = 22;
     protected final List<Card> cards;
     private final String name;
 
@@ -69,8 +69,8 @@ public abstract class Participant {
     }
 
     private int howManyAce() {
-        return (int) cards.stream().
-                        filter(card -> card.getCardValue().isAce()).count();
+        return (int) cards.stream()
+                .filter(card -> card.getCardValue().isAce()).count();
     }
 
     public abstract List<Card> showInitialCards();

@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class GameResultTest {
+    private GameResult gameResult;
     private Dealer dealer;
     private Player player;
     private List<Player> players = new ArrayList<>();
-    GameResult gameResult;
 
     @BeforeEach
     void setUp() {

@@ -26,7 +26,7 @@ public class GameResult {
     private int findResult(final Dealer dealer, final List<Player> players, final Result result) {
         return (int) players.stream()
                 .filter(player -> findDealerResult(dealer, player)
-                .isSame(result)).count();
+                        .isSame(result)).count();
     }
 
     private Result findDealerResult(final Dealer dealer, final Player player) {
