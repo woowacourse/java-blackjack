@@ -1,8 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.result.Result;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -31,6 +32,23 @@ public class Players {
         for (Player player : players) {
             player.receiveInitialCard(cardDeck);
         }
+    }
+
+    public Map<Result, Integer> checkDealerResult(final Dealer dealer) {
+        final Map<Result, Integer> dealerResult = new HashMap<>();
+        for (Player player : players) {
+            Result result = dealer.checkResult(player);
+            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
+        }
+        return Collections.unmodifiableMap(dealerResult);
+    }
+
+    public Map<Player, Result> checkAllPlayerResult(final Dealer dealer) {
+        final Map<Player, Result> playerResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerResult.put(player, player.checkResult(dealer));
+        }
+        return Collections.unmodifiableMap(playerResult);
     }
 
     public List<Player> getPlayers() {
