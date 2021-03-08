@@ -24,6 +24,6 @@ public class Dealer extends Gamer {
 
     @Override
     public List<Card> showOpenHands() {
-        return hands.getCardOf(1);
+        return hands.getCardsWithSize(1);
     }
 }

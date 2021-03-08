@@ -12,6 +12,6 @@ public class Player extends Gamer {
 
     @Override
     public List<Card> showOpenHands() {
-        return hands.getCardOf(2);
+        return hands.getCardsWithSize(2);
     }
 }

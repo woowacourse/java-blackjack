@@ -140,7 +140,7 @@ class HandsTest {
         hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
-        assertThat(hands.getCardOf(2).size()).isEqualTo(2);
+        assertThat(hands.getCardsWithSize(2).size()).isEqualTo(2);
     }
 
     @DisplayName("blackjack인지 확인")
@@ -151,7 +151,7 @@ class HandsTest {
         cards.add(Card.create(Suit.CLUB, Denomination.TEN));
         Hands hands = new Hands();
         hands.initialize(cards);
-
+        System.out.println(hands.calculate());
         assertTrue(hands.isBlackjack());
     }
 }
