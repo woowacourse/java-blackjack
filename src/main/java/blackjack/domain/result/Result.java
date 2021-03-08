@@ -8,23 +8,14 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN("승",
-            (challenger, dealer) -> challenger.isBlackJack() && !dealer.isBlackJack(),
-            (challenger, dealer) -> winCondition(challenger, dealer)),
-    LOSE("패",
-            (challenger, dealer) -> !challenger.isBlackJack() && dealer.isBlackJack(),
-            (challenger, dealer) -> lossCondition(challenger, dealer)),
-    DRAW("무",
-            (challenger, dealer) -> challenger.isBlackJack() && dealer.isBlackJack(),
-            (challenger, dealer) -> drawCondition(challenger, dealer));
+    WIN(Result::challengerBlackJack, Result::winCondition),
+    LOSE(Result::dealerBlackJack, Result::lossCondition),
+    DRAW(Result::bothBlackJack, Result::drawCondition);
 
-    private final String result;
     private final BiPredicate<Challenger, Dealer> blackJackCheck;
     private final BiPredicate<Challenger, Dealer> scoreCheck;
 
-    Result(final String result,
-           final BiPredicate<Challenger, Dealer> blackJackCheck, final BiPredicate<Challenger, Dealer> scoreCheck) {
-        this.result = result;
+    Result(final BiPredicate<Challenger, Dealer> blackJackCheck, final BiPredicate<Challenger, Dealer> scoreCheck) {
         this.blackJackCheck = blackJackCheck;
         this.scoreCheck = scoreCheck;
     }
@@ -39,6 +30,18 @@ public enum Result {
                                 .findAny()
                                 .orElseThrow(() -> new RuntimeException("승패를 가리지 못합니다."))
                 );
+    }
+
+    private static boolean challengerBlackJack(final Challenger challenger, final Dealer dealer) {
+        return challenger.isBlackJack() && !dealer.isBlackJack();
+    }
+
+    private static boolean dealerBlackJack(final Challenger challenger, final Dealer dealer) {
+        return !challenger.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private static boolean bothBlackJack(final Challenger challenger, final Dealer dealer) {
+        return challenger.isBlackJack() && dealer.isBlackJack();
     }
 
     private static boolean winCondition(final Challenger challenger, final Dealer dealer) {
