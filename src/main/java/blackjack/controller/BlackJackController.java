@@ -50,7 +50,7 @@ public class BlackJackController {
     private static void drawOrStop(Deck deck, Player player) {
         if (player.willContinue(InputView.inputString())) {
             player.draw(deck.draw());
-            OutputView.printParticipantStatus(player, false);
+            OutputView.printParticipantStatus(player);
         }
     }
 
@@ -62,7 +62,7 @@ public class BlackJackController {
     }
 
     private static void showGameResult(Players players, Dealer dealer, List<BlackJackParticipant> participants) {
-        OutputView.printParticipantsStatus(participants);
+        OutputView.printParticipantsStatusWithScore(participants);
         OutputView.printResult(players.match(dealer));
     }
 }

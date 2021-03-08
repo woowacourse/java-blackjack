@@ -24,24 +24,26 @@ public class OutputView {
                 .map(BlackJackParticipant::getName)
                 .collect(Collectors.joining(NAME_DELIMITER));
         System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
-        participants.forEach(player -> printParticipantStatus(player, false));
+        participants.forEach(OutputView::printParticipantStatus);
         System.out.println();
     }
 
-    public static void printParticipantsStatus(List<BlackJackParticipant> participants) {
-        participants.forEach(participant -> printParticipantStatus(participant, true));
+    public static void printParticipantStatus(BlackJackParticipant participant) {
+        System.out.println(participant.getName() + "카드: " + getCardNameFormat(participant));
     }
 
-    public static void printParticipantStatus(BlackJackParticipant participant, boolean withScore) {
-        String cardNames = participant.getHand().unwrap().stream()
+    private static String getCardNameFormat(BlackJackParticipant participant) {
+        return participant.getHand().unwrap().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.joining(NAME_DELIMITER));
+    }
 
-        if (withScore) {
-            System.out.println(participant.getName() + "카드: " + cardNames + getScoreMessage(participant));
-            return;
-        }
-        System.out.println(participant.getName() + "카드: " + cardNames);
+    public static void printParticipantsStatusWithScore(List<BlackJackParticipant> participants) {
+        participants.forEach(OutputView::printParticipantStatusWithScore);
+    }
+
+    public static void printParticipantStatusWithScore(BlackJackParticipant participant) {
+        System.out.println(participant.getName() + "카드: " + getCardNameFormat(participant) + getScoreMessage(participant));
     }
 
     private static String getScoreMessage(BlackJackParticipant participant) {
