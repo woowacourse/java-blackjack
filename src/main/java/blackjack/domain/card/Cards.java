@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 
 public class Cards {
 
-    private static final int POINT_LIMIT = 21;
     public static final int BLACKJACK = 21;
     private static final int ACE_CONVERSION = 10;
     public static final int INITIAL_CARDS_SIZE = 2;
@@ -80,7 +79,7 @@ public class Cards {
     }
 
     private int properSum(int sum) {
-        if (sum + ACE_CONVERSION > POINT_LIMIT) {
+        if (sum + ACE_CONVERSION > BLACKJACK) {
             return sum;
         }
         return sum + ACE_CONVERSION;
@@ -91,6 +90,6 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculate() > POINT_LIMIT;
+        return calculate() > BLACKJACK;
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HandsTest {
@@ -151,7 +152,17 @@ class HandsTest {
         cards.add(Card.create(Suit.CLUB, Denomination.TEN));
         Hands hands = new Hands();
         hands.initialize(cards);
-        System.out.println(hands.calculate());
         assertTrue(hands.isBlackjack());
+    }
+
+    @DisplayName("isBust 확인")
+    @Test
+    public void isBust() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(Card.create(Suit.HEART, Denomination.ACE));
+        cards.add(Card.create(Suit.CLUB, Denomination.TEN));
+        Hands hands = new Hands();
+        hands.initialize(cards);
+        assertFalse(hands.isBust());
     }
 }
