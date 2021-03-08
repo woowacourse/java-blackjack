@@ -13,7 +13,7 @@ public class OutputView {
     }
 
     public static void printCards(Player player) {
-        String cards = player.getUnmodifiableCards().stream().map(Card::getName).collect(Collectors.joining(", "));
+        String cards = player.getUnmodifiableCards().stream().map(Card::getCardName).collect(Collectors.joining(", "));
         System.out.println(player.getName() + "카드: " + cards);
     }
 

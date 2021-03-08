@@ -33,7 +33,7 @@ public class Participants {
     }
 
     private String cardsToString(List<Card> cards) {
-        return cards.stream().map(Card::getName).collect(Collectors.joining(", ", "카드: ", ""));
+        return cards.stream().map(Card::getCardName).collect(Collectors.joining(", ", "카드: ", ""));
     }
 
     public Map<String, String> finalResult() {

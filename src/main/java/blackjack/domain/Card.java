@@ -1,14 +1,11 @@
 package blackjack.domain;
 
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Card {
     private static final Map<String, Card> cards;
-
     public static final int CARDS_CAPACITY = 52;
 
     private final Suits suit;
@@ -17,14 +14,18 @@ public class Card {
     static {
         Map<String, Card> cardValues = new HashMap<>(CARDS_CAPACITY);
 
-        Arrays.stream(Suits.values())
-            .forEach(suit -> Arrays.stream(Denominations.values())
-                .forEach(denomination -> {
-                    String key = denomination.getName() + suit.getName();
-                    cardValues.put(key, new Card(suit, denomination));
-                }));
+        for (Suits suits : Suits.values()) {
+            assembleWithDenominations(cardValues, suits);
+        }
 
         cards = Collections.unmodifiableMap(cardValues);
+    }
+
+    private static void assembleWithDenominations(Map<String, Card> cardValues, Suits suits) {
+        for (Denominations denominations : Denominations.values()) {
+            final String key = denominations.getName() + suits.getName();
+            cardValues.put(key, new Card(suits, denominations));
+        }
     }
 
     private Card(Suits suit, Denominations denomination) {
@@ -65,7 +66,7 @@ public class Card {
         return denomination == Denominations.ACE;
     }
 
-    public String getName() {
+    public String getCardName() {
         return denomination.getName() + suit.getName();
     }
 

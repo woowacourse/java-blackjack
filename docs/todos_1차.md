@@ -6,7 +6,7 @@ src/main/java/blackjack/utils/RandomCardDeck.java
 - [ ] forEach가 중첩되어서 가독성이 많이 떨어지는데요, flatMap을 사용하거나, 아니면 하나씩 순차적으로 반복문
 
 src/main/java/blackjack/domain/Card.java
-- [ ] static 필드는 상수로 관리
+- [x] static 필드는 상수로 관리
 
 src/main/java/blackjack/domain/Card.java
 - [x] 캐싱한 카드를 String 타입인 이름 기준으로 뽑아오고 있는데, 타입이 String이라 이 이름이 denomination + suit 라는걸 외부에서 알아야 할 것 같아요.
