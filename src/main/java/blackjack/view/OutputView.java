@@ -86,7 +86,7 @@ public class OutputView {
             .append(HAND_FORMAT)
             .append(joinCards(dealer.getHand()))
             .append(NEW_LINE);
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     private static String joinCards(final List<Card> cards) {
@@ -106,11 +106,11 @@ public class OutputView {
     public static void printGameResult(GameResultDto gameResultDto) {
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
-        gameResultDto.getDealerResult().entrySet().forEach(entry ->
-            System.out.print(entry.getValue() + entry.getKey().getName() + BLANK));
+        gameResultDto.getDealerResult()
+                .forEach((key, value) -> System.out.print(value + key.getName() + BLANK));
         System.out.print(NEW_LINE);
-        gameResultDto.getPlayerResult().entrySet().forEach(entry ->
-            System.out.println(entry.getKey() + ": " + entry.getValue().getName()));
+        gameResultDto.getPlayerResult()
+                .forEach((key, value) -> System.out.println(key + ": " + value.getName()));
     }
 
     public static void printPlayerBurst(final String playerName) {

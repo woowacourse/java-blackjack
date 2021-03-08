@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackManager;
 import blackjack.domain.GameResultDto;
+import blackjack.domain.UserAnswer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -38,13 +39,17 @@ public class BlackjackController {
     }
 
     private void playHit(Player player, Dealer dealer) {
-        while (!player.isOverLimitScore() && InputView.getHitOrStay(player.getName())) {
+        while (!player.isOverLimitScore()) {
+            String input = InputView.getHitOrStay(player.getName());
+            if (!UserAnswer.isHit(input)) {
+                OutputView.printCards(player);
+                break;
+            }
             player.receiveCard(dealer.drawCard());
             OutputView.printCards(player);
         }
         if (player.isOverLimitScore()) {
             OutputView.printPlayerBurst(player.getName());
         }
-        OutputView.printCards(player);
     }
 }
