@@ -28,7 +28,8 @@ public class BlackjackController {
 
         printCurrentDeckAndScore(game.getGamersAsList(), game.getDealer());
 
-        OutputView.printResult(game.getDealerResult(), game.getGamerResult());
+        OutputView.printFinalWinAndLoseResult(game.getDealerResult(), game.getGamerResult());
+        OutputView.printFinalRevenueResult(game.getDealerResult(), game.getGamerResult());
     }
 
     private Game gameInitialize() {
