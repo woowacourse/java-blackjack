@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import java.util.Arrays;
+
 import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
 
 public enum MatchResult {
@@ -31,12 +33,10 @@ public enum MatchResult {
     abstract boolean match(int playerScore, int dealerScore);
 
     public static MatchResult getPlayerMatchResult(int playerScore, int dealerScore) {
-        for (MatchResult matchResult : values()) {
-            if (matchResult.match(playerScore, dealerScore)) {
-                return matchResult;
-            }
-        }
-        throw new IllegalArgumentException();
+        return Arrays.stream(values())
+                .filter(matchResult -> matchResult.match(playerScore, dealerScore))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public static MatchResult getDealerMatchResultByPlayer(MatchResult matchResult) {
