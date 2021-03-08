@@ -83,10 +83,6 @@ public class BlackjackGame {
         return dealer.getFirstCard();
     }
 
-    public int getDealerHandSize() {
-        return dealer.handSize();
-    }
-
     public Users getUsers() {
         return users;
     }

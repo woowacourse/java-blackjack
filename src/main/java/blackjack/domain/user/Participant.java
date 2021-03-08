@@ -31,8 +31,8 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public int handSize() {
-        return hand.size();
+    public boolean isSameHandSize(int size) {
+        return hand.size() == size;
     }
 
     public boolean isSameStatus(Status status) {
@@ -43,20 +43,20 @@ public abstract class Participant {
         return this.status != status;
     }
 
-    public boolean scoreBiggerThan(Participant participant){
+    public boolean scoreBiggerThan(Participant participant) {
         return this.calculateScore() > participant.calculateScore();
     }
 
-    public boolean isSameScore(Participant participant){
+    public boolean isSameScore(Participant participant) {
         return this.calculateScore() == participant.calculateScore();
     }
 
-    public boolean scoreSmallerThan(Participant participant){
+    public boolean scoreSmallerThan(Participant participant) {
         return this.calculateScore() < participant.calculateScore();
     }
 
     public void changeStatus() {
-        status = Status.of(hand.calculateScore());
+        status = Status.of(this);
     }
 
     public int calculateScore() {
