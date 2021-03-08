@@ -17,10 +17,6 @@ public class Players {
                 .collect(toList());
     }
 
-    public List<Player> players() {
-        return Collections.unmodifiableList(players);
-    }
-
     public void distributeToEachPlayer(Deck deck) {
         players.forEach(player -> player.distribute(deck.popTwo()));
     }
@@ -35,5 +31,9 @@ public class Players {
         return Collections.unmodifiableList(players.stream()
                 .map(Player::getName)
                 .collect(toList()));
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

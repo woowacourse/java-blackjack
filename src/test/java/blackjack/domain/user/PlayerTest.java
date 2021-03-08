@@ -33,7 +33,7 @@ public class PlayerTest {
         )));
         Cards cards = player.cards;
 
-        assertThat(cards.cards()).hasSize(2);
+        assertThat(cards.getCards()).hasSize(2);
     }
 
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
@@ -70,7 +70,7 @@ public class PlayerTest {
         player.draw(deck);
         Cards cards = player.cards;
 
-        assertThat(cards.cards()).hasSize(3);
+        assertThat(cards.getCards()).hasSize(3);
     }
 
     @DisplayName("카드 두장을 공개한다.")
@@ -82,7 +82,7 @@ public class PlayerTest {
         )));
         Cards cards = player.getCards();
 
-        assertThat(cards.cards()).hasSize(2);
+        assertThat(cards.getCards()).hasSize(2);
     }
 
     @DisplayName("딜러에 버스트가 있고 플레이어에 버스트가 없는 경우를 확인한다. - 플레이어 승")

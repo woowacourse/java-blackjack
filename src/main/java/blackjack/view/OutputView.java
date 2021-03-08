@@ -31,7 +31,7 @@ public class OutputView {
     }
 
     public static void printPlayersCards(Players players) {
-        players.players()
+        players.getPlayers()
                 .forEach(OutputView::printPlayerCards);
     }
 
@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     private static void printCards(Cards cards) {
-        String cardsGroup = cards.cards()
+        String cardsGroup = cards.getCards()
                 .stream()
                 .map(Card::toString)
                 .collect(joining(COMMA_WITH_BLANK));
@@ -64,7 +64,7 @@ public class OutputView {
         for (User user : users) {
             System.out.println(user.getName() + "카드: " +
                     user.getCards()
-                            .cards()
+                            .getCards()
                             .stream()
                             .map(Card::toString)
                             .collect(joining(COMMA_WITH_BLANK)) + " - 결과: " +
@@ -75,12 +75,12 @@ public class OutputView {
     public static void printResultBoard(Dealer dealer, ResultBoard resultBoard) {
         System.out.println("\n## 최종 승패");
         System.out.print(dealer.getName() + ": ");
-        for (Result result : resultBoard.dealerResultBoard().keySet()) {
-            System.out.print(resultBoard.dealerResultBoard().get(result) + result.getResult() + " ");
+        for (Result result : resultBoard.getDealerResultBoard().keySet()) {
+            System.out.print(resultBoard.getDealerResultBoard().get(result) + result.getResult() + " ");
         }
         System.out.println();
-        for (Player player : resultBoard.playerResultBoard().keySet()) {
-            System.out.println(player.getName() + ": " + resultBoard.playerResultBoard().get(player).getResult());
+        for (Player player : resultBoard.getPlayerResultBoard().keySet()) {
+            System.out.println(player.getName() + ": " + resultBoard.getPlayerResultBoard().get(player).getResult());
         }
     }
 }

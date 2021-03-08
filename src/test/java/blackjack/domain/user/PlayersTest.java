@@ -28,7 +28,7 @@ public class PlayersTest {
     @DisplayName("Players 일급 컬렉션을 반환한다.")
     @Test
     void players() {
-        assertThat(players.players()).hasSize(3);
+        assertThat(players.getPlayers()).hasSize(3);
     }
 
     @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
@@ -37,9 +37,9 @@ public class PlayersTest {
         Deck deck = new Deck();
         players.distributeToEachPlayer(deck);
 
-        assertThat(players.players()
+        assertThat(players.getPlayers()
                 .stream()
-                .allMatch(user -> user.cards.cards().size() == 2)).isTrue();
+                .allMatch(user -> user.cards.getCards().size() == 2)).isTrue();
     }
 
     @DisplayName("각 플레이어의 모든 카드를 보여준다.")
@@ -50,7 +50,7 @@ public class PlayersTest {
         List<Cards> cardsGroup = players.showCardsByPlayers();
 
         assertThat(cardsGroup.stream()
-                .allMatch(cards -> cards.cards().size() == 2)).isTrue();
+                .allMatch(cards -> cards.getCards().size() == 2)).isTrue();
     }
 
     @DisplayName("플레이어 이름들을 확인한다.")

@@ -14,17 +14,13 @@ public class Cards implements Comparable<Cards> {
         this.cards = new ArrayList<>(cards);
     }
 
-    public List<Card> cards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public Card oneCard() {
         return cards.get(FIRST_CARD);
     }
 
     public int calculateTotalValue() {
         int totalValue = cards.stream()
-                .mapToInt(Card::value)
+                .mapToInt(Card::getValue)
                 .sum();
         if (this.containAce() && totalValue > BUST) {
             totalValue -= 10;
@@ -33,15 +29,20 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean containAce() {
-        return cards.stream().anyMatch(c -> Value.ACE.getValue() == c.value());
+        return this.cards.stream()
+                .anyMatch(c -> Value.ACE.getValue() == c.getValue());
     }
 
     public void combine(Cards otherCards) {
-        this.cards.addAll(otherCards.cards());
+        this.cards.addAll(otherCards.getCards());
     }
 
     public boolean isBust() {
         return calculateTotalValue() > BUST;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(this.cards);
     }
 
     @Override

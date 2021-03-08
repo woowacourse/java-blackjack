@@ -23,6 +23,6 @@ public class CardTest {
     @DisplayName("Card 객체의 값을 확인한다.")
     @Test
     public void checkValue() {
-        assertThat(card.value()).isEqualTo(11);
+        assertThat(card.getValue()).isEqualTo(11);
     }
 }

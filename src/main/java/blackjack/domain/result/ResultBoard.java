@@ -17,7 +17,7 @@ public class ResultBoard {
     }
 
     private void putResultByPlayer(Dealer dealer, Players players) {
-        players.players()
+        players.getPlayers()
                 .forEach(player -> {
                     if (dealer.isBust() || player.isBust()) {
                         this.resultBoard.put(player, player.decideResultByBust(dealer));
@@ -27,17 +27,17 @@ public class ResultBoard {
                 });
     }
 
-    public Map<Result, Integer> dealerResultBoard() {
-        return Result.countByResults(groupResult());
+    public Map<Result, Integer> getDealerResultBoard() {
+        return Collections.unmodifiableMap(Result.countByResults(results()));
     }
 
-    private List<Result> groupResult() {
+    private List<Result> results() {
         return resultBoard.values().stream()
                 .map(value -> value.reverse(value))
                 .collect(toList());
     }
 
-    public Map<Player, Result> playerResultBoard() {
+    public Map<Player, Result> getPlayerResultBoard() {
         return Collections.unmodifiableMap(this.resultBoard);
     }
 }

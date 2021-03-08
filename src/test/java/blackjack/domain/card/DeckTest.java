@@ -25,7 +25,7 @@ public class DeckTest {
     public void popTwo() {
         Cards cards = deck.popTwo();
 
-        assertThat(cards.cards()).hasSize(2);
+        assertThat(cards.getCards()).hasSize(2);
     }
 
     @DisplayName("덱에서 카드 한 장을 꺼낸다.")
@@ -33,6 +33,6 @@ public class DeckTest {
     public void popOne() {
         Cards cards = deck.popOne();
 
-        assertThat(cards.cards()).hasSize(1);
+        assertThat(cards.getCards()).hasSize(1);
     }
 }

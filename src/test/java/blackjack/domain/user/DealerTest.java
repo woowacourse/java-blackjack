@@ -32,7 +32,7 @@ public class DealerTest {
         )));
         Cards cards = dealer.cards;
 
-        assertThat(cards.cards()).hasSize(2);
+        assertThat(cards.getCards()).hasSize(2);
     }
 
     @DisplayName("카드 합계가 16 이하인지 확인한다. - 카드를 더 받을 수 있다.")
@@ -69,7 +69,7 @@ public class DealerTest {
         dealer.draw(deck);
         Cards cards = dealer.cards;
 
-        assertThat(cards.cards()).hasSize(3);
+        assertThat(cards.getCards()).hasSize(3);
     }
 
     @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")

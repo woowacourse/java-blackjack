@@ -37,7 +37,7 @@ public class BlackjackController {
     private List<User> setUpUsers(Dealer dealer, Players players) {
         List<User> users = new ArrayList<>();
         users.add(dealer);
-        users.addAll(players.players());
+        users.addAll(players.getPlayers());
         return users;
     }
 
@@ -53,7 +53,7 @@ public class BlackjackController {
     }
 
     private void askToPlayers(Players players, Deck deck) {
-        for (Player player : players.players()) {
+        for (Player player : players.getPlayers()) {
             askForHit(player, deck);
         }
     }

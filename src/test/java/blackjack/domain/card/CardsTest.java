@@ -67,7 +67,7 @@ public class CardsTest {
         Cards otherCards = deck.popTwo();
         cards.combine(otherCards);
 
-        assertThat(cards.cards()).hasSize(4);
+        assertThat(cards.getCards()).hasSize(4);
     }
 
     @DisplayName("카드의 총합이 버스트인 경우를 확인한다.")
