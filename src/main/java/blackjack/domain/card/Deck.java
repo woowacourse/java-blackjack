@@ -9,8 +9,7 @@ public class Deck {
     private final Deque<Card> deck;
 
     public Deck() {
-        this.deck = new ArrayDeque<>();
-        deck.addAll(setUpDeck());
+        this.deck = new ArrayDeque<>(setUpDeck());
     }
 
     private List<Card> setUpDeck() {
@@ -32,13 +31,13 @@ public class Deck {
     }
 
     public Cards popTwo() {
-        return Stream.generate(deck::pop)
+        return Stream.generate(this.deck::pop)
                 .limit(2)
                 .collect(collectingAndThen(toList(), Cards::new));
     }
 
     public Cards popOne() {
-        return Stream.generate(deck::pop)
+        return Stream.generate(this.deck::pop)
                 .limit(1)
                 .collect(collectingAndThen(toList(), Cards::new));
     }

@@ -32,7 +32,7 @@ public class ResultBoard {
     }
 
     private List<Result> results() {
-        return resultBoard.values().stream()
+        return this.resultBoard.values().stream()
                 .map(value -> value.reverse(value))
                 .collect(toList());
     }

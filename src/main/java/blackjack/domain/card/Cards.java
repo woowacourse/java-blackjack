@@ -15,7 +15,15 @@ public class Cards implements Comparable<Cards> {
     }
 
     public Card oneCard() {
-        return cards.get(FIRST_CARD);
+        return this.cards.get(FIRST_CARD);
+    }
+
+    public void combine(Cards otherCards) {
+        this.cards.addAll(otherCards.getCards());
+    }
+
+    public boolean isBust() {
+        return this.calculateTotalValue() > BUST;
     }
 
     public int calculateTotalValue() {
@@ -31,14 +39,6 @@ public class Cards implements Comparable<Cards> {
     public boolean containAce() {
         return this.cards.stream()
                 .anyMatch(c -> Value.ACE.getValue() == c.getValue());
-    }
-
-    public void combine(Cards otherCards) {
-        this.cards.addAll(otherCards.getCards());
-    }
-
-    public boolean isBust() {
-        return calculateTotalValue() > BUST;
     }
 
     public List<Card> getCards() {
