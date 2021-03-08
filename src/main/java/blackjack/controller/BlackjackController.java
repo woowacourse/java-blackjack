@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.CardManager;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.view.InputView;
@@ -9,27 +9,27 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        final Deck deck = Deck.create();
-        final Gamers gamers = deck.initiateGamers(InputView.receiveNames());
+        final CardManager cardManager = CardManager.create();
+        final Gamers gamers = cardManager.initiateGamers(InputView.receiveNames());
         OutputView.gameStart(gamers);
 
         for (Gamer gamer : gamers.players()) {
-            hitOrStand(deck, gamer);
+            hitOrStand(cardManager, gamer);
         }
-        dealerHitOrStand(deck, gamers);
+        dealerHitOrStand(cardManager, gamers);
         printResult(gamers);
     }
 
-    private void hitOrStand(Deck deck, Gamer gamer) {
+    private void hitOrStand(CardManager cardManager, Gamer gamer) {
         while (InputView.receiveAnswer(gamer.getName())) {
-            gamer.receiveCard(deck.giveCard());
+            gamer.receiveCard(cardManager.giveCard());
             OutputView.allCards(gamer);
         }
     }
 
-    private void dealerHitOrStand(Deck deck, Gamers gamers) {
+    private void dealerHitOrStand(CardManager cardManager, Gamers gamers) {
         if (gamers.dealer().checkBoundary()) {
-            gamers.dealer().receiveCard(deck.giveCard());
+            gamers.dealer().receiveCard(cardManager.giveCard());
             OutputView.dealerHit();
         }
     }
