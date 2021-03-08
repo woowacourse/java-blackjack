@@ -73,7 +73,7 @@ public class OutputView {
         for (final Card card : cards) {
             final CardNumber cardNumber = card.getCardNumber();
             final CardType cardType = card.getCardType();
-            cardStatuses.add(cardNumber.getValue() + cardType.getType());
+            cardStatuses.add(cardNumber.getSymbol() + cardType.getType());
         }
         return cardStatuses;
     }
