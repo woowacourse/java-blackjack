@@ -23,18 +23,18 @@ public abstract class Playable {
         return cards.getUnmodifiableList();
     }
 
-    public int result(int counterpart) {
+    public Outcome result(int counterpart) {
         int playerSum = sumCardsForResult();
 
         if (win(counterpart, playerSum)) {
-            return 1;
+            return Outcome.WIN;
         }
 
         if (lose(counterpart, playerSum)) {
-            return -1;
+            return Outcome.LOSE;
         }
 
-        return 0;
+        return Outcome.DRAW;
     }
 
     private boolean lose(int counterpart, int playerSum) {

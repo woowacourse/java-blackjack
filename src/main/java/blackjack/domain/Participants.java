@@ -52,7 +52,7 @@ public class Participants {
         final Map<String, String> results = new LinkedHashMap<>();
         results.put(dealer.getName(), summarizeDealerOutcome(dealer, players));
         for (Playable player : players) {
-            Outcome outcome = Outcome.getInstance(player.result(dealer.sumCardsForResult()));
+            Outcome outcome = player.result(dealer.sumCardsForResult());
             results.put(player.getName(), outcome.getWord());
         }
         return results;
@@ -63,7 +63,7 @@ public class Participants {
         Arrays.stream(Outcome.values()).forEach(outcome -> results.put(outcome, 0));
 
         for (Playable player : players) {
-            Outcome outcome = Outcome.getInstance(dealer.result(player.sumCardsForResult()));
+            Outcome outcome = dealer.result(player.sumCardsForResult());
             results.put(outcome, results.get(outcome) + 1);
         }
 

@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.Outcome;
 import blackjack.domain.Playable;
 import blackjack.utils.CardDeck;
 import blackjack.utils.FixedCardDeck;
@@ -71,7 +72,7 @@ public class DealerTest {
         List<Card> cards = Arrays.asList(Card.from("K다이아몬드"),
                 Card.from("K다이아몬드"));
         Playable dealer = new Dealer(cards);
-        assertThat(dealer.result(18)).isEqualTo(1);
+        assertThat(dealer.result(18)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class DealerTest {
         List<Card> cards = Arrays.asList(Card.from("K다이아몬드"),
                 Card.from("K다이아몬드"));
         Playable dealer = new Dealer(cards);
-        assertThat(dealer.result(22)).isEqualTo(1);
+        assertThat(dealer.result(22)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -89,7 +90,7 @@ public class DealerTest {
         List<Card> cards = Arrays.asList(Card.from("K다이아몬드"),
                 Card.from("K다이아몬드"));
         Playable dealer = new Dealer(cards);
-        assertThat(dealer.result(21)).isEqualTo(-1);
+        assertThat(dealer.result(21)).isEqualTo(Outcome.LOSE);
     }
 
     @Test
@@ -99,7 +100,7 @@ public class DealerTest {
                 Card.from("6다이아몬드"));
         Playable dealer = new Dealer(cards);
         dealer.takeCard(Card.from("6스페이드"));
-        assertThat(dealer.result(21)).isEqualTo(-1);
+        assertThat(dealer.result(21)).isEqualTo(Outcome.LOSE);
     }
 
     @Test
@@ -109,7 +110,7 @@ public class DealerTest {
                 Card.from("6다이아몬드"));
         Playable dealer = new Dealer(cards);
         dealer.takeCard(Card.from("6스페이드"));
-        assertThat(dealer.result(23)).isEqualTo(0);
+        assertThat(dealer.result(23)).isEqualTo(Outcome.DRAW);
     }
 
     @Test
@@ -119,6 +120,6 @@ public class DealerTest {
                 Card.from("6다이아몬드"));
         Playable dealer = new Dealer(cards);
         dealer.takeCard(Card.from("5스페이드"));
-        assertThat(dealer.result(21)).isEqualTo(0);
+        assertThat(dealer.result(21)).isEqualTo(Outcome.DRAW);
     }
 }
