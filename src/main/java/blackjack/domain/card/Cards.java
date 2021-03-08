@@ -1,11 +1,8 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import javax.smartcardio.CardChannel;
 
 public class Cards {
 
@@ -36,7 +33,7 @@ public class Cards {
     private int calculateScoreWithOutAce() {
         return cards.stream()
             .filter(card -> !card.isAce())
-            .mapToInt(card -> card.getScore())
+            .mapToInt(card -> card.calculateScore())
             .sum();
     }
 

@@ -22,7 +22,7 @@ public class Card {
         return new Card(denomination, shape);
     }
 
-    public int getScore() {
+    public int calculateScore() {
         return denomination.getScore();
     }
 
