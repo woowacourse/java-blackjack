@@ -11,14 +11,14 @@ public class NameTest {
     @Test
     @DisplayName("생성 테스트")
     void createName() {
-        Name name = new Name("air");
-        assertThat(name).isEqualTo(new Name("air"));
+        Nickname nickname = new Nickname("air");
+        assertThat(nickname).isEqualTo(new Nickname("air"));
     }
 
     @Test
     @DisplayName("생성 실패 - 이름 글자수 검사")
     void checkNameLength() {
-        assertThatThrownBy(() -> new Name(""))
+        assertThatThrownBy(() -> new Nickname(""))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

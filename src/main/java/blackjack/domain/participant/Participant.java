@@ -6,11 +6,11 @@ import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public abstract class Participant {
-    protected Name name;
+    protected Nickname nickname;
     protected Cards cards;
 
-    protected Participant(Name name, Cards cards) {
-        this.name = name;
+    protected Participant(Nickname nickname, Cards cards) {
+        this.nickname = nickname;
         this.cards = cards;
     }
 
@@ -24,8 +24,8 @@ public abstract class Participant {
         return cards;
     }
 
-    public final Name getName() {
-        return name;
+    public final Nickname getName() {
+        return nickname;
     }
 
     @Override
@@ -33,11 +33,11 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
+        return Objects.equals(nickname, that.nickname) && Objects.equals(cards, that.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(nickname, cards);
     }
 }

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +21,8 @@ public class BlackJackResultTest {
     @DisplayName("게임 결과 생성")
     void createBlackJackResult() {
         Players players = new Players(Arrays.asList(
-                new Player(new Name("air")),
-                new Player(new Name("picka"))
+                new Player(new Nickname("air")),
+                new Player(new Nickname("picka"))
         ));
         Dealer dealer = new Dealer();
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
@@ -33,8 +33,8 @@ public class BlackJackResultTest {
     @DisplayName("딜러의 승패 결과 확인")
     void getResultSucceed() {
         Players players = new Players(Arrays.asList(
-                new Player(new Name("air")),
-                new Player(new Name("picka"))
+                new Player(new Nickname("air")),
+                new Player(new Nickname("picka"))
         ));
         Dealer dealer = new Dealer();
 

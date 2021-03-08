@@ -18,14 +18,11 @@ public class PlayersTest {
     @DisplayName("참가자 생성 성공")
     void createPlayersSucceed() {
         Players players = new Players(Arrays.asList(
-                new Player(new Name("air")),
-                new Player(new Name("picka"))
+                new Player(new Nickname("air")),
+                new Player(new Nickname("picka"))
         ));
 
-        assertThat(players).isEqualTo(new Players(Arrays.asList(
-                new Player(new Name("air")),
-                new Player(new Name("picka"))
-        )));
+        assertThat(players.getPlayers()).hasSize(2);
     }
 
     @ParameterizedTest
@@ -35,7 +32,7 @@ public class PlayersTest {
         assertThatThrownBy(() -> {
             List<Player> allPlayers = Arrays.stream(input.split(","))
                     .map(s -> s.replaceAll(" ", ""))
-                    .map(Name::new)
+                    .map(Nickname::new)
                     .map(Player::new)
                     .collect(Collectors.toList());
             new Players(allPlayers);
@@ -48,7 +45,7 @@ public class PlayersTest {
         assertThatThrownBy(() -> {
             List<Player> allPlayers = Arrays.stream("pika, air, a, b, c, d, e, f, g".split(","))
                     .map(s -> s.replaceAll(" ", ""))
-                    .map(Name::new)
+                    .map(Nickname::new)
                     .map(Player::new)
                     .collect(Collectors.toList());
             new Players(allPlayers);

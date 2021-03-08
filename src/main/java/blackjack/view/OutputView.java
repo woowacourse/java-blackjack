@@ -38,7 +38,7 @@ public class OutputView {
     public static void distributeCardMessage(Players players) {
         String playerName = players.getPlayers().stream()
                 .map(Participant::getName)
-                .map(Name::getName)
+                .map(Nickname::getName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.printf(DISTRIBUTE_MESSAGE_FORM + "%n", playerName);
     }

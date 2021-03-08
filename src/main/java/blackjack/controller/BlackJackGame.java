@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.BlackJackResult;
@@ -46,7 +46,7 @@ public class BlackJackGame {
 
     private List<Player> generatePlayers(List<String> allPlayersName) {
         return allPlayersName.stream()
-                .map(Name::new)
+                .map(Nickname::new)
                 .map(Player::new)
                 .collect(Collectors.toList());
     }

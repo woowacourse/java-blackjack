@@ -20,13 +20,13 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new Name("pika"));
+        player = new Player(new Nickname("pika"));
     }
 
     @Test
     @DisplayName("플레이어 생성 성공")
     void createPlayerSucceed() {
-        assertThat(player).isEqualTo(new Player(new Name("pika")));
+        assertThat(player).isEqualTo(new Player(new Nickname("pika")));
     }
 
     @Test
