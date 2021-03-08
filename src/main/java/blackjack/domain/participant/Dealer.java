@@ -1,13 +1,14 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.exception.InvalidNameInputException;
 
 public class Dealer extends BlackJackParticipant {
 
     public static final int DEALER_LIMIT = 16;
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer() {
+    public Dealer() throws InvalidNameInputException {
         super(DEALER_NAME);
     }
 

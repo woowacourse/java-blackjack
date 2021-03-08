@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
+import blackjack.exception.InvalidNameInputException;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -12,7 +13,7 @@ public abstract class BlackJackParticipant {
     private final Name name;
     private boolean hit;
 
-    public BlackJackParticipant(String name) {
+    public BlackJackParticipant(String name) throws InvalidNameInputException {
         this.hand = new Hand(new ArrayList<>());
         this.hit = true;
         this.name = new Name(name);

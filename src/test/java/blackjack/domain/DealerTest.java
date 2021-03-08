@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
+import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("점수가 16 초과일 경우 카드를 뽑지 않는 기능")
-    void isContinue() {
+    void isContinue() throws InvalidNameInputException {
         Dealer dealer = new Dealer();
         List<Card> cardDeck = new ArrayList<>(Arrays.asList(
                 Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),

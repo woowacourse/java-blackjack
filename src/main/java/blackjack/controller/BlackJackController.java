@@ -5,7 +5,9 @@ import blackjack.domain.Players;
 import blackjack.domain.participant.BlackJackParticipant;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.exception.InvalidNameInputException;
 import blackjack.util.GameInitializer;
+import blackjack.view.ErrorView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,10 +17,9 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static void play() {
+    public static void play() throws InvalidNameInputException {
         Deck deck = GameInitializer.initializeDeck();
-        OutputView.printInputNames();
-        Players players = GameInitializer.initializePlayers(InputView.inputString(), deck);
+        Players players = initializePlayers(deck);
         Dealer dealer = GameInitializer.initializeDealer(deck);
         List<BlackJackParticipant> participants = getBlackJackParticipants(players, dealer);
         OutputView.printGameInitializeMessage(participants, GameInitializer.STARTING_CARD_COUNT);
@@ -26,6 +27,16 @@ public class BlackJackController {
         playersDrawStage(deck, players);
         dealerDrawStage(deck, dealer);
         showGameResult(players, dealer, participants);
+    }
+
+    private static Players initializePlayers(Deck deck){
+        try {
+            OutputView.printInputNames();
+            return GameInitializer.initializePlayers(InputView.inputString(), deck);
+        } catch (InvalidNameInputException e) {
+            ErrorView.printErrorMessage(e.getMessage());
+            return initializePlayers(deck);
+        }
     }
 
     private static List<BlackJackParticipant> getBlackJackParticipants(Players players, Dealer dealer) {

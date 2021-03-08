@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Player;
+import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +35,7 @@ public class PlayersTest {
 
     @Test
     @DisplayName("승패 결과")
-    void match() {
+    void match() throws InvalidNameInputException {
         Players players = new Players(Arrays.asList(TestSetUp.createWinner(), TestSetUp.createLoser(), TestSetUp.createTiePlayer()));
         GameResult gameResult = players.match(TestSetUp.createDealer());
 

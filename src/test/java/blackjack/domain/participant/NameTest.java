@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -15,7 +16,7 @@ class NameTest {
     @ValueSource(strings = {"", "$", "abc!"})
     void validate(String input) {
         assertThatThrownBy(() -> new Player(input))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidNameInputException.class)
                 .hasMessage("이름은 한글, 영문 혹은 숫자로 1자 이상 입력해야합니다.");
     }
 }

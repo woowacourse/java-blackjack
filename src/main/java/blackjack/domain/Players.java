@@ -2,9 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.exception.InvalidNameInputException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -17,13 +17,19 @@ public class Players {
         this.playersList = new ArrayList<>(players);
     }
 
-    public static Players valueOf(String unParsedNames) {
-        List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER))
-                .map(name -> new Player(name.trim()))
-                .collect(Collectors.toList());
+    public static Players valueOf(String unParsedNames) throws InvalidNameInputException {
+        List<Player> parsedPlayers = createPlayersByName(unParsedNames);
         validateDuplication(parsedPlayers);
         validatePlayersCount(parsedPlayers);
         return new Players(parsedPlayers);
+    }
+
+    private static List<Player> createPlayersByName(String unParsedNames) throws InvalidNameInputException {
+        List<Player> players = new ArrayList<>();
+        for (String name : unParsedNames.split(DELIMITER)) {
+            players.add(new Player(name.trim()));
+        }
+        return players;
     }
 
     private static void validateDuplication(List<Player> players) {

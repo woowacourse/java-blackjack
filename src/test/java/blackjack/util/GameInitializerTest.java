@@ -3,6 +3,7 @@ package blackjack.util;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
+import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ public class GameInitializerTest {
 
     @DisplayName("초기 플레이어 카드 분배 검증")
     @Test
-    void checkPlayerCardDistribution() {
+    void checkPlayerCardDistribution() throws InvalidNameInputException {
         Players players = GameInitializer.initializePlayers("a,b,c", deck);
         players.unwrap().forEach(player ->
                 assertThat(player.getHand().unwrap().size()).isEqualTo(2));
@@ -34,7 +35,7 @@ public class GameInitializerTest {
 
     @DisplayName("초기 딜러 카드 분배 검증")
     @Test
-    void checkDealerCardDistribution() {
+    void checkDealerCardDistribution() throws InvalidNameInputException {
         Dealer dealer = GameInitializer.initializeDealer(deck);
         assertThat(dealer.getHand().unwrap().size()).isEqualTo(2);
     }

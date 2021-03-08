@@ -3,10 +3,11 @@ package blackjack.domain.participant;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.exception.InvalidNameInputException;
 
 public class Player extends BlackJackParticipant {
 
-    public Player(String name) {
+    public Player(String name) throws InvalidNameInputException {
         super(name);
     }
 

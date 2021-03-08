@@ -4,6 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
+import blackjack.exception.InvalidNameInputException;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,7 @@ public class GameInitializer {
         return new Deck(allCards);
     }
 
-    public static Players initializePlayers(String playersInput, Deck deck) {
+    public static Players initializePlayers(String playersInput, Deck deck) throws InvalidNameInputException {
         Players players = Players.valueOf(playersInput);
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
             players.unwrap().forEach(player -> player.draw(deck.draw()));
@@ -29,7 +30,7 @@ public class GameInitializer {
         return players;
     }
 
-    public static Dealer initializeDealer(Deck deck) {
+    public static Dealer initializeDealer(Deck deck) throws InvalidNameInputException {
         Dealer dealer = new Dealer();
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
             dealer.draw(deck.draw());

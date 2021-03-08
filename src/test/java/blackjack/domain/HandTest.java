@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
+import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,7 +50,7 @@ public class HandTest {
 
     @DisplayName("버스트 확인 기능")
     @Test
-    void isBust() {
+    void isBust() throws InvalidNameInputException {
         Hand bustHand = TestSetUp.createBustPlayer().getHand();
         assertThat(bustHand.isBust()).isTrue();
 
