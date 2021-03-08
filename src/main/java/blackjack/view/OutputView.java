@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     public static void showParticipantCard(final Participant participant) {
-        final List<Card> cards = participant.getPlayerCards();
+        final List<Card> cards = participant.showCards();
         final Name name = participant.getName();
         final List<String> cardStatuses = getCardInfo(cards);
         final String cardStatus = String.join(", ", cardStatuses);
