@@ -40,4 +40,8 @@ public enum CardLetter {
     public int getExtraValue() {
         return this.extraValue;
     }
+
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
 }

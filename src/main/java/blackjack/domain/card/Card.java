@@ -10,7 +10,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.cardLetter == CardLetter.ACE;
+        return cardLetter.isAce();
     }
 
     public CardLetter getCardLetter() {
