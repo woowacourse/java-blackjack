@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultEnum;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +41,7 @@ public class PlayerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
 
-        assertThat(player.checkResult(dealer)).isEqualTo(ResultEnum.LOSE);
+        assertThat(player.checkResult(dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -55,7 +54,7 @@ public class PlayerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
 
-        Assertions.assertThat(player.checkResult(dealer)).isEqualTo(ResultEnum.WIN);
+        Assertions.assertThat(player.checkResult(dealer)).isEqualTo(Result.WIN);
     }
 
     @ParameterizedTest
@@ -70,6 +69,6 @@ public class PlayerTest {
             final CardLetter cardLetter = CardLetter.valueOf(playerCard);
             player.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
-        assertThat(player.checkResult(dealer)).isEqualTo(ResultEnum.valueOf(expectedResult));
+        assertThat(player.checkResult(dealer)).isEqualTo(Result.valueOf(expectedResult));
     }
 }

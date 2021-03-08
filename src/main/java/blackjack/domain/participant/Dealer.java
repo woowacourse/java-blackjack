@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.ResultEnum;
+import blackjack.domain.result.Result;
 
 public class Dealer extends Participant {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
@@ -15,12 +15,12 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public ResultEnum checkResult(final Participant participant) {
+    public Result checkResult(final Participant participant) {
         if (participant.isBust()) {
-            return ResultEnum.WIN;
+            return Result.WIN;
         }
         if (this.isBust()) {
-            return ResultEnum.LOSE;
+            return Result.LOSE;
         }
         return checkResultByScore(participant);
     }

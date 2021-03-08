@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -34,8 +34,9 @@ public class OutputView {
         System.out.print(NEWLINE);
     }
 
-    public static void showDistributionMessage(final Dealer dealer, final List<Player> players) {
-        final String playerNames = players.stream()
+    public static void showDistributionMessage(final Dealer dealer, final Players players) {
+        final String playerNames = players.getPlayers()
+                .stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         showNewLine();
@@ -50,6 +51,11 @@ public class OutputView {
         showNewLine();
     }
 
+    public static void showAllPlayerCard(final Players players) {
+        players.getPlayers()
+                .forEach(OutputView::showPlayerCard);
+    }
+
     public static void showPlayerCard(final Player player) {
         final String name = player.getName();
         final List<Card> cards = player.getHand().getCards();
@@ -58,6 +64,11 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus);
         showNewLine();
+    }
+
+    public static void showAllPlayerCardResult(final Players players) {
+        players.getPlayers()
+                .forEach(OutputView::showCardResult);
     }
 
     public static void showCardResult(final Participant participant) {
@@ -75,19 +86,19 @@ public class OutputView {
         return card.getCardLetter().getLetter() + card.getCardSuit().getType();
     }
 
-    public static void showDealerGameResult(final Dealer dealer, final Map<ResultEnum, Integer> dealerResult) {
+    public static void showDealerGameResult(final Dealer dealer, final Map<Result, Integer> dealerResult) {
         showNewLine();
         System.out.println(GAME_RESULT_MESSAGE);
         System.out.printf(DEALER_GAME_RESULT_FORMAT, dealer.getName(),
-                dealerResult.getOrDefault(ResultEnum.WIN, 0),
-                dealerResult.getOrDefault(ResultEnum.DRAW, 0),
-                dealerResult.getOrDefault(ResultEnum.LOSE, 0));
+                dealerResult.getOrDefault(Result.WIN, 0),
+                dealerResult.getOrDefault(Result.DRAW, 0),
+                dealerResult.getOrDefault(Result.LOSE, 0));
         showNewLine();
     }
 
-    public static void showPlayerGameResult(final Map<Player, ResultEnum> playerResult) {
+    public static void showPlayerGameResult(final Map<Player, Result> playerResult) {
         for (Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + ": " + playerResult.get(player));
+            System.out.println(player.getName() + ": " + playerResult.get(player).getResult());
         }
     }
 
@@ -98,5 +109,6 @@ public class OutputView {
     public static void showDealerGotMoreCard(final Dealer dealer) {
         showNewLine();
         System.out.printf(DEALER_MORE_CARD_MESSAGE, dealer.getName());
+        showNewLine();
     }
 }
