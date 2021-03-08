@@ -4,8 +4,6 @@ import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 
 public class User extends AbstractPlayer {
-    private static final String YES = "y";
-    private static final String NO = "n";
     private boolean isDrawStop = false;
 
     public User(String name) {
