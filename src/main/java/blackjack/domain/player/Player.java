@@ -9,6 +9,8 @@ public interface Player {
 
     boolean isCanDraw();
 
+    int getScore();
+
     void drawRandomOneCard(Cards allCards);
 
     void drawRandomTwoCards(Cards allCards);
@@ -16,6 +18,4 @@ public interface Player {
     Name getName();
 
     List<Card> getCards();
-
-    int getScore();
 }

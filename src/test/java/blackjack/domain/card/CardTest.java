@@ -21,6 +21,6 @@ public class CardTest {
     @Test
     void getCardNumber() {
         Card card = new Card(CardShapeType.DIAMOND, CardNumberType.ACE);
-        assertThat(card.getCardNumber()).isEqualTo(CardNumberType.ACE);
+        assertThat(card.getValue()).isEqualTo(CardNumberType.ACE.getValue());
     }
 }

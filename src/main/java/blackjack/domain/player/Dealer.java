@@ -22,7 +22,7 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public boolean isCanDraw() {
-        return getScore() <= DRAW_BOUND;
+        return this.getScore() <= DRAW_BOUND;
     }
 
     @Override

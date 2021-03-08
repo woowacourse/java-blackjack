@@ -19,7 +19,7 @@ public class BlackJackController {
     private Cards cards;
 
     public void play() {
-        cards = new Cards();
+        cards = Cards.createAllShuffledCards();
         Users users = new Users(InputView.getUsersName());
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);

@@ -15,6 +15,9 @@ public enum CardNumberType {
     QUEEN("Q", 10),
     KING("K", 10);
 
+    public static final int BLACKJACK = 21;
+    private static final int ACE_HIGH_VALUE = 11;
+
     private final String number;
     private final int value;
 
@@ -29,5 +32,19 @@ public enum CardNumberType {
 
     public int getValue() {
         return value;
+    }
+
+    public int getValue(CardNumberType cardNumber, int scoreSum) {
+        if (cardNumber == ACE) {
+            return aceCase(cardNumber, scoreSum);
+        }
+        return cardNumber.getValue();
+    }
+
+    private int aceCase(CardNumberType cardNumber, int scoreSum) {
+        if (scoreSum + ACE_HIGH_VALUE <= BLACKJACK) {
+            return ACE_HIGH_VALUE;
+        }
+        return cardNumber.getValue();
     }
 }

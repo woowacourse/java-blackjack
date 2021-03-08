@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.card.type.CardNumberType.BLACKJACK;
+
 import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 
@@ -20,7 +22,7 @@ public class User extends AbstractPlayer {
     }
 
     private boolean isOverBlackJack() {
-        return getScore() > BLACKJACK;
+        return this.getScore() > BLACKJACK;
     }
 
     public boolean isDrawContinue(UserDrawContinue userDrawContinue) {
@@ -32,7 +34,7 @@ public class User extends AbstractPlayer {
     }
 
     public ResultType getResult(Dealer dealer) {
-        int userScore = getScore();
+        int userScore = this.getScore();
         int dealerScore = dealer.getScore();
         if (userScore > BLACKJACK) {
             return ResultType.LOSS;

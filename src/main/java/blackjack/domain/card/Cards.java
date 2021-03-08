@@ -9,6 +9,8 @@ import java.util.List;
 public class Cards {
     private final List<Card> cards = new ArrayList<>();
 
+    private Cards() {}
+
     public static Cards createAllShuffledCards() {
         Cards cards = new Cards();
         cards.createAllCards();
@@ -18,6 +20,15 @@ public class Cards {
 
     public static Cards createEmptyCards() {
         return new Cards();
+    }
+
+    public int getScore() {
+        cards.sort((o1, o2) -> -Integer.compare(o1.getValue(), o2.getValue()));
+        int scoreSum = 0;
+        for (Card card : cards) {
+            scoreSum += card.getValue(scoreSum);
+        }
+        return scoreSum;
     }
 
     private void createAllCards() {
@@ -38,5 +49,13 @@ public class Cards {
 
     public Card drawOneCard() {
         return cards.remove(cards.size() - 1);
+    }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

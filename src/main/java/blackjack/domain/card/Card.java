@@ -13,8 +13,8 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public CardNumberType getCardNumber() {
-        return cardNumber;
+    public int getValue() {
+        return cardNumber.getValue();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Card {
         return Objects.hash(cardShape, cardNumber);
     }
 
-    public int getValue() {
-        return cardNumber.getValue();
+    public int getValue(int scoreSum) {
+        return cardNumber.getValue(cardNumber, scoreSum);
     }
 }

@@ -2,20 +2,17 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
-    protected static final int ACE_DIFF = 10;
-    protected static final int BLACKJACK = 21;
     private static final int TWO_CARDS_SIZE = 2;
 
-    private final List<Card> cards;
+    private final Cards cards;
     private final Name name;
 
     public AbstractPlayer(String name) {
-        cards = new ArrayList<>();
+        cards = Cards.createEmptyCards();
         this.name = new Name(name);
     }
 
@@ -25,17 +22,8 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    abstract public boolean isCanDraw();
-
-    @Override
     public int getScore() {
-        int valueSum = cards.stream()
-            .mapToInt(Card::getValue)
-            .sum();
-        if (valueSum + ACE_DIFF <= BLACKJACK) {
-            return valueSum + ACE_DIFF;
-        }
-        return valueSum;
+        return cards.getScore();
     }
 
     @Override
@@ -57,6 +45,6 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(cards.getCards());
     }
 }
