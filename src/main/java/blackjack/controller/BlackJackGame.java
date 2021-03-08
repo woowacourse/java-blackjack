@@ -59,9 +59,7 @@ public class BlackJackGame {
         blackJackService.eachDrawTwoCards(players, dealer, cardDeck);
         OutputView.distributeCardMessage(players);
         OutputView.showDealerFirstCard(dealer);
-        for (Player player : players.getPlayers()) {
-            OutputView.showCards(player);
-        }
+        OutputView.showCards(players);
         OutputView.printNewLine();
     }
 

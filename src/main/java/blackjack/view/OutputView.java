@@ -54,6 +54,12 @@ public class OutputView {
         return denomination.getName() + shape.getName();
     }
 
+    public static void showCards(Players players) {
+        for (Player player : players.getPlayers()) {
+            showCards(player);
+        }
+    }
+
     public static void showCards(Participant participant) {
         System.out.println(getCardsMessageForm(participant));
     }
