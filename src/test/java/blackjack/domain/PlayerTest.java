@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+
     private Player player;
 
     @BeforeEach
@@ -25,6 +26,15 @@ public class PlayerTest {
             for (String name : input.split(",")) {
                 new Player(name);
             }
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("이름이 없을 경우 예외 처리")
+    void playerNameLengthException() {
+        String name = "";
+        assertThatThrownBy(() -> {
+            new Player(name);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

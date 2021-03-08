@@ -14,12 +14,20 @@ public abstract class Gamer {
     private static final int AVAILABLE_ACE_BONUS = 11;
     public static final int HIGHEST_POINT = 21;
     private static final String COMMA = ", ";
+    public static final String ERROR_NAME_LENGTH = "이름이 공백일 수는 없습니다.";
     private final String name;
     protected final List<Card> cards = new ArrayList<>();
 
     protected Gamer(String name) {
         validateSpace(name);
+        validateZeroLength(name);
         this.name = name;
+    }
+
+    private static void validateZeroLength(String name) {
+        if (name.length() == 0) {
+            throw new IllegalArgumentException(ERROR_NAME_LENGTH);
+        }
     }
 
     private static void validateSpace(String name) {
