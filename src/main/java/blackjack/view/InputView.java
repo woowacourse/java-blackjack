@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.player.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,8 +22,8 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    public static boolean getWhetherDrawCard(String name) {
-        System.out.printf(DRAW_ONE_MORE_CARD_MESSAGE_FORMAT, name);
+    public static boolean getWhetherDrawCard(Player player) {
+        System.out.printf(DRAW_ONE_MORE_CARD_MESSAGE_FORMAT, player.getName());
         String input = SCANNER.nextLine();
         if (input.equals(YES_INPUT)) {
             return true;

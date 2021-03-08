@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.blackjackgame.BlackjackGame;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
@@ -10,14 +10,17 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final String DEALER_NAME = "딜러";
-
     public void run() {
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer(DEALER_NAME);
-        List<Player> players = createPlayers();
+        BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
 
-        turnStart(deck, dealer, players);
+        blackjackGame.start();
+        printHandOutResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        while (blackjackGame.isNotEnd()) {
+            Player player = blackjackGame.getCurrentPlayer();
+            blackjackGame.drawCurrentPlayer(InputView.getWhetherDrawCard(player));
+            OutputView.printPlayerCards(player);
+        }
+        printGameResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private List<Player> createPlayers() {
@@ -27,60 +30,17 @@ public class BlackjackController {
             .collect(Collectors.toList());
     }
 
-    private void turnStart(Deck deck, Dealer dealer, List<Player> players) {
-        handOutCards(deck, dealer, players);
-        printHandOutCardsResult(dealer, players);
-
-        startPlayerDrawPhase(deck, players);
-        startDealerDrawPhase(deck, dealer);
-        printDealerPlayersScore(dealer, players);
-
-        calculateBlackJackGameResult(dealer, players);
-        printGameResult(dealer, players);
-    }
-
-    private void handOutCards(Deck deck, Dealer dealer, List<Player> players) {
+    private void printHandOutResult(Dealer dealer, List<Player> players) {
         OutputView.printHandOutCardsMessage(dealer, players);
-        dealer.initialDraw(deck);
-        players.forEach(player -> player.initialDraw(deck));
-    }
-
-    private void startPlayerDrawPhase(Deck deck, List<Player> players) {
-        players.forEach(player -> {
-            while (player.canDraw() && InputView.getWhetherDrawCard(player.getName())) {
-                player.draw(deck);
-                OutputView.printPlayerCards(player);
-            }
-        });
-    }
-
-    private void startDealerDrawPhase(Deck deck, Dealer dealer) {
-        if (dealer.canDraw()) {
-            OutputView.printDealerCardDrawMessage();
-            dealer.draw(deck);
-        }
-    }
-
-    private void calculateBlackJackGameResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> player.calculateGameResult(dealer));
-    }
-
-    private void printDealerPlayersScore(Dealer dealer, List<Player> players) {
-        OutputView.printParticipantCardsWithScore(dealer);
-        players.forEach(OutputView::printParticipantCardsWithScore);
-    }
-
-    private void printHandOutCardsResult(Dealer dealer, List<Player> players) {
-        OutputView.printDealerCards(dealer.getName(), dealer.getCards());
+        OutputView.printDealerCards(dealer);
         players.forEach(OutputView::printPlayerCards);
+        OutputView.printNewLine();
     }
 
     private void printGameResult(Dealer dealer, List<Player> players) {
+        OutputView.printDealerCardsScore(dealer);
+        players.forEach(OutputView::printPlayerCardsScore);
         OutputView.printGameResult(players, dealer);
     }
 
 }
-
-
-
-
