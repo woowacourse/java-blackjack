@@ -18,4 +18,8 @@ public interface Player {
     Name getName();
 
     List<Card> getCards();
+
+    boolean isBlackJack();
+
+    boolean isBust();
 }

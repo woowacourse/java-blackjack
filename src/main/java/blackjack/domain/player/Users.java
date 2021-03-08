@@ -14,14 +14,14 @@ public class Users {
     private static final String DELIMITER = ",";
     private final List<User> users;
 
-    public Users(List<User> users) {
-        this.users = new ArrayList<>(users);
-    }
-
     public Users(String usersNames) {
         users = Arrays.stream(usersNames.split(DELIMITER))
             .map(User::new)
             .collect(Collectors.toList());
+    }
+
+    public Users(List<User> users) {
+        this.users = new ArrayList<>(users);
     }
 
     public void drawRandomTwoCards(Cards allCards) {

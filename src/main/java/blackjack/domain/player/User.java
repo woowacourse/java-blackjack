@@ -34,23 +34,46 @@ public class User extends AbstractPlayer {
     }
 
     public ResultType getResult(Dealer dealer) {
-        int userScore = this.getScore();
-        int dealerScore = dealer.getScore();
-        if (userScore > BLACKJACK) {
-            return ResultType.LOSS;
+        ResultType bustResult = getBustResult(dealer);
+        if (bustResult != null) {
+            return bustResult;
         }
-        if (dealerScore > BLACKJACK) {
-            return ResultType.WIN;
+        ResultType blackJackResult = getBlackJackResult(dealer);
+        if (blackJackResult != null) {
+            return blackJackResult;
         }
-        return notBustCase(userScore, dealerScore);
+        return getRestResult(dealer);
     }
 
-    private ResultType notBustCase(int userScore, int dealerScore) {
-        if (userScore == dealerScore) {
+    private ResultType getBustResult(Dealer dealer) {
+        if (isBust()) {
+            return ResultType.LOSS;
+        }
+        if (dealer.isBust()) {
+            return ResultType.WIN;
+        }
+        return null;
+    }
+
+    private ResultType getBlackJackResult(Dealer dealer) {
+        if (isBlackJack() && dealer.isBlackJack()) {
             return ResultType.DRAW;
         }
-        if (userScore > dealerScore) {
+        if (isBlackJack() && !dealer.isBlackJack()) {
             return ResultType.WIN;
+        }
+        if (!isBlackJack() && dealer.isBlackJack()) {
+            return ResultType.LOSS;
+        }
+        return null;
+    }
+
+    private ResultType getRestResult(Dealer dealer) {
+        if (getScore() > dealer.getScore()) {
+            return ResultType.WIN;
+        }
+        if (getScore() == dealer.getScore()) {
+            return ResultType.DRAW;
         }
         return ResultType.LOSS;
     }

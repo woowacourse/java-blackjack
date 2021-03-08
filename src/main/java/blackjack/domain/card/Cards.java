@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    private static final int BLACKJACK_SIZE = 2;
+    private static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards = new ArrayList<>();
 
     private Cards() {
@@ -58,5 +60,16 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isBlackJack() {
+        if (cards.size() == BLACKJACK_SIZE && getScore() == BLACKJACK_SCORE) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBust() {
+        return getScore() > BLACKJACK_SCORE;
     }
 }

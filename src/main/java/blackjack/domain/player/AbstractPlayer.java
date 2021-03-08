@@ -47,4 +47,14 @@ public abstract class AbstractPlayer implements Player {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
+
+    @Override
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
+    }
 }

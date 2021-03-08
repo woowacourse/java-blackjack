@@ -25,7 +25,7 @@ public class AbstractPlayerTest {
         assertThat(user.getCards()).containsExactly(twoCard);
     }
 
-    @DisplayName("A가 1로 계산되어야 할 때 총 점수 계산 테스트 - 10, 10, A")
+    @DisplayName("A가 1로 계산되어야 할 때 총 점수 계산 테스트 - 10, 10, A(1) = 총 합: 21 / 블랙잭 false")
     @Test
     void getScoreAceLowValue1() {
         AbstractPlayer user = new User(TEST_NAME);
@@ -37,9 +37,11 @@ public class AbstractPlayerTest {
         user.drawOneCard(aceCard);
 
         assertThat(user.getScore()).isEqualTo(21);
+        assertThat(user.isBlackJack()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 
-    @DisplayName("A가 1로 계산되어야 할 때 총 점수 계산 테스트 - 10, A, 10")
+    @DisplayName("A가 1로 계산되어야 할 때 총 점수 계산 테스트 - 10, A(1), 10 = 총 합: 21 / 블랙잭 false")
     @Test
     void getScoreAceLowValue2() {
         AbstractPlayer user = new User(TEST_NAME);
@@ -51,9 +53,11 @@ public class AbstractPlayerTest {
         user.drawOneCard(tenCard);
 
         assertThat(user.getScore()).isEqualTo(21);
+        assertThat(user.isBlackJack()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 
-    @DisplayName("A가 11로 계산되어야 할 때 총 점수 계산 테스트")
+    @DisplayName("A가 11로 계산되어야 할 때 총 점수 계산 테스트 - 10, A(11) = 총 합: 21 / 블랙잭 true")
     @Test
     void getScoreAceHighValue() {
         AbstractPlayer user = new User(TEST_NAME);
@@ -64,9 +68,11 @@ public class AbstractPlayerTest {
         user.drawOneCard(aceCard);
 
         assertThat(user.getScore()).isEqualTo(21);
+        assertThat(user.isBlackJack()).isTrue();
+        assertThat(user.isBust()).isFalse();
     }
 
-    @DisplayName("A가 2개일 때 : A(11) + A(1) = 12")
+    @DisplayName("A가 2개일 때 : A(11) + A(1) = 총 합: 12 / 블랙잭 false")
     @Test
     void getScoreDoubleAce() {
         AbstractPlayer user = new User(TEST_NAME);
@@ -76,20 +82,25 @@ public class AbstractPlayerTest {
         user.drawOneCard(aceCard);
 
         assertThat(user.getScore()).isEqualTo(12);
+        assertThat(user.isBlackJack()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 
-    @DisplayName("A가 없을 때 총 점수 계산 테스트 - 총 합이 10")
+    @DisplayName("A가 없을 때 총 점수 계산 테스트 = 총 합: 10 / 블랙잭 false")
     @Test
     void getScoreNotContainsAceTenOrLess() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card tenCard = new Card(CardShapeType.DIAMOND, CardNumberType.TEN);
+        Card fiveCard = new Card(CardShapeType.DIAMOND, CardNumberType.FIVE);
 
-        user.drawOneCard(tenCard);
+        user.drawOneCard(fiveCard);
+        user.drawOneCard(fiveCard);
 
         assertThat(user.getScore()).isEqualTo(10);
+        assertThat(user.isBlackJack()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 
-    @DisplayName("A가 없을 때 총 점수 계산테스트 - 총 합이 11")
+    @DisplayName("A가 없을 때 총 점수 계산테스트 - 총 합: 11 / 블랙잭 false")
     @Test
     void getScoreNotContainsAce11OrMore() {
         AbstractPlayer user = new User(TEST_NAME);
@@ -100,6 +111,8 @@ public class AbstractPlayerTest {
         user.drawOneCard(sixCard);
 
         assertThat(user.getScore()).isEqualTo(11);
+        assertThat(user.isBlackJack()).isFalse();
+        assertThat(user.isBust()).isFalse();
     }
 
     @DisplayName("카드 반환 테스트")
