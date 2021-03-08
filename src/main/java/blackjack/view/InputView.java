@@ -1,11 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.user.Player;
-
 import blackjack.domain.user.PlayerDto;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -19,13 +16,6 @@ public class InputView {
         return Arrays.stream(input.split(COMMA))
             .map(String::trim)
             .collect(Collectors.toList());
-    }
-
-    public static String askIfMoreCard(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
-        String input = SCANNER.nextLine();
-        validateYOrN(input.toLowerCase());
-        return input;
     }
 
     public static String askIfMoreCardV2(PlayerDto player) {
