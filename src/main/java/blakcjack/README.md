@@ -24,7 +24,7 @@
     - Card 리스트를 가지는 일급컬렉션 생성
     - Player 리스트를 가지는 Players 생성
     - DTO를 만들만한 것 있는지 생각
-  
+
 ## 1단계 피드백 이후 리팩토링 목록
 
 - [x] 커스텀 예외 추가
@@ -35,7 +35,7 @@
     - [x] 플레이어 중복시 GameInitializationFailureException 발생 (BlackjackGame)
     - [x] 카드를 더 뽑을지에 대한 응답이 올바르지 않은 경우 InvalidReplyException 발생 (AdditionalCardReply)
 - [ ] 예외에 따라 뷰에 안내가 필요한 경우 추가
-    - [ ] 카드가 없을 시 뷰에 안내 메시지를 출력하고 게임 종료
+    - [x] 카드가 없을 시 뷰에 안내 메시지를 출력하고 게임 종료
 - [x] 사용자 응답 (y,n)을 담을 enum 생성 (AdditionalCardReply ,view package)
 - [ ] 메서드 분리, stream 또는 forEach 사용할 부분 체크
     - [x] OutputView 리팩터링

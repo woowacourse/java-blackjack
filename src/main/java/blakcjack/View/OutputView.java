@@ -116,4 +116,8 @@ public class OutputView {
     private static String makePlayerOutcomeMessage(final String name, final Outcome outcome) {
         return String.format("%s: %s%n", name, outcome.getValue());
     }
+
+    public static void printGameClosing(final String reason) {
+        System.out.printf("게임을 종료합니다: %s%n", reason);
+    }
 }
