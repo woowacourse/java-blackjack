@@ -3,8 +3,8 @@ package blackjack.service;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Players;
 
 public class BlackJackService {
     private static final int INIT_DRAW_COUNT = 2;

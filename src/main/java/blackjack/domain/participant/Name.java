@@ -1,4 +1,4 @@
-package blackjack.domain.gamer;
+package blackjack.domain.participant;
 
 public class Name {
     private static final String WRONG_PLAYER_NAME_ERROR_MESSAGE = "유효하지 않은 플레이어 이름입니다.";

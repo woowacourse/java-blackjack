@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
 

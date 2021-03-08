@@ -1,7 +1,7 @@
-package blackjack.domain.gamer;
+package blackjack.domain.participant;
 
-import blackjack.domain.MatchResult;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.MatchResult;
 
 public class Dealer extends Participant {
     public static final Name DEALER_NAME = new Name("딜러");

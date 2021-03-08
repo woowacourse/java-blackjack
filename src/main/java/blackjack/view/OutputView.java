@@ -1,17 +1,17 @@
 package blackjack.view;
 
-import blackjack.domain.BlackJackResult;
-import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
-import blackjack.domain.gamer.*;
+import blackjack.domain.participant.*;
+import blackjack.domain.result.BlackJackResult;
+import blackjack.domain.result.MatchResult;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static blackjack.domain.card.Cards.TOP_CARD;
-import static blackjack.domain.gamer.Dealer.DEALER_NAME;
+import static blackjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {
     private static final String ENTER_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
