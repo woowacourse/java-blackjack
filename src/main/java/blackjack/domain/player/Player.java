@@ -17,11 +17,11 @@ public abstract class Player {
 
     abstract boolean canDraw();
 
-    public int calculateScore() {
+    public final int calculateScore() {
         return cards.calculateScore();
     }
 
-    public boolean isBust() {
+    public final boolean isBust() {
         return cards.isBust();
     }
 
