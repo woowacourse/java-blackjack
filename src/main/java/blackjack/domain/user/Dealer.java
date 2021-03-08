@@ -10,7 +10,7 @@ public class Dealer extends User {
         super(DEALER_NAME);
     }
 
-    public boolean isAbleHit() {
+    public boolean isMustHit() {
         return cards.calculateTotalValue() <= MAX_HIT_VALUE;
     }
 

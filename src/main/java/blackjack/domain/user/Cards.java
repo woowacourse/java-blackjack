@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Value;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +35,8 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isSoftHand() {
-        return cards.stream().anyMatch(c -> Value.ACE.getValue() == c.value());
+        return cards.stream()
+                .anyMatch(Card::isAceCard);
     }
 
     public void combine(Cards otherCards) {
