@@ -19,26 +19,21 @@ public class Cards {
     }
 
     public int calculateJudgingPoint() {
-        int point = 0;
-        for (Card card : cards) {
-            point = card.addPoint(point);
+        return cards.stream()
+                .map(Card::getNumber)
+                .reduce(0, Integer::sum);
+    }
+
+    public int addAcePoint() {
+        int point = calculateJudgingPoint();
+        if (point <= MAXIMUM_TO_ACE_IS_ELEVEN && havingAce()) {
+            point += MAKING_ACE_ELEVEN;
         }
         return point;
     }
 
-    public int calculateMaximumPoint() {
-        int point = 0;
-        boolean havingAce = false;
-        for (Card card : cards) {
-            point = card.addPoint(point);
-            if (card.isAce()) {
-                havingAce = true;
-            }
-        }
-        if (point <= MAXIMUM_TO_ACE_IS_ELEVEN && havingAce) {
-            point += MAKING_ACE_ELEVEN;
-        }
-        return point;
+    private boolean havingAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

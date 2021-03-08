@@ -24,16 +24,16 @@ public abstract class Gamer {
         cards.addCard(card);
     }
 
-    public boolean isBurst() {
-        return cards.calculateMaximumPoint() > THRESHOLD_OF_BURST;
+    public boolean isBurst(int point) {
+        return point > THRESHOLD_OF_BURST;
     }
 
     public int makeJudgingPoint() {
         return cards.calculateJudgingPoint();
     }
 
-    public int makeMaximumPoint() {
-        return cards.calculateMaximumPoint();
+    public int makeFinalPoint() {
+        return cards.addAcePoint();
     }
 
     public abstract boolean canReceiveCard();

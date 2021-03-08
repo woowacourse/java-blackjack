@@ -40,10 +40,10 @@ public class OutputView {
 
     public static void noticePlayersPoint(Dealer dealer, Players players) {
         System.out.println();
-        System.out.println(dealer.getName() + COLON_DELIMITER + makePlayerCardNames(dealer) + RESULT_DELIMITER + dealer.makeMaximumPoint());
+        System.out.println(dealer.getName() + COLON_DELIMITER + makePlayerCardNames(dealer) + RESULT_DELIMITER + dealer.makeFinalPoint());
         for (Player player : players.toList()) {
             System.out.println(player.getName() + CARD_DELIMITER + makePlayerCardNames(player)
-                    + RESULT_DELIMITER + player.makeMaximumPoint());
+                    + RESULT_DELIMITER + player.makeFinalPoint());
             WinnerFlag.calculateResult(dealer, player);
         }
     }

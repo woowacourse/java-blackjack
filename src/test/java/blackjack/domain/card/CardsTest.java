@@ -32,7 +32,7 @@ public class CardsTest {
     void addAllPointWithAce() {
         cards.addCard(new Card(CardPattern.SPADE, CardNumber.FIVE));
         cards.addCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        assertEquals(cards.calculateMaximumPoint(), 16);
+        assertEquals(cards.addAcePoint(), 16);
     }
 
     @Test

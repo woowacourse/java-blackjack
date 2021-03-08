@@ -24,6 +24,10 @@ public class Card {
     }
 
     public String getNumberName() {
+        return number.getName();
+    }
+
+    public int getNumber() {
         return number.getNumber();
     }
 

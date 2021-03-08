@@ -15,14 +15,15 @@ public enum WinnerFlag {
     }
 
     public static void calculateResult(Dealer dealer, Player player) {
-        int playerResult = player.makeMaximumPoint();
-        if (dealer.isBurst() && player.isBurst() || dealer.isSameThan(playerResult)) {
+        int playerPoints = player.makeFinalPoint();
+        int dealerPoints = dealer.makeFinalPoint();
+        if (dealer.isBurst(dealerPoints) && player.isBurst(playerPoints) || dealer.isSameThan(playerPoints)) {
             player.matchResult(DRAW);
         }
-        if (player.isBurst() || (!dealer.isBurst() && dealer.isBiggerThan(playerResult))) {
+        if (player.isBurst(playerPoints) || (!dealer.isBurst(dealerPoints) && dealer.isBiggerThan(playerPoints))) {
             player.matchResult(LOSE);
         }
-        if ((dealer.isSmallerThan(playerResult) && !player.isBurst()) || dealer.isBurst()) {
+        if ((dealer.isSmallerThan(playerPoints) && !player.isBurst(playerPoints)) || dealer.isBurst(dealerPoints)) {
             player.matchResult(WIN);
         }
     }

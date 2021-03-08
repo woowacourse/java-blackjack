@@ -22,14 +22,14 @@ public class Dealer extends Gamer {
     }
 
     public boolean isSmallerThan(int playerMaximum) {
-        return this.makeMaximumPoint() < playerMaximum;
+        return this.makeFinalPoint() < playerMaximum;
     }
 
     public boolean isBiggerThan(int playerMaximum) {
-        return this.makeMaximumPoint() > playerMaximum;
+        return this.makeFinalPoint() > playerMaximum;
     }
 
     public boolean isSameThan(int playerMaximum) {
-        return this.makeMaximumPoint() == playerMaximum;
+        return this.makeFinalPoint() == playerMaximum;
     }
 }

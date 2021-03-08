@@ -27,7 +27,11 @@ public enum CardNumber {
         return point + this.number;
     }
 
-    public String getNumber() {
+    public int getNumber() {
+        return number;
+    }
+
+    public String getName() {
         return this.name;
     }
 }

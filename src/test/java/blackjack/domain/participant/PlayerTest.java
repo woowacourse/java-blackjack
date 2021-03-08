@@ -64,7 +64,7 @@ public class PlayerTest {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
-        assertTrue(player.isBurst());
+        assertTrue(player.isBurst(player.makeFinalPoint()));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class PlayerTest {
     void aceCardScoring() {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
-        assertEquals(player.makeMaximumPoint(), 21);
+        assertEquals(player.makeFinalPoint(), 21);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class PlayerTest {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
-        assertEquals(player.makeMaximumPoint(), 21);
+        assertEquals(player.makeFinalPoint(), 21);
     }
 
     @ParameterizedTest
