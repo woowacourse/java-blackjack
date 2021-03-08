@@ -43,7 +43,7 @@ public class Round {
         results.put(dealer.getName(), new ArrayDeque<>(gameOutComes));
 
         players.forEach(player -> results.put(player.getName(),
-                new ArrayDeque<>(Collections.singletonList(Outcome.getPlayerOutcomes(gameOutComes.poll())))));
+                new ArrayDeque<>(Collections.singletonList(Outcome.getPlayerOutcome(gameOutComes.poll())))));
 
         return results;
     }

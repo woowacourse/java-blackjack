@@ -6,9 +6,9 @@ import java.util.function.BiPredicate;
 import static blackjack.domain.Round.GAME_OVER_SCORE;
 
 public enum Outcome {
-    WIN("승", (a, b) -> b > GAME_OVER_SCORE, (a, b) -> ((a <= GAME_OVER_SCORE) && a > b)),
-    LOSE("패", (a, b) -> a > GAME_OVER_SCORE, (a, b) -> a < b),
-    DRAW("무", (a, b) -> false, (a, b) -> a == b);
+    WIN("승", (dealer, player) -> player > GAME_OVER_SCORE, (dealer, player) -> ((dealer <= GAME_OVER_SCORE) && dealer > player)),
+    LOSE("패", (dealer, player) -> dealer > GAME_OVER_SCORE, (dealer, player) -> dealer < player),
+    DRAW("무", (dealer, player) -> false, (dealer, player) -> dealer == player);
 
     private final String name;
     private final BiPredicate<Integer, Integer> busterPredicate;
@@ -27,7 +27,7 @@ public enum Outcome {
                 .orElseThrow(() -> new IllegalArgumentException("체크할수 없습!!"));
     }
 
-    public static Outcome getPlayerOutcomes(final Outcome outcome) {
+    public static Outcome getPlayerOutcome(final Outcome outcome) {
         if (outcome == WIN) {
             return LOSE;
         }

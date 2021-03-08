@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class RoundTest {
     private Dealer dealer;
     private List<Player> players;
