@@ -21,4 +21,12 @@ public class CardTest {
 
         assertThat(card.value()).isEqualTo(11);
     }
+
+    @Test
+    @DisplayName("에이스카드인지 확인한다.")
+    void isAceCard() {
+        Card card = new Card(Shape.CLOVER, Value.ACE);
+
+        assertThat(card.isAceCard()).isTrue();
+    }
 }

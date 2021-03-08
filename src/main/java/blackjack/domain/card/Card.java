@@ -17,4 +17,8 @@ public class Card {
     public String toString() {
         return value.getValue() + shape.getShape();
     }
+
+    public boolean isAceCard() {
+        return value.isAce();
+    }
 }
