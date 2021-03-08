@@ -21,7 +21,7 @@ public class UserTest {
     @Test
     void canDrawCardWhen1() {
         User user = new User(TEST_NAME);
-        Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        Card twoCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TWO);
         user.drawCard(twoCard);
         assertThat(user.isCanDraw()).isTrue();
     }
@@ -30,7 +30,7 @@ public class UserTest {
     @Test
     void canDrawCardWhen21() {
         User user = new User(TEST_NAME);
-        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+        Card sevenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN);
         user.drawCard(sevenCard);
         user.drawCard(sevenCard);
         user.drawCard(sevenCard);
@@ -41,10 +41,10 @@ public class UserTest {
     @Test
     void cannotDrawCardWhen22() {
         User user = new User(TEST_NAME);
-        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+        Card sevenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN);
         user.drawCard(sevenCard);
         user.drawCard(sevenCard);
-        Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
+        Card eightCard = Card.valueOf(CardShape.DIAMOND, CardNumber.EIGHT);
         user.drawCard(eightCard);
         assertThat(user.isCanDraw()).isFalse();
     }
@@ -87,10 +87,10 @@ public class UserTest {
     @Test
     void win() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
+        user.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.EIGHT));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
@@ -100,10 +100,10 @@ public class UserTest {
     @Test
     void loss() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.SIX));
+        user.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SIX));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
@@ -113,10 +113,10 @@ public class UserTest {
     @Test
     void draw() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        user.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SEVEN));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.DRAW);
@@ -126,14 +126,83 @@ public class UserTest {
     @Test
     void lossOver21() {
         Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
 
         User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TWO));
+        user.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
+        user.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
+        user.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TWO));
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
+
+    @DisplayName("딜러가 블랙잭일때 패, 무승부, 버스트")
+    @Test
+    void dealerBlackJackUserProfit() {
+        Dealer dealer = new Dealer();
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+
+        User user = new User(TEST_NAME);
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
+        user.setBetAmount("10000");
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        assertThat(user.profit(dealer)).isEqualTo(0);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.TWO));
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+    }
+
+    @DisplayName("딜러가 21일때 패, 블랙잭, 무승부, 버스트")
+    @Test
+    void dealer21UserProfit() {
+        Dealer dealer = new Dealer();
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+
+        User user = new User(TEST_NAME);
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
+        user.setBetAmount("10000");
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        assertThat(user.profit(dealer)).isEqualTo(15000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        assertThat(user.profit(dealer)).isEqualTo(0);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+    }
+
+    @DisplayName("딜러가 17일때 패, 무승부, 승, 블랙잭, 버스트")
+    @Test
+    void dealer17UserProfit() {
+        Dealer dealer = new Dealer();
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+
+        User user = new User(TEST_NAME);
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
+        user.setBetAmount("10000");
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        assertThat(user.profit(dealer)).isEqualTo(0);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
+        assertThat(user.profit(dealer)).isEqualTo(10000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.FOUR));
+        assertThat(user.profit(dealer)).isEqualTo(15000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+    }
+
+
 }
