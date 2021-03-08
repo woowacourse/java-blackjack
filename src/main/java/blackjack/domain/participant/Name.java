@@ -13,7 +13,7 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (!VALID_NAME_FORMAT.matcher(name).matches() || name.isEmpty()) {
+        if (name == null || name.isEmpty() || !VALID_NAME_FORMAT.matcher(name).matches()) {
             throw new IllegalArgumentException("이름은 한글, 영문 혹은 숫자로 1자 이상 입력해야합니다.");
         }
     }
