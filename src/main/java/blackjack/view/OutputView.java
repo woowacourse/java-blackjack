@@ -7,18 +7,19 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
     public static final String LINE_SEPARATOR = System.lineSeparator();
-    public static final String GAME_RESULT_FORMAT = "%d승 %d무 %d패" + LINE_SEPARATOR;
     public static final String CURRENT_CARD_INFO_FORMAT = "%s카드: %s" + System.lineSeparator();
     public static final String FINISHED_CARD_INFO_FORMAT = "%s카드: %s - 결과: %d" + System.lineSeparator();
     public static final String SET_UP_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 나누었습니다." + LINE_SEPARATOR;
     public static final String DEALER_NO_MORE_DRAW_MESSAGE =
             System.lineSeparator() + "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
     public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String NAME_PREFIX = "%s: ";
+    public static final String GAME_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
+    public static final String DEALER_NAME = "딜러";
 
     private OutputView() {
     }
@@ -58,15 +59,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printParticipantFinalCardInfo(Dealer dealer, List<Player> players) {
-        printEachParticipantFinalCardInfo(dealer);
+    public static void printDealerAndPlayersCardInfoWithScore(Dealer dealer, List<Player> players) {
+        printCardInfoWithScore(dealer);
         for (Player player : players) {
-            printEachParticipantFinalCardInfo(player);
+            printCardInfoWithScore(player);
         }
         System.out.println();
     }
 
-    private static void printEachParticipantFinalCardInfo(Participant participant) {
+    private static void printCardInfoWithScore(Participant participant) {
         String cardInfo = participant.getCards()
                 .stream()
                 .map(Card::toString)
@@ -74,25 +75,20 @@ public class OutputView {
         System.out.printf(FINISHED_CARD_INFO_FORMAT, participant.getName(), cardInfo, participant.calculateResult());
     }
 
-    public static void printWinOrLoseResult(Dealer dealer, List<Player> players) {
-        printWinOrLoseResult(dealer);
-        for (Player player : players) {
-            printWinOrLoseResult(player);
+    public static void printPlayerGameResult(String dealerGameResult,
+                                             Map<String, String> playersGameResult) {
+        printDealerGameResult(dealerGameResult);
+        for (Map.Entry<String, String> playerGameResult : playersGameResult.entrySet()) {
+            printPlayerGameResult(playerGameResult.getKey(), playerGameResult.getValue());
         }
     }
 
-    private static void printWinOrLoseResult(Participant participant) {
-        GameResult gameResult = participant.getGameResult();
-        String result = gameResultToString(gameResult);
-        System.out.printf(NAME_PREFIX + result, participant.getName());
+    private static void printDealerGameResult(String dealerGameResult) {
+        System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, dealerGameResult);
     }
 
-    private static String gameResultToString(GameResult gameResult) {
-        int win = gameResult.getWinCount();
-        int draw = gameResult.getDrawCount();
-        int lose = gameResult.getLoseCount();
-
-        return String.format(GAME_RESULT_FORMAT, win, draw, lose);
+    private static void printPlayerGameResult(String playerName, String playerGameResult) {
+        System.out.printf(GAME_RESULT_FORMAT, playerName, playerGameResult);
     }
 
     public static void printMessage(String message) {

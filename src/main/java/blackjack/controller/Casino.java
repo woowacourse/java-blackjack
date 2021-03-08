@@ -6,6 +6,8 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Map;
+
 public class Casino {
 
     public void blackJack() {
@@ -48,8 +50,10 @@ public class Casino {
     }
 
     private void printGameResult(Game game) {
-        OutputView.printParticipantFinalCardInfo(game.getDealer(), game.getPlayers());
-        game.fightPlayers();
-        OutputView.printWinOrLoseResult(game.getDealer(), game.getPlayers());
+        Map<String, String> playersGameResult = game.getPlayersGameResult();
+        String dealerGameResult = game.getDealerGameResult(playersGameResult);
+
+        OutputView.printDealerAndPlayersCardInfoWithScore(game.getDealer(), game.getPlayers());
+        OutputView.printPlayerGameResult(dealerGameResult, playersGameResult);
     }
 }

@@ -5,6 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
 import java.util.List;
+import java.util.Map;
 
 public class Game {
     public static final int BLACKJACK_NUMBER = 21;
@@ -38,19 +39,12 @@ public class Game {
         dealer.addCard();
     }
 
-    public int playDealerTurn() {
-        int cnt = 0;
-        while (!dealer.isStay()) {
-            giveCardToDealer();
-            cnt++;
-        }
-        return cnt;
+    public String getDealerGameResult(Map<String, String> playersGameResult) {
+        return dealer.getGameResult(playersGameResult);
     }
 
-    public void fightPlayers() {
-        for (Player player : players.getPlayers()) {
-            player.fight(dealer);
-        }
+    public Map<String, String> getPlayersGameResult() {
+        return players.getGameResults(dealer);
     }
 
     public List<Player> getPlayers() {

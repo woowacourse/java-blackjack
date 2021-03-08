@@ -13,7 +13,6 @@ public abstract class Participant {
     public static final int DIFFERENCE_OF_ACE_VALUE = 10;
 
     protected final List<Card> cards = new ArrayList<>();
-    protected GameResult gameResult = new GameResult();
 
     public void addCard() {
         cards.add(Deck.draw());
@@ -53,23 +52,6 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-
-    public int getWinCount() {
-        return gameResult.getWinCount();
-    }
-
-    public int getDrawCount() {
-        return gameResult.getDrawCount();
-    }
-
-    public int getLoseCount() {
-        return gameResult.getLoseCount();
-    }
-
-    public GameResult getGameResult() {
-        return gameResult;
     }
 
     public abstract String getName();

@@ -17,14 +17,6 @@ public class Card {
         return cardNumber.getScore();
     }
 
-    public String getNumber() {
-        return cardNumber.getNumber();
-    }
-
-    public String getShape() {
-        return shape.getName();
-    }
-
     @Override
     public String toString() {
         return cardNumber.getNumber() + shape.getName();
