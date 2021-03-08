@@ -32,7 +32,7 @@ public class OutputView {
         System.out.println(dealer.getName() + COLON + dealer.showOneCard());
     }
 
-    public static void printUsersCards(Players players) {
+    public static void printPlayersCards(Players players) {
         players.players()
                 .forEach(OutputView::printPlayerCards);
     }
@@ -49,7 +49,7 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA)));
     }
 
-    public static void printWantHit(Player player) {
+    public static void printAskOneMoreCard(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
@@ -76,15 +76,16 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA));
     }
 
-    public static void printResults(Dealer dealer, ResultBoard resultBoard) {
+    public static void printResults(ResultBoard resultBoard) {
         System.out.println("\n## 최종 승패");
-        System.out.print(dealer.getName() + ": ");
+        System.out.print("딜러: ");
         for (Result result : resultBoard.dealerResultBoard().keySet()) {
             System.out.print(resultBoard.dealerResultBoard().get(result) + result.getResult() + " ");
         }
         System.out.println();
         for (Player player : resultBoard.userResultBoard().keySet()) {
-            System.out.println(player.getName() + ": " + resultBoard.userResultBoard().get(player).getResult());
+            System.out.println(player.getName() + ": " +
+                    resultBoard.userResultBoard().get(player).getResult());
         }
     }
 }
