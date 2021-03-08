@@ -33,7 +33,7 @@ class PlayerTest {
     void hitCard() {
         Player player = new Player("Player");
         CardDeck cardDeck = CardDeck.createDeck();
-        player.hit(cardDeck.drawCard());
+        player.addCard(cardDeck.drawCard());
         assertThat(player.getCards().cards()).hasSize(1);
     }
 
@@ -61,9 +61,9 @@ class PlayerTest {
         Card card2 = new Card(Suit.CLUB, CardNumber.SEVEN);
         Card card3 = new Card(Suit.CLUB, CardNumber.SIX);
 
-        player.hit(card1);
-        player.hit(card2);
-        player.hit(card3);
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
 
         assertTrue(player.isBust());
     }

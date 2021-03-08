@@ -16,7 +16,7 @@ public abstract class User {
         this.cards = new Cards();
     }
 
-    public void hit(Card card) {
+    public void addCard(Card card) {
         cards.hit(card);
     }
 

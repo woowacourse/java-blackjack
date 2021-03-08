@@ -18,7 +18,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createDeck();
 
-        dealer.hit(cardDeck.drawCard());
+        dealer.addCard(cardDeck.drawCard());
 
         assertThat(dealer.getCards().cards()).hasSize(1);
     }
@@ -31,8 +31,8 @@ class DealerTest {
         Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
         Card card2 = new Card(Suit.CLUB, CardNumber.SIX);
 
-        dealer.hit(card1);
-        dealer.hit(card2);
+        dealer.addCard(card1);
+        dealer.addCard(card2);
 
         assertTrue(dealer.hasToDrawACard());
     }
@@ -45,8 +45,8 @@ class DealerTest {
         Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
         Card card2 = new Card(Suit.CLUB, CardNumber.SEVEN);
 
-        dealer.hit(card1);
-        dealer.hit(card2);
+        dealer.addCard(card1);
+        dealer.addCard(card2);
 
         assertFalse(dealer.hasToDrawACard());
     }

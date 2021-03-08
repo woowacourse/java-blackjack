@@ -13,8 +13,8 @@ class UserTest {
     @Test
     void isBlackJackTrueTest() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
-        user.hit(new Card(Suit.SPADE, CardNumber.JACK));
+        user.addCard(new Card(Suit.SPADE, CardNumber.ACE));
+        user.addCard(new Card(Suit.SPADE, CardNumber.JACK));
         assertTrue(user.isBlackJack());
     }
 
@@ -22,8 +22,8 @@ class UserTest {
     @Test
     void isBlackJackFalseTest() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
+        user.addCard(new Card(Suit.SPADE, CardNumber.ACE));
+        user.addCard(new Card(Suit.SPADE, CardNumber.NINE));
         assertFalse(user.isBlackJack());
     }
 }

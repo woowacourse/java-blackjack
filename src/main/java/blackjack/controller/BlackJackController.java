@@ -21,7 +21,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        initialHits(users);
+        initialDealingCards(users);
         OutputView.printInitialComment(users);
         OutputView.printCardsOfUsersWithScore(users);
 
@@ -39,15 +39,15 @@ public class BlackJackController {
 
     private void drawCardsOfDealerUntilOver16Score() {
         while (dealer.hasToDrawACard()) {
-            dealer.hit(cardDeck.drawCard());
+            dealer.addCard(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
     }
 
-    private void initialHits(Users users) {
+    private void initialDealingCards(Users users) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
             users.gerUsers()
-                    .forEach(user -> user.hit(cardDeck.drawCard()));
+                    .forEach(user -> user.addCard(cardDeck.drawCard()));
         }
     }
 
@@ -59,7 +59,7 @@ public class BlackJackController {
 
     private void requestHitOrNot(Player player) {
         if (InputView.isHit(player.getName())) {
-            player.hit(cardDeck.drawCard());
+            player.addCard(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
             return;
         }
