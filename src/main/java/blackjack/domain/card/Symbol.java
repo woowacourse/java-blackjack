@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public enum Symbol {
+public enum
+Symbol {
     SPADE("스페이드"),
     HEART("하트"),
     CLOVER("클로버"),

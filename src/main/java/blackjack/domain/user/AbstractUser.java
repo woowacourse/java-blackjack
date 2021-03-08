@@ -17,11 +17,11 @@ public abstract class AbstractUser {
         return Collections.unmodifiableList(cards);
     }
 
-    public final List<String> getCardsStatus() {
+/*    public final List<String> getCardsStatus() {
         return cards.stream()
                 .map(Card::getCardStatus)
                 .collect(Collectors.toList());
-    }
+    }*/
 
     public final int getScore() {
         int score = cards.stream()

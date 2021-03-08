@@ -1,6 +1,7 @@
 package blackjack.view.dto;
 
 import blackjack.domain.Round;
+import blackjack.domain.card.Card;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +21,9 @@ public class RoundStatusDto {
 
     public static RoundStatusDto toDto(Round round) {
         return new RoundStatusDto(round.getDealerName(),
-                round.getDealer().getCardsStatus(),
+                cardsToString(round.getDealer().getCards()),
                 round.getPlayers().stream()
-                        .map(player -> new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.getScore()))
+                        .map(player -> new PlayerStatusDto(player.getName(), player.getCards(), player.getScore()))
                         .collect(Collectors.toList()),
                 round.getDealer().getScore());
     }
@@ -35,12 +36,17 @@ public class RoundStatusDto {
         return dealerName;
     }
 
-
     public List<String> getDealerCardStatus() {
         return dealerCardStatus;
     }
 
     public List<PlayerStatusDto> getPlayerStatusDto() {
         return playerStatusDto;
+    }
+
+    private static List<String> cardsToString(final List<Card> cards) {
+        return cards.stream()
+                .map(playerCard -> playerCard.symbolName() + playerCard.numberScore())
+                .collect(Collectors.toList());
     }
 }

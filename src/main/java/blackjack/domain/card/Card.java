@@ -45,13 +45,17 @@ public class Card {
         return number.getScore();
     }
 
+    public String symbolName() {
+        return symbol.getName();
+    }
+
     public boolean containAce() {
         return number.isAce();
     }
 
-    public String getCardStatus() {
+/*    public String getCardStatus() {
         return number.getName() + symbol.getName();
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
