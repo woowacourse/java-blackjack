@@ -28,7 +28,7 @@ public abstract class User {
     }
 
     public final void receiveCards(Cards cards) {
-        cards.combine(cards);
+        this.cards.combine(cards);
     }
 
     public final boolean isAbleToHit() {
