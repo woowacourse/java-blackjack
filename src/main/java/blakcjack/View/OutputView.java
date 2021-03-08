@@ -102,7 +102,7 @@ public class OutputView {
         if (count == 0) {
             return "";
         }
-        return " " + count + outcome.toKorean();
+        return " " + count + outcome.getValue();
     }
 
     private static void printPlayersOutcome(final Map<String, Outcome> playersOutcome) {
@@ -114,6 +114,6 @@ public class OutputView {
     }
 
     private static String makePlayerOutcomeMessage(final String name, final Outcome outcome) {
-        return String.format("%s: %s%n", name, outcome.toKorean());
+        return String.format("%s: %s%n", name, outcome.getValue());
     }
 }

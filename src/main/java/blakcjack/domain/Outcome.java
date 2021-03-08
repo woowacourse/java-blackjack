@@ -8,12 +8,10 @@ public enum Outcome {
     DRAW("무"),
     LOSE("패");
 
-    private static final int MAXIMUM_INDEX = 2;
+    private final String value;
 
-    final String korean;
-
-    Outcome(final String korean) {
-        this.korean = korean;
+    Outcome(final String value) {
+        this.value = value;
     }
 
     public static Outcome of(final Player player, final Dealer dealer) {
@@ -44,11 +42,7 @@ public enum Outcome {
         return DRAW;
     }
 
-    public Outcome getDealerOutcome() {
-        return values()[MAXIMUM_INDEX - ordinal()];
-    }
-
-    public String toKorean() {
-        return korean;
+    public String getValue() {
+        return value;
     }
 }
