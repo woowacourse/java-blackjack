@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import java.util.Objects;
+
 public class PlayerName {
     private static final String ERROR_MESSAGE_WITH_SPACE = "이름에 공백이 포함됩니다.";
     private static final String SPACE = " ";
@@ -31,5 +33,18 @@ public class PlayerName {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerName that = (PlayerName) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
