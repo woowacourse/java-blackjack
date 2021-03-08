@@ -49,7 +49,7 @@ class ProfitStatisticsTest {
     @DisplayName("Player의 이름을 Key로, 각각의 이익금액을 value로 하는 Map을 생성")
     @Test
     void createGameResult() {
-        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayerName(dealer));
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
 
         Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
@@ -59,13 +59,13 @@ class ProfitStatisticsTest {
 
     @DisplayName("딜러의 손익은 플레이어 손익의 합 * -1과 같다.")
     @Test
-    void calculateDealerProfit() {
-        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayerName(dealer));
+    void calculateDealerProfitMoney() {
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
         Collection<Integer> values = profitStatistics.getProfitStatistics()
                 .values();
 
         int playerProfitTotal = values.stream().mapToInt(t -> t).sum();
-        int dealerProfit = profitStatistics.calculateDealerProfit();
+        int dealerProfit = profitStatistics.calculateDealerProfitMoney();
 
         assertThat(dealerProfit).isEqualTo(playerProfitTotal * -1);
     }

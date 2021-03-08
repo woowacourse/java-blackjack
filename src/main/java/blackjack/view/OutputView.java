@@ -75,10 +75,10 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printFinalProfitResult(ProfitStatistics profitStatistics) {
+    public static void printFinalProfitMoney(ProfitStatistics profitStatistics) {
         printNewLine();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + profitStatistics.calculateDealerProfit());
+        System.out.println("딜러: " + profitStatistics.calculateDealerProfitMoney());
         profitStatistics.getProfitStatistics()
                 .forEach((playerName, profitMoney) -> System.out.println(playerName + ": " + profitMoney));
     }

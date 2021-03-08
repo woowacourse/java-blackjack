@@ -84,7 +84,7 @@ class PlayersTest {
         assertThat(jason.getCards()).hasSize(2);
     }
 
-    @DisplayName("참가자들과 딜러의 점수를 비교하고 각 참가자 이름별로 수익(손실)금액을 Map에 집계한다")
+    @DisplayName("참가자들과 딜러의 점수를 비교하고 각 참가자별로 수익(손실)금액을 Map에 집계한다")
     @Test
     void aggregateProfitMoneyByPlayerName() {
         Players players = Players.of(Arrays.asList("pobi", "jason"), Arrays.asList(1000, 2000));
@@ -94,7 +94,7 @@ class PlayersTest {
         playerList.get(1).receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));
 
-        Map<String, Integer> profitStatistics = players.aggregateProfitMoneyByPlayerName(dealer);
+        Map<String, Integer> profitStatistics = players.aggregateProfitMoneyByPlayer(dealer);
 
         assertThat(profitStatistics.keySet()).containsExactly("pobi", "jason");
         assertThat(profitStatistics.values()).containsExactly(1500, -2000);
