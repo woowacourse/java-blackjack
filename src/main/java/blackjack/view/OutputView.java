@@ -7,7 +7,6 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Result;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -46,8 +45,8 @@ public class OutputView {
 
     public static void showDealerCard(final Dealer dealer) {
         final String name = dealer.getName();
-        final Card card = dealer.getHand().getCards().get(0);
-        System.out.printf(DEALER_CARD_STATUS_FORMAT, name, cardPrintForm(card));
+        final Card firstCard = dealer.getHand().getCards().get(0);
+        System.out.printf(DEALER_CARD_STATUS_FORMAT, name, cardPrintFormat(firstCard));
         showNewLine();
     }
 
@@ -58,11 +57,8 @@ public class OutputView {
 
     public static void showCardResult(final Participant participant) {
         final String name = participant.getName();
-        final List<Card> cards = participant.getHand().getCards();
+        final String cardStatus = cardStatusFormat(participant);
         final int result = participant.getHand().calculateScore();
-        final String cardStatus = cards.stream()
-                .map(OutputView::cardPrintForm)
-                .collect(Collectors.joining(", "));
         System.out.printf(CARD_RESULT_FORMAT, name, cardStatus, result);
         showNewLine();
     }
@@ -74,15 +70,19 @@ public class OutputView {
 
     public static void showPlayerCard(final Player player) {
         final String name = player.getName();
-        final List<Card> cards = player.getHand().getCards();
-        final String cardStatus = cards.stream()
-                .map(OutputView::cardPrintForm)
-                .collect(Collectors.joining(", "));
+        final String cardStatus = cardStatusFormat(player);
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, name, cardStatus);
         showNewLine();
     }
 
-    private static String cardPrintForm(final Card card) {
+    private static String cardStatusFormat(final Participant participant) {
+        return participant.getHand().getCards()
+                .stream()
+                .map(OutputView::cardPrintFormat)
+                .collect(Collectors.joining(", "));
+    }
+
+    private static String cardPrintFormat(final Card card) {
         return card.getCardLetter().getLetter() + card.getCardSuit().getType();
     }
 
