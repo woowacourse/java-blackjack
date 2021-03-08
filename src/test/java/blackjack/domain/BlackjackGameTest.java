@@ -17,4 +17,18 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         assertThat(blackjackGame).isInstanceOf(BlackjackGame.class);
     }
+
+    @Test
+    @DisplayName("초기 카드를 나눠준다. - 2장인지 확인한다.")
+    void handOutInitialCards() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        blackjackGame.handOutInitialCards();
+
+        assertThat(blackjackGame.getDealer().getCards().cards().size()).isEqualTo(2);
+        blackjackGame.getPlayers()
+                .players()
+                .forEach(player -> assertThat(player.getCards().cards().size())
+                        .isEqualTo(2));
+    }
 }
