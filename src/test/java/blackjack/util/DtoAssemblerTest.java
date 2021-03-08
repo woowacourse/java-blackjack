@@ -19,7 +19,7 @@ class DtoAssemblerTest {
 
     @Test
     void createPlayerDto() {
-        PlayerDto gamerDto = DtoAssembler.createPlayerDto(new Gamer("pobi"));
+        PlayerDto gamerDto = DtoAssembler.createPlayerDto(new Gamer("pobi", 1));
         assertThat(gamerDto.getScore()).isEqualTo(0);
         assertThat(gamerDto.getName()).isEqualTo("pobi");
         assertThat(gamerDto.getCardList()).isEqualTo(Collections.emptyList());
@@ -48,8 +48,8 @@ class DtoAssemblerTest {
     @Test
     void createPlayerDtos() {
         Gamer[] gamer = {
-                new Gamer("pobi"),
-                new Gamer("jason")
+                new Gamer("pobi",1 ),
+                new Gamer("jason", 1)
         };
 
 

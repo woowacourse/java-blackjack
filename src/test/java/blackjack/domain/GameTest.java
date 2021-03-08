@@ -16,7 +16,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -45,7 +47,9 @@ class GameTest {
         game = new Game(
                 new Cards(cards),
                 dealer,
-                new Gamers("nabom", "neozal")
+                new Gamers(Stream.of("nabom", "neozal")
+                        .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                        .collect(toList()))
         );
     }
 

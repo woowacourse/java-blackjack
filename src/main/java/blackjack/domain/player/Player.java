@@ -11,10 +11,12 @@ public abstract class Player {
 
     private final Deck deck;
     private final String name;
+    private final int bettingMoney;
 
-    public Player(String name) {
+    public Player(String name, int bettingMoney) {
         this.deck = new Deck();
         this.name = name;
+        this.bettingMoney = bettingMoney;
     }
 
     public void addCardToDeck(Card card) {

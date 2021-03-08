@@ -13,6 +13,7 @@ public class InputView {
     private static final String ASK_DRAW_FORMAT =
         "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니요는 n)" + System.lineSeparator();
     private static final String REGEX = ",";
+    private static final String BETTING_MESSAGE = "%s의 배팅 금액은?" + System.lineSeparator();
 
     public static List<String> getGamerNamesFromUser() {
         OutputView.printMessage(GAMER_NAME_MESSAGE);
@@ -43,5 +44,22 @@ public class InputView {
 
     private static boolean yesOrNoToBoolean(String input) {
         return input.equals("y");
+    }
+
+    public static int getBettingMoneyFromUser(String player) {
+        System.out.printf(BETTING_MESSAGE, player);
+
+        String input = SCANNER.nextLine();
+        isNumeric(input);
+
+        return Integer.parseInt(input);
+    }
+
+    private static void isNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("배팅 금액은 숫자여야 합니다.");
+        }
     }
 }

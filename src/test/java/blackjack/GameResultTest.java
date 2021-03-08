@@ -16,12 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GameResultTest {
 
     Player dealer = new Dealer();
-    Player gamer = new Gamer("pobi");
+    Player gamer = new Gamer("pobi", 1);
 
     @BeforeEach
     void init() {
         dealer = new Dealer();
-        gamer = new Gamer("pobi");
+        gamer = new Gamer("pobi", 1);
     }
 
     @Test

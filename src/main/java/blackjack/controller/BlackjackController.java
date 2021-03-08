@@ -37,7 +37,14 @@ public class BlackjackController {
         return new Game(
                 cards,
                 new Dealer(),
-                new Gamers(InputView.getGamerNamesFromUser()));
+                new Gamers(getPlayerInformationFromUser())
+        );
+    }
+
+    private List<Gamers.NameAndBettingMoney> getPlayerInformationFromUser() {
+        return InputView.getGamerNamesFromUser().stream()
+                .map(name -> new Gamers.NameAndBettingMoney(name, InputView.getBettingMoneyFromUser(name)))
+                .collect(toList());
     }
 
     private void printInitializeResult(Game game) {

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,20 +24,26 @@ class GamersTest {
     Gamers gamers;
     @BeforeEach
     void init() {
-        gamers = new Gamers("pobi", "json");
+        gamers = new Gamers(Stream.of("pobi", "json")
+                .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                .collect(toList()));
     }
 
     @Test
     @DisplayName("이름이 중복 시 예외")
     void createGamers_GamerDuplicateException() {
         Assertions.assertThatThrownBy(
-                () -> new Gamers("nabom", "nabom")
+                () -> new Gamers(Stream.of("nabom", "nabom")
+                        .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                        .collect(toList()))
         ).isInstanceOf(GamerDuplicateException.class);
     }
 
     @Test
     void createGamers() {
-        Gamers gamers = new Gamers("nabom", "neozal");
+        Gamers gamers = new Gamers(Stream.of("nabom", "neozal")
+                .map(name -> new Gamers.NameAndBettingMoney(name, 1))
+                .collect(toList()));
         assertThat(gamers.getGamers().size()).isEqualTo(2);
     }
 

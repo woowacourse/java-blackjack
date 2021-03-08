@@ -4,8 +4,8 @@ import blackjack.domain.Status;
 
 public class Gamer extends Player {
 
-    public Gamer(String name) {
-        super(name);
+    public Gamer(String name, int bettingMoney) {
+        super(name, bettingMoney);
     }
 
     @Override

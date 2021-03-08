@@ -19,7 +19,7 @@ class PlayerTest {
     @Test
     @DisplayName("카드를 추가할 때 중복되면 예외를 발생한다.")
     void addCardToDeck_CardDuplicateException() {
-        Player player = new Gamer("player");
+        Player player = new Gamer("player", 1);
         Card card1 = new Card(Symbol.CLOVER, CardNumber.EIGHT);
         Card card2 = new Card(Symbol.CLOVER, CardNumber.EIGHT);
 
@@ -32,7 +32,7 @@ class PlayerTest {
     @Test
     @DisplayName("덱의 점수를 계산한다")
     void getScore() {
-        Player player = new Gamer("player");
+        Player player = new Gamer("player", 1);
 
         player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.FIVE));
         player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.SIX));
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     @DisplayName("각 플레이어 덱에 카드를 추가한다.")
     void addCardToDeck() {
-        Player player = new Gamer("player");
+        Player player = new Gamer("player", 1);
         Card card = new Card(Symbol.CLOVER, CardNumber.EIGHT);
 
         player.addCardToDeck(card);
@@ -56,7 +56,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 덱을 리스트로 반환")
     void getDeckAsList() {
-        Player player = new Gamer("player");
+        Player player = new Gamer("player", 1);
         Card card = new Card(Symbol.CLOVER, CardNumber.EIGHT);
 
         player.addCardToDeck(card);
@@ -69,7 +69,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의환 덱을 보고 상태를 반환")
     void getStatus() {
-        Player player = new Gamer("player");
+        Player player = new Gamer("player", 1);
         Card card = new Card(Symbol.CLOVER, CardNumber.JACK);
 
         player.addCardToDeck(card);
@@ -88,14 +88,14 @@ class PlayerTest {
     @Test
     @DisplayName("이름이 같으면 true")
     void isSameName() {
-        Player player = new Gamer("pobi");
+        Player player = new Gamer("pobi", 1);
         assertThat(player.isSameName("pobi")).isTrue();
     }
 
     @Test
     @DisplayName("자신의 덱을 보고 상태 boolean 반환")
     void isDrawable() {
-        Player player = new Gamer("pobi");
+        Player player = new Gamer("pobi", 1);
 
         player.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.EIGHT));
         assertThat(player.isDrawable()).isTrue();
