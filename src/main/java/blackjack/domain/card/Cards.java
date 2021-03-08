@@ -27,14 +27,14 @@ public class Cards {
         return cards.isEmpty();
     }
 
-    public String getCards() {
+    public String loadCards() {
         return cards.stream()
             .map(Card::getName)
             .collect(Collectors.joining(", "));
     }
 
-    public int getScore() {
-        int total = cards.stream().mapToInt(Card::getScore).sum();
+    public int calculateTotalScore() {
+        int total = cards.stream().mapToInt(Card::findScore).sum();
         return addIfAceExist(total);
     }
 
@@ -49,6 +49,10 @@ public class Cards {
 
     private int countAce() {
         return Math.toIntExact(cards.stream().filter(Card::isAce).count());
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     @Override

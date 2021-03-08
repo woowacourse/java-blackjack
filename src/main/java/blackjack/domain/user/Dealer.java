@@ -10,11 +10,9 @@ import java.util.Map;
 public class Dealer extends User {
 
     private static final int DEALER_HIT_THRESHOLD = 16;
-    private static final String DELIMITER = ", ";
-    private static final String NO_DEALER_CARD_ERROR_MESSAGE = "카드가 없습니다.";
+    private static final int FIRST_CARD_INDEX = 0;
 
     public Dealer() {
-        super();
     }
 
     public boolean canHit() {
@@ -33,9 +31,8 @@ public class Dealer extends User {
     }
 
     public String getFirstCard() {
-        return Arrays.stream(showCards().split(DELIMITER))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(
-                NO_DEALER_CARD_ERROR_MESSAGE));
+        return cards.getCards()
+            .get(FIRST_CARD_INDEX)
+            .getName();
     }
 }

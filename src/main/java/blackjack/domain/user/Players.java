@@ -20,7 +20,8 @@ public class Players {
     }
 
     public String getPlayersName() {
-        return players.stream().map(Player::getName)
+        return players.stream()
+            .map(Player::getName)
             .collect(Collectors.joining(", "));
     }
 

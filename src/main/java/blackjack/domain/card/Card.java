@@ -28,7 +28,7 @@ public class Card {
         return denomination.getDenomination() + suit;
     }
 
-    public int getScore() {
+    public int findScore() {
         return denomination.getScore();
     }
 

@@ -24,7 +24,7 @@ public class CardTest {
     @Test
     public void getScore() {
         Card card = new Card(Denomination.THREE, Suit.SPADE);
-        assertThat(card.getScore()).isEqualTo(3);
+        assertThat(card.findScore()).isEqualTo(3);
     }
 
 }

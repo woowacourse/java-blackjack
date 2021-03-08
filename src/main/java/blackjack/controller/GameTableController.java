@@ -23,7 +23,7 @@ public class GameTableController {
     }
 
     public void playGame() {
-        Deck deck = new Deck(Card.values());
+        Deck deck = new Deck();
         start(deck);
         play(deck);
         finish();

@@ -60,6 +60,6 @@ public class CardsTest {
     @DisplayName("카드들의 점수 총합을 계산한다.")
     @Test
     void calculate() {
-        assertThat(cards.getScore()).isEqualTo(10);
+        assertThat(cards.calculateTotalScore()).isEqualTo(10);
     }
 }

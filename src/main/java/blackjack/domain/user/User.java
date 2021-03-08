@@ -8,6 +8,7 @@ public abstract class User {
 
     protected static final String CARDS_GUIDE_MESSAGE = "카드: ";
     private static final String DEALER_NAME = "딜러";
+
     protected final Cards cards;
     protected String name;
 
@@ -30,7 +31,7 @@ public abstract class User {
     }
 
     public String showCards() {
-        return name + CARDS_GUIDE_MESSAGE + cards.getCards();
+        return name + CARDS_GUIDE_MESSAGE + cards.loadCards();
     }
 
     public String getName() {
@@ -38,6 +39,6 @@ public abstract class User {
     }
 
     public int getScore() {
-        return cards.getScore();
+        return cards.calculateTotalScore();
     }
 }
