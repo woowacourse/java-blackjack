@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.GameManager;
 import blackjack.domain.game.WinnerCount;
+import blackjack.domain.game.WinnerFlag;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -10,6 +10,8 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
+    public static final int INITIAL_DRAWING_COUNT = 2;
+
     public void run() {
         Dealer dealer = new Dealer();
         Players players = askPlayers(dealer);
@@ -20,7 +22,8 @@ public class BlackJackController {
         drawUntilPossible(dealer, players, deck);
 
         OutputView.noticePlayersPoint(dealer, players);
-        OutputView.printResult(new WinnerCount().calculateTotalWinnings(players));
+        players.toList().forEach(player -> WinnerFlag.calculateResult(dealer, player));
+        OutputView.printDealerResult(new WinnerCount().calculateTotalWinnings(players));
         printEachPlayerResult(players);
     }
 
@@ -41,8 +44,14 @@ public class BlackJackController {
 
     private void drawCards(Dealer dealer, Players players, Deck deck) {
         OutputView.noticeDrawTwoCards(players);
-        new GameManager(players).giveCards(deck);
+        giveTwoCardsToPlayers(players, deck);
         OutputView.noticePlayersCards(dealer, players);
+    }
+
+    public void giveTwoCardsToPlayers(Players players, Deck deck) {
+        for (int i = 0; i < INITIAL_DRAWING_COUNT; i++) {
+            players.giveCards(deck);
+        }
     }
 
     private void drawUntilPossible(Dealer dealer, Players players, Deck deck) {

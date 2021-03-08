@@ -7,10 +7,12 @@ import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.game.GameManager.INITIAL_DRAWING_COUNT;
+import static blackjack.controller.BlackJackController.INITIAL_DRAWING_COUNT;
 import static blackjack.domain.participant.Dealer.MAX_OF_RECEIVE_MORE_CARD;
 import static blackjack.domain.participant.Dealer.NAME_OF_DEALER;
 import static blackjack.domain.participant.Gamer.COMMA_DELIMITER;
@@ -27,7 +29,10 @@ public class OutputView {
 
     public static void noticeDrawTwoCards(Players players) {
         System.out.println();
-        System.out.printf(NOTICE_DRAWING_CARDS, players.getDealerName(), players.getPlayerNames(), INITIAL_DRAWING_COUNT);
+        String playerNames = players.toList().stream()
+                .map(Gamer::getName)
+                .collect(Collectors.joining(", "));
+        System.out.printf(NOTICE_DRAWING_CARDS, players.getDealerName(), playerNames, INITIAL_DRAWING_COUNT);
     }
 
     public static void noticePlayersCards(Dealer dealer, Players players) {
@@ -44,7 +49,6 @@ public class OutputView {
         for (Player player : players.toList()) {
             System.out.println(player.getName() + CARD_DELIMITER + makePlayerCardNames(player)
                     + RESULT_DELIMITER + player.makeFinalPoint());
-            WinnerFlag.calculateResult(dealer, player);
         }
     }
 
@@ -73,7 +77,7 @@ public class OutputView {
         System.out.println(player.getName() + CARD_DELIMITER + makePlayerCardNames(player));
     }
 
-    public static void printResult(Map<WinnerFlag, Integer> result) {
+    public static void printDealerResult(Map<WinnerFlag, Integer> result) {
         System.out.println();
         System.out.println(NOTICE_FINAL_RESULT);
         System.out.println(NAME_OF_DEALER + COLON_DELIMITER

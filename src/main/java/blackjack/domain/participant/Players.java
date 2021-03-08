@@ -39,10 +39,6 @@ public class Players {
         return dealer.getName();
     }
 
-    public String getPlayerNames() {
-        return players.stream().map(Gamer::getName).collect(Collectors.joining(", "));
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
