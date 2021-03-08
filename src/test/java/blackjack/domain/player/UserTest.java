@@ -156,7 +156,7 @@ public class UserTest {
         assertThat(user.profit(dealer)).isEqualTo(-10000);
     }
 
-    @DisplayName("딜러가 21일때 패, 블랙잭, 무승부, 버스트")
+    @DisplayName("딜러가 21일때 패, 블랙잭, 무승부")
     @Test
     void dealer21UserProfit() {
         Dealer dealer = new Dealer();
@@ -174,12 +174,9 @@ public class UserTest {
 
         user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
         assertThat(user.profit(dealer)).isEqualTo(0);
-
-        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
-        assertThat(user.profit(dealer)).isEqualTo(-10000);
     }
 
-    @DisplayName("딜러가 17일때 패, 무승부, 승, 블랙잭, 버스트")
+    @DisplayName("딜러가 17일때 패, 블랙잭, 승,")
     @Test
     void dealer17UserProfit() {
         Dealer dealer = new Dealer();
@@ -187,20 +184,14 @@ public class UserTest {
         dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
 
         User user = new User(TEST_NAME);
-        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
         user.setBetAmount("10000");
         assertThat(user.profit(dealer)).isEqualTo(-10000);
 
         user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
-        assertThat(user.profit(dealer)).isEqualTo(0);
-
-        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.ACE));
-        assertThat(user.profit(dealer)).isEqualTo(10000);
-
-        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.THREE));
         assertThat(user.profit(dealer)).isEqualTo(15000);
 
         user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
-        assertThat(user.profit(dealer)).isEqualTo(-10000);
+        assertThat(user.profit(dealer)).isEqualTo(10000);
     }
 }
