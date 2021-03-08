@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.dto.GameResultDTO;
 import blackjack.domain.player.dto.PlayerDTO;
