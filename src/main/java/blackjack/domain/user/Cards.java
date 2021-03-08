@@ -16,11 +16,11 @@ public class Cards implements Comparable<Cards> {
         this.cards = new ArrayList<>(cards);
     }
 
-    public List<Card> cards() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public Card oneCard() {
+    public Card getOneCard() {
         return cards.get(FIRST_CARD);
     }
 
@@ -40,7 +40,7 @@ public class Cards implements Comparable<Cards> {
     }
 
     public void combine(Cards otherCards) {
-        this.cards.addAll(otherCards.cards());
+        this.cards.addAll(otherCards.getCards());
     }
 
     public boolean isBust() {

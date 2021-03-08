@@ -17,13 +17,13 @@ public class DeckTest {
     @DisplayName("카드에서 덱 2장을 뽑는다.")
     void popTwo() {
         Deck deck = new Deck();
-        assertThat(deck.popTwo().cards().size()).isEqualTo(2);
+        assertThat(deck.popTwo().getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("카드에서 덱 1장을 뽑는다.")
     void popOne() {
         Deck deck = new Deck();
-        assertThat(deck.popOne().cards().size()).isEqualTo(1);
+        assertThat(deck.popOne().getCards().size()).isEqualTo(1);
     }
 }

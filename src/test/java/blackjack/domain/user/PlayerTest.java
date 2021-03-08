@@ -30,7 +30,7 @@ public class PlayerTest {
         )));
         Cards cards = player.cards;
 
-        assertThat(cards.cards().size()).isEqualTo(2);
+        assertThat(cards.getCards().size()).isEqualTo(2);
     }
 
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
@@ -67,7 +67,7 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
         Cards cards = player.getCards();
-        assertThat(cards.cards().size()).isEqualTo(2);
+        assertThat(cards.getCards().size()).isEqualTo(2);
     }
 
     @DisplayName("플레이어의 결과를 산출한다. - 버스트여서 패")

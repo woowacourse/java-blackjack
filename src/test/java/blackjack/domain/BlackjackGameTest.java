@@ -31,10 +31,10 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         blackjackGame.handOutInitialCards();
 
-        assertThat(blackjackGame.getDealer().getCards().cards().size()).isEqualTo(2);
+        assertThat(blackjackGame.getDealer().getCards().getCards().size()).isEqualTo(2);
         blackjackGame.getPlayers()
-                .players()
-                .forEach(player -> assertThat(player.getCards().cards().size())
+                .getPlayers()
+                .forEach(player -> assertThat(player.getCards().getCards().size())
                         .isEqualTo(2));
     }
 
@@ -59,7 +59,7 @@ public class BlackjackGameTest {
         Player player = new Player("amazzzi");
 
         blackjackGame.hit(player);
-        assertThat(player.getCards().cards().size()).isEqualTo(1);
+        assertThat(player.getCards().getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         blackjackGame.hit(dealer);
-        assertThat(dealer.getCards().cards().size()).isEqualTo(1);
+        assertThat(dealer.getCards().getCards().size()).isEqualTo(1);
     }
 
     @Test

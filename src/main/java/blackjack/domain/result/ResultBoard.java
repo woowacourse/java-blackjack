@@ -21,7 +21,7 @@ public class ResultBoard {
     }
 
     private static Map<Player, Result> resultByUser(Players players, Dealer dealer) {
-        return players.players()
+        return players.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
                         player -> player, player -> player.produceResult(dealer)
@@ -34,11 +34,11 @@ public class ResultBoard {
                 .collect(Collectors.toList());
     }
 
-    public Map<Result, Integer> dealerResultBoard() {
+    public Map<Result, Integer> showDealerResultBoard() {
         return Result.countByResults(results());
     }
 
-    public Map<Player, Result> userResultBoard() {
+    public Map<Player, Result> showUserResultBoard() {
         return Collections.unmodifiableMap(this.resultBoard);
     }
 }

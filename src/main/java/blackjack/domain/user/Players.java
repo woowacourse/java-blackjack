@@ -17,7 +17,7 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public List<Player> players() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 

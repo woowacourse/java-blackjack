@@ -15,6 +15,6 @@ public class Dealer extends User {
     }
 
     public Card showOneCard() {
-        return cards.oneCard();
+        return cards.getOneCard();
     }
 }

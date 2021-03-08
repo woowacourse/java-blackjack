@@ -28,7 +28,7 @@ public class DealerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
         Cards cards = dealer.cards;
-        assertThat(cards.cards().size()).isEqualTo(2);
+        assertThat(cards.getCards().size()).isEqualTo(2);
     }
 
     @DisplayName("카드 합계가 16 이하인지 확인한다. - 카드를 더 받을 수 있다.")

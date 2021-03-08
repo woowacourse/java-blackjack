@@ -22,7 +22,7 @@ public class OutputView {
     }
 
     private static String playersName(Players players) {
-        return String.join(COMMA, players.players()
+        return String.join(COMMA, players.getPlayers()
                 .stream()
                 .map(User::toString)
                 .collect(Collectors.joining(",")));
@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     public static void printPlayersCards(Players players) {
-        players.players()
+        players.getPlayers()
                 .forEach(OutputView::printPlayerCards);
     }
 
@@ -43,7 +43,7 @@ public class OutputView {
     }
 
     private static void printCards(Cards cards) {
-        System.out.println(cards.cards()
+        System.out.println(cards.getCards()
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA)));
@@ -70,7 +70,7 @@ public class OutputView {
 
     private static String cardsByUser(User user) {
         return user.getCards()
-                .cards()
+                .getCards()
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA));
@@ -79,13 +79,13 @@ public class OutputView {
     public static void printResults(ResultBoard resultBoard) {
         System.out.println("\n## 최종 승패");
         System.out.print("딜러: ");
-        for (Result result : resultBoard.dealerResultBoard().keySet()) {
-            System.out.print(resultBoard.dealerResultBoard().get(result) + result.getResult() + " ");
+        for (Result result : resultBoard.showDealerResultBoard().keySet()) {
+            System.out.print(resultBoard.showDealerResultBoard().get(result) + result.getResult() + " ");
         }
         System.out.println();
-        for (Player player : resultBoard.userResultBoard().keySet()) {
+        for (Player player : resultBoard.showUserResultBoard().keySet()) {
             System.out.println(player.getName() + ": " +
-                    resultBoard.userResultBoard().get(player).getResult());
+                    resultBoard.showUserResultBoard().get(player).getResult());
         }
     }
 }

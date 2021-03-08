@@ -28,7 +28,7 @@ public class BlackjackGame {
 
     public void handOutInitialCards() {
         dealer.receiveCards(deck.popTwo());
-        players.players()
+        players.getPlayers()
                 .forEach(player -> player.receiveCards(deck.popTwo()));
     }
 
@@ -55,7 +55,7 @@ public class BlackjackGame {
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         users.add(dealer);
-        users.addAll(players.players());
+        users.addAll(players.getPlayers());
         return users;
     }
 }

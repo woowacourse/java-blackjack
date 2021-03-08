@@ -27,7 +27,7 @@ public class PlayersTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = Players.of(names);
 
-        assertThat(players.players().size()).isEqualTo(3);
+        assertThat(players.getPlayers().size()).isEqualTo(3);
     }
 
     @DisplayName("각 사용자들의 모든 카드를 보여준다.")
@@ -39,8 +39,8 @@ public class PlayersTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         ));
-        players.players().forEach(player -> player.receiveCards(cards));
+        players.getPlayers().forEach(player -> player.receiveCards(cards));
         List<Cards> cardsGroup = players.showCardsByUsers();
-        assertThat(cardsGroup.stream().allMatch(card -> card.cards().size() == 2)).isTrue();
+        assertThat(cardsGroup.stream().allMatch(card -> card.getCards().size() == 2)).isTrue();
     }
 }

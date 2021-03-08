@@ -37,7 +37,7 @@ public class BlackjackController {
 
     private void proceedPlayersRound(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
-        for (Player player : players.players()) {
+        for (Player player : players.getPlayers()) {
             askWantToHit(player, blackjackGame);
         }
     }
