@@ -32,6 +32,7 @@ class UsersTest {
         for (String name : names) {
             assertThat(users.getPlayers()).contains(new Player(name));
         }
+        assertThat(users.getPlayers()).hasSize(3);
     }
 
     @DisplayName("Player가 중복된 이름을 가지는 경우 예외처리해준다.")

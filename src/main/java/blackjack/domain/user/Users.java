@@ -14,8 +14,7 @@ public class Users {
 
     public static Users of(List<String> playerNames) {
         Dealer dealer = new Dealer();
-        playerNames.add(dealer.getName());
-        isDuplicatePlayers(playerNames);
+        isDuplicatePlayers(playerNames, dealer.getName());
         List<User> users = new ArrayList<>(Arrays.asList(dealer));
         playerNames.stream().forEach(name -> users.add(new Player(name)));
         return new Users(users);
@@ -32,8 +31,8 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    private static void isDuplicatePlayers(List<String> players) {
-        if (players.stream().distinct().count() != players.size()) {
+    private static void isDuplicatePlayers(List<String> players, String dealer) {
+        if (players.stream().distinct().count() != players.size() || players.contains(dealer)) {
             throw new IllegalArgumentException("유저 이름이 중복됩니다!");
         }
     }
