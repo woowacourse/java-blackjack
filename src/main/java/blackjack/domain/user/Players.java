@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -19,12 +18,6 @@ public class Players {
         if (players.size() < 1) {
             throw new IllegalArgumentException(INVALID_PLAYERS_COUNT_ERROR_MESSAGE);
         }
-    }
-
-    public void drawAtFirst(Deck deck) {
-        players.forEach(player -> {
-            player.hitTwoCards(deck);
-        });
     }
 
     public String getPlayersName() {

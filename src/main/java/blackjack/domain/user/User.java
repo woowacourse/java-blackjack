@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
 
 public abstract class User {
 
@@ -17,10 +16,7 @@ public abstract class User {
         this.name = new Name(name);
     }
 
-    public void hitTwoCards(Deck deck) {
-        hit(deck.pop());
-        hit(deck.pop());
-    }
+    abstract public boolean canHit();
 
     public void hit(Card card) {
         cards.addCard(card);

@@ -8,7 +8,7 @@ public class Player extends User {
         super(name);
     }
 
-    public boolean isNotBust() {
-        return this.cards.calculateTotalScore() <= BLACKJACK_UPPER_BOUND;
+    public boolean canHit() {
+        return getScore() <= BLACKJACK_UPPER_BOUND;
     }
 }

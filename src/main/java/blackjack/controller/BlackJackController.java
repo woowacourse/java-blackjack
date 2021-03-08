@@ -55,7 +55,7 @@ public class BlackJackController {
     }
 
     private void askHit(GameTable gameTable, Player player) {
-        while (player.isNotBust() && wantCard(player)) {
+        while (player.canHit() && wantCard(player)) {
             gameTable.draw(player);
             OutputView.printUserCards(player);
         }
@@ -68,8 +68,8 @@ public class BlackJackController {
     }
     private void drawDealer(GameTable gameTable, Dealer dealer) {
         while (dealer.canHit()) {
-            gameTable.draw(dealer);
             OutputView.printDealerHitMessage();
+            gameTable.draw(dealer);
         }
     }
 }
