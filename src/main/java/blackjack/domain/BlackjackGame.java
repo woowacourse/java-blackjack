@@ -12,10 +12,12 @@ import java.util.List;
 public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
+    private final Deck deck;
 
     public BlackjackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
+        this.deck = new Deck();
     }
 
     public static BlackjackGame generateByUser(List<String> names) {
@@ -25,9 +27,9 @@ public class BlackjackGame {
     }
 
     public void handOutInitialCards() {
-        dealer.receiveCards(Deck.popTwo());
+        dealer.receiveCards(deck.popTwo());
         players.players()
-                .forEach(player -> player.receiveCards(Deck.popTwo()));
+                .forEach(player -> player.receiveCards(deck.popTwo()));
     }
 
     public boolean isNotGameOver(User user) {
@@ -35,7 +37,7 @@ public class BlackjackGame {
     }
 
     public void hit(User user) {
-        user.receiveCards(Deck.popOne());
+        user.receiveCards(deck.popOne());
     }
 
     public ResultBoard generateResultBoard() {

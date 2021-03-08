@@ -58,19 +58,6 @@ public class PlayerTest {
         assertThat(player.isAbleToHit()).isFalse();
     }
 
-    @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
-    @Test
-    void draw() {
-        Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-        player.hit();
-        Cards cards = player.cards;
-        assertThat(cards.cards().size()).isEqualTo(3);
-    }
-
     @DisplayName("카드 두장을 공개한다.")
     @Test
     void show() {

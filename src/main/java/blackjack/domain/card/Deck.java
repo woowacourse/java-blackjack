@@ -7,36 +7,40 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
-    private static final Deque<Card> DECK;
     private static final int START_COUNT = 0;
+    private final Deque<Card> deck;
 
-    static {
+    public Deck() {
+        this.deck = createDeck();
+    }
+
+    private Deque<Card> createDeck() {
         List<Card> cards = new ArrayList<>();
         Arrays.stream(Shape.values())
                 .forEach(shape -> cards.addAll(createByShape(shape)));
         shuffle(cards);
-        DECK = new ArrayDeque<>(cards);
+        return new ArrayDeque<>(cards);
     }
 
-    private static List<Card> createByShape(Shape shape) {
+    private List<Card> createByShape(Shape shape) {
         return Arrays.stream(Value.values())
                 .map(value -> new Card(shape, value))
                 .collect(Collectors.toList());
     }
 
-    private static void shuffle(List<Card> cards) {
+    private void shuffle(List<Card> cards) {
         Collections.shuffle(cards);
     }
 
-    public static Cards popTwo() {
+    public Cards popTwo() {
         return new Cards(IntStream.range(START_COUNT, 2)
-                .mapToObj(c -> DECK.pop())
+                .mapToObj(c -> deck.pop())
                 .collect(Collectors.toList()));
     }
 
-    public static Cards popOne() {
+    public Cards popOne() {
         return new Cards(IntStream.range(START_COUNT, 1)
-                .mapToObj(c -> DECK.pop())
+                .mapToObj(c -> deck.pop())
                 .collect(Collectors.toList()));
     }
 }

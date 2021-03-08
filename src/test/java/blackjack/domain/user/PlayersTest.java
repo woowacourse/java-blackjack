@@ -1,5 +1,8 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Value;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,22 +30,17 @@ public class PlayersTest {
         assertThat(players.players().size()).isEqualTo(3);
     }
 
-    @DisplayName("각 사용자에게 초기에 카드 두장을 배분한다.")
-    @Test
-    void DistributeToEachUser() {
-        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        Players players = Players.of(names);
-        players.distributeToEachUser();
-        assertThat(players.players().stream().allMatch(user -> user.cards.cards().size() == 2)).isTrue();
-    }
-
     @DisplayName("각 사용자들의 모든 카드를 보여준다.")
     @Test
     void showCardsByUsers() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = Players.of(names);
-        players.distributeToEachUser();
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.KING)
+        ));
+        players.players().forEach(player -> player.receiveCards(cards));
         List<Cards> cardsGroup = players.showCardsByUsers();
-        assertThat(cardsGroup.stream().allMatch(cards -> cards.cards().size() == 2)).isTrue();
+        assertThat(cardsGroup.stream().allMatch(card -> card.cards().size() == 2)).isTrue();
     }
 }

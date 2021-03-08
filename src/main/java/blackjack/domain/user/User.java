@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +37,6 @@ public abstract class User {
 
     public final boolean isAbleToHit() {
         return !cards.isBust();
-    }
-
-    public final void hit() {
-        cards.combine(Deck.popOne());
     }
 
     public final int score() {

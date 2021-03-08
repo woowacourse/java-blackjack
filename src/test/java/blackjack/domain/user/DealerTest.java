@@ -56,19 +56,6 @@ public class DealerTest {
         assertThat(dealer.isAbleToHit()).isFalse();
     }
 
-    @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
-    @Test
-    void draw() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-        dealer.hit();
-        Cards cards = dealer.cards;
-        assertThat(cards.cards().size()).isEqualTo(3);
-    }
-
     @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")
     @Test
     void show() {

@@ -1,7 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Deck;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,10 +19,6 @@ public class Players {
 
     public List<Player> players() {
         return Collections.unmodifiableList(players);
-    }
-
-    public void distributeToEachUser() {
-        players.forEach(player -> player.receiveCards(Deck.popTwo()));
     }
 
     public List<Cards> showCardsByUsers() {
