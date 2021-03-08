@@ -20,7 +20,7 @@ public class InputView {
     public static boolean wantMoreCard(final Challenger challenger) {
         try {
             printNewLine();
-            System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", challenger.getName()));
+            System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", challenger.getNameAsString()));
             String yesOrNo = scanner.nextLine();
             validateYesOrNo(yesOrNo);
             return "y".equals(yesOrNo);

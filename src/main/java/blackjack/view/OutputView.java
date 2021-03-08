@@ -17,7 +17,7 @@ public class OutputView {
     public static void printInitSetting(final List<Player> players) {
         List<String> challengerNames = players.stream()
                 .filter(player -> player instanceof Challenger)
-                .map(Player::getName)
+                .map(Player::getNameAsString)
                 .collect(Collectors.toList());
         System.out.println(String.format
                 (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", challengerNames)));
@@ -29,11 +29,11 @@ public class OutputView {
     }
 
     public static void printPlayerCards(final Player player) {
-        System.out.print(player.getName() + "카드: ");
+        System.out.print(player.getNameAsString() + "카드: ");
         List<String> challengersCards = player
-                .getCardsList()
+                .getCardsAsList()
                 .stream()
-                .map(card -> card.getFaceValue() + card.getSuit()).collect(Collectors.toList());
+                .map(card -> card.getFaceValueAsInt() + card.getSuitAsString()).collect(Collectors.toList());
         System.out.print(String.join(", ", challengersCards));
     }
 
@@ -45,10 +45,10 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
         System.out.println(String.format("%d승 %d무 %d패",
-                resultStatistics.getDealerWins(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoses()));
+                resultStatistics.getDealerWinCounts(), resultStatistics.getDealerDrawCounts(), resultStatistics.getDealerLoseCounts()));
 
         resultStatistics.getResultStatistics()
-                .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
+                .forEach((key, value) -> System.out.println(key.getNameAsString() + ": " + value.toString()));
     }
 
     public static void printResult(final List<Player> players) {
@@ -65,12 +65,12 @@ public class OutputView {
 
     private static void printDealerInitCard(final Dealer dealer) {
         System.out.print("딜러: ");
-        List<Card> dealerCards = dealer.getInitCards();
-        dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValue() + dealerCard.getSuit()));
+        List<Card> dealerCards = dealer.getInitCardsAsList();
+        dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValueAsInt() + dealerCard.getSuitAsString()));
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {
-        for (Challenger challenger : challengers.getChallengersList()) {
+        for (Challenger challenger : challengers.getChallengersAsList()) {
             printPlayerCards(challenger);
             printNewLine();
         }

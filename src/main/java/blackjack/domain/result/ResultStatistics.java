@@ -13,7 +13,7 @@ public class ResultStatistics {
     private final Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
 
     public ResultStatistics(final Challengers challengers, final Dealer dealer) {
-        challengers.getChallengersList()
+        challengers.getChallengersAsList()
                 .forEach(challenger -> resultStatistics.put(challenger, challenger.getChallengerResult(dealer)));
     }
 
@@ -21,15 +21,15 @@ public class ResultStatistics {
         return resultStatistics;
     }
 
-    public int getDealerWins() {
+    public int getDealerWinCounts() {
         return calculateDealerResult(Result.LOSE);
     }
 
-    public int getDealerDraws() {
+    public int getDealerDrawCounts() {
         return calculateDealerResult(Result.DRAW);
     }
 
-    public int getDealerLoses() {
+    public int getDealerLoseCounts() {
         return calculateDealerResult(Result.WIN);
     }
 

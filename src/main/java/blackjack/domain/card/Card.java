@@ -46,11 +46,11 @@ public class Card {
         }
     }
 
-    public int getFaceValue() {
+    public int getFaceValueAsInt() {
         return this.face.getValue();
     }
 
-    public String getSuit() {
+    public String getSuitAsString() {
         return this.suit.getSuit();
     }
 

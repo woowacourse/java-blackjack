@@ -11,22 +11,22 @@ public abstract class Player {
     private final Name name;
 
     public Player(final Cards cards, final Name name) {
-        this.cards = new Cards(cards.getCardsList());
-        this.name = new Name(name.value());
+        this.cards = new Cards(cards.getCardsAsList());
+        this.name = new Name(name.getName());
     }
 
-    public abstract List<Card> getInitCards();
+    public abstract List<Card> getInitCardsAsList();
 
-    public List<Card> getCardsList() {
-        return cards.getCardsList();
+    public List<Card> getCardsAsList() {
+        return cards.getCardsAsList();
     }
 
     public int getScore() {
         return this.cards.getScore();
     }
 
-    public String getName() {
-        return name.value();
+    public String getNameAsString() {
+        return name.getName();
     }
 
     public void receiveMoreCard(final Card card) {

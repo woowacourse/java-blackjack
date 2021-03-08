@@ -44,7 +44,7 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getDealerLoses()).isEqualTo(1);
+        assertThat(resultStatistics.getDealerLoseCounts()).isEqualTo(1);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getDealerDraws()).isEqualTo(1);
+        assertThat(resultStatistics.getDealerDrawCounts()).isEqualTo(1);
 
     }
 
@@ -77,7 +77,7 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getDealerWins()).isEqualTo(1);
+        assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ResultStatisticsTest {
 
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
 
-        assertThat(resultStatistics.getDealerWins()).isEqualTo(1);
+        assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
     }
 
     @Test
@@ -109,12 +109,12 @@ public class ResultStatisticsTest {
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         challengers.add(challenger);
 
-        Cards cards = new Cards(dealer.getCardsList());
+        Cards cards = new Cards(dealer.getCardsAsList());
         cards.add(new Card(Suit.HEART, Face.JACK));
 
         Dealer dealer1 = new Dealer(cards);
         ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer1);
 
-        assertThat(resultStatistics.getDealerWins()).isEqualTo(1);
+        assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
     }
 }

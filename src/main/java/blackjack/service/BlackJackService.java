@@ -28,7 +28,7 @@ public class BlackJackService {
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(challengers.getChallengersList());
+        players.addAll(challengers.getChallengersAsList());
         return players;
     }
 

@@ -21,7 +21,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public List<Card> getInitCards() {
+    public List<Card> getInitCardsAsList() {
         return new ArrayList<>(Collections.singletonList(cards.getFirstCard()));
     }
 }

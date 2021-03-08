@@ -39,7 +39,7 @@ public class Challenger extends Player {
     }
 
     @Override
-    public List<Card> getInitCards() {
-        return cards.getCardsList();
+    public List<Card> getInitCardsAsList() {
+        return cards.getCardsAsList();
     }
 }

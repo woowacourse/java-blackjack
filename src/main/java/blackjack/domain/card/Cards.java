@@ -15,7 +15,7 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public List<Card> getCardsList() {
+    public List<Card> getCardsAsList() {
         return new ArrayList<>(cards);
     }
 
@@ -25,7 +25,7 @@ public class Cards {
 
     public int getScore() {
         boolean hasAce = hasAce();
-        int sum = cards.stream().mapToInt(Card::getFaceValue).sum();
+        int sum = cards.stream().mapToInt(Card::getFaceValueAsInt).sum();
 
         if (sum <= ACE_PIVOT && hasAce) {
             return sum + ACE_CONVERSION;
