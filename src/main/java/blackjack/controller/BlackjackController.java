@@ -79,9 +79,7 @@ public class BlackjackController {
 
     private void showGameResult(final List<Player> players, final Dealer dealer) {
         final Result result = new Result(players, dealer);
-        final Map<String, Integer> dealerResult = result.checkDealerResult();
-        final Map<Player, String> playerResult = result.checkPlayerResult();
-        OutputView.showDealerGameResult(dealer, dealerResult);
-        OutputView.showPlayerGameResult(playerResult);
+        OutputView.showDealerGameResult(dealer, result.checkDealerResult());
+        OutputView.showPlayerGameResult(result.checkPlayerResult());
     }
 }

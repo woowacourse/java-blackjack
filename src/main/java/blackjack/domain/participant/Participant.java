@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultEnum;
 
 import java.util.Objects;
 
@@ -35,18 +36,12 @@ public abstract class Participant {
         return hand.isBust();
     }
 
-    abstract public String checkResult(final Participant participant);
+    abstract public ResultEnum checkResult(final Participant participant);
 
-    protected String checkResultByScore(final Participant participant) {
+    protected ResultEnum checkResultByScore(final Participant participant) {
         final int myScore = this.hand.calculateScore();
         final int opponentScore = participant.hand.calculateScore();
-        if (myScore > opponentScore) {
-            return Result.WIN;
-        }
-        if (myScore < opponentScore) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
+        return ResultEnum.checkResult(myScore, opponentScore);
     }
 
     public String getName() {

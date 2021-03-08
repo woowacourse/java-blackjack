@@ -5,6 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -74,17 +75,17 @@ public class OutputView {
         return card.getCardLetter().getLetter() + card.getCardSuit().getType();
     }
 
-    public static void showDealerGameResult(final Dealer dealer, final Map<String, Integer> dealerResult) {
+    public static void showDealerGameResult(final Dealer dealer, final Map<ResultEnum, Integer> dealerResult) {
         showNewLine();
         System.out.println(GAME_RESULT_MESSAGE);
         System.out.printf(DEALER_GAME_RESULT_FORMAT, dealer.getName(),
-                dealerResult.getOrDefault(Result.WIN, 0),
-                dealerResult.getOrDefault(Result.DRAW, 0),
-                dealerResult.getOrDefault(Result.LOSE, 0));
+                dealerResult.getOrDefault(ResultEnum.WIN, 0),
+                dealerResult.getOrDefault(ResultEnum.DRAW, 0),
+                dealerResult.getOrDefault(ResultEnum.LOSE, 0));
         showNewLine();
     }
 
-    public static void showPlayerGameResult(final Map<Player, String> playerResult) {
+    public static void showPlayerGameResult(final Map<Player, ResultEnum> playerResult) {
         for (Player player : playerResult.keySet()) {
             System.out.println(player.getName() + ": " + playerResult.get(player));
         }

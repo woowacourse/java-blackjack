@@ -6,10 +6,6 @@ import blackjack.domain.participant.Player;
 import java.util.*;
 
 public class Result {
-    public static final String WIN = "승";
-    public static final String DRAW = "무";
-    public static final String LOSE = "패";
-
     private final List<Player> players;
     private final Dealer dealer;
 
@@ -18,17 +14,17 @@ public class Result {
         this.dealer = dealer;
     }
 
-    public Map<String, Integer> checkDealerResult() {
-        final Map<String, Integer> dealerResult = new HashMap<>();
+    public Map<ResultEnum, Integer> checkDealerResult() {
+        final Map<ResultEnum, Integer> dealerResult = new HashMap<>();
         for (Player player : players) {
-            String result = dealer.checkResult(player);
+            ResultEnum result = dealer.checkResult(player);
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
         }
         return Collections.unmodifiableMap(dealerResult);
     }
 
-    public Map<Player, String> checkPlayerResult() {
-        final Map<Player, String> playerResult = new LinkedHashMap<>();
+    public Map<Player, ResultEnum> checkPlayerResult() {
+        final Map<Player, ResultEnum> playerResult = new LinkedHashMap<>();
         for (Player player : players) {
             playerResult.put(player, player.checkResult(dealer));
         }

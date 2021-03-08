@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +57,7 @@ public class DealerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
 
-        assertThat(dealer.checkResult(player)).isEqualTo(Result.WIN);
+        assertThat(dealer.checkResult(player)).isEqualTo(ResultEnum.WIN);
     }
 
     @Test
@@ -69,11 +70,11 @@ public class DealerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
 
-        assertThat(dealer.checkResult(player)).isEqualTo(Result.LOSE);
+        assertThat(dealer.checkResult(player)).isEqualTo(ResultEnum.LOSE);
     }
     
     @ParameterizedTest
-    @CsvSource(value = {"TEN,NINE:승", "TEN,SEVEN:무", "SIX,SEVEN:패"}, delimiter = ':')
+    @CsvSource(value = {"TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
     @DisplayName("상대와 딜러 모두 버스트가 아니라면, 점수 합계로 승무패를 가린다")
     void checkResultByScore(final String dealerCardInput, final String expectedResult) {
         player.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -84,6 +85,6 @@ public class DealerTest {
             final CardLetter cardLetter = CardLetter.valueOf(dealerCard);
             dealer.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
-        assertThat(dealer.checkResult(player)).isEqualTo(expectedResult);
+        assertThat(dealer.checkResult(player)).isEqualTo(ResultEnum.valueOf(expectedResult));
     }
 }

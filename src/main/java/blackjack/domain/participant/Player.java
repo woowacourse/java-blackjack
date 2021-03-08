@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultEnum;
 
 public class Player extends Participant {
     public Player(final String name) {
@@ -8,12 +9,12 @@ public class Player extends Participant {
     }
 
     @Override
-    public String checkResult(Participant participant) {
+    public ResultEnum checkResult(Participant participant) {
         if (this.isBust()) {
-            return Result.LOSE;
+            return ResultEnum.LOSE;
         }
         if (participant.isBust()) {
-            return Result.WIN;
+            return ResultEnum.WIN;
         }
         return checkResultByScore(participant);
     }

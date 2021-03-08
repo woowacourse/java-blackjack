@@ -56,10 +56,10 @@ public class ResultTest {
         //When
         final Result result = new Result(Arrays.asList(player1, player2, player3), dealer);
         //Then
-        final Map<String, Integer> dealerResult = result.checkDealerResult();
-        assertThat(dealerResult.getOrDefault("승", 0)).isEqualTo(1);
-        assertThat(dealerResult.getOrDefault("무", 0)).isEqualTo(1);
-        assertThat(dealerResult.getOrDefault("패", 0)).isEqualTo(1);
+        final Map<ResultEnum, Integer> dealerResult = result.checkDealerResult();
+        assertThat(dealerResult.getOrDefault(ResultEnum.WIN, 0)).isEqualTo(1);
+        assertThat(dealerResult.getOrDefault(ResultEnum.DRAW, 0)).isEqualTo(1);
+        assertThat(dealerResult.getOrDefault(ResultEnum.LOSE, 0)).isEqualTo(1);
     }
 
     @Test
@@ -80,9 +80,9 @@ public class ResultTest {
         //When
         final Result result = new Result(Arrays.asList(player1, player2, player3), dealer);
         //Then
-        final Map<Player, String> playerResult = result.checkPlayerResult();
-        assertThat(playerResult.get(player1)).isEqualTo("승");
-        assertThat(playerResult.get(player2)).isEqualTo("무");
-        assertThat(playerResult.get(player3)).isEqualTo("패");
+        final Map<Player, ResultEnum> playerResult = result.checkPlayerResult();
+        assertThat(playerResult.get(player1)).isEqualTo(ResultEnum.WIN);
+        assertThat(playerResult.get(player2)).isEqualTo(ResultEnum.DRAW);
+        assertThat(playerResult.get(player3)).isEqualTo(ResultEnum.LOSE);
     }
 }
