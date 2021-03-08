@@ -18,4 +18,12 @@ public class PlayerCards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public boolean isContains(CardNumber number) {
+        return cards.stream().anyMatch(card -> card.getNumber() == number);
+    }
 }
