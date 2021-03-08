@@ -2,11 +2,12 @@ package blackjack.domain;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Card {
-    private static Map<String, Card> cards;
+    private static final Map<String, Card> cards;
 
     public static final int CARDS_CAPACITY = 52;
 
@@ -14,13 +15,16 @@ public class Card {
     private final Denominations denomination;
 
     static {
-        cards = new HashMap<>(CARDS_CAPACITY);
+        Map<String, Card> cardValues = new HashMap<>(CARDS_CAPACITY);
+
         Arrays.stream(Suits.values())
-                .forEach(suit -> Arrays.stream(Denominations.values())
-                        .forEach(denomination -> {
-                            String key = denomination.getName() + suit.getName();
-                            cards.put(key, new Card(suit, denomination));
-                        }));
+            .forEach(suit -> Arrays.stream(Denominations.values())
+                .forEach(denomination -> {
+                    String key = denomination.getName() + suit.getName();
+                    cardValues.put(key, new Card(suit, denomination));
+                }));
+
+        cards = Collections.unmodifiableMap(cardValues);
     }
 
     private Card(Suits suit, Denominations denomination) {
@@ -36,6 +40,23 @@ public class Card {
         return card;
     }
 
+    public static Card from(Suits suit, Denominations denomination) {
+        Card card = cards.get(denomination.getName() + suit.getName());
+        if (card == null) {
+            throw new IllegalArgumentException();
+        }
+        return card;
+    }
+
+    public static Card from(Denominations denomination, Suits suit) {
+        Card card = cards.get(denomination.getName() + suit.getName());
+        if (card == null) {
+            throw new IllegalArgumentException();
+        }
+        return card;
+    }
+
+
     public int getScore() {
         return denomination.getScore();
     }
@@ -47,4 +68,5 @@ public class Card {
     public String getName() {
         return denomination.getName() + suit.getName();
     }
+
 }

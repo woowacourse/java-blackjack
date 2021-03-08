@@ -1,6 +1,8 @@
 package blackjack;
 
 import blackjack.domain.Card;
+import blackjack.domain.Denominations;
+import blackjack.domain.Suits;
 import blackjack.utils.CardDeck;
 import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +19,7 @@ public class CardDeckTest {
     void pop() {
         CardDeck cardDeck = new FixedCardDeck();
         Card card = cardDeck.pop();
-        assertThat(card).isEqualTo(Card.from("A클로버"));
+        assertThat(card).isEqualTo(Card.from(Suits.CLOVER, Denominations.ACE));
     }
 
     @Test
@@ -25,9 +27,9 @@ public class CardDeckTest {
     void pop2() {
         CardDeck cardDeck = new FixedCardDeck();
         Card card = cardDeck.pop();
-        assertThat(card).isEqualTo(Card.from("A클로버"));
+        assertThat(card).isEqualTo(Card.from(Suits.CLOVER, Denominations.ACE));
         card = cardDeck.pop();
-        assertThat(card).isEqualTo(Card.from("2클로버"));
+        assertThat(card).isEqualTo(Card.from(Suits.CLOVER, Denominations.TWO));
     }
 
     @Test
@@ -83,6 +85,6 @@ public class CardDeckTest {
 
         List<Card> cards = cardDeck.initCards();
 
-        assertThat(cards).contains(Card.from("A클로버"), Card.from("2클로버"));
+        assertThat(cards).contains(Card.from(Suits.CLOVER, Denominations.ACE), Card.from(Suits.CLOVER, Denominations.TWO));
     }
 }
