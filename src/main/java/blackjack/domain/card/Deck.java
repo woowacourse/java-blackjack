@@ -10,7 +10,7 @@ public class Deck {
     private final Stack<Card> deck = new Stack<>();
 
     public Deck() {
-        this.deck.addAll(Card.values());
+        this.deck.addAll(CardFactory.generateCards());
         Collections.shuffle(deck);
     }
 

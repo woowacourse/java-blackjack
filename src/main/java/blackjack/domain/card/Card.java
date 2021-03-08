@@ -1,10 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Card {
 
@@ -14,10 +10,6 @@ public class Card {
     public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
-    }
-
-    public static List<Card> values() {
-        return CardCache.CARD_CACHE;
     }
 
     public boolean isAce() {
@@ -48,25 +40,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, denomination);
-    }
-
-    private static class CardCache {
-
-        static final List<Card> CARD_CACHE = new ArrayList<>();
-
-        static {
-            CARD_CACHE.addAll(generateCards());
-        }
-
-        static List<Card> generateCards() {
-            return Stream.of(Denomination.values())
-                .flatMap(CardCache::generateCardsBySymbol)
-                .collect(Collectors.toList());
-        }
-
-        static Stream<Card> generateCardsBySymbol(Denomination denomination) {
-            return Stream.of(Suit.values())
-                .map(suit -> new Card(denomination, suit));
-        }
     }
 }
