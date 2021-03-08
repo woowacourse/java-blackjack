@@ -19,9 +19,10 @@ public class OutputView {
 	}
 
 	private static void printHandSummaryOf(final Participants participants) {
-		for (final Participant participant : participants.toList()) {
+		for (final Participant participant : participants.getParticipants()) {
 			System.out.printf("%s: %s%n", participant.getName(), participant.getInitialHand());
 		}
+		System.out.println();
 	}
 
 	public static void printHandOf(final Participant participant) {
@@ -33,7 +34,7 @@ public class OutputView {
 	}
 
 	public static void printFinalHandsSummaryOf(final Participants participants) {
-		for (Participant participant : participants.toList()) {
+		for (Participant participant : participants.getParticipants()) {
 			System.out.printf("%s - 결과: %d%n", makeHandSummaryOf(participant), participant.getScore());
 		}
 		System.out.println();

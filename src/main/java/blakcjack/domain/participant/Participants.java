@@ -39,8 +39,14 @@ public class Participants {
 				.collect(Collectors.joining(DELIMITER));
 	}
 
-	public List<Participant> toList() {
+	public List<Participant> getParticipants() {
 		return Collections.unmodifiableList(participants);
+	}
+
+	public List<Participant> getParticipantsInDrawOrder() {
+		List<Participant> participantsInGameOrder = new ArrayList<>(participants);
+		Collections.rotate(participantsInGameOrder, participantsInGameOrder.size() - 1);
+		return Collections.unmodifiableList(participantsInGameOrder);
 	}
 
 	public OutcomeStatistics getOutcomeStatistics() {

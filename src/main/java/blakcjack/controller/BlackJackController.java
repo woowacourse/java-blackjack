@@ -41,7 +41,7 @@ public class BlackJackController {
 	}
 
 	private void letParticipantsDraw(final Participants participants, final Deck deck) {
-		for (Participant participant : participants.toList()) {
+		for (Participant participant : participants.getParticipantsInDrawOrder()) {
 			drawCards(participant, deck);
 		}
 	}

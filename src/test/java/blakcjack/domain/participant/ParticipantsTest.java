@@ -29,7 +29,7 @@ class ParticipantsTest {
 	@DisplayName("딜러와 플레이어들을 정상적으로 잘 생성하는지")
 	@Test
 	void create_playerNames_createDealerAndPlayers() {
-		assertThat(participants.toList()).isEqualTo(Arrays.asList(
+		assertThat(participants.getParticipants()).isEqualTo(Arrays.asList(
 				new Dealer(),
 				new Player(new Name("pobi")),
 				new Player(new Name("sakjung")),
@@ -62,12 +62,12 @@ class ParticipantsTest {
 		Cards dealerExepectedCards = new Cards();
 		dealerExepectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.KING));
 		dealerExepectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
-		assertThat(participants.toList().get(0).getCards()).isEqualTo(dealerExepectedCards);
+		assertThat(participants.getParticipants().get(0).getCards()).isEqualTo(dealerExepectedCards);
 
 		Cards pobiExpectedCards = new Cards();
 		pobiExpectedCards.add(Card.of(CardSymbol.DIAMOND, CardNumber.KING));
 		pobiExpectedCards.add(Card.of(CardSymbol.DIAMOND, CardNumber.ACE));
-		assertThat(participants.toList().get(1).getCards()).isEqualTo(pobiExpectedCards);
+		assertThat(participants.getParticipants().get(1).getCards()).isEqualTo(pobiExpectedCards);
 	}
 
 	@DisplayName("플레이어들의 결과를 토대로 결과 통계를 올바르게 생성해 내는지")
