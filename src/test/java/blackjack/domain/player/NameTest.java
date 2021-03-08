@@ -10,12 +10,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class NameTest {
-    @DisplayName("이름 유효성 검사 - 유효한 이름")
+    @DisplayName("이름 유효성 검사 - 유효한 이름, equalsAndHashCode 비교 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"딜러", " jason ", " pobi"})
     void validNames(String nameInput) {
         assertThatCode(() ->
-            assertThat(new Name(nameInput).getName()).isEqualTo(nameInput.trim()))
+            assertThat(new Name(nameInput)).isEqualTo(new Name(nameInput.trim())))
             .doesNotThrowAnyException();
     }
 
