@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class CardFactory {
 
-    private static final Stack<Card> cards = new Stack<>();
+    private static final Stack<Card> CARDS = new Stack<>();
 
     static {
         for (Suit suit : Suit.values()) {
@@ -12,13 +12,17 @@ public class CardFactory {
         }
     }
 
+    private CardFactory() {
+
+    }
+
     private static void addCardValue(Suit suit) {
         for (Denomination denomination : Denomination.values()) {
-            cards.add(Card.create(suit, denomination));
+            CARDS.add(Card.create(suit, denomination));
         }
     }
 
     public static Stack<Card> create() {
-        return cards;
+        return CARDS;
     }
 }
