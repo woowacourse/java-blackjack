@@ -26,7 +26,7 @@ public class UserTest {
         assertThat(user.isCanDraw()).isTrue();
     }
 
-    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 isCanDraw() true")
     @Test
     void canDrawCardWhen21() {
         User user = new User(TEST_NAME);
@@ -37,7 +37,7 @@ public class UserTest {
         assertThat(user.isCanDraw()).isTrue();
     }
 
-    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 isCanDraw() false")
     @Test
     void cannotDrawCardWhen22() {
         User user = new User(TEST_NAME);
@@ -53,7 +53,9 @@ public class UserTest {
     @ParameterizedTest
     @ValueSource(strings = {"딜러", " jason ", " pobi"})
     void validNames(String nameInput) {
-        assertThatCode(() -> new User(nameInput))
+        assertThatCode(() ->
+            assertThat(new User(nameInput).getName()).isEqualTo(new Name(nameInput))
+        )
             .doesNotThrowAnyException();
     }
 
