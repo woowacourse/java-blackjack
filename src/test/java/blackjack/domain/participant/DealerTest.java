@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -71,7 +74,7 @@ public class DealerTest {
 
         assertThat(dealer.checkResult(player)).isEqualTo(Result.LOSE);
     }
-    
+
     @ParameterizedTest
     @CsvSource(value = {"TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
     @DisplayName("상대와 딜러 모두 버스트가 아니라면, 점수 합계로 승무패를 가린다")
@@ -85,5 +88,33 @@ public class DealerTest {
             dealer.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
         assertThat(dealer.checkResult(player)).isEqualTo(Result.valueOf(expectedResult));
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 사이의 모든 게임 결과를 계산한다")
+    void checkEveryResult() {
+        //Given
+        Player player1 = new Player("joel");
+        Player player2 = new Player("bada");
+        Player player3 = new Player("j.on");
+
+        player1.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+
+        player2.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
+        player2.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.HEART));
+
+        player3.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardLetter.THREE, CardSuit.DIAMOND));
+
+        dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.SPADE));
+        dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.SPADE));
+        //When
+        final Map<Result, Integer> dealerResult =
+                dealer.checkEveryResult(new Players(Arrays.asList(player1, player2, player3)));
+        //Then
+        assertThat(dealerResult.getOrDefault(Result.WIN, 0)).isEqualTo(1);
+        assertThat(dealerResult.getOrDefault(Result.DRAW, 0)).isEqualTo(1);
+        assertThat(dealerResult.getOrDefault(Result.LOSE, 0)).isEqualTo(1);
     }
 }
