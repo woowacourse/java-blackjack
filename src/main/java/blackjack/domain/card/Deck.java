@@ -16,6 +16,7 @@ public class Deck {
         deck = new ArrayList<>();
         IntStream.rangeClosed(0, TOTAL_CARD_COUNT - 1)
                 .forEach(index -> deck.add(Card.of(index)));
+        shuffle();
     }
 
     public Card draw() {
