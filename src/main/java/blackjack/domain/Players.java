@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.utils.CardDeck;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Players {
         }
     }
 
-    public List<Player> values() {
+    public List<Player> getUnmodifiableList() {
         return Collections.unmodifiableList(players);
     }
 }

@@ -24,7 +24,7 @@ public class Application {
     }
 
     private static void simulate(CardDeck cardDeck, Dealer dealer, Players players) {
-        for (Player player : players.values()) {
+        for (Player player : players.getUnmodifiableList()) {
             turnForPlayer(cardDeck, player);
         }
 

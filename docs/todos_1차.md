@@ -15,14 +15,14 @@ src/main/java/blackjack/domain/Card.java
 
 src/main/java/blackjack/domain/Playable.java
 - [x] 점수 계산은 Cards에서 충분히 할 수 있지 않을까요? getter를 지양
-- [ ] 점수계산로직에서 int를 반환하는 이유는? 승패관련 Enum에서 처리 가능하지 않을까? 휴먼에러로 인한 장애 가능성 있음
+- [x] 점수계산로직에서 int를 반환하는 이유는? 승패관련 Enum에서 처리 가능하지 않을까? 휴먼에러로 인한 장애 가능성 있음
 명확하게 승페계산 로직 변경
 - [x] 상수의 위치는 ACE가 있는 자리가 아닐까?
 
 src/main/java/blackjack/domain/Participants.java
-- [ ] View의 역할을 가진 내용은 View로 옮기기(책임과 역할을 분명히 하자)
-- [ ] instanceof 말고 다른 방법은?
-- [ ] stream 구문은 한줄에 하나씩 작성
+- [x] View의 역할을 가진 내용은 View로 옮기기(책임과 역할을 분명히 하자)
+- [x] instanceof 말고 다른 방법은?
+- [x] stream 구문은 한줄에 하나씩 작성
 
 src/main/java/blackjack/Application.java
 - [ ] takeCard 관리부분:  deck을 관리하는 객체를 만들어 player에게 카드를 줄지 말지 판단할 수 있도록 설계해볼 수도 있다

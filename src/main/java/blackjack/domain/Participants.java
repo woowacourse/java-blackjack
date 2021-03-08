@@ -4,59 +4,49 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Participants {
-    private final List<Playable> participants;
+    private final Players players;
+    private final Dealer dealer;
 
     public Participants(Players players, Dealer dealer) {
-        participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players.values());
+        this.players = players;
+        this.dealer = dealer;
     }
 
     public String names() {
-        return participants.stream().filter(playable -> playable instanceof Player).map(Playable::getName).collect(Collectors.joining(", "));
+        return players.getUnmodifiableList().stream().map(Playable::getName)
+            .collect(Collectors.joining(", "));
     }
 
-    public List<String> cards() {
-        List<String> results = new ArrayList<>();
-        for (Playable playable : participants) {
-            results.add(playable.getName() + cardsToString(playable.getUnmodifiableCards()));
+    public Map<String, Cards> cards() {
+        final Map<String, Cards> results = new LinkedHashMap<>();
+
+        results.put(dealer.getName(), dealer.getCards());
+        for (Player player : players.getUnmodifiableList()) {
+            results.put(player.getName(), player.getCards());
         }
-        return results;
-    }
 
-    public List<String> result() {
-        List<String> results = new ArrayList<>();
-        for (Playable playable : participants) {
-            results.add(playable.getName() + cardsToString(playable.getUnmodifiableCards()) + " - 결과: " + playable.sumCardsForResult());
-        }
         return results;
-    }
-
-    private String cardsToString(List<Card> cards) {
-        return cards.stream().map(Card::getCardName).collect(Collectors.joining(", ", "카드: ", ""));
     }
 
     public Map<String, String> finalResult() {
-        Playable dealer = participants.stream().filter(playable -> playable instanceof Dealer).findFirst().orElse(null);
-        List<Playable> players = participants.stream().filter(playable -> playable instanceof Player).collect(Collectors.toList());
         final Map<String, String> results = new LinkedHashMap<>();
-        results.put(dealer.getName(), summarizeDealerOutcome(dealer, players));
-        for (Playable player : players) {
-            Outcome outcome = Outcome.getInstance(player.result(dealer.sumCardsForResult()));
+        final Map<Outcome, Integer> outcomes = new EnumMap<>(Outcome.class);
+
+        results.put(dealer.getName(), "");
+        for (Player player : players.getUnmodifiableList()) {
+            Outcome outcome = dealer.resultOfPlayer(player.sumCardsForResult());
+            outcomes.put(outcome, outcomes.getOrDefault(outcome, 0) + 1);
             results.put(player.getName(), outcome.getWord());
         }
+        results.put(dealer.getName(), summarizeDealerOutcome(outcomes));
+
         return results;
     }
 
-    private String summarizeDealerOutcome(Playable dealer, List<Playable> players) {
-        Map<Outcome, Integer> results = new EnumMap(Outcome.class);
-        Arrays.stream(Outcome.values()).forEach(outcome -> results.put(outcome, 0));
-
-        for (Playable player : players) {
-            Outcome outcome = Outcome.getInstance(dealer.result(player.sumCardsForResult()));
-            results.put(outcome, results.get(outcome) + 1);
-        }
-
-        return results.get(Outcome.WIN) + "승 " + results.get(Outcome.LOSE) + "패 " + results.get(Outcome.DRAW) + "무";
+    private String summarizeDealerOutcome(final Map<Outcome, Integer> outcomes) {
+        return outcomes.getOrDefault(Outcome.LOSE, 0) + "승 "
+            + outcomes.getOrDefault(Outcome.WIN, 0) + "패 "
+            + outcomes.getOrDefault(Outcome.DRAW, 0) + "무";
     }
+
 }

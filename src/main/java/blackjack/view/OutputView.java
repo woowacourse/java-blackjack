@@ -1,10 +1,15 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.Cards;
 import blackjack.domain.Participants;
+import blackjack.domain.Playable;
 import blackjack.domain.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -13,15 +18,22 @@ public class OutputView {
     }
 
     public static void printCards(Player player) {
-        String cards = player.getUnmodifiableCards().stream().map(Card::getCardName).collect(Collectors.joining(", "));
+        String cards = player.getUnmodifiableCards().stream().map(Card::getCardName)
+            .collect(Collectors.joining(", "));
         System.out.println(player.getName() + "카드: " + cards);
     }
 
     public static void printParticipantsCards(Participants participants) {
         System.out.printf("\n딜러와 %s에게 2장의 나누었습니다.\n", participants.names());
-        for (String cards : participants.cards()) {
-            System.out.println(cards);
+        for (Entry<String, Cards> value : participants.cards().entrySet()) {
+            System.out.println(value.getKey() + cardsToString(value.getValue()));
         }
+    }
+
+    private static String cardsToString(Cards cards) {
+        return cards.getUnmodifiableList().stream()
+            .map(Card::getCardName)
+            .collect(Collectors.joining(", ", "카드: ", ""));
     }
 
     public static void printDealerGetCard() {
@@ -34,8 +46,10 @@ public class OutputView {
     }
 
     private static void printParticipantsResults(Participants participants) {
-        for (String result : participants.result()) {
-            System.out.println(result);
+        for (Entry<String, Cards> value : participants.cards().entrySet()) {
+            System.out.println(
+                value.getKey() + cardsToString(value.getValue())
+                    + " - 결과: " + value.getValue().sumCardsForResult());
         }
     }
 
@@ -45,5 +59,6 @@ public class OutputView {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
+
 
 }
