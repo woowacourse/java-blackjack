@@ -17,7 +17,7 @@ public class Players {
                 .collect(toList());
     }
 
-    public void distributeToEachPlayer(Deck deck) {
+    public void distributeToPlayer(Deck deck) {
         this.players.forEach(player -> player.distribute(deck.popTwo()));
     }
 

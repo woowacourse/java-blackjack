@@ -1,64 +1,62 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
     private static final String YES = "y";
 
+    private final BlackjackGame blackjackGame;
+
+    public BlackjackController(BlackjackGame blackjackGame) {
+        this.blackjackGame = blackjackGame;
+    }
+
     public void run() {
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
-        Players players = participatePlayers();
-        List<User> users = setUpUsers(dealer, players);
-        distributeToUsers(dealer, players, deck);
-        showUsersCards(dealer, players);
-        askToPlayers(players, deck);
-        isDealerHit(dealer, deck);
-        OutputView.printResults(users);
-        OutputView.printResultBoard(dealer, new ResultBoard(dealer, players));
+        setUpBlackjackGame();
+        distributeCards();
+        showUsersCards();
+        askToPlayersForHit();
+        isDealerHit();
+        showResults();
     }
 
-    private Players participatePlayers() {
+    private void setUpBlackjackGame() {
+        blackjackGame.setUpPlayers(setUpPlayers());
+        blackjackGame.setUpUsers();
+    }
+
+    private List<String> setUpPlayers() {
         OutputView.printInputNames();
-        List<String> names = InputView.inputNames();
-        return new Players(names);
+        return InputView.inputNames();
     }
 
-    private List<User> setUpUsers(Dealer dealer, Players players) {
-        List<User> users = new ArrayList<>();
-        users.add(dealer);
-        users.addAll(players.getPlayers());
-        return users;
+    private void distributeCards() {
+        blackjackGame.distributeToUsers();
+        OutputView.printDistribute(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
-    private void distributeToUsers(Dealer dealer, Players players, Deck deck) {
-        dealer.distribute(deck.popTwo());
-        players.distributeToEachPlayer(deck);
+    private void showUsersCards() {
+        OutputView.printDealerCard(blackjackGame.getDealer());
+        OutputView.printPlayersCards(blackjackGame.getPlayers());
     }
 
-    private void showUsersCards(Dealer dealer, Players players) {
-        OutputView.printDistribute(dealer, players);
-        OutputView.printDealerCard(dealer);
-        OutputView.printPlayersCards(players);
-    }
-
-    private void askToPlayers(Players players, Deck deck) {
+    private void askToPlayersForHit() {
+        Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
-            askForHit(player, deck);
+            askToPlayerForHit(player, blackjackGame.getDeck());
         }
     }
 
-    private void askForHit(Player player, Deck deck) {
+    private void askToPlayerForHit(Player player, Deck deck) {
         while (isPlayerHit(player) && isYes(InputView.inputHit())) {
             player.draw(deck);
             OutputView.printPlayerCards(player);
@@ -77,12 +75,19 @@ public class BlackjackController {
         return answer.equals(YES);
     }
 
-    private void isDealerHit(Dealer dealer, Deck deck) {
+    private void isDealerHit() {
+        Dealer dealer = blackjackGame.getDealer();
         if (dealer.isHit()) {
-            dealer.draw(deck);
+            dealer.draw(blackjackGame.getDeck());
             OutputView.printDealerHit(dealer);
             return;
         }
         OutputView.printDealerNotHit(dealer);
+    }
+
+    private void showResults() {
+        OutputView.printResults(blackjackGame.getUsers());
+        OutputView.printResultBoard(blackjackGame.getDealer(),
+                new ResultBoard(blackjackGame.getDealer(), blackjackGame.getPlayers()));
     }
 }

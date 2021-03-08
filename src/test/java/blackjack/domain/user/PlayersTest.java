@@ -29,7 +29,7 @@ public class PlayersTest {
     @Test
     void DistributeToEachPlayer() {
         Deck deck = new Deck();
-        players.distributeToEachPlayer(deck);
+        players.distributeToPlayer(deck);
 
         assertThat(players.getPlayers()
                 .stream()
@@ -40,7 +40,7 @@ public class PlayersTest {
     @Test
     void showCardsByPlayers() {
         Deck deck = new Deck();
-        players.distributeToEachPlayer(deck);
+        players.distributeToPlayer(deck);
         List<Cards> cardsGroup = players.showCardsByPlayers();
 
         assertThat(cardsGroup.stream()
