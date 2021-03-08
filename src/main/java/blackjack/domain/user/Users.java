@@ -1,9 +1,12 @@
 package blackjack.domain.user;
 
+import blackjack.domain.MatchRule;
 import blackjack.domain.ResultType;
+import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,9 +43,11 @@ public class Users {
     }
 
     public Map<User, ResultType> generateResultsMapAgainstDealer() {
-        int dealerScore = getDealer().getScore();
         return users.stream()
                 .filter(user -> user instanceof Player)
-                .collect(Collectors.toMap(player -> player, player -> ((Player) player).generateResultAgainstDealer(dealerScore)));
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> MatchRule.getMatchResult(player.getCards(), this.getDealer().getCards())
+                ));
     }
 }

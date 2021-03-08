@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Suit;
-import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +20,7 @@ class DealerTest {
 
         dealer.hit(cardDeck.drawCard());
 
-        assertThat(dealer.getCards()).hasSize(1);
+        assertThat(dealer.getCards().cards()).hasSize(1);
     }
 
     @DisplayName("isStay - 딜러는 점수가 17 미만일 때 카드를 뽑아야 한다.")

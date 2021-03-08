@@ -1,8 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.ResultType;
-import blackjack.domain.card.Card;
-import blackjack.domain.user.User;
 import blackjack.util.StringUtil;
 
 public class Player extends User {
@@ -20,16 +17,6 @@ public class Player extends User {
         }
     }
 
-    public ResultType generateResultAgainstDealer(int dealerScore) {
-        if (this.getScore() > dealerScore) {
-            return ResultType.WIN;
-        }
-        if (this.getScore() < dealerScore || this.getScore() == Card.BUST) {
-            return ResultType.LOSE;
-        }
-
-        return ResultType.DRAW;
-    }
 
     public void stay() {
         this.isStay = true;
@@ -40,6 +27,6 @@ public class Player extends User {
     }
 
     public boolean isBust() {
-        return this.getScore() == Card.BUST;
+        return this.cards.isBust();
     }
 }

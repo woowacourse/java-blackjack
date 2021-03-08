@@ -13,6 +13,6 @@ public class Dealer extends User {
     }
 
     public boolean hasToDrawACard() {
-        return this.getScore() < DEALER_REDRAW_STANDARD && this.getScore() != Card.BUST;
+        return this.getScore() < DEALER_REDRAW_STANDARD;
     }
 }

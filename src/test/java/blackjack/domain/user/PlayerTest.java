@@ -35,7 +35,7 @@ class PlayerTest {
         Player player = new Player("Player");
         CardDeck cardDeck = CardDeck.createDeck();
         player.hit(cardDeck.drawCard());
-        assertThat(player.getCards()).hasSize(1);
+        assertThat(player.getCards().cards()).hasSize(1);
     }
 
     @DisplayName("isStay:false - 플레이어가 스테이 의사를 밝히지 않으면 계속 게임 진행")

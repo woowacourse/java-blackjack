@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.card.Cards;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.domain.card.Card;
@@ -20,19 +21,19 @@ public class OutputView {
 
     public static void printCardsOfUsersWithScore(Users users) {
         for (User user : users.gerUsers()) {
-            System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getScore()) + "\n");
+            System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getCards()) + "\n");
         }
         System.out.println();
     }
 
-    private static String makeResultComment(int score) {
-        if (score == Card.BLACKJACK_SCORE) {
+    private static String makeResultComment(Cards cards) {
+        if (cards.isBlackJack()) {
             return "블랙잭";
         }
-        if (score == Card.BUST) {
+        if (cards.isBust()) {
             return "버스트";
         }
-        return Integer.toString(score);
+        return Integer.toString(cards.getScore());
     }
 
     public static void printCardsOfUser(User user) {
@@ -44,8 +45,8 @@ public class OutputView {
         return String.format("%s 카드 : %s", user.getName(), createCardsStringFormat(user.getCards()));
     }
 
-    private static String createCardsStringFormat(List<Card> cards) {
-        return cards.stream()
+    private static String createCardsStringFormat(Cards cards) {
+        return cards.cards().stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
