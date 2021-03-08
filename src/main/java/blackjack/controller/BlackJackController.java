@@ -13,31 +13,27 @@ import blackjack.view.OutputView;
 
 public class BlackJackController {
 
+    private static final Deck DECK = new Deck(Card.getAllCards());
+
     private BlackJackController() {
     }
 
     public static void play() {
-        Deck deck = prepareDeck();
-        Dealer dealer = new Dealer(deck);
-        Players players = joinPlayers(deck);
+        DECK.shuffle();
+        Dealer dealer = new Dealer(DECK);
+        Players players = joinPlayers();
 
         printGameStatus(dealer, players);
 
-        preparePlayers(deck, players);
-        prepareDealer(deck, dealer);
+        preparePlayers(players);
+        prepareDealer(dealer);
 
         printGameResult(dealer, players);
     }
 
-    private static Deck prepareDeck() {
-        Deck deck = new Deck(Card.getAllCards());
-        deck.shuffle();
-        return deck;
-    }
-
-    private static Players joinPlayers(Deck deck) {
+    private static Players joinPlayers() {
         OutputView.printInputNames();
-        return Players.valueOf(InputView.inputString(), deck);
+        return Players.valueOf(InputView.inputString(), DECK);
     }
 
     private static void printGameStatus(Dealer dealer, Players players) {
@@ -51,32 +47,32 @@ public class BlackJackController {
         OutputView.printResult(players.match(dealer));
     }
 
-    private static void preparePlayers(Deck deck, Players players) {
+    private static void preparePlayers(Players players) {
         while (!players.isPrepared()) {
-            preparePlayer(deck, players.nextPlayerToPrepare());
+            preparePlayer(players.nextPlayerToPrepare());
         }
     }
 
-    private static void preparePlayer(Deck deck, Player playerToPrepare) {
+    private static void preparePlayer(Player playerToPrepare) {
         while (playerToPrepare.isContinue()) {
             OutputView.willDrawCard(playerToPrepare);
             Response response = Response.getResponse(InputView.inputString());
             playerToPrepare.updateStatusByResponse(response);
-            drawCardByResponse(playerToPrepare, response, deck);
+            drawCardByResponse(playerToPrepare, response);
         }
     }
 
     private static void drawCardByResponse(Player playerToPrepare,
-        Response response, Deck deck) {
+        Response response) {
         if (response == Response.POSITIVE) {
-            playerToPrepare.draw(deck);
+            playerToPrepare.draw(DECK);
             OutputView.printParticipantStatus(playerToPrepare, false);
         }
     }
 
-    private static void prepareDealer(Deck deck, Dealer dealer) {
+    private static void prepareDealer(Dealer dealer) {
         while (dealer.isContinue()) {
-            dealer.draw(deck);
+            dealer.draw(DECK);
             OutputView.printDealerDrawCard(dealer);
         }
         OutputView.printNewLine();
