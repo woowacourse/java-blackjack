@@ -13,15 +13,14 @@ public class CardDeck {
     }
 
     private void generateCardWithSymbol() {
-        for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
-            CardSymbol cardSymbol = CardSymbol.from(symbolCandidate.getSymbol());
-            generateCardWithNumber(cardSymbol);
+        for (CardSymbol cardSymbol : CardSymbol.values()) {
+            generateCardWithNumber(cardSymbol.getSymbol());
         }
     }
 
-    private void generateCardWithNumber(CardSymbol cardSymbol) {
-        for (NumberCandidate numberCandidate : NumberCandidate.values()) {
-            CardNumber cardNumber = CardNumber.from(numberCandidate.getNumber());
+    private void generateCardWithNumber(String cardSymbol) {
+        for (CardNumber numberCandidate : CardNumber.values()) {
+            String cardNumber = numberCandidate.getNumber();
             deck.add(new Card(cardNumber, cardSymbol));
         }
     }

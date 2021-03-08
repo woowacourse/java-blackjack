@@ -2,24 +2,25 @@ package blackjack.domain.card;
 
 public class Card {
 
+    private static final String ACE_NUMBER = "A";
+
     private final CardNumber cardNumber;
     private final CardSymbol cardSymbol;
 
-    public Card(CardNumber number, CardSymbol symbol) {
-        this.cardNumber = number;
-        this.cardSymbol = symbol;
+    public Card(String number, String symbol) {
+        this.cardNumber = CardNumber.matchByNumber(number);
+        this.cardSymbol = CardSymbol.matchByInput(symbol);
     }
 
     public boolean isAce() {
-        CardNumber aceNumber = CardNumber.from("A");
-        return cardNumber.equals(aceNumber);
+        return cardNumber.getNumber().equals(ACE_NUMBER);
     }
 
     public int getCardValue() {
-        return this.cardNumber.getValue();
+        return cardNumber.getValue();
     }
 
     public String getCard() {
-        return cardNumber.getCardNumber() + cardSymbol.getSymbol();
+        return cardNumber.getNumber() + cardSymbol.getSymbol();
     }
 }

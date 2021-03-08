@@ -12,16 +12,16 @@ public class CardSymbolTest {
 
     private static Stream<Arguments> symbolTest() {
         return Stream.of(
-            Arguments.of("클로버", CardSymbol.from("클로버")),
-            Arguments.of("다이아몬드", CardSymbol.from("다이아몬드"))
+            Arguments.of("클로버", CardSymbol.CLOVER),
+            Arguments.of("다이아몬드", CardSymbol.DIAMOND)
         );
     }
 
     @ParameterizedTest
-    @DisplayName("심볼 동일 인스턴스 확인 테스")
+    @DisplayName("심볼 동일 확인 테스트")
     @MethodSource("symbolTest")
-    void symbol(String symbol, CardSymbol value) {
-        CardSymbol cardSymbol = CardSymbol.from(symbol);
-        assertThat(cardSymbol).isEqualTo(value);
+    void symbol(String symbol, CardSymbol expected) {
+        CardSymbol cardSymbol = CardSymbol.matchByInput(symbol);
+        assertThat(cardSymbol).isEqualTo(expected);
     }
 }

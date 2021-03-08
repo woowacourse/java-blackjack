@@ -20,27 +20,27 @@ public class CardNumberTest {
     }
 
     @ParameterizedTest
-    @DisplayName("카드 숫자 포장 값 매칭 테스트")
+    @DisplayName("카드 숫자 값을 잘 가져오는지 테스트")
     @MethodSource("testNumberSample")
-    void cardNumberTest(String number, int value) {
-        CardNumber cardNumber = CardNumber.from(number);
-        assertThat(cardNumber.getValue()).isEqualTo(value);
+    void cardNumberTest(String number, int expected) {
+        CardNumber cardNumber = CardNumber.matchByNumber(number);
+        assertThat(cardNumber.getValue()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> testNumberInstanceSample() {
         return Stream.of(
-            Arguments.of("5", CardNumber.from("5")),
-            Arguments.of("10", CardNumber.from("10")),
-            Arguments.of("K", CardNumber.from("K")),
-            Arguments.of("A", CardNumber.from("A"))
+            Arguments.of("5", CardNumber.FIVE),
+            Arguments.of("10", CardNumber.TEN),
+            Arguments.of("K", CardNumber.K),
+            Arguments.of("A", CardNumber.A)
         );
     }
 
     @ParameterizedTest
-    @DisplayName("카드 숫자 동일 인스턴스 확인 테스트")
+    @DisplayName("카드 숫자 동일 확인 테스트")
     @MethodSource("testNumberInstanceSample")
-    void cardNumberInstanceTest(String number, CardNumber cardTargetNumber) {
-        CardNumber cardNumber = CardNumber.from(number);
-        assertThat(cardNumber).isEqualTo(cardTargetNumber);
+    void cardNumberInstanceTest(String number, CardNumber expected) {
+        CardNumber cardNumber = CardNumber.matchByNumber(number);
+        assertThat(cardNumber).isEqualTo(expected);
     }
 }

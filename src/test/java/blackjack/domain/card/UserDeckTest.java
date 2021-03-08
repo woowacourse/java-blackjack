@@ -10,8 +10,8 @@ public class UserDeckTest {
     @Test
     @DisplayName("카드 점수 합산 테스트")
     void sumOfCard() {
-        Card one = new Card(CardNumber.from("8"), CardSymbol.from("클로버"));
-        Card two = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
+        Card one = new Card("8", "클로버");
+        Card two = new Card("5", "하트");
         UserDeck userDeck = new UserDeck();
         userDeck.add(one);
         userDeck.add(two);
@@ -21,8 +21,8 @@ public class UserDeckTest {
     @Test
     @DisplayName("에이스 점수 테스트")
     void hasA() {
-        Card one = new Card(CardNumber.from("A"), CardSymbol.from("클로버"));
-        Card two = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
+        Card one = new Card("A", "클로버");
+        Card two = new Card("5", "하트");
         UserDeck userDeck = new UserDeck();
         userDeck.add(one);
         userDeck.add(two);
@@ -32,9 +32,9 @@ public class UserDeckTest {
     @Test
     @DisplayName("에이스 점수 변환 테스트")
     void makeAtoOne() {
-        Card one = new Card(CardNumber.from("A"), CardSymbol.from("클로버"));
-        Card two = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
-        Card three = new Card(CardNumber.from("A"), CardSymbol.from("스페이드"));
+        Card one = new Card("A", "클로버");
+        Card two = new Card("5", "하트");
+        Card three = new Card("A", "스페이드");
         UserDeck userDeck = new UserDeck();
         userDeck.add(one);
         userDeck.add(two);

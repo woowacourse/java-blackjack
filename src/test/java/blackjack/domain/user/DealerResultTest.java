@@ -3,8 +3,6 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.result.DealerResult;
 import java.util.ArrayList;
@@ -15,10 +13,10 @@ import org.junit.jupiter.api.Test;
 
 public class DealerResultTest {
 
-    private final Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
-    private final Card winCard = new Card(CardNumber.from("A"), CardSymbol.from("클로버"));
-    private final Card tieCard = new Card(CardNumber.from("J"), CardSymbol.from("하트"));
-    private final Card loseCard = new Card(CardNumber.from("9"), CardSymbol.from("다이아몬드"));
+    private final Card one = new Card("J", "클로버");
+    private final Card winCard = new Card("A", "클로버");
+    private final Card tieCard = new Card("J", "하트");
+    private final Card loseCard = new Card("9", "다이아몬드");
     private final UserDeck dealerDeck = new UserDeck();
     {
         dealerDeck.add(one);
