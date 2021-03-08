@@ -13,11 +13,7 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public void add(final Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getList() {
+    public List<Card> getCardsList() {
         return new ArrayList<>(cards);
     }
 
@@ -33,6 +29,10 @@ public class Cards {
             return sum + ACE_CONVERSION;
         }
         return sum;
+    }
+
+    public void add(final Card card) {
+        cards.add(card);
     }
 
     public boolean isBust() {

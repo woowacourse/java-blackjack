@@ -20,7 +20,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 두장 넣으면, 사이즈가 2가 나온다.")
     void size() {
-        assertThat(cards.getList()).hasSize(2);
+        assertThat(cards.getCardsList()).hasSize(2);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class CardsTest {
     void add() {
         cards.add(new Card(Suit.CLOVER, Face.NINE));
 
-        assertThat(cards.getList()).hasSize(3);
+        assertThat(cards.getCardsList()).hasSize(3);
     }
 
     @Test

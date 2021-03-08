@@ -38,16 +38,16 @@ public class Card {
         return card;
     }
 
-    public boolean isAce() {
-        return this.face.equals(Face.ACE);
-    }
-
     public int getFaceValue() {
         return this.face.getValue();
     }
 
     public String getSuit() {
         return this.suit.getSuit();
+    }
+
+    public boolean isAce() {
+        return this.face.equals(Face.ACE);
     }
 
     @Override

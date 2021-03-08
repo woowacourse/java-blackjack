@@ -34,7 +34,7 @@ public class BlackJackController {
 
     private void play() {
         Challengers challengers = blackJackService.getChallengers();
-        for (Challenger challenger : challengers.getList()) {
+        for (Challenger challenger : challengers.getChallengersList()) {
             receiveMoreCard(challenger);
         }
         receiveMoreCard(blackJackService.getDealer());

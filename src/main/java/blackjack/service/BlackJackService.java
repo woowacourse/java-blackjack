@@ -13,6 +13,10 @@ public class BlackJackService {
     private Challengers challengers;
     private Dealer dealer;
 
+    public void initDealer() {
+        this.dealer = new Dealer(getInitCards());
+    }
+
     public void initChallengers(final List<String> requestNames) {
         List<Challenger> challengers = new ArrayList<>();
         for (String name : requestNames) {
@@ -21,14 +25,10 @@ public class BlackJackService {
         this.challengers = new Challengers(challengers);
     }
 
-    public void initDealer() {
-        this.dealer = new Dealer(getInitCards());
-    }
-
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(challengers.getList());
+        players.addAll(challengers.getChallengersList());
         return players;
     }
 

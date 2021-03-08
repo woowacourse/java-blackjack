@@ -10,22 +10,14 @@ public abstract class Player {
     private final Name name;
 
     public Player(final Cards cards, final Name name) {
-        this.cards = new Cards(cards.getList());
+        this.cards = new Cards(cards.getCardsList());
         this.name = new Name(name.value());
     }
 
     public abstract List<Card> getInitCards();
 
-    public void receiveMoreCard(final Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return cards.getList();
-    }
-
-    public boolean isBust() {
-        return cards.isBust();
+    public List<Card> getCardsList() {
+        return cards.getCardsList();
     }
 
     public int getScore() {
@@ -34,5 +26,13 @@ public abstract class Player {
 
     public String getName() {
         return name.value();
+    }
+
+    public void receiveMoreCard(final Card card) {
+        cards.add(card);
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 }

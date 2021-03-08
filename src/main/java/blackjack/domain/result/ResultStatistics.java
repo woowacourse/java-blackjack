@@ -13,7 +13,7 @@ public class ResultStatistics {
     private final Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
 
     public ResultStatistics(final Challengers challengers, final Dealer dealer) {
-        challengers.getList()
+        challengers.getChallengersList()
                 .forEach(challenger -> resultStatistics.put(challenger, challenger.getChallengerResult(dealer)));
     }
 

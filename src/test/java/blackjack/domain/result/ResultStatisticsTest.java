@@ -109,7 +109,7 @@ public class ResultStatisticsTest {
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
         challengers.add(challenger);
 
-        Cards cards = new Cards(dealer.getCards());
+        Cards cards = new Cards(dealer.getCardsList());
         cards.add(new Card(Suit.HEART, Face.JACK));
 
         Dealer dealer1 = new Dealer(cards);
