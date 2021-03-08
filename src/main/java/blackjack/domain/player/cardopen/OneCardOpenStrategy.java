@@ -3,7 +3,6 @@ package blackjack.domain.player.cardopen;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-
 public class OneCardOpenStrategy implements CardOpenStrategy {
     public static final int ONE_CARD_SIZE = 1;
 

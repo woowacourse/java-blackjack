@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.cardopen.CardOpenStrategy;
