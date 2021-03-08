@@ -11,7 +11,7 @@ src/main/java/blackjack/domain/Card.java
 src/main/java/blackjack/domain/Card.java
 - [x] 캐싱한 카드를 String 타입인 이름 기준으로 뽑아오고 있는데, 타입이 String이라 이 이름이 denomination + suit 라는걸 외부에서 알아야 할 것 같아요.
   더 명확한 캐싱 및 조회 방법은?
-- [ ] 테스트 코드 수정
+- [x] 테스트 코드 수정
 
 src/main/java/blackjack/domain/Playable.java
 - [x] 점수 계산은 Cards에서 충분히 할 수 있지 않을까요? getter를 지양

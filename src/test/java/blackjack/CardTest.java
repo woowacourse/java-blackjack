@@ -24,10 +24,4 @@ public class CardTest {
             .isSameAs(Card.from(Denominations.ACE, Suits.DIAMOND));
     }
 
-    @Test
-    @DisplayName("실패 - 잘못된 카드 생성")
-    void create_cards2() {
-        assertThatThrownBy(() -> Card.from("11다이아몬드")).isInstanceOf(IllegalArgumentException.class);
-    }
-
 }

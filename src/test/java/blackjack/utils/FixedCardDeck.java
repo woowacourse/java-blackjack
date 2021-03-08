@@ -22,7 +22,7 @@ public class FixedCardDeck implements CardDeck {
     @Override
     public void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit) {
         for (Denominations denomination : Denominations.values()) {
-            cardsValue.offer(Card.from(denomination.getName() + suit.getName()));
+            cardsValue.offer(Card.from(denomination, suit));
         }
     }
 

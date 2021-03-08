@@ -21,7 +21,7 @@ public class RandomCardDeck implements CardDeck {
     @Override
     public void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit) {
         for (Denominations denomination : Denominations.values()) {
-            cardsValue.add(Card.from(denomination.getName() + suit.getName()));
+            cardsValue.add(Card.from(denomination, suit));
         }
     }
 

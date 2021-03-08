@@ -33,14 +33,6 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public static Card from(String value) {
-        Card card = cards.get(value);
-        if (card == null) {
-            throw new IllegalArgumentException();
-        }
-        return card;
-    }
-
     public static Card from(Suits suit, Denominations denomination) {
         Card card = cards.get(denomination.getName() + suit.getName());
         if (card == null) {

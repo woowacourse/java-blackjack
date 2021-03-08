@@ -2,6 +2,8 @@ package blackjack;
 
 import blackjack.domain.GameTable;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denominations;
+import blackjack.domain.card.Suits;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.utils.FixedCardDeck;
@@ -36,7 +38,10 @@ public class PlayerTest {
         Participant player = new Player("sarah", cards);
 
         List<Card> playerCards = player.getUnmodifiableCards();
-        assertThat(playerCards).contains(Card.from("A클로버"), Card.from("2클로버"));
+        assertThat(playerCards)
+            .contains(
+                Card.from(Suits.CLOVER, Denominations.ACE),
+                Card.from(Suits.CLOVER, Denominations.TWO));
     }
 
     @Test
@@ -47,7 +52,11 @@ public class PlayerTest {
         Participant player = new Player("sarah", cards);
 
         gameTable.giveCard(player);
-        assertThat(player.getUnmodifiableCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
+        assertThat(player.getUnmodifiableCards())
+            .contains(
+                Card.from(Suits.CLOVER, Denominations.ACE),
+                Card.from(Suits.CLOVER, Denominations.TWO),
+                Card.from(Suits.CLOVER, Denominations.THREE));
     }
 
     @Test
@@ -63,7 +72,10 @@ public class PlayerTest {
     @Test
     @DisplayName("결과를 위한 플레이어에게 지급된 카드 합계")
     void sum_cards_for_result() {
-        List<Card> cards = Arrays.asList(Card.from("A다이아몬드"), Card.from("6다이아몬드"));
+        List<Card> cards = Arrays.asList(
+            Card.from(Suits.DIAMOND, Denominations.ACE),
+            Card.from(Suits.DIAMOND, Denominations.SIX));
+
         Participant player = new Player("john", cards);
         int score = player.sumCardsForResult();
         assertThat(score).isEqualTo(17);
@@ -72,11 +84,12 @@ public class PlayerTest {
     @Test
     @DisplayName("Ace 4장인 경우 지지않는 최대 합계")
     void sum_cards_for_result1() {
-        List<Card> cards = Arrays.asList(Card.from("A다이아몬드"),
-                Card.from("A다이아몬드"));
+        List<Card> cards = Arrays.asList(
+            Card.from(Suits.DIAMOND, Denominations.ACE),
+            Card.from(Suits.DIAMOND, Denominations.ACE));
         Participant player = new Player("john", cards);
-        player.takeCard(Card.from("A다이아몬드"));
-        player.takeCard(Card.from("A다이아몬드"));
+        player.takeCard(Card.from(Suits.DIAMOND, Denominations.ACE));
+        player.takeCard(Card.from(Suits.DIAMOND, Denominations.ACE));
 
         int score = player.sumCardsForResult();
 
