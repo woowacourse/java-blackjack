@@ -10,22 +10,22 @@ public class Card {
     private static final List<Card> PLAYING_CARDS;
 
     private final String name;
-    private final CardValue value;
+    private final Denomination value;
 
     static {
-        PLAYING_CARDS = Arrays.stream(CardSymbol.values())
-                .flatMap(cardSymbol -> Arrays.stream(CardValue.values())
+        PLAYING_CARDS = Arrays.stream(Suit.values())
+                .flatMap(cardSymbol -> Arrays.stream(Denomination.values())
                             .map(cardValue -> Card.of(cardSymbol, cardValue))
                 )
                 .collect(Collectors.toList());
     }
 
-    private Card(final CardSymbol symbol, final CardValue value) {
+    private Card(final Suit symbol, final Denomination value) {
         this.value = value;
         this.name = value.getName() + symbol.getSymbol();
     }
 
-    public static Card of(final CardSymbol symbol, final CardValue value) {
+    public static Card of(final Suit symbol, final Denomination value) {
         return new Card(symbol, value);
     }
 
@@ -41,7 +41,7 @@ public class Card {
         return value.getValue();
     }
 
-    public CardValue getCardValue() {
+    public Denomination getCardValue() {
         return value;
     }
 }
