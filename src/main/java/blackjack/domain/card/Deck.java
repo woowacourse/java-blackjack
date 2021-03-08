@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 public class Deck {
     private static final int TOP_OF_DECK = 0;
     private static final int NUMBER_OF_INIT_CARD = 2;
-    private static final int TOP_CARD = 0;
 
     private final List<Card> cards;
 
@@ -36,7 +35,7 @@ public class Deck {
     }
 
     public List<Card> handOutInitCards() {
-        return Stream.generate(() -> cards.remove(TOP_CARD))
+        return Stream.generate(() -> cards.remove(TOP_OF_DECK))
                 .limit(NUMBER_OF_INIT_CARD)
                 .collect(Collectors.toList());
     }
