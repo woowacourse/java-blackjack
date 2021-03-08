@@ -36,7 +36,7 @@ public class DeckTest {
     void draw() {
         Card card = deck.draw();
         assertThat(card).isSameAs(Card.valueOf(Shape.DIAMOND, CardValue.ACE));
-        assertThat(deck.getCards().size()).isEqualTo(1);
+        assertThat(deck.getCards()).hasSize(1);
     }
 
     @Test
