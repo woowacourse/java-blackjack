@@ -33,7 +33,7 @@ public class ParticiapantTest {
     @Test
     @DisplayName("초기카드로 2장씩을 잘 분배하는지 확인")
     void receiveInitialCards() {
-        CardDeck cardDeck = new CardDeck();
+        final CardDeck cardDeck = new CardDeck();
         dealer.receiveInitialCards(cardDeck);
         assertThat(dealer.cardCount()).isEqualTo(2);
     }

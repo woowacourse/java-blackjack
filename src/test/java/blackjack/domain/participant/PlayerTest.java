@@ -38,7 +38,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 초기 카드 출력이 두 장 다 되는지 확인")
     void showInitialCards() {
-        CardDeck cardDeck = new CardDeck();
+        final CardDeck cardDeck = new CardDeck();
         player.receiveInitialCards(cardDeck);
         Assertions.assertThat(player.showInitialCards().size()).isEqualTo(2);
     }

@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -20,7 +21,7 @@ public class BlackjackController {
         final Dealer dealer = new Dealer();
         final List<Player> players = playerSetUp();
 
-        distributeCard(players, dealer, cardDeck);
+        distributeInitialCards(players, dealer, cardDeck);
         playerGameProgress(players, cardDeck);
         dealerGameProgress(dealer, cardDeck);
         showGameResult(players, dealer);
@@ -44,13 +45,13 @@ public class BlackjackController {
         }
     }
 
-    private List<Player> generatePlayers(List<String> names) {
+    private List<Player> generatePlayers(final List<String> names) {
         return names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
 
-    private void distributeCard(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
+    private void distributeInitialCards(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
         for (final Player player : players) {
             player.receiveInitialCards(cardDeck);
         }
@@ -85,17 +86,8 @@ public class BlackjackController {
 
     private void showGameResult(final List<Player> players, final Dealer dealer) {
         OutputView.showFinalCardResult(players, dealer);
-        for (final Player player : players) {
-            decideWinner(dealer, player);
-        }
-        OutputView.showGameResult(dealer, players.size());
-        OutputView.showPlayersGameResult(players);
-    }
-
-    private void decideWinner(final Dealer dealer, final Player player) {
-        if (dealer.isWinner(player.calculateScore()) || player.isBust()) {
-            player.lose();
-            dealer.increaseWinCount();
-        }
+        final GameResult gameResult = new GameResult(dealer, players);
+        OutputView.showGameResult(dealer, gameResult.getResultCounts());
+        OutputView.showPlayersGameResult(players, gameResult.getPlayersResult());
     }
 }

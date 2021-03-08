@@ -5,18 +5,8 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player extends Participant {
-    private boolean win = true;
-
     public Player(final String name) {
         super(name);
-    }
-
-    public void lose() {
-        this.win = false;
-    }
-
-    public boolean getWin() {
-        return win;
     }
 
     @Override

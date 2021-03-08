@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class CardTest {
     @Test
-    @DisplayName("카드가 잘 생성되었는지 확인")
+    @DisplayName("카드가 잘 생성되는지 확인")
     void create() {
         assertThatCode(() -> new Card(CardNumber.TWO, CardType.CLOVER))
                 .doesNotThrowAnyException();
