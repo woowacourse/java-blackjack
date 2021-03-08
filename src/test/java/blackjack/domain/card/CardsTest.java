@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 public class CardsTest {
     private static final int ALL_CARDS_SIZE = 52;
 
-    @DisplayName("52장의 전체 카드 생성 테스트")
+    @DisplayName("52장의 전체 카드로 채워진 Cards 생성 테스트")
     @Test
-    void createCards() {
-        Cards cards = new Cards();
+    void createAllShuffledCards() {
+        Cards cards = Cards.createAllShuffledCards();
         Set<Card> notDuplicateCards = new HashSet<>();
 
         for (int i = 0; i < ALL_CARDS_SIZE; i++) {
