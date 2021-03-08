@@ -29,7 +29,7 @@ public enum Result {
         this.scoreCheck = scoreCheck;
     }
 
-    public static Result getPlayerResult(final Challenger challenger, final Dealer dealer) {
+    public static Result getChallengerResult(final Challenger challenger, final Dealer dealer) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.blackJackCheck.test(challenger, dealer))
                 .findAny()
