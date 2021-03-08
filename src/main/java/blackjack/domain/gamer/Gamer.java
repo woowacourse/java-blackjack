@@ -37,6 +37,6 @@ public abstract class Gamer {
     }
 
     public void initHands(List<Card> makeInitialHands) {
-        hands.makeWith(makeInitialHands);
+        hands.initialize(makeInitialHands);
     }
 }

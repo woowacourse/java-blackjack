@@ -22,7 +22,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.QUEEN));
         Hands hands = new Hands();
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> hands.makeWith(cards));
+                .isThrownBy(() -> hands.initialize(cards));
     }
 
     @DisplayName("Hands 객체 생성")
@@ -33,7 +33,7 @@ class HandsTest {
         cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
         assertThatCode(() -> {
             Hands hands = new Hands();
-            hands.makeWith(cards);
+            hands.initialize(cards);
         }).doesNotThrowAnyException();
     }
 
@@ -44,7 +44,7 @@ class HandsTest {
         cards.add(Card.create(Suit.CLUB, Denomination.KING));
         cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
 
         assertThat(hands.toList().size()).isEqualTo(2);
     }
@@ -56,7 +56,7 @@ class HandsTest {
         cards.add(Card.create(Suit.CLUB, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.KING));
 
         assertThat(hands.calculate()).isEqualTo(13);
@@ -69,7 +69,7 @@ class HandsTest {
         cards.add(Card.create(Suit.CLUB, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.calculate()).isEqualTo(16);
@@ -82,7 +82,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.TWO));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.calculate()).isEqualTo(7);
@@ -95,7 +95,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.EIGHT));
 
         assertThat(hands.calculate()).isEqualTo(21);
@@ -108,7 +108,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.TEN));
         cards.add(Card.create(Suit.HEART, Denomination.THREE));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.SPADE, Denomination.ACE));
         hands.addCard(Card.create(Suit.CLUB, Denomination.ACE));
         hands.addCard(Card.create(Suit.HEART, Denomination.ACE));
@@ -124,7 +124,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertTrue(hands.containsAce());
@@ -137,7 +137,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.TWO));
         cards.add(Card.create(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
         hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.getCardOf(2).size()).isEqualTo(2);
@@ -150,7 +150,7 @@ class HandsTest {
         cards.add(Card.create(Suit.HEART, Denomination.ACE));
         cards.add(Card.create(Suit.CLUB, Denomination.TEN));
         Hands hands = new Hands();
-        hands.makeWith(cards);
+        hands.initialize(cards);
 
         assertTrue(hands.isBlackjack());
     }

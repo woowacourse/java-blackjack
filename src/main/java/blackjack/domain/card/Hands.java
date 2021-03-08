@@ -11,14 +11,14 @@ public class Hands {
     private static final int WINNING_BASELINE = 21;
     private static final int ACE_CONVERSION = 10;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
     private boolean isBlackjack;
 
     public Hands() {
-
+        cards = new ArrayList<>();
     }
 
-    public void makeWith(List<Card> initialCards) {
+    public void initialize(List<Card> initialCards) {
         if (initialCards.size() != 2) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
         }
