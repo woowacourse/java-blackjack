@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Participant;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -16,9 +17,10 @@ public enum ResultType {
         this.name = name;
     }
 
-    public static ResultType getResultType(int difference) {
+    public static ResultType getResultTypeByScore(Participant participant1, Participant participant2) {
         return Arrays.stream(ResultType.values())
-            .filter(resultType -> resultType.matcher.apply(difference))
+            .filter(resultType -> resultType.matcher.apply(participant1.getScore() - participant2
+                .getScore()))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
     }

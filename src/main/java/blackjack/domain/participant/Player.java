@@ -34,12 +34,7 @@ public class Player extends Participant {
         if (dealer.isBust()) {
             return ResultType.WIN;
         }
-        return matchByScore(dealer);
+        return ResultType.getResultTypeByScore(this, dealer);
     }
-
-    private ResultType matchByScore(Dealer dealer) {
-        return ResultType.getResultType(getScore() - dealer.getScore());
-    }
-
 
 }
