@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.Game;
-import blackjack.domain.Player;
+import blackjack.domain.gamer.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -18,15 +18,13 @@ public class Application {
         for (Player player : game.getPlayers()) {
             turnForPlayer(game, player);
         }
-
         game.turnForDealer();
         OutputView.printDealerGetCard();
     }
 
     private static void turnForPlayer(Game game, Player player) {
         while (player.isAvailableToTake() && InputView.requestOneMoreCard(player.getName())) {
-            final Player playerResult = game.turnForPlayer(player);
-            OutputView.printCards(playerResult);
+            OutputView.printCards(game.turnForPlayer(player));
         }
     }
 

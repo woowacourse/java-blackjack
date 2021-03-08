@@ -2,9 +2,8 @@ package blackjack;
 
 import blackjack.domain.GameTable;
 import blackjack.domain.card.Card;
-import blackjack.domain.Participant;
-import blackjack.domain.Player;
-import blackjack.utils.CardDeck;
+import blackjack.domain.gamer.Participant;
+import blackjack.domain.gamer.Player;
 import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,8 @@ public class PlayerTest {
         final GameTable gameTable = new GameTable(new FixedCardDeck());
         List<Card> cards = gameTable.initCards();
         Participant player = new Player("sarah", cards);
-        player.takeCard(gameTable.pop());
+
+        gameTable.giveCard(player);
         assertThat(player.getUnmodifiableCards()).contains(Card.from("A클로버"), Card.from("2클로버"), Card.from("3클로버"));
     }
 

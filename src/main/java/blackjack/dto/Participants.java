@@ -1,11 +1,11 @@
 package blackjack.dto;
 
-import blackjack.domain.Cards;
-import blackjack.domain.Dealer;
+import blackjack.domain.card.Cards;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.Outcome;
-import blackjack.domain.Participant;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.gamer.Participant;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import java.util.*;
 import java.util.stream.Collectors;
 

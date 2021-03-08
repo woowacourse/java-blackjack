@@ -1,7 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.dto.Participants;
-import blackjack.utils.CardDeck;
 import blackjack.utils.RandomCardDeck;
 import java.util.List;
 
@@ -27,14 +29,12 @@ public class Game {
     }
 
     public Player turnForPlayer(Player player) {
-            player.takeCard(gameTable.pop());
+        gameTable.giveCard(player);
         return player;
     }
 
     public void turnForDealer() {
-        if (dealer.isAvailableToTake()) {
-            dealer.takeCard(gameTable.pop());
-        }
+        gameTable.giveCard(dealer);
     }
 
 }

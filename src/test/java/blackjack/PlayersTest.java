@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.GameTable;
-import blackjack.domain.Players;
+import blackjack.domain.gamer.Players;
 import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

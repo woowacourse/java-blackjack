@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Participant;
 import blackjack.utils.CardDeck;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,20 @@ public class GameTable implements Playable {
     }
 
     @Override
+    public void giveCard(Participant participant) {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("카드가 소진되었습니다.");
+        }
+        if(participant.isAvailableToTake()){
+            participant.takeCard(cards.poll());
+        }
+    }
+
+    //todo : 삭제
+    @Override
     public Card pop() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("카드가 소진되었습니다.");
         }
         return cards.poll();
     }

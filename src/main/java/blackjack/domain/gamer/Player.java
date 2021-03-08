@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
+import blackjack.domain.card.Cards;
+import blackjack.domain.GameTable;
 import blackjack.domain.card.Card;
-import blackjack.utils.CardDeck;
 
 import java.util.List;
 import java.util.regex.Pattern;
