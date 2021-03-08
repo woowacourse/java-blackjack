@@ -44,7 +44,7 @@ public class PlayerTest {
     void drawCard() {
         Player root = new Player("root", deck);
 
-        root.drawCard(deck);
+        root.draw(deck);
         assertThat(root.getHand()).containsExactly(
             Card.valueOf(Shape.DIAMOND, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT),
@@ -60,10 +60,10 @@ public class PlayerTest {
             Card.valueOf(Shape.SPADE, CardValue.FIVE),
             Card.valueOf(Shape.SPADE, CardValue.TWO)));
         Player root = new Player("root", deck);
-        root.drawCard(deck);
+        root.draw(deck);
 
         assertThatIllegalStateException().isThrownBy(() ->
-            root.drawCard(deck))
+            root.draw(deck))
             .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 

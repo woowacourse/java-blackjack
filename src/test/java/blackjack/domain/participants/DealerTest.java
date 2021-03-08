@@ -34,7 +34,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(deck);
 
         assertThatIllegalStateException().isThrownBy(() ->
-            dealer.drawCard(deck))
+            dealer.draw(deck))
             .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 }

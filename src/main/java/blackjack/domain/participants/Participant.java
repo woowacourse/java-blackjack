@@ -21,21 +21,17 @@ public abstract class Participant {
         this.name = new Name(name);
         this.status = ParticipantStatus.HIT;
 
-        IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> drawCard(deck));
+        IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> draw(deck));
     }
 
     protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
 
-    public void drawCard(Deck deck) {
+    public void draw(Deck deck) {
         if (!isContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
-        addCard(deck.draw());
+        hand.addCard(deck.draw());
         status = updateStatus(status);
-    }
-
-    protected void addCard(Card card) {
-        hand.addCard(card);
     }
 
     protected void setStatus(ParticipantStatus status) {

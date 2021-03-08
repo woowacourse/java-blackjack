@@ -92,13 +92,13 @@ public class GameResultTest {
     @MethodSource("provideDeck")
     void gameResultTest(Deck deck, Map<ResultType, Integer> expected) {
         Dealer dealer = new Dealer(deck);
-        dealer.drawCard(deck);
+        dealer.draw(deck);
         Player pobi = new Player("pobi", deck);
-        pobi.drawCard(deck);
+        pobi.draw(deck);
         Player jason = new Player("jason", deck);
-        jason.drawCard(deck);
+        jason.draw(deck);
         Player root = new Player("root", deck);
-        root.drawCard(deck);
+        root.draw(deck);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);

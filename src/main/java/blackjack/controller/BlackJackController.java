@@ -69,14 +69,14 @@ public class BlackJackController {
     private static void drawCardByResponse(Player playerToPrepare,
         Response response, Deck deck) {
         if (response == Response.POSITIVE) {
-            playerToPrepare.drawCard(deck);
+            playerToPrepare.draw(deck);
             OutputView.printParticipantStatus(playerToPrepare, false);
         }
     }
 
     private static void prepareDealer(Deck deck, Dealer dealer) {
         while (dealer.isContinue()) {
-            dealer.drawCard(deck);
+            dealer.draw(deck);
             OutputView.printDealerDrawCard(dealer);
         }
         OutputView.printNewLine();
