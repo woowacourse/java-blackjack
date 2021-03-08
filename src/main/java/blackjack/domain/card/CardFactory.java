@@ -6,16 +6,19 @@ public class CardFactory {
 
     private static final Stack<Card> cards = new Stack<>();
 
-    public static Stack<Card> generate() {
+    static {
         for (Suit suit : Suit.values()) {
             addCardValue(suit);
         }
-        return cards;
     }
 
     private static void addCardValue(Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             cards.add(Card.create(suit, denomination));
         }
+    }
+
+    public static Stack<Card> create() {
+        return cards;
     }
 }

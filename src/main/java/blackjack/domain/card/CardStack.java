@@ -12,7 +12,7 @@ public class CardStack {
     }
 
     public static CardStack create() {
-        return new CardStack(CardFactory.generate());
+        return new CardStack(CardFactory.create());
     }
 
     public List<Card> getTwoCards() {
