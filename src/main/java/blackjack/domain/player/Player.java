@@ -7,22 +7,22 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected final Cards cards;
+    protected final Cards hand;
     private final Name name;
 
     public Player(final Cards cards, final Name name) {
-        this.cards = new Cards(cards.getCardsAsList());
+        this.hand = new Cards(cards.getCardsAsList());
         this.name = new Name(name.getName());
     }
 
     public abstract List<Card> getInitCardsAsList();
 
     public List<Card> getCardsAsList() {
-        return cards.getCardsAsList();
+        return hand.getCardsAsList();
     }
 
     public int getScore() {
-        return this.cards.getScore();
+        return this.hand.getScore();
     }
 
     public String getNameAsString() {
@@ -30,10 +30,10 @@ public abstract class Player {
     }
 
     public void receiveMoreCard(final Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return hand.isBust();
     }
 }

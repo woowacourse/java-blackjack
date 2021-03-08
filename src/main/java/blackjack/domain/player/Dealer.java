@@ -22,6 +22,6 @@ public class Dealer extends Player {
 
     @Override
     public List<Card> getInitCardsAsList() {
-        return new ArrayList<>(Collections.singletonList(cards.getFirstCard()));
+        return new ArrayList<>(Collections.singletonList(hand.getFirstCard()));
     }
 }

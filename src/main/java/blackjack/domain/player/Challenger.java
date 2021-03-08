@@ -40,6 +40,6 @@ public class Challenger extends Player {
 
     @Override
     public List<Card> getInitCardsAsList() {
-        return cards.getCardsAsList();
+        return hand.getCardsAsList();
     }
 }
