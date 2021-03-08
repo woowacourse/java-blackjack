@@ -71,4 +71,13 @@ public class BlackjackGameTest {
         blackjackGame.hit(dealer);
         assertThat(dealer.getCards().cards().size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("모든 유저들 가지고 오기 확인")
+    void getUsers() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        assertThat(blackjackGame.getUsers().size()).isEqualTo(4);
+    }
 }
