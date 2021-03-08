@@ -18,11 +18,6 @@ public class Cards {
         this.cards = cards;
     }
 
-    private static boolean containAceCard(List<Card> cards) {
-        return cards.stream()
-            .anyMatch(Card::isAce);
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -40,27 +35,30 @@ public class Cards {
     }
 
     public int getScore() {
-        int score = 0;
-
-        if (containAceCard(cards)) {
-            score = calculate(10);
-        }
-        if (score != 0 && score <= BLACKJACK_NUMBER) {
-            return score;
-        }
-        return calculate();
-    }
-
-    private int calculate() {
-        return cards.stream()
+        int score = cards.stream()
+            .filter(Card::isNotAce)
             .mapToInt(Card::findDenominationValue)
             .sum();
+
+        if (containAceCard()) {
+            return calculateAceScore(score);
+        }
+        return score;
     }
 
-    private int calculate(int bonusScore) {
+    private int calculateAceScore(int score) {
+        int aceOneScore = Denomination.ACE.getNumber();
+        int aceElevenScore = Denomination.ACE_ELEVEN.getNumber();
+
+        if (score + aceElevenScore <= BLACKJACK_NUMBER) {
+            return score + aceElevenScore;
+        }
+        return score + aceOneScore;
+    }
+
+    private boolean containAceCard() {
         return cards.stream()
-            .mapToInt(Card::findDenominationValue)
-            .sum() + bonusScore;
+            .anyMatch(Card::isAce);
     }
 
 }

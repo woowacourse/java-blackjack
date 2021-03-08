@@ -28,6 +28,10 @@ public class Card {
         return denomination == Denomination.ACE;
     }
 
+    public boolean isNotAce() {
+        return denomination != Denomination.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

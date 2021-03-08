@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
@@ -28,9 +29,10 @@ public class Deck {
     }
 
     private void makeCard(Type type, List<Card> cards) {
-        for (Denomination denomination : Denomination.values()) {
-            cards.add(new Card(type, denomination));
-        }
+        Arrays.stream(Denomination.values())
+            .filter(denomination -> denomination != Denomination.ACE_ELEVEN)
+            .map(denomination -> new Card(type, denomination))
+            .forEach(cards::add);
     }
 
 }

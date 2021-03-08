@@ -14,7 +14,8 @@ public enum Denomination {
     TEN("10", 10),
     JACK("J", 10),
     QUEEN("Q", 10),
-    KING("K", 10);
+    KING("K", 10),
+    ACE_ELEVEN("A", 11);
 
     private final String name;
     private final int number;
