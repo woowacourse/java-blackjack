@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Round;
 import blackjack.domain.card.Deck;
+import blackjack.domain.user.AbstractUser;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
@@ -34,8 +35,9 @@ public class GameController {
 
     private Round initializeRound() {
         List<String> playerNames = inputView.getPlayerNames();
-        Dealer dealer = new Dealer();
-        List<Player> players = playerNames.stream()
+
+        AbstractUser dealer = new Dealer();
+        List<AbstractUser> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
         Deck deck = Deck.generateByRandomCard();
@@ -43,11 +45,11 @@ public class GameController {
     }
 
     private void addPlayersCardOrPass(final Round round) {
-        List<Player> players = round.getPlayers();
+        List<AbstractUser> players = round.getPlayers();
         players.forEach(player -> addCardOrPass(round, player));
     }
 
-    private void addCardOrPass(final Round round, final Player player) {
+    private void addCardOrPass(final Round round, final AbstractUser player) {
         String answer = "";
         while (!player.isGameOver(GAME_OVER_SCORE) && !answer.equals(NO)) {
             answer = inputView.getCardOrPass(player.getName());
@@ -55,7 +57,7 @@ public class GameController {
         }
     }
 
-    private void addCardOrPassByInput(final Round round, final Player player, final String answer) {
+    private void addCardOrPassByInput(final Round round, final AbstractUser player, final String answer) {
         if (answer.equals(YES)) {
             round.addPlayerCard(player);
             OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getCards(), player.getScore()));

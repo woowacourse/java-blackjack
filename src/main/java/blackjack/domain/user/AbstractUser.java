@@ -39,7 +39,7 @@ public abstract class AbstractUser {
                 .anyMatch(Card::containAce);
     }
 
-    abstract String getName();
+    public abstract String getName();
 
-    abstract boolean isGameOver(final int gameOverScore);
+    public abstract boolean isGameOver(final int gameOverScore);
 }

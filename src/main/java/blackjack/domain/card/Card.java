@@ -53,10 +53,6 @@ public class Card {
         return number.isAce();
     }
 
-/*    public String getCardStatus() {
-        return number.getName() + symbol.getName();
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.user.AbstractUser;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.assertj.core.api.Assertions;
@@ -12,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 class RoundTest {
-    private Dealer dealer;
-    private List<Player> players;
+    private AbstractUser dealer;
+    private List<AbstractUser> players;
 
     @BeforeEach
     void setUp() {

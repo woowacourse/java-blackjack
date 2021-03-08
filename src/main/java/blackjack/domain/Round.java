@@ -1,8 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.AbstractUser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,10 +10,10 @@ public class Round {
     public static final int GAME_OVER_SCORE = 21;
 
     private final Deck deck;
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final AbstractUser dealer;
+    private final List<AbstractUser> players;
 
-    public Round(final Deck deck, final Dealer dealer, final List<Player> players) {
+    public Round(final Deck deck, final AbstractUser dealer, final List<AbstractUser> players) {
         this.deck = deck;
         this.dealer = dealer;
         this.players = new ArrayList<>(players);
@@ -25,7 +24,7 @@ public class Round {
         players.forEach(player -> player.addFirstCards(deck.makeTwoCards()));
     }
 
-    public Dealer getDealer() {
+    public AbstractUser getDealer() {
         return dealer;
     }
 
@@ -33,7 +32,7 @@ public class Round {
         return dealer.getName();
     }
 
-    public List<Player> getPlayers() {
+    public List<AbstractUser> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
@@ -56,8 +55,8 @@ public class Round {
         return false;
     }
 
-    public void addPlayerCard(Player player) {
-        Player findPlayer = players.stream()
+    public void addPlayerCard(AbstractUser player) {
+        AbstractUser findPlayer = players.stream()
                 .filter(p -> p.equals(player))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
