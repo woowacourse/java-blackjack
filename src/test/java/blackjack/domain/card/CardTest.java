@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardTest {
 
@@ -18,7 +19,11 @@ class CardTest {
         Card card = new Card(cardType, cardValue);
 
         //then
-        assertThat(card).isNotNull();
+        assertAll(
+                () -> assertThat(card).isNotNull(),
+                () -> assertThat(card.getCardType()).isEqualTo(CardType.CLOVER),
+                () -> assertThat(card.getCardValue()).isEqualTo(CardValue.ACE)
+        );
     }
 
     @DisplayName("이 카드가 ACE 카드인지 확인한다")
