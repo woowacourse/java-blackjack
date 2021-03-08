@@ -65,10 +65,15 @@
     - 대안 2. `BlackjackManager`가 덱을 갖도록 한다.
         - 딜러가 카드를 꼭 나눠줄 필요가 없다. 객체지향은 현실세계 모방일뿐.
         - 카드가 직접 딜러와 플레이어에게 나눠주는 행동을 하자.
+    
 - Dto 변경
     - `BlackjackManager` 를 서비스레이어처럼 생각하고 Dto를 만드는 역할 추가
+    
 - 블랙잭 승패 비교를 GameResult Enum 클래스가 아닌 딜러가 하도록
     
 - `InputView` 이름 파싱 조금 더 여유롭게 (정규표현식 사용)
 
-- 컨트롤러에게 `Players` 리스트를 던지지말고, `Players` 이름 리스트만 던지도록 수정?
+- Controller 쪽으로 Player, Players, Dealer가 빠져나가지 않도록
+    - 핵심은 `BlackjackManager` 혹은 `Players` 쪽에 현재 플레이어를 기억할 방법을 찾는 것.
+
+- 도메인(`BlackjackManager`)이 Dto 로직을 모르도록
