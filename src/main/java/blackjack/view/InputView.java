@@ -13,6 +13,7 @@ public class InputView {
     private static final String INPUT_YES_OR_NO_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String YES_REPLY = "y";
     private static final String NO_REPLY = "n";
+    private static final String KEEP_DRAW_REPLY_ERROR_MESSAGE = "y/n 으로만 입력해야 합니다. 입력된 값 : %s";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -38,7 +39,7 @@ public class InputView {
         if (NO_REPLY.equals(answer)) {
             return false;
         }
-        throw new IllegalArgumentException(String.format("y/n 으로만 입력해야 합니다. 입력된 값 : %s", answer));
+        throw new IllegalArgumentException(String.format(KEEP_DRAW_REPLY_ERROR_MESSAGE, answer));
     }
 
     private static String inputString() {

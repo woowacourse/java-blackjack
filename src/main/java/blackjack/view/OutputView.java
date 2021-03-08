@@ -11,15 +11,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static final String LINE_SEPARATOR = System.lineSeparator();
-    public static final String CURRENT_CARD_INFO_FORMAT = "%s카드: %s" + System.lineSeparator();
-    public static final String FINISHED_CARD_INFO_FORMAT = "%s카드: %s - 결과: %d" + System.lineSeparator();
-    public static final String SET_UP_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 나누었습니다." + LINE_SEPARATOR;
-    public static final String DEALER_NO_MORE_DRAW_MESSAGE =
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String CURRENT_CARD_INFO_FORMAT = "%s카드: %s" + System.lineSeparator();
+    private static final String FINISHED_CARD_INFO_FORMAT = "%s카드: %s - 결과: %d" + System.lineSeparator();
+    private static final String SET_UP_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장의 나누었습니다." + LINE_SEPARATOR;
+    private static final String DEALER_NO_MORE_DRAW_MESSAGE =
             System.lineSeparator() + "딜러는 16초과라 더 이상 카드를 받지 않습니다.";
-    public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String GAME_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String GAME_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
+    private static final String DEALER_NAME = "딜러";
 
     private OutputView() {
     }

@@ -39,6 +39,14 @@ public class Game {
         dealer.addCard();
     }
 
+    public boolean isPlayerDrawable(Player player) {
+        return !player.isBurst() && !player.isBlackJack();
+    }
+
+    public boolean isDealerDrawable() {
+        return !dealer.isStay();
+    }
+
     public String getDealerGameResult(Map<String, String> playersGameResult) {
         return dealer.getGameResult(playersGameResult);
     }
@@ -53,13 +61,5 @@ public class Game {
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public boolean isPlayerDrawable(Player player) {
-        return !player.isBurst() && !player.isBlackJack();
-    }
-
-    public boolean isDealerDrawable() {
-        return !dealer.isStay();
     }
 }
