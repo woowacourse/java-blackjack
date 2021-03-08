@@ -6,6 +6,8 @@ public enum GameResult {
     LOSE("패"),
     TIE("무");
 
+    private static final int MAX_SCORE_NUMBER = 21;
+
     private final String name;
 
     GameResult(final String name) {
@@ -13,10 +15,10 @@ public enum GameResult {
     }
 
     public static GameResult judgeHand(final int dealerScore, final int playerScore) {
-        if (playerScore > 21 || dealerScore > playerScore) {
+        if (playerScore > MAX_SCORE_NUMBER || (dealerScore <= MAX_SCORE_NUMBER && dealerScore > playerScore)) {
             return LOSE;
         }
-        if (dealerScore < playerScore) {
+        if (dealerScore < playerScore || dealerScore > MAX_SCORE_NUMBER) {
             return WIN;
         }
         return TIE;

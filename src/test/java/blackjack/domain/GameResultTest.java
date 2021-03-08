@@ -14,6 +14,7 @@ public class GameResultTest {
         assertThat(GameResult.judgeHand(21, 15)).isEqualTo(GameResult.LOSE);
         assertThat(GameResult.judgeHand(21, 21)).isEqualTo(GameResult.TIE);
         assertThat(GameResult.judgeHand(25, 22)).isEqualTo(GameResult.LOSE);
+        assertThat(GameResult.judgeHand(25, 21)).isEqualTo(GameResult.WIN);
     }
 
     @Test
