@@ -1,5 +1,6 @@
 package blakcjack.domain.participant;
 
+import blakcjack.domain.Outcome;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.name.Name;
 
@@ -54,12 +55,43 @@ public abstract class Participant {
                 .sum();
     }
 
-    public boolean isScoreLowerThanBlackJackValue() {
-        return calculateScore() < BLACKJACK_VALUE;
+    public Outcome decideOutcome(final Participant other) {
+        if (hasAnyBust(other)) {
+            return judgeOutcomeByBust();
+        }
+        return judgeOutcomeByScore(other);
     }
 
-    public boolean isBust() {
+    private boolean hasAnyBust(final Participant other) {
+        return isBust() || other.isBust();
+    }
+
+    private Outcome judgeOutcomeByBust() {
+        if (isBust()) {
+            return Outcome.LOSE;
+        }
+        return Outcome.WIN;
+    }
+
+    private Outcome judgeOutcomeByScore(final Participant other) {
+        final int myScore = calculateScore();
+        final int otherScore = other.calculateScore();
+
+        if (myScore > otherScore) {
+            return Outcome.WIN;
+        }
+        if (myScore < otherScore) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
+    }
+
+    private boolean isBust() {
         return BLACKJACK_VALUE < calculateScore();
+    }
+
+    public boolean isScoreLowerThanBlackJackValue() {
+        return calculateScore() < BLACKJACK_VALUE;
     }
 
     public List<Card> getCards() {

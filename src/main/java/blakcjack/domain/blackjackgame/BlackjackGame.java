@@ -67,7 +67,7 @@ public class BlackjackGame {
         final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
         for (final Participant player : players) {
-            final Outcome playerOutcome = Outcome.of((Player) player, (Dealer) dealer);
+            final Outcome playerOutcome = player.decideOutcome(dealer);
             playersOutcome.put(player.getNameValue(), playerOutcome);
         }
         return playersOutcome;

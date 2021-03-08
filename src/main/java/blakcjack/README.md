@@ -44,3 +44,4 @@
     - [x] BlackjackGame 리팩터링
 - [ ] 구조 변경
     - [ ] OutcomeStatistics DTO로 변경
+- [x] Outcome이 가지고 있던 승무패 도출 로직을 Participant로 이동
