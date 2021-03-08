@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResultDto;
-import blackjack.domain.result.ResultCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -77,7 +76,6 @@ public class BlackJackApplication {
     }
 
     private static GameResultDto getResult(Dealer dealer, List<Player> players) {
-        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
-        return resultCalculator.getResult();
+        return dealer.getGameResult(players);
     }
 }

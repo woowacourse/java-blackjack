@@ -6,16 +6,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.DealerResultDto;
 import blackjack.domain.result.GameResultDto;
-import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.PlayerResultDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
-    public static final int ZERO_COUNT = 0;
 
     public static void printParticipantHands(Dealer dealer, List<Player> players) {
         System.out.printf("\n딜러와 %s에게 2장의 카드를 나누었습니다.", getPlayerNames(players));
@@ -74,10 +71,10 @@ public class OutputView {
         System.out.printf("%s 카드: %s - 결과: %d\n", name, cards, result);
     }
 
-    private static void printDealerResult(Map<MatchResult, Integer> dealerResult) {
-        int win = dealerResult.getOrDefault(MatchResult.WIN, ZERO_COUNT);
-        int lose = dealerResult.getOrDefault(MatchResult.LOSE, ZERO_COUNT);
-        int tie = dealerResult.getOrDefault(MatchResult.TIE, ZERO_COUNT);
+    private static void printDealerResult(DealerResultDto dealerResult) {
+        int win = dealerResult.getWinCount();
+        int lose = dealerResult.getLoseCount();
+        int tie = dealerResult.getTieCount();
 
         System.out.printf("%s: %d승 %d패 %d무\n", DEALER_NAME, win, lose, tie);
     }
