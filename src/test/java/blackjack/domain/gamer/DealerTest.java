@@ -31,8 +31,8 @@ class DealerTest {
         lowerDealer.initHands(lowerCards);
 
         assertAll(
-                () -> assertTrue(lowerDealer.checkBoundary()),
-                () -> assertFalse(higherDealer.checkBoundary())
+                () -> assertTrue(lowerDealer.canDraw()),
+                () -> assertFalse(higherDealer.canDraw())
         );
 
     }

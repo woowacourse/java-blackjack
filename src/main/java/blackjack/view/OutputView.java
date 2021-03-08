@@ -44,7 +44,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void allCards(Gamer gamer) {
+    public static void printAllCards(Gamer gamer) {
         System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
     }
 
@@ -64,7 +64,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    public static void dealerHit() {
+    public static void printDealerHitMessage() {
         System.out.println(DEALER_ADD_CARD_MSG);
     }
 
@@ -73,7 +73,7 @@ public class OutputView {
         System.out.println(RESULT_TITLE);
     }
 
-    public static void dealerResult(Map<ResultType, Integer> resultWithCount) {
+    public static void printDealerResult(Map<ResultType, Integer> resultWithCount) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
             sb.append(entry.getValue()).append(entry.getKey().getName()).append(" ");
@@ -81,7 +81,7 @@ public class OutputView {
         System.out.printf(RESULT, "딜러", sb.toString());
     }
 
-    public static void playersResult(Map<String, ResultType> resultWithName) {
+    public static void printPlayersResult(Map<String, ResultType> resultWithName) {
         for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
             System.out.printf(RESULT, entry.getKey(), entry.getValue().getName());
         }
