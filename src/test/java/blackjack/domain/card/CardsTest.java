@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static blackjack.domain.card.Cards.TOP_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +23,9 @@ public class CardsTest {
     @Test
     @DisplayName("카드 꾸러미 생성 성공")
     void createCards() {
-        Cards cards1 = new Cards(new Card(Shape.CLOVER, Denomination.FOUR));
+        Cards cards1 = new Cards(Collections.singletonList(
+                new Card(Shape.CLOVER, Denomination.FOUR)
+        ));
         Cards cards2 = new Cards(Arrays.asList(
                 new Card(Shape.SPADE, Denomination.ACE),
                 new Card(Shape.HEART, Denomination.FIVE)

@@ -17,10 +17,6 @@ public class Cards {
         this(Collections.emptyList());
     }
 
-    public Cards(Card card) {
-        this(Collections.singletonList(card));
-    }
-
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
