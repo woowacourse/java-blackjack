@@ -23,7 +23,7 @@ class CardDeckTest {
     @DisplayName("카드 덱에서 기본 카드 2장을 뽑는다.")
     @Test
     void drawDefaultCards() {
-        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
 
         Cards cards = cardDeck.drawDefaultCards();
 
@@ -33,7 +33,7 @@ class CardDeckTest {
     @DisplayName("카드 덱이 비어있는 경우 추가로 카드를 뽑으려고 시도하면 예외 발생")
     @Test
     void cannotDrawCard() {
-        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
         for (int i = 0; i < INIT_CARD_DECK_SIZE; i++) {
             cardDeck.draw();
         }

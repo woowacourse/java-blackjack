@@ -14,7 +14,6 @@ public class CardDeck {
 
     public CardDeck(List<Card> cards) {
         validateCardCounts(cards);
-        Collections.shuffle(cards);
         this.cardDeck = new ArrayDeque<>(cards);
     }
 

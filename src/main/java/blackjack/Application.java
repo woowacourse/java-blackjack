@@ -15,7 +15,7 @@ public class Application {
     private static final String AGREE = "y";
 
     public static void main(String[] args) {
-        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
         Dealer dealer = new Dealer();
         Players players = generatePlayers();
         List<Player> playersGroup = players.toList();

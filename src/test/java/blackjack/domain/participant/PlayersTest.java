@@ -60,7 +60,7 @@ class PlayersTest {
     @DisplayName("플레이어들이 카드를 2장씩 받는다.")
     @Test
     void receiveDefaultCards() {
-        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
         Players players = Players.of(Arrays.asList("jason"), Arrays.asList(1000));
         Participant jason = players.toList()
                 .get(0);

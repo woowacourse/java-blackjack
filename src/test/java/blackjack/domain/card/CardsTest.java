@@ -120,7 +120,7 @@ class CardsTest {
     @DisplayName("카드를 여러 장 뽑아 추가할 때 중복이 존재하는 경우 예외 발생")
     @Test
     void addDuplicationCards() {
-        Cards targetCards = new Cards(CardsGenerator.generateCards());
+        Cards targetCards = new Cards(CardsGenerator.generateShuffledCards());
         Cards cards = new Cards(CARDS_SCORE_21);
 
         assertThatCode(() -> {
