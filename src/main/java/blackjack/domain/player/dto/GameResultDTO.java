@@ -5,19 +5,19 @@ import blackjack.domain.player.Name;
 import java.util.Map;
 
 public class GameResultDTO {
-    private final Map<Name, ResultType> gameResult;
-    private final Map<ResultType, Integer> dealerResult;
+    private final Map<Name, Integer> gameResult;
+    private final int dealerResult;
 
-    public GameResultDTO(Map<Name, ResultType> gameResult, Map<ResultType, Integer> dealerResult) {
+    public GameResultDTO(Map<Name, Integer> gameResult, int dealerResult) {
         this.gameResult = gameResult;
         this.dealerResult = dealerResult;
     }
 
-    public Map<Name, ResultType> getGameResult() {
+    public Map<Name, Integer> getGameResult() {
         return gameResult;
     }
 
-    public Map<ResultType, Integer> getDealerResult() {
+    public int getDealerResult() {
         return dealerResult;
     }
 }

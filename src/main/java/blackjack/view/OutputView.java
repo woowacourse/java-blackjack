@@ -4,7 +4,6 @@ import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.dto.GameResultDTO;
 import blackjack.domain.player.dto.PlayerDTO;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -54,27 +53,20 @@ public class OutputView {
     }
 
     public static void printResultMessage(GameResultDTO gameResultDTO) {
-        System.out.println("## 최종 승패");
-        printDealerResultMessage(gameResultDTO.getDealerResult());
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + gameResultDTO.getDealerResult());
         System.out.print(getPlayersResultMessage(gameResultDTO.getGameResult()));
     }
 
-    private static String getPlayersResultMessage(Map<Name, ResultType> result) {
+    private static String getPlayersResultMessage(Map<Name, Integer> result) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Name name : result.keySet()) {
             stringBuilder
                 .append(name.getName())
                 .append(": ")
-                .append(result.get(name).getResult())
+                .append(result.get(name))
                 .append(NEW_LINE);
         }
         return stringBuilder.toString();
-    }
-
-    private static void printDealerResultMessage(Map<ResultType, Integer> resultCount) {
-        System.out.println("딜러: " +
-            resultCount.getOrDefault(ResultType.LOSS, 0) + "승 " +
-            resultCount.getOrDefault(ResultType.WIN, 0) + "패 " +
-            resultCount.getOrDefault(ResultType.DRAW, 0) + "무승부");
     }
 }

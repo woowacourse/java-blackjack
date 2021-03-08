@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -39,6 +38,7 @@ public class UsersTest {
 
         List<User> convertUsers = new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
         users = new Users(convertUsers);
+        users.getUsers().forEach(user -> user.setBetAmount("10000"));
     }
 
     @DisplayName("서로다른 Users 생성자가 같은 결과를 가져오는지 테스트")
@@ -55,11 +55,11 @@ public class UsersTest {
     @DisplayName("게임 결과 반환 테스트")
     @Test
     void result() {
-        Map<Name, ResultType> result = users.getResult(dealer);
-        assertThat(result.get(new Name("pobi"))).isEqualTo(ResultType.WIN);
-        assertThat(result.get(new Name("jason"))).isEqualTo(ResultType.LOSS);
-        assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
-        assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
+        Map<Name, Integer> result = users.getResult(dealer);
+        assertThat(result.get(new Name("pobi"))).isEqualTo(10000);
+        assertThat(result.get(new Name("jason"))).isEqualTo(-10000);
+        assertThat(result.get(new Name("inbi"))).isEqualTo(0);
+        assertThat(result.get(new Name("mungto"))).isEqualTo(-10000);
     }
 
     @DisplayName("카드 2장이 정상적으로 추가되는지 테스트")

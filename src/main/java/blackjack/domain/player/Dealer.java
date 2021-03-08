@@ -1,10 +1,8 @@
 package blackjack.domain.player;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.cardopen.CardOpenStrategy;
 import blackjack.domain.player.cardopen.OneCardOpenStrategy;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +30,11 @@ public class Dealer extends AbstractPlayer {
         return cardOpenStrategy.getCards(super.getCards());
     }
 
-    public Map<ResultType, Integer> getResult(Map<Name, ResultType> usersResult) {
-        Map<ResultType, Integer> dealerResult = new HashMap<>();
+    public int getResult(Map<Name, Integer> usersResult) {
+        int dealerAmount = 0;
         for (Name name : usersResult.keySet()) {
-            dealerResult.put(usersResult.get(name), dealerResult.getOrDefault(usersResult.get(name), 0) + 1);
+            dealerAmount -= usersResult.get(name);
         }
-        return dealerResult;
+        return dealerAmount;
     }
 }
