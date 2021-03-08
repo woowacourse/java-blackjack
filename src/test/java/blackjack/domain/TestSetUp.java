@@ -12,33 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class TestSetUp {
-    public static final Player WINNER;
-    public static final Player LOSER;
-    public static final Player TIE_PLAYER;
-    public static final Player BUST_PLAYER;
-    public static final Dealer DEALER;
-    public static final Dealer BUST_DEALER;
-
-    static {
-        WINNER = new Player("winner", new Hand(Arrays.asList(
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.ACE))));
-        LOSER = new Player("loser", new Hand(Collections.emptyList()));
-        TIE_PLAYER = new Player("tie player", new Hand(Arrays.asList(
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.QUEEN))));
-        BUST_PLAYER = new Player("bust player", new Hand(Arrays.asList(
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.QUEEN),
-                Card.valueOf(Shape.SPADE, CardValue.JACK))));
-        DEALER = new Dealer(new Hand(Arrays.asList(
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.QUEEN))));
-        BUST_DEALER = new Dealer(new Hand(Arrays.asList(
-                Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.QUEEN),
-                Card.valueOf(Shape.SPADE, CardValue.JACK))));
-    }
 
     public static Player createWinner() {
         Player winner = new Player("winner");
@@ -48,8 +21,63 @@ public class TestSetUp {
         return winner;
     }
 
+    public static Player createTiePlayer() {
+        Player tiePlayer = new Player("tie player");
+        for (Card card : getCompareDeck()) {
+            tiePlayer.draw(card);
+        }
+        return tiePlayer;
+    }
+
+    public static Player createLoser() {
+        Player loser = new Player("loser");
+        for (Card card : getLosingDeck()) {
+            loser.draw(card);
+        }
+        return loser;
+    }
+
+    public static Player createBustPlayer() {
+        Player bust = new Player("bust player");
+        for (Card card : getBustDeck()) {
+            bust.draw(card);
+        }
+        return bust;
+    }
+
+    public static Dealer createDealer() {
+        Dealer dealer = new Dealer();
+        for (Card card : getCompareDeck()) {
+            dealer.draw(card);
+        }
+        return dealer;
+    }
+
+    public static Dealer createBustDealer() {
+        Dealer bustDealer = new Dealer();
+        for (Card card : getBustDeck()) {
+            bustDealer.draw(card);
+        }
+        return bustDealer;
+    }
+
     private static List<Card> getWinningDeck() {
         return new ArrayList<>(Arrays.asList(Card.valueOf(Shape.SPADE, CardValue.KING),
                 Card.valueOf(Shape.SPADE, CardValue.ACE)));
+    }
+
+    private static List<Card> getCompareDeck() {
+        return new ArrayList<>(Arrays.asList(Card.valueOf(Shape.SPADE, CardValue.KING),
+                Card.valueOf(Shape.SPADE, CardValue.QUEEN)));
+    }
+
+    private static List<Card> getLosingDeck() {
+        return new ArrayList<>(Collections.emptyList());
+    }
+
+    private static List<Card> getBustDeck() {
+        return new ArrayList<>(Arrays.asList(Card.valueOf(Shape.SPADE, CardValue.KING),
+                Card.valueOf(Shape.SPADE, CardValue.QUEEN),
+                Card.valueOf(Shape.SPADE, CardValue.JACK)));
     }
 }

@@ -50,10 +50,10 @@ public class HandTest {
     @DisplayName("버스트 확인 기능")
     @Test
     void isBust() {
-        Hand bustHand = TestSetUp.BUST_PLAYER.getHand();
+        Hand bustHand = TestSetUp.createBustPlayer().getHand();
         assertThat(bustHand.isBust()).isTrue();
 
-        Hand validHand = TestSetUp.WINNER.getHand();
+        Hand validHand = TestSetUp.createWinner().getHand();
         assertThat(validHand.isBust()).isFalse();
     }
 }

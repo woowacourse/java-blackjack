@@ -22,8 +22,6 @@ public abstract class BlackJackParticipant {
         this(name, new Hand(new ArrayList<>()));
     }
 
-//    abstract public void draw(Deck deck);
-
     abstract public void draw(Card card);
 
     public int getScore() {

@@ -35,13 +35,13 @@ public class PlayersTest {
     @Test
     @DisplayName("승패 결과")
     void match() {
-        Players players = new Players(Arrays.asList(TestSetUp.WINNER, TestSetUp.LOSER, TestSetUp.TIE_PLAYER));
-        GameResult gameResult = players.match(TestSetUp.DEALER);
+        Players players = new Players(Arrays.asList(TestSetUp.createWinner(), TestSetUp.createLoser(), TestSetUp.createTiePlayer()));
+        GameResult gameResult = players.match(TestSetUp.createDealer());
 
         Map<Player, ResultType> expected = new HashMap<>();
-        expected.put(TestSetUp.WINNER, ResultType.WIN);
-        expected.put(TestSetUp.TIE_PLAYER, ResultType.TIE);
-        expected.put(TestSetUp.LOSER, ResultType.LOSE);
+        expected.put(TestSetUp.createWinner(), ResultType.WIN);
+        expected.put(TestSetUp.createTiePlayer(), ResultType.TIE);
+        expected.put(TestSetUp.createLoser(), ResultType.LOSE);
 
         assertThat(gameResult).isEqualTo(new GameResult(expected));
     }

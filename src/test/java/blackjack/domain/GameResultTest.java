@@ -14,8 +14,8 @@ public class GameResultTest {
     @DisplayName("게임결과 통계 검증")
     @Test
     void checkStatistics() {
-        Players players = new Players(Arrays.asList(TestSetUp.WINNER, TestSetUp.LOSER, TestSetUp.TIE_PLAYER, TestSetUp.BUST_PLAYER));
-        GameResult gameResult = players.match(TestSetUp.DEALER);
+        Players players = new Players(Arrays.asList(TestSetUp.createWinner(), TestSetUp.createLoser(), TestSetUp.createTiePlayer(), TestSetUp.createBustPlayer()));
+        GameResult gameResult = players.match(TestSetUp.createDealer());
 
         Map<ResultType, Integer> expected = new HashMap<>();
         expected.put(ResultType.WIN, 2);

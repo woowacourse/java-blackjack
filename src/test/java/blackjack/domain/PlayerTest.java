@@ -51,23 +51,23 @@ public class PlayerTest {
     @Test
     @DisplayName("버스트가 없는 경우 승패 결과")
     void match() {
-        assertThat(TestSetUp.WINNER.match(TestSetUp.DEALER)).isEqualTo(ResultType.WIN);
-        assertThat(TestSetUp.TIE_PLAYER.match(TestSetUp.DEALER)).isEqualTo(ResultType.TIE);
-        assertThat(TestSetUp.LOSER.match(TestSetUp.DEALER)).isEqualTo(ResultType.LOSE);
+        assertThat(TestSetUp.createWinner().match(TestSetUp.createDealer())).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.createTiePlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.TIE);
+        assertThat(TestSetUp.createLoser().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
     }
 
     @Test
     @DisplayName("버스트인 경우 승패 결과")
     void matchWithBust() {
-        assertThat(TestSetUp.BUST_PLAYER.match(TestSetUp.DEALER)).isEqualTo(ResultType.LOSE);
-        assertThat(TestSetUp.BUST_PLAYER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.LOSE);
+        assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
+        assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
     }
 
     @Test
     @DisplayName("딜러가 버스트인 경우 승패 결과")
     void matchWithDealerBust() {
-        assertThat(TestSetUp.WINNER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.WIN);
-        assertThat(TestSetUp.LOSER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.WIN);
-        assertThat(TestSetUp.BUST_PLAYER.match(TestSetUp.BUST_DEALER)).isEqualTo(ResultType.LOSE);
+        assertThat(TestSetUp.createWinner().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.createLoser().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.LOSE);
     }
 }
