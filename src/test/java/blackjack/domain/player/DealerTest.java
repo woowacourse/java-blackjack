@@ -7,6 +7,8 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
 import blackjack.domain.player.cardopen.OneCardOpenStrategy;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -55,5 +57,17 @@ public class DealerTest {
         dealer.setCardOpen(new AllCardsOpenStrategy());
         dealer.drawRandomTwoCards();
         assertThat(dealer.getCards()).hasSize(2);
+    }
+
+    @DisplayName("딜러 최종수익 테스트")
+    @Test
+    void dealerResult() {
+        Map<Name, Integer> result = new HashMap<>();
+        result.put(new Name("pobi"), 10000);
+        result.put(new Name("jason"), 15000);
+        result.put(new Name("mungto"), -5000);
+
+        Dealer dealer = new Dealer();
+        assertThat(dealer.getResult(result)).isEqualTo(-20000);
     }
 }
