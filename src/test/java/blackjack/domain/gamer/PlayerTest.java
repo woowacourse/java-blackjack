@@ -30,12 +30,6 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 생성 실패")
-    void createPlayerFail() {
-        assertThatThrownBy(() -> new Player(new Name(""))).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("플레이어 카드 추가 성공")
     void receiveCard() {
         player.receiveCard(new Card(Shape.SPADE, Denomination.FOUR));
