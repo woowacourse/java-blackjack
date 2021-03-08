@@ -17,11 +17,8 @@
 
 ## 고려하고 있는 사항
 
-- 사용자 응답 (y,n)을 담을 클래스 생성
 - 점수 클래스 생성
 - 구조 변경 고민
-    - Outcome의 역할 고민 (player와 dealer를 받아 승무패를 얻어내는 로직의 위치)
-    - Card 리스트를 가지는 일급컬렉션 생성
     - Player 리스트를 가지는 Players 생성
     - DTO를 만들만한 것 있는지 생각
 
@@ -34,14 +31,17 @@
     - [x] 덱에 카드가 없는 경우 EmptyDeckException 발생 (Deck)
     - [x] 플레이어 중복시 GameInitializationFailureException 발생 (BlackjackGame)
     - [x] 카드를 더 뽑을지에 대한 응답이 올바르지 않은 경우 InvalidReplyException 발생 (AdditionalCardReply)
-- [ ] 예외에 따라 뷰에 안내가 필요한 경우 추가
+- [x] 예외에 따라 뷰에 안내가 필요한 경우 추가
     - [x] 카드가 없을 시 뷰에 안내 메시지를 출력하고 게임 종료
 - [x] 사용자 응답 (y,n)을 담을 enum 생성 (AdditionalCardReply ,view package)
 - [x] Participant의 종류를 표현할 ParticipantType enum 생성
-- [ ] 메서드 분리, stream 또는 forEach 사용할 부분 체크
+- [x] 메서드 분리, stream 또는 forEach 사용할 부분 체크
     - [x] OutputView 리팩터링
     - [x] Controller 리팩터링
     - [x] BlackjackGame 리팩터링
-- [ ] 구조 변경
-    - [ ] OutcomeStatistics DTO로 변경
-- [x] Outcome이 가지고 있던 승무패 도출 로직을 Participant로 이동
+- [x] Outcome이 가지고 있던 승무패 도출 로직을 Participant로 이동 
+
+## 2단계에서 리팩토링 할 목록
+
+- [ ] OutcomeStatistics DTO로 변경
+- [ ] Cards 클래스 생성하여 현재 Participant가 가지고 있는 점수 계산 로직 이동
