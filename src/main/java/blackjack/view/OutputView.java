@@ -15,9 +15,9 @@ public class OutputView {
     public static String NEW_LINE = System.lineSeparator();
 
     public static void printInitSetting(final List<Player> players) {
-        List<String> challengerNames = players.stream().filter(player -> player instanceof Challenger)
-                .map(player -> (Challenger) player)
-                .map(Challenger::getName)
+        List<String> challengerNames = players.stream()
+                .filter(player -> player instanceof Challenger)
+                .map(Player::getName)
                 .collect(Collectors.toList());
         System.out.println(String.format
                 (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", challengerNames)));
