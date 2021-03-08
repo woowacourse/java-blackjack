@@ -20,9 +20,7 @@ public class Cards {
     }
 
     private int calculate() {
-        int score = cards.stream()
-                .mapToInt(Card::value)
-                .sum();
+        int score = sum();
 
         if (canAddAceUpperValue(score)) {
             score -= Denomination.ACE.getValue();
@@ -30,6 +28,12 @@ public class Cards {
         }
 
         return score;
+    }
+
+    private int sum() {
+        return cards.stream()
+                .mapToInt(Card::value)
+                .sum();
     }
 
     private boolean canAddAceUpperValue(int score) {
