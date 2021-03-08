@@ -17,8 +17,7 @@ public class BlackJackApplication {
         List<Player> players = getPlayers();
 
         initializeParticipants(dealer, players);
-
-        OutputView.printPlayersHandStatus(dealer, players);
+        OutputView.printParticipantHands(dealer, players);
 
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);

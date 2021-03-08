@@ -15,7 +15,9 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printPlayersHandStatus(Dealer dealer, List<Player> players) {
+    public static final int ZERO_COUNT = 0;
+
+    public static void printParticipantHands(Dealer dealer, List<Player> players) {
         System.out.printf("\n딜러와 %s에게 2장의 카드를 나누었습니다.", getPlayerNames(players));
 
         printOpenCard(dealer);
@@ -73,11 +75,11 @@ public class OutputView {
     }
 
     private static void printDealerResult(Map<MatchResult, Integer> dealerResult) {
-        int win = dealerResult.get(MatchResult.WIN);
-        int lose = dealerResult.get(MatchResult.LOSE);
-        int tie = dealerResult.get(MatchResult.TIE);
+        int win = dealerResult.getOrDefault(MatchResult.WIN, ZERO_COUNT);
+        int lose = dealerResult.getOrDefault(MatchResult.LOSE, ZERO_COUNT);
+        int tie = dealerResult.getOrDefault(MatchResult.TIE, ZERO_COUNT);
 
-        System.out.printf(DEALER_NAME + ": %d승 %d패 %d무\n", win, lose, tie);
+        System.out.printf("%s: %d승 %d패 %d무\n", DEALER_NAME, win, lose, tie);
     }
 
     public static String cardsToString(List<Card> cards) {
