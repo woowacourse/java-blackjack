@@ -14,11 +14,10 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static boolean wantsReceive(String playerName) {
+    public static boolean askDrawOrStay(String playerName) {
         askWillDraw(playerName);
 
-        String input = SCANNER.nextLine();
-        return YES.equals(input);
+        return DrawRequest.drawOrStay(SCANNER.nextLine());
     }
 
     private static void askWillDraw(String playerName) {

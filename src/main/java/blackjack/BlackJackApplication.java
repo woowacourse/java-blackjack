@@ -49,12 +49,21 @@ public class BlackJackApplication {
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            turn(dealer, player);
+            playerTurn(dealer, player);
         }
     }
 
-    private static void turn(Dealer dealer, Player player) {
-        while (!player.isBust() && InputView.wantsReceive(player.getName())) {
+    private static void playerTurn(Dealer dealer, Player player) {
+        try {
+            deal(dealer, player);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            playerTurn(dealer, player);
+        }
+    }
+
+    private static void deal(Dealer dealer, Player player) {
+        while (!player.isBust() && InputView.askDrawOrStay(player.getName())) {
             dealer.deal(player);
             OutputView.printHand(player);
         }
