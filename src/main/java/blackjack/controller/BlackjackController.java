@@ -40,8 +40,8 @@ public class BlackjackController {
 
     private void playHit(Player player, Dealer dealer) {
         while (!player.isOverLimitScore()) {
-            String input = InputView.getHitOrStay(player.getName());
-            if (!UserAnswer.isHit(input)) {
+            UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
+            if (!userAnswer.isStay()) {
                 OutputView.printCards(player);
                 break;
             }
