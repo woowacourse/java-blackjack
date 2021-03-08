@@ -23,6 +23,9 @@ public class Deck {
     }
 
     public Card pick() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 덱의 카드가 모두 소진되었습니다.");
+        }
         return cards.getSingleCard();
     }
 }
