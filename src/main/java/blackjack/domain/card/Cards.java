@@ -9,6 +9,7 @@ public class Cards {
 
     private static final int BLACKJACK = 21;
     private static final int GAP_BETWEEN_ACE_MAX_AND_MIN = 10;
+
     private final List<Card> cards;
 
     public Cards() {

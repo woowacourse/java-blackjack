@@ -24,16 +24,15 @@ public class OutputView {
     private static final int DEALER_DRAW = 1;
     private static final int DEALER_LOSE = 0;
 
-    private OutputView() {
-
-    }
+    private OutputView() { }
 
     public static void printPlayersGuideMessage() {
         System.out.println(PLAYERS_INPUT_MESSAGE);
     }
 
     public static void printShowUsersCardMessage(Players players) {
-        System.out.printf(System.lineSeparator() + FIRST_CARD_DRAW_MESSAGE, players.getPlayersName());
+        System.out
+            .printf(System.lineSeparator() + FIRST_CARD_DRAW_MESSAGE, players.getPlayersName());
     }
 
     public static void printUsersFirstDrawCards(Dealer dealer, Players players) {

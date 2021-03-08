@@ -17,8 +17,8 @@ public class BlackJackController {
             OutputView.printPlayersGuideMessage();
             Dealer dealer = new Dealer();
             Players players = new Players(InputView.inputPlayers());
-            playGame(dealer,players);
-            revealResult(dealer,players);
+            playGame(dealer, players);
+            revealResult(dealer, players);
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception);
         }
@@ -59,6 +59,7 @@ public class BlackJackController {
         HitStay hitValue = HitStay.of(InputView.getHitValue());
         return hitValue.isHit();
     }
+
     private void drawDealer(GameTable gameTable, Dealer dealer) {
         while (dealer.canHit()) {
             OutputView.printDealerHitMessage();

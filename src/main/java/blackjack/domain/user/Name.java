@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import java.util.Objects;
 
 public class Name {
+
     private static final String INVALID_PLAYER_NAME_LENGTH_ERROR_MESSAGE = "이름은 1자 이상이어야 합니다.";
 
     private final String name;

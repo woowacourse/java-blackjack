@@ -6,6 +6,7 @@ public enum Status {
     LOSE("패");
 
     private static final int BLACKJACK = 21;
+
     private final String status;
 
     Status(String status) {
@@ -13,7 +14,7 @@ public enum Status {
     }
 
     public static Status compare(int dealerScore, int playerScore) {
-        if(playerScore > BLACKJACK){
+        if (playerScore > BLACKJACK) {
             return LOSE;
         }
         if (dealerScore > BLACKJACK || playerScore > dealerScore) {
