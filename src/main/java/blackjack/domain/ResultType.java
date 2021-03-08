@@ -17,6 +17,16 @@ public enum ResultType {
         this.name = name;
     }
 
+    public ResultType opposite() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return TIE;
+    }
+
     public static ResultType getResultTypeByScore(Participant participant1,
         Participant participant2) {
         return Arrays.stream(ResultType.values())
@@ -28,15 +38,5 @@ public enum ResultType {
 
     public String getName() {
         return name;
-    }
-
-    public ResultType opposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return TIE;
     }
 }

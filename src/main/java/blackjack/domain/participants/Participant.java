@@ -38,24 +38,24 @@ public abstract class Participant {
         this.status = status;
     }
 
-    public int getScore() {
-        return hand.getScore();
-    }
-
-    public String getName() {
-        return name.unwrap();
-    }
-
-    public List<Card> getHand() {
-        return hand.unwrap();
-    }
-
     public boolean isContinue() {
         return status == ParticipantStatus.HIT;
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public String getName() {
+        return name.unwrap();
+    }
+
+    public int getScore() {
+        return hand.getScore();
+    }
+
+    public List<Card> getHand() {
+        return hand.unwrap();
     }
 
     @Override

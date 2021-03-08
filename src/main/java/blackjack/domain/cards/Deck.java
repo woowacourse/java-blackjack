@@ -14,10 +14,6 @@ public class Deck {
         this.cards = new LinkedList<>(cards);
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
-    }
-
     public void shuffle() {
         LinkedList<Card> newCards = new LinkedList<>(cards);
         Collections.shuffle(newCards);
@@ -30,5 +26,9 @@ public class Deck {
             throw new IllegalStateException("덱이 모두 소진되었습니다.");
         }
         return card;
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }

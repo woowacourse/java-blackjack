@@ -38,12 +38,12 @@ public class Hand {
             .orElse(calculateScore(cardsTail, currentScore + Collections.min(scores)));
     }
 
-    public boolean isBust() {
-        return getScore() >= BUST;
-    }
-
     public void addCard(Card card) {
         hand.add(card);
+    }
+
+    public boolean isBust() {
+        return getScore() >= BUST;
     }
 
     public List<Card> unwrap() {
