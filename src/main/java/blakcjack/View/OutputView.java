@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     private static String makeCardDistributionMessage(final Dealer dealer, final List<Participant> players) {
-        return String.format("%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getNameValue(), concatenatePlayerNames(players));
+        return String.format("%n%s 와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getNameValue(), concatenatePlayerNames(players));
     }
 
     private static String concatenatePlayerNames(final List<Participant> players) {
@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public static void printPlayerHand(final Participant participant) {
-        System.out.println(makeCardSummary(participant));
+        System.out.print(makeCardSummary(participant));
     }
 
 
@@ -60,11 +60,11 @@ public class OutputView {
     }
 
     public static void printDealerAdditionalCardMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printFinalHandsSummary(final Dealer dealer, final List<Participant> players) {
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder(System.lineSeparator());
         stringBuilder.append(makeFinalSummary(dealer));
 
         for (final Participant player : players) {

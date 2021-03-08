@@ -9,13 +9,15 @@ import blakcjack.domain.participant.Participant;
 import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
 
-import blakcjack.view.OutputView;
-
 import java.util.List;
 
 import static blakcjack.view.InputView.takePlayerNamesInput;
+import static blakcjack.view.OutputView.printDealerAdditionalCardMessage;
+import static blakcjack.view.OutputView.printFinalHandsSummary;
+import static blakcjack.view.OutputView.printFinalOutcomeSummary;
 import static blakcjack.view.OutputView.printGameClosing;
 import static blakcjack.view.OutputView.printInitialHands;
+import static blakcjack.view.OutputView.printPlayerHand;
 
 public class BlackJackController {
     public void run() {
@@ -69,7 +71,7 @@ public class BlackJackController {
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
         while (player.isScoreLowerThanBlackJackValue() && isHitSelected(player)) {
             blackjackGame.distributeOneCard(player);
-            OutputView.printPlayerHand(player);
+            printPlayerHand(player);
         }
     }
 
@@ -80,12 +82,12 @@ public class BlackJackController {
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Dealer dealer) {
         while (dealer.needsAdditionalCard()) {
             blackjackGame.distributeOneCard(dealer);
-            OutputView.printDealerAdditionalCardMessage();
+            printDealerAdditionalCardMessage();
         }
     }
 
     private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
-        OutputView.printFinalHandsSummary(dealer, players);
-        OutputView.printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getNameValue());
+        printFinalHandsSummary(dealer, players);
+        printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getNameValue());
     }
 }
