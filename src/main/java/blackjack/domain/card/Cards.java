@@ -9,8 +9,8 @@ import java.util.stream.IntStream;
 public class Cards {
 
     public static final int BLACKJACK = 21;
-    private static final int ACE_CONVERSION = 10;
     public static final int INITIAL_CARDS_SIZE = 2;
+    private static final int ACE_CONVERSION = 10;
     private final List<Card> cards;
 
     public Cards() {
