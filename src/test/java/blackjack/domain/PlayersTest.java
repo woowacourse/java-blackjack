@@ -1,9 +1,9 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
     @Test
@@ -11,6 +11,8 @@ public class PlayersTest {
     void playerNameSplit() {
         String input = "pobi,jason";
         Players players = new Players(input, new Dealer());
-        assertThat(new Players("pobi,jason", new Dealer())).isEqualTo(players);
+        Players comparePlayers = new Players("pobi,jason", new Dealer());
+
+        assertThat(players).isEqualTo(comparePlayers);
     }
 }
