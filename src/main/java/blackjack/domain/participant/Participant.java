@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Game;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +15,8 @@ public abstract class Participant {
     private final List<Card> cards = new ArrayList<>();
     protected GameResult gameResult = new GameResult();
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void addCard() {
+        cards.add(Deck.draw());
     }
 
     public int calculateResult() {

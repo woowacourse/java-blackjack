@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Game;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -13,25 +14,19 @@ public class Casino {
     public static final String BURST_MESSAGE = "버스트이므로 더 이상 카드를 뽑지 않습니다.";
     public static final String BLACKJACK_MESSAGE = "블랙잭이므로 더 이상 카드를 뽑지 않습니다.";
 
-    private final Game game;
-
-    public Casino() {
-        game = Game.of(InputView.inputPlayerNames());
-    }
-
     public void blackJack() {
+        Game game = initializeGame();
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
 
-        setUpTwoCards(dealer, players);
         doPlayersTurn(players);
         doDealerTurn();
         closeStage(dealer, players);
     }
 
-    private void setUpTwoCards(Dealer dealer, List<Player> players) {
-        game.setUpTwoCards();
-        OutputView.printSetup(dealer, players);
+    private Game initializeGame() {
+        Players players = new Players(InputView.inputPlayerNames());
+        return Game.of(players);
     }
 
     private void doPlayersTurn(List<Player> players) {
