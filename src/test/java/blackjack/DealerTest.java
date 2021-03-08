@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,18 +30,18 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 참가자에게 상속받았는지 확인")
+    @DisplayName("딜러가 Participant에게 상속받았는지 확인")
     void extend() {
-        final Player player = new Dealer();
-        player.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
-        assertThat(player.getCardCount()).isEqualTo(1);
+        final Participant participant = new Dealer();
+        participant.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        assertThat(participant.cardCount()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("딜러가 카드를 받았는지 확인")
     void receiveCard() {
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(dealer.getCardCount()).isEqualTo(1);
+        assertThat(dealer.cardCount()).isEqualTo(1);
     }
 
     @Test

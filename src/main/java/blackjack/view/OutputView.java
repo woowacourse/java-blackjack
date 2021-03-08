@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
 import java.util.List;
@@ -50,16 +51,16 @@ public class OutputView {
     }
 
     public static void showCardsResult(final List<Player> players) {
-        for (final Player player: players) {
+        for (final Player player : players) {
             showCardResult(player);
         }
     }
 
-    public static void showCardResult(final Player player) {
-        final String cardStatus = player.getCards().stream()
+    public static void showCardResult(final Participant participant) {
+        final String cardStatus = participant.getCards().stream()
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
-        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, player.getName(), cardStatus, player.calculate());
+        System.out.printf(CARD_RESULT_FORMAT + NEWLINE, participant.getName(), cardStatus, participant.calculate());
     }
 
     public static void showGameResult(final String name, final int winCount, final int loseCount) {
@@ -68,7 +69,7 @@ public class OutputView {
     }
 
     public static void showPlayersGameResult(final List<Player> players) {
-        for (final Player player: players) {
+        for (final Player player : players) {
             showPlayerGameResult(player.getName(), player.getWin());
         }
     }
