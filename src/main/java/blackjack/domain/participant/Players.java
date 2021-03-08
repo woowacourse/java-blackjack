@@ -45,6 +45,6 @@ public class Players {
     }
 
     public List<Player> toList() {
-        return Collections.unmodifiableList(new ArrayList<>(this.players));
+        return Collections.unmodifiableList(this.players);
     }
 }
