@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class BlackjackManager {
 
+    private static final int DEFAULT_COUNT = 0;
+
     private BlackjackManager() {
     }
 
@@ -33,7 +35,7 @@ public class BlackjackManager {
 
     private static Map<GameResult, Integer> getDealerResult(Map<String, GameResult> playerResult) {
         Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
-        Arrays.asList(GameResult.values()).forEach(value -> dealerResult.put(value, 0));
+        Arrays.asList(GameResult.values()).forEach(value -> dealerResult.put(value, DEFAULT_COUNT));
         playerResult.values()
             .forEach(result -> dealerResult.computeIfPresent(GameResult.reverseResult(result),
                 ((gameResult, count) -> ++count)));
