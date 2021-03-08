@@ -13,23 +13,23 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {
-    Users users;
-    Player player;
-    Player player2;
-    Dealer dealer;
-    Card jack = new Card(Suit.CLUB, CardNumber.JACK);
-    Card ace = new Card(Suit.CLUB, CardNumber.ACE);
-    Card seven = new Card(Suit.CLUB, CardNumber.SEVEN);
-    Card six = new Card(Suit.CLUB, CardNumber.SIX);
+    private Users users;
+    private Player player1;
+    private Player player2;
+    private Dealer dealer;
+    private Card jack = new Card(Suit.CLUB, CardNumber.JACK);
+    private Card ace = new Card(Suit.CLUB, CardNumber.ACE);
+    private Card seven = new Card(Suit.CLUB, CardNumber.SEVEN);
+    private Card six = new Card(Suit.CLUB, CardNumber.SIX);
 
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
         users = new Users(dealer, Arrays.asList("youngE", "kimkim"));
-        player = users.getPlayers().get(0);
+        player1 = users.getPlayers().get(0);
         player2 = users.getPlayers().get(1);
-        player.addCard(ace);
-        player.addCard(jack);
+        player1.addCard(ace);
+        player1.addCard(jack);
         // 플레이어 youngE에게 블랙잭을 준다.
         player2.addCard(jack);
         player2.addCard(six);
@@ -44,7 +44,7 @@ class UsersTest {
         Map<User, ResultType> resultMap = users.generateResultsMapAgainstDealer();
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
-                put(player, ResultType.DRAW);
+                put(player1, ResultType.DRAW);
                 put(player2, ResultType.LOSE);
             }
         });
@@ -58,7 +58,7 @@ class UsersTest {
         Map<User, ResultType> resultMap = users.generateResultsMapAgainstDealer();
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
-                put(player, ResultType.WIN);
+                put(player1, ResultType.WIN);
                 put(player2, ResultType.LOSE);
             }
         });
@@ -74,7 +74,7 @@ class UsersTest {
         Map<User, ResultType> resultMap = users.generateResultsMapAgainstDealer();
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
-                put(player, ResultType.WIN);
+                put(player1, ResultType.WIN);
                 put(player2, ResultType.LOSE);
             }
         });

@@ -8,12 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CardsTest {
-    Cards cards;
-    Card king;
-    Card queen;
-    Card ace;
-    Card two;
-    Card three;
+    private Cards cards;
+    private Card king;
+    private Card queen;
+    private Card ace;
+    private Card two;
 
     @BeforeEach
     @Test
@@ -23,7 +22,6 @@ public class CardsTest {
         queen = new Card(Suit.CLUB, CardNumber.QUEEN);
         ace = new Card(Suit.CLUB, CardNumber.ACE);
         two = new Card(Suit.CLUB, CardNumber.TWO);
-        three = new Card(Suit.CLUB, CardNumber.THREE);
     }
 
     @DisplayName("가진 패의 점수를 계산할 수 있다.")
