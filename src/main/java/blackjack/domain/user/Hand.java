@@ -85,7 +85,7 @@ public class Hand {
     }
 
     public boolean isLessScoreThan(int score) {
-        return this.score > score;
+        return this.score < score;
     }
 
     public boolean isSameScore(int score) {
