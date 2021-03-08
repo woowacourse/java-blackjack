@@ -42,7 +42,8 @@ public class PlayerTest {
                 Arguments.of(createCards(Rank.TWO, Rank.THREE), 5),
                 Arguments.of(createCards(Rank.ACE, Rank.THREE), 14),
                 Arguments.of(createCards(Rank.ACE, Rank.KING), 21),
-                Arguments.of(createCards(Rank.ACE, Rank.TWO, Rank.KING), 13)
+                Arguments.of(createCards(Rank.ACE, Rank.TWO, Rank.KING), 13),
+                Arguments.of(createCards(Rank.ACE, Rank.ACE, Rank.TWO), 14)
         );
     }
 

@@ -22,7 +22,9 @@ public abstract class Participant {
         return name;
     }
 
-    public abstract int getHandTotal();
+    public boolean isBust() {
+        return cardHand.isBust();
+    }
 
-    public abstract boolean isBust();
+    public abstract int getHandTotal();
 }

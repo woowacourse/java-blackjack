@@ -51,11 +51,6 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isBust() {
-        return cardHand.sumAceToOne() > TWENTY_ONE;
-    }
-
-    @Override
     public int getHandTotal() {
         return cardHand.sumAceToEleven();
     }

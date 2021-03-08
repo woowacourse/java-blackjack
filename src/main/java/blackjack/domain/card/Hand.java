@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Rank.ACE_VALUE;
+import static blackjack.domain.participant.Dealer.TWENTY_ONE;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +27,11 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public int sumAceToOne() {
+    public boolean isBust() {
+        return sumAceToOne() > TWENTY_ONE;
+    }
+
+    private int sumAceToOne() {
         return cards.stream()
                 .mapToInt(Card::getRankValue)
                 .sum();
@@ -43,5 +48,18 @@ public class Hand {
             return ACE_VALUE;
         }
         return card.getRankValue();
+    }
+
+    public int sumTotalExceptAce() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getRankValue)
+                .sum();
+    }
+
+    public int getCountOfAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 }

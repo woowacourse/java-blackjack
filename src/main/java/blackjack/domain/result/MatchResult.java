@@ -11,7 +11,9 @@ public enum MatchResult {
         this.name = name;
     }
 
+    // todo 플레이어가 가지고 있어야 하나?? dealerCardSum 만 넘겨주면 되자나?
     public static MatchResult match(Player player, int dealerCardSum) {
+        // todo dealerCardSum > player.getHandTotal() 플레이어에게 메시지 보내기
         if (player.isBust() || dealerCardSum > player.getHandTotal()) {
             return MatchResult.LOSE;
         }
