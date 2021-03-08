@@ -55,13 +55,8 @@ public class OutputView {
 
     public static void printResultMessage(GameResultDTO gameResultDTO) {
         System.out.println("## 최종 승패");
-        Map<ResultType, Integer> resultCount = new HashMap<>();
-        Map<Name, ResultType> result = gameResultDTO.getGameResult();
-        for (Name name : result.keySet()) {
-            resultCount.put(result.get(name), resultCount.getOrDefault(result.get(name), 0) + 1);
-        }
-        printDealerResultMessage(resultCount);
-        System.out.print(getPlayersResultMessage(result));
+        printDealerResultMessage(gameResultDTO.getDealerResult());
+        System.out.print(getPlayersResultMessage(gameResultDTO.getGameResult()));
     }
 
     private static String getPlayersResultMessage(Map<Name, ResultType> result) {
