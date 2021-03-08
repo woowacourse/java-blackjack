@@ -51,10 +51,10 @@ public class CardsTest {
             Collections.singletonList(new Card(Denomination.THREE, Suit.SPADE)));
         Cards cards = new Cards();
         cards.addCards(deck);
-        assertThat(cards.getCards()).isEqualTo("3스페이드");
+        assertThat(cards.loadCards()).isEqualTo("3스페이드");
 
         cards.addCard(new Card(Denomination.SEVEN, Suit.DIAMOND));
-        assertThat(cards.getCards()).isEqualTo("3스페이드, 7다이아몬드");
+        assertThat(cards.loadCards()).isEqualTo("3스페이드, 7다이아몬드");
     }
 
     @DisplayName("카드들의 점수 총합을 계산한다.")
