@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
 import java.util.List;
@@ -14,26 +15,22 @@ public class OutputView {
     private static final String START_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE;
     private static final String RESULT = "%s - 결과 : %d" + NEWLINE;
 
-    public static void gameStart(Gamers gamers) {
+    public static void gameStart(Gamers gamers, Dealer dealer) {
         final List<String> names = gamers.players().stream()
                 .map(Gamer::getName)
                 .collect(Collectors.toList());
         final String name = String.join(", ", names);
         System.out.printf(START_MSG, name);
         printNewLine();
-        gamersOpenCards(gamers);
-    }
-
-    public static void printNewLine() {
-        System.out.println();
+        gamersOpenCards(gamers, dealer);
     }
 
     public static void allCards(Gamer gamer) {
         System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
     }
 
-    public static void gamersAllCards(Gamers gamers) {
-        allCardsWithPoint(gamers.dealer());
+    public static void gamersAllCards(Gamers gamers, Dealer dealer) {
+        allCardsWithPoint(dealer);
         gamers.players().forEach(OutputView::allCardsWithPoint);
     }
 
@@ -42,8 +39,8 @@ public class OutputView {
                 gamer.getPoint());
     }
 
-    private static void gamersOpenCards(Gamers gamers) {
-        openCards(gamers.dealer());
+    private static void gamersOpenCards(Gamers gamers, Dealer dealer) {
+        openCards(dealer);
         gamers.players().forEach(OutputView::openCards);
         printNewLine();
     }
@@ -79,5 +76,9 @@ public class OutputView {
         for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue().getName());
         }
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 }

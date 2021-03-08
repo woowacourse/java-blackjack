@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import java.util.List;
 
-public abstract class Gamer {
+public abstract class Gamer implements Participant {
 
     protected final Hands hands;
     private final String name;

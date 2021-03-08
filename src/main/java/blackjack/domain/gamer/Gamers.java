@@ -10,15 +10,13 @@ import java.util.Map;
 public class Gamers {
 
     private final List<Player> players;
-    private final Dealer dealer;
 
 
-    public Gamers(List<Player> players, Dealer dealer) {
+    public Gamers(List<Player> players) {
         this.players = players;
-        this.dealer = dealer;
     }
 
-    public Map<ResultType, Integer> resultWithCount() {
+    public Map<ResultType, Integer> resultWithCount(Dealer dealer) {
         Map<ResultType, Integer> result = new EnumMap<>(ResultType.class);
         for (Player player : players) {
             ResultType switchedResult = ResultCalculator.decideWinner(player, dealer)
@@ -28,7 +26,7 @@ public class Gamers {
         return result;
     }
 
-    public Map<String, ResultType> resultWithName() {
+    public Map<String, ResultType> resultWithName(Dealer dealer) {
         Map<String, ResultType> result = new HashMap<>();
         for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);
@@ -39,9 +37,5 @@ public class Gamers {
 
     public List<Player> players() {
         return players;
-    }
-
-    public Dealer dealer() {
-        return dealer;
     }
 }

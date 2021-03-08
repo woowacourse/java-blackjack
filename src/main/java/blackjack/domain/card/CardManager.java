@@ -30,7 +30,7 @@ public class CardManager {
         List<Player> players = names.stream()
                 .map(name -> new Player(name, giveFirstHand()))
                 .collect(Collectors.toList());
-        return new Gamers(players, new Dealer(giveFirstHand()));
+        return new Gamers(players);
     }
 
     public boolean isEmpty() {

@@ -14,8 +14,8 @@ public class Card {
 
     static {
         PLAYING_CARDS = Arrays.stream(Suit.values())
-                .flatMap(cardSymbol -> Arrays.stream(Denomination.values())
-                            .map(cardValue -> Card.of(cardSymbol, cardValue))
+                .flatMap(suit -> Arrays.stream(Denomination.values())
+                            .map(denomination -> Card.of(suit, denomination))
                 )
                 .collect(Collectors.toList());
     }

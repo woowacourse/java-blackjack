@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardManager;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.view.InputView;
@@ -11,33 +12,34 @@ public class BlackjackController {
     public void run() {
         final CardManager cardManager = CardManager.create();
         final Gamers gamers = cardManager.initiateGamers(InputView.receiveNames());
-        OutputView.gameStart(gamers);
+        final Dealer dealer = new Dealer(cardManager.giveFirstHand());
+        OutputView.gameStart(gamers, dealer);
 
         for (Gamer gamer : gamers.players()) {
-            hitOrStand(cardManager, gamer);
+            playerHitOrStand(cardManager, gamer);
         }
-        dealerHitOrStand(cardManager, gamers);
-        printResult(gamers);
+        dealerHitOrStand(cardManager, dealer);
+        printResult(gamers, dealer);
     }
 
-    private void hitOrStand(CardManager cardManager, Gamer gamer) {
+    private void playerHitOrStand(CardManager cardManager, Gamer gamer) {
         while (InputView.receiveAnswer(gamer.getName())) {
             gamer.receiveCard(cardManager.giveCard());
             OutputView.allCards(gamer);
         }
     }
 
-    private void dealerHitOrStand(CardManager cardManager, Gamers gamers) {
-        if (gamers.dealer().checkBoundary()) {
-            gamers.dealer().receiveCard(cardManager.giveCard());
+    private void dealerHitOrStand(CardManager cardManager, Dealer dealer) {
+        if (dealer.checkBoundary()) {
+            dealer.receiveCard(cardManager.giveCard());
             OutputView.dealerHit();
         }
     }
 
-    private void printResult(Gamers gamers) {
-        OutputView.gamersAllCards(gamers);
+    private void printResult(Gamers gamers, Dealer dealer) {
+        OutputView.gamersAllCards(gamers, dealer);
         OutputView.printResultTitle();
-        OutputView.dealerResult(gamers.resultWithCount());
-        OutputView.playersResult(gamers.resultWithName());
+        OutputView.dealerResult(gamers.resultWithCount(dealer));
+        OutputView.playersResult(gamers.resultWithName(dealer));
     }
 }
