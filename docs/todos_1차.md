@@ -14,12 +14,10 @@ src/main/java/blackjack/domain/Card.java
 - [ ] 테스트 코드 수정
 
 src/main/java/blackjack/domain/Playable.java
-- [ ] 점수 계산은 Cards에서 충분히 할 수 있지 않을까요? getter를 지양
+- [x] 점수 계산은 Cards에서 충분히 할 수 있지 않을까요? getter를 지양
 - [ ] 점수계산로직에서 int를 반환하는 이유는? 승패관련 Enum에서 처리 가능하지 않을까? 휴먼에러로 인한 장애 가능성 있음
 명확하게 승페계산 로직 변경
-
-src/main/java/blackjack/domain/Playable.java
-- [ ] 상수의 위치는 ACE가 있는 자리가 아닐까?
+- [x] 상수의 위치는 ACE가 있는 자리가 아닐까?
 
 src/main/java/blackjack/domain/Participants.java
 - [ ] View의 역할을 가진 내용은 View로 옮기기(책임과 역할을 분명히 하자)

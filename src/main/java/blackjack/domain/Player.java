@@ -25,6 +25,6 @@ public class Player extends Playable {
 
     @Override
     public boolean isAvailableToTake() {
-        return sumCards() <= BLACK_JACK;
+        return super.sumCards() <= Cards.BLACK_JACK;
     }
 }

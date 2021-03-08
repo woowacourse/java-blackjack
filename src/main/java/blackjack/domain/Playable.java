@@ -3,11 +3,10 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Playable {
-    public static final int BLACK_JACK = 21;
     private static final int WIN = 1;
     private static final int DRAW = 0;
     private static final int LOSE = -1;
-    private static final int ACE_EXTRA_VALUE = 10;
+
     private final String name;
     private final Cards cards;
 
@@ -16,11 +15,16 @@ public abstract class Playable {
         this.cards = new Cards(cards);
     }
 
-    public String getName() {
-        return name;
+    public abstract boolean isAvailableToTake();
+
+    public String getName(){
+        return this.name;
     }
 
-    public abstract boolean isAvailableToTake();
+
+    public int sumCards() {
+        return cards.sumCards();
+    }
 
     public List<Card> getUnmodifiableCards() {
         return cards.getUnmodifiableList();
@@ -41,20 +45,20 @@ public abstract class Playable {
     }
 
     private boolean lose(int counterpart, int playerSum) {
-        if (counterpart <= BLACK_JACK && playerSum > BLACK_JACK) {
+        if (counterpart <= Cards.BLACK_JACK && playerSum > Cards.BLACK_JACK) {
             return true;
         }
-        if (counterpart <= BLACK_JACK && counterpart > playerSum) {
+        if (counterpart <= Cards.BLACK_JACK && counterpart > playerSum) {
             return true;
         }
         return false;
     }
 
     private boolean win(int counterpart, int playerSum) {
-        if (counterpart > BLACK_JACK && playerSum <= BLACK_JACK) {
+        if (counterpart > Cards.BLACK_JACK && playerSum <= Cards.BLACK_JACK) {
             return true;
         }
-        if (playerSum <= BLACK_JACK && counterpart < playerSum) {
+        if (playerSum <= Cards.BLACK_JACK && counterpart < playerSum) {
             return true;
         }
         return false;
@@ -64,19 +68,8 @@ public abstract class Playable {
         cards.add(card);
     }
 
-    public int sumCards() {
-        List<Card> cardValues = cards.getUnmodifiableList();
-        return cardValues.stream().mapToInt(Card::getScore).sum();
+    public int sumCardsForResult() {
+        return cards.sumCardsForResult();
     }
 
-    public int sumCardsForResult() {
-        List<Card> cardValues = cards.getUnmodifiableList();
-        int aceCount = (int) cardValues.stream().filter(Card::isAce).count();
-        int sum = cardValues.stream().mapToInt(Card::getScore).sum() + aceCount * ACE_EXTRA_VALUE;
-        while (sum > BLACK_JACK && aceCount > 0) {
-            sum -= ACE_EXTRA_VALUE;
-            aceCount--;
-        }
-        return sum;
-    }
 }
