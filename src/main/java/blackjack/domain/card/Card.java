@@ -17,6 +17,10 @@ public class Card {
         return cardNumber.getValue();
     }
 
+    public int getValue(int scoreSum) {
+        return cardNumber.getValue(cardNumber, scoreSum);
+    }
+
     @Override
     public String toString() {
         return cardNumber.getNumber() + cardShape.getShape();
@@ -37,9 +41,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardShape, cardNumber);
-    }
-
-    public int getValue(int scoreSum) {
-        return cardNumber.getValue(cardNumber, scoreSum);
     }
 }
