@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class User {
     protected final Cards cards;
@@ -16,6 +17,10 @@ public abstract class User {
 
     public User(Name name) {
         this(new ArrayList<>(), name);
+    }
+
+    public User(List<Card> cards, String name) {
+        this(new Cards(cards), new Name(name));
     }
 
     public User(List<Card> cards, Name name) {
@@ -54,5 +59,19 @@ public abstract class User {
     @Override
     public final String toString() {
         return name.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(cards, user.cards) &&
+                Objects.equals(name, user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards, name);
     }
 }

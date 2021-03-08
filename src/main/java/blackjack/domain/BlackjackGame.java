@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class BlackjackGame {
         dealer.receiveCards(Deck.popTwo());
         players.players()
                 .forEach(player -> player.receiveCards(Deck.popTwo()));
+    }
+
+    public boolean isNotGameOver(Player player) {
+        return player.isAbleToHit();
     }
 
     public Dealer getDealer() {

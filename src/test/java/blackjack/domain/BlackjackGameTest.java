@@ -1,5 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Value;
+import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,5 +34,18 @@ public class BlackjackGameTest {
                 .players()
                 .forEach(player -> assertThat(player.getCards().cards().size())
                         .isEqualTo(2));
+    }
+
+    @Test
+    @DisplayName("플레이어가 게임을 진행할 수 있는지 확인한다.")
+    void proceedPlayersRound() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        Player player = new Player(Arrays.asList(
+                new Card(Shape.SPACE, Value.QUEEN),
+                new Card(Shape.SPACE, Value.QUEEN),
+                new Card(Shape.SPACE, Value.EIGHT)), "amazzzi");
+
+        assertThat(blackjackGame.isNotGameOver(player)).isFalse();
     }
 }
