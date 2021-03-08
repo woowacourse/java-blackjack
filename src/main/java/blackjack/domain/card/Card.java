@@ -41,7 +41,7 @@ public class Card {
         return cards;
     }
 
-    public int getScore() {
+    public int numberScore() {
         return number.getScore();
     }
 

@@ -25,7 +25,7 @@ public abstract class AbstractUser {
 
     public final int getScore() {
         int score = cards.stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::numberScore)
                 .sum();
         while (containAceCount() && score > GAME_OVER_SCORE) {
             score = Number.ACE.useSecondScore(score);
