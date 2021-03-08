@@ -93,7 +93,7 @@ class PlayersTest {
         pobi.receiveCards(new Cards(CARDS_BLACKJACK));
         jason.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_20));
-        Map<Player, Integer> profitStatistics = players.aggregateProfitMoneyByPlayer2(dealer);
+        Map<Player, Integer> profitStatistics = players.aggregateProfitMoneyByPlayer(dealer);
 
         assertThat(profitStatistics.keySet()).containsExactly(pobi, jason);
         assertThat(profitStatistics.values()).containsExactly(1500, -2000);

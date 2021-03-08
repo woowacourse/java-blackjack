@@ -60,13 +60,7 @@ public class Players {
         players.forEach(player -> player.receiveCards(cardDeck.drawDefaultCards()));
     }
 
-    public Map<String, Integer> aggregateProfitMoneyByPlayer(Dealer dealer) {
-        Map<String, Integer> profitStatistics = new LinkedHashMap<>();
-        players.forEach(player -> profitStatistics.put(player.getName(), player.calculateProfitMoney(dealer)));
-        return profitStatistics;
-    }
-
-    public Map<Player, Integer> aggregateProfitMoneyByPlayer2(Dealer dealer) {
+    public Map<Player, Integer> aggregateProfitMoneyByPlayer(Dealer dealer) {
         Map<Player, Integer> profitStatistics = new LinkedHashMap<>();
         players.forEach(player -> profitStatistics.put(player, player.calculateProfitMoney(dealer)));
         return profitStatistics;

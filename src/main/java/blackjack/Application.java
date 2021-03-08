@@ -24,7 +24,7 @@ public class Application {
         playersGroup.forEach(player -> drawMoreCardForPlayer(player, cardDeck));
         drawMoreCardForDealer(dealer, cardDeck);
 
-        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer2(dealer));
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
         OutputView.printFinalCardsAndScore(dealer, playersGroup);
         OutputView.printFinalProfitMoney(profitStatistics);
     }
