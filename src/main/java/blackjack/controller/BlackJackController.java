@@ -26,8 +26,14 @@ public class BlackJackController {
     }
 
     private void initSetting() {
-        blackJackService.initChallengers(requestNames());
-        blackJackService.initDealer();
+        try {
+            blackJackService.initChallengers(requestNames());
+            blackJackService.initDealer();
+            return;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            initSetting();
+        }
         OutputView.printInitSetting(blackJackService.getPlayers());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
     }
