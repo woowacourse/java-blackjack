@@ -61,4 +61,16 @@ public class UsersTest {
         assertThat(result.get(new Name("inbi"))).isEqualTo(ResultType.DRAW);
         assertThat(result.get(new Name("mungto"))).isEqualTo(ResultType.LOSS);
     }
+
+    @DisplayName("카드 2장이 정상적으로 추가되는지 테스트")
+    @Test
+    void drawTwoRandomCard() {
+        Users users = new Users("pobi");
+        User user = users.getUsers().get(0);
+        assertThat(user.getCards()).hasSize(0);
+
+        users.drawRandomTwoCard();
+        user = users.getUsers().get(0);
+        assertThat(user.getCards()).hasSize(2);
+    }
 }
