@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,9 +44,31 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Player player = new Player(Arrays.asList(
                 new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.QUEEN),
+                new Card(Shape.HEART, Value.QUEEN),
                 new Card(Shape.SPACE, Value.EIGHT)), "amazzzi");
 
         assertThat(blackjackGame.isNotGameOver(player)).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어 hit 확인")
+    void hitPlayer() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        Player player = new Player("amazzzi");
+
+        blackjackGame.hit(player);
+        assertThat(player.getCards().cards().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러 hit 확인")
+    void hitDealer() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        Dealer dealer = new Dealer();
+
+        blackjackGame.hit(dealer);
+        assertThat(dealer.getCards().cards().size()).isEqualTo(1);
     }
 }

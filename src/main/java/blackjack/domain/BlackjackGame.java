@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.User;
 
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class BlackjackGame {
 
     public boolean isNotGameOver(Player player) {
         return player.isAbleToHit();
+    }
+
+    public void hit(User user) {
+        user.receiveCards(Deck.popOne());
     }
 
     public Dealer getDealer() {
