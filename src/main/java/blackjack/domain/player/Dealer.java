@@ -35,11 +35,25 @@ public class Dealer extends Participant {
         return results.findResultCountOfDealer(result);
     }
 
+    public float profit(List<Player> players) {
+        float profit = 0;
+
+        for (int i = 0; i < players.size(); i++) {
+            profit += players.get(i).profit(getPlayerResult(i));
+        }
+
+        return -profit;
+    }
+
     public List<Result> getDealerResults() {
         return results.findDealerResult();
     }
 
     public List<Result> getPlayerResults() {
         return results.findPlayerResult();
+    }
+
+    public Result getPlayerResult(int index) {
+        return results.findPlayerResult().get(index);
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.domain.result.Result;
+
 public class Player extends Participant {
 
     private static final int LIMIT_SCORE = 20;
@@ -22,5 +24,21 @@ public class Player extends Participant {
 
     public boolean canDrawOneMore(){
         return getScore() <= LIMIT_SCORE;
+    }
+
+    public boolean isLose(Result result) {
+        return result == Result.LOSE;
+    }
+
+    public float profit(Result result) {
+        if (isBlackjack()) {
+            return betMoney.getBlackjackBetMoney();
+        }
+
+        if (isLose(result)) {
+            return -betMoney.getBetMoney();
+        }
+
+        return betMoney.getBetMoney();
     }
 }

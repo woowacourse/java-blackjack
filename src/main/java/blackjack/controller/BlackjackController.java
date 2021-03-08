@@ -93,10 +93,11 @@ public class BlackjackController {
     }
 
     public void showResult(Dealer dealer, List<Player> players) {
-        for(Player player : players){
+        for (Player player : players) {
             OutputView.printCardsWithScore(player);
         }
-        OutputView.printDealerResult(dealer);
-        OutputView.printPlayerResult(players, dealer.getPlayerResults());
+        OutputView.printProfit();
+        OutputView.printProfitDealer(dealer, players);
+        OutputView.printProfitPlayers(dealer, players);
     }
 }

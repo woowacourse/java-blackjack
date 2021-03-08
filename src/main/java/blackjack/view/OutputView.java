@@ -86,6 +86,23 @@ public class OutputView {
         }
     }
 
+    public static void printProfit() {
+        System.out.print(NEW_LINE);
+        System.out.println("## 최종 수익");
+    }
+
+    public static void printProfitDealer(Dealer dealer, List<Player> players) {
+        System.out.println("딜러: " + dealer.profit(players));
+    }
+
+    public static void printProfitPlayers(Dealer dealer, List<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(players.get(i).getName()
+                    + ": "
+                    + players.get(i).profit(dealer.getPlayerResult(i)));
+        }
+    }
+
     public static void printNewLine() {
         System.out.print(NEW_LINE);
     }

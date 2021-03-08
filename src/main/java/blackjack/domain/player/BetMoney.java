@@ -5,6 +5,7 @@ import blackjack.exception.NotEnoughBetAmountException;
 public class BetMoney {
 
     private static final long MIN_BETTING_MONEY = 1;
+    private static final float BLACKJACK_BONUS = 1.5f;
 
     private final long betMoney;
 
@@ -21,5 +22,9 @@ public class BetMoney {
 
     public long getBetMoney() {
         return betMoney;
+    }
+
+    public float getBlackjackBetMoney() {
+        return betMoney * BLACKJACK_BONUS;
     }
 }
