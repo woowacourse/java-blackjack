@@ -20,7 +20,7 @@ public class DeckTest {
     void checkIndex() {
         Card secondCard = new Card(CardPattern.HEART, CardNumber.TWO);
         deck.dealCard();
-        assertEquals(secondCard, secondCard);
+        assertEquals(secondCard, deck.dealCard());
     }
 
     @Test

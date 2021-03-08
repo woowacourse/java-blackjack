@@ -18,13 +18,13 @@ public class CardsTest {
     @Test
     @DisplayName("새로운 카드 생성 확인")
     void addNewCard() {
-        assertEquals(cards.getCards().size(), 1);
+        assertEquals(1, cards.getCards().size());
     }
 
     @Test
     @DisplayName("전체 포인트 계산 테스트")
     void addAllPoint() {
-        assertEquals(cards.calculateJudgingPoint(), 10);
+        assertEquals(10, cards.calculateJudgingPoint());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class CardsTest {
     void addAllPointWithAce() {
         cards.addCard(new Card(CardPattern.SPADE, CardNumber.FIVE));
         cards.addCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        assertEquals(cards.addAcePoint(), 16);
+        assertEquals(16, cards.addAcePoint());
     }
 
     @Test
@@ -40,6 +40,6 @@ public class CardsTest {
     void addAllPointWithAceEleven() {
         cards.addCard(new Card(CardPattern.HEART, CardNumber.QUEEN));
         cards.addCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        assertEquals(cards.calculateJudgingPoint(), 21);
+        assertEquals(21, cards.calculateJudgingPoint());
     }
 }

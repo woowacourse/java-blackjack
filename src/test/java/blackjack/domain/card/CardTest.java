@@ -11,7 +11,7 @@ public class CardTest {
     @DisplayName("숫자 계산 테스트")
     void addNumber() {
         Card card = new Card(CardPattern.SPADE, CardNumber.SEVEN);
-        assertEquals(card.addPoint(3), 10);
+        assertEquals(10, card.addPoint(3));
     }
 
     @Test

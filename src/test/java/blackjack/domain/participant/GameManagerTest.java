@@ -20,9 +20,10 @@ public class GameManagerTest {
         GameManager gameManager = new GameManager(players);
         gameManager.giveCards(new Deck());
         for (Player player : players.toList()) {
-            assertEquals(player.getCards().size(), 2);
+            assertEquals(2, player.getCards().size());
         }
-        assertEquals(players.toList().size(), 2);
-        assertTrue(players.toList().stream().allMatch(player -> player.getCards().size() == 2));
+        assertEquals(2, players.toList().size());
+        assertTrue(players.toList().stream()
+                .allMatch(player -> player.getCards().size() == 2));
     }
 }

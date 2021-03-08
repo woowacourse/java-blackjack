@@ -19,6 +19,6 @@ class WinnerFlagTest {
         dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.NINE));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
         WinnerFlag.calculateResult(dealer, player);
-        assertEquals(player.getResult(), WinnerFlag.LOSE);
+        assertEquals(WinnerFlag.LOSE, player.getResult());
     }
 }

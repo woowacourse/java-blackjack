@@ -21,13 +21,13 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 생성 확인")
     void create() {
-        assertEquals(dealer.getName(), "딜러");
+        assertEquals("딜러", dealer.getName());
     }
 
     @Test
     @DisplayName("딜러가 받은 카드 계산")
     void dealerDealCard() {
-        assertEquals(dealer.makeJudgingPoint(), 10);
+        assertEquals(10, dealer.makeJudgingPoint());
     }
 
     @Test

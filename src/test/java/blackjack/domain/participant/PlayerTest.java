@@ -37,7 +37,7 @@ public class PlayerTest {
     void checkReceiveCard() {
         Card card = new Card(CardPattern.CLOVER, CardNumber.TEN);
         player.receiveCard(card);
-        assertEquals(player.makeJudgingPoint(), 10);
+        assertEquals(10, player.makeJudgingPoint());
     }
 
 
@@ -72,7 +72,7 @@ public class PlayerTest {
     void aceCardScoring() {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
-        assertEquals(player.makeFinalPoint(), 21);
+        assertEquals(21, player.makeFinalPoint());
     }
 
     @Test
@@ -81,14 +81,14 @@ public class PlayerTest {
         player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
-        assertEquals(player.makeFinalPoint(), 21);
+        assertEquals(21, player.makeFinalPoint());
     }
 
     @ParameterizedTest
     @DisplayName("다시 받을 때 올바른 입력 확인")
     @CsvSource(value = {"y:true", "n:false"}, delimiter = ':')
     void playerContinueDraw(String value, boolean expected) {
-        assertEquals(player.continueDraw(value, new Deck()), expected);
+        assertEquals(expected, player.continueDraw(value, new Deck()));
     }
 
     @Test

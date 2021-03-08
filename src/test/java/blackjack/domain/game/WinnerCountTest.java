@@ -21,6 +21,6 @@ public class WinnerCountTest {
         for (Player player : players.toList()) {
             player.matchResult(WinnerFlag.LOSE);
         }
-        assertEquals(winnerCount.calculateTotalWinnings(players).get(WinnerFlag.LOSE), 3);
+        assertEquals(3, winnerCount.calculateTotalWinnings(players).get(WinnerFlag.LOSE));
     }
 }
