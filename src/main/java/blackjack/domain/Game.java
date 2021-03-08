@@ -8,7 +8,6 @@ import blackjack.util.Pair;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -93,14 +92,6 @@ public class Game {
         }
 
         return -gamer.getBettingMoney();
-    }
-
-    private Player getPlayerByName(String name) {
-        return Stream.of(gamers.getGamers().stream(), Stream.of(dealer))
-                .flatMap(s -> s)
-                .filter(player -> player.isSameName(name))
-                .findAny()
-                .get();
     }
 
     public Pair<List<String>, Integer> getDealerResult() {
