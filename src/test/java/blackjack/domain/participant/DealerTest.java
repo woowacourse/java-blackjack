@@ -12,6 +12,7 @@ import java.util.Arrays;
 
 import static blackjack.domain.card.Cards.TOP_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DealerTest {
@@ -47,5 +48,23 @@ public class DealerTest {
         assertTrue(cards.getCards().containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
                 new Card(Shape.CLOVER, Denomination.THREE),
                 new Card(Shape.HEART, Denomination.ACE))));
+    }
+
+    @Test
+    @DisplayName("카드를 더 뽑을 수 있는지 확인")
+    void canDraw() {
+        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.ACE));
+        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.THREE));
+        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.ACE));
+        assertTrue(dealer.canDraw());
+    }
+
+    @Test
+    @DisplayName("카드를 뽑을 수 없는 경우 확인")
+    void cannotDraw() {
+        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.KING));
+        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.THREE));
+        dealer.receiveCard(new Card(Shape.DIAMOND, Denomination.FIVE));
+        assertFalse(dealer.canDraw());
     }
 }

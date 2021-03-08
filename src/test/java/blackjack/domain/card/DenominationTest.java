@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DenominationTest {
@@ -27,5 +28,11 @@ public class DenominationTest {
     @DisplayName("Ace 여부 확인")
     void checkAce() {
         assertTrue(Denomination.ACE.isAce());
+    }
+
+    @Test
+    @DisplayName("Ace가 아닌 경우 확인")
+    void checkNoAce() {
+        assertFalse(Denomination.KING.isAce());
     }
 }
