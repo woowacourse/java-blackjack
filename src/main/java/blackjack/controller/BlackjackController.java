@@ -17,7 +17,6 @@ public class BlackjackController {
         final List<Player> players = playerSetUp();
 
         distributeCard(players, dealer, cardDeck);
-
         playerGameProgress(players, cardDeck);
         dealerGameProgress(dealer, cardDeck);
         showGameResult(players, dealer);
