@@ -10,7 +10,6 @@ public class Player extends Participant {
 
     public Player(String name) {
         super(name);
-        gameResult = GameResult.NONE;
     }
 
     public GameResult getResult() {
@@ -22,36 +21,38 @@ public class Player extends Participant {
     }
 
     public void calculateGameResult(Dealer dealer) {
-        gameResult = calculateBustGameResult(dealer);
-        if (gameResult != GameResult.NONE) {
+        if (this.isBust() || !this.isBust() && dealer.isBust()) {
+            calculateBustGameResult(dealer);
             return;
         }
-        gameResult = calculateScoreGameResult(dealer);
+        if (this.getScore() == dealer.getScore()) {
+            dealer.addGameResult(GameResult.DRAW);
+            gameResult = GameResult.DRAW;
+            return;
+        }
+        calculateScoreGameResult(dealer);
     }
 
-    private GameResult calculateBustGameResult(Dealer dealer) {
+    private void calculateBustGameResult(Dealer dealer) {
         if (this.isBust()) {
             dealer.addGameResult(GameResult.WIN);
-            return GameResult.LOSE;
+            gameResult = GameResult.LOSE;
         }
         if (!this.isBust() && dealer.isBust()) {
             dealer.addGameResult(GameResult.LOSE);
-            return GameResult.WIN;
+            gameResult = GameResult.WIN;
         }
-        return GameResult.NONE;
     }
 
-    private GameResult calculateScoreGameResult(Dealer dealer) {
+    private void calculateScoreGameResult(Dealer dealer) {
         if (this.getScore() > dealer.getScore()) {
             dealer.addGameResult(GameResult.LOSE);
-            return GameResult.WIN;
+            gameResult = GameResult.WIN;
         }
         if (this.getScore() < dealer.getScore()) {
             dealer.addGameResult(GameResult.WIN);
-            return GameResult.LOSE;
+            gameResult = GameResult.LOSE;
         }
-        dealer.addGameResult(GameResult.DRAW);
-        return GameResult.DRAW;
     }
 
 }
