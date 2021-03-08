@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DenominationTest {
 
@@ -12,5 +13,19 @@ public class DenominationTest {
     void createDenomination() {
         Denomination denomination = Denomination.valueOf("ACE");
         assertThat(denomination).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Ace 점수 계산")
+    void calculateAceScore() {
+        int score = 10;
+        long aceCount = 1;
+        assertThat(Denomination.plusRemainAceScore(score, aceCount)).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("Ace 여부 확인")
+    void checkAce() {
+        assertTrue(Denomination.ACE.isAce());
     }
 }

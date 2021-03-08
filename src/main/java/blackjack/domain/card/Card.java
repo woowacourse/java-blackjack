@@ -25,7 +25,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.denomination.equals(Denomination.ACE);
+        return this.denomination.isAce();
     }
 
     public int score() {
