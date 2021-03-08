@@ -34,6 +34,7 @@ public class BlackjackController {
 
     private void hitOrStandForPlayer(Deck deck, Player player) {
         while (InputView.receiveAnswer(player.getName())) {
+            player.isPossibleForPick();
             player.receiveCard(deck.pick());
             OutputView.allCards(player);
         }

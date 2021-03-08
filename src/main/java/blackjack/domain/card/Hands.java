@@ -8,8 +8,9 @@ import java.util.stream.IntStream;
 
 public class Hands {
 
-    private static final int WINNING_BASELINE = 21;
+    private static final int SCORE_LIMIT = 21;
     private static final int ACE_CONVERSION = 10;
+    public static final int INITIAL_HANDS_SIZE = 2;
 
     private final List<Card> cards;
     private boolean isBlackjack;
@@ -19,7 +20,7 @@ public class Hands {
     }
 
     public void initialize(List<Card> initialCards) {
-        if (initialCards.size() != 2) {
+        if (initialCards.size() != INITIAL_HANDS_SIZE) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
         }
         cards.addAll(initialCards);
@@ -27,7 +28,7 @@ public class Hands {
     }
 
     private boolean validateBlackjack() {
-        return calculate() == WINNING_BASELINE;
+        return calculate() == SCORE_LIMIT;
     }
 
     public void addCard(Card card) {
@@ -44,7 +45,7 @@ public class Hands {
     }
 
     private int properSum(int sum) {
-        if (sum + ACE_CONVERSION > WINNING_BASELINE) {
+        if (sum + ACE_CONVERSION > SCORE_LIMIT) {
             return sum;
         }
         return sum + ACE_CONVERSION;
@@ -81,5 +82,9 @@ public class Hands {
 
     public boolean isBlackjack() {
         return isBlackjack;
+    }
+
+    public boolean isSumNotInLimit() {
+        return calculate() > SCORE_LIMIT;
     }
 }
