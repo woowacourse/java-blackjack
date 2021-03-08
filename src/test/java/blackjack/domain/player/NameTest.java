@@ -16,7 +16,7 @@ class NameTest {
     }
 
     @ParameterizedTest
-    @DisplayName("사이에 공백이 있는 이름으로 생성하려고하면 예외가 발생한다.")
+    @DisplayName("빈 이름으로 생성하려고하면 예외가 발생한다.")
     @EmptySource
     void emptyThrowException(String name) {
         assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class);
