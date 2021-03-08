@@ -38,7 +38,7 @@ public class Cards implements Comparable<Cards> {
 
     public boolean containAce() {
         return this.cards.stream()
-                .anyMatch(c -> Value.ACE.getValue() == c.getValue());
+                .anyMatch(Card::hasAce);
     }
 
     public List<Card> getCards() {
