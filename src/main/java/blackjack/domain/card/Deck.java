@@ -1,12 +1,13 @@
 package blackjack.domain.card;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class Deck {
     private static final Deque<Card> DECK = new ArrayDeque<>();
-    private static final int START_COUNT = 0;
 
     static {
         List<Card> cards = new ArrayList<>();
@@ -19,7 +20,7 @@ public class Deck {
     private static List<Card> createByShape(Shape shape) {
         return Arrays.stream(Value.values())
                 .map(value->new Card(shape, value))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private static void shuffle(List<Card> cards) {
@@ -27,14 +28,14 @@ public class Deck {
     }
 
     public static Cards popTwo() {
-        return new Cards(IntStream.range(START_COUNT, 2)
-                .mapToObj(c -> DECK.pop())
-                .collect(Collectors.toList()));
+        return Stream.generate(DECK::pop)
+                .limit(2)
+                .collect(collectingAndThen(toList(), Cards::new));
     }
 
     public static Cards popOne() {
-        return new Cards(IntStream.range(START_COUNT, 1)
-                .mapToObj(c -> DECK.pop())
-                .collect(Collectors.toList()));
+        return Stream.generate(DECK::pop)
+                .limit(1)
+                .collect(collectingAndThen(toList(), Cards::new));
     }
 }
