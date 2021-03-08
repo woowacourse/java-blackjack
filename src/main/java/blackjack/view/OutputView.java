@@ -68,12 +68,12 @@ public class OutputView {
         }
     }
 
-    private static void printDealerResult(Map<User, ResultType> checkWinOrLose) {
+    private static void printDealerResult(Map<User, ResultType> resultMap) {
         Map<ResultType, Integer> countMap = new HashMap<>();
         Arrays.stream(ResultType.values())
                 .forEach(value -> countMap.put(value, 0));
 
-        checkWinOrLose.values()
+        resultMap.values()
                 .forEach(value -> countMap.put(value, countMap.get(value) + 1));
 
         System.out.printf("딜러: %d승 %d무 %d패 \n",
