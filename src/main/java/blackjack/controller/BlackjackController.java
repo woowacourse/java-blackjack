@@ -27,7 +27,7 @@ public class BlackjackController {
         final List<String> names = InputView.requestName();
         List<Player> players = new ArrayList<>();
         try {
-             players = names.stream()
+            players = names.stream()
                     .map(Player::new)
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
@@ -73,18 +73,12 @@ public class BlackjackController {
     }
 
     private void showGameResult(final List<Player> players, final Dealer dealer) {
-        showFinalCardResult(players, dealer);
+        OutputView.showFinalCardResult(players, dealer);
         for (final Player player : players) {
             decideWinner(dealer, player);
         }
-        OutputView.showGameResult(dealer.getName(), dealer.getWinCount(), players.size() - dealer.getWinCount());
+        OutputView.showGameResult(dealer, players.size());
         OutputView.showPlayersGameResult(players);
-    }
-
-    private void showFinalCardResult(final List<Player> players, final Dealer dealer) {
-        OutputView.displayNewLine();
-        OutputView.showCardResult(dealer);
-        OutputView.showCardsResult(players);
     }
 
     private void decideWinner(final Dealer dealer, final Player player) {

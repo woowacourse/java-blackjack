@@ -56,22 +56,29 @@ public class OutputView {
         System.out.printf(PLAYER_CARD_STATUS_FORMAT, player.getName(), cardStatus + NEWLINE);
     }
 
-    public static void showCardsResult(final List<Player> players) {
-        for (final Player player : players) {
-            showCardResult(player);
-        }
+    public static void showFinalCardResult(final List<Player> players, final Dealer dealer) {
+        System.out.println();
+        showCardResult(dealer);
+        showCardsResult(players);
     }
 
-    public static void showCardResult(final Participant participant) {
+    private static void showCardResult(final Participant participant) {
         final String cardStatus = participant.getCards().stream()
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
         System.out.printf(CARD_RESULT_FORMAT + NEWLINE, participant.getName(), cardStatus, participant.calculate());
     }
 
-    public static void showGameResult(final String name, final int winCount, final int loseCount) {
+    private static void showCardsResult(final List<Player> players) {
+        for (final Player player : players) {
+            showCardResult(player);
+        }
+    }
+
+    public static void showGameResult(final Dealer dealer, final int playersCount) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name, winCount, loseCount);
+        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, dealer.getName(),
+                dealer.getWinCount(), playersCount - dealer.getWinCount());
     }
 
     public static void showPlayersGameResult(final List<Player> players) {
@@ -98,9 +105,5 @@ public class OutputView {
 
     public static void showErrorMessage(final String message) {
         System.out.println(ERROR_MARK + message);
-    }
-
-    public static void displayNewLine() {
-        System.out.println();
     }
 }
