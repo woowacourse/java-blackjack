@@ -42,7 +42,7 @@ public abstract class Gamer {
 
     public abstract boolean canReceiveCard();
 
-    public abstract Boolean continueDraw(String draw, Deck deck);
+    public abstract boolean continueDraw(String draw, Deck deck);
 
     public String getName() {
         return name.getName();

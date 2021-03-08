@@ -21,7 +21,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public Boolean continueDraw(String draw, Deck deck) {
+    public boolean continueDraw(String draw, Deck deck) {
         if (AGREE.equals(draw)) {
             return true;
         }

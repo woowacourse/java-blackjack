@@ -16,7 +16,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public Boolean continueDraw(String draw, Deck deck) {
+    public boolean continueDraw(String draw, Deck deck) {
         this.receiveCard(deck.dealCard());
         return true;
     }
