@@ -36,7 +36,7 @@ public class Gambler implements Player {
 
     @Override
     public Score getScore() {
-        return cards.getScore();
+        return cards.calculateScore();
     }
 
     @Override

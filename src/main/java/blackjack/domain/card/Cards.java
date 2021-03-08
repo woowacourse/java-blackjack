@@ -16,22 +16,30 @@ public class Cards {
         cards.add(card);
     }
 
-    public Score getScore() {
+    public Score calculateScore() {
         Score score = Score.ZERO_SCORE;
         for (Card card : cards) {
-            score = score.addScore(card.getDenomination().getScore());
+            score = score.addScore(card.getScore());
         }
+        return decideAceScore(score);
+    }
 
-        if (countAce() != 0 && score.useAceAsEleven().isBellowThanBlackJack()) {
-            score = score.useAceAsEleven();
+    private Score decideAceScore(Score score) {
+        if (hasAce() && isNotBust(score.useAceAsEleven())) {
+            return score.useAceAsEleven();
         }
         return score;
     }
 
-    public int countAce() {
-        return (int) cards.stream()
+    private boolean hasAce() {
+        return cards.stream()
                 .filter(card -> card.isAce())
-                .count();
+                .findFirst()
+                .isPresent();
+    }
+
+    private boolean isNotBust(Score score) {
+        return score.isBellowThanBlackJack();
     }
 
     public List<Card> cards() {

@@ -32,6 +32,10 @@ public class Card {
         return new LinkedList<>(ORIGINAL_CARDS);
     }
 
+    public Score getScore() {
+        return denomination.getScore();
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

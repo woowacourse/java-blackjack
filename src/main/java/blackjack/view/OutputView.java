@@ -63,7 +63,7 @@ public class OutputView {
         Cards cards = result.getDealerCards();
         String dealerCardInfo = makeCardInfo(cards);
 
-        printMessageByFormat(RESULT_INFORMATION, "딜러", dealerCardInfo, cards.getScore().getValue());
+        printMessageByFormat(RESULT_INFORMATION, "딜러", dealerCardInfo, cards.calculateScore().getValue());
     }
 
     private static void printFinalWinningResult(final Result result) {

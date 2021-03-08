@@ -18,12 +18,12 @@ public class Dealer implements Player {
     }
 
     public boolean ableToDraw() {
-        return cards.getScore().isBelow(LIMIT_SCORE_TO_HIT);
+        return cards.calculateScore().isBelow(LIMIT_SCORE_TO_HIT);
     }
 
     public WinOrLose calculateGamblerWinOrNot(final Player player) {
         Score gamblerScore = player.getScore();
-        Score dealerScore = cards.getScore();
+        Score dealerScore = cards.calculateScore();
 
         if (dealerScore.equals(gamblerScore) || dealerScore.isBust() && gamblerScore.isBust()) {
             return WinOrLose.DRAW;
@@ -53,7 +53,7 @@ public class Dealer implements Player {
 
     @Override
     public Score getScore() {
-        return cards.getScore();
+        return cards.calculateScore();
     }
 
     @Override
