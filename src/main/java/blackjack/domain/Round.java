@@ -47,12 +47,8 @@ public class Round {
         return results;
     }
 
-    public boolean addDealerCard() {
-        if (!dealer.isGameOver(GAME_OVER_SCORE)) {
-            dealer.addCard(deck.makeOneCard());
-            return true;
-        }
-        return false;
+    public void addDealerCard() {
+        dealer.addCard(deck.makeOneCard());
     }
 
     public void addPlayerCard(AbstractUser player) {
@@ -67,5 +63,9 @@ public class Round {
         return players.stream()
                 .map(player -> Outcome.findOutcome(dealer.getScore(), player.getScore()))
                 .collect(Collectors.toCollection(ArrayDeque::new));
+    }
+
+    public boolean isDealerGameOver() {
+        return dealer.isGameOver(GAME_OVER_SCORE);
     }
 }

@@ -65,7 +65,8 @@ public class GameController {
     }
 
     private void addDealerCard(final Round round) {
-        if (round.addDealerCard()) {
+        while (!round.isDealerGameOver()) {
+            round.addDealerCard();
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
     }

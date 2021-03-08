@@ -76,7 +76,7 @@ public class OutputView {
 
     private static List<String> cardsToString(final List<Card> cards) {
         return cards.stream()
-                .map(playerCard -> playerCard.symbolName() + playerCard.numberScore())
+                .map(playerCard -> playerCard.symbolName() + playerCard.numberName())
                 .collect(Collectors.toList());
     }
 

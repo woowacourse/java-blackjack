@@ -13,6 +13,6 @@ public class Dealer extends AbstractUser {
     @Override
     public boolean isGameOver(final int gameOverScore) {
         int score = getScore();
-        return (score > TURN_OVER_COUNT || score > gameOverScore);
+        return score > TURN_OVER_COUNT || score > gameOverScore;
     }
 }

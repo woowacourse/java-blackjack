@@ -49,6 +49,10 @@ public class Card {
         return symbol.getName();
     }
 
+    public String numberName() {
+        return number.getName();
+    }
+
     public boolean containAce() {
         return number.isAce();
     }

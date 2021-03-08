@@ -20,7 +20,8 @@ public abstract class AbstractUser {
         int score = cards.stream()
                 .mapToInt(Card::numberScore)
                 .sum();
-        while (containAceCount() && score > GAME_OVER_SCORE) {
+        int aceCount = getAceCount();
+        while (aceCount-- > 0 && score > GAME_OVER_SCORE) {
             score = Number.ACE.useSecondScore(score);
         }
         return score;
@@ -34,9 +35,10 @@ public abstract class AbstractUser {
         cards.add(card);
     }
 
-    public final boolean containAceCount() {
-        return cards.stream()
-                .anyMatch(Card::containAce);
+    public final int getAceCount() {
+        return (int)cards.stream()
+                .filter(Card::containAce)
+                .count();
     }
 
     public abstract String getName();
