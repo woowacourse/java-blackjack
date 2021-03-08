@@ -5,7 +5,9 @@ import blackjack.domain.ResultType;
 public class User extends AbstractPlayer {
     private static final String YES = "y";
     private static final String NO = "n";
+
     private boolean isDrawStop = false;
+
 
     public User(String name) {
         super(name);
