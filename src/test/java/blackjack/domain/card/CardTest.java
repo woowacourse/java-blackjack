@@ -14,7 +14,7 @@ public class CardTest {
     void cardNotHaveDuplicate() {
         List<Card> cards = new ArrayList<>();
         for(int i = 1; i <= 52; i++){
-            cards.add(Card.of());
+            cards.add(Card.pullOutCachedCard());
         }
         Assertions.assertThat(cards).doesNotHaveDuplicates();
     }

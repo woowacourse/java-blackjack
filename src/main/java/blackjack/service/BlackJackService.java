@@ -41,11 +41,11 @@ public class BlackJackService {
     }
 
     public void receiveMoreCard(final Player player) {
-        player.receiveMoreCard(Card.of());
+        player.receiveMoreCard(Card.pullOutCachedCard());
     }
 
     private Cards getInitCards() {
-        List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(), Card.of()));
+        List<Card> cards = new ArrayList<>(Arrays.asList(Card.pullOutCachedCard(), Card.pullOutCachedCard()));
         return new Cards(cards);
     }
 }

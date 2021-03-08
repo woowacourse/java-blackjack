@@ -26,16 +26,23 @@ public class Card {
         this.face = face;
     }
 
-    public static Card of() {
+    public static Card pullOutCachedCard() {
         Card card = cached.remove(0);
         cached.add(card);
-        currentCardCount --;
+        updateCardCount();
+        shuffleWhenAllUsed();
+        return card;
+    }
 
-        if(currentCardCount == 0){
+    public static void updateCardCount() {
+        currentCardCount--;
+    }
+
+    public static void shuffleWhenAllUsed() {
+        if (currentCardCount == 0) {
             Collections.shuffle(cached);
             currentCardCount = totalCardCount;
         }
-        return card;
     }
 
     public int getFaceValue() {
