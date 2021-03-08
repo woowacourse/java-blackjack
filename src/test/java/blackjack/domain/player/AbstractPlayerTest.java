@@ -15,7 +15,7 @@ public class AbstractPlayerTest {
     @Test
     void drawCard() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        Card twoCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TWO);
 
         user.drawCard(twoCard);
 
@@ -26,8 +26,8 @@ public class AbstractPlayerTest {
     @Test
     void aceLowValue() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
-        Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
+        Card aceCard = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
 
         user.drawCard(tenCard);
         user.drawCard(tenCard);
@@ -40,8 +40,8 @@ public class AbstractPlayerTest {
     @Test
     void aceHighValue() {
         AbstractPlayer user = new User(TEST_NAME);
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
-        Card aceCard = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
+        Card aceCard = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
 
         user.drawCard(tenCard);
         user.drawCard(aceCard);
@@ -55,7 +55,7 @@ public class AbstractPlayerTest {
         AbstractPlayer user = new User(TEST_NAME);
         assertThat(user.getCards().isEmpty()).isTrue();
 
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
+        Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
         user.drawCard(tenCard);
         assertThat(user.getCards()).containsExactly(tenCard);
     }

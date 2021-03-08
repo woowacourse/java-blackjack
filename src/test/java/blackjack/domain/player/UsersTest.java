@@ -21,21 +21,21 @@ public class UsersTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        dealer.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SEVEN));
 
         User user1 = new User("pobi");
-        user1.drawCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
+        user1.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.EIGHT));
 
         User user2 = new User("jason");
-        user2.drawCard(new Card(CardShape.CLUB, CardNumber.SIX));
+        user2.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SIX));
 
         User user3 = new User("inbi");
-        user3.drawCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        user3.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SEVEN));
 
         User user4 = new User("mungto");
-        user4.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user4.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user4.drawCard(new Card(CardShape.CLUB, CardNumber.TWO));
+        user4.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
+        user4.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
+        user4.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TWO));
 
         List<User> convertUsers = new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
         users = new Users(convertUsers);

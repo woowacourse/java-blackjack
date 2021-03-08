@@ -13,7 +13,7 @@ public class Cards {
         cards = new ArrayList<>();
         Arrays.stream(CardShape.values())
             .forEach(shape -> Arrays.stream(CardNumber.values())
-                .forEach(number -> cards.add(new Card(shape, number))));
+                .forEach(number -> cards.add(Card.valueOf(shape, number))));
         Collections.shuffle(cards);
     }
 

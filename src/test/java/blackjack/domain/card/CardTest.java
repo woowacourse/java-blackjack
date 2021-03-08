@@ -11,14 +11,14 @@ public class CardTest {
     void createCard() {
         String shape = "다이아몬드";
         String number = "A";
-        Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        Card card = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
         assertThat(card.toString()).isEqualTo(number + shape);
     }
 
     @DisplayName("카드 번호 반환 테스트")
     @Test
     void getCardNumber() {
-        Card card = new Card(CardShape.DIAMOND, CardNumber.ACE);
+        Card card = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
         assertThat(card.getNumber()).isEqualTo(CardNumber.ACE);
     }
 }

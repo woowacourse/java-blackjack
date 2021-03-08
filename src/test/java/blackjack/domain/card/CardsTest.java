@@ -22,7 +22,7 @@ public class CardsTest {
         List<Card> cards = new ArrayList<>();
         Arrays.stream(CardShape.values())
             .forEach(shape -> Arrays.stream(CardNumber.values())
-                .forEach(number -> cards.add(new Card(shape, number))));
+                .forEach(number -> cards.add(Card.valueOf(shape, number))));
 
         Card card = Cards.getInstance().draw();
         assertThat(cards).contains(card);

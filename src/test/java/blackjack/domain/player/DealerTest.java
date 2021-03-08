@@ -22,7 +22,7 @@ public class DealerTest {
     @Test
     void canDrawCardWhen16() {
         Dealer dealer = new Dealer();
-        Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
+        Card eightCard = Card.valueOf(CardShape.DIAMOND, CardNumber.EIGHT);
         dealer.drawCard(eightCard);
         dealer.drawCard(eightCard);
         assertThat(dealer.isCanDraw()).isTrue();
@@ -32,8 +32,8 @@ public class DealerTest {
     @Test
     void cannotDrawCardWhen17() {
         Dealer dealer = new Dealer();
-        Card tenCard = new Card(CardShape.DIAMOND, CardNumber.TEN);
-        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+        Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
+        Card sevenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN);
         dealer.drawCard(tenCard);
         dealer.drawCard(sevenCard);
         assertThat(dealer.isCanDraw()).isFalse();
