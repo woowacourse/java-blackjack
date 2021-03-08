@@ -1,8 +1,9 @@
 package blackjack.domain.result;
 
 import blackjack.domain.participant.Player;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.PlayersResultDto;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
@@ -28,8 +29,12 @@ public class BlackJackResult {
                 .count();
     }
 
-    public Map<Player, MatchResult> getResult() {
-        return Collections.unmodifiableMap(result);
+    public DealerResultDto toDealerResultDto() {
+        return new DealerResultDto(getDealerResult());
+    }
+
+    public PlayersResultDto toPlayersResultDto() {
+        return new PlayersResultDto(result);
     }
 
     @Override

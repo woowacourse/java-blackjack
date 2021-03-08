@@ -3,11 +3,11 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.*;
-import blackjack.domain.result.BlackJackResult;
-import blackjack.domain.result.MatchResult;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.PlayersResultDto;
 
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static blackjack.domain.card.Cards.TOP_CARD;
@@ -35,17 +35,16 @@ public class OutputView {
         System.out.println(ENTER_PLAYERS_NAME);
     }
 
-    public static void distributeCardMessage(Players players) {
-        String playerName = players.getPlayers().stream()
-                .map(Participant::getName)
-                .map(Nickname::getName)
+    public static void distributeCardMessage(List<ParticipantDto> players) {
+        String playerName = players.stream()
+                .map(ParticipantDto::getName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.printf(DISTRIBUTE_MESSAGE_FORM + "%n", playerName);
     }
 
-    public static void showDealerFirstCard(Dealer dealer) {
-        Card card = dealer.getCurrentCards().getCards().get(TOP_CARD);
-        System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName().getName(), cardForm(card));
+    public static void showDealerFirstCard(ParticipantDto dealer) {
+        Card card = dealer.getCards().get(TOP_CARD);
+        System.out.printf(CURRENT_CARD_FORM + "%n", dealer.getName(), cardForm(card));
     }
 
     private static String cardForm(Card card) {
@@ -54,57 +53,54 @@ public class OutputView {
         return denomination.getName() + shape.getName();
     }
 
-    public static void showCards(Players players) {
-        for (Player player : players.getPlayers()) {
+    public static void showCards(List<ParticipantDto> players) {
+        for (ParticipantDto player : players) {
             showCards(player);
         }
     }
 
-    public static void showCards(Participant participant) {
+    public static void showCards(ParticipantDto participant) {
         System.out.println(getCardsMessageForm(participant));
     }
 
-    public static void askOneMoreCard(Player player) {
-        System.out.printf(ASK_DRAW_CARD_FORM + "%n", player.getName().getName());
+    public static void askOneMoreCard(ParticipantDto player) {
+        System.out.printf(ASK_DRAW_CARD_FORM + "%n", player.getName());
     }
 
     public static void dealerReceiveOneCard() {
         System.out.println(DEALER_DRAW_ONE_CARD);
     }
 
-    public static void showAllCards(Players players, Dealer dealer) {
-        int dealerScore = dealer.getCurrentCards().calculateScore();
+    public static void showAllCards(List<ParticipantDto> players, ParticipantDto dealer) {
+        int dealerScore = dealer.getFinalScore();
         System.out.printf(CARD_AND_SCORE_RESULT + "%n", getCardsMessageForm(dealer), dealerScore);
-        for (Player player : players.getPlayers()) {
-            int playerScore = player.getCurrentCards().calculateScore();
+        for (ParticipantDto player : players) {
+            int playerScore = player.getFinalScore();
             System.out.printf(CARD_AND_SCORE_RESULT + "%n", getCardsMessageForm(player), playerScore);
         }
     }
 
-    private static String getCardsMessageForm(Participant participant) {
-        String allCards = participant.getCurrentCards().getCards().stream()
+    private static String getCardsMessageForm(ParticipantDto participant) {
+        String allCards = participant.getCards().stream()
                 .map(OutputView::cardForm)
                 .collect(Collectors.joining(DELIMITER));
-        return String.format(CURRENT_CARD_FORM, participant.getName().getName(), allCards);
+        return String.format(CURRENT_CARD_FORM, participant.getName(), allCards);
     }
 
-    public static void showFinalResult(BlackJackResult blackJackResult) {
+    public static void showFinalResultTitle() {
         printNewLine();
         System.out.println(FINAL_RESULT_TITLE);
-        showDealerFinalResult(blackJackResult);
-        showPlayersFinalResult(blackJackResult);
     }
 
-    private static void showDealerFinalResult(BlackJackResult blackJackResult) {
-        Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
+    public static void showDealerFinalResult(DealerResultDto dealerResult) {
         System.out.print(DEALER_NAME.getName() + ": ");
-        dealerResult.entrySet().stream()
+        dealerResult.getResult().entrySet().stream()
                 .filter(entrySet -> entrySet.getValue() != 0)
                 .forEach(entrySet -> System.out.print(entrySet.getValue() + entrySet.getKey().getResult() + " "));
         System.out.println();
     }
 
-    private static void showPlayersFinalResult(BlackJackResult blackJackResult) {
+    public static void showPlayersFinalResult(PlayersResultDto blackJackResult) {
         blackJackResult.getResult()
                 .forEach((key, value) -> System.out.printf(PLAYER_RESULT_FORM + "%n", key.getName().getName(), value.getResult()));
     }

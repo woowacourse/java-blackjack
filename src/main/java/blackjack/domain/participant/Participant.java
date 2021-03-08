@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.dto.ParticipantDto;
 
 import java.util.Objects;
 
@@ -18,6 +19,10 @@ public abstract class Participant {
 
     public final void receiveCard(Card card) {
         cards.addCard(card);
+    }
+
+    public final ParticipantDto toParticipantDto() {
+        return new ParticipantDto(this.nickname, this.cards, this.cards.calculateScore());
     }
 
     public final Cards getCurrentCards() {

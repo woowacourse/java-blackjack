@@ -8,6 +8,7 @@ import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.BlackJackResult;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -60,9 +61,10 @@ public class BlackJackGame {
 
     private void distributeCards(Players players, Dealer dealer, CardDeck cardDeck) {
         eachDrawTwoCards(players, dealer, cardDeck);
-        OutputView.distributeCardMessage(players);
-        OutputView.showDealerFirstCard(dealer);
-        OutputView.showCards(players);
+        List<ParticipantDto> playersDto = players.toPlayersDto();
+        OutputView.distributeCardMessage(playersDto);
+        OutputView.showDealerFirstCard(dealer.toParticipantDto());
+        OutputView.showCards(playersDto);
         OutputView.printNewLine();
     }
 
@@ -82,7 +84,7 @@ public class BlackJackGame {
     private void eachPlayerTurn(CardDeck cardDeck, Player player) {
         while (playerDrawCard(player)) {
             player.receiveCard(cardDeck.drawCard());
-            OutputView.showCards(player);
+            OutputView.showCards(player.toParticipantDto());
             OutputView.printNewLine();
         }
     }
@@ -93,7 +95,7 @@ public class BlackJackGame {
 
     private boolean askDrawCard(Player player) {
         try {
-            OutputView.askOneMoreCard(player);
+            OutputView.askOneMoreCard(player.toParticipantDto());
             boolean isDraw = InputView.inputAnswer();
             showCurrentCard(player, isDraw);
             return isDraw;
@@ -105,7 +107,7 @@ public class BlackJackGame {
 
     private void showCurrentCard(Player player, boolean isDraw) {
         if (!isDraw) {
-            OutputView.showCards(player);
+            OutputView.showCards(player.toParticipantDto());
             OutputView.printNewLine();
         }
     }
@@ -118,8 +120,10 @@ public class BlackJackGame {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        OutputView.showAllCards(players, dealer);
+        OutputView.showAllCards(players.toPlayersDto(), dealer.toParticipantDto());
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
-        OutputView.showFinalResult(blackJackResult);
+        OutputView.showFinalResultTitle();
+        OutputView.showDealerFinalResult(blackJackResult.toDealerResultDto());
+        OutputView.showPlayersFinalResult(blackJackResult.toPlayersResultDto());
     }
 }
