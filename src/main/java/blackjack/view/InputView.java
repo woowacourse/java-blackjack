@@ -28,7 +28,7 @@ public class InputView {
             final String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
             return validateMoreCardOption(userInput);
         } catch (IllegalArgumentException e) {
-            OutputView.getErrorMessage(e.getMessage());
+            OutputView.showErrorMessage(e.getMessage());
             return askPlayerMoreCard(player);
         }
     }

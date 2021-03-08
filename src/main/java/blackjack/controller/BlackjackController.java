@@ -17,7 +17,7 @@ public class BlackjackController {
         final List<Player> players = playerSetUp();
 
         distributeCard(players, dealer, cardDeck);
-        showDistributedCard(players, dealer);
+
         playerGameProgress(players, cardDeck);
         dealerGameProgress(dealer, cardDeck);
         showGameResult(players, dealer);
@@ -31,7 +31,7 @@ public class BlackjackController {
                     .map(Player::new)
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
-            OutputView.getErrorMessage(e.getMessage());
+            OutputView.showErrorMessage(e.getMessage());
             playerSetUp();
         }
         return players;
@@ -44,12 +44,7 @@ public class BlackjackController {
         }
         dealer.receiveCard(cardDeck.distribute());
         dealer.receiveCard(cardDeck.distribute());
-    }
-
-    private void showDistributedCard(final List<Player> players, final Dealer dealer) {
-        OutputView.distributeMessage(players);
-        OutputView.showDealerCard(dealer);
-        OutputView.showPlayersCard(players);
+        OutputView.showDistributedCard(players, dealer);
     }
 
     private void playerGameProgress(final List<Player> players, final CardDeck cardDeck) {
@@ -73,7 +68,7 @@ public class BlackjackController {
 
     private boolean isBust(final Player player) {
         if (player.isBust()) {
-            OutputView.bustMessage();
+            OutputView.showBustMessage();
             return true;
         }
         return false;

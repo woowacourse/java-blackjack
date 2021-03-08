@@ -22,14 +22,20 @@ public class OutputView {
     private static final String WIN_MESSAGE = ": 승";
     private static final String LOSE_MESSAGE = ": 패";
 
-    public static void distributeMessage(final List<Player> players) {
+    public static void showDistributedCard(final List<Player> players, final Dealer dealer) {
+        distributeMessage(players);
+        showDealerCard(dealer);
+        showPlayersCard(players);
+    }
+
+    private static void distributeMessage(final List<Player> players) {
         final String names = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.printf(NEWLINE + DISTRIBUTE_MESSAGE + NEWLINE, names);
     }
 
-    public static void showDealerCard(final Dealer dealer) {
+    private static void showDealerCard(final Dealer dealer) {
         System.out.printf(DEALER_CARD_STATUS_FORMAT + NEWLINE, dealer.getName(), cardFormat(dealer.firstCard()));
     }
 
@@ -37,7 +43,7 @@ public class OutputView {
         return card.getCardSymbol() + card.getCardType();
     }
 
-    public static void showPlayersCard(final List<Player> players) {
+    private static void showPlayersCard(final List<Player> players) {
         for (final Player player : players) {
             showPlayerCard(player);
         }
@@ -82,7 +88,7 @@ public class OutputView {
         System.out.println(name + LOSE_MESSAGE);
     }
 
-    public static void bustMessage() {
+    public static void showBustMessage() {
         System.out.println(BUST_MESSAGE);
     }
 
@@ -90,7 +96,7 @@ public class OutputView {
         System.out.println(NEWLINE + DEALER_MORE_CARD_MESSAGE);
     }
 
-    public static void getErrorMessage(final String message) {
+    public static void showErrorMessage(final String message) {
         System.out.println(ERROR_MARK + message);
     }
 
