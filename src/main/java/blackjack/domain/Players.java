@@ -9,11 +9,18 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    public Players(String s, CardDeck cardDeck) {
+    public Players(String namesInput, CardDeck cardDeck) {
         players = new ArrayList<>();
-        String[] names = s.split(",");
+        validate(namesInput);
+        String[] names = namesInput.split(",");
         for (String name : names) {
             players.add(new Player(name, cardDeck));
+        }
+    }
+
+    private void validate(String namesInput) {
+        if (namesInput == null || namesInput.isEmpty()) {
+            throw new IllegalArgumentException();
         }
     }
 

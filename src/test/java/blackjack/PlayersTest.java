@@ -39,4 +39,28 @@ public class PlayersTest {
     void create7() {
         assertThatThrownBy(() -> new Players("b oni,gr am,ki lo", new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("빈 문자열일 때 예외 발생 확인")
+    void create8() {
+        assertThatThrownBy(() -> new Players("", new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("null일 때 예외 발생 확인")
+    void create9() {
+        assertThatThrownBy(() -> new Players(null, new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("한글일 때 예외 발생 확인")
+    void create10() {
+        assertThatThrownBy(() -> new Players("한글,boni,gram", new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("숫자일 때 예외 발생 확인")
+    void create11() {
+        assertThatThrownBy(() -> new Players("111,boni,gram", new FixedCardDeck())).isInstanceOf(IllegalArgumentException.class);
+    }
 }
