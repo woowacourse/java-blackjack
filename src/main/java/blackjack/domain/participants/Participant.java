@@ -24,6 +24,8 @@ public abstract class Participant {
         IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> drawCard(deck));
     }
 
+    protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
+
     public void drawCard(Deck deck) {
         if (!isContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
@@ -32,14 +34,12 @@ public abstract class Participant {
         status = updateStatus(status);
     }
 
-    protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
+    protected void addCard(Card card) {
+        hand.addCard(card);
+    }
 
     protected void setStatus(ParticipantStatus status) {
         this.status = status;
-    }
-
-    protected void addCard(Card card) {
-        hand.addCard(card);
     }
 
     public int getScore() {

@@ -8,7 +8,7 @@ public class Name {
 
     public Name(String name) {
         validateName(name);
-        this.name = name;
+        this.name = name.trim();
     }
 
     private static void validateName(String name) {

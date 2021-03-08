@@ -15,11 +15,9 @@ public class Players {
 
     private static final String DELIMITER = ",";
     private final List<Player> players;
-    private int preparingIndex;
 
     public Players(List<Player> players) {
         this.players = new ArrayList<>(players);
-        preparingIndex = 0;
     }
 
     public static Players valueOf(String unParsedNames, Deck deck) {
@@ -44,14 +42,14 @@ public class Players {
     }
 
     public Player nextPlayerToPrepare() {
-        if (isPrepared()) {
-            throw new IllegalStateException("이미 모든 플레이어가 준비가 되었습니다.");
-        }
-        return players.get(preparingIndex++);
+        return players.stream()
+            .filter(Player::isContinue)
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("이미 모든 플레이어가 준비가 되었습니다."));
     }
 
     public boolean isPrepared() {
-        return preparingIndex >= players.size();
+        return players.stream().noneMatch(Player::isContinue);
     }
 
     public List<Player> unwrap() {

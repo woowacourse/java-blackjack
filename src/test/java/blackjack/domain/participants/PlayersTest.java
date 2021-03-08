@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
@@ -64,15 +65,14 @@ public class PlayersTest {
     @Test
     @DisplayName("모든 플레이어가 승부할 준비가 되었을 때 nextPlayerToPrepare 호출 시 예외처리")
     void nextPlayerToPrepare() {
-        Dealer dealer = new Dealer(deck);
         Player pobi = new Player("pobi", deck);
         Player jason = new Player("jason", deck);
         Player root = new Player("root", deck);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
-        players.nextPlayerToPrepare();
-        players.nextPlayerToPrepare();
-        players.nextPlayerToPrepare();
+        players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
+        players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
+        players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
 
         assertThatIllegalStateException().isThrownBy(() ->
             players.nextPlayerToPrepare())
