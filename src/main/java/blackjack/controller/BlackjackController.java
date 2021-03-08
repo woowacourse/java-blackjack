@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.user.Answer;
 import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -14,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
+    private static final String YES = "y";
+
     public void run() {
         Dealer dealer = new Dealer();
         Players players = participatePlayers();
@@ -57,7 +58,7 @@ public class BlackjackController {
     }
 
     private void askForHit(Player player) {
-        while (isPlayerHit(player) && Answer.isYes(Answer.of(InputView.inputHit()))) {
+        while (isPlayerHit(player) && isYes(InputView.inputHit())) {
             player.draw();
             OutputView.printPlayerCards(player);
         }
@@ -69,6 +70,10 @@ public class BlackjackController {
             return true;
         }
         return false;
+    }
+
+    private boolean isYes(String answer) {
+        return answer.equals(YES);
     }
 
     private void isDealerHit(Dealer dealer) {

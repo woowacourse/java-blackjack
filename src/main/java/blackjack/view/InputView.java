@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String COMMA = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
     private static final String WITH_BLANK = "\\s+";
     private static final String NO_BLANK = "";
 
@@ -22,7 +24,11 @@ public class InputView {
     }
 
     public static String inputHit() {
-        return SCANNER.nextLine();
+        String input = deleteWhiteSpaces(SCANNER.nextLine());
+        if (input.equals(YES) || input.equals(NO)) {
+            return input;
+        }
+        throw new IllegalArgumentException("y 또는 n으로 입력해주세요.");
     }
 
     private static String deleteWhiteSpaces(String input){
