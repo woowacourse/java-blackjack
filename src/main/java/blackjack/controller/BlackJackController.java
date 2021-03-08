@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.ResultType;
-import blackjack.domain.player.AllCardsOpenStrategy;
+import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.dto.GameResultDTO;
@@ -10,7 +10,6 @@ import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

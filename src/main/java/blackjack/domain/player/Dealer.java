@@ -3,6 +3,8 @@ package blackjack.domain.player;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.player.cardopen.CardOpenStrategy;
+import blackjack.domain.player.cardopen.OneCardOpenStrategy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
