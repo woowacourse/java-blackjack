@@ -30,7 +30,7 @@ public class StatisticResult {
         return statisticResult;
     }
 
-    public Map<String, Result> aggregatePlayerNameAndResult() {
+    public Map<String, Result> aggregateParticipantNameAndResult() {
         Map<String, Result> playerNameAndResult = new HashMap<>();
         for (Player player : players) {
             playerNameAndResult.put(player.getName(), player.judgeResult(dealer));

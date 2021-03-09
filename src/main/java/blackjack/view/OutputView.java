@@ -6,6 +6,7 @@ import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
+import blackjack.domain.StatisticResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ public class OutputView {
     private static final int FIRST_CARD_INDEX = 0;
     private static final String DELIMITER = ", ";
     private static final String NEWLINE = System.getProperty("line.separator");
+    private static final long NO_COUNTS_OF_RESULT = 0L;
 
     private OutputView() {
     }
@@ -75,19 +77,19 @@ public class OutputView {
                 + participant.calculateFinalScore());
     }
 
-    public static void printFinalResult(Dealer dealer, List<Player> players,
-        Map<Result, Long> statisticResult) {
+    public static void printFinalResult(StatisticResult statisticResult) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        long winCounts = statisticResult.get(Result.WIN);
-        long lossCounts = statisticResult.get(Result.LOSE);
-        long drawCounts = statisticResult.get(Result.DRAW);
-        System.out.println(
-            dealer.getName() + ": " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
-        for (Player player : players) {
-            Result result = player.judgeResult(dealer);
-            System.out.println(player.getName() + ": " + result.getName());
-        }
+        Map<Result, Long> dealerStatisticResultMap = statisticResult.aggregateDealerStatisticResult();
+        Map<String, Result> playerNameResultMap = statisticResult.aggregateParticipantNameAndResult();
+        long winCounts = dealerStatisticResultMap.getOrDefault(Result.WIN, NO_COUNTS_OF_RESULT);
+        long lossCounts = dealerStatisticResultMap.getOrDefault(Result.LOSE, NO_COUNTS_OF_RESULT);
+        long drawCounts = dealerStatisticResultMap.getOrDefault(Result.DRAW, NO_COUNTS_OF_RESULT);
+
+        System.out.println("딜러: " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
+        playerNameResultMap.forEach((playerName, result) -> {
+            System.out.println(playerName + ": " + result.getName());
+        });
     }
 
     private static void printEmptyLine() {

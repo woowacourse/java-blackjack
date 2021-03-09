@@ -4,12 +4,10 @@ import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
-import blackjack.domain.Result;
 import blackjack.domain.StatisticResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -33,8 +31,7 @@ public class Application {
         OutputView.printFinalCardsAndScore(participants);
 
         StatisticResult statisticResult = new StatisticResult(participants);
-        Map<Result, Long> dealerStatisticResult = statisticResult.aggregateDealerStatisticResult();
-        OutputView.printFinalResult(dealer, players, dealerStatisticResult);
+        OutputView.printFinalResult(statisticResult);
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
