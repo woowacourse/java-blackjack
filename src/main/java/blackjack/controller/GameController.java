@@ -9,8 +9,8 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.dto.PlayerStatusDto;
-import blackjack.view.dto.RoundStatusDto;
+import blackjack.controller.dto.PlayerStatusDto;
+import blackjack.controller.dto.RoundStatusDto;
 
 import java.util.List;
 import java.util.Scanner;
