@@ -36,6 +36,6 @@ public class Dealer extends Participant {
     }
     
     public Card getCard(int cardIndex) {
-        return getCards().get(cardIndex);
+        return cardHand.get(cardIndex);
     }
 }

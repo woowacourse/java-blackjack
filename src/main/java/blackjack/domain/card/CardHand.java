@@ -52,4 +52,8 @@ public class CardHand {
         return cards.stream()
                     .anyMatch(Card::isAce);
     }
+    
+    public Card get(int cardIndex) {
+        return cards.get(cardIndex);
+    }
 }
