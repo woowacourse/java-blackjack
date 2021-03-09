@@ -14,10 +14,9 @@ public class OutputView {
 
     public static String NEW_LINE = System.lineSeparator();
 
-    public static void printInitSetting(final List<Participant> participants) {
-        List<String> playerNames = participants.stream()
-                .filter(participant -> participant instanceof Player)
-                .map(Participant::getNameAsString)
+    public static void printInitSetting(final List<Player> players) {
+        List<String> playerNames = players.stream()
+                .map(Player::getNameAsString)
                 .collect(Collectors.toList());
         System.out.println(String.format
                 (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", playerNames)));
@@ -49,7 +48,7 @@ public class OutputView {
                 resultStatistics.getDealerWinCounts(), resultStatistics.getDealerDrawCounts(), resultStatistics.getDealerLoseCounts()));
 
         resultStatistics.getResultStatistics()
-                .forEach((key, value) -> System.out.println(key.getNameAsString() + ": " + value.toString()));
+                .forEach((player, result) -> System.out.println(player.getNameAsString() + ": " + result.getResultAsString()));
     }
 
     public static void printResult(final List<Participant> participants) {

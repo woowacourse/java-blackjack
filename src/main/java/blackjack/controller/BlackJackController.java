@@ -34,7 +34,7 @@ public class BlackJackController {
             initBlackJackGame();
             return;
         }
-        OutputView.printInitSetting(blackJackService.getParticipants());
+        OutputView.printInitSetting(blackJackService.getPlayersAsList());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getPlayers());
     }
 
@@ -51,7 +51,7 @@ public class BlackJackController {
     }
 
     private void cardStatus() {
-        OutputView.printResult(blackJackService.getParticipants());
+        OutputView.printResult(blackJackService.getParticipantsAsList());
     }
 
     private void gameResult() {

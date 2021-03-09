@@ -8,14 +8,16 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN(Result::playerBlackJack, Result::winCondition),
-    LOSE(Result::dealerBlackJack, Result::lossCondition),
-    DRAW(Result::bothBlackJack, Result::drawCondition);
+    WIN("승", Result::playerBlackJack, Result::winCondition),
+    LOSE("패", Result::dealerBlackJack, Result::lossCondition),
+    DRAW("무", Result::bothBlackJack, Result::drawCondition);
 
+    private final String value;
     private final BiPredicate<Player, Dealer> blackJackCheck;
     private final BiPredicate<Player, Dealer> scoreCheck;
 
-    Result(final BiPredicate<Player, Dealer> blackJackCheck, final BiPredicate<Player, Dealer> scoreCheck) {
+    Result(String value, final BiPredicate<Player, Dealer> blackJackCheck, final BiPredicate<Player, Dealer> scoreCheck) {
+        this.value = value;
         this.blackJackCheck = blackJackCheck;
         this.scoreCheck = scoreCheck;
     }
@@ -30,6 +32,10 @@ public enum Result {
                                 .findAny()
                                 .orElseThrow(() -> new RuntimeException("승패를 가리지 못합니다."))
                 );
+    }
+
+    public String getResultAsString(){
+        return this.value;
     }
 
     private static boolean playerBlackJack(final Player player, final Dealer dealer) {
