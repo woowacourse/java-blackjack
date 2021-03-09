@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NameTest {
+
     @ParameterizedTest
     @DisplayName("이름을 null로 생성하려고하면 예외가 발생한다.")
     @NullSource

@@ -2,15 +2,14 @@ package blackjack.domain.card;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Card {
 
+    private static final List<Card> cached;
+
     private final Face face;
     private final Suit suit;
-
-    private static final List<Card> cached;
 
     static {
         cached = Arrays.stream(Suit.values())
@@ -39,18 +38,5 @@ public class Card {
 
     public boolean isAce() {
         return this.face.equals(Face.ACE);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return face == card.face && suit == card.suit;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(face, suit);
     }
 }

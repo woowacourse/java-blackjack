@@ -9,6 +9,7 @@ import java.util.List;
 
 
 public class DeckTest {
+
     @Test
     @DisplayName("52장의 카드가 매번 다른 것이 나온다.")
     void cardNotHaveDuplicate() {

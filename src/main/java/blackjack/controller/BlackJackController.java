@@ -1,8 +1,8 @@
 package blackjack.controller;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.result.ResultStatistics;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
@@ -11,6 +11,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
+
     private final BlackJackService blackJackService;
 
     public BlackJackController(final BlackJackService blackJackService) {

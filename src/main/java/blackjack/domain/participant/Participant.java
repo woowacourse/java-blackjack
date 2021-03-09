@@ -7,11 +7,11 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Cards hand;
-    private final Name name;
-
     private final static int BLACK_JACK_SCORE = 21;
     private final static int TWO_CARDS = 2;
+
+    protected final Cards hand;
+    private final Name name;
 
     public Participant(final Cards cards, final Name name) {
         this.hand = new Cards(cards.getCardsAsList());

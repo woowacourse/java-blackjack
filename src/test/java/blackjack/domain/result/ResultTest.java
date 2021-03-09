@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultTest {
 
-    Dealer dealer;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
