@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Challenger;
-import blackjack.domain.player.Challengers;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
+import blackjack.domain.participant.Challenger;
+import blackjack.domain.participant.Challengers;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.result.ResultStatistics;
 
 import java.util.List;
@@ -14,10 +14,10 @@ public class OutputView {
 
     public static String NEW_LINE = System.lineSeparator();
 
-    public static void printInitSetting(final List<Player> players) {
-        List<String> challengerNames = players.stream()
-                .filter(player -> player instanceof Challenger)
-                .map(Player::getNameAsString)
+    public static void printInitSetting(final List<Participant> participants) {
+        List<String> challengerNames = participants.stream()
+                .filter(participant -> participant instanceof Challenger)
+                .map(Participant::getNameAsString)
                 .collect(Collectors.toList());
         System.out.println(String.format
                 (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", challengerNames)));
@@ -28,9 +28,9 @@ public class OutputView {
         printChallengersInitCards(challengers);
     }
 
-    public static void printPlayerCards(final Player player) {
-        System.out.print(player.getNameAsString() + "카드: ");
-        List<String> challengersCards = player
+    public static void printParticipantCards(final Participant participant) {
+        System.out.print(participant.getNameAsString() + "카드: ");
+        List<String> challengersCards = participant
                 .getCardsAsList()
                 .stream()
                 .map(card -> card.getFaceValueAsInt() + card.getSuitAsString()).collect(Collectors.toList());
@@ -52,10 +52,10 @@ public class OutputView {
                 .forEach((key, value) -> System.out.println(key.getNameAsString() + ": " + value.toString()));
     }
 
-    public static void printResult(final List<Player> players) {
-        for (Player player : players) {
-            printPlayerCards(player);
-            System.out.println(" - 결과: " + player.getScore());
+    public static void printResult(final List<Participant> participants) {
+        for (Participant participant : participants) {
+            printParticipantCards(participant);
+            System.out.println(" - 결과: " + participant.getScore());
         }
         printNewLine();
     }
@@ -72,7 +72,7 @@ public class OutputView {
 
     private static void printChallengersInitCards(final Challengers challengers) {
         for (Challenger challenger : challengers.getChallengersAsList()) {
-            printPlayerCards(challenger);
+            printParticipantCards(challenger);
             printNewLine();
         }
     }

@@ -3,10 +3,10 @@ package blackjack.service;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.*;
+import blackjack.domain.participant.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackJackService {
@@ -27,11 +27,11 @@ public class BlackJackService {
         this.challengers = new Challengers(challengers);
     }
 
-    public List<Player> getPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(challengers.getChallengersAsList());
-        return players;
+    public List<Participant> getParticipants() {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(challengers.getChallengersAsList());
+        return participants;
     }
 
     public Dealer getDealer() {
@@ -42,8 +42,8 @@ public class BlackJackService {
         return this.challengers;
     }
 
-    public void receiveMoreCard(final Player player) {
-        player.receiveMoreCard(deck.draw());
+    public void receiveMoreCard(final Participant participant) {
+        participant.receiveMoreCard(deck.draw());
     }
 
     public boolean isDealerBlackJack() {
@@ -51,7 +51,7 @@ public class BlackJackService {
     }
 
     private Cards getInitCards() {
-        List<Card> cards = Arrays.asList(deck.draw());
+        List<Card> cards = Collections.singletonList(deck.draw());
         return new Cards(cards);
     }
 }

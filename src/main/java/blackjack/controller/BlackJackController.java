@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.player.Challenger;
-import blackjack.domain.player.Challengers;
-import blackjack.domain.player.Dealer;
+import blackjack.domain.participant.Challenger;
+import blackjack.domain.participant.Challengers;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.result.ResultStatistics;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
@@ -33,7 +33,7 @@ public class BlackJackController {
             initBlackJackGame();
             return;
         }
-        OutputView.printInitSetting(blackJackService.getPlayers());
+        OutputView.printInitSetting(blackJackService.getParticipants());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
     }
 
@@ -50,7 +50,7 @@ public class BlackJackController {
     }
 
     private void cardStatus() {
-        OutputView.printResult(blackJackService.getPlayers());
+        OutputView.printResult(blackJackService.getParticipants());
     }
 
     private void gameResult() {
@@ -65,7 +65,7 @@ public class BlackJackController {
     private void receiveChallengerMoreCard(final Challenger challenger) {
         while (!challenger.isBust() && InputView.wantMoreCard(challenger)) {
             blackJackService.receiveMoreCard(challenger);
-            OutputView.printPlayerCards(challenger);
+            OutputView.printParticipantCards(challenger);
         }
     }
 

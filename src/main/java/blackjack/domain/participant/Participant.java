@@ -1,11 +1,11 @@
-package blackjack.domain.player;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public abstract class Player {
+public abstract class Participant {
 
     protected final Cards hand;
     private final Name name;
@@ -13,7 +13,7 @@ public abstract class Player {
     private final static int BLACK_JACK_SCORE = 21;
     private final static int TWO_CARDS = 2;
 
-    public Player(final Cards cards, final Name name) {
+    public Participant(final Cards cards, final Name name) {
         this.hand = new Cards(cards.getCardsAsList());
         this.name = new Name(name.getName());
     }

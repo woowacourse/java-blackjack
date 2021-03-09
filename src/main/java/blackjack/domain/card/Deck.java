@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Deck {
 
@@ -14,8 +13,9 @@ public class Deck {
 
     public Deck() {
         deck = new ArrayList<>();
-        IntStream.rangeClosed(0, TOTAL_CARD_COUNT - 1)
-                .forEach(index -> deck.add(Card.of(index)));
+        for (int i = 0; i < TOTAL_CARD_COUNT; i++) {
+            deck.add(Card.of());
+        }
         shuffle();
     }
 

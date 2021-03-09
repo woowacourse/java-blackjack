@@ -1,11 +1,11 @@
-package blackjack.domain.player;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public class Challenger extends Player {
+public class Challenger extends Participant {
 
     public Challenger(final Cards cards, final Name name) {
         super(cards, name);

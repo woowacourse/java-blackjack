@@ -23,8 +23,10 @@ public class Card {
         this.face = face;
     }
 
-    public static Card of(int index) {
-        return cached.get(index);
+    public static Card of() {
+        Card card = cached.remove(0);
+        cached.add(card);
+        return card;
     }
 
     public int getFaceValueAsInt() {
