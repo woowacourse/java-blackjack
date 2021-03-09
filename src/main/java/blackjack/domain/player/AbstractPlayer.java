@@ -61,11 +61,6 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public int getProfit() {
-        return currentMoney - bettingMoney;
-    }
-
-    @Override
     public void addMoney(int money) {
         currentMoney += money;
     }
@@ -73,5 +68,10 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public void subtractMoney(int money) {
         currentMoney -= money;
+    }
+
+    @Override
+    public int getProfit() {
+        return currentMoney - bettingMoney;
     }
 }
