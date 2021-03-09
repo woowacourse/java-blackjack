@@ -6,9 +6,10 @@ import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.user.Users;
 import blackjack.domain.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.*;
@@ -22,16 +23,13 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printDistribute(Dealer dealer, Players players) {
-        System.out.println("\n" + dealer.getName() + "와 " + String.join(COMMA, players.getNames()) + "에게 2장의 카드를 나누었습니다.");
+    public static void printDistribute(Users users) {
+        System.out.println("\n" + users.getDealerName() + "와 " + String.join(COMMA, users.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
     }
 
-    public static void printDealerCard(Dealer dealer) {
-        System.out.println(dealer.getName() + COLON + dealer.showOneCard());
-    }
-
-    public static void printPlayersCards(Players players) {
-        players.getPlayers()
+    public static void printCards(Users users) {
+        System.out.println(users.getDealerName() + COLON + users.getDealer().showOneCard());
+        users.getPlayers()
                 .forEach(OutputView::printPlayerCards);
     }
 
@@ -60,8 +58,11 @@ public class OutputView {
         System.out.println("\n" + dealer.getName() + "는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
     }
 
-    public static void printResults(List<User> users) {
-        for (User user : users) {
+    public static void printResults(Users users) {
+        List<User> userGroup = new ArrayList<>();
+        userGroup.add(users.getDealer());
+        userGroup.addAll(users.getPlayers());
+        for (User user : userGroup) {
             System.out.println(user.getName() + "카드: " +
                     user.getCards()
                             .getCards()

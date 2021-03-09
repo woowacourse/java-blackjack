@@ -8,10 +8,12 @@ import java.util.List;
 
 import static java.util.stream.Collectors.*;
 
-public class Players {
+public class Users {
+    private final Dealer dealer;
     private final List<Player> players;
 
-    public Players(List<String> names) {
+    public Users(Dealer dealer, List<String> names) {
+        this.dealer = dealer;
         this.players = names.stream()
                 .map(Player::new)
                 .collect(toList());
@@ -27,10 +29,18 @@ public class Players {
                 .collect(toList());
     }
 
-    public List<String> getNames() {
+    public List<String> getPlayerNames() {
         return Collections.unmodifiableList(this.players.stream()
                 .map(Player::getName)
                 .collect(toList()));
+    }
+
+    public String getDealerName() {
+        return this.dealer.getName();
+    }
+
+    public Dealer getDealer() {
+        return this.dealer;
     }
 
     public List<Player> getPlayers() {

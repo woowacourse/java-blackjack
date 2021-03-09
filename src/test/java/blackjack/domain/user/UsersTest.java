@@ -11,27 +11,27 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayersTest {
-    private Players players;
+public class UsersTest {
+    private Users users;
 
     @BeforeEach
     public void setUp() {
-        players = new Players(Arrays.asList("amazzi", "dani", "pobi"));
+        users = new Users(new Dealer(), Arrays.asList("amazzi", "dani", "pobi"));
     }
 
     @DisplayName("이름별로 참여자들을 생성한다.")
     @Test
     void createPlayers() {
-        assertThat(players).isInstanceOf(Players.class);
+        assertThat(users).isInstanceOf(Users.class);
     }
 
     @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
     @Test
     void DistributeToEachPlayer() {
         Deck deck = new Deck();
-        players.distributeToPlayer(deck);
+        users.distributeToPlayer(deck);
 
-        assertThat(players.getPlayers()
+        assertThat(users.getPlayers()
                 .stream()
                 .allMatch(user -> user.cards.getCards().size() == 2)).isTrue();
     }
@@ -40,8 +40,8 @@ public class PlayersTest {
     @Test
     void showCardsByPlayers() {
         Deck deck = new Deck();
-        players.distributeToPlayer(deck);
-        List<Cards> cardsGroup = players.showCardsByPlayers();
+        users.distributeToPlayer(deck);
+        List<Cards> cardsGroup = users.showCardsByPlayers();
 
         assertThat(cardsGroup.stream()
                 .allMatch(cards -> cards.getCards().size() == 2)).isTrue();
@@ -50,7 +50,7 @@ public class PlayersTest {
     @DisplayName("플레이어 이름들을 확인한다.")
     @Test
     void getNames() {
-        List<String> namesGroup = players.getNames();
+        List<String> namesGroup = users.getPlayerNames();
 
         assertThat(namesGroup).isEqualTo(Arrays.asList("amazzi", "dani", "pobi"));
     }
@@ -58,6 +58,6 @@ public class PlayersTest {
     @DisplayName("Players 일급 컬렉션을 반환한다.")
     @Test
     void getPlayers() {
-        assertThat(players.getPlayers()).hasSize(3);
+        assertThat(users.getPlayers()).hasSize(3);
     }
 }

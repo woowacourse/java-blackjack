@@ -2,47 +2,38 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Users;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BlackjackGame {
-    private final Deck deck = new Deck();
-    private final Dealer dealer = new Dealer();
-    private final List<User> users = new ArrayList<>();
+    private final Deck deck;
+    private final Users users;
 
-    private Players players;
-
-    public void setUpPlayers(List<String> names) {
-        this.players = new Players(names);
-    }
-
-    public void setUpUsers() {
-        this.users.add(this.dealer);
-        this.users.addAll(this.players.getPlayers());
+    public BlackjackGame(List<String> names) {
+        this.deck = new Deck();
+        this.users = new Users(new Dealer(), names);
     }
 
     public void distributeToUsers() {
-        this.dealer.distribute(this.deck.popTwo());
-        this.players.distributeToPlayer(this.deck);
+        this.users.getDealer().distribute(this.deck.popTwo());
+        this.users.distributeToPlayer(this.deck);
     }
 
     public Deck getDeck() {
         return this.deck;
     }
 
+    public Users getUsers() {
+        return this.users;
+    }
+
     public Dealer getDealer() {
-        return this.dealer;
+        return this.users.getDealer();
     }
 
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(this.users);
-    }
-
-    public Players getPlayers() {
-        return this.players;
+    public List<Player> getPlayers() {
+        return this.users.getPlayers();
     }
 }
