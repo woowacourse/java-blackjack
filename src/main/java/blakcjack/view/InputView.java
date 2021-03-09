@@ -8,8 +8,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
-	public static final String YES = "y";
-	public static final String NO = "n";
+	private static final int BETTING_AMOUNT_LOWER_BOUND = 0;
+	private static final String YES = "y";
+	private static final String NO = "n";
 	private static final Scanner SCANNER = new Scanner(System.in);
 
 	public static List<String> takePlayerNamesInput() {
@@ -17,6 +18,28 @@ public class InputView {
 		return Arrays.stream(SCANNER.nextLine().split(","))
 				.map(String::trim)
 				.collect(Collectors.toList());
+	}
+
+	public static int takeBettingAmountInput(final Player player) {
+		System.out.printf("%s의 베팅 금액은?", player.getName());
+		String bettingAmount = SCANNER.nextLine();
+		validateInteger(bettingAmount);
+		validateAmount(bettingAmount);
+		return Integer.parseInt(bettingAmount);
+	}
+
+	private static void validateAmount(final String bettingAmount) {
+		if (Integer.parseInt(bettingAmount) <= BETTING_AMOUNT_LOWER_BOUND) {
+			throw new IllegalArgumentException("베팅 금액은 0 보다는 많아야 합니다.");
+		}
+	}
+
+	private static void validateInteger(final String bettingAmount) {
+		try {
+			Integer.parseInt(bettingAmount);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("정수만 입력 가능합니다.");
+		}
 	}
 
 	public static boolean isYes(Player player) {
