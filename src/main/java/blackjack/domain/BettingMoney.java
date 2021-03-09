@@ -19,7 +19,7 @@ public class BettingMoney {
 
     private void validate(int value) {
         if (!(MIN_BETTING_MONEY_BOUND <= value && value <= MAX_BETTING_MONEY_BOUND)) {
-            throw new IllegalArgumentException("배팅 금액은 1억원을 초과할 수 없습니다.");
+            throw new IllegalArgumentException("배팅 금액은 1000원 이상, 1억원 이하여야 합니다.");
         }
     }
 

@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
 import blackjack.controller.dto.UsersProfitDTO;
-import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +54,7 @@ public class OutputView {
     }
 
     public static void printFinalProfits(UsersProfitDTO usersProfitDTO) {
-        System.out.println();
-        System.out.println("## 최종 수익");
+        System.out.println(NEW_LINE + "## 최종 수익");
         Map<Name, Integer> profits = usersProfitDTO.getProfits();
         StringBuilder stringBuilder = new StringBuilder();
         buildUsersProfitMessage(profits, stringBuilder);
@@ -64,7 +62,7 @@ public class OutputView {
         for (Name name : profits.keySet()) {
             dealerProfit -= profits.get(name);
         }
-        System.out.printf("딜러: %d", dealerProfit);
+        System.out.printf("딜러: %d" + NEW_LINE, dealerProfit);
         System.out.print(stringBuilder.toString());
     }
 

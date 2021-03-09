@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
-import blackjack.controller.dto.UsersProfitDTO;
 import blackjack.controller.dto.UserNameDTO;
+import blackjack.controller.dto.UsersProfitDTO;
 import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
@@ -12,7 +12,6 @@ import blackjack.domain.player.Users;
 import blackjack.domain.player.strategy.AllCardsOpenStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +19,9 @@ public class BlackJackController {
     private Cards cards;
 
     public void play() {
-        // TODO: 10줄 이하로 줄이기
         cards = Cards.createAllShuffledCards();
-        // TODO: 유저 이름과 배팅 금액으로 생성방식 변경
-        // Users users = new Users(InputView.getUsersName());
-        Users users = new Users(new ArrayList<>());
+        Users users = new Users(InputView.getUsers());
         Dealer dealer = new Dealer();
-        users.getUsers().forEach(this::betMoney);
         drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserCardsDTOs(users), new PlayerCardsDTO(dealer));
         users.getUsers().forEach(this::drawCard);
@@ -34,9 +29,6 @@ public class BlackJackController {
         dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
         OutputView.printFinalCardsMessage(getUserResultDTOs(users), new PlayerResultDTO(dealer));
         OutputView.printFinalProfits(new UsersProfitDTO(users.getProfits(dealer)));
-    }
-
-    private void betMoney(User user) {
     }
 
     private void drawTwoCards(Users users, Dealer dealer) {
