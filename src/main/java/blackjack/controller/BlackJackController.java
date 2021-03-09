@@ -54,17 +54,9 @@ public class BlackJackController {
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (!player.isStay() && !player.isBust() && !player.isBlackJack()) {
-            requestHitOrNot(player);
-        }
-    }
-
-    private void requestHitOrNot(Player player) {
-        if (InputView.isHit(player.getName())) {
+        while (!player.isBust() && !player.isBlackJack() && InputView.isHit(player.getName())) {
             player.addCard(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
-            return;
         }
-        player.stay();
     }
 }

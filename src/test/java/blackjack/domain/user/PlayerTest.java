@@ -37,21 +37,6 @@ class PlayerTest {
         assertThat(player.getCards().cards()).hasSize(1);
     }
 
-    @DisplayName("isStay:false - 플레이어가 스테이 의사를 밝히지 않으면 계속 게임 진행")
-    @Test
-    void isStayFalse() {
-        Player player = new Player("Player");
-        assertFalse(player.isStay());
-    }
-
-    @DisplayName("isStay:true - 플레이어가 스테이 의사를 밝히면 해당 플레이어는 게임 중단")
-    @Test
-    void isStayTrue() {
-        Player player = new Player("Player");
-        player.stay();
-        assertTrue(player.isStay());
-    }
-
     @DisplayName("isBust:true - 플레이어 카드의 총합이 21을 초과하는 경우 자동 중단")
     @Test
     void isBustTrueWhenOver21Score() {
