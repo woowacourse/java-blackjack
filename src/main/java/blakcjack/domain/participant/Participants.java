@@ -6,7 +6,6 @@ import blakcjack.domain.outcome.OutcomeStatistics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -38,15 +37,6 @@ public class Participants {
 		final Dealer dealer = getDealer();
 		final List<Player> players = getPlayers();
 		return new OutcomeStatistics(dealer, players);
-	}
-
-	private float aggregateDealerProfit(final Map<Player, Float> playersProfit) {
-		float profit = 0f;
-		for (final Player player : playersProfit.keySet()) {
-			final float playerProfit = playersProfit.get(player);
-			profit -= playerProfit;
-		}
-		return profit;
 	}
 
 	private Dealer getDealer() {

@@ -21,7 +21,7 @@ public class OutcomeStatistics {
 	private Map<Player, Float> getPlayersProfit(final Dealer dealer, final List<Player> players) {
 		final Map<Player, Float> playersProfit = new LinkedHashMap<>();
 		for (final Player player : players) {
-			final Outcome playerOutcome = dealer.judgeOutcomeOf(player);
+			final Outcome playerOutcome = Outcome.of(dealer, player);
 			final float playerProfit = player.calculateProfit(playerOutcome);
 			playersProfit.put(player, playerProfit);
 		}

@@ -5,7 +5,6 @@ import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
 import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
-import static blakcjack.domain.outcome.Outcome.*;
 
 public class Player extends Participant {
 	private final int bettingAmount;
@@ -26,13 +25,6 @@ public class Player extends Participant {
 
 	public boolean hasAffordableScoreForHit() {
 		return cards.calculateScore() < BLACKJACK_VALUE;
-	}
-
-	public Outcome judgeOutcomeByBust() {
-		if (isBust()) {
-			return LOSE;
-		}
-		return WIN;
 	}
 
 	public float calculateProfit(final Outcome outcome) {

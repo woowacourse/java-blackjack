@@ -50,7 +50,7 @@ public abstract class Participant {
 		return this instanceof Dealer;
 	}
 
-	protected boolean isBlackJack() {
+	public boolean isBlackJack() {
 		return cards.haveOnlyTwoCards() && cards.haveBlackjackScore();
 	}
 
