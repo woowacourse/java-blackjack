@@ -29,7 +29,7 @@ public class Card {
     }
 
     public boolean isNotAce() {
-        return denomination != Denomination.ACE;
+        return !isAce();
     }
 
     @Override
