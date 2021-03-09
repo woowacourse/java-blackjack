@@ -120,9 +120,10 @@ public class UserTest {
         assertThat(user.isDrawStop()).isTrue();
     }
 
-    @DisplayName("승패 판단 - 딜러가 bust, 유저가 bust 일 때 = 패")
-    @Test
-    void dealerBustUserBust() {
+    @DisplayName("수익 계산 - 딜러가 bust, 유저가 bust 일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBustUserBust(int bettingMoney) {
         Dealer dealer = new Dealer(); // bust
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
@@ -143,9 +144,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 bust, 유저가 블랙잭 일 때 = 승")
-    @Test
-    void dealerBustUserBlackJack() {
+    @DisplayName("수익 계산 - 딜러가 bust, 유저가 블랙잭 일 때 = 승")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBustUserBlackJack(int bettingMoney) {
         Dealer dealer = new Dealer(); // bust
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
@@ -165,9 +167,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("승패 판단 - 딜러가 bust, 유저가 블랙잭이 아닌 21 일 때 = 승")
-    @Test
-    void dealerBustUserNotBlackJack21() {
+    @DisplayName("수익 계산 - 딜러가 bust, 유저가 블랙잭이 아닌 21 일 때 = 승")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBustUserNotBlackJack21(int bettingMoney) {
         Dealer dealer = new Dealer(); // bust
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
@@ -188,9 +191,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("승패 판단 - 딜러가 bust, 유저가 21 미만일 때 = 승")
-    @Test
-    void dealerBustUserUnder21() {
+    @DisplayName("수익 계산 - 딜러가 bust, 유저가 21 미만일 때 = 승")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBustUserUnder21(int bettingMoney) {
         Dealer dealer = new Dealer(); // bust
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
@@ -211,9 +215,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭, 유저가 bust 일 때 = 패")
-    @Test
-    void dealerBlackJackUserBust() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 bust 일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBlackJackUserBust(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
@@ -233,9 +238,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭, 유저가 블랙잭 일 때 = 무승부")
-    @Test
-    void dealerBlackJackUserBlackJack() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭 일 때 = 무승부")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBlackJackUserBlackJack(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
@@ -254,9 +260,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.DRAW);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭, 유저가 블랙잭이 아닌 21 일 때 = 패")
-    @Test
-    void dealerBlackJackUserNotBlackJack21() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭이 아닌 21 일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBlackJackUserNotBlackJack21(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
@@ -276,9 +283,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭, 유저가 21 미만일 때 = 패")
-    @Test
-    void dealerBlackJackUserUnder21() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 21 미만일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerBlackJackUserUnder21(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
@@ -298,9 +306,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭이 아닌 21, 유저가 bust일 때 = 패")
-    @Test
-    void dealerNotBlackJack21UserBust() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 bust일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerNotBlackJack21UserBust(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
@@ -321,9 +330,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭일 때 = 승")
-    @Test
-    void dealerNotBlackJack21UserBlackJack() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭일 때 = 승")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerNotBlackJack21UserBlackJack(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
@@ -343,9 +353,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭이 아닌 21일 때 = 무승부")
-    @Test
-    void dealerNotBlackJack21UserNotBlackJack21() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭이 아닌 21일 때 = 무승부")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerNotBlackJack21UserNotBlackJack21(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
@@ -366,9 +377,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.DRAW);
     }
 
-    @DisplayName("승패 판단 - 딜러가 블랙잭이 아닌 21, 유저가 21미만일 때 = 패")
-    @Test
-    void dealerNotBlackJack21UserUnder21() {
+    @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 21미만일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealerNotBlackJack21UserUnder21(int bettingMoney) {
         Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
@@ -388,9 +400,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 20, 유저가 bust일 때 = 패")
-    @Test
-    void dealer20UserBust() {
+    @DisplayName("수익 계산 - 딜러가 20, 유저가 bust일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealer20UserBust(int bettingMoney) {
         Dealer dealer = new Dealer(); // 20
         dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.FOUR));
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.EIGHT));
@@ -411,9 +424,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 
-    @DisplayName("승패 판단 - 딜러가 20, 유저가 블랙잭일 때 = 승")
-    @Test
-    void dealer20UserBlackJack() {
+    @DisplayName("수익 계산 - 딜러가 20, 유저가 블랙잭일 때 = 승")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealer20UserBlackJack(int bettingMoney) {
         Dealer dealer = new Dealer(); // 20
         dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.THREE));
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SEVEN));
@@ -433,9 +447,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("승패 판단 - 딜러가 20, 유저가 블랙잭이 아닌 21일 때 = 승")
-    @Test
-    void dealer20UserNotBlackJack21() {
+    @DisplayName("수익 계산 - 딜러가 20, 유저가 블랙잭이 아닌 21일 때 = 승")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealer20UserNotBlackJack21(int bettingMoney) {
         Dealer dealer = new Dealer(); // 20
         dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
@@ -458,9 +473,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.WIN);
     }
 
-    @DisplayName("승패 판단 - 딜러가 20, 유저가 20일 때 = 무승부")
-    @Test
-    void dealer20User20() {
+    @DisplayName("수익 계산 - 딜러가 20, 유저가 20일 때 = 무승부")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealer20User20(int bettingMoney) {
         Dealer dealer = new Dealer(); // 20
         dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
@@ -480,9 +496,10 @@ public class UserTest {
         assertThat(resultType).isEqualTo(ResultType.DRAW);
     }
 
-    @DisplayName("승패 판단 - 딜러가 20, 유저가 19일 때 = 패")
-    @Test
-    void dealer20User19() {
+    @DisplayName("수익 계산 - 딜러가 20, 유저가 19일 때 = 패")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void dealer20User19(int bettingMoney) {
         Dealer dealer = new Dealer(); // 20
         dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
@@ -500,41 +517,5 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
-    }
-
-    @DisplayName("유저가 지면, 배팅한 금액을 딜러에게 준다.")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
-    void userLossProfit(int bettingMoney) {
-        Dealer dealer = new Dealer();
-        User user = new User(POBI, bettingMoney);
-        user.applyResult(ResultType.LOSS, dealer);
-
-        assertThat(user.getProfit()).isEqualTo(-bettingMoney);
-        assertThat(dealer.getProfit()).isEqualTo(bettingMoney);
-    }
-
-    @DisplayName("비기면, 돈의 이동은 일어나지 않는다.")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
-    void drawProfit(int bettingMoney) {
-        Dealer dealer = new Dealer();
-        User user = new User(POBI, bettingMoney);
-        user.applyResult(ResultType.DRAW, dealer);
-
-        assertThat(user.getProfit()).isEqualTo(0);
-        assertThat(dealer.getProfit()).isEqualTo(0);
-    }
-
-    @DisplayName("유저가 블랙잭으로 이기면, 배팅한 금액의 1.5배 만큼을 딜러로부터 받는다.")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
-    void userWinWithBlackJack(int bettingMoney) {
-        Dealer dealer = new Dealer();
-        User user = new User(POBI, bettingMoney);
-        user.applyResult(ResultType.DRAW, dealer);
-
-        assertThat(user.getProfit()).isEqualTo(0);
-        assertThat(dealer.getProfit()).isEqualTo(0);
     }
 }

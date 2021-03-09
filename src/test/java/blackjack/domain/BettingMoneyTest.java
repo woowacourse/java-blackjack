@@ -1,11 +1,14 @@
 package blackjack.domain;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BettingMoneyTest {
     private static final int MIN_BETTING_MONEY_BOUND = 1_000;
@@ -33,4 +36,23 @@ class BettingMoneyTest {
         assertThatThrownBy(() -> new BettingMoney(MAX_BETTING_MONEY_BOUND + 1))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("결과에 따른 수익 반환 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
+    void getProfit(int bettingMoney) {
+
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.LOSS))
+            .isEqualTo(-bettingMoney);
+
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.DRAW))
+            .isEqualTo(0);
+
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.WIN_WITH_BLACKJACK))
+            .isEqualTo((int)((double)bettingMoney * 1.5));
+
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.WIN_NOT_WITH_BLACKJACK))
+            .isEqualTo(bettingMoney);
+    }
+
 }

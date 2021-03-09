@@ -22,10 +22,4 @@ public interface Player {
     boolean isBlackJack();
 
     boolean isBust();
-
-    int getProfit();
-
-    void addMoney(int money);
-
-    void subtractMoney(int money);
 }

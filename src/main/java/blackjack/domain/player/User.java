@@ -6,17 +6,16 @@ import blackjack.domain.UserDrawContinue;
 
 public class User extends AbstractPlayer {
     private boolean isDrawStop = false;
+    private final BettingMoney bettingMoney;
 
     public User(String name) {
         super(name);
-        bettingMoney = new BettingMoney().getMoney();
-        currentMoney = bettingMoney;
+        bettingMoney = new BettingMoney();
     }
 
     public User(String name, int bettingMoney) {
         super(name);
-        this.bettingMoney = new BettingMoney(bettingMoney).getMoney();
-        currentMoney = this.bettingMoney;
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     public boolean isDrawStop() {
@@ -79,12 +78,5 @@ public class User extends AbstractPlayer {
             return ResultType.DRAW;
         }
         return ResultType.LOSS;
-    }
-
-    public void applyResult(ResultType resultType, Dealer dealer) {
-        if (resultType == ResultType.LOSS) {
-            this.subtractMoney(bettingMoney);
-            dealer.addMoney(bettingMoney);
-        }
     }
 }

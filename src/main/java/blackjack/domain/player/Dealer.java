@@ -15,8 +15,6 @@ public class Dealer extends AbstractPlayer {
     public Dealer() {
         super(DEALER_NAME);
         this.cardOpenStrategy = new OneCardOpenStrategy();
-        bettingMoney = 0;
-        currentMoney = bettingMoney;
     }
 
     public void setCardOpenStrategy(CardOpenStrategy cardOpenStrategy) {
