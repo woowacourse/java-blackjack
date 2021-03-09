@@ -20,7 +20,7 @@ public enum Result {
         return Stream.of(Result.values())
             .filter(it -> it.predicate.test(playerPoint, dealerPoint))
             .findAny()
-            .orElse(null);
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public String getMessage() {
