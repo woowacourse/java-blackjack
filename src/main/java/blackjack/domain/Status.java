@@ -4,9 +4,9 @@ import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 public enum Status {
-    WIN("승", (dealer,player) -> (dealer.isBust() && player.isNotBust()) || player.compareTo(dealer) > 0),
+    LOSE("패",(dealer,player) -> player.isBust()),
     DRAW("무",(dealer,player) -> player.compareTo(dealer) == 0),
-    LOSE("패",(dealer,player) -> player.isBust());
+    WIN("승", (dealer,player) -> (dealer.isBust() && player.isNotBust()) || player.compareTo(dealer) > 0);
 
     private final String status;
     private final BiPredicate<Score,Score> match;

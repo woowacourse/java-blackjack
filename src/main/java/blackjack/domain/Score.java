@@ -21,6 +21,10 @@ public class Score implements Comparable<Score> {
         return score > BLACKJACK;
     }
 
+    public boolean isBlackJack() {
+        return score == BLACKJACK;
+    }
+
     public boolean isLessThanEleven(){
         return score + GAP_BETWEEN_ACE_MAX_AND_MIN <= BLACKJACK;
     }
@@ -31,6 +35,10 @@ public class Score implements Comparable<Score> {
 
     public boolean isLowerThan(int threshold) {
         return score <= threshold;
+    }
+
+    public int toInt() {
+        return score;
     }
 
     @Override
@@ -53,9 +61,5 @@ public class Score implements Comparable<Score> {
     @Override
     public int compareTo(Score that) {
         return Integer.compare(this.score, that.score);
-    }
-
-    public int toInt() {
-        return score;
     }
 }
