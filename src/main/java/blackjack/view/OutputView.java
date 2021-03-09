@@ -70,7 +70,7 @@ public class OutputView {
 
     public static void printResultTitle() {
         printNewLine();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
     public static void dealerResult(Map<ResultType, Integer> resultWithCount) {
@@ -81,9 +81,9 @@ public class OutputView {
         System.out.println("딜러 : " + sb.toString());
     }
 
-    public static void playersResult(Map<String, ResultType> resultWithName) {
-        for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue().getName());
+    public static void playersResult(Map<String, Integer> resultWithName) {
+        for (Map.Entry<String, Integer> entry : resultWithName.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
         }
     }
 

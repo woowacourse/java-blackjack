@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import java.util.List;
@@ -14,14 +15,6 @@ public class Player {
         this.name = name;
         this.money = money;
         this.hands = hands;
-    }
-
-    public int winProfit() {
-        return money;
-    }
-
-    public int loseProfit() {
-        return -money;
     }
 
     public List<Card> showHands() {
@@ -46,5 +39,15 @@ public class Player {
 
     public List<Card> showOpenHands() {
         return hands.getCardOf(2);
+    }
+
+    public int calculateProfit(ResultType resultType) {
+        if (ResultType.WIN.equals(resultType)) {
+            return money;
+        }
+        if (ResultType.LOSE.equals(resultType)) {
+            return -money;
+        }
+        return 0;
     }
 }
