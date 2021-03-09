@@ -33,11 +33,9 @@ public class PlayerTest {
         Player player = Player.from("pobi");
         Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
         Card secondCard = new Card(Suit.CLOVER, Rank.JACK);
-        Card thirdCard = new Card(Suit.CLOVER, Rank.ACE);
         
         player.receive(firstCard);
         player.receive(secondCard);
-        player.receive(thirdCard);
         
         // when
         boolean canReceive = player.canReceive();
