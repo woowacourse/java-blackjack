@@ -4,7 +4,11 @@ import blackjack.domain.player.GameResult;
 
 public class Money {
 
-    private double value;
+    private final double value;
+
+    public Money() {
+        this(0);
+    }
 
     public Money(double value) {
         this.value = value;
@@ -26,9 +30,13 @@ public class Money {
             return this;
         }
         if (GameResult.LOSE.equals(gameResult)) {
-            return new Money(value * -1);
+            return minus();
         }
-        return new Money(0);
+        return new Money();
+    }
+
+    public Money minus() {
+        return new Money(value * -1);
     }
 
 }
