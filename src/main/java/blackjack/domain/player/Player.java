@@ -6,14 +6,15 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 public interface Player {
-
-    void initializeCards(Deck deck);
-
-    void drawCard(Card card);
+    void receiveCard(Card card);
 
     Name getName();
 
     Score getScore();
 
     Cards getCards();
+
+    boolean hasBlackJack();
+
+    boolean isBust();
 }

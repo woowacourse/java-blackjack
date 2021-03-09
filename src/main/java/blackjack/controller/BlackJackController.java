@@ -1,45 +1,65 @@
 package blackjack.controller;
 
 import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame();
-        Players players = initializePlayers(blackJackGame);
-        askPlayersDraw(blackJackGame, players);
-        OutputView.printResult(blackJackGame.calculateResult(players));
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.askPlayerNames());
+        askGamblerBet(blackJackGame);
+        printInitialCards(blackJackGame);
+
+        drawAdditionalCards(blackJackGame);
+
+        calculateResults(blackJackGame);
+        blackJackGame.calculateMoney();
+
+        for (Gambler gambler : blackJackGame.getGamblers()) {
+            System.out.println(gambler.getBettingMoney().abs());
+        }
     }
 
-    private Players initializePlayers(final BlackJackGame blackJackGame) {
-        Players players = blackJackGame.createPlayers(InputView.askPlayerNames());
-        OutputView.printPlayersCardsInformation(players);
-        return players;
+    private void askGamblerBet(BlackJackGame blackJackGame) {
+        for (Gambler gambler : blackJackGame.getGamblers()) {
+            blackJackGame.bet(gambler, InputView.askBettingMoney(gambler));
+        }
+
+        blackJackGame.checkBlackJack();
     }
 
-    private void askPlayersDraw(final BlackJackGame blackJackGame, final Players players) {
-        for (Player player : players.getGamblers()) {
-            giveGamblerCards(blackJackGame, player);
+    private void printInitialCards(BlackJackGame blackJackGame) {
+        OutputView.printInitialCards(blackJackGame.getDealer(), blackJackGame.getGamblers());
+    }
+
+    private void drawAdditionalCards(final BlackJackGame blackJackGame) {
+        for (Player gambler : blackJackGame.getGamblers()) {
+            askGamblerDraw(blackJackGame, gambler);
         }
         giveDealerCards(blackJackGame);
-        OutputView.printLineSeparator();
     }
 
-    private void giveGamblerCards(final BlackJackGame blackJackGame, final Player player) {
-        while (InputView.askDrawOrNot(player).isYes()) {
-            blackJackGame.giveCard(player);
-            OutputView.printPlayerCards(player);
+    private void askGamblerDraw(final BlackJackGame blackJackGame, final Player gambler) {
+        while (InputView.askDrawOrNot(gambler).isYes()) {
+            blackJackGame.giveCard(gambler);
+            OutputView.printPlayerCardsInformation(gambler);
         }
     }
 
     private void giveDealerCards(final BlackJackGame blackJackGame) {
-        while (blackJackGame.isDealerAbleToDraw()) {
-            blackJackGame.giveDealerCard();
-            OutputView.printGiveDealer();
+        Dealer dealer = blackJackGame.getDealer();
+        while (dealer.ableToDraw()) {
+            blackJackGame.giveCard(dealer);
+            OutputView.informDealerReceived();
         }
+    }
+
+    private void calculateResults(BlackJackGame blackJackGame) {
+        OutputView.printResult(blackJackGame.calculateWinningResult());
     }
 }

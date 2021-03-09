@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.WinOrLose;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,22 +18,53 @@ public class Cards {
         cards.add(card);
     }
 
-    public Score getScore() {
+    public Score calculateScore() {
         Score score = Score.ZERO_SCORE;
         for (Card card : cards) {
-            score = score.addScore(card.getDenomination().getScore());
+            score = score.addScore(card.getScore());
         }
+        return decideAceScore(score);
+    }
 
-        if (countAce() != 0 && score.useAceAsEleven().isBellowThanBlackJack()) {
-            score = score.useAceAsEleven();
+    private Score decideAceScore(Score score) {
+        if (hasAce() && !isBust(score.useAceAsEleven())) {
+            return score.useAceAsEleven();
         }
         return score;
     }
 
-    public int countAce() {
-        return (int) cards.stream()
+    public WinOrLose compareCardsScore(Cards other) {
+        Score thisScore = calculateScore();
+        Score otherScore = other.calculateScore();
+
+        if (thisScore.isNotBustAndHigh(otherScore)) {
+            return WinOrLose.WIN;
+        }
+
+        if (otherScore.isNotBustAndHigh(thisScore)) {
+            return WinOrLose.LOSE;
+        }
+
+        return WinOrLose.DRAW;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
                 .filter(card -> card.isAce())
-                .count();
+                .findFirst()
+                .isPresent();
+    }
+
+    public boolean isBust(Score score) {
+        return score.isBust();
+    }
+
+    public boolean isBust() {
+        return isBust(calculateScore());
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore().isBlackJack();
     }
 
     public List<Card> cards() {

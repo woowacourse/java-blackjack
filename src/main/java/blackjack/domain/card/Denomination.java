@@ -39,4 +39,8 @@ public enum Denomination {
     public Score getScore() {
         return score;
     }
+
+    public boolean isAce() {
+        return this.equals(Denomination.ACE);
+    }
 }

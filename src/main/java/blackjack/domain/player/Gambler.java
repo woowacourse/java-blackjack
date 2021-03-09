@@ -2,30 +2,36 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
 public class Gambler implements Player {
-
-    private static final int NUMBER_OF_INITIAL_CARDS = 2;
-
     private final Name name;
-    private final Cards cards;
+    private final Cards cards = new Cards();
+    private Money money = new Money(0);
 
     public Gambler(final Name name) {
         this.name = name;
-        this.cards = new Cards();
+    }
+
+    public void earn(Money money) {
+        this.money = this.money.add(money);
+    }
+
+    public void lose(Money money) {
+        this.money = this.money.sub(money);
+    }
+
+    public Money getBettingMoney() {
+        return this.money.abs();
     }
 
     @Override
-    public void initializeCards(final Deck deck) {
-        for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
-            cards.add(deck.draw());
-        }
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     @Override
-    public void drawCard(final Card card) {
+    public void receiveCard(final Card card) {
         cards.add(card);
     }
 
@@ -36,11 +42,16 @@ public class Gambler implements Player {
 
     @Override
     public Score getScore() {
-        return cards.getScore();
+        return cards.calculateScore();
     }
 
     @Override
     public Cards getCards() {
         return cards;
+    }
+
+    @Override
+    public boolean hasBlackJack() {
+        return cards.isBlackJack();
     }
 }

@@ -27,6 +27,6 @@ public class CardsTest {
     void testGetScore() {
         cards.add(Card.of(Suit.SPADE, Denomination.FIVE));
         cards.add(Card.of(Suit.SPADE, Denomination.TEN));
-        assertThat(cards.getScore()).isEqualTo(new Score(15));
+        assertThat(cards.calculateScore()).isEqualTo(new Score(15));
     }
 }
