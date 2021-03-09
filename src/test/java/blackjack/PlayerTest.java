@@ -5,13 +5,14 @@ import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.utils.CardDeck;
 import blackjack.utils.FixedCardDeck;
+import blackjack.utils.IllegalNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class PlayerTest {
     @Test
@@ -36,6 +37,39 @@ public class PlayerTest {
         List<Card> playerCards = player.getUnmodifiableCards();
         assertThat(playerCards).contains(Card.from("A클로버"), Card.from("2클로버"));
     }
+
+    @Test
+    @DisplayName("이름이 빈문자열이면 예외 발생 확인")
+    void create4() {
+        assertThatThrownBy(() -> new Player("", new FixedCardDeck()))
+                .isInstanceOf(IllegalNameException.class)
+                .hasMessage("이름이 null이거나 빈 문자열일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이름이 null이면 예외 발생 확인")
+    void create5() {
+        assertThatThrownBy(() -> new Player(null, new FixedCardDeck()))
+                .isInstanceOf(IllegalNameException.class)
+                .hasMessage("이름이 null이거나 빈 문자열일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이름에 한글이 섞여있을 때 예외 발생 확인")
+    void create6() {
+        assertThatThrownBy(() -> new Player("john한글", new FixedCardDeck()))
+                .isInstanceOf(IllegalNameException.class)
+                .hasMessage("이름은 알파벳 대소문자로 이루어져야 합니다.");
+    }
+
+    @Test
+    @DisplayName("이름애 숫자가 섞여있을 때 예외 발생 확인")
+    void create7() {
+        assertThatThrownBy(() -> new Player("john123", new FixedCardDeck()))
+                .isInstanceOf(IllegalNameException.class)
+                .hasMessage("이름은 알파벳 대소문자로 이루어져야 합니다.");
+    }
+
 
     @Test
     @DisplayName("플레이어에게 카드 추가 지급")
