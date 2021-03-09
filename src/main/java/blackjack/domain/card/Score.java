@@ -3,39 +3,48 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Score {
-    public final static int BLACK_JACK = 21;
+    public static final int BLACK_JACK = 21;
+    public static final int MIN_BUST_SCORE = 22;
+    public static final Score ZERO_SCORE = new Score(0);
+    public static final Score ADDITIONAL_ACE_SCORE = new Score(10);
 
     private final int score;
 
-    public Score(final int value){
-        if(value < 0){
+    private Score(final int value) {
+        this.score = value;
+    }
+
+    public static Score of(int value) {
+        if (value < 0) {
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
+        if(value == 0){
+            return ZERO_SCORE;
+        }
+        return new Score(value);
+    }
 
-        this.score = value;
+    public Score addScore(Score score) {
+        return of(this.score + score.score);
+    }
+
+    public boolean isTwentyOne() {
+        return score == BLACK_JACK;
     }
 
     public boolean isBust() {
         return score > BLACK_JACK;
     }
 
-    public boolean isBlackJack(){
-        return score == BLACK_JACK;
-    }
-
-    public boolean isBelow(final int score) {
-        return this.score <= score;
-    }
-
-    public boolean isBiggerThan(Score target){
+    public boolean isBiggerThan(final Score target) {
         return score > target.score;
     }
 
-    public boolean isLessThan(Score target){
+    public boolean isLessThan(final Score target) {
         return score < target.score;
     }
 
-    public int score(){
+    public int getScore(){
         return score;
     }
 
