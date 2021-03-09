@@ -47,7 +47,7 @@ public abstract class Participant {
 
     public abstract Result decideWinner(final Participant participant);
 
-    public abstract List<Card> showCards();
+    public abstract List<Card> initialCards();
 
     public abstract boolean checkMoreCardAvailable();
 

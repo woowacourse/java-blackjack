@@ -27,7 +27,7 @@ public class OutputView {
     public static void showNameAndCardInfo(final Participants participants) {
         distributeMessage(participants.getPlayers());
         participants.getParticipantGroup()
-            .forEach(participant -> showParticipantCard(participant, participant.showCards()));
+            .forEach(participant -> showParticipantCard(participant, participant.initialCards()));
     }
 
     private static void distributeMessage(final List<Participant> players) {

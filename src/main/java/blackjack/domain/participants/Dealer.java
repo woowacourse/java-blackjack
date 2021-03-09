@@ -33,7 +33,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<Card> showCards() {
+    public List<Card> initialCards() {
         return Collections.singletonList(getPlayerCards().get(0));
     }
 

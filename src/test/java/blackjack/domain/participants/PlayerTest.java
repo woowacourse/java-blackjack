@@ -42,7 +42,7 @@ public class PlayerTest {
     void showCards() {
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(player.showCards().size()).isEqualTo(2);
+        assertThat(player.initialCards().size()).isEqualTo(2);
     }
 
     @Test

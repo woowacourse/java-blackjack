@@ -27,7 +27,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> showCards() {
+    public List<Card> initialCards() {
         return new ArrayList<>(getPlayerCards());
     }
 

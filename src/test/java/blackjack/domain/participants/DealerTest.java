@@ -54,7 +54,7 @@ public class DealerTest {
     void showCards() {
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(dealer.showCards()).hasSize(1);
+        assertThat(dealer.initialCards()).hasSize(1);
     }
 
     @Test
