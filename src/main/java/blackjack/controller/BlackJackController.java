@@ -29,10 +29,10 @@ public class BlackJackController {
         try {
             blackJackService.initChallengers(requestNames());
             blackJackService.initDealer();
-            return;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             initSetting();
+            return;
         }
         OutputView.printInitSetting(blackJackService.getPlayers());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
