@@ -29,7 +29,7 @@ public class Players {
         players.forEach(player -> player.initialDraw(deck));
     }
 
-    public void calculateGameResult(Dealer dealer){
+    public void calculateGameResult(Dealer dealer) {
         players.forEach(player -> player.calculateGameResult(dealer));
     }
 }
