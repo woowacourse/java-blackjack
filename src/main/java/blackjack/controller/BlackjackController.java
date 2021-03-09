@@ -44,7 +44,7 @@ public class BlackjackController {
     private void printResult(Players players, Dealer dealer) {
         OutputView.gamersAllCards(players, dealer);
         OutputView.printResultTitle();
-        OutputView.dealerResult(players.resultWithCount(dealer));
+        OutputView.dealerResult(players.dealerResult(dealer));
         OutputView.playersResult(players.resultWithName(dealer));
     }
 }

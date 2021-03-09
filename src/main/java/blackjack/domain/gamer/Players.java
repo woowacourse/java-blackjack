@@ -18,14 +18,13 @@ public class Players implements Iterable<Player> {
         this.players = players;
     }
 
-    public Map<ResultType, Integer> resultWithCount(Dealer dealer) {
-        Map<ResultType, Integer> result = new EnumMap<>(ResultType.class);
+    public int dealerResult(Dealer dealer) {
+        int sum = 0;
         for (Player player : players) {
-            ResultType switchedResult = ResultCalculator.decideWinner(player, dealer)
-                    .switchPosition();
-            result.put(switchedResult, result.getOrDefault(switchedResult, 0) + 1);
+            ResultType result = ResultCalculator.decideWinner(player, dealer);
+            sum += player.calculateProfit(result);
         }
-        return result;
+        return -sum;
     }
 
     public Map<String, Integer> resultWithName(Dealer dealer) {

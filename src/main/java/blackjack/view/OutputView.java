@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -73,12 +72,8 @@ public class OutputView {
         System.out.println("## 최종 수익");
     }
 
-    public static void dealerResult(Map<ResultType, Integer> resultWithCount) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
-            sb.append(entry.getValue() + entry.getKey().getName() + " ");
-        }
-        System.out.println("딜러 : " + sb.toString());
+    public static void dealerResult(int dealerResult) {
+        System.out.println("딜러 : " + dealerResult);
     }
 
     public static void playersResult(Map<String, Integer> resultWithName) {
