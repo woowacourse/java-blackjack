@@ -1,22 +1,23 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Deck;
+
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-public class Players implements Iterable<Player>{
+public class Players {
     private final List<Player> players;
 
-    public Players(final List<Player> players){
+    public Players(final List<Player> players) {
         this.players = players;
     }
 
-    public List<Player> players(){
+    public void initPlayerCards(Deck deck) {
+        players.forEach(player -> player.initializeCards(deck));
+    }
+
+    public List<Player> players() {
         return Collections.unmodifiableList(players);
     }
 
-    @Override
-    public Iterator<Player> iterator() {
-        return players.iterator();
-    }
 }
