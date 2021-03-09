@@ -132,7 +132,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isTrue();
         assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI); // bust
+        User user = new User(POBI, bettingMoney); // bust
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FOUR));
         user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
@@ -158,7 +158,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isTrue();
         assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI); // 블랙잭
+        User user = new User(POBI, bettingMoney); // 블랙잭
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
         assertThat(user.isBlackJack()).isTrue();
@@ -183,7 +183,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isTrue();
         assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI); // 블랙잭이 아닌 21
+        User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FIVE));
         user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
@@ -209,7 +209,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isTrue();
         assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI); // 20
+        User user = new User(POBI, bettingMoney); // 20
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FOUR));
         user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
@@ -234,7 +234,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // bust
+        User user = new User(POBI, bettingMoney); // bust
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FOUR));
         user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
@@ -249,9 +249,8 @@ public class UserTest {
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭 일 때 = 무승부")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBlackJackUserBlackJack(int bettingMoney) {
+    @Test
+    void dealerBlackJackUserBlackJack() {
         Dealer dealer = new Dealer(); // 블랙잭
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
@@ -283,7 +282,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // 블랙잭이 아닌 21
+        User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FIVE));
         user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
@@ -308,7 +307,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // 20
+        User user = new User(POBI, bettingMoney); // 20
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FOUR));
         user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
@@ -334,7 +333,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // bust
+        User user = new User(POBI, bettingMoney); // bust
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TWO));
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
@@ -360,7 +359,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // 블랙잭
+        User user = new User(POBI, bettingMoney); // 블랙잭
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         assertThat(user.isBlackJack()).isTrue();
@@ -410,7 +409,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // 20
+        User user = new User(POBI, bettingMoney); // 20
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
         assertThat(user.isBlackJack()).isFalse();
@@ -435,7 +434,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI); // bust
+        User user = new User(POBI, bettingMoney); // bust
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.KING));
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TWO));
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
@@ -461,7 +460,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI); // 블랙잭
+        User user = new User(POBI, bettingMoney); // 블랙잭
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.JACK));
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         assertThat(user.isBlackJack()).isTrue();
@@ -486,7 +485,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI); // 블랙잭이 아닌 21
+        User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
         user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.ACE));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
@@ -538,7 +537,7 @@ public class UserTest {
         assertThat(dealer.isBust()).isFalse();
         assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI); // 19
+        User user = new User(POBI, bettingMoney); // 19
         user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
         user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.NINE));
         assertThat(user.isBlackJack()).isFalse();
