@@ -1,20 +1,33 @@
 package blackjack.domain.card;
 
+import blackjack.exception.InvalidCardException;
+
 import java.util.*;
 
 public class CardFactory {
 
+    private static final List<Card> cards;
+
+    static {
+        cards = create();
+    }
+
     private CardFactory() {
     }
 
-    public static Deque<Card> create() {
-        List<Card> cards = iterateType(new ArrayList<>());
-        return new ArrayDeque<>(cards);
+    public static Card of(Type type, Denomination denomination) {
+        return cards.stream()
+                .filter(card -> card.equals(new Card(type, denomination)))
+                .findFirst()
+                .orElseThrow(InvalidCardException::new);
+    }
+
+    public static List<Card> create() {
+        return iterateType(new ArrayList<>());
     }
 
     public static Deque<Card> createWithShuffle() {
-        List<Card> cards = iterateType(new ArrayList<>());
-        Collections.shuffle(cards);
+        Collections.shuffle(new ArrayList<>(cards));
         return new ArrayDeque<>(cards);
     }
 
