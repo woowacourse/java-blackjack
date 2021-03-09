@@ -33,7 +33,7 @@ public class BlackJackController {
     
     private void dealBaseCards(Dealer dealer, List<Player> players) {
         for (int i = 0; i < BASE_CARD_COUNT; i++) {
-            dealer.deal(dealer);
+            dealer.draw();
             players.forEach(dealer::deal);
         }
         OutputView.printDealtBaseCards(dealer, players);
@@ -50,7 +50,7 @@ public class BlackJackController {
     
     private void progressDealerTurn(Dealer dealer) {
         while (dealer.canReceive()) {
-            dealer.deal(dealer);
+            dealer.draw();
             OutputView.printDealerDrewMessage();
         }
     }

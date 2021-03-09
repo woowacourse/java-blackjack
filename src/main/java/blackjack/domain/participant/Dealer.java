@@ -25,9 +25,13 @@ public class Dealer extends Participant {
         return new Dealer(NAME, cardHand, Deck.createShuffledDeck());
     }
     
-    public void deal(Participant participant) {
+    public void deal(Player player) {
         final Card card = deck.drawCard();
-        participant.receive(card);
+        player.receive(card);
+    }
+    
+    public void draw() {
+        cardHand.add(deck.drawCard());
     }
     
     @Override
