@@ -36,4 +36,15 @@ public class PlayerCardsTest {
         cards.add(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
         assertThat(cards.isBlackjack()).isFalse();
     }
+
+    @DisplayName("버스트 테스트")
+    @Test
+    void isBust() {
+        PlayerCards cards = new PlayerCards();
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.JACK));
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.JACK));
+        assertThat(cards.isBust()).isFalse();
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
+        assertThat(cards.isBust()).isTrue();
+    }
 }
