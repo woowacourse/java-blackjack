@@ -1,17 +1,14 @@
 package blackjack.domain.participant.state;
 
 import blackjack.domain.carddeck.Card;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Hit implements State {
+public class Hit extends Running {
 
     private static final int BLACKJACK = 21;
 
-    private final List<Card> cards;
-
     public Hit(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        super(cards);
     }
 
     public State draw(final Card card) {
@@ -31,15 +28,5 @@ public class Hit implements State {
 
     public State stay() {
         return new Stay(this.cards);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public List<Card> cards() {
-        return new ArrayList<>(this.cards);
     }
 }
