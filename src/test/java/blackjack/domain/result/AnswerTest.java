@@ -24,12 +24,18 @@ public class AnswerTest {
     @DisplayName("예외가 발생하는지 확인한다.")
     @Test
     void createDrawAnswerException() {
-        assertThatThrownBy(() -> Answer.of("q")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() ->
+                Answer.of("q"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("y가 입력되는 되는 경우를 확인한다.")
     @Test
     void isYes() {
-        assertThat(Answer.of("y").isYes()).isTrue();
+        Answer yes = Answer.of("y");
+
+        boolean isYes = yes.isYes();
+
+        assertThat(isYes).isTrue();
     }
 }

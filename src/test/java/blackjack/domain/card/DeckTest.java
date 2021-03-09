@@ -10,6 +10,7 @@ public class DeckTest {
     @DisplayName("카드 덱을 생성한다.")
     void createDeck() {
         Deck deck = new Deck();
+
         assertThat(deck).isInstanceOf(Deck.class);
     }
 
@@ -17,13 +18,21 @@ public class DeckTest {
     @DisplayName("카드에서 덱 2장을 뽑는다.")
     void popTwo() {
         Deck deck = new Deck();
-        assertThat(deck.popTwo().getCards().size()).isEqualTo(2);
+
+        int cardCount = deck.popTwo()
+                .getCards().size();
+
+        assertThat(cardCount).isEqualTo(2);
     }
 
     @Test
     @DisplayName("카드에서 덱 1장을 뽑는다.")
     void popOne() {
         Deck deck = new Deck();
-        assertThat(deck.popOne().getCards().size()).isEqualTo(1);
+
+        int cardCount = deck.popOne()
+                .getCards().size();
+
+        assertThat(cardCount).isEqualTo(1);
     }
 }

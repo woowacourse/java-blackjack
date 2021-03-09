@@ -31,11 +31,19 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         blackjackGame.handOutInitialCards();
 
-        assertThat(blackjackGame.getDealer().getCards().getCards().size()).isEqualTo(2);
-        blackjackGame.getPlayers()
+        int dealerCardCount = blackjackGame.getDealer()
+                .getCards()
+                .getCards()
+                .size();
+        boolean isPlayersCountTwo = blackjackGame.getPlayers()
                 .getPlayers()
-                .forEach(player -> assertThat(player.getCards().getCards().size())
-                        .isEqualTo(2));
+                .stream()
+                .allMatch(player -> player.getCards()
+                        .getCards()
+                        .size() == 2);
+
+        assertThat(dealerCardCount).isEqualTo(2);
+        assertThat(isPlayersCountTwo).isTrue();
     }
 
     @Test
@@ -48,7 +56,9 @@ public class BlackjackGameTest {
                 new Card(Shape.HEART, Value.QUEEN),
                 new Card(Shape.SPACE, Value.EIGHT)), "amazzzi");
 
-        assertThat(blackjackGame.isNotGameOver(player)).isFalse();
+        boolean isNotGameOver = blackjackGame.isNotGameOver(player);
+
+        assertThat(isNotGameOver).isFalse();
     }
 
     @Test
@@ -59,7 +69,11 @@ public class BlackjackGameTest {
         Player player = new Player("amazzzi");
 
         blackjackGame.hit(player);
-        assertThat(player.getCards().getCards().size()).isEqualTo(1);
+        int cardCount = player.getCards()
+                .getCards()
+                .size();
+
+        assertThat(cardCount).isEqualTo(1);
     }
 
     @Test
@@ -70,24 +84,29 @@ public class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         blackjackGame.hit(dealer);
-        assertThat(dealer.getCards().getCards().size()).isEqualTo(1);
+        int cardCount = dealer.getCards().getCards().size();
+
+        assertThat(cardCount).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("모든 유저들 가지고 오기 확인")
+    @DisplayName("딜러 포함 모든 유저들 가지고 오기 확인")
     void getUsers() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
 
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
-        assertThat(blackjackGame.getUsers().size()).isEqualTo(4);
+        int userCount = blackjackGame.getUsers()
+                .size();
+
+        assertThat(userCount).isEqualTo(4);
     }
 
     @Test
     @DisplayName("결과 보드 만들기 확인")
     void generateResultBoard() {
-        Dealer dealer = new Dealer();
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+
         assertThat(blackjackGame.generateResultBoard()).isInstanceOf(ResultBoard.class);
     }
 }

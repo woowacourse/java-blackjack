@@ -17,6 +17,7 @@ public class CardsTest {
     public void oneCard() {
         Deck deck = new Deck();
         Cards cards = deck.popTwo();
+
         Card card = cards.getOneCard();
 
         assertThat(card).isInstanceOf(Card.class);
@@ -29,7 +30,10 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         ));
-        assertThat(cards.calculateTotalValue()).isEqualTo(18);
+
+        int totalValue = cards.calculateTotalValue();
+
+        assertThat(totalValue).isEqualTo(18);
     }
 
     @DisplayName("Ace 카드를 포함하고 있고, 카드 합계가 21이 넘은 경우 총합에서 -10을 한다.")
@@ -39,7 +43,10 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.SPACE, Value.ACE),
                 new Card(Shape.CLOVER, Value.KING)));
-        assertThat(cards.calculateTotalValue()).isEqualTo(19);
+
+        int totalValue = cards.calculateTotalValue();
+
+        assertThat(totalValue).isEqualTo(19);
     }
 
     @DisplayName("카드들에 ACE 카드가 포함되는지 확인한다.")
@@ -48,7 +55,10 @@ public class CardsTest {
         Cards cards = new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.QUEEN),
                 new Card(Shape.SPACE, Value.ACE)));
-        assertThat(cards.isSoftHand()).isTrue();
+
+        boolean isSoftHand = cards.isSoftHand();
+
+        assertThat(isSoftHand).isTrue();
     }
 
     @DisplayName("카드들을 하나의 객체로 합친다.")
@@ -59,7 +69,9 @@ public class CardsTest {
         Cards otherCards = deck.popTwo();
         cards.combine(otherCards);
 
-        assertThat(cards.getCards().size()).isEqualTo(4);
+        int cardCount = cards.getCards().size();
+
+        assertThat(cardCount).isEqualTo(4);
     }
 
     @DisplayName("카드의 총합이 버스트인 경우를 확인한다.")
@@ -70,7 +82,9 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.SPACE, Value.JACK)));
 
-        assertThat(cards.isBust()).isTrue();
+        boolean isBust = cards.isBust();
+
+        assertThat(isBust).isTrue();
     }
 
     @DisplayName("카드의 총합이 버스트가 아닌 경우를 확인한다.")
@@ -80,6 +94,8 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.QUEEN),
                 new Card(Shape.SPACE, Value.ACE)));
 
-        assertThat(cards.isBust()).isFalse();
+        boolean isBust = cards.isBust();
+
+        assertThat(isBust).isFalse();
     }
 }

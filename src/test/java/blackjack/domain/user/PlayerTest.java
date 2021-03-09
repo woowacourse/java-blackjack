@@ -24,13 +24,14 @@ public class PlayerTest {
     @Test
     public void distributeTwoCards() {
         Player player = new Player("amazzi");
+
         player.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.HEART, Value.NINE),
                 new Card(Shape.DIAMOND, Value.JACK)
         )));
-        Cards cards = player.cards;
+        int cardCount = player.cards.getCards().size();
 
-        assertThat(cards.getCards().size()).isEqualTo(2);
+        assertThat(cardCount).isEqualTo(2);
     }
 
     @DisplayName("카드 합계가 21 이하인지 확인한다. - 카드를 더 받을 수 있다.")
@@ -42,7 +43,9 @@ public class PlayerTest {
                 new Card(Shape.DIAMOND, Value.JACK)
         )));
 
-        assertThat(player.isAbleToHit()).isTrue();
+        boolean isAbleToHit = player.isAbleToHit();
+
+        assertThat(isAbleToHit).isTrue();
     }
 
     @DisplayName("카드 합계가 21 초과인지 확인한다. - 카드를 더 받을 수 없다.")
@@ -55,10 +58,12 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.QUEEN)
         )));
 
-        assertThat(player.isAbleToHit()).isFalse();
+        boolean isAbleToHit = player.isAbleToHit();
+
+        assertThat(isAbleToHit).isFalse();
     }
 
-    @DisplayName("카드 두장을 공개한다.")
+    @DisplayName("카드를 공개한다.")
     @Test
     void show() {
         Player player = new Player("amazzi");
@@ -66,8 +71,11 @@ public class PlayerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        Cards cards = player.getCards();
-        assertThat(cards.getCards().size()).isEqualTo(2);
+
+        int cardCount = player.cards
+                .getCards().size();
+
+        assertThat(cardCount).isEqualTo(2);
     }
 
     @DisplayName("플레이어의 결과를 산출한다. - 버스트여서 패")
@@ -84,7 +92,10 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.KING),
                 new Card(Shape.HEART, Value.QUEEN)
         )));
-        assertThat(player.produceResult(dealer)).isEqualTo(Result.LOSE);
+
+        Result result = player.produceResult(dealer);
+
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어의 결과를 산출한다. - 버스트 아니고 패")
@@ -100,7 +111,10 @@ public class PlayerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.TWO)
         )));
-        assertThat(player.produceResult(dealer)).isEqualTo(Result.LOSE);
+
+        Result result = player.produceResult(dealer);
+
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어의 결과를 산출한다. - 무승부")
@@ -116,6 +130,9 @@ public class PlayerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        assertThat(player.produceResult(dealer)).isEqualTo(Result.STAND_OFF);
+
+        Result result = player.produceResult(dealer);
+
+        assertThat(result).isEqualTo(Result.STAND_OFF);
     }
 }

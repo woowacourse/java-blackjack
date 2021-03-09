@@ -23,12 +23,14 @@ public class DealerTest {
     @Test
     public void distributeTwoCards() {
         Dealer dealer = new Dealer();
+
         dealer.receiveCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        Cards cards = dealer.cards;
-        assertThat(cards.getCards().size()).isEqualTo(2);
+        int cardCount = dealer.cards.getCards().size();
+
+        assertThat(cardCount).isEqualTo(2);
     }
 
     @DisplayName("카드 합계가 16 이하인지 확인한다. - 카드를 더 받을 수 있다.")
@@ -40,7 +42,9 @@ public class DealerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(dealer.isAbleToHit()).isTrue();
+        boolean isAbleToHit = dealer.isAbleToHit();
+
+        assertThat(isAbleToHit).isTrue();
     }
 
     @DisplayName("카드 합계가 17 이상인지 확인한다. - 카드를 더 받을 수 없다.")
@@ -53,7 +57,9 @@ public class DealerTest {
                 new Card(Shape.SPACE, Value.QUEEN)
         )));
 
-        assertThat(dealer.isAbleToHit()).isFalse();
+        boolean isAbleToHit = dealer.isAbleToHit();
+
+        assertThat(isAbleToHit).isFalse();
     }
 
     @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")
@@ -64,6 +70,7 @@ public class DealerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
+
         assertThat(dealer.showOneCard()).isInstanceOf(Card.class);
     }
 }

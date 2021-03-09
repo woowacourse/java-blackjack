@@ -19,7 +19,9 @@ public class CardTest {
     public void checkValue() {
         Card card = new Card(Shape.SPACE, Value.ACE);
 
-        assertThat(card.value()).isEqualTo(11);
+        int cardValue = card.value();
+
+        assertThat(cardValue).isEqualTo(11);
     }
 
     @Test
@@ -27,6 +29,8 @@ public class CardTest {
     void isAceCard() {
         Card card = new Card(Shape.CLOVER, Value.ACE);
 
-        assertThat(card.isAceCard()).isTrue();
+        boolean isAce = card.isAceCard();
+
+        assertThat(isAce).isTrue();
     }
 }

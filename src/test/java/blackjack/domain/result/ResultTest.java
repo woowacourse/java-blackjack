@@ -11,6 +11,8 @@ public class ResultTest {
     public void reverse() {
         Result result = Result.WIN;
 
-        assertThat(result.reverse(result)).isEqualTo(Result.LOSE);
+        Result reverseResult = result.reverse(result);
+
+        assertThat(reverseResult).isEqualTo(Result.LOSE);
     }
 }
