@@ -40,11 +40,11 @@ public abstract class Participant {
 		return thisParticipant.isBust() || thatParticipant.isBust();
 	}
 
-	public String getHand() {
-		return cards.getConcatenatedCards();
+	public Cards getHand() {
+		return cards;
 	}
 
-	public abstract String getInitialHand();
+	public abstract Cards getInitialHand();
 
 	public boolean isDealer() {
 		return this instanceof Dealer;

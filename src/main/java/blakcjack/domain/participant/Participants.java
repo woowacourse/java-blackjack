@@ -7,8 +7,6 @@ import blakcjack.domain.outcome.OutcomeStatistics;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static blakcjack.view.OutputView.DELIMITER;
-
 public class Participants {
 	private final List<Participant> participants = new ArrayList<>();
 
@@ -22,13 +20,6 @@ public class Participants {
 			participant.drawOneCardFrom(deck);
 			participant.drawOneCardFrom(deck);
 		}
-	}
-
-	public String getConcatenatedPlayerNames() {
-		return getPlayers()
-				.stream()
-				.map(Participant::getName)
-				.collect(Collectors.joining(DELIMITER));
 	}
 
 	public List<Participant> getParticipants() {
@@ -60,7 +51,7 @@ public class Participants {
 				.orElseThrow(NoDealerExistException::new);
 	}
 
-	private List<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return participants.stream()
 				.filter(participant -> !participant.isDealer())
 				.map(participant -> (Player) participant)

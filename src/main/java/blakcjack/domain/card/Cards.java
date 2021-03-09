@@ -1,11 +1,9 @@
 package blakcjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
-import static blakcjack.view.OutputView.DELIMITER;
 
 public class Cards {
 	public static final int BLACKJACK_VALUE = 21;
@@ -41,18 +39,16 @@ public class Cards {
 		return 0 < aceCount && (score + ACE_ADDITIONAL_VALUE) <= BLACKJACK_VALUE;
 	}
 
+	public List<Card> toList() {
+		return Collections.unmodifiableList(cards);
+	}
+
 	public void add(final Card card) {
 		cards.add(card);
 	}
 
 	public Card getFirstCard() {
 		return cards.get(FIRST_CARD_POSITION);
-	}
-
-	public String getConcatenatedCards() {
-		return cards.stream()
-				.map(Card::getCardInformation)
-				.collect(Collectors.joining(DELIMITER));
 	}
 
 	@Override
