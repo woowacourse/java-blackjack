@@ -46,7 +46,7 @@ public class UserDeckTest {
         assertThat(cardScore).isEqualTo(17);
     }
 
-    private UserDeck generateActiveUserDeck(Card one, Card two) {
+    public static UserDeck generateActiveUserDeck(Card one, Card two) {
         UserDeck userDeck = new UserDeck();
         userDeck.add(one);
         userDeck.add(two);

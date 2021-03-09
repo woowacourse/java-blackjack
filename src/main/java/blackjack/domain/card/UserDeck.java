@@ -28,6 +28,13 @@ public class UserDeck {
         return originalScore;
     }
 
+    public boolean isBust() {
+        if (score() == BURST_CONDITION) {
+            return true;
+        }
+        return false;
+    }
+
     private int getAceCount() {
         return (int) userCards.stream()
             .filter(Card::isAce)
