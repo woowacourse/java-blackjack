@@ -23,7 +23,7 @@ public class Card {
         this.denomination = denomination;
     }
 
-    private static void putDenomination(Suit suit) {
+    private static void putDenomination(final Suit suit) {
         for (final Denomination denomination : Denomination.values()) {
             CARDS.put(toKey(suit, denomination), new Card(suit, denomination));
         }

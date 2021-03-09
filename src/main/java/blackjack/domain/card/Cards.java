@@ -12,15 +12,15 @@ public class Cards {
 
     private final List<Card> cards;
 
-    private Cards(List<Card> cards) {
+    private Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Cards of(List<Card> cards) {
+    public static Cards of(final List<Card> cards) {
         return new Cards(cards);
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
@@ -29,7 +29,7 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public List<Card> getCardsWithSize(int number) {
+    public List<Card> getCardsWithSize(final int number) {
         return IntStream.range(0, number)
                 .mapToObj(cards::get)
                 .collect(Collectors.toList());
@@ -64,7 +64,7 @@ public class Cards {
                 .count();
     }
 
-    private int properSum(int sum) {
+    private int properSum(final int sum) {
         if (sum + ACE_CONVERSION > BLACKJACK) {
             return sum;
         }

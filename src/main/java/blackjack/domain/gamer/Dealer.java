@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
     private static final String NAME = "딜러";
     private static final int ADD_CARD_BOUNDARY = 16;
 
-    private Dealer(String name) {
+    private Dealer(final String name) {
         super(name);
     }
 

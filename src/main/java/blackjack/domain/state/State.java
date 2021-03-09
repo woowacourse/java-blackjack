@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public interface State {
-    State draw(Card card);
+    State draw(final Card card);
 
     State stay();
 
@@ -12,5 +12,5 @@ public interface State {
 
     boolean isFinished();
 
-    double profit(double money);
+    double profit(final double money);
 }

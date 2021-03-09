@@ -14,7 +14,7 @@ public abstract class Gamer {
     private final String name;
     protected State state;
 
-    protected Gamer(String name) {
+    protected Gamer(final String name) {
         this.name = name;
     }
 
@@ -34,11 +34,11 @@ public abstract class Gamer {
         return !state.isFinished();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         state = state.draw(card);
     }
 
-    public void initState(List<Card> initCards) {
+    public void initState(final List<Card> initCards) {
         state = FirstTurn.draw(initCards);
     }
 

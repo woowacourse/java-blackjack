@@ -10,7 +10,7 @@ public class Player extends Gamer {
 
     private final Money money;
 
-    public Player(String name, Money money) {
+    public Player(final String name, final Money money) {
         super(name);
         this.money = money;
     }

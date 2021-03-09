@@ -6,7 +6,7 @@ public class CardStack {
 
     private final Deque<Card> cards;
 
-    private CardStack(List<Card> cards) {
+    private CardStack(final List<Card> cards) {
         Collections.shuffle(cards);
         this.cards = new ArrayDeque<>(cards);
     }

@@ -30,33 +30,33 @@ public class BlackjackController {
         return Players.of(names, playersMoney);
     }
 
-    private void initHandsOf(Deck deck, Dealer dealer, Players players) {
+    private void initHandsOf(final Deck deck, final Dealer dealer, final Players players) {
         StateInitializer.init(deck, dealer, players);
         OutputView.printInitialCards(dealer, players);
     }
 
-    private void hitOrStand(Deck deck, Dealer dealer, Players players) {
+    private void hitOrStand(final Deck deck, final Dealer dealer, final Players players) {
         for (Player player : players) {
             hitOrStandForPlayer(deck, player);
         }
         hitOrStandForDealer(deck, dealer);
     }
 
-    private void hitOrStandForPlayer(Deck deck, Player player) {
+    private void hitOrStandForPlayer(final Deck deck, final Player player) {
         while (player.canDraw() && InputView.receiveAnswer(player.getName())) {
             player.receiveCard(deck.pick());
             OutputView.printAllCards(player);
         }
     }
 
-    private void hitOrStandForDealer(Deck deck, Dealer dealer) {
+    private void hitOrStandForDealer(final Deck deck, final Dealer dealer) {
         if (dealer.canDraw()) {
             dealer.receiveCard(deck.pick());
             OutputView.printDealerHitMessage();
         }
     }
 
-    private void printResult(Dealer dealer, Players players) {
+    private void printResult(final Dealer dealer, final Players players) {
         OutputView.showAllCards(dealer, players);
         OutputView.printResultTitle();
         OutputView.printProfit(ProfitCalculator.calculateProfitOf(dealer, players));

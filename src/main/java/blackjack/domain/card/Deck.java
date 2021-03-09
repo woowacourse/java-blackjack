@@ -6,7 +6,7 @@ public class Deck {
 
     private final CardStack cards;
 
-    private Deck(CardStack cards) {
+    private Deck(final CardStack cards) {
         this.cards = cards;
     }
 

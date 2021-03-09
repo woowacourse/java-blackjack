@@ -16,16 +16,16 @@ public class ProfitCalculator {
     private ProfitCalculator() {
     }
 
-    public static Map<String, Double> calculateProfitOf(Dealer dealer, Players players) {
+    public static Map<String, Double> calculateProfitOf(final Dealer dealer, final Players players) {
         final Map<String, Double> result = new LinkedHashMap<>();
         result.put(DEALER, ZERO);
         for (Player player : players) {
-            updateResult(result, player.getName(), compareResult2(dealer, player));
+            updateResult(result, player.getName(), compareResult(dealer, player));
         }
         return result;
     }
 
-    private static double compareResult2(Dealer dealer, Player player) {
+    private static double compareResult(final Dealer dealer, final Player player) {
         if (bothBlackjack(dealer, player)) {
             return ZERO;
         }
@@ -35,20 +35,20 @@ public class ProfitCalculator {
         return player.getProfit();
     }
 
-    private static void updateResult(Map<String, Double> result, String name, double profit) {
+    private static void updateResult(final Map<String, Double> result, final String name, final double profit) {
         result.put(name, profit);
         result.replace(DEALER, result.get(DEALER) + reverse(profit));
     }
 
-    private static boolean bothStay(Dealer dealer, Player player) {
+    private static boolean bothStay(final Dealer dealer, final Player player) {
         return !dealer.isBust() && !player.isBust();
     }
 
-    private static boolean bothBlackjack(Dealer dealer, Player player) {
+    private static boolean bothBlackjack(final Dealer dealer, final Player player) {
         return dealer.isBlackjack() && player.isBlackjack();
     }
 
-    private static double reverse(double value) {
+    private static double reverse(final double value) {
         return REVERSE * value;
     }
 }
