@@ -19,6 +19,9 @@ public class Dealer extends Participant {
         if (isOverLimit()) {
             return ParticipantState.STAY;
         }
+        if (isBlackJack()) {
+            return ParticipantState.BLACKJACK;
+        }
         return currentStatus;
     }
 

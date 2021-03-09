@@ -47,6 +47,10 @@ public abstract class Participant {
         return hand.isBust();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public String getName() {
         return name.unwrap();
     }

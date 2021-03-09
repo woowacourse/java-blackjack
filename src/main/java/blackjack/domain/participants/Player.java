@@ -18,6 +18,9 @@ public class Player extends Participant {
         if (isBust()) {
             return ParticipantState.BUST;
         }
+        if (isBlackJack()) {
+            return ParticipantState.BLACKJACK;
+        }
         return currentStatus;
     }
 
