@@ -50,8 +50,4 @@ public enum Result {
 
         return Result.WIN;
     }
-
-    public String getResultName() {
-        return resultName;
-    }
 }

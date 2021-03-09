@@ -16,12 +16,6 @@ public class Results {
         results.add(playerResult);
     }
 
-    public int findResultCountOfDealer(Result targetResult) {
-        return (int) results.stream()
-                .filter(result -> result == targetResult)
-                .count();
-    }
-
     public List<Result> findDealerResult() {
         return results.stream()
                 .map(this::convertResult)

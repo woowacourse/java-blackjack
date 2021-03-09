@@ -31,10 +31,6 @@ public class Dealer extends Participant {
         return getScore() <= DEALER_DRAW_LIMIT;
     }
 
-    public int countOfResult(Result result) {
-        return results.findResultCountOfDealer(result);
-    }
-
     public float profit(List<Player> players) {
         float profit = 0;
 
@@ -47,10 +43,6 @@ public class Dealer extends Participant {
 
     public List<Result> getDealerResults() {
         return results.findDealerResult();
-    }
-
-    public List<Result> getPlayerResults() {
-        return results.findPlayerResult();
     }
 
     public Result getPlayerResult(int index) {
