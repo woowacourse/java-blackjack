@@ -9,16 +9,13 @@ import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.exception.PlayerNotFoundException;
-import blackjack.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 

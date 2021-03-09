@@ -9,7 +9,6 @@ import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.ResultOfPlayers;
 import blackjack.util.DtoAssembler;
-import blackjack.util.Pair;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerDto;

@@ -6,7 +6,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Symbol;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
-import blackjack.util.Pair;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
