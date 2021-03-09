@@ -9,8 +9,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
-
     private final Players players;
     private final Dealer dealer;
     private final CardDeck cardDeck;
@@ -45,9 +43,7 @@ public class BlackJackController {
     }
 
     private void dealingTwoCards(Users users) {
-        for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            users.users().forEach(user -> user.addCard(cardDeck.drawCard()));
-        }
+        users.dealTwoCards(cardDeck);
         OutputView.printInitialComment(dealer, players);
         OutputView.printCardsOfDealerWithOneCardOpened(dealer);
         OutputView.printCardsOfPlayersWithoutScore(players);
