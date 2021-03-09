@@ -1,8 +1,6 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Deck;
-import blakcjack.domain.name.Name;
-import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 
@@ -17,12 +15,6 @@ public class Participants {
 	public Participants(final Dealer dealer, final List<Player> players) {
 		participants.add(dealer);
 		participants.addAll(players);
-	}
-
-	private void addPlayers(final Names names) {
-		for (Name name : names.toList()) {
-			participants.add(new Player(name));
-		}
 	}
 
 	public void initializeHandsFrom(final Deck deck) {
