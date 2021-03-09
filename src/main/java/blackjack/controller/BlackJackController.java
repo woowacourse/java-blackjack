@@ -29,20 +29,19 @@ public class BlackJackController {
     }
 
     private void playerDraw(CardDeck cardDeck, Player player) {
-        while (player.isAvailableDraw() && isYes(player)) {
+        String input = InputView.requestMoreDraw(player.getName());
+        if (player.isAvailableDraw() && player.isYes(input)) {
             player.draw(cardDeck.draw());
             OutputView.showPlayerCard(player);
+            playerDraw(cardDeck, player);
         }
     }
 
-    private boolean isYes(Player player) {
-        return InputView.requestMoreDraw(player.getName());
-    }
-
     private void processDealer(CardDeck cardDeck, Dealer dealer) {
-        while (dealer.isAvailableDraw()) {
+        if (dealer.isAvailableDraw()) {
             dealer.draw(cardDeck.draw());
             OutputView.showDealerDraw();
+            processDealer(cardDeck, dealer);
         }
     }
 
