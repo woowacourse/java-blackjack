@@ -28,10 +28,6 @@ public enum Denomination {
         this.score = score;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public static int selectAceScore(int score) {
         if (score > MAX_SCORE - ACE_MAX_SCORE) {
             return ACE_MIN_SCORE;
@@ -39,11 +35,11 @@ public enum Denomination {
         return ACE_MAX_SCORE;
     }
 
-    public static boolean isAce(Denomination denomination) {
-        return ACE.equals(denomination);
+    public int score(){
+        return this.score;
     }
 
-    public static int score(Denomination denomination){
-        return denomination.score;
+    public String getName() {
+        return this.name;
     }
 }

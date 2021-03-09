@@ -54,8 +54,8 @@ public class Cards {
 
     private int noneAceCardScore() {
         return cards.stream()
-                .filter(card -> !Denomination.isAce(card.getDenomination()))
-                .mapToInt(card -> Denomination.score(card.getDenomination()))
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::score)
                 .sum();
     }
 
@@ -63,7 +63,7 @@ public class Cards {
         int score = 0;
         int aceCount = (int) cards
                 .stream()
-                .filter(card -> Denomination.isAce(card.getDenomination()))
+                .filter(Card::isAce)
                 .count();
         for (int i = 0; i < aceCount; i++) {
             score += Denomination.selectAceScore(score);
