@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CardManager {
 
@@ -26,11 +26,11 @@ public class CardManager {
         return cards.popSingleCard();
     }
 
-    public Gamers initiateGamers(List<String> names) {
-        List<Player> players = names.stream()
-                .map(name -> new Player(name, giveFirstHand()))
+    public Players initiateGamers(List<String> playersNames, List<Integer> playersMoney) {
+       List<Player> players = IntStream.range(0, playersNames.size())
+                .mapToObj(i -> new Player(playersNames.get(i), playersMoney.get(i), giveFirstHand()))
                 .collect(Collectors.toList());
-        return new Gamers(players);
+       return new Players(players);
     }
 
     public boolean isEmpty() {

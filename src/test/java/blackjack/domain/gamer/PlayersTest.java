@@ -7,17 +7,17 @@ import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GamersTest {
+class PlayersTest {
 
     @DisplayName("Players 객체 생성")
     @Test
     void create() {
         CardManager cardManager = CardManager.create();
         assertThatCode(() ->
-                new Gamers(
+                new Players(
                         Arrays.asList(
-                                new Player("joanne", cardManager.giveFirstHand()),
-                                new Player("pk", cardManager.giveFirstHand())
+                                new Player("joanne", 1000, cardManager.giveFirstHand()),
+                                new Player("pk", 1000, cardManager.giveFirstHand())
                         )
                 )
         ).doesNotThrowAnyException();

@@ -24,10 +24,6 @@ public abstract class Gamer implements Participant {
         return name;
     }
 
-    public boolean containsAce() {
-        return hands.containsAce();
-    }
-
     public int getPoint() {
         return hands.calculate();
     }

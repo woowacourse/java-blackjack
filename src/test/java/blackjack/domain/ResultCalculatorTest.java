@@ -19,7 +19,7 @@ class ResultCalculatorTest {
     @Test
     void decideWinner() {
 
-        Player player = new Player("joanne", createValidPlayerHands());
+        Player player = new Player("joanne", 1000 ,createValidPlayerHands());
         Dealer dealer = new Dealer(createValidDealerHands());
 
         assertThat(ResultCalculator.decideWinner(player, dealer)).isEqualTo(ResultType.WIN);

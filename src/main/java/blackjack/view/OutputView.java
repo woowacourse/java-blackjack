@@ -3,8 +3,8 @@ package blackjack.view;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,38 +15,47 @@ public class OutputView {
     private static final String START_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE;
     private static final String RESULT = "%s - 결과 : %d" + NEWLINE;
 
-    public static void gameStart(Gamers gamers, Dealer dealer) {
-        final List<String> names = gamers.players().stream()
-                .map(Gamer::getName)
+    public static void gameStart(Players players, Dealer dealer) {
+        final List<String> names = players.stream()
+                .map(Player::getName)
                 .collect(Collectors.toList());
         final String name = String.join(", ", names);
         System.out.printf(START_MSG, name);
         printNewLine();
-        gamersOpenCards(gamers, dealer);
+        gamersOpenCards(players, dealer);
     }
 
-    public static void allCards(Gamer gamer) {
+    public static void allCards(Player gamer) {
         System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
     }
 
-    public static void gamersAllCards(Gamers gamers, Dealer dealer) {
+    public static void gamersAllCards(Players players, Dealer dealer) {
         allCardsWithPoint(dealer);
-        gamers.players().forEach(OutputView::allCardsWithPoint);
+        players.forEach(OutputView::allCardsWithPoint);
     }
 
-    public static void allCardsWithPoint(Gamer gamer) {
-        System.out.printf(RESULT, gamer.getName() + " : " + cardToString(gamer.showHands()),
-                gamer.getPoint());
+    public static void allCardsWithPoint(Player player) {
+        System.out.printf(RESULT, player.getName() + " : " + cardToString(player.showHands()),
+                player.getPoint());
     }
 
-    private static void gamersOpenCards(Gamers gamers, Dealer dealer) {
+    public static void allCardsWithPoint(Dealer dealer) {
+        System.out.printf(RESULT, dealer.getName() + " : " + cardToString(dealer.showHands()),
+                dealer.getPoint());
+    }
+
+    private static void gamersOpenCards(Players players, Dealer dealer) {
         openCards(dealer);
-        gamers.players().forEach(OutputView::openCards);
+        players.forEach(OutputView::openCards);
         printNewLine();
     }
 
-    private static void openCards(Gamer gamer) {
-        System.out.println(gamer.getName() + " : " + cardToString(gamer.showOpenHands()));
+    private static void openCards(Player player) {
+        System.out.println(player.getName() + " : " + cardToString(player.showOpenHands()));
+    }
+
+    private static void openCards(Dealer dealer) {
+        System.out.println(dealer.getName() + " : " + cardToString(dealer.showOpenHands()));
     }
 
     private static String cardToString(List<Card> cards) {

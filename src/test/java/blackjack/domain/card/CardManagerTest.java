@@ -4,13 +4,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Players;
 import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardManagerTest {
+class CardManagerTest {
 
     CardManager cardManager;
 
@@ -46,6 +46,6 @@ public class CardManagerTest {
     @DisplayName("참여자 생성 성공")
     @Test
     void initiateGamersTest() {
-        assertThat(cardManager.initiateGamers(Arrays.asList("joanne", "pk"))).isInstanceOf(Gamers.class);
+        assertThat(cardManager.initiateGamers(Arrays.asList("joanne", "pk"), Arrays.asList(1000, 1000))).isInstanceOf(Players.class);
     }
 }
