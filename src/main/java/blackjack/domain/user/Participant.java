@@ -42,4 +42,8 @@ public abstract class Participant {
     public String getName() {
         return name.getName();
     }
+
+    public boolean isNotStatus(Status status) {
+        return this.status != status;
+    }
 }
