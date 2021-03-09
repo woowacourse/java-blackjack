@@ -1,65 +1,62 @@
 package blackjack.domain.game;
 
-import blackjack.domain.YesOrNo;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Score;
-import blackjack.domain.player.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 
 public class BlackJackGame {
 
     private final Deck deck;
-    private Dealer dealer;
+    private final Dealer dealer;
+    private final Players gamblers;
 
-    public BlackJackGame(){
+    public BlackJackGame(final Players gamblers) {
         deck = new Deck();
         dealer = new Dealer();
+        this.gamblers = gamblers;
     }
 
-    public Players createPlayers(final String allName){
-        List<String> names = Arrays.asList(allName.split(","));
-        List<Player> players = new ArrayList<>();
-
-        players.add(dealer);
-        players.addAll(names.stream()
-                .map(Name::new)
-                .map(Gambler::new)
-                .collect(Collectors.toList()));
-        return new Players(players);
+    public void initDealerCards() {
+        dealer.initializeCards(deck);
     }
 
-    public void initPlayerCards(final Players players){
-        for(Player player : players){
-            player.initializeCards(deck);
-        }
+    public void initPlayerCards() {
+        gamblers.initPlayerCards(deck);
     }
 
-    public void giveCard(final Player player) {
-        player.drawCard(deck);
+    public void giveGamblerCard(Player gambler) {
+        gamblers.players().stream()
+                .filter(player -> player == gambler)
+                .forEach(player -> player.drawCard(deck));
     }
 
-    public void giveDealerCard(){
-        dealer.drawCard(deck);
-    }
-
-    public boolean ableToDraw(){
+    public boolean ableToDraw() {
         return dealer.ableToDraw();
     }
 
-    public Result getResult(final Players players){
-        Result result = new Result(dealer.getCards());
-        for(Player player : players){
+    public void giveDealerCard() {
+        dealer.drawCard(deck);
+    }
+
+    public Result calculateResult() {
+        Result result = new Result(dealer);
+        for (Player player : gamblers.players()) {
             addGamblerResult(result, player);
         }
         return result;
     }
 
-    private void addGamblerResult(final Result result, final Player player){
+    private void addGamblerResult(final Result result, final Player player) {
         WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
         result.add(player, winOrLose);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getGamblers() {
+        return gamblers;
     }
 }
