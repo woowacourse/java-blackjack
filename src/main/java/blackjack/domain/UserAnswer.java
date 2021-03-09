@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public enum UserAnswer {
 
@@ -37,8 +38,14 @@ public enum UserAnswer {
 
     private static void validateHitOrStay(final String input) {
         if (!input.equals(HIT.answer) && !input.equals(STAY.answer)) {
-            throw new IllegalArgumentException("요청은 " + HIT.answer + "또는 " + STAY.answer + "이어야 합니다.");
+            throw new IllegalArgumentException("요청은 " + userAnswerValues() + "이어야 합니다.");
         }
+    }
+
+    private static String userAnswerValues() {
+        return Arrays.stream(UserAnswer.values())
+                .map(UserAnswer::getAnswer)
+                .collect(Collectors.joining("또는 "));
     }
 
     public boolean isStay() {
