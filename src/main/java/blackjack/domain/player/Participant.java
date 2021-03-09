@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.blackjackgame.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -8,10 +9,12 @@ public abstract class Participant {
 
     protected String name;
     protected Cards cards;
+    protected Money money;
 
     public Participant(String name) {
         this.name = name;
         this.cards = new Cards();
+        this.money = new Money();
     }
 
     public String getName() {
@@ -48,5 +51,9 @@ public abstract class Participant {
     }
 
     public abstract boolean canDraw();
+
+    public void addMoney(Money money){
+        this.money =  this.money.add(money);
+    }
 
 }

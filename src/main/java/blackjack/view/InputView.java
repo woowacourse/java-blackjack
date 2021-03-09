@@ -34,4 +34,8 @@ public class InputView {
         throw new IllegalArgumentException();
     }
 
+    public static double getBetMoney(Player player) {
+        System.out.println(player.getName() + "의 배팅 금액은?");
+        return Double.parseDouble(SCANNER.nextLine());
+    }
 }

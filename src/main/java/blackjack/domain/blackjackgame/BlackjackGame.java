@@ -3,6 +3,7 @@ package blackjack.domain.blackjackgame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,29 +13,29 @@ public class BlackjackGame {
     private static final String DEALER_NAME = "딜러";
     private final Deck deck;
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
     private final Queue<Player> currentPlayers;
     private boolean isNotEnd;
 
-    public BlackjackGame(List<Player> players) {
+    public BlackjackGame(Players players) {
         this.deck = new Deck();
         this.dealer = new Dealer(DEALER_NAME);
         this.players = players;
         this.isNotEnd = true;
-        this.currentPlayers = new LinkedList<>(players);
+        this.currentPlayers = new LinkedList<>(players.getPlayers());
     }
 
     public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Player> getPlayers() {
+    public Players getPlayers() {
         return players;
     }
 
     public void start() {
         dealer.initialDraw(deck);
-        players.forEach(player -> player.initialDraw(deck));
+        players.initialDraw(deck);
     }
 
     public boolean isNotEnd() {
@@ -69,7 +70,7 @@ public class BlackjackGame {
         if (dealer.canDraw()) {
             dealer.draw(deck);
         }
-        players.forEach(player -> player.calculateGameResult(dealer));
+        players.calculateGameResult(dealer);
     }
 
 }
