@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
+import blackjack.domain.user.Status;
+
 import java.util.Objects;
 
 public class Card {
-    private static final int BLACK_JACK = 21;
-
     private final Suit suit;
     private final Value value;
 
@@ -30,7 +30,7 @@ public class Card {
     }
 
     public Value selectValue(int score) {
-        if (score > BLACK_JACK) {
+        if (score > Status.BLACKJACK_SCORE) {
             return Value.ACE_OF_ONE;
         }
         return value;

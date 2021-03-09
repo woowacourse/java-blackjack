@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Hand {
-    private static final int BLACK_JACK = 21;
     private static final int FIRST_INDEX = 0;
     private final List<Card> cards;
 
@@ -32,7 +31,7 @@ public class Hand {
     public int calculateScore() {
         int score = sumScore();
 
-        while (score > BLACK_JACK && hasAce()) {
+        while (score > Status.BLACKJACK_SCORE && hasAce()) {
             decideCardValue();
             score = sumScore();
         }
