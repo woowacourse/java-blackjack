@@ -4,7 +4,7 @@ import blackjack.domain.card.UserDeck;
 
 public class Dealer extends User {
 
-    private final int DEALER_CRITERIA = 16;
+    public static final int DEALER_CRITERIA = 16;
 
     public Dealer(UserDeck userDeck) {
         super(userDeck);
