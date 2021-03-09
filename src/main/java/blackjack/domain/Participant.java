@@ -35,11 +35,7 @@ public abstract class Participant {
     }
 
     public int calculateFinalScore() {
-        return cards.calculateFinalScore();
-    }
-
-    public int calculateScoreWhenAceIsMinimum() {
-        return cards.calculateScoreWhenAceIsMinimum();
+        return cards.calculateScore();
     }
 
     public void receiveCard(Card card) {

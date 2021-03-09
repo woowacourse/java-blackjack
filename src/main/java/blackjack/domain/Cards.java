@@ -28,19 +28,19 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculateScoreWhenAceIsMinimum() {
-        return cards.stream()
-                    .mapToInt(Card::getScore)
-                    .sum();
-    }
-
-    public int calculateFinalScore() {
+    public int calculateScore() {
         int aceCounts = getAceCounts();
         int score = calculateScoreWhenAceIsMinimum();
         for (int i = 0; i < aceCounts; i++) {
             score += plusBonusAceScore(score);
         }
         return score;
+    }
+
+    private int calculateScoreWhenAceIsMinimum() {
+        return cards.stream()
+                    .mapToInt(Card::getScore)
+                    .sum();
     }
 
     private int getAceCounts() {
