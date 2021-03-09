@@ -21,7 +21,7 @@ public class BlackJackResult {
             dealerResult.put(matchResult,
                     (int) result.values()
                                 .stream()
-                                .filter(result -> result.equals(MatchResult.getDealerMatchResultByPlayer(matchResult)))
+                                .filter(result -> result.equals(MatchResult.reverseMatchResult(matchResult)))
                                 .count());
         }
 

@@ -12,7 +12,7 @@ public class Dealer extends Participants {
     }
 
     public MatchResult matchGame(Player player) {
-        return MatchResult.getPlayerMatchResult(player.getTakenCards().calculateScore(), this.getTakenCards().calculateScore());
+        return MatchResult.matchPlayerAndDealer(player.getTakenCards().calculateScore(), this.getTakenCards().calculateScore());
     }
 
     @Override

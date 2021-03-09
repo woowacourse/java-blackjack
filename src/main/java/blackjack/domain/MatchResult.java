@@ -31,7 +31,7 @@ public enum MatchResult {
 
     abstract boolean match(int playerScore, int dealerScore);
 
-    public static MatchResult getPlayerMatchResult(int playerScore, int dealerScore) {
+    public static MatchResult matchPlayerAndDealer(int playerScore, int dealerScore) {
         for (MatchResult matchResult : values()) {
             if (matchResult.match(playerScore, dealerScore)) {
                 return matchResult;
@@ -40,7 +40,7 @@ public enum MatchResult {
         throw new IllegalArgumentException();
     }
 
-    public static MatchResult getDealerMatchResultByPlayer(MatchResult matchResult) {
+    public static MatchResult reverseMatchResult(MatchResult matchResult) {
         if (matchResult.equals(MatchResult.WIN)) {
             return MatchResult.LOSE;
         }
