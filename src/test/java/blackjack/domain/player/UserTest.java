@@ -16,7 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class UserTest {
-    private static final int MIN_BETTING_MONEY_BOUND = 1_000;
+    protected static final int MIN_BETTING_MONEY_BOUND = 1_000;
     protected static final int MAX_BETTING_MONEY_BOUND = 100_000_000;
 
     @DisplayName("유저를 이름만으로 생성한 경우")
