@@ -30,10 +30,4 @@ public class Dealer extends AbstractPlayer {
     public List<Card> getCards() {
         return cardOpenStrategy.getCardsWithStrategy(super.getCards());
     }
-
-    public void drawCardsWhileUnder17(Cards cards) {
-        while (isCanDraw()) {
-            drawRandomOneCard(cards);
-        }
-    }
 }

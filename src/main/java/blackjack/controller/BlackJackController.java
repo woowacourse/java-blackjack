@@ -69,8 +69,8 @@ public class BlackJackController {
     }
 
     private void dealerDraw(Dealer dealer) {
-        if (dealer.isCanDraw()) {
-            dealer.drawCardsWhileUnder17(cards);
+        while (dealer.isCanDraw()) {
+            dealer.drawRandomOneCard(cards);
             OutputView.printDealerDrawCardMessage();
         }
     }
