@@ -1,7 +1,6 @@
 package blackjack.domain.cards;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -35,15 +34,6 @@ public class Hand {
             return calculateScore(cardsTail, currentScore + CardValue.getMultipleValue());
         }
         return calculateScore(cardsTail, totalScore);
-    }
-
-    private int findOptimalScore(List<Integer> scores, List<Card> cardsTail, int currentScore) {
-        return scores.stream()
-            .sorted(Collections.reverseOrder())
-            .map(score -> calculateScore(cardsTail, currentScore + score))
-            .filter(totalScore -> totalScore < BUST)
-            .findFirst()
-            .orElse(calculateScore(cardsTail, currentScore + Collections.min(scores)));
     }
 
     public void addCard(Card card) {
