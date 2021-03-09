@@ -23,25 +23,12 @@ public class Dealer extends Participant {
 
     public Map<Result, Long> getStatisticResult(List<Player> players) {
         Map<Result, Long> statisticResult = new EnumMap<>(Result.class);
-        for (Result result : Result.values()) {
-            statisticResult.put(result, DEFAULT_VALUE);
-        }
         for (Player player : players) {
             Result result = player.judgeResult(this);
-            Result replacedResult = replaceWinWithLose(result);
+            Result replacedResult = result.replaceWinWithLose();
             statisticResult.put(replacedResult,
                 statisticResult.getOrDefault(replacedResult, DEFAULT_VALUE) + INCREASE_COUNT);
         }
         return statisticResult;
-    }
-
-    private Result replaceWinWithLose(Result result) {
-        if (result == Result.LOSE) {
-            return Result.WIN;
-        }
-        if (result == Result.WIN) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
     }
 }

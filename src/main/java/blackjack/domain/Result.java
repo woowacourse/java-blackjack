@@ -14,4 +14,14 @@ public enum Result {
     public String getName() {
         return name;
     }
+
+    public Result replaceWinWithLose() {
+        if (this == LOSE) {
+            return WIN;
+        }
+        if (this == WIN) {
+            return LOSE;
+        }
+        return DRAW;
+    }
 }
