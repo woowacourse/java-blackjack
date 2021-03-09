@@ -27,7 +27,7 @@ public class BlackjackManagerTest {
 
         assertThat(players.toList()
             .stream()
-            .filter(player -> player.getHand().size() == 2)
+            .filter(player -> player.toHandList().size() == 2)
             .count())
             .isEqualTo(2);
     }

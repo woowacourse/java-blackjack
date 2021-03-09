@@ -22,7 +22,7 @@ public abstract class Participant {
         return hand.totalScore();
     }
 
-    public List<Card> getHand() {
+    public List<Card> toHandList() {
         return Collections.unmodifiableList(hand.toList());
     }
 }

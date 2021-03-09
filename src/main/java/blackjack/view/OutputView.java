@@ -42,7 +42,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러")
             .append(HAND_FORMAT)
-            .append(joinCards(dealer.getHand()))
+            .append(joinCards(dealer.toHandList()))
             .append(SCORE_FORMAT)
             .append(dealer.getTotalScore())
             .append(NEW_LINE);
@@ -54,7 +54,7 @@ public class OutputView {
         for (Player player : players) {
             sb.append(player.getName())
                 .append(HAND_FORMAT)
-                .append(joinCards(player.getHand()))
+                .append(joinCards(player.toHandList()))
                 .append(SCORE_FORMAT)
                 .append(player.getTotalScore())
                 .append(NEW_LINE);
@@ -75,7 +75,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append(player.getName())
             .append(HAND_FORMAT)
-            .append(joinCards(player.getHand()))
+            .append(joinCards(player.toHandList()))
             .append(NEW_LINE);
         System.out.print(sb);
     }
@@ -84,7 +84,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러")
             .append(HAND_FORMAT)
-            .append(formatsCardName(dealer.getHand().get(0)))
+            .append(formatsCardName(dealer.toHandList().get(0)))
             .append(NEW_LINE);
         System.out.print(sb);
     }

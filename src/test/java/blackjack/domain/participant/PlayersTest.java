@@ -50,7 +50,7 @@ class PlayersTest {
         players.initHandByDealer(dealer, 2);
         assertThat(players.toList()
             .stream()
-            .filter(player -> player.getHand().size() == 2)
+            .filter(player -> player.toHandList().size() == 2)
             .count())
             .isEqualTo(2);
     }
