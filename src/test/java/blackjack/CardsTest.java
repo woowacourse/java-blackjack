@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -60,6 +61,6 @@ public class CardsTest {
     @DisplayName("카드들의 점수 총합을 계산한다.")
     @Test
     void calculate() {
-        assertThat(cards.calculateTotalScore()).isEqualTo(10);
+        assertThat(cards.calculateTotalScore()).isEqualTo(new Score(10));
     }
 }
