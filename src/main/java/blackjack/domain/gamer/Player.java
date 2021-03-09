@@ -48,8 +48,11 @@ public class Player {
         return hands.cardsOf(2);
     }
 
-    public int calculateProfit(ResultType resultType) {
+    public double calculateProfit(ResultType resultType) {
         if (ResultType.WIN.equals(resultType)) {
+            if (hands.isBlackjack()) {
+                return money * 1.5;
+            }
             return money;
         }
         if (ResultType.LOSE.equals(resultType)) {

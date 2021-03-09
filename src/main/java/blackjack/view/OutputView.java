@@ -76,8 +76,8 @@ public class OutputView {
         System.out.println("딜러 : " + dealerResult);
     }
 
-    public static void playersResult(Map<String, Integer> resultWithName) {
-        for (Map.Entry<String, Integer> entry : resultWithName.entrySet()) {
+    public static void playersResult(Map<String, Double> resultWithName) {
+        for (Map.Entry<String, Double> entry : resultWithName.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
     }
