@@ -18,26 +18,26 @@ public class BlackJackController {
     }
 
     public void run() {
-        initSetting();
-        play();
-        result();
-        summary();
+        initBlackJackGame();
+        distributeCards();
+        cardStatus();
+        gameResult();
     }
 
-    private void initSetting() {
+    private void initBlackJackGame() {
         try {
             blackJackService.initChallengers(requestNames());
             blackJackService.initDealer();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            initSetting();
+            initBlackJackGame();
             return;
         }
         OutputView.printInitSetting(blackJackService.getPlayers());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
     }
 
-    private void play() {
+    private void distributeCards() {
         if (blackJackService.isDealerBlackJack()) {
             return;
         }
@@ -49,11 +49,11 @@ public class BlackJackController {
         receiveDealerMoreCard(blackJackService.getDealer());
     }
 
-    private void result() {
+    private void cardStatus() {
         OutputView.printResult(blackJackService.getPlayers());
     }
 
-    private void summary() {
+    private void gameResult() {
         ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
         OutputView.printSummary(resultStatistics);
     }
