@@ -12,8 +12,6 @@ public class InputView {
     private static final String INPUT_NAME_MSG = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_ANSWER_MSG = "%s는 한 장의 카드를 더 받으시겠습니까?";
 
-    private static final String YES_OR_NO_REGEX = "^[YNyn]$";
-
     public static List<String> receiveNames() {
         return Arrays.stream(receiveInput(INPUT_NAME_MSG).split(","))
                 .map(String::trim)
@@ -40,7 +38,7 @@ public class InputView {
     }
 
     private static void validateAnswer(String answer) {
-        if (!answer.matches(YES_OR_NO_REGEX)) {
+        if (!"y".equalsIgnoreCase(answer) && !"n".equalsIgnoreCase(answer)) {
             throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
         }
     }
