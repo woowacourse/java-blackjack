@@ -23,10 +23,18 @@ public class Hand {
             return currentScore;
         }
 
-        List<Integer> scores = leftCards.get(0).getScores();
+        Card cardHead = leftCards.get(0);
         List<Card> cardsTail = leftCards.subList(1, leftCards.size());
 
-        return findOptimalScore(scores, cardsTail, currentScore);
+        return findOptimalScore(cardHead, cardsTail, currentScore);
+    }
+
+    private int findOptimalScore(Card cardHead, List<Card> cardsTail, int currentScore) {
+        int totalScore = currentScore + cardHead.getScore();
+        if (cardHead.hasMultipleValue() && calculateScore(cardsTail, totalScore) >= BUST) {
+            return calculateScore(cardsTail, currentScore + CardValue.getMultipleValue());
+        }
+        return calculateScore(cardsTail, totalScore);
     }
 
     private int findOptimalScore(List<Integer> scores, List<Card> cardsTail, int currentScore) {

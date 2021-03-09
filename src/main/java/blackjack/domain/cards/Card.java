@@ -44,12 +44,16 @@ public class Card {
         return new ArrayList<>(CARD_POOL);
     }
 
-    public List<Integer> getScores() {
-        return value.getScores();
+    public int getScore() {
+        return value.getValue();
+    }
+
+    public boolean hasMultipleValue() {
+        return value.hasMultipleValue();
     }
 
     public String getCardName() {
-        return this.value.getValue() + this.shape.getName();
+        return this.value.getName() + this.shape.getName();
     }
 
     @Override
