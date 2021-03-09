@@ -24,8 +24,11 @@ public class PlayerTest {
     void getPlayerPoint() {
         String name = "Sorong";
         Player player = new Player(name, userDeck);
-        int playerScore = 15;
-        assertThat(player.getPoint()).isEqualTo(playerScore);
+        int predictScore = 15;
+
+        int playerScore = player.getPoint();
+
+        assertThat(playerScore).isEqualTo(predictScore);
     }
 
     @Test
@@ -33,7 +36,10 @@ public class PlayerTest {
     void getAvailableDraw() {
         String name = "Sorong";
         Player player = new Player(name, userDeck);
-        assertThat(player.isAvailableDraw()).isTrue();
+
+        boolean actualDraw = player.isAvailableDraw();
+
+        assertThat(actualDraw).isTrue();
     }
 
     @Test
@@ -43,27 +49,31 @@ public class PlayerTest {
         Card card3 = new Card(CardNumber.from("J"), CardSymbol.from("다이아몬드"));
         userDeck.add(card3);
         Player player = new Player(name, userDeck);
-        assertThat(!player.isAvailableDraw()).isTrue();
+
+        boolean actualDraw = player.isAvailableDraw();
+
+        assertThat(!actualDraw).isTrue();
     }
 
     @Test
     @DisplayName("플레이어 승리 체크")
     void playerWin() {
         Player player = new Player("sorong", userDeck);
-
         Card dealerCard = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer).getResult()).isEqualTo("승");
+        String playerResult = player.betResult(dealer)
+            .getResult();
+
+        assertThat(playerResult).isEqualTo("승");
     }
 
     @Test
     @DisplayName("플레이어 무승부 체크")
     void playerTie() {
         Player player = new Player("sorong", userDeck);
-
         Card dealerCard = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
         Card dealerCard2 = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
         UserDeck dealerDeck = new UserDeck();
@@ -71,7 +81,10 @@ public class PlayerTest {
         dealerDeck.add(dealerCard2);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer).getResult()).isEqualTo("무");
+        String playerResult = player.betResult(dealer)
+            .getResult();
+
+        assertThat(playerResult).isEqualTo("무");
     }
 
     @Test
@@ -80,20 +93,21 @@ public class PlayerTest {
         Card card3 = new Card(CardNumber.from("J"), CardSymbol.from("다이아몬드"));
         userDeck.add(card3);
         Player player = new Player("sorong", userDeck);
-
         Card dealerCard = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer).getResult()).isEqualTo("패");
+        String playerResult = player.betResult(dealer)
+            .getResult();
+
+        assertThat(playerResult).isEqualTo("패");
     }
 
     @Test
     @DisplayName("플레이어 패배 체크")
     void playerLose() {
         Player player = new Player("sorong", userDeck);
-
         Card dealerCard = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
         Card dealerCard2 = new Card(CardNumber.from("K"), CardSymbol.from("하트"));
         UserDeck dealerDeck = new UserDeck();
@@ -101,6 +115,9 @@ public class PlayerTest {
         dealerDeck.add(dealerCard2);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(player.betResult(dealer).getResult()).isEqualTo("패");
+        String playerResult = player.betResult(dealer)
+            .getResult();
+
+        assertThat(playerResult).isEqualTo("패");
     }
 }

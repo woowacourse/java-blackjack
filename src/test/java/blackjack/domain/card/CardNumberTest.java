@@ -24,7 +24,10 @@ public class CardNumberTest {
     @MethodSource("testNumberSample")
     void cardNumberTest(String number, int value) {
         CardNumber cardNumber = CardNumber.from(number);
-        assertThat(cardNumber.getValue()).isEqualTo(value);
+
+        int numberPoint = cardNumber.getValue();
+
+        assertThat(numberPoint).isEqualTo(value);
     }
 
     private static Stream<Arguments> testNumberInstanceSample() {
@@ -41,6 +44,7 @@ public class CardNumberTest {
     @MethodSource("testNumberInstanceSample")
     void cardNumberInstanceTest(String number, CardNumber cardTargetNumber) {
         CardNumber cardNumber = CardNumber.from(number);
+
         assertThat(cardNumber).isEqualTo(cardTargetNumber);
     }
 }

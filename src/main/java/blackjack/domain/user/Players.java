@@ -36,7 +36,7 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> getRawPlayers() {
         return players;
     }
 }

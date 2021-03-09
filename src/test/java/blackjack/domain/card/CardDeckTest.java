@@ -11,7 +11,9 @@ public class CardDeckTest {
     @DisplayName("카드 덱 테스트")
     void drawTest() {
         CardDeck cardDeck = new CardDeck();
+
         boolean isCard = cardDeck.draw() instanceof Card;
+
         assertThat(isCard).isTrue();
     }
 }

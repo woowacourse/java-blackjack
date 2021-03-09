@@ -21,7 +21,9 @@ public class CardTest {
     @ParameterizedTest
     @DisplayName("카드 생성 및 점수 확인 테스트")
     @MethodSource("testCardSample")
-    void general_card(Card sampleCard, int answerPoint) {
-        assertThat(sampleCard.getPoint()).isEqualTo(answerPoint);
+    void general_card(Card sampleCard, int predictPoint) {
+        int cardPoint = sampleCard.getPoint();
+
+        assertThat(cardPoint).isEqualTo(predictPoint);
     }
 }

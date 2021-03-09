@@ -40,7 +40,7 @@ public class OutputView {
 
     private static void showName(Players players) {
         List<String> playerNames = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getRawPlayers()) {
             playerNames.add(player.getName());
         }
         String nameCollect = String.join(STRING_DELIMITER, playerNames);
@@ -53,7 +53,7 @@ public class OutputView {
             .get(DEALER_SHOW_CARD_INDEX)
             .getCard();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getRawPlayers()) {
             showPlayerCard(player);
         }
     }
@@ -90,7 +90,7 @@ public class OutputView {
     }
 
     private static void showPlayersEntireCard(Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getRawPlayers()) {
             String dealerCards = String.format(PLAYER_CARD, player.getName(),
                 combineAllCard(player)) + SCORE_RESULT + getConventionScore(player);
             System.out.println(dealerCards);
@@ -131,7 +131,7 @@ public class OutputView {
         Players players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getRawPlayers()) {
             String playerName = player.getName();
             OneGameResult gameIndividualResult = player.betResult(dealer);
             String individualResultMessage = String

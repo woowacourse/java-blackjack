@@ -26,7 +26,7 @@ public class BlackJackController {
     private void processPlayers(BlackJackGame blackJackGame) {
         Players players = blackJackGame.getPlayers();
         CardDeck cardDeck = blackJackGame.getCardDeck();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getRawPlayers()) {
             playerDraw(cardDeck, player);
         }
     }

@@ -21,7 +21,9 @@ public class CardSymbolTest {
     @DisplayName("심볼 동일 인스턴스 확인 테스")
     @MethodSource("symbolTest")
     void symbol(String symbol, CardSymbol value) {
+
         CardSymbol cardSymbol = CardSymbol.from(symbol);
+
         assertThat(cardSymbol).isEqualTo(value);
     }
 }

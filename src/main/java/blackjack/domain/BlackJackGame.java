@@ -28,7 +28,8 @@ public class BlackJackGame {
 
     public DealerResult getDealerResult() {
         Dealer dealer = participants.getDealer();
-        List<Player> rawPlayers = participants.getPlayers().getPlayers();
+        List<Player> rawPlayers = participants.getPlayers()
+            .getRawPlayers();
         return new DealerResult(dealer, rawPlayers);
     }
 
