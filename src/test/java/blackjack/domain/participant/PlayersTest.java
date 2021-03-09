@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class PlayerTest {
+public class PlayersTest {
 
     @Test
     @DisplayName("참여인원이 1명 미만일 경우, 예외 처리한다")
