@@ -124,6 +124,28 @@ public class DealerTest {
 		assertThat(outcome).isEqualTo(Outcome.LOSE);
 	}
 
+	@DisplayName("플레이어가 블랙잭으로 승리할 경우 블랙잭으로 승리하는 경우로 판단")
+	@Test
+	void judgeOutcome_playerWinWithBlackjack_returnBlackjackWin() {
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.HEART, CardNumber.QUEEN),
+				Card.of(CardSymbol.HEART, CardNumber.JACK),
+				Card.of(CardSymbol.HEART, CardNumber.ACE),
+
+				Card.of(CardSymbol.SPADE, CardNumber.ACE),
+				Card.of(CardSymbol.SPADE, CardNumber.JACK)
+		);
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
+
+		Outcome outcome = dealer.judgeOutcomeOf(player);
+		assertThat(outcome).isEqualTo(Outcome.BLACKJACK_WIN);
+	}
+
 	private Deck createCustomDeck(final Card... cards) {
 		return new Deck(Arrays.asList(cards));
 	}

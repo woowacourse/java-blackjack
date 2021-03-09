@@ -4,8 +4,7 @@ import blakcjack.domain.card.Cards;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
-import static blakcjack.domain.outcome.Outcome.DRAW;
-import static blakcjack.domain.outcome.Outcome.LOSE;
+import static blakcjack.domain.outcome.Outcome.*;
 
 public class Dealer extends Participant {
 	public static final String DEALER_NAME = "딜러";
@@ -26,7 +25,12 @@ public class Dealer extends Participant {
 		return cards.calculateScore() < DEALER_MAXIMUM_DRAW_CRITERION;
 	}
 
+	//TODO
+	// enum에서?
 	public Outcome judgeOutcomeOf(final Player player) {
+		if (player.isBlackJack() && !this.isBlackJack()) {
+			return BLACKJACK_WIN;
+		}
 		if (hasAnyBust(this, player)) {
 			return player.judgeOutcomeByBust();
 		}
@@ -38,7 +42,7 @@ public class Dealer extends Participant {
 		final int dealerScore = this.getScore();
 
 		if (playerScore > dealerScore) {
-			return player.getWinOutcome();
+			return WIN;
 		}
 		if (playerScore < dealerScore) {
 			return LOSE;

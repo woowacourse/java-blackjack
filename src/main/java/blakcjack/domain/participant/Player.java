@@ -32,13 +32,6 @@ public class Player extends Participant {
 		if (isBust()) {
 			return LOSE;
 		}
-		return getWinOutcome();
-	}
-
-	public Outcome getWinOutcome() {
-		if (isBlackJack()) {
-			return BLACKJACK_WIN;
-		}
 		return WIN;
 	}
 
