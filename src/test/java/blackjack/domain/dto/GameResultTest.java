@@ -2,6 +2,8 @@ package blackjack.domain.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.CardDistributor;
+import blackjack.domain.CardDistributorForTest;
 import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
@@ -91,14 +93,16 @@ public class GameResultTest {
     @DisplayName("게임 승패 테스트")
     @MethodSource("provideDeck")
     void gameResultTest(Deck deck, Map<ResultType, Integer> expected) {
-        Dealer dealer = new Dealer(deck);
-        dealer.draw(deck);
-        Player pobi = new Player("pobi", deck);
-        pobi.draw(deck);
-        Player jason = new Player("jason", deck);
-        jason.draw(deck);
-        Player root = new Player("root", deck);
-        root.draw(deck);
+        CardDistributor cardDistributor = new CardDistributor(deck);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        Dealer dealer = new Dealer();
+        cardDistributorForTest.distributeCardsTo(dealer, 3);
+        Player pobi = new Player("pobi");
+        cardDistributorForTest.distributeCardsTo(pobi, 3);
+        Player jason = new Player("jason");
+        cardDistributorForTest.distributeCardsTo(jason, 3);
+        Player root = new Player("root");
+        cardDistributorForTest.distributeCardsTo(root, 3);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);

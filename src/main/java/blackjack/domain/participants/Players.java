@@ -20,9 +20,9 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players valueOf(String unParsedNames, Deck deck) {
-        List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER))
-            .map(name -> new Player(name, deck))
+    public static Players valueOf(String unParsedNames) {
+        List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER, -1))
+            .map(name -> new Player(name))
             .collect(Collectors.toList());
         validateDuplication(parsedPlayers);
         return new Players(parsedPlayers);

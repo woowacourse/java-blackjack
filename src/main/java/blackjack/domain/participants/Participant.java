@@ -16,21 +16,19 @@ public abstract class Participant {
     private final Name name;
     private ParticipantStatus status;
 
-    public Participant(String name, Deck deck) {
+    public Participant(String name) {
         this.hand = new Hand(new ArrayList<>());
         this.name = new Name(name);
         this.status = ParticipantStatus.HIT;
-
-        IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> draw(deck));
     }
 
     protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
 
-    public void draw(Deck deck) {
+    public void addCard(Card card) {
         if (isNotContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
-        hand.addCard(deck.draw());
+        hand.addCard(card);
         status = updateStatus(status);
     }
 

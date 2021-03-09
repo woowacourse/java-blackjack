@@ -25,11 +25,17 @@ public class ResultTypeTest {
             Card.valueOf(Shape.CLOVER, CardValue.SEVEN),
             Card.valueOf(Shape.CLOVER, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT)));
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(new CardDistributor(deck));
 
-        Player eighteen = new Player("eighteen", deck);
-        Player nineteen = new Player("nineteen", deck);
-        Player seventeen = new Player("seventeen", deck);
-        Player anotherEighteen = new Player("anotherEighteen", deck);
+
+        Player eighteen = new Player("eighteen");
+        cardDistributorForTest.distributeCardsTo(eighteen, 2);
+        Player nineteen = new Player("nineteen");
+        cardDistributorForTest.distributeCardsTo(nineteen, 2);
+        Player seventeen = new Player("seventeen");
+        cardDistributorForTest.distributeCardsTo(seventeen, 2);
+        Player anotherEighteen = new Player("anotherEighteen");
+        cardDistributorForTest.distributeCardsTo(anotherEighteen, 2);
 
         assertThat(ResultType.getResultTypeByScore(nineteen, eighteen)).isEqualTo(ResultType.WIN);
         assertThat(ResultType.getResultTypeByScore(eighteen, anotherEighteen))

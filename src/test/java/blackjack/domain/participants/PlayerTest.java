@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.CardDistributor;
+import blackjack.domain.CardDistributorForTest;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
@@ -17,11 +19,11 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    private Deck deck;
+    private CardDistributor cardDistributor;
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(Arrays.asList(
+        Deck deck = new Deck(Arrays.asList(
             Card.valueOf(Shape.DIAMOND, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT),
             Card.valueOf(Shape.DIAMOND, CardValue.ACE),
@@ -30,25 +32,24 @@ public class PlayerTest {
             Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
             Card.valueOf(Shape.CLOVER, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
+        cardDistributor = new CardDistributor(deck);
     }
 
     @Test
     @DisplayName("플레이어 생성")
     void create() {
-        Player root = new Player("root", deck);
-        assertThat(root).isEqualTo(new Player("root", deck));
+        Player root = new Player("root");
+        assertThat(root).isEqualTo(new Player("root"));
     }
 
     @Test
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() {
-        Player root = new Player("root", deck);
+        Player root = new Player("root");
 
-        root.draw(deck);
+        cardDistributor.distributeCardTo(root);
         assertThat(root.getHand()).containsExactly(
-            Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-            Card.valueOf(Shape.SPADE, CardValue.EIGHT),
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE));
+            Card.valueOf(Shape.DIAMOND, CardValue.TEN));
     }
 
     @Test
@@ -59,18 +60,22 @@ public class PlayerTest {
             Card.valueOf(Shape.SPADE, CardValue.SEVEN),
             Card.valueOf(Shape.SPADE, CardValue.FIVE),
             Card.valueOf(Shape.SPADE, CardValue.TWO)));
-        Player root = new Player("root", deck);
-        root.draw(deck);
+        cardDistributor = new CardDistributor(deck);
+
+        Player root = new Player("root");
+        for (int i = 0; i < 3; i++) {
+            cardDistributor.distributeCardTo(root);
+        }
 
         assertThatIllegalStateException().isThrownBy(() ->
-            root.draw(deck))
+            cardDistributor.distributeCardTo(root))
             .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 
     @Test
     @DisplayName("유저가 카드를 계속 더 받을건지 입력")
     void willContinue() {
-        Player root = new Player("root", deck);
+        Player root = new Player("root");
 
         root.updateStatusByResponse(Response.getResponse("y"));
         assertThat(root.isContinue()).isTrue();
@@ -87,10 +92,15 @@ public class PlayerTest {
     @Test
     @DisplayName("승패 결과")
     void match() {
-        Dealer dealer = new Dealer(deck);
-        Player pobi = new Player("pobi", deck);
-        Player jason = new Player("jason", deck);
-        Player root = new Player("root", deck);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        Dealer dealer = new Dealer();
+        cardDistributorForTest.distributeCardsTo(dealer, 2);
+        Player pobi = new Player("pobi");
+        cardDistributorForTest.distributeCardsTo(pobi, 2);
+        Player jason = new Player("jason");
+        cardDistributorForTest.distributeCardsTo(jason, 2);
+        Player root = new Player("root");
+        cardDistributorForTest.distributeCardsTo(root, 2);
 
         assertThat(pobi.match(dealer)).isEqualTo(ResultType.WIN);
         assertThat(jason.match(dealer)).isEqualTo(ResultType.TIE);

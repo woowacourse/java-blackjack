@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.CardDistributor;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
@@ -20,11 +21,11 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
-    private Deck deck;
+    private CardDistributor cardDistributor;
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(Arrays.asList(
+        Deck deck = new Deck(Arrays.asList(
             Card.valueOf(Shape.DIAMOND, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT),
             Card.valueOf(Shape.DIAMOND, CardValue.ACE),
@@ -33,12 +34,13 @@ public class PlayersTest {
             Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
             Card.valueOf(Shape.CLOVER, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
+        cardDistributor = new CardDistributor(deck);
     }
 
     @Test
     @DisplayName("플레이어 이름 중복 검증")
     void validateDuplication() {
-        assertThatThrownBy(() -> Players.valueOf("a,b,a", deck))
+        assertThatThrownBy(() -> Players.valueOf("a,b,a"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("중복된 이름은 사용할 수 없습니다.");
     }
@@ -46,18 +48,17 @@ public class PlayersTest {
     @Test
     @DisplayName("승패 결과")
     void match() {
-        Dealer dealer = new Dealer(deck);
-        Player pobi = new Player("pobi", deck);
-        Player jason = new Player("jason", deck);
-        Player root = new Player("root", deck);
+        Dealer dealer = new Dealer();
+        Players players = Players.valueOf("pobi,jason,root");
+        Participants participants = Participants.valueOf(dealer, players);
+        cardDistributor.distributeStartingCardsTo(participants);
 
-        Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);
 
         Map<Player, ResultType> expected = new HashMap<>();
-        expected.put(pobi, ResultType.WIN);
-        expected.put(jason, ResultType.TIE);
-        expected.put(root, ResultType.LOSE);
+        expected.put(new Player("pobi"), ResultType.WIN);
+        expected.put(new Player("jason"), ResultType.TIE);
+        expected.put(new Player("root"), ResultType.LOSE);
 
         assertThat(gameResult).isEqualTo(new GameResult(expected));
     }
@@ -65,17 +66,12 @@ public class PlayersTest {
     @Test
     @DisplayName("모든 플레이어가 승부할 준비가 되었을 때 nextPlayerToPrepare 호출 시 예외처리")
     void nextPlayerToPrepare() {
-        Player pobi = new Player("pobi", deck);
-        Player jason = new Player("jason", deck);
-        Player root = new Player("root", deck);
+        Players players = Players.valueOf("pobi,jason,root");
+        for (int i = 0; i < 3; i++) {
+            players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
+        }
 
-        Players players = new Players(Arrays.asList(pobi, jason, root));
-        players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
-        players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
-        players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
-
-        assertThatIllegalStateException().isThrownBy(() ->
-            players.nextPlayerToPrepare())
+        assertThatIllegalStateException().isThrownBy(players::nextPlayerToPrepare)
             .withMessage("이미 모든 플레이어가 준비가 되었습니다.");
     }
 }

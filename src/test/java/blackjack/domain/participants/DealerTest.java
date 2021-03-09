@@ -3,6 +3,8 @@ package blackjack.domain.participants;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
+import blackjack.domain.CardDistributor;
+import blackjack.domain.CardDistributorForTest;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
 import blackjack.domain.cards.Deck;
@@ -19,7 +21,10 @@ public class DealerTest {
         Deck deck = new Deck(Arrays.asList(
             Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
+        CardDistributor cardDistributor = new CardDistributor(deck);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        cardDistributorForTest.distributeCardsTo(dealer, 2);
 
         assertThat(dealer.isContinue()).isFalse();
     }
@@ -31,10 +36,13 @@ public class DealerTest {
             Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
             Card.valueOf(Shape.SPADE, CardValue.SEVEN),
             Card.valueOf(Shape.SPADE, CardValue.ACE)));
-        Dealer dealer = new Dealer(deck);
+        CardDistributor cardDistributor = new CardDistributor(deck);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        Dealer dealer = new Dealer();
+        cardDistributorForTest.distributeCardsTo(dealer, 2);
 
         assertThatIllegalStateException().isThrownBy(() ->
-            dealer.draw(deck))
+            cardDistributor.distributeCardTo(dealer))
             .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 }

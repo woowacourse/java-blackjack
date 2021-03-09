@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.CardDistributor;
 import blackjack.domain.Response;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Deck;
@@ -7,39 +8,52 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.dto.Participants;
+import blackjack.domain.participants.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
 
-    private static final Deck DECK = new Deck(Card.getAllCards());
+    private static final CardDistributor CARD_DISTRIBUTOR = makeCardDistributor();
 
     private BlackJackController() {
     }
 
     public static void play() {
-        DECK.shuffle();
-        Dealer dealer = new Dealer(DECK);
+        Dealer dealer = new Dealer();
         Players players = joinPlayers();
+        Participants participants = Participants.valueOf(dealer, players);
 
-        printGameStatus(dealer, players);
-
-        preparePlayers(players);
-        prepareDealer(dealer);
+        initializeGame(participants);
+        prepare(dealer, players);
 
         printGameResult(dealer, players);
     }
 
-    private static Players joinPlayers() {
-        OutputView.printInputNames();
-        return Players.valueOf(InputView.inputString(), DECK);
+    private static void prepare(Dealer dealer, Players players) {
+        preparePlayers(players);
+        prepareDealer(dealer);
     }
 
-    private static void printGameStatus(Dealer dealer, Players players) {
-        OutputView.printGameInitializeMessage(Participants.valueOf(dealer, players),
-            Participant.STARTING_CARD_COUNT);
-        OutputView.printParticipantsStatus(Participants.valueOf(dealer, players), false);
+    private static CardDistributor makeCardDistributor() {
+        Deck deck = new Deck(Card.getAllCards());
+        deck.shuffle();
+        return new CardDistributor(deck);
+    }
+
+    private static Players joinPlayers() {
+        OutputView.printInputNames();
+        return Players.valueOf(InputView.inputString());
+    }
+
+    private static void initializeGame(Participants participants) {
+        CARD_DISTRIBUTOR.distributeStartingCardsTo(participants);
+        printGameStatus(participants);
+    }
+
+    private static void printGameStatus(Participants participants) {
+        OutputView.printGameInitializeMessage(participants, Participant.STARTING_CARD_COUNT);
+        OutputView.printParticipantsStatus(participants, false);
     }
 
     private static void printGameResult(Dealer dealer, Players players) {
@@ -62,17 +76,16 @@ public class BlackJackController {
         }
     }
 
-    private static void drawCardByResponse(Player playerToPrepare,
-        Response response) {
+    private static void drawCardByResponse(Player playerToPrepare, Response response) {
         if (response == Response.POSITIVE) {
-            playerToPrepare.draw(DECK);
+            CARD_DISTRIBUTOR.distributeCardTo(playerToPrepare);
             OutputView.printParticipantStatus(playerToPrepare, false);
         }
     }
 
     private static void prepareDealer(Dealer dealer) {
         while (dealer.isContinue()) {
-            dealer.draw(DECK);
+            CARD_DISTRIBUTOR.distributeCardTo(dealer);
             OutputView.printDealerDrawCard(dealer);
         }
         OutputView.printNewLine();

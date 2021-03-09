@@ -6,8 +6,8 @@ import blackjack.domain.cards.Deck;
 
 public class Player extends Participant {
 
-    public Player(String name, Deck deck) {
-        super(name, deck);
+    public Player(String name) {
+        super(name);
     }
 
     @Override
