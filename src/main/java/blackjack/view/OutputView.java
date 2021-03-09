@@ -121,4 +121,8 @@ public class OutputView {
         System.out.printf("%s의 점수 총합이 21점을 넘어 버스트 되었습니다.", playerName);
         System.out.print(NEW_LINE);
     }
+
+    public static void printException(final Throwable e) {
+        System.out.println(e.getMessage());
+    }
 }

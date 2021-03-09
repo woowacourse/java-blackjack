@@ -13,7 +13,7 @@ public class BlackjackController {
 
     public void play() {
         Dealer dealer = new Dealer();
-        Players players = new Players(InputView.getPlayerNames());
+        Players players = initPlayers();
 
         initGame(dealer, players);
         playBlackjack(dealer, players);
@@ -21,6 +21,15 @@ public class BlackjackController {
         OutputView.printHandResult(players.toList(), dealer);
         GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
         OutputView.printGameResult(gameResultDto);
+    }
+
+    private Players initPlayers() {
+        try {
+            return new Players(InputView.getPlayerNames());
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            return initPlayers();
+        }
     }
 
     private void initGame(Dealer dealer, Players players) {
@@ -39,17 +48,26 @@ public class BlackjackController {
     }
 
     private void playHit(Player player, Dealer dealer) {
-        while (!player.isOverLimitScore()) {
-            UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
-            if (userAnswer.isStay()) {
-                OutputView.printCards(player);
-                break;
-            }
-            player.receiveCard(dealer.drawCard());
-            OutputView.printCards(player);
+        try {
+            hitOrStay(player, dealer);
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            playHit(player, dealer);
         }
+    }
+
+    private void hitOrStay(Player player, Dealer dealer) {
+        UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
+        if (userAnswer.isStay()) {
+            OutputView.printCards(player);
+            return;
+        }
+        player.receiveCard(dealer.drawCard());
+        OutputView.printCards(player);
         if (player.isOverLimitScore()) {
             OutputView.printPlayerBurst(player.getName());
+            return;
         }
+        playHit(player, dealer);
     }
 }
