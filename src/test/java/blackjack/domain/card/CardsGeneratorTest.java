@@ -14,7 +14,7 @@ class CardsGeneratorTest {
     void generate() {
         int expectedCardSize = Shape.values().length * Symbol.values().length;
 
-        List<Card> cards = CardsGenerator.generateCards();
+        List<Card> cards = CardsGenerator.generateShuffledCards();
 
         assertThat(cards).hasSize(expectedCardSize);
     }

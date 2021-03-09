@@ -1,18 +1,17 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Cards {
+    private static final int BLACKJACK_CARD_COUNTS = 2;
+    private static final int BLACKJACK_CARD_SCORE = 21;
     private static final String DUPLICATION_CARDS = "중복된 카드는 보유할 수 없습니다.";
 
-    private final List<Card> cards;
+    private final Set<Card> cards;
 
     public Cards(List<Card> cards) {
         validateCardDuplication(cards);
-        this.cards = cards;
+        this.cards = new LinkedHashSet<>(cards);
     }
 
     public Cards() {
@@ -28,11 +27,19 @@ public class Cards {
     }
 
     public void add(Card card) {
-        cards.add(card);
+        boolean isUniqueCardAdded = cards.add(card);
+        validateCardDuplication(isUniqueCardAdded);
+    }
+
+    private void validateCardDuplication(boolean isUniqueCardAdded) {
+        if (!isUniqueCardAdded) {
+            throw new IllegalArgumentException(DUPLICATION_CARDS);
+        }
     }
 
     public void addAll(Cards targetCards) {
-        cards.addAll(targetCards.cards);
+        boolean isUniqueCardAdded = cards.addAll(targetCards.cards);
+        validateCardDuplication(isUniqueCardAdded);
     }
 
     public int calculateFinalScore() {
@@ -54,7 +61,15 @@ public class Cards {
                 .count();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public boolean isBlackJack() {
+        return cards.size() == BLACKJACK_CARD_COUNTS && calculateFinalScore() == BLACKJACK_CARD_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateFinalScore() > BLACKJACK_CARD_SCORE;
+    }
+
+    public Set<Card> getCards() {
+        return Collections.unmodifiableSet(cards);
     }
 }

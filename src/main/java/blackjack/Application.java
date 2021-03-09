@@ -5,6 +5,7 @@ import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.profit.ProfitStatistics;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -14,23 +15,30 @@ public class Application {
     private static final String AGREE = "y";
 
     public static void main(String[] args) {
-        CardDeck cardDeck = new CardDeck(CardsGenerator.generateCards());
+        CardDeck cardDeck = new CardDeck(CardsGenerator.generateShuffledCards());
         Dealer dealer = new Dealer();
-        Players players = Players.from(InputView.inputPlayerNames());
-        List<Player> playersGroup = players.toList();
+        Players players = generatePlayers();
+        List<Player> playersGroup = players.getPlayers();
 
         distributeDefaultCards(dealer, players, cardDeck);
         playersGroup.forEach(player -> drawMoreCardForPlayer(player, cardDeck));
         drawMoreCardForDealer(dealer, cardDeck);
 
+        ProfitStatistics profitStatistics = new ProfitStatistics(players.aggregateProfitMoneyByPlayer(dealer));
         OutputView.printFinalCardsAndScore(dealer, playersGroup);
-        OutputView.printFinalResult(dealer, playersGroup);
+        OutputView.printFinalProfitMoney(profitStatistics);
+    }
+
+    private static Players generatePlayers() {
+        List<String> playerNames = InputView.inputPlayerNames();
+        List<Integer> bettingMoneys = InputView.inputAllPlayersBettingMoney(playerNames);
+        return Players.of(playerNames, bettingMoneys);
     }
 
     private static void distributeDefaultCards(Dealer dealer, Players players, CardDeck cardDeck) {
         dealer.receiveCards(cardDeck.drawDefaultCards());
         players.receiveDefaultCards(cardDeck);
-        OutputView.printCardDistributionMessage(dealer, players.toList());
+        OutputView.printCardDistributionMessage(dealer, players.getPlayers());
     }
 
     private static void drawMoreCardForPlayer(Player player, CardDeck cardDeck) {

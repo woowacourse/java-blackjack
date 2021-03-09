@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Participant {
     private static final String INVALID_PARTICIPANT_NAME = "플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.";
@@ -46,11 +46,19 @@ public abstract class Participant {
         return cards.calculateScoreWhenAceIsMinimum();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
+    public Set<Card> getCards() {
         return cards.getCards();
     }
 }

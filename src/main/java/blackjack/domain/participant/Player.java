@@ -1,12 +1,24 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.vo.Result;
+import blackjack.domain.profit.ProfitWeight;
 
 public class Player extends Participant {
     private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 21;
+    private static final int INVALID_BETTING_MONEY_BOUNDARY = 0;
+    private static final String INVALID_BETTING_MONEY = "배팅 금액은 양의 정수여야합니다.";
 
-    public Player(String name) {
+    private final int bettingMoney;
+
+    public Player(String name, int bettingMoney) {
         super(name);
+        validateBettingMoney(bettingMoney);
+        this.bettingMoney = bettingMoney;
+    }
+
+    private void validateBettingMoney(int bettingMoney) {
+        if (bettingMoney <= INVALID_BETTING_MONEY_BOUNDARY) {
+            throw new IllegalArgumentException(INVALID_BETTING_MONEY);
+        }
     }
 
     @Override
@@ -15,9 +27,8 @@ public class Player extends Participant {
         return minimumScore < MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 
-    public Result judgeResult(Dealer dealer) {
-        int dealerScore = dealer.calculateFinalScore();
-        int playerScore = calculateFinalScore();
-        return Result.judge(dealerScore, playerScore);
+    public int calculateProfitMoney(Dealer dealer) {
+        ProfitWeight profitWeight = ProfitWeight.findProfitWeight(dealer, this);
+        return (int) (bettingMoney * profitWeight.getWeight());
     }
 }

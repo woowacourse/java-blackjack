@@ -3,12 +3,18 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardDeck;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
     private static final int MAXIMUM_PLAYER_COUNTS = 7;
+    private static final int START_INDEX = 0;
     private static final String INVALID_PLAYER_COUNTS = "게임 참가자의 수는 딜러 제외 최소 1명 최대 7명입니다.";
+    private static final String INVALID_INPUT_COUNTS_EQUALITY = "입력된 참가자의 이름 개수와 배팅 금액 개수가 일치하지 않습니다.";
+    private static final String DUPLICATION_PLAYER_NAMES = "참가자들의 이름은 중복이 없어야 합니다.";
 
     private final List<Player> players;
 
@@ -18,11 +24,19 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
+    public static Players of(List<String> playerNames, List<Integer> bettingMoneys) {
+        validateInputCountsEquality(playerNames, bettingMoneys);
+        int playerCounts = playerNames.size();
+        List<Player> players = IntStream.range(START_INDEX, playerCounts)
+                .mapToObj(i -> new Player(playerNames.get(i), bettingMoneys.get(i)))
                 .collect(Collectors.toList());
         return new Players(players);
+    }
+
+    private static void validateInputCountsEquality(List<String> playerNames, List<Integer> bettingMoneys) {
+        if (playerNames.size() != bettingMoneys.size()) {
+            throw new IllegalArgumentException(INVALID_INPUT_COUNTS_EQUALITY);
+        }
     }
 
     private void validatePlayerCounts(List<Player> players) {
@@ -38,7 +52,7 @@ public class Players {
                 .distinct()
                 .count();
         if (playerCounts != distinctPlayerCounts) {
-            throw new IllegalArgumentException("참가자들의 이름은 중복이 없어야 합니다.");
+            throw new IllegalArgumentException(DUPLICATION_PLAYER_NAMES);
         }
     }
 
@@ -46,7 +60,13 @@ public class Players {
         players.forEach(player -> player.receiveCards(cardDeck.drawDefaultCards()));
     }
 
-    public List<Player> toList() {
+    public Map<Player, Integer> aggregateProfitMoneyByPlayer(Dealer dealer) {
+        Map<Player, Integer> profitStatistics = new LinkedHashMap<>();
+        players.forEach(player -> profitStatistics.put(player, player.calculateProfitMoney(dealer)));
+        return profitStatistics;
+    }
+
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }
