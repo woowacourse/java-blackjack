@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static blackjack.domain.Players.COUPLER_COMMA_SPACE;
 
-import blackjack.domain.GameResult;
+import blackjack.controller.GameResultController;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -33,13 +33,13 @@ public class OutputView {
 
     public static void noticePlayersPoint(Players players) {
         System.out.println();
-        GameResult.getPlayersCardsAndResult(players);
+        GameResultController.getPlayersCardsAndResult(players);
     }
 
     public static void noticeResult(Players players) {
         System.out.println();
         System.out.println(NOTICE_RESULT);
-        GameResult.getResult(players);
+        GameResultController.getResult(players);
     }
 
     public static void printExceptionMessage(IllegalArgumentException exception) {

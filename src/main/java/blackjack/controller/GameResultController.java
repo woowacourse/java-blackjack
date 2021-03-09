@@ -1,9 +1,15 @@
-package blackjack.domain;
+package blackjack.controller;
 
+import blackjack.domain.Gamer;
+import blackjack.domain.Players;
 import blackjack.view.OutputView;
 import java.util.Map;
 
-public class GameResult {
+public class GameResultController {
+
+    private GameResultController() {
+
+    }
 
     public static void getPlayersCardsAndResult(Players players) {
         for (Gamer gamer : players.getAllParticipant()) {
