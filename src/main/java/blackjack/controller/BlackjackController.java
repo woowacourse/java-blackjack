@@ -4,6 +4,7 @@ import blackjack.domain.Game;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.ResultOfPlayers;
@@ -41,13 +42,13 @@ public class BlackjackController {
         return new Game(
                 cards,
                 new Dealer(),
-                new Gamers(getPlayerInformationFromUser())
+                new Gamers(createGamerByUser())
         );
     }
 
-    private List<Pair<String, Integer>> getPlayerInformationFromUser() {
+    private List<Gamer> createGamerByUser() {
         return InputView.getGamerNamesFromUser().stream()
-                .map(name -> new Pair<>(name, InputView.getBettingMoneyFromUser(name)))
+                .map(name -> new Gamer(name, InputView.getBettingMoneyFromUser(name)))
                 .collect(toList());
     }
 

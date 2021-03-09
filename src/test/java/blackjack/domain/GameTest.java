@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.exception.PlayerNotFoundException;
@@ -46,10 +47,12 @@ class GameTest {
         game = new Game(
                 new Cards(cards),
                 dealer,
-                new Gamers(Stream.of("nabom", "neozal")
-                        .map(name -> new Pair<>(name, 1))
-                        .collect(toList()))
-        );
+                new Gamers(
+                        Arrays.asList(
+                                new Gamer("nabom", 1000),
+                                new Gamer("neozal", 1000)
+                        )
+                ));
     }
 
     @Test

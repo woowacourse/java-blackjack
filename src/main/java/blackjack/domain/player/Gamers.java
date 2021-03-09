@@ -13,31 +13,18 @@ import static java.util.stream.Collectors.toList;
 
 public class Gamers {
 
-    private final List<Player> gamers;
+    private final List<? extends Player> gamers;
 
-    public Gamers(List<Pair<String, Integer>> nameAndBettingMonies) {
-        validateDuplicate(asGamerNames(nameAndBettingMonies));
+    public Gamers(List<Gamer> gamers) {
+        validateDuplicate(gamers);
 
-        this.gamers = nameAndBettingMoneyToGamer(nameAndBettingMonies);
+        this.gamers = gamers;
     }
 
-    private List<String> asGamerNames(List<Pair<String, Integer>> nameAndBettingMonies) {
-        return nameAndBettingMonies.stream()
-                .map(Pair::getKey)
-                .collect(toList());
-    }
-
-    private void validateDuplicate(List<String> names) {
-        if (names.size() != names.stream().distinct().count()) {
+    private void validateDuplicate(List<Gamer> gamers) {
+        if (gamers.size() != gamers.stream().map(Gamer::getName).distinct().count()) {
             throw new GamerDuplicateException();
         }
-    }
-
-    private List<Player> nameAndBettingMoneyToGamer(List<Pair<String, Integer>> nameAndBettingMonies) {
-        return nameAndBettingMonies.stream()
-                .map(nameAndBettingMoney -> new Gamer(nameAndBettingMoney.getKey(),
-                        nameAndBettingMoney.getValue()))
-                .collect(Collectors.toList());
     }
 
     public void drawToGamers(Cards cards) {

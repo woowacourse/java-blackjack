@@ -3,15 +3,12 @@ package blackjack;
 import blackjack.domain.WinOrLose;
 import blackjack.domain.result.ResultOfGamer;
 import blackjack.domain.result.ResultOfPlayers;
-import blackjack.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,11 +19,6 @@ public class GameResultOfPlayersTest {
 
     @BeforeEach
     void init() {
-        Map<String, Pair<WinOrLose, Integer>> map = new HashMap<>();
-        map.put("nabom", new Pair<>(WinOrLose.WIN, 1000));
-        map.put("neozal", new Pair<>(WinOrLose.LOSE, -1000));
-
-
         resultOfPlayers = new ResultOfPlayers(
                 Arrays.asList(
                         new ResultOfGamer("nabom", WinOrLose.WIN, 1000),
