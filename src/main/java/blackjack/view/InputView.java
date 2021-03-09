@@ -9,7 +9,8 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = ",";
 
-    private InputView() { }
+    private InputView() {
+    }
 
     public static List<String> inputPlayers() {
         return Arrays.asList(scanner.nextLine().split(DELIMITER));

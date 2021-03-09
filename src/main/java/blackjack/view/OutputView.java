@@ -25,7 +25,8 @@ public class OutputView {
     private static final int DEALER_DRAW = 1;
     private static final int DEALER_LOSE = 0;
 
-    private OutputView() { }
+    private OutputView() {
+    }
 
     public static void printPlayersGuideMessage() {
         System.out.println(PLAYERS_INPUT_MESSAGE);

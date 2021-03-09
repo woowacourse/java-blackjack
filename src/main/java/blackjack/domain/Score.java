@@ -9,15 +9,15 @@ public class Score implements Comparable<Score> {
 
     private final int score;
 
-    public Score (int score) {
+    public Score(int score) {
         this.score = score;
     }
 
-    public boolean isNotBust(){
+    public boolean isNotBust() {
         return !isBust();
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return score > BLACKJACK;
     }
 
@@ -25,11 +25,11 @@ public class Score implements Comparable<Score> {
         return score == BLACKJACK;
     }
 
-    public boolean isLessThanEleven(){
+    public boolean isLessThanEleven() {
         return score + GAP_BETWEEN_ACE_MAX_AND_MIN <= BLACKJACK;
     }
 
-    public Score plus(){
+    public Score plus() {
         return new Score(score + GAP_BETWEEN_ACE_MAX_AND_MIN);
     }
 

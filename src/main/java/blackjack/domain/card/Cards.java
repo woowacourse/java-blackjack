@@ -33,7 +33,7 @@ public class Cards {
     }
 
     public Score calculateTotalScore() {
-        Score score =  new Score(cards.stream()
+        Score score = new Score(cards.stream()
             .mapToInt(Card::findScore)
             .sum());
         return addIfAceExist(score);
