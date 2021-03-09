@@ -4,8 +4,6 @@ import blackjack.domain.*;
 import blackjack.domain.card.Card;
 import blackjack.util.BlackJackConstant;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,7 +67,7 @@ public class OutputView {
         printDealerResult(playerResult, dealer);
 
         for(User user : playerResult.keySet()){
-            if(playerResult.get(user) == Result.TWENTY_ONE) {
+            if(playerResult.get(user) == Result.BLACKJACK) {
                 System.out.printf("%s : %d\n", user.getName(), (user.getBettingMoney()*1.5));
             }
 
@@ -87,7 +85,7 @@ public class OutputView {
         int dealerTotalMoney = dealer.getBettingMoney();
 
         for(User user : playerResult.keySet()){
-            if(playerResult.get(user) == Result.TWENTY_ONE) {
+            if(playerResult.get(user) == Result.BLACKJACK) {
                 dealerTotalMoney -= user.getBettingMoney() * 1.5;
             }
 

@@ -9,9 +9,9 @@ public class Player extends User {
     }
 
     public Result getResult(int dealerScore) {
-        if (dealerScore != BlackJackConstant.BLACKJACK &&
-                this.getScore() == BlackJackConstant.BLACKJACK){
-            return Result.TWENTY_ONE;
+        if (dealerScore != BlackJackConstant.BLACKJACK_SCORE &&
+                this.getScore() == BlackJackConstant.BLACKJACK_SCORE){
+            return Result.BLACKJACK;
         }
 
         if (this.getScore() > dealerScore) {
@@ -24,6 +24,4 @@ public class Player extends User {
 
         return Result.DRAW;
     }
-
-
 }
