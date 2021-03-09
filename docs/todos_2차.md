@@ -32,3 +32,7 @@ src/test/java/blackjack/CardDeckTest.java
 
 src/main/java/blackjack/dto/Participants.java
 - [ ] View와 관련한 로직이 여전히 섞여있다. names(), finalResult()
+
+## self 리팩토링 리스트
+- [ ] 의미있는 모든 원시값 포장
+- [ ] 메소드 호출에서 스트림을 제외하고는 `.`은 하나만 찍자
