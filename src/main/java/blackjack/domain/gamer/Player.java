@@ -1,6 +1,6 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.Score;
+import blackjack.domain.MatchResult;
 
 public class Player extends Participants {
 
@@ -10,6 +10,6 @@ public class Player extends Participants {
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(this.getTakenCards()) < Score.MAX_SCORE;
+        return this.getTakenCards().calculateScore() < MatchResult.MAX_SCORE;
     }
 }

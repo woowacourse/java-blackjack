@@ -43,4 +43,32 @@ public class Cards {
     public void shuffle() {
         Collections.shuffle(cards);
     }
+
+    public int calculateScore() {
+        int score = 0;
+        score += noneAceCardScore();
+        score += aceCardScore();
+
+        return score;
+    }
+
+    private int noneAceCardScore() {
+        return cards.stream()
+                .filter(card -> !Denomination.isAce(card.getDenomination()))
+                .mapToInt(card -> Denomination.score(card.getDenomination()))
+                .sum();
+    }
+
+    private int aceCardScore() {
+        int score = 0;
+        int aceCount = (int) cards
+                .stream()
+                .filter(card -> Denomination.isAce(card.getDenomination()))
+                .count();
+        for (int i = 0; i < aceCount; i++) {
+            score += Denomination.selectAceScore(score);
+        }
+
+        return score;
+    }
 }

@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.Score.MAX_SCORE;
-
 public enum MatchResult {
 
     WIN("승") {
@@ -22,6 +20,8 @@ public enum MatchResult {
             return (playerScore > MAX_SCORE && dealerScore > MAX_SCORE) || (playerScore == dealerScore);
         }
     };
+
+    public static final int MAX_SCORE = 21;
 
     private final String result;
 

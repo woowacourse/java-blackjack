@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.MatchResult;
-import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
@@ -67,9 +66,9 @@ public class OutputView {
     }
 
     public static void showAllCards(Players players, Dealer dealer) {
-        System.out.printf("%n" + (CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), Score.calculatorScore(dealer.getTakenCards()));
+        System.out.printf("%n" + (CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), dealer.getTakenCards().calculateScore());
         for (Player player : players.getPlayers()) {
-            System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), Score.calculatorScore(player.getTakenCards()));
+            System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), player.getTakenCards().calculateScore());
         }
     }
 
