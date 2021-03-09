@@ -27,12 +27,12 @@ class DealerTest {
         final Dealer higherDealer = new Dealer();
         final Dealer lowerDealer = new Dealer();
 
-        higherDealer.initHands(higherCards);
-        lowerDealer.initHands(lowerCards);
+        higherDealer.initState(higherCards);
+        lowerDealer.initState(lowerCards);
 
         assertAll(
-                () -> assertTrue(lowerDealer.canDraw()),
-                () -> assertFalse(higherDealer.canDraw())
+                () -> assertTrue(lowerDealer.canDraw2()),
+                () -> assertFalse(higherDealer.canDraw2())
         );
 
     }

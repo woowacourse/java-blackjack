@@ -2,10 +2,16 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import blackjack.domain.state.FirstTurn;
+import blackjack.domain.state.State;
 
+import javax.naming.spi.StateFactory;
 import java.util.List;
 
 public abstract class Gamer {
+
+    //
+    protected State state;
 
     protected final Hands hands = new Hands();
     private final String name;
@@ -14,33 +20,58 @@ public abstract class Gamer {
         this.name = name;
     }
 
-    public abstract List<Card> showOpenHands();
+//    public abstract List<Card> showOpenHands();
 
-    public List<Card> showHands() {
-        return hands.toList();
+    public abstract List<Card> showOpenHands2();
+
+//    public List<Card> showHands() {
+//        return hands.toList();
+//    }
+
+    public List<Card> showHands2() {
+        return state.cards().toList();
     }
 
     public String getName() {
         return name;
     }
 
-    public int getPoint() {
-        return hands.calculate();
+//    public int getScore() {
+//        return hands.calculate();
+//    }
+
+    public int getScore2() {
+        return state.cards().calculate();
     }
 
-    public boolean canDraw() {
-        return !(hands.isBust() && hands.isBlackjack());
+
+//    public boolean canDraw() {
+//        return !(hands.isBust() && hands.isBlackjack());
+//    }
+
+    public boolean canDraw2() {
+        return !state.isFinished();
     }
 
     public boolean isBlackjack() {
         return hands.isBlackjack();
     }
 
-    public void receiveCard(Card card) {
-        hands.addCard(card);
+//    public void receiveCard(Card card) {
+//        hands.addCard(card);
+//    }
+
+    public void receiveCard2(Card card) {
+        state = state.draw(card);
     }
 
-    public void initHands(List<Card> makeInitialHands) {
-        hands.initialize(makeInitialHands);
+//    public void initHands(List<Card> makeInitialHands) {
+//        hands.initialize(makeInitialHands);
+//    }
+
+    //
+    public void initState(List<Card> initCards) {
+        state = FirstTurn.draw(initCards);
     }
+
 }

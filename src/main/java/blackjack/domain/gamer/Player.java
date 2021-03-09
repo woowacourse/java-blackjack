@@ -15,7 +15,12 @@ public class Player extends Gamer {
     }
 
     @Override
-    public List<Card> showOpenHands() {
-        return hands.getCardsWithSize(2);
+    public List<Card> showOpenHands2() {
+        return state.cards().toList();
     }
+
+//    @Override
+//    public List<Card> showOpenHands() {
+//        return hands.getCardsWithSize(2);
+//    }
 }

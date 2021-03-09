@@ -10,6 +10,10 @@ public class Money {
         this.money = parseInt(money);
     }
 
+    public Money(int money) {
+        this.money = money;
+    }
+
     private void validate(String money) {
         if (Objects.isNull(money) || money.length() == 0) {
             throw new IllegalArgumentException("[ERROR] Money는 숫자만 입력 가능합니다.");

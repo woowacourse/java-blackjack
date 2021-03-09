@@ -21,21 +21,40 @@ public class OutputView {
     private static final String RESULT = "%s: %s" + NEWLINE;
     private static final String RESULT_TITLE = "## 최종 승패";
 
-    public static void printInitialCards(Dealer dealer, Players players) {
+//    public static void printInitialCards(Dealer dealer, Players players) {
+//        printNewLine();
+//        System.out.printf(INITIAL_PRINT_FORMAT,
+//                String.join(", ", players.getNames()));
+//        printNewLine();
+//        printInitialHand(dealer, players);
+//    }
+
+    public static void printInitialCards2(Dealer dealer, Players players) {
         printNewLine();
         System.out.printf(INITIAL_PRINT_FORMAT,
                 String.join(", ", players.getNames()));
         printNewLine();
-        printInitialHand(dealer, players);
+        printInitialHand2(dealer, players);
     }
 
-    private static void printInitialHand(Dealer dealer, Players players) {
+//    private static void printInitialHand(Dealer dealer, Players players) {
+//        System.out.printf(CARD_INFO_FORMAT, dealer.getName()
+//                , cardToString(dealer.showOpenHands()));
+//        printNewLine();
+//        for (Player player : players) {
+//            System.out.printf(CARD_INFO_FORMAT, player.getName(),
+//                    cardToString(player.showOpenHands()));
+//            printNewLine();
+//        }
+//    }
+
+    private static void printInitialHand2(Dealer dealer, Players players) {
         System.out.printf(CARD_INFO_FORMAT, dealer.getName()
-                , cardToString(dealer.showOpenHands()));
+                , cardToString(dealer.showOpenHands2()));
         printNewLine();
         for (Player player : players) {
             System.out.printf(CARD_INFO_FORMAT, player.getName(),
-                    cardToString(player.showOpenHands()));
+                    cardToString(player.showOpenHands2()));
             printNewLine();
         }
     }
@@ -44,18 +63,32 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printAllCards(Gamer gamer) {
-        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands()));
+//    public static void printAllCards(Gamer gamer) {
+//        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands()));
+//    }
+
+    public static void printAllCards2(Gamer gamer) {
+        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands2()));
     }
 
-    public static void showAllCards(Dealer dealer, Players players) {
-        allCardsWithPoint(dealer);
-        players.forEach(OutputView::allCardsWithPoint);
+//    public static void showAllCards(Dealer dealer, Players players) {
+//        allCardsWithPoint(dealer);
+//        players.forEach(OutputView::allCardsWithPoint);
+//    }
+
+    public static void showAllCards2(Dealer dealer, Players players) {
+        allCardsWithPoint2(dealer);
+        players.forEach(OutputView::allCardsWithPoint2);
     }
 
-    public static void allCardsWithPoint(Gamer gamer) {
+//    public static void allCardsWithPoint(Gamer gamer) {
+//        System.out.printf(RESULT_WITH_POINTS,
+//                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands())), gamer.getScore());
+//    }
+
+    public static void allCardsWithPoint2(Gamer gamer) {
         System.out.printf(RESULT_WITH_POINTS,
-                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands())), gamer.getPoint());
+                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands2())), gamer.getScore2());
     }
 
     private static String cardToString(List<Card> cards) {
@@ -73,17 +106,17 @@ public class OutputView {
         System.out.println(RESULT_TITLE);
     }
 
-    public static void printDealerResult(Map<ResultType, Integer> resultWithCount) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
-            sb.append(entry.getValue()).append(entry.getKey().getName()).append(" ");
-        }
-        System.out.printf(RESULT, "딜러", sb.toString());
-    }
-
-    public static void printPlayersResult(Map<String, ResultType> resultWithName) {
-        for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
-            System.out.printf(RESULT, entry.getKey(), entry.getValue().getName());
-        }
-    }
+//    public static void printDealerResult(Map<ResultType, Integer> resultWithCount) {
+//        StringBuilder sb = new StringBuilder();
+//        for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
+//            sb.append(entry.getValue()).append(entry.getKey().getName()).append(" ");
+//        }
+//        System.out.printf(RESULT, "딜러", sb.toString());
+//    }
+//
+//    public static void printPlayersResult(Map<String, ResultType> resultWithName) {
+//        for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
+//            System.out.printf(RESULT, entry.getKey(), entry.getValue().getName());
+//        }
+//    }
 }

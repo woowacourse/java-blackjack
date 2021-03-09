@@ -6,7 +6,6 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Money;
 import blackjack.domain.utils.HandInitializer;
-import blackjack.domain.utils.ResultMapper;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -30,8 +29,8 @@ public class BlackjackController {
     }
 
     private void initHandsOf(Deck deck, Dealer dealer, Players players) {
-        HandInitializer.init(deck, dealer, players);
-        OutputView.printInitialCards(dealer, players);
+        HandInitializer.init2(deck, dealer, players);
+        OutputView.printInitialCards2(dealer, players);
     }
 
     private void hitOrStand(Deck deck, Dealer dealer, Players players) {
@@ -42,23 +41,23 @@ public class BlackjackController {
     }
 
     private void hitOrStandForPlayer(Deck deck, Player player) {
-        while (player.canDraw() && InputView.receiveAnswer(player.getName())) {
-            player.receiveCard(deck.pick());
-            OutputView.printAllCards(player);
+        while (player.canDraw2() && InputView.receiveAnswer(player.getName())) {
+            player.receiveCard2(deck.pick());
+            OutputView.printAllCards2(player);
         }
     }
 
     private void hitOrStandForDealer(Deck deck, Dealer dealer) {
-        if (dealer.canDraw()) {
-            dealer.receiveCard(deck.pick());
+        if (dealer.canDraw2()) {
+            dealer.receiveCard2(deck.pick());
             OutputView.printDealerHitMessage();
         }
     }
 
     private void printResult(Dealer dealer, Players players) {
-        OutputView.showAllCards(dealer, players);
+        OutputView.showAllCards2(dealer, players);
         OutputView.printResultTitle();
-        OutputView.printDealerResult(ResultMapper.resultOfDealer(dealer, players));
-        OutputView.printPlayersResult(ResultMapper.resultOfPlayers(dealer, players));
+//        OutputView.printDealerResult(ResultMapper.resultOfDealer(dealer, players));
+//        OutputView.printPlayersResult(ResultMapper.resultOfPlayers(dealer, players));
     }
 }
