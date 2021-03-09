@@ -71,25 +71,6 @@ class GameTest {
     }
 
     @Test
-    @DisplayName("게임 결과를 반환한다.")
-    void getGamerResult() {
-        Map<String, Pair<String, Integer>> gameResult = game.getGamerResult();
-
-        assertThat(gameResult.keySet()).isEqualTo(new HashSet<>(Arrays.asList("nabom", "neozal")));
-        assertThat(gameResult.values()).containsExactly(
-                new Pair<>(GameResult.LOSE.getMessage(), -1),
-                new Pair<>(GameResult.LOSE.getMessage(), -1)
-        );
-
-    }
-
-    @Test
-    @DisplayName("딜러의 결과를 반환한다.")
-    void getDealerResult() {
-        assertThat(game.getDealerResult().getKey()).containsExactly(GameResult.WIN.getMessage(), GameResult.WIN.getMessage());
-    }
-
-    @Test
     @DisplayName("게이머들의 이름으로 게이머를 반환한다.")
     void findGamerByName() {
         assertThat(game.findGamerByName("neozal").getName()).isEqualTo("neozal");

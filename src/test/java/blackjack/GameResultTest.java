@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.WinOrLose;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Symbol;
@@ -31,16 +31,16 @@ class GameResultTest {
         dealer.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.TWO));
         gamer.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.THREE));
 
-        assertThat(GameResult.calculate(dealer, gamer)).isEqualTo(GameResult.WIN);
+        assertThat(WinOrLose.calculate(dealer, gamer)).isEqualTo(WinOrLose.WIN);
         //lose
         dealer.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.FIVE));
-        assertThat(GameResult.calculate(dealer, gamer)).isEqualTo(GameResult.LOSE);
+        assertThat(WinOrLose.calculate(dealer, gamer)).isEqualTo(WinOrLose.LOSE);
     }
 
     @Test
     @DisplayName("게임 결과를 뒤집는다.")
     void reverse() {
-        assertThat(GameResult.WIN.reverse()).isEqualTo(GameResult.LOSE);
-        assertThat(GameResult.LOSE.reverse()).isEqualTo(GameResult.WIN);
+        assertThat(WinOrLose.WIN.reverse()).isEqualTo(WinOrLose.LOSE);
+        assertThat(WinOrLose.LOSE.reverse()).isEqualTo(WinOrLose.WIN);
     }
 }

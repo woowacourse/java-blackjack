@@ -4,17 +4,17 @@ import blackjack.domain.player.Player;
 
 import static blackjack.domain.Status.BURST;
 
-public enum GameResult {
+public enum WinOrLose {
     WIN("승"),
     LOSE("패");
 
     private final String message;
 
-    GameResult(String message) {
+    WinOrLose(String message) {
         this.message = message;
     }
 
-    public static GameResult calculate(Player dealer, Player gamer) {
+    public static WinOrLose calculate(Player dealer, Player gamer) {
         if (isOnlyDealerBurst(dealer, gamer) || hasPlayerHigherScoreThanDealer(dealer, gamer)) {
             return WIN;
         }
@@ -33,7 +33,7 @@ public enum GameResult {
             dealer.getScore() < gamer.getScore();
     }
 
-    public GameResult reverse() {
+    public WinOrLose reverse() {
         if (this == WIN) {
             return LOSE;
         }
