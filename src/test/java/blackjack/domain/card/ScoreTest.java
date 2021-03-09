@@ -10,27 +10,27 @@ public class ScoreTest {
 
     @Test
     @DisplayName("Score 생성 테스트")
-    void testInit(){
+    void testInit() {
         Score score = Score.of(13);
         assertThat(score).isEqualTo(Score.of(13));
     }
 
     @Test
     @DisplayName("유효하지 않은 Score 생성 테스트")
-    void testInvalidScoreValue(){
-        assertThatThrownBy(()-> Score.of(-1)).isInstanceOf(IllegalArgumentException.class);
+    void testInvalidScoreValue() {
+        assertThatThrownBy(() -> Score.of(-1)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("Score 더하기 테스트")
-    void testAddScore(){
+    void testAddScore() {
         assertThat(Score.of(13).addScore(Score.of(7)))
                 .isEqualTo(Score.of(20));
     }
 
     @Test
     @DisplayName("점수가 21인지 확인한다.")
-    void testIsBlackJack(){
+    void testIsBlackJack() {
         Score score = Score.of(13);
         assertThat(score.isTwentyOne()).isFalse();
         score = Score.of(21);
@@ -39,7 +39,7 @@ public class ScoreTest {
 
     @Test
     @DisplayName("21이 넘었는지 확인한다.")
-    void testIsBust(){
+    void testIsBust() {
         Score score = Score.of(21);
         assertThat(score.isBust()).isFalse();
         score = Score.of(22);
@@ -48,13 +48,13 @@ public class ScoreTest {
 
     @Test
     @DisplayName("비교대상보다 클 때 테스트")
-    void testIsBiggerThan(){
+    void testIsBiggerThan() {
         assertThat(Score.of(21).isBiggerThan(Score.of(20))).isTrue();
     }
 
     @Test
     @DisplayName("비교대상보다 작을 때 테스트")
-    void testIsLessThan(){
+    void testIsLessThan() {
         assertThat(Score.of(20).isLessThan(Score.of(21))).isTrue();
     }
 }

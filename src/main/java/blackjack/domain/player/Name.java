@@ -6,18 +6,18 @@ public class Name {
 
     private final String name;
 
-    public Name(final String name){
+    public Name(final String name) {
         validateName(name);
         this.name = name.trim();
     }
 
     private void validateName(final String name) {
-        if(Objects.isNull(name) || name.trim().isEmpty()){
+        if (Objects.isNull(name) || name.trim().isEmpty()) {
             throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
         }
     }
 
-    public String name(){
+    public String getName() {
         return name;
     }
 

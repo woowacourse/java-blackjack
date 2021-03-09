@@ -1,9 +1,8 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -11,13 +10,13 @@ public class DeckTest {
 
     @Test
     @DisplayName("deck 생성")
-    void testDeckInit(){
+    void testDeckInit() {
         Deck deck = new Deck();
         assertThat(deck).isNotNull();
     }
 
     @Test
-    void testDrawCard(){
+    void testDrawCard() {
         Deck deck = new Deck();
 
         Card card = deck.draw();
@@ -25,13 +24,13 @@ public class DeckTest {
     }
 
     @Test
-    void test(){
+    void test() {
         Deck deck = new Deck();
 
-        for(int i =0; i<52; i++){
+        for (int i = 0; i < 52; i++) {
             deck.draw();
         }
 
-        assertThatThrownBy(()->deck.draw()).isInstanceOf(IndexOutOfBoundsException.class);
+        assertThatThrownBy(deck::draw).isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

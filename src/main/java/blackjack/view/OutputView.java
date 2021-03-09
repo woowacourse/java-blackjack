@@ -1,8 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Card;
 import blackjack.domain.game.Result;
 import blackjack.domain.game.WinOrLose;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -34,48 +35,56 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printDealerCardInfo(final Dealer dealer) {
+        printNewLine();
+        Card firstCard = dealer.cards().getCards().get(0);
+        String oneCardInfo = firstCard.denomination() + firstCard.suit();
+        printMessageByFormat(CARDS_INFORMATION, dealer.name(), oneCardInfo);
+    }
+
     public static void printPlayersCardInfo(final Players players) {
         printNewLine();
-        for (Player player : players) {
-            printPlayerCardInfo(player);
-        }
+        players.players()
+                .forEach(OutputView::printPlayerCardInfo);
+        printNewLine();
     }
 
     public static void printPlayerCardInfo(final Player player) {
-        printMessageByFormat(CARDS_INFORMATION, player.getName().name(), getCardInfo(player));
+        printMessageByFormat(CARDS_INFORMATION, player.name(), getCardInfo(player));
         printNewLine();
     }
 
     private static String getCardInfo(final Player player) {
-        return player.getCards().cards().stream()
-                .map(card -> card.getDenomination().denomination() + card.getSuit().suit())
+        return player.cards().getCards().stream()
+                .map(card -> card.denomination() + card.suit())
                 .collect(Collectors.joining(", "));
     }
 
     public static void printGiveDealer() {
+        printNewLine();
         printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printResult(final Result result) {
         printCardsAndScore(result);
+        printNewLine();
         printFinalWinningResult(result);
     }
 
     private static void printCardsAndScore(final Result result) {
         printDealerResult(result);
-        for (Player player : result.getGamblerMap().keySet()) {
-            printMessageByFormat(RESULT_INFORMATION, player.getName().name(), getCardInfo(player), player.getScore().score());
+        for (Player player : result.getGamblerResult().keySet()) {
+            printMessageByFormat(RESULT_INFORMATION, player.name(), getCardInfo(player), player.score().getScore());
         }
     }
 
     private static void printDealerResult(final Result result) {
-        Cards cards = result.getDealerCards();
-        String dealerCardInfo = cards.cards().stream()
-                .map(card -> card.getDenomination().denomination() + card.getSuit().suit())
+        Dealer dealer = result.getDealerInfo();
+        String dealerCardInfo = dealer.cards().getCards().stream()
+                .map(card -> card.denomination() + card.suit())
                 .collect(Collectors.joining(", "));
-
         printNewLine();
-        printMessageByFormat(RESULT_INFORMATION, "딜러", dealerCardInfo, cards.getScore().score());
+        printMessageByFormat(RESULT_INFORMATION, "딜러", dealerCardInfo, dealer.score().getScore());
 
     }
 
@@ -86,9 +95,9 @@ public class OutputView {
                 result.countDealerLose());
         printNewLine();
 
-        Map<Player, WinOrLose> winningTable = result.getGamblerMap();
+        Map<Player, WinOrLose> winningTable = result.getGamblerResult();
         for (Player player : winningTable.keySet()) {
-            OutputView.printMessage(player.getName().name() + " : " + winningTable.get(player).getSymbol());
+            OutputView.printMessage(player.name() + " : " + winningTable.get(player).getSymbol());
         }
     }
 }

@@ -18,7 +18,7 @@ public class Score {
         if (value < 0) {
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
-        if(value == 0){
+        if (value == 0) {
             return ZERO_SCORE;
         }
         return new Score(value);
@@ -44,7 +44,7 @@ public class Score {
         return score < target.score;
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 

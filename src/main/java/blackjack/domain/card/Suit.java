@@ -14,19 +14,19 @@ public enum Suit {
         this.suit = suit;
     }
 
-    static Suit of(final String value){
+    static Suit of(final String value) {
         return Arrays.stream(Suit.values())
                 .filter(suit -> suit.isMatch(value))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 Suit입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 Suit입니다."));
     }
 
-    private boolean isMatch(final String suit){
+    private boolean isMatch(final String suit) {
         return this.suit.equals(suit);
     }
 
 
-    public String suit() {
+    public String getSuit() {
         return suit;
     }
 }

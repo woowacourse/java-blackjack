@@ -2,12 +2,16 @@ package blackjack.domain.card;
 
 import java.util.*;
 
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.values;
+
 public class Card {
 
     private static final List<Card> cards = new ArrayList<>();
+
     static {
-        for(Suit suit : Suit.values()){
-            Arrays.stream(Denomination.values())
+        for (Suit suit : Suit.values()) {
+            Arrays.stream(values())
                     .forEach(denomination -> cards.add(new Card(suit, denomination)));
         }
     }
@@ -15,7 +19,7 @@ public class Card {
     private final Suit suit;
     private final Denomination denomination;
 
-    private Card(final Suit suit, final Denomination denomination){
+    private Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
@@ -23,23 +27,27 @@ public class Card {
     public static Card of(final Suit suit, final Denomination denomination) {
         return cards.stream()
                 .filter(card -> card.equals(new Card(suit, denomination)))
-                .findFirst().orElseThrow(()-> new IllegalArgumentException("유효하지 않은 카드입니다."));
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("유효하지 않은 카드입니다."));
     }
 
-    public static LinkedList<Card> cashingCards(){
+    public static LinkedList<Card> cashingCards() {
         return new LinkedList<>(cards);
     }
 
-    public Denomination getDenomination() {
-        return denomination;
+    public String denomination() {
+        return denomination.getDenomination();
     }
 
-    public Suit getSuit() {
-        return suit;
+    public Score getCardScore() {
+        return denomination.getScore();
     }
 
-    public boolean isAce(){
-        return denomination == Denomination.ACE;
+    public String suit() {
+        return suit.getSuit();
+    }
+
+    public boolean isAce() {
+        return denomination == ACE;
     }
 
     @Override
