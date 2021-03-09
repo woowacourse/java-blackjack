@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.exception.InvalidNameInputException;
 
@@ -12,11 +13,13 @@ public abstract class BlackJackParticipant {
     private final Hand hand;
     private final Name name;
     private boolean hit;
+    private Money money;
 
     public BlackJackParticipant(String name) {
         this.hand = new Hand(new ArrayList<>());
         this.hit = true;
         this.name = new Name(name);
+        this.money = new Money();
     }
 
     abstract public void draw(Card card);
@@ -31,6 +34,10 @@ public abstract class BlackJackParticipant {
 
     public String getName() {
         return name.value();
+    }
+
+    public double getMoney() {
+        return money.getValue();
     }
 
     protected void cannotDraw() {

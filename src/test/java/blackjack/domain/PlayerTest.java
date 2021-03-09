@@ -7,11 +7,12 @@ import blackjack.domain.participant.Player;
 import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class PlayerTest {
 
@@ -70,5 +71,18 @@ public class PlayerTest {
         assertThat(TestSetUp.createWinner().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
         assertThat(TestSetUp.createLoser().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
         assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.LOSE);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "10000", "-1234567"})
+    @DisplayName("돈 생성 기능")
+    void checkMoney(String input) {
+        Money money = new Money(input);
+        assertThat(TestSetUp.createWinner().getMoney()).isEqualTo(0);
+        assertThat(money.getValue()).isEqualTo(Double.parseDouble(input));
+    }
+
+    @Test
+    void name() {
     }
 }
