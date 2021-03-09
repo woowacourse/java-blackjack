@@ -3,7 +3,7 @@ package blackjack.view;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.GameResult.WinOrLose;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.PlayerDto;
 import java.util.List;
@@ -65,8 +65,8 @@ public class OutputView {
         }
     }
 
-    public static void printResult(List<GameResult> dealerResult,
-        Map<String, GameResult> gamerResult) {
+    public static void printResult(Map<WinOrLose, Long> dealerResult,
+        Map<String, WinOrLose> gamerResult) {
         System.out.println(FINAL_RESULT);
         System.out.println(dealerResultToString(dealerResult));
 
@@ -74,14 +74,11 @@ public class OutputView {
             (name, result) -> System.out.printf(PLAYER_FINAL_RESULT, name, result.getMessage()));
     }
 
-    private static String dealerResultToString(List<GameResult> dealerResult) {
-        Map<GameResult, Long> map = dealerResult.stream()
-            .collect(groupingBy(Function.identity(), Collectors.counting()));
-
+    private static String dealerResultToString(Map<WinOrLose, Long> dealerResult) {
         return String.format(
             DEALER_FINAL_RESULT,
-            map.getOrDefault(GameResult.WIN, 0L),
-            map.getOrDefault(GameResult.LOSE, 0L)
+            dealerResult.getOrDefault(WinOrLose.WIN, 0L),
+            dealerResult.getOrDefault(WinOrLose.LOSE, 0L)
         );
     }
 

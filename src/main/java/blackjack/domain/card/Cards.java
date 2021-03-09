@@ -2,7 +2,9 @@ package blackjack.domain.card;
 
 import blackjack.exception.CardDuplicateException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cards {
 
@@ -16,7 +18,8 @@ public class Cards {
     }
 
     private void duplicateValidate(List<Card> cards) {
-        if (cards.size() != cards.stream().distinct().count()) {
+        Set<Card> cardSet = new HashSet<>(cards);
+        if (cards.size() != cardSet.size()) {
             throw new CardDuplicateException();
         }
     }

@@ -4,7 +4,6 @@ import blackjack.domain.Status;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.exception.CardDuplicateException;
-import blackjack.util.ScoreCalculator;
 import java.util.List;
 
 public abstract class Player {
@@ -12,12 +11,9 @@ public abstract class Player {
     private final Deck deck;
     private final String name;
 
-    private final ScoreCalculator scoreCalculator;
-
-    public Player(String name, ScoreCalculator scoreCalculator) {
+    public Player(String name) {
         this.deck = new Deck();
         this.name = name;
-        this.scoreCalculator = scoreCalculator;
     }
 
     public void addCardToDeck(Card card) {
@@ -33,7 +29,7 @@ public abstract class Player {
     }
 
     public int getScore() {
-        return scoreCalculator.apply(deck);
+        return deck.totalScore();
     }
 
     public Status getStatus() {

@@ -3,11 +3,11 @@ package blackjack.controller;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Game;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import blackjack.util.BlackjackScoreCalculator;
 import blackjack.util.CardFactory;
 import blackjack.util.DtoAssembler;
 import blackjack.view.InputView;
@@ -26,13 +26,14 @@ public class BlackjackController {
 
         printCurrentDeckAndScore(game.getGamersAsList(), game.getDealer());
 
-        OutputView.printResult(game.getDealerResult(), game.getGamerResult());
+        GameResult gameResult = game.gameResult();
+
+        OutputView.printResult(gameResult.dealerResult(), gameResult.gamerResult());
     }
 
     private Game gameInitialize() {
-        BlackjackScoreCalculator scoreCalculator = new BlackjackScoreCalculator();
-        Dealer dealer = new Dealer(scoreCalculator);
-        Gamers gamers = new Gamers(InputView.getGamerNamesFromUser(), scoreCalculator);
+        Dealer dealer = new Dealer();
+        Gamers gamers = new Gamers(InputView.getGamerNamesFromUser());
         Cards cards = new Cards(CardFactory.getNormalCards());
         Game game = Game.of(cards, dealer, gamers);
 

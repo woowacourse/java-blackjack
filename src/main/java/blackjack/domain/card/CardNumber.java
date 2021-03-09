@@ -14,12 +14,17 @@ public enum CardNumber {
     QUEEN("Q", 10),
     JACK("J", 10);
 
+    private static final int ACE_EXCEPTION_NUMBER = 10;
     private final String name;
     private final int score;
 
     CardNumber(String name, int score) {
         this.name = name;
         this.score = score;
+    }
+
+    public static int acePlusNumber() {
+        return ACE_EXCEPTION_NUMBER;
     }
 
     public String getName() {

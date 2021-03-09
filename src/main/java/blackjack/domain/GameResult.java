@@ -1,44 +1,84 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
+import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
-public enum GameResult {
-    WIN("승"),
-    LOSE("패");
+public class GameResult {
 
-    private final String message;
+    private final Map<Player, WinOrLose> results;
 
-    GameResult(String message) {
-        this.message = message;
+    public GameResult() {
+        results = new HashMap<>();
     }
 
-    public static GameResult calculate(Player dealer, Player gamer) {
-        if (isOnlyDealerBursted(dealer, gamer) || hasPlayerHigherScoreThanDealer(dealer, gamer)) {
-            return GameResult.WIN;
+    public void writeResult(Player dealer, Gamers gamers) {
+        gamers.getGamers()
+            .forEach(gamer -> results.put(gamer, WinOrLose.calculate(dealer, gamer)));
+    }
+
+    public Map<WinOrLose, Long> dealerResult() {
+        return results.values()
+            .stream()
+            .map(WinOrLose::reverse)
+            .collect(Collectors.groupingBy(
+                winOrLose -> winOrLose, Collectors.counting())
+            );
+    }
+
+    public Map<String, WinOrLose> gamerResult() {
+        return results.entrySet()
+            .stream()
+            .collect(toMap(entry -> entry.getKey().getName(), Entry::getValue));
+    }
+
+    public WinOrLose result(Player player) {
+        return results.get(player);
+    }
+
+    public enum WinOrLose {
+        WIN("승"),
+        LOSE("패");
+
+        private final String message;
+
+        WinOrLose(String message) {
+            this.message = message;
         }
 
-        return GameResult.LOSE;
-    }
+        public static WinOrLose calculate(Player dealer, Player gamer) {
+            if (isOnlyDealerBursted(dealer, gamer) || hasPlayerHigherScoreThanDealer(dealer, gamer)) {
+                return WinOrLose.WIN;
+            }
 
-    private static boolean isOnlyDealerBursted(Player dealer, Player gamer) {
-        return dealer.getStatus() == Status.BURST &&
-            gamer.getStatus() != Status.BURST;
-    }
-
-    private static boolean hasPlayerHigherScoreThanDealer(Player dealer, Player gamer) {
-        return dealer.getStatus() != Status.BURST &&
-            gamer.getStatus() != Status.BURST &&
-            dealer.getScore() < gamer.getScore();
-    }
-
-    public GameResult reverse() {
-        if (this == WIN) {
-            return LOSE;
+            return WinOrLose.LOSE;
         }
-        return WIN;
-    }
 
-    public String getMessage() {
-        return message;
+        private static boolean isOnlyDealerBursted(Player dealer, Player gamer) {
+            return dealer.getStatus() == Status.BURST &&
+                gamer.getStatus() != Status.BURST;
+        }
+
+        private static boolean hasPlayerHigherScoreThanDealer(Player dealer, Player gamer) {
+            return dealer.getStatus() != Status.BURST &&
+                gamer.getStatus() != Status.BURST &&
+                dealer.getScore() < gamer.getScore();
+        }
+
+        public WinOrLose reverse() {
+            if (this == WIN) {
+                return LOSE;
+            }
+            return WIN;
+        }
+
+        public String getMessage() {
+            return message;
+        }
     }
 }

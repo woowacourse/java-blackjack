@@ -49,19 +49,10 @@ public class Game {
         return player.isDrawable();
     }
 
-    public Map<String, GameResult> getGamerResult() {
-        return gamers.getGamers().stream()
-            .collect(toMap(Player::getName, this::calculateWinning));
-    }
-
-    private GameResult calculateWinning(Player player) {
-        return GameResult.calculate(dealer, player);
-    }
-
-    public List<GameResult> getDealerResult() {
-        return getGamerResult().values().stream()
-            .map(GameResult::reverse)
-            .collect(toList());
+    public GameResult gameResult() {
+        GameResult gameResult = new GameResult();
+        gameResult.writeResult(dealer, gamers);
+        return gameResult;
     }
 
     public Player findGamerByName(String name) {

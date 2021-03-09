@@ -53,18 +53,18 @@ public class GameTest {
         Player dealer = game.getDealer();
         dealer.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.ACE));
 
-        Map<String, GameResult> gamerResult = game.getGamerResult();
-        Assertions.assertThat(gamerResult.get(gamer.getName())).isEqualTo(GameResult.WIN);
-        Assertions.assertThat(gamerResult.get("neozal")).isEqualTo(GameResult.LOSE);
+        Map<String, GameResult.WinOrLose> gamerResult = game.getGamerResult();
+        Assertions.assertThat(gamerResult.get(gamer.getName())).isEqualTo(GameResult.WinOrLose.WIN);
+        Assertions.assertThat(gamerResult.get("neozal")).isEqualTo(GameResult.WinOrLose.LOSE);
     }
 
     @Test
     void getDealerResult() {
         getGamerResult();
-        List<GameResult> dealerResult = game.getDealerResult();
+        List<GameResult.WinOrLose> dealerResult = game.getDealerResult();
         Assertions.assertThat(dealerResult.size()).isEqualTo(2);
-        Assertions.assertThat(dealerResult.contains(GameResult.WIN)).isTrue();
-        Assertions.assertThat(dealerResult.contains(GameResult.LOSE)).isTrue();
+        Assertions.assertThat(dealerResult.contains(GameResult.WinOrLose.WIN)).isTrue();
+        Assertions.assertThat(dealerResult.contains(GameResult.WinOrLose.LOSE)).isTrue();
     }
 
 
