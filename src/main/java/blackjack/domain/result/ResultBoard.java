@@ -5,6 +5,7 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,12 +21,14 @@ public class ResultBoard {
         return new ResultBoard(resultByUser(players, dealer));
     }
 
-    private static Map<Player, Result> resultByUser(Players players, Dealer dealer) {
+    private static LinkedHashMap<Player, Result> resultByUser(Players players, Dealer dealer) {
         return players.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
-                        player -> player, player -> player.produceResult(dealer)
-                ));
+                        player -> player,
+                        player -> player.produceResult(dealer),
+                        (p1, p2) -> p1,
+                        LinkedHashMap::new));
     }
 
     private List<Result> results() {

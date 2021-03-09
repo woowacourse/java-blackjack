@@ -3,8 +3,8 @@ package blackjack.domain.result;
 import blackjack.domain.user.User;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
@@ -41,9 +41,12 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException("승패 결과 조건에 매치되지 않습니다."));
     }
 
-    public static Map<Result, Integer> countByResults(List<Result> results) {
+    public static LinkedHashMap<Result, Integer> countByResults(List<Result> results) {
         return Arrays.stream(values())
-                .collect(Collectors.toMap(result -> result, result -> result.count(results)));
+                .collect(Collectors.toMap(result -> result,
+                        result -> result.count(results),
+                        (p1, p2) -> p1,
+                        LinkedHashMap::new));
     }
 
     public Result reverse(Result result) {
