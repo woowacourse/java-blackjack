@@ -1,4 +1,4 @@
-package blackjack.participants;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -7,8 +7,6 @@ import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

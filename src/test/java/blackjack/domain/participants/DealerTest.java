@@ -1,16 +1,12 @@
-package blackjack.participants;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.InstanceOfAssertFactories.comparable;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
