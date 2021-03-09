@@ -35,6 +35,13 @@ public class OutputView {
         System.out.println(ENTER_PLAYERS_NAME);
     }
 
+    public static void distributeFirstTwoCard(List<ParticipantDto> playersDto, ParticipantDto dealerDto) {
+        distributeCardMessage(playersDto);
+        showDealerFirstCard(dealerDto);
+        showCards(playersDto);
+        printNewLine();
+    }
+
     public static void distributeCardMessage(List<ParticipantDto> players) {
         String playerName = players.stream()
                 .map(ParticipantDto::getName)
@@ -85,6 +92,12 @@ public class OutputView {
                 .map(OutputView::cardForm)
                 .collect(Collectors.joining(DELIMITER));
         return String.format(CURRENT_CARD_FORM, participant.getName(), allCards);
+    }
+
+    public static void showFinalResult(DealerResultDto dealerResultDto, PlayersResultDto playersResultDto) {
+        showFinalResultTitle();
+        showDealerFinalResult(dealerResultDto);
+        showPlayersFinalResult(playersResultDto);
     }
 
     public static void showFinalResultTitle() {

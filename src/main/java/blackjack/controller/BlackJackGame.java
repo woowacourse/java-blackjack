@@ -8,7 +8,6 @@ import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.BlackJackResult;
-import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -34,8 +33,7 @@ public class BlackJackGame {
         try {
             OutputView.enterPlayersName();
             List<String> allPlayersName = InputView.inputName();
-            List<Player> allPlayer = generatePlayers(allPlayersName);
-            return new Players(allPlayer);
+            return new Players(generatePlayers(allPlayersName));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return registerPlayers();
@@ -59,12 +57,7 @@ public class BlackJackGame {
     private void distributeCards(Players players, Dealer dealer, CardDeck cardDeck) {
         dealer.firstDraw(cardDeck.drawCard(), cardDeck.drawCard());
         players.eachPlayerFirstDraw(cardDeck);
-
-        List<ParticipantDto> playersDto = players.toPlayersDto();
-        OutputView.distributeCardMessage(playersDto);
-        OutputView.showDealerFirstCard(dealer.toParticipantDto());
-        OutputView.showCards(playersDto);
-        OutputView.printNewLine();
+        OutputView.distributeFirstTwoCard(players.toPlayersDto(), dealer.toParticipantDto());
     }
 
     private void playersTurn(Players players, CardDeck cardDeck) {
@@ -77,7 +70,6 @@ public class BlackJackGame {
         while (player.canDraw() && askDrawCard(player)) {
             player.draw(cardDeck.drawCard());
             OutputView.showCards(player.toParticipantDto());
-            OutputView.printNewLine();
         }
     }
 
@@ -96,7 +88,6 @@ public class BlackJackGame {
     private void showCurrentCardWhenStopDraw(Player player, boolean wantDraw) {
         if (!wantDraw) {
             OutputView.showCards(player.toParticipantDto());
-            OutputView.printNewLine();
         }
     }
 
@@ -110,8 +101,6 @@ public class BlackJackGame {
     private void showResult(Players players, Dealer dealer) {
         OutputView.showAllCards(players.toPlayersDto(), dealer.toParticipantDto());
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
-        OutputView.showFinalResultTitle();
-        OutputView.showDealerFinalResult(blackJackResult.toDealerResultDto());
-        OutputView.showPlayersFinalResult(blackJackResult.toPlayersResultDto());
+        OutputView.showFinalResult(blackJackResult.toDealerResultDto(), blackJackResult.toPlayersResultDto());
     }
 }
