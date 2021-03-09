@@ -39,7 +39,7 @@ public class Card {
         return cards;
     }
 
-    public int getScore() {
+    public int score() {
         return number.getScore();
     }
 

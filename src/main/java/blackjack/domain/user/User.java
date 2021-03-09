@@ -19,7 +19,7 @@ public abstract class User {
 
     public int calculateScore(int gameOverScore) {
         int score = getCards().stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::score)
                 .sum();
         int aceCount = 0;
         if (score > gameOverScore) {
