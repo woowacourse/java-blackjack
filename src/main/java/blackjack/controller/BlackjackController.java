@@ -16,6 +16,7 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = new Participants(requestName());
+
         participants.distributeCard();
         OutputView.showNameAndCardInfo(participants);
 
