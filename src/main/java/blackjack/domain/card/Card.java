@@ -13,12 +13,12 @@ public class Card {
         return this.value.getValue();
     }
 
+    public boolean isAceCard() {
+        return value.isAce();
+    }
+
     @Override
     public String toString() {
         return value.getValue() + shape.getShape();
-    }
-
-    public boolean isAceCard() {
-        return value.isAce();
     }
 }

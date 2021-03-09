@@ -20,7 +20,7 @@ public class BlackjackController {
         proceedDealerRound(blackjackGame);
         OutputView.printCardsWithTotalValue(blackjackGame.getUsers());
         ResultBoard resultBoard = blackjackGame.generateResultBoard();
-        OutputView.printResults(resultBoard);
+        OutputView.printResultBoard(resultBoard);
     }
 
     private BlackjackGame setUpBlackjackGame() {

@@ -76,7 +76,7 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA));
     }
 
-    public static void printResults(ResultBoard resultBoard) {
+    public static void printResultBoard(ResultBoard resultBoard) {
         System.out.println("\n## 최종 승패");
         System.out.print("딜러: ");
         for (Result result : resultBoard.showDealerResultBoard().keySet()) {
