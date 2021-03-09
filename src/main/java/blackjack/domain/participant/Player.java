@@ -13,7 +13,7 @@ public class Player extends Participant {
     }
     
     public static Player from(String name) {
-        return new Player(name, new CardHand(new ArrayList<>()));
+        return new Player(name.trim(), new CardHand(new ArrayList<>()));
     }
     
     @Override
