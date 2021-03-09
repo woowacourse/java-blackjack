@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
-    private static final String NO_MORE_PLAYING_USER_ERROR_MSG = "플레이 가능한 유저가 없습니다.";
     private static final int DEALER_MINIMUM_SCORE = 16;
+    public static final int FIRST_DRAW_COUNT = 2;
 
     private final Deck deck = Deck.createDeck();
     private final Users users;
@@ -32,23 +32,19 @@ public class BlackjackGame {
 
     public static BlackjackGame createAndFirstDraw(Users users) {
         BlackjackGame blackjackGame = new BlackjackGame(users);
-        blackjackGame.init();
+        blackjackGame.firstDrawToPlayers();
         return blackjackGame;
+    }
+
+    private void firstDrawToPlayers() {
+        for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
+            drawCardToDealer();
+            users.toList().forEach(this::drawCardToUser);
+        }
     }
 
     public boolean dealerScoreUnderSixTeen() {
         return dealer.calculateScore() < DEALER_MINIMUM_SCORE;
-    }
-
-    private void init() {
-        dealer.firstDraw(deck.draw(), deck.draw());
-        users.toList().forEach(user -> user.firstDraw(deck.draw(), deck.draw()));
-    }
-
-    public User findFirstCanPlayUser() {
-        return users.toList().stream()
-                .filter(User::canContinueGame)
-                .findFirst().orElseThrow(() -> new IllegalArgumentException(NO_MORE_PLAYING_USER_ERROR_MSG));
     }
 
     public List<String> getUserNames() {
@@ -71,8 +67,8 @@ public class BlackjackGame {
         dealer.drawCard(deck.draw());
     }
 
-    public void drawCardToUser(User currentUser) {
-        currentUser.drawCard(deck.draw());
+    public void drawCardToUser(User user) {
+        user.drawCard(deck.draw());
     }
 
     public GameResult createDealerGameResult() {

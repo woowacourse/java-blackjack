@@ -18,10 +18,6 @@ public class UserGameResult {
         return gameResult.calculateScore();
     }
 
-    public List<Card> getResultCards() {
-        return gameResult.getResultCards();
-    }
-
     public WinOrLose getWinOrLose() {
         return winOrLose;
     }
