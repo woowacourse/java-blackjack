@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackApplication {
+public class Application {
 
     public static void main(String[] args) {
         Dealer dealer = new Dealer();

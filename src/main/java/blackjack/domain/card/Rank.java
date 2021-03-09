@@ -7,7 +7,7 @@ public enum Rank {
     TEN(10, "10"),
     JACK(10, "J"), QUEEN(10, "Q"), KING(10, "K");
 
-    public static final int ACE_VALUE = 11;
+    public static final int ACE_UPPER_VALUE = 11;
 
     private final int value;
     private final String initial;

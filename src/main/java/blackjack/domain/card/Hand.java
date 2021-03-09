@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Rank.ACE_VALUE;
-import static blackjack.domain.participant.Dealer.TWENTY_ONE;
+import static blackjack.domain.card.Rank.ACE_UPPER_VALUE;
+import static blackjack.domain.participant.Dealer.BLACKJACK_VALUE;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return sumAceToOne() > TWENTY_ONE;
+        return sumAceToOne() > BLACKJACK_VALUE;
     }
 
     private int sumAceToOne() {
@@ -48,17 +48,16 @@ public class Hand {
 
     private int getAceValue(Card card) {
         if (card.isAce()) {
-            return ACE_VALUE;
+            return ACE_UPPER_VALUE;
         }
         return card.getRankValue();
     }
 
-
     public int getPlayerTotal() {
         int aceCount = getCountOfAce();
-        int result = (aceCount * ACE_VALUE) + getTotalExceptAce();
+        int result = (aceCount * ACE_UPPER_VALUE) + getTotalExceptAce();
 
-        while (aceCount >= 0 && TWENTY_ONE < result) {
+        while (aceCount >= 0 && BLACKJACK_VALUE < result) {
             result -= 10;
             aceCount--;
         }

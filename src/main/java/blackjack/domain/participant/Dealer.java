@@ -13,7 +13,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     public static final String DEALER_NAME = "딜러";
-    public static final int TWENTY_ONE = 21;
+    public static final int BLACKJACK_VALUE = 21;
     private static final int DEALER_UNDER = 16;
 
     private final Deck deck;
