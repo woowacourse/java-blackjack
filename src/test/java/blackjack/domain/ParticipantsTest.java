@@ -13,14 +13,16 @@ public class ParticipantsTest {
     @Test
     @DisplayName("참가자들을 정상적으로 생성하는 지 체크")
     public void init() {
-        assertThatCode(() -> {
-            Dealer dealer = new Dealer();
-            List<Player> players = Arrays.asList(
-                new Player("jason"),
-                new Player("pobi")
-            );
-            Participants.of(dealer, players);
-        }).doesNotThrowAnyException();
+        Dealer dealer = new Dealer();
+        List<Player> players = Arrays.asList(
+            new Player("jason"),
+            new Player("pobi")
+        );
+        Participants participants = Participants.of(dealer, players);
+        assertThat(participants.getParticipants()).contains(dealer);
+        for (Player player : players) {
+            assertThat(participants.getParticipants()).contains(player);
+        }
     }
 
     @Test
