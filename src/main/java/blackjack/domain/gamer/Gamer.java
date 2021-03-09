@@ -34,7 +34,7 @@ public abstract class Gamer {
         return !state.isFinished();
     }
 
-    public void receiveCard2(Card card) {
+    public void receiveCard(Card card) {
         state = state.draw(card);
     }
 

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static blackjack.domain.state.Fixtures.*;
+import static blackjack.domain.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FirstTurnTest {

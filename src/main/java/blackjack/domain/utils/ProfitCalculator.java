@@ -9,47 +9,46 @@ import java.util.Map;
 
 public class ProfitCalculator {
 
-    public static final String DEALER = "딜러";
+    private static final String DEALER = "딜러";
+    private static final double ZERO = 0.0;
+    private static final double REVERSE = -1.0;
 
     private ProfitCalculator() {
     }
 
     public static Map<String, Double> calculateProfitOf(Dealer dealer, Players players) {
         final Map<String, Double> result = new LinkedHashMap<>();
-        result.put(DEALER, 0.0);
+        result.put(DEALER, ZERO);
         for (Player player : players) {
-            compareResult(result, dealer, player);
+            updateResult(result, player.getName(), compareResult2(dealer, player));
         }
         return result;
     }
 
-    private static void compareResult(Map<String, Double> result, Dealer dealer, Player player) {
-        result.put(player.getName(), 0.0);
+    private static double compareResult2(Dealer dealer, Player player) {
         if (bothBlackjack(dealer, player)) {
-            return;
+            return ZERO;
         }
         if (bothStay(dealer, player)) {
-            updateResult(result, player.getName(),
-                    player.getProfit() * Integer.compare(player.getScore(), dealer.getScore()));
-            return;
+            return player.getProfit() * Integer.compare(player.getScore(), dealer.getScore());
         }
-        updateResult(result, player.getName(), player.getProfit());
+        return player.getProfit();
     }
 
     private static void updateResult(Map<String, Double> result, String name, double profit) {
-        result.replace(name, profit);
-        result.replace(DEALER, result.get(DEALER) + convert(profit));
+        result.put(name, profit);
+        result.replace(DEALER, result.get(DEALER) + reverse(profit));
     }
 
     private static boolean bothStay(Dealer dealer, Player player) {
-        return !(dealer.isBust() && player.isBust());
+        return !dealer.isBust() && !player.isBust();
     }
 
     private static boolean bothBlackjack(Dealer dealer, Player player) {
         return dealer.isBlackjack() && player.isBlackjack();
     }
 
-    private static double convert(double value) {
-        return -1.0 * value;
+    private static double reverse(double value) {
+        return REVERSE * value;
     }
 }

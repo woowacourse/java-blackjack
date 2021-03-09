@@ -18,6 +18,7 @@ public class BlackjackController {
         final Deck deck = Deck.create();
         final Dealer dealer = new Dealer();
         final Players players = createPlayersWithInfo();
+
         initHandsOf(deck, dealer, players);
         hitOrStand(deck, dealer, players);
         printResult(dealer, players);
@@ -43,14 +44,14 @@ public class BlackjackController {
 
     private void hitOrStandForPlayer(Deck deck, Player player) {
         while (player.canDraw() && InputView.receiveAnswer(player.getName())) {
-            player.receiveCard2(deck.pick());
+            player.receiveCard(deck.pick());
             OutputView.printAllCards(player);
         }
     }
 
     private void hitOrStandForDealer(Deck deck, Dealer dealer) {
         if (dealer.canDraw()) {
-            dealer.receiveCard2(deck.pick());
+            dealer.receiveCard(deck.pick());
             OutputView.printDealerHitMessage();
         }
     }
