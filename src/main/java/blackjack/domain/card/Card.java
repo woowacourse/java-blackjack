@@ -21,14 +21,7 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public static Card of(final Suit suit, final Denomination denomination) {
-        return ORIGINAL_CARDS.stream()
-                .filter(card -> card.equals(new Card(suit, denomination)))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 카드입니다."));
-    }
-
-    public static List<Card> getCachingCards() {
+    public static LinkedList<Card> getCachingCards() {
         return new LinkedList<>(ORIGINAL_CARDS);
     }
 

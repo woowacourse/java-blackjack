@@ -8,11 +8,7 @@ import java.util.List;
 
 public class Cards {
 
-    private final List<Card> cards;
-
-    public Cards() {
-        cards = new ArrayList<>();
-    }
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(final Card card) {
         cards.add(card);

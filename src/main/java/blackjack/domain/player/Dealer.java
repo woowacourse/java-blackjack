@@ -9,7 +9,6 @@ public class Dealer implements Player {
     private static final int LIMIT_SCORE_TO_HIT = 16;
 
     private final Name name = new Name("딜러");
-    ;
     private final Cards cards = new Cards();
     private Money money = new Money(0);
 
@@ -53,6 +52,10 @@ public class Dealer implements Player {
         }
 
         return player.getCards().compareCardsScore(cards);
+    }
+
+    public Money getMoney(){
+        return money;
     }
 
     @Override

@@ -23,6 +23,10 @@ public class Money {
         return multiply(-1);
     }
 
+    public int getValue(){
+        return money;
+    }
+
     @Override
     public String toString() {
         return money + "";

@@ -41,6 +41,10 @@ public class WinningResult {
         return gamblerResults.keySet();
     }
 
+    public Map<Player, WinOrLose> getGamblerResults(){
+        return gamblerResults;
+    }
+
     public WinOrLose findPlayerWinOrLose(Player player) {
         return gamblerResults.get(player);
     }

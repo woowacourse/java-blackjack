@@ -12,17 +12,12 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(InputView.askPlayerNames());
+
         askGamblerBet(blackJackGame);
         printInitialCards(blackJackGame);
 
         drawAdditionalCards(blackJackGame);
-
         calculateResults(blackJackGame);
-        blackJackGame.calculateMoney();
-
-        for (Gambler gambler : blackJackGame.getGamblers()) {
-            System.out.println(gambler.getBettingMoney().abs());
-        }
     }
 
     private void askGamblerBet(BlackJackGame blackJackGame) {
@@ -60,6 +55,9 @@ public class BlackJackController {
     }
 
     private void calculateResults(BlackJackGame blackJackGame) {
+        blackJackGame.calculateMoney();
+
         OutputView.printResult(blackJackGame.calculateWinningResult());
+        OutputView.printFinalRevenue(blackJackGame.getDealer(), blackJackGame.getGamblers());
     }
 }

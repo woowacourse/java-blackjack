@@ -54,7 +54,7 @@ public class OutputView {
 
     private static void printCardsAndScore(final WinningResult winningResult) {
         printDealerResult(winningResult);
-        for (Player player : winningResult.getGamblerMap().keySet()) {
+        for (Player player : winningResult.getGamblerSet()) {
             printMessageByFormat(RESULT_INFORMATION, player.getName().getValue(), makeCardInfo(player.getCards()), player.getScore().getValue());
         }
     }
@@ -80,9 +80,17 @@ public class OutputView {
     }
 
     private static void printGamblerWinningResult(WinningResult winningResult) {
-        Map<Player, WinOrLose> winningTable = winningResult.getGamblerMap();
+        Map<Player, WinOrLose> winningTable = winningResult.getGamblerResults();
         for (Player player : winningTable.keySet()) {
             OutputView.printMessage(player.getName().getValue() + " : " + winningTable.get(player).getSymbol());
+        }
+    }
+
+    public static void printFinalRevenue(Dealer dealer, Gamblers gamblers){
+        System.out.println("## 최종 수익");
+        System.out.println(dealer.getName().getValue() + ": "+ dealer.getMoney().getValue());
+        for (Gambler gambler : gamblers) {
+            System.out.println(gambler.getName() + ": "+gambler.getBettingMoney().abs());
         }
     }
 
@@ -97,6 +105,4 @@ public class OutputView {
     public static void printMessageByFormat(final String format, final Object... message) {
         System.out.printf(format, message);
     }
-
-
 }
