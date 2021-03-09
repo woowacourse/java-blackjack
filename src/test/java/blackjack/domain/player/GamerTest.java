@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +16,11 @@ class GamerTest {
     @Test
     void 카드_추가_테스트() {
         // given, when
-        Cards cards = Cards.of(
+        Cards cards = Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.ACE, Shape.CLUBS)
-        );
+        ));
         Player gamer = new Gamer("테스트 게이머", cards);
 
         // then

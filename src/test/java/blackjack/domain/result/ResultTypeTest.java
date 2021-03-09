@@ -9,6 +9,7 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
+import java.util.Arrays;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,15 +20,15 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_1() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SEVEN, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.NINE, Shape.CLUBS)
-        ));
+        )));
 
         // when
         Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
@@ -41,15 +42,15 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_2() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.NINE, Shape.CLUBS)
-        ));
+        )));
 
         // when
         Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
@@ -63,15 +64,15 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_3() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
         // when
         Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
@@ -85,16 +86,16 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_4() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
-            Card.of(Denomination.KING, Shape.CLUBS),
+            Card.of(Denomination.NINE, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
         // when
         Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
@@ -108,16 +109,16 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_5() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
-            Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+            Card.of(Denomination.NINE, Shape.CLUBS)
+        )));
 
         // when
         Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);
@@ -131,17 +132,17 @@ class ResultTypeTest {
     @Test
     void judgeGameResultTest_6() {
         // given
-        Gamer gamer = new Gamer("pobi", Cards.of(
+        Gamer gamer = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.KING, Shape.CLUBS)
-        ));
+        )));
 
         // when
         Map<Player, ResultType> result = ResultType.judgeGameResult(dealer, gamer);

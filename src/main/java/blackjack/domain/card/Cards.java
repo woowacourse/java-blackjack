@@ -14,12 +14,6 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards of(Card... values) {
-        List<Card> cards = Arrays.stream(values)
-            .collect(Collectors.toList());
-        return new Cards(cards);
-    }
-
     public static Cards of(List<Card> values) {
         return new Cards(values);
     }

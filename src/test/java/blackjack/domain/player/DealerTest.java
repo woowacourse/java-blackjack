@@ -19,10 +19,10 @@ class DealerTest {
     @Test
     void 카드_추가_테스트() {
         // given, when
-        Cards cards = Cards.of(
+        Cards cards = Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SEVEN, Shape.CLUBS)
-        );
+        ));
         Player dealer = new Dealer(cards);
 
         // then
@@ -35,20 +35,20 @@ class DealerTest {
     @Test
     void judgeGameResultWithGamers_1() {
         // given
-        Gamer gamer1 = new Gamer("pobi", Cards.of(
+        Gamer gamer1 = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SEVEN, Shape.CLUBS)
-        ));
+        )));
 
-        Gamer gamer2 = new Gamer("jason", Cards.of(
+        Gamer gamer2 = new Gamer("jason", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.TWO, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SIX, Shape.CLUBS)
-        ));
+        )));
 
         // when
         GameResult gameResult = dealer.judgeGameResultWithGamers(Arrays.asList(gamer1, gamer2));
@@ -66,20 +66,20 @@ class DealerTest {
     @Test
     void judgeGameResultWithGamers_2() {
         // given
-        Gamer gamer1 = new Gamer("pobi", Cards.of(
+        Gamer gamer1 = new Gamer("pobi", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SIX, Shape.CLUBS)
-        ));
+        )));
 
-        Gamer gamer2 = new Gamer("jason", Cards.of(
+        Gamer gamer2 = new Gamer("jason", Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SIX, Shape.CLUBS)
-        ));
+        )));
 
-        Dealer dealer = new Dealer(Cards.of(
+        Dealer dealer = new Dealer(Cards.of(Arrays.asList(
             Card.of(Denomination.KING, Shape.CLUBS),
             Card.of(Denomination.SIX, Shape.CLUBS)
-        ));
+        )));
 
         // when
         GameResult gameResult = dealer.judgeGameResultWithGamers(Arrays.asList(gamer1, gamer2));
