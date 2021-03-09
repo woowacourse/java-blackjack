@@ -4,9 +4,9 @@ import blackjack.domain.card.CardHand;
 
 import java.util.ArrayList;
 
+import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
+
 public class Player extends Participant {
-    
-    private static final int MAXIMUM_THRESHOLD = 21;
     
     private Player(String name, CardHand cardHand) {
         super(name, cardHand);
@@ -18,6 +18,6 @@ public class Player extends Participant {
     
     @Override
     public boolean canReceive() {
-        return sumCardHand() < MAXIMUM_THRESHOLD;
+        return sumCardHand() < BLACKJACK_SCORE;
     }
 }

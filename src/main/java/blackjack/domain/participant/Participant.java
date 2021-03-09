@@ -5,9 +5,9 @@ import blackjack.domain.card.CardHand;
 
 import java.util.List;
 
+import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
+
 public abstract class Participant {
-    
-    private static final int MAXIMUM_THRESHOLD = 21;
     
     protected final String name;
     protected final CardHand cardHand;
@@ -34,7 +34,7 @@ public abstract class Participant {
     }
     
     public boolean isBurst() {
-        return sumCardHand() > MAXIMUM_THRESHOLD;
+        return sumCardHand() > BLACKJACK_SCORE;
     }
     
     public abstract boolean canReceive();

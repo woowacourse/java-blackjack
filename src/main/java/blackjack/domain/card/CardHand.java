@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
+
 public class CardHand {
     
-    private static final int MAXIMUM_THRESHOLD = 21;
     private static final int DIFF_OF_ACE_VALUES = 10;
     
     private final List<Card> cards;
@@ -41,6 +42,6 @@ public class CardHand {
     }
     
     private boolean canChangeAceValueToEleven(int sum) {
-        return sum + DIFF_OF_ACE_VALUES <= MAXIMUM_THRESHOLD;
+        return sum + DIFF_OF_ACE_VALUES <= BLACKJACK_SCORE;
     }
 }
