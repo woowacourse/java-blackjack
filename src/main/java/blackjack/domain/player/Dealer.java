@@ -32,8 +32,8 @@ public class Dealer extends Participant {
         return getScore() <= DEALER_DRAW_LIMIT;
     }
 
-    public float profit(List<Player> players) {
-        float profit = 0;
+    public double profit(List<Player> players) {
+        double profit = 0;
 
         for (Player player : players) {
             profit -= player.profit(getPlayerResult(player));

@@ -30,7 +30,7 @@ public class Player extends Participant {
         return result == Result.LOSE;
     }
 
-    public float profit(Result result) {
+    public double profit(Result result) {
         if (isBlackjack()) {
             return betMoney.getBlackjackBetMoney();
         }
