@@ -3,12 +3,10 @@ package blackjack.domain.participants;
 import blackjack.domain.ResultType;
 import blackjack.dto.GameResult;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -16,16 +14,17 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<Player> players) {
+        validateDuplication(players);
         this.players = new ArrayList<>(players);
     }
-
-    public static Players valueOf(String unParsedNames) {
-        List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER, -1))
-            .map(name -> new Player(name))
-            .collect(Collectors.toList());
-        validateDuplication(parsedPlayers);
-        return new Players(parsedPlayers);
-    }
+//
+//    public static Players valueOf(String unParsedNames) {
+//        List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER, -1))
+//            .map(name -> new Player(name))
+//            .collect(Collectors.toList());
+//        validateDuplication(parsedPlayers);
+//        return new Players(parsedPlayers);
+//    }
 
     private static void validateDuplication(List<Player> players) {
         if (players.size() != new HashSet<>(players).size()) {

@@ -4,6 +4,9 @@ import blackjack.domain.CardDistributor;
 import blackjack.domain.Response;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Deck;
+import blackjack.domain.names.Name;
+import blackjack.domain.names.Names;
+import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
@@ -11,6 +14,8 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackController {
 
@@ -43,7 +48,15 @@ public class BlackJackController {
 
     private static Players joinPlayers() {
         OutputView.printInputNames();
-        return Players.valueOf(InputView.inputString());
+        List<Player> players = new ArrayList<>();
+        Names names = Names.valueOf(InputView.inputString());
+        for (Name name : names.unwrap()) {
+            OutputView.printBetting(name);
+            Betting betting = Betting.valueOf(InputView.inputString());
+            players.add(new Player(name, betting));
+        }
+
+        return new Players(players);
     }
 
     private static void initializeGame(Participants participants) {

@@ -12,6 +12,7 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
 import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Shape;
+import blackjack.domain.names.Name;
 import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,14 +39,14 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 생성")
     void create() {
-        Player root = new Player("root");
-        assertThat(root).isEqualTo(new Player("root"));
+        Player root = new Player(new Name("root"), Betting.valueOf("1"));
+        assertThat(root).isEqualTo(new Player(new Name("root"), Betting.valueOf("1")));
     }
 
     @Test
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() {
-        Player root = new Player("root");
+        Player root = new Player(new Name("root"), Betting.valueOf("1"));
 
         cardDistributor.distributeCardTo(root);
         assertThat(root.getHand()).containsExactly(
@@ -62,7 +63,7 @@ public class PlayerTest {
             Card.valueOf(Shape.SPADE, CardValue.TWO)));
         cardDistributor = new CardDistributor(deck);
 
-        Player root = new Player("root");
+        Player root = new Player(new Name("root"), Betting.valueOf("1"));
         for (int i = 0; i < 3; i++) {
             cardDistributor.distributeCardTo(root);
         }
@@ -75,7 +76,7 @@ public class PlayerTest {
     @Test
     @DisplayName("유저가 카드를 계속 더 받을건지 입력")
     void willContinue() {
-        Player root = new Player("root");
+        Player root = new Player(new Name("root"), Betting.valueOf("1"));
 
         root.updateStatusByResponse(Response.getResponse("y"));
         assertThat(root.isContinue()).isTrue();
@@ -96,11 +97,11 @@ public class PlayerTest {
             .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 2);
-        Player pobi = new Player("pobi");
+        Player pobi = new Player(new Name("pobi"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(pobi, 2);
-        Player jason = new Player("jason");
+        Player jason = new Player(new Name("jason"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(jason, 2);
-        Player root = new Player("root");
+        Player root = new Player(new Name("root"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(root, 2);
 
         assertThat(pobi.match(dealer)).isEqualTo(ResultType.WIN);

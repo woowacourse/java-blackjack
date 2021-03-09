@@ -6,6 +6,8 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
 import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Shape;
+import blackjack.domain.names.Name;
+import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.Player;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
@@ -28,13 +30,13 @@ public class ResultTypeTest {
         CardDistributorForTest cardDistributorForTest = CardDistributorForTest
             .valueOf(new CardDistributor(deck));
 
-        Player eighteen = new Player("eighteen");
+        Player eighteen = new Player(new Name("eighteen"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(eighteen, 2);
-        Player nineteen = new Player("nineteen");
+        Player nineteen = new Player(new Name("nineteen"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(nineteen, 2);
-        Player seventeen = new Player("seventeen");
+        Player seventeen = new Player(new Name("seventeen"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(seventeen, 2);
-        Player anotherEighteen = new Player("anotherEighteen");
+        Player anotherEighteen = new Player(new Name("anotherEighteen"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(anotherEighteen, 2);
 
         assertThat(ResultType.getResultTypeByScore(nineteen, eighteen)).isEqualTo(ResultType.WIN);

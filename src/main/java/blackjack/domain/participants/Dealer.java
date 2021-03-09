@@ -1,12 +1,14 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.names.Name;
+
 public class Dealer extends Participant {
 
     public static final int DEALER_LIMIT = 16;
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(new Name(DEALER_NAME));
     }
 
     @Override

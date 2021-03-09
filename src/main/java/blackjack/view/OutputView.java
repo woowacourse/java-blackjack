@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
+import blackjack.domain.names.Name;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
@@ -92,5 +93,9 @@ public class OutputView {
         unwrappedResult.keySet()
             .forEach(player -> System.out
                 .println(player.getName() + ": " + unwrappedResult.get(player).getName()));
+    }
+
+    public static void printBetting(Name name) {
+        System.out.println("\n" + name.unwrap() + "의 배팅 금액은?");
     }
 }

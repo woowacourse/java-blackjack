@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
+import blackjack.domain.names.Name;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,15 +15,15 @@ public abstract class Participant {
     private final Name name;
     private ParticipantState state;
 
-    public Participant(String name) {
+    public Participant(Name name) {
         this.hand = new Hand(new ArrayList<>());
-        this.name = new Name(name);
+        this.name = name;
         this.state = ParticipantState.HIT;
     }
 
     protected abstract ParticipantState updateStatus(ParticipantState currentStatus);
 
-    public void addCard(Card card) {
+    public void draw(Card card) {
         if (isNotContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }

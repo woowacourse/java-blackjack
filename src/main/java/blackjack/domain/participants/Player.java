@@ -2,11 +2,15 @@ package blackjack.domain.participants;
 
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
+import blackjack.domain.names.Name;
 
 public class Player extends Participant {
 
-    public Player(String name) {
+    private final Betting betting;
+
+    public Player(Name name, Betting betting) {
         super(name);
+        this.betting = betting;
     }
 
     @Override
@@ -18,7 +22,7 @@ public class Player extends Participant {
     }
 
     public void updateStatusByResponse(Response response) {
-        setState(response.getPlayerStatus());
+        setState(response.getParticipantState());
     }
 
     public ResultType match(Dealer dealer) {

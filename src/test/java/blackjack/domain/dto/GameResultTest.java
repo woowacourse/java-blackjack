@@ -9,6 +9,8 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
 import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Shape;
+import blackjack.domain.names.Name;
+import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -98,11 +100,11 @@ public class GameResultTest {
             .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 3);
-        Player pobi = new Player("pobi");
+        Player pobi = new Player(new Name("pobi"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(pobi, 3);
-        Player jason = new Player("jason");
+        Player jason = new Player(new Name("jason"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(jason, 3);
-        Player root = new Player("root");
+        Player root = new Player(new Name("root"), Betting.valueOf("1"));
         cardDistributorForTest.distributeCardsTo(root, 3);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));

@@ -22,7 +22,7 @@ public enum Response {
             .orElseThrow(() -> new IllegalArgumentException("불가능한 입력 입니다."));
     }
 
-    public ParticipantState getPlayerStatus() {
+    public ParticipantState getParticipantState() {
         return participantState;
     }
 }

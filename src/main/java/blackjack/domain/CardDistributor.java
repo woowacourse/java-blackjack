@@ -26,6 +26,6 @@ public class CardDistributor {
 
     public void distributeCardTo(Participant participant) {
         Card card = deck.draw();
-        participant.addCard(card);
+        participant.draw(card);
     }
 }
