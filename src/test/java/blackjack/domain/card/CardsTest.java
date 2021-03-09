@@ -10,6 +10,7 @@ import java.util.Collections;
 import static blackjack.domain.card.Cards.TOP_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CardsTest {
 
@@ -101,5 +102,43 @@ public class CardsTest {
         assertThat(cards1.calculateScore()).isEqualTo(14);
         assertThat(cards2.calculateScore()).isEqualTo(21);
         assertThat(cards3.calculateScore()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("BlackJack 여부 테스트")
+    void isBlackJack() {
+        Cards cards = new Cards(
+                Arrays.asList(
+                        new Card(Shape.SPADE, Denomination.ACE),
+                        new Card(Shape.HEART, Denomination.KING)
+                )
+        );
+        assertTrue(cards.isBlackJack());
+    }
+
+    @Test
+    @DisplayName("Bust 여부 테스트")
+    void isBust() {
+        Cards cards = new Cards(
+                Arrays.asList(
+                        new Card(Shape.SPADE, Denomination.QUEEN),
+                        new Card(Shape.HEART, Denomination.KING)
+                )
+        );
+        cards.addCard(new Card(Shape.DIAMOND, Denomination.JACK));
+        assertTrue(cards.isBust());
+    }
+
+    @Test
+    @DisplayName("Stay 여부 테스트")
+    void isStay() {
+        Cards cards = new Cards(
+                Arrays.asList(
+                        new Card(Shape.SPADE, Denomination.QUEEN),
+                        new Card(Shape.HEART, Denomination.KING)
+                )
+        );
+        cards.addCard(new Card(Shape.DIAMOND, Denomination.ACE));
+        assertTrue(cards.isStay());
     }
 }

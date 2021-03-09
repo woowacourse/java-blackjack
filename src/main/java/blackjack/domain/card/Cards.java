@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
+
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
     private static final String DUPLICATE_CARD_ERROR_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
@@ -36,6 +38,18 @@ public class Cards {
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore() == BLACKJACK_NUMBER;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isStay() {
+        return cards.size() > 2 && isBlackJack();
     }
 
     public int calculateScore() {
